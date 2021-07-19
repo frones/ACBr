@@ -90,7 +90,11 @@ begin
 
   // Todos os provedores que seguem a versão 1 do layout da ABRASF só tem
   // um serviço para recepcionar o RPS e é assíncrono.
-  ConfigGeral.ModoEnvio := meLoteAssincrono;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meLoteAssincrono;
+    ConsultaSitLote := True;
+  end;
 
   SetXmlNameSpace(NameSpace);
 

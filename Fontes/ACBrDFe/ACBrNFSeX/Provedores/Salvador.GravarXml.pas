@@ -49,7 +49,11 @@ type
 
   TNFSeW_Salvador = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
+
     procedure DefinirIDRps; override;
+  public
+    function GerarXml: Boolean; override;
 
   end;
 
@@ -62,9 +66,32 @@ implementation
 
 { TNFSeW_Salvador }
 
+procedure TNFSeW_Salvador.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrValorDeducoes := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrValorISSRetido_1 := 1;
+  NrOcorrOutrasRet := 1;
+  NrOcorrDescIncond := 1;
+  NrOcorrDescCond := 1;
+
+end;
+
 procedure TNFSeW_Salvador.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero);
+end;
+
+function TNFSeW_Salvador.GerarXml: Boolean;
+begin
+  Opcoes.SuprimirDecimais := True;
+
+  Result := inherited GerarXml;
 end;
 
 end.

@@ -42,6 +42,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/07/2021
+-- ACBrNFSeXParametros --
+[+] Acrescentado as propriedades: ConsultaSitLote e ConsultaLote com finalidade
+    de auxiliar nas consultas automaticas após o envio do Rps para o WebService.
+-- Diversos --
+[*] Definição de valores para as propriedades ConsultaSitLote e ConsultaLote.
+-- ACBrNFSeXProviderBase --
+[*] Incluido na function Emitir a chamada as consultas: ConsultaSituacao e 
+    ConsultaLoteRps.
+-- Salvador.Provider, Salvador.GravarXml --
+[-] Possível correção na geração do Xml do Rps.
+-- Betha.Provider --
+[-] Possível correção na assinatura do Rps/Lote.
+   Por: Italo Giurizzato Junior
+
 13/07/2021
 -- ACBrNFSeXGravarXml_ABRASFv1, DBSeller.GravarXml --
 [-] Correção na geração da tag RegimeEspecialTributacao.

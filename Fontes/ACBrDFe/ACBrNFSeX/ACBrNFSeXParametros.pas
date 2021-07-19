@@ -63,6 +63,10 @@ type
     FTabServicosExt: Boolean;
     // define o modo de envio dos Rps para o webservice
     FModoEnvio: TmodoEnvio;
+    // define se vai consultar a situação do lote ou não, após o envio
+    FConsultaSitLote: Boolean;
+    // define se vai consultar o lote ou não, após o envio
+    FConsultaLote: Boolean;
     // uso diverso
     FParams1: string;
     // uso diverso
@@ -81,6 +85,8 @@ type
     property FormatoItemListaServico: TFormatoItemListaServico read FFormItemLServico write FFormItemLServico;
     property TabServicosExt: Boolean read FTabServicosExt write FTabServicosExt;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
+    property ConsultaSitLote: Boolean read FConsultaSitLote write FConsultaSitLote;
+    property ConsultaLote: Boolean read FConsultaLote write FConsultaLote;
     // Parametros lidos no arquivo .Res ou .ini
     property Params1: string read FParams1;
     property Params2: string read FParams2;

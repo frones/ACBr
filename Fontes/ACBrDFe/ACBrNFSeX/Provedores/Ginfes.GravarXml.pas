@@ -88,7 +88,7 @@ begin
   if NFSe.OptanteSimplesNacional = snSim then
     NrOcorrAliquota := 1;
 
-  inherited GerarXml;
+  Result := inherited GerarXml;
 end;
 
 end.

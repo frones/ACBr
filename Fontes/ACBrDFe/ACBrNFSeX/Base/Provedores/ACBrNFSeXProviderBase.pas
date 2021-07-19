@@ -145,7 +145,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrXmlBase, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
+  Math, pcnAuxiliar, ACBrXmlBase, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrDFeUtil, ACBrDFeException, ACBrNFSeX;
 
 { TACBrNFSeXProvider }
@@ -326,6 +326,8 @@ begin
     FormatoItemListaServico := filsComFormatacao;
     TabServicosExt := False;
     Identificador := 'Id';
+    ConsultaSitLote := False;
+    ConsultaLote := True;
   end;
 
   // Inicializa os parâmetros de configuração: MsgDados
@@ -798,6 +800,10 @@ function TACBrNFSeXProvider.Emite(const aLote: String; aModoEnvio: TmodoEnvio): 
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
+  Protocolo: string;
+  RetornoConsSit: TNFSeConsultaSituacaoResponse;
+  RetornoConsLote: TNFSeConsultaLoteRpsResponse;
+  qTentativas, Intervalo, Situacao: Integer;
 begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeRecepcao);
 
@@ -901,6 +907,49 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoEmitir(Result);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+
+  if TACBrNFSeX(FAOwner).Configuracoes.Geral.ConsultaLoteAposEnvio and
+     (Result.ModoEnvio = meLoteAssincrono) then
+  begin
+    Protocolo := Result.Protocolo;
+
+    if Protocolo <> '' then
+    begin
+      if ConfigGeral.ConsultaSitLote then
+      begin
+//        RetornoConsSit := TNFSeConsultaSituacaoResponse.Create;
+
+        with TACBrNFSeX(FAOwner).Configuracoes.WebServices do
+        begin
+          try
+            Sleep(AguardarConsultaRet);
+
+            qTentativas := 0;
+            Situacao := 0;
+            Intervalo := max(IntervaloTentativas, 1000);
+
+            while (Situacao < 3) and (qTentativas < Tentativas) do
+            begin
+              RetornoConsSit := ConsultaSituacao(Protocolo, aLote);
+
+              Situacao := StrToIntDef(RetornoConsSit.Situacao, 0);
+              Inc(qTentativas);
+              sleep(Intervalo);
+            end;
+          finally
+            Result.InfRetorno.Situacao := RetornoConsSit.Situacao;
+          end;
+        end;
+      end;
+
+      if ConfigGeral.ConsultaLote then
+      begin
+//        RetornoConsLote := TNFSeConsultaLoteRpsResponse.Create;
+
+        RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
+      end;
+    end;
+  end;
 end;
 
 function TACBrNFSeXProvider.ConsultaSituacao(const aProtocolo, aNumLote: String): TNFSeConsultaSituacaoResponse;
@@ -1395,7 +1444,7 @@ begin
       meLoteAssincrono:
         Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
           Prefixo + ConfigMsgDados.LoteRps.DocElemento,
-          Prefixo + ConfigMsgDados.LoteRps.InfElemento, '', '', '', IdAttr);
+          {Prefixo + }ConfigMsgDados.LoteRps.InfElemento, '', '', '', IdAttr);
     else
       Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
         Prefixo + ConfigMsgDados.GerarNFSe.DocElemento,

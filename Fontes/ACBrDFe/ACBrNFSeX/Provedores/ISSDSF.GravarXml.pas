@@ -347,8 +347,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividade', 1, 9, 1,
                                                   NFSe.Servico.CodigoCnae, ''));
 
-  NFSeNode.AppendChild(AddNode(tcInt, '#1', 'CodigoServico', 4, 5, 0,
-                                OnlyNumber(NFSe.Servico.ItemListaServico), ''));
+  //NFSeNode.AppendChild(AddNode(tcInt, '#1', 'CodigoServico', 4, 5, 0,
+  //                              OnlyNumber(NFSe.Servico.ItemListaServico), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'AliquotaAtividade', 1, 11, 1,
                                             NFSe.Servico.Valores.Aliquota, ''));

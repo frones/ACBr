@@ -94,7 +94,7 @@ type
 
     procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
                                      const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
+                                     AListTag: string = 'Erros';
                                      AMessageTag: string = 'Erro'); override;
 
   end;
@@ -183,8 +183,9 @@ begin
   with ConfigAssinar do
   begin
     LoteRps := True;
-    ConsultarLote := True;
+    ConsultarLote := False;
     ConsultarNFSeRps := True;
+    ConsultarNFSe := True;
     CancelarNFSe := True;
   end;
 
@@ -249,6 +250,7 @@ begin
     CancelarNFSe := 'ReqCancelamentoNFSe.xsd';
     RecepcionarSincrono := 'ReqEnvioLoteRPS.xsd';
     Teste := 'ReqEnvioLoteRPS.xsd';
+    Validar := False;
   end;
 end;
 
@@ -288,18 +290,34 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
 begin
+  //erros
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
   if (ANode = nil) then
     ANode := RootNode;
 
   ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
-
-  if not Assigned(ANodeArray) then Exit;
-
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
+    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+    AErro.Correcao := '';
+
+    if AErro.Descricao = '' then
+      AErro.Descricao := ANodeArray[I].AsString;
+  end;
+
+  //alertas
+  ANode := RootNode.Childrens.FindAnyNs('Alertas');
+
+  if (ANode = nil) then
+    ANode := RootNode;
+
+  ANodeArray := ANode.Childrens.FindAllAnyNs('Alerta');
+  for I := Low(ANodeArray) to High(ANodeArray) do
+  begin
+    AErro := Response.Alertas.New;
     AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
     AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
     AErro.Correcao := '';
@@ -485,8 +503,8 @@ begin
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
       else
       begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
+        NameSpace := NameSpace + ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                             ConfigMsgDados.XmlRps.xmlns + '"';
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
       end;
     end
@@ -496,6 +514,11 @@ begin
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
     end;
   end;
+
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"';
 
   Response.XmlEnvio := '<' + Prefixo + 'ReqEnvioLoteRPS' + NameSpace + '>' +
                           xCabecalho +
@@ -524,11 +547,37 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, 'Erros', 'Erro');
+      {No WS de Campo Grande/MS tem retornado:
+        <?xml version="1.0" encoding="UTF-8"?>
+        <enviarReturn type="xsd:string">
+          <ns1:RetornoEnvioLoteRPS xsi:schemaLocation="http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/RetornoEnvioLoteRPS.xsd " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:ns1="http://localhost:8080/WsNFe2/lote">
+            <Cabecalho>
+              <CodCidade>9051</CodCidade>
+              <Sucesso>true</Sucesso>
+              <NumeroLote>123456789</NumeroLote>
+              <CPFCNPJRemetente>00000000000000</CPFCNPJRemetente>
+              <DataEnvioLote>2021-07-08T16:12:00.0Z</DataEnvioLote>
+              <QtdNotasProcessadas>0</QtdNotasProcessadas>
+              <TempoProcessamento>0</TempoProcessamento>
+              <ValorTotalServicos>0</ValorTotalServicos>
+              <ValorTotalDeducoes>0</ValorTotalDeducoes>
+              <Versao>1</Versao>
+              <Assincrono>S</Assincrono>
+            </Cabecalho>
+            <Alertas/>
+            <Erros/>
+            <ChavesNFSeRPS/>
+          </ns1:RetornoEnvioLoteRPS>
+        </enviarReturn>
+      }
+
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
+      if ANode = nil then
+        ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
@@ -633,8 +682,8 @@ begin
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
       else
       begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
+        NameSpace := NameSpace + ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                             ConfigMsgDados.XmlRps.xmlns + '"';
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
       end;
     end
@@ -644,6 +693,11 @@ begin
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
     end;
   end;
+
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd"';
 
   Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaLote' + NameSpace + '>' +
                          '<Cabecalho>' +
@@ -669,7 +723,6 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumNFSe: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -688,7 +741,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, 'Erros', 'Erro');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -702,8 +755,9 @@ begin
         end;
       end;
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('ListaNFSe');
-//      ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
+      ANode := ANode.Childrens.FindAnyNs('ListaNFSe');
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('ConsultaNFSe');
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -715,11 +769,13 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
-        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+        //Tenta localizar pelo número da nota
+        //ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(ANode.Childrens.FindAnyNs('NumeroNFe').AsString);
+
+        //Se não achou tenta pelo número do RPS
+        //if not Assigned(ANota) then
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANode.Childrens.FindAnyNs('NumeroRPS').AsString);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
@@ -793,8 +849,8 @@ begin
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
       else
       begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
+        NameSpace := NameSpace + ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                             ConfigMsgDados.XmlRps.xmlns + '"';
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
       end;
     end
@@ -804,6 +860,11 @@ begin
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
     end;
   end;
+
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd"';
 
   Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaNFSeRPS' + NameSpace + '>' +
                          '<Cabecalho>' +
@@ -838,7 +899,6 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumNFSe: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -857,7 +917,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, 'Erros', 'Erro');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -871,7 +931,9 @@ begin
         end;
       end;
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
+      ANode := ANode.Childrens.Find('NotasConsultadas');
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('Nota');
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -883,11 +945,13 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
-        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+        //Tenta localizar pelo número da nota
+        //ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(ANode.Childrens.FindAnyNs('NumeroNota').AsString);
+
+        //Se não achou tenta pelo número do RPS
+        //if not Assigned(ANota) then
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANode.Childrens.FindAnyNs('NumeroRPS').AsString);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
@@ -972,8 +1036,8 @@ begin
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
       else
       begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
+        NameSpace := NameSpace + ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                             ConfigMsgDados.XmlRps.xmlns + '"';
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
       end;
     end
@@ -992,6 +1056,11 @@ begin
   xDataF := FormatFloat('0000', wAno) + '-' +
             FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
 
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd"';
+
   Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaNotas' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
@@ -1005,12 +1074,12 @@ begin
                            '</InscricaoMunicipalPrestador>' +
                            '<dtInicio>' + xDataI + '</dtInicio>' +
                            '<dtFim>' + xDataF + '</dtFim>' +
-//                           '<NotaInicial>' +
-//                             Response.InfConsultaNFSe.NumeroIniNFSe +
-//                           '</NotaInicial>' +
-                           '<NumeroLote>' +
-                             Response.InfConsultaNFSe.NumeroLote +
-                           '</NumeroLote>' +
+                           '<NotaInicial>' +
+                             Response.InfConsultaNFSe.NumeroIniNFSe +
+                           '</NotaInicial>' +
+//                           '<NumeroLote>' +
+//                             Response.InfConsultaNFSe.NumeroLote +
+//                           '</NumeroLote>' +
                            '<Versao>1</Versao>' +
                          '</Cabecalho>' +
                        '</' + Prefixo + 'ReqConsultaNotas>';
@@ -1024,7 +1093,6 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumNFSe: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -1043,7 +1111,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, 'Erros', 'Erro');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -1057,7 +1125,9 @@ begin
         end;
       end;
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
+      ANode := ANode.Childrens.Find('Notas');
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('Nota');
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -1069,11 +1139,13 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNFe');
-        NumNFSe := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+        //Tenta localizar pelo número da nota
+        //ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(ANode.Childrens.FindAnyNs('NumeroNota').AsString);
+
+        //Se não achou tenta pelo número do RPS
+        //if not Assigned(ANota) then
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANode.Childrens.FindAnyNs('NumeroRPS').AsString);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
@@ -1155,8 +1227,8 @@ begin
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
       else
       begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
+        NameSpace := NameSpace + ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                             ConfigMsgDados.XmlRps.xmlns + '"';
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
       end;
     end
@@ -1166,6 +1238,11 @@ begin
         PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
     end;
   end;
+
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"';
 
   {
     Tag <transacao>
@@ -1232,7 +1309,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, 'Erros', 'Erro');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -1278,7 +1355,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:enviar>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviar>';
 
   Result := Executar('', Request,
@@ -1294,7 +1371,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:enviarSincrono>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviarSincrono>';
 
   Result := Executar('', Request,
@@ -1309,7 +1386,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:testeEnviar>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:testeEnviar>';
 
   Result := Executar('', Request,
@@ -1325,7 +1402,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:consultarLote>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarLote>';
 
   Result := Executar('', Request,
@@ -1341,7 +1418,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:consultarNFSeRps>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarNFSeRps>';
 
   Result := Executar('', Request,
@@ -1356,7 +1433,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:consultarNota>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarNota>';
 
   Result := Executar('', Request,
@@ -1371,7 +1448,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:cancelar>';
-  Request := Request + '<mensagemXml>' + AMSG + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:cancelar>';
 
   Result := Executar('', Request,

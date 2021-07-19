@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/07/2021
+-- ACBrNFSeXServicos --
+[*] Troca de URL de Homologação da cidade Parauapebas/PA.
+   Por: Glênio Duarte Moura
+
+19/07/2021
 -- ACBrNFSeXParametros --
 [+] Acrescentado as propriedades: ConsultaSitLote e ConsultaLote com finalidade
     de auxiliar nas consultas automaticas após o envio do Rps para o WebService.

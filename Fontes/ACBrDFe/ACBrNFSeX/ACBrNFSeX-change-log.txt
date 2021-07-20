@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/07/2021
+-- SafeWeb.Provider --
+[*] Ajustes visando funcionar o provedor
+   Por: Italo Giurizzato Junior / Wallace Oliveira
+
+20/07/2021
 -- SmarAPD.GravarXml --
 [*] Para esse provedor Tag obrigatória com conteudo vazio não pode ser gerada
     no formato reduzido.

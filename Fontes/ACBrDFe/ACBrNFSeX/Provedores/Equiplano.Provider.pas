@@ -559,6 +559,11 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
+      AuxNode := AuxNode.Childrens.FindAnyNs('nrProtocolo');
+
+      if AuxNode <> nil then
+        Response.Protocolo := AuxNode.AsString;
+
       AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
       if AuxNode <> nil then

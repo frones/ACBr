@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/07/2021
+-- SmarAPD.Provider --
+[*] Auterado a geração da tag <hashSenha> para que o seu conteudo já esteja
+    codificado.
+   Por: Italo Giurizzato Junior
+-- Equiplano.Provider --
+[*] Auterado o tratamento de retorno da consulta ao lote para que seja lido
+    o numero do protocolo.
+   Por: Italo Giurizzato Junior
+
+20/07/2021
 -- SafeWeb.Provider --
 [*] Ajustes visando funcionar o provedor
    Por: Italo Giurizzato Junior / Wallace Oliveira

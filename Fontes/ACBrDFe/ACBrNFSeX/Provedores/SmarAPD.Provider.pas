@@ -134,7 +134,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil, ACBrDFeException, SynaCode,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, SmarAPD.GravarXml, SmarAPD.LerXml;
 
@@ -604,7 +604,7 @@ begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
     Result := '<cpfUsuario>' + Emitente.WSUser + '</cpfUsuario>' +
-              '<hashSenha>' + Emitente.WSSenha + '</hashSenha>';
+              '<hashSenha>' + EncodeBase64(SHA1(Emitente.WSSenha)) + '</hashSenha>';
   end;
 end;
 

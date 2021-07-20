@@ -78,7 +78,7 @@ type
   TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar, cnCancelamento);
 
   {Definir Tipo de Operação para Registro de Cobrança via WebService}
-  TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta);
+  TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe);
 
   {Definir Tipo de Pagamento Aceito para Registro de Cobrança via WebService }
   TTipo_Pagamento = (tpAceita_Qualquer_Valor, tpAceita_Valores_entre_Minimo_Maximo,
@@ -89,6 +89,9 @@ type
 
   { Indica se o Boleto está vencido ou não. Campo obrigatoriamente MAIÚSCULO. Domínio: S para boletos vencidos N para boletos não vencidos }
   TACBrIndicadorBoletoVencido     = (ibvNenhum,ibvNao,ibvSim);
+
+  {Definir Metodo HTTP}
+  TMetodoHTTP = (htPOST, htGET, htPATCH);
 
 
   function StrToTipoOperacao(out ok: Boolean; const s: String): TOperacao;
@@ -105,6 +108,9 @@ type
 
   function StrToAceite(out ok: Boolean; const s: String): TACBrAceiteTitulo;
   function AceiteToStr(const t: TACBrAceiteTitulo): String;
+
+  function StrToMetodoHTTP(out ok: Boolean; const s: String): TMetodoHTTP;
+  function MetodoHTTPToStr(const t: TMetodoHTTP): String;
 
 const
   CFormatoDataPadrao = 'ddmmyyyy';
@@ -188,6 +194,19 @@ begin
   Result := EnumeradoToStr(t, ['S', 'N'],
                               [atSim, atNao]);
 end;
+
+function StrToMetodoHTTP(out ok: Boolean; const s: String): TMetodoHTTP;
+begin
+  Result := StrToEnumerado(ok, s, ['POST', 'GET', 'PATCH'],
+                                  [htPOST, htGET, htPATCH]);
+end;
+
+function MetodoHTTPToStr(const t: TMetodoHTTP): String;
+begin
+  Result := EnumeradoToStr(t, ['POST', 'GET', 'PATCH'],
+                              [htPOST, htGET, htPATCH]);
+end;
+
 
 end.
 

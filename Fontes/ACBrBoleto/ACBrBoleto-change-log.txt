@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/07/2021
+--ACBrBoleto, ACBrBoletoWS, ACBrBoletoConversao, ACBrBoletoRet_BancoBrasil_API
+ ACBrBoletoW_BancoBrasil_API, ACBrBoletoRetorno--
+[+] Adicionados Serviços de Consulta, Baixa, Alteração e realizado melhorias na solução WebService Boleto.
+
 15/07/2021
 --ACBrBancoSantander, ACBrBoleto--
 [*] Atualização Remessa CNAB400 ref Avalista e Validação Agencia no arquivo de retorno.

@@ -188,6 +188,7 @@ type
     FDataProtesto: TDateTime;
     FDiasDeProtesto: Integer;
     FDataBaixa: TDateTime;
+    FHoraBaixa: String;
     FDataLimitePagto: TDateTime;
     FValorDespesaCobranca: Currency;
     FValorAbatimento: Currency;
@@ -221,6 +222,9 @@ type
     FCodigoEstadoTituloCobranca: String;
     FEstadoTituloCobranca: String;
     FDataMovimento: TDateTime;
+    Femv: String;
+    FurlPix: String;
+    FtxId: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -261,6 +265,7 @@ type
     property DataProtesto: TDateTime read FDataProtesto write FDataProtesto ;
     property DiasDeProtesto: Integer read FDiasDeProtesto write FDiasDeProtesto ;
     property DataBaixa: TDateTime read FDataBaixa write FDataBaixa ;
+    property HoraBaixa: String read FHoraBaixa write FHoraBaixa;
     property DataLimitePagto: TDateTime read FDataLimitePagto write FDataLimitePagto ;
     property ValorDespesaCobranca: Currency read FValorDespesaCobranca write FValorDespesaCobranca ;
     property ValorAbatimento: Currency read FValorAbatimento write FValorAbatimento ;
@@ -294,6 +299,9 @@ type
     property CodigoEstadoTituloCobranca: String read FCodigoEstadoTituloCobranca write FCodigoEstadoTituloCobranca;
     property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
     property DataMovimento: TDateTime read FDataMovimento write FDataMovimento;
+    property EMV: String read Femv write Femv;
+    property UrlPix: String read FurlPix write FurlPix;
+    property TxId: String read FtxId write FtxId;
   end;
 
   { TDadosRet }

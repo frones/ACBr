@@ -1482,6 +1482,7 @@ type
     fPercentualMinPagamento: Currency;
     fPercentualMaxPagamento: Currency;
     fQrCode: TACBrBoletoPIXQRCode;
+    fRetornoWeb: TRetEnvio;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(const AValue: String);
@@ -1500,6 +1501,7 @@ type
     procedure AtualizaDadosProtesto();
     procedure AtualizaDadosNegativacao();
     procedure SetQrCode(const Value: TACBrBoletoPIXQRCode);
+    procedure SetRetornoWeb(const Value: TRetEnvio);
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
@@ -1603,6 +1605,7 @@ type
      property PercentualMaxPagamento: currency read fPercentualMaxPagamento write fPercentualMaxPagamento;
      property ListaDadosNFe : TACBrListadeNFes read fListaDadosNFe;
      property QrCode: TACBrBoletoPIXQRCode read fQrCode write SetQrCode; // Utilizado somente em alguns bancos e com comunicação de API (uso manual por conta e risco da SwHouse)
+     property RetornoWeb: TRetEnvio read fRetornoWeb write SetRetornoWeb;
 
      function CriarNFeNaLista: TACBrDadosNFe;
    end;
@@ -2399,7 +2402,7 @@ begin
   AtualizaDadosNegativacao();
 end;
 
-procedure TACBrTitulo.AtualizaDadosProtesto;
+procedure TACBrTitulo.AtualizaDadosProtesto();
 begin
   if fVencimento <= 0 then
     Exit;
@@ -2420,7 +2423,7 @@ begin
   end;
 end;
 
-procedure TACBrTitulo.AtualizaDadosNegativacao;
+procedure TACBrTitulo.AtualizaDadosNegativacao();
 begin
   if fVencimento <= 0 then
     Exit;
@@ -2453,6 +2456,11 @@ end;
 procedure TACBrTitulo.SetQrCode(const Value: TACBrBoletoPIXQRCode);
 begin
   fQrCode := Value;
+end;
+
+procedure TACBrTitulo.SetRetornoWeb(const Value: TRetEnvio);
+begin
+  fRetornoWeb:= Value;
 end;
 
 procedure TACBrTitulo.SetTotalParcelas ( const AValue: Integer ) ;
@@ -2614,6 +2622,7 @@ begin
 
    fListaDadosNFe := TACBrListadeNFes.Create(true);
    fQrCode := TACBrBoletoPIXQRCode.Create();
+   fRetornoWeb := TRetEnvio.Create;
 
 end;
 
@@ -2630,6 +2639,7 @@ begin
    fDescricaoMotivoRejeicaoComando.Free;
    fListaDadosNFe.Free;
    fQrCode.Free;
+   fRetornoWeb.Free;
 
    inherited;
 end;
@@ -5393,12 +5403,13 @@ begin
         IniRetorno.WriteString(wSessao, 'Cod_Retorno',ListaRetornoWeb[i].CodRetorno);
         IniRetorno.WriteString(wSessao, 'Msg_Retorno',ListaRetornoWeb[i].MsgRetorno);
         IniRetorno.WriteString(wSessao, 'Ori_Retorno',ListaRetornoWeb[i].OriRetorno);
+        IniRetorno.WriteInteger(wSessao, 'HTTP_Result',ListaRetornoWeb[i].HTTPResultCode);
         IniRetorno.WriteBool(wSessao, 'IndicadorContinuidade',ListaRetornoWeb[i].indicadorContinuidade);
         IniRetorno.WriteInteger(wSessao, 'ProximoIndice',ListaRetornoWeb[i].proximoIndice);
 
         for j:= 0 to ListaRetornoWeb[i].ListaRejeicao.Count -1 do
         begin
-          wSessao := 'REJEICAO' + IntToStr(j + 1);
+          wSessao := 'REJEICAO' + IntToStr(i + 1)+'-'+ IntToStr(j + 1);
           IniRetorno.WriteString(wSessao, 'Codigo', ListaRetornoWeb[i].ListaRejeicao[j].Codigo);
           IniRetorno.WriteString(wSessao, 'Campo', ListaRetornoWeb[i].ListaRejeicao[j].Campo);
           IniRetorno.WriteString(wSessao, 'Mensagem', ListaRetornoWeb[i].ListaRejeicao[j].Mensagem);
@@ -5407,7 +5418,7 @@ begin
           IniRetorno.WriteString(wSessao, 'Versao', ListaRetornoWeb[i].ListaRejeicao[j].Versao);
         end;
 
-        wSessao := 'HEADER';
+        wSessao := 'HEADER' + IntToStr(i + 1);
         IniRetorno.WriteString(wSessao, 'Versao',ListaRetornoWeb[i].Header.Versao);
         IniRetorno.WriteString(wSessao, 'Autenticacao',ListaRetornoWeb[i].Header.Autenticacao);
         IniRetorno.WriteString(wSessao, 'Usuario_Servico',ListaRetornoWeb[i].Header.Usuario_Servico);
@@ -5420,20 +5431,20 @@ begin
         IniRetorno.WriteDateTime(wSessao, 'Data_Hora',ListaRetornoWeb[i].Header.Data_Hora);
         IniRetorno.WriteString(wSessao, 'ID_Processo',ListaRetornoWeb[i].Header.Id_Processo);
 
-        wSessao := 'DADOS';
+        wSessao := 'DADOS' + IntToStr(i + 1);
         IniRetorno.WriteString(wSessao, 'Excessao',ListaRetornoWeb[i].DadosRet.Excecao);
 
-        wSessao := 'CONTROLE_NEGOCIAL';
+        wSessao := 'CONTROLE_NEGOCIAL' + IntToStr(i + 1);
         IniRetorno.WriteString(wSessao, 'Origem_Retorno',ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno);
         IniRetorno.WriteString(wSessao, 'NSU',ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU);
         IniRetorno.WriteString(wSessao, 'Cod_Retorno',ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno);
         IniRetorno.WriteString(wSessao, 'Msg_Retorno',ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno);
 
-        wSessao := 'COMPROVANTE';
+        wSessao := 'COMPROVANTE' + IntToStr(i + 1);
         IniRetorno.WriteDate(wSessao, 'Data',ListaRetornoWeb[i].DadosRet.Comprovante.Data);
         IniRetorno.WriteString(wSessao, 'Hora',ListaRetornoWeb[i].DadosRet.Comprovante.Hora);
 
-        wSessao := 'ID_BOLETO';
+        wSessao := 'ID_BOLETO' + IntToStr(i + 1);
         IniRetorno.WriteString(wSessao, 'Codigo_Barras',ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras);
         IniRetorno.WriteString(wSessao, 'Linha_Digitavel',ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig);
         IniRetorno.WriteString(wSessao, 'Nosso_Numero',ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum);
@@ -5441,19 +5452,21 @@ begin
 
         if NaoEstaVazio(ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento) then
         begin
-          wSessao := 'CONSULTA_BOLETO';
+          wSessao := 'CONSULTA_BOLETO' + IntToStr(i + 1);
           IniRetorno.WriteString(wSessao, 'Numero_Documento',ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento);
           IniRetorno.WriteDate(wSessao, 'Data_Vencimento',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento);
           IniRetorno.WriteFloat(wSessao, 'Valor',ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento);
 
         end;
 
-        if NaoEstaVazio(ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
+        if NaoEstaVazio(ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras)
+           or (NaoEstaVazio(ListaRetornoWeb[i].DadosRet.TituloRet.Contrato)) then
         begin
-          wSessao := 'TITULO_RETORNO';
+          wSessao := 'TITULO_RETORNO' + IntToStr(i + 1);
 
           IniRetorno.WriteDate(wSessao, 'vencimento_titulo',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento);
           IniRetorno.WriteString(wSessao, 'tipo_carteira_titulo',ListaRetornoWeb[i].DadosRet.TituloRet.Carteira);
+          IniRetorno.WriteInteger(wSessao, 'modalidade_carteira',ListaRetornoWeb[i].DadosRet.TituloRet.Modalidade);
           IniRetorno.WriteString(wSessao, 'nosso_numero',ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero);
           IniRetorno.WriteString(wSessao, 'seu_numero',ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero);
           IniRetorno.WriteString(wSessao, 'especie',ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc);
@@ -5462,6 +5475,7 @@ begin
           IniRetorno.WriteString(wSessao, 'local_pagamento',ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text);
           IniRetorno.WriteDate(wSessao, 'data_processamento',ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento);
           IniRetorno.WriteDate(wSessao, 'data_emissao',ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento);
+          IniRetorno.WriteDate(wSessao, 'data_credito',ListaRetornoWeb[i].DadosRet.TituloRet.DataCredito);
           IniRetorno.WriteString(wSessao, 'uso_banco',ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco);
           IniRetorno.WriteFloat(wSessao, 'valor_titulo',ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento);
           IniRetorno.WriteFloat(wSessao, 'valor_desconto',ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto);
@@ -5470,7 +5484,20 @@ begin
           IniRetorno.WriteFloat(wSessao, 'valor_outro_acrescimo',ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos);
           IniRetorno.WriteFloat(wSessao, 'valor_total_cobrado',ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago);
           IniRetorno.WriteString(wSessao, 'texto_informacao_cliente_beneficiario',ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text);
+          IniRetorno.WriteString(wSessao, 'codigo_estado_titulo_cobranca',ListaRetornoWeb[i].DadosRet.TituloRet.CodigoEstadoTituloCobranca);
+          IniRetorno.WriteString(wSessao, 'estado_titulo_cobranca',ListaRetornoWeb[i].DadosRet.TituloRet.EstadoTituloCobranca);
 
+          IniRetorno.WriteFloat(wSessao, 'codigo_cliente',ListaRetornoWeb[i].DadosRet.TituloRet.CodigoCliente);
+          IniRetorno.WriteString(wSessao, 'contrato',ListaRetornoWeb[i].DadosRet.TituloRet.Contrato);
+          IniRetorno.WriteDate(wSessao, 'data_baixa',ListaRetornoWeb[i].DadosRet.TituloRet.DataBaixa);
+          IniRetorno.WriteString(wSessao, 'hora_baixa',ListaRetornoWeb[i].DadosRet.TituloRet.HoraBaixa);
+
+          if ( ListaRetornoWeb[i].DadosRet.TituloRet.EMV  <> EmptyStr) then
+          begin
+            IniRetorno.WriteString(wSessao, 'EMV',ListaRetornoWeb[i].DadosRet.TituloRet.EMV);
+            IniRetorno.WriteString(wSessao, 'URL_Pix',ListaRetornoWeb[i].DadosRet.TituloRet.UrlPix);
+            IniRetorno.WriteString(wSessao, 'Tx_ID',ListaRetornoWeb[i].DadosRet.TituloRet.TxId);
+          end;
         end;
 
 

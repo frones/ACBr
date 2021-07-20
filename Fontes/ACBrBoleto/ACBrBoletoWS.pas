@@ -288,13 +288,16 @@ type
     FPIdentificador: String;
     FPAccept: String;
     FPAuthorization: String;
+    FMetodoHTTP: TMetodoHTTP;
 
     procedure setDefinirAccept(const AValue: String);
+    procedure setMetodoHTTP(const AValue: TMetodoHTTP);
     procedure DefinirAuthorization; virtual;
     procedure DefinirContentType; virtual;
     procedure DefinirURL; virtual;
     procedure GerarHeader; virtual;
     procedure GerarDados; virtual;
+
     function GerarTokenAutenticacao: String; virtual;
 
     procedure Executar;
@@ -310,6 +313,7 @@ type
     property Accept: String read FPAccept write setDefinirAccept;
     property KeyUser: String read FPKeyUser;
     property Identificador: String read FPIdentificador;
+    property MetodoHTTP: TMetodoHTTP read FMetodoHTTP write setMetodoHTTP;
 
   end;
 
@@ -356,6 +360,7 @@ Const
   C_ACCEPT = 'Accept';
   C_XML = 'xml';
   C_JSON = 'json';
+  C_ID = 'id';
 
   C_RETORNO_REGISTRO = 'retorno_registro';
   C_ERRO = 'erro';
@@ -538,10 +543,10 @@ begin
       begin
         WriteStrToStream(Stream, FParams);
         FSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-        FSSL.HTTPMethod('POST', URL);
+        FSSL.HTTPMethod(MetodoHTTPToStr(htPOST), URL);
       end
       else
-        FSSL.HTTPMethod('POST', URL + '?' + FParams);
+        FSSL.HTTPMethod(MetodoHTTPToStr(htPOST), URL + '?' + FParams);
     finally
       Stream.Free;
     end;
@@ -621,6 +626,11 @@ begin
     FPAccept := AValue;
 end;
 
+procedure TBoletoWSREST.setMetodoHTTP(const AValue: TMetodoHTTP);
+begin
+  FMetodoHTTP := AValue;
+end;
+
 procedure TBoletoWSREST.DefinirURL;
 begin
   raise EACBrBoletoWSException.Create(ClassName + Format( S_METODO_NAO_IMPLEMENTADO, [C_DEFINIR_URL] ));
@@ -665,6 +675,7 @@ begin
         with FDFeSSL.SSLHttpClass.HeaderReq do
         begin
           Clear;
+
           if FPAccept <> '' then
             Add(C_ACCEPT +': '+ FPAccept);
           if FPAuthorization <> '' then
@@ -682,10 +693,7 @@ begin
           WriteStrToStream(Stream, AnsiString(FPDadosMsg));
 
           FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          if (FBoleto.Banco.TipoCobranca in [cobBancoDoBrasilAPI]) and (FBoleto.Configuracoes.WebService.Operacao in [tpConsulta]) then
-            FDFeSSL.HTTPMethod('GET', FPURL )
-          else
-            FDFeSSL.HTTPMethod('POST', FPURL );
+          FDFeSSL.HTTPMethod(MetodoHTTPToStr(MetodoHTTP), FPURL );
 
         finally
           Stream.Free;
@@ -708,6 +716,7 @@ constructor TBoletoWSREST.Create(ABoletoWS: TBoletoWS);
 begin
   inherited Create(ABoletoWS);
   FTipoRegistro:= C_JSON;
+  FMetodoHTTP:= htPOST;
   FPContentType:= '';
   FPAccept:= '';
   FPDadosMsg:= '';
@@ -715,6 +724,7 @@ begin
   FPAuthorization:= '';
   FPKeyUser:= '';
   FPIdentificador:= '';
+
 end;
 
 function TBoletoWSREST.GerarRemessa: String;
@@ -848,7 +858,7 @@ begin
         try
           WriteStrToStream(Stream, FPEnvelopeSoap);
           FDFeSSL.SSLHttpClass.DataReq.LoadFromStream(Stream);
-          FDFeSSL.HTTPMethod('POST', FPURL);
+          FDFeSSL.HTTPMethod(MetodoHTTPToStr(htPOST), FPURL);
         finally
           Stream.Free;
         end;
@@ -1172,6 +1182,11 @@ begin
       FRetornoBanco.RetornoEnvio;
       if(Result) then
       begin
+        if Assigned(FRetornoBanco) then
+        begin
+          FBoletoWSClass.FTitulos.RetornoWeb:= FBoleto.ListaRetornoWeb[i];
+        end;
+
         if Assigned(FRetornoBanco.QrCodeRet) then
         begin
           FBoletoWSClass.FTitulos.QrCode.url := FRetornoBanco.QrCodeRet.url;
@@ -1182,9 +1197,11 @@ begin
       end;
     end;
 
-  end else
-  if (FBoleto.Banco.TipoCobranca in [cobBancoDoBrasilAPI]) and (FBoleto.Configuracoes.WebService.Operacao in [tpConsulta]) then
+  end
+  else
+  if (FBoleto.Configuracoes.WebService.Operacao in [tpConsulta]) then //Apenas Consulta Genérica não precisa carregar Titulo na Lista
   begin
+    FBoletoWSClass.GerarRemessa;
     Result               := FBoletoWSClass.Enviar;
     FRetornoWS           := BoletoWSClass.FRetornoWS;
     FRetornoBanco.FRetWS := FRetornoWS;

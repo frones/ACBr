@@ -98,6 +98,7 @@ begin
 
   ListaDeAlertas.Clear;
 
+  FDocument.SaveOptions := [xmlFormat, xmlAsXml, xmlNoEmpty];
   FDocument.Clear();
 
   NFSeNode := CreateElement('nfd');

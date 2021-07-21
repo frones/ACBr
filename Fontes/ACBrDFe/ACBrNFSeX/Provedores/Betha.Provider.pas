@@ -65,7 +65,9 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
-//    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+
+    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
   TACBrNFSeXWebserviceBethav2 = class(TACBrNFSeXWebserviceSoap11)
@@ -151,10 +153,7 @@ procedure TACBrNFSeProviderBetha.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    FormatoItemListaServico := filsSemFormatacao;
-  end;
+  ConfigGeral.FormatoItemListaServico := filsSemFormatacao;
 
   with ConfigAssinar do
   begin
@@ -208,6 +207,7 @@ begin
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararEmitir(Response: TNFSeEmiteResponse);
+{
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
@@ -215,7 +215,9 @@ var
   Versao, IdAttr, NameSpace, NameSpaceLote, ListaRps, xRps,
   TagEnvio, Prefixo: string;
   I: Integer;
+}
 begin
+  (*
   if Response.ModoEnvio in [meLoteSincrono, meUnitario, meTeste] then
   begin
     AErro := Response.Erros.New;
@@ -372,8 +374,24 @@ begin
     Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                             ListaRps +
                          '</' + Prefixo + TagEnvio + '>';
+  *)
+
+
+  inherited PrepararEmitir(Response);
+
+  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+                                      'ns3:LoteRps', 'LoteRps', [rfReplaceAll]);
 end;
-(*
+
+procedure TACBrNFSeProviderBetha.PrepararCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+begin
+  inherited PrepararCancelaNFSe(Response);
+
+  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+                                        'ns3:Pedido', 'Pedido', [rfReplaceAll]);
+end;
+
 procedure TACBrNFSeProviderBetha.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 var
@@ -382,32 +400,30 @@ begin
   xXml := Response.XmlEnvio;
 
   case aMetodo of
-    tmRecepcionar:
-      xXml := StringReplace(xXml, 'ns3:LoteRps', 'LoteRps' ,[rfReplaceAll]);
+//    tmRecepcionar:
+//      xXml := StringReplace(xXml, 'ns3:LoteRps', 'LoteRps', [rfReplaceAll]);
 
     tmConsultarSituacao,
     tmConsultarLote:
       begin
-        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador' ,[rfReplaceAll]);
-        xXml := StringReplace(xXml, 'ns3:Protocolo', 'Protocolo' ,[rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador', [rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:Protocolo', 'Protocolo', [rfReplaceAll]);
       end;
 
     tmConsultarNFSePorRps:
       begin
-        xXml := StringReplace(xXml, 'ns3:IdentificacaoRps', 'IdentificacaoRps' ,[rfReplaceAll]);
-        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador' ,[rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:IdentificacaoRps', 'IdentificacaoRps', [rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador', [rfReplaceAll]);
       end;
 
     tmConsultarNFSe:
       begin
-        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador' ,[rfReplaceAll]);
-        xXml := StringReplace(xXml, 'ns3:NumeroNfse', 'NumeroNfse' ,[rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador', [rfReplaceAll]);
+        xXml := StringReplace(xXml, 'ns3:NumeroNfse', 'NumeroNfse', [rfReplaceAll]);
       end;
 
-    tmCancelarNFSe:
-      begin
-        xXml := StringReplace(xXml, 'ns3:Pedido', 'Pedido' ,[rfReplaceAll]);
-      end;
+//    tmCancelarNFSe:
+//        xXml := StringReplace(xXml, 'ns3:Pedido', 'Pedido', [rfReplaceAll]);
   else
     Response.XmlEnvio := xXml;
   end;
@@ -416,7 +432,7 @@ begin
 
   inherited ValidarSchema(Response, aMetodo);
 end;
-*)
+
 { TACBrNFSeProviderBethav2 }
 
 procedure TACBrNFSeProviderBethav2.Configuracao;

@@ -224,7 +224,7 @@ begin
   begin
     Result := '<sis:pParam>' +
                 '<sis1:P1>' + Emitente.WSUser + '</sis1:P1>' +
-                '<sis1:P2>' + Emitente.WSSenha + '</sis1:P2>' +
+                '<sis1:P2>' + ParseText(Emitente.WSSenha, False) + '</sis1:P2>' +
               '</sis:pParam>';
   end;
 end;

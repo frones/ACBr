@@ -91,6 +91,8 @@ type
 
   TACBrNFSeProviderIPMV110 = class (TACBrNFSeProviderIPM)
   protected
+    procedure Configuracao; override;
+
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
@@ -679,12 +681,23 @@ var
   Auth: string;
 begin
   with TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente do
-    Auth := 'Basic ' + string(EncodeBase64(AnsiString(WSUser + ':' + WSSenha)));
+    Auth := 'Basic ' + string(EncodeBase64(AnsiString(WSUser + ':' +
+      ParseText(WSSenha, False))));
 
   aHeaderReq.AddHeader('Authorization', Auth);
 end;
 
 { TACBrNFSeProviderIPMV110 }
+
+procedure TACBrNFSeProviderIPMV110.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+  end;
+end;
 
 function TACBrNFSeProviderIPMV110.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;

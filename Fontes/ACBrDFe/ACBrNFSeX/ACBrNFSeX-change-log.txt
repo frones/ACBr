@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2021
+-- Betha.Provider --
+[*] Remoção de prefixos gerados nas consultas e cancelamento.
+-- IPM.Provider/SimplISS.provider --
+[*] Aplicado o ParseText na senha.
+   Por: Italo Giurizzato Junior
+
 20/07/2021
 -- SmarAPD.Provider --
 [*] Auterado a geração da tag <hashSenha> para que o seu conteudo já esteja

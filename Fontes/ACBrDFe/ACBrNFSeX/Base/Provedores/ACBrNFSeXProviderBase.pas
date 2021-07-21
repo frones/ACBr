@@ -918,8 +918,6 @@ begin
     begin
       if ConfigGeral.ConsultaSitLote then
       begin
-//        RetornoConsSit := TNFSeConsultaSituacaoResponse.Create;
-
         with TACBrNFSeX(FAOwner).Configuracoes.WebServices do
         begin
           try
@@ -945,9 +943,11 @@ begin
 
       if ConfigGeral.ConsultaLote then
       begin
-//        RetornoConsLote := TNFSeConsultaLoteRpsResponse.Create;
-
-        RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
+        try
+          RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
+        finally
+          Result.InfRetorno.Situacao := RetornoConsLote.Situacao;
+        end;
       end;
     end;
   end;

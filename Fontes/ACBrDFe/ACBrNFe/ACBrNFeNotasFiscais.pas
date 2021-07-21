@@ -432,7 +432,7 @@ var
 
 begin
   Inicio := Now;
-  Agora := IncMinute(Now,5);  //Aceita uma tolerância de até 5 minutos, devido ao sincronismo de horário do servidor da Empresa e o servidor da SEFAZ.
+  Agora := IncMinute(Inicio, 5);  //Aceita uma tolerância de até 5 minutos, devido ao sincronismo de horário do servidor da Empresa e o servidor da SEFAZ.
   GravaLog('Inicio da Validação');
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
@@ -1280,7 +1280,6 @@ begin
               fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
             end;
           fsvOutro   := fsvOutro + Prod.vOutro;
-          fsvServ    := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
           fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;;
           fsvFCPST   := fsvFCPST + Imposto.ICMS.vFCPST;;
           fsvFCPSTRet:= fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;;
@@ -1298,6 +1297,9 @@ begin
           NFImportacao := True;
       end;
     end;
+
+    // O campo abaixo é pego diretamento do total. Não foi implementada validação 605 para os itens.
+    fsvServ := NFe.Total.ISSQNtot.vServ;
 
     if not UFCons then
     begin

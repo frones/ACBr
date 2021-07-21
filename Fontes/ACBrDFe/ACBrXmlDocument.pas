@@ -44,8 +44,7 @@ unit ACBrXmlDocument;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrLibXml2;
+  Classes, SysUtils, ACBrLibXml2;
 
 type
   TSaveOption = (xmlNone = 0, xmlFormat = 1, xmlNoDecl = 2, xmlNoEmpty = 4,
@@ -414,7 +413,7 @@ begin
     cdataValue := RetornarConteudoEntre(AContent, '<![CDATA[', ']]>');
     cdataNode := xmlNewCDataBlock(FXmlDoc.xmlDocInternal,
                PAnsichar(ansistring(cdataValue)), Length(cdataValue));
-    xmlAddChild(FXmlNode, FXmlCdataNode);
+    xmlAddChild(FXmlNode, cdataNode);
   end
   else
     xmlNodeSetContent(FXmlNode, PAnsichar(ansistring(AContent)));
@@ -1143,16 +1142,22 @@ function TACBrXmlDocument.GetXml: string;
 var
   buffer: xmlBufferPtr;
   xmlSaveCtx: xmlSaveCtxtPtr;
+  ret: integer;
 begin
     buffer := xmlBufferCreate();
-  try
     xmlSaveCtx := xmlSaveToBuffer(buffer, PAnsiChar(ansistring('UTF-8')), GetSaveOptions);
-    xmlSaveDoc(xmlSaveCtx, xmlDocInternal);
-    xmlSaveClose(xmlSaveCtx);
+
+  try
+    try
+      ret := xmlSaveDoc(xmlSaveCtx, xmlDocInternal);
+      if ret = -1 then
+        raise EACBrXmlException.Create(xmlGetLastError()^.message);
+    finally
+      if Assigned(xmlSaveCtx) then xmlSaveClose(xmlSaveCtx);
+    end;
     Result := string(buffer.content);
   finally
-    if (buffer <> nil) then
-      xmlBufferFree(buffer);
+    if Assigned(buffer) then xmlBufferFree(buffer);
   end;
 end;
 

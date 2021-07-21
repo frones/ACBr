@@ -315,6 +315,16 @@ begin
     Result := mpValePresente
   else if Descricao = 'vale combustivel' then
     Result := mpValeCombustivel
+  else if Descricao = 'boleto bancario' then
+    Result := mpBoletoBancario
+  else if Descricao = 'deposito bancario' then
+    Result := mpDepositoBancario
+  else if Descricao = 'pagamento instantaneo' then
+    Result := mpPagamentoInstantaneo
+  else if Descricao = 'transferencia bancaria' then
+    Result := mpTransfBancario
+  else if Descricao = 'programa de fidelidade' then
+    Result := mpProgramaFidelidade	
   else
   begin
     if pos('cartao', Descricao) > 0 then

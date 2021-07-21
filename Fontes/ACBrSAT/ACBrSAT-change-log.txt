@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/07/2021
+-- ACBrECFVirtualSAT --
+[+] Inclusão dos novos Meios de Pagamento a serem utilizados no SAT.
+  Por: Edmilson Santin
+
 04/09/2020
 -- pcnCFe --
 [*] Melhorias na leitura .ini do CFe, validando primeiramente pelas tags com nomenclaturas padrão SEFAZ

@@ -117,6 +117,7 @@ begin
   NrOcorrInscEstInter := 0;
   NrOcorrOutrasRet := 0;
   NrOcorrEndereco := 0;
+  NrOcorrCodigoPaisTomador := 0;
   NrOcorrUFTomador := 0;
   NrOcorrCepTomador := 0;
   NrOcorrCodTribMun_1 := 0;
@@ -129,7 +130,6 @@ begin
   NrOcorrIncentCultural := 1;
   NrOcorrItemListaServico := 1;
   NrOcorrCodigoPaisServico := 1;
-  NrOcorrCodigoPaisTomador := 1;
   NrOcorrCompetencia := 1;
   NrOcorrSerieRPS := 1;
   NrOcorrTipoRPS := 1;

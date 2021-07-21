@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/07/2021
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] O valor padrão da propriedade NrOcorrCodigoPaisTomador agora é zero, isso
+    significa que a tag <CodigoPais> é opcional, antes estava obrigatória.
+   Por: Marcelo Ogliari
+
+21/07/2021
 -- Betha.Provider --
 [*] Remoção de prefixos gerados nas consultas e cancelamento.
 -- IPM.Provider/SimplISS.provider --

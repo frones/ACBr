@@ -84,7 +84,6 @@ begin
 
   NrOcorrRespRetencao := 1;
   NrOcorrCodigoPaisServico := 1;
-  NrOcorrCodigoPaisTomador := 0;
   NrOcorrMunIncid := 1;
   NrOcorrRazaoSocialInterm := 1;
 end;

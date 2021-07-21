@@ -279,6 +279,7 @@ begin
   FNrOcorrInscEstInter := 0;
   FNrOcorrOutrasRet := 0;
   FNrOcorrEndereco := 0;
+  FNrOcorrCodigoPaisTomador := 0;
   FNrOcorrUFTomador := 0;
   FNrOcorrCepTomador := 0;
   FNrOcorrCodTribMun_1 := 0;
@@ -290,7 +291,6 @@ begin
   FNrOcorrOptanteSimplesNacional := 1;
   FNrOcorrIncentCultural := 1;
   FNrOcorrCodigoPaisServico := 1;
-  FNrOcorrCodigoPaisTomador := 1;
   FNrOcorrCompetencia := 1;
   FNrOcorrSerieRPS := 1;
   FNrOcorrTipoRPS := 1;

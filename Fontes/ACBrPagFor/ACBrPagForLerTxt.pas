@@ -223,7 +223,7 @@ begin
 
   FPagFor.Lote.Last.Registro1.Informacao1          := Copy(FArquivoTXT.Strings[i], 103, 40);
   FPagFor.Lote.Last.Registro1.Endereco.Logradouro  := Copy(FArquivoTXT.Strings[i], 143, 30);
-  FPagFor.Lote.Last.Registro1.Endereco.Numero      := StrToIntDef(Copy(FArquivoTXT.Strings[i], 173, 5), 0);
+  FPagFor.Lote.Last.Registro1.Endereco.Numero      := StrToIntDef(Trim(Copy(FArquivoTXT.Strings[i], 173, 5)), 0);
   FPagFor.Lote.Last.Registro1.Endereco.Complemento := Copy(FArquivoTXT.Strings[i], 178, 15);
   FPagFor.Lote.Last.Registro1.Endereco.Cidade      := Copy(FArquivoTXT.Strings[i], 193, 20);
   FPagFor.Lote.Last.Registro1.Endereco.CEP         := StrToIntDef(Copy(FArquivoTXT.Strings[i], 213, 8),0);
@@ -290,7 +290,7 @@ begin
         FPagFor.Lote.Last.SegmentoA.Last.Favorecido.ContaCorrente.Conta.DV := Copy(FArquivoTXT.Strings[i], 32, 1);
       end;
 
-    pagSicred:
+    pagSicred, pagSantander:
       begin
         FPagFor.Lote.Last.SegmentoA.Last.Favorecido.ContaCorrente.Agencia.Codigo := StrToInt(Copy(FArquivoTXT.Strings[i], 24, 5));
         FPagFor.Lote.Last.SegmentoA.Last.Favorecido.ContaCorrente.Agencia.DV     := Copy(FArquivoTXT.Strings[i], 29, 1);
@@ -304,11 +304,11 @@ begin
   FPagFor.Lote.Last.SegmentoA.Last.Credito.DataPagamento := StringToDateTime(Copy(FArquivoTXT.Strings[i], 94, 2)+'/'+Copy(FArquivoTXT.Strings[i], 96, 2)+'/'+Copy(FArquivoTXT.Strings[i], 98, 4));
 
   case FPagFor.Geral.Banco of
-    pagItau, pagSicred:
+    pagItau, pagSicred, pagSantander:
       begin
         FPagFor.Lote.Last.SegmentoA.Last.Credito.ValorPagamento := StrToInt(Copy(FArquivoTXT.Strings[i], 120, 15)) / 100;
         FPagFor.Lote.Last.SegmentoA.Last.Credito.NossoNumero    := Copy(FArquivoTXT.Strings[i], 135, 15);
-        FPagFor.Lote.Last.SegmentoA.Last.Credito.DataReal       := StringToDateTime(Copy(FArquivoTXT.Strings[i], 155, 2)+'/'+Copy(FArquivoTXT.Strings[i], 157, 2)+'/'+Copy(FArquivoTXT.Strings[i], 159, 4));
+        FPagFor.Lote.Last.SegmentoA.Last.Credito.DataReal       := StringToDateTimeDef(Copy(FArquivoTXT.Strings[i], 155, 2)+'/'+Copy(FArquivoTXT.Strings[i], 157, 2)+'/'+Copy(FArquivoTXT.Strings[i], 159, 4), 0);
         FPagFor.Lote.Last.SegmentoA.Last.Credito.ValorReal      := StrToInt(Copy(FArquivoTXT.Strings[i], 163, 15)) / 100;
         FPagFor.Lote.Last.SegmentoA.Last.Informacao2            := Copy(FArquivoTXT.Strings[i], 178, 40);
         FPagFor.Lote.Last.SegmentoA.Last.CodigoDOC              := Copy(FArquivoTXT.Strings[i], 218, 2);
@@ -318,6 +318,9 @@ begin
 
         if (FPagFor.Geral.Banco = PagItau) then
           FPagFor.Lote.Last.SegmentoA.Last.DescOcorrencia := DescricaoRetornoItau(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia);
+
+        if (FPagFor.Geral.Banco = pagSantander) then
+          FPagFor.Lote.Last.SegmentoA.Last.DescOcorrencia := DescricaoRetornoSantander(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia);
 
         if POS(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
         begin
@@ -566,7 +569,7 @@ begin
   if FPagFor.Lote.Last.SegmentoG.Last.JurosMora > (FPagFor.Lote.Last.SegmentoG.Last.ValorTitulo * 0.1) then
     FPagFor.Lote.Last.SegmentoG.Last.JurosMora := 0;
 
-  FPagFor.Lote.Last.SegmentoG.Last.Desconto1.Codigo := StrToIntDef(Copy(FArquivoTXT.Strings[i], 205, 1),0);
+  FPagFor.Lote.Last.SegmentoG.Last.Desconto1.Codigo := StrToIntDef(Trim(Copy(FArquivoTXT.Strings[i], 205, 1)),0);
   FPagFor.Lote.Last.SegmentoG.Last.Desconto1.Data   := StringToDateTime(Copy(FArquivoTXT.Strings[i], 182, 2) + '/' + Copy(FArquivoTXT.Strings[i], 184, 2) + '/' + Copy(FArquivoTXT.Strings[i], 186, 4));
   FPagFor.Lote.Last.SegmentoG.Last.Desconto1.Valor  := StrToFloat(Copy(FArquivoTXT.Strings[i], 214, 13) + ',' + Copy(FArquivoTXT.Strings[i], 227, 2));
 
@@ -592,21 +595,21 @@ begin
 
   mSegmentoHList.Last.Avalista.Nome := Trim(Copy(FArquivoTXT.Strings[i], 34, 40));
 
-  mSegmentoHList.Last.Desconto2.Codigo := StrToIntDef(Copy(FArquivoTXT.Strings[i], 74, 1),0);
+  mSegmentoHList.Last.Desconto2.Codigo := StrToIntDef(Trim(Copy(FArquivoTXT.Strings[i], 74, 1)),0);
 
   if Copy(FArquivoTXT.Strings[i], 75, 8) <> '00000000' then
     mSegmentoHList.Last.Desconto2.Data := StringToDateTime(Copy(FArquivoTXT.Strings[i], 75, 2) + '/' + Copy(FArquivoTXT.Strings[i], 77, 2) + '/' + Copy(FArquivoTXT.Strings[i], 79, 4));
 
   mSegmentoHList.Last.Desconto2.Valor := StrToFloat(Copy(FArquivoTXT.Strings[i], 83, 13) + ',' + Copy(FArquivoTXT.Strings[i], 96, 2));
 
-  mSegmentoHList.Last.Desconto3.Codigo := StrToIntDef(Copy(FArquivoTXT.Strings[i], 98, 1),0);
+  mSegmentoHList.Last.Desconto3.Codigo := StrToIntDef(Trim(Copy(FArquivoTXT.Strings[i], 98, 1)),0);
 
   if Copy(FArquivoTXT.Strings[i], 99, 8) <> '00000000' then
     mSegmentoHList.Last.Desconto3.Data := StringToDateTime(Copy(FArquivoTXT.Strings[i], 99, 2) + '/' + Copy(FArquivoTXT.Strings[i], 101, 2) + '/' + Copy(FArquivoTXT.Strings[i], 103, 4));
 
   mSegmentoHList.Last.Desconto3.Valor := StrToFloat(Copy(FArquivoTXT.Strings[i], 107, 13) + ',' + Copy(FArquivoTXT.Strings[i], 120, 2));
 
-  mSegmentoHList.Last.Multa.Codigo := StrToIntDef(Copy(FArquivoTXT.Strings[i], 122, 1),0);
+  mSegmentoHList.Last.Multa.Codigo := StrToIntDef(Trim(Copy(FArquivoTXT.Strings[i], 122, 1)),0);
 
   if Copy(FArquivoTXT.Strings[i], 123, 8) <> '00000000' then
     mSegmentoHList.Last.Multa.Data := StringToDateTime(Copy(FArquivoTXT.Strings[i], 123, 2) + '/' + Copy(FArquivoTXT.Strings[i], 125, 2) + '/' + Copy(FArquivoTXT.Strings[i], 127, 4));

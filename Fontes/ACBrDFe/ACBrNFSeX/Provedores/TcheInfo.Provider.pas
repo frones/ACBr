@@ -49,7 +49,6 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
-    function AjustaCabecalho(const Cabecalho: string): string;
   end;
 
   TACBrNFSeProviderTcheInfo = class (TACBrNFSeProviderABRASFv2)
@@ -71,6 +70,8 @@ uses
 { TACBrNFSeProviderTcheInfo }
 
 procedure TACBrNFSeProviderTcheInfo.Configuracao;
+var
+  CodigoIBGE: string;
 begin
   inherited Configuracao;
 
@@ -100,9 +101,14 @@ begin
   begin
     with TACBrNFSeX(FAOwner).Configuracoes.Geral do
     begin
+      if TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+        CodigoIBGE := IntToStr(CodigoMunicipio)
+      else
+        CodigoIBGE := '9999999';
+
       DadosCabecalho := '<cabecalho versao="1.00" xmlns="http://www.abrasf.org.br/nfse.xsd">' +
                         '<versaoDados>2.04</versaoDados>' +
-                        '<CodigoIBGE>' + IntToStr(CodigoMunicipio) + '</CodigoIBGE>' +
+                        '<CodigoIBGE>' + CodigoIBGE + '</CodigoIBGE>' +
                         '<CpfCnpj>' + Emitente.WSUser + '</CpfCnpj>' +
                         '<Token>' + Emitente.WSSenha + '</Token>' +
                         '</cabecalho>';
@@ -139,33 +145,15 @@ end;
 
 { TACBrNFSeXWebserviceTcheInfo }
 
-function TACBrNFSeXWebserviceTcheInfo.AjustaCabecalho(
-  const Cabecalho: string): string;
-var
-  Codigo: string;
-  i: Integer;
-begin
-  if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    Result := Cabecalho
-  else
-  begin
-    i := Pos('</CodigoIBGE>', Cabecalho);
-    Codigo := Copy(Cabecalho, i-7, 7);
-    Result := StringReplace(Cabecalho, Codigo, '9999999', []);
-  end;
-end;
-
 function TACBrNFSeXWebserviceTcheInfo.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
-  Request, Cabecalho: string;
+  Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  Cabecalho := AjustaCabecalho(ACabecalho);
-
   Request := '<nfse:NfseWebService.GERARNFSE>';
-  Request := Request + '<nfse:Nfsecabecmsg>' + XmlToStr(Cabecalho) + '</nfse:Nfsecabecmsg>';
+  Request := Request + '<nfse:Nfsecabecmsg>' + XmlToStr(ACabecalho) + '</nfse:Nfsecabecmsg>';
   Request := Request + '<nfse:Nfsedadosmsg>' + XmlToStr(AMSG) + '</nfse:Nfsedadosmsg>';
   Request := Request + '</nfse:NfseWebService.GERARNFSE>';
 
@@ -178,14 +166,12 @@ end;
 function TACBrNFSeXWebserviceTcheInfo.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
-  Request, Cabecalho: string;
+  Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  Cabecalho := AjustaCabecalho(ACabecalho);
-
   Request := '<nfse:NfseWebService.CONSULTARNFSERPS>';
-  Request := Request + '<nfse:Nfsecabecmsg>' + XmlToStr(Cabecalho) + '</nfse:Nfsecabecmsg>';
+  Request := Request + '<nfse:Nfsecabecmsg>' + XmlToStr(ACabecalho) + '</nfse:Nfsecabecmsg>';
   Request := Request + '<nfse:Nfsedadosmsg>' + XmlToStr(AMSG) + '</nfse:Nfsedadosmsg>';
   Request := Request + '</nfse:NfseWebService.CONSULTARNFSERPS>';
 
@@ -197,14 +183,12 @@ end;
 
 function TACBrNFSeXWebserviceTcheInfo.Cancelar(ACabecalho, AMSG: String): string;
 var
-  Request, Cabecalho: string;
+  Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  Cabecalho := AjustaCabecalho(ACabecalho);
-
   Request := '<nfse:NfseWebService.CANCELARNFSE>';
-  Request := Request + '<nfse:Nfsecabecmsg>' + XmlToStr(Cabecalho) + '</nfse:Nfsecabecmsg>';
+  Request := Request + '<nfse:Nfsecabecmsg>' + XmlToStr(ACabecalho) + '</nfse:Nfsecabecmsg>';
   Request := Request + '<nfse:Nfsedadosmsg>' + XmlToStr(AMSG) + '</nfse:Nfsedadosmsg>';
   Request := Request + '</nfse:NfseWebService.CANCELARNFSE>';
 

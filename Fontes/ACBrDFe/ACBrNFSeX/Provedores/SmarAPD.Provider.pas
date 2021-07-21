@@ -624,8 +624,7 @@ begin
   Request := Request + '</web:nfdEntrada>';
 
   Result := Executar('', Request,
-                     ['return'],
-                     ['xmlns:web="http://webservices.sil.com/"']);
+                     [''], ['xmlns:web="http://webservices.sil.com/"']);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.ConsultarLote(ACabecalho,
@@ -644,8 +643,7 @@ begin
   Request := Request + '</web:nfdSaida>';
 
   Result := Executar('', Request,
-                     ['return'],
-                     ['xmlns:web="http://webservices.sil.com/"']);
+                     [''], ['xmlns:web="http://webservices.sil.com/"']);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.Cancelar(ACabecalho, AMSG: String): string;
@@ -660,8 +658,7 @@ begin
   Request := Request + '</web:nfdEntradaCancelar>';
 
   Result := Executar('', Request,
-                     ['return', 'outputXML'],
-                     ['xmlns:web="http://webservices.sil.com/"']);
+                     [''], ['xmlns:web="http://webservices.sil.com/"']);
 end;
 
 { TACBrNFSeProviderSmarAPDv203 }

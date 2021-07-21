@@ -166,7 +166,8 @@ type
   TpcnindRegra = (irArredondamento, irTruncamento);
   TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja,
                   mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel,
-                  mpOutros);
+                  mpBoletoBancario, mpDepositoBancario, mpPagamentoInstantaneo,
+                  mpTransfBancario, mpProgramaFidelidade, mpSemPagamento, mpOutros);
   TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
   TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
   TpcnindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
@@ -1418,18 +1419,24 @@ end;
 
 function CodigoMPToStr(const t: TpcnCodigoMP ): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12',
+                               '13', '15', '16', '17', '18', '19', '90', '99'],
                               [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito,
                               MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente,
-                              MPValeCombustivel, MPOutros]);
+                              MPValeCombustivel, MPBoletoBancario, MPDepositoBancario,
+                              MPPagamentoInstantaneo, MPTransfBancario, MPProgramaFidelidade,
+                              MPSemPagamento, MPOutros]);
 end;
 
 function StrToCodigoMP(out ok: boolean; const s: string): TpcnCodigoMP ;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12',
+                                   '13', '15', '16', '17', '18', '19', '90', '99'],
                                   [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito,
                                   MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente,
-                                  MPValeCombustivel, MPOutros]);
+                                  MPValeCombustivel, MPBoletoBancario, MPDepositoBancario,
+                                  MPPagamentoInstantaneo, MPTransfBancario, MPProgramaFidelidade,
+                                  MPSemPagamento, MPOutros]);
 end;
 
 function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
@@ -1437,11 +1444,15 @@ begin
   result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito',
                                'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação',
                                'Vale Refeição', 'Vale Presente', 'Vale Combustível',
-                               'Outros'],
+                               'Boleto Bancário', 'Depósito Bancário',
+                               'Pagamento Instantâneo', 'Transferência Bancária',
+                               'Programa de Fidelidade', 'Sem Pagamento', 'Outros'],
                                [MPDinheiro, MPCheque, MPCartaodeCredito,
                                MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao,
                                MPValeRefeicao, MPValePresente, MPValeCombustivel,
-                               MPOutros]);
+                               MPBoletoBancario, MPDepositoBancario,
+                               MPPagamentoInstantaneo, MPTransfBancario,
+                               MPProgramaFidelidade, MPSemPagamento, MPOutros]);
 end;
 
 // Tipo da Unidade de Transporte ***********************************************

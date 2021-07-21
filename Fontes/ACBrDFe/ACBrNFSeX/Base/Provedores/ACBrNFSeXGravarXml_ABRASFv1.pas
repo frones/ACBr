@@ -91,6 +91,8 @@ type
   protected
     procedure Configuracao; override;
 
+    function PadronizaItemServico(const Codigo: string): string;
+
     function GerarInfRps: TACBrXmlNode; virtual;
     function GerarIdentificacaoRPS: TACBrXmlNode; virtual;
     function GerarRPSSubstituido: TACBrXmlNode; virtual;
@@ -247,6 +249,17 @@ begin
   Result := True;
 end;
 
+function TNFSeW_ABRASFv1.PadronizaItemServico(const Codigo: string): string;
+var
+  i: Integer;
+  item: string;
+begin
+  item := OnlyNumber(Codigo);
+  i := StrToIntDef(item, 0);
+  item := Poem_Zeros(i, 4);
+  Result := Copy(item, 1, 2) + '.' + Copy(item, 3, 2);
+end;
+
 function TNFSeW_ABRASFv1.GerarInfRps: TACBrXmlNode;
 begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
@@ -329,30 +342,33 @@ function TNFSeW_ABRASFv1.GerarServico: TACBrXmlNode;
 var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;
+  item: string;
 begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
   Result := CreateElement('Servico');
 
   Result.AppendChild(GerarValores);
 
+  item := PadronizaItemServico(NFSe.Servico.ItemListaServico);
+
   case FAOwner.ConfigGeral.FormatoItemListaServico of
     filsSemFormatacao:
       Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 4, NrOcorrItemListaServico,
-         StringReplace(NFSe.Servico.ItemListaServico, '.', '', []), DSC_CLISTSERV));
+                              StringReplace(item, '.', '', []), DSC_CLISTSERV));
 
     filsComFormatacaoSemZeroEsquerda:
       if Copy(NFSe.Servico.ItemListaServico, 1, 1) = '0' then
         Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
-                      Copy(NFSe.Servico.ItemListaServico, 2, 4), DSC_CLISTSERV))
+                                               Copy(item, 2, 4), DSC_CLISTSERV))
       else
         Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
-                                 NFSe.Servico.ItemListaServico, DSC_CLISTSERV));
+                                                          item, DSC_CLISTSERV));
   else
     Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
-                                 NFSe.Servico.ItemListaServico, DSC_CLISTSERV));
+                                                          item, DSC_CLISTSERV));
   end;
 
-  Result.AppendChild(AddNode(tcStr, '#30', 'CodigoCnae      ', 1, 7, NrOcorrCodigoCnae,
+  Result.AppendChild(AddNode(tcStr, '#30', 'CodigoCnae', 1, 7, NrOcorrCodigoCnae,
                                 OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));
 
   Result.AppendChild(AddNode(tcStr, '#31', 'CodigoTributacaoMunicipio', 1, 20, NrOcorrCodTribMun,

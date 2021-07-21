@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/07/2021
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
+[+] Incluida a função PadronizaItemServico que faz com que o código do 
+    ItemListaServico tenha sempre o formato xx.xx.
+-- TcheInfo.Provider --
+[+] Incluida a função AjustaCabecalho, pois ao enviar para o ambiente de
+    homologação o valor da tag <CodigoIBGE> deve ser 9999999.
+   Por: Italo Giurizzato Junior
+
+21/07/2021
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] O valor padrão da propriedade NrOcorrCodigoPaisTomador agora é zero, isso
     significa que a tag <CodigoPais> é opcional, antes estava obrigatória.

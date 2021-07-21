@@ -1483,6 +1483,7 @@ type
     fPercentualMaxPagamento: Currency;
     fQrCode: TACBrBoletoPIXQRCode;
     fRetornoWeb: TRetEnvio;
+    fOrgaoNegativador:String;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(const AValue: String);
@@ -1502,6 +1503,7 @@ type
     procedure AtualizaDadosNegativacao();
     procedure SetQrCode(const Value: TACBrBoletoPIXQRCode);
     procedure SetRetornoWeb(const Value: TRetEnvio);
+    procedure SetOrgaoNegativador(const Value: String);
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
@@ -1566,6 +1568,7 @@ type
      property DiasDeProtesto                 : Integer   read fDiasDeProtesto    write SetDiasDeProtesto;
      property DataNegativacao                : TDateTime read fDataNegativacao   write SetDataNegativacao;
      property DiasDeNegativacao              : Integer   read fDiasDeNegativacao write SetDiasDeNegativacao;
+     property OrgaoNegativador               : String    read fOrgaoNegativador  write SetOrgaoNegativador;
      property DataBaixa                      : TDateTime read fDataBaixa         write fDataBaixa;
      property DataLimitePagto                : TDateTime read fDataLimitePagto   write fDataLimitePagto;
 
@@ -1865,6 +1868,11 @@ end;
 procedure TACBrBoletoWSFiltroConsulta.SetModalidadeCobranca(const Value: integer);
 begin
   FModalidadeCobrancao:= Value;
+end;
+
+procedure TACBrTitulo.SetOrgaoNegativador(const Value: String);
+begin
+  ForgaoNegativador := Value;
 end;
 
 procedure TACBrBoletoWSFiltroConsulta.SetCarteira(const Value: Integer);

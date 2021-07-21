@@ -325,8 +325,11 @@ begin
       GerarMulta(Json);
       GerarPagador(Json);
       GerarBenificiarioFinal(Json);
-      //Json.Add('quantidadeDiasNegativacao').Value
-      //Json.Add('orgaoNegativador').Value
+      if (Titulos.DiasDeNegativacao > 0) then
+      begin
+        Json.Add('quantidadeDiasNegativacao').Value.AsInteger           := Titulos.DiasDeNegativacao;
+        Json.Add('orgaoNegativador').Value.AsInteger                    := StrToInt64Def(Titulos.orgaoNegativador,0);
+      end;
       Json.Add('indicadorPix').Value.AsString := IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'S','N');
 
       Data := Json.Stringify;

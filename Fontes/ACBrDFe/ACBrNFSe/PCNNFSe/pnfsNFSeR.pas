@@ -4224,6 +4224,9 @@ begin
 
         NFSe.Servico.ItemServico[I].ValorTotal := RoundTo(AValorTotal, - 2);
 
+        NFSe.Servico.Descricao     := Leitor.rCampo(tcStr, 'Descricao');
+        NFSe.Servico.Discriminacao := NFSe.Servico.Descricao;
+
         Inc(I);
       end;
     end; // fim Servicos
@@ -4350,13 +4353,25 @@ begin
   if (Leitor.rExtrai(1, 'Rps') <> '') then
   begin
     NFSe.InfID.ID    := Leitor.rCampo(tcStr, 'Id');
+    NFSe.ChaveNFSe   := NFSe.InfID.ID;
     NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
     NFSe.Status      := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
+    NFSe.CodigoVerificacao := NFSe.ChaveNFSe;
+
     if (Leitor.rExtrai(2, 'IdentificacaoRps') <> '') then
     begin
+      NFSE.Numero                  := Leitor.rCampo(tcStr, 'NumeroNfse');
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+      NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
+    end
+    else
+    if (Leitor.rExtrai(2, 'IdentificacaoNfse') <> '') then
+    begin
+      NFSE.Numero                  := Leitor.rCampo(tcStr, 'Numero');
+      NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRps');
+      //NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
       NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
     end;
 
@@ -4458,6 +4473,9 @@ begin
                        NFSe.Servico.ItemServico[I].ValorUnitario;
 
         NFSe.Servico.ItemServico[I].ValorTotal := RoundTo(AValorTotal, - 2);
+
+        NFSe.Servico.Descricao     := Leitor.rCampo(tcStr, 'Descricao');
+        NFSe.Servico.Discriminacao := NFSe.Servico.Descricao;
 
         Inc(I);
       end;

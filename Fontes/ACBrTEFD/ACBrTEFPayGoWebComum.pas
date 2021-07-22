@@ -164,6 +164,9 @@ const
   PWRET_DEFAULT_COMM_ERROR = -2553;  // Erro genérico de comunicação.
   PWRET_CTLSMAGSTRIPENOTALLOW= -2552; // Aplicação não permite fallback contactless.
   PWRET_PARAMSFILEERRSIZE  = -2551;  //Erro de tamanho do arquivo de parâmetros.
+  PWRET_EXPLOGMEMERR       = -2550;  // Erro ao exportar os logs para o servidor, não foi possível alocar memória para tratar os arquivos.
+  PWRET_EXPLOGPOSTERR      = -2549;  // Erro ao exportar os logs para o servidor, falha no comando POST executado.
+  PWRET_EXPLOGCONFIGERR    = -2548;  // Não foi possível exportar os logs, pois os dados do servidor para exportação não foram configurados
   PWRET_INVPARAM           = -2499;  // Parâmetro inválido passado à função
   PWRET_NOTINST            = -2498;  // Ponto de Captura não instalado. É necessário acionar a função de Instalação.
   PWRET_MOREDATA           = -2497;  // Ainda existem dados que precisam ser capturados para a transação poder ser realizada
@@ -397,13 +400,6 @@ const
 
 type
   EACBrTEFPayGoWeb = class(EACBrTEFErro);
-
-  { TACBrTEFRespPGWeb }
-
-  TACBrTEFRespPGWeb = class(TACBrTEFResp)
-  public
-    procedure ConteudoToProperty; override;
-  end;
 
   //========================================================
   // Record que descreve cada membro da estrutura PW_GetData:
@@ -792,6 +788,8 @@ function PWDATToString(bTipoDeDado: Byte): String;
 function PWVALToString(bValidacaoDado: Byte): String;
 function PWTYPToString(bTiposEntradaPermitidos: Byte): String;
 function PWDPINToString(iMessageId: Word): String;
+procedure DadosDaTransacaoToTEFResp(
+  ADadosDaTransacao: TACBrTEFPGWebAPIParametros; ATefResp: TACBrTEFResp);
 
 implementation
 
@@ -855,6 +853,9 @@ begin
     PWRET_DEFAULT_COMM_ERROR:   Result := 'PWRET_DEFAULT_COMM_ERROR';
     PWRET_CTLSMAGSTRIPENOTALLOW:Result := 'PWRET_CTLSMAGSTRIPENOTALLOW';
     PWRET_PARAMSFILEERRSIZE:    Result := 'PWRET_PARAMSFILEERRSIZE';
+    PWRET_EXPLOGMEMERR:         Result := 'PWRET_EXPLOGMEMERR';
+    PWRET_EXPLOGPOSTERR:        Result := 'PWRET_EXPLOGPOSTERR';
+    PWRET_EXPLOGCONFIGERR:      Result := 'PWRET_EXPLOGCONFIGERR';
     PWRET_INVPARAM:             Result := 'PWRET_INVPARAM';
     PWRET_NOTINST:              Result := 'PWRET_NOTINST';
     PWRET_MOREDATA:             Result := 'PWRET_MOREDATA';
@@ -1075,11 +1076,28 @@ begin
   end;
 end;
 
-{ TACBrTEFRespPGWeb }
-
-procedure TACBrTEFRespPGWeb.ConteudoToProperty;
+procedure DadosDaTransacaoToTEFResp(
+  ADadosDaTransacao: TACBrTEFPGWebAPIParametros; ATefResp: TACBrTEFResp);
+var
+  i, p, AInfo: Integer;
+  Lin, AValue: String;
 begin
-  inherited ConteudoToProperty;
+  for i := 0 to ADadosDaTransacao.Count-1 do
+  begin
+    Lin := ADadosDaTransacao[i];
+    p := pos('=', Lin);
+    if (p > 0) then
+    begin
+      AInfo := StrToIntDef(copy(Lin, 1, p-1), -1);
+      if (AInfo >= 0) then
+      begin
+        AValue := copy(Lin, P+1, Length(Lin));
+        ATefResp.Conteudo.GravaInformacao(Ainfo, 0, AValue);
+      end;
+    end;
+  end;
+
+  ConteudoToPropertyPayGoWeb( ATefResp );
 end;
 
 { TACBrTEFPGWebAPI }
@@ -1668,7 +1686,8 @@ begin
       AStatus := PWCNF_REV_MANU_AUT;
   end;
 
-  FinalizarTransacao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
+  if (AStatus > 0) then
+    FinalizarTransacao(AStatus, pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst);
 end;
 
 procedure TACBrTEFPGWebAPI.ExibirMensagemPinPad(const MsgPinPad: String);
@@ -1800,12 +1819,12 @@ begin
     if Valido and (ADefinicaoCampo.TiposEntradaPermitidos = pgtNumerico) then
     begin
       ARespInt := StrToInt64Def(AResposta, -1);
-      if (ARespInt > ADefinicaoCampo.ValorMaximo) then
+      if (ADefinicaoCampo.ValorMaximo > 0) and (ARespInt > ADefinicaoCampo.ValorMaximo) then
       begin
         Valido := False;
         Erro := Trim(ADefinicaoCampo.MsgDadoMaior)
       end
-      else if ARespInt < ADefinicaoCampo.ValorMinimo then
+      else if (ADefinicaoCampo.ValorMinimo > 0) and (ARespInt < ADefinicaoCampo.ValorMinimo) then
       begin
         Valido := False;
         Erro := Trim(ADefinicaoCampo.MsgDadoMenor);
@@ -2004,6 +2023,8 @@ begin
     ItemSelecionado := AGetData.bItemInicial;
     GravarLog('  OnExibeMenu( '+AGetData.szPrompt+' )', True);
     fOnExibeMenu(Trim(AGetData.szPrompt), SL, ItemSelecionado, Cancelado);
+    GravarLog('    Resposta: '+IntToStr(ItemSelecionado)+', Cancelado: '+BoolToStr(Cancelado, True));
+
     Cancelado := Cancelado or (ItemSelecionado < 0) or (ItemSelecionado >= AGetData.bNumOpcoesMenu);
 
     if not Cancelado then
@@ -2049,6 +2070,8 @@ begin
   repeat
     GravarLog('  OnObtemCampo');
     fOnObtemCampo(ADefinicaoCampo, AResposta, Valido, Cancelado);
+    GravarLog('    Resposta: '+AResposta+', Valido: '+BoolToStr(Valido, True)+
+                                         ', Cancelado: '+BoolToStr(Cancelado, True));
 
     if not (Valido or Cancelado) then
     begin
@@ -2369,6 +2392,15 @@ begin
   Result.MsgDadoMenor := Trim(AGetData.szMsgDadoMenor);
   Result.TipoEntradaCodigoBarras := TACBrTEFPGWebAPITipoBarras(AGetData.bTipoEntradaCodigoBarras);
   Result.OmiteMsgAlerta := (AGetData.bOmiteMsgAlerta = 1);
+
+  // Verificando tipos inválidos, que podem ser retornados pela API
+  if (Result.TiposEntradaPermitidos < Low(TACBrTEFPGWebAPITiposEntrada)) or
+     (Result.TiposEntradaPermitidos > High(TACBrTEFPGWebAPITiposEntrada)) then
+    Result.TiposEntradaPermitidos := pgtAlfaNumEsp;
+
+  if (Result.ValidacaoDado < Low(TACBrTEFPGWebAPIValidacaoDado)) or
+     (Result.ValidacaoDado > pgvDuplaDigitacao) then
+    Result.ValidacaoDado := pgvNenhuma;
 
   case AGetData.wIdentificador of
     PWINFO_AUTHMNGTUSER:

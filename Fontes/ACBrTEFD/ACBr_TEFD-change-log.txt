@@ -46,6 +46,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/08/21
+-- ACBrTEFPayGoWebComum --
+[+] Adicionado o método "DadosDaTransacaoToTEFResp", para mapear o Log de
+    respostas da PayGo, para TACBrTEFResp
+[*] Método "TratarTransacaoPendente", modificado para não tentar Finalizar a
+    Transação Pendente, se o Status retornado por OnAvaliarTransacaoPendente,
+    for negativo
+[*] Método "ValidarRespostaCampo", modificado, para não tentar validar
+    "ValorMaximo" e "ValorMinimo", se os mesmos forem zerados
+[*] Métodos "ObterDadoMenu" e "ObterDadoDigitadoGenerico" modificados, para
+    gravar no Log a resposta do usuário, após a chamada do Evento
+[*] Método "PW_GetDataToDefinicaoCampo", ajustado para tratar retornos inválidos
+    pela API, nos campos "bTiposEntradaPermitidos" e "bValidacaoDado"
+
+-- TEFDemoNF --
+[*] Demos ajustados para tratar em "PayGoWebObtemCampo", campos com Decimais,
+    mas que não são Moeda.
+    (por: DSA)
+
 12/07/21
 -- ACBrTEFDPayGoWeb --
 [-] Correção em método CNC, para erro de transação NÃO ENCONTRADA

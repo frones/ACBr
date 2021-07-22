@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/07/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[+] Incluido a leitura e a gravação do XML da NFS-e no TratarRetornoEmitir,
+    quando se tratar do retorno dos serviços: EnviarLoteRpsSincrono e GerarNfse.
+   Por: Italo Giurizzato Junior
+
+22/07/2021
 -- ACBrNFSeXGravarXml_ABRASFv1 --
 [*] Possível correção no retorno da Consulta ao Lote de Rps do provedor
     ISSCuritiba.

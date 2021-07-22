@@ -549,7 +549,8 @@ begin
     FormObtemCampo.btVoltar.Visible := False;  // PayGoWeb não suporta Voltar;
 
     if (pos('R$', DefinicaoCampo.MascaraDeCaptura) > 0) or
-       (pos('@,@@', DefinicaoCampo.MascaraDeCaptura) > 0) then
+       (pos('@.@@@,@@', DefinicaoCampo.MascaraDeCaptura) > 0) or
+       (pos('@@@@@@,@@', DefinicaoCampo.MascaraDeCaptura) > 0) then
       FormObtemCampo.TipoCampo := tcoCurrency
     else
     begin
@@ -557,7 +558,10 @@ begin
         pgApenasLeitura:
           FormObtemCampo.edtResposta.ReadOnly := True;
         pgtNumerico:
-          FormObtemCampo.TipoCampo := tcoNumeric;
+          if (pos('@,@@', DefinicaoCampo.MascaraDeCaptura) > 0) then
+            FormObtemCampo.TipoCampo := tcoDecimal
+          else
+            FormObtemCampo.TipoCampo := tcoNumeric;
         pgtAlfabetico:
           FormObtemCampo.TipoCampo := tcoAlfa;
         pgtAlfaNum:
@@ -1777,7 +1781,6 @@ end;
 
 procedure TFormPrincipal.ExcluirPagamento(IndicePagto: Integer);
 var
-  i: Integer;
   AResp: TACBrTEFResp;
   Cancelada: Boolean;
 begin

@@ -10,7 +10,7 @@ object FormPrincipal: TFormPrincipal
   ParentFont = True
   KeyPreview = True
   OldCreateOrder = True
-  Position = poDefaultSizeOnly
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
@@ -831,7 +831,7 @@ object FormPrincipal: TFormPrincipal
             ParentFont = False
             TabOrder = 2
             object lNumOperacao: TLabel
-              Left = 597
+              Left = 664
               Top = 4
               Width = 85
               Height = 29
@@ -1132,6 +1132,7 @@ object FormPrincipal: TFormPrincipal
   object ACBrTEFD1: TACBrTEFD
     AutoFinalizarCupom = False
     EsperaSTS = 7
+    ConfirmarAntesDosComprovantes = True
     TEFPayGo.LogDebug = True
     TEFPayGo.ArqTemp = 'C:\PAYGO\REQ\intpos.tmp'
     TEFPayGo.ArqReq = 'C:\PAYGO\REQ\intpos.001'

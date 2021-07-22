@@ -281,6 +281,7 @@ begin
   FNrOcorrMunIncid := 0;
   FNrOcorrInscEstInter := 0;
   FNrOcorrOutrasRet := 0;
+  FNrOcorrCodigoCNAE := 0;
   FNrOcorrEndereco := 0;
   FNrOcorrCodigoPaisTomador := 0;
   FNrOcorrUFTomador := 0;
@@ -297,7 +298,6 @@ begin
   FNrOcorrCompetencia := 1;
   FNrOcorrSerieRPS := 1;
   FNrOcorrTipoRPS := 1;
-  FNrOcorrCodigoCNAE := 1;
   FNrOcorrDiscriminacao_1 := 1;
   FNrOcorrExigibilidadeISS := 1;
   FNrOcorrCodigoMunic_1 := 1;

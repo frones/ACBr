@@ -116,6 +116,7 @@ begin
   NrOcorrMunIncid := 0;
   NrOcorrInscEstInter := 0;
   NrOcorrOutrasRet := 0;
+  NrOcorrCodigoCNAE := 0;
   NrOcorrEndereco := 0;
   NrOcorrCodigoPaisTomador := 0;
   NrOcorrUFTomador := 0;
@@ -133,7 +134,6 @@ begin
   NrOcorrCompetencia := 1;
   NrOcorrSerieRPS := 1;
   NrOcorrTipoRPS := 1;
-  NrOcorrCodigoCNAE := 1;
   NrOcorrDiscriminacao_1 := 1;
   NrOcorrExigibilidadeISS := 1;
   NrOcorrCodigoMunic_1 := 1;

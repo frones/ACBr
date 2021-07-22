@@ -511,7 +511,12 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
-        AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+        AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+
+        if AuxNode = nil then
+          AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+        else
+          AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
         if AuxNode <> nil then
         begin
@@ -531,6 +536,8 @@ begin
           end;
 
           SalvarXmlNfse(ANota);
+
+          Response.Situacao := '4';
         end
         else
         begin

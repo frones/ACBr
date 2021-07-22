@@ -42,7 +42,7 @@ type
 
 {$R *.lfm}
 
-  TTipoCampo = (tcoString, tcoNumeric, tcoCurrency, tcoAlfa, tcoAlfaNum) ;
+  TTipoCampo = (tcoString, tcoNumeric, tcoCurrency, tcoAlfa, tcoAlfaNum, tcoDecimal) ;
 
 { TFormObtemCampo }
 
@@ -102,12 +102,19 @@ end;
 procedure TFormObtemCampo.FormShow(Sender : TObject);
 var
   TamMascara: Integer;
+  TextVal: String;
 begin
-   if (fTipoCampo = tcoCurrency) then
+   if (fTipoCampo in [tcoCurrency, tcoDecimal]) then
    begin
      edtResposta.AutoSelect := False;
-     edtResposta.Text := 'R$ 0,00';
+     TextVal := '0,00';
+     if (fTipoCampo = tcoCurrency) then
+       TextVal := 'R$ '+TextVal;
+
+     edtResposta.Text := TextVal;
      edtResposta.SelStart := Length(edtResposta.Text);
+     if TamanhoMaximo > 0 then
+       TamanhoMaximo := TamanhoMaximo + 1;  // (Ponto Decimal)
    end
    else
    begin
@@ -152,7 +159,7 @@ begin
      Exit;
 
    case fTipoCampo of
-     tcoNumeric, tcoCurrency:
+     tcoNumeric, tcoCurrency, tcoDecimal:
        Ok := CharIsNum(Key);
 
      tcoAlfa:
@@ -188,11 +195,16 @@ end;
 procedure TFormObtemCampo.edtRespostaChange(Sender: TObject);
 var
   AValor: Int64;
+  TextVal: String;
 begin
-  if (TipoCampo = tcoCurrency) then
+  if (fTipoCampo in [tcoCurrency, tcoDecimal]) then
   begin
     AValor := StrToIntDef(OnlyNumber(edtResposta.Text), 0);
-    edtResposta.Text := 'R$ '+FormatFloatBr(AValor/100);
+    TextVal := FormatFloatBr(AValor/100, FloatMask(2, (fTipoCampo = tcoCurrency)));
+    if (fTipoCampo = tcoCurrency) then
+      TextVal := 'R$ '+TextVal;
+
+    edtResposta.Text := TextVal;
     edtResposta.SelStart := Length(edtResposta.Text);
   end
   else if (fMascara <> '') then
@@ -216,7 +228,7 @@ function TFormObtemCampo.GetResposta: String;
 var
   AValor: Int64;
 begin
-  if (TipoCampo = tcoCurrency) then
+  if (TipoCampo in [tcoCurrency, tcoDecimal]) then
   begin
     AValor := StrToIntDef(OnlyNumber(edtResposta.Text), 0);
     Result := FloatToString(AValor/100, '.', '0.00');

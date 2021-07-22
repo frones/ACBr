@@ -889,7 +889,7 @@ object FormPrincipal: TFormPrincipal
     object pLogs: TPanel
       Left = 0
       Height = 119
-      Top = 376
+      Top = 381
       Width = 806
       Align = alClient
       ClientHeight = 119
@@ -922,10 +922,10 @@ object FormPrincipal: TFormPrincipal
       Cursor = crVSplit
       Left = 0
       Height = 5
-      Top = 495
+      Top = 376
       Width = 806
-      Align = alBottom
-      ResizeAnchor = akBottom
+      Align = alTop
+      ResizeAnchor = akTop
     end
   end
   object pImpressao: TPanel

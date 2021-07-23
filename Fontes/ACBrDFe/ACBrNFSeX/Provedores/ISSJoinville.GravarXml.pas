@@ -42,7 +42,7 @@ uses
 {$ENDIF}
   SysUtils, Classes, StrUtils,
   ACBrXmlBase,
-  ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
   { TNFSeW_ISSJoinville }
@@ -66,6 +66,7 @@ procedure TNFSeW_ISSJoinville.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
   FormatoAliq := tcDe2;
 
   NrOcorrNIFTomador := 0;

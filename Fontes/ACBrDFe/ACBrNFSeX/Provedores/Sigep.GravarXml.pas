@@ -80,6 +80,7 @@ begin
   NrOcorrLogradouro := 0;
   NrOcorrDDD := 0;
   NrOcorrTipoTelefone := 0;
+  NrOcorrInscEstTomador := 0;
 
   NrOcorrCompetencia := -1;
   NrOcorrEndereco := -1;

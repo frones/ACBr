@@ -122,11 +122,6 @@ procedure TACBrNFSeProviderTecnos.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
-  end;
-
   with ConfigAssinar do
   begin
     Rps := True;
@@ -141,7 +136,6 @@ begin
 
   with ConfigMsgDados do
   begin
-
     with XmlRps do
     begin
       InfElemento := 'InfDeclaracaoPrestacaoServico';

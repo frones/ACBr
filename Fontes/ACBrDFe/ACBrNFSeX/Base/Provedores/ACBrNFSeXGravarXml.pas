@@ -84,7 +84,7 @@ type
 
     FFormatoEmissao: TACBrTipoCampo;
     FFormatoCompetencia: TACBrTipoCampo;
-
+    FFormItemLServico: TFormatoItemListaServico;
     FFormatoAliq: TACBrTipoCampo;
     FDivAliq100: Boolean;
 
@@ -134,6 +134,8 @@ type
     property FormatoEmissao: TACBrTipoCampo     read FFormatoEmissao     write FFormatoEmissao;
     property FormatoCompetencia: TACBrTipoCampo read FFormatoCompetencia write FFormatoCompetencia;
 
+    property FormatoItemListaServico: TFormatoItemListaServico read FFormItemLServico write FFormItemLServico;
+
     property FormatoAliq: TACBrTipoCampo read FFormatoAliq  write FFormatoAliq;
     property DivAliq100: Boolean         read FDivAliq100   write FDivAliq100;
     property NrMinExigISS: Integer       read FNrMinExigISS write FNrMinExigISS;
@@ -166,8 +168,9 @@ end;
 procedure TNFSeWClass.Configuracao;
 begin
   // Propriedades de Formatação de informações
-  FFormatoEmissao     := tcDatHor;
+  FFormatoEmissao := tcDatHor;
   FFormatoCompetencia := tcDatHor;
+  FFormItemLServico := filsComFormatacao;
 
   FFormatoAliq := tcDe4;
   FDivAliq100  := False;

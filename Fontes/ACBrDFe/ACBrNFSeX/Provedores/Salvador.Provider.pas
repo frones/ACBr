@@ -152,11 +152,7 @@ procedure TACBrNFSeProviderSalvador.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    Identificador := 'id';
-    FormatoItemListaServico := filsSemFormatacao;
-  end;
+  ConfigGeral.Identificador := 'id';
 
   with ConfigAssinar do
   begin

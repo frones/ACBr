@@ -153,8 +153,6 @@ procedure TACBrNFSeProviderBetha.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.FormatoItemListaServico := filsSemFormatacao;
-
   with ConfigAssinar do
   begin
     Rps := True;

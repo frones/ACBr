@@ -323,7 +323,6 @@ begin
     NumMaxRpsGerar  := 1;
     NumMaxRpsEnviar := 50;
     ModoEnvio := meAutomatico;
-    FormatoItemListaServico := filsComFormatacao;
     TabServicosExt := False;
     Identificador := 'Id';
     ConsultaSitLote := False;

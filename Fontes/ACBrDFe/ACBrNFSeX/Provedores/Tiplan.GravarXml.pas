@@ -49,6 +49,7 @@ type
 
   TNFSeW_Tiplan = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -66,6 +67,15 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Tiplan
 //==============================================================================
+
+{ TNFSeW_Tiplan }
+
+procedure TNFSeW_Tiplan.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsSemFormatacao;
+end;
 
 { TNFSeW_Tiplanv2 }
 

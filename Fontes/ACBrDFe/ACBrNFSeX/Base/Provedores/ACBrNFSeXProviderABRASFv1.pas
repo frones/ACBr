@@ -500,7 +500,7 @@ begin
       end;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
-      if not Assigned(ANode) then
+      if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
@@ -834,7 +834,7 @@ begin
       end;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
-      if not Assigned(ANode) then
+      if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;

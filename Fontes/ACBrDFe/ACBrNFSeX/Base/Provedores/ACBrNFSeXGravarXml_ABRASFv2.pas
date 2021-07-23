@@ -571,7 +571,7 @@ begin
 
     item := PadronizaItemServico(NFSe.Servico.ItemListaServico);
 
-    case FAOwner.ConfigGeral.FormatoItemListaServico of
+    case FormatoItemListaServico of
       filsSemFormatacao:
         Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 4, NrOcorrItemListaServico,
                               StringReplace(item, '.', '', []), DSC_CLISTSERV));

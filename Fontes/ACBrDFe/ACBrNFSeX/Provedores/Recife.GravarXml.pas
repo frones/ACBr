@@ -65,6 +65,8 @@ procedure TNFSeW_Recife.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacao;
+
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
   NrOcorrValorInss := 1;

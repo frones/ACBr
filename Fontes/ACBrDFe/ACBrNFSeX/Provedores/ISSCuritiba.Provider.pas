@@ -77,11 +77,7 @@ procedure TACBrNFSeProviderISSCuritiba.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigGeral do
-  begin
-    FormatoItemListaServico := filsSemFormatacao;
-    Identificador := 'id';
-  end;
+  ConfigGeral.Identificador := 'id';
 
   SetXmlNameSpace('http://srv2-isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd');
 

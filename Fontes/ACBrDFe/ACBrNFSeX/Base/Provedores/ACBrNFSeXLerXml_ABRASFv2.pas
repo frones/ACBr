@@ -838,17 +838,8 @@ begin
 
   ItemServico := FormatFloat('0000', Item);
 
-  case FAOwner.ConfigGeral.FormatoItemListaServico of
-    filsSemFormatacao:
-      NFSe.Servico.ItemListaServico := ItemServico;
-
-    filsComFormatacaoSemZeroEsquerda:
-      NFSe.Servico.ItemListaServico := IntToStr(Item);
-  else
-    // filsComFormatacao
-    NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
-                                     Copy(ItemServico, 3, 2);
-  end;
+  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
+                                   Copy(ItemServico, 3, 2);
 
   if FAOwner.ConfigGeral.TabServicosExt then
     NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)

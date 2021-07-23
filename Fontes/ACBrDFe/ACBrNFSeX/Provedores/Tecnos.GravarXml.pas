@@ -76,6 +76,8 @@ begin
 
   FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
+
   FormatoAliq := tcDe2;
 
   NrOcorrValorPis := 1;

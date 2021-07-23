@@ -41,7 +41,7 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXGravarXml_ABRASFv1;
+  ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
   { TNFSeW_ISSCuritiba }
@@ -65,6 +65,7 @@ procedure TNFSeW_ISSCuritiba.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacao;
   DivAliq100 := True;
 end;
 

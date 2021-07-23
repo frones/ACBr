@@ -41,6 +41,7 @@ interface
 
 uses
   SysUtils, Classes,
+  ACBrXmlBase,
   ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
@@ -95,9 +96,6 @@ begin
     UseAuthorizationHeader := False;
     NumMaxRpsGerar  := 1;
     NumMaxRpsEnviar := 50;
-
-    // filsComFormatacao, filsSemFormatacao, filsComFormatacaoSemZeroEsquerda
-    FormatoItemListaServico := filsComFormatacao;
 
     TabServicosExt := False;
     Identificador := 'Id';

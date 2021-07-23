@@ -75,6 +75,8 @@ procedure TNFSeW_Betha.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacao;
+
   NrOcorrOutrasInformacoes := 0;
   NrOcorrValorISSRetido_1 := -1;
   NrOcorrValorISSRetido_2 := 0;

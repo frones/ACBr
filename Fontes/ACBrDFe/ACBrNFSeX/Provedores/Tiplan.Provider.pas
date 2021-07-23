@@ -101,8 +101,6 @@ procedure TACBrNFSeProviderTiplan.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.FormatoItemListaServico := filsSemFormatacao;
-
   with ConfigAssinar do
   begin
     LoteRps := True;

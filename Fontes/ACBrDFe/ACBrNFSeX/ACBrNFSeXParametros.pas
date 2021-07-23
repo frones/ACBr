@@ -57,8 +57,6 @@ type
     FNumMaxRpsGerar: integer;
     // define o numero maximo de Rps a serem incluidos no EnviarLoteRpsEnvio e EnviarLoteRpsSincronoEnvio
     FNumMaxRpsEnviar: integer;
-    // define o formato que o código do ItemListaServico deve ser gerado
-    FFormItemLServico: TFormatoItemListaServico;
     // define se vai ser utilizado uma tabela externa de serviço ou não
     FTabServicosExt: Boolean;
     // define o modo de envio dos Rps para o webservice
@@ -82,7 +80,6 @@ type
     property UseAuthorizationHeader: boolean read FUseAuthorizationHeader write FUseAuthorizationHeader;
     property NumMaxRpsGerar: integer read FNumMaxRpsGerar write FNumMaxRpsGerar;
     property NumMaxRpsEnviar: integer read FNumMaxRpsEnviar write FNumMaxRpsEnviar;
-    property FormatoItemListaServico: TFormatoItemListaServico read FFormItemLServico write FFormItemLServico;
     property TabServicosExt: Boolean read FTabServicosExt write FTabServicosExt;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property ConsultaSitLote: Boolean read FConsultaSitLote write FConsultaSitLote;

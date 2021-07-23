@@ -87,6 +87,13 @@ begin
 
   FormatoAliq := tcDe4;
   }
+
+  // elas requerem que seja declarado em uses a unit: ACBrNFSeXConversao
+  {
+  // filsComFormatacao, filsSemFormatacao, filsComFormatacaoSemZeroEsquerda
+  FormatoItemListaServico := filsComFormatacao;
+  }
+
   DivAliq100  := False;
 
   NrMinExigISS := 1;

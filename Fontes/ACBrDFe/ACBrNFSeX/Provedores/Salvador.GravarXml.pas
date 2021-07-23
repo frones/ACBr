@@ -70,6 +70,8 @@ procedure TNFSeW_Salvador.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacao;
+
   NrOcorrValorDeducoes := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
@@ -79,7 +81,6 @@ begin
   NrOcorrOutrasRet := 1;
   NrOcorrDescIncond := 1;
   NrOcorrDescCond := 1;
-
 end;
 
 procedure TNFSeW_Salvador.DefinirIDRps;

@@ -239,8 +239,6 @@ type
     property LastErrorDesc: String read GetLastErrorDesc;
   end;
 
-
-
   { TDFeSSLXmlSignClass }
 
   TDFeSSLXmlSignClass = class

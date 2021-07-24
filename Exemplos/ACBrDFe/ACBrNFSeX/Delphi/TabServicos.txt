@@ -185,6 +185,7 @@
   2701 Servicos de assistencia social.
   2801 Servicos de avaliacao de bens e servicos de qualquer natureza.
   2901 Servicos de biblioteconomia.
+  2919 xxxxxx
   3001 Servicos de biologia, biotecnologia e quimica.
   3101 Servicos tecnicos em edificacoes, eletronica, eletrotecnica, mecanica, telecomunicacoes e congeneres.
   3201 Servicos de desenhos tecnicos.

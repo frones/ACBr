@@ -2051,6 +2051,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
     Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.Arquivos.TabServicosExt = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

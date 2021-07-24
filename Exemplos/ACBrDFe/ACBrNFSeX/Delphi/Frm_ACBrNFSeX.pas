@@ -567,14 +567,7 @@ begin
 
       Servico.Valores.Aliquota := 4;
 
-      // No provedor ISSCuritiba a aliquota é gerada dividida por 100, logo no
-      // calculo do valor ISS não se deve dividir novamente
-      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
-        proISSCuritiba:
-          ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota;
-      else
-        ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
-      end;
+      ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
       // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
       // parametro se refere ao numero de casas decimais.
@@ -612,6 +605,9 @@ begin
 
         proCenti:
           Servico.CodigoTributacaoMunicipio := '0901';
+
+        proSalvador:
+          Servico.CodigoTributacaoMunicipio := '0901001';
       else
         Servico.CodigoTributacaoMunicipio := '63194';
       end;
@@ -698,6 +694,7 @@ begin
       Tomador.Endereco.Endereco := 'RUA PRINCIPAL';
       Tomador.Endereco.Numero := '100';
       Tomador.Endereco.Complemento := 'APTO 11';
+      Tomador.Endereco.TipoBairro := 'BAIRRO';
       Tomador.Endereco.Bairro := 'CENTRO';
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
       Tomador.Endereco.xMunicipio := CodIBGEToCidade(StrToIntDef(edtCodCidade.Text, 0));
@@ -729,7 +726,7 @@ begin
       // ConstrucaoCivil.Art        := '433';
 
       // Condição de Pagamento usado pelo provedor Betha versão 1 do Layout da ABRASF
-      CondicaoPagamento.QtdParcela := 2;
+      CondicaoPagamento.QtdParcela := 1;
 //      CondicaoPagamento.Condicao   := cpAPrazo;
       CondicaoPagamento.Condicao   := cpAVista;
 

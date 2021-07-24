@@ -110,6 +110,8 @@ type
 
     function GerarCNPJ(const CNPJ: string): TACBrXmlNode; virtual;
     function GerarCPFCNPJ(const CPFCNPJ: string): TACBrXmlNode; virtual;
+    function PadronizarItemServico(const Codigo: string): string;
+    function AjustarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
 
  public
     constructor Create(AOwner: IACBrNFSeXProvider); virtual;
@@ -203,6 +205,33 @@ end;
 function TNFSeWClass.ObterNomeArquivo: String;
 begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
+end;
+
+function TNFSeWClass.AjustarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
+var
+  Aliq: Double;
+begin
+  if Aliquota < 1 then
+    Aliq := Aliquota * 100
+  else
+    Aliq := Aliquota;
+
+  if DivPor100 then
+    Result := Aliq / 100
+  else
+    Result := Aliq;
+end;
+
+function TNFSeWClass.PadronizarItemServico(const Codigo: string): string;
+var
+  i: Integer;
+  item: string;
+begin
+  item := OnlyNumber(Codigo);
+  i := StrToIntDef(item, 0);
+  item := Poem_Zeros(i, 4);
+
+  Result := Copy(item, 1, 2) + '.' + Copy(item, 3, 2);
 end;
 
 function TNFSeWClass.GetOpcoes: TACBrXmlWriterOptions;

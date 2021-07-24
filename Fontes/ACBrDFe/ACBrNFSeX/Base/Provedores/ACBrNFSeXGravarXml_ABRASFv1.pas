@@ -91,8 +91,6 @@ type
   protected
     procedure Configuracao; override;
 
-    function PadronizaItemServico(const Codigo: string): string;
-
     function GerarInfRps: TACBrXmlNode; virtual;
     function GerarIdentificacaoRPS: TACBrXmlNode; virtual;
     function GerarRPSSubstituido: TACBrXmlNode; virtual;
@@ -249,17 +247,6 @@ begin
   Result := True;
 end;
 
-function TNFSeW_ABRASFv1.PadronizaItemServico(const Codigo: string): string;
-var
-  i: Integer;
-  item: string;
-begin
-  item := OnlyNumber(Codigo);
-  i := StrToIntDef(item, 0);
-  item := Poem_Zeros(i, 4);
-  Result := Copy(item, 1, 2) + '.' + Copy(item, 3, 2);
-end;
-
 function TNFSeW_ABRASFv1.GerarInfRps: TACBrXmlNode;
 begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
@@ -285,7 +272,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#7', 'OptanteSimplesNacional', 1, 1, NrOcorrOptanteSN,
                         SimNaoToStr(NFSe.OptanteSimplesNacional), DSC_INDOPSN));
 
-  Result.AppendChild(AddNode(tcStr, '#8', 'IncentivadorCultural  ', 1, 1, NrOcorrIncentCult,
+  Result.AppendChild(AddNode(tcStr, '#8', 'IncentivadorCultural', 1, 1, NrOcorrIncentCult,
                        SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'Status', 1, 1, NrOcorrStatus,
@@ -311,10 +298,10 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 15, 1,
                          OnlyNumber(NFSe.IdentificacaoRps.Numero), DSC_NUMRPS));
 
-  Result.AppendChild(AddNode(tcStr, '#2', 'Serie ', 1, 05, 1,
+  Result.AppendChild(AddNode(tcStr, '#2', 'Serie', 1, 5, 1,
                                     NFSe.IdentificacaoRps.Serie, DSC_SERIERPS));
 
-  Result.AppendChild(AddNode(tcStr, '#3', 'Tipo  ', 1, 01, 1,
+  Result.AppendChild(AddNode(tcStr, '#3', 'Tipo', 1, 1, 1,
                         TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS));
 end;
 
@@ -330,10 +317,10 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 15, 1,
                         OnlyNumber(NFSe.RpsSubstituido.Numero), DSC_NUMRPSSUB));
 
-    Result.AppendChild(AddNode(tcStr, '#2', 'Serie ', 1, 05, 1,
+    Result.AppendChild(AddNode(tcStr, '#2', 'Serie', 1, 5, 1,
                                    NFSe.RpsSubstituido.Serie, DSC_SERIERPSSUB));
 
-    Result.AppendChild(AddNode(tcStr, '#3', 'Tipo  ', 1, 01, 1,
+    Result.AppendChild(AddNode(tcStr, '#3', 'Tipo', 1, 1, 1,
                        TipoRPSToStr(NFSe.RpsSubstituido.Tipo), DSC_TIPORPSSUB));
   end;
 end;
@@ -349,7 +336,7 @@ begin
 
   Result.AppendChild(GerarValores);
 
-  item := PadronizaItemServico(NFSe.Servico.ItemListaServico);
+  item := PadronizarItemServico(NFSe.Servico.ItemListaServico);
 
   case FormatoItemListaServico of
     filsSemFormatacao:
@@ -395,6 +382,8 @@ begin
 end;
 
 function TNFSeW_ABRASFv1.GerarValores: TACBrXmlNode;
+var
+  Aliquota: Double;
 begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
   Result := CreateElement('Valores');
@@ -423,7 +412,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll', 1, 15, NrOcorrValorCsll,
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));
 
-  Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 01, 1,
+  Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 1, 1,
        SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
   Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss', 1, 15, NrOcorrValorIss,
@@ -438,12 +427,10 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#24', 'BaseCalculo', 1, 15, NrOcorrBaseCalc,
                                  NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS));
 
-  if DivAliq100 then
-    Result.AppendChild(AddNode(FormatoAliq, '#25', 'Aliquota', 1, 05, NrOcorrAliquota,
-                              (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ))
-  else
-    Result.AppendChild(AddNode(FormatoAliq, '#25', 'Aliquota', 1, 05, NrOcorrAliquota,
-                                     NFSe.Servico.Valores.Aliquota, DSC_VALIQ));
+  Aliquota := AjustarAliquota(NFSe.Servico.Valores.Aliquota, DivAliq100);
+
+  Result.AppendChild(AddNode(FormatoAliq, '#25', 'Aliquota', 1, 5, NrOcorrAliquota,
+                                                          Aliquota, DSC_VALIQ));
 
   Result.AppendChild(AddNode(tcDe2, '#26', 'ValorLiquidoNfse', 1, 15, NrOcorrValLiq,
                              NFSe.Servico.Valores.ValorLiquidoNfse, DSC_VNFSE));
@@ -557,13 +544,13 @@ begin
     Result.AppendChild(AddNode(tcStr, '#39', 'Endereco', 1, 125, 0,
                                      NFSe.Tomador.Endereco.Endereco, DSC_XLGR));
 
-    Result.AppendChild(AddNode(tcStr, '#40', 'Numero', 1, 010, 0,
+    Result.AppendChild(AddNode(tcStr, '#40', 'Numero', 1, 10, 0,
                                         NFSe.Tomador.Endereco.Numero, DSC_NRO));
 
-    Result.AppendChild(AddNode(tcStr, '#41', 'Complemento', 1, 060, NrOcorrComplTomador,
+    Result.AppendChild(AddNode(tcStr, '#41', 'Complemento', 1, 60, NrOcorrComplTomador,
                                   NFSe.Tomador.Endereco.Complemento, DSC_XCPL));
 
-    Result.AppendChild(AddNode(tcStr, '#42', 'Bairro', 1, 060, 0,
+    Result.AppendChild(AddNode(tcStr, '#42', 'Bairro', 1, 60, 0,
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
     nodeArray := GerarCodigoMunicipioUF;
@@ -576,7 +563,7 @@ begin
       end;
     end;
 
-    Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 008, 0,
+    Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, 0,
                                OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP));
   end;
 end;

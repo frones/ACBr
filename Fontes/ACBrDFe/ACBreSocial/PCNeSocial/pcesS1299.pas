@@ -221,10 +221,11 @@ begin
       Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, self.InfoFech.compSemMovto);
   end;
 
-  if (VersaoDF > ve02_05_00) and
-     (Self.InfoFech.indExcApur1250 <> snfNada) and 
-     ((Self.ideEvento.IndApuracao = iapuMensal) and 
-      (Copy(Self.ideEvento.perApur,1,4)+Copy(Self.ideEvento.perApur,6,2) < '202105')) then
+  if (VersaoDF >= ve02_05_00) and
+     (Self.InfoFech.indExcApur1250 <> snfNada) and
+     ((Self.ideEvento.IndApuracao = iapuMensal) and
+      (Copy(Self.ideEvento.perApur,1,4)+Copy(Self.ideEvento.perApur,6,2) <= '202106'))
+  then
     Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoFacultativoToStr(self.InfoFech.indExcApur1250));
 
   Gerador.wGrupo('/infoFech');

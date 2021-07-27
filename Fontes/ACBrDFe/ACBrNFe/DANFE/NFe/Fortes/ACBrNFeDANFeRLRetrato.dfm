@@ -7875,6 +7875,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 80
         Height = 7
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
@@ -7918,6 +7919,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 80
         Height = 7
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
@@ -7947,6 +7949,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 80
         Height = 7
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
@@ -7975,6 +7978,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 656
         Top = 14
         Width = 80
+        Alignment = taCenter
         Height = 7
         AutoSize = False
         Caption = 'VALOR'
@@ -8004,6 +8008,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 26
         Width = 80
         Height = 12
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8033,6 +8038,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 27
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8062,6 +8068,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 27
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8091,6 +8098,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 27
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8120,6 +8128,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 39
         Width = 80
         Height = 12
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8149,6 +8158,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 40
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8178,6 +8188,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 40
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8207,6 +8218,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 40
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8236,6 +8248,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 52
         Width = 80
         Height = 12
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8265,6 +8278,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 53
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8294,6 +8308,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 53
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8323,6 +8338,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 53
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8352,6 +8368,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 65
         Width = 80
         Height = 12
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8381,6 +8398,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 66
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8410,6 +8428,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 66
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
@@ -8439,6 +8458,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 66
         Width = 80
         Height = 10
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET

@@ -9498,6 +9498,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 14
         Width = 80
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Color = clBlack
@@ -9547,6 +9548,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 14
         Width = 80
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Color = clBlack
@@ -9580,6 +9582,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 14
         Width = 80
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Color = clBlack
@@ -9613,6 +9616,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 14
         Width = 80
+        Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
         Font.Color = clBlack
@@ -9645,6 +9649,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 12
         Top = 26
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9678,6 +9683,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 27
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9711,6 +9717,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 27
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9744,6 +9751,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 27
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9777,6 +9785,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 12
         Top = 39
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9810,6 +9819,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 40
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9843,6 +9853,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 40
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9876,6 +9887,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 40
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9909,6 +9921,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 12
         Top = 52
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9942,6 +9955,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 53
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -9975,6 +9989,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 53
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -10008,6 +10023,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 53
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -10041,6 +10057,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 12
         Top = 65
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -10074,6 +10091,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 66
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -10107,6 +10125,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 66
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
@@ -10140,6 +10159,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 66
         Width = 80
+        Alignment = taRightJustify
         AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack

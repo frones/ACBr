@@ -352,13 +352,12 @@ class AcbrLibNFe : public Php::Base
         if(params.size() < 1) throw Php::Exception("Número errado de parâmetros.");
 
         std::int32_t ALote = params[0];
-	    bool Imprimir = params.size() >= 2 ? params[1].boolValue() : false;
-	    bool Sincrono = params.size() >= 3 ? params[2].boolValue() : false;
-        bool Zipado = params.size() >= 4 ? params[3].boolValue() : false;
+	    bool Sincrono = params.size() >= 2 ? params[2].boolValue() : false;
+        bool Zipado = params.size() >= 3 ? params[3].boolValue() : false;
         
         try
         {
-            return nfe->Enviar(ALote, Imprimir, Sincrono, Zipado);
+            return nfe->Enviar(ALote, false, Sincrono, Zipado);
         }
         catch(const std::exception& e)
         {
@@ -613,7 +612,7 @@ extern "C" {
         // for the entire duration of the process (that's why it's static)
         static Php::Extension extension("ACBrLibNFe", "1.0");
 
-        // Instanciando uma instancia fixa para não ter problemas de impressão, por causa do erro da lcl.
+        // Instanciando uma instancia fixa para não ter problemas de impressão, por causa do erro da LCL.
         static std::shared_ptr<ACBrNFe> nfe = std::make_shared<ACBrNFe>("[Memory]", "");
         
         // description of the class so that PHP knows which methods are accessible
@@ -699,7 +698,6 @@ extern "C" {
 
         NFe.method<&AcbrLibNFe::Enviar>("Enviar", {
             Php::ByVal("ALote", Php::Type::Numeric),
-            Php::ByVal("Imprimir", Php::Type::Bool, false),
             Php::ByVal("Sincrono", Php::Type::Bool, false),
             Php::ByVal("Zipado", Php::Type::Bool, false),
         });

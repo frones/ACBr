@@ -72,10 +72,13 @@ type
 
   TDFeSSLXmlSignLibXml2 = class(TDFeSSLXmlSignClass)
   private
+    FLibXml2Inicializada: Boolean;
     function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring; overload;
     function CanonC14n(const aDoc: xmlDocPtr; const ANode: xmlNodePtr): Ansistring; overload;
 
   protected
+    procedure InitLibXML2;
+
     function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String; docElement: String = ''): xmlNodePtr;
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); virtual;
@@ -111,6 +114,24 @@ uses
 constructor TDFeSSLXmlSignLibXml2.Create(ADFeSSL: TDFeSSL);
 begin
   inherited Create(ADFeSSL);
+  FLibXml2Inicializada := False;
+end;
+
+procedure TDFeSSLXmlSignLibXml2.InitLibXML2;
+begin
+  if FLibXml2Inicializada then
+    Exit;
+
+  if not InitLibXml2Interface then
+    raise EACBrDFeException.Create(cErrLibInit);
+
+  { Configurações }
+  xmlSubstituteEntitiesDefault(1);
+  xmlLoadExtDtdDefaultValue(XML_DETECT_IDS or XML_COMPLETE_ATTRS);
+  xmlIndentTreeOutput(1);
+  xmlSaveNoEmptyTags(1);
+
+  FLibXml2Inicializada := True;
 end;
 
 function TDFeSSLXmlSignLibXml2.Assinar(const ConteudoXML, docElement,
@@ -119,13 +140,15 @@ function TDFeSSLXmlSignLibXml2.Assinar(const ConteudoXML, docElement,
 var
   aDoc: xmlDocPtr;
   SignNode, XmlNode: xmlNodePtr;
-  buffer: xmlBufferPtr;
-  xmlSaveCtx: xmlSaveCtxtPtr;
-  aXML, URI: String;
+  buffer: PAnsiChar;
+  aXML, XmlAss, URI: String;
   Canon, DigestValue, Signaturevalue: AnsiString;
   TemDeclaracao: Boolean;
-  ret: Integer;
+  XmlLength: Integer;
 begin
+  InitLibXML2;
+
+  XmlAss := '';
   // Verificando se possui a Declaração do XML, se não possuir,
   // adiciona para libXml2 compreender o Encoding
   TemDeclaracao := XmlEhUTF8(ConteudoXML);
@@ -141,7 +164,7 @@ begin
 
   aDoc := nil;
   buffer := nil;
-
+  XmlLength := 0;
   try
     aDoc := xmlParseDoc(PAnsiChar(AnsiString(aXML)));
     if (aDoc = nil) then
@@ -207,31 +230,29 @@ begin
 
     xmlNodeSetContent(XmlNode, PAnsiChar(AnsiString(FpDFeSSL.DadosCertificado.DERBase64)));
 
-    buffer := xmlBufferCreate();
-    if not TemDeclaracao then
-      // Sem formatacao, sem tag auto closed e sem declaração
-      xmlSaveCtx := xmlSaveToBuffer(buffer, PAnsiChar(ansistring('UTF-8')), 6)
-    else
-      // Sem formatacao, sem tag auto closed  e cm declaração
-      xmlSaveCtx := xmlSaveToBuffer(buffer, PAnsiChar(ansistring('UTF-8')), 4);
+    xmlDocDumpMemory(aDoc, @buffer, @XmlLength);
+    XmlAss := String(buffer);
 
-    try
-      try
-        ret := xmlSaveDoc(xmlSaveCtx, aDoc);
-        if ret = -1 then
-          raise EACBrDFeException.Create(xmlGetLastError()^.message);
-      finally
-        if Assigned(xmlSaveCtx) then xmlSaveClose(xmlSaveCtx);
-      end;
-      Result := string(buffer.content);
-      // DEBUG
-      //WriteToTXT('C:\TEMP\XmlSigned.xml', Result, False, False, True);
-    finally
-      if Assigned(buffer) then xmlBufferFree(buffer);
-    end;
+    // DEBUG
+    //WriteToTXT('C:\TEMP\XmlSigned.xml', XmlAss, False, False, True);
   finally
-    if (aDoc <> nil) then xmlFreeDoc(aDoc);
+    if (buffer <> nil) then
+      xmlFree(buffer);
+
+    if (aDoc <> nil) then
+      xmlFreeDoc(aDoc);
   end;
+
+  if not TemDeclaracao then
+    XmlAss := RemoverDeclaracaoXML(XmlAss);
+
+  // Removendo quebras de linha //
+  XmlAss := ChangeLineBreak(XmlAss, '');
+
+  // DEBUG
+  //WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False, True);
+
+  Result := XmlAss;
 end;
 
 function TDFeSSLXmlSignLibXml2.CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring;
@@ -348,6 +369,8 @@ var
   valid_ctxt: xmlSchemaValidCtxtPtr;
   schemError: xmlErrorPtr;
 begin
+  InitLibXML2;
+
   Result := False;
   MsgErro := '';
 
@@ -426,6 +449,8 @@ var
   DigestAlg: TSSLDgst;
   rootNode, SignNode: xmlNodePtr;
 begin
+  InitLibXML2;
+
   Result := False;
   signBuffer := nil;
   aDoc := nil;
@@ -515,7 +540,8 @@ begin
 end;
 
 function TDFeSSLXmlSignLibXml2.LibXmlFindSignatureNode(aDoc: xmlDocPtr;
-  const SignatureNode: String; const SelectionNamespaces: String; infElement: String): xmlNodePtr;
+  const SignatureNode: String; const SelectionNamespaces: String; infElement: String
+  ): xmlNodePtr;
 var
   rootNode, infNode, infNodeParent, SignNode: xmlNodePtr;
   vSignatureNode, vSelectionNamespaces, vinfElement: String;

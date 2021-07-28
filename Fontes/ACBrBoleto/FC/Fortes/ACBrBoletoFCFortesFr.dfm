@@ -2600,7 +2600,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 350
         Width = 131
         Height = 10
-        Caption = 'Autentica'#231#227'o - Ficha de Compensa'#231#227'o'
+        Caption = 'Autentica'#231#227'o Mec'#226'nica - Ficha de Compensa'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -6261,7 +6261,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 314
         Width = 131
         Height = 10
-        Caption = 'Autentica'#231#227'o - Ficha de Compensa'#231#227'o'
+        Caption = 'Autentica'#231#227'o Mec'#226'nica - Ficha de Compensa'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -10306,7 +10306,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 246
         Width = 143
         Height = 10
-        Caption = 'Autentica'#231#227'o - Ficha de Compensa'#231#227'o'
+        Caption = 'Autentica'#231#227'o Mec'#226'nica - Ficha de Compensa'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

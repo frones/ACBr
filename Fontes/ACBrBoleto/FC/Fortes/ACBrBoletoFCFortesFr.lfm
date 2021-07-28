@@ -2330,7 +2330,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 350
         Width = 131
-        Caption = 'Autenticação - Ficha de Compensação'
+        Caption = 'Autenticação Mecânica - Ficha de Compensação'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -5618,7 +5618,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 314
         Width = 131
-        Caption = 'Autenticação - Ficha de Compensação'
+        Caption = 'Autenticação Mecânica - Ficha de Compensação'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -9250,7 +9250,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 246
         Width = 143
-        Caption = 'Autenticação - Ficha de Compensação'
+        Caption = 'Autenticação Mecânica - Ficha de Compensação'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'

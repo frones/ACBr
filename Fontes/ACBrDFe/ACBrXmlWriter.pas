@@ -149,7 +149,7 @@ begin
   FListaDeAlertas := TStringList.Create;
   FOpcoes := CreateOptions;
   FDocument := TACBrXmlDocument.Create();
-  FDocument.SaveOptions := [xmlNone, xmlNoDecl];
+  FDocument.SaveOptions := [xmlNoEmpty, xmlNoDecl];
 end;
 
 destructor TACBrXmlWriter.Destroy;

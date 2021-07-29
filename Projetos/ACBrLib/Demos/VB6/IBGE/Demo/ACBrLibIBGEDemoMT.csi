@@ -1,0 +1,15 @@
+[History]
+1=#P0#=mb	#P1#=processResult	#P2#=ACBrLibIBGE/ACBrIBGE/processResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172939	#P7#=0	#P8#=4	.
+2=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibIBGE/ACBrIBGE/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172934	#P7#=0	#P8#=2	.
+3=#P0#=mb	#P1#=BuscarPorNome	#P2#=ACBrLibIBGE/ACBrIBGE/BuscarPorNome	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172901	#P7#=0	#P8#=10	.
+4=#P0#=mb	#P1#=BuscarPorCodigo	#P2#=ACBrLibIBGE/ACBrIBGE/BuscarPorCodigo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172856	#P7#=0	#P8#=11	.
+5=#P0#=mb	#P1#=Versao	#P2#=ACBrLibIBGE/ACBrIBGE/Versao	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172847	#P7#=0	#P8#=10	.
+6=#P0#=mb	#P1#=Nome	#P2#=ACBrLibIBGE/ACBrIBGE/Nome	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172840	#P7#=0	#P8#=10	.
+7=#P0#=mb	#P1#=ConfigGravarValor	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigGravarValor	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172810	#P7#=0	#P8#=6	.
+8=#P0#=mb	#P1#=ConfigLerValor	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigLerValor	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722172802	#P7#=0	#P8#=9	.
+9=#P0#=mb	#P1#=ConfigGravar	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigGravar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722171526	#P7#=0	#P8#=4	.
+10=#P0#=mb	#P1#=ConfigLer	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigLer	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722171522	#P7#=0	#P8#=4	.
+11=#P0#=mb	#P1#=ConfigExportar	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigExportar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722171513	#P7#=0	#P8#=10	.
+12=#P0#=mb	#P1#=ConfigImportar	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigImportar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722171457	#P7#=0	#P8#=4	.
+13=#P0#=mb	#P1#=FinalizarLib	#P2#=ACBrLibIBGE/ACBrIBGE/FinalizarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722171324	#P7#=0	#P8#=0	.
+14=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibIBGE/ACBrIBGE/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722170028	#P7#=0	#P8#=3	.

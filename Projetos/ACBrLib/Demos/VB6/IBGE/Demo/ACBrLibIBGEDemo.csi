@@ -1,0 +1,20 @@
+[History]
+1=#P0#=mb	#P1#=Form_Unload	#P2#=ACBrLibIBGE/FrmMain/Form_Unload	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210722153846	#P7#=0	#P8#=0	.
+2=#P0#=mb	#P1#=SalvarConfig	#P2#=ACBrLibIBGE/FrmMain/SalvarConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722153911	#P7#=0	#P8#=7	.
+3=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibIBGE/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210721182628	#P7#=0	#P8#=-1	.
+4=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibIBGE/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210721182615	#P7#=0	#P8#=13	.
+5=#P0#=mb	#P1#=btnBuscarPorCodigo_Click	#P2#=ACBrLibIBGE/FrmMain/btnBuscarPorCodigo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210722151309	#P7#=0	#P8#=1	.
+6=#P0#=mb	#P1#=cmdCarregarConfigurações_Click	#P2#=ACBrLibIBGE/FrmMain/cmdCarregarConfigurações_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210721174903	#P7#=0	#P8#=0	.
+7=#P0#=mb	#P1#=cmdSalvarConfigurações_Click	#P2#=ACBrLibIBGE/FrmMain/cmdSalvarConfigurações_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210721174848	#P7#=0	#P8#=1	.
+8=#P0#=mb	#P1#=HasPosTipoStatus	#P2#=ACBrLibIBGE/ACBrComum/HasPosTipoStatus	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210721173916	#P7#=0	#P8#=-2	.
+9=#P0#=mb	#P1#=btnBuscarPorNome_Click	#P2#=ACBrLibIBGE/FrmMain/btnBuscarPorNome_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210722151408	#P7#=0	#P8#=3	.
+10=#P0#=mb	#P1#=BuscarPorCodigo	#P2#=ACBrLibIBGE/ACBrIBGE/BuscarPorCodigo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210721173424	#P7#=0	#P8#=16	.
+11=#P0#=mb	#P1#=BuscarPorNome	#P2#=ACBrLibIBGE/ACBrIBGE/BuscarPorNome	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210721173412	#P7#=0	#P8#=0	.
+12=#P0#=mb	#P1#=FinalizarLib	#P2#=ACBrLibIBGE/ACBrIBGE/FinalizarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722153643	#P7#=0	#P8#=3	.
+13=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibIBGE/ACBrIBGE/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210716161731	#P7#=0	#P8#=9	.
+14=#P0#=mb	#P1#=Nome	#P2#=ACBrLibIBGE/ACBrIBGE/Nome	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210716161728	#P7#=0	#P8#=13	.
+15=#P0#=mb	#P1#=Versao	#P2#=ACBrLibIBGE/ACBrIBGE/Versao	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210716151739	#P7#=0	#P8#=11	.
+16=#P0#=mb	#P1#=ConfigLer	#P2#=ACBrLibIBGE/ACBrIBGE/ConfigLer	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210716151629	#P7#=0	#P8#=2	.
+17=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibIBGE/ACBrIBGE/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210716151558	#P7#=0	#P8#=5	.
+18=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibIBGE/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210722153915	#P7#=0	#P8#=-1	.
+19=#P0#=mb	#P1#=CreateIBGE	#P2#=ACBrLibIBGE/ACBrIBGEUtils/CreateIBGE	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210714151003	#P7#=0	#P8#=7	.

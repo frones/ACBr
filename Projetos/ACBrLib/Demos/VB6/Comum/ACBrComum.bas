@@ -55,6 +55,7 @@ Public Const SESSAO_BAL_DEVICE                As String = "BAL_Device"
 Public Const SESSAO_GNRE                      As String = "GNRe"
 Public Const SESSAO_GUIA                      As String = "Guia"
 Public Const SESSAO_CEP                       As String = "CEP"
+Public Const SESSAO_IBGE                      As String = "IBGE"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -539,6 +540,11 @@ Public Enum WebServiceCEP
 End Enum
 
 Public Enum PesquisarIBGE
+    Nao = 0
+    Sim = 1
+End Enum
+
+Public Enum IgnorarCaixaEAcentos
     Nao = 0
     Sim = 1
 End Enum

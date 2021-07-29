@@ -57,6 +57,8 @@ exports
   IBGE_ConfigGravar,
   IBGE_ConfigLerValor,
   IBGE_ConfigGravarValor,
+  IBGE_ConfigImportar,
+  IBGE_ConfigExportar,
 
   // IBGE
   IBGE_BuscarPorCodigo,

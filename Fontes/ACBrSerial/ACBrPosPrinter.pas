@@ -491,6 +491,8 @@ type
     procedure DoTraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString);
 
+    procedure AjustarEstadoFonteAlinhamento(const ATag: AnsiString);
+
     procedure AtivarPorta;
     procedure DesativarPorta;
     procedure VerificaPodeLerDaPorta;
@@ -1886,215 +1888,102 @@ begin
   if (TagsNaoSuportadas.IndexOf(ATag) >= 0) then
     Exit;
 
-  if FPosPrinterClass.TraduzirTag(ATag, TagTraduzida) then
-    Exit;
-
-  TagTraduzida := '';
-  if ATag = cTagLigaExpandido then
+  if not FPosPrinterClass.TraduzirTag(ATag, TagTraduzida) then
   begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftExpandido, True);
-    FFonteStatus := FFonteStatus + [ftExpandido];
-  end
-
-  else if ATag = cTagDesligaExpandido then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftExpandido, False);
-    FFonteStatus := FFonteStatus - [ftExpandido];
-  end
-
-  else if ATag = cTagLigaAlturaDupla then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftAlturaDupla, True);
-    FFonteStatus := FFonteStatus + [ftAlturaDupla];
-  end
-
-  else if ATag = cTagDesligaAlturaDupla then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftAlturaDupla, False);
-    FFonteStatus := FFonteStatus - [ftAlturaDupla];
-  end
-
-  else if ATag = cTagLigaNegrito then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftNegrito, True);
-    FFonteStatus := FFonteStatus + [ftNegrito];
-  end
-
-  else if ATag = cTagDesligaNegrito then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftNegrito, False);
-    FFonteStatus := FFonteStatus - [ftNegrito];
-  end
-
-  else if ATag = cTagLigaSublinhado then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftSublinhado, True);
-    FFonteStatus := FFonteStatus + [ftSublinhado];
-  end
-
-  else if ATag = cTagDesligaSublinhado then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftSublinhado, False);
-    FFonteStatus := FFonteStatus - [ftSublinhado];
-  end
-
-  else if ATag = cTagLigaCondensado then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftCondensado, True);
-    FFonteStatus := FFonteStatus + [ftCondensado];
-  end
-
-  else if ATag = cTagDesligaCondensado then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftCondensado, False);
-    FFonteStatus := FFonteStatus - [ftCondensado];
-  end
-
-  else if ATag = cTagLigaItalico then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftItalico, True);
-    FFonteStatus := FFonteStatus + [ftItalico];
-  end
-
-  else if ATag = cTagDesligaItalico then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftItalico, False);
-    FFonteStatus := FFonteStatus - [ftItalico];
-  end
-
-  else if ATag = cTagFonteNormal then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.FonteNormal;
-    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
-                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido, ftFonteB];
-  end
-
-  else if ATag = cTagZera then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.Zera + FPosPrinterClass.ComandoInicializa;
-
-    FInicializada := True;
-    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
-                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
-  end
-
-  else if ATag = cTagReset then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.Zera;
-
-    FInicializada := False;
-    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
-                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
-  end
-
-  else if ATag = cTagLigaInvertido then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftInvertido, True);
-    FFonteStatus := FFonteStatus + [ftInvertido];
-  end
-
-  else if ATag = cTagDesligaInvertido then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftInvertido, False);
-    FFonteStatus := FFonteStatus - [ftInvertido];
-  end
-
-  else if ATag = cTagFonteA then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftFonteB, False);
-    FFonteStatus := FFonteStatus - [ftFonteB];
-  end
-
-  else if ATag = cTagFonteB then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoFonte(ftFonteB, True);
-    FFonteStatus := FFonteStatus + [ftFonteB];
-  end
-
-  else if ATag = cTagLinhaSimples then
-    TagTraduzida := AnsiString(StringOfChar('-', Colunas))
-
-  else if ATag = cTagLinhaDupla then
-    TagTraduzida := AnsiString(StringOfChar('=', Colunas))
-
-  else if ATag = cTagPuloDeLinhas then
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
-
-  else if (ATag = cTagCorteParcial) or ( (ATag = cTagCorte) and (FTipoCorte = ctParcial) ) then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
-    if CortaPapel then
-      TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteParcial;
-  end
-
-  else if (ATag = cTagCorteTotal) or ( (ATag = cTagCorte) and (FTipoCorte = ctTotal) ) then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
-    if CortaPapel then
-      TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteTotal;
-  end
-
-  else if ATag = cTagAbreGaveta then
-    TagTraduzida := FPosPrinterClass.ComandoGaveta()
-
-  else if ATag = cTagBeep then
-    TagTraduzida := FPosPrinterClass.Cmd.Beep
-
-  else if ATag = cTagLogotipo then
-    if FConfigLogo.IgnorarLogo then
-      TagTraduzida := ''
-    else
-      TagTraduzida := FPosPrinterClass.ComandoLogo
-
-  else if ATag = cTagPulodeLinha then
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(1)
-
-  else if ATag = cTagPulodePagina then
-    TagTraduzida := FPosPrinterClass.Cmd.PuloDePagina
-
-  else if ATag = cTagRetornoDeCarro then
-    TagTraduzida := CR
-
-  else if ATag = cTagFonteAlinhadaEsquerda then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.AlinhadoEsquerda;
-    FTipoAlinhamento := alEsquerda;
-  end
-
-  else if ATag = cTagFonteAlinhadaDireita then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.AlinhadoDireita;
-    FTipoAlinhamento := alDireita;
-  end
-
-  else if ATag = cTagfonteAlinhadaCentro then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.AlinhadoCentro;
-    FTipoAlinhamento := alCentro;
-  end
-
-  else if ATag = cTagModoPaginaLiga then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.LigaModoPagina;
-    FModoPaginaLigado := True;
-  end
-
-  else if ATag = cTagModoPaginaDesliga then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.ImprimePagina +
-                    FPosPrinterClass.Cmd.DesligaModoPagina;
-    FModoPaginaLigado := False;
-  end
-
-  else if ATag = cTagModoPaginaImprimir then
-  begin
-    TagTraduzida := FPosPrinterClass.Cmd.ImprimePagina;
-  end
-
-  else if ATag = cTagModoPaginaConfigurar then
-  begin
-    TagTraduzida := FPosPrinterClass.ComandoConfiguraModoPagina;
+    TagTraduzida := '';
+    if (ATag = cTagLigaExpandido) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftExpandido, True)
+    else if (ATag = cTagDesligaExpandido) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftExpandido, False)
+    else if (ATag = cTagLigaAlturaDupla) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftAlturaDupla, True)
+    else if (ATag = cTagDesligaAlturaDupla) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftAlturaDupla, False)
+    else if (ATag = cTagLigaNegrito) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftNegrito, True)
+    else if (ATag = cTagDesligaNegrito) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftNegrito, False)
+    else if (ATag = cTagLigaSublinhado) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftSublinhado, True)
+    else if (ATag = cTagDesligaSublinhado) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftSublinhado, False)
+    else if (ATag = cTagLigaCondensado) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftCondensado, True)
+    else if (ATag = cTagDesligaCondensado) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftCondensado, False)
+    else if (ATag = cTagLigaItalico) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftItalico, True)
+    else if (ATag = cTagDesligaItalico) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftItalico, False)
+    else if (ATag = cTagLigaInvertido) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftInvertido, True)
+    else if (ATag = cTagDesligaInvertido) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftInvertido, False)
+    else if (ATag = cTagFonteA) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftFonteB, False)
+    else if (ATag = cTagFonteB) then
+      TagTraduzida := FPosPrinterClass.ComandoFonte(ftFonteB, True)
+    else if (ATag = cTagFonteAlinhadaEsquerda) then
+      TagTraduzida := FPosPrinterClass.Cmd.AlinhadoEsquerda
+    else if (ATag = cTagFonteAlinhadaDireita) then
+      TagTraduzida := FPosPrinterClass.Cmd.AlinhadoDireita
+    else if (ATag = cTagfonteAlinhadaCentro) then
+      TagTraduzida := FPosPrinterClass.Cmd.AlinhadoCentro
+    else if (ATag = cTagFonteNormal) then
+      TagTraduzida := FPosPrinterClass.Cmd.FonteNormal
+    else if (ATag = cTagZera) then
+      TagTraduzida := FPosPrinterClass.Cmd.Zera + FPosPrinterClass.ComandoInicializa
+    else if (ATag = cTagReset) then
+      TagTraduzida := FPosPrinterClass.Cmd.Zera
+    else if (ATag = cTagLinhaSimples) then
+      TagTraduzida := AnsiString(StringOfChar('-', Colunas))
+    else if (ATag = cTagLinhaDupla) then
+      TagTraduzida := AnsiString(StringOfChar('=', Colunas))
+    else if (ATag = cTagPuloDeLinhas) then
+      TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
+    else if (ATag = cTagCorteParcial) or ( (ATag = cTagCorte) and (FTipoCorte = ctParcial) ) then
+    begin
+      TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
+      if CortaPapel then
+        TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteParcial;
+    end
+    else if (ATag = cTagCorteTotal) or ( (ATag = cTagCorte) and (FTipoCorte = ctTotal) ) then
+    begin
+      TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
+      if CortaPapel then
+        TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteTotal;
+    end
+    else if (ATag = cTagAbreGaveta) then
+      TagTraduzida := FPosPrinterClass.ComandoGaveta()
+    else if (ATag = cTagBeep) then
+      TagTraduzida := FPosPrinterClass.Cmd.Beep
+    else if (ATag = cTagLogotipo) then
+    begin
+      if FConfigLogo.IgnorarLogo then
+        TagTraduzida := ''
+      else
+        TagTraduzida := FPosPrinterClass.ComandoLogo;
+    end
+    else if (ATag = cTagPulodeLinha) then
+      TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(1)
+    else if (ATag = cTagPulodePagina) then
+      TagTraduzida := FPosPrinterClass.Cmd.PuloDePagina
+    else if (ATag = cTagRetornoDeCarro) then
+      TagTraduzida := CR
+    else if (ATag = cTagModoPaginaLiga) then
+      TagTraduzida := FPosPrinterClass.Cmd.LigaModoPagina
+    else if (ATag = cTagModoPaginaDesliga) then
+    begin
+      TagTraduzida := FPosPrinterClass.Cmd.ImprimePagina +
+                      FPosPrinterClass.Cmd.DesligaModoPagina;
+    end
+    else if (ATag = cTagModoPaginaImprimir) then
+      TagTraduzida := FPosPrinterClass.Cmd.ImprimePagina
+    else if (ATag = cTagModoPaginaConfigurar) then
+      TagTraduzida := FPosPrinterClass.ComandoConfiguraModoPagina;
   end;
+
+  AjustarEstadoFonteAlinhamento(ATag);
 
   GravarLog(AnsiString('TraduzirTag(' + ATag + ') -> ') + TagTraduzida, True);
 end;
@@ -2254,6 +2143,70 @@ begin
   end;
 
   GravarLog('TraduzirTagBloco(' + ATag + ', ' + ConteudoBloco + ') -> ' + BlocoTraduzido, True);
+end;
+
+procedure TACBrPosPrinter.AjustarEstadoFonteAlinhamento(const ATag: AnsiString);
+begin
+  if (ATag = cTagLigaExpandido) then
+    FFonteStatus := FFonteStatus + [ftExpandido]
+  else if (ATag = cTagDesligaExpandido) then
+    FFonteStatus := FFonteStatus - [ftExpandido]
+  else if (ATag = cTagLigaAlturaDupla) then
+    FFonteStatus := FFonteStatus + [ftAlturaDupla]
+  else if (ATag = cTagDesligaAlturaDupla) then
+    FFonteStatus := FFonteStatus - [ftAlturaDupla]
+  else if (ATag = cTagLigaNegrito) then
+    FFonteStatus := FFonteStatus + [ftNegrito]
+  else if (ATag = cTagDesligaNegrito) then
+    FFonteStatus := FFonteStatus - [ftNegrito]
+  else if (ATag = cTagLigaSublinhado) then
+    FFonteStatus := FFonteStatus + [ftSublinhado]
+  else if (ATag = cTagDesligaSublinhado) then
+    FFonteStatus := FFonteStatus - [ftSublinhado]
+  else if (ATag = cTagLigaCondensado) then
+    FFonteStatus := FFonteStatus + [ftCondensado]
+  else if (ATag = cTagDesligaCondensado) then
+    FFonteStatus := FFonteStatus - [ftCondensado]
+  else if (ATag = cTagLigaItalico) then
+    FFonteStatus := FFonteStatus + [ftItalico]
+  else if (ATag = cTagDesligaItalico) then
+    FFonteStatus := FFonteStatus - [ftItalico]
+  else if (ATag = cTagLigaInvertido) then
+    FFonteStatus := FFonteStatus + [ftInvertido]
+  else if (ATag = cTagDesligaInvertido) then
+    FFonteStatus := FFonteStatus - [ftInvertido]
+  else if (ATag = cTagFonteA) then
+    FFonteStatus := FFonteStatus - [ftFonteB]
+  else if (ATag = cTagFonteB) then
+    FFonteStatus := FFonteStatus + [ftFonteB]
+  else if (ATag = cTagFonteAlinhadaEsquerda) then
+    FTipoAlinhamento := alEsquerda
+  else if (ATag = cTagFonteAlinhadaDireita) then
+    FTipoAlinhamento := alDireita
+  else if (ATag = cTagfonteAlinhadaCentro) then
+    FTipoAlinhamento := alCentro
+  else if (ATag = cTagModoPaginaLiga) then
+    FModoPaginaLigado := True
+  else if (ATag = cTagModoPaginaDesliga) then
+    FModoPaginaLigado := False
+  else if (ATag = cTagFonteNormal) then
+  begin
+    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido,
+                                    ftFonteB]
+  end
+  else if (ATag = cTagZera) then
+  begin
+    FInicializada := True;
+    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
+  end
+  else if (ATag = cTagReset) then
+  begin
+    FInicializada := False;
+    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
+  end
 end;
 
 procedure TACBrPosPrinter.AtivarPorta;

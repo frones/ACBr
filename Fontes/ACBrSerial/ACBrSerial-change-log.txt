@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/07/2021
+-- ACBrPosPrinter --
+[-] Método "TACBrPosPrinter.DoTraduzirTag", modificado, para que os Flags internos
+    de Fonte e Alinhamento, sejam processados, mesmo quando a tradução da Tag é
+    sobreposta em uma Classe Externa
+    (por: DSA)
+
 Data: 06/07/2021
 -- ACBrPosPrinter --
 [-] Ajuste para evitar apagar a atribuição do evento: OnEnviarStringDevice,

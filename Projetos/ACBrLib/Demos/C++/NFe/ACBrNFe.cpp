@@ -71,7 +71,9 @@ std::string ACBrNFe::Nome() const
 	const std::string buffer(BUFFER_LEN, ' ');
 	int bufferLen = BUFFER_LEN;
 
-	method(this->libHandler, buffer.c_str(), &bufferLen);
+	const int ret = method(this->libHandler, buffer.c_str(), &bufferLen);
+	CheckResult(ret);
+
 	return ProcessResult(buffer, bufferLen);
 }
 
@@ -88,7 +90,9 @@ std::string ACBrNFe::Versao() const
 	const std::string buffer(BUFFER_LEN, ' ');
 	int bufferLen = BUFFER_LEN;
 
-	method(this->libHandler, buffer.c_str(), &bufferLen);
+	const int ret = method(this->libHandler, buffer.c_str(), &bufferLen);
+	CheckResult(ret);
+
 	return ProcessResult(buffer, bufferLen);
 }
 

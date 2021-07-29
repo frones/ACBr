@@ -49,12 +49,14 @@ type
     FRegistroH005Count: Integer;
     FRegistroH010Count: Integer;
     FRegistroH020Count: Integer;
+    FRegistroH011Count: Integer;
     FRegistroH030Count: Integer;
 
 
     procedure WriteRegistroH005(RegH001: TRegistroH001);
     procedure WriteRegistroH010(RegH005: TRegistroH005);
     procedure WriteRegistroH020(RegH010: TRegistroH010);
+    procedure WriteRegistroH011(RegH010: TRegistroH010);
     procedure WriteRegistroH030(RegH010: TRegistroH010);
 
 
@@ -68,6 +70,7 @@ type
     function RegistroH001New: TRegistroH001;
     function RegistroH005New: TRegistroH005;
     function RegistroH010New: TRegistroH010;
+    function RegistroH011New: TRegistroH011;
     function RegistroH020New: TRegistroH020;
     function RegistroH030New: TRegistroH030;
 
@@ -81,6 +84,7 @@ type
 
     property RegistroH005Count: Integer read FRegistroH005Count write FRegistroH005Count;
     property RegistroH010Count: Integer read FRegistroH010Count write FRegistroH010Count;
+    property RegistroH011Count: Integer read FRegistroH011Count write FRegistroH011Count;
     property RegistroH020Count: Integer read FRegistroH020Count write FRegistroH020Count;
     property RegistroH030Count: Integer read FRegistroH030Count write FRegistroH030Count;
   end;
@@ -108,6 +112,7 @@ begin
 
   FRegistroH005Count := 0;
   FRegistroH010Count := 0;
+  FRegistroH011Count := 0;
   FRegistroH020Count := 0;
   FRegistroH030Count := 0;
 
@@ -167,6 +172,21 @@ begin
 
    H010   := FRegistroH001.RegistroH005.Items[H005Count].RegistroH010.Items[H010Count];
    Result := H010.RegistroH020.New(H010);
+end;
+
+function TBloco_H.RegistroH011New: TRegistroH011;
+var
+H010: TRegistroH010;
+H005Count: integer;
+H010Count: integer;
+begin
+   H005Count := FRegistroH001.RegistroH005.Count -1;
+   H010Count := FRegistroH001.RegistroH005.Items[H005Count].RegistroH010.Count -1;
+   if H010Count = -1 then
+      raise Exception.Create('O registro H011 deve ser filho do registro H010, e não existe nenhum H010 pai!');
+
+   H010   := FRegistroH001.RegistroH005.Items[H005Count].RegistroH010.Items[H010Count];
+   Result := H010.RegistroH011.New(H010);
 end;
 
 function TBloco_H.RegistroH030New: TRegistroH030;
@@ -283,6 +303,7 @@ begin
         end;
 
         /// Registros FILHOS
+        WriteRegistroH011( RegH005.RegistroH010.Items[intFor] );
         WriteRegistroH020( RegH005.RegistroH010.Items[intFor] );
         WriteRegistroH030( RegH005.RegistroH010.Items[intFor] );
 
@@ -320,6 +341,30 @@ begin
     end;
 end;
 
+procedure TBloco_H.WriteRegistroH011(RegH010: TRegistroH010);
+var
+  intFor: integer;
+begin
+  if DT_INI >= EncodeDate(2012,07,01) then
+  begin
+    if Assigned( RegH010.RegistroH011 ) then
+    begin
+      for intFor := 0 to RegH010.RegistroH011.Count - 1 do
+      begin
+        with RegH010.RegistroH011.Items[intFor] do
+        begin
+          Add( LFill('H011') +
+               LFill( CNPJ ));
+        end;
+
+        RegistroH990.QTD_LIN_H := RegistroH990.QTD_LIN_H + 1;
+      end;
+
+      /// Variavél para armazenar a quantidade de registro do tipo.
+      FRegistroH011Count := FRegistroH011Count + RegH010.RegistroH011.Count;
+    end;
+  end;
+end;
 
 procedure TBloco_H.WriteRegistroH030(RegH010: TRegistroH010);
 var

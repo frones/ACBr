@@ -40,6 +40,7 @@ uses
 type
   TRegistroH005List = class;
   TRegistroH010List = class;
+  TRegistroH011List = class;
   TRegistroH020List = class;
   TRegistroH030List = class;
 
@@ -109,6 +110,7 @@ type
     fCOD_CTA: String;        /// Código da conta analítica contábil debitada/creditada
     fVL_ITEM_IR: Double;       /// Valor do item para efeitos do Imposto de Renda.
 
+    FRegistroH011: TRegistroH011List;  /// BLOCO H - Lista de RegistroH011 (FILHO)
     FRegistroH020: TRegistroH020List;  /// BLOCO H - Lista de RegistroH020 (FILHO)
     FRegistroH030: TRegistroH030List;  /// BLOCO H - Lista de RegistroH030 (FILHO)
 
@@ -127,6 +129,7 @@ type
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
     property VL_ITEM_IR : Double read fVL_ITEM_IR write fVL_ITEM_IR;
     /// Registros FILHOS
+    property RegistroH011: TRegistroH011List read FRegistroH011 write FRegistroH011;
     property RegistroH020: TRegistroH020List read FRegistroH020 write FRegistroH020;
     property RegistroH030: TRegistroH030List read FRegistroH030 write FRegistroH030;
   end;
@@ -141,6 +144,27 @@ type
     function LocalizaRegistro(const pCOD_ITEM: String): boolean;
     function New(): TRegistroH010;
     property Items[Index: Integer]: TRegistroH010 read GetItem write SetItem;
+  end;
+
+  /// Registro H020 - INFORMAÇÃO COMPLEMENTAR DO INVENTÁRIO
+
+  TRegistroH011 = class
+  private
+    fCNPJ: String;          /// CNPJ DA EMPRESA RESPONSÁVEL PELO INVENTARIO
+  public
+    constructor Create(AOwner: TRegistroH010); virtual; /// Create
+
+    property CNPJ: String read fCNPJ write fCNPJ;
+  end;
+
+  /// Registro H011 - Lista
+  TRegistroH011List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroH011; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroH011); /// SetItem
+  public
+    function New(AOwner: TRegistroH010): TRegistroH011;
+    property Items[Index: Integer]: TRegistroH011 read GetItem write SetItem;
   end;
 
   /// Registro H020 - INFORMAÇÃO COMPLEMENTAR DO INVENTÁRIO
@@ -308,11 +332,31 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroH011List }
+
+function TRegistroH011List.GetItem(Index: Integer): TRegistroH011;
+begin
+  Result := TRegistroH011(Inherited Items[Index]);
+end;
+
+function TRegistroH011List.New(AOwner: TRegistroH010): TRegistroH011;
+begin
+  Result := TRegistroH011.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroH011List.SetItem(Index: Integer;
+  const Value: TRegistroH011);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroH010 }
 
 constructor TRegistroH010.Create();
 begin
   inherited Create;
+  FRegistroH011 := TRegistroH011List.Create;
   FRegistroH020 := TRegistroH020List.Create;
   FRegistroH030 := TRegistroH030List.Create;
 end;
@@ -322,6 +366,12 @@ begin
   FRegistroH020.Free;
   FRegistroH030.Free;
   inherited;
+end;
+
+{ TRegistroH011 }
+
+constructor TRegistroH011.Create(AOwner: TRegistroH010);
+begin
 end;
 
 { TRegistroH020 }

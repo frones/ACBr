@@ -60,10 +60,17 @@ type
     function GetProperties: TArray<TRttiProperty>;
   end;
 
+  TEnum = record
+    class function TryParse<T>(const Value: Integer; out AEnum: T): Boolean; overload; static;
+    class function TryParse<T>(const Value: string; out AEnum: T): Boolean; overload; static;
+    class function Parse<T>(const Value: Integer): T; overload; static;
+    class function Parse<T>(const Value: String): T; overload; static;
+  end;
+
 implementation
 
 uses
-  ACBrLibComum, ACBrUtil;
+  TypInfo, ACBrLibComum, ACBrUtil;
 
 { TACBrMemIniFileHelper }
 procedure TACBrMemIniFileHelper.LoadFromString(const IniString: string);
@@ -163,6 +170,49 @@ begin
   begin
     Result[i] := TRttiProperty.Create(Self.Items[i]);
   end;
+end;
+
+{ TEnum }
+class function TEnum.TryParse<T>(const Value: Integer; out AEnum: T): Boolean;
+begin
+  if PTypeInfo(TypeInfo(T))^.Kind <> tkEnumeration then
+      Exit;
+
+  try
+    AEnum := T(GetEnumValue(TypeInfo(T), GetEnumName(TypeInfo(T), Value)));
+    Result := True;
+  except
+    Result := false;
+  end;
+end;
+
+class function TEnum.TryParse<T>(const Value: String; out AEnum: T): Boolean;
+begin
+  if PTypeInfo(TypeInfo(T))^.Kind <> tkEnumeration then
+      Exit;
+
+  try
+    AEnum := T(GetEnumValue(TypeInfo(T), Value));
+    Result := True;
+  except
+    Result := false;
+  end;
+end;
+
+class function TEnum.Parse<T>(const Value: Integer): T;
+begin
+  if PTypeInfo(TypeInfo(T))^.Kind <> tkEnumeration then
+      Exit;
+
+  Result := T(GetEnumValue(TypeInfo(T), GetEnumName(TypeInfo(T), Value)));
+end;
+
+class function TEnum.Parse<T>(const Value: String): T;
+begin
+  if PTypeInfo(TypeInfo(T))^.Kind <> tkEnumeration then
+      Exit;
+
+  Result := T(GetEnumValue(TypeInfo(T), Value));
 end;
 
 end.

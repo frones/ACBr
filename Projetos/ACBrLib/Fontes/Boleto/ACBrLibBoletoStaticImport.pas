@@ -95,18 +95,16 @@ function Boleto_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint
 {%endregion}
 
 {%region Boleto}
-function Boleto_ConfigurarDados(eArquivoIni: PChar; const sResposta: PChar;
-    var esTamanho: longint): longint;
+function Boleto_ConfigurarDados(eArquivoIni: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_IncluirTitulos(eArquivoIni, eTpSaida: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function Boleto_IncluirTitulos(eArquivoIni, eTpSaida: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_TotalTitulosLista(const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_TotalTitulosLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_Imprimir(eNomeImpressora: PChar): longint;
@@ -131,8 +129,7 @@ function Boleto_ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar;
 function Boleto_EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_SetDiretorioArquivo(eDir, eArq: PChar; const sResposta: PChar;
-  var esTamanho: longint): longint;
+function Boleto_SetDiretorioArquivo(eDir, eArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_ListaBancos(const sResposta: PChar; var esTamanho: longint): longint;
@@ -147,13 +144,13 @@ function Boleto_ListaOcorrencias(const sResposta: PChar; var esTamanho: longint)
 function Boleto_ListaOcorrenciasEX(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_CodigosMoraAceitos(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_SelecionaBanco(eCodBanco: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_SelecionaBanco(eCodBanco: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_MontarNossoNumero(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
@@ -165,6 +162,8 @@ function Boleto_RetornaLinhaDigitavel(eIndice: longint; const sResposta: PChar; 
 function Boleto_RetornaCodigoBarras(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
+function Boleto_EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 {%endregion}
 

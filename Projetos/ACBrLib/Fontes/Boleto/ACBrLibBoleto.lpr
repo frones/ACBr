@@ -86,7 +86,8 @@ exports
   Boleto_SelecionaBanco,
   Boleto_MontarNossoNumero,
   Boleto_RetornaLinhaDigitavel,
-  Boleto_RetornaCodigoBarras;
+  Boleto_RetornaCodigoBarras,
+  Boleto_EnviarBoleto;
 
 begin
   {$IFDEF DEBUG}

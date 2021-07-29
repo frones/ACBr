@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrBoleto, ACBrBoletoConversao, ACBrLibConfig;
+  ACBrBoleto, ACBrBoletoConversao, ACBrLibConfig, ACBrLibComum, pcnConversao, ACBrDFeConfiguracoes;
 
 type
 
@@ -106,6 +106,29 @@ type
     property NumeroCorrespondente: Integer read FNumeroCorrespondente write FNumeroCorrespondente;
     property OrientacaoBanco: String read FOrientacaoBanco write FOrientacaoBanco;
     property TipoCobranca: TACBrTipoCobranca read FTipoCobranca write FTipoCobranca;
+
+  end;
+
+  {TBoletoCedenteWS}
+  TBoletoCedenteWS = class
+  private
+    FClientID: String;
+    FClientSecret: String;
+    FKeyUser: String;
+    FScope: String;
+    FIndicadorPix: Boolean;
+
+  public
+    constructor Create;
+
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
+
+    property ClientID: String read FClientID write FClientID;
+    property ClientSecret: String read FClientSecret write FClientSecret;
+    property KeyUser: String read FKeyUser write FKeyUser;
+    property Scope: String read FScope write FScope;
+    property IndicadorPix: Boolean read FIndicadorPix write FIndicadorPix;
 
   end;
 
@@ -183,6 +206,8 @@ type
     FNumeroCopias: Integer;
     FPrinterName: String;
     FSoftwareHouse: String;
+    FAlterarEscalaPadrao: Boolean;
+    FNovaEscala: Integer;
 
   public
     constructor Create;
@@ -200,6 +225,33 @@ type
     property NumeroCopias: Integer read FNumeroCopias write FNumeroCopias;
     property PrinterName: String read FPrinterName write FPrinterName;
     property SoftwareHouse: String read FSoftwareHouse write FSoftwareHouse;
+    property AlterarEscalaPadrao: Boolean read FAlterarEscalaPadrao write FAlterarEscalaPadrao;
+    property NovaEscala: Integer read FNovaEscala write FNovaEscala;
+
+  end;
+
+  { TBoletoConfigWS }
+  TBoletoConfigWS = class
+  private
+    FLogRegistro: Boolean;
+    FPathGravarRegistro: String;
+    FAmbiente: TpcnTipoAmbiente;
+    FOperacao: TOperacao;
+    FVersaoDF: String;
+    FUseCertificateHTTP: Boolean;
+
+  public
+    constructor Create;
+
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
+
+    property LogRegistro: Boolean read FLogRegistro write FLogRegistro;
+    property PathGravarRegistro: String read FPathGravarRegistro write FPathGravarRegistro;
+    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
+    property Operacao: TOperacao read FOperacao write FOperacao;
+    property VersaoDF: String read FVersaoDF write FVersaoDF;
+    property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
 
   end;
 
@@ -228,6 +280,9 @@ type
     FBoletoCedenteConfig: TBoletoCedenteConfig;
     FBoletoFCFortesConfig: TBoletoFCFortesConfig;
     FBoletoConfig: TBoletoConfig;
+    FBoletoCedenteWS: TBoletoCedenteWS;
+    FBoletoConfigWS: TBoletoConfigWS;
+    FBoletoDFeConfigWS: TConfiguracoes;
 
   protected
     procedure INIParaClasse; override;
@@ -241,11 +296,16 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: string = ''; AChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
 
+    function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; override;
+
     property BoletoDiretorioConfig: TBoletoDiretorioConfig read FBoletoDiretorioConfig;
     property BoletoBancoConfig: TBoletoBancoConfig read FBoletoBancoConfig;
     property BoletoCedenteConfig: TBoletoCedenteConfig read FBoletoCedenteConfig;
     property BoletoFCFortesConfig: TBoletoFCFortesConfig read FBoletoFCFortesConfig;
     property BoletoConfig: TBoletoConfig read FBoletoConfig;
+    property BoletoCedenteWS: TBoletoCedenteWS read FBoletoCedenteWS;
+    property BoletoConfigWS: TBoletoConfigWS read FBoletoConfigWS;
+    property BoletoDFeConfigWS: TConfiguracoes read FBoletoDFeConfigWS;
 
   end;
 
@@ -253,8 +313,72 @@ type
 implementation
 
 uses
-  ACBrLibBoletoConsts, ACBrUtil,
+  typinfo, strutils, synacode, blcksock, ACBrLibBoletoConsts, ACBrUtil,
   ACBrConsts, ACBrLibConsts, ACBrLibBoletoBase;
+
+{ TBoletoConfigWS }
+
+constructor TBoletoConfigWS.Create;
+begin
+  FLogRegistro:= True;
+  FPathGravarRegistro:= '';
+  FAmbiente:= taHomologacao;
+  FOperacao:= tpInclui;
+  FVersaoDF:= '1.2';
+  FUseCertificateHTTP:= False;
+
+end;
+
+procedure TBoletoConfigWS.LerIni(const AIni: TCustomIniFile);
+begin
+  LogRegistro:= AIni.ReadBool(CSessaoBoletoWebSevice, CChaveLogRegistro, LogRegistro );
+  PathGravarRegistro:= AIni.ReadString(CSessaoBoletoWebSevice, CChavePathGravarRegistro, PathGravarRegistro );
+  Ambiente:= TpcnTipoAmbiente( AIni.ReadInteger(CSessaoBoletoWebSevice, CChaveAmbiente, integer(Ambiente) ) );
+  Operacao:= TOperacao( AIni.ReadInteger(CSessaoBoletoWebSevice, CChaveOperacao, integer(Operacao) ) );
+  VersaoDF:= AIni.ReadString(CSessaoBoletoWebSevice, CChaveVersaoDF, VersaoDF );
+  UseCertificateHTTP:= AIni.ReadBool(CSessaoBoletoWebSevice, CChaveUseCertificateHTTP, UseCertificateHTTP );
+
+end;
+
+procedure TBoletoConfigWS.GravarIni(const AIni: TCustomIniFile);
+begin
+  AIni.WriteBool(CSessaoBoletoWebSevice, CChaveLogRegistro, LogRegistro );
+  AIni.WriteString(CSessaoBoletoWebSevice, CChavePathGravarRegistro, PathGravarRegistro );
+  AIni.WriteInteger(CSessaoBoletoWebSevice, CChaveAmbiente,integer(Ambiente) );
+  AIni.WriteInteger(CSessaoBoletoWebSevice, CChaveOperacao, integer(Operacao) );
+  AIni.WriteString(CSessaoBoletoWebSevice, CChaveVersaoDF, VersaoDF );
+  AIni.WriteBool(CSessaoBoletoWebSevice, CChaveUseCertificateHTTP, UseCertificateHTTP );
+
+end;
+
+{ TBoletoCedenteWS }
+
+constructor TBoletoCedenteWS.Create;
+begin
+  FClientID:= '';
+  FClientSecret:= '';
+  FKeyUser:= '';
+  FScope:= '';
+  FIndicadorPix:= False;
+end;
+
+procedure TBoletoCedenteWS.LerIni(const AIni: TCustomIniFile);
+begin
+  ClientID:= AIni.ReadString(CSessaoBoletoCedenteWS, CChaveClientID, ClientID );
+  ClientSecret:= AIni.ReadString(CSessaoBoletoCedenteWS, CChaveClientSecret, ClientSecret);
+  KeyUser:= AIni.ReadString(CSessaoBoletoCedenteWS, CChaveKeyUser, KeyUser);
+  Scope:= AIni.ReadString(CSessaoBoletoCedenteWS, CChaveScope, Scope);
+  IndicadorPix:= AIni.ReadBool(CSessaoBoletoCedenteWS, CChaveIndicadorPix, IndicadorPix);
+end;
+
+procedure TBoletoCedenteWS.GravarIni(const AIni: TCustomIniFile);
+begin
+  AIni.WriteString(CSessaoBoletoCedenteWS, CChaveClientID, ClientID  );
+  AIni.WriteString(CSessaoBoletoCedenteWS, CChaveClientSecret, ClientSecret  );
+  AIni.WriteString(CSessaoBoletoCedenteWS, CChaveKeyUser, KeyUser  );
+  AIni.WriteString(CSessaoBoletoCedenteWS, CChaveScope, Scope  );
+  AIni.WriteBool(CSessaoBoletoCedenteWS, CChaveIndicadorPix, IndicadorPix);
+end;
 
 { TLibBoletoConfig }
 procedure TLibBoletoConfig.INIParaClasse;
@@ -266,6 +390,10 @@ begin
   FBoletoCedenteConfig.LerIni(Ini);
   FBoletoFCFortesConfig.LerIni(Ini);
   FBoletoConfig.LerIni(Ini);
+  FBoletoCedenteWS.LerIni(Ini);
+  FBoletoConfigWS.LerIni(Ini);
+  FBoletoDFeConfigWS.ChaveCryptINI:= ChaveCrypt;
+  FBoletoDFeConfigWS.LerIni(Ini);
 
 end;
 
@@ -278,6 +406,11 @@ begin
   FBoletoCedenteConfig.GravarIni(Ini);
   FBoletoFCFortesConfig.GravarIni(Ini);
   FBoletoConfig.GravarIni(Ini);
+  FBoletoCedenteWS.GravarIni(Ini);
+  FBoletoConfigWS.GravarIni(Ini);
+  FBoletoDFeConfigWS.ChaveCryptINI:= ChaveCrypt;
+  FBoletoDFeConfigWS.GravarIni(Ini);
+
 end;
 
 procedure TLibBoletoConfig.ClasseParaComponentes;
@@ -288,6 +421,8 @@ end;
 
 procedure TLibBoletoConfig.Travar;
 begin
+  FBoletoDFeConfigWS.ChaveCryptINI:= ChaveCrypt;
+
   if Assigned(Owner) then
   begin
     with TACBrLibBoleto(Owner) do
@@ -314,6 +449,11 @@ begin
   FBoletoCedenteConfig := TBoletoCedenteConfig.Create;
   FBoletoFCFortesConfig := TBoletoFCFortesConfig.Create;
   FBoletoConfig := TBoletoConfig.Create;
+  FBoletoCedenteWS := TBoletoCedenteWS.Create;
+  FBoletoConfigWS := TBoletoConfigWS.Create;
+  FBoletoDFeConfigWS := TConfiguracoes.Create(nil);
+  FBoletoDFeConfigWS.ChaveCryptINI := AChaveCrypt;
+
 end;
 
 destructor TLibBoletoConfig.Destroy;
@@ -323,6 +463,9 @@ begin
   FBoletoCedenteConfig.Free;
   FBoletoFCFortesConfig.Free;
   FBoletoConfig.Free;
+  FBoletoCedenteWS.Free;
+  FBoletoConfigWS.Free;
+  FBoletoDFeConfigWS.Free;
 
   inherited Destroy;
 end;
@@ -360,6 +503,8 @@ begin
   FNumeroCopias:= 1;
   FPrinterName:= '';
   FSoftwareHouse:= '';
+  FAlterarEscalaPadrao:= False;
+  FNovaEscala:= 96;
 end;
 
 procedure TBoletoFCFortesConfig.LerIni(const AIni: TCustomIniFile);
@@ -374,6 +519,8 @@ begin
   NumeroCopias:= AIni.ReadInteger(CSessaoBoletoFCFortesConfig, CChaveNumeroCopias, NumeroCopias );
   PrinterName:= AIni.ReadString(CSessaoBoletoFCFortesConfig, CChavePrinterName, PrinterName);
   SoftwareHouse:= AIni.ReadString(CSessaoBoletoFCFortesConfig, CChaveSoftwareHouse, SoftwareHouse );
+  AlterarEscalaPadrao:= AIni.ReadBool(CSessaoBoletoFCFortesConfig, CChaveAlterarEscalaPadrao, AlterarEscalaPadrao );
+  NovaEscala:= AIni.ReadInteger(CSessaoBoletoFCFortesConfig, CChaveNovaEscala, NovaEscala);
 
 end;
 
@@ -389,6 +536,8 @@ begin
   AIni.WriteInteger(CSessaoBoletoFCFortesConfig, CChaveNumeroCopias, NumeroCopias  );
   AIni.WriteString(CSessaoBoletoFCFortesConfig, CChavePrinterName, PrinterName  );
   AIni.WriteString(CSessaoBoletoFCFortesConfig, CChaveSoftwareHouse, SoftwareHouse  );
+  AIni.WriteBool(CSessaoBoletoFCFortesConfig, CChaveAlterarEscalaPadrao, AlterarEscalaPadrao);
+  AIni.WriteInteger(CSessaoBoletoFCFortesConfig, CChaveNovaEscala, NovaEscala );
 
 end;
 
@@ -577,6 +726,28 @@ begin
   AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveNumeroArquivo, NumeroArquivo);
   AIni.WriteBool(CSessaoBoletoDiretorioConfig, CChaveRemoveAcentosArqRemessa, RemoveAcentosArqRemessa);
 
+end;
+
+function TLibBoletoConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave,
+  AValor: Ansistring): Ansistring;
+begin
+  Result := '';
+
+  if (ASessao = CSessaoDFe) and (AChave = CChaveDadosPFX) then
+  begin
+    TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
+                                                          + ASessao + ',' + AChave + ',' +
+                                                          IfThen(PrecisaCriptografar(ASessao, AChave),
+                                                          StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
+    case Tipo of
+      tfGravar: Result := StringToB64Crypt(DecodeBase64(AValor), ChaveCrypt);
+      tfLer: Result := EncodeBase64(B64CryptToString(AValor, ChaveCrypt));
+    end;
+
+    TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor - Feito Result: ' + Result, logParanoico);
+  end
+  else
+    Result := inherited AjustarValor(Tipo, ASessao, AChave, AValor);
 end;
 
 end.

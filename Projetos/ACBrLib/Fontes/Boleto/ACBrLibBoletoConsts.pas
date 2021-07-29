@@ -102,6 +102,23 @@ const
   CChaveNumeroCopias= 'NumeroCopias';
   CChavePrinterName= 'PrinterName';
   CChaveSoftwareHouse= 'SoftwareHouse';
+  CChaveAlterarEscalaPadrao= 'AlterarEscalaPadrao';
+  CChaveNovaEscala= 'NovaEscala';
+
+  CSessaoBoletoCedenteWS = 'BoletoCedenteWS';
+  CChaveClientID= 'ClientID';
+  CChaveClientSecret= 'ClientSecret';
+  CChaveKeyUser= 'KeyUser';
+  CChaveScope= 'Scope';
+  CChaveIndicadorPix= 'IndicadorPix';
+
+  CSessaoBoletoWebSevice= 'BoletoWebSevice';
+  CChaveLogRegistro= 'LogRegistro';
+  CChavePathGravarRegistro= 'PathGravarRegistro';
+  CChaveAmbiente= 'Ambiente';
+  CChaveOperacao= 'Operacao';
+  CChaveVersaoDF= 'VersaoDF';
+  CChaveUseCertificateHTTP= 'UseCertificateHTTP';
 
   CSessaoBolConfig = 'BoletoConfig';
   CChaveemailAssuntoBoleto= 'emailAssuntoBoleto';

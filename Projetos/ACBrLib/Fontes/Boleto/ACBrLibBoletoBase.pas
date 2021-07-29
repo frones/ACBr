@@ -38,12 +38,11 @@ unit ACBrLibBoletoBase;
 interface
 
 uses
-  Classes, SysUtils, Forms, ACBrLibComum, ACBrLibBoletoDataModule;
+  Classes, SysUtils, Forms, ACBrLibComum, ACBrLibBoletoDataModule, ACBrBoletoConversao;
 
 type
 
   {TACBrLibBoleto}
-
   TACBrLibBoleto = class(TACBrLib)
   private
     FBoletoDM: TLibBoletoDM;
@@ -56,6 +55,7 @@ type
   protected
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
+    procedure AtualizaLayoutImpressao;
 
   public
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
@@ -88,6 +88,7 @@ type
     function MontarNossoNumero(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaLinhaDigitavel(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaCodigoBarras(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    function EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
 
   end;
 
@@ -95,7 +96,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, ACBrUtil, strutils, typinfo,
-  ACBrLibResposta, ACBrBoleto, ACBrBoletoConversao, ACBrLibBoletoConfig, ACBrMail,
+  ACBrLibResposta, ACBrBoleto, ACBrLibBoletoConfig, ACBrMail,
   ACBrLibBoletoRespostas;
   
 constructor TACBrLibBoleto.Create(ArqConfig: string; ChaveCrypt: ansistring);
@@ -104,6 +105,7 @@ begin
   Create(ArqConfig, ChaveCrypt);
   FBoletoDM := TLibBoletoDM.Create(nil);
   FBoletoDM.Lib := Self;
+
 end;
 
 destructor TACBrLibBoleto.Destroy;
@@ -123,6 +125,15 @@ begin
   FBoletoDM.AplicarConfiguracoes;
 end;
 
+procedure TACBrLibBoleto.AtualizaLayoutImpressao;
+begin
+  if Assigned(BoletoDM.ACBrBoleto1.ACBrBoletoFC) then
+  begin
+    if (TLibBoletoConfig(Config).BoletoFCFortesConfig.Layout <> BoletoDM.ACBrBoleto1.ACBrBoletoFC.LayOut) then
+     BoletoDM.LayoutImpressao:= Integer(BoletoDM.ACBrBoleto1.ACBrBoletoFC.LayOut);
+  end;
+end;
+
 function TACBrLibBoleto.ConfigurarDados(eArquivoIni: PChar): longint;
 var
   ArquivoIni: AnsiString;
@@ -137,10 +148,19 @@ begin
 
     BoletoDM.Travar;
     try
-      if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
+      BoletoDM.ConfigurarImpressao; 
+      try
+        if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
          raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
 
-      Result := SetRetorno(ErrOK);
+        AtualizaLayoutImpressao;
+
+        Result := SetRetorno(ErrOK);
+
+      finally
+        BoletoDM.FinalizarImpressao;
+      end;
+
     finally
       BoletoDM.Destravar;
     end;
@@ -176,12 +196,13 @@ begin
       Exit;
     end;
 {$ENDIF}
-
+      
       if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
          raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
-
+      
       try
         BoletoDM.ConfigurarImpressao;
+        AtualizaLayoutImpressao;
 
         if TpSaida = 'I' then
         begin
@@ -206,15 +227,17 @@ begin
               else
                 GravarLog('Boleto_EnviarEmail', logNormal);
 
-              BoletoDM.ACBrBoleto1.EnviarEmail(BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
-                                               emailAssuntoBoleto, Mensagem, True);
+              BoletoDM.ACBrBoleto1.EnviarEmail( BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
+                                                emailAssuntoBoleto, Mensagem, True );
             finally
               Mensagem.Free;
             end;
           end;
         end;
+
       finally
-        BoletoDM.FinalizarImpressao;
+         BoletoDM.FinalizarImpressao;
+         
       end;
 
       Result := SetRetorno(ErrOk, Format('%d Titulo(s) Carregado(s)', [BoletoDM.ACBrBoleto1.ListadeBoletos.Count]));
@@ -359,7 +382,6 @@ end;
 function TACBrLibBoleto.GerarPDFBoleto(eIndice: longint): longint;
 begin
   try
-
       if Config.Log.Nivel > logNormal then
         GravarLog('Boleto_GerarPDFBoleto(' + IntToStr(eIndice) + ' )', logCompleto, True)
       else
@@ -414,9 +436,13 @@ var
 begin
   try
     Dir := ConverterAnsiParaUTF8(eDir);
-    NumArquivo:= StrToIntDef( IntToStr( eNumArquivo ), 0);
+    NumArquivo:= StrToIntDef(IntToStr(eNumArquivo ), 0);
     NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
-    GravarLog('Boleto_GerarRemessa', logNormal);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_GerarRemessa(' + Dir + ', ' + NumArquivo + ', ' + NomeArq + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_GerarRemessa', logNormal);
 
     BoletoDM.Travar;
     try
@@ -446,7 +472,11 @@ begin
   try
     Dir := ConverterAnsiParaUTF8(eDir);
     NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
-    GravarLog('Boleto_LerRetorno', logNormal);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_LerRetorno(' + Dir + ', ' + NomeArq + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_LerRetorno', logNormal);
 
     BoletoDM.Travar;
     try
@@ -470,8 +500,7 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.ObterRetorno(eDir, eNomeArq: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibBoleto.ObterRetorno(eDir, eNomeArq: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Dir, NomeArq: AnsiString;
   Resposta: AnsiString;
@@ -994,6 +1023,47 @@ begin
 
   if (Result <> '') then
     Result := copy(Result, 1, Length(Result)-1) ;
+end;
+
+function TACBrLibBoleto.EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  Resposta: AnsiString;
+  Resp : TRetornoRegistroWeb;
+  I: Integer;
+begin
+  try
+    GravarLog('Boleto_EnviarBoleto', logNormal);
+
+    BoletoDM.Travar;
+
+    try
+      BoletoDM.ACBrBoleto1.EnviarBoleto;
+
+      if BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count > 0 then
+      for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
+      begin
+        Resp := TRetornoRegistroWeb.Create(I , Config.TipoResposta, Config.CodResposta);
+        try
+          Resp.Processar(BoletoDM.ACBrBoleto1);
+          Resposta := Resp.Gerar;
+        Finally
+          Resp.Free;
+        end;
+      end;
+
+      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      BoletoDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 end.

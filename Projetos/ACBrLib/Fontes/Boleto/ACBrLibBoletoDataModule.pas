@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, SyncObjs, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrLibComum,
-  ACBrLibConfig, ACBrMail;
+  ACBrLibConfig, ACBrMail, ACBrBoletoConversao;
 
 type
 
@@ -54,6 +54,7 @@ type
     FLock: TCriticalSection;
     fpLib: TACBrLib;
     BoletoFortes: TACBrBoletoFCFortes;
+    FLayoutImpressao: Integer;
 
   public
     procedure AplicarConfiguracoes;
@@ -65,6 +66,7 @@ type
     procedure AplicarConfigMail;
 
     property Lib: TACBrLib read fpLib write fpLib;
+    property LayoutImpressao: Integer read FLayoutImpressao write FLayoutImpressao;
 
   end;
 
@@ -83,6 +85,7 @@ uses
 procedure TLibBoletoDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
+  FLayoutImpressao:= -1;
 end;
 
 procedure TLibBoletoDM.DataModuleDestroy(Sender: TObject);
@@ -111,45 +114,75 @@ begin
     NumeroArquivo := LibConfig.BoletoDiretorioConfig.NumeroArquivo;
     RemoveAcentosArqRemessa := LibConfig.BoletoDiretorioConfig.RemoveAcentosArqRemessa;
 
-    with ACBrBoleto1.Banco do
-    begin
-      LayoutVersaoArquivo := LibConfig.BoletoBancoConfig.LayoutVersaoArquivo;
-      LayoutVersaoLote := LibConfig.BoletoBancoConfig.LayoutVersaoLote;
-      Digito := LibConfig.BoletoBancoConfig.Digito;
-      LocalPagamento := LibConfig.BoletoBancoConfig.LocalPagamento;
-      Numero := LibConfig.BoletoBancoConfig.Numero;
-      NumeroCorrespondente := LibConfig.BoletoBancoConfig.NumeroCorrespondente;
-      OrientacoesBanco.Text := LibConfig.BoletoBancoConfig.OrientacaoBanco;
-      TipoCobranca := LibConfig.BoletoBancoConfig.TipoCobranca;
-    end;
+  end;
 
-    with ACBrBoleto1.Cedente do
-    begin
-      TipoCarteira := LibConfig.BoletoCedenteConfig.TipoCarteira;
-      TipoDocumento := LibConfig.BoletoCedenteConfig.TipoDocumento;
-      TipoInscricao := LibConfig.BoletoCedenteConfig.TipoInscricao;
-      Agencia := LibConfig.BoletoCedenteConfig.Agencia;
-      AgenciaDigito := LibConfig.BoletoCedenteConfig.AgenciaDigito;
-      Bairro := LibConfig.BoletoCedenteConfig.Bairro;
-      CaracTitulo := LibConfig.BoletoCedenteConfig.CaracTitulo;
-      CEP := LibConfig.BoletoCedenteConfig.CEP;
-      Cidade := LibConfig.BoletoCedenteConfig.Cidade;
-      CNPJCPF := LibConfig.BoletoCedenteConfig.CNPJCPF;
-      CodigoCedente := LibConfig.BoletoCedenteConfig.CodigoCedente;
-      CodigoTransmissao := LibConfig.BoletoCedenteConfig.CodigoTransmissao;
-      Complemento := LibConfig.BoletoCedenteConfig.Complemento;
-      Conta := LibConfig.BoletoCedenteConfig.Conta;
-      ContaDigito := LibConfig.BoletoCedenteConfig.ContaDigito;
-      Convenio := LibConfig.BoletoCedenteConfig.Convenio;
-      Logradouro := LibConfig.BoletoCedenteConfig.Logradouro;
-      Modalidade := LibConfig.BoletoCedenteConfig.Modalidade;
-      Nome := LibConfig.BoletoCedenteConfig.Nome;
-      NumeroRes := LibConfig.BoletoCedenteConfig.NumeroRes;
-      ResponEmissao := LibConfig.BoletoCedenteConfig.ResponEmissao;
-      Telefone := LibConfig.BoletoCedenteConfig.Telefone;
-      UF := LibConfig.BoletoCedenteConfig.UF;
-      DigitoVerificadorAgenciaConta := LibConfig.BoletoCedenteConfig.DigitoVerificadorAgenciaConta;
-    end;
+  with ACBrBoleto1.Banco do
+  begin
+    LayoutVersaoArquivo := LibConfig.BoletoBancoConfig.LayoutVersaoArquivo;
+    LayoutVersaoLote := LibConfig.BoletoBancoConfig.LayoutVersaoLote;
+    Digito := LibConfig.BoletoBancoConfig.Digito;
+    LocalPagamento := LibConfig.BoletoBancoConfig.LocalPagamento;
+    Numero := LibConfig.BoletoBancoConfig.Numero;
+    NumeroCorrespondente := LibConfig.BoletoBancoConfig.NumeroCorrespondente;
+    OrientacoesBanco.Text := LibConfig.BoletoBancoConfig.OrientacaoBanco;
+    TipoCobranca := LibConfig.BoletoBancoConfig.TipoCobranca;
+  end;
+
+  with ACBrBoleto1.Cedente do
+  begin
+    TipoCarteira := LibConfig.BoletoCedenteConfig.TipoCarteira;
+    TipoDocumento := LibConfig.BoletoCedenteConfig.TipoDocumento;
+    TipoInscricao := LibConfig.BoletoCedenteConfig.TipoInscricao;
+    Agencia := LibConfig.BoletoCedenteConfig.Agencia;
+    AgenciaDigito := LibConfig.BoletoCedenteConfig.AgenciaDigito;
+    Bairro := LibConfig.BoletoCedenteConfig.Bairro;
+    CaracTitulo := LibConfig.BoletoCedenteConfig.CaracTitulo;
+    CEP := LibConfig.BoletoCedenteConfig.CEP;
+    Cidade := LibConfig.BoletoCedenteConfig.Cidade;
+    CNPJCPF := LibConfig.BoletoCedenteConfig.CNPJCPF;
+    CodigoCedente := LibConfig.BoletoCedenteConfig.CodigoCedente;
+    CodigoTransmissao := LibConfig.BoletoCedenteConfig.CodigoTransmissao;
+    Complemento := LibConfig.BoletoCedenteConfig.Complemento;
+    Conta := LibConfig.BoletoCedenteConfig.Conta;
+    ContaDigito := LibConfig.BoletoCedenteConfig.ContaDigito;
+    Convenio := LibConfig.BoletoCedenteConfig.Convenio;
+    Logradouro := LibConfig.BoletoCedenteConfig.Logradouro;
+    Modalidade := LibConfig.BoletoCedenteConfig.Modalidade;
+    Nome := LibConfig.BoletoCedenteConfig.Nome;
+    NumeroRes := LibConfig.BoletoCedenteConfig.NumeroRes;
+    ResponEmissao := LibConfig.BoletoCedenteConfig.ResponEmissao;
+    Telefone := LibConfig.BoletoCedenteConfig.Telefone;
+    UF := LibConfig.BoletoCedenteConfig.UF;
+    DigitoVerificadorAgenciaConta := LibConfig.BoletoCedenteConfig.DigitoVerificadorAgenciaConta;
+  end;
+
+  with ACBrBoleto1.Cedente.CedenteWS do
+  begin
+    ClientID:= LibConfig.BoletoCedenteWS.ClientID;
+    ClientSecret:= LibConfig.BoletoCedenteWS.ClientSecret;
+    KeyUser:= LibConfig.BoletoCedenteWS.KeyUser;
+    Scope:= LibConfig.BoletoCedenteWS.Scope;
+    IndicadorPix:= LibConfig.BoletoCedenteWS.IndicadorPix;
+  end;
+
+  with ACBrBoleto1.Configuracoes do
+  begin
+    Arquivos.LogRegistro := LibConfig.BoletoConfigWS.LogRegistro;
+    Arquivos.PathGravarRegistro := LibConfig.BoletoConfigWS.PathGravarRegistro;
+    WebService.Ambiente := LibConfig.BoletoConfigWS.Ambiente;
+    WebService.Operacao := LibConfig.BoletoConfigWS.Operacao;
+    WebService.VersaoDF := LibConfig.BoletoConfigWS.VersaoDF;
+
+    WebService.UseCertificateHTTP := LibConfig.BoletoConfigWS.UseCertificateHTTP;
+    WebService.ProxyHost := LibConfig.BoletoDFeConfigWS.WebServices.ProxyHost;
+    WebService.ProxyPass := LibConfig.BoletoDFeConfigWS.WebServices.ProxyPass;
+    WebService.ProxyPort := LibConfig.BoletoDFeConfigWS.WebServices.ProxyPort;
+    WebService.ProxyUser := LibConfig.BoletoDFeConfigWS.WebServices.ProxyUser;
+    WebService.SSLCryptLib := LibConfig.BoletoDFeConfigWS.Geral.SSLCryptLib;
+    WebService.SSLHttpLib := LibConfig.BoletoDFeConfigWS.Geral.SSLHttpLib;
+    WebService.SSLType := LibConfig.BoletoDFeConfigWS.WebServices.SSLType;
+    WebService.TimeOut := LibConfig.BoletoDFeConfigWS.WebServices.TimeOut;
+
   end;
 
   AplicarConfigMail;
@@ -168,13 +201,18 @@ begin
   begin
      DirLogo := LibConfig.BoletoFCFortesConfig.DirLogo;
      Filtro := LibConfig.BoletoFCFortesConfig.Filtro;
-     Layout := LibConfig.BoletoFCFortesConfig.Layout;
+     if (LayoutImpressao <> -1) then
+       Layout := TACBrBolLayOut(LayoutImpressao)
+     else
+       Layout := LibConfig.BoletoFCFortesConfig.Layout;
      MostrarPreview := LibConfig.BoletoFCFortesConfig.MostrarPreview;
      MostrarProgresso := LibConfig.BoletoFCFortesConfig.MostrarProgresso;
      MostrarSetup := LibConfig.BoletoFCFortesConfig.MostrarSetup;
      NomeArquivo := LibConfig.BoletoFCFortesConfig.NomeArquivo;
      NumCopias := LibConfig.BoletoFCFortesConfig.NumeroCopias;
      PrinterName := LibConfig.BoletoFCFortesConfig.PrinterName;
+     AlterarEscalaPadrao := LibConfig.BoletoFCFortesConfig.AlterarEscalaPadrao;
+     NovaEscala := LibConfig.BoletoFCFortesConfig.NovaEscala;
 {$IFDEF Demo}
      SoftwareHouse := Lib.Nome + ' v' + Lib.Versao;
 {$ELSE}

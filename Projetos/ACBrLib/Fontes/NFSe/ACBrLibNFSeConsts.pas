@@ -42,10 +42,38 @@ uses
 const
 
   CSessaoRespEnvio = 'Envio';
-  CSessaoRespConsulta = 'Consulta';
-  CSessaoRespCancelar = 'Cancelar';
-  CSessaoRespLink = 'Link';
-  CSessaoRespSubstituir = 'Substituir';
+  CSessaoRespSituacao = 'Situacao';
+  CSessaoRespConsultaLote = 'ConsultaLote';
+  CSessaoRespErro = 'Erro';
+  CSessaoRespAlerta = 'Alerta';
+
+  CSessaoDANFSE = 'DANFSe';
+  CChavePLogo = 'Prestador.Logo';
+  CChavePRazaoSocial = 'Prestador.RazaoSocial';
+  CChavePNomeFantasia = 'Prestador.NomeFantasia';
+  CChavePEndereco = 'Prestador.Endereco';
+  CChavePComplemento = 'Prestador.Complemento';
+  CChavePFone = 'Prestador.Fone';
+  CChavePMunicipio = 'Prestador.Municipio';
+  CChavePIM = 'Prestador.InscricaoMunicipal';
+  CChavePEMail = 'Prestador.EMail';
+  CChavePUF = 'Prestador.UF';
+
+  CChaveTIE = 'Tomador.InscricaoEstadual';
+  CChaveTIM = 'Tomador.InscricaoMunicipal';
+  CChaveTFone = 'Tomador.Fone';
+  CChaveTEndereco = 'Tomador.Endereco';
+  CChaveTComplemento = 'Tomador.Complemento';
+  CChaveTEMail = 'Tomador.EMail';
+
+  CChavePrefeitura = 'Prefeitura';
+  CChaveTamanhoFonte = 'TamanhoFonte';
+  CChaveOutrasInformacaoesImp = 'OutrasInformacaoesImp';
+  CChaveAtividade = 'Atividade';
+  CChaveFmtNroNFSe = 'FormatarNumeroDocumentoNFSe';
+  CChaveNFSeCancelada = 'Cancelada';
+  CChaveDetalharServico = 'DetalharServico';
+  CChaveProducao = 'Producao';
 
   ErrValidacaoNFSe = -11;
   ErrChaveNFSe = -12;
@@ -57,7 +85,7 @@ const
   ErrEnvioEvento = -18;
 
 Resourcestring
-  SInfNFSeCarregadas = '%d NFSe(s) Carregada(s)';
+  SInfNFSeCarregadas = '%d NFSe(s)/RPS(s) Carregada(s)';
 
 
 implementation

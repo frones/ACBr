@@ -326,14 +326,24 @@ begin
     begin
       with RegK155.RegistroK156.Items[intFor] do
       begin
-        Add( LFill('K156') +
-             LFill(COD_CTA_REF) +
-             LFill(VL_SLD_INI, 19, 2) +
-             LFill(IND_VL_SLD_INI,0) +
-             LFill(VL_DEB, 19, 2) +
-             LFill(VL_CRED, 19, 2) +
-             LFill(VL_SLD_FIN, 19, 2) +
-             LFill(IND_VL_SLD_FIN,0) );
+        if Bloco_0.Registro0000.COD_VER >= ECFVersao500 then
+        begin 
+          Add( LFill('K156') +
+               LFill(COD_CTA_REF) +
+               LFill(VL_SLD_INI, 19, 2) +
+               LFill(IND_VL_SLD_INI,0) +
+               LFill(VL_DEB, 19, 2) +
+               LFill(VL_CRED, 19, 2) +
+               LFill(VL_SLD_FIN, 19, 2) +
+               LFill(IND_VL_SLD_FIN,0) );
+        end
+        else
+        begin
+          Add( LFill('K156') +
+               LFill(COD_CTA_REF) +
+               LFill(VL_SLD_FIN, 19, 2) +
+               LFill(IND_VL_SLD_FIN,0) );
+        end;
       end;
       FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
 

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.abrasf.org.br/nfse.xsd" xmlns="http://www.abrasf.org.br/nfse.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
@@ -104,6 +104,13 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="tsInscricaoMunicipal">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsInscricaoEstadual">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="15" />
 			<xsd:minLength value="1" />
@@ -329,6 +336,8 @@
 			<xsd:element name="CpfCnpj" type="tcCpfCnpj" minOccurs="0"
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="InscricaoEstadual" type="tsInscricaoEstadual"
 				minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>

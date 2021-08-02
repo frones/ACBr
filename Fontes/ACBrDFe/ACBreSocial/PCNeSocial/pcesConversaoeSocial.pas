@@ -184,19 +184,48 @@ type
                              ciPensaoAlimenticiaFerias, ciPensaoAlimenticiaPLR, ciPensaoAlimenticiaRRA,
                              ciFundoAposentadoriaProgIndFAPIRemMensal,
                              ciFundoAposentadoriaProgIndFAPI13Salario, ciFundacaoPrevCompServidorPubFederalFunprespRemMensal,
-                             ciFundacaoPrevCompServidorPubFederalFunpresp13Salario, ciParcelaIsenta65AnosRemMensal,
+                             ciFundacaoPrevCompServidorPubFederalFunpresp13Salario, ciFundacaoPrevCompServidorPubFunprespFerias,
+                             ciFundoAposProgIndividualFAPIFerias, ciPlanoprivadocoletivodeassistenciaasaude, ciParcelaIsenta65AnosRemMensal,
                              ciParcelaIsenta65Anos13Salario, ciDiaria, ciAjudaDeCusto, ciIndenizacaoRescisaoContratoInclusiveAtituloPDV,
                              ciAbonoPecuniario, ciPensaoAposOureformaPorMolestiaGraveOuAcidServicoRemMensal,
                              ciPensaoAposOureformaPorMolestiaGraveOuAcidServico13Salario,
                              ciValPagosATitOuSocioMicroEmpOuEmpPeqPorteExcProLaboreEAlugueis,
+                             ciAuxiliomoradia, ciPartenaotribvalorservicotransppassageirosoucargas,
                              ciOutros, ciDepositoJudicial, ciCompJudicialAnoCalendario, ciCompJudicialAnosAnteriores,
                              ciiIncidenciasuspensajudicialBCIRRF, ciiIncidenciasuspensajudicialBCIRRF13Salario,
                              ciiIncidenciasuspensajudicialBCIRRFFerias, ciiIncidenciasuspensajudicialBCIRRFPLR,
-                             ciiIncidenciasuspensajudicialBCIRRFRRA);
+                             ciiIncidenciasuspensajudicialBCIRRFRRA,
+                             ciIncidenciasuspensaBCRemuneracaomensal, ciIncidenciasuspensaBC13salario,
+                             ciIncidenciasuspensaBCFerias, ciIncidenciasuspensaBCPLR,
+                             ciIncidenciasuspensaRetencaoRemuneracaomensal, ciIncidenciasuspensaRetencao13salario,
+                             ciIncidenciasuspensaRetencaoFerias, ciIncidenciasuspensaRetencaoPLR,
+                             ciIncidenciasuspensaRetencaoDepositojudicialMensal, ciIncidenciasuspensaRetencaoDepositojudicial13salario,
+                             ciIncidenciasuspensaRetencaoDepositojudicialFerias, ciIncidenciasuspensaRetencaoDepositojudicialPLR,
+                             ciIncidenciasuspensaDeducaoPSORemuneracaomensal, ciIncidenciasuspensaDeducaoPSO13salario,
+                             ciIncidenciasuspensaDeducaoPSOFerias, ciIncidenciasuspensaDeducaoPrevidenciaprivadamensal,
+                             ciIncidenciasuspensaDeducaoPrevidenciaprivada13salario, ciIncidenciasuspensaDeducaoPrevidenciaprivadaFerias,
+                             ciIncidenciasuspensaDeducaoPensaoalimenticiamensal, ciIncidenciasuspensaDeducaoPensaoalimentícia13salario,
+                             ciIncidenciasuspensaDeducaoPensaoalimentíciaFerias, ciIncidenciasuspensaDeducaoPensaoalimentíciaPLR,
+                             ciIncidenciasuspensaDeducaoFundodeAposentadoriaProgIndividualFAPImensal,
+                             ciIncidenciasuspensaDeducaoFundodeAposentadoriaProgIndividualFAPI13salario,
+                             ciIncidenciasuspensaDeducaoFundacaodePrevidenciacompservidorpublicomensal,
+                             ciIncidenciasuspensaDeducaoFundacaodePrevidenciacompservidorpublico13salario,
+                             ciIncidenciasuspensaDeducaoFundacaodePrevidenciacompservidorpublicoFerias,
+                             ciIncidenciasuspensaDeducaoFundodeAposentadoriaProgramadaIndividualFAPIFerias,
+                             ciIncidenciasuspensaDeducaoPlanoprivadocoletivodeassistenciaasaude,
+                             ciCompensacaojudicialdoanocalendario, ciCompensacaojudicialdeanosanteriores
+                             );
 
   tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaojudicial);
 
   tpCodIncSIND            = (cisNaoebasedecalculo, cisBasedecalculo, cisValorlaboraldescontada, cisIncidenciasuspensajudicial);
+
+  tpCodIncCPRP            = (NaoebasedecalculodecontribuicoesdevidasaoRPPSregimemilitar,
+                             BasedecalculodecontribuicoesdevidasaoRPPSregimemilitar,
+                             BasedecalculodecontribuicoesdevidasaoRPPSregimemilitar13salario,
+                             Contribuicaodescontadadoseguradoebeneficiario,
+                             Contribuicaodescontadadoseguradoebeneficiario13salario,
+                             Suspensaodeincidenciaemdecorrenciadedecisaojudicial);
 
   tpExtDecisao            = (edContribPatronais, edContribPatronaisSegurados );
 
@@ -594,6 +623,9 @@ function eSStrToCodIncFGTS(var ok: boolean; const s: string): TpCodIncFGTS;
 
 function eSCodIncSINDToStr(const t: TpCodIncSIND ): string;
 function eSStrToCodIncSIND(var ok: boolean; const s: string): TpCodIncSIND;
+
+function eSCodIncCPRPToStr(const t: TpCodIncCPRP ): string;
+function eSStrToCodIncCPRP(var ok: boolean; const s: string): TpCodIncCPRP;
 
 function eSIndSuspToStr(const t: tpIndSusp): string;
 function eSStrToIndSusp(var ok: Boolean; const s: string): tpIndSusp;
@@ -1770,18 +1802,24 @@ function eSCodIncIRRFToStr(const t:tpCodIncIRRF ): string;
 begin
   result := EnumeradoToStr2(t,[  '00', '01', '09','11', '12', '13', '14', '15', '31', '32', '33', '34',
                                  '35', '41', '42', '43', '44', '46', '47', '51', '52', '53',
-                                 '54', '55', '61', '62', '63', '64', '70', '71',
-                                 '72', '73', '74', '75', '76', '77', '78', '79', '81', '82',
-                                 '83','91', '92', '93', '94', '95' ] );
+                                 '54', '55', '61', '62', '63', '64', '65', '66', '67', '70', '71',
+                                 '72', '73', '74', '75', '76', '77', '78', '700', '701', '79', '81', '82',
+                                 '83','91', '92', '93', '94', '95', '9011','9012','9013','9014',
+                                 '9031','9032','9033','9034','9831','9832','9833','9834','9041',
+                                 '9042','9043','9046','9047','9048','9051','9052','9053','9054',
+                                 '9061','9062','9063','9064','9065','9066','9067','9082','9083' ] );
 end;
 
 function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
 begin
   result := tpCodIncIRRF( StrToEnumerado2(ok , s,[  '00', '01', '09','11', '12', '13', '14', '15', '31', '32', '33', '34',
                                                     '35', '41', '42', '43', '44', '46', '47', '51', '52', '53',
-                                                    '54', '55', '61', '62', '63', '64', '70', '71',
-                                                    '72', '73', '74', '75', '76', '77', '78', '79', '81', '82',
-                                                    '83','91', '92', '93', '94', '95' ] ));
+                                                    '54', '55', '61', '62', '63', '64', '65', '66', '67', '70', '71',
+                                                    '72', '73', '74', '75', '76', '77', '78', '700', '701', '79', '81', '82',
+                                                    '83','91', '92', '93', '94', '95', '9011','9012','9013','9014',
+                                                    '9031','9032','9033','9034','9831','9832','9833','9834','9041',
+                                                    '9042','9043','9046','9047','9048','9051','9052','9053','9054',
+                                                    '9061','9062','9063','9064','9065','9066','9067','9082','9083' ] ));
 end;
 
 function eSCodIncFGTSToStr(const t:tpCodIncFGTS ): string;
@@ -1802,6 +1840,16 @@ end;
 function eSStrToCodIncSIND(var ok: boolean; const s: string): tpCodIncSIND;
 begin
   result := tpCodIncSIND( StrToEnumerado2(ok , s,[  '00', '11', '31','91'] ));
+end;
+
+function eSCodIncCPRPToStr(const t:tpCodIncCPRP ): string;
+begin
+  result := EnumeradoToStr2(t,[ '00', '11', '12', '31', '32', '91' ] );
+end;
+
+function eSStrToCodIncCPRP(var ok: boolean; const s: string): tpCodIncCPRP;
+begin
+  result := tpCodIncCPRP( StrToEnumerado2(ok , s,[ '00', '11', '12', '31', '32', '91' ] ));
 end;
 
 function eSIndSuspToStr(const t: tpIndSusp): string;

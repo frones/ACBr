@@ -157,6 +157,8 @@ type
     FCodIncIRRF : tpCodIncIRRF;
     FCodIncFGTS : tpCodIncFGTS;
     FCodIncSIND: tpCodIncSIND;
+    FCodIncCPRP: tpCodIncCPRP;
+    FTetoRemun: tpSimNaoFacultativo;
     FObservacao: string;
     FIdeProcessoCP: TIdeProcessoCPCollection;
     FIdeProcessoIRRF: TIdeProcessoIRRFCollection;
@@ -183,7 +185,9 @@ type
     property codIncIRRF: tpCodIncIRRF read FCodIncIRRF write FCodIncIRRF;
     property codIncFGTS: tpCodIncFGTS read FCodIncFGTS write FCodIncFGTS;
     property codIncSIND: tpCodIncSIND read FCodIncSIND write FCodIncSIND;
+    property codIncCPRP: tpCodIncCPRP read FCodIncCPRP write FCodIncCPRP;
     property observacao: string read FObservacao write FObservacao;
+    property tetoRemun: tpSimNaoFacultativo read FTetoRemun write FTetoRemun;
     property IdeProcessoCP: TIdeProcessoCPCollection read getIdeProcessoCP write FIdeProcessoCP;
     property IdeProcessoIRRF: TIdeProcessoIRRFCollection read getIdeProcessoIRRF write FIdeProcessoIRRF;
     property IdeProcessoFGTS: TIdeProcessoFGTSCollection read getIdeProcessoFGTS write FIdeProcessoFGTS;
@@ -310,6 +314,13 @@ begin
   
   if VersaoDF <= ve02_05_00 then
      Gerador.wCampo(tcStr, '', 'codIncSIND', 2,   2, 1, eSCodIncSINDToStr(InfoRubrica.dadosRubrica.codIncSIND));
+
+  if VersaoDF = veS01_00_00 then
+  Begin
+        Gerador.wCampo(tcStr, '', 'codIncCPRP', 2,   2, 1, eSCodIncCPRPToStr(InfoRubrica.dadosRubrica.codIncCPRP));
+        if InfoRubrica.dadosRubrica.tetoRemun <> snfNada then
+                Gerador.wCampo(tcStr, '', 'tetoRemun', 0, 2, 0, eSSimNaoFacultativoToStr(InfoRubrica.dadosRubrica.tetoRemun));
+  End;
 
   Gerador.wCampo(tcStr, '', 'observacao', 0, 255, 0, InfoRubrica.dadosRubrica.observacao);
 
@@ -473,7 +484,9 @@ begin
         infoRubrica.dadosRubrica.codIncIRRF := eSStrToCodIncIRRF(Ok, INIRec.ReadString(sSecao, 'codIncIRRF', '00'));
         infoRubrica.dadosRubrica.codIncFGTS := eSStrToCodIncFGTS(Ok, INIRec.ReadString(sSecao, 'codIncFGTS', '00'));
         infoRubrica.dadosRubrica.codIncSIND := eSStrToCodIncSIND(Ok, INIRec.ReadString(sSecao, 'codIncSIND', '00'));
+        infoRubrica.dadosRubrica.codIncCPRP := eSStrToCodIncCPRP(Ok, INIRec.ReadString(sSecao, 'codIncCPRP', '00'));
         infoRubrica.dadosRubrica.observacao := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+        infoRubrica.dadosRubrica.tetoRemun  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'tetoRemun', EmptyStr));
 
         I := 1;
         while true do
@@ -646,6 +659,7 @@ begin
   FIdeProcessoIRRF := nil;
   FIdeProcessoFGTS := nil;
   FIdeProcessoSIND := nil;
+  FTetoRemun       := snfNada;
 end;
 
 destructor TDadosRubrica.destroy;

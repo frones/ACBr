@@ -310,8 +310,7 @@ procedure TForm6.btnRegistrosPAFClick(Sender: TObject);
 var
   i, j: Integer;
 begin
-  ACBrPAF.Layout := lpPAFNFCe;
-
+  ACBrPAF.Layout := lpPAFECF;
   //U1
   with ACBrPAF.PAF_U.RegistroU1 do
     begin
@@ -662,7 +661,7 @@ begin
       VLR_TROCO        := GerarDados('I', 2);
       DT_TROCO         := DATE;
       CPF              := '111.111.111-99';
-      TITULO           := GerarDados('S', 7);
+      TITULO           := GerarDados('I', 7);
 
       RegistroValido := True;
     end;

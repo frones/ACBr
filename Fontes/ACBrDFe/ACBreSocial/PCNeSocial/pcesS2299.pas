@@ -831,16 +831,16 @@ end;
 
 procedure TEvtDeslig.GerarSucessaoVinc(obj: TSucessaoVinc2);
 begin
-  if obj.cnpjSucessora <> EmptyStr then
+  if (obj.cnpjSucessora <> EmptyStr) or (obj.nrInsc <> EmptyStr) then
   begin
     Gerador.wGrupo('sucessaoVinc');
     
     if VersaoDF <= ve02_05_00 then
     begin
       if VersaoDF >= ve02_05_00 then
-        Gerador.wCampo(tcStr, '', 'tpInscSuc',    1,  1, 1, eSTpInscricaoToStr(obj.tpInsc));
+        Gerador.wCampo(tcStr, '', 'tpInscSuc',    1,  1, 1, eSTpInscricaoToStr(obj.tpInscSuc));
 
-      Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.nrInsc);
+      Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjSucessora);
     end
     else
     begin    

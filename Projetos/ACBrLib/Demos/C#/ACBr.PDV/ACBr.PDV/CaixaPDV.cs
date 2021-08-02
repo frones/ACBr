@@ -278,7 +278,7 @@ namespace ACBr.PDV
                 Retorno = envioRet.Resposta
             };
 
-            if (envioRet.Retorno.CStat != 100) return ret;
+            if (envioRet.Envio.CStat != 100) return ret;
 
             ret.Sucesso = true;
             Configuracao.Instance.DFe.NumeroAtual += 1;

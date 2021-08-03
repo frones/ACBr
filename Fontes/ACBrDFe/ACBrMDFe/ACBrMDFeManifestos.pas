@@ -1169,6 +1169,20 @@ begin
         INIRec.WriteString(sSecao, 'infAdFisco', infAdFisco);
         INIRec.WriteString(sSecao, 'infCpl', infCpl);
       end;
+
+      INIRec.WriteString('infRespTec', 'CNPJ', infRespTec.CNPJ);
+      INIRec.WriteString('infRespTec', 'xContato', infRespTec.xContato);
+      INIRec.WriteString('infRespTec', 'email', infRespTec.email);
+      INIRec.WriteString('infRespTec', 'fone', infRespTec.fone);
+
+      INIRec.WriteString('procMDFe', 'tpAmb', TpAmbToStr(procMDFe.tpAmb));
+      INIRec.WriteString('procMDFe', 'verAplic', procMDFe.verAplic);
+      INIRec.WriteString('procMDFe', 'chNFe', procMDFe.chNFe);
+      INIRec.WriteString('procMDFe', 'dhRecbto', DateTimeToStr(procMDFe.dhRecbto));
+      INIRec.WriteString('procMDFe', 'nProt', procMDFe.nProt);
+      INIRec.WriteString('procMDFe', 'digVal', procMDFe.digVal);
+      INIRec.WriteString('procMDFe', 'cStat', IntToStr(procMDFe.cStat));
+      INIRec.WriteString('procMDFe', 'xMotivo', procMDFe.xMotivo);
     end;
 
     IniDFe := TStringList.Create;

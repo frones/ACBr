@@ -440,7 +440,7 @@ begin
     NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('Boleto_GerarRemessa(' + Dir + ', ' + NumArquivo + ', ' + NomeArq + ' )', logCompleto, True)
+      GravarLog('Boleto_GerarRemessa(' + Dir + ', ' + IntToStr(NumArquivo) + ', ' + NomeArq + ' )', logCompleto, True)
     else
       GravarLog('Boleto_GerarRemessa', logNormal);
 

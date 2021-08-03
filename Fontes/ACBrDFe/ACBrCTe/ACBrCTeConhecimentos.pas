@@ -981,7 +981,7 @@ begin
 
       INIRec.WriteString('procCTe', 'tpAmb', TpAmbToStr(procCTe.tpAmb));
       INIRec.WriteString('procCTe', 'verAplic', procCTe.verAplic);
-      INIRec.WriteString('procCTe', 'chNFe', procCTe.chNFe);
+      INIRec.WriteString('procCTe', 'chCTe', procCTe.chCTe);
       INIRec.WriteString('procCTe', 'dhRecbto', DateTimeToStr(procCTe.dhRecbto));
       INIRec.WriteString('procCTe', 'nProt', procCTe.nProt);
       INIRec.WriteString('procCTe', 'digVal', procCTe.digVal);

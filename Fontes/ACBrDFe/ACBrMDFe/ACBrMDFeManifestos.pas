@@ -1177,7 +1177,7 @@ begin
 
       INIRec.WriteString('procMDFe', 'tpAmb', TpAmbToStr(procMDFe.tpAmb));
       INIRec.WriteString('procMDFe', 'verAplic', procMDFe.verAplic);
-      INIRec.WriteString('procMDFe', 'chNFe', procMDFe.chNFe);
+      INIRec.WriteString('procMDFe', 'chMDFe', procMDFe.chMDFe);
       INIRec.WriteString('procMDFe', 'dhRecbto', DateTimeToStr(procMDFe.dhRecbto));
       INIRec.WriteString('procMDFe', 'nProt', procMDFe.nProt);
       INIRec.WriteString('procMDFe', 'digVal', procMDFe.digVal);

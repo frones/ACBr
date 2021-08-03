@@ -4757,7 +4757,7 @@ end;
 
 procedure TFrmACBrMonitor.ImgChatClick(Sender: TObject);
 begin
-  OpenURL('https://discord.com/invite/PVHbMRktsG');
+  OpenURL('https://projetoacbr.com.br/discord');
 end;
 
 procedure TFrmACBrMonitor.ImgChatMouseEnter(Sender: TObject);

@@ -207,21 +207,21 @@ function RemoverPrefixos(const aXML: string): string;
 var
   XML: string;
 
-function StrReplace(AXML, APrefixo: string): string;
+function Remover(AXML, APrefixo: string): string;
 begin
   Result := stringReplace(stringReplace(AXML, '<' + APrefixo, '<', [rfReplaceAll]),
                           '</' + APrefixo, '</', [rfReplaceAll]);
 end;
 
 begin
-  XML := StrReplace(aXML, 'ns1:');
-  XML := StrReplace(XML, 'ns2:');
-  XML := StrReplace(XML, 'ns3:');
-  XML := StrReplace(XML, 'ns4:');
-  XML := StrReplace(XML, 'ns5:');
-  XML := StrReplace(XML, 'tc:');
-  XML := StrReplace(XML, 'ii:');
-  XML := StrReplace(XML, 'p1:');
+  XML := Remover(aXML, 'ns1:');
+  XML := Remover(XML, 'ns2:');
+  XML := Remover(XML, 'ns3:');
+  XML := Remover(XML, 'ns4:');
+  XML := Remover(XML, 'ns5:');
+  XML := Remover(XML, 'tc:');
+  XML := Remover(XML, 'ii:');
+  XML := Remover(XML, 'p1:');
 
   Result := XML;
 end;

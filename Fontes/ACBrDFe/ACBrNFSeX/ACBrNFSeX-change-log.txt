@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/08/2021
+-- Diversos --
+[*] Implementado o Provedor Sudoeste.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 / ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção do problema de duplicidade de dados na lista: NotasFiscais.
    Por: Italo Giurizzato Junior

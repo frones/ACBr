@@ -123,6 +123,7 @@ uses
   Sigep.Provider,
   SisPMJP.Provider,
   Sistemas4R.Provider,
+  Sudoeste.Provider,
   SystemPro.Provider,
   TcheInfo.Provider,
   Tecnos.Provider,
@@ -285,6 +286,7 @@ begin
     proSisPMJP:      Result := TACBrNFSeProviderSisPMJP.Create(ACBrNFSe);
     proSmarAPD_203:  Result := TACBrNFSeProviderSmarAPDv203.Create(ACBrNFSe);
     proSmarAPD_204:  Result := TACBrNFSeProviderSmarAPDv204.Create(ACBrNFSe);
+    proSudoeste:     Result := TACBrNFSeProviderSudoeste.Create(ACBrNFSe);
     proSystemPro:    Result := TACBrNFSeProviderSystemPro.Create(ACBrNFSe);
     proTcheInfo_2:   Result := TACBrNFSeProviderTcheInfo.Create(ACBrNFSe);
     proTecnos:       Result := TACBrNFSeProviderTecnos.Create(ACBrNFSe);

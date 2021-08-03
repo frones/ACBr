@@ -476,7 +476,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
-  NumNFSe: String;
+  NumRps: String;
   I: Integer;
 begin
   Document := TACBrXmlDocument.Create;
@@ -500,6 +500,9 @@ begin
       end;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+      if ANodeArray = nil then
+        ANodeArray := ANode.Childrens.FindAllAnyNs('ComplNfse');
+
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -521,11 +524,11 @@ begin
         if AuxNode <> nil then
         begin
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-//          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
           AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-          NumNFSe := ProcessarConteudoXml(AuxNode, tcStr);
+          NumRps := ProcessarConteudoXml(AuxNode, tcStr);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
           if Assigned(ANota) then
             ANota.XML := ANode.OuterXml

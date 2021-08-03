@@ -350,8 +350,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root;
       Response.Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
       Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
@@ -365,6 +363,10 @@ begin
         AErro.Descricao := Desc202;
         Exit;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
       if not Assigned(ANodeArray) then
@@ -492,7 +494,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
-  NumNFSe: String;
+  NumRps: String;
   I: Integer;
 begin
   Document := TACBrXmlDocument.Create;
@@ -511,8 +513,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       Response.Situacao := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('Situacao'), tcStr);
 
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
@@ -523,6 +523,10 @@ begin
         AErro.Descricao := Desc202;
         Exit;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
       if not Assigned(ANodeArray) then
@@ -538,17 +542,14 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        {
         AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
         AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        }
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-        NumNFSe := AuxNode.AsString;
+        NumRps := AuxNode.AsString;
 
-//        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNFSe);
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
@@ -912,8 +913,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
       if not Assigned(ANode) then
       begin
@@ -922,6 +921,10 @@ begin
         AErro.Descricao := Desc202;
         Exit;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
       if not Assigned(ANodeArray) then
@@ -1139,8 +1142,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
       if not Assigned(ANode) then
       begin
@@ -1149,6 +1150,10 @@ begin
         AErro.Descricao := Desc202;
         Exit;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
       if not Assigned(ANodeArray) then
@@ -1377,8 +1382,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
       if not Assigned(ANode) then
       begin
@@ -1387,6 +1390,10 @@ begin
         AErro.Descricao := Desc202;
         Exit;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
       if not Assigned(ANodeArray) then
@@ -1785,8 +1792,6 @@ begin
 
       ProcessarMensagemErros(Document.Root, Response);
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root.Childrens.FindAnyNs('RetSubstituicao');
       if not Assigned(ANode) then
       begin
@@ -1795,6 +1800,10 @@ begin
         AErro.Descricao := Desc205;
         Exit;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := ANode.Childrens.FindAnyNs('NfseSubstituida');
       if not Assigned(ANode) then

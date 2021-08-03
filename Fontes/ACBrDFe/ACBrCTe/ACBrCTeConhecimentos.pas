@@ -973,6 +973,20 @@ begin
         end;
       end;
       {$ENDIF}
+
+      INIRec.WriteString('infRespTec', 'CNPJ', infRespTec.CNPJ);
+      INIRec.WriteString('infRespTec', 'xContato', infRespTec.xContato);
+      INIRec.WriteString('infRespTec', 'email', infRespTec.email);
+      INIRec.WriteString('infRespTec', 'fone', infRespTec.fone);
+
+      INIRec.WriteString('procCTe', 'tpAmb', TpAmbToStr(procCTe.tpAmb));
+      INIRec.WriteString('procCTe', 'verAplic', procCTe.verAplic);
+      INIRec.WriteString('procCTe', 'chNFe', procCTe.chNFe);
+      INIRec.WriteString('procCTe', 'dhRecbto', DateTimeToStr(procCTe.dhRecbto));
+      INIRec.WriteString('procCTe', 'nProt', procCTe.nProt);
+      INIRec.WriteString('procCTe', 'digVal', procCTe.digVal);
+      INIRec.WriteString('procCTe', 'cStat', IntToStr(procCTe.cStat));
+      INIRec.WriteString('procCTe', 'xMotivo', procCTe.xMotivo);
     end;
 
   finally

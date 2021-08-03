@@ -46,14 +46,14 @@ uses
   ACBrValidador, ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs,
   ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
-  ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids,
+  ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, LazHelpHTML,
   SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml, TreeFilterEdit,
   pcnConversao, pcnConversaoNFe, pcteConversaoCTe, pcnConversaoBPe, ACBrSAT,
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   pgnreConversao, ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX,
   ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
   fileinfo, ACBrDFeConfiguracoes, ACBrBPe, ACBrBPeDABPeESCPOS, ACBrReinf,
-  ACBreSocial, ACBrIntegrador, LazHelpCHM, pmdfeConversaoMDFe,
+  ACBreSocial, ACBrIntegrador, pmdfeConversaoMDFe,
   pcesConversaoeSocial, pcnConversaoReinf, ACBrMonitorConfig, ACBrMonitorConsts,
   DOACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit,
   DoBALUnit, DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit,
@@ -700,6 +700,8 @@ type
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
     GroupBox9: TGroupBox;
+    HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer;
+    HTMLHelpDatabase1: THTMLHelpDatabase;
     Image2: TImage;
     imgErrEmail_Mail: TImage;
     imgErrEmail_User: TImage;
@@ -716,7 +718,6 @@ type
     ImgDocumentacao: TImage;
     Image7: TImage;
     ImageList2: TImageList;
-    CHMHelpDatabase1: TCHMHelpDatabase;
     FontDialog1: TFontDialog;
     ImageACBr: TImage;
     imgErrCEP: TImage;
@@ -1078,7 +1079,6 @@ type
     lCEPProxyUsuario: TLabel;
     lCEPWebService: TLabel;
     lGAVEstado: TLabel;
-    LHelpConnector1: TLHelpConnector;
     lIBGECodNome: TLabel;
     lImpressora: TLabel;
     lLCBCodigoLido: TPanel;
@@ -2022,8 +2022,8 @@ begin
   FpUmask(0);
   {$ENDIF}
 
-  LHelpConnector1.LHelpPath := ExtractFilePath(Application.ExeName)+
-                            ClHelp + PathDelim + ClHelp;
+  //LHelpConnector1.LHelpPath := ExtractFilePath(Application.ExeName)+
+  //                          ClHelp + PathDelim + ClHelp;
 
   FMonitorConfig := TMonitorConfig.Create(
                  PathWithDelim(ExtractFilePath(Application.ExeName)) + CMonitorIni );

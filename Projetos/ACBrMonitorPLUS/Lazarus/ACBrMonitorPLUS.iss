@@ -8,11 +8,11 @@
 #define ACBrMonitorPLUSDir ACBrDIR + "\Projetos\ACBrMonitorPLUS\Lazarus"
 #ifNDef OutputDir
   #define OutputDir ACBrMonitorPLUSDir
-  #define CHMFile  OutputDir + "\Output\chm\ACBrMonitor.chm"
-  #define PDFFile  OutputDir + "\Output\pdf\ACBrMonitor.pdf"
+;  #define CHMFile  OutputDir + "\Output\chm\ACBrMonitor.chm"
+;  #define PDFFile  OutputDir + "\Output\pdf\ACBrMonitor.pdf"
 #else
-  #define CHMFile  OutputDir + "\ACBrMonitor.chm"
-  #define PDFFile  OutputDir + "\ACBrMonitor.pdf"
+;  #define CHMFile  OutputDir + "\ACBrMonitor.chm"
+;  #define PDFFile  OutputDir + "\ACBrMonitor.pdf"
 #endif
 
 ; para teste de compilação em 64 bits, descomente a linha abaixo
@@ -129,9 +129,9 @@ Source: {#ACBrDIR}\Fontes\ACBrBoleto\ACBrBoleto-change-log.txt; DestDir: {app}\C
 Source: {#ACBrDIR}\Fontes\ACBrDiversos\ACBrDiversos-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
 
 ;Arquivo de leitura de CHM para exibição diretamente usando a tecla F1
-Source: {#ACBrMonitorPLUSDir}\lhelp\lhelp.exe; DestDir: {app}\lhelp; Flags: ignoreversion sign; Components: help
-Source: {#CHMFile}; DestDir: {app}; Flags: ignoreversion; Components: help
-Source: {#PDFFile}; DestDir: {app}; Flags: ignoreversion; Components: help
+;Source: {#ACBrMonitorPLUSDir}\lhelp\lhelp.exe; DestDir: {app}\lhelp; Flags: ignoreversion sign; Components: help
+;Source: {#CHMFile}; DestDir: {app}; Flags: ignoreversion; Components: help
+;Source: {#PDFFile}; DestDir: {app}; Flags: ignoreversion; Components: help
 
 ;Exemplos
 Source: {#ACBrMonitorPLUSDir}\Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
@@ -182,7 +182,7 @@ Filename: {app}\{#MyAppUrlName}; Section: InternetShortcut; Key: URL; String: {#
 [Icons]
 Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {app}; Components: programa
 Name: {group}\Programa ECFTeste; Filename: {app}\{#ECFTesteExeName}; WorkingDir: {app}; Components: programa
-Name: {group}\Manual do ACBrMonitor; Filename: {app}\ACBrMonitor.chm; WorkingDir: {app}; Components: help
+;Name: {group}\Manual do ACBrMonitor; Filename: {app}\ACBrMonitor.chm; WorkingDir: {app}; Components: help
 Name: {group}\Pasta Exemplos; Filename: {app}\Exemplos\; Components: exemplos
 Name: {userdesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {app}; Tasks: desktopicon
 Name: {userstartup}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {app}
@@ -192,7 +192,7 @@ Name: {group}\{cm:ProgramOnTheWeb,{#MyAppName}}; Filename: {app}\{#MyAppUrlName}
 Filename: {tmp}\{#VCRedistInstaller}; Parameters: "/install /passive /norestart"; StatusMsg: Installing Visual C++ 2019 RunTime...
     
 Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent; Description: "{cm:LaunchProgram,{#MyAppName}}"
-Filename: "{app}\ACBrMonitor.chm"; Flags: postinstall shellexec skipifsilent; Description: "Manual ACBrMonitor"; Components: help
+;Filename: "{app}\ACBrMonitor.chm"; Flags: postinstall shellexec skipifsilent; Description: "Manual ACBrMonitor"; Components: help
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""{#MyAppName}"" dir=in action=allow protocol=TCP localport=3434"; Flags: skipifdoesntexist runhidden; MinVersion: 0,6.0; Tasks: firewallopen
 
 [UninstallRun]

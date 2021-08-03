@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2021
+-- ACBrNFSeXProviderBase --
+[+] Incluido a linha para setar com o valor True a propriedade Confirmado ao obter o
+    XML da NFS-e.
+   Por: Italo Giurizzato Junior
+
 24/07/2021
 -- Diversos --
 [*] Implementado a função AjustarAliquota e movido a função PadronizarItemListaServico

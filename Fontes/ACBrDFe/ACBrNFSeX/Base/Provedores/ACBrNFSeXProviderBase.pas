@@ -568,6 +568,7 @@ begin
                  '-nfse.xml';
 
     aNota.NomeArq := NomeArq;
+    aNota.Confirmada := True;
 
     TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XML, aPath);
   end;

@@ -67,7 +67,9 @@ function XmlToStr(const AXML: string): string;
 function StrToXml(const AXML: string): string;
 function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
+function ConverterUnicode(const aXML: string): string;
 function TratarXmlRetorno(const aXML: string): string;
+function RemoverPrefixos(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
@@ -170,14 +172,58 @@ begin
   Result := StringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
+function ConverterUnicode(const aXML: string): string;
+var
+  Xml: string;
+  p: Integer;
+begin
+  Xml := aXML;
+  p := Pos('&#', Xml);
+
+  while p > 0 do
+  begin
+    if Xml[p+5] = ';' then
+      Xml := StringReplace(Xml, Copy(Xml, p, 6), '\' + Copy(Xml, p+2, 3), [rfReplaceAll])
+    else
+      Xml := StringReplace(Xml, Copy(Xml, p, 5), '\' + Copy(Xml, p+2, 3), [rfReplaceAll]);
+
+    p := Pos('&#', Xml);
+  end;
+
+  Result := StringToBinaryString(Xml);
+end;
+
 function TratarXmlRetorno(const aXML: string): string;
 begin
   Result := StrToXml(aXML);
   Result := RemoverCDATA(Result);
   Result := RemoverDeclaracaoXML(Result);
-  Result := ConverteXMLtoUTF8(Result);
-  Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
+  Result := ConverterUnicode(Result);
+  Result := TiraAcentos(Result);
+end;
+
+function RemoverPrefixos(const aXML: string): string;
+var
+  XML: string;
+
+function StrReplace(AXML, APrefixo: string): string;
+begin
+  Result := stringReplace(stringReplace(AXML, '<' + APrefixo, '<', [rfReplaceAll]),
+                          '</' + APrefixo, '</', [rfReplaceAll]);
+end;
+
+begin
+  XML := StrReplace(aXML, 'ns1:');
+  XML := StrReplace(XML, 'ns2:');
+  XML := StrReplace(XML, 'ns3:');
+  XML := StrReplace(XML, 'ns4:');
+  XML := StrReplace(XML, 'ns5:');
+  XML := StrReplace(XML, 'tc:');
+  XML := StrReplace(XML, 'ii:');
+  XML := StrReplace(XML, 'p1:');
+
+  Result := XML;
 end;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;

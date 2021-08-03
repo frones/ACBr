@@ -254,6 +254,7 @@ begin
       UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CodigoPais      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -275,6 +276,7 @@ begin
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -412,6 +414,9 @@ begin
       Sucesso  := StrToBool(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBoolStr));
       DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
     end;
+
+    if NFSe.NfseCancelamento.DataHora > 0 then
+      NFSe.Status := srCancelado;
   end;
 end;
 

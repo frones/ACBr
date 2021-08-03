@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/08/2021
+-- ACBrNFSeXLerXml_ABRASFv1/ ACBrNFSeXLerXml_ABRASFv2 --
+[*] Se a nota contem as informações de cancelamento seta com o valor srCancelado 
+    a propriedade Status.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [+] Incluido a linha para setar com o valor True a propriedade Confirmado ao obter o
     XML da NFS-e.

@@ -199,6 +199,7 @@ begin
       UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CodigoPais      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -220,6 +221,7 @@ begin
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -357,6 +359,9 @@ begin
       Sucesso  := StrToBool(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBoolStr));
       DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
     end;
+
+    if NFSe.NfseCancelamento.DataHora > 0 then
+      NFSe.Status := srCancelado;
   end;
 end;
 
@@ -648,6 +653,7 @@ var
   xRetorno: string;
 begin
   xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := RemoverPrefixos(xRetorno);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');
@@ -679,7 +685,12 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+  AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+  else
+    AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
   LerInfNfse(AuxNode);
 

@@ -162,8 +162,8 @@ begin
   begin
     with LoteRps do
     begin
-      InfElemento := 'tbnfd';
-      DocElemento := 'nfd';
+      InfElemento := 'nfd';
+      DocElemento := 'tbnfd';
     end;
   end;
 
@@ -302,7 +302,7 @@ begin
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
-  Response.XmlEnvio := '<nfd>' + '<tbnfd>' + ListaRps + '</tbnfd>' + '</nfd>';
+  Response.XmlEnvio := '<tbnfd>' + ListaRps + '</tbnfd>';
 end;
 
 procedure TACBrNFSeProviderSmarAPD.TratarRetornoEmitir(
@@ -611,20 +611,16 @@ end;
 function TACBrNFSeXWebserviceSmarAPD.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
-  Request, CodMun: string;
+  Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  CodMun := IntToStr(TACBrNFSeX(FPDFeOwner).Configuracoes.Geral.CodigoMunicipio);
-
-  Request := '<web:nfdEntrada>';
+  Request := '<sil:nfdEntrada xmlns:sil="http://webservices.sil.com/">';
   Request := Request + DadosUsuario;
-  Request := Request + '<codigoMunicipio>' + CodMun + '</codigoMunicipio>';
-  Request := Request + AMSG;
-  Request := Request + '</web:nfdEntrada>';
+  Request := Request + '<nfd>' + XmlToStr(AMSG) + '</nfd>';
+  Request := Request + '</sil:nfdEntrada>';
 
-  Result := Executar('', Request,
-                     [''], ['xmlns:web="http://webservices.sil.com/"']);
+  Result := Executar('', Request, [''], ['']);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.ConsultarLote(ACabecalho,
@@ -635,7 +631,7 @@ begin
   FPMsgOrig := AMSG;
 
   IM := TACBrNFSeX(FPDFeOwner).Configuracoes.Geral.Emitente.InscMun;
-
+  {
   Request := '<web:nfdSaida>';
   Request := Request + DadosUsuario;
   Request := Request + '<inscricaoMunicipal>' + IM + '</inscricaoMunicipal>';
@@ -644,6 +640,15 @@ begin
 
   Result := Executar('', Request,
                      [''], ['xmlns:web="http://webservices.sil.com/"']);
+  }
+
+  Request := '<sil:nfdSaida xmlns:sil="http://webservices.sil.com/">';
+  Request := Request + DadosUsuario;
+  Request := Request + '<inscricaoMunicipal>' + IM + '</inscricaoMunicipal>';
+  Request := Request + AMSG;
+  Request := Request + '</sil:nfdSaida>';
+
+  Result := Executar('', Request, [''], ['']);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.Cancelar(ACabecalho, AMSG: String): string;
@@ -651,7 +656,7 @@ var
   Request: string;
 begin
   FPMsgOrig := AMSG;
-
+  {
   Request := '<web:nfdEntradaCancelar>';
   Request := Request + DadosUsuario;
   Request := Request + '<nfd>' + AMSG + '</nfd>';
@@ -659,6 +664,14 @@ begin
 
   Result := Executar('', Request,
                      [''], ['xmlns:web="http://webservices.sil.com/"']);
+  }
+
+  Request := '<sil:nfdEntradaCancelar xmlns:sil="http://webservices.sil.com/">';
+  Request := Request + DadosUsuario;
+  Request := Request + '<nfd>' + XmlToStr(AMSG) + '</nfd>';
+  Request := Request + '</sil:nfdEntradaCancelar>';
+
+  Result := Executar('', Request, [''], ['']);
 end;
 
 { TACBrNFSeProviderSmarAPDv203 }

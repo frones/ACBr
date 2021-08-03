@@ -326,7 +326,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#57', 'codatividade', 1, 20, 1,
                                       NFSe.Servico.ItemServico[i].CodServ, ''));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#57', 'valorunitario', 1, 15, 1,
+    Result[i].AppendChild(AddNode(tcDe4, '#57', 'valorunitario', 1, 15, 1,
                                 NFSe.Servico.ItemServico[i].ValorUnitario, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#57', 'aliquota', 1, 15, 1,

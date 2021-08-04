@@ -43,7 +43,7 @@ interface
 
 uses
   Classes, SysUtils,
-  pcnConversao, ACBrDFeSSL;
+  pcnConversao, ACBrDFeSSL, ACBrBase;
 
 const
   cLIBSAT = 'SAT.DLL';

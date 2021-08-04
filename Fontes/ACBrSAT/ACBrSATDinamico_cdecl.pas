@@ -37,7 +37,7 @@ unit ACBrSATDinamico_cdecl ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATClass;
+  Classes, SysUtils, ACBrSATClass, ACBrBase;
 
 type
 

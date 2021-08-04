@@ -37,7 +37,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao;
+  pcnConversao, ACBrBase;
 
 type
 

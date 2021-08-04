@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2021
+-- ACBrSATClass, ACBrSATDinamico_stdcall, ACBrSATDinamico_cdecl, pcnCFe, pcnCFeR,
+   pcnCFeCanc, pcnRede --
+[*] Diversos ajustes para compatibilizar com a compilação em Delphi FMX,
+    Android e Linux
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=63547
 
 21/07/2021
 -- ACBrECFVirtualSAT --

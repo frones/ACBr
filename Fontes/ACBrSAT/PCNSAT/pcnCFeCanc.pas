@@ -36,8 +36,13 @@ unit pcnCFeCanc;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, pcnSignature;
+  SysUtils, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}
+  pcnConversao, pcnSignature, ACBrBase;
 
 type
 
@@ -246,7 +251,7 @@ type
 
   { TobsFiscoCollection }
 
-  TobsFiscoCollection = class(TObjectList)
+  TobsFiscoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TobsFiscoCollectionItem;
     procedure SetItem(Index: Integer; Value: TobsFiscoCollectionItem);
@@ -393,13 +398,13 @@ end;
 function TobsFiscoCollection.GetItem(
   Index: Integer): TobsFiscoCollectionItem;
 begin
-  Result := TobsFiscoCollectionItem(inherited GetItem(Index));
+  Result := TobsFiscoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TobsFiscoCollection.SetItem(Index: Integer;
   Value: TobsFiscoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TobsFiscoCollection.New: TobsFiscoCollectionItem;

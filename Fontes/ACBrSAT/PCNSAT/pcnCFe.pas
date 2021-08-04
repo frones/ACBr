@@ -41,8 +41,13 @@ unit pcnCFe;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  pcnConversao, pcnSignature, pcnAuxiliar;
+  SysUtils, Classes,
+  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
+   System.Generics.Collections, System.Generics.Defaults,
+  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+   System.Contnrs,
+  {$IfEnd}      
+  pcnConversao, pcnSignature, pcnAuxiliar, ACBrBase;
 
 type
 
@@ -278,7 +283,7 @@ type
     property UF: string read FUF write FUF;
   end;
 
-  TDetCollection = class(TObjectList)
+  TDetCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetCollectionItem);
@@ -356,7 +361,7 @@ type
 
   { TobsFiscoDetCollection }
 
-  TobsFiscoDetCollection = class(TObjectList)
+  TobsFiscoDetCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TobsFiscoDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TobsFiscoDetCollectionItem);
@@ -621,7 +626,7 @@ type
 
   { TMPCollection }
 
-  TMPCollection = class(TObjectList)
+  TMPCollection = class(TACBrObjectList)
   private
     FvTroco: currency;
     function GetItem(Index: Integer): TMPCollectionItem;
@@ -667,7 +672,7 @@ type
 
   { TobsFiscoCollection }
 
-  TobsFiscoCollection = class(TObjectList)
+  TobsFiscoCollection = class(TACBrObjectList)
   private
     function GetItem(Index: Integer): TobsFiscoCollectionItem;
     procedure SetItem(Index: Integer; Value: TobsFiscoCollectionItem);
@@ -975,13 +980,13 @@ end;
 function TobsFiscoCollection.GetItem(
   Index: Integer): TobsFiscoCollectionItem;
 begin
-  Result := TobsFiscoCollectionItem(inherited GetItem(Index));
+  Result := TobsFiscoCollectionItem(inherited Items[Index]);
 end;
 
 procedure TobsFiscoCollection.SetItem(Index: Integer;
   Value: TobsFiscoCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TobsFiscoCollection.Add: TobsFiscoCollectionItem;
@@ -1126,13 +1131,13 @@ end;
 function TobsFiscoDetCollection.GetItem(
   Index: Integer): TobsFiscoDetCollectionItem;
 begin
-  Result := TobsFiscoDetCollectionItem(inherited GetItem(Index));
+  Result := TobsFiscoDetCollectionItem(inherited Items[Index]);
 end;
 
 procedure TobsFiscoDetCollection.SetItem(Index: Integer;
   Value: TobsFiscoDetCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TobsFiscoDetCollection.New: TobsFiscoDetCollectionItem;
@@ -1156,13 +1161,13 @@ end;
 
 function TDetCollection.GetItem(Index: Integer): TDetCollectionItem;
 begin
-  Result := TDetCollectionItem(inherited GetItem(Index));
+  Result := TDetCollectionItem(inherited Items[Index]);
 end;
 
 procedure TDetCollection.SetItem(Index: Integer;
   Value: TDetCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TDetCollection.Add: TDetCollectionItem;
@@ -1246,12 +1251,12 @@ end;
 
 function TMPCollection.GetItem(Index: Integer): TMPCollectionItem;
 begin
-  Result := TMPCollectionItem(inherited GetItem(Index));
+  Result := TMPCollectionItem(inherited Items[Index]);
 end;
 
 procedure TMPCollection.SetItem(Index: Integer; Value: TMPCollectionItem);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
 end;
 
 function TMPCollection.New: TMPCollectionItem;

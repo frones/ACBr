@@ -78,7 +78,7 @@ function TCFeR.LerXml: boolean;
 var
   ok, XMLContemTagsSAT: boolean;
   i, j, nItem: integer;
-  Arquivo, Itens, ItensTemp, NumItem, ACampo: AnsiString;
+  Arquivo, Itens, ItensTemp, NumItem, ACampo: String;
   Aspas: String;
 begin
   if Pos('versao=''', Leitor.Arquivo) <> 0 then

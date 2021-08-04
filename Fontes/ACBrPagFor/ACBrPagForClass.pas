@@ -81,9 +81,13 @@ type
   private
     FTipo: TTipoInscricao; // Tamanho 1
     FNumero: String; // Tamanho 14 ou 15
+	FPixTipoChave: String;
+    FPixMensagem: String;
   public
     property Tipo: TTipoInscricao read FTipo write FTipo;
     property Numero: String read FNumero write FNumero;
+	property PixTipoChave: String read FPixTipoChave write FPixTipoChave;
+    property PixMensagem: String read FPixMensagem write FPixMensagem;
   end;
 
   TAgencia = class(TObject)

@@ -844,17 +844,19 @@ begin
       wregistro := wregistro + '3';
       wregistro := wregistro + FormatFloat('00000', FSequencialDeLote);
       wregistro := wregistro + 'B';
-      wregistro := wregistro + Space(3);
-      wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
-      wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
-      wregistro := wregistro + PadRight(TiraAcentos(Endereco.Logradouro), 30);
-      wregistro := wregistro + FormatFloat('00000', Endereco.Numero);
-      wregistro := wregistro + PadRight(TiraAcentos(Endereco.Complemento), 15);
-      wregistro := wregistro + PadRight(TiraAcentos(Endereco.Bairro), 15);
-      wregistro := wregistro + PadRight(TiraAcentos(Endereco.Cidade), 20);
-      wregistro := wregistro + FormatFloat('00000000', Endereco.CEP);
-      wregistro := wregistro + PadRight(Endereco.Estado, 2);
-
+      if(Inscricao.PixTipoChave = '')then
+      begin
+        wregistro := wregistro + Space(3);
+        wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
+        wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
+        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Logradouro), 30);
+        wregistro := wregistro + FormatFloat('00000', Endereco.Numero);
+        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Complemento), 15);
+        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Bairro), 15);
+        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Cidade), 20);
+        wregistro := wregistro + FormatFloat('00000000', Endereco.CEP);
+        wregistro := wregistro + PadRight(Endereco.Estado, 2);
+      end;
       case FPagFor.Geral.Banco of
         pagSantander:
           begin
@@ -884,6 +886,15 @@ begin
 
         pagItau:
           begin
+		    if(Inscricao.PixTipoChave <> '')then
+            begin
+              wregistro := wregistro + PadRight(Inscricao.PixTipoChave, 2);
+              wregistro := wregistro + ' ';
+              wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
+              wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
+              wregistro := wregistro + Space(30);
+              wregistro := wregistro + PadRight(Inscricao.PixMensagem, 65);
+            end;
             wregistro := wregistro + PadRight(Email, 100); //ENDEREÇO DE E-MAIL
             wregistro := wregistro + Space(3);
             wregistro := wregistro + Space(10);

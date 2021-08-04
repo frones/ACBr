@@ -69,7 +69,8 @@ function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
 function ConverterUnicode(const aXML: string): string;
 function TratarXmlRetorno(const aXML: string): string;
-function RemoverPrefixos(const aXML: string): string;
+function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
+function RemoverPrefixosDesnecessarios(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
@@ -203,27 +204,24 @@ begin
   Result := TiraAcentos(Result);
 end;
 
-function RemoverPrefixos(const aXML: string): string;
+function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 var
-  XML: string;
-
-function Remover(AXML, APrefixo: string): string;
+  i: Integer;
 begin
-  Result := stringReplace(stringReplace(AXML, '<' + APrefixo, '<', [rfReplaceAll]),
-                          '</' + APrefixo, '</', [rfReplaceAll]);
+  Result := aXML;
+
+  if (Result = '') or (Length(APrefixo) = 0) then
+    exit ;
+
+  for i := Low(APrefixo) to High(APrefixo) do
+    Result := StringReplace(StringReplace(Result, '<' + APrefixo[i], '<', [rfReplaceAll]),
+                          '</' + APrefixo[i], '</', [rfReplaceAll]);
 end;
 
+function RemoverPrefixosDesnecessarios(const aXML: string): string;
 begin
-  XML := Remover(aXML, 'ns1:');
-  XML := Remover(XML, 'ns2:');
-  XML := Remover(XML, 'ns3:');
-  XML := Remover(XML, 'ns4:');
-  XML := Remover(XML, 'ns5:');
-  XML := Remover(XML, 'tc:');
-  XML := Remover(XML, 'ii:');
-  XML := Remover(XML, 'p1:');
-
-  Result := XML;
+  Result := RemoverPrefixos(aXML, ['ns1:', 'ns2:', 'ns3:', 'ns4:', 'ns5:', 'tc:',
+              'ii:', 'p1:']);
 end;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;

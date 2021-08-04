@@ -79,6 +79,8 @@ procedure TNFSeW_Actconv2.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoEmissao := tcDat;
+  FormatoCompetencia := tcDat;
   TagTomador := 'TomadorServico';
 end;
 
@@ -95,7 +97,6 @@ procedure TNFSeW_Actconv202.Configuracao;
 begin
   inherited Configuracao;
 
-  FormatoEmissao := tcDatHor;
   TagTomador := 'Tomador';
 end;
 

@@ -57,8 +57,13 @@ type
   protected
     FAOwner: IACBrNFSeXProvider;
 
+    function LerDatas(const DataStr: string): TDateTime;
+    function NormatizaItemListaServico(const Codigo: string): string;
+    function ItemListaServicoDescricao(const Codigo: string): string;
+    function TipodeXMLLeitura(const aArquivo: string): TtpXML;
   public
     constructor Create(AOwner: IACBrNFSeXProvider);
+
     function LerXml: Boolean; Override;
 
     property NFSe: TNFSe                 read FNFSe         write FNFSe;
@@ -76,10 +81,96 @@ begin
   FAOwner := AOwner;
 end;
 
+function TNFSeRClass.ItemListaServicoDescricao(const Codigo: string): string;
+var
+  xCodigo: string;
+begin
+  xCodigo := OnlyNumber(Codigo);
+
+  if FAOwner.ConfigGeral.TabServicosExt then
+    Result := ObterDescricaoServico(xCodigo)
+  else
+    Result := CodItemServToDesc(xCodigo);
+end;
+
+function TNFSeRClass.LerDatas(const DataStr: string): TDateTime;
+var
+  xData: string;
+begin
+  xData := Trim(DataStr);
+
+  if xData = '' then
+    Result := 0
+  else
+  begin
+    xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
+
+    if (Length(xData) >= 16) and (xData[11] in ['T', ' ']) then
+    begin
+      if Pos('/', xData) = 5 then
+        // Le a data/hora no formato YYYY/MM/DDTHH:MM:SS
+        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
+                             StrToInt(copy(xData, 6, 2)),
+                             StrToInt(copy(xData, 9, 2))) +
+                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
+                             StrToIntDef(copy(xData, 15, 2), 0),
+                             StrToIntDef(copy(xData, 18, 2), 0),
+                             0)
+      else
+        // Le a data/hora no formato DD/MM/YYYYTHH:MM:SS
+        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                             StrToInt(copy(xData, 4, 2)),
+                             StrToInt(copy(xData, 1, 2))) +
+                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
+                             StrToIntDef(copy(xData, 15, 2), 0),
+                             StrToIntDef(copy(xData, 18, 2), 0),
+                             0)
+    end
+    else
+    begin
+      if Pos('/', xData) = 5 then
+        // Le a data no formato YYYY/MM/DD
+        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
+                             StrToInt(copy(xData, 6, 2)),
+                             StrToInt(copy(xData, 9, 2)))
+      else
+        // Le a data no formato DD/MM/YYYY
+        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                             StrToInt(copy(xData, 4, 2)),
+                             StrToInt(copy(xData, 1, 2)));
+    end;
+  end;
+end;
+
 function TNFSeRClass.LerXml: Boolean;
 begin
   Result := False;
   raise EACBrDFeException.Create(ClassName + '.LerXml, não implementado');
+end;
+
+function TNFSeRClass.NormatizaItemListaServico(const Codigo: string): string;
+var
+  Item: Integer;
+  xCodigo: string;
+begin
+  xCodigo := Codigo;
+
+  Item := StrToIntDef(OnlyNumber(xCodigo), 0);
+  if Item < 100 then
+    Item := Item * 100 + 1;
+
+  xCodigo := FormatFloat('0000', Item);
+
+  Result := Copy(xCodigo, 1, 2) + '.' + Copy(xCodigo, 3, 2);
+end;
+
+function TNFSeRClass.TipodeXMLLeitura(const aArquivo: string): TtpXML;
+begin
+  if (Pos('CompNfse', Arquivo) > 0) or (Pos('ComplNfse', Arquivo) > 0) or
+     (Pos('tcCompNfse', Arquivo) > 0) then
+    Result := txmlNFSe
+  else
+    Result := txmlRPS;
 end;
 
 end.

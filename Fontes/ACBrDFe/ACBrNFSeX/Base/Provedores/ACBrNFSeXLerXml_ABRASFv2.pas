@@ -49,11 +49,8 @@ type
 
   TNFSeR_ABRASFv2 = class(TNFSeRClass)
   private
-    procedure SetxItemListaServico(Codigo: string);
 
   protected
-    function LerDatas(const DataStr: string): TDateTime;
-
     procedure LerInfNfse(const ANode: TACBrXmlNode);
 
     procedure LerValoresNfse(const ANode: TACBrXmlNode);
@@ -94,8 +91,6 @@ type
 
     procedure LerInfNfseSubstituicao(const ANode: TACBrXmlNode);
     procedure LerSubstituicaoNfse(const ANode: TACBrXmlNode);
-
-    function TipodeXMLLeitura(aArquivo: string): TtpXML;
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -169,55 +164,6 @@ begin
     begin
       Telefone := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Telefone'), tcStr);
       Email    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Email'), tcStr);
-    end;
-  end;
-end;
-
-function TNFSeR_ABRASFv2.LerDatas(const DataStr: string): TDateTime;
-var
-  xData: string;
-begin
-  xData := Trim(DataStr);
-
-  if xData = '' then
-    Result := 0
-  else
-  begin
-    xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
-
-    if Length(xData) > 10 then
-    begin
-      if Pos('/', xData) = 5 then
-        // Le a data/hora no formato YYYY/MM/DDTHH:MM:SS
-        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
-                             StrToInt(copy(xData, 6, 2)),
-                             StrToInt(copy(xData, 9, 2))) +
-                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
-                             StrToIntDef(copy(xData, 15, 2), 0),
-                             StrToIntDef(copy(xData, 18, 2), 0),
-                             0)
-      else
-        // Le a data/hora no formato DD/MM/YYYYTHH:MM:SS
-        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
-                             StrToInt(copy(xData, 4, 2)),
-                             StrToInt(copy(xData, 1, 2))) +
-                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
-                             StrToIntDef(copy(xData, 15, 2), 0),
-                             StrToIntDef(copy(xData, 18, 2), 0),
-                             0)
-    end
-    else
-    begin
-      if Pos('/', xData) = 5 then
-        // Le a data no formato YYYY/MM/DD
-        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
-                             StrToInt(copy(xData, 6, 2)),
-                             StrToInt(copy(xData, 9, 2)))
-      else
-        // Le a data no formato DD/MM/YYYY
-        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
-                             StrToInt(copy(xData, 4, 2)),
-                             StrToInt(copy(xData, 1, 2)));
     end;
   end;
 end;
@@ -647,7 +593,7 @@ procedure TNFSeR_ABRASFv2.LerServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
-  ItemServico: string;
+  CodigoItemServico: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('Servico');
 
@@ -655,16 +601,16 @@ begin
   begin
     LerValores(AuxNode);
 
-    ItemServico := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ItemListaServico'), tcStr);
+    CodigoItemServico := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ItemListaServico'), tcStr);
 
     // Provedor MegaSoft
-    if ItemServico = '' then
-      ItemServico := OnlyNumber(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr));
-
-    SetxItemListaServico(ItemServico);
+    if CodigoItemServico = '' then
+      CodigoItemServico := OnlyNumber(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr));
 
     with NFSe.Servico do
     begin
+      ItemListaServico          := NormatizaItemListaServico(CodigoItemServico);
+      xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
       CodigoCnae                := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnae'), tcStr);
       CodigoTributacaoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr);
       Discriminacao             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
@@ -828,37 +774,6 @@ begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   LerInfDeclaracaoPrestacaoServico(ANode);
-end;
-
-procedure TNFSeR_ABRASFv2.SetxItemListaServico(Codigo: string);
-var
-  Item: Integer;
-  ItemServico: string;
-begin
-  NFSe.Servico.ItemListaServico := Codigo;
-
-  Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-  if Item < 100 then
-    Item := Item * 100 + 1;
-
-  ItemServico := FormatFloat('0000', Item);
-
-  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
-                                   Copy(ItemServico, 3, 2);
-
-  if FAOwner.ConfigGeral.TabServicosExt then
-    NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)
-  else
-    NFSe.Servico.xItemListaServico := CodItemServToDesc(ItemServico);
-end;
-
-function TNFSeR_ABRASFv2.TipodeXMLLeitura(aArquivo: string): TtpXML;
-begin
-  if (Pos('CompNfse', Arquivo) > 0) or (Pos('ComplNfse', Arquivo) > 0) or
-     (Pos('tcCompNfse', Arquivo) > 0) then
-    Result := txmlNFSe
-  else
-    Result := txmlRPS;
 end;
 
 end.

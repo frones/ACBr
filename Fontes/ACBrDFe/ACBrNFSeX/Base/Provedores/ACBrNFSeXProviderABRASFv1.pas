@@ -385,12 +385,20 @@ begin
 
   try
     try
+      if Response.XmlRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
       Document.LoadFromXml(Response.XmlRetorno);
+
       ProcessarMensagemErros(Document.Root, Response);
 
-      if Response.Erros.Count > 0 then Exit;
+      Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Sucesso := True;
       Response.Situacao := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('Situacao'), tcStr);
     except
       on E:Exception do
@@ -483,10 +491,21 @@ begin
 
   try
     try
+      if Response.XmlRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Response.Situacao := '3'; // Processado com Falhas
+
       Document.LoadFromXml(Response.XmlRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-      if Response.Erros.Count > 0 then Exit;
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       Response.Situacao := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('SituacaoLoteRps'), tcStr);
 
@@ -539,8 +558,6 @@ begin
           end;
 
           SalvarXmlNfse(ANota);
-
-          Response.Situacao := '4';
         end
         else
         begin
@@ -550,8 +567,6 @@ begin
           Exit;
         end;
       end;
-
-      Response.Sucesso := True;
     except
       on E:Exception do
       begin
@@ -649,10 +664,19 @@ begin
 
   try
     try
+      if Response.XmlRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
       Document.LoadFromXml(Response.XmlRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-      if Response.Erros.Count > 0 then Exit;
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('CompNfse');
 
@@ -681,8 +705,6 @@ begin
       end;
 
       SalvarXmlNfse(ANota);
-
-      Response.Sucesso := True;
     except
       on E:Exception do
       begin
@@ -822,10 +844,19 @@ begin
 
   try
     try
+      if Response.XmlRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
       Document.LoadFromXml(Response.XmlRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-      if Response.Erros.Count > 0 then Exit;
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
       if not Assigned(ANode) then
@@ -866,8 +897,6 @@ begin
 
         SalvarXmlNfse(ANota);
       end;
-
-      Response.Sucesso := True;
     except
       on E:Exception do
       begin
@@ -993,10 +1022,19 @@ begin
 
   try
     try
+      if Response.XmlRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
       Document.LoadFromXml(Response.XmlRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
-      if Response.Erros.Count > 0 then Exit;
+
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('Cancelamento');
       if not Assigned(ANode) then

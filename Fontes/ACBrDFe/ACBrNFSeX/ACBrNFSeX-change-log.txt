@@ -42,6 +42,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2021
+-- Diversos --
+[*] Melhorias nas rotinas de leitura do XML do layout ABRASF.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Melhorias nas rotinas de tratamento de retorno dos serviços.
+   Por: Italo Giurizzato Junior
+-- Actcon.GravarXml --
+[*] A formatação da data estava errada.
+   Por: Italo Giurizzato Junior
+-- Saatri.GravarXml --
+[*] A mensagem do Cabeçalho e Dados devem ser convertidos para string.
+   Por: Italo Giurizzato Junior
+-- SmarAPD.Provider --
+[*] Ajustes para gerar corretamente os XML dos serviços de consulta e cancelamento.
+   Por: Italo Giurizzato Junior
+
 03/08/2021
 -- SmarAPD.GravarXml / SmarAPD.Provider --
 [*] Ajustes necessários para o provedor SmarAPD layout próprio.

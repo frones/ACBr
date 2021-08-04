@@ -424,7 +424,9 @@ begin
     Exit;
   end;
 
-  Response.XmlEnvio := '<recibo>' + Response.Protocolo + '</recibo>';
+  Response.XmlEnvio := '<recibo>' +
+                         '<codrecibo>' + Response.Protocolo + '</codrecibo>' +
+                       '</recibo>';
 end;
 
 procedure TACBrNFSeProviderSmarAPD.TratarRetornoConsultaLoteRps(
@@ -533,18 +535,20 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<inscricaomunicipalemissor>' +
-                         OnlyNumber(Emitente.InscMun) +
-                       '</inscricaomunicipalemissor>' +
-                       '<numeronf>' +
-                         Response.InfCancelamento.NumeroNFSe +
-                       '</numeronf>' +
-                       '<motivocancelamento>' +
-                         Response.InfCancelamento.MotCancelamento +
-                       '</motivocancelamento>' +
-                       '<datacancelamento>' +
-                         FormatDateTime('dd/mm/yyyy', now) +
-                       '</datacancelamento>';
+  Response.XmlEnvio := '<nfd>' +
+                         '<inscricaomunicipalemissor>' +
+                           OnlyNumber(Emitente.InscMun) +
+                         '</inscricaomunicipalemissor>' +
+                         '<numeronf>' +
+                           Response.InfCancelamento.NumeroNFSe +
+                         '</numeronf>' +
+                         '<motivocancelamento>' +
+                           Response.InfCancelamento.MotCancelamento +
+                         '</motivocancelamento>' +
+                         '<datacancelamento>' +
+                           FormatDateTime('dd/mm/yyyy', now) +
+                         '</datacancelamento>' +
+                       '</nfd>';
 end;
 
 procedure TACBrNFSeProviderSmarAPD.TratarRetornoCancelaNFSe(
@@ -631,21 +635,11 @@ begin
   FPMsgOrig := AMSG;
 
   IM := TACBrNFSeX(FPDFeOwner).Configuracoes.Geral.Emitente.InscMun;
-  {
-  Request := '<web:nfdSaida>';
-  Request := Request + DadosUsuario;
-  Request := Request + '<inscricaoMunicipal>' + IM + '</inscricaoMunicipal>';
-  Request := Request + AMSG;
-  Request := Request + '</web:nfdSaida>';
-
-  Result := Executar('', Request,
-                     [''], ['xmlns:web="http://webservices.sil.com/"']);
-  }
 
   Request := '<sil:nfdSaida xmlns:sil="http://webservices.sil.com/">';
   Request := Request + DadosUsuario;
   Request := Request + '<inscricaoMunicipal>' + IM + '</inscricaoMunicipal>';
-  Request := Request + AMSG;
+  Request := Request + '<recibo>' + XmlToStr(AMSG) + '</recibo>';
   Request := Request + '</sil:nfdSaida>';
 
   Result := Executar('', Request, [''], ['']);
@@ -656,15 +650,6 @@ var
   Request: string;
 begin
   FPMsgOrig := AMSG;
-  {
-  Request := '<web:nfdEntradaCancelar>';
-  Request := Request + DadosUsuario;
-  Request := Request + '<nfd>' + AMSG + '</nfd>';
-  Request := Request + '</web:nfdEntradaCancelar>';
-
-  Result := Executar('', Request,
-                     [''], ['xmlns:web="http://webservices.sil.com/"']);
-  }
 
   Request := '<sil:nfdEntradaCancelar xmlns:sil="http://webservices.sil.com/">';
   Request := Request + DadosUsuario;

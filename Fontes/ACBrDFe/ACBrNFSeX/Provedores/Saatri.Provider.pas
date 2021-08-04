@@ -176,8 +176,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:RecepcionarLoteRpsSincronoRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/RecepcionarLoteRpsSincrono', Request,
@@ -194,8 +194,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:GerarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:GerarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/GerarNfse', Request,
@@ -212,8 +212,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/ConsultarLoteRps', Request,
@@ -230,8 +230,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarNfsePorFaixaRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/ConsultarNfsePorFaixa', Request,
@@ -248,8 +248,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarNfsePorRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/ConsultarNfsePorRps', Request,
@@ -266,8 +266,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarNfseServicoPrestadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoPrestado', Request,
@@ -284,8 +284,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarNfseServicoTomadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/ConsultarNfseServicoTomado', Request,
@@ -301,8 +301,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:CancelarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:CancelarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/CancelarNfse', Request,
@@ -319,8 +319,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:SubstituirNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + ACabecalho + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:SubstituirNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/SubstituirNfse', Request,

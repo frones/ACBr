@@ -41,7 +41,11 @@ uses
   FMX.Graphics,
   Androidapi.JNI.GraphicsContentViewText,
   ACBrConsts, ACBrDevice, ACBrBase, ACBrPosPrinter,
-  G700Interface;
+  {$IFDEF __G800__}
+   G800Interface
+  {$ELSE}
+   G700Interface
+  {$ENDIF};
 
 resourcestring
   cErroImpressoraSemPapapel = 'Impressora sem Papel';
@@ -414,10 +418,11 @@ var
   imgConfig: JGEDI_PRNTR_st_PictureConfig;
 begin
   IniciarImpressao;
-
   imgConfig := TJGEDI_PRNTR_st_PictureConfig.Create;
-  imgConfig.offset := 0;
 
+  {$IFNDEF __G800__}
+   imgConfig.offset := 0;
+  {$ENDIF}
   // Ajusta o alinhamento da Imagem
   case Alinhamento of
     alEsquerda: imgConfig.alignment := TJGEDI_PRNTR_e_Alignment.JavaClass.LEFT;
@@ -474,7 +479,12 @@ procedure TACBrPosPrinterGEDI.Configurar;
 begin
   fpPosPrinter.Porta := 'NULL';
   fpPosPrinter.OnEnviarStringDevice := ImprimirGEDI;
-  fpPosPrinter.PaginaDeCodigo := TACBrPosPaginaCodigo.pcUTF8;
+
+  {$IFDEF __G800__}
+   fpPosPrinter.PaginaDeCodigo := TACBrPosPaginaCodigo.pc1252;
+  {$ELSE}
+   fpPosPrinter.PaginaDeCodigo := TACBrPosPaginaCodigo.pcUTF8;
+  {$ENDIF}
 end;
 
 function TACBrPosPrinterGEDI.TraduzirTag(const ATag: AnsiString;

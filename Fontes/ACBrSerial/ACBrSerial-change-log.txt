@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/08/2021
+-- ACBrPosPrinterGEDI --
+[-] Ajuste para compatibilizar com G800Interface
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=63498
+
 Data: 29/07/2021
 -- ACBrPosPrinter --
 [-] Método "TACBrPosPrinter.DoTraduzirTag", modificado, para que os Flags internos

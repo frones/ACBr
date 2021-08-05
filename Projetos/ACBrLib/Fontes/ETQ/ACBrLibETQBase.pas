@@ -81,6 +81,9 @@ type
                                        const eNomeImagem: PChar): longint;
     function ImprimirQRCode(const Vertical, Horizontal: Integer; const Texto: PChar;
                                        LarguraModulo, ErrorLevel, Tipo: Integer): longint;
+    function ComandoGravaRFIDASCII(const Texto: PChar): longint;
+    function ComandoGravaRFIDHexaDecimal(const Texto: PChar): longint;
+
   end;
 
 implementation
@@ -477,6 +480,62 @@ begin
     ETQDM.Travar;
     try
       ETQDM.ACBrETQ1.ImprimirQRCode(Vertical, Horizontal, ATexto, LarguraModulo, ErrorLevel, Tipo);
+      Result := SetRetorno(ErrOK);
+    finally
+      ETQDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibETQ.ComandoGravaRFIDASCII(const Texto: PChar): longint;
+Var
+  ATexto: string;
+begin
+  try
+    ATexto := ConverterAnsiParaUTF8(Texto);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('ETQ_ComandoGravaRFIDASCII( ' +  ATexto + ' )', logCompleto)
+    else
+      GravarLog('ETQ_ComandoGravaRFIDASCII', logNormal);
+
+    ETQDM.Travar;
+    try
+      ETQDM.ACBrETQ1.ComandoGravaRFIDASCII(ATexto);
+      Result := SetRetorno(ErrOK);
+    finally
+      ETQDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibETQ.ComandoGravaRFIDHexaDecimal(const Texto: PChar): longint;
+Var
+  ATexto: string;
+begin
+  try
+    ATexto := ConverterAnsiParaUTF8(Texto);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('ETQ_ComandoGravaRFIDHexaDecimal( ' +  ATexto + ' )', logCompleto)
+    else
+      GravarLog('ETQ_ComandoGravaRFIDHexaDecimal', logNormal);
+
+    ETQDM.Travar;
+    try
+      ETQDM.ACBrETQ1.ComandoGravaRFIDHexaDecimal(ATexto);
       Result := SetRetorno(ErrOK);
     finally
       ETQDM.Destravar;

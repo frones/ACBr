@@ -91,11 +91,15 @@ function ETQ_ImprimirBarras(const libHandle: PLibHandle; const Orientacao, TipoB
 function ETQ_ImprimirLinha(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirCaixa(const libHandle: PLibHandle; const Vertical, Horizontal, Largura, Altura,
-      EspessuraVertical, EspessuraHorizontal: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  EspessuraVertical, EspessuraHorizontal: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirImagem(const libHandle: PLibHandle; const MultiplicadorImagem, Vertical, Horizontal: Integer;
-      const eNomeImagem: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const eNomeImagem: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirQRCode(const libHandle: PLibHandle; const Vertical, Horizontal: Integer; const Texto: PChar;
-          LarguraModulo, ErrorLevel, Tipo: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  LarguraModulo, ErrorLevel, Tipo: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ComandoGravaRFIDASCII(const libHandle: PLibHandle; const Texto: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ComandoGravaRFIDHexaDecimal(const libHandle: PLibHandle; const Texto: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -378,6 +382,36 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibETQ(libHandle^.Lib).ImprimirQRCode(Vertical, Horizontal, Texto, LarguraModulo, ErrorLevel, Tipo);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function ETQ_ComandoGravaRFIDASCII(const libHandle: PLibHandle; const Texto: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ComandoGravaRFIDASCII(Texto);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function ETQ_ComandoGravaRFIDHexaDecimal(const libHandle: PLibHandle; const Texto: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibETQ(libHandle^.Lib).ComandoGravaRFIDHexaDecimal(Texto);
   except
     on E: EACBrLibException do
       Result := E.Erro;

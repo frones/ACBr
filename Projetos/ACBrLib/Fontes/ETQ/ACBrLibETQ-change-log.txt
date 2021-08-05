@@ -42,11 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2021
+--- ACBrLibETQBase ---
+[+] Adicionado os metodos para trabalhar com RFID no ACBrLibETQ.
+    (Por: Rafael Dias)
+
 26/11/2020
 --- ACBrLibETQDataModule ---
 [+] Correção do na passagem das configurações para o componente estava lendo as configurações do PosPrinter.
     (Por: Rafael Dias)
-
 
 19/10/2020
 --- ACBrLibETQBase, ACBrLibETQDataModule ---

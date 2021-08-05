@@ -76,7 +76,9 @@ exports
   ETQ_ImprimirLinha,
   ETQ_ImprimirCaixa,
   ETQ_ImprimirImagem,
-  ETQ_ImprimirQRCode;
+  ETQ_ImprimirQRCode,
+  ETQ_ComandoGravaRFIDASCII,
+  ETQ_ComandoGravaRFIDHexaDecimal;
 
 begin
   {$IFDEF DEBUG}

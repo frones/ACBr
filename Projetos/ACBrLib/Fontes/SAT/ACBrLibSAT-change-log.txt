@@ -42,8 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2021
+--- ACBrLibSATDataModule ---
+[-] Correção de erro quando utilizado com integrador fiscal do CE.
+	Por: Rafael Dias
+
 21/10/2020
---- ACBrLibSATeDataModule ---
+--- ACBrLibSATDataModule ---
 [-] Correção de erro na impressão EscPos.
 	Por: Rafael Dias
 

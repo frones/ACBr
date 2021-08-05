@@ -222,8 +222,6 @@ type
     FExtrato: TExtratoConfig;
     FIntegrador: TIntegradorConfig;
 
-    function GetIsMFe: Boolean;
-
   protected
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
@@ -247,7 +245,6 @@ type
     property ValidarNumeroSessaoResposta: boolean read FValidarNumeroSessaoResposta write FValidarNumeroSessaoResposta;
     property NumeroTentativasValidarSessao: integer read FNumeroTentativasValidarSessao write FNumeroTentativasValidarSessao;
     property ArqLOG: string read FArqLOG write FArqLOG;
-    property IsMFe: boolean read GetIsMFe;
     property Config: TSATConfig read FConfig;
     property Arquivos: TSATConfigArquivo read FConfigArquivos;
     property Certificado: TSATCertificado read FSATCertificado;
@@ -564,11 +561,6 @@ begin
   FExtrato.Free;
 
   inherited Destroy;
-end;
-
-function TLibSATConfig.GetIsMFe: Boolean;
-begin
-  Result := FModelo = mfe_Integrador_XML;
 end;
 
 procedure TLibSATConfig.LerIni(const AIni: TCustomIniFile);

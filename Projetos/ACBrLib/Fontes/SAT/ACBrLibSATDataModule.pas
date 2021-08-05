@@ -37,15 +37,15 @@ unit ACBrLibSatDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
+  Classes, SysUtils, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
   ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrMail, ACBrPosPrinter, ACBrLibComum;
+  ACBrMail, ACBrPosPrinter, ACBrLibComum, ACBrLibDataModule;
 
 type
 
   { TLibSatDM }
 
-  TLibSatDM = class(TDataModule)
+  TLibSatDM = class(TLibDataModule)
     ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrPosPrinter1: TACBrPosPrinter;
@@ -53,18 +53,12 @@ type
 
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
-    FLock: TCriticalSection;
-    fpLib: TACBrLib;
     ExtratoEscPos: TACBrSATExtratoESCPOS;
     ExtratoFortes: TACBrSATExtratoFortes;
 
   public
-    property Lib: TACBrLib read fpLib write fpLib;
-
-    procedure AplicarConfiguracoes;
+    procedure AplicarConfiguracoes; override;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False; NomeArqPDF: String = '');
@@ -72,10 +66,6 @@ type
     function GerarImpressaoFiscalMFe: Ansistring;
     procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring);
     procedure CarregarDadosCancelamento(XmlArquivoOuString: Ansistring);
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
-
     function RespostaIntegrador: String;
 
   end;
@@ -90,16 +80,6 @@ uses
 {$R *.lfm}
 
 { TLibSatDM }
-
-procedure TLibSatDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-end;
-
-procedure TLibSatDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
 
 procedure TLibSatDM.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
@@ -188,19 +168,13 @@ begin
       proxy_senha := LibConfig.ProxyInfo.Senha;
     end;
 
-    if LibConfig.IsMFe then
+    with Integrador do
     begin
-      Integrador := ACBrIntegrador1;
-      with Integrador do
-      begin
-        ArqLOG := LibConfig.Integrador.ArqLOG;
-        PastaInput := LibConfig.Integrador.PastaInput;
-        PastaOutput := LibConfig.Integrador.PastaOutput;
-        Timeout := LibConfig.Integrador.Timeout;
-      end;
-    end
-    else
-      Integrador := nil;
+      ArqLOG := LibConfig.Integrador.ArqLOG;
+      PastaInput := LibConfig.Integrador.PastaInput;
+      PastaOutput := LibConfig.Integrador.PastaOutput;
+      Timeout := LibConfig.Integrador.Timeout;
+    end;
 
     SSL.SSLXmlSignLib := xsLibXml2;
     SSL.SSLCryptLib := cryOpenSSL;
@@ -294,13 +268,6 @@ begin
     Device.HardFlow := LibConfig.PosDeviceConfig.HardFlow;
     Device.SoftFlow := LibConfig.PosDeviceConfig.SoftFlow;
   end;
-end;
-
-procedure TLibSatDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
-  Traduzir: Boolean);
-begin
-  if Assigned(Lib) then
-    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibSatDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean; NomeArqPDF: String);
@@ -411,18 +378,6 @@ begin
     GravarLog('Carregando xml string de cancelamento  [' + XmlArquivoOuString + ']', logParanoico);
     ACBrSAT1.CFeCanc.AsXMLString := XmlArquivoOuString;
   end;
-end;
-
-procedure TLibSatDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibSatDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 function TLibSatDM.RespostaIntegrador: String;

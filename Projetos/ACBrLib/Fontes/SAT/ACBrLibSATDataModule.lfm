@@ -1,6 +1,4 @@
 object LibSatDM: TLibSatDM
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 153
   HorizontalOffset = 388
@@ -8,6 +6,7 @@ object LibSatDM: TLibSatDM
   Width = 210
   object ACBrSAT1: TACBrSAT
     MAIL = ACBrMail1
+    Integrador = ACBrIntegrador1
     Config.infCFe_versaoDadosEnt = 0.07
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao

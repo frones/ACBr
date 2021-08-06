@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/08/2021
+-- SJP.GravarXml --
+[*] Alterado o valor da propriedade DivAliq100 para True, para que a aliquota
+    seja gerada no XML já dividida por 100.
+   Por: Italo Giurizzato Junior
+
 04/08/2021
 -- Diversos --
 [*] Melhorias nas rotinas de leitura do XML do layout ABRASF.

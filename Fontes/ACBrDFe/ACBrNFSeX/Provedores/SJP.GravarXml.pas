@@ -65,6 +65,7 @@ procedure TNFSeW_SJP.Configuracao;
 begin
   inherited Configuracao;
 
+  DivAliq100 := True;
   PrefixoPadrao := 'tipos';
 end;
 

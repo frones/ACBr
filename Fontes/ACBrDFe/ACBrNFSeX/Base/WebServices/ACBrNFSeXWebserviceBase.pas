@@ -669,7 +669,7 @@ begin
         try
           HttpClient.URL := FPURL;
           HttpClient.Method := 'POST';
-          HttpClient.MimeType := MimeType;
+          HttpClient.MimeType := FPMimeType;
 
           SetHeaders(HttpClient.HeaderReq);
 
@@ -830,7 +830,8 @@ constructor TACBrNFSeXWebserviceSoap11.Create(AOwner: TACBrDFe; AMetodo: TMetodo
 begin
   inherited Create(AOwner, AMetodo, AURl);
 
-  FPMimeType := 'text/xml; charset=utf-8';
+//  FPMimeType := 'text/xml; charset=utf-8';
+  FPMimeType := 'text/xml';
 end;
 
 function TACBrNFSeXWebserviceSoap11.PrepararEnvio(const Message, SoapAction,
@@ -870,7 +871,8 @@ constructor TACBrNFSeXWebserviceSoap12.Create(AOwner: TACBrDFe; AMetodo: TMetodo
 begin
   inherited Create(AOwner, AMetodo, AURl);
 
-  FPMimeType := 'application/soap+xml; charset=utf-8';
+//  FPMimeType := 'application/soap+xml; charset=utf-8';
+  FPMimeType := 'application/soap+xml';
 end;
 
 function TACBrNFSeXWebserviceSoap12.PrepararEnvio(const Message, SoapAction,
@@ -911,7 +913,8 @@ constructor TACBrNFSeXWebserviceNoSoap.Create(AOwner: TACBrDFe;
 begin
   inherited Create(AOwner, AMetodo, AURl);
 
-  FPMimeType := 'application/xml; charset=utf-8';
+//  FPMimeType := 'application/xml; charset=utf-8';
+  FPMimeType := 'application/xml';
 end;
 
 function TACBrNFSeXWebserviceNoSoap.GetSoapBody(const Response: string): string;

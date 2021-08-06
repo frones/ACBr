@@ -2474,7 +2474,7 @@ end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00', '_S_01_00_00'],
+  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00', 'S01_00_00'],
                           [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
 end;
 

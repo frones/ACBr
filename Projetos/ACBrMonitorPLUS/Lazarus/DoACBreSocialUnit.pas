@@ -140,6 +140,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetVersaoDF}
+
+TMetodoSetVersaoDF = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoConsultaIdentificadoresEventosEmpregador }
 
 TMetodoConsultaIdentificadoresEventosEmpregador = class(TACBrMetodo)
@@ -186,6 +193,32 @@ begin
   begin
     with MonitorConfig.DFE.ESocial do
       TipoEmpregador := GetEnumName( TypeInfo(TEmpregador), Integer(nTipoEmpregador) );
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoSetVersaoDF }
+
+{ Params: 0 - String contendo versão do Layout:
+"02_04_01", "02_04_02", "02_05_00" ou "S01_00_00"
+}
+procedure TMetodoSetVersaoDF.Executar;
+var
+  OK: boolean;
+  eVersao: TVersaoeSocial;
+  AVersao: String;
+begin
+  AVersao := fpCmd.Params(0);
+  eVersao := StrToVersaoeSocial(OK, AVersao);
+
+  if not OK then
+    raise Exception.Create('Versão Inválida do eSocial.');
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.WebService do
+      VersaoeSocial := VersaoeSocialToStr(eVersao);
 
     MonitorConfig.SalvarArquivo;
   end;
@@ -684,6 +717,7 @@ begin
   ListaDeMetodos.Add(CMetodoConsultaIdentEventosTrab);
   ListaDeMetodos.Add(CMetodoDownloadEventos);
   ListaDeMetodos.Add(CMetodoSetTipoEmpregadoreSocial);
+  ListaDeMetodos.Add(CMetodoSetVersaoDF);
 
 end;
 
@@ -719,6 +753,7 @@ begin
     10 : AMetodoClass := TMetodoConsultaIdentificadoresEventosTrabalhador;
     11 : AMetodoClass := TMetodoDownloadEventos;
     12 : AMetodoClass := TMetodoSetTipoEmpregador;
+    13 : AMetodoClass := TMetodoSetVersaoDF;
 
     else
       begin

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2021
+--DoACBreSocialUnit--
+[+] Adicionado método setVersaoDF, para alterar a versão do layout e-social.
+contribuicao: https://www.projetoacbr.com.br/forum/topic/63380-comando-esocialsetversaodf/
+
 05/07/2021
 --- ACBrMonior1, ACBrMonitorConfig, ACBrMonitorConsts, DoBoletoUnit--
 [+] Adicionado Funcionalidade para integração WebService de Registro de Boleto

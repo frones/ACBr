@@ -200,6 +200,31 @@ begin
             Retorno.DadosRet.TituloRet.Modalidade    := AJson.Values['numeroVariacaoCarteiraCobranca'].AsInteger;
             Retorno.DadosRet.TituloRet.Contrato      := AJson.Values['numeroContratoCobranca'].AsString;
 
+            // Dados Adicionais
+
+            Retorno.DadosRet.TituloRet.NumeroDocumento            := AJson.Values['numeroTituloCedenteCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.DataRegistro               := DateBBtoDateTime( AJson.Values['dataRegistroTituloCobranca'].AsString );
+            Retorno.DadosRet.TituloRet.Vencimento                 := DateBBtoDateTime( AJson.Values['dataVencimentoTituloCobranca'].AsString );
+            Retorno.DadosRet.TituloRet.ValorDocumento             := AJson.Values['valorOriginalTituloCobranca'].AsNumber;
+            Retorno.DadosRet.TituloRet.Carteira                   := AJson.Values['numeroCarteiraCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.Modalidade                 := StrToIntDef( AJson.Values['numeroVariacaoCarteiraCobranca'].asString ,0 );
+            Retorno.DadosRet.TituloRet.codigoEstadoTituloCobranca := AJson.Values['codigoEstadoTituloCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.contrato                   := AJson.Values['numeroContratoCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.DataMovimento              := DateBBtoDateTime(AJson.Values['dataRegistroTituloCobranca'].AsString);
+            Retorno.DadosRet.TituloRet.Vencimento                 := DateBBtoDateTime(AJson.Values['dataVencimentoTituloCobranca'].AsString);
+            Retorno.DadosRet.TituloRet.DataDocumento              := DateBBtoDateTime(AJson.Values['dataEmissaoTituloCobranca'].AsString);
+            Retorno.DadosRet.TituloRet.DataCredito                := DateBBtoDateTime(AJson.Values['dataCreditoLiquidacao'].AsString);
+            Retorno.DadosRet.TituloRet.DataBaixa                  := DateBBtoDateTime(AJson.Values['dataRecebimentoTitulo'].AsString);
+            Retorno.DadosRet.TituloRet.ValorAtual                 := AJson.Values['valorAtualTituloCobranca'].AsNumber;
+            Retorno.DadosRet.TituloRet.ValorPago                  := AJson.Values['valorPagoSacado'].AsNumber;
+
+
+            Retorno.DadosRet.TituloRet.Sacado.NomeSacado          := AJson.Values['nomeSacadoCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.Sacado.Logradouro          := AJson.Values['textoEnderecoSacadoCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.Sacado.Bairro              := AJson.Values['nomeBairroSacadoCobranca'].AsString;
+            Retorno.DadosRet.TituloRet.Sacado.Cidade              := AJson.Values['nomeMunicipioSacadoCobranca'].AsString;
+
+
           end else
           if (TipoOperacao = tpBaixa) then
           begin

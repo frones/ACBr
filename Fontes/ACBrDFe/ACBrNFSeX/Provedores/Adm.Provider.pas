@@ -105,7 +105,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
 
   Result := Executar('', Request,
-                   ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], ['']);
+                   ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.RecepcionarSincrono(ACabecalho,
@@ -122,7 +122,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
 
   Result := Executar('', Request,
-   ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'], ['']);
+   ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -138,7 +138,7 @@ begin
   Request := Request + '</nfse:ConsultarLoteRpsRequest>';
 
   Result := Executar('', Request,
-                  ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], ['']);
+                  ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -154,7 +154,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseRpsRequest>';
 
   Result := Executar('', Request,
-            ['ConsultarNfsePorRpsResult', 'ConsultarNfsePorRpsResposta'], ['']);
+            ['ConsultarNfsePorRpsResult', 'ConsultarNfsePorRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.ConsultarNFSePorFaixa(ACabecalho,
@@ -171,7 +171,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('', Request,
-        ['ConsultarNfsePorFaixaResult', 'ConsultarNfsePorFaixaResposta'], ['']);
+        ['ConsultarNfsePorFaixaResult', 'ConsultarNfsePorFaixaResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.ConsultarNFSeServicoPrestado(ACabecalho,
@@ -188,7 +188,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
 
   Result := Executar('', Request,
-   ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'], ['']);
+   ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.ConsultarNFSeServicoTomado(ACabecalho,
@@ -205,7 +205,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
 
   Result := Executar('', Request,
-   ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'], ['']);
+   ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.GerarNFSe(ACabecalho, AMSG: String): string;
@@ -221,7 +221,7 @@ begin
   Request := Request + '</nfse:GerarNfseRequest>';
 
   Result := Executar('', Request,
-                     ['GerarNfseResult', 'GerarNfseResposta'], ['']);
+                     ['GerarNfseResult', 'GerarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.Cancelar(ACabecalho, AMSG: String): string;
@@ -237,7 +237,7 @@ begin
   Request := Request + '</nfse:CancelarNfseRequest>';
 
   Result := Executar('', Request,
-                     ['CancelarNfseResult', 'CancelarNfseResposta'], ['']);
+                     ['CancelarNfseResult', 'CancelarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAdm.SubstituirNFSe(ACabecalho,
@@ -254,7 +254,7 @@ begin
   Request := Request + '</nfse:SubstituirNfseRequest>';
 
   Result := Executar('', Request,
-                     ['SubstituirNfseResult', 'SubstituirNfseResposta'], ['']);
+                     ['SubstituirNfseResult', 'SubstituirNfseResposta'], []);
 end;
 
 { TACBrNFSeProviderAdm }

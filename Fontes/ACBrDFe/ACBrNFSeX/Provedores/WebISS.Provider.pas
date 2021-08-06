@@ -168,7 +168,7 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/RecepcionarLoteRps', Request,
                      ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceWebISS.ConsultarSituacao(ACabecalho,
@@ -185,7 +185,7 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/ConsultarSituacaoLoteRps', Request,
                      ['ConsultarSituacaoLoteRpsResult', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceWebISS.ConsultarLote(ACabecalho,
@@ -202,7 +202,7 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/ConsultarLoteRps', Request,
                      ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceWebISS.ConsultarNFSePorRps(ACabecalho,
@@ -219,7 +219,7 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/ConsultarNfsePorRps', Request,
                      ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceWebISS.ConsultarNFSe(ACabecalho,
@@ -236,7 +236,7 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/ConsultarNfse', Request,
                      ['ConsultarNfseResult', 'ConsultarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceWebISS.Cancelar(ACabecalho, AMSG: String): string;
@@ -252,7 +252,7 @@ begin
 
   Result := Executar('http://tempuri.org/INfseServices/CancelarNfse', Request,
                      ['CancelarNfseResult', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 { TACBrNFSeProviderWebISSv2 }

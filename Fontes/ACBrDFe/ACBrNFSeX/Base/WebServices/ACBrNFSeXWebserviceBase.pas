@@ -439,7 +439,6 @@ end;
 procedure TACBrNFSeXWebservice.SalvarEnvio(ADadosSoap, ADadosMsg: string);
 var
   Prefixo, ArqEnv: String;
-  IsUTF8: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -451,23 +450,20 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
 
-    IsUTF8  := XmlEstaAssinado(ADadosMsg);
-    FPDFeOwner.Gravar(ArqEnv, ADadosMsg, '', IsUTF8);
+    FPDFeOwner.Gravar(ArqEnv, ADadosMsg);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
 
-    IsUTF8  := XmlEstaAssinado(ADadosSoap);
-    FPDFeOwner.Gravar(ArqEnv, ADadosSoap, '', IsUTF8);
+    FPDFeOwner.Gravar(ArqEnv, ADadosSoap);
   end;
 end;
 
 procedure TACBrNFSeXWebservice.SalvarRetorno(ADadosSoap, ADadosMsg: string);
 var
   Prefixo, ArqEnv: String;
-  IsUTF8: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -479,16 +475,14 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqResp + '.xml';
 
-    IsUTF8  := XmlEstaAssinado(ADadosMsg);
-    FPDFeOwner.Gravar(ArqEnv, ADadosMsg, '', IsUTF8);
+    FPDFeOwner.Gravar(ArqEnv, ADadosMsg);
   end;
 
   if FPDFeOwner.Configuracoes.WebServices.Salvar then
   begin
     ArqEnv := Prefixo + '-' + FPArqResp + '-soap.xml';
 
-    IsUTF8  := XmlEstaAssinado(ADadosSoap);
-    FPDFeOwner.Gravar(ArqEnv, ADadosSoap, '', IsUTF8);
+    FPDFeOwner.Gravar(ArqEnv, ADadosSoap);
   end;
 end;
 
@@ -679,7 +673,7 @@ begin
             HttpClient.Execute;
 
             HttpClient.DataResp.Position := 0;
-            FPRetorno := string(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
+            FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size);
 
             // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
             // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html

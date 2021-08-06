@@ -136,7 +136,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/RecepcionarLoteRps', Request,
                      ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.RecepcionarSincrono(ACabecalho,
@@ -152,7 +152,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/RecepcionarLoteRpsSincrono', Request,
                      ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.GerarNFSe(ACabecalho,
@@ -168,7 +168,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/GerarNfse', Request,
                      ['GerarNfseResult', 'GerarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.ConsultarLote(ACabecalho,
@@ -184,7 +184,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/ConsultarLoteRps', Request,
                      ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.ConsultarNFSePorFaixa(ACabecalho,
@@ -200,7 +200,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/ConsultarNfseFaixa', Request,
                      ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.ConsultarNFSePorRps(ACabecalho,
@@ -216,7 +216,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/ConsultarNfsePorRps', Request,
                      ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.ConsultarNFSeServicoPrestado(ACabecalho,
@@ -232,7 +232,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/ConsultarNfseServicoPrestado', Request,
                      ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.ConsultarNFSeServicoTomado(ACabecalho,
@@ -248,7 +248,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/ConsultarNfseServicoTomado', Request,
                      ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.Cancelar(ACabecalho, AMSG: String): string;
@@ -263,7 +263,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/CancelarNfse', Request,
                      ['CancelarNfseResult', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceVitoria.SubstituirNFSe(ACabecalho,
@@ -279,7 +279,7 @@ begin
 
   Result := Executar('http://www.abrasf.org.br/nfse.xsd/SubstituirNfse', Request,
                      ['SubstituirNfseResult', 'SubstituirNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 end.

@@ -123,7 +123,7 @@ begin
   Request := Request + '</RecepcionarLoteRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult'], ['']);
+                     ['RecepcionarLoteRpsResult'], []);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -137,7 +137,7 @@ begin
   Request := Request + '</ConsultarLoteRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarLoteRps', Request,
-                     ['ConsultarLoteRpsResult'], ['']);
+                     ['ConsultarLoteRpsResult'], []);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -151,7 +151,7 @@ begin
   Request := Request + '</ConsultarSituacaoLoteRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarSituacaoLoteRps', Request,
-                     ['ConsultarSituacaoLoteRpsResult'], ['']);
+                     ['ConsultarSituacaoLoteRpsResult'], []);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -165,7 +165,7 @@ begin
   Request := Request + '</ConsultarNfsePorRps>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarNfsePorRps', Request,
-                     ['ConsultarNfsePorRpsResult'], ['']);
+                     ['ConsultarNfsePorRpsResult'], []);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -179,7 +179,7 @@ begin
   Request := Request + '</ConsultarNfse>';
 
   Result := Executar('http://www.e-governeapps2.com.br/ConsultarNfse', Request,
-                     ['ConsultarNfseResult'], ['']);
+                     ['ConsultarNfseResult'], []);
 end;
 
 function TACBrNFSeXWebserviceISSCuritiba.Cancelar(ACabecalho, AMSG: String): string;
@@ -193,7 +193,7 @@ begin
   Request := Request + '</CancelarNfse>';
 
   Result := Executar('http://www.e-governeapps2.com.br/CancelarNfse', Request,
-                     ['CancelarNfseResult'], ['']);
+                     ['CancelarNfseResult'], []);
 end;
 
 end.

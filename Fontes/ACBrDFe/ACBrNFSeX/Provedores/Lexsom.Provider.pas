@@ -127,7 +127,7 @@ begin
 
   Result := Executar('http://tempuri.org/RecebeLoteRPS', Request,
                      ['RecebeLoteRPSResult', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceLexsom.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -142,7 +142,7 @@ begin
 
   Result := Executar('http://tempuri.org/ConsultarLoteRPS', Request,
                      ['ConsultarLoteRPSResult', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceLexsom.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -157,7 +157,7 @@ begin
 
   Result := Executar('http://tempuri.org/ConsultarSituacaoLoteRPS', Request,
                      ['ConsultarSituacaoLoteRPSResult', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceLexsom.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -172,7 +172,7 @@ begin
 
   Result := Executar('http://tempuri.org/ConsultarNFSEPorRPS', Request,
                      ['ConsultarNFSEPorRPSResult', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceLexsom.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -187,7 +187,7 @@ begin
 
   Result := Executar('http://tempuri.org/ConsultaNFSE', Request,
                      ['ConsultaNFSEResult', 'ConsultarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceLexsom.Cancelar(ACabecalho, AMSG: String): string;
@@ -202,7 +202,7 @@ begin
 
   Result := Executar('http://tempuri.org/CancelamentoNFSE', Request,
                      ['CancelamentoNFSEResult', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 end.

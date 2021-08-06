@@ -624,7 +624,7 @@ begin
   Request := Request + '<nfd>' + XmlToStr(AMSG) + '</nfd>';
   Request := Request + '</sil:nfdEntrada>';
 
-  Result := Executar('', Request, [''], ['']);
+  Result := Executar('', Request, [''], []);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.ConsultarLote(ACabecalho,
@@ -642,7 +642,7 @@ begin
   Request := Request + '<recibo>' + XmlToStr(AMSG) + '</recibo>';
   Request := Request + '</sil:nfdSaida>';
 
-  Result := Executar('', Request, [''], ['']);
+  Result := Executar('', Request, [''], []);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.Cancelar(ACabecalho, AMSG: String): string;
@@ -656,7 +656,7 @@ begin
   Request := Request + '<nfd>' + XmlToStr(AMSG) + '</nfd>';
   Request := Request + '</sil:nfdEntradaCancelar>';
 
-  Result := Executar('', Request, [''], ['']);
+  Result := Executar('', Request, [''], []);
 end;
 
 { TACBrNFSeProviderSmarAPDv203 }

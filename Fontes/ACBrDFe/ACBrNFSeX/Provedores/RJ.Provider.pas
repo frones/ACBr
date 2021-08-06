@@ -88,7 +88,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/RecepcionarLoteRps', Request,
                      ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceRJ.GerarNFSe(ACabecalho, AMSG: String): string;
@@ -110,7 +110,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/GerarNfse', Request,
                      ['outputXML', 'GerarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceRJ.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -125,7 +125,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/ConsultarLoteRps', Request,
                      ['outputXML', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceRJ.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -140,7 +140,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/ConsultarSituacaoLoteRps', Request,
                      ['outputXML', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceRJ.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -155,7 +155,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/ConsultarNfsePorRps', Request,
                      ['outputXML', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceRJ.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -170,7 +170,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/ConsultarNfse', Request,
                      ['outputXML', 'ConsultarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceRJ.Cancelar(ACabecalho, AMSG: String): string;
@@ -185,7 +185,7 @@ begin
 
   Result := Executar('http://notacarioca.rio.gov.br/CancelarNfse', Request,
                      ['outputXML', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 { TACBrNFSeProviderRJ }

@@ -109,42 +109,42 @@ function TACBrNFSeXWebserviceBetha.Recepcionar(ACabecalho, AMSG: String): string
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, ['EnviarLoteRpsResposta'], ['']);
+  Result := Executar('', AMSG, ['EnviarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceBetha.ConsultarLote(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, ['ConsultarLoteRpsResposta'], ['']);
+  Result := Executar('', AMSG, ['ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceBetha.ConsultarSituacao(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, ['ConsultarSituacaoLoteRpsResposta'], ['']);
+  Result := Executar('', AMSG, ['ConsultarSituacaoLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceBetha.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, ['ConsultarNfseRpsResposta'], ['']);
+  Result := Executar('', AMSG, ['ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceBetha.ConsultarNFSe(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, ['ConsultarNfseResposta'], ['']);
+  Result := Executar('', AMSG, ['ConsultarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceBetha.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, ['CancelarNfseResposta'], ['']);
+  Result := Executar('', AMSG, ['CancelarNfseResposta'], []);
 end;
 
 { TACBrNFSeProviderBetha }

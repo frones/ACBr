@@ -260,7 +260,7 @@ begin
 
   Result := Executar('', Request,
                      ['EnviarLoteRpsResposta', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceISSFortaleza.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -276,7 +276,7 @@ begin
 
   Result := Executar('', Request,
                      ['ConsultarLoteRpsResposta', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceISSFortaleza.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -292,7 +292,7 @@ begin
 
   Result := Executar('', Request,
                      ['ConsultarSituacaoLoteRpsResposta', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceISSFortaleza.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -308,7 +308,7 @@ begin
 
   Result := Executar('', Request,
                      ['ConsultarNfseRpsResposta', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceISSFortaleza.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -324,7 +324,7 @@ begin
 
   Result := Executar('', Request,
                      ['ConsultarNfseResposta', 'ConsultarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceISSFortaleza.Cancelar(ACabecalho, AMSG: String): string;
@@ -339,7 +339,7 @@ begin
 
   Result := Executar('', Request,
                      ['CancelarNfseResposta', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 end.

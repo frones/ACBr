@@ -130,7 +130,7 @@ begin
 
   Result := Executar('urn:NFSE#RecepcionarLoteRPS', Request,
                      ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebservicegeNFe.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -145,7 +145,7 @@ begin
 
   Result := Executar('urn:NFSE#ConsultarLoteRps', Request,
                      ['outputXML', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebservicegeNFe.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -160,7 +160,7 @@ begin
 
   Result := Executar('urn:NFSE#ConsultarSituacaoLoteRps', Request,
                      ['outputXML', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebservicegeNFe.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -175,7 +175,7 @@ begin
 
   Result := Executar('urn:NFSE#ConsultarNfseRps', Request,
                      ['outputXML', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebservicegeNFe.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -190,7 +190,7 @@ begin
 
   Result := Executar('urn:NFSE#ConsultarNfse', Request,
                      ['outputXML', 'ConsultarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebservicegeNFe.Cancelar(ACabecalho, AMSG: String): string;
@@ -205,7 +205,7 @@ begin
 
   Result := Executar('urn:NFSE#CancelarNfse', Request,
                      ['outputXML', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 end.

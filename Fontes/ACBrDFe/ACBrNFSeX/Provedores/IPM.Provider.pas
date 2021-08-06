@@ -594,7 +594,7 @@ begin
 
   Result := Executar('', Request,
                      ['enviarReturn', 'ReqEnvioLoteRPS'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceIPM.TesteEnvio(ACabecalho, AMSG: String): string;
@@ -607,7 +607,7 @@ begin
 
   Result := Executar('', Request,
                      ['testeEnviarReturn', 'RetornoEnvioLoteRPS'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceIPM.ConsultarLote(ACabecalho,
@@ -621,7 +621,7 @@ begin
 
   Result := Executar('', Request,
                      ['consultarLoteReturn', 'RetornoConsultaLote'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceIPM.Cancelar(ACabecalho, AMSG: String): string;
@@ -634,7 +634,7 @@ begin
 
   Result := Executar('', Request,
                      ['cancelarReturn', 'RetornoCancelamentoNFSe'],
-                     ['']);
+                     []);
 end;
 
 { TACBrNFSeProviderIPMa }

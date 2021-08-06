@@ -200,8 +200,7 @@ begin
   Result := RemoverCDATA(Result);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
-  Result := ConverterUnicode(Result);
-  Result := TiraAcentos(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;

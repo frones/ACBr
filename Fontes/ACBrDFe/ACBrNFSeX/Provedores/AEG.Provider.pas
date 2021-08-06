@@ -92,7 +92,7 @@ begin
   Request := Request + '</urn:RecepcionarLoteRps>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#RecepcionarLoteRps',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.RecepcionarSincrono(ACabecalho,
@@ -107,7 +107,7 @@ begin
   Request := Request + '</urn:RecepcionarLoteRpsSincrono>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#RecepcionarLoteRpsSincrono',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -121,7 +121,7 @@ begin
   Request := Request + '</urn:ConsultarLoteRps>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#ConsultarLoteRps',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -135,7 +135,7 @@ begin
   Request := Request + '</urn:ConsultarNfsePorRps>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#ConsultarNfsePorRps',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.ConsultarNFSePorFaixa(ACabecalho,
@@ -150,7 +150,7 @@ begin
   Request := Request + '</urn:ConsultarNfsePorFaixa>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#ConsultarNfsePorFaixa',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.ConsultarNFSeServicoPrestado(ACabecalho,
@@ -165,7 +165,7 @@ begin
   Request := Request + '</urn:ConsultarNfseServicoPrestado>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#ConsultarNfseServicoPrestado',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.ConsultarNFSeServicoTomado(ACabecalho,
@@ -180,7 +180,7 @@ begin
   Request := Request + '</urn:ConsultarNfseServicoTomado>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#ConsultarNfseServicoTomado',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.GerarNFSe(ACabecalho, AMSG: String): string;
@@ -194,7 +194,7 @@ begin
   Request := Request + '</urn:GerarNfse>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#GerarNfse',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.Cancelar(ACabecalho, AMSG: String): string;
@@ -208,7 +208,7 @@ begin
   Request := Request + '</urn:CancelarNfse>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#CancelarNfse',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 function TACBrNFSeXWebserviceAEG.SubstituirNFSe(ACabecalho,
@@ -223,7 +223,7 @@ begin
   Request := Request + '</urn:SubstituirNfse>';
 
   Result := Executar('urn:uWSPortalInteg-IWSPortalInteg#SubstituirNfse',
-                     Request, ['return', 'DocumentElement'], ['']);
+                     Request, ['return', 'DocumentElement'], []);
 end;
 
 { TACBrNFSeProviderAEG }

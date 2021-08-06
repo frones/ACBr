@@ -144,7 +144,7 @@ begin
   Request := Request + '</RecepcionarLoteRps>';
 
   Result := Executar('http://tempuri.org/RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], ['']);
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceSafeWeb.ConsultarLote(ACabecalho,
@@ -160,7 +160,7 @@ begin
   Request := Request + '</ConsultarLoteRps>';
 
   Result := Executar('http://tempuri.org/ConsultarLoteRps', Request,
-                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], ['']);
+                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceSafeWeb.ConsultarNFSePorFaixa(ACabecalho,
@@ -176,7 +176,7 @@ begin
   Request := Request + '</ConsultarNfseFaixa>';
 
   Result := Executar('http://tempuri.org/ConsultarNfseFaixa', Request,
-                     ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'], ['']);
+                     ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceSafeWeb.ConsultarNFSePorRps(ACabecalho,
@@ -192,7 +192,7 @@ begin
   Request := Request + '</ConsultarNfsePorRps>';
 
   Result := Executar('http://tempuri.org/ConsultarNfsePorRps', Request,
-                     ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'], ['']);
+                     ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceSafeWeb.Cancelar(ACabecalho, AMSG: String): string;
@@ -207,7 +207,7 @@ begin
   Request := Request + '</CancelarNfse>';
 
   Result := Executar('http://tempuri.org/CancelarNfse', Request,
-                     ['CancelarNfseResult', 'CancelarNfseResposta'], ['']);
+                     ['CancelarNfseResult', 'CancelarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceSafeWeb.SubstituirNFSe(ACabecalho,
@@ -223,7 +223,7 @@ begin
   Request := Request + '</SubstituirNfse>';
 
   Result := Executar('http://tempuri.org/SubstituirNfse', Request,
-                     ['SubstituirNfseResult', 'SubstituirNfseResposta'], ['']);
+                     ['SubstituirNfseResult', 'SubstituirNfseResposta'], []);
 end;
 
 end.

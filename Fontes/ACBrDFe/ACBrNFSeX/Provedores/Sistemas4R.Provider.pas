@@ -93,7 +93,7 @@ begin
   Request := Request + '<Entrada>' + XmlToStr(AMSG) + '</Entrada>';
   Request := Request + '</' + xTag + '>';
 
-  Result := Executar(xSoap, Request, ['Resposta', 'EnviarLoteRpsSincronoResposta'], ['']);
+  Result := Executar(xSoap, Request, ['Resposta', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
 function TACBrNFSeXWebservice4R.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -118,7 +118,7 @@ begin
   Request := Request + '<Entrada>' + XmlToStr(AMSG) + '</Entrada>';
   Request := Request + '</' + xTag + '>';
 
-  Result := Executar(xSoap, Request, ['Resposta', 'ConsultarLoteRpsResposta'], ['']);
+  Result := Executar(xSoap, Request, ['Resposta', 'ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebservice4R.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -143,7 +143,7 @@ begin
   Request := Request + '<Entrada>' + XmlToStr(AMSG) + '</Entrada>';
   Request := Request + '</' + xTag + '>';
 
-  Result := Executar(xSoap, Request, ['Resposta', 'ConsultarNfseRpsResposta'], ['']);
+  Result := Executar(xSoap, Request, ['Resposta', 'ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebservice4R.Cancelar(ACabecalho, AMSG: String): string;
@@ -168,7 +168,7 @@ begin
   Request := Request + '<Entrada>' + XmlToStr(AMSG) + '</Entrada>';
   Request := Request + '</' + xTag + '>';
 
-  Result := Executar(xSoap, Request, ['Resposta', 'CancelarNfseResposta'], ['']);
+  Result := Executar(xSoap, Request, ['Resposta', 'CancelarNfseResposta'], []);
 end;
 
 { TACBrNFSeProvider4R }

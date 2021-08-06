@@ -373,7 +373,7 @@ end;
 
 function TACBrXmlNode.GetContent: string;
 begin
-  Result := string(xmlNodeGetContent(FXmlNode));
+  Result := UTF8ToNativeString(AnsiString(xmlNodeGetContent(FXmlNode)));
 end;
 
 function TACBrXmlNode.GetOuterXml: string;
@@ -597,7 +597,7 @@ end;
 
 function TACBrXmlNamespace.GetContent: string;
 begin
-  Result := string(xmlNsInternal^.href);
+  Result := UTF8ToNativeString(AnsiString(xmlNsInternal^.href));
 end;
 
 procedure TACBrXmlNamespace.SetPrefixo(AName: string);
@@ -664,7 +664,7 @@ end;
 
 function TACBrXmlAttribute.GetContent: string;
 begin
-  Result := string(xmlGetNoNsProp(FParentNode.FXmlNode, xmlAttInternal^.Name));
+  Result := UTF8ToNativeString(AnsiString(xmlGetNoNsProp(FParentNode.FXmlNode, xmlAttInternal^.Name)));
 end;
 
 procedure TACBrXmlAttribute.SetName(AName: string);

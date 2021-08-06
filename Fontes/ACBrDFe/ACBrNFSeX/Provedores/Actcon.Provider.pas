@@ -124,7 +124,7 @@ begin
 
   Result := Executar(SoapAction + 'RecepcionarLoteRps',
                      Request,
-                     ['outputXML', 'EnviarLoteRpsResposta'], ['']);
+                     ['outputXML', 'EnviarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.RecepcionarSincrono(ACabecalho,
@@ -142,7 +142,7 @@ begin
 
   Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono',
                      Request,
-                     ['outputXML', 'EnviarLoteRpsSincronoResposta'], ['']);
+                     ['outputXML', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -159,7 +159,7 @@ begin
 
   Result := Executar(SoapAction + 'ConsultarLoteRps',
                      Request,
-                     ['outputXML', 'ConsultarLoteRpsResposta'], ['']);
+                     ['outputXML', 'ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -176,7 +176,7 @@ begin
 
   Result := Executar(SoapAction + 'ConsultarNfsePorRps',
                      Request,
-                     ['outputXML', 'ConsultarNfseRpsResposta'], ['']);
+                     ['outputXML', 'ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.ConsultarNFSePorFaixa(ACabecalho,
@@ -194,7 +194,7 @@ begin
 
   Result := Executar(SoapAction + 'ConsultarNfsePorFaixa',
                      Request,
-                     ['outputXML', 'ConsultarNfseFaixaResposta'], ['']);
+                     ['outputXML', 'ConsultarNfseFaixaResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.ConsultarNFSeServicoPrestado(ACabecalho,
@@ -212,7 +212,7 @@ begin
 
   Result := Executar(SoapAction + 'ConsultarNfseServicoPrestado',
                      Request,
-                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'], ['']);
+                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.ConsultarNFSeServicoTomado(ACabecalho,
@@ -230,7 +230,7 @@ begin
 
   Result := Executar(SoapAction + 'ConsultarNfseServicoTomado',
                      Request,
-                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'], ['']);
+                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.GerarNFSe(ACabecalho, AMSG: String): string;
@@ -247,7 +247,7 @@ begin
 
   Result := Executar(SoapAction + 'GerarNfse',
                      Request,
-                     ['outputXML', 'GerarNfseResposta'], ['']);
+                     ['outputXML', 'GerarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.Cancelar(ACabecalho, AMSG: String): string;
@@ -264,7 +264,7 @@ begin
 
   Result := Executar(SoapAction + 'CancelarNfse',
                      Request,
-                     ['outputXML', 'CancelarNfseResposta'], ['']);
+                     ['outputXML', 'CancelarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceActconv2.SubstituirNFSe(ACabecalho,
@@ -282,7 +282,7 @@ begin
 
   Result := Executar(SoapAction + 'SubstituirNfse',
                      Request,
-                     ['outputXML', 'SubstituirNfseResposta'], ['']);
+                     ['outputXML', 'SubstituirNfseResposta'], []);
 end;
 
 { TACBrNFSeProviderActconv201 }

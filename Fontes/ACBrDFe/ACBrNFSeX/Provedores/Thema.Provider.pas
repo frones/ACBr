@@ -90,7 +90,7 @@ begin
 
   Result := Executar('urn:recepcionarLoteRps', Request,
                      ['return', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceThema.RecepcionarSincrono(ACabecalho,
@@ -108,7 +108,7 @@ begin
 
   Result := Executar('urn:recepcionarLoteRpsLimitado', Request,
                      ['return', 'EnviarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceThema.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -123,7 +123,7 @@ begin
 
   Result := Executar('urn:consultarLoteRps', Request,
                      ['return', 'ConsultarLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceThema.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -138,7 +138,7 @@ begin
 
   Result := Executar('urn:consultarSituacaoLoteRps', Request,
                      ['return', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceThema.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -153,7 +153,7 @@ begin
 
   Result := Executar('urn:consultarNfsePorRps', Request,
                      ['return', 'ConsultarNfseRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceThema.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -168,7 +168,7 @@ begin
 
   Result := Executar('urn:consultarNfse', Request,
                      ['return', 'ConsultarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceThema.Cancelar(ACabecalho, AMSG: String): string;
@@ -183,7 +183,7 @@ begin
 
   Result := Executar('urn:cancelarNfse', Request,
                      ['return', 'CancelarNfseResposta'],
-                     ['']);
+                     []);
 end;
 
 { TACBrNFSeProviderThema }

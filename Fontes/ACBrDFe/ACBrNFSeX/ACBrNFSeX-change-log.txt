@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/08/2021
+-- Diversos --
+[*] Alterações visando a gravação e a leitura correta dos XMLs.
+   Por: Rafael Dias / Italo Giurizzato Junior
 -- SJP.GravarXml --
 [*] Alterado o valor da propriedade DivAliq100 para True, para que a aliquota
     seja gerada no XML já dividida por 100.

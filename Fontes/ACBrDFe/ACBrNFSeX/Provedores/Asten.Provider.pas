@@ -93,7 +93,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRps>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
-                        ['return', 'outputXML', 'EnviarLoteRpsResposta'], ['']);
+                        ['return', 'outputXML', 'EnviarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.RecepcionarSincrono(ACabecalho,
@@ -111,7 +111,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsSincrono>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
-                ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'], ['']);
+                ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -128,7 +128,7 @@ begin
   Request := Request + '</nfse:ConsultarLoteRps>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarLoteRps', Request,
-                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'], ['']);
+                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -145,7 +145,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorRps>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'], ['']);
+                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.ConsultarNFSePorFaixa(ACabecalho,
@@ -163,7 +163,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorFaixa>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
-                ['return', 'outputXML', 'ConsultarNfseFaixaResposta'], ['']);
+                ['return', 'outputXML', 'ConsultarNfseFaixaResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.ConsultarNFSeServicoPrestado(ACabecalho,
@@ -181,7 +181,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoPrestado>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
-         ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'], ['']);
+         ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.ConsultarNFSeServicoTomado(ACabecalho,
@@ -199,7 +199,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoTomado>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
-           ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'], ['']);
+           ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.GerarNFSe(ACabecalho, AMSG: String): string;
@@ -216,7 +216,7 @@ begin
   Request := Request + '</nfse:GerarNfse>';
 
   Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
-                            ['return', 'outputXML', 'GerarNfseResposta'], ['']);
+                            ['return', 'outputXML', 'GerarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.Cancelar(ACabecalho, AMSG: String): string;
@@ -233,7 +233,7 @@ begin
   Request := Request + '</nfse:CancelarNfse>';
 
   Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
-                         ['return', 'outputXML', 'CancelarNfseResposta'], ['']);
+                         ['return', 'outputXML', 'CancelarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceAsten.SubstituirNFSe(ACabecalho,
@@ -251,7 +251,7 @@ begin
   Request := Request + '</nfse:SubstituirNfse>';
 
   Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
-                       ['return', 'outputXML', 'SubstituirNfseResposta'], ['']);
+                       ['return', 'outputXML', 'SubstituirNfseResposta'], []);
 end;
 
 { TACBrNFSeProviderAsten }

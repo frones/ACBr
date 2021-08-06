@@ -518,7 +518,7 @@ begin
 
   Result := Executar('', AMSG,
                      ['EnviaLoteRpsResposta', 'EnviaLoteRpsResposta'],
-                     ['']);
+                     []);
 end;
 
 function TACBrNFSeXWebserviceGiap.ConsultarNFSePorRps(ACabecalho,
@@ -526,14 +526,14 @@ function TACBrNFSeXWebserviceGiap.ConsultarNFSePorRps(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], ['']);
+  Result := Executar('', AMSG, [''], []);
 end;
 
 function TACBrNFSeXWebserviceGiap.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], ['']);
+  Result := Executar('', AMSG, [''], []);
 end;
 
 end.

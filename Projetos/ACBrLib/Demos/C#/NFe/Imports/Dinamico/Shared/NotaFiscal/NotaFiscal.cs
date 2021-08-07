@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
@@ -33,7 +34,7 @@ namespace ACBrLib.NFe
             Exporta = new ExportaNFe();
             Compra = new CompraNFe();
             Cana = new CanaNFe();
-            InfRespTec = new InfRespTecNFe();
+            InfRespTec = new InfRespTec();
 
             InfNFe.versao = "4.00";
         }
@@ -93,7 +94,7 @@ namespace ACBrLib.NFe
 
         public CanaNFe Cana { get; }
 
-        public InfRespTecNFe InfRespTec { get; }
+        public InfRespTec InfRespTec { get; }
 
         #endregion Properties
 

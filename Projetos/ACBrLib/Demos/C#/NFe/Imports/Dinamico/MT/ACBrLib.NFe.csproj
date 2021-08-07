@@ -55,7 +55,6 @@
     <Compile Include="..\Shared\DANFeNFeConfig.cs" Link="DANFeNFeConfig.cs" />
     <Compile Include="..\Shared\FonteDANFCeConfig.cs" Link="FonteDANFCeConfig.cs" />
     <Compile Include="..\Shared\NotaFiscal\ArmaNFe.cs" Link="NotaFiscal\ArmaNFe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\AutXML.cs" Link="NotaFiscal\AutXML.cs" />
     <Compile Include="..\Shared\NotaFiscal\AvulsaNFe.cs" Link="NotaFiscal\AvulsaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\BandeiraCartao.cs" Link="NotaFiscal\BandeiraCartao.cs" />
     <Compile Include="..\Shared\NotaFiscal\CanaNFe.cs" Link="NotaFiscal\CanaNFe.cs" />

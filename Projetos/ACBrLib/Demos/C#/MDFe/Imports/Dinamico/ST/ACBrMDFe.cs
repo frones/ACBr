@@ -130,6 +130,8 @@ namespace ACBrLib.MDFe
 
         #endregion Ini
 
+        public void CarregarManifesto(Manifesto manifesto) => CarregarINI(manifesto.ToString());
+
         public void CarregarXML(string eArquivoOuXml)
         {
             var method = GetMethod<MDFE_CarregarXML>();

@@ -48,11 +48,81 @@
 
   <ItemGroup>
     <Compile Include="..\Shared\DAMDFeConfig.cs" Link="DAMDFeConfig.cs" />
+    <Compile Include="..\Shared\Manifesto\AverbacaoMDFe.cs" Link="Manifesto\AverbacaoMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\CategCombVeic.cs" Link="Manifesto\CategCombVeic.cs" />
+    <Compile Include="..\Shared\Manifesto\CompMDFe.cs" Link="Manifesto\CompMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\CondutorMDFe.cs" Link="Manifesto\CondutorMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\DispMDFe.cs" Link="Manifesto\DispMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\EmitMDFe.cs" Link="Manifesto\EmitMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\IdeMDFe.cs" Link="Manifesto\IdeMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\IModalMDFe.cs" Link="Manifesto\IModalMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\IndPag.cs" Link="Manifesto\IndPag.cs" />
+    <Compile Include="..\Shared\Manifesto\InfANTTMDFe.cs" Link="Manifesto\InfANTTMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfBancMDFe.cs" Link="Manifesto\InfBancMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfCIOTMDFe.cs" Link="Manifesto\InfCIOTMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfContratanteMDFe.cs" Link="Manifesto\InfContratanteMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfCTeMDFe.cs" Link="Manifesto\InfCTeMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfDocMDFe.cs" Link="Manifesto\InfDocMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfEmbCombMDFe.cs" Link="Manifesto\InfEmbCombMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfEntregaParcialMDFe.cs" Link="Manifesto\InfEntregaParcialMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfLocalMDFe.cs" Link="Manifesto\InfLocalMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfMDFe.cs" Link="Manifesto\InfMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfMDFeTransp.cs" Link="Manifesto\InfMDFeTransp.cs" />
+    <Compile Include="..\Shared\Manifesto\InfMunCarregaMDFe.cs" Link="Manifesto\InfMunCarregaMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfMunDescargaMDFe.cs" Link="Manifesto\InfMunDescargaMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfNFeMDFe.cs" Link="Manifesto\InfNFeMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfPagMDFe.cs" Link="Manifesto\InfPagMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfPercurso.cs" Link="Manifesto\InfPercurso.cs" />
+    <Compile Include="..\Shared\Manifesto\InfPrazoMDFe.cs" Link="Manifesto\InfPrazoMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfTerminalCarregMDFe.cs" Link="Manifesto\InfTerminalCarregMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfTerminalDescarregMDFe.cs" Link="Manifesto\InfTerminalDescarregMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfUnidCargaMDFe.cs" Link="Manifesto\InfUnidCargaMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfUnidCargaVaziaMDFe.cs" Link="Manifesto\InfUnidCargaVaziaMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfUnidTranspMDFe.cs" Link="Manifesto\InfUnidTranspMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\InfUnidTranspVaziaMDFe.cs" Link="Manifesto\InfUnidTranspVaziaMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\LacreMDFe.cs" Link="Manifesto\LacreMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\Manifesto.cs" Link="Manifesto\Manifesto.cs" />
+    <Compile Include="..\Shared\Manifesto\ModalAereoMDFe.cs" Link="Manifesto\ModalAereoMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ModalAquaviarioMDFe.cs" Link="Manifesto\ModalAquaviarioMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ModalFerroviarioMDFe.cs" Link="Manifesto\ModalFerroviarioMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ModalMDFe.cs" Link="Manifesto\ModalMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ModalRodoMDFe.cs" Link="Manifesto\ModalRodoMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\PeriMDFe.cs" Link="Manifesto\PeriMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ProcessoEmissao.cs" Link="Manifesto\ProcessoEmissao.cs" />
+    <Compile Include="..\Shared\Manifesto\ProcMDFe.cs" Link="Manifesto\ProcMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ProdPredMDFe.cs" Link="Manifesto\ProdPredMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\PropVeicMDFe.cs" Link="Manifesto\PropVeicMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ReboqueMDFe.cs" Link="Manifesto\ReboqueMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\RspSegMDFe.cs" Link="Manifesto\RspSegMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\SeguroMDFe.cs" Link="Manifesto\SeguroMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\TipoCarroceria.cs" Link="Manifesto\TipoCarroceria.cs" />
+    <Compile Include="..\Shared\Manifesto\TipoNavegacao.cs" Link="Manifesto\TipoNavegacao.cs" />
+    <Compile Include="..\Shared\Manifesto\TipoRodado.cs" Link="Manifesto\TipoRodado.cs" />
+    <Compile Include="..\Shared\Manifesto\TotalMDFe.cs" Link="Manifesto\TotalMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\TpCarga.cs" Link="Manifesto\TpCarga.cs" />
+    <Compile Include="..\Shared\Manifesto\TpComp.cs" Link="Manifesto\TpComp.cs" />
+    <Compile Include="..\Shared\Manifesto\TpEmitenteMDFe.cs" Link="Manifesto\TpEmitenteMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\TpModalMDFe.cs" Link="Manifesto\TpModalMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\TpProp.cs" Link="Manifesto\TpProp.cs" />
+    <Compile Include="..\Shared\Manifesto\TpValePed.cs" Link="Manifesto\TpValePed.cs" />
+    <Compile Include="..\Shared\Manifesto\TransportadorMDFe.cs" Link="Manifesto\TransportadorMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\UnidCarga.cs" Link="Manifesto\UnidCarga.cs" />
+    <Compile Include="..\Shared\Manifesto\UnidMed.cs" Link="Manifesto\UnidMed.cs" />
+    <Compile Include="..\Shared\Manifesto\UnidTransp.cs" Link="Manifesto\UnidTransp.cs" />
+    <Compile Include="..\Shared\Manifesto\VagaoMDFe.cs" Link="Manifesto\VagaoMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\ValePedMDFe.cs" Link="Manifesto\ValePedMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\VeicTracaoMDFe.cs" Link="Manifesto\VeicTracaoMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\VersaoMDFe.cs" Link="Manifesto\VersaoMDFe.cs" />
     <Compile Include="..\Shared\MDFeConfig.cs" Link="MDFeConfig.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Manifesto\" />
+    <Folder Include="Resposta\" />
   </ItemGroup>
 
 </Project>

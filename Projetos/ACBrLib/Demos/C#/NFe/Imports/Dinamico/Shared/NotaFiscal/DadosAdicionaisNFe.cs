@@ -1,23 +1,14 @@
 ﻿using System.Collections.Generic;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
     /// <summary>
     /// Informações Adicionais da NF-e
     /// </summary>
-    public class DadosAdicionaisNFe
+    public class DadosAdicionaisNFe : DadosAdicionais
     {
         #region Properties
-
-        /// <summary>
-        /// Informações Adicionais de Interesse do Fisco
-        /// </summary>
-        public string infAdFisco { get; set; }
-
-        /// <summary>
-        /// Informações Complementares de interesse do Contribuinte
-        /// </summary>
-        public string infCpl { get; set; }
 
         public List<InfoAdicionalNfe> ObsCont { get; } = new List<InfoAdicionalNfe>();
 

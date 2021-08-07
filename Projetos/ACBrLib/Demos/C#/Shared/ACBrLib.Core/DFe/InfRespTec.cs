@@ -1,6 +1,6 @@
-﻿namespace ACBrLib.NFe
+﻿namespace ACBrLib.Core.DFe
 {
-    public class InfRespTecNFe
+    public sealed class InfRespTec
     {
         public string CNPJ { get; set; }
 

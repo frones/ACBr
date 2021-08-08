@@ -101,7 +101,7 @@ type
 implementation
 
 uses
-  ACBrLibDISClass, ACBrLibDISConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibDISBase, ACBrLibDISConsts, ACBrLibConsts, ACBrUtil;
 
 { TDISConfig }
 

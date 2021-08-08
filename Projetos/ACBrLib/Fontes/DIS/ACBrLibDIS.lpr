@@ -37,7 +37,8 @@ library ACBrLibDIS;
 uses
   Interfaces, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
-  ACBrLibDISClass, ACBrLibDISConfig, ACBrLibDISDataModule;
+  {$IFDEF MT}ACBrLibDISMT{$ELSE}ACBrLibDISST{$ENDIF},
+  ACBrLibDISConfig, ACBrLibDISDataModule;
 
 {$R *.res}
 
@@ -79,7 +80,6 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibDIS; // Ajusta a classe a ser criada
   MainThreadID := GetCurrentThreadId();
 end.
 

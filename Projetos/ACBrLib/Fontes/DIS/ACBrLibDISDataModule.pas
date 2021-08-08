@@ -37,52 +37,34 @@ unit ACBrLibDISDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrDIS;
+  Classes, SysUtils, FileUtil,
+  ACBrLibDataModule, ACBrDIS;
 
 type
 
   { TLibDISDM }
 
-  TLibDISDM = class(TDataModule)
+  TLibDISDM = class(TLibDataModule)
     ACBrDIS1: TACBrDIS;
-
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
-  private
-    FLock: TCriticalSection;
-
   public
-    procedure AplicarConfiguracoes;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
+    procedure AplicarConfiguracoes; override;
+
   end;
 
 implementation
 
 uses
-  ACBrUtil,
-  ACBrLibDISConfig, ACBrLibComum, ACBrLibDISClass;
+  ACBrUtil, ACBrDeviceSerial,
+  ACBrLibDISConfig, ACBrLibComum, ACBrLibDISBase;
 
 {$R *.lfm}
 
 { TLibDISDM }
-
-procedure TLibDISDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-end;
-
-procedure TLibDISDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
-
 procedure TLibDISDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibDISConfig;
 begin
-  pLibConfig := TLibDISConfig(TACBrLibDIS(pLib).Config);
+  pLibConfig := TLibDISConfig(TACBrLibDIS(Lib).Config);
 
   with ACBrDIS1 do
   begin
@@ -95,28 +77,19 @@ begin
     Passos              := pLibConfig.DISConfig.Passos;
     IntervaloEnvioBytes := pLibConfig.DISConfig.IntervaloEnvioBytes;
     RemoveAcentos       := pLibConfig.DISConfig.RemoveAcentos;
+
+    Device.Baud := pLibConfig.DeviceConfig.Baud;
+    Device.Data := pLibConfig.DeviceConfig.Data;
+    Device.TimeOut := pLibConfig.DeviceConfig.TimeOut;
+    Device.Parity := TACBrSerialParity(pLibConfig.DeviceConfig.Parity);
+    Device.Stop := TACBrSerialStop(pLibConfig.DeviceConfig.Stop);
+    Device.MaxBandwidth := pLibConfig.DeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.DeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.DeviceConfig.SendBytesInterval;
+    Device.HandShake := TACBrHandShake(pLibConfig.DeviceConfig.HandShake);
+    Device.HardFlow := pLibConfig.DeviceConfig.HardFlow;
+    Device.SoftFlow := pLibConfig.DeviceConfig.SoftFlow;
   end;
-
-  pLibConfig.DeviceConfig.Apply(ACBrDIS1.Device);
-end;
-
-procedure TLibDISDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
-  Traduzir: Boolean);
-begin
-  if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
-end;
-
-procedure TLibDISDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibDISDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 end.

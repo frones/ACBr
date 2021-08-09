@@ -2101,6 +2101,7 @@ object frmACBrNFe: TfrmACBrNFe
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    Usuario = 'ACBr'
     MargemInferior = 0.700000000000000000
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000

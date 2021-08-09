@@ -558,6 +558,8 @@ begin
           end;
 
           SalvarXmlNfse(ANota);
+
+          Response.Situacao := '4'; // Processado com sucesso pois retornou a nota
         end
         else
         begin
@@ -781,12 +783,12 @@ begin
   if (Response.InfConsultaNFSe.DataInicial > 0) and (Response.InfConsultaNFSe.DataFinal > 0) then
     XmlConsulta := XmlConsulta +
                      '<' + Prefixo + 'PeriodoEmissao>' +
-                       '<' + PrefixoTS + 'DataInicial>' +
+                       '<' + Prefixo + 'DataInicial>' +
                           FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataInicial) +
-                       '</' + PrefixoTS + 'DataInicial>' +
-                       '<' + PrefixoTS + 'DataFinal>' +
+                       '</' + Prefixo + 'DataInicial>' +
+                       '<' + Prefixo + 'DataFinal>' +
                           FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataFinal) +
-                       '</' + PrefixoTS + 'DataFinal>' +
+                       '</' + Prefixo + 'DataFinal>' +
                      '</' + Prefixo + 'PeriodoEmissao>';
 
   if NaoEstaVAzio(Response.InfConsultaNFSe.CNPJTomador) then

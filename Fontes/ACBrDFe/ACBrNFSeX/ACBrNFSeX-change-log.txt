@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/08/2021
+-- ACBrNFSeXProviderABRASFv1 --
+[*] https://www.projetoacbr.com.br/forum/topic/63591-acbrnfsex-erro-em-consultarnfse/
+   Por: Gilspider
 -- SmarAPD.Provider --
 [*] Ajustes para a leitura correta dos retornos do provedor.
    Por: Jorge

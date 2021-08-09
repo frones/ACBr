@@ -448,7 +448,8 @@ begin
 
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proNFSeBrasil,
-        proEquiplano:
+        proEquiplano,
+        proSudoeste:
           IdentificacaoRps.Serie := '1';
 
         proBetha,
@@ -464,7 +465,7 @@ begin
             IdentificacaoRps.Serie := '8';
 
       else
-        IdentificacaoRps.Serie := '85'; // NF
+        IdentificacaoRps.Serie := '85';
       end;
 
       // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
@@ -873,9 +874,9 @@ begin
 
     // Os Provedores da lista requerem que seja informado o motivo do cancelamento
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
-      proConam, proEquiplano, proGoverna, proIPM, proIPM_A, proISSDSF, proLencois,
+      proConam, proEquiplano, proGoverna, proIPM, proIPM_120, proISSDSF, proLencois,
       proModernizacaoPublica, proPublica, proSiat, proSigISS, proSigep,
-      proSmarAPD, proWebFisco, proTecnos] then
+      proSmarAPD, proWebFisco, proTecnos, proSudoeste] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -1885,8 +1886,8 @@ begin
   end;
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proConam, proEquiplano,
-    proGoverna, proIPM, proIPM_A, proISSDSF, proLencois, proModernizacaoPublica,
-    proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco] then
+    proGoverna, proIPM, proIPM_120, proISSDSF, proLencois, proModernizacaoPublica,
+    proPublica, proSiat, proSigISS, proSmarAPD, proWebFisco, proSudoeste] then
   begin
     Motivo := 'Teste de Cancelamento';
     if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
@@ -2377,6 +2378,13 @@ begin
     memoLog.Lines.Add('Numero do Lote: ' + TNFSeEmiteResponse(Response).Lote);
     memoLog.Lines.Add('Data de Envio : ' + DateToStr(TNFSeEmiteResponse(Response).Data));
     memoLog.Lines.Add('Numero do Prot: ' + TNFSeEmiteResponse(Response).Protocolo);
+    memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Response.Sucesso, True));
+    memoLog.Lines.Add(' ');
+
+    memoLog.Lines.Add('Modo de Envio : ' + ModoEnvioToStr(TNFSeEmiteResponse(Response).ModoEnvio));
+    memoLog.Lines.Add('Numero do Lote: ' + ACBrNFSeX1.Resposta.NumeroLote);
+    memoLog.Lines.Add('Data de Envio : ' + DateToStr(ACBrNFSeX1.Resposta.DataRecebimento));
+    memoLog.Lines.Add('Numero do Prot: ' + ACBrNFSeX1.Resposta.Protocolo);
     memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Response.Sucesso, True));
   end;
 

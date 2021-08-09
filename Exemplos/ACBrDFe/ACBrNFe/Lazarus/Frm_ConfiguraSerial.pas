@@ -35,7 +35,7 @@ unit Frm_ConfiguraSerial;
 interface
 
 uses
-  ACBrDevice, ACBrDeviceSerial,
+  ACBrDevice, ACBrDeviceSerial, 
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons;
 

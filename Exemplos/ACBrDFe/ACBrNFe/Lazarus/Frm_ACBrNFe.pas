@@ -35,29 +35,18 @@ unit Frm_ACBrNFe;
 interface
 
 uses
-  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
-  Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
   SynEdit, SynHighlighterXML,
-  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
-  ACBrDFeDANFeReport,
-  ACBrNFe, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4,
-  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrIntegrador;
+  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrNFeDANFEClass, ACBrDANFCeFortesFr,
+  ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFeRLClass, ACBrBase, ACBrDFe,
+  ACBrNFe, ACBrUtil, ACBrMail, ACBrIntegrador, ACBrDANFCeFortesFrA4;
 
 type
-
-  { TfrmACBrNFe }
-
   TfrmACBrNFe = class(TForm)
-    ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4;
-    bVersao: TButton;
-    cbTipoEmpresa: TComboBox;
-    edtURLPFX: TEdit;
-    Label51: TLabel;
-    Label52: TLabel;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
-    SynXMLSyn1: TSynXMLSyn;
     TabSheet1: TTabSheet;
     PageControl4: TPageControl;
     TabSheet3: TTabSheet;
@@ -244,7 +233,7 @@ type
     btnEnviarEventoEmail: TButton;
     tsDistribuicao: TTabSheet;
     btnManifDestConfirmacao: TButton;
-    btnDistribuicaoDFe: TButton;
+    btnDistrDFePorUltNSU: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -283,9 +272,18 @@ type
     btnImprimirDANFCE: TButton;
     btnImprimirDANFCEOffline: TButton;
     rgDANFCE: TRadioGroup;
-    ACBrIntegrador1: TACBrIntegrador;
     btnStatusServ: TButton;
-    procedure bVersaoClick(Sender: TObject);
+    ACBrIntegrador1: TACBrIntegrador;
+    btVersao: TButton;
+    ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4;
+    Label51: TLabel;
+    edtURLPFX: TEdit;
+    Label52: TLabel;
+    cbTipoEmpresa: TComboBox;
+    btnAtorInterNFeTransp: TButton;
+    btnDistrDFePorNSU: TButton;
+    btnDistrDFePorChave: TButton;
+
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -341,12 +339,16 @@ type
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarImprimirClick(Sender: TObject);
-    procedure btnDistribuicaoDFeClick(Sender: TObject);
+    procedure btnDistrDFePorUltNSUClick(Sender: TObject);
     procedure btnManifDestConfirmacaoClick(Sender: TObject);
     procedure ACBrNFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANFCEClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
+    procedure btVersaoClick(Sender: TObject);
+    procedure btnAtorInterNFeTranspClick(Sender: TObject);
+    procedure btnDistrDFePorNSUClick(Sender: TObject);
+    procedure btnDistrDFePorChaveClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -369,13 +371,12 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, blcksock, Grids,
-  Printers,
-  pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT,
-  ACBrDFeConfiguracoes, ACBrDFeUtil,
+  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  IniFiles, Printers,
+  pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT, pcnRetConsReciDFe,
+  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes,
-  Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial,
-  ACBrDFeOpenSSL, OpenSSLExt;
+  Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
 
 const
   SELDIRHELP = 1000;
@@ -526,6 +527,8 @@ end;
 procedure TfrmACBrNFe.AlimentarNFCe(NumDFe: String);
 var
   Ok: Boolean;
+  BaseCalculo,
+  ValorICMS: Double;
 begin
   with ACBrNFe1.NotasFiscais.Add.NFe do
   begin
@@ -546,7 +549,22 @@ begin
     Ide.finNFe    := fnNormal;
     Ide.tpImp     := tiNFCe;
     Ide.indFinal  := cfConsumidorFinal;
+    {
+      valores aceitos pelo campo:
+      pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio,
+      pcPresencialForaEstabelecimento, pcOutros
+    }
     Ide.indPres   := pcPresencial;
+
+    {
+      abaixo o campo incluido no layout a partir da NT 2020/006
+    }
+    {
+      valores aceitos pelo campo:
+      iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+    }
+    // Indicador de intermediador/marketplace
+    Ide.indIntermed := iiSemOperacao;
 
 //     Ide.dhCont := date;
 //     Ide.xJust  := 'Justificativa Contingencia';
@@ -644,6 +662,54 @@ begin
 
 //         infAdProd      := 'Informação Adicional do Produto';
 
+      {
+        abaixo os campos incluidos no layout a partir da NT 2020/005
+      }
+      // Opcional - Preencher com o Código de Barras próprio ou de terceiros que seja diferente do padrão GTIN
+      // por exemplo: código de barras de catálogo, partnumber, etc
+      Prod.cBarra := 'ABC123456';
+      // Opcional - Preencher com o Código de Barras próprio ou de terceiros que seja diferente do padrão GTIN
+      //  correspondente àquele da menor unidade comercializável identificado por Código de Barras
+      // por exemplo: código de barras de catálogo, partnumber, etc
+      Prod.cBarraTrib := 'ABC123456';
+
+      // Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.New
+      (*
+      with Prod.DI.New do
+      begin
+        nDi         := '';
+        dDi         := now;
+        xLocDesemb  := '';
+        UFDesemb    := '';
+        dDesemb     := now;
+        {
+          tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal, tvFerroviaria, tvRodoviaria,
+
+          abaixo os novos valores incluidos a partir da NT 2020/005
+
+          tvConduto, tvMeiosProprios, tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque
+        }
+        tpViaTransp := tvRodoviaria;
+        vAFRMM := 0;
+        {
+          tiContaPropria, tiContaOrdem, tiEncomenda
+        }
+        tpIntermedio := tiContaPropria;
+        CNPJ := '';
+        UFTerceiro := '';
+        cExportador := '';
+
+        with adi.New do
+        begin
+          nAdicao     := 1;
+          nSeqAdi     := 1;
+          cFabricante := '';
+          vDescDI     := 0;
+          nDraw       := '';
+        end;
+      end;
+      *)
+
       with Imposto do
       begin
         // lei da transparencia nos impostos
@@ -670,13 +736,22 @@ begin
           if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
             CST := cst00
           else
-            CSOSN := csosn101;
+            CSOSN := csosn102;
 
           orig    := oeNacional;
           modBC   := dbiValorOperacao;
-          vBC     := 100;
+
+          if Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+            BaseCalculo := 100
+          else
+            BaseCalculo := 0;
+
+          vBC     := BaseCalculo;
           pICMS   := 18;
-          vICMS   := 18;
+
+          ValorICMS := vBC * pICMS;
+
+          vICMS   := ValorICMS;
           modBCST := dbisMargemValorAgregado;
           pMVAST  := 0;
           pRedBCST:= 0;
@@ -701,6 +776,26 @@ begin
           vBCEfet := 0;
           pICMSEfet := 0;
           vICMSEfet := 0;
+
+          {
+            abaixo os campos incluidos no layout a partir da NT 2020/005
+          }
+          // Informar apenas nos motivos de desoneração documentados abaixo
+          vICMSSTDeson := 0;
+          {
+            o campo abaixo só aceita os valores:
+            mdiProdutorAgropecuario, mdiOutros, mdiOrgaoFomento
+            Campo será preenchido quando o campo anterior estiver preenchido.
+          }
+          motDesICMSST := mdiOutros;
+
+          // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
+          // No caso de diferimento total, informar o percentual de diferimento "100"
+          pFCPDif := 0;
+          // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido
+          vFCPDif := 0;
+          // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) realmente devido.
+          vFCPEfet := 0;
 
           // partilha do ICMS e fundo de probreza
           with ICMSUFDest do
@@ -735,6 +830,15 @@ begin
           qBCProd   := 0;
           vAliqProd := 0;
           vPIS      := 0;
+          {
+            abaixo o campo incluido no layout a partir da NT 2020/005
+          }
+          {
+            valores aceitos pelo campo:
+            ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe
+          }
+          // Indica se o valor do PISST compõe o valor total da NF-e
+          IndSomaPISST :=  ispNenhum;
         end;
 
         with COFINS do
@@ -755,12 +859,21 @@ begin
           qBCProd   := 0;
           vAliqProd := 0;
           vCOFINS   := 0;
+          {
+            abaixo o campo incluido no layout a partir da NT 2020/005
+          }
+          {
+            valores aceitos pelo campo:
+            iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe
+          }
+          // Indica se o valor da COFINS ST compõe o valor total da NF-e
+          indSomaCOFINSST :=  iscNenhum;
         end;
       end;
     end;
 
-    Total.ICMSTot.vBC     := 100;
-    Total.ICMSTot.vICMS   := 18;
+    Total.ICMSTot.vBC     := BaseCalculo;
+    Total.ICMSTot.vICMS   := ValorICMS;
     Total.ICMSTot.vBCST   := 0;
     Total.ICMSTot.vST     := 0;
     Total.ICMSTot.vProd   := 100;
@@ -798,8 +911,20 @@ begin
     with pag.New do
     begin
       tPag := fpDinheiro;
+      {
+        abaixo o campo incluido no layout a partir da NT 2020/006
+      }
+      {
+        se tPag for fpOutro devemos incluir o campo xPag
+      xPag := 'Caderneta';
+      }
       vPag := 100;
     end;
+
+    // O grupo infIntermed só deve ser gerado nos casos de operação não presencial
+    // pela internet em site de terceiros (Intermediadores).
+//    infIntermed.CNPJ := '';
+//    infIntermed.idCadIntTran := '';
 
     InfAdic.infCpl     :=  '';
     InfAdic.infAdFisco :=  '';
@@ -815,6 +940,17 @@ begin
       xCampo := 'ObsFisco';
       xTexto := 'Texto';
     end;
+
+    {
+      abaixo o campo incluido no layout a partir da NT 2020/006
+    }
+    // CNPJ do Intermediador da Transação (agenciador, plataforma de delivery,
+    // marketplace e similar) de serviços e de negócios.
+    infIntermed.CNPJ := '';
+    // Nome do usuário ou identificação do perfil do vendedor no site do intermediador
+    // (agenciador, plataforma de delivery, marketplace e similar) de serviços e de
+    // negócios.
+    infIntermed.idCadIntTran := '';
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
@@ -861,10 +997,25 @@ begin
   if  Assigned( ACBrNFe1.DANFE ) then
     NotaF.NFe.Ide.tpImp     := ACBrNFe1.DANFE.TipoDANFE;
 
+  // Valores aceitos:
+  // iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+//  NotaF.NFe.Ide.indIntermed := iiSemOperacao;
+
 //  NotaF.NFe.Ide.dhCont := date;
 //  NotaF.NFe.Ide.xJust  := 'Justificativa Contingencia';
 
-//Para NFe referenciada use os campos abaixo
+  {
+    abaixo o campo incluido no layout a partir da NT 2020/006
+  }
+  {
+    valores aceitos pelo campo:
+    iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador
+  }
+  // Indicador de intermediador/marketplace
+  NotaF.NFe.Ide.indIntermed := iiSemOperacao;
+
+
+  //Para NFe referenciada use os campos abaixo
   (*
   Referenciada := NotaF.NFe.Ide.NFref.Add;
   Referenciada.refNFe       := ''; //NFe Eletronica
@@ -997,7 +1148,18 @@ begin
 
   Produto.infAdProd := 'Informacao Adicional do Produto';
 
-//Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
+  {
+    abaixo os campos incluidos no layout a partir da NT 2020/005
+  }
+  // Opcional - Preencher com o Código de Barras próprio ou de terceiros que seja diferente do padrão GTIN
+  // por exemplo: código de barras de catálogo, partnumber, etc
+  Produto.Prod.cBarra := 'ABC123456';
+  // Opcional - Preencher com o Código de Barras próprio ou de terceiros que seja diferente do padrão GTIN
+  //  correspondente àquele da menor unidade comercializável identificado por Código de Barras
+  // por exemplo: código de barras de catálogo, partnumber, etc
+  Produto.Prod.cBarraTrib := 'ABC123456';
+
+  // Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
   (*
   DI := Produto.Prod.DI.Add;
   DI.nDi         := '';
@@ -1005,6 +1167,21 @@ begin
   DI.xLocDesemb  := '';
   DI.UFDesemb    := '';
   DI.dDesemb     := now;
+  {
+    tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal, tvFerroviaria, tvRodoviaria,
+
+    abaixo os novos valores incluidos a partir da NT 2020/005
+
+    tvConduto, tvMeiosProprios, tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque
+  }
+  DI.tpViaTransp := tvRodoviaria;
+  DI.vAFRMM := 0;
+  {
+    tiContaPropria, tiContaOrdem, tiEncomenda
+  }
+  DI.tpIntermedio := tiContaPropria;
+  DI.CNPJ := '';
+  DI.UFTerceiro := '';
   DI.cExportador := '';
 
   Adicao := DI.adi.Add;
@@ -1012,6 +1189,7 @@ begin
   Adicao.nSeqAdi     := 1;
   Adicao.cFabricante := '';
   Adicao.vDescDI     := 0;
+  Adicao.nDraw       := '';
   *)
 
 //Campos para venda de veículos novos
@@ -1037,7 +1215,6 @@ begin
   Produto.Prod.veicProd.VIN     := '';
   Produto.Prod.veicProd.condVeic := cvAcabado;
   Produto.Prod.veicProd.cMod    := '';
-
 
 // Campos de Rastreabilidade do produto
   {
@@ -1161,6 +1338,26 @@ begin
       vBCEfet := 0;
       pICMSEfet := 0;
       vICMSEfet := 0;
+
+      {
+        abaixo os campos incluidos no layout a partir da NT 2020/005
+      }
+      // Informar apenas nos motivos de desoneração documentados abaixo
+      vICMSSTDeson := 0;
+      {
+        o campo abaixo só aceita os valores:
+        mdiProdutorAgropecuario, mdiOutros, mdiOrgaoFomento
+        Campo será preenchido quando o campo anterior estiver preenchido.
+      }
+      motDesICMSST := mdiOutros;
+
+      // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
+      // No caso de diferimento total, informar o percentual de diferimento "100"
+      pFCPDif := 0;
+      // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido
+      vFCPDif := 0;
+      // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) realmente devido.
+      vFCPEfet := 0;
     end;
 
     with ICMSUFDest do
@@ -1222,6 +1419,15 @@ begin
       qBCProd   := 0;
       vAliqProd := 0;
       vPIS      := 0;
+      {
+        abaixo o campo incluido no layout a partir da NT 2020/005
+      }
+      {
+        valores aceitos pelo campo:
+        ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe
+      }
+      // Indica se o valor do PISST compõe o valor total da NF-e
+      IndSomaPISST :=  ispNenhum;
     end;
 
     with COFINS do
@@ -1241,6 +1447,15 @@ begin
       qBCProd   := 0;
       vAliqProd := 0;
       vCOFINS   := 0;
+      {
+        abaixo o campo incluido no layout a partir da NT 2020/005
+      }
+      {
+        valores aceitos pelo campo:
+        iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe
+      }
+      // Indica se o valor da COFINS ST compõe o valor total da NF-e
+      indSomaCOFINSST :=  iscNenhum;
     end;
   end;
 
@@ -1366,6 +1581,11 @@ begin
   Duplicata.dVenc := now+20;
   Duplicata.vDup  := 50;
 
+    // O grupo infIntermed só deve ser gerado nos casos de operação não presencial
+    // pela internet em site de terceiros (Intermediadores).
+//  NotaF.NFe.infIntermed.CNPJ := '';
+//  NotaF.NFe.infIntermed.idCadIntTran := '';
+
   NotaF.NFe.InfAdic.infCpl     :=  '';
   NotaF.NFe.InfAdic.infAdFisco :=  '';
 
@@ -1403,6 +1623,14 @@ begin
   InfoPgto := NotaF.NFe.pag.New;
   InfoPgto.indPag := ipVista;
   InfoPgto.tPag   := fpCartaoCredito;
+
+  {
+    abaixo o campo incluido no layout a partir da NT 2020/006
+  }
+  {
+    se tPag for fpOutro devemos incluir o campo xPag
+  InfoPgto.xPag := 'Caderneta';
+  }
   InfoPgto.vPag   := 75;
   InfoPgto.tpIntegra := tiPagIntegrado;
   InfoPgto.CNPJ      := '05481336000137';
@@ -1413,6 +1641,17 @@ begin
 // Regra opcional: Informar se valor dos pagamentos maior que valor da nota.
 // Regra obrigatória: Se informado, Não pode diferir de "(+) vPag (id:YA03) (-) vNF (id:W16)"
 //  NotaF.NFe.pag.vTroco := 75;
+
+  {
+    abaixo o campo incluido no layout a partir da NT 2020/006
+  }
+  // CNPJ do Intermediador da Transação (agenciador, plataforma de delivery,
+  // marketplace e similar) de serviços e de negócios.
+  NotaF.NFe.infIntermed.CNPJ := '';
+  // Nome do usuário ou identificação do perfil do vendedor no site do intermediador
+  // (agenciador, plataforma de delivery, marketplace e similar) de serviços e de
+  // negócios.
+  NotaF.NFe.infIntermed.idCadIntTran := '';
 
   ACBrNFe1.NotasFiscais.GerarNFe;
 end;
@@ -1459,6 +1698,95 @@ begin
   end;
 end;
 
+procedure TfrmACBrNFe.btnAtorInterNFeTranspClick(Sender: TObject);
+var
+  xTitulo, Chave, idLote, CNPJ, nSeqEvento, xUF, TipoAtor, VerAplic,
+  AutXML, TipoAutoriz: string;
+  Ok: Boolean;
+begin
+  {
+    Esse evento consta na NT 2020/007
+    Só será possível realizar testes em ambiente de homologação a partir de 01/11/2021
+    E enviar em produção a partir de 30/11/2021
+  }
+  xTitulo := 'Evento Ator Interessado na NF-e - Transportador';
+
+  idLote := '1';
+  if not(InputQuery(xTitulo, 'Numero do Lote de envio do Evento', idLote)) then
+     exit;
+
+  Chave := '';
+  if not(InputQuery(xTitulo, 'Chave da NF-e', Chave)) then
+     exit;
+
+  Chave := Trim(OnlyNumber(Chave));
+
+  CNPJ := copy(Chave,7,14);
+  if not(InputQuery(xTitulo, 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+     exit;
+
+  nSeqEvento := '1';
+  if not(InputQuery(xTitulo, 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
+     exit;
+
+  xUF := 'SP';
+  if not(InputQuery(xTitulo, 'UF do emitente do Evento', xUF)) then
+     exit;
+
+  {
+    1 = Empresa Emitente,
+    2 = Empresa Destinatária,
+    3 = Empresa Transportadora.
+  }
+  TipoAtor := '1';
+  if not(InputQuery(xTitulo, 'Tipo de Ator do Evento (1, 2 ou 3)', TipoAtor)) then
+     exit;
+
+  VerAplic := '1.00';
+  if not(InputQuery(xTitulo, 'Versão do Aplicativo do emitente', VerAplic)) then
+     exit;
+
+  AutXML := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do Autorizado', AutXML)) then
+     exit;
+
+  {
+    0 = Não permite;
+    1 = Permite o transportador autorizado pelo emitente ou destinatário
+        autorizar outros transportadores para ter acesso ao download da NF-e
+  }
+  TipoAutoriz := '0';
+  if not(InputQuery(xTitulo, 'Tipo de Autorização (0 ou 1)', TipoAutoriz)) then
+     exit;
+
+  ACBrNFe1.EventoNFe.Evento.Clear;
+
+  with ACBrNFe1.EventoNFe.Evento.New do
+  begin
+    infEvento.chNFe      := Chave;
+    infEvento.CNPJ       := CNPJ;
+    infEvento.dhEvento   := now;
+    infEvento.tpEvento   := teAtorInteressadoNFe;
+    infEvento.nSeqEvento := StrToIntDef(nSeqEvento, 1);
+
+    infEvento.detEvento.cOrgaoAutor := UFtoCUF(xUF);
+    infEvento.detEvento.tpAutor     := StrToTipoAutor(Ok, TipoAtor);
+    infEvento.detEvento.verAplic    := VerAplic;
+
+    // No momento a SEFAZ só aceita apenas 1 CNPJ/CPF
+    with InfEvento.detEvento.autXML.New do
+      CNPJCPF := AutXML;
+
+    infEvento.detEvento.tpAutorizacao := StrToAutorizacao(Ok, TipoAutoriz);
+  end;
+
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
+  LoadXML(MemoResp, WBResposta);
+end;
+
 procedure TfrmACBrNFe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
@@ -1497,15 +1825,8 @@ begin
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
   LoadXML(MemoResp, WBResposta);
-  (*
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.TpAmb
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.verAplic
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.cStat
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.chNFe
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento
-  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt
-  *)
+  ShowMessage(IntToStr(ACBrNFe1.WebServices.EnvEvento.cStat));
+  ShowMessage(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
 end;
 
 procedure TfrmACBrNFe.btnCancelarXMLClick(Sender: TObject);
@@ -1552,6 +1873,8 @@ begin
 end;
 
 procedure TfrmACBrNFe.btnCarregarXMLEnviarClick(Sender: TObject);
+var
+  Ok: Boolean;
 begin
   OpenDialog1.Title := 'Selecione a NFe';
   OpenDialog1.DefaultExt := '*-nfe.XML';
@@ -1587,7 +1910,7 @@ begin
       Emit.IM                := ''; // Preencher no caso de existir serviços na nota
       Emit.CNAE              := ''; // Verifique na cidade do emissor da NFe se é permitido
                                     // a inclusão de serviços na NFe
-      Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+      Emit.CRT               := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
     end;
 
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 55 then
@@ -1765,7 +2088,7 @@ end;
 
 procedure TfrmACBrNFe.btnCriarEnviarClick(Sender: TObject);
 var
-  vAux, vNumLote, vSincrono: String;
+  vAux, vNumLote: String;
   Sincrono: Boolean;
 begin
   vAux := '';
@@ -1788,28 +2111,30 @@ begin
   AlimentarComponente(vAux);
 
   if ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe then
+    {
+      Envio de NF-e modelo 55
+    }
     ACBrNFe1.Enviar(vNumLote)
   else
   begin
-    vSincrono := '1';
-    if not(InputQuery('WebServices Enviar', 'Envio Síncrono(1=Sim, 0=Não)', vSincrono)) then
-      exit;
-
-    if (Trim(vSincrono) <> '1') and (Trim(vSincrono) <> '0') then
-    begin
-      MessageDlg('Valor Inválido.', mtError,[mbok], 0);
-      exit;
-    end;
-
-    if (ACBrNFe1.Integrador= ACBrIntegrador1) or (Trim(vSincrono) = '1') then
-      Sincrono := True
-    else
-      Sincrono := False;
-
-    if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe) and (rgDANFCE.ItemIndex = 1) then
+    {
+      Envio de NFC-e modelo 65
+    }
+    if (rgDANFCE.ItemIndex = 1) then
       PrepararImpressao;
 
-    ACBrNFe1.Enviar(vNumLote, True, Sincrono);
+    if ACBrNFe1.NotasFiscais.Count > 1 then
+      {
+        Se o lote tem 2 ou mais notas (até 50) o envio tem que ser no modo
+        assíncrono (terceiro parâmetro tem que valer False)
+      }
+      ACBrNFe1.Enviar(vNumLote, True, False)
+    else
+      {
+        Se o lote tem apenas 1 nota o envio tem que ser no modo
+        síncrono (terceiro parâmetro tem que valer True)
+      }
+      ACBrNFe1.Enviar(vNumLote, True, True);
   end;
 
   pgRespostas.ActivePageIndex := 1;
@@ -1877,27 +2202,76 @@ begin
   ShowMessage(FormatDateBr(ACBrNFe1.SSL.CertDataVenc));
 end;
 
-procedure TfrmACBrNFe.btnDistribuicaoDFeClick(Sender: TObject);
+procedure TfrmACBrNFe.btnDistrDFePorChaveClick(Sender: TObject);
 var
-  cUFAutor, CNPJ, ultNSU, ANSU: string;
+  xTitulo, cUFAutor, CNPJ, Chave: string;
 begin
+  xTitulo := 'Distribuição DFe Por Chave';
   cUFAutor := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
      exit;
 
   CNPJ := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
      exit;
 
-  ultNSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Último NSU recebido pelo ator', ultNSU)) then
+  Chave := '';
+  if not(InputQuery(xTitulo, 'Chave da NF-e', Chave)) then
+     exit;
+
+  ACBrNFe1.DistribuicaoDFePorChaveNFe(StrToInt(cUFAutor), CNPJ, Chave);
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
+
+  LoadXML(MemoResp, WBResposta);
+end;
+
+procedure TfrmACBrNFe.btnDistrDFePorNSUClick(Sender: TObject);
+var
+  xTitulo, cUFAutor, CNPJ, ANSU: string;
+begin
+  xTitulo := 'Distribuição DF-e por NSU';
+
+  cUFAutor := '';
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+     exit;
+
+  CNPJ := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
      exit;
 
   ANSU := '';
-  if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'NSU específico', ANSU)) then
+  if not(InputQuery(xTitulo, 'NSU específico', ANSU)) then
      exit;
 
-  ACBrNFe1.DistribuicaoDFe(StrToInt(cUFAutor), CNPJ, ultNSU, ANSU);
+  ACBrNFe1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
+
+  LoadXML(MemoResp, WBResposta);
+end;
+
+procedure TfrmACBrNFe.btnDistrDFePorUltNSUClick(Sender: TObject);
+var
+  xTitulo, cUFAutor, CNPJ, ultNSU: string;
+begin
+  xTitulo := 'Distribuição DF-e por último NSU';
+
+  cUFAutor := '';
+  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+     exit;
+
+  CNPJ := '';
+  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+     exit;
+
+  ultNSU := '';
+  if not(InputQuery(xTitulo, 'Último NSU recebido pelo ator', ultNSU)) then
+     exit;
+
+  ACBrNFe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU);
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
@@ -2978,33 +3352,50 @@ begin
 
   with ACBrNFe1.EventoNFe.Evento.New do
   begin
+    {
+     Como os Eventos de Manifestação do Destinatário são enviados para o
+     Ambiente Nacional, o código informado em cOrgao deve ser sempre 91
+    }
     InfEvento.cOrgao   := 91;
     infEvento.chNFe    := Chave;
-    infEvento.CNPJ     := CNPJ;
+    infEvento.CNPJ     := CNPJ; // CNPJ/CPF do Destinatário da Mercadoria
     infEvento.dhEvento := now;
+    {
+     Tipos de Eventos de Manifestação do Destinatário:
+       teManifDestConfirmacao      = Confirmação da Operação
+       teManifDestCiencia          = Ciência da Operação
+       teManifDestDesconhecimento  = Desconhecimento da Operação
+       teManifDestOperNaoRealizada = Operação Não Realizada
+    }
     infEvento.tpEvento := teManifDestConfirmacao;
+
+    {
+     Se o tipo for: teManifDestOperNaoRealizada, informar a justificativa
+    }
+//    InfEvento.detEvento.xJust := 'justificativa';
   end;
 
-  ACBrNFe1.EnviarEvento(StrToInt(IDLote));
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
   with AcbrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
   begin
     lMsg:=
-    'Id: ' + Id + #13 +
-    'tpAmb: ' + TpAmbToStr(tpAmb) + #13 +
-    'verAplic: ' + verAplic + #13 +
-    'cOrgao: ' + IntToStr(cOrgao) + #13 +
-    'cStat: ' + IntToStr(cStat) + #13 +
-    'xMotivo: ' + xMotivo + #13 +
-    'chNFe: ' + chNFe + #13 +
-    'tpEvento: ' + TpEventoToStr(tpEvento) + #13 +
-    'xEvento: ' + xEvento + #13 +
-    'nSeqEvento: ' + IntToStr(nSeqEvento) + #13 +
-    'CNPJDest: ' + CNPJDest + #13 +
-    'emailDest: ' + emailDest + #13 +
-    'dhRegEvento: ' + DateTimeToStr(dhRegEvento) + #13 +
-    'nProt: ' + nProt;
+      'Id: ' + Id + #13 +
+      'tpAmb: ' + TpAmbToStr(tpAmb) + #13 +
+      'verAplic: ' + verAplic + #13 +
+      'cOrgao: ' + IntToStr(cOrgao) + #13 +
+      'cStat: ' + IntToStr(cStat) + #13 +
+      'xMotivo: ' + xMotivo + #13 +
+      'chNFe: ' + chNFe + #13 +
+      'tpEvento: ' + TpEventoToStr(tpEvento) + #13 +
+      'xEvento: ' + xEvento + #13 +
+      'nSeqEvento: ' + IntToStr(nSeqEvento) + #13 +
+      'CNPJDest: ' + CNPJDest + #13 +
+      'emailDest: ' + emailDest + #13 +
+      'dhRegEvento: ' + DateTimeToStr(dhRegEvento) + #13 +
+      'nProt: ' + nProt;
   end;
+
   ShowMessage(lMsg);
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
@@ -3186,6 +3577,12 @@ begin
   end;
 end;
 
+procedure TfrmACBrNFe.btVersaoClick(Sender: TObject);
+begin
+  pgRespostas.ActivePageIndex := 0;
+  MemoResp.Lines.Add(ACBrNFe1.SSL.SSLCryptClass.Versao);
+end;
+
 procedure TfrmACBrNFe.cbCryptLibChange(Sender: TObject);
 begin
   try
@@ -3244,7 +3641,6 @@ var
   Y: TSSLType;
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
-  l: Integer;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -3315,12 +3711,6 @@ begin
   pgRespostas.ActivePageIndex := 0;
   PageControl1.ActivePageIndex := 0;
   PageControl4.ActivePageIndex := 0;
-end;
-
-procedure TfrmACBrNFe.bVersaoClick(Sender: TObject);
-begin
-  pgRespostas.ActivePageIndex := 0;
-  MemoResp.Lines.Add(ACBrNFe1.SSL.SSLCryptClass.Versao);
 end;
 
 procedure TfrmACBrNFe.GravarConfiguracao;

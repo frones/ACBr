@@ -40,7 +40,7 @@ uses
 
 type
 
-  { TfrmSelecionarCertificado }
+  { TfrSelecionarCertificado }
 
   TfrmSelecionarCertificado = class(TForm)
     BitBtn1: TBitBtn;

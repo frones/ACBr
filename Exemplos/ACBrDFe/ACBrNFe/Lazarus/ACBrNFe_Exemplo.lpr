@@ -9,7 +9,7 @@ uses
   Frm_ConfiguraSerial in 'Frm_ConfiguraSerial.pas' {frmConfiguraSerial},
   Frm_Status in 'Frm_Status.pas' {frmStatus};
 
-{.$R *.res}
+{$R *.res}
 
 begin
   Application.Initialize;

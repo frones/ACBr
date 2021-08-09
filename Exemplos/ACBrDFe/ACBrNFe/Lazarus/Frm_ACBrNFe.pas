@@ -43,10 +43,14 @@ uses
   ACBrNFe, ACBrUtil, ACBrMail, ACBrIntegrador, ACBrDANFCeFortesFrA4;
 
 type
+
+  { TfrmACBrNFe }
+
   TfrmACBrNFe = class(TForm)
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
+    SynXMLSyn1: TSynXMLSyn;
     TabSheet1: TTabSheet;
     PageControl4: TPageControl;
     TabSheet3: TTabSheet;
@@ -3203,7 +3207,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    PrepararImpressao;
+    if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+      PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
@@ -3952,6 +3957,7 @@ procedure TfrmACBrNFe.ConfigurarComponente;
 var
   Ok: Boolean;
   PathMensal: string;
+  SS: TStringStream;
 begin
   ACBrNFe1.Configuracoes.Certificados.URLPFX      := edtURLPFX.Text;
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
@@ -4048,7 +4054,20 @@ begin
   if ACBrNFe1.DANFE <> nil then
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
-    ACBrNFe1.DANFE.Logo      := edtLogoMarca.Text;
+    if FileExists(edtLogoMarca.Text) then
+    begin
+      SS := TStringStream.Create('');
+      try
+        SS.LoadFromFile(edtLogoMarca.Text);
+        SS.Position := 0;
+        ACBrNFe1.DANFE.Logo := SS.ReadString(SS.Size);
+      finally
+        SS.Free;
+      end;
+    end
+    else
+      ACBrNFe1.DANFE.Logo := edtLogoMarca.Text;
+
     ACBrNFe1.DANFE.PathPDF   := PathMensal;
 
     ACBrNFe1.DANFE.MargemDireita  := 7;

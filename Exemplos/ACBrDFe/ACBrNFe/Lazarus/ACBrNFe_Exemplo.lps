@@ -19,8 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1701"/>
-        <CursorPos X="3" Y="1707"/>
+        <TopLine Value="1705"/>
+        <CursorPos X="27" Y="1714"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -52,7 +52,7 @@
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="Frm_ACBrNFe.pas"/>
         <Caret Line="4081" Column="63" TopLine="4059"/>
@@ -163,21 +163,12 @@
       </Position27>
       <Position28>
         <Filename Value="Frm_ACBrNFe.pas"/>
-        <Caret Line="2280" TopLine="2369"/>
+        <Caret Line="1710" Column="29" TopLine="1701"/>
       </Position28>
-      <Position29>
-        <Filename Value="Frm_ACBrNFe.pas"/>
-        <Caret Line="2449" Column="19" TopLine="2679"/>
-      </Position29>
-      <Position30>
-        <Filename Value="Frm_ACBrNFe.pas"/>
-        <Caret Line="3433" TopLine="3540"/>
-      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes Count="0" ActiveMode=""/>
     </RunParams>
   </ProjectSession>
-  <SkipCheckLCLInterfaces Value="True"/>
 </CONFIG>

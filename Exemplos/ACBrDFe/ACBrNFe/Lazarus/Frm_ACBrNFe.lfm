@@ -12,7 +12,7 @@ object frmACBrNFe: TfrmACBrNFe
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 612
@@ -2169,6 +2169,7 @@ object frmACBrNFe: TfrmACBrNFe
           Gutter.MouseActions = <>
           RightGutter.Width = 0
           RightGutter.MouseActions = <>
+          Highlighter = SynXMLSyn1
           Keystrokes = <>
           MouseActions = <>
           MouseTextActions = <>
@@ -2316,8 +2317,8 @@ object frmACBrNFe: TfrmACBrNFe
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
-    left = 330
-    top = 239
+    Left = 330
+    Top = 239
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2340,9 +2341,8 @@ object frmACBrNFe: TfrmACBrNFe
     ACBrNFe = ACBrNFe1
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
-    TributosPercentualPersonalizado = 0
-    left = 411
-    top = 239
+    Left = 411
+    Top = 239
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2367,8 +2367,8 @@ object frmACBrNFe: TfrmACBrNFe
     FonteLinhaItem.Color = clWindowText
     FonteLinhaItem.Height = -9
     FonteLinhaItem.Name = 'Lucida Console'
-    left = 530
-    top = 239
+    Left = 530
+    Top = 239
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2390,8 +2390,8 @@ object frmACBrNFe: TfrmACBrNFe
     TipoDANFE = tiSemGeracao
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
-    left = 529
-    top = 287
+    Left = 529
+    Top = 287
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -2405,8 +2405,8 @@ object frmACBrNFe: TfrmACBrNFe
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
-    left = 409
-    top = 287
+    Left = 409
+    Top = 287
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2416,21 +2416,21 @@ object frmACBrNFe: TfrmACBrNFe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    left = 330
-    top = 287
+    Left = 330
+    Top = 287
   end
   object OpenDialog1: TOpenDialog
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 411
-    top = 343
+    Left = 411
+    Top = 343
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
-    left = 334
-    top = 342
+    Left = 334
+    Top = 342
   end
   object ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -2450,7 +2450,14 @@ object frmACBrNFe: TfrmACBrNFe
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     FormularioContinuo = True
-    left = 528
-    top = 344
+    Left = 528
+    Top = 344
+  end
+  object SynXMLSyn1: TSynXMLSyn
+    DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
+    Enabled = False
+    WantBracesParsed = False
+    Left = 730
+    Top = 312
   end
 end

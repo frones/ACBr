@@ -69,9 +69,9 @@ type
 
   end;
 
-  { TNFSeR_IPMa }
+  { TNFSeR_IPMV120 }
 
-  TNFSeR_IPMa = class(TNFSeR_IPM)
+  TNFSeR_IPMV120 = class(TNFSeR_IPM)
   protected
 
   end;

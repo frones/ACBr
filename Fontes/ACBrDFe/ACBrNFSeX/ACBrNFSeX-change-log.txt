@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/08/2021
+-- Diversos --
+[*] Alterado o nome do provedor de IPM_A para IPM_120, agora temos os provedores
+    IPM que se utiliza das URLs antigas e o Rps não é assinado
+    IPM_110 que se utiliza das novas URLs e o Rps não é assinado
+    IPM_120 que se utiliza das novas URLs e o Rps é assinado
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/63591-acbrnfsex-erro-em-consultarnfse/
    Por: Gilspider

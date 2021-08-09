@@ -76,9 +76,9 @@ type
 
   end;
 
-  { TNFSeW_IPMa }
+  { TNFSeW_IPMV120 }
 
-  TNFSeW_IPMa = class(TNFSeW_IPM)
+  TNFSeW_IPMV120 = class(TNFSeW_IPM)
   protected
     procedure Configuracao; override;
 
@@ -471,7 +471,7 @@ end;
 
 { TNFSeW_IPMa }
 
-procedure TNFSeW_IPMa.Configuracao;
+procedure TNFSeW_IPMV120.Configuracao;
 begin
   inherited Configuracao;
 

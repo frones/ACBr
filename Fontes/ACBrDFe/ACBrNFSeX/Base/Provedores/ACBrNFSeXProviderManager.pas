@@ -332,7 +332,7 @@ begin
 
     proIPM:     Result := TACBrNFSeProviderIPM.Create(ACBrNFSe);
     proIPM_110: Result := TACBrNFSeProviderIPMV110.Create(ACBrNFSe);
-    proIPM_A:   Result := TACBrNFSeProviderIPMa.Create(ACBrNFSe);
+    proIPM_120: Result := TACBrNFSeProviderIPMV120.Create(ACBrNFSe);
     proISSDSF:  Result := TACBrNFSeProviderISSDSF.Create(ACBrNFSe);
     proLencois: Result := TACBrNFSeProviderLencois.Create(ACBrNFSe);
     proSiat:    Result := TACBrNFSeProviderSiat.Create(ACBrNFSe);

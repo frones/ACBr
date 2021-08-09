@@ -47,6 +47,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
+  // Rps não é assinado
   TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceRest)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
@@ -83,6 +84,7 @@ type
 
   end;
 
+  // Rps não é assinado
   TACBrNFSeXWebserviceIPMV110 = class(TACBrNFSeXWebserviceIPM)
   protected
     procedure SetHeaders(aHeaderReq: THTTPHeader); override;
@@ -99,12 +101,13 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceIPMa = class(TACBrNFSeXWebserviceIPM)
+  TACBrNFSeXWebserviceIPMV120 = class(TACBrNFSeXWebserviceIPM)
   public
 
   end;
 
-  TACBrNFSeProviderIPMa = class (TACBrNFSeProviderIPM)
+  // Rps é assinado
+  TACBrNFSeProviderIPMV120 = class (TACBrNFSeProviderIPM)
   protected
     procedure Configuracao; override;
 
@@ -521,14 +524,14 @@ begin
                              Response.InfCancelamento.MotCancelamento +
                            '</observacao>' +
                          '</nf>' +
-                         '<Prestador>' +
+                         '<prestador>' +
                            '<cpfcnpj>' +
                              OnlyNumber(Emitente.CNPJ) +
                            '</cpfcnpj>' +
                            '<cidade>' +
                              CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                            '</cidade>' +
-                         '</Prestador>' +
+                         '</prestador>' +
                        '</nfse>';
 end;
 
@@ -637,9 +640,9 @@ begin
                      []);
 end;
 
-{ TACBrNFSeProviderIPMa }
+{ TACBrNFSeProviderIPMV120 }
 
-procedure TACBrNFSeProviderIPMa.Configuracao;
+procedure TACBrNFSeProviderIPMV120.Configuracao;
 begin
   inherited Configuracao;
 
@@ -649,19 +652,19 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderIPMa.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderIPMV120.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_IPMa.Create(Self);
+  Result := TNFSeW_IPMV120.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderIPMa.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderIPMV120.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_IPMa.Create(Self);
+  Result := TNFSeR_IPMV120.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderIPMa.CriarServiceClient(
+function TACBrNFSeProviderIPMV120.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -669,7 +672,7 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceIPMa.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceIPMV120.Create(FAOwner, AMetodo, URL)
   else
     raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
@@ -693,10 +696,6 @@ procedure TACBrNFSeProviderIPMV110.Configuracao;
 begin
   inherited Configuracao;
 
-  with ConfigAssinar do
-  begin
-    Rps := True;
-  end;
 end;
 
 function TACBrNFSeProviderIPMV110.CriarGeradorXml(

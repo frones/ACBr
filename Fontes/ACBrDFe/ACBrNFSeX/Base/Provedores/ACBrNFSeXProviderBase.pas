@@ -921,6 +921,8 @@ begin
         with TACBrNFSeX(FAOwner).Configuracoes.WebServices do
         begin
           try
+            RetornoConsSit.Clear;
+
             Sleep(AguardarConsultaRet);
 
             qTentativas := 0;
@@ -944,6 +946,8 @@ begin
       if ConfigGeral.ConsultaLote then
       begin
         try
+          RetornoConsLote.Clear;
+
           RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
         finally
           Result.InfRetorno.Situacao := RetornoConsLote.Situacao;
@@ -1561,6 +1565,11 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
   TratarRetornoCancelaNFSe(Result);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+
+  if TACBrNFSeX(FAOwner).Configuracoes.Geral.ConsultaAposCancelar then
+  begin
+    // Falta Implementar
+  end;
 end;
 
 function TACBrNFSeXProvider.SubstituiNFSe(const aNumNFSe, aSerieNFSe, aCodCancelamento,

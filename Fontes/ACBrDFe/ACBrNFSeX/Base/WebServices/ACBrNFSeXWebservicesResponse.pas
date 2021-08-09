@@ -51,11 +51,14 @@ type
 
   TInfRetorno = class
   private
+    FXML: string;
+
     FNumeroLote: String;
     FDataRecebimento: TDateTime;
     FProtocolo: String;
     FSucesso: String;
     FSituacao: String;
+    FHashIdent: string;
 
 //    FRetornoNFSe: TRetornoNFSe;
     FInformacoesLote: TInformacoesLote;
@@ -69,12 +72,16 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear;
+
+    property XML: string read FXML write FXML;
 
     property NumeroLote: String         read FNumeroLote      write FNumeroLote;
     property DataRecebimento: TDateTime read FDataRecebimento write FDataRecebimento;
     property Protocolo: String          read FProtocolo       write FProtocolo;
     property Sucesso: String            read FSucesso         write FSucesso;
     property Situacao: String           read FSituacao        write FSituacao;
+    property HashIdent: string          read FHashIdent       write FHashIdent;
 
 //    property RetornoNFSe: TRetornoNFSe                read FRetornoNFSe      write FRetornoNFSe;
     property InformacoesLote: TInformacoesLote        read FInformacoesLote  write FInformacoesLote;
@@ -222,6 +229,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear;
 
     property Lote: string read FLote write FLote;
     property Protocolo: string read FProtocolo write FProtocolo;
@@ -240,6 +248,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear;
 
     property Lote: string read FLote write FLote;
     property Protocolo: string read FProtocolo write FProtocolo;
@@ -501,6 +510,17 @@ end;
 
 { TInfRetorno }
 
+procedure TInfRetorno.Clear;
+begin
+  XML := '';
+  NumeroLote := '';
+  DataRecebimento := 0;
+  Protocolo := '';
+  Situacao := '1';
+  Sucesso := '';
+  HashIdent := '';
+end;
+
 constructor TInfRetorno.Create;
 begin
   inherited Create;
@@ -545,6 +565,14 @@ end;
 
 { TNFSeConsultaSituacaoResponse }
 
+procedure TNFSeConsultaSituacaoResponse.Clear;
+begin
+  Lote := '';
+  Situacao := '';
+  Protocolo := '';
+  InfRetorno.Clear;
+end;
+
 constructor TNFSeConsultaSituacaoResponse.Create;
 begin
   inherited Create;
@@ -560,6 +588,14 @@ begin
 end;
 
 { TNFSeConsultaLoteRpsResponse }
+
+procedure TNFSeConsultaLoteRpsResponse.Clear;
+begin
+  Lote := '';
+  Protocolo := '';
+  Situacao := '';
+  InfRetorno.Clear;
+end;
 
 constructor TNFSeConsultaLoteRpsResponse.Create;
 begin

@@ -996,7 +996,7 @@ type
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
-
+  (*
   TMsgRetornoIdentificacaoRps = class(TObject)
   private
     FNumero: string;
@@ -1007,7 +1007,7 @@ type
     property Serie: string  read FSerie  write FSerie;
     property Tipo: TTipoRps read FTipo   write FTipo;
   end;
-
+  *)
   TChaveNFeRPSCollectionItem = class(TObject)
   private
     FChaveNFeRPS: TChaveNFeRPS;
@@ -1027,7 +1027,7 @@ type
     function New: TChaveNFeRPSCollectionItem;
     property Items[Index: Integer]: TChaveNFeRPSCollectionItem read GetItem write SetItem; default;
   end;
-
+  (*
   TMensagemRetornoItem = class(TObject)
   private
     // ABRASF versão 1 e 2
@@ -1066,7 +1066,9 @@ type
     function New: TMensagemRetornoItem;
     property Items[Index: Integer]: TMensagemRetornoItem read GetItem write SetItem; default;
   end;
+*)
 
+(*
   TInfRetorno = class(TObject)
   private
     FXML: string;
@@ -1090,6 +1092,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear;
 
     property XML: string read FXML write FXML;
 
@@ -1105,7 +1108,7 @@ type
 
     property ListaChaveNFeRPS: TChaveNFeRPSCollection read FListaChaveNFeRPS write SetListaChaveNFeRPS;
   end;
-
+*)
 const
   CMUN_EXTERIOR = 9999999;
   XMUN_EXTERIOR = 'EXTERIOR';
@@ -1545,7 +1548,7 @@ begin
 end;
 
 { TMensagemRetornoCollection }
-
+(*
 function TMensagemRetornoCollection.Add: TMensagemRetornoItem;
 begin
   Result := Self.New;
@@ -1568,7 +1571,7 @@ procedure TMensagemRetornoCollection.SetItem(Index: Integer;
 begin
   inherited Items[Index] := Value;
 end;
-
+*)
 { TChaveNFeRPSCollectionItem }
 
 constructor TChaveNFeRPSCollectionItem.Create;
@@ -1611,7 +1614,7 @@ begin
 end;
 
 { TMensagemRetornoItem }
-
+(*
 constructor TMensagemRetornoItem.Create;
 begin
   inherited Create;
@@ -1627,8 +1630,19 @@ begin
 
   inherited;
 end;
-
+*)
 { TInfRetorno }
+(*
+procedure TInfRetorno.Clear;
+begin
+  XML := '';
+  NumeroLote := '';
+  DataRecebimento := 0;
+  Protocolo := '';
+  Situacao := sLoteNaoRecibo;
+  Sucesso := '';
+  HashIdent := '';
+end;
 
 constructor TInfRetorno.Create;
 begin
@@ -1657,7 +1671,7 @@ procedure TInfRetorno.SetMsgRetorno(Value: TMensagemRetornoCollection);
 begin
   FMsgRetorno.Assign(Value);
 end;
-
+*)
 { TQuartoCollection }
 
 function TQuartoCollection.GetItem(Index: Integer): TQuartoCollectionItem;

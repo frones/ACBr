@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes para a leitura das informações do Tomador do Serviço.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXWebservicesResponse/ACBrNFSeXProviderBase/ACBrNFSeXClass/ACBrNFSeX --
+[*] Inicio das alterações visando a padronização dos retornos dos WebServices.
+   Por: Italo Giurizzato Junior
+
 06/08/2021
 -- Diversos --
 [*] Alterações visando a gravação e a leitura correta dos XMLs.

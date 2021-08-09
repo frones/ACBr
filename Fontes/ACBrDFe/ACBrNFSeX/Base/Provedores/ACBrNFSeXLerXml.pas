@@ -105,7 +105,7 @@ begin
   begin
     xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
 
-    if (Length(xData) >= 16) and (xData[11] in ['T', ' ']) then
+    if (Length(xData) >= 16) and CharInSet(xData[11], ['T', ' ']) then
     begin
       if Pos('/', xData) = 5 then
         // Le a data/hora no formato YYYY/MM/DDTHH:MM:SS

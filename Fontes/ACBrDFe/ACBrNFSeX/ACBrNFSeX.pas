@@ -60,6 +60,7 @@ type
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
     fpCidadesJaCarregadas: Boolean;
+    FResposta: TInfRetorno;
 
     function GetNumID(ANFSe : TNFSe): String;
     function GetConfiguracoes: TConfiguracoesNFSe;
@@ -80,17 +81,11 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFSe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function GerarLote(aLote: Integer; aqMaxRps: Integer = 50;
-      aModoEnvio: TmodoEnvio = meAutomatico): TNFSeEmiteResponse; overload;
-
     function GerarLote(const aLote: String; aqMaxRps: Integer = 50;
       aModoEnvio: TmodoEnvio = meAutomatico): TNFSeEmiteResponse; overload;
 
-    function Emitir(aLote: Integer; aModoEnvio: TmodoEnvio = meAutomatico;
-      aImprimir: Boolean = True): TNFSeEmiteResponse; overload;
-
     function Emitir(const aLote: String; aModoEnvio: TmodoEnvio = meAutomatico;
-      aImprimir: Boolean = True): TNFSeEmiteResponse; overload;
+      aImprimir: Boolean = True): TNFSeEmiteResponse;
 
     // Usado pelos provedores que seguem a versão 1 do layout da ABRASF.
     function ConsultarSituacao(const AProtocolo: String;
@@ -180,6 +175,7 @@ type
     property Status: TStatusACBrNFSe      read FStatus;
     property Provider: IACBrNFSeXProvider read FProvider;
     property NumID[ANFSe: TNFSe]: string  read GetNumID;
+    property Resposta: TInfRetorno        read FResposta;
 
   published
     property Configuracoes: TConfiguracoesNFSe read GetConfiguracoes write SetConfiguracoes;
@@ -206,6 +202,7 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := TNotasFiscais.Create(Self);
+  FResposta := TInfRetorno.Create;
 
   fpCidadesJaCarregadas := False;
 end;
@@ -213,6 +210,7 @@ end;
 destructor TACBrNFSeX.Destroy;
 begin
   FNotasFiscais.Free;
+  FResposta.Free;
 
   if Assigned(FProvider) then
     FProvider := nil;
@@ -349,12 +347,6 @@ begin
   end;
 end;
 
-function TACBrNFSeX.GerarLote(aLote: Integer; aqMaxRps: Integer;
-  aModoEnvio: TmodoEnvio): TNFSeEmiteResponse;
-begin
-  Result := GerarLote(IntToStr(aLote), aqMaxRps, aModoEnvio);
-end;
-
 function TACBrNFSeX.GerarLote(const aLote: String; aqMaxRps: Integer;
   aModoEnvio: TmodoEnvio): TNFSeEmiteResponse;
 begin
@@ -364,21 +356,25 @@ begin
   Result := FProvider.GeraLote(aLote, aqMaxRps, aModoEnvio);
 end;
 
-function TACBrNFSeX.Emitir(aLote: Integer; aModoEnvio: TmodoEnvio;
-  aImprimir: Boolean): TNFSeEmiteResponse;
-begin
-  Result := Emitir(IntToStr(aLote), aModoEnvio, aImprimir);
-end;
-
 function TACBrNFSeX.Emitir(const aLote: String; aModoEnvio: TmodoEnvio;
   aImprimir: Boolean): TNFSeEmiteResponse;
 var
   i: Integer;
+  Retorno: TNFSeEmiteResponse;
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.Emite(aLote, aModoEnvio);
+//  Result := FProvider.Emite(aLote, aModoEnvio);
+  Retorno := FProvider.Emite(aLote, aModoEnvio);
+
+  FResposta.Clear;
+  FResposta.NumeroLote := Retorno.Lote;
+  FResposta.DataRecebimento := Retorno.Data;
+  FResposta.Protocolo := Retorno.Protocolo;
+  FResposta.XML := Retorno.XmlRetorno;
+
+  Result := Retorno;
 
   if DANFSE <> nil then
   begin

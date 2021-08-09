@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/08/2021
+-- SmarAPD.Provider --
+[*] Ajustes para a leitura correta dos retornos do provedor.
+   Por: Jorge
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes para a leitura das informações do Tomador do Serviço.
    Por: Italo Giurizzato Junior

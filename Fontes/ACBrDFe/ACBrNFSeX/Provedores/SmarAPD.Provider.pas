@@ -59,6 +59,8 @@ type
   protected
     procedure Configuracao; override;
 
+    function LerDatas(const DataStr: string): TDateTime;
+
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
@@ -205,6 +207,55 @@ begin
     raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeProviderSmarAPD.LerDatas(const DataStr: string): TDateTime;
+var
+  xData: string;
+begin
+  xData := Trim(DataStr);
+
+  if xData = '' then
+    Result := 0
+  else
+  begin
+    xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
+
+    if (Length(xData) >= 16) and CharInSet(xData[11], ['T', ' ']) then
+    begin
+      if Pos('/', xData) = 5 then
+        // Le a data/hora no formato YYYY/MM/DDTHH:MM:SS
+        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
+                             StrToInt(copy(xData, 6, 2)),
+                             StrToInt(copy(xData, 9, 2))) +
+                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
+                             StrToIntDef(copy(xData, 15, 2), 0),
+                             StrToIntDef(copy(xData, 18, 2), 0),
+                             0)
+      else
+        // Le a data/hora no formato DD/MM/YYYYTHH:MM:SS
+        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                             StrToInt(copy(xData, 4, 2)),
+                             StrToInt(copy(xData, 1, 2))) +
+                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
+                             StrToIntDef(copy(xData, 15, 2), 0),
+                             StrToIntDef(copy(xData, 18, 2), 0),
+                             0)
+    end
+    else
+    begin
+      if Pos('/', xData) = 5 then
+        // Le a data no formato YYYY/MM/DD
+        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
+                             StrToInt(copy(xData, 6, 2)),
+                             StrToInt(copy(xData, 9, 2)))
+      else
+        // Le a data no formato DD/MM/YYYY
+        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                             StrToInt(copy(xData, 4, 2)),
+                             StrToInt(copy(xData, 1, 2)));
+    end;
+  end;
+end;
+
 procedure TACBrNFSeProviderSmarAPD.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
@@ -225,13 +276,26 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
-    AErro.Correcao := '';
+    if Pos('Erro:', ANodeArray[I].AsString)>0 then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := '';
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('return'), tcStr);
+      AErro.Correcao := '';
 
-    if AErro.Descricao = '' then
-      AErro.Descricao := ANodeArray[I].AsString;
+      if AErro.Descricao = '' then
+        AErro.Descricao := ANodeArray[I].AsString;
+    end
+    else
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+      AErro.Correcao := '';
+
+      if AErro.Descricao = '' then
+        AErro.Descricao := ANodeArray[I].AsString;
+    end;
   end;
 end;
 
@@ -310,8 +374,8 @@ procedure TACBrNFSeProviderSmarAPD.TratarRetornoEmitir(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-//  ANode: TACBrXmlNode;
-//  AuxNode, AuxNodeCPFCNPJ, AuxNodeChave: TACBrXmlNode;
+  ANode: TACBrXmlNode;
+  AuxNode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -330,74 +394,23 @@ begin
       ProcessarMensagemErros(Document.Root, Response, '', 'return');
 
       Response.Sucesso := (Response.Erros.Count = 0);
-      {
+
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+      AuxNode := ANode.Childrens.FindAnyNs('return');
+      AuxNode := AuxNode.Childrens.FindAnyNs('nfd');
+      AuxNode := AuxNode.Childrens.FindAnyNs('recibo');
 
       if AuxNode <> nil then
       begin
+        Response.Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
+
         with Response.InfRetorno do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-
-          AuxNode := AuxNode.Childrens.FindAnyNs('InformacoesLote');
-
-          if AuxNode <> nil then
-          begin
-            with InformacoesLote do
-            begin
-              NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-              InscricaoPrestador := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-
-              AuxNodeCPFCNPJ := AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente');
-
-              if AuxNodeCPFCNPJ <> nil then
-              begin
-                CPFCNPJRemetente := ProcessarConteudoXml(AuxNodeCPFCNPJ.Childrens.FindAnyNs('CNPJ'), tcStr);
-
-                if CPFCNPJRemetente = '' then
-                  CPFCNPJRemetente := ProcessarConteudoXml(AuxNodeCPFCNPJ.Childrens.FindAnyNs('CPF'), tcStr);
-              end;
-
-              DataEnvioLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataEnvioLote'), tcDatHor);
-              QtdNotasProcessadas := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('QtdNotasProcessadas'), tcInt);
-              TempoProcessamento := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
-              ValorTotalServico := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
-            end;
-          end;
+          DataRecebimento := LerDatas(ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('datahora'), tcStr));
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
         end;
       end;
-
-      AuxNode := ANode.Childrens.FindAnyNs('ChaveNFeRPS');
-
-      if AuxNode <> nil then
-      begin
-        AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveRPS');
-
-        if (AuxNodeChave <> nil) then
-        begin
-          with Response.InfRetorno.ChaveNFeRPS do
-          begin
-            InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            SerieRPS := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
-            NumeroRPS := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroRPS'), tcStr);
-          end;
-        end;
-
-        AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveNFe');
-
-        if (AuxNodeChave <> nil) then
-        begin
-          with Response.InfRetorno.ChaveNFeRPS do
-          begin
-            InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            Numero := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
-            CodigoVerificacao := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          end;
-        end;
-      end;
-      }
     except
       on E:Exception do
       begin
@@ -434,11 +447,11 @@ procedure TACBrNFSeProviderSmarAPD.TratarRetornoConsultaLoteRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-//  ANode, AuxNode: TACBrXmlNode;
-//  ANodeArray: TACBrXmlNodeArray;
-//  i: Integer;
-//  NumRps: String;
-//  ANota: NotaFiscal;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  NumNFSe: String;
+  ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -457,20 +470,12 @@ begin
       ProcessarMensagemErros(Document.Root, Response, '', 'return');
 
       Response.Sucesso := (Response.Erros.Count = 0);
-      {
+
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+      ANode := ANode.Childrens.FindAnyNs('return');
+      ANodeArray := ANode.Childrens.FindAllAnyNs('tbnfd');
 
-      if AuxNode <> nil then
-      begin
-        with Response.InfRetorno do
-        begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-        end;
-      end;
-
-      ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -482,22 +487,29 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        NumRps := AuxNode.AsString;
+        AuxNode := ANode.Childrens.FindAnyNs('nfdok');
+        AuxNode := AuxNode.Childrens.FindAnyNs('NewDataSet');
+        AuxNode := AuxNode.Childrens.FindAnyNs('NOTA_FISCAL');
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-        if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
-        else
+        if AuxNode <> nil then
         begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
+          NumNFSe := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroNota'), tcStr);
+          if NumNFSe > '' then
+            Response.InfRetorno.NumeroNota := StrToInt(NumNFSe);
 
-        SalvarXmlNfse(ANota);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+          if Assigned(ANota) then
+            ANota.XML := ANode.OuterXml
+          else
+          begin
+            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          end;
+
+          SalvarXmlNfse(ANota);
+        end;
       end;
-      }
     except
       on E:Exception do
       begin

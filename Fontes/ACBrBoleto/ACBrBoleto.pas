@@ -1017,6 +1017,8 @@ type
     function CalcularNomeArquivoRemessa : String;
     function ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';
        const AValidaCodCedente: Boolean= False ): Boolean;
+    function ConverterCodigoBarrasITF25ParaLinhaDigitavel(const ACodigoBarras:String):String;
+
   published
     property Numero    : Integer        read GetNumero  write SetNumero default 0;
     property Digito    : Integer        read GetDigito  write SetDigito stored false;
@@ -3251,6 +3253,12 @@ function TACBrBanco.CompOcorrenciaOutrosDadosToDescricao(
   const CompOcorrencia: TACBrComplementoOcorrenciaOutrosDados): String;
 begin
   Result:= BancoClass.CompOcorrenciaOutrosDadosToDescricao(CompOcorrencia);
+end;
+
+function TACBrBanco.ConverterCodigoBarrasITF25ParaLinhaDigitavel(
+  const ACodigoBarras: String): String;
+begin
+  result := OnlyNumber(BancoClass.MontarLinhaDigitavel(ACodigoBarras, nil));
 end;
 
 function TACBrBanco.CompOcorrenciaOutrosDadosToCodigo(

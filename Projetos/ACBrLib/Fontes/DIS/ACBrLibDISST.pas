@@ -43,53 +43,36 @@ uses
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function DIS_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Finalizar: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Nome(const sNome: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Versao(const sVersao: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Finalizar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Nome(const sNome: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Versao(const sVersao: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function DIS_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_ConfigLer(const eArqConfig: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_ConfigGravar(const eArqConfig: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ConfigLer(const eArqConfig: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ConfigGravar(const eArqConfig: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function DIS_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Diplay}
-function DIS_Ativar: longint;
+function DIS_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Desativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_LimparDisplay: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_LimparLinha(const Linha: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_PosicionarCursor(const Linha, Coluna: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Escrever(const eTexto: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ExibirLinha(const Linha: Integer ; const eTexto: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ExibirLinhaAlinhada(const Linha: Integer ; const eTexto: PChar; const Alinhamento: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Desativar: longint;
+function DIS_ExibirLinhaEfeito(const Linha: Integer ; const eTexto: PChar; const Efeito: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_LimparDisplay: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_LimparLinha(const Linha: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_PosicionarCursor(const Linha, Coluna: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Escrever(const eTexto: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_ExibirLinha(const Linha: Integer ; const eTexto: PChar;
-  const Alinhamento, Efeito: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_RolarLinha(const Linha, Efeito: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Parar: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_Continuar: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_PararLinha(const Linha: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_ContinuarLinha(const Linha: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_RolarLinha(const Linha, Efeito: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Parar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_Continuar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_PararLinha(const Linha: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ContinuarLinha(const Linha: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -239,12 +222,42 @@ begin
   end;
 end;
 
-function DIS_ExibirLinha(const Linha: Integer ; const eTexto: PChar;
-  const Alinhamento, Efeito: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ExibirLinha(const Linha: Integer ; const eTexto: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibDIS(pLib^.Lib).ExibirLinha(Linha, eTexto, Alinhamento, Efeito);
+    Result := TACBrLibDIS(pLib^.Lib).ExibirLinha(Linha, eTexto);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function DIS_ExibirLinhaAlinhada(const Linha: Integer ; const eTexto: PChar;
+  const Alinhamento: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibDIS(pLib^.Lib).ExibirLinhaAlinhada(Linha, eTexto, Alinhamento);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function DIS_ExibirLinhaEfeito(const Linha: Integer ; const eTexto: PChar;
+  const Efeito: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(pLib);
+    Result := TACBrLibDIS(pLib^.Lib).ExibirLinhaEfeito(Linha, eTexto, Efeito);
   except
     on E: EACBrLibException do
       Result := E.Erro;

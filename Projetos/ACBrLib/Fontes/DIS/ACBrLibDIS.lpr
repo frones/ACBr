@@ -67,6 +67,8 @@ exports
   DIS_PosicionarCursor,
   DIS_Escrever,
   DIS_ExibirLinha,
+  DIS_ExibirLinhaAlinhada,
+  DIS_ExibirLinhaEfeito,
   DIS_RolarLinha,
   DIS_Parar,
   DIS_Continuar,

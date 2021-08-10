@@ -65,7 +65,9 @@ type
     function LimparLinha(const Linha: Integer): longint;
     function PosicionarCursor(const Linha, Coluna: Integer): longint;
     function Escrever(const eTexto: PChar): longint;
-    function ExibirLinha(const Linha: Integer ; const eTexto: PChar; const Alinhamento, Efeito: Integer): longint;
+    function ExibirLinha(const Linha: Integer ; const eTexto: PChar): longint;
+    function ExibirLinhaAlinhada(const Linha: Integer ; const eTexto: PChar; const Alinhamento: Integer): longint;
+    function ExibirLinhaEfeito(const Linha: Integer ; const eTexto: PChar; const Efeito: Integer): longint;
     function RolarLinha(const Linha, Efeito: Integer): longint;
     function Parar: longint;
     function Continuar: longint;
@@ -251,7 +253,7 @@ begin
   end;
 end;
 
-function TACBrLibDIS.ExibirLinha(const Linha: Integer ; const eTexto: PChar; const Alinhamento, Efeito: Integer): longint;
+function TACBrLibDIS.ExibirLinha(const Linha: Integer; const eTexto: PChar): longint;
 Var
   ATexto: String;
 begin
@@ -259,20 +261,71 @@ begin
     ATexto := ConverterAnsiParaUTF8(eTexto);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('DIS_ExibirLinha(' + IntToStr(Linha) + ', ' + ATexto  + ', '
-        + IntToStr(Alinhamento) +  ', ' + IntToStr(Efeito) + ' )', logCompleto, True)
+      GravarLog('DIS_ExibirLinha(' + IntToStr(Linha) + ', ' + ATexto  + ' )', logCompleto, True)
     else
       GravarLog('DIS_ExibirLinha', logNormal);
 
     FDISDM.Travar;
     try
-      if (Alinhamento > -1) and (Efeito = -1) then
-        FDISDM.ACBrDIS1.ExibirLinha(Linha, ATexto, TACBrDISAlinhamento(Alinhamento))
-      else if (Alinhamento = -1) and (Efeito > -1) then
-        FDISDM.ACBrDIS1.ExibirLinha(Linha, ATexto, TACBrDISEfeitoExibir(Efeito))
-      else
-        FDISDM.ACBrDIS1.ExibirLinha(Linha, ATexto);
+      FDISDM.ACBrDIS1.ExibirLinha(Linha, ATexto);
+      Result := SetRetorno(ErrOK);
+    finally
+      FDISDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
 
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibDIS.ExibirLinhaAlinhada(const Linha: Integer ; const eTexto: PChar; const Alinhamento: Integer): longint;
+Var
+  ATexto: String;
+begin
+  try
+    ATexto := ConverterAnsiParaUTF8(eTexto);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('DIS_ExibirLinhaAlinhada(' + IntToStr(Linha) + ', ' + ATexto  + ', '
+                                           + IntToStr(Alinhamento) + ' )', logCompleto, True)
+    else
+      GravarLog('DIS_ExibirLinhaAlinhada', logNormal);
+
+    FDISDM.Travar;
+    try
+      FDISDM.ACBrDIS1.ExibirLinha(Linha, ATexto, TACBrDISAlinhamento(Alinhamento));
+      Result := SetRetorno(ErrOK);
+    finally
+      FDISDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibDIS.ExibirLinhaEfeito(const Linha: Integer ; const eTexto: PChar; const Efeito: Integer): longint;
+Var
+  ATexto: String;
+begin
+  try
+    ATexto := ConverterAnsiParaUTF8(eTexto);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('DIS_ExibirLinhaEfeito(' + IntToStr(Linha) + ', ' + ATexto  + ', '
+                                   + IntToStr(Efeito) + ' )', logCompleto, True)
+    else
+      GravarLog('DIS_ExibirLinhaEfeito', logNormal);
+
+    FDISDM.Travar;
+    try
+      FDISDM.ACBrDIS1.ExibirLinha(Linha, ATexto, TACBrDISEfeitoExibir(Efeito));
       Result := SetRetorno(ErrOK);
     finally
       FDISDM.Destravar;

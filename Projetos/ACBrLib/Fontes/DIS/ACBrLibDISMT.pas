@@ -77,9 +77,12 @@ function DIS_PosicionarCursor(const libHandle: PLibHandle; const Linha, Coluna: 
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function DIS_Escrever(const libHandle: PLibHandle; const eTexto: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function DIS_ExibirLinha(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar;
-  const Alinhamento, Efeito: Integer): longint;
+function DIS_ExibirLinha(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ExibirLinhaAlinhada(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar;
+  const Alinhamento: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ExibirLinhaEfeito(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar;
+  const Efeito: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function DIS_RolarLinha(const libHandle: PLibHandle; const Linha, Efeito: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function DIS_Parar(const libHandle: PLibHandle): longint;
@@ -239,12 +242,42 @@ begin
   end;
 end;
 
-function DIS_ExibirLinha(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar;
-  const Alinhamento, Efeito: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function DIS_ExibirLinha(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(libHandle);
-    Result := TACBrLibDIS(libHandle^.Lib).ExibirLinha(Linha, eTexto, Alinhamento, Efeito);
+    Result := TACBrLibDIS(libHandle^.Lib).ExibirLinha(Linha, eTexto);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function DIS_ExibirLinhaAlinhada(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar;
+  const Alinhamento: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibDIS(libHandle^.Lib).ExibirLinhaAlinhada(Linha, eTexto, Alinhamento);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function DIS_ExibirLinhaEfeito(const libHandle: PLibHandle; const Linha: Integer ; const eTexto: PChar;
+  const Efeito: Integer): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibDIS(libHandle^.Lib).ExibirLinhaEfeito(Linha, eTexto, Efeito);
   except
     on E: EACBrLibException do
       Result := E.Erro;

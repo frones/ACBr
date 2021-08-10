@@ -133,15 +133,18 @@ begin
 
     with NFSe.Servico.ItemServico[i] do
     begin
-      if NFSe.Servico.Discriminacao = '' then
-        NFSe.Servico.Discriminacao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Servico'), tcStr);
+      Quantidade := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe2);
+      ItemListaServico := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('CodigoAtividade'), tcStr);
+      Descricao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Servico'), tcStr);
 
-      Descricao     := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Servico'), tcStr);
-      Quantidade    := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe2);
+      if NFSe.Servico.Discriminacao = '' then
+        NFSe.Servico.Discriminacao := Descricao;
+
       ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('ValorUnitario'), tcDe2);
       ValorTotal    := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('ValorTotal'), tcDe2);
       Aliquota      := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Aliquota'), tcDe2);
-      Tributavel := snSim;
+      Tributavel    := snSim;
+
       NFSe.Servico.Valores.ValorServicos := (NFSe.Servico.Valores.ValorServicos +
                                                                   ValorTotal);
     end;
@@ -230,10 +233,18 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NFe');
+//  AuxNode := ANode.Childrens.FindAnyNs('NFe');
 
-  if AuxNode = nil then
-    AuxNode := ANode.Childrens.FindAnyNs('CompNfse');
+//  if AuxNode = nil then
+//    AuxNode := ANode.Childrens.FindAnyNs('CompNfse');
+
+  AuxNode := ANode.Childrens.FindAnyNs('nfdok');
+
+  if AuxNode <> nil then
+    AuxNode := AuxNode.Childrens.FindAnyNs('NewDataSet');
+
+  if AuxNode <> nil then
+    AuxNode := AuxNode.Childrens.FindAnyNs('NOTA_FISCAL');
 
   if AuxNode = nil then Exit;
 
@@ -241,7 +252,7 @@ begin
   begin
     Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroNota'), tcStr);
     CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ChaveValidacao'), tcStr);
-    DataEmissaoRps    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+    DataEmissaoRps    := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
     Competencia       := DataEmissaoRps;
     DataEmissao       := DataEmissaoRps;
     dhRecebimento     := DataEmissaoRps;
@@ -249,7 +260,7 @@ begin
     aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr);
     NaturezaOperacao := StrToNaturezaOperacao(Ok, aValor);
 
-    Protocolo         := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ChaveValidacao'), tcStr);
+    Protocolo         := CodigoVerificacao;
     OutrasInformacoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
 
     MotivoCancelamento           := '';

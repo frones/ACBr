@@ -22,7 +22,7 @@ Private Declare Function MDFE_Inicializar _
                                       ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function MDFE_Finalizar Lib "ACBrMDFE32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function MDFE_Finalizar Lib "ACBrMDFE32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function MDFE_Nome _
                 Lib "ACBrMDFE32.dll" (ByVal libHandler As Long, _

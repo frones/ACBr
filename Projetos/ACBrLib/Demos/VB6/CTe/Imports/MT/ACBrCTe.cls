@@ -22,7 +22,7 @@ Private Declare Function CTE_Inicializar _
                                      ByVal eArqConfig As String, _
                                      ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function CTE_Finalizar Lib "ACBrCTE32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function CTE_Finalizar Lib "ACBrCTE32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function CTE_Nome _
                 Lib "ACBrCTE32.dll" (ByVal libHandler As Long, _

@@ -22,7 +22,7 @@ Private Declare Function POS_Inicializar _
                                             ByVal eArqConfig As String, _
                                             ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function POS_Finalizar Lib "ACBrPosPrinter32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function POS_Finalizar Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function POS_Nome _
                 Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long, _

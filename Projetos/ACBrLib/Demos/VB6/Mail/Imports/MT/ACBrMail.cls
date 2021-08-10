@@ -22,7 +22,7 @@ Private Declare Function MAIL_Inicializar _
                                       ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function MAIL_Finalizar Lib "ACBrMAIL32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function MAIL_Finalizar Lib "ACBrMAIL32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function MAIL_Nome _
                 Lib "ACBrMAIL32.dll" (ByVal libHandler As Long, _

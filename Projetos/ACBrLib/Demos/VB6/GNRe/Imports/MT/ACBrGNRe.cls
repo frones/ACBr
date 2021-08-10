@@ -22,7 +22,7 @@ Private Declare Function GNRE_Inicializar _
                                       ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function GNRE_Finalizar Lib "ACBrGNRe32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function GNRE_Finalizar Lib "ACBrGNRe32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function GNRE_Nome _
                 Lib "ACBrGNRe32.dll" (ByVal buffer As String, _

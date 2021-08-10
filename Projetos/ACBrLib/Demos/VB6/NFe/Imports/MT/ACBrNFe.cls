@@ -22,7 +22,7 @@ Private Declare Function NFE_Inicializar _
                                      ByVal eArqConfig As String, _
                                      ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function NFE_Finalizar Lib "ACBrNFE32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function NFE_Finalizar Lib "ACBrNFE32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function NFE_Nome _
                 Lib "ACBrNFE32.dll" (ByVal libHandler As Long, _

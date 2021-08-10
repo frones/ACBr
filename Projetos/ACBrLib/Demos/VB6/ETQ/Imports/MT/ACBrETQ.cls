@@ -22,7 +22,7 @@ Private Declare Function ETQ_Inicializar _
                                      ByVal eArqConfig As String, _
                                      ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function ETQ_Finalizar Lib "ACBrETQ32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function ETQ_Finalizar Lib "ACBrETQ32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function ETQ_Nome _
                 Lib "ACBrETQ32.dll" (ByVal libHandler As Long, _

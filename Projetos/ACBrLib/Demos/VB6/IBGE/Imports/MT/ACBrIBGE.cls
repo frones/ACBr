@@ -22,7 +22,7 @@ Private Declare Function IBGE_Inicializar _
                                      ByVal eArqConfig As String, _
                                      ByVal eChaveCrypt As String) As Long
 
-Private Declare Function IBGE_Finalizar Lib "ACBrCEP32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function IBGE_Finalizar Lib "ACBrCEP32.dll" (ByVal libHandler As Long) As Long
 
 
 Private Declare Function IBGE_Nome _

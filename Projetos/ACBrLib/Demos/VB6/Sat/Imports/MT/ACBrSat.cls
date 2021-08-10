@@ -22,7 +22,7 @@ Private Declare Function SAT_Inicializar _
                                      ByVal eArqConfig As String, _
                                      ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function SAT_Finalizar Lib "ACBrSAT32.dll" (ByRef libHandler As Long) As Long
+Private Declare Function SAT_Finalizar Lib "ACBrSAT32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function SAT_Nome _
                 Lib "ACBrSAT32.dll" (ByVal libHandler As Long, _

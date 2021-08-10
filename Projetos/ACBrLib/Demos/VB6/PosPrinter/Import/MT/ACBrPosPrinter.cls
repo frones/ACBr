@@ -39,11 +39,11 @@ Private Declare Function POS_UltimoRetorno _
                                             ByVal buffer As String, _
                                             ByRef bufferLen As Long) As Long
                                             
-Private Declare Function POS_ImportarConfig _
+Private Declare Function POS_ConfigImportar _
                 Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long, _
                                             ByVal eArqConfig As String) As Long
                                             
-Private Declare Function POS_ExportarConfig _
+Private Declare Function POS_ConfigExportar _
                 Lib "ACBrPosPrinter32.dll" (ByVal libHandler As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long

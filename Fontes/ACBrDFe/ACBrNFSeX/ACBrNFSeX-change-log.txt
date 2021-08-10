@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2021
+-- ACBrNFSeXProviderBase --
+[*] Incluida as linhas para criar e destruir as variáveis: 
+    RetornoConsSit e RetornoConsLote.
+-- DSFSJC.Provider --
+[*] Corrigido a versão que consta na mensagem de cabeçalho.
+   Por: Italo Giurizzato Junior
+
 09/08/2021
 -- Diversos --
 [*] Alterado o nome do provedor de IPM_A para IPM_120, agora temos os provedores

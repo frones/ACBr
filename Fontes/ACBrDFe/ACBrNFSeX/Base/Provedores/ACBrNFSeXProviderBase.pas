@@ -921,6 +921,7 @@ begin
         with TACBrNFSeX(FAOwner).Configuracoes.WebServices do
         begin
           try
+            RetornoConsSit := TNFSeConsultaSituacaoResponse.Create;
             RetornoConsSit.Clear;
 
             Sleep(AguardarConsultaRet);
@@ -939,6 +940,7 @@ begin
             end;
           finally
             Result.InfRetorno.Situacao := RetornoConsSit.Situacao;
+            RetornoConsSit.Free;
           end;
         end;
       end;
@@ -946,11 +948,13 @@ begin
       if ConfigGeral.ConsultaLote then
       begin
         try
+          RetornoConsLote := TNFSeConsultaLoteRpsResponse.Create;
           RetornoConsLote.Clear;
 
           RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
         finally
           Result.InfRetorno.Situacao := RetornoConsLote.Situacao;
+          RetornoConsLote.Free;
         end;
       end;
     end;

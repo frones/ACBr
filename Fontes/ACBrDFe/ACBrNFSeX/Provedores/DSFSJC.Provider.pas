@@ -189,16 +189,16 @@ begin
   end;
 
   SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-
+  {
   with ConfigWebServices do
   begin
     VersaoDados := '3';
     VersaoAtrib := '3';
   end;
+  }
+  ConfigWebServices.AtribVerLote := 'versao';
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
-
-  ConfigWebServices.AtribVerLote := 'versao';
 end;
 
 function TACBrNFSeProviderDSFSJC.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;

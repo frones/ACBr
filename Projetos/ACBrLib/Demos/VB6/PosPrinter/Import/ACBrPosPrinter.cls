@@ -555,7 +555,7 @@ Public Function LerCMC7(ByVal AguardaCheque As Boolean, _
     retorno = POS_LerCMC7(AguardaCheque, SegundosEspera, buffer, bufferLen)
     CheckResult (retorno)
     
-    LeituraCheque = processResult(buffer, bufferLen)
+    LerCMC7 = processResult(buffer, bufferLen)
 End Function
 
 Public Sub EjetarCheque()

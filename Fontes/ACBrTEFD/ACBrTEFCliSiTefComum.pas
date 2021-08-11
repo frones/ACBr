@@ -385,6 +385,7 @@ begin
 
     QtdLinhasComprovante := max(ImagemComprovante1aVia.Count, ImagemComprovante2aVia.Count);
     Confirmar := (QtdLinhasComprovante > 0);
+    Sucesso := (NSU_TEF <> '');
 
     // leitura de parcelas conforme nova documentação
     // 141 e 142 foram removidos em Setembro de 2014

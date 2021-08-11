@@ -46,6 +46,39 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/21
+-- ACBrTEFComum --
+[+] Adicionado novos Enumerados, para uso em ACBrTEFAPI e derivados
+    TACBrTEFOperacaoAdmin, TACBrTEFTratamentoTransacaoPendente,
+    TACBrTEFTratamentoTransacaoInicalizacao
+[+] Classe "TACBrTEFResp" adicionada a propriedade "Sucesso: Boolean", que deve
+    sinalizar, se a Resposta do TEF, ocorreu com sucesso.
+[+] Classe "TACBrTEFRespostasPendentes", dividida, criando a classe ancestral
+    "TACBrTEFRespostas"
+[+] Criado novo Tipo: TACBrTEFRespClass = class of TACBrTEFResp;
+
+-- ACBrTEFDClass, ACBrTEFCliSiTefComum, ACBrTEFPayGoComum --
+[*] Ajustadas para interepretar a nova propriedade: TACBrTEFResp.Sucesso"
+
+-- ACBrTEFPayGoComum, ACBrTEFPayGoWebComum --
+[*] Tipo "EACBrTEFPayGoWeb", movido de ACBrTEFPayGoWebComum.pas para
+    ACBrTEFPayGoComum.pas
+[*] Método "DadosDaTransacaoToTEFResp", movido de ACBrTEFPayGoWebComum.pas para
+    ACBrTEFPayGoComum.pas
+[*] Otimização de vários métodos, usando "const" na passagem de parâmetros String
+
+-- ACBrTEFPayGoWebComum --
+[-] Correção em "TACBrTEFPGWebAPI.ExecutarTransacao", para atribuir corretamente
+    ao Log de Respostas, o valor do retorno da última transação "PWINFO_RET"
+
+-- ACBrTEFPayGoComum --
+[+] Criado novo tipo "TACBrTEFRespPayGoWeb". Uma especialização da "TACBrTEFResp",
+    para processar corretamente as respostas do Log da PayGo.
+[+] Adicionado novos métodos de Conversão:
+    function StatusTransacaoToPWCNF_( AStatus: TACBrTEFStatusTransacao): LongWord;
+    function OperacaoAdminToPWOPER_( AOperacao: TACBrTEFOperacaoAdmin): Byte;
+    (por: DSA)
+
 21/08/21
 -- ACBrTEFPayGoWebComum --
 [+] Adicionado o método "DadosDaTransacaoToTEFResp", para mapear o Log de

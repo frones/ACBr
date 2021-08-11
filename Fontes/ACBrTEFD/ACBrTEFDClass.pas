@@ -879,6 +879,7 @@ begin
    end;
 
    fpConfirmar := (fpQtdLinhasComprovante > 0);
+   fpSucesso := (fpStatusTransacao = '0');
 
    fpParcelas.Clear;
    if TemParcelas then

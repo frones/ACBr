@@ -1042,12 +1042,12 @@ begin
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := Cod204;
-        AErro.Descricao := Desc204;
+        AErro.Codigo := Cod209;
+        AErro.Descricao := Desc209;
         Exit;
       end;
 
-      ANode := Document.Root.Childrens.FindAnyNs('Confirmacao');
+      ANode := ANode.Childrens.FindAnyNs('Confirmacao');
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -1064,12 +1064,12 @@ begin
       else
         IdAttr := 'ID';
 
-      ANode := Document.Root.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
+      ANode := ANode.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
 
       Ret.Pedido.InfID.ID := ANode.Attributes.Items[IdAttr].Content;
       Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
-      ANode := Document.Root.Childrens.FindAnyNs('IdentificacaoNfse');
+      ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
       with  Ret.Pedido.IdentificacaoNfse do
       begin

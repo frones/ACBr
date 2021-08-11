@@ -139,6 +139,11 @@ const
   Cod208 = 'X208';
   Desc208	= 'Não foi retornado nenhum Rps.';
 
+  Cod209 = 'X209';
+  Desc209 = 'Retorno do Cancelamento não encontrada.';
+  Cod210 = 'X210';
+  Desc210 = 'Nfse do Cancelamento não encontrada.';
+
   Cod999 = 'X999';
 
 implementation

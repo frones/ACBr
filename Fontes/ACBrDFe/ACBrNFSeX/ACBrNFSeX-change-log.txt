@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+11/08/2021
+-- Diversos --
+[*] Ajuste no tratamento do retorno do cancelamento dos provedores que seguem a 
+    versão 1 ou 2 do layout da ABRASF.
+   Por: Italo Giurizzato Junior
+
 10/08/2021
 -- SmarAPD.Provider/SmarAPD.LerXml --
 [*] Possível correção na leitura do XML da nota.

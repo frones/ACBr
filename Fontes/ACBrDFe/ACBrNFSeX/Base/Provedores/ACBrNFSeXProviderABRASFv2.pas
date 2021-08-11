@@ -741,6 +741,7 @@ Var
   AErro: TNFSeEventoCollectionItem;
 begin
   case Response.InfConsultaNFSe.tpConsulta of
+    tcPorPeriodo,
     tcPorFaixa: PrepararConsultaNFSeporFaixa(Response);
     tcServicoPrestado: PrepararConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: PrepararConsultaNFSeServicoTomado(Response);
@@ -758,6 +759,7 @@ Var
   AErro: TNFSeEventoCollectionItem;
 begin
   case Response.InfConsultaNFSe.tpConsulta of
+    tcPorPeriodo,
     tcPorFaixa: AssinarConsultaNFSeporFaixa(Response);
     tcServicoPrestado: AssinarConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: AssinarConsultaNFSeServicoTomado(Response);
@@ -775,6 +777,7 @@ Var
   AErro: TNFSeEventoCollectionItem;
 begin
   case Response.InfConsultaNFSe.tpConsulta of
+    tcPorPeriodo,
     tcPorFaixa: TratarRetornoConsultaNFSeporFaixa(Response);
     tcServicoPrestado: TratarRetornoConsultaNFSeServicoPrestado(Response);
     tcServicoTomado: TratarRetornoConsultaNFSeServicoTomado(Response);
@@ -1596,16 +1599,25 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root.Childrens.FindAnyNs('Cancelamento');
+      ANode := Document.Root.Childrens.FindAnyNs('RetCancelamento');
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := Cod204;
-        AErro.Descricao := Desc204;
+        AErro.Codigo := Cod209;
+        AErro.Descricao := Desc209;
         Exit;
       end;
 
-      ANode := Document.Root.Childrens.FindAnyNs('Confirmacao');
+      ANode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod210;
+        AErro.Descricao := Desc210;
+        Exit;
+      end;
+
+      ANode := ANode.Childrens.FindAnyNs('Confirmacao');
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -1615,26 +1627,32 @@ begin
       end;
 
       Ret :=  Response.RetCancelamento;
-      Ret.DataHora := ANode.Childrens.FindAnyNs('DataHoraCancelamento').AsDateTime;
+      Ret.DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
       else
         IdAttr := 'ID';
 
-      ANode := Document.Root.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
+      ANode := ANode.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
       Ret.Pedido.InfID.ID := ANode.Attributes.Items[IdAttr].Content;
-      Ret.Pedido.CodigoCancelamento := ANode.Childrens.FindAnyNs('CodigoCancelamento').AsString;
+      Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
-      ANode := Document.Root.Childrens.FindAnyNs('IdentificacaoNfse');
-      Ret.Pedido.IdentificacaoNfse.Numero := ANode.Childrens.FindAnyNs('Numero').AsString;
-      Ret.Pedido.IdentificacaoNfse.Cnpj := ANode.Childrens.FindAnyNs('Cnpj').AsString;
+      ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
-      AuxNode := ANode.Childrens.FindAnyNs('InscricaoMunicipal');
-      if Assigned(AuxNode) then
-        Ret.Pedido.IdentificacaoNfse.InscricaoMunicipal := AuxNode.AsString;
+      with  Ret.Pedido.IdentificacaoNfse do
+      begin
+        Numero := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
 
-      Ret.Pedido.IdentificacaoNfse.CodigoMunicipio := ANode.Childrens.FindAnyNs('CodigoMunicipio').AsString;
+        AuxNode := ANode.Childrens.FindAnyNs('CpfCnpj');
+        Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+        if Cnpj = '' then
+          Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+
+        InscricaoMunicipal := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+        CodigoMunicipio := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+      end;
     except
       on E:Exception do
       begin

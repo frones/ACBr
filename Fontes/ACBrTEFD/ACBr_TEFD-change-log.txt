@@ -47,6 +47,34 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/08/21
+-- ACBrTEFAPIComum --
+[+] Adicionada nova Unit, que define as classes básicas, para a criação dos
+    componentes "TACBrTEFAPI" e "TACBRTEFAndroid"
+
+-- ACBrTEFAPI --
+[+] Adicionada nova Unit, com a definição do NOVO componente "TACBrTEFAPI".
+[+] Criação da classe "TACBrTEFAPIClass", que é a base para todos os modelos de
+    Classe de TEF, que serão suportados por TACBrTEFAPI.
+
+-- ACBrTEFAPIPayGoWeb --
+[+] Adicionada nova Unit, com a definição de Classe de TEF "TACBrTEFAPIClassPayGoWeb"
+    instanciada quanddo TACBrTEFAPI.Modelo = tefApiPayGoWeb
+
+-- ACBrTEFAPIClass --
+[+] Unit removida, código susbtituto está em ACBrTEFAPI.pas
+
+-- ACBrTEFAndroid --
+[*] Ampla refatoração, movendo boa parte do código, para ACBrTEFAPIComum.pas
+
+-- ACBrTEFAndroidPayGo --
+[*] Métodos da Classe "TACBrTEFAndroidPayGoClass" ajustados para novas assinaturas
+    dos métodos definidos na classe pai, "TACBrTEFAPIComumClass"
+
+-- ACBrTEFDReg, ACBr_TEFD.dpk, ACBr_TEFD.lpk   --
+[*] Ajustados para registrar na IDE, o novo componente, TACBrTEFAPI
+    (por: DSA)
+
+11/08/21
 -- ACBrTEFComum --
 [+] Adicionado novos Enumerados, para uso em ACBrTEFAPI e derivados
     TACBrTEFOperacaoAdmin, TACBrTEFTratamentoTransacaoPendente,

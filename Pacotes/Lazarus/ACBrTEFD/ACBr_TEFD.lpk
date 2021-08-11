@@ -26,7 +26,7 @@
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="22">
+    <Files Count="23">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -45,77 +45,81 @@
         <UnitName Value="ACBrTEFComum"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIClass.pas"/>
-        <UnitName Value="ACBrTEFAPIClass"/>
-      </Item5>
-      <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPI.pas"/>
-        <UnitName Value="ACBrTEFAPI"/>
-      </Item6>
-      <Item7>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas"/>
         <UnitName Value="ACBrTEFDDial"/>
-      </Item7>
-      <Item8>
+      </Item5>
+      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDPayGo.pas"/>
         <UnitName Value="ACBrTEFDPayGo"/>
-      </Item8>
-      <Item9>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDPayGoWeb.pas"/>
         <UnitName Value="ACBrTEFDPayGoWeb"/>
-      </Item9>
-      <Item10>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
         <UnitName Value="ACBrTEFDDisc"/>
-      </Item10>
-      <Item11>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
         <UnitName Value="ACBrTEFDHiper"/>
-      </Item11>
-      <Item12>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
         <UnitName Value="ACBrTEFDCliSiTef"/>
-      </Item12>
-      <Item13>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
         <UnitName Value="ACBrTEFDVeSPague"/>
-      </Item13>
-      <Item14>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
         <UnitName Value="ACBrTEFDBanese"/>
-      </Item14>
-      <Item15>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas"/>
         <UnitName Value="ACBrTEFDCappta"/>
-      </Item15>
-      <Item16>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFCliSiTefComum.pas"/>
         <UnitName Value="ACBrTEFCliSiTefComum"/>
-      </Item16>
-      <Item17>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoComum.pas"/>
         <UnitName Value="ACBrTEFPayGoComum"/>
-      </Item17>
-      <Item18>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoWebComum.pas"/>
         <UnitName Value="ACBrTEFPayGoWebComum"/>
-      </Item18>
-      <Item19>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrPOS.pas"/>
         <UnitName Value="ACBrPOS"/>
-      </Item19>
-      <Item20>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrPOSPGWebAPI.pas"/>
         <UnitName Value="ACBrPOSPGWebAPI"/>
-      </Item20>
-      <Item21>
+      </Item18>
+      <Item19>
         <Filename Value="..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas"/>
         <UnitName Value="ACBrPicpay"/>
-      </Item21>
-      <Item22>
+      </Item19>
+      <Item20>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoRedes.pas"/>
         <UnitName Value="ACBrTEFPayGoRedes"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPI.pas"/>
+        <UnitName Value="ACBrTEFAPI"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIComum.pas"/>
+        <UnitName Value="ACBrTEFAPIComum"/>
       </Item22>
+      <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIPayGoWeb.pas"/>
+        <UnitName Value="ACBrTEFAPIPayGoWeb"/>
+      </Item23>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

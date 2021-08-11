@@ -65,6 +65,9 @@ contains
   ACBrTEFPayGoWebComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFPayGoWebComum.pas',
   ACBrPOS in '..\..\..\Fontes\ACBrTEFD\ACBrPOS.pas',
   ACBrPOSPGWebAPI in '..\..\..\Fontes\ACBrTEFD\ACBrPOSPGWebAPI.pas',
-  ACBrPicpay in '..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas';
+  ACBrPicpay in '..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas',
+  ACBrTEFAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPI.pas',
+  ACBrTEFAPIComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIComum.pas',
+  ACBrTEFAPIPayGoWeb in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIPayGoWeb.pas';
 
 end.

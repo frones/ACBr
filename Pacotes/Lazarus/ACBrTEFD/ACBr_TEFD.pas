@@ -8,12 +8,12 @@ unit ACBr_TEFD;
 interface
 
 uses
-  ACBrTEFDReg, ACBrTEFD, ACBrTEFDClass, ACBrTEFComum, ACBrTEFAPIClass, 
-  ACBrTEFAPI, ACBrTEFDDial, ACBrTEFDPayGo, ACBrTEFDPayGoWeb, ACBrTEFDDisc, 
-  ACBrTEFDHiper, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, 
-  ACBrTEFDCappta, ACBrTEFCliSiTefComum, ACBrTEFPayGoComum, 
-  ACBrTEFPayGoWebComum, ACBrPOS, ACBrPOSPGWebAPI, ACBrPicpay, 
-  ACBrTEFPayGoRedes, LazarusPackageIntf;
+  ACBrTEFDReg, ACBrTEFD, ACBrTEFDClass, ACBrTEFComum, ACBrTEFDDial, 
+  ACBrTEFDPayGo, ACBrTEFDPayGoWeb, ACBrTEFDDisc, ACBrTEFDHiper, 
+  ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDCappta, 
+  ACBrTEFCliSiTefComum, ACBrTEFPayGoComum, ACBrTEFPayGoWebComum, ACBrPOS, 
+  ACBrPOSPGWebAPI, ACBrPicpay, ACBrTEFPayGoRedes, ACBrTEFAPI, ACBrTEFAPIComum, 
+  ACBrTEFAPIPayGoWeb, LazarusPackageIntf;
 
 implementation
 

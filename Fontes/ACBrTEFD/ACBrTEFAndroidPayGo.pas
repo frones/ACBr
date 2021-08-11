@@ -39,7 +39,8 @@ interface
 uses
   Classes, SysUtils,
   Androidapi.JNI.GraphicsContentViewText,
-  ACBrTEFComum, ACBrTEFPayGoComum, ACBrTEFAndroid, ACBrTEFPayGoAndroidAPI;
+  ACBrTEFComum, ACBrTEFAPIComum, ACBrTEFAndroid,
+  ACBrTEFPayGoComum, ACBrTEFPayGoAndroidAPI;
 
 const
   PWRET_OK = 0;      // Operação bem sucedida
@@ -48,12 +49,8 @@ resourcestring
   sACBrTEFAndroidIdentificadorVendaVazioException = 'IdentificadorVenda não pode ser vazio';
   sACBrTEFAndroidValorPagamentoInvalidoException = 'Valor do Pagamento inválido';
 
-  sACBrTEFAndroidTransacaoPendenteAPI = 'Transação Pendente.' + sLineBreak +
-                                         'Rede: %s' + sLineBreak +
-                                         'NSU: %s';
-
 type
-  TACBrTEFAndroidPayGoClass = class(TACBrTEFAndroidClass)
+  TACBrTEFAndroidPayGoClass = class(TACBrTEFAPIComumClass)
   private
     fTEFPayGoAPI: TACBrTEFPGWebAndroid;
     fpndReqNum: String;
@@ -73,46 +70,48 @@ type
       pszExtRef: String; pszVirtMerch: String; pszAuthSyst: String);
 
     procedure LimparTransacaoPendente;
-    procedure VerificarIdentificadorVendaInformado(IdentificadorVenda: String);
+    procedure VerificarIdentificadorVendaInformado(const IdentificadorVenda: String);
 
   protected
-    procedure InicializarOperacaoTEF; override;
-    procedure InterpretarDadosDaTransacao; override;
-    procedure FinalizarOperacaoTEF; override;
+    procedure InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao); override;
+    procedure InterpretarRespostaAPI; override;
 
   public
-    constructor Create(AACBrTEFAndroid: TACBrTEFAndroid);
+    constructor Create(AACBrTEFAPI: TACBrTEFAPIComum);
     destructor Destroy; override;
 
     procedure Inicializar; override;
     procedure DesInicializar; override;
 
-    procedure EfetuarPagamento(
-      IdentificadorVenda: String;
+    function EfetuarPagamento(
+      const IdentificadorVenda: String;
       ValorPagto: Currency;
-      CartoesAceitos: TACBrTEFTiposCartao = [];
       Modalidade: TACBrTEFModalidadePagamento = TACBrTEFModalidadePagamento.tefmpNaoDefinido;
+      CartoesAceitos: TACBrTEFTiposCartao = [];
       Financiamento: TACBrTEFModalidadeFinanciamento = TACBrTEFModalidadeFinanciamento.tefmfNaoDefinido;
       Parcelas: Byte = 0;
-      DataPreDatado: TDate = 0); override;
+      DataPreDatado: TDateTime = 0): Boolean; override;
 
-    procedure EfetuarAdministrativa(
-      Operacao: string = '';
-      IdentificadorVenda: string = ''); override;
+    function EfetuarAdministrativa(
+      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral;
+      const IdentificadorTransacao: string = ''): Boolean; overload; override;
+    function EfetuarAdministrativa(
+      const CodOperacaoAdm: string = '';
+      const IdentificadorTransacao: string = ''): Boolean; overload; override;
 
-    procedure CancelarTransacao(
-      NSU, CodigoAutorizacaoTransacao: string;
+    function CancelarTransacao(
+      const NSU, CodigoAutorizacaoTransacao: string;
       DataHoraTransacao: TDateTime;
       Valor: Double;
-      CodigoFinalizacao: string = '';
-      Rede: string = ''); override;
+      const CodigoFinalizacao: string = '';
+      const Rede: string = ''): Boolean; override;
 
-    procedure FinalizarOperacao(
-      Rede, NSU, CodigoFinalizacao: String;
-      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoAutomatico); override;
+    procedure FinalizarTransacao(
+      const Rede, NSU, CodigoFinalizacao: String;
+      AStatus: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoAutomatico); override;
 
-    procedure ResolverOperacaoPendente(
-      Status: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoManual); override;
+    procedure ResolverTransacaoPendente(
+      AStatus: TACBrTEFStatusTransacao = TACBrTEFStatusTransacao.tefstsSucessoManual); override;
 
     property TEFPayGoAPI: TACBrTEFPGWebAndroid read fTEFPayGoAPI;
     property OperacaoVenda: Byte read fOperacaoVenda
@@ -124,30 +123,20 @@ type
     property Autorizador: String read fAutorizador write fAutorizador;
   end;
 
-function StatusTransacaoToPWCNF_( AStatus: TACBrTEFStatusTransacao): LongWord;
-
 implementation
 
 uses
-  math;
-
-function StatusTransacaoToPWCNF_( AStatus: TACBrTEFStatusTransacao): LongWord;
-begin
-  case AStatus of
-    tefstsSucessoAutomatico: Result := PWCNF_CNF_AUTO;
-    tefstsSucessoManual: Result := PWCNF_CNF_MANU_AUT;
-    tefstsErroImpressao: Result := PWCNF_REV_PRN_AUT;
-    tefstsErroDispesador: Result := PWCNF_REV_DISP_AUT;
-  else
-    Result := PWCNF_REV_MANU_AUT;
-  end;
-end;
+  math,
+  ACBrTEFPayGoWebComum;
 
 { TACBrTEFAndroidPayGoClass }
 
-constructor TACBrTEFAndroidPayGoClass.Create(AACBrTEFAndroid: TACBrTEFAndroid);
+constructor TACBrTEFAndroidPayGoClass.Create(AACBrTEFAPI: TACBrTEFAPIComum);
 begin
   inherited;
+
+  fpTEFRespClass := TACBrTEFRespPayGoWeb;
+
   fOperacaoVenda := PWOPER_SALE;
   fOperacaoAdministrativa := PWOPER_ADMIN;
   fOperacaoCancelamento := PWOPER_SALEVOID;
@@ -167,59 +156,43 @@ end;
 
 procedure TACBrTEFAndroidPayGoClass.Inicializar;
 begin
-  with fTEFPayGoAPI do
+  fTEFPayGoAPI.DadosAutomacao.NomeAplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
+  fTEFPayGoAPI.DadosAutomacao.VersaoAplicacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
+  fTEFPayGoAPI.DadosAutomacao.SoftwareHouse := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse;
+  fTEFPayGoAPI.NomeEstabelecimento := fpACBrTEFAPI.DadosEstabelecimento.RazaoSocial;
+  fTEFPayGoAPI.DadosAutomacao.SuportaSaque := fpACBrTEFAPI.DadosAutomacao.SuportaSaque;
+  fTEFPayGoAPI.DadosAutomacao.SuportaDesconto := fpACBrTEFAPI.DadosAutomacao.SuportaDesconto;
+  fTEFPayGoAPI.DadosAutomacao.SuportaViasDiferenciadas := fpACBrTEFAPI.DadosAutomacao.SuportaViasDiferenciadas;
+  fTEFPayGoAPI.DadosAutomacao.ImprimeViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
+  fTEFPayGoAPI.DadosAutomacao.UtilizaSaldoTotalVoucher := fpACBrTEFAPI.DadosAutomacao.UtilizaSaldoTotalVoucher;
+
+  With TACBrTEFAndroid(fpACBrTEFAPI).Personalizacao do
   begin
-    with DadosAutomacao do
-    begin
-      NomeAplicacao := fpACBrTEFAndroid.DadosAutomacao.NomeAplicacao;
-      VersaoAplicacao := fpACBrTEFAndroid.DadosAutomacao.VersaoAplicacao;
-      SoftwareHouse := fpACBrTEFAndroid.DadosAutomacao.NomeSoftwareHouse;
-      NomeEstabelecimento := fpACBrTEFAndroid.DadosEstabelecimento.RazaoSocial;
-      SuportaSaque := fpACBrTEFAndroid.DadosAutomacao.SuportaDesconto;
-      SuportaDesconto := fpACBrTEFAndroid.DadosAutomacao.SuportaDesconto;
-      SuportaViasDiferenciadas := fpACBrTEFAndroid.DadosAutomacao.SuportaViasDiferenciadas;
-      ImprimeViaClienteReduzida := fpACBrTEFAndroid.DadosAutomacao.ImprimeViaClienteReduzida;
-      UtilizaSaldoTotalVoucher := fpACBrTEFAndroid.DadosAutomacao.UtilizaSaldoTotalVoucher;
-    end;
-
-    With Personalizacao do
-    begin
-      corFundoTela := fpACBrTEFAndroid.Personalizacao.corFundoTela;
-      corFundoToolbar := fpACBrTEFAndroid.Personalizacao.corFundoToolbar;
-      corFonte := fpACBrTEFAndroid.Personalizacao.corFonte;
-      corSeparadorMenu := fpACBrTEFAndroid.Personalizacao.corSeparadorMenu;
-      corFundoCaixaEdicao := fpACBrTEFAndroid.Personalizacao.corFundoCaixaEdicao;
-      corTextoCaixaEdicao := fpACBrTEFAndroid.Personalizacao.corTextoCaixaEdicao;
-      corFundoTeclado := fpACBrTEFAndroid.Personalizacao.corFundoTeclado;
-      corTeclaLiberadaTeclado := fpACBrTEFAndroid.Personalizacao.corTeclaLiberadaTeclado;
-      corTeclaPressionadaTeclado := fpACBrTEFAndroid.Personalizacao.corTeclaPressionadaTeclado;
-      corFonteTeclado := fpACBrTEFAndroid.Personalizacao.corFonteTeclado;
-      pathIconeToolbar := fpACBrTEFAndroid.Personalizacao.ArquivoIcone;
-      pathFonte := fpACBrTEFAndroid.Personalizacao.ArquivoFonte;
-    end;
-
-    ConfirmarTransacoesPendentesNoHost := True;
-    if fpACBrTEFAndroid.AutoConfirmarTransacoesPendente then
-      OnAvaliarTransacaoPendente := Nil
-    else
-      OnAvaliarTransacaoPendente := QuandoAvaliarTransacaoPendenteAPI;
-
-    Inicializar;
+    fTEFPayGoAPI.Personalizacao.corFundoTela := corFundoTela;
+    fTEFPayGoAPI.Personalizacao.corFundoToolbar := corFundoToolbar;
+    fTEFPayGoAPI.Personalizacao.corFonte := corFonte;
+    fTEFPayGoAPI.Personalizacao.corSeparadorMenu := corSeparadorMenu;
+    fTEFPayGoAPI.Personalizacao.corFundoCaixaEdicao := corFundoCaixaEdicao;
+    fTEFPayGoAPI.Personalizacao.corTextoCaixaEdicao := corTextoCaixaEdicao;
+    fTEFPayGoAPI.Personalizacao.corFundoTeclado := corFundoTeclado;
+    fTEFPayGoAPI.Personalizacao.corTeclaLiberadaTeclado := corTeclaLiberadaTeclado;
+    fTEFPayGoAPI.Personalizacao.corTeclaPressionadaTeclado := corTeclaPressionadaTeclado;
+    fTEFPayGoAPI.Personalizacao.corFonteTeclado := corFonteTeclado;
+    fTEFPayGoAPI.Personalizacao.pathIconeToolbar := ArquivoIcone;
+    fTEFPayGoAPI.Personalizacao.pathFonte := ArquivoFonte;
   end;
+
+  fTEFPayGoAPI.ConfirmarTransacoesPendentesNoHost := (fpACBrTEFAPI.TratamentoTransacaoPendente = tefpenConfirmar);
+  if (fpACBrTEFAPI.TratamentoTransacaoPendente = tefpenPerguntar) then
+    fTEFPayGoAPI.OnAvaliarTransacaoPendente := QuandoAvaliarTransacaoPendenteAPI
+  else
+    fTEFPayGoAPI.OnAvaliarTransacaoPendente := Nil;
+
+  fTEFPayGoAPI.Inicializar;
 
   LimparTransacaoPendente;
 
   inherited;
-end;
-
-procedure TACBrTEFAndroidPayGoClass.InicializarOperacaoTEF;
-begin
-  LimparTransacaoPendente;
-end;
-
-procedure TACBrTEFAndroidPayGoClass.FinalizarOperacaoTEF;
-begin
-  { Nada a fazer... }
 end;
 
 procedure TACBrTEFAndroidPayGoClass.DesInicializar;
@@ -228,28 +201,58 @@ begin
   inherited;
 end;
 
+procedure TACBrTEFAndroidPayGoClass.InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao);
+begin
+  inherited;
+  LimparTransacaoPendente;
+end;
+
+procedure TACBrTEFAndroidPayGoClass.InterpretarRespostaAPI;
+begin
+  inherited;
+  DadosDaTransacaoToTEFResp( fTEFPayGoAPI.DadosDaTransacao,
+                             fpACBrTEFAPI.UltimaRespostaTEF );
+end;
+
 procedure TACBrTEFAndroidPayGoClass.QuandoGravarLogAPI(const ALogLine: String;
   var Tratado: Boolean);
 begin
-  fpACBrTEFAndroid.GravarLog(ALogLine);
+  fpACBrTEFAPI.GravarLog(ALogLine);
   Tratado := True;
 end;
 
 procedure TACBrTEFAndroidPayGoClass.QuandoIniciarTransacaoAPI(AIntent: JIntent);
 begin
-  if Assigned(fpACBrTEFAndroid.QuandoIniciarTransacao) then
-    fpACBrTEFAndroid.QuandoIniciarTransacao(AIntent);
+  with TACBrTEFAndroid(fpACBrTEFAPI) do
+  begin
+    if Assigned(QuandoIniciarTransacao) then
+      QuandoIniciarTransacao(AIntent);
+  end;
 end;
 
-procedure TACBrTEFAndroidPayGoClass.ResolverOperacaoPendente(
-  Status: TACBrTEFStatusTransacao);
+procedure TACBrTEFAndroidPayGoClass.ResolverTransacaoPendente(
+  AStatus: TACBrTEFStatusTransacao);
 var
   PGWebStatus: LongWord;
 begin
+  // Se não foi disparado por QuandoAvaliarTransacaoPendenteAPI, pegue as
+  //   informações da Transação atual, na memória
   if fpndReqNum.IsEmpty then
-    raise EACBrTEFAndroid.Create(sACBrTEFAndroidSemTransacaoPendenteException);
+  begin
+    with fpACBrTEFAPI.UltimaRespostaTEF do
+    begin
+      fpndReqNum := LeInformacao(PWINFO_REQNUM,0).AsString;
+      fPndLocRef := LeInformacao(PWINFO_AUTLOCREF,0).AsString;
+      fPndExtRef := LeInformacao(PWINFO_AUTEXTREF,0).AsString;
+      fPndVirtMerch := LeInformacao(PWINFO_VIRTMERCH,0).AsString;
+      fPndAuthSyst := LeInformacao(PWINFO_AUTHSYST,0).AsString;
+    end;
+  end;
 
-  PGWebStatus := StatusTransacaoToPWCNF_(Status);
+  if fpndReqNum.IsEmpty then
+    fpACBrTEFAPI.DoException(sACBrTEFAPISemTransacaoPendenteException);
+
+  PGWebStatus := StatusTransacaoToPWCNF_(AStatus);
   fTEFPayGoAPI.ResolverTransacaoPendente(PGWebStatus,
           fpndReqNum, fPndLocRef, fPndExtRef, fPndVirtMerch, fPndAuthSyst);
 end;
@@ -265,8 +268,8 @@ begin
   fPndVirtMerch := pszVirtMerch;
   fPndAuthSyst := pszAuthSyst;
 
-  MsgErro := Format(sACBrTEFAndroidTransacaoPendenteAPI, [pszAuthSyst, pszExtRef]);
-  ProcessarTransacaoPendente(MsgErro);
+  MsgErro := Format(sACBrTEFAPITransacaoPendente, [pszAuthSyst, pszExtRef]);
+  fpACBrTEFAPI.ProcessarTransacaoPendente(MsgErro);
 end;
 
 procedure TACBrTEFAndroidPayGoClass.QuandoFianlizarTransacaoAPI(AIntent: JIntent);
@@ -275,14 +278,15 @@ begin
 end;
 
 procedure TACBrTEFAndroidPayGoClass.VerificarIdentificadorVendaInformado(
-  IdentificadorVenda: String);
+  const IdentificadorVenda: String);
 begin
   if IdentificadorVenda.Trim.IsEmpty then
-    raise EACBrTEFAndroid.Create(sACBrTEFAndroidIdentificadorVendaVazioException);
+    fpACBrTEFAPI.DoException(sACBrTEFAndroidIdentificadorVendaVazioException);
 end;
 
-procedure TACBrTEFAndroidPayGoClass.EfetuarAdministrativa(
-  Operacao: string = ''; IdentificadorVenda: string = '');
+function TACBrTEFAndroidPayGoClass.EfetuarAdministrativa(
+  const CodOperacaoAdm: string = '';
+  const IdentificadorTransacao: string = ''): Boolean;
 var
   PA: TACBrTEFPGWebAPIParametros;
   OpInt: Integer;
@@ -293,50 +297,62 @@ begin
   PA := TACBrTEFPGWebAPIParametros.Create;
   try
     OpByte := fOperacaoAdministrativa;
-    if (Operacao <> '') then
+    if (CodOperacaoAdm <> '') then
     begin
-      OpInt := StrToIntDef(Operacao, -1);
-      if (OpInt > 0) then
+      OpInt := StrToIntDef(CodOperacaoAdm, -1);
+      if (OpInt >= 0) then
       begin
-       if (OpInt < High(Byte)) then
+       if (OpInt <= High(Byte)) then
          OpByte := OpInt;
       end
       else
-        OpByte := OperationToPWOPER_(Operacao);
+        OpByte := OperationToPWOPER_(CodOperacaoAdm);
     end;
 
     if (fAutorizador <> '') then
       PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
 
-    PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorVenda;
+    if (IdentificadorTransacao <> '') then
+      PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorTransacao;
+
     fTEFPayGoAPI.IniciarTransacao(OpByte, PA);
+    Result := True;  // TEF no Android trabalha de modo Assincrono
   finally
     PA.Free;
   end;
 end;
 
-procedure TACBrTEFAndroidPayGoClass.EfetuarPagamento(IdentificadorVenda: String;
-  ValorPagto: Currency; CartoesAceitos: TACBrTEFTiposCartao;
+function TACBrTEFAndroidPayGoClass.EfetuarAdministrativa(
+  OperacaoAdm: TACBrTEFOperacaoAdmin;
+  const IdentificadorTransacao: string): Boolean;
+begin
+  Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)),
+                                        IdentificadorTransacao );
+end;
+
+function TACBrTEFAndroidPayGoClass.EfetuarPagamento(
+  const IdentificadorVenda: String;
+  ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento;
+  CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento;
   Parcelas: Byte;
-  DataPreDatado: TDate);
+  DataPreDatado: TDateTime): Boolean;
 var
   PA: TACBrTEFPGWebAPIParametros;
-  Tipo: TObject;
   SomaCartoes, ModalidadeInt, FinanciamentoInt: Integer;
   TipoCartao: TACBrTEFTipoCartao;
 begin
   VerificarIdentificadorVendaInformado(IdentificadorVenda);
   if (ValorPagto <= 0) then
-    raise EACBrTEFAndroid.Create(sACBrTEFAndroidValorPagamentoInvalidoException);
+    fpACBrTEFAPI.DoException(sACBrTEFAndroidValorPagamentoInvalidoException);
 
   PA := TACBrTEFPGWebAPIParametros.Create;
   try
     PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorVenda;
     PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
     PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
-    PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(fpACBrTEFAndroid.DadosAutomacao.MoedaISO4217); // '986' ISO4217 - BRL
+    PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(fpACBrTEFAPI.DadosAutomacao.MoedaISO4217); // '986' ISO4217 - BRL
 
     SomaCartoes := 0;
     for TipoCartao in CartoesAceitos do
@@ -386,14 +402,15 @@ begin
       PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
 
     fTEFPayGoAPI.IniciarTransacao(fOperacaoVenda, PA);
+    Result := True;  // TEF no Android trabalha de modo Assincrono
   finally
     PA.Free;
   end;
 end;
 
-procedure TACBrTEFAndroidPayGoClass.CancelarTransacao(NSU,
+function TACBrTEFAndroidPayGoClass.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
-  Valor: Double; CodigoFinalizacao, Rede: string);
+  Valor: Double; const CodigoFinalizacao, Rede: string): Boolean;
 var
   PA: TACBrTEFPGWebAPIParametros;
   i: Integer;
@@ -421,10 +438,10 @@ begin
 
     if not (Rede.IsEmpty or CodigoFinalizacao.IsEmpty) then
     begin
-      i := fpACBrTEFAndroid.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
+      i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
       if (i >= 0) then
       begin
-        Resp := fpACBrTEFAndroid.RespostasTEF[i];
+        Resp := fpACBrTEFAPI.RespostasTEF[i];
         PA.ValueInfo[PWINFO_TRNORIGLOCREF] := Resp.Finalizacao;
         PA.ValueInfo[PWINFO_TRNORIGREQNUM] := IntToStr(Resp.NumeroLoteTransacao);
         CopiarValorDaUltimaResposta(PWINFO_MERCHCNPJCPF);
@@ -441,13 +458,14 @@ begin
       PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
 
     fTEFPayGoAPI.IniciarTransacao(fOperacaoCancelamento, PA);
+    Result := True;  // TEF no Android trabalha de modo Assincrono
   finally
     PA.Free;
   end;
 end;
 
-procedure TACBrTEFAndroidPayGoClass.FinalizarOperacao(Rede, NSU,
-  CodigoFinalizacao: String; Status: TACBrTEFStatusTransacao);
+procedure TACBrTEFAndroidPayGoClass.FinalizarTransacao(const Rede, NSU,
+  CodigoFinalizacao: String; AStatus: TACBrTEFStatusTransacao);
 var
   confirmTransactionIdentifier: String;
   PGWebStatus: LongWord;
@@ -456,43 +474,15 @@ begin
  if Rede.IsEmpty or NSU.IsEmpty then
     Exit;
 
-  i := fpACBrTEFAndroid.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
+  i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
   if (i >= 0) then
-    confirmTransactionIdentifier := fpACBrTEFAndroid.RespostasTEF[i].Conteudo.LeInformacao(PWINFO_CONFTRANSIDENT).AsString
+    confirmTransactionIdentifier := fpACBrTEFAPI.RespostasTEF[i].Conteudo.LeInformacao(PWINFO_CONFTRANSIDENT).AsString
   else
-    raise EACBrTEFAndroid.CreateFmt(sACBrTEFAndroidTransacaoNaoEncontradaException,
-      [Rede+' '+ NSU+' '+CodigoFinalizacao]);
+    fpACBrTEFAPI.DoException( Format(sACBrTEFAPITransacaoNaoEncontradaException,
+                              [Rede+' '+ NSU+' '+CodigoFinalizacao]));
 
-  PGWebStatus := StatusTransacaoToPWCNF_(Status);
+  PGWebStatus := StatusTransacaoToPWCNF_(AStatus);
   fTEFPayGoAPI.ConfirmarTransacao(PGWebStatus, confirmTransactionIdentifier);
-end;
-
-procedure TACBrTEFAndroidPayGoClass.InterpretarDadosDaTransacao;
-var
-  i, p, AInfo: Integer;
-  Lin, AValue: String;
-begin
-  inherited;
-
-  for i := 0 to fTEFPayGoAPI.DadosDaTransacao.Count-1 do
-  begin
-    Lin := fTEFPayGoAPI.DadosDaTransacao[i];
-    p := pos('=', Lin);
-    if (p > 0) then
-    begin
-      AInfo := StrToIntDef(copy(Lin, 1, p-1), -1);
-      if (AInfo >= 0) then
-      begin
-        AValue := copy(Lin, P+1, Length(Lin));
-        fpACBrTEFAndroid.UltimaRespostaTEF.Conteudo.GravaInformacao(Ainfo, 0, AValue);
-      end;
-    end;
-  end;
-
-  ConteudoToPropertyPayGoWeb( fpACBrTEFAndroid.UltimaRespostaTEF );
-
-  fpTransacaoOK := (StrToIntDef(fTEFPayGoAPI.DadosDaTransacao.ValueInfo[PWINFO_RET], -1) = PWRET_OK);
-  fpMensagemResultado := fTEFPayGoAPI.DadosDaTransacao.ValueInfo[PWINFO_RESULTMSG];
 end;
 
 procedure TACBrTEFAndroidPayGoClass.LimparTransacaoPendente;

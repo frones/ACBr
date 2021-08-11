@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 11/08/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Na versão 2 do layout da ABRASF a tag IssRetido esta dentro do grupo <Servico>
+    e não dentro do grupo <Valores> como é na versão 1.
+   Por: Diego Reckziegel
 -- Diversos --
 [*] Ajuste no tratamento do retorno do cancelamento dos provedores que seguem a 
     versão 1 ou 2 do layout da ABRASF.

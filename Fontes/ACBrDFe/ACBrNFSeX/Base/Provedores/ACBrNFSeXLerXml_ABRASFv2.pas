@@ -625,6 +625,13 @@ begin
       ExigibilidadeISS    := StrToExigibilidadeISS(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
       MunicipioIncidencia := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
       NumeroProcesso      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
+
+      Valores.IssRetido := StrToSituacaoTributaria(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
+
+      if Valores.IssRetido = stRetencao then
+        Valores.ValorIssRetido := Valores.ValorInss
+      else
+        Valores.ValorIssRetido := 0;
     end;
   end;
 end;
@@ -664,7 +671,6 @@ end;
 procedure TNFSeR_ABRASFv2.LerValores(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  Ok: Boolean;
   Valor: Currency;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('Valores');
@@ -680,7 +686,6 @@ begin
       ValorInss       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
       ValorIr         := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
       ValorCsll       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
-      IssRetido       := StrToSituacaoTributaria(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
       ValorIss        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
       OutrasRetencoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
       BaseCalculo     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
@@ -689,11 +694,6 @@ begin
 
       if Valor <> 0 then
         ValorLiquidoNfse := Valor;
-
-      if IssRetido = stRetencao then
-        ValorIssRetido := ValorInss
-      else
-        ValorIssRetido := 0;
 
       DescontoCondicionado   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
       DescontoIncondicionado := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);

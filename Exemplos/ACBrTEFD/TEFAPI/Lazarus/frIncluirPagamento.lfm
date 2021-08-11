@@ -1,0 +1,78 @@
+object FormIncluirPagamento: TFormIncluirPagamento
+  Left = 627
+  Height = 94
+  Top = 239
+  Width = 340
+  BorderStyle = bsDialog
+  Caption = 'Incluir Pagamento'
+  ClientHeight = 94
+  ClientWidth = 340
+  OnCreate = FormCreate
+  Position = poOwnerFormCenter
+  LCLVersion = '2.0.8.0'
+  object cbFormaPagamento: TComboBox
+    Left = 16
+    Height = 23
+    Top = 24
+    Width = 189
+    ItemHeight = 15
+    OnChange = seValorPagoChange
+    Style = csDropDownList
+    TabOrder = 0
+  end
+  object Label14: TLabel
+    Left = 16
+    Height = 15
+    Top = 8
+    Width = 114
+    Caption = 'Forma de Pagamento'
+    ParentColor = False
+  end
+  object Label16: TLabel
+    Left = 233
+    Height = 15
+    Top = 9
+    Width = 56
+    Caption = 'Valor Pago'
+    ParentColor = False
+  end
+  object seValorPago: TFloatSpinEdit
+    Left = 232
+    Height = 23
+    Top = 24
+    Width = 89
+    Alignment = taRightJustify
+    MaxValue = 100000
+    MinValue = 0
+    OnChange = seValorPagoChange
+    TabOrder = 1
+    Value = 0
+  end
+  object btGravar: TBitBtn
+    Left = 232
+    Height = 28
+    Top = 56
+    Width = 89
+    Caption = 'Gravar'
+    Default = True
+    Enabled = False
+    ModalResult = 1
+    Images = FormPrincipal.ImageList1
+    ImageIndex = 5
+    ParentFont = False
+    TabOrder = 2
+  end
+  object btCancelar: TBitBtn
+    Left = 16
+    Height = 28
+    Top = 56
+    Width = 89
+    Cancel = True
+    Caption = 'Cancelar'
+    ModalResult = 2
+    Images = FormPrincipal.ImageList1
+    ImageIndex = 11
+    ParentFont = False
+    TabOrder = 3
+  end
+end

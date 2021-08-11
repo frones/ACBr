@@ -1,0 +1,92 @@
+object FormObtemCampo: TFormObtemCampo
+  Left = 738
+  Height = 170
+  Top = 50
+  Width = 422
+  BorderStyle = bsDialog
+  Caption = 'Entre com a Informação'
+  ClientHeight = 170
+  ClientWidth = 422
+  Constraints.MinHeight = 170
+  Constraints.MinWidth = 420
+  Font.Height = -19
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  LCLVersion = '2.0.12.0'
+  object edtResposta: TEdit
+    Left = 32
+    Height = 33
+    Top = 80
+    Width = 356
+    Alignment = taCenter
+    Anchors = [akLeft, akRight, akBottom]
+    AutoSelect = False
+    OnChange = edtRespostaChange
+    OnKeyDown = edtRespostaKeyDown
+    OnKeyPress = edtRespostaKeyPress
+    TabOrder = 0
+  end
+  object btOk: TBitBtn
+    Left = 317
+    Height = 35
+    Top = 127
+    Width = 71
+    Anchors = [akRight, akBottom]
+    AutoSize = True
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object btCancel: TBitBtn
+    Left = 187
+    Height = 35
+    Top = 127
+    Width = 103
+    Anchors = [akRight, akBottom]
+    AutoSize = True
+    Cancel = True
+    Caption = 'Cancel'
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 3
+  end
+  object pTitulo: TPanel
+    Left = 0
+    Height = 56
+    Top = 0
+    Width = 422
+    Align = alTop
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 56
+    ClientWidth = 422
+    TabOrder = 4
+    object lTitulo: TLabel
+      Left = 1
+      Height = 54
+      Top = 1
+      Width = 420
+      Align = alClient
+      Alignment = taCenter
+      Caption = 'lTitulo'
+      Layout = tlCenter
+      ParentColor = False
+      WordWrap = True
+    end
+  end
+  object btVoltar: TBitBtn
+    Left = 32
+    Height = 35
+    Top = 127
+    Width = 97
+    Anchors = [akLeft, akBottom]
+    AutoSize = True
+    Caption = 'Voltar'
+    Kind = bkRetry
+    ModalResult = 4
+    TabOrder = 2
+  end
+end

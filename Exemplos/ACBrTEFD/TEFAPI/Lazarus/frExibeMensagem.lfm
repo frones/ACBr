@@ -1,0 +1,59 @@
+object FormExibeMensagem: TFormExibeMensagem
+  Left = 708
+  Height = 163
+  Top = 289
+  Width = 515
+  BorderStyle = bsDialog
+  ClientHeight = 163
+  ClientWidth = 515
+  OnClick = FormClick
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  LCLVersion = '2.0.8.0'
+  object btOk: TButton
+    Left = 208
+    Height = 33
+    Top = 116
+    Width = 99
+    Anchors = [akLeft, akBottom]
+    Caption = 'OK'
+    Default = True
+    ModalResult = 1
+    OnKeyDown = btOkKeyDown
+    TabOrder = 0
+  end
+  object pMensagem: TPanel
+    Left = 10
+    Height = 92
+    Top = 10
+    Width = 495
+    Align = alTop
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Around = 10
+    ClientHeight = 92
+    ClientWidth = 495
+    Font.Height = -19
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    object lMensagem: TLabel
+      Left = 1
+      Height = 90
+      Top = 1
+      Width = 493
+      Align = alClient
+      Alignment = taCenter
+      Caption = 'Mensagem ao Operador'
+      Layout = tlCenter
+      ParentColor = False
+      WordWrap = True
+      OnClick = lMensagemClick
+    end
+  end
+  object tEspera: TTimer
+    Enabled = False
+    OnTimer = tEsperaTimer
+    left = 456
+    top = 120
+  end
+end

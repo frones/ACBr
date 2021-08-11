@@ -1,0 +1,108 @@
+object FormMenuTEF: TFormMenuTEF
+  Left = 353
+  Height = 361
+  Top = 162
+  Width = 608
+  Caption = 'Selecione uma opção'
+  ClientHeight = 361
+  ClientWidth = 608
+  Font.Height = -19
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  LCLVersion = '2.0.8.0'
+  object lbOpcoes: TListBox
+    Left = 0
+    Height = 261
+    Top = 50
+    Width = 283
+    Align = alClient
+    ExtendedSelect = False
+    Font.Height = -19
+    Font.Style = [fsBold]
+    ItemHeight = 0
+    OnClick = lbOpcoesClick
+    OnKeyPress = lbOpcoesKeyPress
+    ParentFont = False
+    TabOrder = 0
+  end
+  object pTitulo: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 608
+    Align = alTop
+    Caption = 'pTitulo'
+    TabOrder = 1
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 50
+    Top = 311
+    Width = 608
+    Align = alBottom
+    ClientHeight = 50
+    ClientWidth = 608
+    TabOrder = 2
+    object btOK: TBitBtn
+      Left = 512
+      Height = 35
+      Top = 8
+      Width = 71
+      Anchors = [akTop]
+      AutoSize = True
+      Caption = '&OK'
+      Default = True
+      Kind = bkOK
+      ModalResult = 1
+      TabOrder = 0
+    end
+    object btCancel: TBitBtn
+      Left = 360
+      Height = 35
+      Top = 8
+      Width = 120
+      Anchors = [akTop]
+      AutoSize = True
+      Cancel = True
+      Caption = 'Cancelar'
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 2
+    end
+    object btVoltar: TBitBtn
+      Left = 24
+      Height = 35
+      Top = 8
+      Width = 97
+      Anchors = [akTop]
+      AutoSize = True
+      Caption = 'Voltar'
+      Kind = bkRetry
+      ModalResult = 4
+      TabOrder = 1
+    end
+  end
+  object mOpcao: TMemo
+    Left = 288
+    Height = 261
+    Top = 50
+    Width = 320
+    Align = alRight
+    Font.Height = -13
+    Font.Name = 'Courier'
+    ParentFont = False
+    ScrollBars = ssAutoBoth
+    TabOrder = 3
+    Visible = False
+    WordWrap = False
+  end
+  object Splitter1: TSplitter
+    Left = 283
+    Height = 261
+    Top = 50
+    Width = 5
+    Align = alRight
+    ResizeAnchor = akRight
+    Visible = False
+  end
+end

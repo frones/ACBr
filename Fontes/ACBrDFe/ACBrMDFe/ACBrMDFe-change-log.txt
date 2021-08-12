@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2021
+-- pmdfeMDFeW  --
+[*] Corrigido a condição para definir se gera dou não o grupo <valePed>.
+   Por: Italo Giurizzato Junior
+
 25/06/2021
 -- ACBrMDFeManifestos/pmdfeMDFeW  --
 [*] Corrigido a leitura do novo campo categCombVeic.

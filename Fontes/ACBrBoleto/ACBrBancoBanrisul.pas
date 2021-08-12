@@ -93,6 +93,8 @@ begin
   fpTamanhoAgencia        := 4;
   fpTamanhoConta          := 12;
   fpTamanhoCarteira       := 1;
+  fpLayoutVersaoArquivo   := 40;
+  fpLayoutVersaoLote      := 20;
   fpCodigosMoraAceitos    :='01';
   fpOrientacoesBanco.Clear;
   fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
@@ -489,7 +491,7 @@ begin
                '1'+                                               // 143 - 143   Código remessa
                FormatDateTime('ddmmyyyyhhnnss', Now) +            // 144 - 157   Data e hora da geração do arquivo
                IntToStrZero(NumeroRemessa, 6) +                   // 158 - 163   Número sequencial do arquivo
-               '040'+                                             // 164 - 166   Número da versão do layout do arquivo
+               PadLeft(IntToStr(fpLayoutVersaoArquivo), 3, '0')+  // 164 - 166   Número da versão do layout do arquivo
                DupeString('0', 5) +                               // 167 - 171   Densidade de gravação do arquivo
                Space(69);                                         // 172 - 240   Outros campos
 
@@ -498,9 +500,12 @@ begin
                '0001' +                                           //   4 -   7   Lote de serviço
                '1'+                                               //   8 -   8   Registro header de lote
                'R'+                                               //   9 -   9   Tipo de operação
-               '01'+                                              //  10 -  11   Tipo de serviço
-               '00'+                                              //  12 -  13   Forma de lançamento
-               '020'+                                             //  14 -  16   Número da versão do layout do lote
+               '01';                                              //  10 -  11   Tipo de serviço
+     if(fpLayoutVersaoArquivo < 103) then
+     begin
+       Result := Result +
+               '00' +                                               //  12 -  13   Forma de lançamento
+               PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0') +    //  14 -  16   Número da versão do layout do lote
                Space(1) +                                         //  17 -  17   Uso exclusivo FEBRABAN/CNAB
                TipoInsc +                                         //  18 -  18   Tipo de inscrição da empresa
                PadLeft(OnlyNumber(CNPJCPF), 15, '0') +            //  19 -  33   Número de inscrição da empresa
@@ -517,6 +522,28 @@ begin
                FormatDateTime('ddmmyyyy', Now) +                  // 192 - 199   Data de geração do arquivo
                DupeString('0', 8) +                               // 200 - 207   Data do crédito
                DupeString(' ', 33);                               // 208 - 240   Uso exclusivo FEBRABAN/CNAB
+     end else
+     begin
+       Result := Result +
+               '  ' +                                             //  12 -  13   BRANCOS
+               PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0') +    //  14 -  16   Número da versão do layout do lote
+               Space(1) +                                         //  17 -  17   Uso exclusivo FEBRABAN/CNAB
+               TipoInsc +                                         //  18 -  18   Tipo de inscrição da empresa
+               PadLeft(OnlyNumber(CNPJCPF), 15, '0') +            //  19 -  33   Número de inscrição da empresa
+               PadLeft(OnlyNumber(Convenio), 13, '0') +           //  34 -  46   Código do convênio
+               Space(7) +                                         //  47 -  53   Brancos
+               PadLeft(OnlyNumber(Agencia), 5, '0') +             //  54 -  58   Agência
+               PadLeft(AgenciaDigito, 1, ' ') +                   //  59 -  59   Dígito da agência
+               PadLeft(OnlyNumber(Conta), 12, '0') +              //  60 -  71   Número da conta
+               ContaDigito +                                      //  72 -  72   Dígito da conta
+               Space(1) +                                         //  73 -  73   Dígito verificador da agência/conta
+               PadLeft(Nome, 30) +                                //  74 - 103   Nome da empresa
+               Space(80) +                                        // 104 - 183   Mensagens
+               IntToStrZero(NumeroRemessa, 8) +                   // 184 - 191   Número sequencial do arquivo
+               FormatDateTime('ddmmyyyy', Now) +                  // 192 - 199   Data de geração do arquivo
+               DupeString(' ', 8) +                               // 200 - 207   Data do crédito
+               DupeString(' ', 33);                               // 208 - 240   Uso exclusivo FEBRABAN/CNAB
+     end;
   end;
 end;
 
@@ -543,12 +570,21 @@ begin
    iQtdRegistros := (ARemessa.Count * 2) + FiQtdSegmentoR;
    // Adicionar linha do Trailler de lote
    Result := '04100015'+
-             DupeString(' ', 9) +
-             IntToStrZero(iQtdRegistros, 6) +
-             IntToStrZero(((ARemessa.Count * 2) - 2) div 2, 6) +
-             PadLeft(StringReplace(FormatFloat('#####0.00', Valor), ',', '', []), 17, '0') +
-             DupeString('0', 77) +
-             DupeString(' ', 117);
+           DupeString(' ', 9) +
+           IntToStrZero(iQtdRegistros, 6) +
+           IntToStrZero(((ARemessa.Count * 2) - 2) div 2, 6) +
+           PadLeft(StringReplace(FormatFloat('#####0.00', Valor), ',', '', []), 17, '0');
+   if(fpLayoutVersaoLote < 60) then
+   begin
+      Result := Result +
+               DupeString('0', 77) +
+               DupeString(' ', 117);
+   end else
+   begin
+     Result := Result +
+               DupeString('0', 69) +
+               DupeString(' ', 125);
+   end;
    // Calcular o total de registro do Trailler de arquivo
    iQtdRegistros := ((ARemessa.Count + 1) * 2) + FiQtdSegmentoR;
    // Adicionar linha do Trailler de arquivo
@@ -567,7 +603,7 @@ function TACBrBanrisul.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
     aAceite, DiasProt, Juros, TipoInscSacado, Ocorrencia: String;
-    sDiasBaixaDevol, ACaracTitulo, ATipoBoleto : String;
+    sDiasBaixaDevol, ACaracTitulo, ATipoBoleto, AEspecieCobranca : String;
 begin
    with ACBrTitulo do begin
       case Aceite of
@@ -635,52 +671,109 @@ begin
 
       ACaracTitulo := '1';
       case CaracTitulo of
-        tcSimples     : ACaracTitulo  := '1';
+        tcSimples     :
+          begin
+            ACaracTitulo  := '1';
+            AEspecieCobranca := '805076'
+          end;
         tcVinculada   : ACaracTitulo  := '2';
         tcCaucionada  : ACaracTitulo  := '3';
-        tcDescontada  : ACaracTitulo  := '4';
+        tcDescontada  :
+          begin
+            ACaracTitulo     := '4';
+            AEspecieCobranca := '603015';
+          end
       end;
       {Segmento "P"}
-      Result := '04100013' +
-                DupeString('*', 5) +
-                'P ' +
-                Ocorrencia +
+      if(fpLayoutVersaoArquivo < 103) then
+      begin
+        Result := '041'  +                                                                                                              //  1-3    CODIGO DO BANCO
+                  '0001'+                                                                                                               //  4-7    LOTE
+                  '3' +                                                                                                                 //  8-8    REGISTRO DETALHE 3
+                  DupeString('*', 5) +                                                                                                  //  9-13   NUM. SEQUENCIAL DO LOTE
+                  'P'+                                                                                                                  //  14-14  CODIGO SEGUIMENTO P
+                  Space(1) +                                                                                                            //  15-15  BRANCOS
+                  Ocorrencia +                                                                                                          //  16-17  CODIGO DO MOVIMENTO
+                  PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Agencia), 5, '0') +                                                   //  18-22  Agência mantenedora da conta
+                  PadLeft( ACBrBanco.ACBrBoleto.Cedente.AgenciaDigito, 1, ' ') +                                                        //  23-23  Dígito verificador da agência
+                  PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Conta), 12, '0') +                                                    //  24-35  Número da conta corrente
+                  PadLeft( ACBrBanco.ACBrBoleto.Cedente.ContaDigito, 1, ' ') +                                                          //  36-36  Dígito verificador da conta
+                  Space(1) +                                                                                                            //  37-37  Dígito verificador da ag/conta
+                  PadLeft(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 10, '0') +                                                    //  38-57  NOSSO NUMERO (SOMENTE 10 POSICOES DEMAIS BRANCOS
+                  DupeString(' ', 10) +                                                                                                 //         RESTANTE DO NOSSO NUMERO EM BRANCO - 10 POSIÇÕES RESTANTES
+                  ACaracTitulo +                                                                                                        //  58-58  CARTEIRA
+                  '1' +                                                                                                                 //  59-59  CADASTRAMENTO
+                  '0' +                                                                                                                 //  60-60  TIPO DE DOCUMENTO
+                  ATipoBoleto +                                                                                                         //  61-61  EMISSAO DO BLOQUETO
+                  '0' +                                                                                                                 //  62-62  DISTRIBUIÇÃO DO BLOQUETO
+                  PadRight(NumeroDocumento, 15) +                                                                                       //  63-77  NUMERO DO DOCUMENTO
+                  FormatDateTime('ddmmyyyy', Vencimento) +                                                                              //  78-85  VENCIMENTO DO BOLETO
+                  PadLeft(StringReplace(FormatFloat('#####0.00', ValorDocumento), ',', '', []), 15, '0') +                              //  86-100 VALOR DO TITULO
+                  '00000' +                                                                                                             // 101-105 AGENCIA COBRADORA
+                  '0' +                                                                                                                 // 106-106 DV AGENCIA COBRADORA
+                  '02' +                                                                                                                // 107-108 ESPECIDE DO TITULO
+                  aAceite +                                                                                                             // 109-109 ACEITE
+                  FormatDateTime('ddmmyyyy', DataProcessamento) +                                                                       // 110-117 DATA DE EMISSAO
+                  Juros +                                                                                                               // 118-141 JUROS
+                  IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, '1','3'), '0')                                                   + // 142-142 codigo desconto
+                  IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, FormatDateTime('ddmmyyyy',DataDesconto),'00000000'), '00000000') + // 143-150 Data do desconto
+                  IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))                      + // 151-165 Valor do desconto por dia
+                  IntToStrZero( round(ValorIOF * 100), 15)                                                                            + // 166-180 valor do IOF a ser recolhido
+                  IntToStrZero( round(ValorAbatimento * 100), 15)                                                                     + // 181-195 Valor do abatimento
+                  PadRight(NumeroDocumento, 15) +                                                                                       // 196-220 USO DA EMPRESA BENEFICIÁRIA
+                  DupeString(' ', 10) +                                                                                                 //         CONTINUAÇÃO DO USO DA EMPRESA
+                  DiasProt +                                                                                                            // 222-223 NUMERO DE DIAS PARA PROTESTO
+                  PadRight(Trim(Instrucao2), 1, ' ') +                                                                                  // 224-224 CODIGO PARA BAIXA
+                  sDiasBaixaDevol +                                                                                                     // 225-227 DIAS PARA BAIXA DO BOLETO
+                  '09' +                                                                                                                // 228-229 CODIGO DA MOEDA - 09 REAL
+                  DupeString('0', 10) +                                                                                                 // 230-239 NUMERO DO CONTRATO
+                  ' ';                                                                                                                  // 240-240 BRANCOS
+      end else
+      begin
+        Result := '041'  +                                                                                                              //  1-3    CODIGO DO BANCO
+                  '0001'+                                                                                                               //  4-7    LOTE
+                  '3' +                                                                                                                 //  8-8    REGISTRO DETALHE 3
+                  DupeString('*', 5) +                                                                                                  //  9-13   NUM. SEQUENCIAL DO LOTE
+                  'P'+                                                                                                                  //  14-14  CODIGO SEGUIMENTO P
+                  Space(1) +                                                                                                            //  15-15  BRANCOS
+                  Ocorrencia +                                                                                                          //  16-17  CODIGO DO MOVIMENTO
+                  PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Agencia), 5, '0') +                                                   //  18-22  Agência mantenedora da conta
+                  PadLeft( ACBrBanco.ACBrBoleto.Cedente.AgenciaDigito, 1, ' ') +                                                        //  23-23  Dígito verificador da agência
+                  PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Conta), 12, '0') +                                                    //  24-35  Número da conta corrente
+                  PadLeft( ACBrBanco.ACBrBoleto.Cedente.ContaDigito, 1, ' ') +                                                          //  36-36  Dígito verificador da conta
+                  Space(1) +                                                                                                            //  37-37  Dígito verificador da ag/conta
+                  PadLeft(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 10, '0') +                                                    //  38-57  NOSSO NUMERO (SOMENTE 10 POSICOES DEMAIS BRANCOS
+                  DupeString(' ', 10) +                                                                                                 //         RESTANTE DO NOSSO NUMERO EM BRANCO - 10 POSIÇÕES RESTANTES
+                  ACaracTitulo +                                                                                                        //  58-58  CARTEIRA
+                  '1' +                                                                                                                 //  59-59  CADASTRAMENTO
+                  '1' +                                                                                                                 //  60-60  TIPO DE DOCUMENTO 1 TRADICIONAL - 2 ESCRITURAL
+                  ATipoBoleto +                                                                                                         //  61-61  EMISSAO DO BLOQUETO
+                  IfThen(ACBrBoleto.Cedente.IdentDistribuicao = tbClienteDistribui,'2','1') +                                           //  62-62  DISTRIBUIÇÃO DO BLOQUETO
+                  PadRight(NumeroDocumento, 15) +                                                                                       //  63-77  NUMERO DO DOCUMENTO
+                  FormatDateTime('ddmmyyyy', Vencimento) +                                                                              //  78-85  VENCIMENTO DO BOLETO
+                  PadLeft(StringReplace(FormatFloat('#####0.00', ValorDocumento), ',', '', []), 15, '0') +                              //  86-100 VALOR DO TITULO
+                  '00000' +                                                                                                             // 101-105 AGENCIA COBRADORA
+                  '0' +                                                                                                                 // 106-106 DV AGENCIA COBRADORA
+                  '02' +                                                                                                                // 107-108 ESPECIDE DO TITULO
+                  aAceite +                                                                                                             // 109-109 ACEITE
+                  FormatDateTime('ddmmyyyy', DataProcessamento) +                                                                       // 110-117 DATA DE EMISSAO
+                  Juros +                                                                                                               // 118-141 JUROS
+                  IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, '1','3'), '0')                                                   + // 142-142 codigo desconto
+                  IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, FormatDateTime('ddmmyyyy',DataDesconto),'00000000'), '00000000') + // 143-150 Data do desconto
+                  IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))                      + // 151-165 Valor do desconto por dia
+                  IntToStrZero( round(ValorIOF * 100), 15)                                                                            + // 166-180 valor do IOF a ser recolhido
+                  IntToStrZero( round(ValorAbatimento * 100), 15)                                                                     + // 181-195 Valor do abatimento
+                  PadRight(NumeroDocumento, 15) +                                                                                       // 196-220 USO DA EMPRESA BENEFICIÁRIA
+                  DupeString(' ', 10) +                                                                                                 //         CONTINUAÇÃO DO USO DA EMPRESA
+                  DiasProt +                                                                                                            // 222-223 NUMERO DE DIAS PARA PROTESTO
+                  PadRight(Trim(Instrucao2), 1, ' ') +                                                                                  // 224-224 CODIGO PARA BAIXA
+                  sDiasBaixaDevol +                                                                                                     // 225-227 DIAS PARA BAIXA DO BOLETO
+                  '09' +                                                                                                                // 228-229 CODIGO DA MOEDA - 09 REAL
+                  PadLeft(AEspecieCobranca,10,'0') +                                                                                    // 230-239 ESPECIE DE COBRANCA
+                  '1';                                                                                                                  // 240-240 NÃO PERMITE RECEBIMENTO PARCIAL
+      end;
 
-                //Agência mantenedora da conta 18 - 22
-                PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Agencia), 5, '0') +
-                // Dígito verificador da agência 23 - 23
-               PadLeft( ACBrBanco.ACBrBoleto.Cedente.AgenciaDigito, 1, ' ') +
-                // Número da conta corrente 24 - 35
-                PadLeft(OnlyNumber(ACBrBanco.ACBrBoleto.Cedente.Conta), 12, '0') +
-                // Dígito verificador da conta 36 - 36
-                PadLeft( ACBrBanco.ACBrBoleto.Cedente.ContaDigito, 1, ' ') +
-                // Dígito verificador da ag/conta 37 - 37
-                Space(1) +
 
-
-                PadLeft(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 10, '0') +
-                DupeString(' ', 10) +
-                ACaracTitulo +
-                '10' + ATipoBoleto + '0' +
-                PadRight(NumeroDocumento, 15) +
-                FormatDateTime('ddmmyyyy', Vencimento) +
-                PadLeft(StringReplace(FormatFloat('#####0.00', ValorDocumento), ',', '', []), 15, '0') +
-                '00000002' +
-                aAceite +
-                FormatDateTime('ddmmyyyy', DataProcessamento) +
-                Juros +
-                IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, '1','3'), '0')                                                   +     // 142 - codigo desconto
-                IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, FormatDateTime('ddmmyyyy',DataDesconto),'00000000'), '00000000') +     // 143 a 150 - Data do desconto
-                IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))                      +     // 151 a 165 - Valor do desconto por dia
-                IntToStrZero( round(ValorIOF * 100), 15)                                                                            +     // 166 a 180 - Valor do IOF a ser recolhido
-                IntToStrZero( round(ValorAbatimento * 100), 15)                                                                     +     // 181 a 195 - Valor do abatimento
-                PadRight(NumeroDocumento, 15) +
-                DupeString(' ', 10) +
-                DiasProt +
-                PadRight(Trim(Instrucao2), 1, ' ') +
-                sDiasBaixaDevol +
-                '09' +
-                DupeString('0', 10) +' ';
       {Segmento "Q" }
       Result := Result + #13#10 +
                 '04100013' +
@@ -703,19 +796,51 @@ begin
       if (PercentualMulta > 0) then
         begin
          {Segmento "R"}
-         Result := Result + #13#10 +
-                   '04100013' +
-                   DupeString('*', 5) +
-                   'R ' +
-                   Ocorrencia +
-                   DupeString('0', 48) +
-                   '1' +
-                   FormatDateTime('ddmmyyyy', DataMulta) +
-                   PadLeft(StringReplace(FormatFloat('#####0.00', TruncTo(((PercentualMulta * ValorDocumento) / 100),2)), ',', '', []), 15, '0') +
-                   DupeString(' ', 90) +
-                   DupeString('0', 28) +
-                   DupeString(' ', 33);
+         Result := Result +
+                   #13#10 +
+                   '041'  +                                                                                                                           //   1-3  BANCO
+                   '0001' +                                                                                                                           //   4-7  LOTE
+                   '3'    +                                                                                                                           //   8-8   REGISTRO
+                   DupeString('*', 5) +                                                                                                               //   9-13  SEQ. LOTE
+                   'R'    +                                                                                                                           //  14-14  SEGMENTO
+                   ' '    +                                                                                                                           //  15-15  BRANCOS
+                   Ocorrencia +                                                                                                                       //  16-17  CODIGO MOVIMENTO
+                   DupeString('0', 1)  +                                                                                                              //  18-18  CÓDIGO DESCONTO 2
+                   DupeString('0', 8)  +                                                                                                              //  19-26  DATA DESCONTO 2
+                   DupeString('0', 15) +                                                                                                              //  27-41  VALOR DESCONTO 2
+                   DupeString('0', 1)  +                                                                                                              //  42-42  CODIGO DESCONTO 3
+                   DupeString('0', 8)  +                                                                                                              //  43-50  DATA DESCONTO 3
+                   DupeString('0', 15) +                                                                                                              //  51-65  VALOR DESCONTO 3
+                   '1'    +                                                                                                                           //  66-66  CODIGO DA MULTA
+                   FormatDateTime('ddmmyyyy', DataMulta) +                                                                                            //  67-74  DATA DA MULTA
+                   PadLeft(StringReplace(FormatFloat('#####0.00', TruncTo(((PercentualMulta * ValorDocumento) / 100),2)), ',', '', []), 15, '0') +    //  75-89  VALOR/PERCENTUAL MULTA
+                   DupeString(' ', 10) +                                                                                                              //  90-99  INFORMAÇÃO DO BANCO PAGADOR
+                   DupeString(' ', 40) +                                                                                                              // 100-139 MENSAGEM 3
+                   DupeString(' ', 40);                                                                                                               // 140-179 MENSAGEM 4
+          if(fpLayoutVersaoArquivo < 103) then
+          begin
+            Result := Result +
+                   DupeString('0', 3)  +                                                                                                              // 180-182 CODIGO DO BANCO DA CONTA DO DEBITO
+                   DupeString('0', 4)  +                                                                                                              // 183-186 CODIGO DA AGENCIA DO DEBITO
+                   DupeString('0', 13) +                                                                                                              // 187-199 CONTA CORRENTE /DV DO DEBITO
+                   DupeString('0', 8)  +                                                                                                              // 200-207 CODIGO DE OCORRENCIA DO PAGADOR
+                   DupeString(' ', 33);                                                                                                               // 208-240 BRANCOS
+          end else
+          begin
+            Result := Result +
+                   DupeString(' ', 20) +                                                                                                              // 180-199 BRANCOS
+                   DupeString('0', 8)  +                                                                                                              // 200-207 CODIGO OCORRENCIA DO PAGADOR
+                   DupeString('0', 3)  +                                                                                                              // 208-210 CODIGO DO BANCO DA CONTA DO DEBITO
+                   DupeString('0', 5)  +                                                                                                              // 211-215 CODIGO DA AGENCIA DO DEBITO
+                   DupeString(' ', 1)  +                                                                                                              // 216-216 DV AGENCIA DO DEBITO
+                   DupeString('0', 12) +                                                                                                              // 217-228 CONTA CORRENTE DO DEBITO
+                   DupeString(' ', 1)  +                                                                                                              // 229-229 DV CONTA CORRENTE DO DEBITO
+                   DupeString(' ', 1)  +                                                                                                              // 230-230 DV AGENCIA/CONTA
+                   DupeString('0', 1)  +                                                                                                              // 231-231 AVISO DEBITO AUTOMATICO
+                   DupeString(' ', 9);                                                                                                                // 232-240 BRANCOS
+          end;
          // Atualizar o contador do Segmento R
+
          Inc(FiQtdSegmentoR);
         end;
    end;

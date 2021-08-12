@@ -933,6 +933,8 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrBanco = class(TComponent)
+  protected
+    procedure Loaded; override;
   private
     fACBrBoleto        : TACBrBoleto;
     fNumeroBanco       : Integer;
@@ -3348,6 +3350,21 @@ end;
 procedure TACBrBanco.LerRetorno400(ARetorno: TStringList);
 begin
    BancoClass.LerRetorno400(ARetorno);
+end;
+
+procedure TACBrBanco.Loaded;
+begin
+  inherited;
+  case TipoCobranca of
+    cobBanrisul :
+      begin
+        if (LayoutVersaoArquivo = 0) then
+        LayoutVersaoArquivo := 40;
+
+        if (LayoutVersaoLote = 0) then
+          LayoutVersaoLote    := 20;
+      end;
+  end;
 end;
 
 procedure TACBrBanco.LerRetorno240(ARetorno: TStringList);

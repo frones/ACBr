@@ -82,7 +82,8 @@ procedure TACBrNFSeProviderISSNet.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.Identificador := 'id';
+//  ConfigGeral.Identificador := 'id';
+  ConfigGeral.Identificador := '';
 
   with ConfigMsgDados do
   begin

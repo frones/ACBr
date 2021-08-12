@@ -53,14 +53,16 @@ type
   private
     FXML: string;
 
+    // Retornos dos serviços tanto versão 1 quanto versão 2 do layout da ABRASF
     FNumeroLote: String;
     FDataRecebimento: TDateTime;
     FProtocolo: String;
-    FSucesso: String;
     FSituacao: String;
+    FDataHoraCanc: TDateTime;
+    FSucesso: Boolean;
+
     FHashIdent: string;
 
-//    FRetornoNFSe: TRetornoNFSe;
     FInformacoesLote: TInformacoesLote;
     FListaChaveNFeRPS: TChaveNFeRPSCollection;
     // Retornado pelo GerarNfse
@@ -76,14 +78,16 @@ type
 
     property XML: string read FXML write FXML;
 
+    // Retornos dos serviços tanto versão 1 quanto versão 2 do layout da ABRASF
     property NumeroLote: String         read FNumeroLote      write FNumeroLote;
     property DataRecebimento: TDateTime read FDataRecebimento write FDataRecebimento;
     property Protocolo: String          read FProtocolo       write FProtocolo;
-    property Sucesso: String            read FSucesso         write FSucesso;
     property Situacao: String           read FSituacao        write FSituacao;
+    property DataHoraCanc: TDateTime    read FDataHoraCanc    write FDataHoraCanc;
+    property Sucesso: Boolean           read FSucesso         write FSucesso;
+
     property HashIdent: string          read FHashIdent       write FHashIdent;
 
-//    property RetornoNFSe: TRetornoNFSe                read FRetornoNFSe      write FRetornoNFSe;
     property InformacoesLote: TInformacoesLote        read FInformacoesLote  write FInformacoesLote;
     property ListaChaveNFeRPS: TChaveNFeRPSCollection read FListaChaveNFeRPS write SetListaChaveNFeRPS;
     // Retornado pelo GerarNfse
@@ -175,9 +179,14 @@ type
 
   TNFSeWebserviceResponse = class
   private
+    FSituacao: String;
+    FLote: string;
     FSucesso: Boolean;
+    FNumeroNota: Integer;
+
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
+
     FXmlEnvio: String;
     FXmlRetorno: String;
     FEnvelopeEnvio: String;
@@ -187,9 +196,14 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    property Situacao: String read FSituacao write FSituacao;
+    property Lote: string read FLote write FLote;
     property Sucesso: Boolean read FSucesso write FSucesso;
+    property NumeroNota: Integer read FNumeroNota write FNumeroNota;
+
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
+
     property XmlEnvio: String read FXmlEnvio write FXmlEnvio;
     property XmlRetorno: String read FXmlRetorno write FXmlRetorno;
     property EnvelopeEnvio: String read FEnvelopeEnvio write FEnvelopeEnvio;
@@ -199,7 +213,6 @@ type
 
   TNFSeEmiteResponse = class(TNFSeWebserviceResponse)
   private
-    FLote: string;
     FData: TDateTime;
     FProtocolo: String;
     FModoEnvio: TmodoEnvio;
@@ -210,7 +223,6 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property Lote: string read FLote write FLote;
     property Data: TDateTime read FData write FData;
     property Protocolo: String read FProtocolo write FProtocolo;
     property MaxRps: Integer read FMaxRps write FMaxRps;
@@ -221,7 +233,6 @@ type
 
   TNFSeConsultaSituacaoResponse = class(TNFSeWebserviceResponse)
   private
-    FLote: string;
     FSituacao: string;
     FProtocolo: string;
     FInfRetorno: TInfRetorno;
@@ -231,7 +242,6 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    property Lote: string read FLote write FLote;
     property Protocolo: string read FProtocolo write FProtocolo;
     property Situacao: string read FSituacao write FSituacao;
 
@@ -240,7 +250,6 @@ type
 
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
   private
-    FLote: string;
     FProtocolo: string;
     FSituacao: string;
     FInfRetorno: TInfRetorno;
@@ -250,7 +259,6 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    property Lote: string read FLote write FLote;
     property Protocolo: string read FProtocolo write FProtocolo;
     property Situacao: string read FSituacao write FSituacao;
 
@@ -517,7 +525,7 @@ begin
   DataRecebimento := 0;
   Protocolo := '';
   Situacao := '1';
-  Sucesso := '';
+  Sucesso := False;
   HashIdent := '';
 end;
 

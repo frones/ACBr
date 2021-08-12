@@ -384,8 +384,8 @@ begin
 
       if ANode <> nil then
       begin
-        Response.InfRetorno.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('notaExiste'), tcStr);
-        Response.InfRetorno.NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcInt);
+        Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('notaExiste'), tcStr);
+        Response.NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcInt);
       end;
     except
       on E:Exception do
@@ -464,7 +464,7 @@ begin
 
       ANode := Document.Root;
 
-      Response.InfRetorno.NumeroLote := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+      Response.Lote := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
       if not Assigned(ANode) then

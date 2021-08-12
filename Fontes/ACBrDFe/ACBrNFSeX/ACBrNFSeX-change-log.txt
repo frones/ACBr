@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/08/2021
+-- Diversos --
+[*] Inicio das mudanças nos retornos dos serviços.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Implementado o provedor Simple
+   Por: Italo Giurizzato Junior
+
 11/08/2021
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Na versão 2 do layout da ABRASF a tag IssRetido esta dentro do grupo <Servico>

@@ -144,7 +144,8 @@ type
                    proeGoverneISS, proEL, proEquiplano, proGeisWeb, proGiap,
                    proGoverna, proInfisc_100, proInfisc_110, proIPM, proIPM_120,
                    proIPM_110, proISSDSF, proLencois, proSiat, proSigISS,
-                   proSigISS_103, proSmarAPD, proSP, proWebFisco, proFGMaiss);
+                   proSigISS_103, proSmarAPD, proSP, proWebFisco, proFGMaiss,
+                   proSimple);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao);
 
@@ -626,7 +627,7 @@ begin
          'DSFSJC', 'SimplISS_2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
-         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste'],
+         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste', 'Simple'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
          proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -650,7 +651,7 @@ begin
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
          proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
-         proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste]);
+         proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste, proSimple]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
@@ -677,7 +678,7 @@ begin
          'DSFSJC', 'SimplISS_2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
          'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
-         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste'],
+         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste', 'Simple'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
          proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -701,7 +702,7 @@ begin
          proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
          proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
          proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
-         proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste]);
+         proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste, proSimple]);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

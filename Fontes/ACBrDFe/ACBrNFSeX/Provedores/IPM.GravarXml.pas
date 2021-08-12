@@ -336,7 +336,7 @@ begin
              OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), DSC_CNPJ));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 1,
-                           NFSe.Prestador.Endereco.CodigoMunicipio, ''));
+  CodIBGEToCodTOM(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio,0)), ''));
 end;
 
 function TNFSeW_IPM.GerarTomador: TACBrXmlNode;
@@ -405,7 +405,7 @@ begin
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 0,
-                                    NFSe.Tomador.Endereco.CodigoMunicipio, ''));
+    CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio,0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 8, 0,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));

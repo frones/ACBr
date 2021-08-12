@@ -162,6 +162,7 @@ uses
   Lencois.Provider,
   Siat.Provider,
   SigISS.Provider,
+  Simple.Provider,
   SP.Provider,
   WebFisco.Provider;
 
@@ -341,6 +342,7 @@ begin
     proSigISS_103:
       Result := TACBrNFSeProviderSigISS_103.Create(ACBrNFSe);
 
+    proSimple:  Result := TACBrNFSeProviderSimple.Create(ACBrNFSe);
     proSmarAPD: Result := TACBrNFSeProviderSmarAPD.Create(ACBrNFSe);
     proSP:      Result := TACBrNFSeProviderSP.Create(ACBrNFSe);
 

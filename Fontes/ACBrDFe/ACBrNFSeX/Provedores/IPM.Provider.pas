@@ -48,7 +48,8 @@ uses
 
 type
   // Rps não é assinado
-  TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceRest)
+//  TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceRest)
+  TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceMulti)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function TesteEnvio(ACabecalho, AMSG: String): string; override;

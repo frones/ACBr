@@ -369,10 +369,13 @@ begin
   Retorno := FProvider.Emite(aLote, aModoEnvio);
 
   FResposta.Clear;
+
+  FResposta.XML := Retorno.XmlRetorno;
   FResposta.NumeroLote := Retorno.Lote;
   FResposta.DataRecebimento := Retorno.Data;
   FResposta.Protocolo := Retorno.Protocolo;
-  FResposta.XML := Retorno.XmlRetorno;
+  FResposta.Sucesso := Retorno.Sucesso;
+  FResposta.Situacao := Retorno.Situacao;
 
   Result := Retorno;
 

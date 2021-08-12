@@ -939,7 +939,7 @@ begin
               sleep(Intervalo);
             end;
           finally
-            Result.InfRetorno.Situacao := RetornoConsSit.Situacao;
+            Result.Situacao := RetornoConsSit.Situacao;
             RetornoConsSit.Free;
           end;
         end;
@@ -953,7 +953,7 @@ begin
 
           RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
         finally
-          Result.InfRetorno.Situacao := RetornoConsLote.Situacao;
+          Result.Situacao := RetornoConsLote.Situacao;
           RetornoConsLote.Free;
         end;
       end;

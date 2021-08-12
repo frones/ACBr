@@ -675,6 +675,12 @@ begin
             HttpClient.DataResp.Position := 0;
             FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size);
 
+            (*
+            // {"retorno":{"msg":"Acesso Negado!","sis":false,"code":401}}
+            if not StringIsXML(FPRetorno) then
+              FPRetorno := JsonToXML(FPRetorno);
+            *)
+
             // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
             // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
             if not (HttpClient.HTTPResultCode in [200..202]) then

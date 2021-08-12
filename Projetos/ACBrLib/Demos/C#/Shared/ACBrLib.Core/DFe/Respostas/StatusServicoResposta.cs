@@ -1,9 +1,8 @@
 ﻿using System;
-using ACBrLib.Core;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.Core.DFe
 {
-    public sealed class StatusServicoResposta : LibNFeResposta
+    public sealed class StatusServicoResposta : DFeRespostaBase
     {
         #region Properties
 

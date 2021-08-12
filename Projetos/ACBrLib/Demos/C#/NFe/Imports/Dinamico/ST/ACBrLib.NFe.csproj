@@ -154,8 +154,6 @@
     <Compile Include="..\Shared\Respostas\EventoItemResposta.cs" Link="Respostas\EventoItemResposta.cs" />
     <Compile Include="..\Shared\Respostas\EventoResposta.cs" Link="Respostas\EventoResposta.cs" />
     <Compile Include="..\Shared\Respostas\InutilizarNFeResposta.cs" Link="Respostas\InutilizarNFeResposta.cs" />
-    <Compile Include="..\Shared\Respostas\LibNFeResposta.cs" Link="Respostas\LibNFeResposta.cs" />
-    <Compile Include="..\Shared\Respostas\StatusServicoResposta.cs" Link="Respostas\StatusServicoResposta.cs" />
   </ItemGroup>
 
   <ItemGroup>

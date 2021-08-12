@@ -1,8 +1,9 @@
 ﻿using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
-    public sealed class InutilizarNFeResposta : LibNFeResposta
+    public sealed class InutilizarNFeResposta : DFeRespostaBase
     {
         #region Properties
 

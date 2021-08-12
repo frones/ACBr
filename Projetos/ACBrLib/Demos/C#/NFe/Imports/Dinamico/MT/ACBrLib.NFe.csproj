@@ -110,7 +110,6 @@
     <Compile Include="..\Shared\NotaFiscal\InfIntermedNFe.cs" Link="NotaFiscal\InfIntermedNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfNFe.cs" Link="NotaFiscal\InfNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfoAdicionalNfe.cs" Link="NotaFiscal\InfoAdicionalNfe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\InfRespTecNFe.cs" Link="NotaFiscal\InfRespTecNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\IPIProdutoNFe.cs" Link="NotaFiscal\IPIProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ISSQNcSitTrib.cs" Link="NotaFiscal\ISSQNcSitTrib.cs" />
     <Compile Include="..\Shared\NotaFiscal\ISSQNtotNFe.cs" Link="NotaFiscal\ISSQNtotNFe.cs" />
@@ -157,8 +156,6 @@
     <Compile Include="..\Shared\Respostas\EventoItemResposta.cs" Link="Respostas\EventoItemResposta.cs" />
     <Compile Include="..\Shared\Respostas\EventoResposta.cs" Link="Respostas\EventoResposta.cs" />
     <Compile Include="..\Shared\Respostas\InutilizarNFeResposta.cs" Link="Respostas\InutilizarNFeResposta.cs" />
-    <Compile Include="..\Shared\Respostas\LibNFeResposta.cs" Link="Respostas\LibNFeResposta.cs" />
-    <Compile Include="..\Shared\Respostas\StatusServicoResposta.cs" Link="Respostas\StatusServicoResposta.cs" />
   </ItemGroup>
 
   <ItemGroup>

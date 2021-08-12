@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoResposta : LibNFeResposta
+    public sealed class EventoResposta : DFeRespostaBase
     {
         #region Properties
 

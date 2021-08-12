@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public sealed class EnvioResposta : LibNFeResposta
+    public sealed class EnvioResposta : DFeRespostaBase
     {
         #region Properties
 

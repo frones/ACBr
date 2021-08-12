@@ -1,9 +1,8 @@
 ﻿using System;
-using ACBrLib.Core.DFe;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.Core.DFe
 {
-    public abstract class LibNFeResposta
+    public abstract class DFeRespostaBase
     {
         #region Properties
 

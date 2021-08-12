@@ -1403,6 +1403,19 @@ begin
 
     if TemTEF then
     begin
+      // -- Exemplo, usando TypeCast, para inserir Propriedades direto na Classe de TEF -- //
+      (*
+      if ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb then
+      begin
+        with TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF) do
+        begin
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_AUTHSYST] := 'REDE';   // Autorizador
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_FINTYPE] := '2';       // 01: à vista, 2: parcelado
+          TEFPayGoAPI.ParametrosAdicionais.ValueInfo[PWINFO_INSTALLMENTS] := '3';  // Parcelas
+        end;
+      end;
+      *)
+
       Ok := ACBrTEFAPI1.EfetuarPagamento( IntToStr(Venda.NumOperacao),
                                           AValor, Modalidade, CartoesAceitos,
                                           tefmfAVista );
@@ -1796,8 +1809,11 @@ begin
     ACBrTEFAPI1.ExibicaoQRCode := qrapiAuto;
   end;
 
+  // -- Exemplo de como ajustar o diretório de Trabalho, da PayGoWeb -- //
+  (*
   if (ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb) then
     TACBrTEFAPIClassPayGoWeb(ACBrTEFAPI1.TEF).DiretorioTrabalho := 'C:\PAYGOWEB';
+  *)
 end;
 
 procedure TFormPrincipal.AtivarTEF;

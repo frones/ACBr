@@ -173,7 +173,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btTestarTEF: TBitBtn
               Left = 110
-              Top = 241
+              Top = 239
               Width = 117
               Height = 36
               Anchors = [akLeft, akBottom]
@@ -225,7 +225,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btSalvarParametros: TBitBtn
               Left = 14
-              Top = 286
+              Top = 284
               Width = 136
               Height = 28
               Anchors = [akLeft, akBottom]
@@ -235,7 +235,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btLerParametros: TBitBtn
               Left = 161
-              Top = 286
+              Top = 284
               Width = 136
               Height = 28
               Anchors = [akLeft, akBottom]
@@ -366,7 +366,7 @@ object FormPrincipal: TFormPrincipal
               end
               object btSerial: TSpeedButton
                 Left = 321
-                Top = 34
+                Top = 32
                 Width = 25
                 Height = 26
                 Anchors = [akTop, akRight]
@@ -374,7 +374,7 @@ object FormPrincipal: TFormPrincipal
               end
               object btProcuraImpressoras: TSpeedButton
                 Left = 345
-                Top = 34
+                Top = 32
                 Width = 25
                 Height = 26
                 Anchors = [akTop, akRight]
@@ -913,7 +913,7 @@ object FormPrincipal: TFormPrincipal
               Left = 673
               Top = 4
               Width = 85
-              Height = 42
+              Height = 29
               Align = alRight
               Caption = '000000'
               Color = clBtnFace
@@ -963,6 +963,7 @@ object FormPrincipal: TFormPrincipal
         Height = 118
         Align = alClient
         ReadOnly = True
+        ScrollBars = ssBoth
         TabOrder = 0
         WordWrap = False
       end
@@ -1028,6 +1029,7 @@ object FormPrincipal: TFormPrincipal
       Font.Style = []
       ParentFont = False
       ReadOnly = True
+      ScrollBars = ssVertical
       TabOrder = 0
       WordWrap = False
     end

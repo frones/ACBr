@@ -1,7 +1,7 @@
 object FormPrincipal: TFormPrincipal
-  Left = 440
+  Left = 405
   Height = 500
-  Top = 146
+  Top = 210
   Width = 1110
   Caption = 'ACBrTEFAPI - Demo'
   ClientHeight = 500
@@ -38,11 +38,11 @@ object FormPrincipal: TFormPrincipal
       Height = 375
       Top = 0
       Width = 775
-      ActivePage = tsOperacao
+      ActivePage = tsConfiguracao
       Align = alTop
       Constraints.MinHeight = 375
       Images = ImageList1
-      TabIndex = 1
+      TabIndex = 0
       TabOrder = 0
       object tsConfiguracao: TTabSheet
         Caption = 'Configuração'

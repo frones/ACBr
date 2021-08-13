@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/08/2021
+-- Diversos --
+[+] Implentação do provedor Sintese.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --
 [*] Substituido a função XmlToStr por IncluirCDATA ao passar a mensagem de dados 
     para o Envelope Soap.

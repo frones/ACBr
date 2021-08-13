@@ -93,7 +93,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil, ACBrDFeException, SynaCode,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   AssessorPublico.GravarXml, AssessorPublico.LerXml;
 
@@ -566,7 +566,7 @@ begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
     Result := '<nfse:Usuario>' + Emitente.WSUser + '</nfse:Usuario>' +
-              '<nfse:Senha>' + Emitente.WSSenha + '</nfse:Senha>';
+              '<nfse:Senha>' + MD5(Emitente.WSSenha) + '</nfse:Senha>';
   end;
 end;
 
@@ -580,7 +580,7 @@ begin
   Request := '<nfse:Nfse.Execute>';
   Request := Request + '<nfse:Operacao>1</nfse:Operacao>';
   Request := Request + DadosUsuario;
-  Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
+  Request := Request + '<nfse:Webxml>' + IncluirCDATA(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
@@ -598,7 +598,7 @@ begin
   Request := '<nfse:Nfse.Execute>';
   Request := Request + '<nfse:Operacao>3</nfse:Operacao>';
   Request := Request + DadosUsuario;
-  Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
+  Request := Request + '<nfse:Webxml>' + IncluirCDATA(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
@@ -616,7 +616,7 @@ begin
   Request := '<nfse:Nfse.Execute>';
   Request := Request + '<nfse:Operacao>4</nfse:Operacao>';
   Request := Request + DadosUsuario;
-  Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
+  Request := Request + '<nfse:Webxml>' + IncluirCDATA(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
@@ -633,7 +633,7 @@ begin
   Request := '<nfse:Nfse.Execute>';
   Request := Request + '<nfse:Operacao>2</nfse:Operacao>';
   Request := Request + DadosUsuario;
-  Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
+  Request := Request + '<nfse:Webxml>' + IncluirCDATA(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,

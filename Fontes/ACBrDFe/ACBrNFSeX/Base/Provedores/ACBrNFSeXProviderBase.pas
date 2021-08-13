@@ -337,6 +337,8 @@ begin
     Prefixo := '';
     PrefixoTS := '';
 
+    GerarIdentificacaoRequerente := False;
+
     // Usado para geração do Xml do Rps
     with XmlRps do
     begin
@@ -552,6 +554,9 @@ var
   aPath, NomeArq: string;
   aConfig: TConfiguracoesNFSe;
 begin
+  aNota.Confirmada := True;
+  aNota.NomeArq := '';
+
   if FAOwner.Configuracoes.Arquivos.Salvar then
   begin
     aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
@@ -568,7 +573,6 @@ begin
                  '-nfse.xml';
 
     aNota.NomeArq := NomeArq;
-    aNota.Confirmada := True;
 
     TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XML, aPath);
   end;

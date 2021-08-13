@@ -121,6 +121,7 @@ uses
   SiapSistemas.Provider,
   SigCorp.Provider,
   Sigep.Provider,
+  Sintese.Provider,
   SisPMJP.Provider,
   Sistemas4R.Provider,
   Sudoeste.Provider,
@@ -284,6 +285,7 @@ begin
       Result := TACBrNFSeProviderSilTecnologiaV203.Create(ACBrNFSe);
 
     proSimplISS_2:   Result := TACBrNFSeProviderSimplISSv2.Create(ACBrNFSe);
+    proSintese:      Result := TACBrNFSeProviderSintese.Create(ACBrNFSe);
     proSisPMJP:      Result := TACBrNFSeProviderSisPMJP.Create(ACBrNFSe);
     proSmarAPD_203:  Result := TACBrNFSeProviderSmarAPDv203.Create(ACBrNFSe);
     proSmarAPD_204:  Result := TACBrNFSeProviderSmarAPDv204.Create(ACBrNFSe);

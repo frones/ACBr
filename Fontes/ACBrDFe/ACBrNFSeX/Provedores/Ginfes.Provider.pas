@@ -311,7 +311,7 @@ begin
   Request := Request + '</ns1:ConsultarNfsePorRpsV3>';
 
   Result := Executar('', Request,
-                     ['return', 'ConsultarNfseResposta'],
+                     ['return', 'ConsultarNfseRpsResposta'],
                      []);
 end;
 

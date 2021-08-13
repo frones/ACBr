@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/08/2021
+-- Ginfes.Provider --
+[*] Correção no nome da tag de retorno da consulta a NFS-e por Rps.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implentação do provedor Sintese.
    Por: Italo Giurizzato Junior

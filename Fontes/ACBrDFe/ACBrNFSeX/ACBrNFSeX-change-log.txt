@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 13/08/2021
+-- ISSDSF.Provider --
+[*] Substituido a função XmlToStr por IncluirCDATA ao passar a mensagem de dados 
+    para o Envelope Soap.
+   Por: Edv4ldO
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/GovDigital.Provider --
 [*] Estava gerando dois NameSpace no XML sem os devidos prefixos.
    Por: Italo Giurizzato Junior

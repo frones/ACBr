@@ -1355,7 +1355,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:enviar>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviar>';
 
   Result := Executar('', Request,
@@ -1371,7 +1371,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:enviarSincrono>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviarSincrono>';
 
   Result := Executar('', Request,
@@ -1386,7 +1386,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:testeEnviar>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:testeEnviar>';
 
   Result := Executar('', Request,
@@ -1402,7 +1402,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:consultarLote>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarLote>';
 
   Result := Executar('', Request,
@@ -1418,7 +1418,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:consultarNFSeRps>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarNFSeRps>';
 
   Result := Executar('', Request,
@@ -1433,7 +1433,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:consultarNota>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarNota>';
 
   Result := Executar('', Request,
@@ -1448,7 +1448,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:cancelar>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:cancelar>';
 
   Result := Executar('', Request,

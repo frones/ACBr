@@ -44,8 +44,6 @@ uses
 
 type
   TACBrNFSeXWebserviceEloTech = class(TACBrNFSeXWebserviceSoap11)
-  private
-    function GetRequerente: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -56,8 +54,6 @@ type
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
-
-    property Requerente: string read GetRequerente;
   end;
 
   TACBrNFSeProviderEloTech = class (TACBrNFSeProviderABRASFv2)
@@ -82,7 +78,11 @@ procedure TACBrNFSeProviderEloTech.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.UseCertificateHTTP := False;
+  with ConfigGeral do
+  begin
+    UseCertificateHTTP := False;
+    Identificador := '';
+  end;
 
   with ConfigWebServices do
   begin
@@ -90,9 +90,12 @@ begin
     VersaoAtrib := '2.03';
   end;
 
+  ConfigMsgDados.GerarIdentificacaoRequerente := True;
+
   SetXmlNameSpace('http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd');
 
   SetNomeXSD('nfse_v2_03.xsd');
+//  ConfigSchemas.Validar := False;
 end;
 
 function TACBrNFSeProviderEloTech.CriarGeradorXml(
@@ -124,221 +127,101 @@ end;
 
 { TACBrNFSeXWebserviceEloTech }
 
-function TACBrNFSeXWebserviceEloTech.GetRequerente: string;
-var
-  xRequerente: string;
-  Homologacao: Boolean;
-begin
-  Homologacao := (FPConfiguracoes.WebServices.AmbienteCodigo = 2);
-
-  with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
-  begin
-    xRequerente := '<IdentificacaoRequerente>' +
-                     '<CpfCnpj>' +
-                       '<Cnpj>' + Emitente.CNPJ + '</Cnpf>' +
-                     '</CpfCnpj>' +
-                     '<InscricaoMunicipal>' +
-                        Emitente.InscMun +
-                     '</InscricaoMunicipal>' +
-                     '<Senha>' + Emitente.WSSenha + '</Senha>' +
-                     '<Homologa>' +
-                        LowerCase(booltostr(Homologacao, True)) +
-                     '</Homologa>';
-  end;
-end;
-
 function TACBrNFSeXWebserviceEloTech.Recepcionar(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('<LoteRps', AMSG);
-
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente + Copy(AMSG, i -1, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'EnviarLoteRpsResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'EnviarLoteRpsResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('<LoteRps', AMSG);
-
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente + Copy(AMSG, i -1, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.ConsultarLote(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('<NumeroLote', AMSG);
-
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente + Copy(AMSG, i -1, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('<Prestador', AMSG);
-
-  // Remove o grupo <Prestador> e coloca no lugar o <IdentificacaoRequerente>
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente;
-
-    i := Pos('</Prestador', AMSG);
-
-    Request := Request + Copy(AMSG, i +11, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'ConsultarNfsePorFaixaResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'ConsultarNfsePorFaixaResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('Prestador', AMSG);
-
-  // Remove o grupo <Prestador> e coloca no lugar o <IdentificacaoRequerente>
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente + '</ConsultarNfseRpsEnvio>';
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('<Prestador', AMSG);
-
-  // Remove o grupo <Prestador> e coloca no lugar o <IdentificacaoRequerente>
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente;
-
-    i := Pos('</Prestador', AMSG);
-
-    Request := Request + Copy(AMSG, i +11, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('<Prestador', AMSG);
-
-  // Remove o grupo <Prestador> e coloca no lugar o <IdentificacaoRequerente>
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente;
-
-    i := Pos('</Prestador', AMSG);
-
-    Request := Request + Copy(AMSG, i +11, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.Cancelar(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('Pedido', AMSG);
-
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente + Copy(AMSG, i -1, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'CancelarNfseResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'CancelarNfseResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceEloTech.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
-var
-  Request: string;
-  i: Integer;
 begin
-  i := Pos('Pedido', AMSG);
-
-  if i > 0 then
-  begin
-    Request := Copy(AMSG, 1, i -2) + Requerente + Copy(AMSG, i -1, Length(AMSG));
-  end;
-
   FPMsgOrig := AMSG;
 
-  Result := Executar('', Request,
-                     ['return', 'outputXML', 'SubstituirNfseResposta'],
+  Result := Executar('', AMSG,
+//                     ['return', 'outputXML', 'SubstituirNfseResposta'],
+                     [''],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 

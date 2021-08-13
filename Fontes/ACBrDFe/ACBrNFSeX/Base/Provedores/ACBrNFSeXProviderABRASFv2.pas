@@ -85,6 +85,8 @@ type
                                      AListTag: string = 'ListaMensagemRetorno';
                                      AMessageTag: string = 'MensagemRetorno'); virtual;
 
+    function GerarRequerente(const CNPJ: string; const InscMunc: string;
+      const Senha: string): string;
   end;
 
 implementation
@@ -131,13 +133,32 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderABRASFv2.GerarRequerente(const CNPJ, InscMunc,
+  Senha: string): string;
+var
+  Homologacao: Boolean;
+begin
+  Homologacao := (TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 2);
+
+  Result := '<IdentificacaoRequerente>' +
+              '<CpfCnpj>' +
+                '<Cnpj>' + CNPJ + '</Cnpj>' +
+              '</CpfCnpj>' +
+              '<InscricaoMunicipal>' + InscMunc + '</InscricaoMunicipal>' +
+              '<Senha>' + Senha + '</Senha>' +
+              '<Homologa>' +
+                 LowerCase(booltostr(Homologacao, True)) +
+              '</Homologa>' +
+            '</IdentificacaoRequerente>';
+end;
+
 procedure TACBrNFSeProviderABRASFv2.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   Nota: NotaFiscal;
   Versao, IdAttr, NameSpace, NameSpaceLote, ListaRps, xRps,
-  TagEnvio, Prestador, Prefixo, PrefixoTS: string;
+  TagEnvio, Prestador, Prefixo, PrefixoTS, Requerente: string;
   I: Integer;
 begin
   if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
@@ -162,6 +183,7 @@ begin
   ListaRps := '';
   Prefixo := '';
   PrefixoTS := '';
+  Requerente := '';
 
   case Response.ModoEnvio of
     meLoteSincrono:
@@ -308,7 +330,11 @@ begin
                    '</' + PrefixoTS + 'CpfCnpj>' +
                    GetInscMunic(Emitente.InscMun, PrefixoTS);
 
+    if ConfigMsgDados.GerarIdentificacaoRequerente then
+      Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+
     Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                           Requerente +
                            '<' + Prefixo + 'LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
                              '<' + PrefixoTS + 'NumeroLote>' + Response.Lote + '</' + PrefixoTS + 'NumeroLote>' +
                              Prestador +
@@ -429,7 +455,8 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaLoteRps(Response: TNFSeConsu
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace, TagEnvio, Prefixo, PrefixoTS: string;
+  NameSpace, TagEnvio, Prefixo, PrefixoTS, Prestador, Requerente,
+  NumeroLote: string;
 begin
   if EstaVazio(Response.Protocolo) then
   begin
@@ -442,6 +469,8 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   Prefixo := '';
   PrefixoTS := '';
+  NumeroLote := '';
+  Requerente := '';
 
   if EstaVazio(ConfigMsgDados.ConsultarLote.xmlns) then
     NameSpace := ''
@@ -479,16 +508,31 @@ begin
 
   TagEnvio := ConfigMsgDados.ConsultarLote.DocElemento;
 
+  Prestador :='<' + Prefixo + 'Prestador>' +
+                '<' + PrefixoTS + 'CpfCnpj>' +
+                  GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
+                '</' + PrefixoTS + 'CpfCnpj>' +
+                GetInscMunic(Emitente.InscMun, PrefixoTS) +
+              '</' + Prefixo + 'Prestador>' +
+              '<' + Prefixo + 'Protocolo>' +
+                Response.Protocolo +
+              '</' + Prefixo + 'Protocolo>';
+
+  if Response.Lote <> '' then
+    NumeroLote := '<' + Prefixo + 'NumeroLote>' +
+                    Response.Lote +
+                  '</' + Prefixo + 'NumeroLote>';
+
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Prestador := '';
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'CpfCnpj>' +
-                             GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
-                           '</' + PrefixoTS + 'CpfCnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
-                         '<' + Prefixo + 'Protocolo>' +
-                           Response.Protocolo +
-                         '</' + Prefixo + 'Protocolo>' +
+                         Prestador +
+                         Requerente +
+                         NumeroLote +
                        '</' + Prefixo + TagEnvio + '>';
 end;
 
@@ -587,7 +631,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeporRps(Response: TNFSeCo
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace, TagEnvio, Prefixo, PrefixoTS: string;
+  NameSpace, TagEnvio, Prefixo, PrefixoTS, Prestador, Requerente: string;
 begin
   if EstaVazio(Response.NumRPS) then
   begin
@@ -637,6 +681,19 @@ begin
 
   TagEnvio := ConfigMsgDados.ConsultarNFSeRps.DocElemento;
 
+  Prestador :='<' + Prefixo + 'Prestador>' +
+                '<' + PrefixoTS + 'CpfCnpj>' +
+                  GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
+                '</' + PrefixoTS + 'CpfCnpj>' +
+                GetInscMunic(Emitente.InscMun, PrefixoTS) +
+              '</' + Prefixo + 'Prestador>';
+
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Prestador := '';
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                          '<' + Prefixo + 'IdentificacaoRps>' +
                            '<' + PrefixoTS + 'Numero>' +
@@ -649,12 +706,8 @@ begin
                              Response.Tipo +
                            '</' + PrefixoTS + 'Tipo>' +
                          '</' + Prefixo + 'IdentificacaoRps>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'CpfCnpj>' +
-                             GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
-                           '</' + PrefixoTS + 'CpfCnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
+                         Prestador +
+                         Requerente +
                        '</' + Prefixo + TagEnvio + '>';
 end;
 
@@ -797,7 +850,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeporFaixa(Response: TNFSe
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
+  XmlConsulta, NameSpace, Prefixo, PrefixoTS, Prestador, Requerente: string;
 begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
@@ -856,13 +909,22 @@ begin
                    '</' + PrefixoTS + 'NumeroNfseFinal>' +
                  '</' + Prefixo + 'Faixa>';
 
+  Prestador :='<' + Prefixo + 'Prestador>' +
+                '<' + PrefixoTS + 'CpfCnpj>' +
+                  GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
+                '</' + PrefixoTS + 'CpfCnpj>' +
+                GetInscMunic(Emitente.InscMun, PrefixoTS) +
+              '</' + Prefixo + 'Prestador>';
+
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Prestador := '';
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'CpfCnpj>' +
-                             GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
-                           '</' + PrefixoTS + 'CpfCnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
+                         Prestador +
+                         Requerente +
                          XmlConsulta +
                          '<' + Prefixo + 'Pagina>' +
                             IntToStr(Response.InfConsultaNFSe.Pagina) +
@@ -994,7 +1056,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeServicoPrestado(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
+  XmlConsulta, NameSpace, Prefixo, PrefixoTS, Prestador, Requerente: string;
 begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
@@ -1084,13 +1146,22 @@ begin
                      '</' + Prefixo + 'Intermediario>';
   end;
 
+  Prestador :='<' + Prefixo + 'Prestador>' +
+                '<' + PrefixoTS + 'CpfCnpj>' +
+                  GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
+                '</' + PrefixoTS + 'CpfCnpj>' +
+                GetInscMunic(Emitente.InscMun, PrefixoTS) +
+              '</' + Prefixo + 'Prestador>';
+
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Prestador := '';
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseServicoPrestadoEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'CpfCnpj>' +
-                             GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
-                           '</' + PrefixoTS + 'CpfCnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
+                         Prestador +
+                         Requerente +
                          XmlConsulta +
                          '<' + Prefixo + 'Pagina>' +
                             IntToStr(Response.InfConsultaNFSe.Pagina) +
@@ -1224,7 +1295,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeServicoTomado(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
+  XmlConsulta, NameSpace, Prefixo, PrefixoTS, Consulente, Requerente: string;
 begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
@@ -1325,13 +1396,22 @@ begin
                      '</' + Prefixo + 'Intermediario>';
   end;
 
+  Consulente :='<' + Prefixo + 'Consulente>' +
+                 '<' + PrefixoTS + 'CpfCnpj>' +
+                   GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
+                 '</' + PrefixoTS + 'CpfCnpj>' +
+                 GetInscMunic(Emitente.InscMun, PrefixoTS) +
+               '</' + Prefixo + 'Consulente>';
+
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Consulente := '';
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseServicoTomadoEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Consulente>' +
-                           '<' + PrefixoTS + 'CpfCnpj>' +
-                             GetCpfCnpj(Emitente.CNPJ, PrefixoTS) +
-                           '</' + PrefixoTS + 'CpfCnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Consulente>' +
+                         Consulente +
+                         Requerente +
                          XmlConsulta +
                          '<' + Prefixo + 'Pagina>' +
                             IntToStr(Response.InfConsultaNFSe.Pagina) +
@@ -1466,7 +1546,7 @@ var
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
   IdAttr, NameSpace, NameSpaceCanc, xMotivo, xCodVerif, Prefixo, PrefixoTS,
-  xSerie: string;
+  xSerie, Requerente, ChavedeAcesso: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -1554,7 +1634,15 @@ begin
   if xCodVerif <> '' then
     xCodVerif := '<CodigoVerificacao>' + xCodVerif + '</CodigoVerificacao>';
 
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+    ChavedeAcesso := '<ChaveAcesso>' + Trim(InfoCanc.CodVerificacao) + '</ChaveAcesso>';
+    xCodVerif := '';
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+                         Requerente +
                          '<' + PrefixoTS + 'Pedido>' +
                            '<' + PrefixoTS + 'InfPedidoCancelamento' + IdAttr + NameSpaceCanc + '>' +
                              '<' + PrefixoTS + 'IdentificacaoNfse>' +
@@ -1571,6 +1659,7 @@ begin
                                '</' + PrefixoTS + 'CodigoMunicipio>' +
                                xCodVerif +
                              '</' + PrefixoTS + 'IdentificacaoNfse>' +
+                             ChavedeAcesso +
                              '<' + PrefixoTS + 'CodigoCancelamento>' +
                                 InfoCanc.CodCancelamento +
                              '</' + PrefixoTS + 'CodigoCancelamento>' +
@@ -1675,7 +1764,9 @@ end;
 
 procedure TACBrNFSeProviderABRASFv2.PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse);
 var
-  IdAttr, xRps, NameSpace, NumRps, TagEnvio, Prefixo, PrefixoTS: string;
+  IdAttr, xRps, NameSpace, NumRps, TagEnvio, Prefixo, PrefixoTS,
+  Requerente: string;
+  Emitente: TEmitenteConfNFSe;
   AErro: TNFSeEventoCollectionItem;
   Nota: NotaFiscal;
 begin
@@ -1793,7 +1884,17 @@ begin
 
   TagEnvio := ConfigMsgDados.SubstituirNFSe.DocElemento;
 
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  if ConfigMsgDados.GerarIdentificacaoRequerente then
+  begin
+    Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
+    Response.PedCanc := RetornarConteudoEntre(Response.PedCanc,
+                                                 '<Pedido>', '</Pedido>', True);
+  end;
+
   Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                         Requerente +
                          '<' + Prefixo + 'SubstituicaoNfse' + IdAttr + '>' +
                            Response.PedCanc +
                            xRps +

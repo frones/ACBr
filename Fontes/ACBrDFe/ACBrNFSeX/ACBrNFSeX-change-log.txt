@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/08/2021
+-- Diversos --
+[*] Alterações visando o provedor EloTech.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXParametros --
 [+] Incluido a propriedade GerarIdentificacaoRequerente.
    Por: Italo Giurizzato Junior

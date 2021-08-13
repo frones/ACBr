@@ -249,6 +249,8 @@ type
     FGerarNSLoteRps: Boolean;
     // Se True gera o Prestador no Lote de Rps
     FGerarPrestadorLoteRps: Boolean;
+    // Se True gera a IdentificacaoPrestador no Lote de Rps
+    FGerarIdentificacaoRequerente: Boolean;
 
   public
     constructor Create;
@@ -277,6 +279,7 @@ type
 
     property GerarNSLoteRps: Boolean read FGerarNSLoteRps write FGerarNSLoteRps;
     property GerarPrestadorLoteRps: Boolean read FGerarPrestadorLoteRps write FGerarPrestadorLoteRps;
+    property GerarIdentificacaoRequerente: Boolean read FGerarIdentificacaoRequerente write FGerarIdentificacaoRequerente;
   end;
 
   { TConfigAssinar }

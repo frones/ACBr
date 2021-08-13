@@ -223,7 +223,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.LoteRps.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.LoteRps.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -457,7 +458,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarLote.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarLote.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -614,7 +616,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeRps.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeRps.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -823,7 +826,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSePorFaixa.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSePorFaixa.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -1019,7 +1023,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeServicoPrestado.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeServicoPrestado.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -1248,7 +1253,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeServicoTomado.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeServicoTomado.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -1503,7 +1509,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -1716,7 +1723,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.SubstituirNFSe.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.SubstituirNFSe.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -1937,12 +1945,26 @@ begin
   if (ANode = nil) then
     ANode := RootNode.Childrens.FindAnyNs('MensagemRetorno');
 
+  if (ANode = nil) then Exit;
+
+  ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
+
+  if Assigned(ANodeArray) then
+  begin
+    for I := Low(ANodeArray) to High(ANodeArray) do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+      AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+    end;
+  end;
+
   {
     Para os serviços que recepcionam o Lote de Rps tanto no modo assíncrono
     quanto no modo síncrono do provedor RLZ o nome da tag é diferente.
   }
-  if (ANode = nil) then
-    ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetornoLote');
+  ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetornoLote');
 
   if (ANode = nil) then Exit;
 

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/08/2021
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2/GovDigital.Provider --
+[*] Estava gerando dois NameSpace no XML sem os devidos prefixos.
+   Por: Italo Giurizzato Junior
+
 12/08/2021
 -- Diversos --
 [*] Inicio das mudanças nos retornos dos serviços.

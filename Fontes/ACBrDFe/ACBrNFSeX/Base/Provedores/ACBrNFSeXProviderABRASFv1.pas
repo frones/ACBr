@@ -192,7 +192,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.LoteRps.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.LoteRps.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -345,7 +346,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarSituacao.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarSituacao.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -446,7 +448,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarLote.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarLote.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -615,7 +618,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeRps.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSeRps.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -755,7 +759,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSe.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSe.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
@@ -963,7 +968,8 @@ begin
 
   if ConfigMsgDados.XmlRps.xmlns <> '' then
   begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns then
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
     begin
       if ConfigMsgDados.PrefixoTS = '' then
         NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'

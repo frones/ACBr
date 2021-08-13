@@ -88,8 +88,6 @@ begin
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
   end;
-
-  ConfigMsgDados.XmlRps.xmlns := 'http://www.abrasf.org.br/';
 end;
 
 function TACBrNFSeProviderGovDigital.CriarGeradorXml(

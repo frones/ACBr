@@ -249,6 +249,8 @@ begin
    97: Result:='97-Despesas de Sustação de Protesto' ;
    98: Result:='98-Débito de Custas Antecipadas' ;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBrasilSICOOB.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -399,6 +401,8 @@ begin
         90: Result:='90-Baixa automática';
       end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBrasilSICOOB.GerarRegistroHeader240(

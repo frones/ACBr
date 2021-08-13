@@ -1758,7 +1758,9 @@ begin
       Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
     end;
   end;  
-  end
+  end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrCaixaEconomica.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
@@ -1841,6 +1843,8 @@ begin
       99: Result := '99-Rejeição do Título';
     end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrCaixaEconomica.CodigoLiquidacao_Descricao(CodLiquidacao: Integer): String;
@@ -1860,6 +1864,8 @@ begin
     13 : result := 'Decurso Prazo - Banco';
     14 : result := 'Protestado';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);

@@ -1372,6 +1372,8 @@ begin
       end; //---- Fim Anderson
     end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoSicredi.CalcularNomeArquivoRemessa: String;
@@ -1487,7 +1489,10 @@ begin
   end;
 
   if (Result <> '') then
+  begin
+    Result := ACBrSTr(Result);
     Exit;
+  end;
 
   case CodOcorrencia of
     02: Result := '02-Entrada Confirmada';
@@ -1512,6 +1517,8 @@ begin
     84: Result := '84-Exclusão de Negativação por Outros Motivos';
     85: Result := '85-Ocorrência Informacional por Outros Motivos';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoSicredi.CodOcorrenciaToTipo(
@@ -2173,6 +2180,8 @@ begin
   TCompCarteiraCobranca:              Result := 'Carteira de cobrança';
   TCompCancelaNegativacaoAutomatica:  Result := 'Cancelamento de negativação automática';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 end.

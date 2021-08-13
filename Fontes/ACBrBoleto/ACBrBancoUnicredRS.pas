@@ -430,6 +430,8 @@ begin
     32: Result := '32-Instrução Rejeitada';
     33: Result := '33-Confirmação Pedido Alteração Outros Dados';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoUnicredRS.CodOcorrenciaToTipo(const CodOcorrencia:

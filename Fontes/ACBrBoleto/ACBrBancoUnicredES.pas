@@ -519,6 +519,8 @@ begin
     13: Result := '13-Título Utilizado Como Garantia em Operação de Desconto';
     14: Result := '14-Título Com Desistência de Garantia em Operação de Desconto';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoUnicredES.CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia;

@@ -1017,7 +1017,10 @@ begin
   end;
 
   if (Result <> '') then
-  Exit;
+  begin
+    Result := ACBrSTr(Result);
+    Exit;
+  end;
 
   case CodOcorrencia of
     02: Result := '02-Entrada Confirmada';
@@ -1094,6 +1097,8 @@ begin
     92: Result := '92-Tarifa Mensal de Cancelamento de Negativação Expressa';
     93: Result := '93-Tarifa Mensal de Exclusão de Negativação Expressa Por Liquidação';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoItau.CodOcorrenciaToTipo(
@@ -1753,6 +1758,8 @@ begin
    else
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
    end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoItau.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;

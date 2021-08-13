@@ -1140,6 +1140,8 @@ begin
     98: Result := '98-Instrução de Protesto Processada';
     99: Result := '99-Remessa Rejeitada';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBanestes.CodOcorrenciaToTipo(
@@ -1405,8 +1407,8 @@ begin
       99: Result := 'OUTROS MOTIVOS';
     end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 end.
-
-

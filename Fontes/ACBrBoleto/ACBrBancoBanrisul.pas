@@ -1296,6 +1296,8 @@ begin
   else
     Result := IntToStrZero(StrToIntDef(CodMotivo, 0), 2) +' - Outros Motivos';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBanrisul.CodOcorrenciaToTipo(
@@ -1387,8 +1389,7 @@ begin
   end;
 end;
 
-function TACBrBanrisul.TipoOcorrenciaToDescricao(
-  const TipoOcorrencia: TACBrTipoOcorrencia): String;
+function TACBrBanrisul.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 var
  CodOcorrencia: Integer;
 begin
@@ -1465,6 +1466,8 @@ begin
         Result := 'Outras ocorrências';
       end;
     end;
+
+    Result := ACBrSTr(Result);
 end;
  
 

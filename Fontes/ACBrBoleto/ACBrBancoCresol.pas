@@ -614,7 +614,10 @@ begin
   end;
 
   if (Result <> '') then
+  begin
+    Result := ACBrSTr(Result);
     Exit;
+  end;
 
   case CodOcorrencia of
     02: Result := '02-Entrada Confirmada';
@@ -635,6 +638,8 @@ begin
     35: Result := '35-Desagendamento do débito automático';
     73: Result := '73-Confirmação Recebimento Pedido de Negativação';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoCresol.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -1148,6 +1153,7 @@ begin
     Result:= PadLeft(CodMotivo,2,'0') +' - Motivos não identificados';
   end;
 
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoCresol.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;

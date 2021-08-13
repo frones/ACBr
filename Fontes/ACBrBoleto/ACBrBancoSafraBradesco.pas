@@ -473,6 +473,8 @@ begin
     60: Result := '60-Equalizacao Vendor';
     77: Result := '77-Alt. Instr. Cobr. - Juros;';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoSafraBradesco.CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
@@ -653,6 +655,8 @@ begin
   else
     Result := IntToStrZero(CodMotivo, 3) + ' - Outros Motivos';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 end.

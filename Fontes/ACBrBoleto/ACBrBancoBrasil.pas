@@ -1536,6 +1536,8 @@ begin
       98: Result:= '98-Débito de Custas Antecipadas';
     end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBrasil.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -1973,6 +1975,8 @@ begin
       end;
     end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 procedure TACBrBancoBrasil.LerRetorno400(ARetorno: TStringList);

@@ -558,6 +558,8 @@ begin
      68: Result:='68-Acerto dos dados do rateio de Crédito' ;
      69: Result:='69-Cancelamento dos dados do rateio' ;
    end;
+
+   Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBradescoSICOOB.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -649,7 +651,7 @@ begin
   end;
 end;
 
-function TACBrBancoBradescoSICOOB.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
+function TACBrBancoBradescoSICOOB.CodMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado:
@@ -836,6 +838,8 @@ begin
    else
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
    end;
+
+   Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBradescoSICOOB.CalcularTamMaximoNossoNumero(

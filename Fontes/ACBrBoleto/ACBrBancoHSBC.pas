@@ -668,6 +668,8 @@ Begin
     68: Result := '68-Acerto dos dados do rateio de Crédito';
     69: Result := '69-Cancelamento dos dados do rateio';
   End;
+
+  Result := ACBrSTr(Result);
 End;
 
 Function TACBrBancoHSBC.CodOcorrenciaToTipo(Const CodOcorrencia:
@@ -1114,6 +1116,8 @@ Begin
   Else
     Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
   End;
+
+  Result := ACBrSTr(Result);
 End;
 
 

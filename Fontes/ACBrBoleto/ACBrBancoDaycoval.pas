@@ -693,6 +693,8 @@ begin
   else
     Result := IntToStr(CodOcorrencia)+' Ocorrência desconhecida';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoDaycoval.CalcularNomeArquivoRemessa: String;

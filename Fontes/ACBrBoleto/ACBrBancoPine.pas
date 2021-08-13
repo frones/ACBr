@@ -659,6 +659,8 @@ begin
      97: Result:= 'Tarifa Sobre Baixas – Mês Anterior';
      98: Result:= 'Tarifa Sobre Entradas – Mês Anterior';
    end;
+
+   Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoPine.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -923,6 +925,8 @@ begin
    else
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
    end;
+
+   Result := ACBrSTr(Result);
 end;
 
 end.

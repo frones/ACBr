@@ -396,8 +396,9 @@ begin
     35: Result := '35-Desagendamento do débito automático';
     68: Result := '68-Acerto dos dados do rateio de Crédito';
     69: Result := '69-Cancelamento dos dados do rateio';
-
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoAlfa.CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia;
@@ -709,6 +710,7 @@ begin
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
    end;
 
+   Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoAlfa.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
@@ -754,7 +756,4 @@ begin
 
 end;
 
-
 end.
-
-

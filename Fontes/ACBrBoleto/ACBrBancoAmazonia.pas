@@ -1032,6 +1032,8 @@ begin
                     Result := '98-Débito de Custas Antecipadas';
           end;
      end;
+
+     Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoAmazonia.CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
@@ -1450,6 +1452,8 @@ begin
                          Result := '52-Reembolso de título vendor ou descontado';
                end;
      end;
+
+     Result := ACBrSTr(Result);
 end;
 
 procedure TACBrBancoAmazonia.LerRetorno400(ARetorno: TStringList);

@@ -1343,6 +1343,8 @@ begin
     60: Result := '60-EQUALIZACAO VENDOR';
     77: Result := '77-ALT. INSTR. COBR. - JUROS';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 end.

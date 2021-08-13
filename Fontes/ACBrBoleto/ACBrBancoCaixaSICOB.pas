@@ -295,6 +295,8 @@ begin
         11: Result := '11-Custas de Edital';
       end;
   end;
+
+   Result := ACBrSTr(Result);
 end;
 
 function TACBrCaixaEconomicaSICOB.CalcularTamMaximoNossoNumero(
@@ -630,6 +632,8 @@ begin
        99: Result := '99-Rejeição do Título';
      end;
    end;
+
+   Result := ACBrSTr(Result);
 end;
 
 function TACBrCaixaEconomicaSICOB.MontarCampoCodigoCedente (

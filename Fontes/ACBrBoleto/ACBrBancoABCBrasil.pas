@@ -1232,6 +1232,8 @@ begin
     98: Result := '98-Confirma Recebimento de Instrução de Alteração de Mora';
     99: Result := '99-Confirma Recebimento de Instrução de Alteração de Multa';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoABCBrasil.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -1776,6 +1778,8 @@ begin
   end
   else
     Result := CodMotivo + ' - Outros Motivos';
+
+  Result := ACBrSTr(Result);
 end;
 
 end.

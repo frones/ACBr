@@ -1395,6 +1395,7 @@ begin
       end;
   end;
 
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoob.CodOcorrenciaToTipo(
@@ -1536,6 +1537,7 @@ begin
       98: Result:='98-DESPESAS DE CUSTAS ANTECIPADAS' ;
    end;
 
+   Result := ACBrSTr(Result);
 end;
 
 end.

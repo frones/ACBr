@@ -936,7 +936,10 @@ begin
   end;
 
   if (Result <> '') then
-  Exit;
+  begin
+    Result := ACBrSTr(Result);
+    Exit;
+  end;
 
   case CodOcorrencia of
     02: Result := '02-Confirmação de Entrada de Título';
@@ -950,6 +953,8 @@ begin
     19: Result := '19-Confirmação de Recebimento de Instruções para Protesto';
     23: Result := '23-Indicação de Encaminhamento a Cartório';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoCecred.CodOcorrenciaToTipo(const CodOcorrencia:
@@ -1086,6 +1091,8 @@ begin
         90: Result:='90-Baixa automática';
       end;
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 procedure TACBrBancoCecred.LerRetorno240(ARetorno: TStringList);

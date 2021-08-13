@@ -1261,7 +1261,10 @@ begin
   end;
 
   if (Result <> '') then
+  begin
+    Result := ACBrSTr(Result);
     Exit;
+  end;
 
   case CodOcorrencia of
     02: Result:= '02-Entrada Confirmada';
@@ -1297,6 +1300,8 @@ begin
     98: Result:= '98-Instrução de Protesto Processada';
     99: Result:= '99-Remessa Rejeitada';
   end;
+
+  Result := ACBrSTr(Result);
 end;
 
 function TACBrBancoBanese.CodOcorrenciaToTipo(
@@ -1545,8 +1550,9 @@ begin
       else
          Result := IntToStrZero(CodMotivo,2) +' - Outros Motivos';
       end;
-
   end;
+
+  Result := ACBrSTr(Result);
 end;
 end.
 

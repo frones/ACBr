@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/08/2021
+-- GovDigital.GravarXml --
+[*] Possível correção para gerar a aliquota com 4 casas decimais.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alterações visando o provedor EloTech.
    Por: Italo Giurizzato Junior

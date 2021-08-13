@@ -48,6 +48,7 @@ type
 
   TNFSeW_GovDigital = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -57,5 +58,14 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     GovDigital
 //==============================================================================
+
+{ TNFSeW_GovDigital }
+
+procedure TNFSeW_GovDigital.Configuracao;
+begin
+  inherited Configuracao;
+
+  DivAliq100  := True;
+end;
 
 end.

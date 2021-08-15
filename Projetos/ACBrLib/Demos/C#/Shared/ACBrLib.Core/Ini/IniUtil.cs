@@ -251,7 +251,7 @@ namespace ACBrLib.Core
 
                 if (!section.ContainsKey(keyName)) continue;
 
-                var str = section[property.Name];
+                var str = section[keyName];
                 if (str == null) continue;
 
                 object value;

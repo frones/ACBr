@@ -1,6 +1,4 @@
-﻿using ACBrLib.Core.DFe;
-
-namespace ACBrLib.NFe
+﻿namespace ACBrLib.Core.DFe
 {
     public sealed class EnvioResposta : DFeRespostaBase
     {

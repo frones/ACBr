@@ -151,8 +151,6 @@
     <Compile Include="..\Shared\Respostas\ConsultaNFeItemPedidoResposta.cs" Link="Respostas\ConsultaNFeItemPedidoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultaNFeProcEventoResposta.cs" Link="Respostas\ConsultaNFeProcEventoResposta.cs" />
     <Compile Include="..\Shared\Respostas\ConsultaNFeResposta.cs" Link="Respostas\ConsultaNFeResposta.cs" />
-    <Compile Include="..\Shared\Respostas\EnvioResposta.cs" Link="Respostas\EnvioResposta.cs" />
-    <Compile Include="..\Shared\Respostas\EnvioRetornoResposta.cs" Link="Respostas\EnvioRetornoResposta.cs" />
     <Compile Include="..\Shared\Respostas\EventoItemResposta.cs" Link="Respostas\EventoItemResposta.cs" />
     <Compile Include="..\Shared\Respostas\EventoResposta.cs" Link="Respostas\EventoResposta.cs" />
     <Compile Include="..\Shared\Respostas\InutilizarNFeResposta.cs" Link="Respostas\InutilizarNFeResposta.cs" />

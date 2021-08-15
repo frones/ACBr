@@ -1,12 +1,12 @@
 ﻿using ACBrLib.Core.DFe;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.MDFe
 {
     public sealed class EventoItemResposta : EventoItemBase
     {
         #region Properties
 
-        public string chNFe { get; set; }
+        public string chMDFe { get; set; }
 
         #endregion Properties
     }

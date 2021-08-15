@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using ACBrLib.Core;
-using ACBrLib.Core.DFe;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.Core.DFe
 {
     public sealed class EnvioRetornoResposta
     {
@@ -18,7 +16,7 @@ namespace ACBrLib.NFe
 
         #region Methods
 
-        public static EnvioRetornoResposta LerResposta(string resposta)
+        public static EnvioRetornoResposta LerResposta(string resposta, string prefix)
         {
             var iniresposta = ACBrIniFile.Parse(resposta);
             var ret = new EnvioRetornoResposta
@@ -30,7 +28,7 @@ namespace ACBrLib.NFe
 
             if (ret.Retorno == null)
             {
-                var section = iniresposta.SingleOrDefault(x => x.Name.StartsWith("NFe"));
+                var section = iniresposta.SingleOrDefault(x => x.Name.StartsWith(prefix));
                 if (section == null) return ret;
 
                 var item = new RetornoItemResposta();

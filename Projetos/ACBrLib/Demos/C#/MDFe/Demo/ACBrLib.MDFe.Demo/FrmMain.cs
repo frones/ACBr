@@ -429,7 +429,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.Enviar(aLote, sincrono: true);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -447,7 +447,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.Enviar(aLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -589,7 +589,7 @@ namespace ACBrLib.MDFe.Demo
 
             try
             {
-                rtbRespostas.AppendText(ACBrMDFe.StatusServico());
+                rtbRespostas.AppendText(ACBrMDFe.StatusServico().Resposta);
             }
             catch (Exception exception)
             {
@@ -613,7 +613,7 @@ namespace ACBrLib.MDFe.Demo
                 ACBrMDFe.LimparLista();
 
                 var ret = ACBrMDFe.Consultar(chaveOuNFe);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -637,7 +637,7 @@ namespace ACBrLib.MDFe.Demo
 
                 ACBrMDFe.LimparLista();
                 var ret = ACBrMDFe.Consultar(chaveOuNFe);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -659,7 +659,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Consultar: Recibo", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.ConsultarRecibo(aRecibo);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -681,7 +681,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Consultar: Não Encerrados", "CNPJ.", ref aCNPJ) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.ConsultaMDFeNaoEnc(aCNPJ);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -709,7 +709,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Eventos: Cancelamento", "Justificativa do Cancelamento", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.Cancelar(eChave, aJustificativa, eCNPJ, idLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -733,7 +733,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Eventos: Encerrar", "Código do Municipio", ref cMunicipio) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.EncerrarMDFe(eChave, DateTime.Now, cMunicipio);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -755,7 +755,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Eventos: Enviar", "Identificador de controle do Lote de envio do Evento", ref idLote) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.EnviarEvento(idLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {
@@ -982,7 +982,7 @@ namespace ACBrLib.MDFe.Demo
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
 
                 var ret = ACBrMDFe.Enviar(aLote);
-                rtbRespostas.AppendText(ret);
+                rtbRespostas.AppendText(ret.Resposta);
             }
             catch (Exception exception)
             {

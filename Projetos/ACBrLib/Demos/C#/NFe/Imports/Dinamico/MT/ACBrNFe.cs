@@ -394,7 +394,7 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return EnvioRetornoResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return EnvioRetornoResposta.LerResposta(ProcessResult(buffer, bufferLen), "NFe");
         }
 
         public RetornoResposta ConsultarRecibo(string aRecibo)
@@ -410,7 +410,7 @@ namespace ACBrLib.NFe
             return RetornoResposta.LerResposta(ProcessResult(buffer, bufferLen), "NFe");
         }
 
-        public CancelamentoResposta Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
+        public CancelamentoNFeResposta Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -420,7 +420,7 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return CancelamentoResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return CancelamentoNFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public EventoResposta EnviarEvento(int aLote)

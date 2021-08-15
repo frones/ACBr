@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
+using ACBrLib.Core.Extensions;
 using ACBrLib.Core.MDFe;
 
 namespace ACBrLib.MDFe
@@ -130,6 +131,8 @@ namespace ACBrLib.MDFe
         #endregion Ini
 
         public void CarregarManifesto(Manifesto manifesto) => CarregarINI(manifesto.ToString());
+
+        public Manifesto ObterManifesto(int aIndex) => Manifesto.Load(ObterIni(aIndex));
 
         public void CarregarXML(string eArquivoOuXml)
         {
@@ -304,18 +307,18 @@ namespace ACBrLib.MDFe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string GetPathEvento(string evento)
+        public string GetPathEvento(TipoEvento evento)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<MDFE_GetPathEvento>();
-            var ret = ExecuteMethod(() => method(libHandle, ToUTF8(evento), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(libHandle, ToUTF8(evento.GetEnumValueOrInt()), buffer, ref bufferLen));
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string StatusServico()
+        public StatusServicoResposta StatusServico()
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -325,10 +328,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return StatusServicoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string Consultar(string eChaveOuNFe, bool AExtrairEventos = false)
+        public ConsultaMDFeResposta Consultar(string eChaveOuNFe, bool AExtrairEventos = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -338,10 +341,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return ConsultaMDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string Enviar(int aLote, bool imprimir = false, bool sincrono = false)
+        public EnvioRetornoResposta Enviar(int aLote, bool imprimir = false, bool sincrono = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -351,10 +354,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EnvioRetornoResposta.LerResposta(ProcessResult(buffer, bufferLen), "MDFe");
         }
 
-        public string ConsultarRecibo(string aRecibo)
+        public RetornoResposta ConsultarRecibo(string aRecibo)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -364,10 +367,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return RetornoResposta.LerResposta(ProcessResult(buffer, bufferLen), "MDFe");
         }
 
-        public string Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
+        public CancelamentoMDFeResposta Cancelar(string eChave, string eJustificativa, string eCNPJ, int aLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -377,10 +380,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return CancelamentoMDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string EnviarEvento(int aLote)
+        public EventoResposta EnviarEvento(int aLote)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -390,10 +393,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EventoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string EncerrarMDFe(string eChaveOuMDFe, DateTime eDtEnc, string cMunicipioDescarga, string nCNPJ = "", string nProtocolo = "")
+        public EncerramentoResposta EncerrarMDFe(string eChaveOuMDFe, DateTime eDtEnc, string cMunicipioDescarga, string nCNPJ = "", string nProtocolo = "")
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -404,10 +407,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return EncerramentoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public string ConsultaMDFeNaoEnc(string cnpj)
+        public NaoEncerradosResposta ConsultaMDFeNaoEnc(string cnpj)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -417,7 +420,7 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            return NaoEncerradosResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public DistribuicaoDFeResposta DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)

@@ -114,6 +114,13 @@
     <Compile Include="..\Shared\Manifesto\VeicTracaoMDFe.cs" Link="Manifesto\VeicTracaoMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\VersaoMDFe.cs" Link="Manifesto\VersaoMDFe.cs" />
     <Compile Include="..\Shared\MDFeConfig.cs" Link="MDFeConfig.cs" />
+    <Compile Include="..\Shared\Resposta\CancelamentoMDFeResposta.cs" Link="Resposta\CancelamentoMDFeResposta.cs" />
+    <Compile Include="..\Shared\Resposta\ConsultaMDFeResposta.cs" Link="Resposta\ConsultaMDFeResposta.cs" />
+    <Compile Include="..\Shared\Resposta\EncerramentoResposta.cs" Link="Resposta\EncerramentoResposta.cs" />
+    <Compile Include="..\Shared\Resposta\EventoItemResposta.cs" Link="Resposta\EventoItemResposta.cs" />
+    <Compile Include="..\Shared\Resposta\EventoResposta.cs" Link="Resposta\EventoResposta.cs" />
+    <Compile Include="..\Shared\Resposta\NaoEncerradosResposta.cs" Link="Resposta\NaoEncerradosResposta.cs" />
+    <Compile Include="..\Shared\Resposta\NaoEncerradosRespostaItem.cs" Link="Resposta\NaoEncerradosRespostaItem.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -122,6 +129,7 @@
 
   <ItemGroup>
     <Folder Include="Manifesto\" />
+    <Folder Include="Resposta\" />
   </ItemGroup>
 
 </Project>

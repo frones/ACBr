@@ -1,6 +1,6 @@
 ﻿using ACBrLib.Core.DFe;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.MDFe
 {
     public sealed class EventoResposta : EventoResposta<EventoResposta, EventoItemResposta>
     {

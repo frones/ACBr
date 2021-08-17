@@ -2224,7 +2224,7 @@ procedure TfrlDANFeRLPaisagem.AdicionarInformacoesPagamento;
     begin
       TRLLabel(FindComponent('RLPagDescricao' + IntToStr(x))).Caption :=
         ACBrStr(
-          FormaPagamentoToDescricao(fpNFe.pag.Items[x].tPag, fpNFe.pag.Items[x].xPag)
+          Copy(FormaPagamentoToDescricao(fpNFe.pag.Items[x].tPag, fpNFe.pag.Items[x].xPag),1,22)
                   );
       TRLLabel(FindComponent('RLPagValor' + IntToStr(x))).Caption :=
         FormatFloatBr(fpNFe.pag.Items[x].vPag);

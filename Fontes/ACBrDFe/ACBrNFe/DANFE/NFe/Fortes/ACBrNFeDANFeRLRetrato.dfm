@@ -2,7 +2,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Left = 234
   Top = 0
   Caption = 'frlDANFeRLRetrato'
+  ClientHeight = 703
   Font.Height = -18
+  ExplicitHeight = 742
   PixelsPerInch = 96
   TextHeight = 24
   inherited RLNFe: TRLReport
@@ -21,6 +23,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     Title = 'Danfe Retrato'
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
+    ExplicitTop = 0
     object rliMarcaDagua1: TRLImage
       Left = 241
       Top = 670
@@ -1252,7 +1255,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 126
+        Width = 124
         Height = 7
         Caption = 'INFORMA'#199#213'ES COMPLEMENTARES'
         Font.Charset = DEFAULT_CHARSET
@@ -5841,7 +5844,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 82
+        Width = 81
         Height = 7
         Caption = 'INSCRI'#199#195'O MUNICIPAL'
         Font.Charset = DEFAULT_CHARSET
@@ -7875,7 +7878,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 80
         Height = 7
-        Alignment = taCenter
+        Alignment = taRightJustify
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
@@ -7919,7 +7922,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 80
         Height = 7
-        Alignment = taCenter
+        Alignment = taRightJustify
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
@@ -7949,7 +7952,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 80
         Height = 7
-        Alignment = taCenter
+        Alignment = taRightJustify
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET
@@ -7978,8 +7981,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 656
         Top = 14
         Width = 80
-        Alignment = taCenter
         Height = 7
+        Alignment = taRightJustify
         AutoSize = False
         Caption = 'VALOR'
         Font.Charset = DEFAULT_CHARSET

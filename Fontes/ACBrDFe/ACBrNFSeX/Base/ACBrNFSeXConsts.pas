@@ -121,6 +121,10 @@ const
   Desc117 = 'Código de Verificação/Validação não informado.';
   Cod118 = 'X118';
   Desc118	= 'Chave da NFSe não informada.';
+  Cod119 = 'X119';
+  Desc119	= 'Emitente.WSUser não informado.';
+  Cod120 = 'X120';
+  Desc120	= 'Emitente.WSSenha não informada.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';

@@ -71,35 +71,30 @@ type
     function AbreSessao(const aLote: String): TNFSeAbreSessaoResponse;
     function FechaSessao(const aLote: String): TNFSeFechaSessaoResponse;
 
-    //metodos para geração e tratamento dos dados do metodo AbrirSessao
+    function PrepararRpsParaLote(const aXml: string): string; override;
+
     procedure PrepararAbrirSessao(Response: TNFSeAbreSessaoResponse);
     procedure TratarRetornoAbrirSessao(Response: TNFSeAbreSessaoResponse);
 
-    //metodos para geração e tratamento dos dados do metodo FecharSessao
     procedure PrepararFecharSessao(Response: TNFSeFechaSessaoResponse);
     procedure TratarRetornoFecharSessao(Response: TNFSeFechaSessaoResponse);
 
-    //metodos para geração e tratamento dos dados do metodo emitir
-    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaSituacao
     procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaLoteRps
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaNFSeporRps
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaNFSe
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
@@ -497,6 +492,11 @@ begin
   FechaSessao(aLote);
 end;
 
+function TACBrNFSeProviderEL.PrepararRpsParaLote(const aXml: string): string;
+begin
+  Result := '<Rps>' + SeparaDados(aXml, 'Rps') + '</Rps>';
+end;
+
 procedure TACBrNFSeProviderEL.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
@@ -638,116 +638,57 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEL.PrepararEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProviderEL.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+  Params: TNFSeParamsResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
-  IdAttr, ListaRps, xRps, xTipoDoc: string;
-  I: Integer;
+  xTipoDoc: string;
 begin
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
-  end;
-
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
-                       ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
-  end;
-
-  if Response.Erros.Count > 0 then Exit;
-
-  ListaRps := '';
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
-  begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
-
-    if EstaVazio(Nota.XMLAssinado) then
-    begin
-      Nota.GerarXML;
-      if ConfigAssinar.Rps or ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal), ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
-    end;
-
-    if FAOwner.Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(Nota.NomeArqRps) then
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-      else
-      begin
-        Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-      end;
-    end;
-
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-
-    xRps := '<Rps>' + SeparaDados(xRps, 'Rps') + '</Rps>';
-
-    ListaRps := ListaRps + xRps;
-  end;
-
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  ListaRps := ChangeLineBreak(ListaRps, '');
+  with Params do
+  begin
+    if Length(OnlyNumber(Emitente.CNPJ)) = 14 then
+      xTipoDoc := '2'
+    else
+      xTipoDoc := '1';
 
-  if Length(OnlyNumber(Emitente.CNPJ)) = 14 then
-    xTipoDoc := '2'
-  else
-    xTipoDoc := '1';
-
-  Response.XmlEnvio := '<el:EnviarLoteRpsEnvio>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                         '<hashIdentificador>' +
-                            FPHash +
-                         '</hashIdentificador>' +
-                         '<arquivo>' +
-                           '<LoteRps>' +
-                             '<Id>' +
-                                Response.Lote +
-                             '</Id>' +
-                             '<NumeroLote>' +
-                                Response.Lote +
-                             '</NumeroLote>' +
-                             '<QuantidadeRps>' +
-                                IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                             '</QuantidadeRps>' +
-                             '<IdentificacaoPrestador>' +
-                               '<CpfCnpj>' +
-                                 OnlyNumber(Emitente.CNPJ) +
-                               '</CpfCnpj>' +
-                               '<IndicacaoCpfCnpj>' +
-                                 xTipoDoc +
-                               '</IndicacaoCpfCnpj>' +
-                               '<InscricaoMunicipal>' +
-                                 OnlyNumber(Emitente.InscMun) +
-                               '</InscricaoMunicipal>' +
-                             '</IdentificacaoPrestador>' +
-                             '<ListaRps>' +
-                               ListaRps +
-                             '</ListaRps>' +
-                           '</LoteRps>' +
-                         '</arquivo>' +
-                       '</el:EnviarLoteRpsEnvio>';
+    Response.XmlEnvio := '<el:EnviarLoteRpsEnvio>' +
+                           '<identificacaoPrestador>' +
+                              OnlyNumber(Emitente.CNPJ) +
+                           '</identificacaoPrestador>' +
+                           '<hashIdentificador>' +
+                              FPHash +
+                           '</hashIdentificador>' +
+                           '<arquivo>' +
+                             '<LoteRps>' +
+                               '<Id>' +
+                                  Response.Lote +
+                               '</Id>' +
+                               '<NumeroLote>' +
+                                  Response.Lote +
+                               '</NumeroLote>' +
+                               '<QuantidadeRps>' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</QuantidadeRps>' +
+                               '<IdentificacaoPrestador>' +
+                                 '<CpfCnpj>' +
+                                   OnlyNumber(Emitente.CNPJ) +
+                                 '</CpfCnpj>' +
+                                 '<IndicacaoCpfCnpj>' +
+                                   xTipoDoc +
+                                 '</IndicacaoCpfCnpj>' +
+                                 '<InscricaoMunicipal>' +
+                                   OnlyNumber(Emitente.InscMun) +
+                                 '</InscricaoMunicipal>' +
+                               '</IdentificacaoPrestador>' +
+                               '<ListaRps>' +
+                                 Xml +
+                               '</ListaRps>' +
+                             '</LoteRps>' +
+                           '</arquivo>' +
+                         '</el:EnviarLoteRpsEnvio>';
+  end;
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoEmitir(Response: TNFSeEmiteResponse);

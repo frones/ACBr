@@ -177,6 +177,35 @@ type
 
   end;
 
+  TNFSeParamsResponse = class
+  private
+    FXml: String;
+    FTagEnvio: String;
+    FPrefixo: String;
+    FPrefixo2: String;
+    FNameSpace: String;
+    FNameSpace2: String;
+    FIdAttr: String;
+    FVersao: String;
+    FSerie: String;
+    FMotivo: String;
+    FCodVerif: String;
+  public
+    procedure Clear;
+
+    property Xml: String read FXml write FXml;
+    property TagEnvio: String read FTagEnvio write FTagEnvio;
+    property Prefixo: String read FPrefixo write FPrefixo;
+    property Prefixo2: String read FPrefixo2 write FPrefixo2;
+    property NameSpace: String read FNameSpace write FNameSpace;
+    property NameSpace2: String read FNameSpace2 write FNameSpace2;
+    property IdAttr: String read FIdAttr write FIdAttr;
+    property Versao: String read FVersao write FVersao;
+    property Serie: String read FSerie write FSerie;
+    property Motivo: String read FMotivo write FMotivo;
+    property CodVerif: String read FCodVerif write FCodVerif;
+  end;
+
   TNFSeWebserviceResponse = class
   private
     FSituacao: String;
@@ -633,6 +662,23 @@ begin
   FInfRetorno.Free;
 
   inherited Destroy;
+end;
+
+{ TNFSeParamsResponse }
+
+procedure TNFSeParamsResponse.Clear;
+begin
+  Xml := '';
+  TagEnvio := '';
+  Prefixo := '';
+  Prefixo2 := '';
+  NameSpace := '';
+  NameSpace2 := '';
+  IdAttr := '';
+  Versao := '';
+  Serie := '';
+  Motivo := '';
+  CodVerif := '';
 end;
 
 end.

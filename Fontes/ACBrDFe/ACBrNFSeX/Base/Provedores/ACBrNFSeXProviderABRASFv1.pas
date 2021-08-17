@@ -47,24 +47,38 @@ type
     procedure Configuracao; override;
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
     procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
+    procedure GerarMsgDadosConsultaSituacao(Response: TNFSeConsultaSituacaoResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
 
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+    procedure GerarMsgDadosConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure GerarMsgDadosConsultaporRps(Response: TNFSeConsultaNFSeporRpsResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
+    procedure GerarMsgDadosConsultaNFSe(Response: TNFSeConsultaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
     procedure PrepararSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
+    procedure GerarMsgDadosSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
     procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
@@ -110,7 +124,7 @@ end;
 procedure TACBrNFSeProviderABRASFv1.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
+  aParams: TNFSeParamsResponse;
   Nota: NotaFiscal;
   Versao, IdAttr, NameSpace, NameSpaceLote, ListaRps, xRps,
   TagEnvio, Prefixo, PrefixoTS: string;
@@ -234,8 +248,6 @@ begin
     ListaRps := ListaRps + xRps;
   end;
 
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
   if ConfigMsgDados.GerarNSLoteRps then
     NameSpaceLote := NameSpace
   else
@@ -254,24 +266,52 @@ begin
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
-  if Response.ModoEnvio in [meLoteAssincrono] then
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
-                           '<' + Prefixo + 'LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
-                             '<' + PrefixoTS + 'NumeroLote>' + Response.Lote + '</' + PrefixoTS + 'NumeroLote>' +
-                             '<' + PrefixoTS + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + PrefixoTS + 'Cnpj>' +
-                             GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                             '<' + PrefixoTS + 'QuantidadeRps>' +
-                                IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                             '</' + PrefixoTS + 'QuantidadeRps>' +
-                             '<' + PrefixoTS + 'ListaRps>' +
-                               ListaRps +
-                             '</' + PrefixoTS + 'ListaRps>' +
-                           '</' + Prefixo + 'LoteRps>' +
-                         '</' + Prefixo + TagEnvio + '>'
-  else
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
-                            ListaRps +
-                         '</' + Prefixo + TagEnvio + '>';
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := ListaRps;
+    aParams.TagEnvio := TagEnvio;
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := NameSpaceLote;
+    aParams.IdAttr := IdAttr;
+    aParams.Versao := Versao;
+
+    GerarMsgDadosEmitir(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    if Response.ModoEnvio in [meLoteAssincrono] then
+      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                             '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
+                               '<' + Prefixo2 + 'NumeroLote>' + Response.Lote + '</' + Prefixo2 + 'NumeroLote>' +
+                               '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
+                               GetInscMunic(Emitente.InscMun, Prefixo2) +
+                               '<' + Prefixo2 + 'QuantidadeRps>' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</' + Prefixo2 + 'QuantidadeRps>' +
+                               '<' + Prefixo2 + 'ListaRps>' +
+                                 Xml +
+                               '</' + Prefixo2 + 'ListaRps>' +
+                             '</' + Prefixo + 'LoteRps>' +
+                           '</' + Prefixo + TagEnvio + '>'
+    else
+      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                              Xml +
+                           '</' + Prefixo + TagEnvio + '>';
+  end;
 end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -316,7 +356,7 @@ end;
 procedure TACBrNFSeProviderABRASFv1.PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
+  aParams: TNFSeParamsResponse;
   NameSpace, Prefixo, PrefixoTS: string;
 begin
   if EstaVazio(Response.Protocolo) then
@@ -327,7 +367,6 @@ begin
     Exit;
   end;
 
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   Prefixo := '';
   PrefixoTS := '';
 
@@ -365,17 +404,45 @@ begin
     end;
   end;
 
-  Response.XmlEnvio := '<' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'Cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
-                           '</' + PrefixoTS + 'Cnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
-                         '<' + Prefixo + 'Protocolo>' +
-                           Response.Protocolo +
-                         '</' + Prefixo + 'Protocolo>' +
-                       '</' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio>';
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := '';
+    aParams.TagEnvio := '';
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := '';
+    aParams.Versao := '';
+
+    GerarMsgDadosConsultaSituacao(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosConsultaSituacao(
+  Response: TNFSeConsultaSituacaoResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    Response.XmlEnvio := '<' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyNumber(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                           '<' + Prefixo + 'Protocolo>' +
+                             Response.Protocolo +
+                           '</' + Prefixo + 'Protocolo>' +
+                         '</' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio>';
+  end;
 end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse);
@@ -418,7 +485,7 @@ end;
 procedure TACBrNFSeProviderABRASFv1.PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
+  aParams: TNFSeParamsResponse;
   NameSpace, Prefixo, PrefixoTS: string;
 begin
   if EstaVazio(Response.Protocolo) then
@@ -429,7 +496,6 @@ begin
     Exit;
   end;
 
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   Prefixo := '';
   PrefixoTS := '';
 
@@ -467,17 +533,45 @@ begin
     end;
   end;
 
-  Response.XmlEnvio := '<' + Prefixo + 'ConsultarLoteRpsEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'Cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
-                           '</' + PrefixoTS + 'Cnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
-                         '<' + Prefixo + 'Protocolo>' +
-                           Response.Protocolo +
-                         '</' + Prefixo + 'Protocolo>' +
-                       '</' + Prefixo + 'ConsultarLoteRpsEnvio>';
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := '';
+    aParams.TagEnvio := '';
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := '';
+    aParams.Versao := '';
+
+    GerarMsgDadosConsultaLoteRps(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    Response.XmlEnvio := '<' + Prefixo + 'ConsultarLoteRpsEnvio' + NameSpace + '>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyNumber(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                           '<' + Prefixo + 'Protocolo>' +
+                             Response.Protocolo +
+                           '</' + Prefixo + 'Protocolo>' +
+                         '</' + Prefixo + 'ConsultarLoteRpsEnvio>';
+  end;
 end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse);
@@ -588,8 +682,8 @@ end;
 procedure TACBrNFSeProviderABRASFv1.PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  NameSpace, Prefixo, PrefixoTS: string;
+  aParams: TNFSeParamsResponse;
+  NameSpace, Prefixo, PrefixoTS, TagEnvio: string;
 begin
   if EstaVazio(Response.NumRPS) then
   begin
@@ -599,7 +693,6 @@ begin
     Exit;
   end;
 
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   Prefixo := '';
   PrefixoTS := '';
 
@@ -637,25 +730,55 @@ begin
     end;
   end;
 
-  Response.XmlEnvio := '<' + Prefixo + ConfigMsgDados.ConsultarNFSeRps.DocElemento + NameSpace + '>' +
-                         '<' + Prefixo + 'IdentificacaoRps>' +
-                           '<' + PrefixoTS + 'Numero>' +
-                             Response.NumRPS +
-                           '</' + PrefixoTS + 'Numero>' +
-                           '<' + PrefixoTS + 'Serie>' +
-                             Response.Serie +
-                           '</' + PrefixoTS + 'Serie>' +
-                           '<' + PrefixoTS + 'Tipo>' +
-                             Response.Tipo +
-                           '</' + PrefixoTS + 'Tipo>' +
-                         '</' + Prefixo + 'IdentificacaoRps>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'Cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
-                           '</' + PrefixoTS + 'Cnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
-                       '</' + Prefixo + ConfigMsgDados.ConsultarNFSeRps.DocElemento + '>';
+  TagEnvio := ConfigMsgDados.ConsultarNFSeRps.DocElemento;
+
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := '';
+    aParams.TagEnvio := TagEnvio;
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := '';
+    aParams.Versao := '';
+
+    GerarMsgDadosConsultaporRps(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosConsultaporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                           '<' + Prefixo + 'IdentificacaoRps>' +
+                             '<' + Prefixo2 + 'Numero>' +
+                               Response.NumRPS +
+                             '</' + Prefixo2 + 'Numero>' +
+                             '<' + Prefixo2 + 'Serie>' +
+                               Response.Serie +
+                             '</' + Prefixo2 + 'Serie>' +
+                             '<' + Prefixo2 + 'Tipo>' +
+                               Response.Tipo +
+                             '</' + Prefixo2 + 'Tipo>' +
+                           '</' + Prefixo + 'IdentificacaoRps>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyNumber(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                         '</' + Prefixo + TagEnvio + '>';
+  end;
 end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
@@ -727,8 +850,8 @@ end;
 procedure TACBrNFSeProviderABRASFv1.PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  XmlConsulta, RazaoInter, NameSpace, Prefixo, PrefixoTS: string;
+  aParams: TNFSeParamsResponse;
+  XmlConsulta, RazaoInter, NameSpace, Prefixo, PrefixoTS, TagEnvio: string;
 begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado, tcPorNumeroURLRetornado] then
   begin
@@ -738,7 +861,6 @@ begin
     Exit;
   end;
 
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
   Prefixo := '';
   PrefixoTS := '';
 
@@ -826,15 +948,45 @@ begin
                      '</' + Prefixo + 'IntermediarioServico>';
   end;
 
-  Response.XmlEnvio := '<' + Prefixo + ConfigMsgDados.ConsultarNFSe.DocElemento + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'Cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
-                           '</' + PrefixoTS + 'Cnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
-                         XmlConsulta +
-                       '</' + Prefixo + ConfigMsgDados.ConsultarNFSe.DocElemento + '>';
+  TagEnvio := ConfigMsgDados.ConsultarNFSe.DocElemento;
+
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := XmlConsulta;
+    aParams.TagEnvio := TagEnvio;
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := '';
+    aParams.Versao := '';
+
+    GerarMsgDadosConsultaNFSe(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosConsultaNFSe(
+  Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyNumber(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                           Xml +
+                         '</' + Prefixo + TagEnvio + '>';
+  end;
 end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
@@ -920,6 +1072,7 @@ end;
 procedure TACBrNFSeProviderABRASFv1.PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
+  aParams: TNFSeParamsResponse;
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
   IdAttr, NameSpace, Prefixo, PrefixoTS, xMotivo: string;
@@ -994,28 +1147,61 @@ begin
   else
     xMotivo := '';
 
-  Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Pedido>' +
-                           '<' + PrefixoTS + 'InfPedidoCancelamento' + IdAttr + '>' +
-                             '<' + PrefixoTS + 'IdentificacaoNfse>' +
-                               '<' + PrefixoTS + 'Numero>' +
-                                 InfoCanc.NumeroNFSe +
-                               '</' + PrefixoTS + 'Numero>' +
-                               '<' + PrefixoTS + 'Cnpj>' +
-                                 OnlyNumber(Emitente.CNPJ) +
-                               '</' + PrefixoTS + 'Cnpj>' +
-                               GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                               '<' + PrefixoTS + 'CodigoMunicipio>' +
-                                  IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
-                               '</' + PrefixoTS + 'CodigoMunicipio>' +
-                             '</' + PrefixoTS + 'IdentificacaoNfse>' +
-                             '<' + PrefixoTS + 'CodigoCancelamento>' +
-                                InfoCanc.CodCancelamento +
-                             '</' + PrefixoTS + 'CodigoCancelamento>' +
-                             xMotivo +
-                           '</' + PrefixoTS + 'InfPedidoCancelamento>' +
-                         '</' + Prefixo + 'Pedido>' +
-                       '</' + Prefixo + 'CancelarNfseEnvio>';
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := '';
+    aParams.TagEnvio := '';
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := IdAttr;
+    aParams.Versao := '';
+    aParams.Serie := '';
+    aParams.Motivo := xMotivo;
+    aParams.CodVerif := '';
+
+    GerarMsgDadosCancelaNFSe(Response, aParams);
+  finally
+    aParams.Free;
+  end;
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  InfoCanc: TInfCancelamento;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  InfoCanc := Response.InfCancelamento;
+
+  with Params do
+  begin
+    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+                           '<' + Prefixo + 'Pedido>' +
+                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + '>' +
+                               '<' + Prefixo2 + 'IdentificacaoNfse>' +
+                                 '<' + Prefixo2 + 'Numero>' +
+                                   InfoCanc.NumeroNFSe +
+                                 '</' + Prefixo2 + 'Numero>' +
+                                 '<' + Prefixo2 + 'Cnpj>' +
+                                   OnlyNumber(Emitente.CNPJ) +
+                                 '</' + Prefixo2 + 'Cnpj>' +
+                                 GetInscMunic(Emitente.InscMun, Prefixo2) +
+                                 '<' + Prefixo2 + 'CodigoMunicipio>' +
+                                    IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                                 '</' + Prefixo2 + 'CodigoMunicipio>' +
+                               '</' + Prefixo2 + 'IdentificacaoNfse>' +
+                               '<' + Prefixo2 + 'CodigoCancelamento>' +
+                                  InfoCanc.CodCancelamento +
+                               '</' + Prefixo2 + 'CodigoCancelamento>' +
+                               Motivo +
+                             '</' + Prefixo2 + 'InfPedidoCancelamento>' +
+                           '</' + Prefixo + 'Pedido>' +
+                         '</' + Prefixo + 'CancelarNfseEnvio>';
+  end;
 end;
 
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse);
@@ -1107,6 +1293,12 @@ begin
 
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderABRASFv1.GerarMsgDadosSubstituiNFSe(
+  Response: TNFSeSubstituiNFSeResponse; Params: TNFSeParamsResponse);
+begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 

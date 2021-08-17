@@ -48,8 +48,7 @@ uses
 
 type
   // Rps não é assinado
-//  TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceRest)
-  TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceMulti)
+  TACBrNFSeXWebserviceIPM = class(TACBrNFSeXWebserviceRest)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function TesteEnvio(ACabecalho, AMSG: String): string; override;
@@ -66,15 +65,15 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    //metodos para geração e tratamento dos dados do metodo emitir
-    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    function PrepararRpsParaLote(const aXml: string): string; override;
+
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaLoteRps
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
@@ -213,6 +212,12 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderIPM.PrepararRpsParaLote(const aXml: string): string;
+begin
+  Result := aXml;
+end;
+
+(*
 procedure TACBrNFSeProviderIPM.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -279,6 +284,12 @@ begin
   ListaRps := ChangeLineBreak(ListaRps, '');
 
   Response.XmlEnvio := ListaRps;
+end;
+*)
+procedure TACBrNFSeProviderIPM.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+  Params: TNFSeParamsResponse);
+begin
+  Response.XmlEnvio := Params.Xml;
 end;
 
 procedure TACBrNFSeProviderIPM.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -381,11 +392,11 @@ procedure TACBrNFSeProviderIPM.PrepararConsultaLoteRps(
 var
   AErro: TNFSeEventoCollectionItem;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod111;
-    AErro.Descricao := Desc111;
+    AErro.Codigo := Cod101;
+    AErro.Descricao := Desc101;
     Exit;
   end;
 
@@ -597,7 +608,8 @@ begin
   Request := AMSG;
 
   Result := Executar('', Request,
-                     ['enviarReturn', 'ReqEnvioLoteRPS'],
+                     [''],
+//                     ['enviarReturn', 'ReqEnvioLoteRPS'],
                      []);
 end;
 

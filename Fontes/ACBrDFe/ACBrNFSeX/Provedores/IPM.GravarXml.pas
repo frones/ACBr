@@ -115,8 +115,8 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nfse_teste', 1, 1, 80,
-                                                            NFSe.InfID.ID, ''));
+//  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nfse_teste', 1, 1, 80,
+//                                                            NFSe.InfID.ID, ''));
 
   if NFSe.Producao = snNao then
     NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 1, 1, '1', ''));

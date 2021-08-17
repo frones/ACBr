@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/08/2021
+-- Diversos --
+[*] Criado novos métodos para reduzir o código com o uso de sobre carga.
+   Por: Italo Giurizzato Junior
+
 13/08/2021
 -- GovDigital.GravarXml --
 [*] Possível correção para gerar a aliquota com 4 casas decimais.

@@ -64,15 +64,15 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    //metodos para geração e tratamento dos dados do metodo emitir
-    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    function PrepararRpsParaLote(const aXml: string): string; override;
+
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaLoteRps
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
@@ -136,6 +136,14 @@ begin
     raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeProvidereGoverneISS.PrepararRpsParaLote(
+  const aXml: string): string;
+begin
+  Result := '<eis:NotaFiscal>' +
+                SeparaDados(aXml, 'eis:NotaFiscal') +
+            '</eis:NotaFiscal>';
+end;
+
 procedure TACBrNFSeProvidereGoverneISS.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
@@ -163,96 +171,34 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProvidereGoverneISS.PrepararEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProvidereGoverneISS.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
-  IdAttr, ListaRps, xRps: string;
-  I: Integer;
 begin
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
-  end;
-
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
-                       ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
-  end;
-
-  if Response.Erros.Count > 0 then Exit;
-
-  ListaRps := '';
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
-  begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
-
-    if EstaVazio(Nota.XMLAssinado) then
-    begin
-      Nota.GerarXML;
-      if ConfigAssinar.Rps or ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal), ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
-    end;
-
-    if FAOwner.Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(Nota.NomeArqRps) then
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-      else
-      begin
-        Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-      end;
-    end;
-
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-
-    xRps := '<eis:NotaFiscal>' +
-                 SeparaDados(xRps, 'eis:NotaFiscal') +
-              '</eis:NotaFiscal>';
-
-    ListaRps := ListaRps + xRps;
-  end;
-
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  ListaRps := ChangeLineBreak(ListaRps, '');
-
-  if Response.ModoEnvio = meLoteAssincrono then
+  with Params do
   begin
-    ListaRps := StringReplace(ListaRps, 'eis:NotaFiscal', 'eis1:NotaFiscalLoteDTO', [rfReplaceAll]);
+    if Response.ModoEnvio = meLoteAssincrono then
+    begin
+      Xml := StringReplace(Xml, 'eis:NotaFiscal', 'eis1:NotaFiscalLoteDTO', [rfReplaceAll]);
 
-    Response.XmlEnvio := '<eis:Notas>' +
-                           '<eis1:ChaveAutenticacao>' +
-                              Emitente.WSChaveAcesso +
-                           '</eis1:ChaveAutenticacao>' +
-                           '<eis1:EmailContato>' +
-                              Emitente.DadosEmitente.Email +
-                           '</eis1:EmailContato>' +
-                           '<eis1:Notas>' +
-                              ListaRps +
-                           '</eis1:Notas>' +
-                         '</eis:Notas>';
-  end
-  else
-    Response.XmlEnvio := ListaRps;
+      Response.XmlEnvio := '<eis:Notas>' +
+                             '<eis1:ChaveAutenticacao>' +
+                                Emitente.WSChaveAcesso +
+                             '</eis1:ChaveAutenticacao>' +
+                             '<eis1:EmailContato>' +
+                                Emitente.DadosEmitente.Email +
+                             '</eis1:EmailContato>' +
+                             '<eis1:Notas>' +
+                                Xml +
+                             '</eis1:Notas>' +
+                           '</eis:Notas>';
+    end
+    else
+      Response.XmlEnvio := Xml;
+  end;
 end;
 
 procedure TACBrNFSeProvidereGoverneISS.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -377,7 +323,7 @@ begin
                           Emitente.WSChaveAcesso +
                        '</eis:ChaveAutenticacao>' +
                        '<eis:Homologacao>' +
-                         LowerCase(BoolToStr(not Transacao, True)) +
+                         LowerCase(BoolToStr(Transacao, True)) +
                        '</eis:Homologacao>' +
                        '<eis:NumeroNota>' +
                           Response.InfCancelamento.NumeroNFSe +

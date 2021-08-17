@@ -500,14 +500,14 @@ begin
 
   if aXml = '' then
     aXml := '<a>' +
-                '<ListaMensagemRetorno>' +
-                 '<MensagemRetorno>' +
+              '<ListaMensagemRetorno>' +
+                '<MensagemRetorno>' +
                   '<Codigo>' + '</Codigo>' +
                   '<Mensagem>' + Response + '</Mensagem>' +
                   '<Correcao>' + '</Correcao>' +
-                 '</MensagemRetorno>' +
-                '</ListaMensagemRetorno>' +
-               '</a>';
+                '</MensagemRetorno>' +
+              '</ListaMensagemRetorno>' +
+            '</a>';
 
   Result :=  aXml;
 end;
@@ -674,6 +674,17 @@ begin
 
             HttpClient.DataResp.Position := 0;
             FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size);
+
+            // Alsuns provedores retorna uma string apenas com a mensagem de erro
+            if Pos('Body', FPRetorno) = 0 then
+              FPRetorno := GetSoapBody(FPRetorno);
+
+            // Se o XML não tiver a codificação incluir ela.
+            if ObtemDeclaracaoXML(FPRetorno) = '' then
+              FPRetorno := CUTF8DeclaracaoXML + FPRetorno;
+
+            // Alguns provedores não retornam o XML em UTF-8
+            FPRetorno := ConverteXMLtoUTF8(FPRetorno);
 
             (*
             // {"retorno":{"msg":"Acesso Negado!","sis":false,"code":401}}
@@ -919,7 +930,20 @@ end;
 
 function TACBrNFSeXWebserviceNoSoap.GetSoapBody(const Response: string): string;
 begin
-  Result := Response;
+  if Pos('<', Response) = 0 then
+    Result := '<a>' +
+                '<ListaMensagemRetorno>' +
+                  '<MensagemRetorno>' +
+                    '<Codigo>' + '</Codigo>' +
+                    '<Mensagem>' + Response + '</Mensagem>' +
+                    '<Correcao>' + '</Correcao>' +
+                  '</MensagemRetorno>' +
+                '</ListaMensagemRetorno>' +
+              '</a>'
+  else
+    Result := Response;
+
+   Result := ConverteXMLtoUTF8(Result);
 end;
 
 function TACBrNFSeXWebserviceNoSoap.PrepararEnvio(const Message, SoapAction,

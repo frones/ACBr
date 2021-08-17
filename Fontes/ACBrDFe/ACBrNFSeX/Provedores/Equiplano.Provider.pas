@@ -66,27 +66,24 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    //metodos para geração e tratamento dos dados do metodo emitir
-    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    function PrepararRpsParaLote(const aXml: string): string; override;
+
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaSituacao
     procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaLoteRps
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaNFSeporRps
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaNFSe
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
@@ -164,7 +161,7 @@ begin
       DocElemento := 'esCancelarNfseEnvio';
     end;
 
-    DadosCabecalho   := '1';
+    DadosCabecalho := '1';
   end;
 
   with ConfigSchemas do
@@ -232,108 +229,61 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEquiplano.PrepararEmitir(Response: TNFSeEmiteResponse);
+function TACBrNFSeProviderEquiplano.PrepararRpsParaLote(
+  const aXml: string): string;
+begin
+  Result := '<rps>' + SeparaDados(aXml, 'rps') + '</rps>';
+end;
+
+procedure TACBrNFSeProviderEquiplano.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
-  IdAttr, NameSpace, ListaRps, xRps: string;
-  I: Integer;
 begin
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
+  if EstaVazio(Response.Lote) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
-  end;
-
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
-                       ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
-  end;
-
-  if Response.Erros.Count > 0 then Exit;
-
-  ListaRps := '';
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
-  begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
-
-    if EstaVazio(Nota.XMLAssinado) then
-    begin
-      Nota.GerarXML;
-      if ConfigAssinar.Rps or ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal), ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
-    end;
-
-    if FAOwner.Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(Nota.NomeArqRps) then
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-      else
-      begin
-        Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-      end;
-    end;
-
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-
-    xRps := '<rps>' + SeparaDados(xRps, 'rps') + '</rps>';
-
-    ListaRps := ListaRps + xRps;
+    AErro.Codigo := Cod111;
+    AErro.Descricao := Desc111;
+    Exit;
   end;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  ListaRps := ChangeLineBreak(ListaRps, '');
-
-  NameSpace := ' xmlns:es="' + ConfigMsgDados.LoteRps.xmlns + '"';
-
-  Response.XmlEnvio := '<es:enviarLoteRpsEnvio' + NameSpace + '>' +
-                         '<lote>' +
-                           '<nrLote>' +
-                              Response.Lote +
-                           '</nrLote>' +
-                           '<qtRps>' +
-                              IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                           '</qtRps>' +
-                           '<nrVersaoXml>' +
-                              '1' +
-                           '</nrVersaoXml>' +
-                           '<prestador>' +
-                             '<nrCnpj>' +
-                                OnlyNumber(Emitente.CNPJ) +
-                             '</nrCnpj>' +
-                             '<nrInscricaoMunicipal>' +
-                                OnlyNumber(Emitente.InscMun) +
-                             '</nrInscricaoMunicipal>' +
-                             '<isOptanteSimplesNacional>' +
-                                SimNaoToStr(TACBrNFSeX(FAOwner).NotasFiscais.items[0].NFSe.OptanteSimplesNacional) +
-                             '</isOptanteSimplesNacional>' +
-                             '<idEntidade>' +
-                                TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
-                             '</idEntidade>' +
-                           '</prestador>' +
-                           '<listaRps>' +
-                              ListaRps +
-                           '</listaRps>' +
-                         '</lote>' +
-                       '</es:enviarLoteRpsEnvio>';
+  with Params do
+  begin
+    Response.XmlEnvio := '<es:enviarLoteRpsEnvio' + NameSpace + '>' +
+                           '<lote>' +
+                             '<nrLote>' +
+                                Response.Lote +
+                             '</nrLote>' +
+                             '<qtRps>' +
+                                IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                             '</qtRps>' +
+                             '<nrVersaoXml>' +
+                                '1' +
+                             '</nrVersaoXml>' +
+                             '<prestador>' +
+                               '<nrCnpj>' +
+                                  OnlyNumber(Emitente.CNPJ) +
+                               '</nrCnpj>' +
+                               '<nrInscricaoMunicipal>' +
+                                  OnlyNumber(Emitente.InscMun) +
+                               '</nrInscricaoMunicipal>' +
+                               '<isOptanteSimplesNacional>' +
+                                  SimNaoToStr(TACBrNFSeX(FAOwner).NotasFiscais.items[0].NFSe.OptanteSimplesNacional) +
+                               '</isOptanteSimplesNacional>' +
+                               '<idEntidade>' +
+                                  TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                               '</idEntidade>' +
+                             '</prestador>' +
+                             '<listaRps>' +
+                                Xml +
+                             '</listaRps>' +
+                           '</lote>' +
+                         '</es:enviarLoteRpsEnvio>';
+  end;
 end;
 
 procedure TACBrNFSeProviderEquiplano.TratarRetornoEmitir(Response: TNFSeEmiteResponse);

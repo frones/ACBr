@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2021
+--- ACBrLibSATMT, ACBrLibSATST ---
+[-] Correção de erro no metodo SAT_AtivarSAT estava sem a declaração StdCall/Cdecl.
+	Por: Rafael Dias
+
 05/08/2021
 --- ACBrLibSATDataModule ---
 [-] Correção de erro quando utilizado com integrador fiscal do CE.
@@ -54,11 +59,13 @@ Símbolo : Significado
 
 07/09/2020
 --- ACBrLibSATMT, ACBrLibSATST ---
-[+] Removido o metodo SAT_ConfigImportar.
+[+] Adicionado o metodo SAT_ConfigImportar.
    Por: Rafael Dias
-[+] Removido o metodo SAT_ConfigExportar.
+[+] Adicionado o metodo SAT_ConfigExportar.
    Por: Rafael Dias
 [-] Removido o metodo SAT_ImportarConfig.
+   Por: Rafael Dias
+[-] Removido o metodo SAT_ExportarConfig.
    Por: Rafael Dias
 
 28/08/2020

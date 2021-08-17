@@ -162,6 +162,10 @@ type
     xObtemDadoPinPadDiretoEx: function(ChaveAcesso: PAnsiChar;
               Identificador: PAnsiChar; Entrada: PAnsiChar; Saida: PAnsiChar): Integer;
               {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
+	
+  	xLeDigitoPinPad: function(MensagemDisplay: PAnsiChar;
+              NumeroDigitado: PAnsiChar): Integer;
+              {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
     procedure SetInicializada(AValue: Boolean);
 
@@ -217,6 +221,8 @@ type
     function VerificaPresencaPinPad: Boolean;
     function ObtemDadoPinPadDiretoEx(TipoDocumento: Integer; ChaveAcesso,
       Identificador: AnsiString): AnsiString;
+
+    function LeDigitoPinPad(MensagemDisplay: AnsiString): AnsiString;
 
     property PathDLL: string read fPathDLL write fPathDLL;
     property Inicializada: Boolean read fInicializada write SetInicializada;
@@ -479,6 +485,7 @@ begin
   xEnviaRecebeSiTefDireto             := nil;
   xVerificaPresencaPinPad             := nil;
   xObtemDadoPinPadDiretoEx            := nil;
+  xLeDigitoPinPad                     := nil;
 end;
 
 destructor TACBrTEFCliSiTefAPI.Destroy;
@@ -535,6 +542,7 @@ begin
   CliSiTefFunctionDetect('EnviaRecebeSiTefDireto',@xEnviaRecebeSiTefDireto);
   CliSiTefFunctionDetect('VerificaPresencaPinPad',@xVerificaPresencaPinPad);
   CliSiTefFunctionDetect('ObtemDadoPinPadDiretoEx', @xObtemDadoPinPadDiretoEx);
+  CliSiTefFunctionDetect('LeDigitoPinPad', @xLeDigitoPinPad);
 
   fInicializada := True;
 end ;
@@ -562,6 +570,7 @@ begin
   xEnviaRecebeSiTefDireto             := Nil;
   xVerificaPresencaPinPad             := Nil;
   xObtemDadoPinPadDiretoEx            := Nil;
+  xLeDigitoPinPad                     := Nil;
 
   fInicializada := False;
 end;
@@ -762,6 +771,25 @@ begin
       Result := copy(TrimRight(Saida), 5, DocLen);
       if (TipoDocumento = 2) then
         Delete(Result, 9, 2);
+    end;
+  end;
+end;
+
+function TACBrTEFCliSiTefAPI.LeDigitoPinPad(MensagemDisplay: AnsiString): AnsiString;
+var
+  Saida: array [0..5] of AnsiChar;
+  Retorno: Integer;
+begin
+  Result := '';
+
+  if Assigned(xLeDigitoPinPad) then
+  begin
+    Retorno := xLeDigitoPinPad(PAnsiChar(MensagemDisplay),
+                    Saida);
+
+    if Retorno = 0 then
+    begin
+      Result := TrimRight(Saida);
     end;
   end;
 end;

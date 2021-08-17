@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/08/2021
+-- ACBrNFSeXParametros/ACBrNFSeXProviderBase --
+[-] Correção na leitura das URLs de Homologação e Produção contidas no arquivo
+    ACBrNFSeXServicos.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Criado novos métodos para reduzir o código com o uso de sobre carga.
    Por: Italo Giurizzato Junior

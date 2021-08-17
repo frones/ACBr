@@ -176,7 +176,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure LoadUrl(AINI: TCustomIniFile; ASession: string);
+    procedure LoadUrlProducao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadUrlHomologacao(AINI: TCustomIniFile; ASession: string);
+    procedure HomologacaoIgualProducao(AINI: TCustomIniFile; ASession: string);
 
     property VersaoDados: string read FVersaoDados write FVersaoDados;
     property VersaoAtrib: string read FVersaoAtrib write FVersaoAtrib;
@@ -418,7 +420,39 @@ begin
   inherited Destroy;
 end;
 
-procedure TConfigWebServices.LoadUrl(AINI: TCustomIniFile; ASession: string);
+procedure TConfigWebServices.LoadUrlHomologacao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  with Homologacao do
+  begin
+    FRecepcionar         := AINI.ReadString(ASession, 'HomRecepcionar'        , '');
+    FConsultarSituacao   := AINI.ReadString(ASession, 'HomConsultarSituacao'  , FRecepcionar);
+    FConsultarLote       := AINI.ReadString(ASession, 'HomConsultarLote'      , FRecepcionar);
+    FConsultarNFSeRPS    := AINI.ReadString(ASession, 'HomConsultarNFSeRps'   , FRecepcionar);
+    FConsultarNFSe       := AINI.ReadString(ASession, 'HomConsultarNFSe'      , FRecepcionar);
+    FConsultarNFSeURL    := AINI.ReadString(ASession, 'HomConsultarNFSeURL'   , FRecepcionar);
+    FCancelarNFSe        := AINI.ReadString(ASession, 'HomCancelarNFSe'       , FRecepcionar);
+    FGerarNFSe           := AINI.ReadString(ASession, 'HomGerarNFSe'          , FRecepcionar);
+    FRecepcionarSincrono := AINI.ReadString(ASession, 'HomRecepcionarSincrono', FRecepcionar);
+    FSubstituirNFSe      := AINI.ReadString(ASession, 'HomSubstituirNFSe'     , FRecepcionar);
+    FAbrirSessao         := AINI.ReadString(ASession, 'HomAbrirSessao'        , FRecepcionar);
+    FFecharSessao        := AINI.ReadString(ASession, 'HomFecharSessao'       , FRecepcionar);
+
+    FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'HomConsultarNFSePorFaixa'       , FRecepcionar);
+    FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'HomConsultarNFSeServicoPrestado', FRecepcionar);
+    FConsultarNFSeServicoTomado   := AINI.ReadString(ASession, 'HomConsultarNFSeServicoTomado'  , FRecepcionar);
+
+    FXMLNameSpace := AINI.ReadString(ASession, 'HomXMLNameSpace', '');
+
+    FNameSpace := AINI.ReadString(ASession, 'HomNameSpace', '');
+
+    FSoapAction := AINI.ReadString(ASession, 'HomSoapAction', '');
+
+    FLinkURL := AINI.ReadString(ASession, 'HomLinkURL', '');
+  end;
+end;
+
+procedure TConfigWebServices.LoadUrlProducao(AINI: TCustomIniFile; ASession: string);
 begin
   with Producao do
   begin
@@ -447,34 +481,13 @@ begin
 
     FLinkURL := AINI.ReadString(ASession, 'ProLinkURL', '');
   end;
+end;
 
+procedure TConfigWebServices.HomologacaoIgualProducao(AINI: TCustomIniFile;
+  ASession: string);
+begin
   with Homologacao do
   begin
-    FRecepcionar         := AINI.ReadString(ASession, 'HomRecepcionar'        , '');
-    FConsultarSituacao   := AINI.ReadString(ASession, 'HomConsultarSituacao'  , FRecepcionar);
-    FConsultarLote       := AINI.ReadString(ASession, 'HomConsultarLote'      , FRecepcionar);
-    FConsultarNFSeRPS    := AINI.ReadString(ASession, 'HomConsultarNFSeRps'   , FRecepcionar);
-    FConsultarNFSe       := AINI.ReadString(ASession, 'HomConsultarNFSe'      , FRecepcionar);
-    FConsultarNFSeURL    := AINI.ReadString(ASession, 'HomConsultarNFSeURL'   , FRecepcionar);
-    FCancelarNFSe        := AINI.ReadString(ASession, 'HomCancelarNFSe'       , FRecepcionar);
-    FGerarNFSe           := AINI.ReadString(ASession, 'HomGerarNFSe'          , FRecepcionar);
-    FRecepcionarSincrono := AINI.ReadString(ASession, 'HomRecepcionarSincrono', FRecepcionar);
-    FSubstituirNFSe      := AINI.ReadString(ASession, 'HomSubstituirNFSe'     , FRecepcionar);
-    FAbrirSessao         := AINI.ReadString(ASession, 'HomAbrirSessao'        , FRecepcionar);
-    FFecharSessao        := AINI.ReadString(ASession, 'HomFecharSessao'       , FRecepcionar);
-
-    FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'HomConsultarNFSePorFaixa'       , FRecepcionar);
-    FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'HomConsultarNFSeServicoPrestado', FRecepcionar);
-    FConsultarNFSeServicoTomado   := AINI.ReadString(ASession, 'HomConsultarNFSeServicoTomado'  , FRecepcionar);
-
-    FXMLNameSpace := AINI.ReadString(ASession, 'HomXMLNameSpace', '');
-
-    FNameSpace := AINI.ReadString(ASession, 'HomNameSpace', '');
-
-    FSoapAction := AINI.ReadString(ASession, 'HomSoapAction', '');
-
-    FLinkURL := AINI.ReadString(ASession, 'HomLinkURL', '');
-
     if FRecepcionar = '' then
     begin
       FRecepcionar         := Producao.Recepcionar;

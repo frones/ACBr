@@ -520,14 +520,27 @@ begin
     with TACBrNFSeX(FAOwner) do
     begin
       Sessao := Configuracoes.Geral.xProvedor;
-      ConfigWebServices.LoadUrl(IniParams, Sessao);
+      ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
+      ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
       ConfigGeral.LoadParams1(IniParams, Sessao);
       ConfigGeral.LoadParams2(IniParams, Sessao);
 
       if ConfigWebServices.Producao.Recepcionar = '' then
       begin
         Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-        ConfigWebServices.LoadUrl(IniParams, Sessao);
+        ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.Recepcionar = '' then
+      begin
+        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
+        ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.Recepcionar = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
       end;
 
       if ConfigGeral.Params1 = '' then

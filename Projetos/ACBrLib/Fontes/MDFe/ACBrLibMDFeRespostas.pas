@@ -53,6 +53,7 @@ type
     FxMotivo: string;
     FcUF: integer;
     FMsg: string;
+    FdhRecbto: TDateTime;
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
@@ -68,6 +69,7 @@ type
     property XMotivo: string read FxMotivo write FxMotivo;
     property CUF: integer read FcUF write FcUF;
     property Msg: string read FMsg write FMsg;
+    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
 
   end;
 
@@ -96,9 +98,7 @@ type
   { TConsultaResposta }
   TConsultaResposta = class(TLibMDFeResposta)
   private
-    FMsg: string;
     FchMDFe: string;
-    FdhRecbto: TDateTime;
     FnProt: string;
     FdigVal: string;
 
@@ -108,9 +108,7 @@ type
     procedure Processar(const ACBrMDFe: TACBrMDFe); override;
 
   published
-    property Msg: string read FMsg write FMsg;
     property ChMDFe: string read FchMDFe write FchMDFe;
-    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property NProt: string read FnProt write FnProt;
     property DigVal: string read FdigVal write FdigVal;
 
@@ -121,7 +119,6 @@ type
   private
     FArquivo: string;
     FchMDFe: string;
-    FdhRecbto: TDateTime;
     FnProt: string;
     FtpEvento: string;
     FxEvento: string;
@@ -137,7 +134,6 @@ type
 
   published
     property ChMDFe: string read FchMDFe write FchMDFe;
-    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property NProt: string read FnProt write FnProt;
     property TpEvento: string read FtpEvento write FtpEvento;
     property XEvento: string read FxEvento write FxEvento;
@@ -192,7 +188,6 @@ type
   private
     FArquivo: string;
     FchMDFe: string;
-    FdhRecbto: TDateTime;
     FnProt: string;
     FtpEvento: string;
     FxEvento: string;
@@ -208,7 +203,6 @@ type
 
   published
     property ChMDFe: string read FchMDFe write FchMDFe;
-    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property NProt: string read FnProt write FnProt;
     property TpEvento: string read FtpEvento write FtpEvento;
     property XEvento: string read FxEvento write FxEvento;
@@ -223,8 +217,6 @@ type
   { TEnvioResposta }
   TEnvioResposta = class(TLibMDFeResposta)
   private
-    Fmsg: string;
-    FdhRecbto: TDateTime;
     FtMed: integer;
     FnRec: string;
     FXml: string;
@@ -238,8 +230,6 @@ type
     procedure Processar(const ACBrMDFe: TACBrMDFe); override;
 
   published
-    property Msg: string read Fmsg write Fmsg;
-    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property TMed: integer read FtMed write FtMed;
     property NRec: string read FnRec write FnRec;
     property Xml: String read FXml write FXml;
@@ -496,6 +486,7 @@ begin
     Self.CStat := cStat;
     Self.XMotivo := XMotivo;
     Self.CUF := cUF;
+    Self.DhRecbto := DhRecbto;
 
     for i := 0 to InfMDFe.Count - 1 do
     begin

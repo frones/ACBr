@@ -65,15 +65,15 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    //metodos para geração e tratamento dos dados do metodo emitir
-    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    function PrepararRpsParaLote(const aXml: string): string; override;
+
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaLoteRps
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
@@ -299,74 +299,16 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSmarAPD.PrepararEmitir(Response: TNFSeEmiteResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-  Nota: NotaFiscal;
-  IdAttr, ListaRps, xRps: string;
-  I: Integer;
+function TACBrNFSeProviderSmarAPD.PrepararRpsParaLote(
+  const aXml: string): string;
 begin
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
-  end;
+  Result := '<nfd>' + SeparaDados(aXml, 'nfd') + '</nfd>';
+end;
 
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
-                       ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
-  end;
-
-  if Response.Erros.Count > 0 then Exit;
-
-  ListaRps := '';
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
-  begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
-
-    if EstaVazio(Nota.XMLAssinado) then
-    begin
-      Nota.GerarXML;
-      if ConfigAssinar.Rps or ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal), ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
-    end;
-
-    if FAOwner.Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(Nota.NomeArqRps) then
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-      else
-      begin
-        Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-      end;
-    end;
-
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-
-    xRps := '<nfd>' + SeparaDados(xRps, 'nfd') + '</nfd>';
-
-    ListaRps := ListaRps + xRps;
-  end;
-
-  ListaRps := ChangeLineBreak(ListaRps, '');
-
-  Response.XmlEnvio := '<tbnfd>' + ListaRps + '</tbnfd>';
+procedure TACBrNFSeProviderSmarAPD.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+begin
+  Response.XmlEnvio := '<tbnfd>' + Params.Xml + '</tbnfd>';
 end;
 
 procedure TACBrNFSeProviderSmarAPD.TratarRetornoEmitir(
@@ -398,17 +340,25 @@ begin
       ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('return');
-      AuxNode := AuxNode.Childrens.FindAnyNs('nfd');
-      AuxNode := AuxNode.Childrens.FindAnyNs('recibo');
 
       if AuxNode <> nil then
       begin
-        Response.Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
+        AuxNode := AuxNode.Childrens.FindAnyNs('nfd');
 
-        with Response.InfRetorno do
+        if AuxNode <> nil then
         begin
-          DataRecebimento := LerDatas(ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('datahora'), tcStr));
-          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          AuxNode := AuxNode.Childrens.FindAnyNs('recibo');
+
+          if AuxNode <> nil then
+          begin
+            Response.Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
+
+            with Response.InfRetorno do
+            begin
+              DataRecebimento := LerDatas(ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('datahora'), tcStr));
+              Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+            end;
+          end;
         end;
       end;
     except

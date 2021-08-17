@@ -106,7 +106,11 @@ procedure TACBrNFSeProviderSimplISS.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.Identificador := 'id';
+  with ConfigGeral do
+  begin
+    identificador := 'id';
+    UseCertificateHTTP := False;
+  end;
 
   SetXmlNameSpace('http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd');
 

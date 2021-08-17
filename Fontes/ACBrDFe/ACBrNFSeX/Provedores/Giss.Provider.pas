@@ -86,8 +86,16 @@ begin
     CancelarNFSe := True;
   end;
 
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.04';
+    VersaoAtrib := '2.04';
+  end;
+
   with ConfigMsgDados do
   begin
+    GerarPrestadorLoteRps := True;
+    {
     XmlRps.xmlns := 'http://www.giss.com.br/tipos-v2_04.xsd';
 
     LoteRps.xmlns := 'http://www.giss.com.br/enviar-lote-rps-envio-v2_04.xsd';
@@ -109,8 +117,10 @@ begin
     DadosCabecalho := '<cabecalho versao="1.0" xmlns="http://www.giss.com.br/cabecalho-v2_04.xsd">' +
                       '<versaoDados>1.0</versaoDados>' +
                       '</cabecalho>';
+    }
+    DadosCabecalho := GetCabecalho('');
   end;
-
+  {
   with ConfigSchemas do
   begin
     Recepcionar := 'enviar-lote-rps-envio-v2_04.xsd';
@@ -125,7 +135,9 @@ begin
     GerarNFSe := 'gerar-nfse-envio-v2_04.xsd';
     RecepcionarSincrono := 'enviar-lote-rps-sincrono-envio-v2_04.xsd';
     SubstituirNFSe := 'substituir-nfse-envio-v2_04.xsd';
+    Validar := False;
   end;
+  }
 end;
 
 function TACBrNFSeProviderGiss.CriarGeradorXml(

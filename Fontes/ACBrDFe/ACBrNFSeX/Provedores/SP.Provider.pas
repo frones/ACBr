@@ -70,27 +70,21 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    //metodos para geração e tratamento dos dados do metodo emitir
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaSituacao
     procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaLoteRps
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaNFSeporRps
     procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo ConsultaNFSe
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
 
-    //metodos para geração e tratamento dos dados do metodo CancelaNFSe
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 

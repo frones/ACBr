@@ -52,10 +52,7 @@ type
     function GetNameSpace: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function TesteEnvio(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
@@ -83,86 +80,13 @@ uses
 
 procedure TACBrNFSeProviderSiat.Configuracao;
 begin
-{
   inherited Configuracao;
 
   with ConfigGeral do
   begin
     QuebradeLinha := '<br >';
-    ModoEnvio := meLoteSincrono;
+    ModoEnvio := meLoteAssincrono;
   end;
-
-  with ConfigAssinar do
-  begin
-    LoteRps := True;
-    ConsultarNFSeRps := True;
-    ConsultarNFSe := True;
-    CancelarNFSe := True;
-  end;
-
-  with ConfigWebServices do
-  begin
-    VersaoDados := '1.00';
-    VersaoAtrib := '1.00';
-  end;
-
-  SetXmlNameSpace('http://localhost:8080/WsNFe2/lote');
-
-  with ConfigMsgDados do
-  begin
-    Prefixo := 'ns1';
-    PrefixoTS := 'tipos';
-
-    XmlRps.xmlns := 'http://localhost:8080/WsNFe2/tp';
-
-    with LoteRps do
-    begin
-      InfElemento := 'Lote';
-      DocElemento := 'ReqEnvioLoteRPS';
-    end;
-
-    with LoteRpsSincrono do
-    begin
-      InfElemento := 'Lote';
-      DocElemento := 'ReqEnvioLoteRPS';
-    end;
-
-    with ConsultarLote do
-    begin
-      InfElemento := '';
-      DocElemento := 'ReqConsultaLote';
-    end;
-
-    with ConsultarNFSeRps do
-    begin
-      InfElemento := 'Lote';
-      DocElemento := 'ReqConsultaNFSeRPS';
-    end;
-
-    with ConsultarNFSe do
-    begin
-      InfElemento := 'Lote';
-      DocElemento := 'ReqConsultaNotas';
-    end;
-
-    with CancelarNFSe do
-    begin
-      InfElemento := 'Lote';
-      DocElemento := 'ReqCancelamentoNFSe';
-    end;
-  end;
-
-  with ConfigSchemas do
-  begin
-    Recepcionar := 'ReqEnvioLoteRPS.xsd';
-    ConsultarLote := 'ReqConsultaLote.xsd';
-    ConsultarNFSeRps := 'ReqConsultaNFSeRPS.xsd';
-    ConsultarNFSe := 'ReqConsultaNotas.xsd';
-    CancelarNFSe := 'ReqCancelamentoNFSe.xsd';
-    RecepcionarSincrono := 'ReqEnvioLoteRPS.xsd';
-    Teste := 'ReqEnvioLoteRPS.xsd';
-  end;
-  }
 end;
 
 function TACBrNFSeProviderSiat.CriarGeradorXml(
@@ -220,37 +144,6 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiat.RecepcionarSincrono(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<lot:enviarSincrono>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
-  Request := Request + '</lot:enviarSincrono>';
-
-  Result := Executar('', Request,
-                     ['enviarSincronoReturn', 'RetornoEnvioLoteRPS'],
-                     [NameSpace]);
-end;
-
-function TACBrNFSeXWebserviceSiat.TesteEnvio(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<lot:testeEnviar>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
-  Request := Request + '</lot:testeEnviar>';
-
-  Result := Executar('', Request,
-                     ['testeEnviarReturn', 'RetornoEnvioLoteRPS'],
-                     [NameSpace]);
-end;
-
 function TACBrNFSeXWebserviceSiat.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
@@ -264,22 +157,6 @@ begin
 
   Result := Executar('', Request,
                      ['consultarLoteReturn', 'RetornoConsultaLote'],
-                     [NameSpace]);
-end;
-
-function TACBrNFSeXWebserviceSiat.ConsultarNFSePorRps(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<lot:consultarNFSeRps>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
-  Request := Request + '</lot:consultarNFSeRps>';
-
-  Result := Executar('', Request,
-                     ['consultarNFSeRpsReturn', 'RetornoConsultaNFSeRPS'],
                      [NameSpace]);
 end;
 

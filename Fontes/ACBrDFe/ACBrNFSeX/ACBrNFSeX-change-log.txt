@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/08/2021
+-- Diversos --
+[*] Criado novos métodos para reduzir o código com o uso de sobre carga,
+    ultimos provedores que tem layout próprio.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXParametros/ACBrNFSeXProviderBase --
 [-] Correção na leitura das URLs de Homologação e Produção contidas no arquivo
     ACBrNFSeXServicos.

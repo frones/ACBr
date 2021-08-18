@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/08/2021
+-- ACBrNFSeXWebservicesResponse/EL.Provider --
+[*] Ajustes nas rotinas de tratamento de retorno dos serviços do provedor EL
+    layout próprio.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Tem provedor que dentro do grupo <CompNfse> tem o grupo <tcCompNfse> 
     que não existe no layout da ABRASF.

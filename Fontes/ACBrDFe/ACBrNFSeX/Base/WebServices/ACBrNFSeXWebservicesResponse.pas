@@ -212,6 +212,8 @@ type
     FLote: string;
     FSucesso: Boolean;
     FNumeroNota: Integer;
+    FData: TDateTime;
+    FidNota: string;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
@@ -229,6 +231,8 @@ type
     property Lote: string read FLote write FLote;
     property Sucesso: Boolean read FSucesso write FSucesso;
     property NumeroNota: Integer read FNumeroNota write FNumeroNota;
+    property Data: TDateTime read FData write FData;
+    property idNota: string read FidNota write FidNota;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
@@ -242,7 +246,6 @@ type
 
   TNFSeEmiteResponse = class(TNFSeWebserviceResponse)
   private
-    FData: TDateTime;
     FProtocolo: String;
     FModoEnvio: TmodoEnvio;
     FMaxRps: Integer;
@@ -252,7 +255,6 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property Data: TDateTime read FData write FData;
     property Protocolo: String read FProtocolo write FProtocolo;
     property MaxRps: Integer read FMaxRps write FMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;

@@ -808,6 +808,8 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('CompNfse');
+      if ANode = nil then
+        ANode := Document.Root.Childrens.FindAnyNs('ComplNfse');
 
       if not Assigned(ANode) then
       begin
@@ -817,7 +819,13 @@ begin
         Exit;
       end;
 
-      AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+      AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+
+      if AuxNode = nil then
+        AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+      else
+        AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
+
       AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
 //      AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
       AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
@@ -1027,6 +1035,9 @@ begin
       end;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+      if ANodeArray = nil then
+        ANodeArray := ANode.Childrens.FindAllAnyNs('ComplNfse');
+
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -1038,7 +1049,13 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
-        AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+        AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+
+        if AuxNode = nil then
+          AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+        else
+          AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
+
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
 //        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');

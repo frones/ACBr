@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/08/2021
+-- Diversos --
+[*] Correção no enumerado rtTomador que estava como ptTomador e foi incluido
+    o enumerado rtNenhum quando não tem o responsável pela retenção.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes visando ler o XML da NFSe ou Rps de forma correta.
    Por: Italo Giurizzato Junior

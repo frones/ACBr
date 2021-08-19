@@ -120,7 +120,7 @@ begin
       aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Obrigacao'), tcStr);
 
       if aValor = '1' then
-        ResponsavelRetencao := ptTomador
+        ResponsavelRetencao := rtTomador
       else
         ResponsavelRetencao := rtPrestador;
 

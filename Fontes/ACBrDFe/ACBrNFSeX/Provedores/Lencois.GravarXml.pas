@@ -167,7 +167,7 @@ begin
                                             NFSe.Servico.Valores.Aliquota, ''));
 
     case NFSe.Servico.ResponsavelRetencao of
-      ptTomador:
+      rtTomador:
         Result.AppendChild(AddNode(tcInt, '#1', 'Obrigacao', 1, 1, 1, 1, ''));
     else
       Result.AppendChild(AddNode(tcInt, '#1', 'Obrigacao', 1, 1, 1, 0, ''));

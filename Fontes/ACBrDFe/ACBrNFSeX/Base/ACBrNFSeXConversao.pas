@@ -149,7 +149,7 @@ type
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao);
 
-  TnfseResponsavelRetencao = (ptTomador, rtPrestador, rtIntermediario);
+  TnfseResponsavelRetencao = (rtTomador, rtPrestador, rtIntermediario, rtNenhum);
 
   TTipoEmissao = (teNormalNFSe, teContigenciaNFSe);
 
@@ -18157,15 +18157,15 @@ end;
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [ptTomador, rtPrestador]);
+                           ['1', '', '2', ''],
+                           [rtTomador, rtPrestador, rtIntermediario, rtNenhum]);
 end;
 
 function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['1', '2', ''],
-                           [ptTomador, rtPrestador, rtPrestador]);
+                           ['1', '', '2', ''],
+                           [rtTomador, rtPrestador, rtIntermediario, rtNenhum]);
 end;
 
 // Tipo de Emissão *********************************************************
@@ -18561,9 +18561,9 @@ end;
 function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
 begin
   case t of
-    ptTomador      : Result := '1 - Tomador';
-    rtPrestador    : Result := '2 - Prestador';
-    rtIntermediario: Result := '3 - Intermediário';
+    rtTomador      : Result := '1 - Tomador';
+    rtIntermediario: Result := '2 - Intermediário';
+    rtPrestador    : Result := '3 - Prestador';
   else
     Result := '';
   end;

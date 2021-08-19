@@ -637,7 +637,7 @@ function TNFSeW_Agili.RespRetencaoToStr(
   const T: TnfseResponsavelRetencao): String;
 begin
   result := EnumeradoToStr(t, ['-1', '-2', '-3'],
-                           [ptTomador, rtIntermediario, rtPrestador]);
+                           [rtTomador, rtIntermediario, rtPrestador]);
 end;
 
 function TNFSeW_Agili.SimNaoAgiliToStr(const t: TnfseSimNao): String;

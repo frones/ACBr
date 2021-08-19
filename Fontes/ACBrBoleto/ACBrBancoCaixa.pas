@@ -949,6 +949,7 @@ begin
          toRemessaAlterarDadosEmissaoBloqueto    : ATipoOcorrencia := '10'; {Alt de dados c/ emissão / emissão de bloqueto}
          toRemessaAlterarProtestoDevolucao       : ATipoOcorrencia := '11'; {Alteração da opção de Protesto para Devolução}
          toRemessaAlterarDevolucaoProtesto       : ATipoOcorrencia := '12'; {Alteração da opção de Devolução para Protesto}
+         toRemessaAlterarValorTitulo             : ATipoOcorrencia := '13'; {Alteração do Valor Nominal do Título - 19/08/2021}
       else
          ATipoOcorrencia := '01';                                      {Remessa}
       end;

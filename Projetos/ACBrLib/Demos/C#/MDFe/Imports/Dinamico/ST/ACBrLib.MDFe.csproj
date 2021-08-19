@@ -54,6 +54,14 @@
     <Compile Include="..\Shared\Manifesto\CondutorMDFe.cs" Link="Manifesto\CondutorMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\DispMDFe.cs" Link="Manifesto\DispMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\EmitMDFe.cs" Link="Manifesto\EmitMDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoCancelamento.cs" Link="Manifesto\EventoCancelamento.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoEncerramento.cs" Link="Manifesto\EventoEncerramento.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoIncCondutor.cs" Link="Manifesto\EventoIncCondutor.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoIncDFe.cs" Link="Manifesto\EventoIncDFe.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoInfDocNFe.cs" Link="Manifesto\EventoInfDocNFe.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoInfViagens.cs" Link="Manifesto\EventoInfViagens.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoMDFeBase.cs" Link="Manifesto\EventoMDFeBase.cs" />
+    <Compile Include="..\Shared\Manifesto\EventoPagOpTrasnporte.cs" Link="Manifesto\EventoPagOpTrasnporte.cs" />
     <Compile Include="..\Shared\Manifesto\IdeMDFe.cs" Link="Manifesto\IdeMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\IModalMDFe.cs" Link="Manifesto\IModalMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\IndPag.cs" Link="Manifesto\IndPag.cs" />

@@ -41,7 +41,8 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrUtil, ACBrXmlBase, ACBrXmlDocument,
+  ACBrUtil, ACBrConsts,
+  ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXLerXml, ACBrNFSeXConversao;
 
 type
@@ -727,7 +728,16 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := Arquivo;
+
+  // Se o XML não tiver a codificação incluir ela.
+  if ObtemDeclaracaoXML(xRetorno) = '' then
+    xRetorno := CUTF8DeclaracaoXML + xRetorno;
+
+  // Alguns provedores não retornam o XML em UTF-8
+  xRetorno := ConverteXMLtoUTF8(xRetorno);
+
+  xRetorno := TratarXmlRetorno(xRetorno);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');

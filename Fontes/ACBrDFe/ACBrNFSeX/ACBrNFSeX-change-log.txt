@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/08/2021
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes visando ler o XML da NFSe ou Rps de forma correta.
+   Por: Italo Giurizzato Junior
 -- Abaco.Provider/Abaco.GravarXml --
 [*] Ajustes visando atender o provedor no que se refere ao webservice que segue
     a versão 2 do layout da ABRASF.

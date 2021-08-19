@@ -41,6 +41,9 @@ uses
   ACBrBase, ACBrTEFComum;
 
 resourcestring
+  sACBrTEFAPIIdentificadorVendaVazioException = 'IdentificadorVenda não pode ser vazio';
+  sACBrTEFAPIValorPagamentoInvalidoException = 'Valor do Pagamento inválido';
+
   sACBrTEFAPIClassDonoNaoDefinido = 'O componente TACBrTEFAPIComumClass, deve ser filho de TACBrTEFAPIComum';
   sACBrTEFAPIMetodoInvalidoException = 'Método: %s '+ sLineBreak +
                                        'não implementado para o TEF: %s';
@@ -51,6 +54,7 @@ resourcestring
   sACBrTEFAPISemTransacaoPendenteException = 'Não há transação Pendente';
   sACBrTEFAPITransacaoNaoEncontradaException = 'Transação não encontrada [%s]';
   sACBrTEFAPICapturaNaoSuportada = 'Captura Tipo: %s não suportada por: %s';
+  sACBrTEFAPIAdministrativaNaoSuportada = 'Função Administrativa: %s não suportada por: %s';
   sACBrTEFAPITransacaoPendente = 'Transação Pendente.' + sLineBreak +
                                  'Rede: %s' + sLineBreak +
                                  'NSU: %s';
@@ -138,11 +142,14 @@ type
 
   { TACBrTEFDadosTerminal }
 
+  { TACBrTEFAPIDadosTerminal }
+
   TACBrTEFAPIDadosTerminal = class(TPersistent)
   private
     fCodEmpresa: String;
     fCodFilial: String;
     fCodTerminal: String;
+    fEnderecoServidor: String;
     fOperador: String;
     fPortaPinPad: String;
   public
@@ -151,6 +158,7 @@ type
     procedure Assign(Source: TPersistent); override;
 
   published
+    property EnderecoServidor: String read fEnderecoServidor write fEnderecoServidor;
     property CodEmpresa: String read fCodEmpresa write fCodEmpresa;
     property CodFilial: String read fCodFilial write fCodFilial;
     property CodTerminal: String read fCodTerminal write fCodTerminal;
@@ -175,6 +183,7 @@ type
     fpTEFRespClass: TACBrTEFRespClass;
 
     procedure ErroAbstract(const NomeProcedure: String);
+    procedure VerificarIdentificadorVendaInformado;
 
     procedure InicializarChamadaAPI( AOperacao: TACBrTEFAPIOperacao); virtual;
     procedure FinalizarChamadaAPI; virtual;
@@ -193,7 +202,6 @@ type
 //  function VerificarTEF: Boolean; virtual;
 
     function EfetuarPagamento(
-      const IdentificadorVenda: String;
       ValorPagto: Currency;
       Modalidade: TACBrTEFModalidadePagamento = tefmpNaoDefinido;
       CartoesAceitos: TACBrTEFTiposCartao = [];
@@ -202,11 +210,9 @@ type
       DataPreDatado: TDateTime = 0 ): Boolean; virtual;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral;
-      const IdentificadorTransacao: string = ''): Boolean; overload; virtual;
-    function EfetuarAdministrativa(
-      const CodOperacaoAdm: string = '';
-      const IdentificadorTransacao: string = ''): Boolean; overload; virtual;
+      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; virtual;
+    function EfetuarAdministrativa(const CodOperacaoAdm: string = ''):
+      Boolean; overload; virtual;
 
     function CancelarTransacao(
       const NSU, CodigoAutorizacaoTransacao: string;
@@ -297,8 +303,7 @@ type
     fDadosAutomacao: TACBrTEFAPIDadosAutomacao;
     fDadosEstabelecimento: TACBrTEFAPIDadosEstabelecimento;
     fDadosTerminal: TACBrTEFAPIDadosTerminal;
-
-      fTratamentoTransacaoInicalizacao: TACBrTEFTratamentoTransacaoInicalizacao;
+    fTratamentoTransacaoInicializacao: TACBrTEFTratamentoTransacaoInicializacao;
     fTratamentoTransacaoPendente: TACBrTEFTratamentoTransacaoPendente;
     fUltimaRespostaTEF: TACBrTEFResp;
 
@@ -313,8 +318,7 @@ type
     procedure SetDadosAutomacao(const AValue: TACBrTEFAPIDadosAutomacao);
     procedure SetDadosEstabelecimento(const AValue: TACBrTEFAPIDadosEstabelecimento);
     procedure SetDadosTerminal(const AValue: TACBrTEFAPIDadosTerminal);
-    procedure SetTratamentoTransacaoInicalizacao(
-      AValue: TACBrTEFTratamentoTransacaoInicalizacao);
+    procedure SetTratamentoTransacaoInicializacao(AValue: TACBrTEFTratamentoTransacaoInicializacao);
     procedure SetTratamentoTransacaoPendente(const AValue: TACBrTEFTratamentoTransacaoPendente);
     procedure SetGravarRespostas(const AValue: Boolean);
     procedure SetLimparRespostasQuandoNovoIdentificador(const AValue: Boolean);
@@ -400,8 +404,8 @@ type
     property TratamentoTransacaoPendente : TACBrTEFTratamentoTransacaoPendente
       read fTratamentoTransacaoPendente
       write SetTratamentoTransacaoPendente default tefpenConfirmar;
-    property TratamentoTransacaoInicalizacao: TACBrTEFTratamentoTransacaoInicalizacao
-      read fTratamentoTransacaoInicalizacao write SetTratamentoTransacaoInicalizacao
+    property TratamentoTransacaoInicializacao: TACBrTEFTratamentoTransacaoInicializacao
+      read fTratamentoTransacaoInicializacao write SetTratamentoTransacaoInicializacao
       default tefopiProcessarPendentes;
 
     property DadosAutomacao: TACBrTEFAPIDadosAutomacao
@@ -536,6 +540,7 @@ begin
   fCodTerminal := '';
   fOperador := '';
   fPortaPinPad := '';
+  fEnderecoServidor := '';
 end;
 
 procedure TACBrTEFAPIDadosTerminal.Assign(Source: TPersistent);
@@ -551,6 +556,7 @@ begin
     fCodTerminal := DadosTerminal.CodTerminal;
     fOperador := DadosTerminal.Operador;
     fPortaPinPad := DadosTerminal.PortaPinPad;
+    fEnderecoServidor := DadosTerminal.EnderecoServidor;
   end;
 end;
 
@@ -848,15 +854,12 @@ begin
   fpOperacao := tefopNenhuma;
 end;
 
-function TACBrTEFAPIComumClass.EfetuarAdministrativa(
-  const CodOperacaoAdm: string; const IdentificadorTransacao: string): Boolean;
+function TACBrTEFAPIComumClass.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
 begin
   Result := False;
 end;
 
-function TACBrTEFAPIComumClass.EfetuarAdministrativa(
-  OperacaoAdm: TACBrTEFOperacaoAdmin; const IdentificadorTransacao: string
-  ): Boolean;
+function TACBrTEFAPIComumClass.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
 begin
   Result := False;
 end;
@@ -868,8 +871,7 @@ begin
   Result := False;
 end;
 
-function TACBrTEFAPIComumClass.EfetuarPagamento(
-  const IdentificadorVenda: String; ValorPagto: Currency;
+function TACBrTEFAPIComumClass.EfetuarPagamento(ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime): Boolean;
@@ -967,6 +969,12 @@ begin
                                    [NomeProcedure, ClassName] ));
 end ;
 
+procedure TACBrTEFAPIComumClass.VerificarIdentificadorVendaInformado;
+begin
+  if (Trim(fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao) = '') then
+    fpACBrTEFAPI.DoException(sACBrTEFAPIIdentificadorVendaVazioException);
+end;
+
 { TACBrTEFAPIComum }
 
 constructor TACBrTEFAPIComum.Create(AOwner: TComponent);
@@ -975,7 +983,7 @@ begin
   fArqLOG := '';
   fConfirmarTransacaoAutomaticamente := True;
   fTratamentoTransacaoPendente := tefpenConfirmar;
-  fTratamentoTransacaoInicalizacao := tefopiProcessarPendentes;
+  fTratamentoTransacaoInicializacao := tefopiProcessarPendentes;
   fQuandoGravarLog := Nil;
   fQuandoFinalizarOperacao := Nil;
   fQuandoDetectarTransacaoPendente := Nil;
@@ -1060,13 +1068,13 @@ begin
   CriarListaTEFResp;
 
   // Verificando se ficou alguma Transação Pendente, no Diretório de Trabalho
-  if (TratamentoTransacaoInicalizacao = tefopiCancelarOuEstornar) then
+  if (TratamentoTransacaoInicializacao = tefopiCancelarOuEstornar) then
     CancelarOuEstornarTransacoesDiretorioTrabalho
   else
   begin
     fRespostasTEF.CarregarRespostasDoDiretorioTrabalho;
 
-    if (TratamentoTransacaoInicalizacao = tefopiProcessarPendentes) then
+    if (TratamentoTransacaoInicializacao = tefopiProcessarPendentes) then
       VerificarTransacoesPendentes;
   end;
 end;
@@ -1134,17 +1142,17 @@ begin
     fDadosTerminal.Assign(AValue);
 end;
 
-procedure TACBrTEFAPIComum.SetTratamentoTransacaoInicalizacao(
-  AValue: TACBrTEFTratamentoTransacaoInicalizacao);
+procedure TACBrTEFAPIComum.SetTratamentoTransacaoInicializacao(
+  AValue: TACBrTEFTratamentoTransacaoInicializacao);
 begin
-  if (fTratamentoTransacaoInicalizacao = AValue) then
+  if (fTratamentoTransacaoInicializacao = AValue) then
     Exit;
 
   if Inicializado then
     DoException( Format( ACBrStr(sACBrTEFAPIComponenteInicializadoException),
                          ['TratamentoTransacaoInicalizacao']) );
 
-  fTratamentoTransacaoInicalizacao := AValue;
+  fTratamentoTransacaoInicializacao := AValue;
 end;
 
 procedure TACBrTEFAPIComum.SetGravarRespostas(const AValue: Boolean);
@@ -1173,7 +1181,7 @@ begin
 
   fpTEFAPIClass.InicializarChamadaAPI(tefopAdministrativa);
   try
-    Result := fpTEFAPIClass.EfetuarAdministrativa(Operacao, IdentificadorTransacao);
+    Result := fpTEFAPIClass.EfetuarAdministrativa(Operacao);
   finally
     fpTEFAPIClass.FinalizarChamadaAPI;
   end;
@@ -1191,7 +1199,7 @@ begin
 
   fpTEFAPIClass.InicializarChamadaAPI(tefopAdministrativa);
   try
-    Result := fpTEFAPIClass.EfetuarAdministrativa(Operacao, IdentificadorTransacao);
+    Result := fpTEFAPIClass.EfetuarAdministrativa(Operacao);
   finally
     fpTEFAPIClass.FinalizarChamadaAPI;
   end;
@@ -1231,8 +1239,8 @@ begin
 
   fpTEFAPIClass.InicializarChamadaAPI(tefopPagamento);
   try
-    Result := fpTEFAPIClass.EfetuarPagamento( IdentificadorTransacao, ValorPagto,
-                                              Modalidade, CartoesAceitos, Financiamento,
+    Result := fpTEFAPIClass.EfetuarPagamento( ValorPagto, Modalidade,
+                                              CartoesAceitos, Financiamento,
                                               Parcelas, DataPreDatado );
   finally
     fpTEFAPIClass.FinalizarChamadaAPI;

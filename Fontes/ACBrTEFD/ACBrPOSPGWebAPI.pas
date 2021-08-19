@@ -45,7 +45,7 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrTEFPayGoComum, ACBrBase;
+  ACBrTEFComum, ACBrTEFPayGoComum, ACBrBase;
 
 resourcestring
   sErrTransacaoNaoIniciada = 'Não foi iniciada uma Transação TEF no Temrinal %s';
@@ -241,7 +241,7 @@ type
 
   { TACBrPOSPGWebAPIParametros }
 
-  TACBrPOSPGWebAPIParametros = class(TACBrTEFPGWebAPIParametros)
+  TACBrPOSPGWebAPIParametros = class(TACBrTEFParametros)
   private
     fTerminalId: String;
   public

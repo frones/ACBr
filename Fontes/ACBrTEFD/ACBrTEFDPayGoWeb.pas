@@ -89,7 +89,7 @@ type
     fsPGWebAPI: TACBrTEFPGWebAPI;
     function GetConfirmarTransacoesPendentes: Boolean;
     function GetExibicaoQRCode: TACBrTEFPGWebAPIExibicaoQRCode;
-    function GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+    function GetParametrosAdicionais: TACBrTEFParametros;
     function GetPerguntarCartaoDigitadoAposCancelarLeitura: Boolean;
     function GetPortaPinPad: Integer;
     procedure GravaLogAPI(const ALogLine: String; var Tratado: Boolean);
@@ -139,7 +139,7 @@ type
     property PGWebAPI: TACBrTEFPGWebAPI read fsPGWebAPI;
     property PathDLL: string read GetPathDLL write SetPathDLL;
     property DiretorioTrabalho: String read GetDiretorioTrabalho write SetDiretorioTrabalho;
-    property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read GetParametrosAdicionais;
+    property ParametrosAdicionais: TACBrTEFParametros read GetParametrosAdicionais;
 
     constructor Create( AOwner : TComponent ) ; override;
     destructor Destroy ; override;
@@ -392,7 +392,7 @@ end;
 function TACBrTEFDPayGoWeb.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double; CodigoAutorizacaoTransacao: String): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
 
   procedure CopiarValorDaUltimaResposta(AInfo: Integer);
   var
@@ -404,7 +404,7 @@ var
   end;
 
 begin
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     PA.ValueInfo[PWINFO_AUTHSYST] := Rede;
     PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;                                            // Mandatorio
@@ -651,7 +651,7 @@ procedure TACBrTEFDPayGoWeb.FazerRequisicao(PWOPER: Word; AHeader: String;
   AValor: Double; ADocumentoVinculado: String; AMoeda: Integer;
   ParametrosAdicionaisTransacao: TStrings);
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
 begin
   GravaLog('FazerRequisicao: Oper:'+PWOPERToString(PWOPER)+', Header:'+AHeader+
            ', Valor:'+FloatToStr(AValor)+', Documento:'+ADocumentoVinculado);
@@ -669,7 +669,7 @@ begin
   Req.DocumentoVinculado := ADocumentoVinculado;
   Req.ValorTotal := AValor;
 
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     if (AValor > 0) then
     begin
@@ -881,7 +881,7 @@ begin
   TACBrTEFD(Owner).DoExibeQRCode(Dados);
 end;
 
-function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+function TACBrTEFDPayGoWeb.GetParametrosAdicionais: TACBrTEFParametros;
 begin
   Result := fsPGWebAPI.ParametrosAdicionais;
 end;

@@ -385,20 +385,7 @@ begin
                                                 PAnsiChar(fNumeroTerminal),
                                                 0,
                                                 PAnsiChar(ParamAdic) );
-  Erro := '' ;
-  Case Sts of
-    1 :	Erro := CACBrTEFCliSiTef_Erro1;
-    2 : Erro := CACBrTEFCliSiTef_Erro2;
-    3 : Erro := CACBrTEFCliSiTef_Erro3;
-    6 : Erro := CACBrTEFCliSiTef_Erro6;
-    7 : Erro := CACBrTEFCliSiTef_Erro7;
-    8 : Erro := CACBrTEFCliSiTef_Erro8;
-   10 : Erro := CACBrTEFCliSiTef_Erro10;
-   11 : Erro := CACBrTEFCliSiTef_Erro11;
-   12 : Erro := CACBrTEFCliSiTef_Erro12;
-   13 : Erro := CACBrTEFCliSiTef_Erro13;
-  end;
-
+  Erro := fSiTefAPI.TraduzirErroInicializacao(Sts);
   if Erro <> '' then
      raise EACBrTEFDErro.Create( ACBrStr( Erro ) ) ;
 
@@ -1105,8 +1092,8 @@ begin
    if not fExibirErroRetorno then
      Exit;
 
-   Erro := fSiTefAPI.TraduzirErro(Sts);
-   if Erro <> '' then
+   Erro := fSiTefAPI.TraduzirErroTransacao(Sts);
+   if (Erro <> '') then
       TACBrTEFD(Owner).DoExibeMsg( opmOK, Erro );
 end ;
 
@@ -1395,7 +1382,7 @@ begin
 
   if (Ret <> 0) then
   begin
-    Erro := fSiTefAPI.TraduzirErro(Ret);
+    Erro := fSiTefAPI.TraduzirErroTransacao(Ret);
     if (Erro <> '') then
       raise EACBrTEFDErro.Create( ACBrStr(Erro) ) ;
   end;

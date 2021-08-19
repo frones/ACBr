@@ -92,8 +92,7 @@ type
     fOnAposFinalizarTransacao: TACBrPOSAposFinalizarTransacao;
     function GetConfirmarAntesImpressao: Boolean;
     function GetConfirmarTransacoesPendentes: Boolean;
-    function GetDadosTransacao(const TerminalId: String
-      ): TACBrTEFPGWebAPIParametros;
+    function GetDadosTransacao(const TerminalId: String): TACBrTEFParametros;
     function GetDiretorioTrabalho: String;
     function GetImprimirViaClienteReduzida: Boolean;
     function GetInicializada: Boolean;
@@ -207,7 +206,7 @@ type
     function EmTransacao(const TerminalId: String): Boolean;
 
     property ParametrosAdicionais[const TerminalId: String]: TACBrPOSPGWebAPIParametros read GetParametrosAdicionais;
-    property DadosDaTransacao[const TerminalId: String]: TACBrTEFPGWebAPIParametros read GetDadosTransacao;
+    property DadosDaTransacao[const TerminalId: String]: TACBrTEFParametros read GetDadosTransacao;
     property TEFResp[const TerminalId: String]: TACBrPOSResp read GetTEFResp;
 
   published
@@ -345,8 +344,7 @@ begin
   GravarLog(ALogLine);
 end;
 
-function TACBrPOS.GetDadosTransacao(const TerminalId: String
-  ): TACBrTEFPGWebAPIParametros;
+function TACBrPOS.GetDadosTransacao(const TerminalId: String): TACBrTEFParametros;
 begin
   Result := fPOSPGWeb.DadosDaTransacao[TerminalId];
 end;
@@ -566,7 +564,7 @@ procedure TACBrPOS.DadosDaTransacaoParaTEFResp(const TerminalId: String);
 var
   i, p, AInfo: Integer;
   Lin, AValue: String;
-  DadosDaTransacaoTerminal: TACBrTEFPGWebAPIParametros;
+  DadosDaTransacaoTerminal: TACBrTEFParametros;
   TEFRespTerminal: TACBrPOSResp;
 begin
   DadosDaTransacaoTerminal := DadosDaTransacao[TerminalId];
@@ -715,9 +713,9 @@ end;
 procedure TACBrPOS.ExecutarTransacaoPagamento(const TerminalId: String;
   ValorPagto: Double; Comprovantes: TACBrPOSPGWebComprovantes);
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
 begin
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
     PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));

@@ -40,9 +40,7 @@ uses
   Classes, SysUtils,
   ACBrBase, ACBrTEFAPIComum;
 
-
 type
-
   TACBrTEFAPITipo = ( tefApiNenhum,
                       tefApiPayGoWeb,
                       tefApiCliSiTEF );
@@ -119,15 +117,15 @@ type
   TACBrTEFAPIQuandoExibirMensagem = procedure(
     const Mensagem: String;
     Terminal: TACBrTEFAPITela;
-    MilissegundosExibicao: Integer  // 0 - Para com OK; Positivo - aguarda Ok ou
-    ) of object;                    // Positivo - Aguarda N milissegundos e apaga a msg;
+    MilissegundosExibicao: Integer  // 0 - Para com OK;
+    ) of object;                    // Positivo - Aguarda N milissegundos, e apaga a msg;
                                     // Negativo - Apenas exibe a Msg (não aguarda e não apaga msg)
 
   TACBrTEFAPIQuandoPerguntarMenu = procedure(
     const Titulo: String;
     Opcoes: TStringList;
     var ItemSelecionado: Integer) of object;  // Retorna o Item Selecionado, iniciando com 1
-                                              // 0  - Volta no Fluxo
+                                              // -2 - Volta no Fluxo
                                               // -1 - Cancela o Fluxo
 
   TACBrTEFAPIQuandoPerguntarCampo = procedure(
@@ -205,7 +203,7 @@ implementation
 
 uses
   TypInfo,
-  ACBrTEFAPIPayGoWeb;
+  ACBrTEFAPIPayGoWeb, ACBrTEFAPICliSiTef;
 
 { TACBrTEFAPIClass }
 
@@ -295,7 +293,7 @@ begin
   { Instanciando uma nova classe de acordo com AValue }
   case AValue of
     tefApiPayGoWeb : fpTEFAPIClass := TACBrTEFAPIClassPayGoWeb.Create( Self );
-    tefApiCliSiTEF : fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
+    tefApiCliSiTEF : fpTEFAPIClass := TACBrTEFAPIClassCliSiTef.Create( Self );
   else
     fpTEFAPIClass := TACBrTEFAPIClass.Create( Self );
   end;

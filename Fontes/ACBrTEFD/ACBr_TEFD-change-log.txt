@@ -46,6 +46,51 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/21
+-- ACBrTEFComum --
+[+] Adicionada a Classe: "TACBrTEFParametros", derivada de TStringList,
+    e que permite o uso de Indices numéricos em ValueInfo[n]
+
+-- ACBrTEFAPIComum --
+[+] Adicionado novas constantes de Texto.
+[+] Adicionada a propriedade "TACBrTEFAPIDadosTerminal.EnderecoServidor: String"
+[+] Adicionado método, "TACBrTEFAPIComumClass.VerificarIdentificadorVendaInformado"
+[*] Métodos de "TACBrTEFAPIComumClass"; EfetuarPagamento e EfetuarAdministrativa,
+    modificados para não receber como parâmetro "IdentificadorVenda".
+[*] Correção de Grafia na propriedade de "TACBrTEFAPIComum":
+    "TratamentoTransacaoInicalizacao" para "TratamentoTransacaoInicializacao"
+
+-- ACBrTEFAPIComum, ACBrTEFAndroidPayGo, ACBrTEFAPIPayGoWeb --
+[*] Modificado para usar Método da classe pai,
+    "TACBrTEFAPIComumClass.VerificarIdentificadorVendaInformado"
+[*] Métodos "EfetuarPagamento" e "EfetuarAdministrativa",
+    modificados para ficar correspondente a classe Pai, "TACBrTEFAPIComumClass"
+
+-- ACBrTEFAPI --
+[+] Adicionado o suporte a classe "TACBrTEFAPIClassCliSiTef"
+
+-- ACBrTEFAPICliSiTef --
+[+] Adicionada nova Unit, com a primeira implementação da CliSiTef, para o ACBrTEFAPI
+
+-- ACBrTEFAPIPayGoWeb --
+[*] Método: "TACBrTEFAPIClassPayGoWeb.Inicializar", modificado transmitir a API da
+    PayGoWeb, o valor da propriedade TACBrTEFAPIDadosTerminal.EnderecoServidor"
+
+-- ACBrTEFCliSiTefComum --
+[*] Método "ConteudoToPropertyCliSiTef", modificado para mapear o TipoCampo 584
+    para a propriedade "TACBrTEFResp.QrCode"
+[+] Adicionado o método: "TraduzirErroInicializacao"
+[*] Método "TraduzirErroTransacao", atualizado, com novos Erros
+
+-- ACBrTEFDCliSiTef --
+[*] Modificado para usar "TraduzirErroInicializacao" e "TraduzirErroTransacao"
+
+-- ACBrTEFPayGoComum, ACBrTEFPayGoWebComum, ACBrPOS, ACBrPOSPGWebAPI,
+   ACBrTEFAndroidPayGo, ACBrTEFPayGoAndroidAPI,
+   ACBrTEFAPIPayGoWeb, ACBrTEFDPayGoWeb,  --
+[*] Modificado para usar "TACBrTEFParametros" no lugar de "TACBrTEFPGWebAPIParametros"
+    (por: DSA)
+
 11/08/21
 -- ACBrTEFAPIComum --
 [+] Adicionada nova Unit, que define as classes básicas, para a criação dos

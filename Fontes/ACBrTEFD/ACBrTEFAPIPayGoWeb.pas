@@ -41,10 +41,6 @@ uses
   ACBrBase,
   ACBrTEFComum, ACBrTEFAPI, ACBrTEFAPIComum, ACBrTEFPayGoComum, ACBrTEFPayGoWebComum;
 
-resourcestring
-  sACBrTEFAPIIdentificadorVendaVazioException = 'IdentificadorVenda não pode ser vazio';
-  sACBrTEFAPIValorPagamentoInvalidoException = 'Valor do Pagamento inválido';
-
 const
   CSUBDIRETORIO_PAYGOWEB = 'PGWeb';
 
@@ -85,7 +81,6 @@ type
 
     procedure LimparUltimaTransacaoPendente;
     procedure SetDiretorioTrabalho(const AValue: String);
-    procedure VerificarIdentificadorVendaInformado(const IdentificadorVenda: String);
 
   protected
     procedure InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao); override;
@@ -99,7 +94,6 @@ type
     procedure DesInicializar; override;
 
     function EfetuarPagamento(
-      const IdentificadorVenda: String;
       ValorPagto: Currency;
       Modalidade: TACBrTEFModalidadePagamento = tefmpNaoDefinido;
       CartoesAceitos: TACBrTEFTiposCartao = [];
@@ -108,11 +102,9 @@ type
       DataPreDatado: TDateTime = 0): Boolean; override;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral;
-      const IdentificadorTransacao: string = ''): Boolean; overload; override;
+      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; override;
     function EfetuarAdministrativa(
-      const CodOperacaoAdm: string = '';
-      const IdentificadorTransacao: string = ''): Boolean; overload; override;
+      const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
     function CancelarTransacao(
       const NSU, CodigoAutorizacaoTransacao: string;
@@ -180,15 +172,29 @@ end;
 
 procedure TACBrTEFAPIClassPayGoWeb.Inicializar;
 var
-  i: Integer;
-  ADir: String;
+  i, P: Integer;
+  ADir, IpStr, PortaStr: String;
 begin
+  if Inicializado then
+    Exit;
+
   if (fDiretorioTrabalho = '') then
     ADir := PathWithDelim(fpACBrTEFAPI.DiretorioTrabalho) + CSUBDIRETORIO_PAYGOWEB
   else
     ADir := fDiretorioTrabalho;
 
+  IpStr := fpACBrTEFAPI.DadosTerminal.EnderecoServidor;
+  PortaStr := '';
+  p := pos(IpStr, ':');
+  if (p > 0) then
+  begin
+    PortaStr := copy(IpStr, p+1, Length(IpStr));
+    IpStr := copy(IpStr, 1, p-1);
+  end;
+
   fTEFPayGoAPI.DiretorioTrabalho := ADir;
+  fTEFPayGoAPI.EnderecoIP := IpStr;
+  fTEFPayGoAPI.PortaTCP := PortaStr;
   fTEFPayGoAPI.NomeAplicacao := fpACBrTEFAPI.DadosAutomacao.NomeAplicacao;
   fTEFPayGoAPI.VersaoAplicacao := fpACBrTEFAPI.DadosAutomacao.VersaoAplicacao;
   fTEFPayGoAPI.SoftwareHouse := fpACBrTEFAPI.DadosAutomacao.NomeSoftwareHouse;
@@ -361,29 +367,18 @@ begin
   Status := 0;
 end;
 
-procedure TACBrTEFAPIClassPayGoWeb.VerificarIdentificadorVendaInformado(
-  const IdentificadorVenda: String);
+function TACBrTEFAPIClassPayGoWeb.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
 begin
-  if (Trim(IdentificadorVenda) = '') then
-    fpACBrTEFAPI.DoException(sACBrTEFAPIIdentificadorVendaVazioException);
+  Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)) );
 end;
 
-function TACBrTEFAPIClassPayGoWeb.EfetuarAdministrativa(
-  OperacaoAdm: TACBrTEFOperacaoAdmin; const IdentificadorTransacao: string
-  ): Boolean;
-begin
-  Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)),
-                                        IdentificadorTransacao );
-end;
-
-function TACBrTEFAPIClassPayGoWeb.EfetuarAdministrativa(
-  const CodOperacaoAdm: string; const IdentificadorTransacao: string): Boolean;
+function TACBrTEFAPIClassPayGoWeb.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
   OpInt: Integer;
   OpByte: Byte;
 begin
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     OpByte := fOperacaoAdministrativa;
     if (CodOperacaoAdm <> '') then
@@ -399,8 +394,8 @@ begin
     if (fAutorizador <> '') then
       PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
 
-    if (IdentificadorTransacao <> '') then
-      PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorTransacao;
+    if (fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao <> '') then
+      PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
 
     fTEFPayGoAPI.IniciarTransacao(OpByte, PA);
     Result := fTEFPayGoAPI.ExecutarTransacao;
@@ -410,23 +405,23 @@ begin
 end;
 
 function TACBrTEFAPIClassPayGoWeb.EfetuarPagamento(
-  const IdentificadorVenda: String; ValorPagto: Currency;
+  ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento; CartoesAceitos: TACBrTEFTiposCartao;
   Financiamento: TACBrTEFModalidadeFinanciamento; Parcelas: Byte;
   DataPreDatado: TDateTime): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
   SomaCartoes, ModalidadeInt, FinanciamentoInt: Integer;
   ValDbl: Double;
 begin
-  VerificarIdentificadorVendaInformado(IdentificadorVenda);
+  VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
     fpACBrTEFAPI.DoException(sACBrTEFAPIValorPagamentoInvalidoException);
 
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     ValDbl := ValorPagto * 100;
-    PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorVenda;
+    PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
     PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
     PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValDbl,-2)));
     PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(fpACBrTEFAPI.DadosAutomacao.MoedaISO4217); // '986' ISO4217 - BRL
@@ -516,7 +511,7 @@ function TACBrTEFAPIClassPayGoWeb.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao: string; const Rede: string): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
   i: Integer;
   Resp: TACBrTEFResp;
 
@@ -530,7 +525,7 @@ var
   end;
 
 begin
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;
     PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMYY', DataHoraTransacao);

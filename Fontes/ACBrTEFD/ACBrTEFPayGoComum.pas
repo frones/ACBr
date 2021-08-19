@@ -288,16 +288,6 @@ const
 type
   EACBrTEFPayGoWeb = class(EACBrTEFErro);
 
-  { TACBrTEFPGWebAPIParametros }
-
-  TACBrTEFPGWebAPIParametros = class(TStringList)
-  private
-    function GetValueInfo(AInfo: Word): string;
-    procedure SetValueInfo(AInfo: Word; const AValue: string);
-  public
-    property ValueInfo[AInfo: Word]: string read GetValueInfo write SetValueInfo;
-  end;
-
   { TACBrTEFRespPayGoWeb }
 
   TACBrTEFRespPayGoWeb = class( TACBrTEFResp )
@@ -306,7 +296,7 @@ type
   end;
 
 procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
-procedure DadosDaTransacaoToTEFResp( ADadosDaTransacao: TACBrTEFPGWebAPIParametros; ATefResp: TACBrTEFResp);
+procedure DadosDaTransacaoToTEFResp(ADadosDaTransacao: TACBrTEFParametros; ATefResp: TACBrTEFResp);
 
 function ParseKeyValue(const AKeyValueStr: String; out TheKey: String; out TheValue: String): Boolean;
 function PWINFOToString(iINFO: Word): String;
@@ -672,8 +662,8 @@ begin
   end;
 end;
 
-procedure DadosDaTransacaoToTEFResp(
-  ADadosDaTransacao: TACBrTEFPGWebAPIParametros; ATefResp: TACBrTEFResp);
+procedure DadosDaTransacaoToTEFResp(ADadosDaTransacao: TACBrTEFParametros;
+  ATefResp: TACBrTEFResp);
 var
   i, p, AInfo: Integer;
   Lin, AValue: String;
@@ -1014,19 +1004,6 @@ begin
   else
     Result := PWOPER_ADMIN;
   end;
-end;
-
-{ TACBrTEFPGWebAPIParametros }
-
-function TACBrTEFPGWebAPIParametros.GetValueInfo(AInfo: Word): string;
-begin
-   Result := Values[IntToStr(AInfo)];
-end;
-
-procedure TACBrTEFPGWebAPIParametros.SetValueInfo(AInfo: Word;
-  const AValue: string);
-begin
-  Values[IntToStr(AInfo)] := AValue;
 end;
 
 { TACBrTEFRespPayGoWeb }

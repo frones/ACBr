@@ -45,10 +45,6 @@ uses
 const
   PWRET_OK = 0;      // Operação bem sucedida
 
-resourcestring
-  sACBrTEFAndroidIdentificadorVendaVazioException = 'IdentificadorVenda não pode ser vazio';
-  sACBrTEFAndroidValorPagamentoInvalidoException = 'Valor do Pagamento inválido';
-
 type
   TACBrTEFAndroidPayGoClass = class(TACBrTEFAPIComumClass)
   private
@@ -70,7 +66,6 @@ type
       pszExtRef: String; pszVirtMerch: String; pszAuthSyst: String);
 
     procedure LimparTransacaoPendente;
-    procedure VerificarIdentificadorVendaInformado(const IdentificadorVenda: String);
 
   protected
     procedure InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao); override;
@@ -84,7 +79,6 @@ type
     procedure DesInicializar; override;
 
     function EfetuarPagamento(
-      const IdentificadorVenda: String;
       ValorPagto: Currency;
       Modalidade: TACBrTEFModalidadePagamento = TACBrTEFModalidadePagamento.tefmpNaoDefinido;
       CartoesAceitos: TACBrTEFTiposCartao = [];
@@ -93,11 +87,9 @@ type
       DataPreDatado: TDateTime = 0): Boolean; override;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral;
-      const IdentificadorTransacao: string = ''): Boolean; overload; override;
+      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; override;
     function EfetuarAdministrativa(
-      const CodOperacaoAdm: string = '';
-      const IdentificadorTransacao: string = ''): Boolean; overload; override;
+      const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
     function CancelarTransacao(
       const NSU, CodigoAutorizacaoTransacao: string;
@@ -277,24 +269,16 @@ begin
   Self.ProcessarRespostaOperacaoTEF;
 end;
 
-procedure TACBrTEFAndroidPayGoClass.VerificarIdentificadorVendaInformado(
-  const IdentificadorVenda: String);
-begin
-  if IdentificadorVenda.Trim.IsEmpty then
-    fpACBrTEFAPI.DoException(sACBrTEFAndroidIdentificadorVendaVazioException);
-end;
-
 function TACBrTEFAndroidPayGoClass.EfetuarAdministrativa(
-  const CodOperacaoAdm: string = '';
-  const IdentificadorTransacao: string = ''): Boolean;
+  const CodOperacaoAdm: string = ''): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
   OpInt: Integer;
   OpByte: Byte;
 begin
 //VerificarIdentificadorVendaInformado(IdentificadorVenda);
 
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     OpByte := fOperacaoAdministrativa;
     if (CodOperacaoAdm <> '') then
@@ -312,8 +296,8 @@ begin
     if (fAutorizador <> '') then
       PA.ValueInfo[PWINFO_AUTHSYST] := fAutorizador;
 
-    if (IdentificadorTransacao <> '') then
-      PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorTransacao;
+    if (fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao <> '') then
+      PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
 
     fTEFPayGoAPI.IniciarTransacao(OpByte, PA);
     Result := True;  // TEF no Android trabalha de modo Assincrono
@@ -323,15 +307,12 @@ begin
 end;
 
 function TACBrTEFAndroidPayGoClass.EfetuarAdministrativa(
-  OperacaoAdm: TACBrTEFOperacaoAdmin;
-  const IdentificadorTransacao: string): Boolean;
+  OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
 begin
-  Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)),
-                                        IdentificadorTransacao );
+  Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)) );
 end;
 
 function TACBrTEFAndroidPayGoClass.EfetuarPagamento(
-  const IdentificadorVenda: String;
   ValorPagto: Currency;
   Modalidade: TACBrTEFModalidadePagamento;
   CartoesAceitos: TACBrTEFTiposCartao;
@@ -339,17 +320,17 @@ function TACBrTEFAndroidPayGoClass.EfetuarPagamento(
   Parcelas: Byte;
   DataPreDatado: TDateTime): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
   SomaCartoes, ModalidadeInt, FinanciamentoInt: Integer;
   TipoCartao: TACBrTEFTipoCartao;
 begin
-  VerificarIdentificadorVendaInformado(IdentificadorVenda);
+  VerificarIdentificadorVendaInformado;
   if (ValorPagto <= 0) then
-    fpACBrTEFAPI.DoException(sACBrTEFAndroidValorPagamentoInvalidoException);
+    fpACBrTEFAPI.DoException(sACBrTEFAPIValorPagamentoInvalidoException);
 
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
-    PA.ValueInfo[PWINFO_FISCALREF] := IdentificadorVenda;
+    PA.ValueInfo[PWINFO_FISCALREF] := fpACBrTEFAPI.RespostasTEF.IdentificadorTransacao;
     PA.ValueInfo[PWINFO_CURREXP] := '2'; // centavos
     PA.ValueInfo[PWINFO_TOTAMNT] := IntToStr(Trunc(RoundTo(ValorPagto * 100,-2)));
     PA.ValueInfo[PWINFO_CURRENCY] := IntToStr(fpACBrTEFAPI.DadosAutomacao.MoedaISO4217); // '986' ISO4217 - BRL
@@ -412,7 +393,7 @@ function TACBrTEFAndroidPayGoClass.CancelarTransacao(const NSU,
   CodigoAutorizacaoTransacao: string; DataHoraTransacao: TDateTime;
   Valor: Double; const CodigoFinalizacao, Rede: string): Boolean;
 var
-  PA: TACBrTEFPGWebAPIParametros;
+  PA: TACBrTEFParametros;
   i: Integer;
   Resp: TACBrTEFResp;
 
@@ -426,7 +407,7 @@ var
   end;
 
 begin
-  PA := TACBrTEFPGWebAPIParametros.Create;
+  PA := TACBrTEFParametros.Create;
   try
     PA.ValueInfo[PWINFO_TRNORIGNSU] := NSU;
     PA.ValueInfo[PWINFO_TRNORIGDATE] := FormatDateTime('DDMMYY', DataHoraTransacao);

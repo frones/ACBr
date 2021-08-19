@@ -95,12 +95,23 @@ type
                                           tefpenEstornar,
                                           tefpenPerguntar );
 
-  TACBrTEFTratamentoTransacaoInicalizacao = ( tefopiNenhum,
-                                                 tefopiProcessarPendentes,
-                                                 tefopiCancelarOuEstornar);
+  TACBrTEFTratamentoTransacaoInicializacao = ( tefopiNenhum,
+                                              tefopiProcessarPendentes,
+                                              tefopiCancelarOuEstornar);
 
   EACBrTEFErro = class(Exception);
   EACBrTEFArquivo = class(EACBrTEFErro);
+
+  { TACBrTEFParametros }
+
+  TACBrTEFParametros = class(TStringList)
+  private
+    function GetValueInfo(AInfo: Word): string;
+    procedure SetValueInfo(AInfo: Word; const AValue: string);
+  public
+    property ValueInfo[AInfo: Word]: string read GetValueInfo write SetValueInfo;
+  end;
+
 
   { TACBrTEFLinha }
 
@@ -510,6 +521,18 @@ var
 begin
   Casas := max(Length(IntToStr(Identificacao)), 3);
   Result := IntToStrZero(Identificacao, Casas) + '-' + IntToStrZero(Sequencia, 3);
+end;
+
+{ TACBrTEFParametros }
+
+function TACBrTEFParametros.GetValueInfo(AInfo: Word): string;
+begin
+  Result := Values[IntToStr(AInfo)];
+end;
+
+procedure TACBrTEFParametros.SetValueInfo(AInfo: Word; const AValue: string);
+begin
+  Values[IntToStr(AInfo)] := AValue;
 end;
 
 { TACBrTEFLinha }

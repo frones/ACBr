@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrTEFPayGoComum, ACBrBase;
+  ACBrTEFPayGoComum, ACBrTEFComum, ACBrBase;
 
 resourcestring
   sPerVenctoCartao = 'VENCIMENTO CARTAO';
@@ -546,7 +546,7 @@ type
   private
     fCNPJEstabelecimento: String;
     fConfirmarTransacoesPendentesNoHost: Boolean;
-    fDadosTransacao: TACBrTEFPGWebAPIParametros;
+    fDadosTransacao: TACBrTEFParametros;
     fDiretorioTrabalho: String;
     fEnderecoIP: String;
     fExibeMensagemCheckout: Boolean;
@@ -566,7 +566,7 @@ type
     fOnExibeQRCode: TACBrTEFPGWebAPIExibeQRCode;
     fOnGravarLog: TACBrGravarLog;
     fOnObtemCampo: TACBrTEFPGWebAPIObtemCampo;
-    fParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+    fParametrosAdicionais: TACBrTEFParametros;
     fPathLib: String;
     fPontoCaptura: String;
     fPortaPinPad: Integer;
@@ -730,7 +730,7 @@ type
     property Inicializada: Boolean read fInicializada write SetInicializada;
 
     property EmTransacao: Boolean read fEmTransacao;
-    property DadosDaTransacao: TACBrTEFPGWebAPIParametros read fDadosTransacao;
+    property DadosDaTransacao: TACBrTEFParametros read fDadosTransacao;
 
     property SoftwareHouse: String read fSoftwareHouse write SetSoftwareHouse;
     property NomeAplicacao: String read fNomeAplicacao write SetNomeAplicacao ;
@@ -742,7 +742,7 @@ type
     property EnderecoIP: String  read fEnderecoIP write SetEnderecoIP;
     property PortaTCP: String read fPortaTCP write SetPortaTCP;
     property PortaPinPad: Integer read fPortaPinPad write fPortaPinPad;
-    property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read fParametrosAdicionais;
+    property ParametrosAdicionais: TACBrTEFParametros read fParametrosAdicionais;
 
     Property SuportaSaque: Boolean read fSuportaSaque write fSuportaSaque;
     Property SuportaDesconto: Boolean read fSuportaDesconto write fSuportaDesconto;
@@ -1106,8 +1106,8 @@ begin
   fConfirmarTransacoesPendentesNoHost := True;
   fPerguntarCartaoDigitadoAposCancelarLeitura := False;
 
-  fDadosTransacao := TACBrTEFPGWebAPIParametros.Create;
-  fParametrosAdicionais := TACBrTEFPGWebAPIParametros.Create;
+  fDadosTransacao := TACBrTEFParametros.Create;
+  fParametrosAdicionais := TACBrTEFParametros.Create;
 
   fOnGravarLog := Nil;
   fOnExibeMenu := Nil;

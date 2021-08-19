@@ -176,7 +176,7 @@ type
     procedure Clear;
 
     function CalcularCapacidadesDaAutomacao: Integer;
-    function GetURI_DadosAutomacao(ParametrosAdicionais: TACBrTEFPGWebAPIParametros): String;
+    function GetURI_DadosAutomacao(ParametrosAdicionais: TACBrTEFParametros): String;
 
     property SoftwareHouse: String read fSoftwareHouse write SetSoftwareHouse;
     property NomeAplicacao: String read fNomeAplicacao write SetNomeAplicacao ;
@@ -198,9 +198,9 @@ type
     fEmTransacao: Boolean;
     fCNPJEstabelecimento: String;
     fConfirmarTransacoesPendentesNoHost: Boolean;
-    fDadosTransacao: TACBrTEFPGWebAPIParametros;
+    fDadosTransacao: TACBrTEFParametros;
     fNomeEstabelecimento: String;
-    fParametrosAdicionais: TACBrTEFPGWebAPIParametros;
+    fParametrosAdicionais: TACBrTEFParametros;
     fOnGravarLog: TACBrGravarLog;
     fOutputURI: TACBrURI;
     fDadosPendentesURI: TACBrURI;
@@ -239,7 +239,7 @@ type
     procedure GravarLog(const AString: String; Traduz: Boolean = False); overload;
 
     procedure IniciarTransacao(iOPER: Byte;
-      ParametrosAdicionaisTransacao: TACBrTEFPGWebAPIParametros = Nil);
+      ParametrosAdicionaisTransacao: TACBrTEFParametros = Nil);
     procedure ObterDadosDaTransacao;
     procedure TratarTransacaoPendente(AStatus: LongWord = 0;
       pszReqNum: String = ''; pszLocRef: String = ''; pszExtRef: String = '';
@@ -253,7 +253,7 @@ type
     property Inicializada: Boolean read fInicializada write SetInicializada;
 
     property EmTransacao: Boolean read fEmTransacao;
-    property DadosDaTransacao: TACBrTEFPGWebAPIParametros read fDadosTransacao;
+    property DadosDaTransacao: TACBrTEFParametros read fDadosTransacao;
 
     Property NomeEstabelecimento: String read fNomeEstabelecimento write SetNomeEstabelecimento;
     property CNPJEstabelecimento: String read fCNPJEstabelecimento write SetCNPJEstabelecimento;
@@ -261,7 +261,7 @@ type
     property DadosAutomacao: TACBrTEFPGWebAndroidDadosAutomacao read fDadosAutomacao;
     property Personalizacao: TACBrTEFPGWebAndroidPersonalizacao read fPersonalizacao;
 
-    property ParametrosAdicionais: TACBrTEFPGWebAPIParametros read fParametrosAdicionais;
+    property ParametrosAdicionais: TACBrTEFParametros read fParametrosAdicionais;
 
     property ConfirmarTransacoesPendentesNoHost: Boolean
       read fConfirmarTransacoesPendentesNoHost
@@ -913,7 +913,7 @@ begin
 end;
 
 function TACBrTEFPGWebAndroidDadosAutomacao.GetURI_DadosAutomacao(
-  ParametrosAdicionais: TACBrTEFPGWebAPIParametros): String;
+  ParametrosAdicionais: TACBrTEFParametros): String;
 var
   AURI: TACBrURI;
   ANomeAplicacao, AVersaoAplicacao, ASoftwareHouse: string;
@@ -969,8 +969,8 @@ begin
   fDadosAutomacao := TACBrTEFPGWebAndroidDadosAutomacao.Create;
   fPersonalizacao := TACBrTEFPGWebAndroidPersonalizacao.Create;
 
-  fDadosTransacao := TACBrTEFPGWebAPIParametros.Create;
-  fParametrosAdicionais := TACBrTEFPGWebAPIParametros.Create;
+  fDadosTransacao := TACBrTEFParametros.Create;
+  fParametrosAdicionais := TACBrTEFParametros.Create;
   fOutputURI := TACBrURI.Create;
   fDadosPendentesURI := TACBrURI.Create;
 end;
@@ -1194,7 +1194,7 @@ begin
 end;
 
 procedure TACBrTEFPGWebAndroid.IniciarTransacao(iOPER: Byte;
-  ParametrosAdicionaisTransacao: TACBrTEFPGWebAPIParametros);
+  ParametrosAdicionaisTransacao: TACBrTEFParametros);
 var
   uriTransacao, uriDadosAutomacao, uriPersonalizacao: String;
   i: Integer;

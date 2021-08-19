@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2021
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[*] Conversão do layout .dfm atualizado para o .lfm do Lazarus.
+  Por: José M S Junior
+
 17/05/2021
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem, ACBrDANFCeFortesFrA4 --
 [*] Impressão da tag "xPag" como descrição da forma de pagamento.

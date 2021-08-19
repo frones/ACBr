@@ -585,8 +585,8 @@ begin
         Servico.Valores.ValorIssRetido - Servico.Valores.DescontoIncondicionado
         - Servico.Valores.DescontoCondicionado;
 
-      // TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
-      Servico.ResponsavelRetencao := ptTomador;
+      // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum );
+      Servico.ResponsavelRetencao := rtNenhum;
 
       Servico.ItemListaServico := '09.01';
 

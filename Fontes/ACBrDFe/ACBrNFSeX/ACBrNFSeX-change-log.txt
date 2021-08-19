@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/08/2021
+-- Abaco.Provider/Abaco.GravarXml --
+[*] Ajustes visando atender o provedor no que se refere ao webservice que segue
+    a versão 2 do layout da ABRASF.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Alterações visando padronizar o retorno de todos os métodos.
    Por: Italo Giurizzato Junior

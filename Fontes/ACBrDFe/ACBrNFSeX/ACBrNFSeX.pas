@@ -60,7 +60,7 @@ type
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
     fpCidadesJaCarregadas: Boolean;
-    FResposta: TInfRetorno;
+    FResposta: TNFSeWebserviceResponse;
 
     function GetNumID(ANFSe : TNFSe): String;
     function GetConfiguracoes: TConfiguracoesNFSe;
@@ -175,7 +175,7 @@ type
     property Status: TStatusACBrNFSe      read FStatus;
     property Provider: IACBrNFSeXProvider read FProvider;
     property NumID[ANFSe: TNFSe]: string  read GetNumID;
-    property Resposta: TInfRetorno        read FResposta;
+    property Resposta: TNFSeWebserviceResponse read FResposta;
 
   published
     property Configuracoes: TConfiguracoesNFSe read GetConfiguracoes write SetConfiguracoes;
@@ -202,7 +202,7 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := TNotasFiscais.Create(Self);
-  FResposta := TInfRetorno.Create;
+  FResposta := TNFSeWebserviceResponse.Create;
 
   fpCidadesJaCarregadas := False;
 end;
@@ -370,9 +370,9 @@ begin
 
   FResposta.Clear;
 
-  FResposta.XML := Retorno.XmlRetorno;
-  FResposta.NumeroLote := Retorno.Lote;
-  FResposta.DataRecebimento := Retorno.Data;
+  FResposta.XmlRetorno := Retorno.XmlRetorno;
+  FResposta.Lote := Retorno.Lote;
+  FResposta.Data := Retorno.Data;
   FResposta.Protocolo := Retorno.Protocolo;
   FResposta.Sucesso := Retorno.Sucesso;
   FResposta.Situacao := Retorno.Situacao;

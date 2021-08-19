@@ -265,7 +265,7 @@ begin
       if AuxNode <> nil then
       begin
         {
-        with Response.InfRetorno do
+        with Response do
         begin
           Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
 
@@ -671,6 +671,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -696,9 +697,10 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
         end;
       end;
     except

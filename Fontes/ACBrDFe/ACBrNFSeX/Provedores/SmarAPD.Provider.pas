@@ -169,7 +169,8 @@ begin
     end;
   end;
 
-  // Apesar de existir os nomes dos schemas até o momento não temos eles.
+  // Os schemas que se encontram na pasta SmarAPD/Proprio não é padrão para
+  // todas as cidades
   with ConfigSchemas do
   begin
     Recepcionar := 'WSEntradaNfd.xsd';
@@ -318,6 +319,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -353,10 +355,12 @@ begin
           begin
             Response.Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
 
-            with Response.InfRetorno do
+            with Response do
             begin
-              DataRecebimento := LerDatas(ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('datahora'), tcStr));
-              Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+              Data := LerDatas(ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('datahora'), tcStr));
+              Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
+              xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+              Sucesso := not (xSucesso = 'N');
             end;
           end;
         end;
@@ -545,7 +549,7 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
         end;

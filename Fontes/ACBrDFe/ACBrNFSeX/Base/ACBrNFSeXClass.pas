@@ -968,7 +968,7 @@ type
     property SerieRPS: string  read FSerieRPS  write FSerieRPS;
     property NumeroRPS: string read FNumeroRPS write FNumeroRPS;
   end;
-
+  (*
   TInformacoesLote = class(TObject)
   private
     FNumeroLote: string;
@@ -996,7 +996,7 @@ type
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
-  (*
+
   TMsgRetornoIdentificacaoRps = class(TObject)
   private
     FNumero: string;

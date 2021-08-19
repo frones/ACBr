@@ -297,7 +297,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
-  AuxNode, AuxNodeChave: TACBrXmlNode;
+  AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -327,10 +328,13 @@ begin
 
         Response.Sucesso := (Response.Erros.Count = 0);
 
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
+          Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
+          { Verificar se mais alguma dessas informações são necessárias
           with InformacoesLote do
           begin
             NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
@@ -343,9 +347,10 @@ begin
             TempoProcessamento := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
             ValorTotalServico := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
           end;
+          }
         end;
       end;
-
+      {
       AuxNode := ANode.Childrens.FindAnyNs('ChavesNFeRPS');
 
       if AuxNode <> nil then
@@ -354,7 +359,7 @@ begin
 
         if (AuxNodeChave <> nil) then
         begin
-          with Response.InfRetorno.ChaveNFeRPS do
+          with Response do
           begin
             InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
             SerieRPS := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
@@ -366,7 +371,7 @@ begin
 
         if (AuxNodeChave <> nil) then
         begin
-          with Response.InfRetorno.ChaveNFeRPS do
+          with Response do
           begin
             InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
             Numero := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
@@ -374,6 +379,7 @@ begin
           end;
         end;
       end;
+      }
     except
       on E:Exception do
       begin
@@ -428,6 +434,7 @@ var
   i: Integer;
   NumRps: String;
   ANota: NotaFiscal;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -453,7 +460,8 @@ begin
 
       if AuxNode <> nil then
       begin
-        Response.InfRetorno.Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+        xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+        Response.Sucesso := not (xSucesso = 'N');
       end;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('ListaNFSe');
@@ -553,6 +561,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -578,9 +587,10 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
         end;
       end;
     except

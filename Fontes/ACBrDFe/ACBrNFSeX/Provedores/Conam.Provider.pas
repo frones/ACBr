@@ -438,7 +438,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
@@ -532,7 +532,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
         end;
@@ -818,7 +818,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
         end;

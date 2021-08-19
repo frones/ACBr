@@ -273,9 +273,9 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
       end;
@@ -369,7 +369,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
 
@@ -503,7 +503,6 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
   ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -528,7 +527,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
           if not Assigned(ANodeArray) then
@@ -669,7 +668,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           AuxNode := ANode.Childrens.FindAnyNs('ListaNfse');
 
@@ -824,9 +823,9 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('ProtocoloRequerimentoCancelamento'), tcStr);
         end;
       end;

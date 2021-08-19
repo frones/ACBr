@@ -53,22 +53,22 @@ type
   private
     FXML: string;
 
-    // Retornos dos serviços tanto versão 1 quanto versão 2 do layout da ABRASF
     FNumeroLote: String;
     FDataRecebimento: TDateTime;
     FProtocolo: String;
     FSituacao: String;
     FDataHoraCanc: TDateTime;
     FSucesso: Boolean;
+    FNumeroNota: Integer;
+    FLink: String;
+    FidNota: string;
 
     FHashIdent: string;
 
-    FInformacoesLote: TInformacoesLote;
+//    FInformacoesLote: TInformacoesLote;
     FListaChaveNFeRPS: TChaveNFeRPSCollection;
     // Retornado pelo GerarNfse
     FChaveNFeRPS: TChaveNFeRPS;
-    FNumeroNota: Integer;
-    FLink: String;
 
     procedure SetListaChaveNFeRPS(const Value: TChaveNFeRPSCollection);
   public
@@ -78,22 +78,23 @@ type
 
     property XML: string read FXML write FXML;
 
-    // Retornos dos serviços tanto versão 1 quanto versão 2 do layout da ABRASF
     property NumeroLote: String         read FNumeroLote      write FNumeroLote;
     property DataRecebimento: TDateTime read FDataRecebimento write FDataRecebimento;
     property Protocolo: String          read FProtocolo       write FProtocolo;
     property Situacao: String           read FSituacao        write FSituacao;
     property DataHoraCanc: TDateTime    read FDataHoraCanc    write FDataHoraCanc;
     property Sucesso: Boolean           read FSucesso         write FSucesso;
+    property NumeroNota: Integer        read FNumeroNota      write FNumeroNota;
+    property Link: String               read FLink            write FLink;
+    property idNota: string             read FidNota          write FidNota;
+
 
     property HashIdent: string          read FHashIdent       write FHashIdent;
 
-    property InformacoesLote: TInformacoesLote        read FInformacoesLote  write FInformacoesLote;
+//    property InformacoesLote: TInformacoesLote        read FInformacoesLote  write FInformacoesLote;
     property ListaChaveNFeRPS: TChaveNFeRPSCollection read FListaChaveNFeRPS write SetListaChaveNFeRPS;
     // Retornado pelo GerarNfse
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
-    property NumeroNota: Integer       read FNumeroNota  write FNumeroNota;
-    property Link: String              read FLink        write FLink;
   end;
 
   TNFSeEventoCollectionItem = class
@@ -214,6 +215,8 @@ type
     FNumeroNota: Integer;
     FData: TDateTime;
     FidNota: string;
+    FLink: String;
+    FProtocolo: String;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
@@ -226,6 +229,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear;
 
     property Situacao: String read FSituacao write FSituacao;
     property Lote: string read FLote write FLote;
@@ -233,6 +237,8 @@ type
     property NumeroNota: Integer read FNumeroNota write FNumeroNota;
     property Data: TDateTime read FData write FData;
     property idNota: string read FidNota write FidNota;
+    property Link: String read FLink write FLink;
+    property Protocolo: String read FProtocolo write FProtocolo;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
@@ -246,7 +252,6 @@ type
 
   TNFSeEmiteResponse = class(TNFSeWebserviceResponse)
   private
-    FProtocolo: String;
     FModoEnvio: TmodoEnvio;
     FMaxRps: Integer;
     FInfRetorno: TInfRetorno;
@@ -255,7 +260,6 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property Protocolo: String read FProtocolo write FProtocolo;
     property MaxRps: Integer read FMaxRps write FMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
 
@@ -264,34 +268,24 @@ type
 
   TNFSeConsultaSituacaoResponse = class(TNFSeWebserviceResponse)
   private
-    FSituacao: string;
-    FProtocolo: string;
     FInfRetorno: TInfRetorno;
 
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-
-    property Protocolo: string read FProtocolo write FProtocolo;
-    property Situacao: string read FSituacao write FSituacao;
 
     property InfRetorno: TInfRetorno read FInfRetorno write FInfRetorno;
   end;
 
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
   private
-    FProtocolo: string;
-    FSituacao: string;
     FInfRetorno: TInfRetorno;
 
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-
-    property Protocolo: string read FProtocolo write FProtocolo;
-    property Situacao: string read FSituacao write FSituacao;
 
     property InfRetorno: TInfRetorno read FInfRetorno write FInfRetorno;
   end;
@@ -377,21 +371,17 @@ type
 
   TNFSeAbreSessaoResponse = class(TNFSeWebserviceResponse)
   private
-    FLote: string;
     FHashIdent: String;
 
   public
-    property Lote: string read FLote write FLote;
     property HashIdent: String read FHashIdent write FHashIdent;
   end;
 
   TNFSeFechaSessaoResponse = class(TNFSeWebserviceResponse)
   private
-    FLote: string;
     FHashIdent: String;
 
   public
-    property Lote: string read FLote write FLote;
     property HashIdent: String read FHashIdent write FHashIdent;
   end;
 
@@ -472,6 +462,26 @@ begin
 end;
 
 { TNFSeWebserviceResponse }
+
+procedure TNFSeWebserviceResponse.Clear;
+begin
+  Situacao := '';
+  Lote := '';
+  Sucesso := False;
+  NumeroNota := 0;
+  Data := 0;
+  idNota := '';
+  Link := '';
+  Protocolo := '';
+
+//  FAlertas: TNFSeEventoCollection;
+//  FErros: TNFSeEventoCollection;
+
+  XmlEnvio := '';
+  XmlRetorno := '';
+  EnvelopeEnvio := '';
+  EnvelopeRetorno := '';
+end;
 
 constructor TNFSeWebserviceResponse.Create;
 begin
@@ -565,7 +575,7 @@ begin
   inherited Create;
 
 //  FRetornoNFSe      := TRetornoNFSe.Create;
-  FInformacoesLote  := TInformacoesLote.Create;
+//  FInformacoesLote  := TInformacoesLote.Create;
   FListaChaveNFeRPS := TChaveNFeRPSCollection.Create;
   FChaveNFeRPS      := TChaveNFeRPS.Create;
 end;
@@ -573,7 +583,7 @@ end;
 destructor TInfRetorno.Destroy;
 begin
 //  FRetornoNFSe.Free;
-  FInformacoesLote.Free;
+//  FInformacoesLote.Free;
   FListaChaveNFeRPS.Free;
   FChaveNFeRPS.Free;
 

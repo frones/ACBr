@@ -420,8 +420,6 @@ begin
 
         ProcessarMensagemErros(ANode, Response);
 
-        Response.Sucesso := (Response.Erros.Count = 0);
-
         ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
         if not Assigned(ANodeArray) then
         begin
@@ -451,6 +449,8 @@ begin
 
           SalvarXmlNfse(ANota);
         end;
+
+        Response.Sucesso := (Response.Erros.Count = 0);
       end;
     except
       on E:Exception do

@@ -486,7 +486,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
-  AuxNode, AuxNodeCPFCNPJ, AuxNodeChave: TACBrXmlNode;
+  AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -512,14 +513,18 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InformacoesLote');
 
           if AuxNode <> nil then
           begin
+              Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+
+            { Verificar se mais alguma dessas informações são necessárias
             with InformacoesLote do
             begin
               NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
@@ -540,10 +545,11 @@ begin
               TempoProcessamento := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
               ValorTotalServico := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('ValorTotalServicos'), tcDe2);
             end;
+            }
           end;
         end;
       end;
-
+      {
       AuxNode := ANode.Childrens.FindAnyNs('ChaveNFeRPS');
 
       if AuxNode <> nil then
@@ -552,7 +558,7 @@ begin
 
         if (AuxNodeChave <> nil) then
         begin
-          with Response.InfRetorno.ChaveNFeRPS do
+          with Response do
           begin
             InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
             SerieRPS := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
@@ -564,7 +570,7 @@ begin
 
         if (AuxNodeChave <> nil) then
         begin
-          with Response.InfRetorno.ChaveNFeRPS do
+          with Response do
           begin
             InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
             Numero := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
@@ -572,6 +578,7 @@ begin
           end;
         end;
       end;
+      }
     except
       on E:Exception do
       begin
@@ -629,7 +636,8 @@ procedure TACBrNFSeProviderSP.TratarRetornoConsultaSituacao(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode, AuxNodeCPFCNPJ: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -655,14 +663,18 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
 
           AuxNode := AuxNode.Childrens.FindAnyNs('InformacoesLote');
 
           if AuxNode <> nil then
           begin
+            Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+
+            { Verificar se mais alguma dessas informações são necessárias
             with InformacoesLote do
             begin
               NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
@@ -683,6 +695,7 @@ begin
               TempoProcessamento := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
               ValorTotalServico := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
             end;
+            }
           end;
         end;
       end;
@@ -745,6 +758,7 @@ var
   i: Integer;
   NumNFSe: String;
   ANota: NotaFiscal;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -770,9 +784,10 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
         end;
       end;
 
@@ -880,6 +895,7 @@ var
   i: Integer;
   NumNFSe: String;
   ANota: NotaFiscal;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -905,9 +921,10 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
         end;
       end;
 
@@ -1010,6 +1027,7 @@ var
   i: Integer;
   NumNFSe: String;
   ANota: NotaFiscal;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -1035,9 +1053,10 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
         end;
       end;
 
@@ -1156,6 +1175,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -1181,9 +1201,10 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := not (xSucesso = 'N');
         end;
       end;
     except

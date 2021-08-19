@@ -235,7 +235,7 @@ begin
 
       if ANode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
@@ -507,7 +507,9 @@ begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
     Result := '<nfse:Usuario>' + Emitente.WSUser + '</nfse:Usuario>' +
-              '<nfse:Senha>' + AsciiToHex(MD5(Emitente.WSSenha)) + '</nfse:Senha>';
+              '<nfse:Senha>' + LowerCase(AsciiToHex(MD5(Emitente.WSSenha))) + '</nfse:Senha>';
+//    202cb962ac59075b 2013 4b07152d234b70
+//    202cb962ac59075b 96   4b07152d234b70
   end;
 end;
 

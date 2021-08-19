@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2021
+-- Diversos --
+[*] Alterações visando padronizar o retorno de todos os métodos.
+   Por: Italo Giurizzato Junior
+-- SmarAPD.GravarXml --
+[*] Se a natureza da operação for 400 a tag <impostoretido> deve conter o valor
+    "i".
+   Por: Italo Giurizzato Junior
+
 18/08/2021
 -- ACBrNFSeXWebservicesResponse/EL.Provider --
 [*] Ajustes nas rotinas de tratamento de retorno dos serviços do provedor EL

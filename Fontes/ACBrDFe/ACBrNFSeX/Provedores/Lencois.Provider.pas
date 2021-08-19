@@ -215,7 +215,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      with Response.InfRetorno do
+      with Response do
       begin
         Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('validacao'), tcStr);
       end;
@@ -347,7 +347,7 @@ begin
 
       if AuxNode <> nil then
       begin
-        with Response.InfRetorno do
+        with Response do
         begin
           Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
           NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Nota'), tcInt);

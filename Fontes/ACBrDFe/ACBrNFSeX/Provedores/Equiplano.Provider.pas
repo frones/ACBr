@@ -317,7 +317,7 @@ begin
 
         Response.Sucesso := (Response.Erros.Count = 0);
 
-        with Response.InfRetorno do
+        with Response do
         begin
           Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('protocolo'), tcStr);
         end;
@@ -411,9 +411,9 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      with Response.InfRetorno do
+      with Response do
       begin
-        NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
+        Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
         Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('stLote'), tcStr);
       end;
     except
@@ -644,7 +644,7 @@ begin
       begin
         Response.CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
 
-        with Response.InfRetorno do
+        with Response do
         begin
           NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrNfse'), tcInt);
         end;

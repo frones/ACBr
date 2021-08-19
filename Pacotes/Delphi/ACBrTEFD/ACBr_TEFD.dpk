@@ -68,6 +68,7 @@ contains
   ACBrPicpay in '..\..\..\Fontes\ACBrPicPay\ACBrPicpay.pas',
   ACBrTEFAPI in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPI.pas',
   ACBrTEFAPIComum in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIComum.pas',
-  ACBrTEFAPIPayGoWeb in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIPayGoWeb.pas';
+  ACBrTEFAPIPayGoWeb in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPIPayGoWeb.pas',
+  ACBrTEFAPICliSiTef in '..\..\..\Fontes\ACBrTEFD\ACBrTEFAPICliSiTef.pas';
 
 end.

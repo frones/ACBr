@@ -13,7 +13,7 @@ uses
   ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDCappta, 
   ACBrTEFCliSiTefComum, ACBrTEFPayGoComum, ACBrTEFPayGoWebComum, ACBrPOS, 
   ACBrPOSPGWebAPI, ACBrPicpay, ACBrTEFPayGoRedes, ACBrTEFAPI, ACBrTEFAPIComum, 
-  ACBrTEFAPIPayGoWeb, LazarusPackageIntf;
+  ACBrTEFAPIPayGoWeb, ACBrTEFAPICliSiTef, LazarusPackageIntf;
 
 implementation
 

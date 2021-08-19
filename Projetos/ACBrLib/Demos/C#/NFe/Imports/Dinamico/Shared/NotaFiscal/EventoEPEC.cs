@@ -5,7 +5,7 @@ using ACBrLib.Core.NFe;
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoEPEC : EventoBase
+    public sealed class EventoEPEC : EventoNFeBase
     {
         #region Constructor
 

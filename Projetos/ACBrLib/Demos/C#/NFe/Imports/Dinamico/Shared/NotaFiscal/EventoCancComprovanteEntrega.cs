@@ -3,7 +3,7 @@ using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoCancComprovanteEntrega : EventoBase
+    public sealed class EventoCancComprovanteEntrega : EventoNFeBase
     {
         #region Constructor
 

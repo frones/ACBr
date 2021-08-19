@@ -79,7 +79,6 @@
     <Compile Include="..\Shared\NotaFiscal\EncerranteNFe.cs" Link="NotaFiscal\EncerranteNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventDEST.cs" Link="NotaFiscal\EventDEST.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoAtorIntNFe.cs" Link="NotaFiscal\EventoAtorIntNFe.cs" />
-    <Compile Include="..\Shared\NotaFiscal\EventoBase.cs" Link="NotaFiscal\EventoBase.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoCancelamento.cs" Link="NotaFiscal\EventoCancelamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoCancSubstituicao.cs" Link="NotaFiscal\EventoCancSubstituicao.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoCCe.cs" Link="NotaFiscal\EventoCCe.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="..\Shared\NotaFiscal\EventoManifDestConfirmacao.cs" Link="NotaFiscal\EventoManifDestConfirmacao.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoManifDestDesconhecimento.cs" Link="NotaFiscal\EventoManifDestDesconhecimento.cs" />
     <Compile Include="..\Shared\NotaFiscal\EventoManifDestOperNaoRealizada.cs" Link="NotaFiscal\EventoManifDestOperNaoRealizada.cs" />
+    <Compile Include="..\Shared\NotaFiscal\EventoNFeBase.cs" Link="NotaFiscal\EventoNFeBase.cs" />
     <Compile Include="..\Shared\NotaFiscal\ExportaNFe.cs" Link="NotaFiscal\ExportaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\FaturaNFe.cs" Link="NotaFiscal\FaturaNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\FinalidadeNFe.cs" Link="NotaFiscal\FinalidadeNFe.cs" />

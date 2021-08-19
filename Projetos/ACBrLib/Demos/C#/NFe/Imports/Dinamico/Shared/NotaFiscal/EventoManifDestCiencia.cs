@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoManifDestCiencia : EventoBase
+    public sealed class EventoManifDestCiencia : EventoNFeBase
     {
         #region Constructors
 

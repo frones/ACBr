@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoComprovanteEntrega : EventoBase
+    public sealed class EventoComprovanteEntrega : EventoNFeBase
     {
         #region Constructor
 

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using ACBrLib.Core;
-using ACBrLib.Core.DFe;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.Core.DFe
 {
     public abstract class EventoBase
     {
@@ -23,11 +20,9 @@ namespace ACBrLib.NFe
 
         public string CNPJ { get; set; }
 
-        public string chNFe { get; set; }
-
         public DateTime dhEvento { get; set; }
 
-        public TipoEvento tpEvento { get; set; }
+        public TipoEvento tpEvento { get; protected set; }
 
         public int nSeqEvento { get; set; }
 
@@ -42,13 +37,17 @@ namespace ACBrLib.NFe
 
         protected virtual ACBrIniFile WriteToIni()
         {
-            var iniData = new ACBrIniFile();
-            iniData["EVENTO"]["idLote"] = "1";
+            var iniData = new ACBrIniFile
+            {
+                ["EVENTO"] =
+                {
+                    ["idLote"] = "1"
+                }
+            };
+
             iniData.WriteToIni(GetType(), this, "EVENTO001");
             return iniData;
         }
-
-        //protected abstract void WriteEvento(ACBrIniFile iniData);
 
         #endregion Methods
     }

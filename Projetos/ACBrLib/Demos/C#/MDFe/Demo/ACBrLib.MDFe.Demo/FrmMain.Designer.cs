@@ -176,6 +176,7 @@
             this.btnDFePorChave = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnIncCondutor = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -1652,6 +1653,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnIncCondutor);
             this.tabPage3.Controls.Add(this.btnEncerrar);
             this.tabPage3.Controls.Add(this.btnEnviarEvento);
             this.tabPage3.Controls.Add(this.btnImprimirEventoPDF);
@@ -1802,6 +1804,16 @@
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            // 
+            // btnIncCondutor
+            // 
+            this.btnIncCondutor.Location = new System.Drawing.Point(254, 35);
+            this.btnIncCondutor.Name = "btnIncCondutor";
+            this.btnIncCondutor.Size = new System.Drawing.Size(118, 23);
+            this.btnIncCondutor.TabIndex = 33;
+            this.btnIncCondutor.Text = "Inclusão de Condutor";
+            this.btnIncCondutor.UseVisualStyleBackColor = true;
+            this.btnIncCondutor.Click += new System.EventHandler(this.btnIncCondutor_Click);
             // 
             // FrmMain
             // 
@@ -2012,6 +2024,7 @@
         private System.Windows.Forms.Button btnCarregarConfiguracoes;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Button btnGerarChaveMDFe;
+        private System.Windows.Forms.Button btnIncCondutor;
     }
 }
 

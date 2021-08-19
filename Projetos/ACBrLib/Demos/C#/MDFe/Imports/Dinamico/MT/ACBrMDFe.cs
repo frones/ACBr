@@ -134,6 +134,8 @@ namespace ACBrLib.MDFe
 
         public Manifesto ObterManifesto(int aIndex) => Manifesto.Load(ObterIni(aIndex));
 
+        public void CarregarEvento(EventoBase evento) => CarregarEventoINI(evento.ToString());
+
         public void CarregarXML(string eArquivoOuXml)
         {
             var method = GetMethod<MDFE_CarregarXML>();

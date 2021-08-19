@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoCCe : EventoBase
+    public sealed class EventoCCe : EventoNFeBase
     {
         #region Constructor
 

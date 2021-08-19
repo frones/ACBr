@@ -142,10 +142,7 @@ namespace ACBrLib.NFe
         /// <returns></returns>
         public NotaFiscal ObterNFe(int aIndex) => NotaFiscal.Load(ObterIni(aIndex));
 
-        public void CarregarEvento(EventoBase evento)
-        {
-            CarregarEventoINI(evento.ToString());
-        }
+        public void CarregarEvento(EventoBase evento) => CarregarEventoINI(evento.ToString());
 
         public void CarregarXML(string eArquivoOuXml)
         {

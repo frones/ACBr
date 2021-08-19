@@ -394,7 +394,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -417,7 +417,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -530,7 +530,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacaoEmail())
             {
-                MessageBox.Show("Erro - Verifique as configurações de E-mail");
+                MessageBox.Show(@"Erro - Verifique as configurações de E-mail");
                 return;
             }
 
@@ -583,7 +583,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -601,7 +601,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -625,7 +625,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -649,7 +649,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -671,7 +671,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -693,7 +693,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -721,7 +721,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -741,11 +741,51 @@ namespace ACBrLib.MDFe.Demo
             }
         }
 
+        private void btnIncCondutor_Click(object sender, EventArgs e)
+        {
+            if (!validacao())
+            {
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
+                return;
+            }
+
+            try
+            {
+                var cOrgao = 0;
+                var chave = "";
+                var condutor = "";
+                var cpf = "";
+                var lote = 1;
+                if (InputBox.Show("WebServices Eventos: Inclusão de Condutor", "Codigo da UF", ref cOrgao) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Eventos: Inclusão de Condutor", "Chave da MDF-e", ref chave) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Eventos: Inclusão de Condutor", "Nome do Condutor", ref condutor) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Eventos: Inclusão de Condutor", "CPF do Condutor", ref cpf) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Eventos: Inclusão de Condutor", "Número do Lote", ref lote) != DialogResult.OK) return;
+
+                var evento = new EventoIncCondutor
+                {
+                    cOrgao = cOrgao,
+                    chMDFe = chave,
+                    xNome = condutor,
+                    CPF = cpf,
+                    dhEvento = DateTime.Now
+                };
+
+                ACBrMDFe.LimparListaEventos();
+                ACBrMDFe.CarregarEvento(evento);
+                ACBrMDFe.EnviarEvento(lote);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnEnviarEvento_Click(object sender, EventArgs e)
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -831,7 +871,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacaoEmail())
             {
-                MessageBox.Show("Erro - Verifique as configurações de E-mail");
+                MessageBox.Show(@"Erro - Verifique as configurações de E-mail");
                 return;
             }
 
@@ -859,7 +899,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -886,7 +926,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -906,7 +946,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 
@@ -970,7 +1010,7 @@ namespace ACBrLib.MDFe.Demo
         {
             if (!validacao())
             {
-                MessageBox.Show("Erro Verifique as configurações do certificado");
+                MessageBox.Show(@"Erro Verifique as configurações do certificado");
                 return;
             }
 

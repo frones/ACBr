@@ -3,7 +3,7 @@ using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoAtorIntNFe : EventoBase
+    public sealed class EventoAtorIntNFe : EventoNFeBase
     {
         #region Constructor
 

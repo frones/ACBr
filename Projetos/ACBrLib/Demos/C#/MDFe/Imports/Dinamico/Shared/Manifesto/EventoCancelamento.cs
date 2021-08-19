@@ -1,8 +1,8 @@
 ﻿using ACBrLib.Core.DFe;
 
-namespace ACBrLib.NFe
+namespace ACBrLib.MDFe
 {
-    public sealed class EventoCancelamento : EventoNFeBase
+    public sealed class EventoCancelamento : EventoMDFeBase
     {
         #region Constructor
 

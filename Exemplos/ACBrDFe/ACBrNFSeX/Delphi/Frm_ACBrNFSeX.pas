@@ -823,7 +823,8 @@ begin
     if not (InputQuery(Titulo, 'Numero da NFSe', NumNFSe)) then
       exit;
 
-    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil_2, proWebFisco] then
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil_2, proWebFisco,
+      proSimple, proFGMaiss] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -876,7 +877,7 @@ begin
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
       proConam, proEquiplano, proGoverna, proIPM, proIPM_120, proISSDSF, proLencois,
       proModernizacaoPublica, proPublica, proSiat, proSigISS, proSigep,
-      proSmarAPD, proWebFisco, proTecnos, proSudoeste] then
+      proSmarAPD, proWebFisco, proTecnos, proSudoeste, proSimple, proFGMaiss] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -892,7 +893,7 @@ begin
 
     // Os Provedores da lista requerem que seja informado o código de verificação
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proInfisc_100, proInfisc_110,
-         proISSDSF, proLencois, proGoverna, proSiat, proSigep] then
+         proISSDSF, proLencois, proGoverna, proSiat, proSigep, proElotech] then
     begin
       CodVerif := '12345678';
       if not (InputQuery(Titulo, 'Código de Verificação ou Chave de Autenticação', CodVerif)) then
@@ -1130,7 +1131,7 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSePeloNumeroClick(Sender: TObject);
 var
-  xTitulo, NumeroNFSe, NumPagina, NumLote, DataIni, DataFin, xTipo: String;
+  xTitulo, NumeroNFSe, NumPagina, NumLote, xDataIni, xDataFin, xTipo: String;
   Response: TNFSeConsultaNFSeResponse;
   InfConsultaNFSe: TInfConsultaNFSe;
 begin
@@ -1141,8 +1142,8 @@ begin
     exit;
 
   NumLote := '1';
-  DataIni := '';
-  DataFin := '';
+  xDataIni := '';
+  xDataFin := '';
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAssessorPublico] then
   begin
@@ -1155,17 +1156,17 @@ begin
     if not(InputQuery(xTitulo, 'Numero do Lote:', NumLote)) then
       exit;
 
-    DataIni := DateToStr(Date);
-    if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', DataIni)) then
+    xDataIni := DateToStr(Date);
+    if not (InputQuery(xTitulo, 'Data Inicial (DD/MM/AAAA):', xDataIni)) then
       exit;
 
-    DataFin := DateToStr(Date);
-    if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', DataFin)) then
+    xDataFin := DateToStr(Date);
+    if not (InputQuery(xTitulo, 'Data Final (DD/MM/AAAA):', xDataFin)) then
       exit;
   end;
 
   xTipo := '';
-  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proWebFisco] then
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proWebFisco] then
   begin
     if not(InputQuery(xTitulo, 'Tipo da NFSe:', xTipo)) then
       exit;
@@ -1178,8 +1179,49 @@ begin
   case ACBrNFSeX1.Configuracoes.Geral.Provedor of
     proISSDSF,
     proSiat:
-      Response := ACBrNFSeX1.ConsultarNFSePorPeriodo(StrToDateDef(DataIni, 0),
-                  StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1), NumLote);
+      begin
+        InfConsultaNFSe := TInfConsultaNFSe.Create;
+
+        try
+          with InfConsultaNFSe do
+          begin
+            tpConsulta := tcPorNumero;
+
+            NumeroIniNFSe := NumeroNFSe;
+            NumeroLote := NumLote;
+            DataInicial :=  StrToDateDef(xDataIni, 0);
+            DataFinal := StrToDateDef(xDataFin, 0);
+            Pagina := StrToIntDef(NumPagina, 1);
+          end;
+
+          Response := ACBrNFSeX1.ConsultarNFSe(InfConsultaNFSe);
+        finally
+          InfConsultaNFSe.Free;
+        end;
+      end;
+
+//      Response := ACBrNFSeX1.ConsultarNFSePorPeriodo(StrToDateDef(DataIni, 0),
+//                  StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1), NumLote);
+
+    proFGMaiss,
+    proWebFisco:
+      begin
+        InfConsultaNFSe := TInfConsultaNFSe.Create;
+
+        try
+          with InfConsultaNFSe do
+          begin
+            tpConsulta := tcPorNumero;
+
+            NumeroIniNFSe := NumeroNFSe;
+            Tipo := xTipo;
+          end;
+
+          Response := ACBrNFSeX1.ConsultarNFSe(InfConsultaNFSe);
+        finally
+          InfConsultaNFSe.Free;
+        end;
+      end;
 
     proAssessorPublico:
       begin
@@ -1913,7 +1955,7 @@ begin
   end;
 
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proLencois, proGoverna,
-       proSiat, proSigep] then
+       proSiat, proSigep, proElotech] then
   begin
     CodVerif := '12345678';
     if not (InputQuery('Cancelar NFSe', 'Código de Verificação', CodVerif)) then
@@ -2382,8 +2424,8 @@ begin
     memoLog.Lines.Add(' ');
 
     memoLog.Lines.Add('Modo de Envio : ' + ModoEnvioToStr(TNFSeEmiteResponse(Response).ModoEnvio));
-    memoLog.Lines.Add('Numero do Lote: ' + ACBrNFSeX1.Resposta.NumeroLote);
-    memoLog.Lines.Add('Data de Envio : ' + DateToStr(ACBrNFSeX1.Resposta.DataRecebimento));
+    memoLog.Lines.Add('Numero do Lote: ' + ACBrNFSeX1.Resposta.Lote);
+    memoLog.Lines.Add('Data de Envio : ' + DateToStr(ACBrNFSeX1.Resposta.Data));
     memoLog.Lines.Add('Numero do Prot: ' + ACBrNFSeX1.Resposta.Protocolo);
     memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Response.Sucesso, True));
   end;

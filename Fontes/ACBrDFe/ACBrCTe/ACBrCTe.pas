@@ -312,7 +312,7 @@ begin
 
   if TipoAmbiente = taHomologacao then
   begin
-    if ( (TipoEmissao in [teSVCSP]) and (CUF in [31,41,50,51]) ) then
+    if ( (TipoEmissao in [teSVCSP]) and (CUF in [41, 50, 51]) ) then
       urlUF := LerURLDeParams('CTe', GetUFFormaEmissao, TipoAmbiente, 'URL-QRCode', 0)
     else
       urlUF := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);

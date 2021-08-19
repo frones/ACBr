@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2021
+-- pcteRetEnvEventoCTe --
+[*] Possível correção na leitura do XML de eventos.
+   Por: Italo Giurizzato Junior
+-- ACBrCTe --
+[*] Possível correção para a autorização do CT-e em ambiente de homologação em 
+    SVC-SP.
+   Por: Italo Giurizzato Junior
+
 30/06/2021
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajustes na impressão de tpDoc = 99 informados em <infOutros>.

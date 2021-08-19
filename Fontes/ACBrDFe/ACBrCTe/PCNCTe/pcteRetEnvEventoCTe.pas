@@ -183,7 +183,7 @@ begin
          infEvento.Id         := Leitor.rAtributo('Id=', 'infEvento');
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-         infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
+         infEvento.CNPJ       := Leitor.rCampoCNPJCPF;
          infEvento.chCTe      := Leitor.rCampo(tcStr, 'chCTe');
          infEvento.dhEvento   := Leitor.rCampo(tcDatHor, 'dhEvento');
          infEvento.tpEvento   := StrToTpEventoCTe(ok,Leitor.rCampo(tcStr, 'tpEvento'));

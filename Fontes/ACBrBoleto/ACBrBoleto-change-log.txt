@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2021
+--ACBrBancoBanrisul--
+[*] Correção na geração do SeuNumero na remessa
+https://www.projetoacbr.com.br/forum/topic/63506-boleto-banrisul-cnab-240/
+
 10/08/2021
 --ACBrBancoCaixa--
 [*] Atualização Codigos Mora Aceitos

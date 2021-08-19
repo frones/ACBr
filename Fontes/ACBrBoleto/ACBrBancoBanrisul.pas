@@ -720,8 +720,7 @@ begin
                   IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))                      + // 151-165 Valor do desconto por dia
                   IntToStrZero( round(ValorIOF * 100), 15)                                                                            + // 166-180 valor do IOF a ser recolhido
                   IntToStrZero( round(ValorAbatimento * 100), 15)                                                                     + // 181-195 Valor do abatimento
-                  PadRight(NumeroDocumento, 15) +                                                                                       // 196-220 USO DA EMPRESA BENEFICIÁRIA
-                  DupeString(' ', 10) +                                                                                                 //         CONTINUAÇÃO DO USO DA EMPRESA
+                  PadRight(IfThen(SeuNumero <> '',SeuNumero,NumeroDocumento), 25, ' ')                                                + // 196-220 Identificação do Título na Empresa 25 - Alfa G072
                   DiasProt +                                                                                                            // 222-223 NUMERO DE DIAS PARA PROTESTO
                   PadRight(Trim(Instrucao2), 1, ' ') +                                                                                  // 224-224 CODIGO PARA BAIXA
                   sDiasBaixaDevol +                                                                                                     // 225-227 DIAS PARA BAIXA DO BOLETO
@@ -763,8 +762,7 @@ begin
                   IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))                      + // 151-165 Valor do desconto por dia
                   IntToStrZero( round(ValorIOF * 100), 15)                                                                            + // 166-180 valor do IOF a ser recolhido
                   IntToStrZero( round(ValorAbatimento * 100), 15)                                                                     + // 181-195 Valor do abatimento
-                  PadRight(NumeroDocumento, 15) +                                                                                       // 196-220 USO DA EMPRESA BENEFICIÁRIA
-                  DupeString(' ', 10) +                                                                                                 //         CONTINUAÇÃO DO USO DA EMPRESA
+                  PadRight(IfThen(SeuNumero <> '',SeuNumero,NumeroDocumento), 25, ' ')                                                + // 196-220 USO DA EMPRESA BENEFICIÁRIA
                   DiasProt +                                                                                                            // 222-223 NUMERO DE DIAS PARA PROTESTO
                   PadRight(Trim(Instrucao2), 1, ' ') +                                                                                  // 224-224 CODIGO PARA BAIXA
                   sDiasBaixaDevol +                                                                                                     // 225-227 DIAS PARA BAIXA DO BOLETO

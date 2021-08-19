@@ -954,10 +954,14 @@ begin
 
     MR := FormMenuTEF.ShowModal ;
 
-    if (MR = mrOK) then
-      ItemSelecionado := FormMenuTEF.ItemSelecionado
+    case MR of
+      mrOK:
+        ItemSelecionado := FormMenuTEF.ItemSelecionado;
+      mrRetry:
+        ItemSelecionado := -2;  // Voltar
     else
-      ItemSelecionado := -1;
+      ItemSelecionado := -1;   // Cancelar
+    end;
   finally
     FormMenuTEF.Free;
   end;
@@ -1786,7 +1790,7 @@ begin
   ACBrTEFAPI1.Modelo := TACBrTEFAPITipo(cbxGP.ItemIndex);
   ACBrTEFAPI1.ArqLOG := edLog.Text;
   ACBrTEFAPI1.TratamentoTransacaoPendente := TACBrTEFTratamentoTransacaoPendente(cbxTransacaoPendente.ItemIndex);
-  ACBrTEFAPI1.TratamentoTransacaoInicalizacao := TACBrTEFTratamentoTransacaoInicalizacao(cbxTransacaoPendenteInicializacao.ItemIndex);
+  ACBrTEFAPI1.TratamentoTransacaoInicializacao := TACBrTEFTratamentoTransacaoInicializacao(cbxTransacaoPendenteInicializacao.ItemIndex);
   ACBrTEFAPI1.DadosAutomacao.AutoAtendimento := cbAutoAtendimento.Checked;
   ACBrTEFAPI1.DadosAutomacao.ImprimeViaClienteReduzida := cbImprimirViaReduzida.Checked;
   ACBrTEFAPI1.ConfirmarTransacaoAutomaticamente := cbConfirmarAutomaticamente.Checked;

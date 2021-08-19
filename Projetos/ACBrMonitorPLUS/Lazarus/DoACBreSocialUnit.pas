@@ -218,7 +218,13 @@ begin
   with TACBrObjetoeSocial(fpObjetoDono) do
   begin
     with MonitorConfig.DFE.WebService do
+    begin
       VersaoeSocial := VersaoeSocialToStr(eVersao);
+
+      if (VersaoeSocial = '_S_01_00_00') then
+        VersaoeSocial := 'S01_00_00';
+
+    end;
 
     MonitorConfig.SalvarArquivo;
   end;

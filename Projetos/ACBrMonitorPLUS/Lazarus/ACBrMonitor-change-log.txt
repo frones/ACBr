@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2021
+--DoACBreSocialUnit--
+[*] Ajuste método setVersaoDF, para alteração do layout simplificado.
+
 05/08/2021
 --DoACBreSocialUnit--
 [+] Adicionado método setVersaoDF, para alterar a versão do layout e-social.

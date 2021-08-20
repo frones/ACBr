@@ -827,7 +827,6 @@ begin
         AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
       AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-//      AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
       AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
       NumNFSe := ProcessarConteudoXml(AuxNode, tcStr);
 
@@ -1057,7 +1056,6 @@ begin
           AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-//        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumNFSe := ProcessarConteudoXml(AuxNode, tcStr);
 

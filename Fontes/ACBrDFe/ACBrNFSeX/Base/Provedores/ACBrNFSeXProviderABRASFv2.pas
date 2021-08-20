@@ -382,7 +382,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  NumNFSe: String;
+  NumRps: String;
   ANota: NotaFiscal;
   I: Integer;
 begin
@@ -434,10 +434,20 @@ begin
           ANode := ANodeArray[I];
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-          AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
-          NumNFSe := AuxNode.AsString;
+          AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+          // Tem provedor que mudou a tag de <DeclaracaoPrestacaoServico>
+          // para <Rps>
+          if AuxNode = nil then
+            AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+
+          AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+          AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+          NumRps := AuxNode.AsString;
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
           if Assigned(ANota) then
             ANota.XML := ANode.OuterXml
@@ -643,6 +653,12 @@ begin
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+        // Tem provedor que mudou a tag de <DeclaracaoPrestacaoServico>
+        // para <Rps>
+        if AuxNode = nil then
+          AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+
         AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
         AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
@@ -821,16 +837,9 @@ begin
       if AuxNode <> nil then
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        {
-        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        }
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumNFSe := AuxNode.AsString;
 
-//        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNFSe);
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
@@ -1126,16 +1135,9 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        {
-        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        }
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumNFSe := AuxNode.AsString;
 
-//        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNFSe);
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
@@ -1386,16 +1388,9 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        {
-        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        }
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumNFSe := AuxNode.AsString;
 
-//        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNFSe);
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then
@@ -1657,16 +1652,9 @@ begin
         ANode := ANodeArray[I];
         AuxNode := ANode.Childrens.FindAnyNs('Nfse');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        {
-        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
-        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        }
         AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
         NumNFSe := AuxNode.AsString;
 
-//        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNFSe);
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
         if Assigned(ANota) then

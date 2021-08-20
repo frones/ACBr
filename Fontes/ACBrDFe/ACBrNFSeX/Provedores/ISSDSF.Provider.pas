@@ -196,6 +196,7 @@ begin
   begin
     Prefixo := 'ns1';
     PrefixoTS := 'tipos';
+    UsarNumLoteConsLote := True;
 
     XmlRps.xmlns := 'http://localhost:8080/WsNFe2/tp';
 

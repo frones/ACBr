@@ -40,7 +40,7 @@ uses
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
-  SysUtils, Classes, StrUtils, ACBrUtil,
+  SysUtils, Classes, StrUtils, ACBrUtil, ACBrXmlBase,
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
@@ -66,8 +66,10 @@ procedure TNFSeW_Sudoeste.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoAliq := tcDe2;
   GerarIDRps := True;
   DivAliq100 := True;
+  NrOcorrCodigoPaisServico := 0;
 end;
 
 procedure TNFSeW_Sudoeste.DefinirIDRps;

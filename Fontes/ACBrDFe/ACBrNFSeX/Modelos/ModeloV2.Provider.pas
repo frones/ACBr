@@ -126,6 +126,8 @@ begin
     // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
     Prefixo := '';
 
+    UsarNumLoteConsLote := False;
+
     DadosCabecalho := GetCabecalho('');
 
     { caso tenha um cabeçalho fora do padrão montar ele conforme exemplo abaixo

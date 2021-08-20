@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/08/2021
+-- Diversos --
+[*] Incluido a propriedade de parametrização (UsarNumLoteConsLote) que determina
+    o uso ou não do numero do lote ao consultar a situação do lote e consultar o 
+    lote.
+   Por: Italo Giurizzato Junior
+
 19/08/2021
 -- Diversos --
 [*] Correção no enumerado rtTomador que estava como ptTomador e foi incluido

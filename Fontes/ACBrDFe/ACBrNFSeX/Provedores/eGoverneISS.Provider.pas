@@ -104,7 +104,11 @@ begin
 
   SetXmlNameSpace('');
 
-  ConfigMsgDados.Prefixo := 'eis';
+  with ConfigMsgDados do
+  begin
+    Prefixo := 'eis';
+    UsarNumLoteConsLote := True;
+  end;
 
   ConfigSchemas.Validar := False;
 end;

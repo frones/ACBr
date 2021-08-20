@@ -351,6 +351,8 @@ begin
     Prefixo := '';
     PrefixoTS := '';
 
+    UsarNumLoteConsLote := False;
+
     // Usado para geração do Xml do Rps
     with XmlRps do
     begin
@@ -961,7 +963,10 @@ begin
 
             while (Situacao < 3) and (qTentativas < Tentativas) do
             begin
-              RetornoConsSit := ConsultaSituacao(Protocolo, aLote);
+              if ConfigMsgDados.UsarNumLoteConsLote then
+                RetornoConsSit := ConsultaSituacao(Protocolo, aLote)
+              else
+                RetornoConsSit := ConsultaSituacao(Protocolo, '');
 
               Situacao := StrToIntDef(RetornoConsSit.Situacao, 0);
               Inc(qTentativas);
@@ -980,7 +985,10 @@ begin
           RetornoConsLote := TNFSeConsultaLoteRpsResponse.Create;
           RetornoConsLote.Clear;
 
-          RetornoConsLote := ConsultaLoteRps(Protocolo, aLote);
+          if ConfigMsgDados.UsarNumLoteConsLote then
+            RetornoConsLote := ConsultaLoteRps(Protocolo, aLote)
+          else
+            RetornoConsLote := ConsultaLoteRps(Protocolo, '');
         finally
           Result.Situacao := RetornoConsLote.Situacao;
           RetornoConsLote.Free;

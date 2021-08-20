@@ -110,6 +110,8 @@ begin
     VersaoAtrib := '2.03';
   end;
 
+  ConfigMsgDados.UsarNumLoteConsLote := True;
+
   SetXmlNameSpace('http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd');
 
   SetNomeXSD('nfse_v2_03.xsd');
@@ -207,22 +209,19 @@ procedure TACBrNFSeProviderEloTech.GerarMsgDadosConsultaLoteRps(
   Response: TNFSeConsultaLoteRpsResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
-  Requerente, NumeroLote: string;
+  Requerente: string;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   with Params do
   begin
-    if Response.Lote <> '' then
-      NumeroLote := '<' + Prefixo + 'NumeroLote>' +
-                      Response.Lote +
-                    '</' + Prefixo + 'NumeroLote>';
-
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
     Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            Requerente +
-                           NumeroLote +
+                           '<' + Prefixo + 'NumeroLote>' +
+                             Response.Lote +
+                           '</' + Prefixo + 'NumeroLote>' +
                          '</' + Prefixo + TagEnvio + '>';
   end;
 end;

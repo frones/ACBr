@@ -251,6 +251,8 @@ type
     FGerarNSLoteRps: Boolean;
     // Se True gera o Prestador no Lote de Rps
     FGerarPrestadorLoteRps: Boolean;
+    // Se True gera o grupo <NumeroLote> ao Consultar a Situação e o Lote
+    FUsarNumLoteConsLote: Boolean;
 
   public
     constructor Create;
@@ -279,6 +281,7 @@ type
 
     property GerarNSLoteRps: Boolean read FGerarNSLoteRps write FGerarNSLoteRps;
     property GerarPrestadorLoteRps: Boolean read FGerarPrestadorLoteRps write FGerarPrestadorLoteRps;
+    property UsarNumLoteConsLote: Boolean read FUsarNumLoteConsLote write FUsarNumLoteConsLote;
   end;
 
   { TConfigAssinar }

@@ -143,6 +143,8 @@ begin
     AtribVerLote := 'versao';
   end;
 
+  ConfigMsgDados.UsarNumLoteConsLote := True;
+
   SetXmlNameSpace('http://ws.pc.gif.com.br/');
 end;
 

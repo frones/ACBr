@@ -116,6 +116,8 @@ begin
 
   with ConfigMsgDados do
   begin
+    UsarNumLoteConsLote := True;
+
     with XmlRps do
     begin
       DocElemento := 'Rps';

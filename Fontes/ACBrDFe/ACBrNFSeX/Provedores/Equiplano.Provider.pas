@@ -124,6 +124,7 @@ begin
   with ConfigMsgDados do
   begin
     Prefixo := 'es';
+    UsarNumLoteConsLote := True;
 
     with LoteRps do
     begin

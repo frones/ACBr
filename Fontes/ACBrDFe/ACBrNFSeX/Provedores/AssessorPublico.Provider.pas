@@ -108,6 +108,8 @@ begin
     ModoEnvio := meLoteAssincrono;
   end;
 
+  ConfigMsgDados.UsarNumLoteConsLote := True;
+
   SetXmlNameSpace('');
 
   ConfigSchemas.Validar := False;

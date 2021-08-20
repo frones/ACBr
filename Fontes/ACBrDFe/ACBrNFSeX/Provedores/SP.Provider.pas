@@ -196,6 +196,8 @@ begin
 
   with ConfigMsgDados do
   begin
+    UsarNumLoteConsLote := True;
+
     with LoteRps do
     begin
       GerarNSLoteRps := True;

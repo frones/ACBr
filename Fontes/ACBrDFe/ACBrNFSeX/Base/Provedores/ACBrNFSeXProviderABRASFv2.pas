@@ -2227,18 +2227,19 @@ begin
   if (ANode = nil) then
     ANode := RootNode.Childrens.FindAnyNs('MensagemRetorno');
 
-  if (ANode = nil) then Exit;
-
-  ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
-
-  if Assigned(ANodeArray) then
+  if Assigned(ANode) then
   begin
-    for I := Low(ANodeArray) to High(ANodeArray) do
+    ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
+
+    if Assigned(ANodeArray) then
     begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
-      AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+      for I := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+        AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+        AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+      end;
     end;
   end;
 

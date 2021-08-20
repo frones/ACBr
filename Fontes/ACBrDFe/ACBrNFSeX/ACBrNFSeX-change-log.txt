@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/08/2021
+-- ACBrXmlBase --
+[*] Substituido o StrToInt por StrToIntDef da hora ao ler um campo tcDatHor.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Melhoria na procedure: ProcessarMensagemErros.
+   Por: Ramon Valentim
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Acrescentado a função para remover acentos ao ler o XML da NFSe ou Rps,
+    estava ocorrendo erro de arquivo fora do formato UTF-8.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Incluido a propriedade de parametrização (UsarNumLoteConsLote) que determina
     o uso ou não do numero do lote ao consultar a situação do lote e consultar o 

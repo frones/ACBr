@@ -738,6 +738,7 @@ begin
   xRetorno := ConverteXMLtoUTF8(xRetorno);
 
   xRetorno := TratarXmlRetorno(xRetorno);
+  xRetorno := TiraAcentos(xRetorno);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');

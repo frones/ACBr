@@ -4952,7 +4952,7 @@ begin
     Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
   if Cedente.Conta = '' then
     Raise Exception.Create(ACBrStr('Conta não informada'));
-  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese, cobCitiBank,cobBancoDoBrasilAPI])) then
+  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese, cobCitiBank,cobBancoDoBrasilAPI,cobBancoCECRED])) then
     Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
   if Cedente.Agencia = '' then
     Raise Exception.Create(ACBrStr('Agência não informada'));

@@ -620,7 +620,7 @@ begin
           JsonMulta.Add('tipo').Value.AsInteger             := ACodMulta;
           JsonMulta.Add('data').Value.AsString              := FormatDateBr(Titulos.DataMulta, 'DD.MM.YYYY');
           case ACodMulta of
-            1 : JsonMulta.Add('valor').Value.AsNumber       := Titulos.ValorMoraJuros;
+            1 : JsonMulta.Add('valor').Value.AsNumber       := Titulos.PercentualMulta;
             2 : JsonMulta.Add('porcentagem').Value.AsNumber := Titulos.PercentualMulta;
           end;
 

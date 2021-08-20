@@ -648,7 +648,8 @@ begin
     // Se não for Venda, já podemos Confirmar e imprimir os comprovantes
     if (RespostaTEF.Header <> CHEADER_PAGAMENTO) then
     begin
-      if RespostaTEF.Confirmar then   // Requer confirmação ?
+     if (not ACBrTEFAPI1.ConfirmarTransacaoAutomaticamente) and   // Não confirma de forma automática ?
+       RespostaTEF.Confirmar then                                 // Requer confirmação ?
         ACBrTEFAPI1.FinalizarTransacao(tefstsSucessoAutomatico);  // ...então confirme
 
       ImprimirTodosComprovantes

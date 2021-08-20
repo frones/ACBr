@@ -316,8 +316,8 @@ begin
       Json.Add('codigoTipoTitulo').Value.AsInteger                      := codigoTipoTitulo(Titulos.EspecieDoc);
       Json.Add('descricaoTipoTitulo').Value.AsString                    := Titulos.EspecieDoc;
       //Json.Add('indicadorPermissaoRecebimentoParcial').Value.AsString := 'N';
-      Json.Add('numeroTituloBeneficiario').Value.AsString               := UpperCase(copy(Titulos.NumeroDocumento,0,15));
-      Json.Add('campoUtilizacaoBeneficiario').Value.AsString            := UpperCase(Copy(Titulos.Mensagem.Text,0,30));
+      Json.Add('numeroTituloBeneficiario').Value.AsString               := Copy(Trim(UpperCase(Titulos.NumeroDocumento)),0,15);
+      Json.Add('campoUtilizacaoBeneficiario').Value.AsString            := Copy(Trim(StringReplace(UpperCase(Titulos.Mensagem.Text),'\r\n',' ',[rfReplaceAll])),0,30);
       Json.Add('numeroTituloCliente').Value.AsString                    := Boleto.Banco.MontarCampoNossoNumero(Titulos);
       Json.Add('mensagemBloquetoOcorrencia').Value.AsString             := UpperCase(Copy(Trim(Titulos.Instrucao1 +' '+Titulos.Instrucao2+' '+Titulos.Instrucao3),0,165));
       GerarDesconto(Json);

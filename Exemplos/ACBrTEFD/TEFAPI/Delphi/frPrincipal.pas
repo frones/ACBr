@@ -481,8 +481,6 @@ begin
     begin
       AdicionarLinhaLog( '  Operação Cancelada Pelo Operador');
       FCanceladoPeloOperador := True;
-      if (StatusVenda in [stsOperacaoTEF, stsAguardandoTEF]) then
-        StatusVenda := stsEmPagamento;
     end;
   end;
 end;
@@ -582,6 +580,9 @@ var
   QRCodeBitmap: TBitmap;
   Row, Column: Integer;
 begin
+  if not (StatusVenda in [stsAguardandoTEF, stsOperacaoTEF]) then
+    StatusVenda := stsAguardandoTEF;
+
   if (cbxQRCode.ItemIndex = 4) then  // 4 - Imprimir
   begin
     if (DadosQRCode <> '') then
@@ -632,11 +633,7 @@ end;
 procedure TFormPrincipal.ACBrTEFAPI1QuandoFinalizarOperacao(
   RespostaTEF: TACBrTEFResp);
 var
-  i, nINFO: Integer;
-  TheKey, TheValue: string;
   MsgFinal: String;
-  MR: TModalResult;
-  AStatus: TACBrTEFStatusTransacao;
 begin
   MsgFinal := RespostaTEF.TextoEspecialOperador;
 
@@ -1650,7 +1647,6 @@ end;
 procedure TFormPrincipal.ImprimirTodosComprovantes;
 var
   i: Integer;
-  ATEFResp: TACBrTEFResp;
 begin
   for i := 0 to ACBrTEFAPI1.RespostasTEF.Count-1 do
     ImprimirComprovantes(ACBrTEFAPI1.RespostasTEF[i]);

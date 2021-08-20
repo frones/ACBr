@@ -38,12 +38,13 @@ uses
   Classes, SysUtils, contnrs, IniFiles;
 
 const
-  cPagamentos: array[0..5] of array [0..1] of String =
+  cPagamentos: array[0..6] of array [0..1] of String =
      ( ('01','Dinheiro'),
        ('02','Cheque'),
        ('03','Cartão de Crédito'),
        ('04','Cartão de Débito'),
        ('05','Carteira Digital'),
+       ('06','Vale Refeição'),
        ('99','Outros') );
 
 type

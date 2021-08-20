@@ -52,7 +52,7 @@ object FormExibeMensagem: TFormExibeMensagem
       Height = 90
       Align = alClient
       Alignment = taCenter
-      Caption = 'lMensagem'
+      Caption = 'Mensagem ao Operador'
       Layout = tlCenter
       WordWrap = True
       OnClick = lMensagemClick

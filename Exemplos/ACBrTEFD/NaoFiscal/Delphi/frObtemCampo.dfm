@@ -29,6 +29,7 @@ object FormObtemCampo: TFormObtemCampo
     Width = 356
     Height = 32
     Anchors = [akLeft, akRight, akBottom]
+    AutoSelect = False
     TabOrder = 0
     OnChange = edtRespostaChange
     OnKeyDown = edtRespostaKeyDown

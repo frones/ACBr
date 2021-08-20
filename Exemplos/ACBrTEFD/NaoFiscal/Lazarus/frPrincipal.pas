@@ -634,8 +634,6 @@ begin
     begin
       AdicionarLinhaLog( '  Operação Cancelada Pelo Operador');
       FCanceladoPeloOperador := True;
-      if (StatusVenda in [stsOperacaoTEF, stsAguardandoTEF]) then
-        StatusVenda := stsEmPagamento;
     end;
   end;
 end;
@@ -735,6 +733,9 @@ var
   QRCodeBitmap: TBitmap;
   Row, Column: Integer;
 begin
+  if not (StatusVenda in [stsAguardandoTEF, stsOperacaoTEF]) then
+    StatusVenda := stsAguardandoTEF;
+
   if (cbxQRCode.ItemIndex = 4) then  // 4 - Imprimir
   begin
     if (Dados <> '') then
@@ -1410,6 +1411,7 @@ procedure TFormPrincipal.btTestarTEFClick(Sender: TObject);
 var
   NomeTEF: String;
 begin
+  GravarConfiguracao;
   NomeTEF := GetEnumName(TypeInfo(TACBrTEFDTipo), cbxGP.ItemIndex);
   AdicionarLinhaLog('- btTestarTEFClick: '+NomeTEF);
   try
@@ -1606,6 +1608,16 @@ var
     end;
   end;
 
+  procedure InformarParametrosVoucher;
+  begin
+    // Instruindo CRT a apenas transações de Débito
+    if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
+    begin
+      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_PAYMNTTYPE]:='1'; // Modalidade de pagamento:   1: cartão   2: dinheiro   4: cheque   8: carteira virtual
+      ACBrTEFD1.TEFPayGoWeb.ParametrosAdicionais.ValueInfo[PWINFO_CARDTYPE]:='04'; // 1: crédito 2: débito 4: voucher/PAT 8: private label 16: frota 128: outros
+    end;
+  end;
+
 begin
   Ok := False;
   TemTEF := False;
@@ -1645,6 +1657,13 @@ begin
     begin
       FTestePayGo := 27;
       InformarParametrosCarteiraDigital;
+      Ok := ACBrTEFD1.CRT(AValor, '01');
+      TemTEF := True;
+    end
+
+    else if (Indice = '06') then    // 05-VALE REFEICAO
+    begin
+      InformarParametrosVoucher;
       Ok := ACBrTEFD1.CRT(AValor, '01');
       TemTEF := True;
     end
@@ -1718,7 +1737,6 @@ end;
 
 procedure TFormPrincipal.ExcluirPagamento(IndicePagto: Integer);
 var
-  i: Integer;
   AResp: TACBrTEFResp;
   Cancelada: Boolean;
 begin
@@ -2011,7 +2029,7 @@ begin
     ACBrTEFD1.TEFPayGoWeb.ExibicaoQRCode := qreAuto;
   end;
 
-  ACBrTEFD1.TEFPayGoWeb.DiretorioTrabalho := 'C:\PAYGOWEB';
+  //ACBrTEFD1.TEFPayGoWeb.DiretorioTrabalho := 'C:\PAYGOWEB';
   //ACBrTEFD1.PathBackup := 'C:\TEF\TER01';
   //ACBrTEFD1.TEFPayGoWeb.PathDLL := 'C:\DLLs';
 

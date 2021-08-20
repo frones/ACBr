@@ -51,6 +51,7 @@ object FormIncluirPagamento: TFormIncluirPagamento
     Height = 28
     Caption = 'Gravar'
     Default = True
+    Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11

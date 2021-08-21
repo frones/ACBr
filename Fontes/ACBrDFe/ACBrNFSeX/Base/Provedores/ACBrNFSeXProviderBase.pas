@@ -1542,6 +1542,8 @@ function TACBrNFSeXProvider.CancelaNFSe(aInfCancelamento: TInfCancelamento): TNF
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
+  RetornoConsNFSe: TNFSeConsultaNFSeResponse;
+  InfConsultaNFSe: TInfConsultaNFSe;
 begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeCancelamento);
 
@@ -1609,7 +1611,32 @@ begin
 
   if TACBrNFSeX(FAOwner).Configuracoes.Geral.ConsultaAposCancelar then
   begin
-    // Falta Implementar
+    try
+      RetornoConsNFSe := TNFSeConsultaNFSeResponse.Create;
+      RetornoConsNFSe.Clear;
+
+      InfConsultaNFSe := TInfConsultaNFSe.Create;
+
+      try
+        with InfConsultaNFSe do
+        begin
+          if ConfigGeral.ConsultaPorFaixa then
+            tpConsulta := tcPorFaixa
+          else
+            tpConsulta := tcPorNumero;
+
+          NumeroIniNFSe := Result.InfCancelamento.NumeroNFSe;
+          NumeroFinNFSe := Result.InfCancelamento.NumeroNFSe;
+          Pagina        := 1;
+        end;
+
+        RetornoConsNFSe := ConsultaNFSe(InfConsultaNFSe);
+      finally
+        InfConsultaNFSe.Free;
+      end;
+    finally
+      RetornoConsNFSe.Free;
+    end;
   end;
 end;
 

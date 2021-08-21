@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+21/08/2021
+-- ACBrNFSeXParametros --
+[+] Acrescentado a propriedade de parametrização (ConsultaPorFaixa) que define
+    se vai consultar a NFS-e por faixa ou não após o cancelamento.
+    Essa consulta só é realizada se a propriedade de configuração 
+    (ConsultaAposCancelar) estiver com o valor True.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Alterações visando o uso na nova propriedade de parametrização e configuração.
+   Por: Italo Giurizzato Junior
+
 20/08/2021
 -- ACBrXmlBase --
 [*] Substituido o StrToInt por StrToIntDef da hora ao ler um campo tcDatHor.

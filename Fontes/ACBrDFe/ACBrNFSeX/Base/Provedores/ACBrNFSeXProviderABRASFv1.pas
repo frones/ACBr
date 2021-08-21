@@ -108,6 +108,7 @@ begin
   begin
     ModoEnvio := meLoteAssincrono;
     ConsultaSitLote := True;
+    ConsultaPorFaixa := False;
   end;
 
   SetXmlNameSpace(NameSpace);

@@ -103,7 +103,11 @@ procedure TACBrNFSeProviderSimple.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ModoEnvio := meLoteAssincrono;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meLoteAssincrono;
+    ConsultaPorFaixa := True;
+  end;
 
   ConfigSchemas.Validar := False;
 end;

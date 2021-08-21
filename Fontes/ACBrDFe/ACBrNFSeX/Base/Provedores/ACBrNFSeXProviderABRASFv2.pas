@@ -124,9 +124,13 @@ begin
   // Os provedores que seguem a versão 2 do layout da ABRASF podem ter até
   // três serviços para recepcionar o RPS: assíncrono, síncrono e unitário.
   // Por padrão vamos adotar o serviço Síncrono, caso o provedor não tenha
-  // esse serviço na Unit ACBrNFSeProviderxxxx (xxxx = Provedor) devemos
+  // esse serviço na Unit xxxx.Provider (xxxx = Provedor) devemos
   // configurar o serviço disponibilizado.
-  ConfigGeral.ModoEnvio := meLoteSincrono;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meLoteSincrono;
+    ConsultaPorFaixa := True;
+  end;
 
   SetXmlNameSpace(NameSpace);
 

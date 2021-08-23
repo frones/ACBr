@@ -78,7 +78,11 @@ procedure TACBrNFSeProviderNotaInteligente.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ModoEnvio := meLoteAssincrono;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meLoteAssincrono;
+    ConsultaNFSe := False;
+  end;
 
   with ConfigAssinar do
   begin

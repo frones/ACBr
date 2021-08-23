@@ -77,6 +77,7 @@ begin
   begin
     QuebradeLinha := '\s\n';
     ModoEnvio := meUnitario;
+    ConsultaNFSe := False;
   end;
 
   with ConfigAssinar do

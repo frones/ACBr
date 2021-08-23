@@ -69,7 +69,6 @@ begin
   FormatoAliq := tcDe2;
   GerarIDRps := True;
   DivAliq100 := True;
-  NrOcorrCodigoPaisServico := 0;
 end;
 
 procedure TNFSeW_Sudoeste.DefinirIDRps;

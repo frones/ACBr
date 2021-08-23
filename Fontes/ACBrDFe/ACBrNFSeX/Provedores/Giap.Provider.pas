@@ -105,6 +105,7 @@ begin
     UseAuthorizationHeader := True;
     ModoEnvio := meLoteAssincrono;
     ConsultaLote := False;
+    ConsultaNFSe := False;
   end;
 
   SetXmlNameSpace('');

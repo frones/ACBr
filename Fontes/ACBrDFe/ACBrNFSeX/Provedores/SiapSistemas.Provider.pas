@@ -80,6 +80,8 @@ procedure TACBrNFSeProviderSiapSistemas.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.ConsultaNFSe := False;
+
   ConfigAssinar.IncluirURI := False;
 
   ConfigWebServices.AtribVerLote := '';

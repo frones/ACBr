@@ -85,6 +85,7 @@ begin
   begin
     QuebradeLinha := '\n';
     ModoEnvio := meLoteAssincrono;
+    ConsultaNFSe := False;
   end;
 
   with ConfigAssinar do

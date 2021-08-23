@@ -69,7 +69,6 @@ begin
   FormatoAliq := tcDe2;
 
   NrOcorrInscEstTomador := 0;
-  NrOcorrCodigoPaisServico := 0;
 
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

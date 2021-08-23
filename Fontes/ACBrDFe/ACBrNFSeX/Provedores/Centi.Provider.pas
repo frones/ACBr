@@ -77,7 +77,11 @@ procedure TACBrNFSeProviderCenti.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ModoEnvio := meUnitario;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meUnitario;
+    ConsultaNFSe := False;
+  end;
 
   with ConfigAssinar do
   begin

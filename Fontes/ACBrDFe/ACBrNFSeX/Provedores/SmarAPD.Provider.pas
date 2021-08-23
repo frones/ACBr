@@ -150,6 +150,7 @@ begin
   begin
     Identificador := 'id';
     ModoEnvio := meLoteAssincrono;
+    ConsultaNFSe := False;
   end;
 
   with ConfigAssinar do
@@ -166,6 +167,13 @@ begin
     begin
       InfElemento := 'nfd';
       DocElemento := 'tbnfd';
+    end;
+
+    with CancelarNFSe do
+    begin
+      xmlns := '';
+      InfElemento := 'nfdEntradaCancelar';
+      DocElemento := 'nfd';
     end;
   end;
 
@@ -277,7 +285,7 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    if Pos('Erro:', ANodeArray[I].AsString)>0 then
+    if Pos('Erro:', ANodeArray[I].AsString) > 0 then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := '';

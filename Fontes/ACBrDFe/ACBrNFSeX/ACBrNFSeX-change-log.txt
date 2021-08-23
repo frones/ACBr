@@ -43,6 +43,28 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/08/2021
+-- Diversos --
+[*] Adicionado a propriedade de parametrização (ConsultaNFSe) que define se 
+    vai consultar a NFS-e ou não, após o cancelamento.
+    Essa propriedade trabalha em conjunto com a propriedade de configuração
+    (ConsultaAposCancelar), pois nem todos os provedores implementaram o 
+    serviço de Consultar NFS-e por numero ou por faixa de numeros.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção para a leitura da Razão Social do Tomador do Serviço.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] A propriedade NrOcorrCodigoPaisServico estava como obrigatória só que pelo
+    schema da versão 2 da ABRASF ela é opcional.
+   Por: Ramon Valentim
+-- AssessorPublico.Provider --
+[*] Possível correção para a leitura do Protocolo retornado ao enviar o Rps.
+   Por: Italo Giurizzato Junior
+-- IMP.Provider --
+[*] Possível correção visando o provedor IPM.
+   Por: Italo Giurizzato Junior
+
 21/08/2021
 -- ACBrNFSeXParametros --
 [+] Acrescentado a propriedade de parametrização (ConsultaPorFaixa) que define

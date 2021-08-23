@@ -260,6 +260,11 @@ begin
 
   ConfigGeral.ModoEnvio := meLoteAssincrono;
 
+  with ConfigAssinar do
+  begin
+    Rps := True;
+  end;
+
   with ConfigWebServices do
   begin
     VersaoDados := '2.04';

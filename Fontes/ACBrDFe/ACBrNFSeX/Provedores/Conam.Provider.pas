@@ -108,6 +108,7 @@ begin
 
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
+    ConsultaNFSe := False;
   end;
 
   SetXmlNameSpace('');

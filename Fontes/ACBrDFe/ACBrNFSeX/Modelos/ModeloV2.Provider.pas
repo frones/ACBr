@@ -103,9 +103,15 @@ begin
 
     TabServicosExt := False;
     Identificador := 'Id';
+    QuebradeLinha := ';';
 
     // meLoteAssincrono, meLoteSincrono ou meUnitario
     ModoEnvio := meLoteSincrono;
+
+    ConsultaSitLote := False;
+    ConsultaLote := True;
+    ConsultaNFSe := True;
+    ConsultaPorFaixa := True;
   end;
 
   // Inicializa os parâmetros de configuração: WebServices

@@ -146,18 +146,19 @@ procedure TACBrNFSeProviderABase.Configuracao;
 begin
   inherited Configuracao;
 
+  with ConfigGeral do
+  begin
+    UseCertificateHTTP := False;
+    ModoEnvio := meLoteAssincrono;
+    ConsultaNFSe := False;
+  end;
+
   with ConfigAssinar do
   begin
     Rps := True;
     LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
-  end;
-
-  with ConfigGeral do
-  begin
-    UseCertificateHTTP := False;
-    ModoEnvio := meLoteAssincrono;
   end;
 
   SetXmlNameSpace('http://nfse.abase.com.br/nfse.xsd');

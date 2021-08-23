@@ -76,6 +76,12 @@ procedure TACBrNFSeProviderDesenvolve.Configuracao;
 begin
   inherited Configuracao;
 
+  with ConfigGeral do
+  begin
+    UseCertificateHTTP := False;
+    ConsultaNFSe := False;
+  end;
+
   with ConfigAssinar do
   begin
     Rps := True;
@@ -85,8 +91,6 @@ begin
     CancelarNFSe := True;
     RpsGerarNFSe := True;
   end;
-
-  ConfigGeral.UseCertificateHTTP := False;
 
   with ConfigWebServices do
   begin

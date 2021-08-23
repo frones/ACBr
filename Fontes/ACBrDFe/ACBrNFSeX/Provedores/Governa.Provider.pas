@@ -100,6 +100,7 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
     ConsultaLote := False;
+    ConsultaNFSe := False;
   end;
 
   SetXmlNameSpace('http://tempuri.org/');

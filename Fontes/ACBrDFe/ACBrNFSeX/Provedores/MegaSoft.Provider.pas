@@ -74,7 +74,11 @@ procedure TACBrNFSeProviderMegaSoft.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ModoEnvio := meUnitario;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meUnitario;
+    ConsultaNFSe := False;
+  end;
 
   ConfigAssinar.RpsGerarNFSe := True;
 

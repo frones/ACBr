@@ -224,26 +224,13 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
-
-      if ANode <> nil then
-      begin
-        ProcessarMensagemErros(ANode, Response, '', 'INCONSISTENCIA');
-
-        Response.Sucesso := (Response.Erros.Count = 0);
-      end;
-      {
       ANode := Document.Root;
 
-      if ANode <> nil then
-      begin
-        with Response do
-        begin
-          DataRecebimento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
-        end;
-      end;
-      }
+      ProcessarMensagemErros(ANode, Response, '', 'INCONSISTENCIA');
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
     except
       on E:Exception do
       begin
@@ -529,8 +516,7 @@ begin
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
-                     ['Mensagem'],
-                     ['xmlns:nfse="nfse"']);
+                     [''], ['xmlns:nfse="nfse"']);
 end;
 
 function TACBrNFSeXWebserviceAssessorPublico.ConsultarLote(ACabecalho,
@@ -547,8 +533,7 @@ begin
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
-                     ['Mensagem'],
-                     ['xmlns:nfse="nfse"']);
+                     [''], ['xmlns:nfse="nfse"']);
 end;
 
 function TACBrNFSeXWebserviceAssessorPublico.ConsultarNFSe(ACabecalho,
@@ -565,8 +550,7 @@ begin
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
-                     ['Mensagem'],
-                     ['xmlns:nfse="nfse"']);
+                     [''], ['xmlns:nfse="nfse"']);
 end;
 
 function TACBrNFSeXWebserviceAssessorPublico.Cancelar(ACabecalho, AMSG: String): string;
@@ -582,8 +566,7 @@ begin
   Request := Request + '</nfse:Nfse.Execute>';
 
   Result := Executar('nfseaction/ANFSE.Execute', Request,
-                     ['Mensagem'],
-                     ['xmlns:nfse="nfse"']);
+                     [''], ['xmlns:nfse="nfse"']);
 end;
 
 end.

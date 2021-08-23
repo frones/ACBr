@@ -507,6 +507,8 @@ begin
   inherited Create;
 
   FInfRetorno := TInfRetorno.Create;
+
+  FInfConsultaNFSe := TInfConsultaNFSe.Create;
 end;
 
 destructor TNFSeConsultaNFSeResponse.Destroy;

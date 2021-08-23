@@ -69,7 +69,6 @@ begin
   FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
   FormatoAliq := tcDe2;
-  NrOcorrCodigoPaisServico := 0;
 end;
 
 end.

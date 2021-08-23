@@ -100,6 +100,7 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meLoteAssincrono;
+    ConsultaNFSe := False;
   end;
 
   SetXmlNameSpace('');

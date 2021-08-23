@@ -77,7 +77,11 @@ procedure TACBrNFSeProviderSigep.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.Identificador := '';
+  with ConfigGeral do
+  begin
+    Identificador := '';
+    ConsultaNFSe := False;
+  end;
 
   with ConfigAssinar do
   begin

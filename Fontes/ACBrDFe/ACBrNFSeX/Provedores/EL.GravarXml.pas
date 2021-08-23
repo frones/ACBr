@@ -537,7 +537,6 @@ begin
   FormatoAliq := tcDe2;
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrCepTomador := 1;
-  NrOcorrCodigoPaisServico := 0;
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';

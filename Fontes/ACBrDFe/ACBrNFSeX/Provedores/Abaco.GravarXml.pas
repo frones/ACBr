@@ -83,7 +83,6 @@ procedure TNFSeW_Abacov204.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrCodigoPaisServico := 0;
   NrOcorrCodigoPaisTomador := -1;
 
   TagTomador := 'TomadorServico';

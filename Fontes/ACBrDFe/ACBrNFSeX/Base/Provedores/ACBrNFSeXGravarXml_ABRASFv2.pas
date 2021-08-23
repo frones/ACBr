@@ -287,12 +287,12 @@ begin
   FNrOcorrCodTribMun_1 := 0;
   FNrOcorrNumProcesso := 0;
   FNrOcorrInscMunTomador := 0;
+  FNrOcorrCodigoPaisServico := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   FNrOcorrIssRetido := 1;
   FNrOcorrOptanteSimplesNacional := 1;
   FNrOcorrIncentCultural := 1;
-  FNrOcorrCodigoPaisServico := 1;
   FNrOcorrCompetencia := 1;
   FNrOcorrSerieRPS := 1;
   FNrOcorrTipoRPS := 1;

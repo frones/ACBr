@@ -179,7 +179,6 @@ type
   protected
     FPBound: string;
 
-    function GerarPrefixoArquivo: String; override;
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                                   namespace: array of string): string; override;
   public
@@ -678,11 +677,11 @@ begin
             // Alsuns provedores retorna uma string apenas com a mensagem de erro
             if Pos('Body', FPRetorno) = 0 then
               FPRetorno := GetSoapBody(FPRetorno);
-
+            {
             // Se o XML não tiver a codificação incluir ela.
             if ObtemDeclaracaoXML(FPRetorno) = '' then
               FPRetorno := CUTF8DeclaracaoXML + FPRetorno;
-
+            }
             // Alguns provedores não retornam o XML em UTF-8
             FPRetorno := ConverteXMLtoUTF8(FPRetorno);
 
@@ -1008,11 +1007,6 @@ begin
   FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr(FPBound, '"');
 end;
 
-function TACBrNFSeXWebserviceMulti.GerarPrefixoArquivo: String;
-begin
-  Result := IntToHex(Random(MaxInt), 8);
-end;
-
 function TACBrNFSeXWebserviceMulti.PrepararEnvio(const Message, SoapAction,
   SoapHeader: string; namespace: array of string): string;
 var
@@ -1039,7 +1033,7 @@ begin
             '--' + FPBound + sLineBreak +
             'Content-Disposition: form-data; name=' +
             AnsiQuotedStr('f1', '"' ) + '; ' + 'filename=' +
-            AnsiQuotedStr(GerarPrefixoArquivo + '-lot-rps.xml', '"') + sLineBreak +
+            AnsiQuotedStr(GerarPrefixoArquivo + '-' + FPArqEnv + '.xml', '"') + sLineBreak +
             'Content-Type: text/xml' + sLineBreak + sLineBreak + Message + sLineBreak +
             '--' + FPBound + '--' + sLineBreak;
 

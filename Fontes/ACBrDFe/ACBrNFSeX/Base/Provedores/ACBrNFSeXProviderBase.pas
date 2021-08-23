@@ -341,6 +341,7 @@ begin
     Identificador := 'Id';
     ConsultaSitLote := False;
     ConsultaLote := True;
+    ConsultaNFSe := True;
     QuebradeLinha := ';';
   end;
 
@@ -1609,7 +1610,8 @@ begin
   TratarRetornoCancelaNFSe(Result);
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 
-  if TACBrNFSeX(FAOwner).Configuracoes.Geral.ConsultaAposCancelar then
+  if TACBrNFSeX(FAOwner).Configuracoes.Geral.ConsultaAposCancelar and
+     ConfigGeral.ConsultaNFSe then
   begin
     try
       RetornoConsNFSe := TNFSeConsultaNFSeResponse.Create;
@@ -1635,7 +1637,10 @@ begin
         InfConsultaNFSe.Free;
       end;
     finally
+      Result.Situacao := RetornoConsNFSe.Situacao;
+      { esta gerando Invalid Pointer Operation
       RetornoConsNFSe.Free;
+      }
     end;
   end;
 end;

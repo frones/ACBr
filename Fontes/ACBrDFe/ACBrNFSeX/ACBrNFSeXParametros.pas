@@ -65,6 +65,8 @@ type
     FConsultaSitLote: Boolean;
     // define se vai consultar o lote ou não, após o envio
     FConsultaLote: Boolean;
+    // define se vai consultar a NFS-e ou não, após o cancelamento
+    FConsultaNFSe: Boolean;
     // define se vai consultar a NFS-e por faixa ou não, após o cancelamento
     FConsultaPorFaixa: Boolean;
     // uso diverso
@@ -86,6 +88,7 @@ type
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property ConsultaSitLote: Boolean read FConsultaSitLote write FConsultaSitLote;
     property ConsultaLote: Boolean read FConsultaLote write FConsultaLote;
+    property ConsultaNFSe: Boolean read FConsultaNFSe write FConsultaNFSe;
     property ConsultaPorFaixa: Boolean read FConsultaPorFaixa write FConsultaPorFaixa;
     // Parametros lidos no arquivo .Res ou .ini
     property Params1: string read FParams1;

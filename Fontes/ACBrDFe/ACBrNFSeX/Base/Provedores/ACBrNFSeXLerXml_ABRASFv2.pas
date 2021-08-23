@@ -345,7 +345,8 @@ begin
       InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
     end;
 
-    NFSe.Tomador.RazaoSocial := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('RazaoSocial'), tcStr);
+    if NFSe.Tomador.RazaoSocial = '' then
+      NFSe.Tomador.RazaoSocial := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('RazaoSocial'), tcStr);
 
     LerEnderecoTomador(AuxNode);
     LerContatoTomador(AuxNode);

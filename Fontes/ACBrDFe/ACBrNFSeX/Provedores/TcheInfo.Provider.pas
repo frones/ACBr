@@ -80,12 +80,13 @@ begin
     Identificador := '';
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
+    ConsultaNFSe := False;
   end;
 
   with ConfigAssinar do
   begin
-    Rps := True;
-    LoteRps := True;
+//    Rps := True;
+//    LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     IncluirURI := False;

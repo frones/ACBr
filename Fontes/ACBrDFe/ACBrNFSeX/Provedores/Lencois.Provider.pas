@@ -96,6 +96,7 @@ begin
     Identificador := '';
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
+    ConsultaNFSe := False;
   end;
 
   SetXmlNameSpace('NotaFiscal-Geracao.xsd');

@@ -177,7 +177,11 @@ procedure TACBrNFSeProvider4R.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := '&lt;br&gt;';
+  with ConfigGeral do
+  begin
+    QuebradeLinha := '&lt;br&gt;';
+    ConsultaNFSe := False;
+  end;
 
   with ConfigAssinar do
   begin

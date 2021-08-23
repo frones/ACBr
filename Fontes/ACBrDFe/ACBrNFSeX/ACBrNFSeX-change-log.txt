@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/08/2021
+-- AssessorPublico.Provider --
+[*] Ajuste no tratamento do retorno do consulta lote.
+   Por: Italo Giurizzato Junior
 -- Abaco.Provider --
 [*] Estava sendo passado tanto a mensagem do cabeçalho quanto a de dados
     dentro de um CDATA e tem que ser apenas convertido para string o XML.

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/08/2021
+-- Abaco.Provider --
+[*] Estava sendo passado tanto a mensagem do cabeçalho quanto a de dados
+    dentro de um CDATA e tem que ser apenas convertido para string o XML.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.Provider/ISSDSF.GravarXml --
 [*] Possível correção para o envio e tratamento dos retornos do provedor
     ISSDSF.

@@ -546,6 +546,12 @@ begin
         ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
       end;
 
+      if ConfigWebServices.Homologacao.Recepcionar = '' then
+      begin
+        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
+        ConfigWebServices.HomologacaoIgualProducao(IniParams, Sessao);
+      end;
+
       if ConfigGeral.Params1 = '' then
       begin
         Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);

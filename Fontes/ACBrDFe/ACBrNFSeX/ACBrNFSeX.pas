@@ -62,7 +62,6 @@ type
     fpCidadesJaCarregadas: Boolean;
     FResposta: TNFSeWebserviceResponse;
 
-    function GetNumID(ANFSe : TNFSe): String;
     function GetConfiguracoes: TConfiguracoesNFSe;
     procedure SetConfiguracoes(AValue: TConfiguracoesNFSe);
     procedure SetDANFSE(const Value: TACBrNFSeXDANFSEClass);
@@ -76,6 +75,8 @@ type
     destructor Destroy; override;
 
     procedure SetProvedor;
+
+    function GetNumID(ANFSe: TNFSe): String;
 
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;

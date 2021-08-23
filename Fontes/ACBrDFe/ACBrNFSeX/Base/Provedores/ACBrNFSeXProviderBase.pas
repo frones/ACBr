@@ -590,6 +590,8 @@ begin
     aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
     aPath := aConfig.Arquivos.GetPathNFSe;
 
+    NomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';
+    {
     if aConfig.Arquivos.NomeLongoNFSe then
       NomeArq := GerarNomeNFSe(aConfig.WebServices.UFCodigo,
                                aNota.NFSe.DataEmissao,
@@ -599,7 +601,7 @@ begin
       NomeArq := aNota.NFSe.Numero +
                  aNota.NFSe.IdentificacaoRps.Serie +
                  '-nfse.xml';
-
+    }
     aNota.NomeArq := NomeArq;
 
     TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XML, aPath);

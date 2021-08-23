@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/08/2021
+-- ACBrNFSeX/ACBrNFSeXProviderBase --
+[*] A função GetNumID agora é publica para poder ser utilizada na procedure
+    SalvarXmlNfse.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Adicionado a propriedade de parametrização (ConsultaNFSe) que define se 
     vai consultar a NFS-e ou não, após o cancelamento.

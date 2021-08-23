@@ -528,7 +528,6 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
-  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -544,33 +543,15 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      {No WS de Campo Grande/MS tem retornado:
-        <?xml version="1.0" encoding="UTF-8"?>
-        <enviarReturn type="xsd:string">
-          <ns1:RetornoEnvioLoteRPS xsi:schemaLocation="http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/RetornoEnvioLoteRPS.xsd " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tipos="http://localhost:8080/WsNFe2/tp" xmlns:ns1="http://localhost:8080/WsNFe2/lote">
-            <Cabecalho>
-              <CodCidade>9051</CodCidade>
-              <Sucesso>true</Sucesso>
-              <NumeroLote>123456789</NumeroLote>
-              <CPFCNPJRemetente>00000000000000</CPFCNPJRemetente>
-              <DataEnvioLote>2021-07-08T16:12:00.0Z</DataEnvioLote>
-              <QtdNotasProcessadas>0</QtdNotasProcessadas>
-              <TempoProcessamento>0</TempoProcessamento>
-              <ValorTotalServicos>0</ValorTotalServicos>
-              <ValorTotalDeducoes>0</ValorTotalDeducoes>
-              <Versao>1</Versao>
-              <Assincrono>S</Assincrono>
-            </Cabecalho>
-            <Alertas/>
-            <Erros/>
-            <ChavesNFSeRPS/>
-          </ns1:RetornoEnvioLoteRPS>
-        </enviarReturn>
-      }
-
       ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
+
       if ANode = nil then
-        ANode := Document.Root;
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
 
       ProcessarMensagemErros(ANode, Response);
 
@@ -583,9 +564,8 @@ begin
         with Response do
         begin
           Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-
-          Sucesso := not (xSucesso = 'N');
+          Protocolo := Lote;
+          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
 
           { Verificar se mais alguma dessas informações são necessárias
           with InformacoesLote do
@@ -602,7 +582,7 @@ begin
         end;
       end;
 
-      Response.Sucesso := (Response.Erros.Count = 0);
+//      Response.Sucesso := (Response.Erros.Count = 0);
       {
       AuxNode := ANode.Childrens.FindAnyNs('ChavesNFeRPS');
 
@@ -654,6 +634,9 @@ var
   NameSpace, Prefixo, PrefixoTS: string;
 begin
   if EstaVazio(Response.Lote) then
+    Response.Lote := Response.Protocolo;
+
+  if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -714,7 +697,7 @@ begin
                            '</CPFCNPJRemetente>' +
                            '<Versao>1</Versao>' +
                            '<NumeroLote>' +
-                             Response.Lote +
+                             Response.Protocolo +
                            '</NumeroLote>' +
                          '</Cabecalho>' +
                        '</' + Prefixo + 'ReqConsultaLote>';
@@ -744,7 +727,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root;
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaLote');
 
       ProcessarMensagemErros(ANode, Response);
 
@@ -753,13 +736,29 @@ begin
       if AuxNode <> nil then
       begin
         ProcessarMensagemErros(AuxNode, Response);
-//        with Response do
-//        begin
-//          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-//        end;
+
+        with Response do
+        begin
+          Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+          Protocolo := Lote;
+          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
+
+          { Verificar se mais alguma dessas informações são necessárias
+          with InformacoesLote do
+          begin
+            NumeroLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+            InscricaoPrestador := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
+            CPFCNPJRemetente := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente'), tcStr);
+            DataEnvioLote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataEnvioLote'), tcDatHor);
+            QtdNotasProcessadas := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('QtdNotasProcessadas'), tcInt);
+            TempoProcessamento := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
+            ValorTotalServico := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
+          end;
+          }
+        end;
       end;
 
-      Response.Sucesso := (Response.Erros.Count = 0);
+//      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := ANode.Childrens.FindAnyNs('ListaNFSe');
 
@@ -925,21 +924,27 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root;
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaNFSeRPS');
 
       ProcessarMensagemErros(ANode, Response);
-
+      (*
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
       if AuxNode <> nil then
       begin
         ProcessarMensagemErros(AuxNode, Response);
-//        with Response do
-//        begin
-//          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-//        end;
-      end;
 
+        with Response do
+        begin
+          { Verificar se mais alguma dessas informações são necessárias
+          with InformacoesLote do
+          begin
+            CPFCNPJRemetente := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente'), tcStr);
+          end;
+          }
+        end;
+      end;
+      *)
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := ANode.Childrens.Find('NotasConsultadas');
@@ -1092,9 +1097,11 @@ begin
                            '<NotaInicial>' +
                              Response.InfConsultaNFSe.NumeroIniNFSe +
                            '</NotaInicial>' +
+                           {
                            '<NumeroLote>' +
                              Response.InfConsultaNFSe.NumeroLote +
                            '</NumeroLote>' +
+                           }
                            '<Versao>1</Versao>' +
                          '</Cabecalho>' +
                        '</' + Prefixo + 'ReqConsultaNotas>';
@@ -1124,21 +1131,27 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root;
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaNotas');
 
       ProcessarMensagemErros(ANode, Response);
-
+      (*
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
       if AuxNode <> nil then
       begin
         ProcessarMensagemErros(AuxNode, Response);
-//        with Response do
-//        begin
-//          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-//        end;
-      end;
 
+        with Response do
+        begin
+          { Verificar se mais alguma dessas informações são necessárias
+          with InformacoesLote do
+          begin
+            CPFCNPJRemetente := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente'), tcStr);
+          end;
+          }
+        end;
+      end;
+      *)
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := ANode.Childrens.Find('Notas');
@@ -1259,10 +1272,10 @@ begin
     end;
   end;
 
-//  NameSpace := NameSpace +
-//    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-//    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
-//    ' http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"';
+  NameSpace := NameSpace +
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+    ' http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd"';
 
   {
     Tag <transacao>
@@ -1312,6 +1325,9 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  i: Integer;
+  ANodeArray: TACBrXmlNodeArray;
+  ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -1327,7 +1343,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root;
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoCancelamentoNFSe');
 
       ProcessarMensagemErros(ANode, Response);
 
@@ -1336,13 +1352,51 @@ begin
       if AuxNode <> nil then
       begin
         ProcessarMensagemErros(AuxNode, Response);
-//        with Response do
-//        begin
-//          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-//        end;
+
+        with Response do
+        begin
+          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
+        end;
       end;
 
       Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := ANode.Childrens.Find('NotasCanceladas');
+
+      if ANode <> nil then
+      begin
+        ANodeArray := ANode.Childrens.FindAllAnyNs('Nota');
+
+        if not Assigned(ANodeArray) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit;
+        end;
+
+        for i := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[i];
+
+          //Tenta localizar pelo número da nota
+          //ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(ANode.Childrens.FindAnyNs('NumeroNota').AsString);
+
+          //Se não achou tenta pelo número do RPS
+          //if not Assigned(ANota) then
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANode.Childrens.FindAnyNs('NumeroRPS').AsString);
+
+          if Assigned(ANota) then
+            ANota.XML := ANode.OuterXml
+          else
+          begin
+            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          end;
+
+          SalvarXmlNfse(ANota);
+        end;
+      end;
     except
       on E:Exception do
       begin
@@ -1376,12 +1430,10 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:enviar>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviar>';
 
-  Result := Executar('', Request,
-                     ['enviarReturn', 'ReqEnvioLoteRPS'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['enviarReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.RecepcionarSincrono(ACabecalho,
@@ -1426,9 +1478,7 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarLote>';
 
-  Result := Executar('', Request,
-                     ['consultarLoteReturn', 'RetornoConsultaLote'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['consultarLoteReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.ConsultarNFSePorRps(ACabecalho,
@@ -1442,9 +1492,7 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarNFSeRps>';
 
-  Result := Executar('', Request,
-                     ['consultarNFSeRpsReturn', 'RetornoConsultaNFSeRPS'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['consultarNFSeRpsReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -1457,9 +1505,7 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:consultarNota>';
 
-  Result := Executar('', Request,
-                     ['consultarNotaReturn', 'RetornoConsultaNotas'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['consultarNotaReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.Cancelar(ACabecalho, AMSG: String): string;
@@ -1469,12 +1515,10 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<lot:cancelar>';
-  Request := Request + '<mensagemXml>' + XmlToStr(AMSG) + '</mensagemXml>';
+  Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:cancelar>';
 
-  Result := Executar('', Request,
-                     ['cancelarReturn', 'RetornoCancelamentoNFSe'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['cancelarReturn'], [NameSpace]);
 end;
 
 end.

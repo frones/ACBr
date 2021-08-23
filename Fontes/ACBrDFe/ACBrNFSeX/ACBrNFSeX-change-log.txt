@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/08/2021
+-- ISSDSF.Provider/ISSDSF.GravarXml --
+[*] Possível correção para o envio e tratamento dos retornos do provedor
+    ISSDSF.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX/ACBrNFSeXProviderBase --
 [*] A função GetNumID agora é publica para poder ser utilizada na procedure
     SalvarXmlNfse.

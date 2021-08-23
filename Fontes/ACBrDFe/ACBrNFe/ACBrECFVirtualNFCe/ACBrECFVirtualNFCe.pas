@@ -492,6 +492,8 @@ begin
     with fsACBrNFCe do
     begin
       NotasFiscais.Clear;
+      WebServices.EnvEvento.Clear;
+
       NotasFiscais.Add;
       Consumidor.Enviado := False;
 
@@ -888,7 +890,7 @@ begin
 
         if NotasFiscais.Items[0].Confirmada then
           FazerImpressaoDocumento;
-    end;
+      end;
     end;
   end
   else

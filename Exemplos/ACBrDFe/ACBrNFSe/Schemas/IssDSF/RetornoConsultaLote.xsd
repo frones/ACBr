@@ -47,7 +47,7 @@ xmlns:ns1="http://localhost:8080/WsNFe2/lote" targetNamespace="http://localhost:
 									<xs:documentation>Data/hora de envio do lote.</xs:documentation>
 								</xs:annotation>
 							</xs:element>
-							<xs:element name="QtdNotasProcessadas" type="tipos:tpQuantidade" minOccurs="1" maxOccurs="1">
+							<xs:element name="QtdNotasProcessadas" type="tipos:tpQtdRpsLote" minOccurs="1" maxOccurs="1">
 								<xs:annotation>
 									<xs:documentation>Quantidade de RPS do lote.</xs:documentation>
 								</xs:annotation>

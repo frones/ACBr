@@ -306,7 +306,7 @@ begin
       ANode := ANode.Childrens.FindAnyNs('Mensagem');
 
       ANode := ANode.Childrens.FindAnyNs('NFSE');
-      if not Assigned(ANodeArray) then
+      if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
@@ -327,7 +327,7 @@ begin
       begin
         ANode := ANodeArray[i];
 
-        NumNFSe := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
+        NumNFSe := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('COD'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 

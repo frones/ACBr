@@ -384,7 +384,7 @@ begin
   begin
     SetStatus(stNFSeImprimir);
 
-    for i:= 0 to NotasFiscais.Count-1 do
+    for i := 0 to NotasFiscais.Count-1 do
     begin
       if NotasFiscais.Items[i].Confirmada and aImprimir then
         NotasFiscais.Items[i].Imprimir;

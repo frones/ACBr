@@ -714,14 +714,14 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagens');
-
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       AuxNode := ANode.Childrens.FindAnyNs('return');
 
       if AuxNode <> nil then
       begin
+        ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+
+        Response.Sucesso := (Response.Erros.Count = 0);
+
         with Response do
         begin
           Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataRecebimento'), tcDatHor);
@@ -1148,10 +1148,16 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
+    NumMaxRpsEnviar := 5;
   end;
 
   SetXmlNameSpace('http://www.el.com.br/nfse/xsd/el-nfse.xsd');
 
+  SetNomeXSD('el-nfse.xsd');
+  {
+    Apesar de ter o xsd não é possível usa-lo pois esta incompleto, não tem
+    a definição dos serviços, somente do LoteRps.
+  }
   ConfigSchemas.Validar := False;
 end;
 

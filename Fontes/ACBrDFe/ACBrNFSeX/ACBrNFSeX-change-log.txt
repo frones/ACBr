@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/08/2021
+-- ACBrNFSeXProviderBase/ACBrNFSeXWebservicesReponse --
+[*] Corrigido o problema de erro ao consultar a NFS-e após o cancelamento.
+   Por: Italo Giurizzato Junior / Rafael Dias
+-- AssessorPublico.Provider/AssessorPublico.LerXml --
+[*] Ajuste no tratamento do retorno do consulta lote e leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
+-- EL.Provider/EL.GravarXml --
+[*] Ajuste no tratamento do retorno do Emitir e gravação do XML do Rps.
+   Por: Italo Giurizzato Junior
+
 23/08/2021
 -- AssessorPublico.Provider --
 [*] Ajuste no tratamento do retorno do consulta lote.

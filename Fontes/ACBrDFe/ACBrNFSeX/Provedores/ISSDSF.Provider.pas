@@ -905,7 +905,7 @@ procedure TACBrNFSeProviderISSDSF.TratarRetornoConsultaNFSeporRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   ANota: NotaFiscal;
@@ -1112,7 +1112,7 @@ procedure TACBrNFSeProviderISSDSF.TratarRetornoConsultaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   ANota: NotaFiscal;

@@ -287,7 +287,7 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
                                        NFSe.Prestador.Endereco.xMunicipio, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 1,
                                                NFSe.Prestador.Endereco.UF, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Cep', 8, 8, 0,
@@ -330,7 +330,7 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
                                 NFSe.Tomador.Endereco.xMunicipio, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 1,
                                         NFSe.Tomador.Endereco.UF, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Cep', 8, 8, 0,
@@ -466,8 +466,8 @@ begin
                                                                        '', ''));
   end;
 
-  if NFSe.Servico.ItemServico.Count > 10 then
-    wAlerta('#', 'Servico', '', ERR_MSG_MAIOR_MAXIMO + '10');
+  if NFSe.Servico.ItemServico.Count > 50 then
+    wAlerta('#', 'Servico', '', ERR_MSG_MAIOR_MAXIMO + '50');
 end;
 
 function TNFSeW_EL.GerarServicos: TACBrXmlNode;

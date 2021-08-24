@@ -507,14 +507,14 @@ begin
   inherited Create;
 
   FInfRetorno := TInfRetorno.Create;
-
-  FInfConsultaNFSe := TInfConsultaNFSe.Create;
 end;
 
 destructor TNFSeConsultaNFSeResponse.Destroy;
 begin
   FInfRetorno.Free;
-  FreeAndNil(FInfConsultaNFSe);
+
+  if Assigned(FInfConsultaNFSe) then
+    FreeAndNil(FInfConsultaNFSe);
 
   inherited Destroy;
 end;
@@ -535,8 +535,11 @@ destructor TNFSeCancelaNFSeResponse.Destroy;
 begin
   FInfRetorno.Free;
 
-  FreeAndNil(FInfCancelamento);
-  FreeAndNil(FRetCancelamento);
+  if Assigned(FInfCancelamento) then
+    FreeAndNil(FInfCancelamento);
+
+  if Assigned(FRetCancelamento) then
+    FreeAndNil(FRetCancelamento);
 
   inherited Destroy;
 end;
@@ -553,8 +556,11 @@ end;
 
 destructor TNFSeSubstituiNFSeResponse.Destroy;
 begin
-  FreeAndNil(FInfCancelamento);
-  FreeAndNil(FRetCancelamento);
+  if Assigned(FInfCancelamento) then
+    FreeAndNil(FInfCancelamento);
+
+  if Assigned(FRetCancelamento) then
+    FreeAndNil(FRetCancelamento);
 
   inherited Destroy;
 end;

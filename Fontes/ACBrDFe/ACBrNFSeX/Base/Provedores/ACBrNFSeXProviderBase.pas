@@ -1627,28 +1627,22 @@ begin
 
       InfConsultaNFSe := TInfConsultaNFSe.Create;
 
-      try
-        with InfConsultaNFSe do
-        begin
-          if ConfigGeral.ConsultaPorFaixa then
-            tpConsulta := tcPorFaixa
-          else
-            tpConsulta := tcPorNumero;
+      with InfConsultaNFSe do
+      begin
+        if ConfigGeral.ConsultaPorFaixa then
+          tpConsulta := tcPorFaixa
+        else
+          tpConsulta := tcPorNumero;
 
-          NumeroIniNFSe := Result.InfCancelamento.NumeroNFSe;
-          NumeroFinNFSe := Result.InfCancelamento.NumeroNFSe;
-          Pagina        := 1;
-        end;
-
-        RetornoConsNFSe := ConsultaNFSe(InfConsultaNFSe);
-      finally
-        InfConsultaNFSe.Free;
+        NumeroIniNFSe := Result.InfCancelamento.NumeroNFSe;
+        NumeroFinNFSe := Result.InfCancelamento.NumeroNFSe;
+        Pagina        := 1;
       end;
+
+      RetornoConsNFSe := ConsultaNFSe(InfConsultaNFSe);
     finally
       Result.Situacao := RetornoConsNFSe.Situacao;
-      { esta gerando Invalid Pointer Operation
       RetornoConsNFSe.Free;
-      }
     end;
   end;
 end;
@@ -1703,7 +1697,6 @@ begin
     Result.PedCanc := Cancelamento.XmlEnvio;
     Result.PedCanc := SepararDados(Result.PedCanc, 'CancelarNfseEnvio', False);
   finally
-//    Cancelamento := nil;  //italo Não sei se esta correto
     FreeAndNil(Cancelamento);
   end;
 

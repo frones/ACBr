@@ -46,6 +46,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/21
+-- ACBrTEFAPIComum --
+[*] Módificado os métodos "CancelarOuEstornarTransacoesDiretorioTrabalho" e
+    "FinalizarTransacoesPendentes", para a Finalização apenas para Transaçoes
+    que realmente necessitem da 3a perna
+
+-- ACBrTEFAPIPayGoWeb --
+[*] Método "QuandoAguardaPinPadAPI" modificado para suportar ação "ppLerQRCode"
+
+-- ACBrTEFPayGoWebComum --
+[*] Tipo enumerado "TACBrTEFPGWebAPIOperacaoPinPad", adicionada a açao:
+    "ppLerQRCode", que sinaliza para a aplicação, que a PayGoWeb está aguardando
+    a leitura do QRCode, pelo Cliente Final
+[*] Método "AbortarTransacao", renomeado para "EstornarTransacaoEmAndamento"
+[+] Adicionado o método: "ChamarOnAguardaPinPad", para centralizar as chamadas ao
+    evento "OnAguardaPinPad"
+[+] Adicionado o método "AbortarTransacao", que permite sinalizar para a PayGoWeb
+    que o Loop da transação TEF, deve ser interrompido
+[-] Método "ObterDados", modificado, para invocar "ChamarOnAguardaPinPad", quando
+    ocorrer bTipoDeDado for PWDAT_DSPCHECKOUT ou PWDAT_DSPQRCODE
+    (por: DSA)
+
 19/08/21
 -- ACBrTEFComum --
 [+] Adicionada a Classe: "TACBrTEFParametros", derivada de TStringList,

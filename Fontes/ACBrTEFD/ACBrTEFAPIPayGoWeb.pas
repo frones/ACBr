@@ -333,6 +333,8 @@ begin
       Op := opapiPinPad;
     ppRemoveCard:
       Op := opapiRemoveCartao;
+    ppLerQRCode:
+      Op := opapiLeituraQRCode;
   else
     Op := opapiPinPad;
   end;

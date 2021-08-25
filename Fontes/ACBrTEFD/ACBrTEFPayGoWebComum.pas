@@ -530,7 +530,8 @@ type
 
   TACBrTEFPGWebAPIOperacaoPinPad = (ppGetCard, ppGetPIN, ppGetData, ppGoOnChip,
     ppFinishChip, ppConfirmData, ppGenericCMD, ppDataConfirmation, ppDisplay,
-    ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock, ppTestKey);
+    ppGetUserData, ppWaitEvent, ppRemoveCard, ppGetPINBlock, ppTestKey,
+    ppLerQRCode);
 
   TACBrTEFPGWebAPIAguardaPinPad = procedure(
     OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelar: Boolean)
@@ -688,6 +689,7 @@ type
     function AguardarOperacaoPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
     procedure ExibirMensagem(const AMsg: String; Terminal: TACBrTEFPGWebAPITerminalMensagem = tmOperador; TempoEspera: Integer = -1);
     procedure ExibirQRCode(const Dados: String);
+    procedure ChamarOnAguardaPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelado: Boolean);
 
     function PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData): TACBrTEFPGWebAPIDefinicaoCampo;
     procedure LogPWGetData(AGetData: TPW_GetData);
@@ -709,11 +711,12 @@ type
     procedure AdicionarParametro(iINFO: Word; const AValor: AnsiString); overload;
     procedure AdicionarParametro(const AKeyValueStr: String); overload;
     function ExecutarTransacao: Boolean;
+    function AbortarTransacao: SmallInt;
     procedure ObterDadosDaTransacao;
     procedure FinalizarTransacao(Status: LongWord; const pszReqNum: String;
       const pszLocRef: String; const pszExtRef: String; const pszVirtMerch: String;
       const pszAuthSyst: String);
-    procedure AbortarTransacao;
+    procedure EstornarTransacaoEmAndamento;
     procedure TratarTransacaoPendente;
     procedure ExibirMensagemPinPad(const MsgPinPad: String);
     function ObterDadoPinPad(iMessageId: Word; MinLen, MaxLen: Byte;
@@ -1401,7 +1404,7 @@ begin
   except
     On E: Exception do
     begin
-      AbortarTransacao;
+      EstornarTransacaoEmAndamento;
       DoException(E.Message);
     end;
   end;
@@ -1515,7 +1518,7 @@ begin
         GravarLog('  '+PWRETToString(iRetPP));
       end;
 
-      AbortarTransacao;
+      EstornarTransacaoEmAndamento;
       if (iRet = PWRET_OK) then
         iRet := PWRET_INVCALL;
     end;
@@ -1529,6 +1532,26 @@ begin
     TratarTransacaoPendente;
 
   Result := (iRet = PWRET_OK);
+end;
+
+function TACBrTEFPGWebAPI.AbortarTransacao: SmallInt;
+begin
+  GravarLog('PW_iPPAbort');
+  Result := xPW_iPPAbort;
+  GravarLog('  '+PWRETToString(Result));
+  case Result of
+    PWRET_OK:
+      Result := PWRET_CANCEL;  // Sinaliza Cancelado, para função chamadora
+
+    PWRET_PPCOMERR:
+      DoException(ACBrStr(sErrPWRET_PPCOMERR));
+
+    PWRET_DLLNOTINIT:
+      DoException(ACBrStr(sErrPWRET_DLLNOTINIT));
+
+  else
+    DoException(ACBrStr(ObterUltimoRetorno));
+  end;
 end;
 
 procedure TACBrTEFPGWebAPI.ObterDadosDaTransacao;
@@ -1612,11 +1635,11 @@ begin
   end;
 end;
 
-procedure TACBrTEFPGWebAPI.AbortarTransacao;
+procedure TACBrTEFPGWebAPI.EstornarTransacaoEmAndamento;
 var
   pszReqNum, pszLocRef, pszExtRef, pszVirtMerch, pszAuthSyst: String;
 begin
-  GravarLog('TACBrTEFPGWebAPI.AbortarTransacao');
+  GravarLog('TACBrTEFPGWebAPI.EstornarTransacaoEmAndamento');
   if EmTransacao and (Trim(ObterInfo(PWINFO_CNFREQ)) = '1') then
   begin
     pszReqNum := Trim(ObterInfo(PWINFO_REQNUM));
@@ -1817,6 +1840,7 @@ var
   i, j: Integer;
   AMsg, DadosQRCode: String;
   iRet: SmallInt;
+  Cancelado: Boolean;
 begin
   GravarLog('TACBrTEFPGWebAPI.ObterDados( '+IntToStr(ArrLen)+' )');
 
@@ -1880,7 +1904,12 @@ begin
             if (AMsg <> '') then
               ExibirMensagem(AMsg, tmCliente);
 
-            AdicionarParametro(AGetData.wIdentificador, '');
+            Cancelado := False;
+            ChamarOnAguardaPinPad(ppLerQRCode, Cancelado);
+            if Cancelado then
+              iRet := AbortarTransacao
+            else
+              AdicionarParametro(AGetData.wIdentificador, '');
           end;
           PWDAT_DSPQRCODE:
           begin
@@ -1895,7 +1924,12 @@ begin
             if (AMsg <> '') then
               ExibirMensagem(AMsg, tmCliente);
 
-            AdicionarParametro(AGetData.wIdentificador, '');
+            Cancelado := False;
+            ChamarOnAguardaPinPad(ppLerQRCode, Cancelado);
+            if Cancelado then
+              iRet := AbortarTransacao
+            else
+              AdicionarParametro(AGetData.wIdentificador, '');
           end
         else
           DoException(Format(ACBrStr(sErrPWDAT_UNKNOWN), [AGetData.bTipoDeDado]));
@@ -2256,32 +2290,14 @@ begin
         DoException(ACBrStr(ObterUltimoRetorno));
       end;
 
-      GravarLog('  OnAguardaPinPad');
-      fOnAguardaPinPad(OperacaoPinPad, Cancelado);
+      ChamarOnAguardaPinPad(OperacaoPinPad, Cancelado);
     end;
   finally
     Freemem(pszDisplay);
   end;
 
   if Cancelado then
-  begin
-    GravarLog('PW_iPPAbort');
-    iRet := xPW_iPPAbort;
-    GravarLog('  '+PWRETToString(iRet));
-    case iRet of
-      PWRET_OK:
-        iRet := PWRET_CANCEL;  // Sinaliza Cancelado, para função chamadora
-
-      PWRET_PPCOMERR:
-        DoException(ACBrStr(sErrPWRET_PPCOMERR));
-
-      PWRET_DLLNOTINIT:
-        DoException(ACBrStr(sErrPWRET_DLLNOTINIT));
-
-    else
-      DoException(ACBrStr(ObterUltimoRetorno));
-    end;
-  end;
+    iRet := AbortarTransacao;
 
   Result := iRet;
 end;
@@ -2341,6 +2357,16 @@ procedure TACBrTEFPGWebAPI.ExibirQRCode(const Dados: String);
 begin
   GravarLog('  OnExibeQRCode( '+Dados+' )');
   fOnExibeQRCode(Dados);
+end;
+
+procedure TACBrTEFPGWebAPI.ChamarOnAguardaPinPad(
+  OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelado: Boolean);
+begin
+  Cancelado := False;
+  GravarLog('  OnAguardaPinPad( '+GetEnumName(TypeInfo(TACBrTEFPGWebAPIOperacaoPinPad),
+                                              integer(OperacaoPinPad))+' )');
+  fOnAguardaPinPad(OperacaoPinPad, Cancelado);
+  GravarLog('    Cancelado: '+BoolToStr(Cancelado, True) );
 end;
 
 function TACBrTEFPGWebAPI.PW_GetDataToDefinicaoCampo(AGetData: TPW_GetData

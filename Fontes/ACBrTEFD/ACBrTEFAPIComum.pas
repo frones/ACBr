@@ -1428,7 +1428,8 @@ begin
                                  ATEFResp.Finalizacao,
                                  ATEFResp.Rede )
           end
-          else
+
+          else if ATEFResp.Confirmar then    // Transação requer Confirmação ?
           begin
             if EhPagamento then
               AStatus := tefstsErroDiverso
@@ -1436,9 +1437,9 @@ begin
               AStatus := tefstsSucessoManual; // Queremos Confirmar os Cancelamentos...
 
             FinalizarTransacao( ATEFResp.Rede,
-                               ATEFResp.NSU,
-                               ATEFResp.Finalizacao,
-                               AStatus );
+                                ATEFResp.NSU,
+                                ATEFResp.Finalizacao,
+                                AStatus );
           end;
 
           RespostasTEFAtuais.ApagarRespostaTEF(i);  // Apaga arquivo de Backup
@@ -1467,7 +1468,8 @@ begin
   for i := 0 to RespostasTEF.Count-1 do
   begin
     ATEFResp := RespostasTEF[i];
-    if not ATEFResp.CNFEnviado then    // Ainda não enviou Terceira Perna ?
+    if ATEFResp.Confirmar and            // Transação requer Confirmação ?
+       (not ATEFResp.CNFEnviado) then    // Ainda não enviou Terceira Perna ?
     begin
       FinalizarTransacao( ATEFResp.Rede,
                           ATEFResp.NSU,

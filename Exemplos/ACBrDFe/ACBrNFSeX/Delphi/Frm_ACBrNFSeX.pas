@@ -585,8 +585,9 @@ begin
         Servico.Valores.ValorIssRetido - Servico.Valores.DescontoIncondicionado
         - Servico.Valores.DescontoCondicionado;
 
-      // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum );
-      Servico.ResponsavelRetencao := rtNenhum;
+      // TnfseResponsavelRetencao = ( rtTomador, rtPrestador, rtIntermediario, rtNenhum )
+      //                              '1',       '',          '2',             ''
+      Servico.ResponsavelRetencao := rtTomador;
 
       Servico.ItemListaServico := '09.01';
 
@@ -609,6 +610,9 @@ begin
 
         proSalvador:
           Servico.CodigoTributacaoMunicipio := '0901001';
+
+        proIPM, proIPM_110, proIPM_120:
+          Servico.CodigoTributacaoMunicipio := '';
       else
         Servico.CodigoTributacaoMunicipio := '63194';
       end;
@@ -824,7 +828,7 @@ begin
       exit;
 
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proiiBrasil_2, proWebFisco,
-      proSimple, proFGMaiss] then
+      proSimple, proFGMaiss, proIPM_110] then
     begin
       SerNFSe := '1';
       if not (InputQuery(Titulo, 'Série da NFSe', SerNFSe)) then
@@ -875,8 +879,8 @@ begin
 
     // Os Provedores da lista requerem que seja informado o motivo do cancelamento
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
-      proConam, proEquiplano, proGoverna, proIPM, proIPM_120, proISSDSF, proLencois,
-      proModernizacaoPublica, proPublica, proSiat, proSigISS, proSigep,
+      proConam, proEquiplano, proGoverna, proIPM, proIPM_110, proIPM_120, proISSDSF,
+      proLencois, proModernizacaoPublica, proPublica, proSiat, proSigISS, proSigep,
       proSmarAPD, proWebFisco, proTecnos, proSudoeste, proSimple, proFGMaiss] then
     begin
       Motivo := 'Motivo do Cancelamento';

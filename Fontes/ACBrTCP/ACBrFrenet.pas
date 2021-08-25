@@ -69,7 +69,13 @@ unit ACBrFrenet;
 interface
 
 uses
-  Classes, SysUtils, contnrs, Jsons, ACBrSocket, ACBrUtil;
+  Classes, SysUtils, contnrs,
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    JsonDataObjects_ACBr,
+  {$Else}
+    Jsons,
+  {$EndIf}
+  ACBrSocket, ACBrUtil;
 
 const
   CURL_FRENET         = 'http://api.frenet.com.br';
@@ -199,7 +205,8 @@ type
     FCepDestino: string;
     FCepOrigem: string;
     FCotacoes: TACBrFrenetCotacoes;
-    FJson: TJson;
+    FJson: TJsonObject;
+
     procedure SetItens(const Value: TACBrFrenetItens);
     function TemItens: Boolean;
     function UrlConsultaAlterada: Boolean;
@@ -218,7 +225,7 @@ type
     { Buscar os servicos disponiveis - configurados no painel do Frenet }
     function ServicosDisponiveis: boolean;
 
-    property Json: TJson         read FJson;
+    property Json: TJsonObject   read FJson;
 
     property Erro: integer       read FErro           write FErro;
     property MsgErro: string     read FMsgErro        write FMsgErro;
@@ -268,7 +275,7 @@ begin
   FMsgErro := '';
 
   // Json obj
-  FJson := TJson.Create;
+  FJson := TJsonObject.Create;
 
   // Itens
   FItens := TACBrFrenetItens.Create(True);
@@ -311,34 +318,61 @@ begin
     // Montar string json
     Json.Clear;
 
-    Json['SellerCEP'].AsString := OnlyNumber( FCepOrigem );
-    Json['RecipientCEP'].AsString := OnlyNumber( FCepDestino );
-    Json['ShipmentInvoiceValue'].AsNumber := FValorDeclarado;
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     Json['SellerCEP'].Value := OnlyNumber( FCepOrigem );
+     Json['RecipientCEP'].Value := OnlyNumber( FCepDestino );
+     Json['ShipmentInvoiceValue'].FloatValue := FValorDeclarado;
 
-    for i := 0 to Itens.Count-1 do
-    begin
-      // Item
-      Json['ShippingItemArray'].AsArray.Add;
-      JItem := Json['ShippingItemArray'].AsArray[ i ].AsObject;
-      JItem['Weight'].AsNumber := Itens[i].Peso;
-      JItem['Length'].AsNumber := Itens[i].Comprimento;
-      JItem['Height'].AsNumber := Itens[i].Altura;
-      JItem['Width'].AsNumber := Itens[i].Largura;
-      JItem['Diameter'].AsNumber := Itens[i].Diametro;
-      JItem['Quantity'].AsInteger := Max(Itens[i].Quantidade, 1);
+     for i := 0 to Itens.Count-1 do
+     begin
+       // Item
+       JItem := Json.A['ShippingItemArray'].AddObject;
+       JItem['Weight'].FloatValue := Itens[i].Peso;
+       JItem['Length'].FloatValue := Itens[i].Comprimento;
+       JItem['Height'].FloatValue := Itens[i].Altura;
+       JItem['Width'].FloatValue := Itens[i].Largura;
+       JItem['Diameter'].FloatValue := Itens[i].Diametro;
+       JItem['Quantity'].IntValue := Max(Itens[i].Quantidade, 1);
 
-      if Itens[i].SKU > '' then
-        JItem['SKU'].AsString := Itens[i].SKU;
+       if Itens[i].SKU > '' then
+         JItem['SKU'].Value := Itens[i].SKU;
 
-      if Itens[i].Categoria > '' then
-        JItem['Category'].AsString := Itens[i].Categoria;
-    end;
+       if Itens[i].Categoria > '' then
+         JItem['Category'].Value := Itens[i].Categoria;
+     end;
 
-    Json['RecipientCountry'].AsString := PaisDestino;
+     Json['RecipientCountry'].Value := PaisDestino;
 
+     sSend := Json.ToString;
+    {$Else}
+     Json['SellerCEP'].AsString := OnlyNumber( FCepOrigem );
+     Json['RecipientCEP'].AsString := OnlyNumber( FCepDestino );
+     Json['ShipmentInvoiceValue'].AsNumber := FValorDeclarado;
 
-    // Converter para UTF-8
-    sSend := ACBrAnsiToUTF8(Json.Stringify);
+     for i := 0 to Itens.Count-1 do
+     begin
+       // Item
+       Json['ShippingItemArray'].AsArray.Add;
+       JItem := Json['ShippingItemArray'].AsArray[ i ].AsObject;
+       JItem['Weight'].AsNumber := Itens[i].Peso;
+       JItem['Length'].AsNumber := Itens[i].Comprimento;
+       JItem['Height'].AsNumber := Itens[i].Altura;
+       JItem['Width'].AsNumber := Itens[i].Largura;
+       JItem['Diameter'].AsNumber := Itens[i].Diametro;
+       JItem['Quantity'].AsInteger := Max(Itens[i].Quantidade, 1);
+
+       if Itens[i].SKU > '' then
+         JItem['SKU'].AsString := Itens[i].SKU;
+
+       if Itens[i].Categoria > '' then
+         JItem['Category'].AsString := Itens[i].Categoria;
+     end;
+
+     Json['RecipientCountry'].AsString := PaisDestino;
+
+     // Converter para UTF-8
+     sSend := ACBrAnsiToUTF8(Json.Stringify);
+    {$EndIf}
 
     // Limpar Document
     HTTPSend.Document.Clear;
@@ -347,13 +381,10 @@ begin
     HTTPSend.Document.Write(Pointer(sSend)^,Length(sSend));
 
     try
-
       //DEBUG
       //HTTPSend.Document.SaveToFile('C:\TEMP\CALL_FRENET.HTML');
 
       HTTPPost(FUrlConsulta + CURL_FRENET_QUOTE);
-
-
     except
       on E: Exception do
       begin
@@ -364,12 +395,18 @@ begin
     //DEBUG
     // RespHTTP.SaveToFile('C:\TEMP\FRENET_RESP.HTML');
 
-
-    // Json de retorno
-    Json.Parse(RespHTTP.Text);
-
-    // Se não retorno Message, OK
-    Result := (Json['message'].AsString = '');
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     // Json de retorno
+     FreeAndNil(FJson);
+     FJson := TJsonObject.Parse(RespHTTP.Text) as TJsonObject;
+     // Se não retorno Message, OK
+     Result := (Json['message'].Value = '');
+    {$Else}
+     // Json de retorno
+     Json.Parse(RespHTTP.Text);
+     // Se não retorno Message, OK
+     Result := (Json['message'].AsString = '');
+    {$EndIf}
 
     if Result then
       LerCotacoes
@@ -414,12 +451,18 @@ begin
     // DEBUG
     // RespHTTP.SaveToFile('C:\TEMP\FRENET_RESP.HTML');
 
-
-    // Json de retorno
-    Json.Parse(RespHTTP.Text);
-
-    // Se não retornar Message, OK
-    Result := (Json['message'].AsString = '');
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     // Json de retorno
+     FreeAndNil(FJson);
+     FJson := TJsonObject.Parse(RespHTTP.Text) as TJsonObject;
+     // Se não retorno Message, OK
+     Result := (Json['message'].Value = '');
+    {$Else}
+     // Json de retorno
+     Json.Parse(RespHTTP.Text);
+     // Se não retorno Message, OK
+     Result := (Json['message'].AsString = '');
+    {$EndIf}
 
     if Result then
       LerServicos
@@ -450,9 +493,11 @@ end;
 procedure TACBrFrenet.LerMsgErro;
 begin
   try
-
-    FMsgErro := Json['message'].AsString;
-
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     FMsgErro := Json['message'].Value;
+    {$Else}
+     FMsgErro := Json['message'].AsString;
+    {$EndIf}
   finally
 
   end;
@@ -467,20 +512,37 @@ begin
   try
     // Salva o retorno em Cotacoes
 
-    JArray := Json['ShippingSeviceAvailableArray'].AsArray;
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     JArray := Json['ShippingSeviceAvailableArray'].ArrayValue;
 
-    for i := 0 to JArray.Count-1 do
-    begin
+     for i := 0 to JArray.Count-1 do
+     begin
 
-      with Cotacoes.New do
-      begin
+       with Cotacoes.New do
+       begin
         // So retorna transportador e serviço
-        Transportador := JArray[i].AsObject['carrier'].AsString;
-        CodigoTransportador := JArray[i].AsObject['CarrierCode'].AsString;
-        CodigoServico := JArray[i].AsObject['ServiceCode'].AsString;
-        DescricaoServico := JArray[i].AsObject['ServiceDescription'].AsString;
-      end;
-    end;
+         Transportador := JArray[i].ObjectValue['carrier'].Value;
+         CodigoTransportador := JArray[i].ObjectValue['CarrierCode'].Value;
+         CodigoServico := JArray[i].ObjectValue['ServiceCode'].Value;
+         DescricaoServico := JArray[i].ObjectValue['ServiceDescription'].Value;
+       end;
+     end;
+    {$Else}
+     JArray := Json['ShippingSeviceAvailableArray'].AsArray;
+
+     for i := 0 to JArray.Count-1 do
+     begin
+
+       with Cotacoes.New do
+       begin
+         // So retorna transportador e serviço
+         Transportador := JArray[i].AsObject['carrier'].AsString;
+         CodigoTransportador := JArray[i].AsObject['CarrierCode'].AsString;
+         CodigoServico := JArray[i].AsObject['ServiceCode'].AsString;
+         DescricaoServico := JArray[i].AsObject['ServiceDescription'].AsString;
+       end;
+     end;
+    {$EndIf}
   finally
   end;
 
@@ -549,44 +611,86 @@ var
   JArray: TJsonArray;
 begin
   try
-    JArray := Json['ShippingSevicesArray'].AsArray;
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     JArray := Json['ShippingSevicesArray'].ArrayValue;
 
-    for i := 0 to JArray.Count-1 do
-    begin
-      with Cotacoes.New do
-      begin
+     for i := 0 to JArray.Count-1 do
+     begin
+       with Cotacoes.New do
+       begin
 
-        // Propriedades novas
-        // OriginalDeliveryTime = Prazo original, sem modificações de regras de frete
-        // ResponseTime = Tempo resposta (ms)
-        // OriginalShippingPrice = Valor original, sem modificações de regras de frete
+         // Propriedades novas
+         // OriginalDeliveryTime = Prazo original, sem modificações de regras de frete
+         // ResponseTime = Tempo resposta (ms)
+         // OriginalShippingPrice = Valor original, sem modificações de regras de frete
 
-        Transportador := JArray[i].AsObject['carrier'].AsString;
-        CodigoTransportador := JArray[i].AsObject['CarrierCode'].AsString;
-        PrazoEntrega := JArray[i].AsObject['DeliveryTime'].AsInteger;
-        PrazoEntregaOriginal := JArray[i].AsObject['OriginalDeliveryTime'].AsInteger;
-        Mensagem := JArray[i].AsObject['msg'].AsString;
-        CodigoServico := JArray[i].AsObject['ServiceCode'].AsString;
-        DescricaoServico := JArray[i].AsObject['ServiceDescription'].AsString;
+         Transportador := JArray[i].ObjectValue['carrier'].Value;
+         CodigoTransportador := JArray[i].ObjectValue['CarrierCode'].Value;
+         PrazoEntrega := JArray[i].ObjectValue['DeliveryTime'].IntValue;
+         PrazoEntregaOriginal := JArray[i].ObjectValue['OriginalDeliveryTime'].IntValue;
+         Mensagem := JArray[i].ObjectValue['msg'].Value;
+         CodigoServico := JArray[i].ObjectValue['ServiceCode'].Value;
+         DescricaoServico := JArray[i].ObjectValue['ServiceDescription'].Value;
 
-        // Novas propriedades
-        TempoResposta := JArray[i].AsObject['ResponseTime'].AsNumber;
+         // Novas propriedades
+         TempoResposta := JArray[i].ObjectValue['ResponseTime'].FloatValue;
 
-        // Erro nesta conexão
-        Erro := JArray[i].AsObject['Error'].AsBoolean;
+         // Erro nesta conexão
+         Erro := JArray[i].ObjectValue['Error'].BoolValue;
 
-        if Erro then
-        begin
-          Valor := 0;
-          ValorOriginal := 0;
-        end
-        else
-        begin
-          Valor :=  JArray[i].AsObject['ShippingPrice'].AsNumber;
-          ValorOriginal :=  JArray[i].AsObject['OriginalShippingPrice'].AsNumber;
-        end;
-      end;
-    end;
+         if Erro then
+         begin
+           Valor := 0;
+           ValorOriginal := 0;
+         end
+         else
+         begin
+           Valor :=  JArray[i].ObjectValue['ShippingPrice'].FloatValue;
+           ValorOriginal :=  JArray[i].ObjectValue['OriginalShippingPrice'].FloatValue;
+         end;
+       end;
+     end;
+    {$Else}
+     JArray := Json['ShippingSevicesArray'].AsArray;
+
+     for i := 0 to JArray.Count-1 do
+     begin
+       with Cotacoes.New do
+       begin
+
+         // Propriedades novas
+         // OriginalDeliveryTime = Prazo original, sem modificações de regras de frete
+         // ResponseTime = Tempo resposta (ms)
+         // OriginalShippingPrice = Valor original, sem modificações de regras de frete
+
+         Transportador := JArray[i].AsObject['carrier'].AsString;
+         CodigoTransportador := JArray[i].AsObject['CarrierCode'].AsString;
+         PrazoEntrega := JArray[i].AsObject['DeliveryTime'].AsInteger;
+         PrazoEntregaOriginal := JArray[i].AsObject['OriginalDeliveryTime'].AsInteger;
+         Mensagem := JArray[i].AsObject['msg'].AsString;
+         CodigoServico := JArray[i].AsObject['ServiceCode'].AsString;
+         DescricaoServico := JArray[i].AsObject['ServiceDescription'].AsString;
+
+         // Novas propriedades
+         TempoResposta := JArray[i].AsObject['ResponseTime'].AsNumber;
+
+         // Erro nesta conexão
+         Erro := JArray[i].AsObject['Error'].AsBoolean;
+
+         if Erro then
+         begin
+           Valor := 0;
+           ValorOriginal := 0;
+         end
+         else
+         begin
+           Valor :=  JArray[i].AsObject['ShippingPrice'].AsNumber;
+           ValorOriginal :=  JArray[i].AsObject['OriginalShippingPrice'].AsNumber;
+         end;
+       end;
+     end;
+    {$EndIf}
+
   finally
 
   end;

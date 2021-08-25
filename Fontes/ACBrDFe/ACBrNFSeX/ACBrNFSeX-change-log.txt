@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/08/2021
+-- ISSe.Provider/ISSe.GravarXml --
+[*] Correções para atender o provedor.
+   Por: Valter Accellog/ 
 -- ACBrNFSeXProviderBase/ACBrNFSeXGravarXml/IPM.GravarXml --
 [*] Possível correção para o erro de AV.
    Por: Italo Giurizzato Junior

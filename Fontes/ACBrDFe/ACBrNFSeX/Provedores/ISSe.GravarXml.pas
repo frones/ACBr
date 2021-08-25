@@ -74,6 +74,8 @@ begin
   NrOcorrValorIss := 1;
   NrOcorrValorISS := 1;
   NrOcorrAliquota := 1;
+
+  FormatoItemListaServico := filsSemFormatacao;
 end;
 
 end.

@@ -2225,6 +2225,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -2245,6 +2246,21 @@ begin
         AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
+  end;
+
+  ANode := RootNode.Childrens.FindAnyNs('ListaMensagemAlertaRetorno');
+
+  if (ANode = nil) then Exit;
+
+  ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
+  if not Assigned(ANodeArray) then Exit;
+
+  for I := Low(ANodeArray) to High(ANodeArray) do
+  begin
+    AAlerta := Response.Alertas.New;
+    AAlerta.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    AAlerta.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+    AAlerta.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
   end;
 
   {

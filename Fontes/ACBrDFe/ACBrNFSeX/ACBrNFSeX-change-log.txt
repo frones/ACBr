@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/08/2021
+-- ACBrNFSeXProviderBase/IPM.Provider/IPM.GravarXml --
+[*] Possível correção para o provedor IPM.
+   Por: Italo Giurizzato Junior
+
 24/08/2021
 -- ACBrNFSeXProviderBase/ACBrNFSeXWebservicesReponse --
 [*] Corrigido o problema de erro ao consultar a NFS-e após o cancelamento.

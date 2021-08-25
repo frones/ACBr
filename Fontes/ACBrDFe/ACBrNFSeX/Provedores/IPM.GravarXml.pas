@@ -86,6 +86,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeX;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     IPM
@@ -115,11 +118,8 @@ begin
 
   FDocument.Root := NFSeNode;
 
-//  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'nfse_teste', 1, 1, 80,
-//                                                            NFSe.InfID.ID, ''));
-
-  if NFSe.Producao = snNao then
-    NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 1, 1, '1', ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
+    'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
 
   xmlNode := GerarIdentificacaoRPS;
   NFSeNode.AppendChild(xmlNode);
@@ -136,7 +136,8 @@ begin
   xmlNode := GerarItens;
   NFSeNode.AppendChild(xmlNode);
 
-  if NFSe.Status = srNormal then
+  if (NFSe.Status = srNormal) and
+     (TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor in [proIPM_110, proIPM_120]) then
   begin
     xmlNode := GerarCondicaoPagamento;
     NFSeNode.AppendChild(xmlNode);
@@ -160,10 +161,10 @@ begin
   Result := CreateElement('forma_pagamento');
 
   codFp := EnumeradoToStr(NFSe.CondicaoPagamento.Condicao,
-        ['1', '3', '2', '4', '5'],
-        [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito]);
+        ['1', '2', '3', '4', '5'],
+        [cpAVista, cpAPrazo, cpNaApresentacao, cpCartaoDebito, cpCartaoCredito]);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tipo_pagamento', 1, 9, 1, codFp, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'tipo_pagamento', 1, 1, 1, codFp, ''));
 
   if (NFSe.CondicaoPagamento.QtdParcela > 0) then
   begin
@@ -176,7 +177,7 @@ function TNFSeW_IPM.GerarIdentificacaoRPS: TACBrXmlNode;
 begin
   Result :=  nil;
 
-  if( StrToIntDef( NFSe.IdentificacaoRps.Numero, 0 ) > 0 )then
+  if( StrToIntDef( NFSe.IdentificacaoRps.Numero, 0 ) > 0 ) then
   begin
     Result := CreateElement('rps');
 
@@ -239,15 +240,15 @@ begin
                                    NFSe.Servico.CodigoTributacaoMunicipio, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_local_prestacao_servico', 1, 9, 1,
-                                             NFSe.Servico.CodigoMunicipio, ''));
+            CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0)), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'unidade_codigo', 1, 9, 0,
                    UnidadeToStr(NFSe.Servico.ItemServico[I].TipoUnidade), ''));
 
-    Result[i].AppendChild(AddNode(tcDe3, '#', 'unidade_quantidade', 1, 15, 0,
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_quantidade', 1, 15, 0,
                                    NFSe.Servico.ItemServico[I].Quantidade, ''));
 
-    Result[i].AppendChild(AddNode(tcDe6, '#', 'unidade_valor_unitario', 1, 30, 0,
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'unidade_valor_unitario', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorUnitario, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_item_lista_servico', 1, 9, 1,
@@ -258,10 +259,10 @@ begin
        NFSe.Servico.Discriminacao, NFSe.Servico.ItemServico[I].Descricao), ''));
 
     if NFSe.Servico.ItemServico[I].Aliquota = 0 then
-      Result[i].AppendChild(AddNode(tcDe4, '#', 'aliquota_item_lista_servico', 1, 15, 0,
+      Result[i].AppendChild(AddNode(tcDe2, '#', 'aliquota_item_lista_servico', 1, 15, 1,
                                              NFSe.Servico.Valores.Aliquota, ''))
     else
-      Result[i].AppendChild(AddNode(tcDe4, '#', 'aliquota_item_lista_servico', 1, 15, 0,
+      Result[i].AppendChild(AddNode(tcDe2, '#', 'aliquota_item_lista_servico', 1, 15, 1,
                                      NFSe.Servico.ItemServico[I].Aliquota, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'situacao_tributaria', 1, 4, 1,
@@ -273,12 +274,8 @@ begin
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_deducao', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));
 
-    if NFSe.Servico.Valores.ValorIssRetido > 0 then
-      Result[i].AppendChild(AddNode(tcDe4, '#', 'valor_issrf', 1, 15, 0,
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorIss, DSC_VISS))
-    else
-      Result[i].AppendChild(AddNode(tcDe4, '#', 'valor_issrf', 1, 15, 0,
-                                                                  0, DSC_VISS));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then
@@ -296,14 +293,14 @@ begin
   begin
     Result[i] := CreateElement('parcela');
 
-    Result[i].AppendChild(AddNode(tcInt, '#', 'numero', 1, 3, 1,
+    Result[i].AppendChild(AddNode(tcInt, '#', 'numero', 1, 2, 1,
                          NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, ''));
+
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor', 1, 15, 1,
+                           NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, ''));
 
     Result[i].AppendChild(AddNode(tcDatVcto, '#', 'data_vencimento', 10, 10, 1,
                   NFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, ''));
-
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor', 1, 18, 1,
-                           NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, ''));
   end;
 
   if NFSe.CondicaoPagamento.Parcelas.Count > 10 then
@@ -335,30 +332,20 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cpfcnpj', 11, 14, 1,
              OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), DSC_CNPJ));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 1,
-  CodIBGEToCodTOM(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio,0)), ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 0,
+  CodIBGEToCodTOM(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0)), ''));
 end;
 
 function TNFSeW_IPM.GerarTomador: TACBrXmlNode;
 begin
   Result := CreateElement('tomador');
 
-  if( NFSe.Status <> srCancelado )then
-  begin
-    if (NFSe.Tomador.Endereco.EnderecoInformado) then
-      Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 1,
-                                                                       'S', ''))
-    else
-      Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 1,
-                                                                      'N', ''));
-  end;
-
   if Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro) <> '' then
   begin
+    Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'E', ''));
+
     Result.AppendChild(AddNode(tcStr, '#1', 'identificador', 1, 20, 1,
             Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro), ''));
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'E', ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'estado', 1, 100, 1,
                                                  NFSe.Tomador.Endereco.UF, ''));
@@ -372,19 +359,19 @@ begin
       Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'F', ''))
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'J', ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'cpfcnpj', 1, 14, 0,
+                OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), DSC_CNPJ));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'ie', 0, 16, 0,
+        OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), DSC_IE));
   end;
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cpfcnpj', 1, 14, 1,
-              OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), DSC_CNPJ));
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'ie', 0, 16, 1,
-      OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), DSC_IE));
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'nome_razao_social', 1, 100, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'nome_razao_social', 1, 100, 0,
                                           NFSe.Tomador.RazaoSocial, DSC_XNOME));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'sobrenome_nome_fantasia', 1, 100, 1,
-                                          NFSe.Tomador.NomeFantasia, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'sobrenome_nome_fantasia', 1, 100, 0,
+                                                NFSe.Tomador.NomeFantasia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'logradouro', 1, 70, 0,
                                      NFSe.Tomador.Endereco.Endereco, DSC_XLGR));
@@ -405,7 +392,7 @@ begin
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 0,
-    CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio,0)), ''));
+    CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 8, 0,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
@@ -427,6 +414,17 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'fone_fax', 1, 9, 0,
                                                                        '', ''));
+{
+  if( NFSe.Status <> srCancelado )then
+  begin
+    if (NFSe.Tomador.Endereco.EnderecoInformado) then
+      Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 1,
+                                                                       'S', ''))
+    else
+      Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 1,
+                                                                      'N', ''));
+  end;
+}
 end;
 
 function TNFSeW_IPM.GerarValoresServico: TACBrXmlNode;
@@ -435,10 +433,10 @@ begin
 
   if NFSe.Status = srCancelado then
   begin
-    Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 1, 1, 'C', ''));
-
     Result.AppendChild(AddNode(tcStr, '#1', 'numero', 0, 9, 1,
                                                               NFSe.Numero, ''));
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 1, 1, 'C', ''));
   end;
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'valor_total', 1, 15, 1,

@@ -301,15 +301,15 @@ begin
                            '<codigo_autenticidade>' +
                              Response.Protocolo +
                            '</codigo_autenticidade>' +
-                           '<numero>' +
-                             '' +
-                           '</numero>' +
-                           '<serie>' +
-                             '' +
-                           '</serie>' +
-                           '<cadastro>' +
-                             '' +
-                           '</cadastro>' +
+//                           '<numero>' +
+//                             '' +
+//                           '</numero>' +
+//                           '<serie>' +
+//                             '' +
+//                           '</serie>' +
+//                           '<cadastro>' +
+//                             '' +
+//                           '</cadastro>' +
                          '</pesquisa>' +
                        '</nfse>';
 end;
@@ -376,6 +376,14 @@ begin
     Exit;
   end;
 
+  if EstaVazio(Response.InfCancelamento.SerieNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod112;
+    AErro.Descricao := Desc112;
+    Exit;
+  end;
+
   if EstaVazio(Response.InfCancelamento.MotCancelamento) then
   begin
     AErro := Response.Erros.New;
@@ -391,6 +399,9 @@ begin
                            '<numero>' +
                              Response.InfCancelamento.NumeroNFSe +
                            '</numero>' +
+                           '<serie_nfse>' +
+                             Response.InfCancelamento.SerieNFSe +
+                           '</serie_nfse>' +
                            '<situacao>' +
                              'C' +
                            '</situacao>' +
@@ -550,9 +561,12 @@ function TACBrNFSeXWebserviceIPMV110.Recepcionar(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
+  Result := Executar('', AMSG, [''], []);
+  {
   Result := Executar('', AMSG,
                      ['enviarReturn', 'ReqEnvioLoteRPS'],
                      []);
+  }
 end;
 
 function TACBrNFSeXWebserviceIPMV110.TesteEnvio(ACabecalho,
@@ -560,9 +574,12 @@ function TACBrNFSeXWebserviceIPMV110.TesteEnvio(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
+  Result := Executar('', AMSG, [''], []);
+  {
   Result := Executar('', AMSG,
                      ['testeEnviarReturn', 'RetornoEnvioLoteRPS'],
                      []);
+  }
 end;
 
 function TACBrNFSeXWebserviceIPMV110.ConsultarLote(ACabecalho,
@@ -570,18 +587,24 @@ function TACBrNFSeXWebserviceIPMV110.ConsultarLote(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
+  Result := Executar('', AMSG, [''], []);
+  {
   Result := Executar('', AMSG,
                      ['consultarLoteReturn', 'RetornoConsultaLote'],
                      []);
+                     }
 end;
 
 function TACBrNFSeXWebserviceIPMV110.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
+  Result := Executar('', AMSG, [''], []);
+  {
   Result := Executar('', AMSG,
                      ['cancelarReturn', 'RetornoCancelamentoNFSe'],
                      []);
+  }
 end;
 
 { TACBrNFSeProviderIPMV110 }

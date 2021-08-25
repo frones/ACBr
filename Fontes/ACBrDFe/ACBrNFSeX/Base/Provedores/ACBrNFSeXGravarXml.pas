@@ -81,6 +81,7 @@ type
     FChaveAutoriz: string;
     FFraseSecreta: string;
     FCNPJPrefeitura: string;
+    FProvedor: TnfseProvedor;
 
     FFormatoEmissao: TACBrTipoCampo;
     FFormatoCompetencia: TACBrTipoCampo;
@@ -132,6 +133,7 @@ type
     property ChaveAutoriz: string        read FChaveAutoriz   write FChaveAutoriz;
     property FraseSecreta: string        read FFraseSecreta   write FFraseSecreta;
     property CNPJPrefeitura: string      read FCNPJPrefeitura write FCNPJPrefeitura;
+    property Provedor: TnfseProvedor     read FProvedor       write FProvedor;
 
     property FormatoEmissao: TACBrTipoCampo     read FFormatoEmissao     write FFormatoEmissao;
     property FormatoCompetencia: TACBrTipoCampo read FFormatoCompetencia write FFormatoCompetencia;

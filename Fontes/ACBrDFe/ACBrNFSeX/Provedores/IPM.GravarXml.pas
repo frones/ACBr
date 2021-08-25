@@ -136,8 +136,7 @@ begin
   xmlNode := GerarItens;
   NFSeNode.AppendChild(xmlNode);
 
-  if (NFSe.Status = srNormal) and
-     (TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor in [proIPM_110, proIPM_120]) then
+  if (NFSe.Status = srNormal) and (Provedor in [proIPM_110, proIPM_120]) then
   begin
     xmlNode := GerarCondicaoPagamento;
     NFSeNode.AppendChild(xmlNode);

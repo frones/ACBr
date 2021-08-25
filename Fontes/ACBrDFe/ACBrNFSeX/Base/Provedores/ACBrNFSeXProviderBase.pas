@@ -683,6 +683,7 @@ begin
       AWriter.ChaveAcesso  := Configuracoes.Geral.Emitente.WSChaveAcesso;
       AWriter.ChaveAutoriz := Configuracoes.Geral.Emitente.WSChaveAutoriz;
       AWriter.FraseSecreta := Configuracoes.Geral.Emitente.WSFraseSecr;
+      AWriter.Provedor     := Configuracoes.Geral.Provedor;
 
       if AWriter.Ambiente = taProducao then
         AWriter.Municipio := ConfigGeral.Params1

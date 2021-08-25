@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/08/2021
+-- ACBrNFSeXProviderBase/ACBrNFSeXGravarXml/IPM.GravarXml --
+[*] Possível correção para o erro de AV.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase/IPM.Provider/IPM.GravarXml --
 [*] Possível correção para o provedor IPM.
    Por: Italo Giurizzato Junior

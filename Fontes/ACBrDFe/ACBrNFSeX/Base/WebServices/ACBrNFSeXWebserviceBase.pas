@@ -679,11 +679,13 @@ begin
             // Alsuns provedores retorna uma string apenas com a mensagem de erro
             if Pos('Body', FPRetorno) = 0 then
               FPRetorno := GetSoapBody(FPRetorno);
-            {
-            // Se o XML não tiver a codificação incluir ela.
-            if ObtemDeclaracaoXML(FPRetorno) = '' then
-              FPRetorno := CUTF8DeclaracaoXML + FPRetorno;
-            }
+
+            if Pos('ISO-8859-1', FPRetorno) > 0 then
+            begin
+              FPRetorno := RemoverDeclaracaoXML(FPRetorno);
+              FPRetorno := TranslateString(FPRetorno, 0, 28591);
+            end;
+
             // Alguns provedores não retornam o XML em UTF-8
             FPRetorno := ConverteXMLtoUTF8(FPRetorno);
 
@@ -943,8 +945,6 @@ begin
               '</a>'
   else
     Result := Response;
-
-   Result := ConverteXMLtoUTF8(Result);
 end;
 
 function TACBrNFSeXWebserviceNoSoap.PrepararEnvio(const Message, SoapAction,

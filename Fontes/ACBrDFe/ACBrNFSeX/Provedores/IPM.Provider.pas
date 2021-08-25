@@ -254,6 +254,8 @@ begin
         Exit
       end;
 
+      Response.XmlRetorno := StringReplace(Response.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
+
       Document.LoadFromXml(Response.XmlRetorno);
 
       ANode := Document.Root;
@@ -332,6 +334,8 @@ begin
         AErro.Descricao := Desc201;
         Exit
       end;
+
+      Response.XmlRetorno := StringReplace(Response.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
 
       Document.LoadFromXml(Response.XmlRetorno);
 
@@ -438,6 +442,8 @@ begin
         AErro.Descricao := Desc201;
         Exit
       end;
+
+      Response.XmlRetorno := StringReplace(Response.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
 
       Document.LoadFromXml(Response.XmlRetorno);
 

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/08/2021
+-- ACBrNFSeXProviderBase/IPM.Provider --
+[*] Possível correção na leitura do retorno do provedor IPM.
+   Por: Italo Giurizzato Junior
 -- ISSe.Provider/ISSe.GravarXml --
 [*] Correções para atender o provedor.
    Por: Valter Accellog/ 

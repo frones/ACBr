@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils, ACBrBoletoConversao, 
-  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
+  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage,
+  frxExportBaseDialog;
 
 type
   EACBrBoletoFCFR = class(Exception);
@@ -60,9 +61,11 @@ type
     FModoThread: Boolean;
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
+    FCustomPreview: TfrxCustomPreview;
     function PrepareBoletos: Boolean;
     function PreparaRelatorio: Boolean;
     function GetACBrTitulo: TACBrTitulo;
+    procedure SetCustomPreview(const Value: TfrxCustomPreview);
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -78,6 +81,7 @@ type
     property dmBoleto: TdmACBrBoletoFCFR read FdmBoleto write FdmBoleto;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
+    property CustomPreview: TfrxCustomPreview read FCustomPreview write SetCustomPreview;
   end;
 
   { TdmACbrBoletoFCFR }
@@ -282,6 +286,7 @@ begin
   FIncorporarFontesPdf := False;
   FdmBoleto := TdmACBrBoletoFCFR.Create(Self);
   MensagemPadrao  := TStringList.Create;
+  FCustomPreview := Nil;
 end;
 
 destructor TACBrBoletoFCFR.Destroy;
@@ -308,6 +313,11 @@ begin
     end;
 end;
 
+procedure TACBrBoletoFCFR.SetCustomPreview(const Value: TfrxCustomPreview);
+begin
+  FCustomPreview := Value;
+end;
+
 procedure TACBrBoletoFCFR.Imprimir;
 begin
   inherited Imprimir; // Verifica se a lista de boletos está vazia
@@ -319,6 +329,7 @@ begin
 
       if PreparaRelatorio then
       begin
+        frxReport.Preview := CustomPreview;
         frxReport.PrintOptions.ShowDialog := (MostrarSetup) and (not FModoThread);
         frxReport.PrintOptions.Copies := NumCopias;
         if TituloPreview <> '' then

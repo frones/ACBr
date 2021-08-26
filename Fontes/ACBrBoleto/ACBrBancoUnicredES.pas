@@ -116,7 +116,7 @@ begin
     sTipoSacado := DefineTipoSacado(ACBrTitulo);
 
     {Pegando campo Intruções}
-    sProtesto:= DefineTipoDiasProtesto(ACBrTitulo); //InstrucoesProtesto(ACBrTitulo);
+    sProtesto:= DefineCodigoProtesto(ACBrTitulo); //InstrucoesProtesto(ACBrTitulo);
 
     with ACBrBoleto do
     begin
@@ -379,7 +379,7 @@ begin
     ADataDesconto := DefineDataDesconto(ACBrTitulo);
 
     {Código para Protesto}
-    ACodProtesto := DefineTipoDiasProtesto(ACBrTitulo);
+    ACodProtesto := DefineCodigoProtesto(ACBrTitulo);
 
     {Define Codigo Multa}
     ACodMulta := DefineCodigoMulta(ACBrTitulo);

@@ -2652,8 +2652,6 @@ begin
    fDescricaoMotivoRejeicaoComando.Free;
    fListaDadosNFe.Free;
    fQrCode.Free;
-   ///fRetornoWeb.Free;
-
    inherited;
 end;
 

@@ -38,8 +38,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils, ACBrBoletoConversao, 
-  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage,
-  frxExportBaseDialog;
+  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
 
 type
   EACBrBoletoFCFR = class(Exception);

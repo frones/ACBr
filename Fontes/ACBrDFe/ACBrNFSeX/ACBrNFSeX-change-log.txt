@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/08/2021
+-- SmarAPD.Provider --
+[*] O pedido de cancelamento tem que ser assinado.
+   Por: NetStar
 -- Betha.Provider --
 [*] Possível correção na leitura do retorno do provedor IPM.
    Por: Italo Giurizzato Junior

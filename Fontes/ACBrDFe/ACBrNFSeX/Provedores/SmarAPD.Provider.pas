@@ -156,6 +156,7 @@ begin
   with ConfigAssinar do
   begin
     LoteRps := True;
+    CancelarNFSe := True;
     IncluirURI := False;
   end;
 
@@ -273,6 +274,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Codigo, Descricao: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -297,13 +299,19 @@ begin
     end
     else
     begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
-      AErro.Correcao := '';
+      Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
 
-      if AErro.Descricao = '' then
-        AErro.Descricao := ANodeArray[I].AsString;
+      if (Codigo <> '') and (Descricao <> '') then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Codigo;
+        AErro.Descricao := Descricao;
+        AErro.Correcao := '';
+
+        if AErro.Descricao = '' then
+          AErro.Descricao := ANodeArray[I].AsString;
+      end;
     end;
   end;
 end;

@@ -65,9 +65,12 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
+    procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
+    procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-
-    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+    procedure AssinarCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
   TACBrNFSeXWebserviceBethav2 = class(TACBrNFSeXWebserviceSoap11)
@@ -164,7 +167,6 @@ begin
 
   with ConfigMsgDados do
   begin
-    Prefixo := 'ns3';
     ConsultarNFSeRps.DocElemento := 'ConsultarNfsePorRpsEnvio';
     XmlRps.xmlns := '';
   end;
@@ -205,230 +207,106 @@ begin
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararEmitir(Response: TNFSeEmiteResponse);
-{
 var
-  AErro: TNFSeEventoCollectionItem;
-  Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
-  Versao, IdAttr, NameSpace, NameSpaceLote, ListaRps, xRps,
-  TagEnvio, Prefixo: string;
-  I: Integer;
-}
+  aXml: string;
 begin
-  (*
-  if Response.ModoEnvio in [meLoteSincrono, meUnitario, meTeste] then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod001;
-    AErro.Descricao := Desc001;
-  end;
-
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count <= 0 then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod002;
-    AErro.Descricao := Desc002;
-  end;
-
-  if TACBrNFSeX(FAOwner).NotasFiscais.Count > Response.MaxRps then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
-                       ' excedido. Quantidade atual: ' +
-                       IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
-  end;
-
-  if Response.Erros.Count > 0 then Exit;
-
-  if ConfigAssinar.IncluirURI then
-    IdAttr := ConfigGeral.Identificador
-  else
-    IdAttr := 'ID';
-
-  ListaRps := '';
-  Prefixo := '';
-
-  case Response.ModoEnvio of
-    meUnitario:
-    begin
-      TagEnvio := ConfigMsgDados.GerarNFSe.DocElemento;
-
-      if EstaVazio(ConfigMsgDados.GerarNFSe.xmlns) then
-        NameSpace := ''
-      else
-      begin
-        if ConfigMsgDados.Prefixo = '' then
-          NameSpace := ' xmlns="' + ConfigMsgDados.GerarNFSe.xmlns + '"'
-        else
-        begin
-          NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' +
-                                   ConfigMsgDados.GerarNFSe.xmlns + '"';
-          Prefixo := ConfigMsgDados.Prefixo + ':';
-        end;
-      end;
-    end;
-  else
-    begin
-      TagEnvio := ConfigMsgDados.LoteRps.DocElemento;
-
-      if EstaVazio(ConfigMsgDados.LoteRps.xmlns) then
-        NameSpace := ''
-      else
-      begin
-        if ConfigMsgDados.Prefixo = '' then
-          NameSpace := ' xmlns="' + ConfigMsgDados.LoteRps.xmlns + '"'
-        else
-        begin
-          NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' +
-                                   ConfigMsgDados.LoteRps.xmlns + '"';
-          Prefixo := ConfigMsgDados.Prefixo + ':';
-        end;
-      end;
-    end;
-  end;
-
-  if ConfigMsgDados.XmlRps.xmlns <> '' then
-  begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.LoteRps.xmlns then
-    begin
-      if ConfigMsgDados.PrefixoTS = '' then
-        NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
-      else
-      begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-      end;
-    end
-    else
-    begin
-      if ConfigMsgDados.PrefixoTS <> '' then
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-    end;
-  end;
-
-  for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
-  begin
-    Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
-
-    if EstaVazio(Nota.XMLAssinado) then
-    begin
-      Nota.GerarXML;
-      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
-
-      if ConfigAssinar.Rps then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(ConverteXMLtoUTF8(Nota.XMLOriginal),
-                                                PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
-    end;
-
-    SalvarXmlRps(Nota);
-
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
-    xRps := PrepararRpsParaLote(xRps);
-
-    ListaRps := ListaRps + xRps;
-  end;
-
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
-  if ConfigMsgDados.GerarNSLoteRps then
-    NameSpaceLote := NameSpace
-  else
-    NameSpaceLote := '';
-
-  if ConfigWebServices.AtribVerLote <> '' then
-    Versao := ' ' + ConfigWebServices.AtribVerLote + '="' +
-              ConfigWebServices.VersaoDados + '"'
-  else
-    Versao := '';
-
-  if ConfigGeral.Identificador <> '' then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"'
-  else
-    IdAttr := '';
-
-  ListaRps := ChangeLineBreak(ListaRps, '');
-
-  if Response.ModoEnvio in [meLoteAssincrono] then
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
-                           '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
-                             '<NumeroLote>' + Response.Lote + '</NumeroLote>' +
-                             '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
-                             GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                             '<QuantidadeRps>' +
-                                IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                             '</QuantidadeRps>' +
-                             '<ListaRps>' +
-                               ListaRps +
-                             '</ListaRps>' +
-                           '</LoteRps>' +
-                         '</' + Prefixo + TagEnvio + '>'
-  else
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
-                            ListaRps +
-                         '</' + Prefixo + TagEnvio + '>';
-  *)
-
-
   inherited PrepararEmitir(Response);
 
-  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
-                                      'ns3:LoteRps', 'LoteRps', [rfReplaceAll]);
+  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+   '<EnviarLoteRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
+   '</EnviarLoteRpsEnvio>', False);
+
+  Response.XmlEnvio := '<ns3:EnviarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         aXml +
+                       '</ns3:EnviarLoteRpsEnvio>';
+end;
+
+procedure TACBrNFSeProviderBetha.PrepararConsultaSituacao(
+  Response: TNFSeConsultaSituacaoResponse);
+var
+  aXml: string;
+begin
+  inherited PrepararConsultaSituacao(Response);
+
+  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+   '<ConsultarSituacaoLoteRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
+   '</ConsultarSituacaoLoteRpsEnvio>', False);
+
+  Response.XmlEnvio := '<ns3:ConsultarSituacaoLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         aXml +
+                       '</ns3:ConsultarSituacaoLoteRpsEnvio>';
+end;
+
+procedure TACBrNFSeProviderBetha.PrepararConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse);
+var
+  aXml: string;
+begin
+  inherited PrepararConsultaLoteRps(Response);
+
+  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+   '<ConsultarLoteRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
+   '</ConsultarLoteRpsEnvio>', False);
+
+  Response.XmlEnvio := '<ns3:ConsultarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         aXml +
+                       '</ns3:ConsultarLoteRpsEnvio>';
+end;
+
+procedure TACBrNFSeProviderBetha.PrepararConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  aXml: string;
+begin
+  inherited PrepararConsultaNFSeporRps(Response);
+
+  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+   '<ConsultarNfsePorRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
+   '</ConsultarNfsePorRpsEnvio>', False);
+
+  Response.XmlEnvio := '<ns3:ConsultarNfsePorRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         aXml +
+                       '</ns3:ConsultarNfsePorRpsEnvio>';
+end;
+
+procedure TACBrNFSeProviderBetha.PrepararConsultaNFSe(
+  Response: TNFSeConsultaNFSeResponse);
+var
+  aXml: string;
+begin
+  inherited PrepararConsultaNFSe(Response);
+
+  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+   '<ConsultarNfseEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
+   '</ConsultarNfseEnvio>', False);
+
+  Response.XmlEnvio := '<ns3:ConsultarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         aXml +
+                       '</ns3:ConsultarNfseEnvio>';
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
+var
+  aXml: string;
 begin
   inherited PrepararCancelaNFSe(Response);
 
-  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
-                                        'ns3:Pedido', 'Pedido', [rfReplaceAll]);
+  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+   '<CancelarNfseEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
+   '</CancelarNfseEnvio>', False);
+
+  Response.XmlEnvio := aXml;
 end;
 
-procedure TACBrNFSeProviderBetha.ValidarSchema(
-  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
-var
-  xXml: string;
+procedure TACBrNFSeProviderBetha.AssinarCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
 begin
-  xXml := Response.XmlEnvio;
+  inherited AssinarCancelaNFSe(Response);
 
-  case aMetodo of
-//    tmRecepcionar:
-//      xXml := StringReplace(xXml, 'ns3:LoteRps', 'LoteRps', [rfReplaceAll]);
-
-    tmConsultarSituacao,
-    tmConsultarLote:
-      begin
-        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador', [rfReplaceAll]);
-        xXml := StringReplace(xXml, 'ns3:Protocolo', 'Protocolo', [rfReplaceAll]);
-      end;
-
-    tmConsultarNFSePorRps:
-      begin
-        xXml := StringReplace(xXml, 'ns3:IdentificacaoRps', 'IdentificacaoRps', [rfReplaceAll]);
-        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador', [rfReplaceAll]);
-      end;
-
-    tmConsultarNFSe:
-      begin
-        xXml := StringReplace(xXml, 'ns3:Prestador', 'Prestador', [rfReplaceAll]);
-        xXml := StringReplace(xXml, 'ns3:NumeroNfse', 'NumeroNfse', [rfReplaceAll]);
-      end;
-
-//    tmCancelarNFSe:
-//        xXml := StringReplace(xXml, 'ns3:Pedido', 'Pedido', [rfReplaceAll]);
-  else
-    Response.XmlEnvio := xXml;
-  end;
-
-  Response.XmlEnvio := xXml;
-
-  inherited ValidarSchema(Response, aMetodo);
+  Response.XmlEnvio := '<ns3:CancelarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         Response.XmlEnvio +
+                       '</ns3:CancelarNfseEnvio>';
 end;
 
 { TACBrNFSeProviderBethav2 }

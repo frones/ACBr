@@ -262,7 +262,7 @@ begin
   Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
                                                    NFSe.DataEmissao, DSC_DEMI));
 
-  Result.AppendChild(AddNode(tcStr, '#5', 'NaturezaOperacao', 1, 1, NrOcorrNaturezaOperacao,
+  Result.AppendChild(AddNode(tcStr, '#5', 'NaturezaOperacao', 1, 3, NrOcorrNaturezaOperacao,
                    NaturezaOperacaoToStr(NFSe.NaturezaOperacao), DSC_INDNATOP));
 
   if (NFSe.RegimeEspecialTributacao <> retNenhum) then

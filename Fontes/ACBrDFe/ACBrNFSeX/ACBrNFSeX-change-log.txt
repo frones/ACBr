@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/08/2021
+-- Betha.Provider --
+[*] Possível correção na leitura do retorno do provedor IPM.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Correção no tamanho máximo da tag NaturezaOperacao.
+   Por: Italo Giurizzato Junior
+
 25/08/2021
 -- ACBrNFSeXProviderBase/IPM.Provider --
 [*] Possível correção na leitura do retorno do provedor IPM.

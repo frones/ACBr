@@ -537,7 +537,7 @@ begin
                PadLeft(OnlyNumber(Conta), 12, '0') +              //  60 -  71   Número da conta
                ContaDigito +                                      //  72 -  72   Dígito da conta
                Space(1) +                                         //  73 -  73   Dígito verificador da agência/conta
-               PadLeft(Nome, 30) +                                //  74 - 103   Nome da empresa
+               PadRight(Nome, 30) +                                //  74 - 103   Nome da empresa
                Space(80) +                                        // 104 - 183   Mensagens
                IntToStrZero(NumeroRemessa, 8) +                   // 184 - 191   Número sequencial do arquivo
                FormatDateTime('ddmmyyyy', Now) +                  // 192 - 199   Data de geração do arquivo
@@ -621,6 +621,8 @@ begin
       else
          DiasProt := '1'+ DiasProt;
 
+      if(fpLayoutVersaoArquivo >= 103) and (CodigoNegativacao = cnNaoProtestar) then
+        DiasProt := '300';
       // Se a instrução relativa ao código de baixa estiver vazia
       if (Instrucao2 = '') then
         begin

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 26/08/2021
+-- SmarAPD.GravarXml --
+[*] A tag <tributadonomunicipio> agora passa a ser gerada em função do valor
+    do campo: TipoTributacaoRPS.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider/ACBrNFSeXWebserviceBase --
 [*] Possível correção para o erro: 
     Premature end of data in tag retorno line 1.

@@ -238,13 +238,20 @@ begin
     NFSeNode.AppendChild(AddNode(tcStr, '#2', 'totaldeducoesconstrucao', 1, 15, 1,
                                                                        '', ''));
   end;
-
+  {
   if NFSe.Tomador.Endereco.CodigoMunicipio <> NFSe.Prestador.Endereco.CodigoMunicipio then
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
                                                                    'false', ''))
   else
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
                                                                    'true', ''));
+  }
+  if NFSe.TipoTributacaoRPS = ttTribnoMun then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
+                                                                   'true', ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tributadonomunicipio', 1, 5, 1,
+                                                                   'false', ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#2', 'numerort', 1, 02, 1,
                                              NFSe.IdentificacaoRps.Numero, ''));

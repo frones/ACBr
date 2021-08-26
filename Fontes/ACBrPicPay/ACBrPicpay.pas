@@ -56,11 +56,11 @@ uses
   {$ELSE}
   EncdDecd,
   {$ENDIF}
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonDataObjects_ACBr,
-  {$Else}
+//  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+//    JsonDataObjects_ACBr,
+//  {$Else}
     Jsons,
-  {$EndIf}
+//  {$EndIf}
   httpsend, synautil,
    ACBRBase, ACBRValidador, ACBrUtil, ACBrSocket
    , SyncObjs

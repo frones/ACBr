@@ -33,7 +33,8 @@ requires
   ACBr_DFeComum,
   rtl,
   vcl,
-  designide;
+  designide,
+  ACBr_Diversos;
 
 contains
   ACBrBancoBrasil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas',

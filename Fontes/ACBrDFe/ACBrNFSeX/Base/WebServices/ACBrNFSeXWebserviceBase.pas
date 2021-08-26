@@ -651,7 +651,8 @@ begin
     InternalErrorCode := 0;
 
     try
-      if Assigned(FPDFeOwner.OnTransmit) then  // Envio por Evento... Aplicação cuidará do envio
+      // Envio por Evento... Aplicação cuidará do envio
+      if Assigned(FPDFeOwner.OnTransmit) then
       begin
         FPDFeOwner.OnTransmit( FPEnvio, FPURL, SoapAction,
                                FPMimeType, FPRetorno, HTTPResultCode, InternalErrorCode);
@@ -844,7 +845,6 @@ constructor TACBrNFSeXWebserviceSoap11.Create(AOwner: TACBrDFe; AMetodo: TMetodo
 begin
   inherited Create(AOwner, AMetodo, AURL);
 
-//  FPMimeType := 'text/xml; charset=utf-8';
   FPMimeType := 'text/xml';
 end;
 
@@ -885,7 +885,6 @@ constructor TACBrNFSeXWebserviceSoap12.Create(AOwner: TACBrDFe; AMetodo: TMetodo
 begin
   inherited Create(AOwner, AMetodo, AURL);
 
-//  FPMimeType := 'application/soap+xml; charset=utf-8';
   FPMimeType := 'application/soap+xml';
 end;
 
@@ -927,7 +926,6 @@ constructor TACBrNFSeXWebserviceNoSoap.Create(AOwner: TACBrDFe;
 begin
   inherited Create(AOwner, AMetodo, AURL);
 
-//  FPMimeType := 'application/xml; charset=utf-8';
   FPMimeType := 'application/xml';
 end;
 
@@ -965,11 +963,6 @@ end;
 constructor TACBrNFSeXWebserviceRest.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
   AURL: string);
 begin
-(*
-  inherited Create(AOwner, AMetodo, AURL);
-
-  FPMimeType := 'application/json';
-*)
   inherited Create(AOwner, AMetodo, AURL);
 
   FPBound := '----=_Part_1_' + IntToHex(Random(MaxInt), 8);
@@ -979,33 +972,13 @@ end;
 function TACBrNFSeXWebserviceRest.PrepararEnvio(const Message, SoapAction,
   SoapHeader: string; namespace: array of string): string;
 var
-  NomeArq, UsuarioWeb, SenhaWeb, Texto: String;
+  NomeArq: String;
 begin
-(*
-  UsuarioWeb := Trim(TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSUser);
-
-  if UsuarioWeb = '' then
-    GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
-      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSUser seja informada.'));
-
-  SenhaWeb := Trim(TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSSenha);
-
-  if SenhaWeb = '' then
-    GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
-      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSSenha seja informada.'));
-
-  Texto := StringReplace(Message, '"', '''', [rfReplaceAll]);
-  Texto := StringReplace(Texto, #10, '', [rfReplaceAll]);
-  Texto := StringReplace(Texto, #13, '', [rfReplaceAll]);
-
-  Result := Format('{"xml": "%s", "usuario": "%s", "senha": "%s"}', [Texto, UsuarioWeb, SenhaWeb]);
-*)
   NomeArq := GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
 
   Result := '--' + FPBound + sLineBreak +
             'Content-Type: text/xml; charset=Cp1252; name=' +
             NomeArq + sLineBreak +
-//            AnsiQuotedStr(NomeArq, '"') + sLineBreak +
             'Content-Transfer-Encoding: binary' + sLineBreak +
             'Content-Disposition: form-data; name=' + AnsiQuotedStr(NomeArq, '"') +
             '; filename=' + AnsiQuotedStr(NomeArq, '"') + sLineBreak +

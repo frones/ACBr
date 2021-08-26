@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 26/08/2021
+-- IPM.Provider/ACBrNFSeXWebserviceBase --
+[*] Possível correção para o erro: 
+    Premature end of data in tag retorno line 1.
+    Remoção de código comentado.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider/IPM.GravarXml --
 [*] O pedido de cancelamento tem que ser assinado.
    Por: Sandro Felipe Adad

@@ -82,6 +82,7 @@ type
                                      AListTag: string = '';
                                      AMessageTag: string = 'Erro'); override;
 
+    function AjustarRetorno(const Retorno: string): string;
   end;
 
   // Rps não é assinado
@@ -223,6 +224,20 @@ begin
       Response.Erros.Delete(0);
 end;
 
+function TACBrNFSeProviderIPM.AjustarRetorno(const Retorno: string): string;
+var
+  i: Integer;
+begin
+  i := Pos('<codigo_html>', Retorno);
+
+  if i > 0 then
+    Result := Copy(Retorno, 1, i -1) + '</retorno>'
+  else
+    Result := Retorno;
+
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+end;
+
 function TACBrNFSeProviderIPM.PrepararRpsParaLote(const aXml: string): string;
 begin
   Result := aXml;
@@ -252,7 +267,7 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := StringReplace(Response.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
+      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
 
       Document.LoadFromXml(Response.XmlRetorno);
 
@@ -333,7 +348,7 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := StringReplace(Response.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
+      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
 
       Document.LoadFromXml(Response.XmlRetorno);
 
@@ -441,7 +456,7 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := StringReplace(Response.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
+      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
 
       Document.LoadFromXml(Response.XmlRetorno);
 

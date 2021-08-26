@@ -411,7 +411,8 @@ type
     cobBancoAlfa,
     cobBancoDoBrasilAPI,
     cobBancoDoBrasilWS,
-    cobBancoCresol
+    cobBancoCresol,
+    cobMoneyPlus
     );
 
   TACBrTitulo = class;
@@ -1814,7 +1815,8 @@ Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
-     ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol;
+     ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
+     ACBrBancoBradescoMoneyPlus;
 
 { TACBrBoletoWSFiltroConsulta }
 
@@ -3226,7 +3228,8 @@ begin
      cobBancoPineBradesco   : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
      cobUnicredSC           : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}
      cobBancoAlfa           : fBancoClass := TACBrBancoAlfa.Create(Self);           {025}
-     cobBancoCresol         : fBancoClass := TACBrBancoCresol.Create(Self);           {133}
+     cobBancoCresol         : fBancoClass := TACBrBancoCresol.Create(Self);         {133}
+     cobMoneyPlus           : fBancoClass := TACBrBancoBradescoMoneyPlus.create(Self); {274}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -5027,6 +5030,7 @@ begin
     133: Result := cobBancoCresol;
     136: Result := cobUnicredES;
     237: Result := cobBradesco;
+    274: Result := cobMoneyPlus;
     341: Result := cobItau;
     389: Result := cobBancoMercantil;
     748: Result := cobSicred;

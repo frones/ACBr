@@ -38,7 +38,11 @@ interface
 
 uses
   Classes, SysUtils, ACBrBoleto,ACBrBoletoWS, ACBrBoletoRetorno,
-  Jsons,
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    JsonDataObjects_ACBr,
+  {$Else}
+    Jsons,
+  {$EndIf}
   ACBrUtil, DateUtils, pcnConversao;
 
 type

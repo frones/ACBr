@@ -56,7 +56,12 @@ uses
   {$ELSE}
   EncdDecd,
   {$ENDIF}
-  Jsons, httpsend, synautil,
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    JsonDataObjects_ACBr,
+  {$Else}
+    Jsons,
+  {$EndIf}
+  httpsend, synautil,
    ACBRBase, ACBRValidador, ACBrUtil, ACBrSocket
    , SyncObjs
    //, ACBrPicpayThreadCallback

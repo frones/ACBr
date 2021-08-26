@@ -96,13 +96,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
   end;
-  {
-  TACBrNFSeXWebserviceIPMV110 = class(TACBrNFSeXWebserviceIPM)
-  protected
-    procedure SetHeaders(aHeaderReq: THTTPHeader); override;
 
-  end;
-  }
   TACBrNFSeProviderIPMV110 = class (TACBrNFSeProviderIPM)
   protected
     procedure Configuracao; override;
@@ -223,6 +217,10 @@ begin
     if AErro.Descricao = '' then
       AErro.Descricao := ANodeArray[I].AsString;
   end;
+
+  if Response.Erros.Count > 0 then
+    if Response.Erros[0].Codigo='00001 - Sucesso' then
+      Response.Erros.Delete(0);
 end;
 
 function TACBrNFSeProviderIPM.PrepararRpsParaLote(const aXml: string): string;
@@ -270,7 +268,7 @@ begin
 //        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
         Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
         Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
-//        CodVerif := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
       end;
     except
       on E:Exception do
@@ -351,7 +349,7 @@ begin
 //        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
         Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
         Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
-//        CodVerif := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
       end;
     except
       on E:Exception do
@@ -459,7 +457,7 @@ begin
 //        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
         Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
         Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
-//        CodVerif := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
       end;
     except
       on E:Exception do
@@ -568,11 +566,6 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [''], []);
-  {
-  Result := Executar('', AMSG,
-                     ['enviarReturn', 'ReqEnvioLoteRPS'],
-                     []);
-  }
 end;
 
 function TACBrNFSeXWebserviceIPMV110.TesteEnvio(ACabecalho,
@@ -581,11 +574,6 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [''], []);
-  {
-  Result := Executar('', AMSG,
-                     ['testeEnviarReturn', 'RetornoEnvioLoteRPS'],
-                     []);
-  }
 end;
 
 function TACBrNFSeXWebserviceIPMV110.ConsultarLote(ACabecalho,
@@ -594,11 +582,6 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [''], []);
-  {
-  Result := Executar('', AMSG,
-                     ['consultarLoteReturn', 'RetornoConsultaLote'],
-                     []);
-                     }
 end;
 
 function TACBrNFSeXWebserviceIPMV110.Cancelar(ACabecalho, AMSG: String): string;
@@ -606,11 +589,6 @@ begin
   FPMsgOrig := AMSG;
 
   Result := Executar('', AMSG, [''], []);
-  {
-  Result := Executar('', AMSG,
-                     ['cancelarReturn', 'RetornoCancelamentoNFSe'],
-                     []);
-  }
 end;
 
 { TACBrNFSeProviderIPMV110 }

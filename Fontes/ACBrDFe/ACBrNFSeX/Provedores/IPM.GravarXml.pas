@@ -274,7 +274,7 @@ begin
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
-                                NFSe.Servico.ItemServico[I].ValorIss, DSC_VISS))
+                                NFSe.Servico.ItemServico[I].ValorIr, DSC_VISS))
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then
@@ -466,7 +466,7 @@ begin
                                         NFSe.OutrasInformacoes, DSC_OUTRASINF));
 end;
 
-{ TNFSeW_IPMa }
+{ TNFSeW_IPMV120 }
 
 procedure TNFSeW_IPMV120.Configuracao;
 begin

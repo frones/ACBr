@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/08/2021
+-- IPM.Provider/IPM.GravarXml --
+[*] O pedido de cancelamento tem que ser assinado.
+   Por: Sandro Felipe Adad
 -- SmarAPD.Provider --
 [*] O pedido de cancelamento tem que ser assinado.
    Por: NetStar

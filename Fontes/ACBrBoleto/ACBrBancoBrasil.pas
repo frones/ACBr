@@ -1128,7 +1128,7 @@ begin
        Instrucao1:= '00';
        Instrucao2:= '00';
        AInstrucao:= '0000';
-       aDataDesconto:= '000000';
+       aDataDesconto:= sDiasBaixa;
      end;
 
      with ACBrBoleto do

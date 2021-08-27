@@ -595,8 +595,12 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
       private static String getLibraryName() {
         if ( library.isEmpty() ) {
-          library = Platform.is64Bit() ? "ACBrNFe64" : "ACBrNFe32";
-        }
+			if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrNFe64" : "ACBrNFe32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrnfe64" : "acbrnfe32";
+                    }
+                }
         return library;
       }
 

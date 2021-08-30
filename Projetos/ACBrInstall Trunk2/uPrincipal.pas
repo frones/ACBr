@@ -135,7 +135,7 @@ type
     FListaCheckBox: TList<TCheckBox>;
 
     FUltimoArquivoLog: string;
-
+    procedure AbrirLinkEmNavegadorParaEnderecoDoACBrPro;
     procedure GravarConfiguracoesEmArquivoIni;
     procedure LerConfiguracoesEmArquivoIni;
     function PathArquivoIni: String;
@@ -452,6 +452,12 @@ begin
   ShellExecute(Handle, 'open', PWideChar(FUltimoArquivoLog), '', '', 1);
 end;
 
+procedure TfrmPrincipal.AbrirLinkEmNavegadorParaEnderecoDoACBrPro;
+begin
+  // ir para o endereço do ACBrSAC
+  ShellExecute(Handle, 'open', PWideChar(lblUrlACBrSac1.Caption), '', '', 1);
+end;
+
 procedure TfrmPrincipal.btnDesmarcarTodasClick(Sender: TObject);
 var
   I: Integer;
@@ -579,8 +585,7 @@ end;
 // abrir o endereço do ACBrSAC quando clicar na propaganda
 procedure TfrmPrincipal.imgPropaganda1Click(Sender: TObject);
 begin
-  // ir para o endereço do ACBrSAC
-  ShellExecute(Handle, 'open', PWideChar(lblUrlACBrSac1.Caption), '', '', 1);
+  AbrirLinkEmNavegadorParaEnderecoDoACBrPro;
 end;
 
 // quando clicar em alguma das urls chamar o link mostrado no caption

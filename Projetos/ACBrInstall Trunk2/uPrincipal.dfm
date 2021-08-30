@@ -88,12 +88,12 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Width = 80
       object Label20: TLabel
         Left = 15
-        Top = 321
-        Width = 465
+        Top = 305
+        Width = 514
         Height = 32
         Caption = 
-          'Ajude o projeto ACBr assinando nosso ACBrSAC, para mais informa'#231 +
-          #245'es visite o site:'
+          'Quer suporte profissional do ACBr, cursos e outras vantagens e d' +
+          'e quebra ajudar o projeto? Conhe'#231'a o "ACBr Pro" no link abaixo:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGreen
         Font.Height = -13
@@ -929,12 +929,12 @@ object frmPrincipal: TfrmPrincipal
           2806F00D31A412CA3F017E399E13B16624070000000049454E44AE426082}
       end
       object lblUrlACBrSac1: TLabel
-        Left = 107
-        Top = 355
-        Width = 281
+        Left = 136
+        Top = 356
+        Width = 171
         Height = 14
         Cursor = crHandPoint
-        Caption = 'http://www.projetoacbr.com.br/forum/SAC/sobre/'
+        Caption = 'https://projetoacbr.com.br/pro'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -12
@@ -1002,12 +1002,12 @@ object frmPrincipal: TfrmPrincipal
       object Label7: TLabel
         Left = 15
         Top = 392
-        Width = 518
+        Width = 482
         Height = 32
         Alignment = taCenter
         Caption = 
-          'Este instalador foi desenvolvido gra'#231'as aos investimentos feitos' +
-          ' pelos usu'#225'rios do ACBrSAC.'
+          'Este instalador '#233' mantido gra'#231'as aos usu'#225'rios que assinam o ACBr' +
+          ' PRO.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clMaroon
         Font.Height = -13
@@ -1622,6 +1622,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

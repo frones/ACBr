@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/08/2021
+-- IPM.Provider --
+[*] Ajustes no TratarRetornoCancelaNFSe
+   Por: Sandro Felipe Adad
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Ajustes no TratarRetornoCancelaNFSe.
    Por: Italo Giurizzato Junior

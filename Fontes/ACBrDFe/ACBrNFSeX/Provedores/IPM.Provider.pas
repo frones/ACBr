@@ -194,6 +194,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  aMsg, Codigo: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -206,22 +207,22 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    aMsg := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+    Codigo := Copy(aMsg, 1, 5);
 
-    if AErro.Codigo = '' then
-      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+    {
+     Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
+     tem erros.
+    }
+    if Codigo <> '00001' then
+    begin
+      AErro := Response.Erros.New;
 
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
-    AErro.Correcao := '';
-
-    if AErro.Descricao = '' then
-      AErro.Descricao := ANodeArray[I].AsString;
+      AErro.Codigo := Codigo;
+      AErro.Descricao := Copy(aMsg, 9, Length(aMsg));
+      AErro.Correcao := '';
+    end;
   end;
-
-  if Response.Erros.Count > 0 then
-    if Response.Erros[0].Codigo='00001 - Sucesso' then
-      Response.Erros.Delete(0);
 end;
 
 function TACBrNFSeProviderIPM.AjustarRetorno(const Retorno: string): string;
@@ -284,6 +285,13 @@ begin
         Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
         Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
         Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+
+        //Código da situação da NFS-e (1-Emitida, 2-Cancelada)
+        if (Situacao = '1') or (Situacao = '2') then
+          Situacao := '4'
+        else
+          Situacao := '3';
       end;
     except
       on E:Exception do
@@ -358,13 +366,25 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      with Response do
+      ANode := ANode.Childrens.FindAnyNs('nf');
+
+      if ANode <> nil then
       begin
-        NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero_nfse'), tcInt);
-//        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
-        Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
-        Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
-        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+        with Response do
+        begin
+          NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero_nfse'), tcInt);
+  //        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
+          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
+          Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
+          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+
+          //Código da situação da NFS-e (1-Emitida, 2-Cancelada)
+          if (Situacao = '1') or (Situacao = '2') then
+            Situacao := '4'
+          else
+            Situacao := '3';
+        end;
       end;
     except
       on E:Exception do
@@ -473,6 +493,13 @@ begin
         Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
         Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
         Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+
+        //Código da situação da NFS-e (1-Emitida, 2-Cancelada)
+        if (Situacao = '1') or (Situacao = '2') then
+          Situacao := '4'
+        else
+          Situacao := '3';
       end;
     except
       on E:Exception do

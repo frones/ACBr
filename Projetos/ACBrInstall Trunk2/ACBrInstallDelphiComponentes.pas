@@ -226,7 +226,9 @@ begin
   begin
     //Encontramos um Delphi trial. Precisamos abortar a instalação.
     Inc(FCountErros);
-    FazLog('O ACBrInstall não funciona com a versão Trial do Delphi. Você precisa instalar os pacotes manualmente.');
+    FazLog('O ACBrInstall precisa usar o compilador por linha de comando. Na sua versão está o compilador por linha de comando está desativado.');
+    FazLog('Geralmente isso acontece com versões Trial ou Community Edition do Delphi.');
+    FazLog('Você precisará instalar os pacotes manualmente.');
   end;
 end;
 

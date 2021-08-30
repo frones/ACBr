@@ -457,7 +457,7 @@ begin
                                 NFSe.Servico.ItemServico[i].ValorTotal, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorIssqn', 1, 15, 1,
-                                     NFSe.Servico.ItemServico[i].ValorIss, ''));
+                                     NFSe.Servico.ItemServico[i].ValorISS, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorDesconto', 1, 15, 0,
                                 NFSe.Servico.ItemServico[i].ValorDeducoes, ''));

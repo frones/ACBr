@@ -171,7 +171,8 @@ begin
 
   with NFSe do
   begin
-    Protocolo      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumNf'), tcStr);
+    Numero         := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumNf'), tcStr);
+//    Protocolo      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumNf'), tcStr);
     SeriePrestacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('SerNf'), tcStr);
 
     aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('SitNf'), tcStr);

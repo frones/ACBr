@@ -87,7 +87,7 @@ begin
       ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nValorServico'), tcDe2);
       Descricao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('sDescricao'), tcStr);
       Aliquota := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nAliquota'), tcDe2);
-      ValorIss := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nValorIss'), tcDe2);
+      ValorISS := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nValorIss'), tcDe2);
       ValorTotal := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nValorTotal'), tcDe2);
     end;
 

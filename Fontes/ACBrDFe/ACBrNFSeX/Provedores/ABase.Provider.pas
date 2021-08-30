@@ -159,6 +159,7 @@ begin
     LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
   end;
 
   SetXmlNameSpace('http://nfse.abase.com.br/nfse.xsd');

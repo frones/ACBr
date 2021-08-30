@@ -238,7 +238,7 @@ begin
   AuxNode := ANode;
 
   NFSe.dhRecebimento  := Now;
-  NFSe.Protocolo      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+//  NFSe.Protocolo      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
   NFSe.NumeroLote     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
   NFSe.DataEmissao    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoNFe'), tcDatHor);
   NFSe.DataEmissaoRps := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRPS'), tcDat);

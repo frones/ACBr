@@ -260,7 +260,7 @@ begin
     aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr);
     NaturezaOperacao := StrToNaturezaOperacao(Ok, aValor);
 
-    Protocolo         := CodigoVerificacao;
+//    Protocolo         := CodigoVerificacao;
     OutrasInformacoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
 
     MotivoCancelamento           := '';

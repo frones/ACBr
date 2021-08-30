@@ -140,7 +140,7 @@ begin
                               NFSe.Servico.ItemServico[i].Aliquota, DSC_VPARC));
 
     Result[i].AppendChild(AddNode(tcDe2, '#57', 'nValorIss', 1, 15, 1,
-                              NFSe.Servico.ItemServico[i].ValorIss, DSC_VPARC));
+                              NFSe.Servico.ItemServico[i].ValorISS, DSC_VPARC));
 
     Result[i].AppendChild(AddNode(tcDe2, '#57', 'nValorTotal', 1, 15, 1,
                             NFSe.Servico.ItemServico[i].ValorTotal, DSC_VPARC));

@@ -339,7 +339,7 @@ begin
         ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('ValorServico'), tcDe2);
         Descricao     := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Descricao'), tcStr);
         Aliquota      := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('Aliquota'), tcDe2);
-        ValorIss      := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('ValorIssqn'), tcDe4);
+        ValorISS      := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('ValorIssqn'), tcDe4);
 
         aValorTotal := Quantidade * ValorUnitario;
 

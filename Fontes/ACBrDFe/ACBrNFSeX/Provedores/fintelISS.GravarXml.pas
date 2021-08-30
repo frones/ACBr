@@ -219,7 +219,7 @@ begin
                      NFSe.Servico.ItemServico[i].ValorDeducoes, DSC_VDEDUCISS));
 
   Result[0].AppendChild(AddNode(tcDe2, '#21', 'ValorIss     ', 1, 15, 1,
-                               NFSe.Servico.ItemServico[i].ValorIss, DSC_VISS));
+                               NFSe.Servico.ItemServico[i].ValorISS, DSC_VISS));
 
   Result[0].AppendChild(AddNode(FormatoAliq, '#25', 'Aliquota', 1, 05, 1,
                               NFSe.Servico.ItemServico[i].Aliquota, DSC_VALIQ));

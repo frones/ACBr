@@ -133,12 +133,12 @@ begin
           ValorTotal    := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
           ValorDeducoes := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_deducao'), tcDe2);
           BaseCalculo   := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
-          ValorIss      := BaseCalculo * Aliquota / 100;
+          ValorISS      := BaseCalculo * Aliquota / 100;
 
           Valores.ValorIssRetido := Valores.ValorIssRetido +
               ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
           Valores.BaseCalculo    := Valores.BaseCalculo + BaseCalculo;
-          Valores.ValorIss       := Valores.ValorIss + ValorIss;
+          Valores.ValorIss       := Valores.ValorIss + ValorISS;
         end;
       end;
     end;

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/08/2021
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Ajustes no TratarRetornoCancelaNFSe.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Ajustes na grafia de alguns campos.
+   Por: Italo Giurizzato Junior
+
 26/08/2021
 -- SmarAPD.GravarXml --
 [*] A tag <tributadonomunicipio> agora passa a ser gerada em função do valor

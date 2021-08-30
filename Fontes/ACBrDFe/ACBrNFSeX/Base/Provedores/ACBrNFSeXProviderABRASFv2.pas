@@ -587,7 +587,7 @@ begin
                   Response.Protocolo +
                 '</' + Prefixo + 'Protocolo>';
 
-    if Response.Lote <> '' then
+    if ConfigMsgDados.UsarNumLoteConsLote then
       NumeroLote := '<' + Prefixo + 'NumeroLote>' +
                       Response.Lote +
                     '</' + Prefixo + 'NumeroLote>';
@@ -1900,7 +1900,8 @@ begin
         IdAttr := 'ID';
 
       ANode := ANode.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
-      Ret.Pedido.InfID.ID := ANode.Attributes.Items[IdAttr].Content;
+
+      //      Ret.Pedido.InfID.ID := ANode.Attributes.Items[IdAttr].Content;
       Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
@@ -1910,10 +1911,16 @@ begin
         Numero := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
 
         AuxNode := ANode.Childrens.FindAnyNs('CpfCnpj');
-        Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
-        if Cnpj = '' then
-          Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+        if AuxNode <> nil then
+        begin
+          Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+          if Cnpj = '' then
+            Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+        end
+        else
+          Cnpj := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
         InscricaoMunicipal := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
         CodigoMunicipio := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);

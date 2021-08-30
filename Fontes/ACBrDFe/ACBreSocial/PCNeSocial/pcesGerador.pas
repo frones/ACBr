@@ -1198,6 +1198,9 @@ begin
   Gerador.wCampo(tcStr, '', 'indApuracao', 1, 1, 1, eSIndApuracaoToStr(pEvt.IndApuracao));
   Gerador.wCampo(tcStr, '', 'perApur',     7, 7, 1, pEvt.perApur);
 
+  if  (VersaoDF = veS01_00_00) then
+    Gerador.wCampo(tcStr, '', 'indGuia', 1, 1, 0, pEvt.indGuia);
+
   GerarIdeEvento(pEvt, false);
 
   Gerador.wGrupo('/ideEvento');

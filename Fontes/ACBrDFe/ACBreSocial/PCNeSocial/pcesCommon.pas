@@ -611,9 +611,11 @@ type
   private
     FIndApuracao: tpIndApuracao;
     FPerApur: string;
+    FindGuia: string;
   public
     property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;
     property perApur: string read FPerApur write FPerApur;
+    property indGuia: string read FindGuia write FindGuia;
   end;
 
   TIdeEvento4 = class(TObject)

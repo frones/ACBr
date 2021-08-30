@@ -691,11 +691,12 @@ begin
       cat.localAcidente.pais        := INIRec.ReadString(sSecao, 'pais', EmptyStr);
       cat.localAcidente.codPostal   := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
 
+      sSecao := 'ideLocalAcid';
       if INIRec.ReadString(sSecao, 'nrInsc', '') <> '' then
       begin
          cat.localAcidente.ideLocalAcid.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
          cat.localAcidente.ideLocalAcid.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
-      end;      
+      end;
 
       I := 1;
       while true do

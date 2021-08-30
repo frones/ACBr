@@ -1720,9 +1720,16 @@ begin
     txtValorPix.Caption           := FormatFloatBr(Titulo.ValorDocumento,',R$ 0.00');
 
     if not EstaVazio(Trim(Titulo.QrCode.emv)) then
+    begin
+      imgQRCodePix.Visible := True;
+      lblPaguePix.Visible := True;
       PintarQRCode( Titulo.QrCode.emv, imgQRCodePix.Picture.Bitmap, qrAuto )
+    end
     else
+    begin
       imgQRCodePix.Visible := False;
+      lblPaguePix.Visible := False;
+    end;
 
   end;
 end;

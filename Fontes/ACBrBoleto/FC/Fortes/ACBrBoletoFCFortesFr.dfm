@@ -17,7 +17,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   TextHeight = 13
   object LayoutBoleto: TRLReport
     Left = 984
-    Top = 24
+    Top = 18
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -1602,9 +1602,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object lblSacador2a: TRLLabel
         Left = 3
         Top = 321
-        Width = 47
+        Width = 63
         Height = 14
-        Caption = 'Sacador/'
+        Caption = 'Benefici'#225'rio'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1613,9 +1613,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtEndSacadorAval2: TRLLabel
-        Left = 53
+        Left = 72
         Top = 335
-        Width = 514
+        Width = 495
         Height = 14
         AutoSize = False
         Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
@@ -1709,7 +1709,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 335
         Width = 45
         Height = 14
-        Caption = 'Avalista:'
+        Caption = 'Final:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1718,12 +1718,12 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtNomeSacadorAval2: TRLLabel
-        Left = 53
+        Left = 72
         Top = 321
-        Width = 514
+        Width = 495
         Height = 12
         AutoSize = False
-        Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
+        Caption = 'Benefici'#225'rio Final - Cpf/Cnpj'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2569,12 +2569,12 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtNomeSacadorAval3: TRLLabel
-        Left = 53
+        Left = 72
         Top = 318
-        Width = 514
+        Width = 495
         Height = 14
         AutoSize = False
-        Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
+        Caption = 'Benefici'#225'rio Final - Cpf/Cnpj'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2744,9 +2744,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         DrawKind = dkLine
       end
       object txtEndSacadorAval3: TRLLabel
-        Left = 53
+        Left = 72
         Top = 330
-        Width = 514
+        Width = 495
         Height = 14
         AutoSize = False
         Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
@@ -2760,9 +2760,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object lblSacador3a: TRLLabel
         Left = 3
         Top = 316
-        Width = 47
+        Width = 63
         Height = 14
-        Caption = 'Sacador/'
+        Caption = 'Benefici'#225'rio'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2775,7 +2775,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 330
         Width = 45
         Height = 14
-        Caption = 'Avalista:'
+        Caption = 'Final:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -3829,8 +3829,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 24
-    Top = 16
+    Left = 40
+    Top = 18
     Width = 794
     Height = 1123
     Margins.LeftMargin = 5.000000000000000000
@@ -4370,7 +4370,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 265
         Width = 88
         Height = 14
-        Caption = 'Sacador/Avalista:'
+        Caption = 'Benefici'#225'rio Final:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -5170,8 +5170,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutFaturaDetal: TRLReport
-    Left = 64
-    Top = 40
+    Left = 40
+    Top = 18
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -6274,7 +6274,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 294
         Width = 89
         Height = 14
-        Caption = 'Sacador/Avalista:'
+        Caption = 'Benefici'#225'rio Final:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -7797,8 +7797,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 952
-    Top = 32
+    Left = 956
+    Top = 16
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -9176,7 +9176,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 446
         Width = 88
         Height = 14
-        Caption = 'Pagador/Avalista:'
+        Caption = 'Benefici'#225'rio Final:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -9410,8 +9410,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutTermica: TRLReport
-    Left = 904
-    Top = 592
+    Left = 871
+    Top = 484
     Width = 907
     Height = 302
     Margins.LeftMargin = 2.000000000000000000
@@ -10275,12 +10275,12 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object lTertxtNomeSacado: TRLLabel
-        Left = 221
+        Left = 240
         Top = 224
-        Width = 477
+        Width = 458
         Height = 14
         AutoSize = False
-        Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
+        Caption = 'Benefici'#225'rio Final - Cpf/Cnpj'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -10456,10 +10456,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel333: TRLLabel
         Left = 172
-        Top = 222
-        Width = 47
+        Top = 223
+        Width = 62
         Height = 14
-        Caption = 'Sacador/'
+        Caption = 'Benefici'#225'rio Final:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11

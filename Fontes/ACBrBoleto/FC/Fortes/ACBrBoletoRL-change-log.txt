@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2021
+--ACBrBoletoFCFortesFr--
+[*] Alteração da descrição dos Campos "Sacado Avalista" para "Beneficiário Final"
+https://www.projetoacbr.com.br/forum/topic/63835-altera%C3%A7%C3%A3o-layout-boleto-banco-do-brasil-sacadoavalista-para-benefici%C3%A1rio-final/?tab=comments#comment-416977
+
 11/06/2021
 --ACBrBoletoFCFortesFr--
 [+] Adicionado Layout PadraoBoletoPix em FortesReport

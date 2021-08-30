@@ -382,7 +382,10 @@ begin
     Gerador.wCampo(tcStr, '', 'nivEstagio',   1,  1, 1, eStpNivelEstagioToStr(obj.nivEstagio));
     Gerador.wCampo(tcStr, '', 'areaAtuacao',  1, 50, 0, obj.areaAtuacao);
     Gerador.wCampo(tcStr, '', 'nrApol',       1, 30, 0, obj.nrApol);
-    Gerador.wCampo(tcDe2, '', 'vlrBolsa',     1, 14, 0, obj.vlrBolsa);
+
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcDe2, '', 'vlrBolsa',     1, 14, 0, obj.vlrBolsa);
+
     Gerador.wCampo(tcDat, '', 'dtPrevTerm',  10, 10, 1, obj.dtPrevTerm);
 
     GerarInstEnsino(obj.instEnsino);
@@ -494,7 +497,9 @@ begin
     Gerador.wGrupo('supervisorEstagio');
 
     Gerador.wCampo(tcStr, '', 'cpfSupervisor', 11, 11, 1, obj.cpfSupervisor);
-    Gerador.wCampo(tcStr, '', 'nmSuperv',      1,  70, 1, obj.nmSuperv);
+
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'nmSuperv',      1,  70, 1, obj.nmSuperv);
 
     Gerador.wGrupo('/supervisorEstagio');
   end;

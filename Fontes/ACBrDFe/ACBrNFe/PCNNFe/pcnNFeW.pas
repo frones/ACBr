@@ -2816,12 +2816,9 @@ begin
       begin
         Gerador.wGrupo('card', 'YA04');
         Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(nfe.pag[i].tpIntegra), DSC_TPINTEGRA);
-        if nfe.pag[i].CNPJ <> '' then
-         begin
-           Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, nfe.pag[i].CNPJ, DSC_CNPJ);
-           Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
-           Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, nfe.pag[i].cAut, DSC_CAUT);
-         end;
+        Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, nfe.pag[i].CNPJ, DSC_CNPJ);
+        Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
+        Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, nfe.pag[i].cAut, DSC_CAUT);
         Gerador.wGrupo('/card');
       end;
     if (NFe.infNFe.Versao >= 4) then

@@ -3121,18 +3121,17 @@ begin
 
     xmlNode.AppendChild(AddNode(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(NFe.pag[i].tPag), DSC_TPAG));
     xmlNode.AppendChild(AddNode(tcDe2, 'YA03', 'vPag', 01, 15, 1, NFe.pag[i].vPag, DSC_VPAG));
-    if(NFe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and
-      ((NFe.pag[i].CNPJ <> '') or (NFe.pag[i].tpIntegra <> tiNaoInformado))then
-      begin
-        xmlCardNode := xmlNode.AddChild('card');
-        xmlCardNode.AppendChild(AddNode(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(NFe.pag[i].tpIntegra), DSC_TPINTEGRA));
-        if NFe.pag[i].CNPJ <> '' then
-         begin
-           xmlCardNode.AppendChild(AddNode(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, NFe.pag[i].CNPJ, DSC_CNPJ));
-           xmlCardNode.AppendChild(AddNode(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(NFe.pag[i].tBand), DSC_TBAND));
-           xmlCardNode.AppendChild(AddNode(tcStr, 'YA07', 'cAut ', 01, 20, 0, NFe.pag[i].cAut, DSC_CAUT));
-         end;
-      end;
+
+    if(NFe.pag[i].tPag in [fpCartaoDebito, fpCartaoCredito]) and
+      ((NFe.pag[i].CNPJ <> '') or (NFe.pag[i].tpIntegra <> tiNaoInformado)) then
+    begin
+      xmlCardNode := xmlNode.AddChild('card');
+      xmlCardNode.AppendChild(AddNode(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(NFe.pag[i].tpIntegra), DSC_TPINTEGRA));
+      xmlCardNode.AppendChild(AddNode(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, NFe.pag[i].CNPJ, DSC_CNPJ));
+      xmlCardNode.AppendChild(AddNode(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(NFe.pag[i].tBand), DSC_TBAND));
+      xmlCardNode.AppendChild(AddNode(tcStr, 'YA07', 'cAut ', 01, 20, 0, NFe.pag[i].cAut, DSC_CAUT));
+    end;
+
     if (NFe.infNFe.Versao >= 4) then
       Result[0].AppendChild(xmlNode)
     else

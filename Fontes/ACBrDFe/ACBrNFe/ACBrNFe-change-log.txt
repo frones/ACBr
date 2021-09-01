@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/09/2021
+-- ACBrNFeXmlWriter--
+[*] Aplicado a mesma alteração realizada em pcnNFeW.
+  Por: Italo Giurizzato Junior
 -- pcnNFeW --
 [*] Correção para gerar as tags do grupo "card" independentemente de estar informado o CNPJ da credenciadora.
     https://www.projetoacbr.com.br/forum/topic/63989-nfce-rejei%C3%A7%C3%A3o-c%C3%B3digo-da-bandeira-de-operadora-de-cart%C3%A3o-inexistenste/

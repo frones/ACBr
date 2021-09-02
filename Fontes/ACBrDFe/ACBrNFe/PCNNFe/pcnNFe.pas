@@ -3827,6 +3827,7 @@ constructor TpagCollectionItem.Create;
 begin
   inherited Create;
   FindPag := ipNenhum;
+  FtBand := TpcnBandeiraCartao(-1);
 end;
 
 { TobsContCollectionItem }

@@ -303,20 +303,22 @@ begin
   with ACBrTitulo do
   begin
     if ((DataProtesto > 0) and (DataProtesto > Vencimento)) then
-      begin
-        case TipoDiasProtesto of
-             diCorridos : Result := '34';
-             diUteis    : Result := '35';
-        else
-          Result := '';
-        end;
-      end
+    begin
+      case TipoDiasProtesto of
+        diCorridos : Result := '34';
+        diUteis    : Result := '35';
       else
         Result := '';
-
-      if (PadLeft(trim(Instrucao1),2,'0') = '00') and (Result <> '')  then
+      end;
+    end else
+    begin
+      if ((DataNegativacao > 0) and (DataNegativacao > Vencimento)) then
+        Result := '66'
+      else
+        Result := '';
+    end;
+      if (PadLeft(trim(Instrucao1),2,'0') = '00') and (Result <> '') then
         Instrucao1:= Result;
-
   end;
 end;
 

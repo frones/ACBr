@@ -154,6 +154,26 @@ type
     property vlrCRComlSusp: Double read FvlrCRComlSusp;
   end;
 
+  TRAquisCollectionItem = class(TObject)
+  private
+    FCRAquis: String;
+    FvlrCRAquis: Double;
+  public
+    property CRAquis: String read FCRAquis;
+    property vlrCRAquis: Double read FvlrCRAquis;
+  end;
+    
+  TRAquisCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TRAquisCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRAquisCollectionItem);
+  public
+    function Add: TRAquisCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRAquisCollectionItem;
+
+    property Items[Index: Integer]: TRAquisCollectionItem read GetItem write SetItem;
+  end;
+
   TRRecEspetDesp = class(TObject)
   private
     FvlrReceitaTotal: Double;
@@ -178,12 +198,14 @@ type
     FRPrest: TRPrest;
     FRRecRepAD: TRRecRepADCollection;
     FRComl: TRComlCollection;
+    FRAquis: TRAquisCollection;
     FRCPRB: TRCPRBCollection;
     FRRecEspetDesp: TRRecEspetDesp;
 
     procedure SetRRecRepAD(const Value: TRRecRepADCollection);
     procedure SetRCPRB(const Value: TRCPRBCollection);
     procedure SetRComl(const Value: TRComlCollection);
+    procedure SetRAquis(const Value: TRAquisCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -193,6 +215,7 @@ type
     property RPrest: TRPrest read FRPrest write FRPrest;
     property RRecRepAD: TRRecRepADCollection read FRRecRepAD write SetRRecRepAD;
     property RComl: TRComlCollection read FRComl write SetRComl;
+    property RAquis: TRAquisCollection read FRAquis write SetRAquis;
     property RCPRB: TRCPRBCollection read FRCPRB write SetRCPRB;
     property RRecEspetDesp: TRRecEspetDesp read FRRecEspetDesp write FRRecEspetDesp;
   end;
@@ -455,6 +478,30 @@ begin
   inherited Items[Index] := Value;
 end;
 
+{ TRAquisCollection }
+
+function TRAquisCollection.Add: TRAquisCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TRAquisCollection.GetItem(Index: Integer): TRAquisCollectionItem;
+begin
+  Result := TRAquisCollectionItem(inherited Items[Index]);
+end;
+
+function TRAquisCollection.New: TRAquisCollectionItem;
+begin
+  Result := TRAquisCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TRAquisCollection.SetItem(Index: Integer; Value: TRAquisCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+
 { TInfoTotal }
 
 constructor TInfoTotal.Create;
@@ -463,6 +510,7 @@ begin
   FRPrest        := TRPrest.Create;
   FRRecRepAD     := TRRecRepADCollection.Create;
   FRComl         := TRComlCollection.Create;
+  FRAquis        := TRAquisCollection.Create;
   FRCPRB         := TRCPRBCollection.Create;
   FRRecEspetDesp := TRRecEspetDesp.Create;
 end;
@@ -473,6 +521,7 @@ begin
   FRPrest.Free;
   FRRecRepAD.Free;
   FRComl.Free;
+  FRAquis.Free;
   FRCPRB.Free;
   FRRecEspetDesp.Free;
 
@@ -482,6 +531,11 @@ end;
 procedure TInfoTotal.SetRComl(const Value: TRComlCollection);
 begin
   FRComl := Value;
+end;
+
+procedure TInfoTotal.SetRAquis(const Value: TRAquisCollection);
+begin
+  FRAquis := Value;
 end;
 
 procedure TInfoTotal.SetRCPRB(const Value: TRCPRBCollection);
@@ -763,6 +817,16 @@ begin
                   end;
 
                   j := 0;
+                  while Leitor.rExtrai(6, 'RAquis', '', j + 1) <> '' do
+                  begin
+                    RAquis.New;
+                    RAquis.Items[j].FCRAquis      := leitor.rCampo(tcDe2, 'CRAquis');
+                    RAquis.Items[j].FvlrCRAquis   := leitor.rCampo(tcDe2, 'vlrCRAquis');
+
+                    inc(j);
+                  end;
+
+                  j := 0;
                   while Leitor.rExtrai(6, 'RCPRB', '', j + 1) <> '' do
                   begin
                     RCPRB.New;
@@ -910,6 +974,14 @@ begin
             AIni.WriteString(sSecao, 'CRComl',       RComl.Items[i].CRComl);
             AIni.WriteFloat(sSecao, 'vlrCRComl',     RComl.Items[i].vlrCRComl);
             AIni.WriteFloat(sSecao, 'vlrCRComlSusp', RComl.Items[i].vlrCRComlSusp);
+          end;
+
+          for i := 0 to RAquis.Count -1 do
+          begin
+            sSecao := 'RAquis' + IntToStrZero(i, 1);
+
+            AIni.WriteString(sSecao, 'CRAquis',       RAquis.Items[i].CRAquis);
+            AIni.WriteFloat(sSecao, 'vlrCRAquis',     RAquis.Items[i].vlrCRAquis);
           end;
 
           for i := 0 to RCPRB.Count -1 do

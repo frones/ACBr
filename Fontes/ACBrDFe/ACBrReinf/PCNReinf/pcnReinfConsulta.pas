@@ -56,6 +56,7 @@ type
     FtpInscTomador: String;
     FnrInscTomador: String;
     FdtApur: TDateTime;
+    FnrInscAdq: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -71,6 +72,7 @@ type
     property cnpjPrestador: String   read FcnpjPrestador write FcnpjPrestador;
     property nrInscTomador: String   read FnrInscTomador write FnrInscTomador;
     property dtApur: TDateTime       read FdtApur        write FdtApur;
+    property nrInscAdq: String       read FnrInscAdq     write FnrInscAdq;
   end;
 
 implementation
@@ -100,6 +102,7 @@ begin
 
   if Length(nrInscContrib) = 14 then
   begin
+    nrInscAdq := nrInscContrib;
     nrInscContrib := Copy( nrInscContrib, 1, 8 );
     FtpInscContrib := '1';
   end
@@ -123,9 +126,9 @@ begin
   Gerador.Prefixo := '';
 
   Gerador.wGrupo('consultar ' + SoapEnvelope);
- 
+
   Gerador.Prefixo := 'v1:';
- 
+
  // Os 3 campos abaixos atende os Eventos: R-1000, R-1070
 
   Gerador.wCampo(tcStr, 'C02', 'tipoEvento', 04, 04, 1, tpEvento, 'XXX');
@@ -161,6 +164,17 @@ begin
         Gerador.wCampo(tcStr, 'C06', 'perApur    ', 07, 07, 1, perApur, 'XXX');
         // nrInscEstabPrest é do Estabelecimento
         Gerador.wCampo(tcStr, 'C07', 'nrInscEstab', 11, 14, 1, nrInscEstab, 'XXX');
+      end;
+
+    teR2055:
+      begin
+        Gerador.wCampo(tcStr, 'C06', 'perApur    ', 07, 07, 1, perApur, 'XXX');
+        // estabelecimento adquirente
+        Gerador.wCampo(tcInt, 'C07', 'tpInscAdq    ', 01, 01, 1, FtpInscContrib, 'XXX');
+        Gerador.wCampo(tcStr, 'C08', 'nrInscAdq    ', 11, 14, 1, nrInscAdq, 'XXX');
+        //tipo inscrição produtor
+        Gerador.wCampo(tcStr, 'C09', 'tpInscProd   ', 01, 01, 1, FtpInscTomador, 'XXX');
+        Gerador.wCampo(tcStr, 'C10', 'nrInscProd', 11, 14, 1, nrInscEstab, 'XXX');
       end;
 
     teR2060:

@@ -73,6 +73,7 @@ contains
   ACBrNFSeXConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXConfiguracoes.pas',
   ACBrNFSeXNotasFiscais in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXNotasFiscais.pas',
   ACBrNFSeXParametros in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXParametros.pas',
+  ACBrNFSeXWebservices in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXWebservices.pas',
   ACBrNFSeXClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXClass.pas',
   ACBrNFSeXConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXConsts.pas',
   ACBrNFSeXConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Base\ACBrNFSeXConversao.pas',

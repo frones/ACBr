@@ -237,25 +237,18 @@ begin
 
   AuxNode := ANode;
 
-  NFSe.dhRecebimento  := Now;
+  NFSe.dhRecebimento := Now;
+  NFSe.SituacaoNfse := snNormal;
 //  NFSe.Protocolo      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-  NFSe.NumeroLote     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-  NFSe.DataEmissao    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoNFe'), tcDatHor);
+  NFSe.NumeroLote := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+  NFSe.DataEmissao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoNFe'), tcDatHor);
   NFSe.DataEmissaoRps := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRPS'), tcDat);
-  NFSe.Competencia    := NFSe.DataEmissao;
+  NFSe.Competencia := NFSe.DataEmissao;
 
   aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
 
   if aValor = 'C' then
-  begin
-    NFSe.Status    := srCancelado;
-    NFSe.Cancelada := snSim;
-  end
-  else
-  begin
-    NFSe.Status    := srNormal;
-    NFSe.Cancelada := snNao;
-  end;
+    NFSe.SituacaoNfse := snCancelado;
 
   NFSe.TipoTributacaoRPS := StrToTipoTributacaoRPS(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('TributacaoNFe'), tcStr));
 

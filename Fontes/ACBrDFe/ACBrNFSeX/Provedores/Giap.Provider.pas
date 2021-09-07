@@ -208,7 +208,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANodeArray: TACBrXmlNodeArray;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode: TACBrXmlNode;
   i: Integer;
   NumRps: String;
   ANota: NotaFiscal;
@@ -233,7 +233,9 @@ begin
 
       ANode := Document.Root;
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
+      ANode := ANode.Childrens.FindAnyNs('nfeResposta');
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('notaFiscal');
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -245,11 +247,15 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
-        AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoRps');
-        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroRps');
 
-        if AuxNode <> nil then
-          NumRps := ProcessarConteudoXml(AuxNode, tcStr);
+        with Response do
+        begin
+          NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcInt);
+          CodVerificacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+          Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link'), tcStr);
+        end;
+
+        NumRps := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroRps'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -472,7 +478,8 @@ begin
   with TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente do
   begin
     Token := WSChaveAutoriz;
-    Auth := InscMun + '-' + UpperCase(EncodeBase64(Token));
+    Auth := InscMun + '-' + Token;
+//    Auth := InscMun + '-' + UpperCase(EncodeBase64(Token));
   end;
 
   aHeaderReq.AddHeader('Authorization', Auth);
@@ -484,9 +491,7 @@ function TACBrNFSeXWebserviceGiap.Recepcionar(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-                     ['EnviaLoteRpsResposta', 'EnviaLoteRpsResposta'],
-                     []);
+  Result := Executar('', AMSG, [''], []);
 end;
 
 function TACBrNFSeXWebserviceGiap.ConsultarNFSePorRps(ACabecalho,

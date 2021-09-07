@@ -43,6 +43,31 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/09/2021
+-- Diversos --
+[*] Melhorias diversas em diversas units.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Ajustes no tratamento de retorno de diversos métodos.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2/Conam.LerXml/EL.LerXml/
+   Equiplano.LerXml/Giap.LerXml/IPM.LerXml/SigISS.LerXml/SmarAPD.LerXml/
+   SmarAPD.LerXml --
+[*] A propriedade SituacaoNfse recebe o valor snNormal ou snCancelado ao 
+    ler o Xml de uma NFS-e.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXClass --
+[*] Ajustes na classe ItemServico para deixa-la completa.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXNotasFiscais --
+[*] Alteração na função LerArqIni deixando a leitura dos ItemServico completa.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeX/ACBrNFSeXWebservices/ACBrNFSeXInterface/ACBrNFSeXWebservicesResponse/
+   ACBrNFSeXProviderBase --
+[*] Modificação na chamada dos métodos e implementado classes que vão conter
+    o retorno de cada método executado.
+   Por: Italo Giurizzato Junior / Rafael Dias
+
 30/08/2021
 -- IPM.Provider --
 [*] Ajustes no TratarRetornoCancelaNFSe

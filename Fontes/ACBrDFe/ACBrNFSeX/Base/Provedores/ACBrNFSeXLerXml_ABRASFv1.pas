@@ -333,6 +333,8 @@ var
 begin
   AuxNode := ANode.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
 
+  NFSe.SituacaoNfse := snNormal;
+
   if AuxNode <> nil then
   begin
     with NFSe.NfseCancelamento do
@@ -342,7 +344,7 @@ begin
     end;
 
     if NFSe.NfseCancelamento.DataHora > 0 then
-      NFSe.Status := srCancelado;
+      NFSe.SituacaoNfse := snCancelado;
   end;
 end;
 
@@ -660,6 +662,8 @@ begin
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
+
+  NFSe.Clear;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

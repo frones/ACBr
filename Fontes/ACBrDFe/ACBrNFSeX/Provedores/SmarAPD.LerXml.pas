@@ -230,6 +230,7 @@ var
   Ok: Boolean;
 begin
   Result := True;
+  NFSe.SituacaoNfse := snNormal;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -270,14 +271,8 @@ begin
 
     if aValor = 'Cancelada' then
     begin
-      Status    := srCancelado;
-      Cancelada := snSim;
+      NFSe.SituacaoNfse := snCancelado;
       NfseCancelamento.DataHora := DataEmissao;
-    end
-    else
-    begin
-      Status    := srNormal;
-      Cancelada := snNao;
     end;
 
     IdentificacaoRps.Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);

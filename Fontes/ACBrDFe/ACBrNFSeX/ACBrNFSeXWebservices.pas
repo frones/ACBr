@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Rafael Dias                                     }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,40 +32,70 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFSeXInterface;
+unit ACBrNFSeXWebservices;
 
 interface
 
 uses
-  ACBrNFSeXClass, ACBrNFSeXParametros;
+  Classes, SysUtils,
+  ACBrNFSeXWebservicesResponse;
 
 type
-  IACBrNFSeXProvider = interface ['{6A71A59C-9EA1-45BF-BCAB-59BB90B62AAA}']
-    function GerarXml(const ANFSe: TNFSe; var AXml, AAlerts: string): Boolean;
-    function LerXml(const AXML: String; var ANFSe: TNFSe): Boolean;
 
-    procedure GeraLote;
-    procedure Emite;
-    procedure ConsultaSituacao;
-    procedure ConsultaLoteRps;
-    procedure ConsultaNFSeporRps;
-    procedure ConsultaNFSe;
-    procedure CancelaNFSe;
-    procedure SubstituiNFSe;
+  { TWebServices }
+  TWebServices = class
+  private
+    FGerar: TNFSeEmiteResponse;
+    FEmite: TNFSeEmiteResponse;
+    FConsultaSituacao: TNFSeConsultaSituacaoResponse;
+    FConsultaLoteRps: TNFSeConsultaLoteRpsResponse;
+    FConsultaNFSeporRps: TNFSeConsultaNFSeporRpsResponse;
+    FConsultaNFSe: TNFSeConsultaNFSeResponse;
+    FCancelaNFSe: TNFSeCancelaNFSeResponse;
+    FSubstituiNFSe: TNFSeSubstituiNFSeResponse;
 
-    function GetConfigGeral: TConfigGeral;
-    function GetConfigWebServices: TConfigWebServices;
-    function GetConfigMsgDados: TConfigMsgDados;
-    function GetConfigAssinar: TConfigAssinar;
-    function GetConfigSchemas: TConfigSchemas;
+  public
+    constructor Create;
+    destructor Destroy; override;
 
-    property ConfigGeral: TConfigGeral read GetConfigGeral;
-    property ConfigWebServices: TConfigWebServices read GetConfigWebServices;
-    property ConfigMsgDados: TConfigMsgDados read GetConfigMsgDados;
-    property ConfigAssinar: TConfigAssinar read GetConfigAssinar;
-    property ConfigSchemas: TConfigSchemas read GetConfigSchemas;
+    property Gerar: TNFSeEmiteResponse read FGerar;
+    property Emite: TNFSeEmiteResponse read FEmite;
+    property ConsultaSituacao: TNFSeConsultaSituacaoResponse read FConsultaSituacao;
+    property ConsultaLoteRps: TNFSeConsultaLoteRpsResponse read FConsultaLoteRps;
+    property ConsultaNFSeporRps: TNFSeConsultaNFSeporRpsResponse read FConsultaNFSeporRps;
+    property ConsultaNFSe: TNFSeConsultaNFSeResponse read FConsultaNFSe;
+    property CancelaNFSe: TNFSeCancelaNFSeResponse read FCancelaNFSe;
+    property SubstituiNFSe: TNFSeSubstituiNFSeResponse read FSubstituiNFSe;
+
   end;
 
 implementation
+
+{ TWebServices }
+constructor TWebServices.Create;
+begin
+  FGerar := TNFSeEmiteResponse.Create;
+  FEmite := TNFSeEmiteResponse.Create;
+  FConsultaSituacao := TNFSeConsultaSituacaoResponse.Create;
+  FConsultaLoteRps := TNFSeConsultaLoteRpsResponse.Create;
+  FConsultaNFSeporRps := TNFSeConsultaNFSeporRpsResponse.Create;
+  FConsultaNFSe := TNFSeConsultaNFSeResponse.Create;
+  FCancelaNFSe := TNFSeCancelaNFSeResponse.Create;
+  FSubstituiNFSe := TNFSeSubstituiNFSeResponse.Create;
+end;
+
+destructor TWebServices.Destroy;
+begin
+  FGerar.Free;
+  FEmite.Free;
+  FConsultaSituacao.Free;
+  FConsultaLoteRps.Free;
+  FConsultaNFSeporRps.Free;
+  FConsultaNFSe.Free;
+  FCancelaNFSe.Free;
+  FSubstituiNFSe.Free;
+
+  inherited Destroy;
+end;
 
 end.

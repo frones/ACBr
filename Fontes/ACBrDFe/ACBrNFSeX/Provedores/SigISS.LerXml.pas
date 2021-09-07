@@ -245,26 +245,19 @@ begin
 
   with NFSe do
   begin
-    dhRecebimento     := Now;
-    id_sis_legado     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('id_sis_legado'), tcInt);
+    SituacaoNfse := snNormal;
+    dhRecebimento := Now;
+    id_sis_legado := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('id_sis_legado'), tcInt);
     CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
-    Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nota'), tcStr);
-    DataEmissao       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dt_conversao'), tcDat);
-    DataEmissaoRps    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('emissao_rps'), tcDat);
-    Link              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+    Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nota'), tcStr);
+    DataEmissao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dt_conversao'), tcDat);
+    DataEmissaoRps := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('emissao_rps'), tcDat);
+    Link := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
 
     aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('StatusNFe'), tcStr);
 
     if aValor = 'Cancelada' then
-    begin
-      Status    := srCancelado;
-      Cancelada := snSim;
-    end
-    else
-    begin
-      Status    := srNormal;
-      Cancelada := snNao;
-    end;
+      SituacaoNfse := snCancelado;
 
     aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OpcaoSimples'), tcStr);
 

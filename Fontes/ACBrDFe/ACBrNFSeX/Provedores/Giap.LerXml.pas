@@ -94,9 +94,6 @@ begin
         Tipo   := trRPS;
       end;
 
-      Status    := srNormal;
-      Cancelada := snNao;
-
       CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
 
       with Prestador.IdentificacaoPrestador do
@@ -290,6 +287,7 @@ var
   AuxNode: TACBrXmlNode;
 begin
   Result := True;
+  NFSe.SituacaoNfse := snNormal;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 

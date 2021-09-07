@@ -104,7 +104,8 @@ type
                                      AMessageTag: string = ''); override;
 
   public
-    function Emite(const aLote: String; aModoEnvio: TmodoEnvio): TNFSeEmiteResponse; override;
+    procedure Emite; override;
+
   end;
 
   TACBrNFSeXWebserviceELv2 = class(TACBrNFSeXWebserviceSoap11)
@@ -482,14 +483,13 @@ begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 end;
 
-function TACBrNFSeProviderEL.Emite(const aLote: String;
-  aModoEnvio: TmodoEnvio): TNFSeEmiteResponse;
+procedure TACBrNFSeProviderEL.Emite;
 begin
-  AbreSessao(aLote);
+  AbreSessao(EmiteResponse.Lote);
 
-  Result := inherited Emite(aLote, aModoEnvio);
+  inherited Emite;
 
-  FechaSessao(aLote);
+  FechaSessao(EmiteResponse.Lote);
 end;
 
 function TACBrNFSeProviderEL.PrepararRpsParaLote(const aXml: string): string;
@@ -574,7 +574,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'mensagens');
+      ProcessarMensagemErros(Document.Root, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -622,7 +622,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'mensagens');
+      ProcessarMensagemErros(Document.Root, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
     except
@@ -718,7 +718,7 @@ begin
 
       if AuxNode <> nil then
       begin
-        ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+        ProcessarMensagemErros(ANode, Response, 'return', 'mensagens');
 
         Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -792,7 +792,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+      ProcessarMensagemErros(ANode, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -869,7 +869,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+      ProcessarMensagemErros(ANode, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -948,7 +948,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+      ProcessarMensagemErros(ANode, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -1030,7 +1030,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+      ProcessarMensagemErros(ANode, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -1110,7 +1110,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagens');
+      ProcessarMensagemErros(ANode, Response, 'return', 'mensagens');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 

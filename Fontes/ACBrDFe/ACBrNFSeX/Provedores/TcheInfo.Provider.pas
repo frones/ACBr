@@ -100,6 +100,8 @@ begin
 
   with ConfigMsgDados do
   begin
+    GerarPrestadorLoteRps := True;
+
     with TACBrNFSeX(FAOwner).Configuracoes.Geral do
     begin
       if TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then

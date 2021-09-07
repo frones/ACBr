@@ -40,7 +40,8 @@ uses
   Classes, SysUtils,
   ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFSeXDANFSEClass, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
-  ACBrNFSeXClass, ACBrXmlBase, ACBrNFSeXInterface, ACBrNFSeXWebserviceBase,
+  ACBrNFSeXClass, ACBrXmlBase, ACBrNFSeXWebservices,
+  ACBrNFSeXInterface, ACBrNFSeXWebserviceBase,
   ACBrNFSeXWebservicesResponse, ACBrNFSeXProviderManager, ACBrNFSeXConversao;
 
 resourcestring
@@ -60,7 +61,7 @@ type
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
     fpCidadesJaCarregadas: Boolean;
-    FResposta: TNFSeWebserviceResponse;
+    FWebService: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesNFSe;
     procedure SetConfiguracoes(AValue: TConfiguracoesNFSe);
@@ -82,85 +83,85 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFSe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function GerarLote(const aLote: String; aqMaxRps: Integer = 50;
-      aModoEnvio: TmodoEnvio = meAutomatico): TNFSeEmiteResponse; overload;
+    procedure GerarLote(const aLote: String; aqMaxRps: Integer = 50;
+      aModoEnvio: TmodoEnvio = meAutomatico); overload;
 
-    function Emitir(const aLote: String; aModoEnvio: TmodoEnvio = meAutomatico;
-      aImprimir: Boolean = True): TNFSeEmiteResponse;
-
-    // Usado pelos provedores que seguem a versão 1 do layout da ABRASF.
-    function ConsultarSituacao(const AProtocolo: String;
-      const ANumLote: String = ''): TNFSeConsultaSituacaoResponse;
-
-    function ConsultarLoteRps(const AProtocolo: String;
-      const ANumLote: String = ''): TNFSeConsultaLoteRpsResponse;
-
-    function ConsultarNFSePorRps(const ANumRPS, ASerie, ATipo: String;
-      const ACodVerificacao: string = ''): TNFSeConsultaNFSeporRpsResponse;
+    procedure Emitir(const aLote: String; aModoEnvio: TmodoEnvio = meAutomatico;
+      aImprimir: Boolean = True);
 
     // Usado pelos provedores que seguem a versão 1 do layout da ABRASF.
-    function ConsultarNFSePorNumero(const aNumero: string;
-      aRetorno: TtpRetorno = trXML; aPagina: Integer = 1): TNFSeConsultaNFSeResponse;
+    procedure ConsultarSituacao(const AProtocolo: String;
+      const ANumLote: String = '');
+
+    procedure ConsultarLoteRps(const AProtocolo: String;
+      const ANumLote: String = '');
+
+    procedure ConsultarNFSePorRps(const ANumRPS, ASerie, ATipo: String;
+      const ACodVerificacao: string = '');
+
+    // Usado pelos provedores que seguem a versão 1 do layout da ABRASF.
+    procedure ConsultarNFSePorNumero(const aNumero: string;
+      aRetorno: TtpRetorno = trXML; aPagina: Integer = 1);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: string;
-      aPagina: Integer = 1): TNFSeConsultaNFSeResponse;
+    procedure ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: string;
+      aPagina: Integer = 1);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime;
+    procedure ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime;
       aPagina: Integer = 1; aNumeroLote: string = '';
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoPrestadoPorNumero(const aNumero: string;
+    procedure ConsultarNFSeServicoPrestadoPorNumero(const aNumero: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime;
-      aPagina: Integer = 1; aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+    procedure ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial, aDataFinal: TDateTime;
+      aPagina: Integer = 1; aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: string;
+    procedure ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ, aInscMun: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: string;
+    procedure ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ, aInscMun: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoTomadoPorNumero(const aNumero: string;
+    procedure ConsultarNFSeServicoTomadoPorNumero(const aNumero: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime;
-      aPagina: Integer = 1; aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+    procedure ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial, aDataFinal: TDateTime;
+      aPagina: Integer = 1; aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: string;
+    procedure ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ, aInscMun: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: string;
+    procedure ConsultarNFSeServicoTomadoPorTomador(const aCNPJ, aInscMun: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
     // Usado pelos provedores que seguem a versão 2 do layout da ABRASF.
-    function ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: string;
+    procedure ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ, aInscMun: string;
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
-      aTipoPeriodo: TtpPeriodo = tpEmissao): TNFSeConsultaNFSeResponse;
+      aTipoPeriodo: TtpPeriodo = tpEmissao);
 
-    function ConsultarNFSe(aInfConsultaNFSe: TInfConsultaNFSe): TNFSeConsultaNFSeResponse;
+    procedure ConsultarNFSe;
 
-    function CancelarNFSe(aInfCancelamento: TInfCancelamento): TNFSeCancelaNFSeResponse;
+    procedure CancelarNFSe(aInfCancelamento: TInfCancelamento);
 
-    function SubstituirNFSe(const ANumNFSe: String; const ASerieNFSe: String;
+    procedure SubstituirNFSe(const ANumNFSe: String; const ASerieNFSe: String;
       const ACodCancelamento: string; const AMotCancelamento: String = '';
-      const ANumLote: String = ''; const ACodVerificacao: String = ''): TNFSeSubstituiNFSeResponse;
+      const ANumLote: String = ''; const ACodVerificacao: String = '');
 
     function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
       const AChaveAcesso: String = ''): String;
@@ -176,7 +177,7 @@ type
     property Status: TStatusACBrNFSe      read FStatus;
     property Provider: IACBrNFSeXProvider read FProvider;
     property NumID[ANFSe: TNFSe]: string  read GetNumID;
-    property Resposta: TNFSeWebserviceResponse read FResposta;
+    property WebService: TWebServices read FWebService;
 
   published
     property Configuracoes: TConfiguracoesNFSe read GetConfiguracoes write SetConfiguracoes;
@@ -187,7 +188,7 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils,
+  StrUtils, DateUtils, Math,
   ACBrDFeSSL, ACBrNFSeXProviderBase;
 
 {$IFDEF FPC}
@@ -203,7 +204,7 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := TNotasFiscais.Create(Self);
-  FResposta := TNFSeWebserviceResponse.Create;
+  FWebService := TWebservices.Create;
 
   fpCidadesJaCarregadas := False;
 end;
@@ -211,10 +212,8 @@ end;
 destructor TACBrNFSeX.Destroy;
 begin
   FNotasFiscais.Free;
-  FResposta.Free;
-
-  if Assigned(FProvider) then
-    FProvider := nil;
+  FWebService.Free;
+  if Assigned(FProvider) then FProvider := nil;
 
   inherited Destroy;
 end;
@@ -348,37 +347,80 @@ begin
   end;
 end;
 
-function TACBrNFSeX.GerarLote(const aLote: String; aqMaxRps: Integer;
-  aModoEnvio: TmodoEnvio): TNFSeEmiteResponse;
+procedure TACBrNFSeX.GerarLote(const aLote: String; aqMaxRps: Integer; aModoEnvio: TmodoEnvio);
 begin
-  if not Assigned(FProvider) then
-    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+  if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.GeraLote(aLote, aqMaxRps, aModoEnvio);
+  FWebService.Gerar.Clear;
+  FWebService.Gerar.Lote := aLote;
+  FWebService.Gerar.MaxRps := aqMaxRps;
+  FWebService.Gerar.ModoEnvio := aModoEnvio;
+
+  FProvider.GeraLote;
 end;
 
-function TACBrNFSeX.Emitir(const aLote: String; aModoEnvio: TmodoEnvio;
-  aImprimir: Boolean): TNFSeEmiteResponse;
+procedure TACBrNFSeX.Emitir(const aLote: String; aModoEnvio: TmodoEnvio; aImprimir: Boolean);
 var
-  i: Integer;
-  Retorno: TNFSeEmiteResponse;
+  i, qTentativas, Intervalo, Situacao: Integer;
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-//  Result := FProvider.Emite(aLote, aModoEnvio);
-  Retorno := FProvider.Emite(aLote, aModoEnvio);
 
-  FResposta.Clear;
+  FWebService.Emite.Clear;
+  FWebService.Emite.Lote := aLote;
+  FWebService.Emite.ModoEnvio := aModoEnvio;
 
-  FResposta.XmlRetorno := Retorno.XmlRetorno;
-  FResposta.Lote := Retorno.Lote;
-  FResposta.Data := Retorno.Data;
-  FResposta.Protocolo := Retorno.Protocolo;
-  FResposta.Sucesso := Retorno.Sucesso;
-  FResposta.Situacao := Retorno.Situacao;
+  FProvider.Emite;
 
-  Result := Retorno;
+  if Configuracoes.Geral.ConsultaLoteAposEnvio and
+     (FWebService.Emite.ModoEnvio = meLoteAssincrono) then
+  begin
+    if FWebService.Emite.Protocolo <> '' then
+    begin
+      if FProvider.ConfigGeral.ConsultaSitLote then
+      begin
+        with Configuracoes.WebServices do
+        begin
+          FWebService.ConsultaSituacao.Clear;
+          FWebService.ConsultaSituacao.Protocolo := FWebService.Emite.Protocolo;
+
+          Sleep(AguardarConsultaRet);
+
+          qTentativas := 0;
+          Situacao := 0;
+          Intervalo := max(IntervaloTentativas, 1000);
+
+          while (Situacao < 3) and (qTentativas < Tentativas) do
+          begin
+            FProvider.ConsultaSituacao;
+
+            Situacao := StrToIntDef(FWebService.ConsultaSituacao.Situacao, 0);
+            Inc(qTentativas);
+            sleep(Intervalo);
+          end;
+        end;
+      end;
+
+      if FProvider.ConfigGeral.ConsultaLote then
+      begin
+        FWebService.ConsultaLoteRps.Clear;
+
+        if FProvider.ConfigMsgDados.UsarNumLoteConsLote then
+        begin
+          FWebService.ConsultaLoteRps.Protocolo := FWebService.Emite.Protocolo;
+          FWebService.ConsultaLoteRps.Lote := FWebService.Emite.Lote;
+        end
+        else
+        begin
+          FWebService.ConsultaLoteRps.Protocolo := FWebService.Emite.Protocolo;
+          FWebService.ConsultaLoteRps.Lote := '';
+        end;
+
+        FProvider.ConsultaLoteRps;
+      end;
+    end;
+  end;
 
   if DANFSE <> nil then
   begin
@@ -422,370 +464,344 @@ begin
   end;
 end;
 
-function TACBrNFSeX.ConsultarLoteRps(const AProtocolo, ANumLote: String): TNFSeConsultaLoteRpsResponse;
+procedure TACBrNFSeX.ConsultarLoteRps(const AProtocolo, ANumLote: String);
+begin
+  if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.ConsultaLoteRps.Clear;
+  FWebService.ConsultaLoteRps.Protocolo := AProtocolo;
+  FWebService.ConsultaLoteRps.Lote := ANumLote;
+
+  FProvider.ConsultaLoteRps;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSe;
+begin
+  if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FProvider.ConsultaNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: string; aPagina: Integer);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcPorFaixa;
+
+    NumeroIniNFSe := aNumeroInicial;
+    NumeroFinNFSe := aNumeroFinal;
+    Pagina        := aPagina;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSePorNumero(const aNumero: string; aRetorno: TtpRetorno; aPagina: Integer);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    if aRetorno = trXML then
+      tpConsulta := tcPorNumero
+    else
+      tpConsulta := tcPorNumeroURLRetornado;
+
+    NumeroIniNFSe := aNumero;
+    NumeroFinNFSe := aNumero;
+    Pagina        := aPagina;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime;
+  aPagina: Integer; aNumeroLote: string; aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcPorPeriodo;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+    Pagina      := aPagina;
+
+    NumeroLote  := aNumeroLote;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSePorRps(const ANumRPS, ASerie, ATipo,
+  ACodVerificacao: String);
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.ConsultaLoteRps(AProtocolo, ANumLote);
+  FWebService.ConsultaNFSeporRps.Clear;
+  FWebService.ConsultaNFSeporRps.NumRPS := ANumRPS;
+  FWebService.ConsultaNFSeporRps.Serie := ASerie;
+  FWebService.ConsultaNFSeporRps.Tipo := ATipo;
+  FWebService.ConsultaNFSeporRps.CodVerificacao := ACodVerificacao;
+
+  FProvider.ConsultaNFSeporRps;
 end;
 
-function TACBrNFSeX.ConsultarNFSe(aInfConsultaNFSe: TInfConsultaNFSe): TNFSeConsultaNFSeResponse;
+procedure TACBrNFSeX.ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ,
+  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
+  aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoPrestado;
+
+    CNPJInter := aCNPJ;
+    IMInter   := aInscMun;
+    Pagina    := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoPrestadoPorNumero(const aNumero: string;
+  aPagina: Integer; aDataInicial: TDateTime; aDataFinal: TDateTime; aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoPrestado;
+
+    NumeroIniNFSe := aNumero;
+    NumeroFinNFSe := aNumero;
+    Pagina        := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial,
+  aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoPrestado;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+    Pagina      := aPagina;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ,
+  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
+  aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoPrestado;
+
+    CNPJTomador := aCNPJ;
+    IMTomador   := aInscMun;
+    Pagina      := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ,
+  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
+  aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoTomado;
+
+    CNPJInter := aCNPJ;
+    IMInter   := aInscMun;
+    Pagina    := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoTomadoPorNumero(const aNumero: string;
+  aPagina: Integer; aDataInicial, aDataFinal: TDateTime; aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoTomado;
+
+    NumeroIniNFSe := aNumero;
+    NumeroFinNFSe := aNumero;
+    Pagina        := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial,
+  aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoTomado;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+    Pagina      := aPagina;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ,
+  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
+  aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoTomado;
+
+    CNPJPrestador := aCNPJ;
+    IMPrestador   := aInscMun;
+    Pagina        := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeServicoTomadoPorTomador(const aCNPJ,
+  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
+  aTipoPeriodo: TtpPeriodo);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := tcServicoTomado;
+
+    CNPJTomador := aCNPJ;
+    IMTomador   := aInscMun;
+    Pagina      := aPagina;
+
+    DataInicial := aDataInicial;
+    DataFinal   := aDataFinal;
+    tpPeriodo   := aTipoPeriodo;
+  end;
+
+  ConsultarNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarSituacao(const AProtocolo, ANumLote: String);
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.ConsultaNFSe(aInfConsultaNFSe);
+  FWebService.ConsultaSituacao.Clear;
+  FWebService.ConsultaSituacao.Protocolo := AProtocolo;
+  FWebService.ConsultaSituacao.Lote := ANumLote;
+
+  FProvider.ConsultaSituacao;
 end;
 
-function TACBrNFSeX.ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: string;
-  aPagina: Integer): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcPorFaixa;
-
-      NumeroIniNFSe := aNumeroInicial;
-      NumeroFinNFSe := aNumeroFinal;
-      Pagina        := aPagina;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSePorNumero(const aNumero: string;
-  aRetorno: TtpRetorno; aPagina: Integer): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      if aRetorno = trXML then
-        tpConsulta := tcPorNumero
-      else
-        tpConsulta := tcPorNumeroURLRetornado;
-
-      NumeroIniNFSe := aNumero;
-      NumeroFinNFSe := aNumero;
-      Pagina        := aPagina;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSePorPeriodo(aDataInicial, aDataFinal: TDateTime;
-  aPagina: Integer; aNumeroLote: string; aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcPorPeriodo;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-      Pagina      := aPagina;
-
-      NumeroLote  := aNumeroLote;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSePorRps(const ANumRPS, ASerie, ATipo,
-  ACodVerificacao: String): TNFSeConsultaNFSeporRpsResponse;
+procedure TACBrNFSeX.CancelarNFSe(aInfCancelamento: TInfCancelamento);
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.ConsultaNFSeporRps(ANumRPS, ASerie, ATipo,
-    ACodVerificacao);
-end;
+  FWebService.CancelaNFSe.Clear;
 
-function TACBrNFSeX.ConsultarNFSeServicoPrestadoPorIntermediario(const aCNPJ,
-  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
+  with FWebService.CancelaNFSe.InfCancelamento do
+  begin
+    NumeroNFSe := aInfCancelamento.NumeroNFSe;
+    SerieNFSe := aInfCancelamento.SerieNFSe;
+    ChaveNFSe := aInfCancelamento.ChaveNFSe;
+    CodCancelamento := aInfCancelamento.CodCancelamento;
+    MotCancelamento := aInfCancelamento.MotCancelamento;
+    NumeroLote := aInfCancelamento.NumeroLote;
+    NumeroRps := aInfCancelamento.NumeroRps;
+    SerieRps := aInfCancelamento.SerieRps;
+    ValorNFSe := aInfCancelamento.ValorNFSe;
+    CodVerificacao := aInfCancelamento.CodVerificacao;
+  end;
 
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoPrestado;
+  FProvider.CancelaNFSe;
 
-      CNPJInter := aCNPJ;
-      IMInter   := aInscMun;
-      Pagina    := aPagina;
+  if Configuracoes.Geral.ConsultaAposCancelar and
+     FProvider.ConfigGeral.ConsultaNFSe then
+  begin
+//    try
+      FWebService.ConsultaNFSe.Clear;
 
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
+      with FWebService.ConsultaNFSe.InfConsultaNFSe do
+      begin
+        if FProvider.ConfigGeral.ConsultaPorFaixa then
+          tpConsulta := tcPorFaixa
+        else
+          tpConsulta := tcPorNumero;
 
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
+        NumeroIniNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
+        NumeroFinNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
+        Pagina        := 1;
+      end;
+
+      FProvider.ConsultaNFSe;
+//    finally
+//      FWebService.CancelaNFSe.Situacao := FWebService.ConsultaNFSe.Situacao;
+//    end;
   end;
 end;
 
-function TACBrNFSeX.ConsultarNFSeServicoPrestadoPorNumero(const aNumero: string;
-  aPagina: Integer; aDataInicial: TDateTime; aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoPrestado;
-
-      NumeroIniNFSe := aNumero;
-      NumeroFinNFSe := aNumero;
-      Pagina        := aPagina;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoPrestadoPorPeriodo(aDataInicial,
-  aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoPrestado;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-      Pagina      := aPagina;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoPrestadoPorTomador(const aCNPJ,
-  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoPrestado;
-
-      CNPJTomador := aCNPJ;
-      IMTomador   := aInscMun;
-      Pagina      := aPagina;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoTomadoPorIntermediario(const aCNPJ,
-  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoTomado;
-
-      CNPJInter := aCNPJ;
-      IMInter   := aInscMun;
-      Pagina    := aPagina;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoTomadoPorNumero(const aNumero: string;
-  aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoTomado;
-
-      NumeroIniNFSe := aNumero;
-      NumeroFinNFSe := aNumero;
-      Pagina        := aPagina;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoTomadoPorPeriodo(aDataInicial,
-  aDataFinal: TDateTime; aPagina: Integer; aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoTomado;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-      Pagina      := aPagina;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoTomadoPorPrestador(const aCNPJ,
-  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoTomado;
-
-      CNPJPrestador := aCNPJ;
-      IMPrestador   := aInscMun;
-      Pagina        := aPagina;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarNFSeServicoTomadoPorTomador(const aCNPJ,
-  aInscMun: string; aPagina: Integer; aDataInicial, aDataFinal: TDateTime;
-  aTipoPeriodo: TtpPeriodo): TNFSeConsultaNFSeResponse;
-var
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      tpConsulta := tcServicoTomado;
-
-      CNPJTomador := aCNPJ;
-      IMTomador   := aInscMun;
-      Pagina      := aPagina;
-
-      DataInicial := aDataInicial;
-      DataFinal   := aDataFinal;
-      tpPeriodo   := aTipoPeriodo;
-    end;
-
-    Result := ConsultarNFSe(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-end;
-
-function TACBrNFSeX.ConsultarSituacao(const AProtocolo,
-  ANumLote: String): TNFSeConsultaSituacaoResponse;
-begin
-  if not Assigned(FProvider) then
-    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
-
-  Result := FProvider.ConsultaSituacao(AProtocolo, ANumLote);
-end;
-
-function TACBrNFSeX.CancelarNFSe(aInfCancelamento: TInfCancelamento): TNFSeCancelaNFSeResponse;
-begin
-  if not Assigned(FProvider) then
-    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
-
-  Result := FProvider.CancelaNFSe(aInfCancelamento);
-end;
-
-function TACBrNFSeX.SubstituirNFSe(const ANumNFSe, ASerieNFSe, ACodCancelamento: String;
-  const AMotCancelamento, ANumLote, ACodVerificacao: String): TNFSeSubstituiNFSeResponse;
+procedure TACBrNFSeX.SubstituirNFSe(const ANumNFSe, ASerieNFSe, ACodCancelamento: String;
+  const AMotCancelamento, ANumLote, ACodVerificacao: String);
 begin
   if ANumNFSe = '' then
     GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
@@ -799,8 +815,18 @@ begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.SubstituiNFSe(ANumNFSe, ASerieNFSe, ACodCancelamento,
-                                    AMotCancelamento, ANumLote, ACodVerificacao);
+  FWebService.SubstituiNFSe.Clear;
+  with FWebService.SubstituiNFSe.InfCancelamento do
+  begin
+    NumeroNFSe := aNumNFSe;
+    SerieNFSe := aSerieNFSe;
+    CodCancelamento := aCodCancelamento;
+    MotCancelamento := aMotCancelamento;
+    NumeroLote := aNumLote;
+    CodVerificacao := aCodVerificacao;
+  end;
+
+  FProvider.SubstituiNFSe;
 end;
 
 function TACBrNFSeX.LinkNFSe(ANumNFSe: String; const ACodVerificacao,

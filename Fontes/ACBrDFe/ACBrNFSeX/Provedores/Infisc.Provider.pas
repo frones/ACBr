@@ -429,24 +429,34 @@ end;
 procedure TACBrNFSeProviderInfiscv100.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   Versao: string;
+  xConsulta: string;
 begin
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
+  if (Response.InfConsultaNFSe.NumeroIniNFSe <> '') and
+     (Response.InfConsultaNFSe.NumeroFinNFSe <> '') then
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod105;
-    AErro.Descricao := Desc105;
-    Exit;
-  end;
+    xConsulta := '<notaInicial>' +
+                   Response.InfConsultaNFSe.NumeroIniNFSe +
+                 '</notaInicial>' +
+                 '<notaFinal>' +
+                   Response.InfConsultaNFSe.NumeroFinNFSe +
+                 '</notaFinal>';
 
-  if EstaVazio(Response.InfConsultaNFSe.NumeroFinNFSe) then
+    if Response.InfConsultaNFSe.SerieNFSe <> '' then
+      xConsulta := xConsulta + '<serieNotaFiscal>' +
+                                 Response.InfConsultaNFSe.SerieNFSe +
+                               '</serieNotaFiscal>';
+
+  end
+  else
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod106;
-    AErro.Descricao := Desc106;
-    Exit;
+    xConsulta := '<emissaoInicial>' +
+                   FormatDateTime('YYYY-MM-DD', Response.InfConsultaNFSe.DataInicial) +
+                 '</emissaoInicial>' +
+                 '<emissaoFinal>' +
+                   FormatDateTime('YYYY-MM-DD', Response.InfConsultaNFSe.DataFinal) +
+                 '</emissaoFinal>';
   end;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
@@ -460,12 +470,7 @@ begin
                          '<CNPJ>' +
                             OnlyNumber(Emitente.CNPJ) +
                          '</CNPJ>' +
-                         '<notaInicial>' +
-                            Response.InfConsultaNFSe.NumeroIniNFSe +
-                         '</notaInicial>' +
-                         '<notaFinal>' +
-                            Response.InfConsultaNFSe.NumeroFinNFSe +
-                         '</notaFinal>' +
+                         xConsulta +
                        '</pedidoLoteNFSe>';
 end;
 
@@ -684,6 +689,10 @@ begin
   with ConfigAssinar do
   begin
     LoteRps := True;
+    ConsultarSituacao := True;
+    ConsultarNFSe := True;
+    CancelarNFSe := True;
+
     IncluirURI := False;
   end;
 

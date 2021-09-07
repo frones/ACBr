@@ -453,26 +453,26 @@ begin
         DescontoIncondicionado := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vDesc'), tcDe2);
 
         Aliquota    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('pISS'), tcDe2);
-        ValorIss    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vISS'), tcDe2);
+        ValorISS    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vISS'), tcDe2);
         BaseCalculo := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vBCISS'), tcDe2);
 
-        ValorIr  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetIRF'), tcDe2);
-        ValorPis := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-PIS-PASEP'), tcDe2);
+        ValorIRRF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetIRF'), tcDe2);
+        ValorPIS := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-PIS-PASEP'), tcDe2);
 
-        if ValorPis = 0 then
-          ValorPis := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetPISPASEP'), tcDe2);
+        if ValorPIS = 0 then
+          ValorPIS := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetPISPASEP'), tcDe2);
 
-        ValorCofins := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-COFINS'), tcDe2);
+        ValorCOFINS := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-COFINS'), tcDe2);
 
-        if ValorCofins = 0 then
-          ValorCofins := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetCOFINS'), tcDe2);
+        if ValorCOFINS = 0 then
+          ValorCOFINS := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetCOFINS'), tcDe2);
 
-        ValorCsll := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-CSLL'), tcDe2);
+        ValorCSLL := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetLei10833-CSLL'), tcDe2);
 
-        if ValorCsll = 0 then
-          ValorCsll := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2);
+        if ValorCSLL = 0 then
+          ValorCSLL := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2);
 
-        ValorInss := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetINSS'), tcDe2);
+        ValorINSS := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vRetINSS'), tcDe2);
 
         // versão 1.1
         CodLCServ := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cLCServ'), tcStr);
@@ -482,8 +482,8 @@ begin
 
         if AuxNodeItem <> nil then
         begin
-          AliquotaISSST := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('pISSST'), tcDe2);
-          ValorISSST    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vISSST'), tcDe2);
+          AliqISSST := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('pISSST'), tcDe2);
+          ValorISSST := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vISSST'), tcDe2);
         end;
       end;
 

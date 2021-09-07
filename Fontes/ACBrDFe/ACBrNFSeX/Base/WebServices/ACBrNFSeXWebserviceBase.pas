@@ -208,7 +208,8 @@ type
    FtpConsulta: TtpConsulta;
    FtpPeriodo: TtpPeriodo;
    FTipo: String;
-   FCodTribMun: String;
+   FCadEconomico: String;
+   FSerieNFSe: String;
 
  public
    constructor Create;
@@ -231,7 +232,8 @@ type
    property tpConsulta: TtpConsulta read FtpConsulta    write FtpConsulta;
    property tpPeriodo: TtpPeriodo   read FtpPeriodo     write FtpPeriodo;
    property Tipo: String            read FTipo          write FTipo;
-   property CodTribMun: String      read FCodTribMun    write FCodTribMun;
+   property CadEconomico: String    read FCadEconomico  write FCadEconomico;
+   property SerieNFSe: String       read FSerieNFSe     write FSerieNFSe;
  end;
 
   TInfCancelamento = class
@@ -548,6 +550,7 @@ var
   xRetorno: string;
 begin
   xRetorno := TratarXmlRetorno(ARetorno);
+//  xRetorno := TiraAcentos(xRetorno);
 
   if xRetorno = '' then
   begin
@@ -686,6 +689,9 @@ begin
               FPRetorno := RemoverDeclaracaoXML(FPRetorno);
               FPRetorno := TranslateString(FPRetorno, 0, 28591);
             end;
+
+            if Pos('<?xml version="1.0" ?>', FPRetorno) > 0 then
+              FPRetorno := RemoverDeclaracaoXML(FPRetorno);
 
             // Alguns provedores não retornam o XML em UTF-8
             FPRetorno := ConverteXMLtoUTF8(FPRetorno);
@@ -1055,7 +1061,8 @@ begin
   CNPJInter     := '';
   IMInter       := '';
   RazaoInter    := '';
-  CodTribMun    := '';
+  CadEconomico  := '';
+  SerieNFSe     := '';
   Pagina        := 1;
   Tipo          := '';
 end;
@@ -1093,7 +1100,8 @@ begin
     IMInter       := INIRec.ReadString(sSecao, 'IMInter', '');
     RazaoInter    := INIRec.ReadString(sSecao, 'RazaoInter', '');
     Tipo          := INIRec.ReadString(sSecao, 'Tipo', '');
-    CodTribMun    := INIRec.ReadString(sSecao, 'CodTribMun', '');
+    CadEconomico  := INIRec.ReadString(sSecao, 'CadEconomico', '');
+    SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
 
     Pagina        := INIRec.ReadInteger(sSecao, 'Pagina', 1);
 

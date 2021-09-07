@@ -83,6 +83,7 @@ begin
     Rps := True;
     LoteRps := True;
     CancelarNFSe := True;
+    RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
   end;
 

@@ -360,6 +360,8 @@ var
 begin
   AuxNode := ANode.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
 
+  NFSe.SituacaoNfse := snNormal;
+
   if AuxNode <> nil then
   begin
     with NFSe.NfseCancelamento do
@@ -369,7 +371,7 @@ begin
     end;
 
     if NFSe.NfseCancelamento.DataHora > 0 then
-      NFSe.Status := srCancelado;
+      NFSe.SituacaoNfse := snCancelado;
   end;
 end;
 
@@ -425,6 +427,8 @@ begin
     LerEnderecoPrestadorServico(AuxNode, 'EnderecoPrestadorServico');
     LerOrgaoGerador(AuxNode);
     LerDeclaracaoPrestacaoServico(AuxNode);
+
+    NFSe.ChaveAcesso := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ChaveAcesso'), tcStr);
   end;
 end;
 
@@ -570,7 +574,8 @@ begin
   begin
     LerIdentificacaoRps(AuxNode);
 
-    NFSe.DataEmissao := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+    if NFSe.DataEmissao = 0 then
+      NFSe.DataEmissao := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
 
     NFSe.Status := StrToStatusRPS(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 
@@ -756,6 +761,8 @@ begin
 
   if XmlNode = nil then
     raise Exception.Create('Arquivo xml vazio.');
+
+  NFSe.Clear;
 
   if tpXML = txmlNFSe then
     Result := LerXmlNfse(XmlNode)

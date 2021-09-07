@@ -70,7 +70,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
@@ -162,81 +163,31 @@ begin
     raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
-procedure TACBrNFSeProviderGinfes.PrepararCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse);
+procedure TACBrNFSeProviderGinfes.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
-  IdAttr, NameSpace, Prefixo, PrefixoTS: string;
 begin
-  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
-    Exit;
-  end;
-
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-  Prefixo := '';
-  PrefixoTS := '';
-
   InfoCanc := Response.InfCancelamento;
 
-  if ConfigGeral.Identificador <> '' then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Canc_' +
-                      OnlyNumber(Emitente.CNPJ) + OnlyNumber(Emitente.InscMun) +
-                      InfoCanc.NumeroNFSe + '"'
-  else
-    IdAttr := '';
-
-  if EstaVazio(ConfigMsgDados.CancelarNFSe.xmlns) then
-    NameSpace := ''
-  else
+  with Params do
   begin
-    if ConfigMsgDados.Prefixo = '' then
-      NameSpace := ' xmlns="' + ConfigMsgDados.CancelarNFSe.xmlns + '"'
-    else
-    begin
-      NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' + ConfigMsgDados.CancelarNFSe.xmlns + '"';
-      Prefixo := ConfigMsgDados.Prefixo + ':';
-    end;
+    NameSpace := StringReplace(NameSpace, '_v03.xsd', '', [rfReplaceAll]);
+
+    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyNumber(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                           '<' + Prefixo + 'NumeroNfse>' +
+                             InfoCanc.NumeroNFSe +
+                           '</' + Prefixo + 'NumeroNfse>' +
+                         '</' + Prefixo + 'CancelarNfseEnvio>';
   end;
-
-  if ConfigMsgDados.XmlRps.xmlns <> '' then
-  begin
-    if ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns then
-    begin
-      if ConfigMsgDados.PrefixoTS = '' then
-        NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
-      else
-      begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-      end;
-    end
-    else
-    begin
-      if ConfigMsgDados.PrefixoTS <> '' then
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-    end;
-  end;
-
-  NameSpace := StringReplace(NameSpace, '_v03.xsd', '', [rfReplaceAll]);
-
-  Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
-                         '<' + Prefixo + 'Prestador>' +
-                           '<' + PrefixoTS + 'Cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
-                           '</' + PrefixoTS + 'Cnpj>' +
-                           GetInscMunic(Emitente.InscMun, PrefixoTS) +
-                         '</' + Prefixo + 'Prestador>' +
-                         '<' + Prefixo + 'NumeroNfse>' +
-                           InfoCanc.NumeroNFSe +
-                         '</' + Prefixo + 'NumeroNfse>' +
-                       '</' + Prefixo + 'CancelarNfseEnvio>';
 end;
 
 { TACBrNFSeXWebserviceGinfes }
@@ -311,7 +262,8 @@ begin
   Request := Request + '</ns1:ConsultarNfsePorRpsV3>';
 
   Result := Executar('', Request,
-                     ['return', 'ConsultarNfseRpsResposta'],
+                     ['return', 'ConsultarNfseResposta'],
+//                     ['return', 'ConsultarNfseRpsResposta'],
                      []);
 end;
 

@@ -149,6 +149,7 @@ procedure TNFSeR_IPM.LerNota(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   aValor: string;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('nf');
 
@@ -172,18 +173,8 @@ begin
         DataEmissao := StrToDateTimeDef(aValor, 0);
       end;
 
+      SituacaoNfse := StrToStatusNFSe(Ok, ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr));
       aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
-
-      if aValor = 'C' then
-      begin
-        Status := srCancelado;
-        Cancelada := snSim;
-      end
-      else
-      begin
-        Status := srNormal;
-        Cancelada := snNao;
-      end;
 
       OutrasInformacoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('observacao'), tcStr);
 

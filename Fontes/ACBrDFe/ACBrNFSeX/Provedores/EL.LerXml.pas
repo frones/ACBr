@@ -416,6 +416,7 @@ var
   Ok: Boolean;
 begin
   Result := True;
+  NFSe.SituacaoNfse := snNormal;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -435,10 +436,7 @@ begin
     aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
 
     if aValor <> 'A' then
-    begin
-      NFSe.Cancelada := snSim;
-      NFSe.Status    := srCancelado;
-    end;
+      NFSe.SituacaoNfse := snCancelado;
 
     LerIdNota(AuxNode);
   end;

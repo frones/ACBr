@@ -86,7 +86,6 @@ begin
                             ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nrServicoSubItem'), tcStr);
 
         ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlServico'), tcDe2);
-
         Aliquota := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlAliquota'), tcDe2);
 
         AuxNodeDed := ANodes[i].Childrens.FindAnyNs('deducao');
@@ -95,13 +94,11 @@ begin
         begin
           ValorDeducoes := ProcessarConteudo(AuxNodeDed.Childrens.FindAnyNs('vlDeducao'), tcDe2);
 
-          JustificativaDeducao := ProcessarConteudo(AuxNodeDed.Childrens.FindAnyNs('dsJustificativaDeducao'), tcStr);
+          xJustDeducao := ProcessarConteudo(AuxNodeDed.Childrens.FindAnyNs('dsJustificativaDeducao'), tcStr);
         end;
 
         BaseCalculo := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlBaseCalculo'), tcDe2);
-
-        ValorIss := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlIssServico'), tcDe2);
-
+        ValorISS := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlIssServico'), tcDe2);
         Descricao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
       end;
     end;
@@ -171,6 +168,7 @@ var
   aValor: string;
 begin
   Result := True;
+  NFSe.SituacaoNfse := snNormal;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -189,10 +187,8 @@ begin
     if AuxNode <> nil then
     begin
       NFSe.NfseCancelamento.DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
-      NFSe.MotivoCancelamento        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
-
-      NFSe.Status    := srCancelado;
-      NFSe.Cancelada := snSim;
+      NFSe.MotivoCancelamento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
+      NFSe.SituacaoNfse := snCancelado;
     end;
   end;
 
@@ -257,10 +253,8 @@ begin
     if AuxNode <> nil then
     begin
       NFSe.NfseCancelamento.DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
-      NFSe.MotivoCancelamento        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
-
-      NFSe.Status    := srCancelado;
-      NFSe.Cancelada := snSim;
+      NFSe.MotivoCancelamento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
+      NFSe.SituacaoNfse := snCancelado;
     end;
   end;
 

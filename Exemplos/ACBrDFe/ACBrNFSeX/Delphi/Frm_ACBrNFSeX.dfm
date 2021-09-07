@@ -1624,7 +1624,7 @@ object frmACBrNFSe: TfrmACBrNFSe
         ImageIndex = 2
         object btnGerarEnviarLote: TButton
           Left = 10
-          Top = 40
+          Top = 41
           Width = 177
           Height = 25
           Caption = 'Enviar Lote RPS (Ass'#237'ncrono)'
@@ -1923,7 +1923,7 @@ object frmACBrNFSe: TfrmACBrNFSe
       Top = 137
       Width = 567
       Height = 474
-      ActivePage = TabSheet8
+      ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -1978,14 +1978,19 @@ object frmACBrNFSe: TfrmACBrNFSe
       object TabSheet9: TTabSheet
         Caption = 'Documento'
         ImageIndex = 3
-        object trvwDocumento: TTreeView
+        object WBDocumento: TWebBrowser
           Left = 0
           Top = 0
           Width = 559
           Height = 446
           Align = alClient
-          Indent = 19
           TabOrder = 0
+          ControlData = {
+            4C000000C6390000182E00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
       object TabSheet10: TTabSheet

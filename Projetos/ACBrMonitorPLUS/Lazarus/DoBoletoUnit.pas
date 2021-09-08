@@ -238,6 +238,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetOperacaoWS  }
+
+TMetodoSetOperacaoWS  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses ACBrUtil, DoACBrUnit, strutils, typinfo,
@@ -277,6 +284,8 @@ begin
   ListaDeMetodos.Add(CMetodoGerarPDFBoleto);
   ListaDeMetodos.Add(CMetodoEnviarEmailBoleto);
   ListaDeMetodos.Add(CMetodoEnviarBoleto);
+  ListaDeMetodos.Add(CMetodoSetOperacaoWS);
+
 end;
 
 procedure TACBrObjetoBoleto.Executar(ACmd: TACBrCmd);
@@ -317,6 +326,7 @@ begin
     22 : AMetodoClass := TMetodoGerarPDFBoleto;
     23 : AMetodoClass := TMetodoEnviarEmailBoleto;
     24 : AMetodoClass := TMetodoEnviarBoleto;
+    25 : AMetodoClass := TMetodoSetOperacaoWS;
 
     else
       begin
@@ -340,6 +350,31 @@ begin
       Ametodo.Free;
     end;
 
+  end;
+
+end;
+
+{ TMetodoSetOperacaoWS }
+
+{ Params: 0 - CodOperacao Integer - (0- tpInclui, 1- tpAltera, 2- tpBaixa, 3- tpConsulta, 4- tpConsultaDetalhe)
+}
+procedure TMetodoSetOperacaoWS.Executar;
+var
+   ACodOperacao: Integer;
+begin
+  ACodOperacao := StrToIntDef(fpCmd.Params(0), 1);
+
+  try
+    with TACBrObjetoBoleto(fpObjetoDono) do
+    begin
+      ACBrBoleto.Configuracoes.WebService.Operacao:= TOperacao(ACodOperacao);
+      with MonitorConfig.BOLETO.WS.Config.SSL do
+        Operacao:= Integer(ACBrBoleto.Configuracoes.WebService.Operacao);
+      MonitorConfig.SalvarArquivo;
+    end;
+
+  except
+    raise Exception.Create('Código ou Operação Inválido.');
   end;
 
 end;
@@ -370,6 +405,7 @@ begin
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
     ACBrBoleto.ListadeBoletos.Clear;
+
   end;
 
 end;

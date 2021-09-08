@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2021
+--DoACBrBoleto--
+[*] Adicionado método setOperacaoWS para alterar o serviço a ser utilizado no webservice boleto.
+
 19/08/2021
 --DoACBreSocialUnit--
 [*] Ajuste método setVersaoDF, para alteração do layout simplificado.

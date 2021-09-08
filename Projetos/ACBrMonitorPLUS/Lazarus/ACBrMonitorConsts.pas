@@ -577,6 +577,7 @@ const
   CMetodoGerarPDFBoleto =            'gerarpdfboleto';
   CMetodoEnviarEmailBoleto =         'enviaremailboleto';
   CMetodoEnviarBoleto =              'enviarboleto';
+  CMetodoSetOperacaoWS =             'setoperacaows';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';

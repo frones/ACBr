@@ -582,7 +582,7 @@ begin
         end;
       end;
 
-//      Response.Sucesso := (Response.Erros.Count = 0);
+      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
       {
       AuxNode := ANode.Childrens.FindAnyNs('ChavesNFeRPS');
 
@@ -634,9 +634,6 @@ var
   NameSpace, Prefixo, PrefixoTS: string;
 begin
   if EstaVazio(Response.Lote) then
-    Response.Lote := Response.Protocolo;
-
-  if EstaVazio(Response.Protocolo) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
@@ -697,7 +694,7 @@ begin
                            '</CPFCNPJRemetente>' +
                            '<Versao>1</Versao>' +
                            '<NumeroLote>' +
-                             Response.Protocolo +
+                             Response.Lote +
                            '</NumeroLote>' +
                          '</Cabecalho>' +
                        '</' + Prefixo + 'ReqConsultaLote>';
@@ -758,7 +755,7 @@ begin
         end;
       end;
 
-//      Response.Sucesso := (Response.Erros.Count = 0);
+      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
 
       ANode := ANode.Childrens.FindAnyNs('ListaNFSe');
 
@@ -945,7 +942,7 @@ begin
         end;
       end;
       *)
-      Response.Sucesso := (Response.Erros.Count = 0);
+      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
 
       ANode := ANode.Childrens.Find('NotasConsultadas');
 
@@ -1152,7 +1149,7 @@ begin
         end;
       end;
       *)
-      Response.Sucesso := (Response.Erros.Count = 0);
+      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
 
       ANode := ANode.Childrens.Find('Notas');
 
@@ -1359,7 +1356,7 @@ begin
         end;
       end;
 
-      Response.Sucesso := (Response.Erros.Count = 0);
+      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
 
       ANode := ANode.Childrens.Find('NotasCanceladas');
 

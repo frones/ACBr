@@ -343,8 +343,12 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace, xConsulta: string;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.Protocolo) and EstaVazio(Response.Lote) then
   begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod101;
+    AErro.Descricao := Desc101;
+
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
     AErro.Descricao := Desc111;
@@ -437,8 +441,12 @@ var
   Emitente: TEmitenteConfNFSe;
   NameSpace, xConsulta: string;
 begin
-  if EstaVazio(Response.Lote) then
+  if EstaVazio(Response.Protocolo) and EstaVazio(Response.Lote) then
   begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod101;
+    AErro.Descricao := Desc101;
+
     AErro := Response.Erros.New;
     AErro.Codigo := Cod111;
     AErro.Descricao := Desc111;

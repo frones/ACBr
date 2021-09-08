@@ -376,7 +376,7 @@ begin
   if Configuracoes.Geral.ConsultaLoteAposEnvio and
      (FWebService.Emite.ModoEnvio = meLoteAssincrono) then
   begin
-    if FWebService.Emite.Protocolo <> '' then
+    if (FWebService.Emite.Protocolo <> '') or (FWebService.Emite.Lote <> '') then
     begin
       if FProvider.ConfigGeral.ConsultaSitLote then
       begin
@@ -384,6 +384,7 @@ begin
         begin
           FWebService.ConsultaSituacao.Clear;
           FWebService.ConsultaSituacao.Protocolo := FWebService.Emite.Protocolo;
+          FWebService.ConsultaSituacao.Lote := FWebService.Emite.Lote;
 
           Sleep(AguardarConsultaRet);
 

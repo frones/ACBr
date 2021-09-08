@@ -56,6 +56,7 @@ Public Const SESSAO_GNRE                      As String = "GNRe"
 Public Const SESSAO_GUIA                      As String = "Guia"
 Public Const SESSAO_CEP                       As String = "CEP"
 Public Const SESSAO_IBGE                      As String = "IBGE"
+Public Const SESSAO_Sedex                     As String = "Sedex"
 
 Public Enum NivelLog
     logNenhum = 0

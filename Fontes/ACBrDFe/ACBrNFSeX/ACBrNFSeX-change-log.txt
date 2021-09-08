@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/09/2021
+-- Giap.Provider --
+[*] Melhorias no tratamento do retorno do emitir.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Melhorias na preparação da consulta a situação e lote enviado.
    Por: Italo Giurizzato Junior

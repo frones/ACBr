@@ -252,6 +252,7 @@ begin
         begin
           NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcInt);
           CodVerificacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
+          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('statusEmissao'), tcStr);
           Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link'), tcStr);
         end;
 

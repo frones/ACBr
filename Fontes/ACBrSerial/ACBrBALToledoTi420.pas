@@ -46,7 +46,11 @@ unit ACBrBALToledoTi420;
 interface
 
 uses
-  ACBrBALClass, Classes;
+  Classes,
+  ACBrBALClass
+  {$IFDEF NEXTGEN}
+   ,ACBrBase
+  {$ENDIF};
 
 type
 

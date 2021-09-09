@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/09/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Melhorias no ProcessarMensagemErros.
+   Por: Ramon Valentim
+
 08/09/2021
 -- Giap.Provider --
 [*] Melhorias no tratamento do retorno do emitir.

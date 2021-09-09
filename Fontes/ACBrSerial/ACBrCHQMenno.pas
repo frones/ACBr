@@ -37,7 +37,7 @@ unit ACBrCHQMenno;
 interface
 uses
   Classes,
-  ACBrCHQClass,Dialogs
+  ACBrCHQClass
   {$IFDEF NEXTGEN}
    ,ACBrBase
   {$ENDIF};

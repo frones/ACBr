@@ -99,13 +99,14 @@ type
     procedure Imprimir;
     procedure ImprimirExtratoPDF(AStream : TMemoryStream = nil);
     procedure ImprimirExtratoHTML;
-    property PreparedReport: TfrxReport read GetPreparedReport;
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirExtrato(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe: TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+    property PreparedReport: TfrxReport read GetPreparedReport;
   published
     property ExportStream: TMemoryStream read FExportStream write SetExportStream;
     property FastExtrato: string read FFastExtrato write FFastExtrato;

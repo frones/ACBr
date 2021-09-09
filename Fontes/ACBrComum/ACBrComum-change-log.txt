@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2021
+-- ACBrUtil --
+[*] Depreciação do método "LerTagXML" em prol do "SeparaDados" por o primeiro não
+    suportar tags com atributos ou prefixos, e correção no "SeparaDados" para
+    sempre procurar a tag completa como informado. Também adicionado no "SeparaDados"
+    a funcionalidade de busca case sensitive que existia na "LerTagXML".
+  Por: BigWings
+
 22/06/2021
 -- ACBrBase --
 [*] Corrigido a grafia da palavra "ordenada"

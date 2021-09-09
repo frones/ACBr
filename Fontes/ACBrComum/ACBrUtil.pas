@@ -105,7 +105,7 @@ type
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
 
-function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String;
+function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método SeparaDados()' {$ENDIF};
 function XmlEhUTF8(const AXML: String): Boolean;
 function ConverteXMLtoUTF8(const AXML: String): String;
 function ConverteXMLtoNativeString(const AXML: String): String;
@@ -117,9 +117,9 @@ function InserirDeclaracaoXMLSeNecessario(const AXML: String;
 function Split(const ADelimiter: Char; const AString: string): TSplitResult;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados(const AString: String; const Chave: String; const MantemChave : Boolean = False;
-  const PermitePrefixo: Boolean = True) : String;
+  const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True) : String;
 function SeparaDadosArray(const AArray: Array of String; const AString: String; const MantemChave: Boolean = False;
-  const PermitePrefixo: Boolean = True) : String;
+  const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True) : String;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
 procedure EncontrarInicioFinalTag(const aText, ATag: String;
   var PosIni, PosFim: integer;const PosOffset: integer = 0);
@@ -251,7 +251,7 @@ function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
 function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
 function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
 function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String;
-Function StringToFloat( NumString : String ) : Double ;
+Function StringToFloat(NumString : String): Double;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
 
@@ -1805,7 +1805,7 @@ begin
     NumString := StringReplace(NumString, DS, '', []);
 
   Result := StrToFloat(NumString);
-end;
+end ;
 
 {-----------------------------------------------------------------------------
   Converte um Double para string, SEM o separator decimal, considerando as
@@ -4069,28 +4069,36 @@ begin
 end;
 
 function SeparaDados(const AString: String; const Chave: String; const MantemChave: Boolean = False;
-  const PermitePrefixo: Boolean = True): String;
+  const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True): String;
 var
   PosIni, PosFim: Integer;
   UTexto, UChave: String;
   Prefixo: String;
 begin
   Result := '';
-  UTexto := AnsiUpperCase(AString);
-  UChave := AnsiUpperCase(Chave);
   PosFim := 0;
   Prefixo := '';
 
-  if MantemChave then
+  if AIgnoreCase then
   begin
-    PosIni := Pos('<' + UChave, UTexto);
-    if PosIni > 0 then
-      PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
+    UTexto := AnsiUpperCase(AString);
+    UChave := AnsiUpperCase(Chave);
   end
   else
   begin
-    PosIni := Pos('<' + UChave, UTexto);
-    if PosIni > 0 then
+    UTexto := AString;
+    UChave := Chave;
+  end;
+
+  PosIni := Pos('<' + UChave, UTexto);
+  while (PosIni > 0) and not CharInSet(UTexto[PosIni + Length('<' + UChave)], ['>', ' ']) do
+    PosIni := PosEx('<' + UChave, UTexto, PosIni + 1);
+
+  if PosIni > 0 then
+  begin
+    if MantemChave then
+      PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3
+    else
     begin
       PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
       PosFim := Pos('/' + UChave + '>', UTexto);
@@ -4107,7 +4115,7 @@ begin
         Prefixo := AString[PosIni - 1] + Prefixo;
         PosIni := PosIni - 1;
       end;
-      Result := SeparaDados(AString, Prefixo + ':' + Chave, MantemChave, False);
+      Result := SeparaDados(AString, Prefixo + ':' + Chave, MantemChave, False, AIgnoreCase);
     end
   end
   else
@@ -4116,14 +4124,14 @@ begin
 end;
 
 function SeparaDadosArray(const AArray: array of String; const AString: String; const MantemChave: Boolean = False;
-  const PermitePrefixo: Boolean = True): String;
+  const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True): String;
 var
   I : Integer;
 begin
   Result := '';
  for I:=Low(AArray) to High(AArray) do
  begin
-   Result := Trim(SeparaDados(AString,AArray[I], MantemChave, PermitePrefixo));
+   Result := Trim(SeparaDados(AString,AArray[I], MantemChave, PermitePrefixo, AIgnoreCase));
    if Result <> '' then
       Exit;
  end;
@@ -4245,33 +4253,9 @@ end;
    Retorna o conteudo de uma Tag dentro de um arquivo XML
  ------------------------------------------------------------------------------}
 function LerTagXML(const AXML, ATag: String; IgnoreCase: Boolean): String;
-Var
-  PI, PF : Integer ;
-  UXML, UTAG: String;
 begin
-  Result := '';
-  if IgnoreCase then
-  begin
-    UXML := UpperCase(AXML) ;
-    UTAG := UpperCase(ATag) ;
-  end
-  else
-  begin
-    UXML := AXML ;
-    UTAG := ATag ;
-  end;
-
-  PI := pos('<'+UTAG+'>', UXML ) ;
-  if PI = 0 then exit ;
-
-  PI := PI + Length(UTAG) + 2;
-  PF := PosEx('</'+UTAG+'>', UXML, PI) ;
-  if PF = 0 then
-     PF := Length(AXML);
-
-  Result := copy(AXML, PI, PF-PI)
+  Result := SeparaDados(AXML, ATag, False, True, IgnoreCase);
 end ;
-
 
 {------------------------------------------------------------------------------
    Retorna True se o XML contêm a TAG de encoding em UTF8, no seu início.

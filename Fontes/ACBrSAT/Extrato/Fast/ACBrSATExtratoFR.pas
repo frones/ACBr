@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Juliomar Marchetti                              }
+{ Colaboradores nesse arquivo: Juliomar Marchetti, Victor Hugo Gonzales        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -38,8 +38,10 @@ interface
 
 uses
   Classes, SysUtils, ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass, pcnCFe,
-  pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode;
-
+  pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode,
+  frxExportHTML;
+type
+ TTipoImpressao = (tiNormal,tiResumido,tiCancelado);
 type
   EACBrSATExtratoFR = class(Exception);
 
@@ -69,16 +71,17 @@ type
     frxEntrega: TfrxDBDataset;
     frxReport: TfrxReport;
     frxPDFExport: TfrxPDFExport;
+    frxHTMLExport: TfrxHTMLExport;
+
     frxBarCodeObject: TfrxBarCodeObject;
     FFastExtrato: string;
-    FFastExtratoResumido: string;
-    FFastExtratoCancelamento: string;
-    function PrepareReport(ACFe: TCFe): Boolean;
+    FTipoImpressao : TTipoImpressao;
+    FExportStream: TMemoryStream;
+    function PrepareReport(ACFe: TCFe; ACFeCanc:TCFeCanc = nil): Boolean;
     function GetPreparedReport: TfrxReport;
     procedure CriarDataSetsFrx;
     procedure SetDataSetsToFrxReport;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
-
     procedure LimpaDados;
     procedure CarregaDados;
     procedure CarregaIdentificacao;
@@ -90,20 +93,22 @@ type
     procedure CarregaCalculoImposto;
     procedure CarregaFormaPagamento;
     procedure AjustaMargensReports;
+    procedure TipoImpressao(AValue:TTipoImpressao);
+    procedure SetExportStream(const Value: TMemoryStream);
   protected
     procedure Imprimir;
+    procedure ImprimirExtratoPDF(AStream : TMemoryStream = nil);
+    procedure ImprimirExtratoHTML;
+    property PreparedReport: TfrxReport read GetPreparedReport;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-
     procedure ImprimirExtrato(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe: TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   published
-    property PreparedReport: TfrxReport read GetPreparedReport;
+    property ExportStream: TMemoryStream read FExportStream write SetExportStream;
     property FastExtrato: string read FFastExtrato write FFastExtrato;
-    property FastExtratoResumido: string read FFastExtratoResumido write FFastExtratoResumido;
-    property FastExtratoCancelamento: string read FFastExtratoCancelamento write FFastExtratoCancelamento;
   end ;
 
 implementation
@@ -115,7 +120,8 @@ uses
 
 procedure TACBrSATExtratoFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
-  qrCode: string;
+  qrCode,qrCodeCanc: string;
+  bandaHeader, bandaProduto,bandaDadosPagamentoHeader : TfrxComponent;
 begin
   if Assigned(FCFe) then
   begin
@@ -128,6 +134,37 @@ begin
 
     if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
       PintarQRCode(qrCode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
+
+    case FTipoImpressao of
+      tiResumido : begin
+        bandaHeader  := frxReport.FindObject('GroupHeader1');
+        bandaProduto := frxReport.FindObject('DadosProdutos');
+        bandaDadosPagamentoHeader := frxReport.FindObject('DadosPagamentoHeader');
+
+        if assigned(bandaHeader) then
+          bandaHeader.Visible := False;
+        if assigned(bandaProduto) then
+          bandaProduto.Visible := False;
+        if assigned(bandaDadosPagamentoHeader) then
+          bandaDadosPagamentoHeader.Visible := False;
+      end;
+      tiCancelado : begin
+        if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCodeCupom') then
+          PintarQRCode(qrCode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
+        with FCFeCanc do
+        begin
+          qrCodeCanc := CalcularConteudoQRCode(infCFe.ID,
+                                           ide.dEmi+ide.hEmi,
+                                           Total.vCFe,
+                                           Trim(Dest.CNPJCPF),
+                                           ide.assinaturaQRCODE);
+        end;
+        if Assigned(Sender) and (Trim(qrCodeCanc) <> '') and (Sender.Name = 'ImgQrCodeCancelado') then
+          PintarQRCode(qrCodeCanc, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
+      end;
+    end;
+
+
   end;
 end;
 
@@ -143,6 +180,16 @@ begin
   frxReport.EnabledDataSets.Add(frxCalculoImposto);
   frxReport.EnabledDataSets.Add(frxFormaPagamento);
   frxReport.EnabledDataSets.Add(frxEntrega);
+end;
+
+procedure TACBrSATExtratoFR.SetExportStream(const Value: TMemoryStream);
+begin
+  FExportStream := Value;
+end;
+
+procedure TACBrSATExtratoFR.TipoImpressao(AValue: TTipoImpressao);
+begin
+  FTipoImpressao := AValue;
 end;
 
 procedure TACBrSATExtratoFR.CarregaDados;
@@ -182,7 +229,7 @@ begin
     FieldByName('Imagem').AsString := Ifthen(Self.Logo <> '', Self.Logo,'');
     FieldByName('Sistema').AsString := Ifthen(Self.Sistema <> '',Self.Sistema,'Projeto ACBr - https://www.projetoacbr.com.br');
     FieldByName('Usuario').AsString := Ifthen(Self.Usuario <> '', Self.Usuario,'');
-
+    FieldByName('MsgAppQRCode').AsString := Ifthen(Self.MsgAppQRCode <> '', Self.MsgAppQRCode,'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)');
     Post;
   end;
 end;
@@ -199,14 +246,15 @@ begin
   cdsEntrega.EmptyDataSet;
 end;
 
-function TACBrSATExtratoFR.PrepareReport(ACFe: TCFe): Boolean;
+function TACBrSATExtratoFR.PrepareReport(ACFe: TCFe; ACFeCanc:TCFeCanc = nil): Boolean;
 var
   Stream: TStringStream;
 begin
   Result := False;
+
   SetDataSetsToFrxReport;
 
-  if Trim(FastExtrato) <> '' then
+  if NaoEstaVazio(Trim(FastExtrato)) then
   begin
     if not (UpperCase(Copy(FastExtrato, Length(FastExtrato)-3, 4)) = '.FR3') then
     begin
@@ -217,16 +265,14 @@ begin
       finally
         Stream.Free;
       end;
-    end
-    else
+    end else
     begin
       if FileExists(FastExtrato) then
         frxReport.LoadFromFile(FastExtrato)
       else
         raise EACBrSATExtratoFR.CreateFmt('Caminho do arquivo de impressão do Extrato SAT "%s" inválido.', [FastExtrato]);
     end;
-  end
-  else
+  end else
     raise EACBrSATExtratoFR.Create('Caminho do arquivo de impressão do Extrato SAT não assinalado.');
 
   frxReport.PrintOptions.Copies      := NumCopias;
@@ -238,36 +284,36 @@ begin
   if NaoEstaVazio(frxReport.PrintOptions.Printer) then
     frxReport.PrintOptions.Printer := Impressora;
 
+  frxReport.Variables['isCancelado'] := Ord(FTipoImpressao = tiCancelado);
+
   if Assigned(ACFe) then
   begin
     FCFe := ACFe;
     SetDataSetsToFrxReport;
     Result := frxReport.PrepareReport;
-  end
-  else
+  end else
   begin
     if Assigned(ACBrSAT) then
     begin
       FCFe := TACBrSAT(ACBrSAT).CFe;
+      if Assigned(TACBrSAT(ACBrSAT).CFeCanc) then
+        FCFeCanc := TACBrSAT(ACBrSAT).CFeCanc;
       CarregaDados;
 
       Result := frxReport.PrepareReport(False);
-    end
-    else
-      raise EACBrSATExtratoFR.Create('Propriedade ACBrSAT não assinalada.');
+    end;
   end;
 
-  AjustaMargensReports;
+  if Assigned(ACFe) then
+    AjustaMargensReports;
 end;
 
 
 constructor TACBrSATExtratoFR.Create(AOwner: TComponent);
 begin
    inherited create(AOwner);
-   FFastExtrato             := '';
-   FFastExtratoResumido     := '';
-   FFastExtratoCancelamento := '';
-
+   FFastExtrato   := '';
+   FExportStream  := Nil;
    CriarDataSetsFrx;
 end;
 
@@ -278,26 +324,94 @@ end;
 
 procedure TACBrSATExtratoFR.Imprimir;
 begin
-
+  case Filtro of
+    fiNenhum:
+      Begin
+        if MostraPreview then
+          frxReport.ShowPreparedReport
+        else
+          frxReport.Print;
+      end;
+    fiPDF : ImprimirExtratoPDF(FExportStream);
+    fiHTML: ImprimirExtratoHTML;
+  end;
+  TipoImpressao(tiNormal);
 end;
 
 procedure TACBrSATExtratoFR.ImprimirExtrato(ACFe: TCFe);
 begin
   inherited;
-  Imprimir;
+  if PrepareReport(ACFe) then
+    Imprimir;
 end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoCancelamento(ACFe: TCFe;
   ACFeCanc: TCFeCanc);
 begin
   inherited;
-  Imprimir;
+  TipoImpressao(tiCancelado);
+  if PrepareReport(ACFe,ACFeCanc) then
+    Imprimir;
+end;
+
+procedure TACBrSATExtratoFR.ImprimirExtratoHTML;
+begin
+  if EstaVazio(Trim(NomeDocumento)) then
+    frxHTMLExport.FileName := 'Extrato SAT'
+  else
+    frxHTMLExport.FileName := NomeDocumento;
+  frxHTMLExport.FileName     := PathPDF + frxHTMLExport.FileName + '.html';
+  frxHTMLExport.ShowDialog   := false;
+  frxHTMLExport.ShowProgress := MostraStatus;
+  frxReport.Export(frxHTMLExport);
+  FPArquivoPDF := frxHTMLExport.FileName;
+end;
+
+procedure TACBrSATExtratoFR.ImprimirExtratoPDF(AStream : TMemoryStream = nil);
+begin
+  if AStream <> nil then
+  begin
+    frxPDFExport.Stream := AStream;
+    AStream.Position    := 0;
+    AStream.Clear;
+  end;
+  frxPDFExport.ShowDialog        := false;
+  frxPDFExport.ShowProgress      := MostraStatus;
+  frxPDFExport.Author            := Sistema;
+  frxPDFExport.Creator           := Sistema;
+  frxPDFExport.Producer          := Sistema;
+  frxPDFExport.Title             := 'Extrato SAT';
+  frxPDFExport.Subject           := frxPDFExport.Title;
+  frxPDFExport.Keywords          := frxPDFExport.Title;
+  frxPDFExport.Background        := false;//False diminui 70% do tamanho do pdf
+  frxPDFExport.EmbeddedFonts     := false;
+
+  if EstaVazio(Trim(NomeDocumento)) then
+    frxPDFExport.FileName := frxPDFExport.Title
+  else
+    frxPDFExport.FileName := NomeDocumento;
+
+  frxPDFExport.FileName := PathPDF + frxPDFExport.FileName + '.pdf';
+
+  if frxPDFExport.FileName <> NomeDocumento then
+    NomeDocumento := frxPDFExport.FileName;
+
+  if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+    ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
+  frxReport.Export(frxPDFExport);
+  FPArquivoPDF := frxPDFExport.FileName;
+
 end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoResumido(ACFe: TCFe);
 begin
   inherited;
-  Imprimir;
+  TipoImpressao(tiResumido);
+  if PrepareReport(ACFe) then
+  begin
+    Imprimir;
+  end;
 end;
 
 procedure TACBrSATExtratoFR.CriarDataSetsFrx;
@@ -318,6 +432,10 @@ begin
   frxPDFExport.PrintOptimized := True;
   frxPDFExport.ShowProgress := False;
 
+  frxHTMLExport := TfrxHTMLExport.Create(Self);
+
+
+
   frxBarCodeObject := TfrxBarCodeObject.Create(Self);
 
   cdsIdentificacao := TClientDataSet.Create(Self);
@@ -333,7 +451,10 @@ begin
     Add('nCFe', ftString, 15);
     Add('dhEmi', ftDateTime);
     Add('CPFConsumidor', ftString, 45);
-
+    Add('IdCanc', ftString, 44);
+    Add('ChaveCanc', ftString, 60);
+    Add('nCFeCanc', ftString, 15);
+    Add('dhEmiCanc', ftDateTime);
     CreateDataSet;
   end;
 
@@ -368,6 +489,7 @@ begin
     Add('QrCodeCarregado', ftGraphic, 1000);
     Add('LogoCarregado', ftBlob);
     Add('QtdeItens', ftInteger);
+    Add('MsgAppQRCode',ftString,150);
     CreateDataSet;
   end;
 
@@ -520,14 +642,33 @@ begin
     with FCFe.Ide do
     begin
       if tpAmb = taHomologacao then
-        NumExtrato := '000,000,000'
+        NumExtrato := '000.000.000'
       else
-        NumExtrato := FormatFloat('000,000,000', nCFe);
+        NumExtrato := FormatFloatBr(nCFe,'000,000,000');
 
       FieldByName('nCFe').AsString      := NumExtrato;
       FieldByName('tpAmb').AsInteger    := StrToIntDef(TpAmbToStr(tpAmb), 0);
-      FieldByName('nserieSAT').AsString := FormatFloat('000,000,000', nserieSAT);
+      FieldByName('nserieSAT').AsString := FormatFloatBr(nserieSAT,'000,000,000');
       FieldByName('dhEmi').AsString     := FormatDateTimeBr(dEmi + hEmi, 'DD/MM/YYYY - hh:nn:ss');
+    end;
+    if FCFeCanc <> nil then
+    begin
+      with FCFeCanc.infCFe do
+      begin
+        FieldByName('IdCanc').AsString    := OnlyNumber(Id);
+        FieldByName('ChaveCanc').AsString := FormatarChaveAcesso(Id);
+      end;
+
+      with FCFeCanc.ide do
+      begin
+        if FCFe.Ide.tpAmb = taHomologacao then
+          NumExtrato := '000.000.000'
+        else
+          NumExtrato := FormatFloatBr(nCFe,'000,000,000');
+
+        FieldByName('nCFeCanc').AsString      := NumExtrato;
+        FieldByName('dhEmiCanc').AsString     := FormatDateTimeBr(dEmi + hEmi, 'DD/MM/YYYY - hh:nn:ss');
+      end;
     end;
 
     if FCFe.Dest.CNPJCPF <> '' then
@@ -575,7 +716,7 @@ var
 begin
   with cdsDadosProdutos do
   begin
-    for inItem := 0 to (FCFe.Det.Count - 1) do
+    for inItem := 0 to Pred(FCFe.Det.Count) do
     begin
       Append;
 
@@ -622,7 +763,7 @@ begin
     if (Emit.cRegTrib = RTSimplesNacional) then
       FieldByName('ObsFisco').AsString := Msg_ICMS_123_2006;
 
-    for i := 0 to obsFisco.Count - 1 do
+    for i := 0 to Pred(obsFisco.Count) do
       FieldByName('ObsFisco').AsString := FieldByName('ObsFisco').AsString + obsFisco[i].xCampo + '-' + obsFisco[i].xTexto;
 
     if (InfAdic.infCpl <> '') or (Self.ImprimeMsgOlhoNoImposto and (Total.vCFeLei12741 > 0)) then
@@ -676,7 +817,7 @@ var
 begin
   with cdsFormaPagamento do
   begin
-    for i := 0 to FCFe.Pagto.Count - 1 do
+    for i := 0 to Pred(FCFe.Pagto.Count) do
     begin
       Append;
 
@@ -709,7 +850,7 @@ var
   Page: TfrxReportPage;
   i: Integer;
 begin
-  for i := 0 to (frxReport.PreviewPages.Count - 1) do
+  for i := 0 to Pred(frxReport.PreviewPages.Count) do
   begin
     Page := frxReport.PreviewPages.Page[i];
     if (MargemSuperior > 0) then

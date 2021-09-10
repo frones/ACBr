@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/09/2021
+-- IPM.Provider --
+[*] Implementado uma segunda forma de solicitar o cancelamento de uma nota.
+   Por: Italo Giurizzato Junior
 -- Publica.Provider/Publica.GravarXml --
 [*] Possível ajustes para o provedor.
    Por: Italo Giurizzato Junior

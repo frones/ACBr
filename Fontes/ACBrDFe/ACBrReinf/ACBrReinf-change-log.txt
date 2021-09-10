@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2021
+-- pcnReinfR2055 --
+[*] Remoção de variável definida e não utilizada.
+-- pcnReinfRetEventos --
+[+] Inclusão do campo vlrCRAquisSusp na lista RAquis.
+[-] Corrigido o tipo de campo (tcDe2 para tcStr) do campo CRAquis uma vez que
+    ele é do tipo string.
+   Por: Italo Giurizzato Junior
+
 09/06/2021
 -- pcnReinfR2099 --
 [-] Correção na leitura do arquivo INI do evento 2099

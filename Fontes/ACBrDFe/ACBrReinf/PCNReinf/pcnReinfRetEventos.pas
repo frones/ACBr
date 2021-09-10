@@ -158,9 +158,11 @@ type
   private
     FCRAquis: String;
     FvlrCRAquis: Double;
+    FvlrCRAquisSusp: Double;
   public
     property CRAquis: String read FCRAquis;
     property vlrCRAquis: Double read FvlrCRAquis;
+    property vlrCRAquisSusp: Double read FvlrCRAquisSusp;
   end;
     
   TRAquisCollection = class(TACBrObjectList)
@@ -820,8 +822,9 @@ begin
                   while Leitor.rExtrai(6, 'RAquis', '', j + 1) <> '' do
                   begin
                     RAquis.New;
-                    RAquis.Items[j].FCRAquis      := leitor.rCampo(tcDe2, 'CRAquis');
-                    RAquis.Items[j].FvlrCRAquis   := leitor.rCampo(tcDe2, 'vlrCRAquis');
+                    RAquis.Items[j].FCRAquis        := leitor.rCampo(tcStr, 'CRAquis');
+                    RAquis.Items[j].FvlrCRAquis     := leitor.rCampo(tcDe2, 'vlrCRAquis');
+                    RAquis.Items[j].FvlrCRAquisSusp := leitor.rCampo(tcDe2, 'vlrCRAquisSusp');
 
                     inc(j);
                   end;
@@ -982,6 +985,7 @@ begin
 
             AIni.WriteString(sSecao, 'CRAquis',       RAquis.Items[i].CRAquis);
             AIni.WriteFloat(sSecao, 'vlrCRAquis',     RAquis.Items[i].vlrCRAquis);
+            AIni.WriteFloat(sSecao, 'vlrCRAquisSusp', RAquis.Items[i].vlrCRAquisSusp);
           end;
 
           for i := 0 to RCPRB.Count -1 do

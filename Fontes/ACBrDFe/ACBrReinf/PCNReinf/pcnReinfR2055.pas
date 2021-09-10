@@ -433,7 +433,7 @@ function TevtAqProd.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim, sSecaoF: String;
+  sSecao, sFim: String;
   I, J: Integer;
 begin
   Result := True;

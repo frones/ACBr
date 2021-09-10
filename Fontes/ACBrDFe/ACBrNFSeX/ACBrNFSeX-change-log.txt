@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/09/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível correção no tratamento do retorno da consulta a nfse por rps,
+    visando o provedor Tecnos.
+   Por: Italo Giurizzato Junior
 -- Coplan.GravarXml --
 [*] Alterado o formado do ItemListaServico para sem formatação.
    Por: Italo Giurizzato Junior

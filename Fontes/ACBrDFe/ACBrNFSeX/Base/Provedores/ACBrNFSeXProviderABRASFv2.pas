@@ -827,7 +827,13 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root.Childrens.FindAnyNs('CompNfse');
+      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
+
+      if ANode = nil then
+        ANode := Document.Root.Childrens.FindAnyNs('CompNfse')
+      else
+        ANode := ANode.Childrens.FindAnyNs('CompNfse');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;

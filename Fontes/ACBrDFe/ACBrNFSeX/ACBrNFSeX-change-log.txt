@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/09/2021
+-- Coplan.GravarXml --
+[*] Alterado o formado do ItemListaServico para sem formatação.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Implementado uma segunda forma de solicitar o cancelamento de uma nota.
    Por: Italo Giurizzato Junior

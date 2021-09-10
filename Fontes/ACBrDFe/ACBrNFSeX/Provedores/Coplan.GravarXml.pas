@@ -67,6 +67,7 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+  FormatoItemListaServico := filsSemFormatacao;
 
   NrOcorrInscEstTomador := 0;
 

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2021
+-- ACBrDFeReportFortes --
+[*] https://www.projetoacbr.com.br/forum/topic/63913-gerar-pdf-danfe-fortesreport-via-iis/?tab=comments#comment-417640
+  Por: edv4ld0
+
 09/03/2021
 -- ACBrXmlBase/ACBrXmlDocument/ACBrXmlWriter/ACBrXmlReader --
 [+] Inclusão da Unit ACBrXmlBase para tormar as outras 3 units idenpendentes das

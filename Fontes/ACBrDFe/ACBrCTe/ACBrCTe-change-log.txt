@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2021
+-- ACBrCTeWebServices --
+[*] Possível correção no retorno da consulta quando tem eventos vinculados.
+   Por: Italo Giurizzato Junior
+
 19/08/2021
 -- pcteRetEnvEventoCTe --
 [*] Possível correção na leitura do XML de eventos.

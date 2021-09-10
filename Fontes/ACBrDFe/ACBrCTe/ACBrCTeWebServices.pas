@@ -2280,7 +2280,7 @@ begin
               Atualiza := (NaoEstaVazio(CTeRetorno.XMLprotCTe));
 
               if Atualiza and
-                 TACBrCTe(FPDFeOwner).cStatCancelado(CTeRetorno.CStat) then
+                 TACBrCTe(FPDFeOwner).cStatCancelado(CTeRetorno.protCTe.CStat) then
                 Atualiza := False;
 
               if (CTeRetorno.cUF = 51) and (CTeRetorno.CStat = 101) then
@@ -2295,7 +2295,7 @@ begin
               end;
 
               // Atualiza o Status da CTe interna //
-              CTe.procCTe.cStat := CTeRetorno.cStat;
+              CTe.procCTe.cStat := CTeRetorno.protCTe.cStat;
 
               if Atualiza then
               begin
@@ -2306,8 +2306,8 @@ begin
                 CTe.procCTe.dhRecbto := FDhRecbto;
                 CTe.procCTe.nProt := FProtocolo;
                 CTe.procCTe.digVal := CTeRetorno.protCTe.digVal;
-                CTe.procCTe.cStat := CTeRetorno.cStat;
-                CTe.procCTe.xMotivo := CTeRetorno.xMotivo;
+                CTe.procCTe.cStat := CTeRetorno.protCTe.cStat;
+                CTe.procCTe.xMotivo := CTeRetorno.protCTe.xMotivo;
 
                 AProcCTe := TProcCTe.Create;
                 try

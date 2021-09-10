@@ -71,6 +71,8 @@ procedure TNFSeW_Publica.Configuracao;
 begin
   inherited Configuracao;
 
+  DivAliq100 := True;
+
   NrOcorrCodigoCnae := -1;
   NrOcorrCodTribMun := -1;
 

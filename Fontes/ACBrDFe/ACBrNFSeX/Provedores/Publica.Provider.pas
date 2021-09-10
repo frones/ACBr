@@ -86,7 +86,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:RecepcionarLoteRps>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:RecepcionarLoteRps>';
 
   Result := Executar('', Request,
@@ -101,7 +101,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:GerarNfse>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:GerarNfse>';
 
   Result := Executar('', Request,
@@ -116,7 +116,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:ConsultarLoteRps>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:ConsultarLoteRps>';
 
   Result := Executar('', Request,
@@ -131,7 +131,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:ConsultarSituacaoLoteRps>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:ConsultarSituacaoLoteRps>';
 
   Result := Executar('', Request,
@@ -146,7 +146,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:ConsultarNfsePorRps>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:ConsultarNfsePorRps>';
 
   Result := Executar('', Request,
@@ -161,7 +161,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:ConsultarNfseFaixa>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:ConsultarNfseFaixa>';
 
   Result := Executar('', Request,
@@ -176,7 +176,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ns2:CancelarNfse>';
-  Request := Request + '<XML>' + XmlToStr(AMSG) + '</XML>';
+  Request := Request + '<XML>' + IncluirCDATA(AMSG) + '</XML>';
   Request := Request + '</ns2:CancelarNfse>';
 
   Result := Executar('', Request,
@@ -210,6 +210,7 @@ begin
   SetXmlNameSpace('http://www.publica.inf.br');
 
   ConfigMsgDados.ConsultarNFSe.DocElemento := 'ConsultarNfseFaixaEnvio';
+//  ConfigMsgDados.ConsultarNFSe.InfElemento := 'Prestador';
 
   ConfigWebServices.AtribVerLote := 'versao';
 
@@ -278,6 +279,7 @@ begin
     IdAttr := 'ID';
 
   ListaRps := '';
+
   for I := 0 to TACBrNFSeX(FAOwner).NotasFiscais.Count -1 do
   begin
     Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
@@ -403,7 +405,7 @@ procedure TACBrNFSeProviderPublica.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   Emitente: TEmitenteConfNFSe;
-  XmlConsulta, NameSpace, NumFinal: string;
+  XmlConsulta, NameSpace, NumFinal, IdAttr: string;
   NumNFSeI, NumNFSeF: Integer;
 begin
   NumNFSeI := StrToIntDef(Response.InfConsultaNFSe.NumeroIniNFSe, 0);
@@ -416,7 +418,7 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  if NumNFSeF <> 0 then
+  if (NumNFSeF <> 0) and (NumNFSeF <> NumNFSeI) then
     NumFinal := '<NumeroNfseFinal>' +
                   OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
                 '</NumeroNfseFinal>'
@@ -430,14 +432,21 @@ begin
                    NumFinal +
                  '</Faixa>';
 
+  if ConfigGeral.Identificador <> '' then
+    IdAttr := ' ' + ConfigGeral.Identificador + '="Cons_' +
+              Response.InfConsultaNFSe.NumeroIniNFSe + '"'
+  else
+    IdAttr := '';
+
   if EstaVazio(ConfigMsgDados.ConsultarNFSe.xmlns) then
     NameSpace := ''
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
   Response.XmlEnvio := '<ConsultarNfseFaixaEnvio' + NameSpace + '>' +
-                         '<Prestador>' +
-                           '<CpfCnpj>' + GetCpfCnpj(Emitente.CNPJ) + '</CpfCnpj>' +
+                         '<Prestador' + IdAttr + '>' +
+//                           '<CpfCnpj>' + GetCpfCnpj(Emitente.CNPJ) + '</CpfCnpj>' +
+                           '<Cnpj>' + Emitente.CNPJ + '</Cnpj>' +
                            GetInscMunic(Emitente.InscMun) +
                          '</Prestador>' +
                          XmlConsulta +

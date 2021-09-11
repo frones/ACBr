@@ -5213,7 +5213,10 @@ begin
 
         proBetha,
         proBethav2:
-          CodMunicipio  := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
+          if FNotasFiscais.Count > 0 then
+            CodMunicipio  := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)
+          else
+            CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
 
         proFiorilli:
           CodMunicipio := FNotasFiscais.Items[0].NFSe.Servico.MunicipioIncidencia;

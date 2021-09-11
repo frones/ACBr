@@ -92,7 +92,7 @@ begin
   if RetirarEspacos then
   begin
     while pos('  ', aTexto) > 0 do
-      aTexto := StringReplace(aTexto, '  ', ' ', [rfReplaceAll]);
+      aTexto := FaststringReplace(aTexto, '  ', ' ', [rfReplaceAll]);
   end;
 
   if SubstituirQuebrasLinha then
@@ -169,8 +169,8 @@ end;
 
 function RemoverCDATA(const aXML: string): string;
 begin
-  Result := StringReplace(aXML, '<![CDATA[', '', [rfReplaceAll]);
-  Result := StringReplace(Result, ']]>', '', [rfReplaceAll]);
+  Result := FaststringReplace(aXML, '<![CDATA[', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
 function ConverterUnicode(const aXML: string): string;
@@ -184,9 +184,9 @@ begin
   while p > 0 do
   begin
     if Xml[p+5] = ';' then
-      Xml := StringReplace(Xml, Copy(Xml, p, 6), '\' + Copy(Xml, p+2, 3), [rfReplaceAll])
+      Xml := FaststringReplace(Xml, Copy(Xml, p, 6), '\' + Copy(Xml, p+2, 3), [rfReplaceAll])
     else
-      Xml := StringReplace(Xml, Copy(Xml, p, 5), '\' + Copy(Xml, p+2, 3), [rfReplaceAll]);
+      Xml := FaststringReplace(Xml, Copy(Xml, p, 5), '\' + Copy(Xml, p+2, 3), [rfReplaceAll]);
 
     p := Pos('&#', Xml);
   end;
@@ -200,6 +200,7 @@ begin
   Result := RemoverCDATA(Result);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
+//  Result := ConverterUnicode(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
@@ -213,7 +214,7 @@ begin
     exit ;
 
   for i := Low(APrefixo) to High(APrefixo) do
-    Result := StringReplace(StringReplace(Result, '<' + APrefixo[i], '<', [rfReplaceAll]),
+    Result := FaststringReplace(FaststringReplace(Result, '<' + APrefixo[i], '<', [rfReplaceAll]),
                           '</' + APrefixo[i], '</', [rfReplaceAll]);
 end;
 

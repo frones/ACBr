@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2021
+-- ACBrXmlBase --
+[*] Trocado o StringReplace por FastStringReplace.
+  Por: Italo Giurizzato Junior
+
 10/09/2021
 -- ACBrDFeReportFortes --
 [*] https://www.projetoacbr.com.br/forum/topic/63913-gerar-pdf-danfe-fortesreport-via-iis/?tab=comments#comment-417640

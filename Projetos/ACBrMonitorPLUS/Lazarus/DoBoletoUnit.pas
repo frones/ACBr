@@ -942,15 +942,21 @@ end;
 
 { TMetodoEnviarBoleto }
 
+{ Params: 0 - TipoOperacao: Integer (0-Inclui, 1-Altera, 2-Baixa, 3-Consulta, 4-ConsultaDetalhe)
+}
 procedure TMetodoEnviarBoleto.Executar;
 var
   I : Integer;
+  AOperacao: Integer;
   RespRetornoWeb : TRetornoRegistroWeb;
 begin
+
+  AOperacao := StrToIntDef(fpCmd.Params(0),0);
 
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
     try
+      ACBrBoleto.Configuracoes.WebService.Operacao:= TOperacao(AOperacao);
       ACBrBoleto.EnviarBoleto;
       if ACBrBoleto.ListaRetornoWeb.Count > 0 then
       for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do

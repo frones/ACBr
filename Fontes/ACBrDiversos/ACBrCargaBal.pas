@@ -225,6 +225,8 @@ type
     FCodigoFornecedor: Smallint;
     FCodigoFracionador: Smallint;
     FCodigoConservacao: Smallint;
+    FImpValidade: Smallint;
+    FImpEmbalagem: Smallint;
     FEAN13Fornecedor: string;
     FInformacaoExtra: TACBrCargaBalInformacaoExtra;
     FTeclado: TAcbrCargaBalTeclado;
@@ -253,9 +255,11 @@ type
     property CodigoInfoNutr: Integer read FCodigoInfoNutr write FCodigoInfoNutr;
     property CodigoTara: Integer Read FCodigoTara Write FCodigoTara Default 0;
     property CodigoFornecedor: Smallint Read FCodigoFornecedor Write FCodigoFornecedor Default 0;
+    property ImpValidade: Smallint Read FImpvalidade Write FImpvalidade Default 1;
+    property ImpEmbalagem: Smallint Read FImpEmbalagem Write FImpEmbalagem Default 1;
     property CodigoFracionador: Smallint Read FCodigoFracionador Write FCodigoFracionador Default 0;
     property CodigoConservacao: Smallint Read FCodigoConservacao Write FCodigoConservacao Default 0;
-  	property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
+    property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
   end;
 
   TACBrCargaBalItens = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrCargaBalItem>{$EndIf})
@@ -914,8 +918,9 @@ begin
           LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
           LFIll('0', 3)+ // codigo imagem
           LFIll(Produtos[i].Nutricional.Codigo, 4)+ // codigo inf nutricional
-          RFill('1', 1)+ // imprime data de validade
-          RFill('1', 1)+ // imprime data embalagem
+//          RFill('1', 1)+ // imprime data de validade
+          RFill(Produtos[i].ImpValidade.ToString, 1)+ // imprime data de validade
+          RFill(Produtos[i].ImpEmbalagem.ToString, 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
           lFill('0', 12)+ // lote
@@ -1002,8 +1007,9 @@ begin
           LFIll(Produtos[i].ObterCodigoInfoExtra(modToledoMGV5), 6)+ // codigo inf extra
           LFIll('0', 4)+ // codigo imagem
           LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
-          RFill('1', 1)+ // imprime data de validade
-          RFill('1', 1)+ // imprime data embalagem
+//          RFill('1', 1)+ // imprime data de validade
+          RFill(Produtos[i].ImpValidade.ToString, 1)+ // imprime data de validade
+          RFill(Produtos[i].ImpEmbalagem.ToString, 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
           lFill('0', 12)+ // lote
@@ -1133,8 +1139,8 @@ begin
           LFIll(Produtos[i].ObterCodigoInfoExtra(modToledoMGV6), 6)+ // codigo inf extra
           LFIll('0', 4)+ // codigo imagem
           LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
-          RFill('1', 1)+ // imprime data de validade
-          RFill('1', 1)+ // imprime data embalagem
+          RFill(Produtos[i].ImpValidade.ToString, 1)+ // imprime data de validade
+          RFill(Produtos[i].ImpEmbalagem.ToString, 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
           lFill('0', 12)+ // lote

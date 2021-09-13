@@ -41,7 +41,7 @@
 
 {$I ACBr.inc}
 
-unit pcesS2400;
+unit pcesS2405;
 
 interface
 
@@ -58,39 +58,64 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2400Collection = class;
-  TS2400CollectionItem = class;
-  TEvtCdBenefIn = class;
-  TBeneficiario = class;
-
-  TS2400Collection = class(TeSocialCollection)
+  TS2405Collection = class;
+  TS2405CollectionItem = class;
+  TEvtCdBenefAlt = class;
+  TIdeBenef = class;
+  TAlteracao = class;
+  TDadosBenef = class;
+  
+  TS2405Collection = class(TeSocialCollection)
   private
-    function GetItem(Index: Integer): TS2400CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2400CollectionItem);
+    function GetItem(Index: Integer): TS2405CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2405CollectionItem);
   public
-    function Add: TS2400CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2400CollectionItem;
-    property Items[Index: Integer]: TS2400CollectionItem read GetItem write SetItem; default;
+    function Add: TS2405CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2405CollectionItem;
+    property Items[Index: Integer]: TS2405CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2400CollectionItem = class(TObject)
+  TS2405CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
-    FEvtCdBenefIn : TEvtCdBenefIn;
+    FEvtCdBenefAlt: TEvtCdBenefAlt;
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
+    
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenefIn: TEvtCdBenefIn read FEvtCdBenefIn write FEvtCdBenefIn;
+    property EvtCdBenefAlt: TEvtCdBenefAlt read FEvtCdBenefAlt write FEvtCdBenefAlt;
   end;
 
-  TEvtCdBenefIn = class(TeSocialEvento)
+  TIdeBenef = class(TObject)
+  private
+    FCpfBenef: string;
+  public
+    property CpfBenef: string read FCpfBenef write FCpfBenef;
+  end;
+  
+  TAlteracao = class(TObject)
+  private
+    FDtAlteracao: TDateTime;
+    FDadosBenef: TDadosBenef;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    
+    property DtAlteracao: TDateTime read FDtAlteracao write FDtAlteracao;
+    property DadosBenef: TDadosBenef read FDadosBenef write FDadosBenef;
+  end;
+  
+  TEvtCdBenefAlt = class(TeSocialEvento)
   private
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
-    FBeneficiario: TBeneficiario;
+    FIdeBenef: TIdeBenef;
+    FAlteracao: TAlteracao;
     
-    procedure GerarBeneficiario(pBeneficiario: TBeneficiario);
+    procedure GerarIdeBenef(pIdeBenef: TIdeBenef);
+    procedure GerarAlteracao(pAlteracao: TAlteracao);
+    procedure GerarDadosBenef(pDadosBenef: TDadosBenef);
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
@@ -100,35 +125,28 @@ type
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
+    property IdeBenef: TIdeBenef read FIdeBenef write FIdeBenef;
+    property Alteracao: TAlteracao read FAlteracao write FAlteracao;
   end;
-
-  TBeneficiario = class(TObject)
+  
+  TDadosBenef = class(TObject)
   private
-    FCpfBenef: string;
     FNmBenefic: string;
-    FDtNascto: TDateTime;
-    FDtInicio: TDateTime;
     FSexo: string;
     FRacaCor: integer;
     FEstCiv: integer;
     FIncFisMen: TpSimNao;
-    FDtIncFisMen: TDateTime;
     FEndereco: TEndereco;
     FDependente: TDependenteCollection;
   public
     constructor Create;
     destructor Destroy; override;
     
-    property cpfBenef: String read FCpfBEnef write FCpfBEnef;
     property nmBenefic: string read FNmBenefic write FNmBenefic;
-    property dtNascto: TDateTime read FDtNascto write FDtNascto;
-    property dtInicio: TDateTime read FDtInicio write FDtInicio;
     property sexo: string read FSexo write FSexo;
     property racaCor: integer read FRacaCor write FRacaCor;
     property estCiv: integer read FEstCiv write FEstCiv;
     property incFisMen: TpSimNao read FIncFisMen write FIncFisMen;
-    property dtIncFisMen: TDateTime read FDtIncFisMen write FDtIncFisMen;
     property endereco: TEndereco read FEndereco write FEndereco;
     property dependente: TDependenteCollection read FDependente write FDependente;
   end;
@@ -139,127 +157,160 @@ uses
   IniFiles,
   ACBreSocial;
 
-{ TS2400Collection }
+{ TS2405Collection }
 
-function TS2400Collection.Add: TS2400CollectionItem;
+function TS2405Collection.Add: TS2405CollectionItem;
 begin
   Result := Self.New;
 end;
 
-function TS2400Collection.GetItem(Index: Integer): TS2400CollectionItem;
+function TS2405Collection.GetItem(Index: Integer): TS2405CollectionItem;
 begin
-  Result := TS2400CollectionItem(inherited Items[Index]);
+  Result := TS2405CollectionItem(inherited Items[Index]);
 end;
 
-procedure TS2400Collection.SetItem(Index: Integer; Value: TS2400CollectionItem);
+procedure TS2405Collection.SetItem(Index: Integer; Value: TS2405CollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-function TS2400Collection.New: TS2400CollectionItem;
+function TS2405Collection.New: TS2405CollectionItem;
 begin
-  Result := TS2400CollectionItem.Create(FACBreSocial);
+  Result := TS2405CollectionItem.Create(FACBreSocial);
   Self.Add(Result);
 end;
 
-{ TS2400CollectionItem }
+{ TS2405CollectionItem }
 
-constructor TS2400CollectionItem.Create(AOwner: TComponent);
+constructor TS2405CollectionItem.Create(AOwner: TComponent);
 begin
   inherited Create;
-  FTipoEvento   := teS2400;
-  FEvtCdBenefIn := TEvtCdBenefIn.Create(AOwner);
+  FTipoEvento    := teS2405;
+  FEvtCdBenefAlt := TEvtCdBenefAlt.Create(AOwner);
 end;
 
-destructor TS2400CollectionItem.Destroy;
+destructor TS2405CollectionItem.Destroy;
 begin
-  FEvtCdBenefIn.Free;
+  FEvtCdBenefAlt.Free;
 
   inherited;
 end;
 
-{ TBeneficiario }
+{ TDadosBenef }
 
-constructor TBeneficiario.Create;
+constructor TDadosBenef.Create;
 begin
   inherited Create;
   FEndereco := TEndereco.Create;
   FDependente := TDependenteCollection.Create;
 end;
 
-destructor TBeneficiario.Destroy;
+destructor TDadosBenef.Destroy;
 begin
   FEndereco.Free;
   FDependente.Free;
   inherited;
 end;
 
-{ TEvtCdBenefIn }
+{ TAlteracao }
 
-constructor TEvtCdBenefIn.Create(AACBreSocial: TObject);
+constructor TAlteracao.Create;
+begin
+  inherited Create;
+  FDadosBenef := TDadosBenef.Create;
+end;
+
+destructor TAlteracao.Destroy;
+begin
+  FDadosBenef.Free;
+  inherited;
+end;
+
+{ TEvtCdBenefAlt }
+
+constructor TEvtCdBenefAlt.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FBeneficiario  := TBeneficiario.Create;
+  FIdeBenef      := TIdeBenef.Create;
+  FAlteracao     := TAlteracao.Create;
 end;
 
-destructor TEvtCdBenefIn.Destroy;
+destructor TEvtCdBenefAlt.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
-  FBeneficiario.Free;
-
+  FIdeBenef.Free;
+  FAlteracao.Free;
+  
   inherited;
 end;
 
-procedure TEvtCdBenefIn.GerarBeneficiario(pBeneficiario: TBeneficiario);
+procedure TEvtCdBenefAlt.GerarIdeBenef(pIdeBenef: TIdeBenef);
 begin
-  Gerador.wGrupo('beneficiario');
+  Gerador.wGrupo('ideBenef');
+  
+  Gerador.wCampo(tcStr, '', 'cpfBenef',    11, 11, 1, pIdeBenef.cpfBenef);
 
-  Gerador.wCampo(tcStr, '', 'cpfBenef',    11, 11, 1, pBeneficiario.cpfBenef);
-  Gerador.wCampo(tcStr, '', 'nmBenefic',   70, 70, 1, pBeneficiario.nmBenefic);
-  Gerador.wCampo(tcDat, '', 'dtNascto',    10, 10, 1, pBeneficiario.dtNascto);
-  Gerador.wCampo(tcDat, '', 'dtInicio',    10, 10, 1, pBeneficiario.dtInicio);
-  Gerador.wCampo(tcStr, '', 'sexo',         0,  1, 1, pBeneficiario.sexo);
-  Gerador.wCampo(tcInt, '', 'racaCor',      1,  1, 1, pBeneficiario.racaCor);
-
-  if ((pBeneficiario.EstCiv >= 1) and (pBeneficiario.EstCiv <= 5)) then
-    Gerador.wCampo(tcInt, '', 'estCiv',     1,  1, 0, pBeneficiario.estCiv);
-
-  Gerador.wCampo(tcStr, '', 'incFisMen',    1,  1, 1, eSSimNaoToStr(pBeneficiario.incFisMen));
-  Gerador.wCampo(tcDat, '', 'dtIncFisMen',  0, 10, 0, pBeneficiario.dtIncFisMen);
-    
-  GerarEndereco(pBeneficiario.endereco, (pBeneficiario.endereco.exterior.paisResid <> ''));
-
-  GerarDependente(pBeneficiario.dependente, true);
- 
-  Gerador.wGrupo('/beneficiario');
+  Gerador.wGrupo('/ideBenef');
 end;
 
-function TEvtCdBenefIn.GerarXML: boolean;
+procedure TEvtCdBenefAlt.GerarAlteracao(pAlteracao: TAlteracao);
+begin
+  Gerador.wGrupo('alteracao');
+
+  Gerador.wCampo(tcDat, '', 'dtAlteracao', 10, 10, 1, pAlteracao.dtAlteracao);
+  
+  GerarDadosBenef(pAlteracao.DadosBenef);
+
+  Gerador.wGrupo('/alteracao');
+end;
+
+procedure TEvtCdBenefAlt.GerarDadosBenef(pDadosBenef: TDadosBenef);
+begin
+  Gerador.wGrupo('dadosBenef');
+
+  Gerador.wCampo(tcStr, '', 'nmBenefic',   70, 70, 1, pDadosBenef.nmBenefic);
+  Gerador.wCampo(tcStr, '', 'sexo',         1,  1, 1, pDadosBenef.sexo);
+  Gerador.wCampo(tcInt, '', 'racaCor',      1,  1, 1, pDadosBenef.racaCor);
+
+  if ((pDadosBenef.EstCiv >= 1) and (pDadosBenef.EstCiv <= 5)) then
+    Gerador.wCampo(tcInt, '', 'estCiv',     1,  1, 0, pDadosBenef.estCiv);
+
+  Gerador.wCampo(tcStr, '', 'incFisMen',    1,  1, 1, eSSimNaoToStr(pDadosBenef.incFisMen));
+  
+  GerarEndereco(pDadosBenef.endereco, (pDadosBenef.endereco.exterior.paisResid <> ''));
+
+  GerarDependente(pDadosBenef.dependente, true);
+ 
+  Gerador.wGrupo('/dadosBenef');
+end;
+
+function TEvtCdBenefAlt.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
      
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
-    GerarCabecalho('evtCdBenefIn');
-    Gerador.wGrupo('evtCdBenefIn Id="' + Self.Id + '"');
+    GerarCabecalho('evtCdBenefAlt');
+    Gerador.wGrupo('evtCdBenefAlt Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
-    GerarBeneficiario(self.Beneficiario);
+    GerarIdeBenef(self.IdeBenef);
+    GerarAlteracao(self.Alteracao);
     
-    Gerador.wGrupo('/evtCdBenefIn');
+    Gerador.wGrupo('/evtCdBenefAlt');
 
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenefIn');
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenefAlt');
 
-//    Validar(schEvtCdBenefIn);
+//    Validar(schEvtCdBenefAlt);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -267,7 +318,7 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
-function TEvtCdBenefIn.LerArqIni(const AIniString: String): Boolean;
+function TEvtCdBenefAlt.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;

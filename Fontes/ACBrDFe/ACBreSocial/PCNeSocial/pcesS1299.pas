@@ -331,6 +331,7 @@ begin
       infoFech.evtInfoComplPer := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtInfoComplPer', 'S'));
       infoFech.compSemMovto    := INIRec.ReadString(sSecao, 'compSemMovto', '');
       infoFech.indExcApur1250  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indExcApur1250', 'S'));
+      infoFech.transDCTFWeb    := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'transDCTFWeb', 'N'));
     end;
 
     GerarXML;

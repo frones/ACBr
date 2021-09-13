@@ -41,7 +41,7 @@
 
 {$I ACBr.inc}
 
-unit pcesS2400;
+unit pcesS2418;
 
 interface
 
@@ -58,39 +58,42 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2400Collection = class;
-  TS2400CollectionItem = class;
-  TEvtCdBenefIn = class;
-  TBeneficiario = class;
+  TS2418Collection = class;
+  TS2418CollectionItem = class;
+  TEvtReativBen = class;
+  TIdeBeneficio = class;
+  TInfoReativ = class;
 
-  TS2400Collection = class(TeSocialCollection)
+  TS2418Collection = class(TeSocialCollection)
   private
-    function GetItem(Index: Integer): TS2400CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS2400CollectionItem);
+    function GetItem(Index: Integer): TS2418CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2418CollectionItem);
   public
-    function Add: TS2400CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TS2400CollectionItem;
-    property Items[Index: Integer]: TS2400CollectionItem read GetItem write SetItem; default;
+    function Add: TS2418CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2418CollectionItem;
+    property Items[Index: Integer]: TS2418CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2400CollectionItem = class(TObject)
+  TS2418CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
-    FEvtCdBenefIn : TEvtCdBenefIn;
+    FEvtReativBen : TEvtReativBen;
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCdBenefIn: TEvtCdBenefIn read FEvtCdBenefIn write FEvtCdBenefIn;
+    property EvtReativBen: TEvtReativBen read FEvtReativBen write FEvtReativBen;
   end;
 
-  TEvtCdBenefIn = class(TeSocialEvento)
+  TEvtReativBen = class(TeSocialEvento)
   private
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
-    FBeneficiario: TBeneficiario;
-    
-    procedure GerarBeneficiario(pBeneficiario: TBeneficiario);
+    FIdeBeneficio: TIdeBeneficio;
+    FInfoReativ: TInfoReativ;
+
+    procedure GerarIdeBeneficio(pIdeBeneficio: TIdeBeneficio);
+    procedure GerarInfoReativ(pInfoReativ: TInfoReativ);
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
@@ -98,168 +101,140 @@ type
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
 
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
+    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property ideBeneficio: TIdeBeneficio read FIdeBeneficio write FIdeBeneficio;
+    property infoReativ: TInfoReativ read FInfoReativ write FInfoReativ;
   end;
-
-  TBeneficiario = class(TObject)
+  
+  TIdeBeneficio = class(TObject)
   private
     FCpfBenef: string;
-    FNmBenefic: string;
-    FDtNascto: TDateTime;
-    FDtInicio: TDateTime;
-    FSexo: string;
-    FRacaCor: integer;
-    FEstCiv: integer;
-    FIncFisMen: TpSimNao;
-    FDtIncFisMen: TDateTime;
-    FEndereco: TEndereco;
-    FDependente: TDependenteCollection;
+    FNrBeneficio: string;
   public
-    constructor Create;
-    destructor Destroy; override;
-    
-    property cpfBenef: String read FCpfBEnef write FCpfBEnef;
-    property nmBenefic: string read FNmBenefic write FNmBenefic;
-    property dtNascto: TDateTime read FDtNascto write FDtNascto;
-    property dtInicio: TDateTime read FDtInicio write FDtInicio;
-    property sexo: string read FSexo write FSexo;
-    property racaCor: integer read FRacaCor write FRacaCor;
-    property estCiv: integer read FEstCiv write FEstCiv;
-    property incFisMen: TpSimNao read FIncFisMen write FIncFisMen;
-    property dtIncFisMen: TDateTime read FDtIncFisMen write FDtIncFisMen;
-    property endereco: TEndereco read FEndereco write FEndereco;
-    property dependente: TDependenteCollection read FDependente write FDependente;
+    property cpfBenef: String read FCpfBenef write FCpfBenef;
+    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
   end;
 
+  TInfoReativ = class(TObject)
+  private
+    FDtEfetReativ: TDateTime;
+    FDtEfeito: TDateTime;
+  public
+    property dtEfetReativ: TDateTime read FDtEfetReativ write FDtEfetReativ;
+    property dtEfeito: TDateTime read FDtEfeito write FDtEfeito;
+  end;
+  
 implementation
 
 uses
   IniFiles,
   ACBreSocial;
 
-{ TS2400Collection }
+{ TS2418Collection }
 
-function TS2400Collection.Add: TS2400CollectionItem;
+function TS2418Collection.Add: TS2418CollectionItem;
 begin
   Result := Self.New;
 end;
 
-function TS2400Collection.GetItem(Index: Integer): TS2400CollectionItem;
+function TS2418Collection.GetItem(Index: Integer): TS2418CollectionItem;
 begin
-  Result := TS2400CollectionItem(inherited Items[Index]);
+  Result := TS2418CollectionItem(inherited Items[Index]);
 end;
 
-procedure TS2400Collection.SetItem(Index: Integer; Value: TS2400CollectionItem);
+procedure TS2418Collection.SetItem(Index: Integer; Value: TS2418CollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-function TS2400Collection.New: TS2400CollectionItem;
+function TS2418Collection.New: TS2418CollectionItem;
 begin
-  Result := TS2400CollectionItem.Create(FACBreSocial);
+  Result := TS2418CollectionItem.Create(FACBreSocial);
   Self.Add(Result);
 end;
 
-{ TS2400CollectionItem }
+{ TS2418CollectionItem }
 
-constructor TS2400CollectionItem.Create(AOwner: TComponent);
+constructor TS2418CollectionItem.Create(AOwner: TComponent);
 begin
   inherited Create;
-  FTipoEvento   := teS2400;
-  FEvtCdBenefIn := TEvtCdBenefIn.Create(AOwner);
+  FTipoEvento   := teS2418;
+  FEvtReativBen  := TEvtReativBen.Create(AOwner);
 end;
 
-destructor TS2400CollectionItem.Destroy;
+destructor TS2418CollectionItem.Destroy;
 begin
-  FEvtCdBenefIn.Free;
+  FreeAndNil(FEvtReativBen);
 
   inherited;
 end;
 
-{ TBeneficiario }
+{ TEvtReativBen }
 
-constructor TBeneficiario.Create;
-begin
-  inherited Create;
-  FEndereco := TEndereco.Create;
-  FDependente := TDependenteCollection.Create;
-end;
-
-destructor TBeneficiario.Destroy;
-begin
-  FEndereco.Free;
-  FDependente.Free;
-  inherited;
-end;
-
-{ TEvtCdBenefIn }
-
-constructor TEvtCdBenefIn.Create(AACBreSocial: TObject);
+constructor TEvtReativBen.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FBeneficiario  := TBeneficiario.Create;
+  FIdeBeneficio  := TIdeBeneficio.Create;
+  FInfoReativ    := TInfoReativ.Create;
 end;
 
-destructor TEvtCdBenefIn.Destroy;
+destructor TEvtReativBen.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
-  FBeneficiario.Free;
+  FIdeBeneficio.Free;
+  FInfoReativ.Free;
 
   inherited;
 end;
 
-procedure TEvtCdBenefIn.GerarBeneficiario(pBeneficiario: TBeneficiario);
+procedure TEvtReativBen.GerarIdeBeneficio(pIdeBeneficio: TIdeBeneficio);
 begin
-  Gerador.wGrupo('beneficiario');
+  Gerador.wGrupo('ideBeneficio');
 
-  Gerador.wCampo(tcStr, '', 'cpfBenef',    11, 11, 1, pBeneficiario.cpfBenef);
-  Gerador.wCampo(tcStr, '', 'nmBenefic',   70, 70, 1, pBeneficiario.nmBenefic);
-  Gerador.wCampo(tcDat, '', 'dtNascto',    10, 10, 1, pBeneficiario.dtNascto);
-  Gerador.wCampo(tcDat, '', 'dtInicio',    10, 10, 1, pBeneficiario.dtInicio);
-  Gerador.wCampo(tcStr, '', 'sexo',         0,  1, 1, pBeneficiario.sexo);
-  Gerador.wCampo(tcInt, '', 'racaCor',      1,  1, 1, pBeneficiario.racaCor);
+  Gerador.wCampo(tcStr, '', 'cpfBenef',     11, 11, 1, pIdeBeneficio.cpfBenef);
+  Gerador.wCampo(tcStr, '', 'nrBeneficio',  20, 20, 1, pIdeBeneficio.nrBeneficio);
 
-  if ((pBeneficiario.EstCiv >= 1) and (pBeneficiario.EstCiv <= 5)) then
-    Gerador.wCampo(tcInt, '', 'estCiv',     1,  1, 0, pBeneficiario.estCiv);
-
-  Gerador.wCampo(tcStr, '', 'incFisMen',    1,  1, 1, eSSimNaoToStr(pBeneficiario.incFisMen));
-  Gerador.wCampo(tcDat, '', 'dtIncFisMen',  0, 10, 0, pBeneficiario.dtIncFisMen);
-    
-  GerarEndereco(pBeneficiario.endereco, (pBeneficiario.endereco.exterior.paisResid <> ''));
-
-  GerarDependente(pBeneficiario.dependente, true);
- 
-  Gerador.wGrupo('/beneficiario');
+  Gerador.wGrupo('/ideBeneficio');
 end;
 
-function TEvtCdBenefIn.GerarXML: boolean;
+procedure TEvtReativBen.GerarInfoReativ(pInfoReativ: TInfoReativ);
+begin
+  Gerador.wGrupo('infoReativ');
+
+  Gerador.wCampo(tcDat, '', 'dtEfetReativ',  10, 10, 1, pInfoReativ.dtEfetReativ);
+  Gerador.wCampo(tcDat, '', 'dtEfeito',      10, 10, 1, pInfoReativ.dtEfeito);
+
+  Gerador.wGrupo('/infoReativ');
+end;
+
+function TEvtReativBen.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
      
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
-    GerarCabecalho('evtCdBenefIn');
-    Gerador.wGrupo('evtCdBenefIn Id="' + Self.Id + '"');
+    GerarCabecalho('evtReativBen');
+    Gerador.wGrupo('evtReativBen Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
-    GerarBeneficiario(self.Beneficiario);
-    
-    Gerador.wGrupo('/evtCdBenefIn');
+    GerarIdeBeneficio(self.IdeBeneficio);
+    GerarInfoReativ(self.InfoReativ);
+
+    Gerador.wGrupo('/evtReativBen');
 
     GerarRodape;
 
     FXML := Gerador.ArquivoFormatoXML;
-//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtCdBenefIn');
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'EvtReativBen');
 
-//    Validar(schEvtCdBenefIn);
+//    Validar(schEvtReativBen);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -267,7 +242,7 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
-function TEvtCdBenefIn.LerArqIni(const AIniString: String): Boolean;
+function TEvtReativBen.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;

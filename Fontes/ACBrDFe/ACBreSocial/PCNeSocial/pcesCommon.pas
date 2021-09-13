@@ -399,6 +399,7 @@ type
     property depSF: tpSimNao read FdepSF write FdepSF;
     property sexoDep: string read FsexoDep write FsexoDep;
     property incTrab: tpSimNao read FIncTrab write FIncTrab;
+    property incFisMen: tpSimNao read FIncTrab write FIncTrab;
   end;
 
   TDescAtividadeCollection = class(TACBrObjectList)

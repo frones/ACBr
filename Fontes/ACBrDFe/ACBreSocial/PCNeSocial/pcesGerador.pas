@@ -86,7 +86,7 @@ type
     procedure GerarObservacoes(pObservacoes: TObservacoesCollection);
     procedure GerarTransfDom(pTransfDom: TTransfDom);
     procedure GerarCTPS(pCTPS: TCTPS);
-    procedure GerarDependente(pDependente: TDependenteCollection);
+    procedure GerarDependente(pDependente: TDependenteCollection; pBeneficiario: boolean = false);
     procedure GerarDescAtividade(pDescAtividade: TDescAtividadeCollection);
     procedure GerarDocumentos(pDocumentos: TDocumentos);
     procedure GerarDuracao(pDuracao: TDuracao; pTipo: Integer);
@@ -109,7 +109,7 @@ type
     procedure GerarIdeEstabVinc(pIdeEstabVinc: TIdeEstabVinc);
     procedure GerarIdeTrabSubstituido(pIdeTrabSubstituido: TIdeTrabSubstituidoCollection);
     procedure GerarIdVersao(pIdEsocial: TeSocial);
-    procedure GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True);
+    procedure GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
     procedure GerarInfoAtivDesemp(pInfoAtivDesemp: TInfoAtivDesemp);
     procedure GerarInfoDeficiencia(pInfoDeficiencia: TInfoDeficiencia; pTipo: integer = 0);
     procedure GerarLocalTrabGeral(pLocalTrabGeral: TLocalTrabGeral);
@@ -532,7 +532,7 @@ begin
   Gerador.wGrupo('/CTPS');
 end;
 
-procedure TeSocialEvento.GerarDependente(pDependente: TDependenteCollection);
+procedure TeSocialEvento.GerarDependente(pDependente: TDependenteCollection; pBeneficiario: boolean = false);
 var
   i: integer;
 begin
@@ -545,13 +545,19 @@ begin
     Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 1, pDependente.Items[i].DtNascto);
     Gerador.wCampo(tcStr, '', 'cpfDep',   11, 11, 0, pDependente.Items[i].CpfDep);
     
-    if VersaoDF > ve02_05_00 then
+    if (VersaoDF > ve02_05_00) and (pBeneficiario) then
       if (pDependente.Items[i].sexoDep = 'F') or (pDependente.Items[i].sexoDep = 'M') then
         Gerador.wCampo(tcStr, '', 'sexoDep',   1,  1, 0, pDependente.Items[i].sexoDep);
 
-    Gerador.wCampo(tcStr, '', 'depIRRF',   1,  1, 1, eSSimNaoToStr(pDependente.Items[i].DepIRRF));
-    Gerador.wCampo(tcStr, '', 'depSF',     1,  1, 1, eSSimNaoToStr(pDependente.Items[i].DepSF));
-    Gerador.wCampo(tcStr, '', 'incTrab',   1,  1, 1, eSSimNaoToStr(pDependente.Items[i].incTrab));
+    Gerador.wCampo(tcStr, '', 'depIRRF',   1,  1, 1, eSSimNaoToStr(pDependente.Items[i].depIRRF));
+
+    if not(pBeneficiario) then
+      Gerador.wCampo(tcStr, '', 'depSF',     1,  1, 1, eSSimNaoToStr(pDependente.Items[i].depSF));
+
+    if (pBeneficiario ) then
+      Gerador.wCampo(tcStr, '', 'incFisMen', 1,  1, 1, eSSimNaoToStr(pDependente.Items[i].incFisMen))
+    else
+      Gerador.wCampo(tcStr, '', 'incTrab',   1,  1, 1, eSSimNaoToStr(pDependente.Items[i].incTrab));
 
     Gerador.wGrupo('/dependente');
   end;
@@ -1304,24 +1310,26 @@ begin
     Gerador.wAlerta('', 'ideTrabSubstituido', 'Lista de Trabalhadores Substituido', ERR_MSG_MAIOR_MAXIMO + '9');
 end;
 
-procedure TeSocialEvento.GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True);
+procedure TeSocialEvento.GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
 begin
   Gerador.wGrupo('ideVinculo');
 
   Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pIdeVinculo.cpfTrab);
 
-  if VersaoDF <= ve02_05_00 then
-  begin
-    if ((pIdeVinculo.codCateg = 901) or (pIdeVinculo.codCateg = 903) or (pIdeVinculo.codCateg = 904)) then
-      Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 0, pIdeVinculo.nisTrab)
-    else
-      Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pIdeVinculo.nisTrab);
-  end;
+  if not(pCessao) then
+    if VersaoDF <= ve02_05_00 then
+    begin
+      if ((pIdeVinculo.codCateg = 901) or (pIdeVinculo.codCateg = 903) or (pIdeVinculo.codCateg = 904)) then
+        Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 0, pIdeVinculo.nisTrab)
+      else
+        Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pIdeVinculo.nisTrab);
+    end;
   
-  Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, pIdeVinculo.matricula);
+  Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, pIdeVinculo.matricula);
   
-  if pcodCateg then
-    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 0, pIdeVinculo.codCateg);
+  if not(pCessao) then
+    if (pcodCateg) then
+      Gerador.wCampo(tcInt, '', 'codCateg',  3,  3, 0, pIdeVinculo.codCateg);
 
   Gerador.wGrupo('/ideVinculo');
 end;

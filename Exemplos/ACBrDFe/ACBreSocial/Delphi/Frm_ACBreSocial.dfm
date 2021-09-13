@@ -2,7 +2,7 @@ object frmACBreSocial: TfrmACBreSocial
   Left = 226
   Top = 114
   Caption = 'ACBreSocial - Programa Exemplo'
-  ClientHeight = 612
+  ClientHeight = 645
   ClientWidth = 1099
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object frmACBreSocial: TfrmACBreSocial
     Left = 0
     Top = 0
     Width = 297
-    Height = 612
+    Height = 645
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -999,15 +999,15 @@ object frmACBreSocial: TfrmACBreSocial
     Left = 297
     Top = 0
     Width = 802
-    Height = 612
+    Height = 645
     Align = alClient
     TabOrder = 1
     object pgcBotoes: TPageControl
       Left = 1
       Top = 1
       Width = 800
-      Height = 272
-      ActivePage = tbsEventosTabela
+      Height = 345
+      ActivePage = tbsEventosNaoPeriodicos
       Align = alTop
       TabOrder = 0
       object tbsEventosTabela: TTabSheet
@@ -1366,7 +1366,7 @@ object frmACBreSocial: TfrmACBreSocial
         end
         object cbs2260: TCheckBox
           Left = 422
-          Top = 39
+          Top = 37
           Width = 332
           Height = 17
           Caption = 'S-2260 Convoca'#231#227'o para Trabalho Intermitente'
@@ -1419,26 +1419,74 @@ object frmACBreSocial: TfrmACBreSocial
           Top = 173
           Width = 321
           Height = 17
-          Caption = 'S-2400 Cadastro de Benef'#237'cios Previd'#234'nci'#225'rios - RPPS'
+          Caption = 'S-2400 Cadastro de Benefici'#225'rio - Entes P'#250'blicos - In'#237'cio'
           TabOrder = 18
         end
         object cbS3000: TCheckBox
-          Left = 422
-          Top = 196
+          Left = 12
+          Top = 290
           Width = 175
           Height = 17
           Caption = 'S-3000 Exclus'#227'o de Eventos'
           Ctl3D = False
           ParentCtl3D = False
+          TabOrder = 25
+        end
+        object cbS2405: TCheckBox
+          Left = 422
+          Top = 196
+          Width = 321
+          Height = 17
+          Caption = 'S-2405 Cadastro de Benefici'#225'rio - Entes P'#250'blicos - Altera'#231#227'o'
           TabOrder = 19
+        end
+        object cbS2410: TCheckBox
+          Left = 422
+          Top = 219
+          Width = 321
+          Height = 17
+          Caption = 'S-2410 Cadastro de Benef'#237'cio - Entes P'#250'blicos - In'#237'cio'
+          TabOrder = 20
+        end
+        object cbS2231: TCheckBox
+          Left = 12
+          Top = 242
+          Width = 404
+          Height = 17
+          Caption = 'S-2231 Cess'#227'o/Exerc'#237'cio em Outro '#211'rg'#227'o'
+          TabOrder = 21
+        end
+        object cbS2416: TCheckBox
+          Left = 422
+          Top = 242
+          Width = 321
+          Height = 17
+          Caption = 'S-2416 Cadastro de Benef'#237'cio - Entes P'#250'blicos - Altera'#231#227'o'
+          TabOrder = 22
+        end
+        object cbS2418: TCheckBox
+          Left = 12
+          Top = 265
+          Width = 404
+          Height = 17
+          Caption = 'S-2418 Reativa'#231#227'o de Benef'#237'cio - Entes P'#250'blicos'
+          TabOrder = 23
+        end
+        object cbS2420: TCheckBox
+          Left = 422
+          Top = 265
+          Width = 321
+          Height = 17
+          Caption = 'S-2420 Cadastro de Benef'#237'cio - Entes P'#250'blicos - T'#233'rmino'
+          TabOrder = 24
         end
       end
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 273
+      Top = 346
       Width = 800
-      Height = 338
+      Height = 298
       ActivePage = tsFormaEnvio
       Align = alClient
       TabOrder = 1
@@ -1596,7 +1644,7 @@ object frmACBreSocial: TfrmACBreSocial
           Left = 0
           Top = 0
           Width = 792
-          Height = 310
+          Height = 270
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1609,11 +1657,11 @@ object frmACBreSocial: TfrmACBreSocial
           Left = 0
           Top = 0
           Width = 792
-          Height = 310
+          Height = 270
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000DB5100000A2000000000000000000000000000000000000000000000
+            4C000000DB510000E81B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1627,7 +1675,7 @@ object frmACBreSocial: TfrmACBreSocial
           Left = 0
           Top = 0
           Width = 792
-          Height = 310
+          Height = 270
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1640,7 +1688,7 @@ object frmACBreSocial: TfrmACBreSocial
           Left = 0
           Top = 0
           Width = 792
-          Height = 310
+          Height = 270
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1653,7 +1701,7 @@ object frmACBreSocial: TfrmACBreSocial
           Left = 0
           Top = 0
           Width = 792
-          Height = 310
+          Height = 270
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1666,7 +1714,7 @@ object frmACBreSocial: TfrmACBreSocial
           Left = 0
           Top = 0
           Width = 792
-          Height = 310
+          Height = 270
           Align = alClient
           Lines.Strings = (
             '')
@@ -1694,6 +1742,7 @@ object frmACBreSocial: TfrmACBreSocial
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoDF = veS01_00_00
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

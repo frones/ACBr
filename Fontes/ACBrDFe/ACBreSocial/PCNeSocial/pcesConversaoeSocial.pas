@@ -77,8 +77,8 @@ type
   TeSocialSchema          = (schErro, schConsultaLoteEventos, schEnvioLoteEventos,
                              schevtAdesao, schevtAdmissao, schevtAdmPrelim,
                              schevtAfastTemp, schevtAltCadastral, schevtAltContratual,
-                             schevtAqProd, schevtAvPrevio, schevtBasesTrab, schevtBenPrRP,
-                             schevtCadInicial, schevtCAT, schevtCdBenPrRP,
+                             schevtAqProd, schevtAvPrevio, schevtBasesTrab, schevtCdBenefIn,
+                             schevtCadInicial, schevtCAT, schevtBenPrRP,
                              schevtComProd, schevtContratAvNP, schevtContrSindPatr,
                              schevtConvInterm, schevtCS, schevtDeslig, schevtExclusao,
                              schevtExpRisco, schevtFechaEvPer, schevtInfoComplPer,
@@ -89,8 +89,10 @@ type
                              schevtTabFuncao, schevtTabHorTur, schevtTabLotacao, schevtTabOperPort,
                              schevtTabProcesso, schevtTabRubrica, schevtTotConting, schevtTSVAltContr,
                              schevtTSVInicio, schevtTSVTermino, schRetornoEnvioLoteEventos,
-                             schRetornoEvento, schRetornoProcessamentoLote,
-                             schConsultaIdentEventos, schDownloadEventos, schEvtToxic, schEvtTreiCap);
+                             schRetornoEvento, schRetornoProcessamentoLote, schConsultaIdentEventos, 
+                             schDownloadEventos, schEvtToxic, schEvtTreiCap,schevtCdBenefAlt, 
+                             schevtCdBenIn, schevtCessao, schevtCdBenAlt, schevtReativBen,
+                             schevtCdBenTerm);
 
   TLayOut                 = (LayEnvioLoteEventos, LayConsultaLoteEventos,
                              LayConsultaIdentEventos, LayDownloadEventos);
@@ -104,7 +106,8 @@ type
                              teS1300, teS2190, teS2200, teS2205, teS2206, teS2210, teS2220, teS2230,
                              teS2240, teS2245, teS2250, teS2260, teS2298, teS2299, teS2300, teS2305,
                              teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS5001, teS5002,
-                             teS5003, teS5011, teS5012, teS5013, teS2221);
+                             teS5003, teS5011, teS5012, teS5013, teS2221, teS2405, teS2410, teS2231,
+                             teS2416, teS2418, teS2420);
 
   tpSimNao                = (tpSim, tpNao);
 
@@ -257,16 +260,17 @@ type
                              ciiCompensacaoJudicialAnoCalendario,                                {9082}  { Item válido a partir da versão simplificada }
                              ciiCompensacaoJudicialAnosAnteriores);                              {9083}  { Item válido a partir da versão simplificada }
 
+  tpCodIncCPRP            = (cicpNaoeBasedeCalculodeContribuicoesDevidasaoRPPSRegimeMilitar,
+                             cicpBasedeCalculodeContribuicoesDevidasaoRPPSRegimeMilitar,
+                             cicpBasedeCalculodeContribuicoesDevidasaoRPPSRegimeMilitarDecimo,
+                             cicpContribuicaoDescontadadoSeguradoeBeneficiario,
+                             cicpContribuicaoDescontadadoSeguradoeBeneficiarioDecimo,
+                             cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicial,
+                             cicpNenhum);
+  
   tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaojudicial);
 
   tpCodIncSIND            = (cisNaoebasedecalculo, cisBasedecalculo, cisValorlaboraldescontada, cisIncidenciasuspensajudicial);
-
-  tpCodIncCPRP            = (NaoebasedecalculodecontribuicoesdevidasaoRPPSregimemilitar,
-                             BasedecalculodecontribuicoesdevidasaoRPPSregimemilitar,
-                             BasedecalculodecontribuicoesdevidasaoRPPSregimemilitar13salario,
-                             Contribuicaodescontadadoseguradoebeneficiario,
-                             Contribuicaodescontadadoseguradoebeneficiario13salario,
-                             Suspensaodeincidenciaemdecorrenciadedecisaojudicial);
 
   tpExtDecisao            = (edContribPatronais, edContribPatronaisSegurados );
 
@@ -525,8 +529,8 @@ type
 
   tpInclContr             = (icNenhum, icLocaisSemFiliais, icEstudoDeMercado, icContratacaoSuperior3Meses);
 
-  tpPlanRP                = (prpNenhum, prpPlanoPrevidenciarioOuUnico, prpPlanoFinanceiro);
-
+  tpPlanRP                = (prpNenhum = -1, prpSemSegregacaoDaMassa, prpFundoEmCapitalizacao, prpFundoEmReparticao, prpMantidoPeloTesouro);
+  
   tpMtvAlt                = (maPromocao, maReadaptacao, maAproveitamento, maOutros);
 
   tpOrigemAltAfast        = (oaaPorIniciativaDoEmpregador, oaaRevisaoAdministrativa, oaaDeterminacaoJudicial);
@@ -575,28 +579,60 @@ type
 
   tpIndApurIR             = (tiaiNenhum, tiaiNormal, tiaiSituacaoEspecialIRRF);
 
+  tpIndSitBenef           = (tpisbNenhum,
+                             tpisbBeneficioConcedidoPeloProprioOrgaoDeclarante,
+                             tpisbBeneficioTransferidoDeOutroOrgao,
+                             tpisbMudandaDeCPFDoBeneficiario);
+ 
+  tpTpPenMorte            = (pmNada, pmVitalicia, pmTemporaria);
+  
+  tpMotCessBenef          = (tmcbNenhum,
+                             tmcbObito, 
+                             tmcbReversao, 
+                             tmcbPorDecisaoJudicial, 
+                             tmcbCassacao, 
+                             tmcbTerminoDoPrazoDoBeneficio,
+                             tmcbExtincaoDeQuota,
+                             tmcbNaoHomologadoPeloTribunalDeContas,
+                             tmcbRenunciaExpressa,
+                             tmcbTransferenciaDeOrgaoAdministrador,
+                             tmcbMudancaDeCPFDoBeneficiario,
+                             tmcbNaoRecadastramento);
+
+  tpMtvTermino            = tpMotCessBenef;
+  
+  tpMtvSuspensao          = (mtvNada,
+                             mtvSuspensaoPorNaoRecadastramento,
+                             mtvOutrosMotivosDeSuspensao);
+  
 const
   PrefixoVersao = '-v';
 
-  TEventoString: array[0..43] of String =('evtInfoEmpregador', 'evtTabEstab',
+  TEventoString: array[0..49] of String =('evtInfoEmpregador', 'evtTabEstab',
                                           'evtTabRubrica', 'evtTabLotacao',
                                           'evtTabCargo', 'evtTabCarreira',
                                           'evtTabFuncao', 'evtTabHorTur',
                                           'evtTabAmbiente', 'evtTabProcesso',
-                                          'evtTabOperPort', 'S-2100', 'evtRemun',
-                                          'evtRmnRPPS', 'evtBenPrRP', 'evtPgtos',
-                                          'S-1220', 'evtAqProd', 'evtComProd',
-                                          'evtContratAvNP', 'evtInfoComplPer',
-                                          'evtTotConting', 'evtReabreEvPer',
-                                          'evtFechaEvPer', 'evtContrSindPatr',
-                                          'evtAdmPrelim', 'evtAdmissao',
-                                          'evtAltCadastral', 'evtAltContratual',
-                                          'evtCAT', 'evtMonit', 'evtAfastTemp',
-                                          'evtExpRisco', 'evtInsApo', 'evtAvPrevio',
-                                          'evtConvInterm', 'evtReintegr',
-                                          'evtDeslig', 'evtTSVInicio', 'S-2305',
+                                          'evtTabOperPort', 'S-2100', 
+                                          'evtRemun', 'evtRmnRPPS', 
+                                          'evtCdBenefIn', 'evtPgtos',
+                                          'S-1220', 'evtAqProd', 
+                                          'evtComProd', 'evtContratAvNP', 
+                                          'evtInfoComplPer', 'evtTotConting', 
+                                          'evtReabreEvPer', 'evtFechaEvPer', 
+                                          'evtContrSindPatr', 'evtAdmPrelim', 
+                                          'evtAdmissao', 'evtAltCadastral', 
+                                          'evtAltContratual', 'evtCAT', 
+                                          'evtMonit', 'evtAfastTemp',
+                                          'evtExpRisco', 'evtInsApo', 
+                                          'evtAvPrevio', 'evtConvInterm', 
+                                          'evtReintegr', 'evtDeslig', 
+                                          'evtTSVInicio', 'S-2305',
                                           'evtTSVAltContr', 'evtTSVTermino',
-                                          'evtCdBenPrRP', 'evtExclusao');
+                                          'evtCdBenPrRP', 'evtExclusao', 
+                                          'evtCdBenefAlt', 'evtCdBenIn', 
+                                          'evtCessao', 'evtCdBenAlt', 
+                                          'evtReativBen','evtCdBenTerm');
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
@@ -1029,13 +1065,25 @@ function StrTotpTmpResid(var ok: boolean; const s: string): tpTmpResid;
 function tpCondIngToStr(const t: tpCondIng ): string;
 function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;
 
+function eSTpIndSitBenefToStr(const t: tpIndSitBenef): string;
+function eSStrToTpIndSitBenef(var ok: boolean; const s: string): tpIndSitBenef;
+
+function eStpTpPenMorteToStr(const t: tpTpPenMorte): string;
+function eSStrTotpTpPenMorte(var ok: boolean; const s: string): tpTpPenMorte;
+
+function eStpTpMotCessBenefToStr(const t: tpMotCessBenef): string;
+function eSStrToTpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef;
+
+function eStpTpMtvSuspensaoToStr(const t: tpMtvSuspensao): string;
+function eSStrToTpMtvSuspensao(var ok: boolean; const s: string): tpMtvSuspensao;
+
 implementation
 
 uses
   pcnConversao, typinfo;
 
 const
-  TTipoEventoString   : array[0..52] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
+  TTipoEventoString   : array[0..58] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
                                                  'S-1035', 'S-1040', 'S-1050', 'S-1060', 'S-1070',
                                                  'S-1080', 'S-2100', 'S-1200', 'S-1202', 'S-1207',
                                                  'S-1210', 'S-1220', 'S-1250', 'S-1260', 'S-1270',
@@ -1045,7 +1093,8 @@ const
                                                  'S-2260', 'S-2298', 'S-2299', 'S-2300', 'S-2305',
                                                  'S-2306', 'S-2399', 'S-2400', 'S-3000', 'S-4000',
                                                  'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
-                                                 'S-5012', 'S-5013', 'S-2221');
+                                                 'S-5012', 'S-5013', 'S-2221', 'S-2405', 'S-2410',
+                                                 'S-2231', 'S-2416', 'S-2418', 'S-2420');
 
   TUFString           : array[0..27] of String = ('AC','AL','AP','AM','BA','CE','DF','ES','GO',
                                                   'MA','MT','MS','MG','PA','PB','PR','PE','PI',
@@ -1207,6 +1256,7 @@ begin
      teS2220: Result := schevtMonit;
      teS2221: Result := schevtToxic;
      teS2230: Result := schevtAfastTemp;
+     teS2231: Result := schevtCessao;
      teS2240: Result := schevtExpRisco;
      teS2245: Result := schevtTreiCap;
      teS2250: Result := schevtAvPrevio;
@@ -1216,7 +1266,12 @@ begin
      teS2300: Result := schevtTSVInicio;
      teS2306: Result := schevtTSVAltContr;
      teS2399: Result := schevtTSVTermino;
-     teS2400: Result := schevtCdBenPrRP;
+     teS2400: Result := schevtCdBenefIn;
+     teS2405: Result := schevtCdBenefAlt;
+     teS2410: Result := schevtCdBenIn;
+     teS2416: Result := schevtCdBenAlt;
+     teS2418: Result := schevtReativBen;
+     teS2420: Result := schevtCdBenTerm;
      teS3000: Result := schevtExclusao;
   else
     Result := schErro;
@@ -1318,14 +1373,14 @@ begin
   result := tpInclContr( StrToEnumerado2(ok, s, TGenericosString0_3) );
 end;
 
-function eSTpPlanRPToStr(const t: tpPlanRP): string;
+function eStpPlanRPToStr(const t: tpPlanRP): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString0_2 );
+  result := EnumeradoToStr2(t, TGenericosString0_3 );
 end;
 
-function eSStrToTpPlanRP(var ok: Boolean; const s: string): tpPlanRP;
+function eSStrTotpPlanRP(var ok: Boolean; const s: string): tpPlanRP;
 begin
-  result := tpPlanRP( StrToEnumerado2(ok, s, TGenericosString0_2) );
+  result := tpPlanRP( StrToEnumerado2(ok, s, TGenericosString0_3) );
 end;
 
 function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;
@@ -2606,10 +2661,10 @@ end;
 
 function StrEventoToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 const
-  EventoString: array[0..52] of String =('evtInfoEmpregador', 'evtTabEstab',
+  EventoString: array[0..58] of String =('evtInfoEmpregador', 'evtTabEstab',
        'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
        'evtTabFuncao', 'evtTabHorContratual', 'evtTabAmbiente', 'evtTabProcesso',
-       'evtTabOperPortuario', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
+       'evtTabOperPortuario', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtCdBenefIn',
        'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
        'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
        'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
@@ -2617,7 +2672,8 @@ const
        'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
        'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP',
        'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011', 'S-5012', 'S-5013',
-       'evtToxic');
+       'evtToxic', 'evtCdBenefAlt', 'evtCdBenIn', 'evtCessao', 'evtCdBenAlt',
+       'evtReativBen', 'evtCdBenTerm');
 begin
   result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
 end;
@@ -2749,6 +2805,49 @@ end;
 function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;
 begin
   result := tpCondIng( StrToEnumerado2(ok, s, TGenericosString1_7) );
+end;
+
+function eSTpIndSitBenefToStr(const t: tpIndSitBenef): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString0_3);
+end;
+                          
+function eSStrToTpIndSitBenef(var ok: boolean; const s: string): tpIndSitBenef;
+begin
+  result := tpIndSitBenef(StrToEnumerado2(ok, s, TGenericosString0_3) );
+end;
+
+function eStpTpPenMorteToStr(const t: tpTpPenMorte): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_2);
+end;
+
+function eSStrTotpTpPenMorte(var ok: boolean; const s: string): tpTpPenMorte;
+begin
+  result := tpTpPenMorte(StrToEnumerado2(ok, s, TGenericosString1_2) );
+end;
+
+function eStptpMotCessBenefToStr(const t: tpMotCessBenef): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString01_11);
+end;
+
+function eSStrTotpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef;
+begin
+  result := tpMotCessBenef(StrToEnumerado2(ok, s, TGenericosString01_11) );
+end;
+
+function eStpTpMtvSuspensaoToStr(const t: tpMtvSuspensao): string;
+begin
+  result := EnumeradoToStr2(t,['00', '01', '99'] );
+end;
+
+function eSStrToTpMtvSuspensao(var ok: boolean; const s: string): tpMtvSuspensao;
+begin
+  result := StrToEnumerado(ok, s, ['00', '01', '99'],
+                           [mtvNada, 
+                            mtvSuspensaoPorNaoRecadastramento,
+                            mtvOutrosMotivosDeSuspensao]);
 end;
 
 end.

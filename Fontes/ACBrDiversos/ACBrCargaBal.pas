@@ -919,8 +919,8 @@ begin
           LFIll('0', 3)+ // codigo imagem
           LFIll(Produtos[i].Nutricional.Codigo, 4)+ // codigo inf nutricional
 //          RFill('1', 1)+ // imprime data de validade
-          RFill(Produtos[i].ImpValidade.ToString, 1)+ // imprime data de validade
-          RFill(Produtos[i].ImpEmbalagem.ToString, 1)+ // imprime data embalagem
+          RFill(IntToStr(Produtos[i].ImpValidade), 1)+ // imprime data de validade
+          RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
           lFill('0', 12)+ // lote
@@ -1008,8 +1008,8 @@ begin
           LFIll('0', 4)+ // codigo imagem
           LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
 //          RFill('1', 1)+ // imprime data de validade
-          RFill(Produtos[i].ImpValidade.ToString, 1)+ // imprime data de validade
-          RFill(Produtos[i].ImpEmbalagem.ToString, 1)+ // imprime data embalagem
+          RFill(IntToStr(Produtos[i].ImpValidade), 1)+ // imprime data de validade
+          RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
           lFill('0', 12)+ // lote
@@ -1139,8 +1139,8 @@ begin
           LFIll(Produtos[i].ObterCodigoInfoExtra(modToledoMGV6), 6)+ // codigo inf extra
           LFIll('0', 4)+ // codigo imagem
           LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
-          RFill(Produtos[i].ImpValidade.ToString, 1)+ // imprime data de validade
-          RFill(Produtos[i].ImpEmbalagem.ToString, 1)+ // imprime data embalagem
+          RFill(IntToStr(Produtos[i].ImpValidade), 1)+ // imprime data de validade
+          RFill(IntToStr(Produtos[i].ImpEmbalagem), 1)+ // imprime data embalagem
           LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
           //LFIll('0', 4)+ // codigo fornecedor
           lFill('0', 12)+ // lote

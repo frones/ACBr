@@ -38,6 +38,9 @@ unit JsonDataObjects_ACBr;
 {$ELSE}
   {$IF CompilerVersion >= 24.0} // XE3 or newer
     {$LEGACYIFEND ON}
+    {$IF CompilerVersion >= 35.0} //11.0
+      {$DEFINE USE_NATIVEINT}
+    {$IFEND}
   {$IFEND}
   {$IF CompilerVersion >= 23.0}
     {$DEFINE HAS_UNIT_SCOPE}
@@ -1079,7 +1082,7 @@ type
   private
     FDataString: UTF8String;
   protected
-    function Realloc(var NewCapacity: {$IFDEF VER350} NativeInt {$ELSE} Longint {$ENDIF VER350}): Pointer; override;
+    function Realloc(var NewCapacity: {$IF Defined(USE_NATIVEINT)}NativeInt{$ELSE}Longint{$IFEND}): Pointer; override;
   public
     constructor Create;
     property DataString: UTF8String read FDataString;
@@ -1090,7 +1093,7 @@ type
   private
     FBytes: TBytes;
   protected
-    function Realloc(var NewCapacity: {$IFDEF VER350} NativeInt {$ELSE} Longint {$ENDIF VER350}): Pointer; override;
+    function Realloc(var NewCapacity: {$IF Defined(USE_NATIVEINT)}NativeInt{$ELSE}Longint{$IFEND}): Pointer; override;
   public
     constructor Create;
     property Bytes: TBytes read FBytes;
@@ -1154,7 +1157,7 @@ begin
     if VirtualQuery(PByte(MainInstance + $1000), MemInfo, SizeOf(MemInfo)) = SizeOf(MemInfo) then
     begin
       JsonMemInfoMainBlockStart := MemInfo.AllocationBase;
-      JsonMemInfoMainBlockEnd := JsonMemInfoBlockStart + MemInfo.RegionSize;
+      JsonMemInfoMainBlockEnd := JsonMemInfoMainBlockStart + MemInfo.RegionSize;
     end;
   end;
 end;
@@ -6213,7 +6216,7 @@ begin
     Inc(P);
     while P < EndP do
     begin
-      Result := Result * 10 + (P^ - Byte(Ord('0')));
+      Result := Result * 10 + Byte(P^ - Byte(Ord('0')));
       Inc(P);
     end;
   end;
@@ -6740,7 +6743,7 @@ begin
     Inc(P);
     while P < EndP do
     begin
-      Result := Result * 10 + (Ord(P^) - Ord('0'));
+      Result := Result * 10 + Byte(Ord(P^) - Ord('0'));
       Inc(P);
     end;
   end;
@@ -8234,9 +8237,9 @@ begin
   SetPointer(nil, 0);
 end;
 
-function TJsonUTF8StringStream.Realloc(var NewCapacity: {$IFDEF VER350} NativeInt {$ELSE} Longint {$ENDIF VER350}): Pointer;
+function TJsonUTF8StringStream.Realloc(var NewCapacity: {$IF Defined(USE_NATIVEINT)}NativeInt{$ELSE}Longint{$IFEND}): Pointer;
 var
-  L: Longint;
+  L: {$IF Defined(USE_NATIVEINT)}NativeInt{$ELSE}Longint{$IFEND};
 begin
   if NewCapacity <> Capacity then
   begin
@@ -8272,9 +8275,9 @@ begin
   SetPointer(nil, 0);
 end;
 
-function TJsonBytesStream.Realloc(var NewCapacity: {$IFDEF VER350} NativeInt {$ELSE} Longint {$ENDIF VER350}): Pointer;
+function TJsonBytesStream.Realloc(var NewCapacity: {$IF Defined(USE_NATIVEINT)}NativeInt{$ELSE}Longint{$IFEND}): Pointer;
 var
-  L: Longint;
+  L: {$IF Defined(USE_NATIVEINT)}NativeInt{$ELSE}Longint{$IFEND};
 begin
   if NewCapacity <> Capacity then
   begin

@@ -115,6 +115,7 @@ type
     FevtInfoComplPer: TpSimNao;
     FcompSemMovto : string;
     FindExcApur1250: tpSimNaoFacultativo;
+    FtransDCTFWeb: tpSimNaoFacultativo;
   public
     constructor create;
     destructor Destroy; override;
@@ -127,6 +128,7 @@ type
     property evtInfoComplPer: TpSimNao read FevtInfoComplPer write FevtInfoComplPer;
     property compSemMovto : string read FcompSemMovto write FcompSemMovto;
     property indExcApur1250: tpSimNaoFacultativo read FindExcApur1250 write FindExcApur1250;
+    property transDCTFWeb: tpSimNaoFacultativo read FtransDCTFWeb write FtransDCTFWeb;
   end;
 
 implementation
@@ -228,6 +230,13 @@ begin
   then
     Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoFacultativoToStr(self.InfoFech.indExcApur1250));
 
+
+{ Ate a presente data, o campo a seguir consta no manual, mas nao consta no xsd.
+  if (VersaoDF >= ve02_05_00) and
+     (Self.InfoFech.transDCTFWeb <> snfNada) and
+     (Self.ideEvento.IndApuracao = iapuMensal) then
+    Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 0, eSSimNaoFacultativoToStr(self.InfoFech.FtransDCTFWeb));
+  }
   Gerador.wGrupo('/infoFech');
 end;
 

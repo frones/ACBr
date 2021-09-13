@@ -315,7 +315,7 @@ begin
   if VersaoDF <= ve02_05_00 then
      Gerador.wCampo(tcStr, '', 'codIncSIND', 2,   2, 1, eSCodIncSINDToStr(InfoRubrica.dadosRubrica.codIncSIND));
 
-  if VersaoDF = veS01_00_00 then
+  if VersaoDF >= veS01_00_00 then
   Begin
         Gerador.wCampo(tcStr, '', 'codIncCPRP', 2,   2, 1, eSCodIncCPRPToStr(InfoRubrica.dadosRubrica.codIncCPRP));
         if InfoRubrica.dadosRubrica.tetoRemun <> snfNada then

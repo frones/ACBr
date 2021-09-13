@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2021
+--DoACBrBoleto--
+[*] Adicionado parâmetro no Método EnviarBoleto para definir o Tipo de Operação.
+
+13/09/2021
+--DoACBrReinfUnit--
+[*] Atualização dos parâmetros no método ConsultarReciboReinf.
+
 06/09/2021
 --DoACBrBoleto--
 [*] Adicionado método setOperacaoWS para alterar o serviço a ser utilizado no webservice boleto.

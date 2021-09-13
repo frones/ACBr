@@ -174,46 +174,6 @@ implementation
 uses
   DoACBrUnit, Forms;
 
-{ TMetodoConsultarReciboReinf }
-
-procedure TMetodoConsultarReciboReinf.Executar;
-var
-  APerApur: String;
-  ATipoEvento: Integer;
-  ACnpjPrestadorTomador: String;
-  AInscricaoEstabPrestadorTomador: String;
-  i: Integer;
-begin
-  APerApur := fpCmd.Params(0);
-  ATipoEvento := StrToIntDef(fpCmd.Params(1),0);
-  ACnpjPrestadorTomador := fpCmd.Params(2);
-  AInscricaoEstabPrestadorTomador := fpCmd.Params(3);
-
-  with TACBrObjetoReinf(fpObjetoDono) do
-  begin
-    if (EstaVazio(APerApur)) or (EstaVazio(ACnpjPrestadorTomador)) then
-      raise Exception.Create(ACBrStr(SErroReinfConsulta));
-
-    ACBrReinf.Eventos.Clear;
-    if ACBrReinf.ConsultaReciboEvento(APerApur, TTipoEvento(ATipoEvento),
-        ACnpjPrestadorTomador, AInscricaoEstabPrestadorTomador) then
-    begin
-      with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta do
-      begin
-        RespostaConsultaReciboStatus;
-
-        for i := 0 to evtTotalContrib.IdeStatus.regOcorrs.Count -1 do
-         RespostaConsultaReciboOcorrs(i);
-
-        for i := 0 to evtTotalContrib.RetornoEventos.Count -1 do
-          RespostaEventoRecibo(i);
-
-      end;
-    end;
-  end;
-
-end;
-
 { TACBrCarregarReinf }
 
 procedure TACBrCarregarReinf.CarregarDFePath(const AValue: String);
@@ -264,6 +224,61 @@ begin
       CargaDFe.Free;
     end;
   end;
+end;
+
+{ TMetodoConsultarReciboReinf }
+
+{ Params: 0 - PerApur : String - Periodo de apuração
+          1 - TipoEvento : Integer - Código do Tipo de Evento
+          2 - Inscricaoestabelecimento : String - IE do estabelecimento
+          3 - CnpjPrestador : String - CNPJ do
+          4 - InscricaoTomador : String - IE do tomador
+          5 - DataApur : TDateTime - Data de Apuração
+}
+procedure TMetodoConsultarReciboReinf.Executar;
+var
+  APerApur: String;
+  ATipoEvento: Integer;
+  AInscricaoestabelecimento: String;
+  ACnpjPrestador: String;
+  AInscricaoTomador: String;
+  ADataApur: TDateTime;
+  i: Integer;
+begin
+  APerApur := fpCmd.Params(0);
+  ATipoEvento := StrToIntDef(fpCmd.Params(1),0);
+  AInscricaoEstabelecimento := fpCmd.Params(2);
+  ACnpjPrestador := fpCmd.Params(3);
+  AInscricaoTomador := fpCmd.Params(4);
+  ADataApur := StrToDateTimeDef(fpCmd.Params(5),0);
+
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    if (EstaVazio(APerApur)) or (EstaVazio(ACnpjPrestador)) then
+      raise Exception.Create(ACBrStr(SErroReinfConsulta));
+
+    ACBrReinf.Eventos.Clear;
+    if ACBrReinf.ConsultaReciboEvento(APerApur,
+                                      TTipoEvento(ATipoEvento),
+                                      AInscricaoestabelecimento,
+                                      ACnpjPrestador,
+                                      AInscricaoTomador,
+                                      ADataApur) then
+    begin
+      with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta do
+      begin
+        RespostaConsultaReciboStatus;
+
+        for i := 0 to evtTotalContrib.IdeStatus.regOcorrs.Count -1 do
+         RespostaConsultaReciboOcorrs(i);
+
+        for i := 0 to evtTotalContrib.RetornoEventos.Count -1 do
+          RespostaEventoRecibo(i);
+
+      end;
+    end;
+  end;
+
 end;
 
 { TMetodoConsultarReinf }

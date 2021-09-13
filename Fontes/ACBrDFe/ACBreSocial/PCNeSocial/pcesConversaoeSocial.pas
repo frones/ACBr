@@ -173,48 +173,89 @@ type
                              cicIncidExclusivaEmpregadorSalMaternidade,
                              cicIncidExclusivaEmpregadorSalMaternidade13oSalario);
 
-  tpCodIncIRRF            = (ciiNaoeBasedeCalculo, ciiNaoeBasedeCalculoAcordoInternacional,
-                             ciiOutrasVerbasNaoConsideradas,
-                             ciiBasedeCalculoIRRFRemMensal, ciiBasedeCalculoIRRF13oSalario,
-                             ciiBasedeCalculoIRRFFerias, ciiBasedeCalculoIRRFPLR, ciiBasedeCalculoIRRFRRA,
-                             ciiValorIRRFRemMensal, ciiValorIRRF13oSalario, ciiValorIRRFFerias, ciiValorIRRFPLR,
-                             ciiValorIRRFPLRRRA, ciPrevSocialOficialRemMensal, ciPrevSocialOficial13Salario,
-                             ciPrevSocialOficialFerias, ciPrevSocialOficialRRA, ciPrevPrivadaSalarioMensal,
-                             ciPrevPrivada13Salario, ciPensaoAlimenticiaRemMensal, ciPensaoAlimenticia13Salario,
-                             ciPensaoAlimenticiaFerias, ciPensaoAlimenticiaPLR, ciPensaoAlimenticiaRRA,
-                             ciFundoAposentadoriaProgIndFAPIRemMensal,
-                             ciFundoAposentadoriaProgIndFAPI13Salario, ciFundacaoPrevCompServidorPubFederalFunprespRemMensal,
-                             ciFundacaoPrevCompServidorPubFederalFunpresp13Salario, ciFundacaoPrevCompServidorPubFunprespFerias,
-                             ciFundoAposProgIndividualFAPIFerias, ciPlanoprivadocoletivodeassistenciaasaude, ciParcelaIsenta65AnosRemMensal,
-                             ciParcelaIsenta65Anos13Salario, ciDiaria, ciAjudaDeCusto, ciIndenizacaoRescisaoContratoInclusiveAtituloPDV,
-                             ciAbonoPecuniario, ciPensaoAposOureformaPorMolestiaGraveOuAcidServicoRemMensal,
-                             ciPensaoAposOureformaPorMolestiaGraveOuAcidServico13Salario,
-                             ciValPagosATitOuSocioMicroEmpOuEmpPeqPorteExcProLaboreEAlugueis,
-                             ciAuxiliomoradia, ciPartenaotribvalorservicotransppassageirosoucargas,
-                             ciOutros, ciDepositoJudicial, ciCompJudicialAnoCalendario, ciCompJudicialAnosAnteriores,
-                             ciiIncidenciasuspensajudicialBCIRRF, ciiIncidenciasuspensajudicialBCIRRF13Salario,
-                             ciiIncidenciasuspensajudicialBCIRRFFerias, ciiIncidenciasuspensajudicialBCIRRFPLR,
-                             ciiIncidenciasuspensajudicialBCIRRFRRA,
-                             ciIncidenciasuspensaBCRemuneracaomensal, ciIncidenciasuspensaBC13salario,
-                             ciIncidenciasuspensaBCFerias, ciIncidenciasuspensaBCPLR,
-                             ciIncidenciasuspensaRetencaoRemuneracaomensal, ciIncidenciasuspensaRetencao13salario,
-                             ciIncidenciasuspensaRetencaoFerias, ciIncidenciasuspensaRetencaoPLR,
-                             ciIncidenciasuspensaRetencaoDepositojudicialMensal, ciIncidenciasuspensaRetencaoDepositojudicial13salario,
-                             ciIncidenciasuspensaRetencaoDepositojudicialFerias, ciIncidenciasuspensaRetencaoDepositojudicialPLR,
-                             ciIncidenciasuspensaDeducaoPSORemuneracaomensal, ciIncidenciasuspensaDeducaoPSO13salario,
-                             ciIncidenciasuspensaDeducaoPSOFerias, ciIncidenciasuspensaDeducaoPrevidenciaprivadamensal,
-                             ciIncidenciasuspensaDeducaoPrevidenciaprivada13salario, ciIncidenciasuspensaDeducaoPrevidenciaprivadaFerias,
-                             ciIncidenciasuspensaDeducaoPensaoalimenticiamensal, ciIncidenciasuspensaDeducaoPensaoalimenticia13salario,
-                             ciIncidenciasuspensaDeducaoPensaoalimenticiaFerias, ciIncidenciasuspensaDeducaoPensaoalimenticiaPLR,
-                             ciIncidenciasuspensaDeducaoFundodeAposentadoriaProgIndividualFAPImensal,
-                             ciIncidenciasuspensaDeducaoFundodeAposentadoriaProgIndividualFAPI13salario,
-                             ciIncidenciasuspensaDeducaoFundacaodePrevidenciacompservidorpublicomensal,
-                             ciIncidenciasuspensaDeducaoFundacaodePrevidenciacompservidorpublico13salario,
-                             ciIncidenciasuspensaDeducaoFundacaodePrevidenciacompservidorpublicoFerias,
-                             ciIncidenciasuspensaDeducaoFundodeAposentadoriaProgramadaIndividualFAPIFerias,
-                             ciIncidenciasuspensaDeducaoPlanoprivadocoletivodeassistenciaasaude,
-                             ciCompensacaojudicialdoanocalendario, ciCompensacaojudicialdeanosanteriores
-                             );
+  tpCodIncIRRF            = (ciiNaoeBasedeCalculo,                                               {0}    { Item válido até a versão 2.5 }
+                             ciiNaoeBasedeCalculoAcordoInternacional,                            {1}    { Item válido até a versão 2.5 }
+                             ciiOutrasVerbasNaoConsideradas,                                     {9}
+                             ciiBasedeCalculoIRRFRemMensal,                                      {11}
+                             ciiBasedeCalculoIRRF13oSalario,                                     {12}
+                             ciiBasedeCalculoIRRFFerias,                                         {13}
+                             ciiBasedeCalculoIRRFPLR,                                            {14}
+                             ciiBasedeCalculoIRRFRRA,                                            {15}    { Item válido até a versão 2.5 }
+                             ciiValorIRRFRemMensal,                                              {31}
+                             ciiValorIRRF13oSalario,                                             {32}
+                             ciiValorIRRFFerias,                                                 {33}
+                             ciiValorIRRFPLR,                                                    {34}
+                             ciiValorIRRFPLRRRA,                                                 {35}    { Item válido até a versão 2.5 }
+                             ciPrevSocialOficialRemMensal,                                       {41}
+                             ciPrevSocialOficial13Salario,                                       {42}
+                             ciPrevSocialOficialFerias,                                          {43}
+                             ciPrevSocialOficialRRA,                                             {44}    { Item válido até a versão 2.5 }
+                             ciPrevPrivadaSalarioMensal,                                         {46}
+                             ciPrevPrivada13Salario,                                             {47}
+                             ciPrevPrivadaFerias,                                                {48}    { Item válido a partir da versão simplificada }
+                             ciPensaoAlimenticiaRemMensal,                                       {51}
+                             ciPensaoAlimenticia13Salario,                                       {52}
+                             ciPensaoAlimenticiaFerias,                                          {53}
+                             ciPensaoAlimenticiaPLR,                                             {54}
+                             ciPensaoAlimenticiaRRA,                                             {55}    { Item válido até a versão 2.5 }
+                             ciFundoAposentadoriaProgIndFAPIRemMensal,                           {61}
+                             ciFundoAposentadoriaProgIndFAPI13Salario,                           {62}
+                             ciFundacaoPrevCompServidorPubFederalFunprespRemMensal,              {63}
+                             ciFundacaoPrevCompServidorPubFederalFunpresp13Salario,              {64}
+                             ciFundacaoPrevCompServidorPublicoFerias,                            {65}    { Item válido a partir da versão simplificada }
+                             ciFundoDeAposentadoriaProgramadaIndividualFAPIFerias,               {66}    { Item válido a partir da versão simplificada }
+                             ciPlanoPrivadoColetivoAssistenciaSaude,                             {67}    { Item válido a partir da versão simplificada }
+                             ciParcelaIsenta65AnosRemMensal,                                     {70}
+                             ciParcelaIsenta65Anos13Salario,                                     {71}
+                             ciDiaria,                                                           {72}
+                             ciAjudaDeCusto,                                                     {73}
+                             ciIndenizacaoRescisaoContratoInclusiveAtituloPDV,                   {74}
+                             ciAbonoPecuniario,                                                  {75}
+                             ciPensaoAposOureformaPorMolestiaGraveOuAcidServicoRemMensal,        {76}
+                             ciPensaoAposOureformaPorMolestiaGraveOuAcidServico13Salario,        {77}
+                             ciValPagosATitOuSocioMicroEmpOuEmpPeqPorteExcProLaboreEAlugueis,    {78}    { Item válido até a versão 2.5 }
+                             ciOutros,                                                           {79}
+                             ciDepositoJudicial,                                                 {81}    { Item válido até a versão 2.5 }
+                             ciCompJudicialAnoCalendario,                                        {82}    { Item válido até a versão 2.5 }
+                             ciCompJudicialAnosAnteriores,                                       {83}    { Item válido até a versão 2.5 }
+                             ciiIncidenciasuspensajudicialBCIRRF,                                {91}    { Item válido até a versão 2.5 }
+                             ciiIncidenciasuspensajudicialBCIRRF13Salario,                       {92}    { Item válido até a versão 2.5 }
+                             ciiIncidenciasuspensajudicialBCIRRFFerias,                          {93}    { Item válido até a versão 2.5 }
+                             ciiIncidenciasuspensajudicialBCIRRFPLR,                             {94}    { Item válido até a versão 2.5 }
+                             ciiIncidenciasuspensajudicialBCIRRFRRA,                             {95}    { Item válido até a versão 2.5 }
+                             ciiRendimentoIsentoAuxilioMoradia,                                  {700}   { Item válido a partir da versão simplificada }
+                             ciiRendimentoParteNaoTributavelDoValorDeServicoDeTransporte,        {701}   { Item válido a partir da versão simplificada }
+                             ciiRendimentoTributavelExigibilidadeSuspensaRemuneracaoMensal,      {9011}  { Item válido a partir da versão simplificada }
+                             ciiRendimentoTributavelExigibilidadeSuspensaDecimoTerceiro,         {9012}  { Item válido a partir da versão simplificada }
+                             ciiRendimentoTributavelExigibilidadeSuspensaFerias,                 {9013}  { Item válido a partir da versão simplificada }
+                             ciiRendimentoTributavelExigibilidadeSuspensaPLR,                    {9014}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspensaRetencaoIRRFRemuneracaoMensal,                       {9031}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspensaRetencaoIRRFDecimoTerceiro,                          {9032}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspensaRetencaoIRRFFerias,                                  {9033}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspensaRetencaoIRRFPLR,                                     {9034}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspRetencaoIRRFDepositoJudicialMensal,                      {9831}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspRetencaoIRRFDepositoJudicialDecimoTerceiro,              {9832}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspRetencaoIRRFDepositoJudicialFerias,                      {9833}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspRetencaoIRRFDepositoJudicialPLR,                         {9834}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPSORemuneracaoMensal,                     {9041}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPSODecimoTerceiro,                        {9042}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPSOFerias,                                {9043}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPrevPrivadaSalarioMensal,                 {9046}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPrevPrivadaDecimoTerceiro,                {9047}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPrevPrivadaFerias,                        {9048}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPensaoRemuneracaoMensal,                  {9051}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPensaoDecimoTerceiro,                     {9052}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPensaoFerias,                             {9053}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPensaoPLR,                                {9054}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFFundoAposProgIndFAPIRemuneracaoMensal,    {9061}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFFundoAposProgIndFAPIDecimoTerceiro,       {9062}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFFundoPrevComplServPublRemuneracaoMensal,  {9063}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFFundoPrevComplServPublDecimoTerceiro,     {9064}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFFundoPrevComplServPublFerias,             {9065}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFFundoAposProgIndFAPIFerias,               {9066}  { Item válido a partir da versão simplificada }
+                             ciiExigSuspDeducaoBaseIRRFPlanoPrivadoColetivoDeAssistenciaASaude,  {9067}  { Item válido a partir da versão simplificada }
+                             ciiCompensacaoJudicialAnoCalendario,                                {9082}  { Item válido a partir da versão simplificada }
+                             ciiCompensacaoJudicialAnosAnteriores);                              {9083}  { Item válido a partir da versão simplificada }
 
   tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaojudicial);
 
@@ -354,7 +395,7 @@ type
   tpTpRegPrev             = (rpRGPS, rpRPPS, rpRPPE);
 
   tpTpRegPrevFacultativo  = (rpfNenhum, rpfRGPS, rpfRPPS, rpfRPPE2);
-  
+
   tpTpAdmissao            = (taAdmissao,
                              taTransfEmpresaMesmoGrupoEconomico,
                              taTransfEmpresaConsorciadaOuDeConsorcio,
@@ -397,7 +438,7 @@ type
                              tjJornadaComHorarioDiarioFixoEFolhaFixaOutroDiaDaSemana,  { Item válido a partir da versão simplificada }
                              tjTurnoIninterruptoDeRevezamento,                         { Item válido a partir da versão simplificada }
                              tjDemaisTiposJornada);
-                             
+
   tpTpDia                 = (diSegundaFeira, diTercaFeira, diQuartaFeira, diQuintaFeira, diSextaFeira, diSabado, diDomingo, diDiaVariavel);
 
   tpTpExameOcup           = (taAdmissional, taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual, taDemissional);
@@ -502,17 +543,17 @@ type
                              cpaAvisoprevioIndenizadoNaoExigivel);
 
   tpTpAval                = (tpaQuantitativo, tpaQualitativo);
-                        
+
   tpModTreiCap            = (mtcPresencial, mtcEaD, mtcSemipresencial);
-                        
+
   tpTpTreiCap             = (ttcInicial, ttcPeriodico, ttcReciclagem, ttcEventual, ttcOutros);
-                        
+
   tpTpProf                = (ttpProfissionalEmpregado, ttpProfissionalSemVinculo);
-                        
+
   tpNacProf               = (ttpProfissionalBrasileiro, ttpProfissionalEstrangeiro);
-                        
+
   TVersaoeSocial          = (ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00);
-                        
+
   tpTmpParc               = (tpNaoeTempoParcial,
                              tpLimitado25HorasSemanais,
                              tpLimitado30HorasSemanais,
@@ -528,8 +569,8 @@ type
 
   tpTmpResid              = (ttrNenhum, ttrPrazoIndeterminado, ttrPrazoDeterminado);
 
-  tpCondIng               = (tciNenhum, tciRefugiado, tciSolicitanteDeRefugio, tciPermanenciaNoBrasilReuniaoFamiliar, 
-                             tciBeneficiadopeloAcordoEntrePaisesDoMercosul, tciDependenteDeAgenteDiplomatico, 
+  tpCondIng               = (tciNenhum, tciRefugiado, tciSolicitanteDeRefugio, tciPermanenciaNoBrasilReuniaoFamiliar,
+                             tciBeneficiadopeloAcordoEntrePaisesDoMercosul, tciDependenteDeAgenteDiplomatico,
                              tciBeneficiadoPeloTratadoDeAmizade, tciOutraCondicao);
 
   tpIndApurIR             = (tiaiNenhum, tiaiNormal, tiaiSituacaoEspecialIRRF);
@@ -899,7 +940,7 @@ function eSStrTotpTpPgto(var ok: Boolean; const s: string): tpTpPgto;
 
 function eSTpOpcConsultToStr(const t: tpOpcConsult): string;
 function eSStrTotpOpcConsult(var ok: Boolean; const s: string): tpOpcConsult;
-  
+
 function eSTpNivelEstagioToStr(const t: tpNivelEstagio): string;
 function eSStrTotpNivelEstagio(var ok: Boolean; const s: string): tpNivelEstagio;
 
@@ -1800,26 +1841,26 @@ end;
 
 function eSCodIncIRRFToStr(const t:tpCodIncIRRF ): string;
 begin
-  result := EnumeradoToStr2(t,[  '00', '01', '09','11', '12', '13', '14', '15', '31', '32', '33', '34',
-                                 '35', '41', '42', '43', '44', '46', '47', '51', '52', '53',
-                                 '54', '55', '61', '62', '63', '64', '65', '66', '67', '70', '71',
-                                 '72', '73', '74', '75', '76', '77', '78', '700', '701', '79', '81', '82',
-                                 '83','91', '92', '93', '94', '95', '9011','9012','9013','9014',
-                                 '9031','9032','9033','9034','9831','9832','9833','9834','9041',
-                                 '9042','9043','9046','9047','9048','9051','9052','9053','9054',
-                                 '9061','9062','9063','9064','9065','9066','9067','9082','9083' ] );
+  result := EnumeradoToStr2(t,[    '00',   '01',   '09',   '11',   '12',   '13',   '14',   '15',   '31',   '32',   '33',
+                                   '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',  
+                                   '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',
+                                   '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',
+                                   '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013', 
+                                 '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041', '9042',
+                                 '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063', 
+                                 '9064', '9065', '9066', '9067', '9082', '9083'  ] );
 end;
 
 function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
 begin
-  result := tpCodIncIRRF( StrToEnumerado2(ok , s,[  '00', '01', '09','11', '12', '13', '14', '15', '31', '32', '33', '34',
-                                                    '35', '41', '42', '43', '44', '46', '47', '51', '52', '53',
-                                                    '54', '55', '61', '62', '63', '64', '65', '66', '67', '70', '71',
-                                                    '72', '73', '74', '75', '76', '77', '78', '700', '701', '79', '81', '82',
-                                                    '83','91', '92', '93', '94', '95', '9011','9012','9013','9014',
-                                                    '9031','9032','9033','9034','9831','9832','9833','9834','9041',
-                                                    '9042','9043','9046','9047','9048','9051','9052','9053','9054',
-                                                    '9061','9062','9063','9064','9065','9066','9067','9082','9083' ] ));
+  result := tpCodIncIRRF( StrToEnumerado2(ok , s,[    '00',   '01',   '09',   '11',   '12',   '13',   '14',   '15',   '31',   '32',   '33',
+                                                      '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52', 
+                                                      '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',   
+                                                      '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',   
+                                                      '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013',
+                                                    '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041', '9042',
+                                                    '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063', 
+                                                    '9064', '9065', '9066', '9067', '9082', '9083'  ] ));
 end;
 
 function eSCodIncFGTSToStr(const t:tpCodIncFGTS ): string;

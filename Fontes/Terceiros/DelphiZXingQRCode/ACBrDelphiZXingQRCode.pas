@@ -1073,7 +1073,7 @@ begin
     end else
     if (Mode = qmAlphanumeric) then
     begin
-      CanAdd := GetAlphanumericCode(Ord(Content[X])) > 0;
+      CanAdd := GetAlphanumericCode(Ord(Content[X])) > -1;
     end else
     if (Mode = qmByte) then
     begin

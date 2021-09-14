@@ -282,6 +282,7 @@ type
     btnAtorInterNFeTransp: TButton;
     btnDistrDFePorNSU: TButton;
     btnDistrDFePorChave: TButton;
+    btnManifDestDesconnhecimento: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -348,6 +349,7 @@ type
     procedure btnAtorInterNFeTranspClick(Sender: TObject);
     procedure btnDistrDFePorNSUClick(Sender: TObject);
     procedure btnDistrDFePorChaveClick(Sender: TObject);
+    procedure btnManifDestDesconnhecimentoClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -768,6 +770,7 @@ begin
           pST := 0;
           vICMSSubstituto := 0;
           vICMSSTRet := 0;
+
           vBCFCPSTRet := 0;
           pFCPSTRet := 0;
           vFCPSTRet := 0;
@@ -1303,26 +1306,40 @@ begin
       // (consulte o contador do seu cliente para saber qual deve ser utilizado)
       // Pode variar de um produto para outro.
 
+      orig := oeNacional;
+
       if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
-        CST := cst00
+      begin
+        CST     := cst00;
+        modBC   := dbiPrecoTabelado;
+        vBC     := 100;
+        pICMS   := 18;
+        vICMS   := 18;
+        modBCST := dbisMargemValorAgregado;
+        pMVAST  := 0;
+        pRedBCST:= 0;
+        vBCST   := 0;
+        pICMSST := 0;
+        vICMSST := 0;
+        pRedBC  := 0;
+      end
       else
-        CSOSN := csosn101;
+      begin
+        CSOSN   := csosn101;
+        modBC   := dbiValorOperacao;
+        pCredSN := 5;
+        vCredICMSSN := 100 * pCredSN / 100;;
+        vBC     := 0;
+        pICMS   := 0;
+        vICMS   := 0;
+        modBCST := dbisListaNeutra;
+        pMVAST  := 0;
+        pRedBCST:= 0;
+        vBCST   := 0;
+        pICMSST := 0;
+        vICMSST := 0;
+      end;
 
-      orig    := oeNacional;
-      modBC   := dbiValorOperacao;
-      vBC     := 100;
-      pICMS   := 18;
-      vICMS   := 18;
-      modBCST := dbisMargemValorAgregado;
-      pMVAST  := 0;
-      pRedBCST:= 0;
-      vBCST   := 0;
-      pICMSST := 0;
-      vICMSST := 0;
-      pRedBC  := 0;
-
-      pCredSN := 5;
-      vCredICMSSN := 50;
       vBCFCPST := 100;
       pFCPST := 2;
       vFCPST := 2;
@@ -1330,6 +1347,7 @@ begin
       pST := 0;
       vICMSSubstituto := 0;
       vICMSSTRet := 0;
+
       vBCFCPSTRet := 0;
       pFCPSTRet := 0;
       vFCPSTRet := 0;
@@ -1505,8 +1523,17 @@ begin
 
 *)
 
-  NotaF.NFe.Total.ICMSTot.vBC     := 100;
-  NotaF.NFe.Total.ICMSTot.vICMS   := 18;
+  if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+  begin
+    NotaF.NFe.Total.ICMSTot.vBC := 100;
+    NotaF.NFe.Total.ICMSTot.vICMS := 18;
+  end
+  else
+  begin
+    NotaF.NFe.Total.ICMSTot.vBC := 0;
+    NotaF.NFe.Total.ICMSTot.vICMS := 0;
+  end;
+
   NotaF.NFe.Total.ICMSTot.vBCST   := 0;
   NotaF.NFe.Total.ICMSTot.vST     := 0;
   NotaF.NFe.Total.ICMSTot.vProd   := 100;
@@ -1527,6 +1554,9 @@ begin
   NotaF.NFe.Total.ICMSTot.vFCPUFDest   := 0.00;
   NotaF.NFe.Total.ICMSTot.vICMSUFDest  := 0.00;
   NotaF.NFe.Total.ICMSTot.vICMSUFRemet := 0.00;
+
+  NotaF.NFe.Total.ICMSTot.vFCPST     := 0;
+  NotaF.NFe.Total.ICMSTot.vFCPSTRet  := 0;
 
   NotaF.NFe.Total.retTrib.vRetPIS    := 0;
   NotaF.NFe.Total.retTrib.vRetCOFINS := 0;
@@ -1615,7 +1645,7 @@ begin
   InfoPgto := NotaF.NFe.pag.New;
   InfoPgto.indPag := ipVista;
   InfoPgto.tPag   := fpDinheiro;
-  InfoPgto.vPag   := 100;
+  InfoPgto.vPag   := 50;
 
 // Exemplo de pagamento integrado.
 
@@ -1630,7 +1660,7 @@ begin
     se tPag for fpOutro devemos incluir o campo xPag
   InfoPgto.xPag := 'Caderneta';
   }
-  InfoPgto.vPag   := 75;
+  InfoPgto.vPag   := 50;
   InfoPgto.tpIntegra := tiPagIntegrado;
   InfoPgto.CNPJ      := '05481336000137';
   InfoPgto.tBand     := bcVisa;
@@ -3340,17 +3370,19 @@ end;
 
 procedure TfrmACBrNFe.btnManifDestConfirmacaoClick(Sender: TObject);
 var
-  Chave, idLote, CNPJ, lMsg: string;
+  Chave, idLote, CNPJ, lMsg, Titulo: string;
 begin
+  Titulo := 'WebServices Eventos: Manif. Destinatario - Conf. Operacao';
+
   Chave:='';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Chave da NF-e', Chave)) then
+  if not(InputQuery(Titulo, 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
   idLote := '1';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+  if not(InputQuery(Titulo, 'Numero do Lote de envio do Evento', idLote)) then
      exit;
   CNPJ := '';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+  if not(InputQuery(Titulo, 'CNPJ ou CPF do autor do Evento', CNPJ)) then
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
@@ -4239,6 +4271,62 @@ end;
 procedure TfrmACBrNFe.spPathSchemasClick(Sender: TObject);
 begin
   PathClick(edtPathSchemas);
+end;
+
+procedure TfrmACBrNFe.btnManifDestDesconnhecimentoClick(Sender: TObject);
+var
+  Chave, idLote, CNPJ, lMsg, Titulo: string;
+begin
+  Titulo := 'WebServices Eventos: Manif. Destinatario - Desconhec. da Operacao';
+
+  Chave:='';
+  if not(InputQuery(Titulo, 'Chave da NF-e', Chave)) then
+     exit;
+  Chave := Trim(OnlyNumber(Chave));
+  idLote := '1';
+  if not(InputQuery(Titulo, 'Numero do Lote de envio do Evento', idLote)) then
+     exit;
+  CNPJ := '';
+  if not(InputQuery(Titulo, 'CNPJ ou CPF do autor do Evento', CNPJ)) then
+     exit;
+
+  ACBrNFe1.EventoNFe.Evento.Clear;
+
+  with ACBrNFe1.EventoNFe.Evento.New do
+  begin
+    InfEvento.cOrgao   := 91;
+    infEvento.chNFe    := Chave;
+    infEvento.CNPJ     := CNPJ;
+    infEvento.dhEvento := now;
+    infEvento.tpEvento := teManifDestDesconhecimento;
+  end;
+
+  ACBrNFe1.EnviarEvento(StrToInt(IDLote));
+
+  with AcbrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
+  begin
+    lMsg:=
+    'Id: ' + Id + #13 +
+    'tpAmb: ' + TpAmbToStr(tpAmb) + #13 +
+    'verAplic: ' + verAplic + #13 +
+    'cOrgao: ' + IntToStr(cOrgao) + #13 +
+    'cStat: ' + IntToStr(cStat) + #13 +
+    'xMotivo: ' + xMotivo + #13 +
+    'chNFe: ' + chNFe + #13 +
+    'tpEvento: ' + TpEventoToStr(tpEvento) + #13 +
+    'xEvento: ' + xEvento + #13 +
+    'nSeqEvento: ' + IntToStr(nSeqEvento) + #13 +
+    'CNPJDest: ' + CNPJDest + #13 +
+    'emailDest: ' + emailDest + #13 +
+    'dhRegEvento: ' + DateTimeToStr(dhRegEvento) + #13 +
+    'nProt: ' + nProt;
+  end;
+  ShowMessage(lMsg);
+
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
+
+  LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
 end;
 
 end.

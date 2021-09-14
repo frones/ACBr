@@ -1,6 +1,6 @@
 object frmACBrNFe: TfrmACBrNFe
-  Left = 236
-  Top = 118
+  Left = 252
+  Top = 127
   Caption = 'ACBrNFe - Programa Exemplo'
   ClientHeight = 612
   ClientWidth = 866
@@ -1977,6 +1977,15 @@ object frmACBrNFe: TfrmACBrNFe
           Caption = 'Distribui'#231#227'o DF-e por Chave'
           TabOrder = 2
           OnClick = btnDistrDFePorChaveClick
+        end
+        object btnManifDestDesconnhecimento: TButton
+          Left = 192
+          Top = 40
+          Width = 178
+          Height = 25
+          Caption = 'Manif. Dest. - Recusa da opera'#231#227'o'
+          TabOrder = 4
+          OnClick = btnManifDestDesconnhecimentoClick
         end
       end
     end

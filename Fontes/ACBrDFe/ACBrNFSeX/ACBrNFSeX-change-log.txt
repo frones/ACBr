@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/09/2021
+-- Sudoeste.Provider --
+[*] Possível correção para a leitura correta do retorno do Consultar NFS-e por
+    Rps.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade de Mineiros do Tiete/SP.
    Por: Diego A. Folieni

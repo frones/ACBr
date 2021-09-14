@@ -44,6 +44,9 @@ uses
 
 type
   TACBrNFSeXWebserviceeReceita = class(TACBrNFSeXWebserviceSoap11)
+  private
+    function GetSoapAction: string;
+    function GetNameSpace: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -54,6 +57,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    property SoapAction: string read GetSoapAction;
+    property NameSpace: string read GetNameSpace;
   end;
 
   TACBrNFSeProvidereReceita = class (TACBrNFSeProviderABRASFv2)
@@ -124,6 +129,22 @@ end;
 
 { TACBrNFSeXWebserviceeReceita }
 
+function TACBrNFSeXWebserviceeReceita.GetNameSpace: string;
+begin
+  if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+    Result := 'xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"'
+  else
+    Result := 'xmlns:nfs="http://www3.ereceita.net.br/soap/NfseWebService"';
+end;
+
+function TACBrNFSeXWebserviceeReceita.GetSoapAction: string;
+begin
+  if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
+    Result := 'https://www.ereceita.net.br/'
+  else
+    Result := 'https://www3.ereceita.net.br/ereceita/rpp/';
+end;
+
 function TACBrNFSeXWebserviceeReceita.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
@@ -136,9 +157,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:RecepcionarLoteRpsRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/RecepcionarLoteRps', Request,
-                     ['outputXML', 'EnviarLoteRpsResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'RecepcionarLoteRps', Request,
+                     ['outputXML', 'EnviarLoteRpsResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.RecepcionarSincrono(ACabecalho,
@@ -153,9 +173,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:RecepcionarLoteRpsSincronoRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/RecepcionarLoteRpsSincrono', Request,
-                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'RecepcionarLoteRpsSincrono', Request,
+                     ['outputXML', 'EnviarLoteRpsSincronoResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.GerarNFSe(ACabecalho,
@@ -170,9 +189,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:GerarNfseRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/GerarNfse', Request,
-                     ['outputXML', 'GerarNfseResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'GerarNfse', Request,
+                     ['outputXML', 'GerarNfseResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.ConsultarLote(ACabecalho,
@@ -187,9 +205,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:ConsultarLoteRpsRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/ConsultarLoteRps', Request,
-                     ['outputXML', 'ConsultarLoteRpsResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'ConsultarLoteRps', Request,
+                     ['outputXML', 'ConsultarLoteRpsResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.ConsultarNFSePorFaixa(ACabecalho,
@@ -204,9 +221,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:ConsultarNfseFaixaRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/ConsultarNfseFaixa', Request,
-                     ['outputXML', 'ConsultarNfseFaixaResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'ConsultarNfseFaixa', Request,
+                     ['outputXML', 'ConsultarNfseFaixaResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.ConsultarNFSePorRps(ACabecalho,
@@ -221,9 +237,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:ConsultarNfsePorRpsRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/ConsultarNfsePorRps', Request,
-                     ['outputXML', 'ConsultarNfseRpsResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'ConsultarNfsePorRps', Request,
+                     ['outputXML', 'ConsultarNfseRpsResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.Cancelar(ACabecalho, AMSG: String): string;
@@ -237,9 +252,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:CancelarNfseRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/CancelarNfse', Request,
-                     ['outputXML', 'CancelarNfseResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'CancelarNfse', Request,
+                     ['outputXML', 'CancelarNfseResposta'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceeReceita.SubstituirNFSe(ACabecalho,
@@ -254,9 +268,8 @@ begin
   Request := Request + '<nfs:nfseDadosMsg>' + XmlToStr(AMSG) + '</nfs:nfseDadosMsg>';
   Request := Request + '</nfs:SubstituirNfseRequest>';
 
-  Result := Executar('https://www.ereceita.net.br/SubstituirNfse', Request,
-                     ['outputXML', 'SubstituirNfseResposta'],
-         ['xmlns:nfs="http://webservice.ereceita.net.br/soap/NfseWebService"']);
+  Result := Executar(SoapAction + 'SubstituirNfse', Request,
+                     ['outputXML', 'SubstituirNfseResposta'], [NameSpace]);
 end;
 
 end.

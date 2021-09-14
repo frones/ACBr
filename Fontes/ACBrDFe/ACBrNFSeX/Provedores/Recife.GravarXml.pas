@@ -66,6 +66,7 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacao;
+  DivAliq100 := True;
 
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

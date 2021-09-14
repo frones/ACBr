@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/09/2021
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Coromandel/MG.
+   Por: Thiagfb
+-- eReceita.Provider --
+[*] Esse provedor tem SoapAction e NameSpace no envelope diferente para cada
+    ambiente.
+   Por: Italo Giurizzato Junior
+-- Recife.GravarXml/ISSFortaleza.GravarXml --
+[*] Esses dois provedores exige que a aliquota seja gerada já dividida por 100.
+   Por: Gilspider
+
 10/09/2021
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção no tratamento do retorno da consulta a nfse por rps,

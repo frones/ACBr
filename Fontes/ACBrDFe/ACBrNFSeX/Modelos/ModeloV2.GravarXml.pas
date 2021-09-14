@@ -131,13 +131,14 @@ begin
   NrOcorrCodTribMun_1 := 0;
   NrOcorrNumProcesso := 0;
   NrOcorrInscMunTomador := 0;
+  NrOcorrCodigoPaisServico := 0;
+  NrOcorrRespRetencao := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   NrOcorrIssRetido := 1;
   NrOcorrOptanteSimplesNacional := 1;
   NrOcorrIncentCultural := 1;
   NrOcorrItemListaServico := 1;
-  NrOcorrCodigoPaisServico := 1;
   NrOcorrCompetencia := 1;
   NrOcorrSerieRPS := 1;
   NrOcorrTipoRPS := 1;
@@ -170,7 +171,6 @@ begin
   NrOcorrValorCargaTribEst := -1;
   NrOcorrInformacoesComplemetares := -1;
   NrOcorrValTotTrib := -1;
-  NrOcorrRespRetencao := -1;
   NrOcorrTipoLogradouro := -1;
   NrOcorrLogradouro := -1;
   NrOcorrDDD := -1;

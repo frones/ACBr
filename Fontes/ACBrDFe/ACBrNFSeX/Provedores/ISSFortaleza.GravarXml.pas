@@ -65,6 +65,8 @@ procedure TNFSeW_ISSFortaleza.Configuracao;
 begin
   inherited Configuracao;
 
+  DivAliq100 := True;
+
   NrOcorrAliquota := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

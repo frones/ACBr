@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 14/09/2021
+-- IPM.Provider --
+[*] Possível correção para o erro AV.
+   Por: Italo Giurizzato Junior
+-- IPM.Provider --
+[*] Leitura do retorno quando este vem em Json.
+   Por: Sandro Andre Reghelin/Italo Giurizzato Junior
+-- GeisWeb.Provider --
+[*] Possível correção para a leitura correta do retorno do envio do lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Alterado a procedure LerInfNfse para ler a tag <InformacoesComplementares>
     caso ela exista no XML.

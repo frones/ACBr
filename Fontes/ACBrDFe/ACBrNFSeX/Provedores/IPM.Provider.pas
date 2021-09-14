@@ -196,7 +196,7 @@ procedure TACBrNFSeProviderIPM.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
 var
-  I: Integer;
+  I, j, k: Integer;
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
@@ -214,19 +214,47 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     aMsg := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
-    Codigo := Copy(aMsg, 1, 5);
 
-    {
-     Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
-     tem erros.
-    }
-    if Codigo <> '00001' then
+    if aMsg = '' then
     begin
-      AErro := Response.Erros.New;
+      aMsg := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('MensagemRetorno'), tcStr);
 
-      AErro.Codigo := Codigo;
-      AErro.Descricao := Copy(aMsg, 9, Length(aMsg));
-      AErro.Correcao := '';
+      j := Pos('code', aMsg);
+
+      if j > 0 then
+       Codigo := Copy(aMsg, j + 6, 3);
+
+
+      j := Pos('msg', aMsg);
+
+      if j > 0 then
+      begin
+        AErro := Response.Erros.New;
+
+        AErro.Codigo := Codigo;
+        AErro.Descricao := Copy(aMsg, j + 6, Length(aMsg));
+        k := Pos(',', AErro.Descricao);
+        AErro.Descricao := Copy(AErro.Descricao, 1, k - 2);
+
+        AErro.Correcao := '';
+      end;
+    end
+    else
+    begin
+      Codigo := Copy(aMsg, 1, 5);
+
+      {
+       Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
+       tem erros.
+      }
+      if Codigo <> '00001' then
+      begin
+        AErro := Response.Erros.New;
+
+        AErro.Codigo := Codigo;
+        AErro.Descricao := Copy(aMsg, 9, Length(aMsg));
+        AErro.Correcao := '';
+      end;
     end;
   end;
 end;
@@ -412,20 +440,20 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := ANode.Childrens.FindAnyNs('nf');
+      AuxNode := ANode.Childrens.FindAnyNs('nf');
 
-      if ANode <> nil then
+      if AuxNode <> nil then
       begin
         with Response do
         begin
-          NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero_nfse'), tcInt);
-  //        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
-          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
-          Data := Data + ProcessarConteudoXml(ANode.Childrens.FindAnyNs('hora_nfse'), tcHor);
-          Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
-          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
-          DescSituacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero_nfse'), tcInt);
+  //        SerieNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('serie_nfse'), tcInt);
+          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
+          Data := Data + ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcHor);
+          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+          DescSituacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
         end;
       end;
 
@@ -563,20 +591,20 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := ANode.Childrens.FindAnyNs('nf');
+      AuxNode := ANode.Childrens.FindAnyNs('nf');
 
-      if ANode <> nil then
+      if AuxNode <> nil then
       begin
         with Response do
         begin
-          NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero_nfse'), tcInt);
-  //        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
-          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
-          Data := Data + ProcessarConteudoXml(ANode.Childrens.FindAnyNs('hora_nfse'), tcHor);
-          Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
-          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
-          DescSituacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero_nfse'), tcInt);
+  //        SerieNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('serie_nfse'), tcInt);
+          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
+          Data := Data + ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcHor);
+          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+          DescSituacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
         end;
       end;
 
@@ -1055,10 +1083,12 @@ begin
       ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response, '', 'ListaMensagemRetorno');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('nfse');
+
       if not Assigned(ANodeArray) and (Response.Sucesso) then
       begin
         AErro := Response.Erros.New;

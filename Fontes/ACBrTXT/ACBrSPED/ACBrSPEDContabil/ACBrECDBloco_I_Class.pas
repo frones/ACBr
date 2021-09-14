@@ -222,6 +222,7 @@ begin
   FRegistroI200.Clear;
   FRegistroI300.Clear;
   FRegistroI350.Clear;
+  FRegistroI500.Clear;
   FRegistroI510.Clear;
   FRegistroI550.Clear;
 

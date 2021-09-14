@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 14/09/2021
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Mineiros do Tiete/SP.
+   Por: Diego A. Folieni
+-- ACBrNFSeXServicos --
+[*] Ajuste na URL de produção da cidade Cachoeiro do Itapemirim.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Possível correção para o erro AV.
    Por: Italo Giurizzato Junior

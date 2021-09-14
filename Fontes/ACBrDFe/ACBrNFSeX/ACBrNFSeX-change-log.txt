@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/09/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Alterado a procedure LerInfNfse para ler a tag <InformacoesComplementares>
+    caso ela exista no XML.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXClass --
 [+] Incluido o campo ValorISSRetido na lista ItemServicoCollectionItem, pois o
     provedor IPM gera um grupo <lista> que é uma lista de itens de serviço e 

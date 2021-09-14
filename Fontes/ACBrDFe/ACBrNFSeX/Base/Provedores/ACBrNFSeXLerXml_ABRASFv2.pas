@@ -417,7 +417,8 @@ begin
     NFSe.NfseSubstituida   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
 
     NFSe.OutrasInformacoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
-    NFSe.Link              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('UrlNfse'), tcStr);
+    NFSe.InformacoesComplementares := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
+    NFSe.Link := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('UrlNfse'), tcStr);
 
     LerValoresNfse(AuxNode);
 

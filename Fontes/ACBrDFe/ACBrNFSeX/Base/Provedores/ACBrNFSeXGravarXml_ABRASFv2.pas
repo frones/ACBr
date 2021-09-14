@@ -288,6 +288,7 @@ begin
   FNrOcorrNumProcesso := 0;
   FNrOcorrInscMunTomador := 0;
   FNrOcorrCodigoPaisServico := 0;
+  FNrOcorrRespRetencao := 0;
 
   // Por padrão as tags abaixo são obrigatórias
   FNrOcorrIssRetido := 1;
@@ -325,7 +326,6 @@ begin
   FNrOcorrValorCargaTribEst := -1;
   FNrOcorrInformacoesComplemetares := -1;
   FNrOcorrValTotTrib := -1;
-  FNrOcorrRespRetencao := -1;
   FNrOcorrTipoLogradouro := -1;
   FNrOcorrLogradouro := -1;
   FNrOcorrDDD := -1;

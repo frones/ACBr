@@ -65,7 +65,6 @@ procedure TNFSeW_Prodata.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrRespRetencao := 0;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
   NrOcorrValorInss := 1;
@@ -73,7 +72,6 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
   NrOcorrAliquota := 1;
-  NrOcorrRespRetencao := 0;
   NrOcorrValorISS := -1;
 end;
 

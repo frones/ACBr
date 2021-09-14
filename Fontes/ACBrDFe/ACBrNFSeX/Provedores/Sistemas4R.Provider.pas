@@ -199,13 +199,13 @@ end;
 
 function TACBrNFSeProvider4R.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_4R.Create(Self);
+  Result := TNFSeW_Sistemas4R.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
 function TACBrNFSeProvider4R.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_4R.Create(Self);
+  Result := TNFSeR_Sistemas4R.Create(Self);
   Result.NFSe := ANFSe;
 end;
 

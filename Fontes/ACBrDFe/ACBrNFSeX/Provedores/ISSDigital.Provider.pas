@@ -30,6 +30,8 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+//     Funcionou informando httpWinINet para HTTPLib
+
 {$I ACBr.inc}
 
 unit ISSDigital.Provider;

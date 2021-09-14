@@ -57,7 +57,6 @@ implementation
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     ISSDigital
-//     Funcionou informando httpWinINet para HTTPLib
 //==============================================================================
 
 { TNFSeW_ISSDigital }

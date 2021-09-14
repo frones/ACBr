@@ -54,7 +54,12 @@ type
 
 implementation
 
-{ TNFSeW_Publica }
+//==============================================================================
+// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+//     DBSeller
+//==============================================================================
+
+{ TNFSeW_DBSeller }
 
 procedure TNFSeW_DBSeller.Configuracao;
 begin

@@ -70,13 +70,13 @@ procedure TNFSeW_Elotech.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrRespRetencao := 0;
   NrOcorrCodigoMunic_2 := 1;
   NrOcorrOptanteSimplesNacional := -1;
   NrOcorrItemListaServico := -1;
   NrOcorrCodigoCNAE := -1;
   NrOcorrCodTribMun_1 := -1;
   NrOcorrCodigoMunic_1 := -1;
+
   GerarIDDeclaracao := False;
 end;
 

@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_4R }
+  { TNFSeR_Sistemas4R }
 
-  TNFSeR_4R = class(TNFSeR_ABRASFv2)
+  TNFSeR_Sistemas4R = class(TNFSeR_ABRASFv2)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     4R
+//     Sistemas4R
 //==============================================================================
 
 end.

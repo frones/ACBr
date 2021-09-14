@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_4R }
+  { TNFSeW_Sistemas4R }
 
-  TNFSeW_4R = class(TNFSeW_ABRASFv2)
+  TNFSeW_Sistemas4R = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -57,12 +57,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     4R
+//     Sistemas4R
 //==============================================================================
 
-{ TNFSeW_4R }
+{ TNFSeW_Sistemas4R }
 
-procedure TNFSeW_4R.Configuracao;
+procedure TNFSeW_Sistemas4R.Configuracao;
 begin
   inherited Configuracao;
 

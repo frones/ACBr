@@ -147,16 +147,11 @@ type
     tsCancelamento: TTabSheet;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
-    MemoResp: TMemo;
     TabSheet6: TTabSheet;
-    WBResposta: TWebBrowser;
+    WBXmlRetorno: TWebBrowser;
     TabSheet8: TTabSheet;
     memoLog: TMemo;
     TabSheet9: TTabSheet;
-    TabSheet10: TTabSheet;
-    memoRespWS: TMemo;
-    Dados: TTabSheet;
-    MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     Label6: TLabel;
     lblSchemas: TLabel;
@@ -226,7 +221,8 @@ type
     Label44: TLabel;
     edtChaveAcessoWeb: TEdit;
     edtChaveAutorizWeb: TEdit;
-    WBDocumento: TWebBrowser;
+    WBXmlEnvio: TWebBrowser;
+    WBXmlNotas: TWebBrowser;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -297,7 +293,8 @@ type
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
     procedure AlimentarNFSe(NumDFe, NumLote: String);
-    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser;
+      NomeArq: string = 'temp.xml');
     procedure AtualizarSSLLibsCombo;
     procedure AtualizarCidades;
     function RoundTo5(Valor: Double; Casas: Integer): Double;
@@ -670,6 +667,8 @@ begin
         Aliquota := 4;
 
         ValorISS := BaseCalculo * Aliquota / 100;
+
+        ValorISSRetido := 0;
 
         AliqISSST := 0;
         ValorISSST := 0;
@@ -1608,11 +1607,9 @@ begin
 
     sCC.Free;
 
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
-    MemoResp.Lines.LoadFromFile(ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
-    LoadXML(MemoResp.Text, WBResposta);
+    memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
 
-    pgRespostas.ActivePageIndex := 2;
+    pgRespostas.ActivePageIndex := 0;
   end;
 end;
 
@@ -1694,7 +1691,7 @@ begin
     ACBrNFSeX1.NotasFiscais.LoadFromFile(sNomeArq, False);
     ACBrNFSeX1.NotasFiscais.Imprimir;
 
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + sNomeArq);
+    memoLog.Lines.Add('Arquivo Carregado de: ' + sNomeArq);
   end;
 end;
 
@@ -1766,7 +1763,7 @@ begin
 
   ACBrNFSeX1.NotasFiscais.Clear;
 
-  pgRespostas.ActivePageIndex := 2;
+  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFSe.btnHTTPSClick(Sender: TObject);
@@ -1789,7 +1786,7 @@ begin
   ACBrNFSeX1.SSL.UseCertificateHTTP := False;
 
   try
-    MemoResp.Lines.Text := ACBrNFSeX1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+    memoLog.Lines.Text := ACBrNFSeX1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
   finally
     ACBrNFSeX1.SSL.UseCertificateHTTP := OldUseCert;
   end;
@@ -1813,22 +1810,15 @@ begin
     ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 
     if ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps <> '' then
-      MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)
+      memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)
     else
-      MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
+      memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
 
-    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
-    MemoDados.Lines.Add('Código de Verificação: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Data de Emissão: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));
+    memoLog.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
+    memoLog.Lines.Add('Código de Verificação: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
+    memoLog.Lines.Add('Data de Emissão: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));
 
-    if ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps <> '' then
-      MemoResp.Lines.LoadFromFile(ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)
-    else
-      MemoResp.Lines.LoadFromFile(ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
-
-    LoadXML(MemoResp.Text, WBResposta);
-
-    pgRespostas.ActivePageIndex := 2;
+    pgRespostas.ActivePageIndex := 0;
   end;
 end;
 
@@ -1844,12 +1834,12 @@ procedure TfrmACBrNFSe.btnLeituraX509Click(Sender: TObject);
 begin
   with ACBrNFSeX1.SSL do
   begin
-     CarregarCertificadoPublico(AnsiString(MemoDados.Lines.Text));
-     MemoResp.Lines.Add(CertIssuerName);
-     MemoResp.Lines.Add(CertRazaoSocial);
-     MemoResp.Lines.Add(CertCNPJ);
-     MemoResp.Lines.Add(CertSubjectName);
-     MemoResp.Lines.Add(CertNumeroSerie);
+     CarregarCertificadoPublico(AnsiString(memoLog.Lines.Text));
+     memoLog.Lines.Add(CertIssuerName);
+     memoLog.Lines.Add(CertRazaoSocial);
+     memoLog.Lines.Add(CertCNPJ);
+     memoLog.Lines.Add(CertSubjectName);
+     memoLog.Lines.Add(CertNumeroSerie);
 
     //MemoDados.Lines.LoadFromFile('c:\temp\teste2.xml');
     //MemoResp.Lines.Text := Assinar(MemoDados.Lines.Text, 'Entrada', 'Parametros');
@@ -1875,7 +1865,7 @@ begin
 
   sLink := ACBrNFSeX1.LinkNFSe(vNumNFSe, sCodVerif);
 
-  MemoResp.Lines.Add('Link Gerado: ' + sLink);
+  memoLog.Lines.Add('Link Gerado: ' + sLink);
 
   pgRespostas.ActivePageIndex := 0;
 end;
@@ -1900,7 +1890,7 @@ begin
     xAssinatura.Add(edtTexto.Text);
 
     Ahash := string(ACBrNFSeX1.SSL.CalcHash(xAssinatura, dgstSHA256, outBase64, cbAssinar.Checked));
-    MemoResp.Lines.Add( Ahash );
+    memoLog.Lines.Add( Ahash );
     pgRespostas.ActivePageIndex := 0;
   finally
     xAssinatura.Free;
@@ -1987,7 +1977,7 @@ begin
 
   ChecarResposta(tmSubstituirNFSe);
 
-  MemoDados.Lines.Add('Retorno da Substituição:');
+  memoLog.Lines.Add('Retorno da Substituição:');
 //  MemoDados.Lines.Add('Cód. Cancelamento: ' + Response.InfCancelamento.CodCancelamento);
 end;
 
@@ -2191,7 +2181,7 @@ begin
 
   LerConfiguracao;
 
-  pgRespostas.ActivePageIndex := 2;
+  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFSe.GravarConfiguracao;
@@ -2449,9 +2439,8 @@ begin
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2494,9 +2483,8 @@ begin
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
                 memoLog.Lines.Add(' ');
 
-                MemoResp.Lines.Text := XmlEnvio;
-                memoRespWS.Lines.Text := XmlRetorno;
-                LoadXML(XmlEnvio, WBResposta);
+                LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+                LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
                 if Erros.Count > 0 then
                 begin
@@ -2537,9 +2525,8 @@ begin
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
                 memoLog.Lines.Add(' ');
 
-                MemoResp.Lines.Text := XmlEnvio;
-                memoRespWS.Lines.Text := XmlRetorno;
-                LoadXML(XmlEnvio, WBResposta);
+                LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+                LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
                 if Erros.Count > 0 then
                 begin
@@ -2580,12 +2567,14 @@ begin
             memoLog.Lines.Add('Numero do Lote: ' + Lote);
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
+            memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
+            memoLog.Lines.Add('Link          : ' + Link);
+            memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2626,9 +2615,8 @@ begin
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2669,9 +2657,8 @@ begin
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2711,12 +2698,12 @@ begin
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
             memoLog.Lines.Add('Numero do Rps : ' + NumRPS);
             memoLog.Lines.Add('Série do Rps  : ' + Serie);
+            memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2761,9 +2748,8 @@ begin
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2801,9 +2787,10 @@ begin
             memoLog.Lines.Add('Numero do Lote: ' + Lote);
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
-            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Numero da NFSe: ' + InfCancelamento.NumeroNFSe);
             memoLog.Lines.Add('Série da NFSe : ' + InfCancelamento.SerieNFSe);
+            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Retorno do Pedido de Cancelamento:');
             memoLog.Lines.Add('Situação  : ' + RetCancelamento.Situacao);
@@ -2814,9 +2801,8 @@ begin
 
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2857,9 +2843,8 @@ begin
               memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
               memoLog.Lines.Add(' ');
 
-              MemoResp.Lines.Text := XmlEnvio;
-              memoRespWS.Lines.Text := XmlRetorno;
-              LoadXML(XmlEnvio, WBResposta);
+              LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+              LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
               if Erros.Count > 0 then
               begin
@@ -2907,9 +2892,8 @@ begin
             memoLog.Lines.Add('Situação : ' + RetCancelamento.Situacao);
             memoLog.Lines.Add(' ');
 
-            MemoResp.Lines.Text := XmlEnvio;
-            memoRespWS.Lines.Text := XmlRetorno;
-            LoadXML(XmlEnvio, WBResposta);
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
 
             if Erros.Count > 0 then
             begin
@@ -2950,20 +2934,21 @@ begin
 
   end;
 
-  MemoDados.Lines.Clear;
+//  MemoDados.Lines.Clear;
 
   for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
   begin
-    MemoDados.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
-    MemoDados.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
-    MemoDados.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.Configuracoes.Arquivos.GetPathNFSe() + '\' +
-                                               ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
+    memoLog.Lines.Add(' ');
+    memoLog.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
+    memoLog.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
+    memoLog.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.Configuracoes.Arquivos.GetPathNFSe() + '\' +
+                                             ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
 
     // Na propriedade XML temos o XML da NFS-e
-    LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XML, WBDocumento);
+    LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XML, WBXmlNotas);
   end;
 
-  pgRespostas.ActivePageIndex := 2;
+  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFSe.ConfigurarComponente;
@@ -3124,15 +3109,20 @@ begin
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;
 end;
 
-procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser; NomeArq: string);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      AnsiString(ACBrUtil.ConverteXMLtoUTF8(RetWS)), False, False);
+//  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+//                      AnsiString(ACBrUtil.ConverteXMLtoUTF8(RetWS)), False, False);
 
-  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
+  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
+                      AnsiString(RetWS), False, False);
+
+  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq);
 
   if ACBrNFSeX1.NotasFiscais.Count > 0then
-    MemoResp.Lines.Add('Empresa: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Prestador.RazaoSocial);
+    memoLog.Lines.Add('Empresa: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Prestador.RazaoSocial);
+
+  sleep(1000);
 end;
 
 procedure TfrmACBrNFSe.PathClick(Sender: TObject);

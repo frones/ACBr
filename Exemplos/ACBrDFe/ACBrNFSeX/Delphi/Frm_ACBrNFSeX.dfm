@@ -1923,39 +1923,9 @@ object frmACBrNFSe: TfrmACBrNFSe
       Top = 137
       Width = 567
       Height = 474
-      ActivePage = TabSheet5
+      ActivePage = TabSheet8
       Align = alClient
       TabOrder = 1
-      object TabSheet5: TTabSheet
-        Caption = 'Respostas'
-        object MemoResp: TMemo
-          Left = 0
-          Top = 0
-          Width = 559
-          Height = 446
-          Align = alClient
-          ScrollBars = ssVertical
-          TabOrder = 0
-        end
-      end
-      object TabSheet6: TTabSheet
-        Caption = 'XML Resposta'
-        ImageIndex = 1
-        object WBResposta: TWebBrowser
-          Left = 0
-          Top = 0
-          Width = 559
-          Height = 446
-          Align = alClient
-          TabOrder = 0
-          ControlData = {
-            4C000000C6390000182E00000000000000000000000000000000000000000000
-            000000004C000000000000000000000001000000E0D057007335CF11AE690800
-            2B2E126200000000000000004C0000000114020000000000C000000000000046
-            8000000000000000000000000000000000000000000000000000000000000000
-            00000000000000000100000000000000000000000000000000000000}
-        end
-      end
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
@@ -1976,9 +1946,9 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
       object TabSheet9: TTabSheet
-        Caption = 'Documento'
+        Caption = 'XML de Envio'
         ImageIndex = 3
-        object WBDocumento: TWebBrowser
+        object WBXmlEnvio: TWebBrowser
           Left = 0
           Top = 0
           Width = 559
@@ -1993,33 +1963,39 @@ object frmACBrNFSe: TfrmACBrNFSe
             00000000000000000100000000000000000000000000000000000000}
         end
       end
-      object TabSheet10: TTabSheet
-        Caption = 'Retorno Completo WS'
-        ImageIndex = 4
-        object memoRespWS: TMemo
+      object TabSheet6: TTabSheet
+        Caption = 'XML de Retorno'
+        ImageIndex = 1
+        object WBXmlRetorno: TWebBrowser
           Left = 0
           Top = 0
           Width = 559
           Height = 446
           Align = alClient
-          ScrollBars = ssVertical
           TabOrder = 0
+          ControlData = {
+            4C000000C6390000182E00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
-      object Dados: TTabSheet
-        Caption = 'Dados'
-        ImageIndex = 5
-        object MemoDados: TMemo
+      object TabSheet5: TTabSheet
+        Caption = 'XML das Notas'
+        object WBXmlNotas: TWebBrowser
           Left = 0
           Top = 0
           Width = 559
           Height = 446
           Align = alClient
-          Lines.Strings = (
-            '')
-          ScrollBars = ssVertical
           TabOrder = 0
-          WordWrap = False
+          ControlData = {
+            4C000000C6390000182E00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
     end

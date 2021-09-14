@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 14/09/2021
+-- ACBrNFSeXClass --
+[+] Incluido o campo ValorISSRetido na lista ItemServicoCollectionItem, pois o
+    provedor IPM gera um grupo <lista> que é uma lista de itens de serviço e 
+    o valor desse campo será usando para gerar a tag <valor_issrf>.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajuste para que a tag <ResponsavelRetencao> seja opcional na versão 2 do 
     layout da ABRASF, estava como não gerar.

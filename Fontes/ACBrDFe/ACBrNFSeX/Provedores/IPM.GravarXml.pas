@@ -274,7 +274,7 @@ begin
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
-                                NFSe.Servico.ItemServico[I].ValorISS, DSC_VISS))
+                         NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

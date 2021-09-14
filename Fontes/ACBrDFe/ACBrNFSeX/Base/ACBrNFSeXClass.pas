@@ -200,6 +200,7 @@ type
 
     FAliquota: Double;
     FValorISS: Double;
+    FValorISSRetido: Double;
 
     FAliqISSST: Double;
     FValorISSST: Double;
@@ -254,6 +255,7 @@ type
 
     property Aliquota: Double read FAliquota write FAliquota;
     property ValorISS: Double read FValorISS write FValorISS;
+    property ValorISSRetido: Double read FValorISSRetido write FValorISSRetido;
 
     property AliqISSST: Double read FAliqISSST write FAliqISSST;
     property ValorISSST: Double read FValorISSST write FValorISSST;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/09/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção para a leitura do XML da NFS-e provedor SimplISS_2.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Possível correção para a leitura correta do retorno da consulta ao lote.
    Por: Italo Giurizzato Junior

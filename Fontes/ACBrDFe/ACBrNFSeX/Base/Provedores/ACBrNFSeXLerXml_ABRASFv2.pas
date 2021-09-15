@@ -552,6 +552,10 @@ var
 begin
   AuxNode := ANode.Childrens.FindAnyNs('PrestadorServico');
 
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('Prestador');
+
+
   if AuxNode <> nil then
   begin
     LerIdentificacaoPrestador(AuxNode);

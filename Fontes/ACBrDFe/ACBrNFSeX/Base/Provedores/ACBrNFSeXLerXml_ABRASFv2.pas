@@ -83,14 +83,14 @@ type
 
     procedure LerConstrucaoCivil(const ANode: TACBrXmlNode);
 
-    procedure LerInfNfseCancelamento(const ANode: TACBrXmlNode);
+    procedure LerNfseCancelamento(const ANode: TACBrXmlNode);
     procedure LerConfirmacao(const ANode: TACBrXmlNode);
     procedure LerPedido(const ANode: TACBrXmlNode);
     procedure LerInfConfirmacaoCancelamento(const ANode: TACBrXmlNode);
     procedure LerInfPedidoCancelamento(const ANode: TACBrXmlNode);
     procedure LerIdentificacaoNfse(const ANode: TACBrXmlNode);
 
-    procedure LerInfNfseSubstituicao(const ANode: TACBrXmlNode);
+    procedure LerNfseSubstituicao(const ANode: TACBrXmlNode);
     procedure LerSubstituicaoNfse(const ANode: TACBrXmlNode);
   public
     function LerXml: Boolean; override;
@@ -118,6 +118,14 @@ begin
   begin
     LerPedido(AuxNode);
     LerInfConfirmacaoCancelamento(AuxNode);
+
+    with NFSe.NfseCancelamento do
+    begin
+      DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
+
+      if DataHora > 0 then
+        NFSe.SituacaoNfse := snCancelado;
+    end;
   end;
 end;
 
@@ -436,32 +444,18 @@ begin
   end;
 end;
 
-procedure TNFSeR_ABRASFv2.LerInfNfseCancelamento(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFSeR_ABRASFv2.LerNfseCancelamento(const ANode: TACBrXmlNode);
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
-
-  if AuxNode <> nil then
-  begin
-    LerConfirmacao(AuxNode);
-  end;
+  LerConfirmacao(ANode);
 end;
 
-procedure TNFSeR_ABRASFv2.LerInfNfseSubstituicao(const ANode: TACBrXmlNode);
-var
-  AuxNode: TACBrXmlNode;
+procedure TNFSeR_ABRASFv2.LerNfseSubstituicao(const ANode: TACBrXmlNode);
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
-
-  if AuxNode <> nil then
-  begin
-    LerSubstituicaoNfse(AuxNode);
-  end;
+  LerSubstituicaoNfse(ANode);
 end;
 
 procedure TNFSeR_ABRASFv2.LerInfPedidoCancelamento(const ANode: TACBrXmlNode);
@@ -797,11 +791,11 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
 
-  LerInfNfseCancelamento(AuxNode);
+  LerNfseCancelamento(AuxNode);
 
   AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
 
-  LerInfNfseSubstituicao(AuxNode);
+  LerNfseSubstituicao(AuxNode);
 end;
 
 function TNFSeR_ABRASFv2.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

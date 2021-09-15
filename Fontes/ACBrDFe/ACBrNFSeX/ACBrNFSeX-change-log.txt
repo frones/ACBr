@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/09/2021
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção para a leitura do XML de NFS-e Cancelada.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Possível correção para a leitura do XML da NFS-e provedor SimplISS_2.
    Por: Italo Giurizzato Junior

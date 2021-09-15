@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/09/2021
+-- Betha.GravarXml --
+[*] Incluido a linha para alterar o formato do ItemListaServico.
+   Por: Elias LS Tech
 -- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
 [*] Possível correção para a leitura do XML de NFS-e Cancelada.
    Por: Italo Giurizzato Junior

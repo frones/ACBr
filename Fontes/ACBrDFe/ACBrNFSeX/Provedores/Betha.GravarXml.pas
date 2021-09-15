@@ -144,6 +144,8 @@ procedure TNFSeW_Bethav2.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacao;
+
   NrOcorrCodigoPaisServico := -1;
 end;
 

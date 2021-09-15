@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/09/2021
+-- IPM.Provider --
+[*] Possível correção para a leitura correta do retorno da consulta ao lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Possível correção para a leitura do XML da NFS-e provedor Tecno.
    Por: Italo Giurizzato Junior

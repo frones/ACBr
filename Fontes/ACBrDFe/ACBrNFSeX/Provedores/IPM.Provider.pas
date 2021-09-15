@@ -440,6 +440,21 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
+      with Response do
+      begin
+        NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero_nfse'), tcInt);
+//        SerieNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('serie_nfse'), tcInt);
+        Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
+        Data := Data + ProcessarConteudoXml(ANode.Childrens.FindAnyNs('hora_nfse'), tcHor);
+        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+        DescSituacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
+        Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link_nfse'), tcStr);
+        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+      end;
+
+      (*
+        Verificar se as outras versões do WebService traz um retorno diferente.
+
       AuxNode := ANode.Childrens.FindAnyNs('nf');
 
       if AuxNode <> nil then
@@ -500,7 +515,9 @@ begin
 
           SalvarXmlNfse(ANota);
         end;
+
       end;
+      *)
     except
       on E:Exception do
       begin

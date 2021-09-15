@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -42,17 +41,16 @@ namespace ACBrLib.Core
             stream.WriteLine("");
         }
 
-        public TType GetValue<TType>(string key, TType defaultValue = default, IFormatProvider format = null)
+        public TType GetValue<TType>(string key, TType defaultValue = default)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key)) return defaultValue;
 
             TType ret;
             try
             {
-                if (format == null) format = CultureInfo.InvariantCulture;
                 if (!ContainsKey(key)) return defaultValue;
 
-                ret = (TType)Convert.ChangeType(this[key], typeof(TType), format);
+                ret = IniValueWrapper.UnWrap(this[key], defaultValue);
             }
             catch (Exception)
             {
@@ -60,6 +58,11 @@ namespace ACBrLib.Core
             }
 
             return ret;
+        }
+
+        public void SetValue<TType>(string key, TType value)
+        {
+            Add(key, IniValueWrapper.Wrap<TType>(value));
         }
 
         public override string ToString()

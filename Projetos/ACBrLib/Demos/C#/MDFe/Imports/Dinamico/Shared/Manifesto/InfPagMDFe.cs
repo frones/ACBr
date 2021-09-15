@@ -13,7 +13,7 @@ namespace ACBrLib.MDFe
 
         public decimal vContrato { get; set; }
 
-        public IndBoolDFe indAltoDesemp { get; set; }
+        public bool indAltoDesemp { get; set; }
 
         public IndPag indPag { get; set; }
 

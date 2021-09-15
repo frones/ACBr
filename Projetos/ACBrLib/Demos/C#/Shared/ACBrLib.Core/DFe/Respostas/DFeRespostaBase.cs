@@ -25,5 +25,13 @@ namespace ACBrLib.Core.DFe
         public string Resposta { get; protected set; }
 
         #endregion Properties
+
+        #region Methods
+
+        public override string ToString() => Resposta;
+
+        public static implicit operator string(DFeRespostaBase source) => source.Resposta;
+
+        #endregion Methods
     }
 }

@@ -104,7 +104,6 @@
     <Compile Include="..\Shared\NotaFiscal\IndicadorPagamento.cs" Link="NotaFiscal\IndicadorPagamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorProcesso.cs" Link="NotaFiscal\IndicadorProcesso.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorTotal.cs" Link="NotaFiscal\IndicadorTotal.cs" />
-    <Compile Include="..\Shared\NotaFiscal\IndIEDest.cs" Link="IndIEDest.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndIntermed.cs" Link="NotaFiscal\IndIntermed.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndISS.cs" Link="NotaFiscal\IndISS.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfIntermedNFe.cs" Link="NotaFiscal\InfIntermedNFe.cs" />
@@ -125,7 +124,6 @@
     <Compile Include="..\Shared\NotaFiscal\PISProdutoNFe.cs" Link="NotaFiscal\PISProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PISSTProdutoNFe.cs" Link="NotaFiscal\PISSTProdutoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\PresencaComprador.cs" Link="NotaFiscal\PresencaComprador.cs" />
-    <Compile Include="..\Shared\NotaFiscal\ProcessoEmissao.cs" Link="NotaFiscal\ProcessoEmissao.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProcNFe.cs" Link="NotaFiscal\ProcNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProcRefNFe.cs" Link="NotaFiscal\ProcRefNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\ProdutoNFe.cs" Link="NotaFiscal\ProdutoNFe.cs" />

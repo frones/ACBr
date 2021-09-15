@@ -102,7 +102,6 @@
     <Compile Include="..\Shared\NotaFiscal\IndicadorPagamento.cs" Link="NotaFiscal\IndicadorPagamento.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorProcesso.cs" Link="NotaFiscal\IndicadorProcesso.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndicadorTotal.cs" Link="NotaFiscal\IndicadorTotal.cs" />
-    <Compile Include="..\Shared\NotaFiscal\IndIEDest.cs" Link="NotaFiscal\IndIEDest.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndIntermed.cs" Link="NotaFiscal\IndIntermed.cs" />
     <Compile Include="..\Shared\NotaFiscal\IndISS.cs" Link="NotaFiscal\IndISS.cs" />
     <Compile Include="..\Shared\NotaFiscal\InfIntermedNFe.cs" Link="NotaFiscal\InfIntermedNFe.cs" />

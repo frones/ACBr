@@ -2,7 +2,7 @@
 {
     public enum IndBoolDFe
     {
-        tiSim = 1,
-        tiNao = 0
+        tiSim = 0,
+        tiNao = 1
     }
 }

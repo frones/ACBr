@@ -1,4 +1,6 @@
-﻿namespace ACBrLib.NFe
+﻿using ACBrLib.Core.DFe;
+
+namespace ACBrLib.NFe
 {
     /// <summary>
     /// Identificação do Destinatário da Nota Fiscal eletrônica
@@ -36,7 +38,7 @@
         /// <para>Nota 2: No caso de operação com o Exterior informar indIEDest=9 e não informar a tag IE do destinatário;</para>
         /// <para>Nota 3: No caso de Contribuinte Isento de Inscrição (indIEDest= 2), não informar a tag IE do destinatário.</para>
         /// </summary>
-        public IndIEDest indIEDest { get; set; }
+        public IndicadorIE indIEDest { get; set; }
 
         /// <summary>
         /// Inscrição Estadual do destinatário

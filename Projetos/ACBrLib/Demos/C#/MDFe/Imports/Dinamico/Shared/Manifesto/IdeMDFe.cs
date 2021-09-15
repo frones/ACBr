@@ -33,9 +33,9 @@ namespace ACBrLib.MDFe
 
         public DateTime? dhIniViagem { get; set; }
 
-        public IndBoolDFe indCanalVerde { get; set; }
+        public bool indCanalVerde { get; set; }
 
-        public IndBoolDFe indCarregaPosterior { get; set; }
+        public bool indCarregaPosterior { get; set; }
 
         public int cUF { get; set; }
     }

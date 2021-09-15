@@ -108,22 +108,23 @@ namespace ACBrLib.Core
             sections.Remove(section);
         }
 
-        public TType Read<TType>(string section, string propertie, TType defaultValue = default, IFormatProvider format = null)
+        public TType Read<TType>(string section, string propertie, TType defaultValue = default)
         {
             if (string.IsNullOrEmpty(propertie) || string.IsNullOrWhiteSpace(propertie)) return defaultValue;
             if (string.IsNullOrEmpty(section) || string.IsNullOrWhiteSpace(section)) return defaultValue;
 
             var iniSection = this[section];
-            return iniSection.GetValue(propertie, defaultValue, format);
+            return iniSection.GetValue(propertie, defaultValue);
         }
 
         public void Write(string section, string propertie, object value)
         {
             if (string.IsNullOrEmpty(propertie) || string.IsNullOrWhiteSpace(propertie)) return;
             if (string.IsNullOrEmpty(section) || string.IsNullOrWhiteSpace(section)) return;
+            if (value == null) return;
 
             var iniSection = this[section];
-            iniSection.Add(propertie, string.Format(CultureInfo.InvariantCulture, "{0}", value));
+            iniSection.SetValue(propertie, value);
         }
 
         public void Save()

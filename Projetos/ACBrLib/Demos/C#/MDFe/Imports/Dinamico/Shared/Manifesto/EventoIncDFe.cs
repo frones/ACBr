@@ -35,7 +35,7 @@ namespace ACBrLib.MDFe
             var iniData = base.WriteToIni();
 
             for (var i = 0; i < Docs.Count; i++)
-                iniData.WriteToIni(Docs[i], $"infDoc{i:0000}");
+                iniData.WriteToIni(Docs[i], $"infDoc{i + 1:0000}");
 
             return iniData;
         }

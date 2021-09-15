@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/09/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção para a leitura do XML da NFS-e provedor Tecno.
+   Por: Italo Giurizzato Junior
+
 14/09/2021
 -- Sudoeste.Provider --
 [*] Possível correção para a leitura correta do retorno do Consultar NFS-e por

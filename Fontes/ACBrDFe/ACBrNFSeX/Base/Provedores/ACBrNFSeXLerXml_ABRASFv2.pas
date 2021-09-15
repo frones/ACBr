@@ -420,6 +420,9 @@ begin
     NFSe.InformacoesComplementares := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('InformacoesComplementares'), tcStr);
     NFSe.Link := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('UrlNfse'), tcStr);
 
+    if NFSe.Link = '' then
+      NFSe.Link := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('LinkNota'), tcStr);
+
     LerValoresNfse(AuxNode);
 
     NFSe.ValorCredito := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);
@@ -604,7 +607,7 @@ end;
 
 procedure TNFSeR_ABRASFv2.LerServico(const ANode: TACBrXmlNode);
 var
-  AuxNode: TACBrXmlNode;
+  AuxNode, AuxNode2: TACBrXmlNode;
   Ok: Boolean;
   CodigoItemServico: string;
 begin
@@ -612,6 +615,11 @@ begin
 
   if AuxNode <> nil then
   begin
+    AuxNode2 := AuxNode.Childrens.FindAnyNs('tcDadosServico');
+
+    if AuxNode2 <> nil then
+      AuxNode := AuxNode2;
+
     LerValores(AuxNode);
 
     CodigoItemServico := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ItemListaServico'), tcStr);

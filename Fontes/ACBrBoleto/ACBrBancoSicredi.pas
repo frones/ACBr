@@ -171,9 +171,12 @@ end;
 
 function TACBrBancoSicredi.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 begin
-  Result:= FormatDateTime('yy',ACBrTitulo.DataDocumento) + '/' +
-           ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5) + '-' +
-           CalcularDigitoVerificador(ACBrTitulo);
+  if ( (ACBrBanco.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and ( (Trim(ACBrTitulo.NossoNumero) = '') or (Trim(ACBrTitulo.NossoNumero) = '00000') ) ) then
+    Result := ''
+  else
+    Result:= FormatDateTime('yy',ACBrTitulo.DataDocumento) + '/' +
+             ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5) + '-' +
+             CalcularDigitoVerificador(ACBrTitulo);
 end;
 
 function TACBrBancoSicredi.MontarCampoCodigoCedente (const ACBrTitulo: TACBrTitulo ) : String;

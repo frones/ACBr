@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Preloader;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -47,13 +48,16 @@ public class FrmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup8 = new javax.swing.ButtonGroup();
+        buttonGroup9 = new javax.swing.ButtonGroup();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         rtbRespostas = new javax.swing.JTextArea();
         btnSalvar = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel14 = new javax.swing.JPanel();
-        btnGerarXml = new javax.swing.JButton();
+        btnCriarEnviar = new javax.swing.JButton();
         btnCarregarIni = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         btnEnviarEmail = new javax.swing.JButton();
@@ -65,6 +69,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnValidarRegra = new javax.swing.JButton();
         btnEnviarAssincrono = new javax.swing.JButton();
         btnLimparLista = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         btnStatusServ = new javax.swing.JButton();
         btnConsultarRecibo = new javax.swing.JButton();
@@ -97,11 +102,11 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtFormatoAlerta = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        cmbFormaEmissao = new javax.swing.JComboBox<>();
+        cmbFormaEmissao = new javax.swing.JComboBox<String>();
         jLabel8 = new javax.swing.JLabel();
-        cmbModeloDocumento = new javax.swing.JComboBox<>();
+        cmbModeloDocumento = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
-        cmbVersaoDF = new javax.swing.JComboBox<>();
+        cmbVersaoDF = new javax.swing.JComboBox<String>();
         ckbRetirarAcentos = new javax.swing.JCheckBox();
         ckbSalvar = new javax.swing.JCheckBox();
         txtLogs = new javax.swing.JTextField();
@@ -116,14 +121,14 @@ public class FrmMain extends javax.swing.JFrame {
         txtCSC = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
-        cmbUfDestino = new javax.swing.JComboBox<>();
+        cmbUfDestino = new javax.swing.JComboBox<String>();
         jLabel33 = new javax.swing.JLabel();
-        cmbSSlType = new javax.swing.JComboBox<>();
+        cmbSSlType = new javax.swing.JComboBox<String>();
         nudTimeOut = new javax.swing.JSpinner();
         jLabel34 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
-        rdbProducao = new javax.swing.JRadioButton();
         rdbHomologacao = new javax.swing.JRadioButton();
+        rdbProducao = new javax.swing.JRadioButton();
         ckbVisualizar = new javax.swing.JCheckBox();
         ckbSalvarSOAP = new javax.swing.JCheckBox();
         jPanel21 = new javax.swing.JPanel();
@@ -145,22 +150,21 @@ public class FrmMain extends javax.swing.JFrame {
         txtProxySenha = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        cmbCrypt = new javax.swing.JComboBox<>();
-        cmbHttp = new javax.swing.JComboBox<>();
+        cmbCrypt = new javax.swing.JComboBox<String>();
+        cmbHttp = new javax.swing.JComboBox<String>();
         jLabel26 = new javax.swing.JLabel();
-        cmbXmlSign = new javax.swing.JComboBox<>();
+        cmbXmlSign = new javax.swing.JComboBox<String>();
         jLabel27 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         txtCertPath = new javax.swing.JTextField();
         btnSelecionarCertificado = new javax.swing.JButton();
-        btnDadosPFX = new javax.swing.JButton();
         txtDadosPFX = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        txtCertPassword = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
         txtCertNumero = new javax.swing.JTextField();
+        txtCertPassword = new javax.swing.JPasswordField();
         btnObterCertificados = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         ckbSalvarArqs = new javax.swing.JCheckBox();
@@ -179,6 +183,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtArqEvento = new javax.swing.JTextField();
         btnArqEvento = new javax.swing.JButton();
+        jLabel42 = new javax.swing.JLabel();
+        txtSalvarXMLDistribuicao = new javax.swing.JTextField();
+        btnArqSalvarRetorno = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtLogomarca = new javax.swing.JTextField();
         btnLogomarca = new javax.swing.JButton();
@@ -191,12 +198,12 @@ public class FrmMain extends javax.swing.JFrame {
         rdbRetrato = new javax.swing.JRadioButton();
         rdbPaisagem = new javax.swing.JRadioButton();
         jPanel13 = new javax.swing.JPanel();
-        cmbModelo = new javax.swing.JComboBox<>();
-        cmbPagCodigo = new javax.swing.JComboBox<>();
+        cmbModelo = new javax.swing.JComboBox<String>();
+        cmbPagCodigo = new javax.swing.JComboBox<String>();
         lblModelo = new javax.swing.JLabel();
         lblPagCodigo = new javax.swing.JLabel();
         lblPorta = new javax.swing.JLabel();
-        cmbPorta = new javax.swing.JComboBox<>();
+        cmbPorta = new javax.swing.JComboBox<String>();
         nudColunas = new javax.swing.JSpinner();
         lblColunas = new javax.swing.JLabel();
         lblEspacos = new javax.swing.JLabel();
@@ -268,10 +275,10 @@ public class FrmMain extends javax.swing.JFrame {
         jTabbedPane2.setToolTipText("");
         jTabbedPane2.setName("Envio"); // NOI18N
 
-        btnGerarXml.setText("Gerar XML");
-        btnGerarXml.addActionListener(new java.awt.event.ActionListener() {
+        btnCriarEnviar.setText("Criar e Enviar");
+        btnCriarEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarXmlActionPerformed(evt);
+                btnCriarEnviarActionPerformed(evt);
             }
         });
 
@@ -352,58 +359,79 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Gerar XML");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCarregarIni, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(btnGerarXml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGerarChave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAssinar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEnviarSincrono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCarregarXml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimirPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnValidarRegra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEnviarAssincrono, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimparLista, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnLimparLista, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnValidarRegra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCarregarIni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                            .addComponent(btnCriarEnviar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addComponent(btnAssinar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGerarChave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                                .addComponent(btnImprimirPDF)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnEnviarSincrono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnEnviarAssincrono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCarregarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(21, 21, 21))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGerarXml)
-                    .addComponent(btnEnviarSincrono)
-                    .addComponent(btnEnviarAssincrono))
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCriarEnviar)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCarregarXml)
+                        .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCarregarIni)
-                    .addComponent(btnCarregarXml)
-                    .addComponent(btnLimparLista))
+                    .addComponent(btnEnviarSincrono)
+                    .addComponent(btnEnviarAssincrono)
+                    .addComponent(btnCarregarIni))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnImprimir)
+                    .addComponent(btnEnviarEmail)
                     .addComponent(btnImprimirPDF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEnviarEmail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnValidarRegra)
                     .addComponent(btnAssinar)
-                    .addComponent(btnValidarRegra))
+                    .addComponent(btnGerarChave))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGerarChave)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnLimparLista)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
+
+        btnCriarEnviar.getAccessibleContext().setAccessibleName("Criar e Enviar");
 
         jTabbedPane2.addTab("Envio", jPanel14);
 
@@ -667,7 +695,7 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
-        ckbAttXML.setText("Atualizar XML");
+        ckbAttXML.setText("Atualizar XML Cancelado");
 
         ckbExibirErroSchema.setText("Exibir Erro Schema");
 
@@ -677,18 +705,19 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Forma de Emissão");
 
-        cmbFormaEmissao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "teContingencia", "teDPEC", "teFSDA", "teNormal", "teOffLine", "teSCAN", "teSVCAN", "teSVCRS", "teSVCSP" }));
+        cmbFormaEmissao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "teNormal", "teContingencia", "teSVCAN", "teDPEC", "teFSDA", "teSCAN", "teSVCRS", "teSVCSP", "teOffLine", " ", " " }));
         cmbFormaEmissao.setToolTipText("");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Modelo Documento Fiscal");
 
-        cmbModeloDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "moNFCe", "moNFe" }));
+        cmbModeloDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "moNFe", "moNFCe", " " }));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Versão Documento Fiscal");
 
-        cmbVersaoDF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ve200", "ve300", "ve310", "ve400" }));
+        cmbVersaoDF.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ve200", "ve300", "ve310", "ve400" }));
+        cmbVersaoDF.setSelectedIndex(3);
 
         ckbRetirarAcentos.setText("Retirar Acentos dos XMLs enviados");
 
@@ -819,36 +848,39 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel32.setText("Uf Destino");
 
-        cmbUfDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        cmbUfDestino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel33.setText("SSL Type");
 
-        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LT_all", "LT_SSHv2", "LT_SSLv2", "LT_SSLv3", "LT_TSLv1", "LT_TSLv1_1", "LT_TSLv1_2" }));
+        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LT_all", "LT_SSLv2", "LT_SSLv3", "LT_TSLv1", "LT_TSLv1_1", "LT_TSLv1_2", "LT_SSHv2" }));
 
-        nudTimeOut.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudTimeOut.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel34.setText("TimeOut");
 
         jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ambiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jPanel20.setToolTipText("Ambiente");
+        jPanel20.setFocusCycleRoot(true);
         jPanel20.setName("Ambiente"); // NOI18N
 
-        rdbProducao.setText("Produção");
-
+        buttonGroup1.add(rdbHomologacao);
         rdbHomologacao.setLabel("Homologação");
+
+        buttonGroup1.add(rdbProducao);
+        rdbProducao.setText("Produção");
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rdbProducao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(rdbHomologacao)
-                .addGap(26, 26, 26))
+                .addGap(38, 38, 38)
+                .addComponent(rdbProducao)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -868,24 +900,32 @@ public class FrmMain extends javax.swing.JFrame {
 
         jPanel21.setBorder(javax.swing.BorderFactory.createTitledBorder("Retorno do Envio"));
         jPanel21.setToolTipText("Retorno do Envio");
+        jPanel21.setEnabled(false);
         jPanel21.setName("Retorno do Envio"); // NOI18N
 
+        ckbAjustarAut.setEnabled(false);
         ckbAjustarAut.setLabel("Ajustar Automaticamente prop. \"Aguardar\"");
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel35.setText("Aguardar");
+        jLabel35.setEnabled(false);
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel36.setText("Tentativas");
+        jLabel36.setEnabled(false);
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel37.setText("Intervalo");
+        jLabel37.setEnabled(false);
 
-        nudAguardar.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudAguardar.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
+        nudAguardar.setEnabled(false);
 
-        nudIntervalos.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudIntervalos.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
+        nudIntervalos.setEnabled(false);
 
-        nudTentativas.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudTentativas.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
+        nudTentativas.setEnabled(false);
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -896,7 +936,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(ckbAjustarAut)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(18, Short.MAX_VALUE))
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel35)
@@ -940,7 +980,7 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel39.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel39.setText("Porta");
 
-        nudProxyPorta.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudProxyPorta.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel40.setText("Usuário");
@@ -1000,11 +1040,10 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ckbSalvarSOAP)
-                            .addComponent(ckbVisualizar)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel32)
@@ -1016,10 +1055,11 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(nudTimeOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(nudTimeOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(ckbSalvarSOAP)
+                            .addComponent(ckbVisualizar))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -1057,14 +1097,14 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel17.setText("CryptLib");
 
-        cmbCrypt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cryCapicom", "cryNone", "cryOpenSSL", "cryWinCrypt" }));
+        cmbCrypt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "cryNone", "cryOpenSSL", "cryCapicom", "cryWinCrypt" }));
 
-        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "httpIndy", "httpNone", "httpOpenSSL", "httpWinHttp", "httpWinINet" }));
+        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "httpNone", "httpWinINet", "httpWinHttp", "httpOpenSSL", "httpIndy", " ", " ", " " }));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel26.setText("HttpLib");
 
-        cmbXmlSign.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "xsLibXml2", "xsMsXml", "xsMsXmlCapicom", "xsNone", "xsXmlSec" }));
+        cmbXmlSign.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "xsNone", "xsXmlSec", "xsMsXml", "xsMsXmlCapicom", "xsLibXml2" }));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel27.setText("XmlSignLib");
@@ -1074,19 +1114,12 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel19.setName("DANFe"); // NOI18N
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel28.setText("Caminho");
+        jLabel28.setText("Caminho PFX");
 
         btnSelecionarCertificado.setText("btnSelectLog");
         btnSelecionarCertificado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSelecionarCertificadoActionPerformed(evt);
-            }
-        });
-
-        btnDadosPFX.setText("jButton1");
-        btnDadosPFX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDadosPFXActionPerformed(evt);
             }
         });
 
@@ -1098,6 +1131,8 @@ public class FrmMain extends javax.swing.JFrame {
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel31.setText("Número de Série");
+
+        txtCertPassword.setText("jPasswordField1");
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -1111,21 +1146,17 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(txtCertPath))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSelecionarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtDadosPFX))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDadosPFX, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(txtCertPassword)
             .addComponent(txtCertNumero)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel30)
                     .addComponent(jLabel31))
                 .addGap(0, 168, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                .addComponent(jLabel29)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(txtCertPassword)
+            .addComponent(txtDadosPFX)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1138,18 +1169,16 @@ public class FrmMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel29)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDadosPFX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDadosPFX))
+                .addComponent(txtDadosPFX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(txtCertPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel31)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCertNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         btnObterCertificados.setActionCommand("Obter Certificados");
@@ -1249,6 +1278,17 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel42.setText("Salvar XML Distribuição");
+        jLabel42.setRequestFocusEnabled(false);
+
+        btnArqSalvarRetorno.setText("btnSelectLog");
+        btnArqSalvarRetorno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArqSalvarRetornoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -1256,16 +1296,6 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ckbSalvarArqs)
-                            .addComponent(ckbPastaMensal)
-                            .addComponent(ckbAdicionaLiteral)
-                            .addComponent(ckbEmissaoPathNFe)
-                            .addComponent(ckbSalvaPathEvento)
-                            .addComponent(ckbSepararPorCNPJ)
-                            .addComponent(ckbSepararPorModelo))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel9Layout.createSequentialGroup()
@@ -1284,12 +1314,26 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnArqInu, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(ckbSalvarArqs)
+                            .addComponent(ckbPastaMensal)
+                            .addComponent(ckbAdicionaLiteral)
+                            .addComponent(ckbEmissaoPathNFe)
+                            .addComponent(ckbSalvaPathEvento)
+                            .addComponent(ckbSepararPorCNPJ)
+                            .addComponent(ckbSepararPorModelo)
+                            .addComponent(jLabel42))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtSalvarXMLDistribuicao, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
                                 .addGap(0, 112, Short.MAX_VALUE))
-                            .addComponent(txtArqEvento))
+                            .addComponent(txtArqEvento, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnArqEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnArqEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnArqSalvarRetorno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -1326,7 +1370,13 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtArqEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArqEvento))
-                .addGap(0, 174, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSalvarXMLDistribuicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArqSalvarRetorno))
+                .addGap(0, 125, Short.MAX_VALUE))
         );
 
         ckbEmissaoPathNFe.getAccessibleContext().setAccessibleDescription("");
@@ -1362,11 +1412,14 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel11.setToolTipText("DANFCe");
         jPanel11.setName("DANFe"); // NOI18N
 
+        buttonGroup9.add(rdbFortes);
         rdbFortes.setText("Fortes");
 
+        buttonGroup9.add(rdbEscPos);
         rdbEscPos.setActionCommand("EscPos");
         rdbEscPos.setLabel("EscPos");
 
+        buttonGroup9.add(rdbFortesA4);
         rdbFortesA4.setText("Fortes A4");
         rdbFortesA4.setActionCommand("EscPos");
 
@@ -1398,9 +1451,11 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel12.setToolTipText("DANFe");
         jPanel12.setName("DANFe"); // NOI18N
 
+        buttonGroup8.add(rdbRetrato);
         rdbRetrato.setActionCommand("Retrato");
         rdbRetrato.setLabel("Retrato");
 
+        buttonGroup8.add(rdbPaisagem);
         rdbPaisagem.setText("Paisagem");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
@@ -1428,10 +1483,10 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel13.setToolTipText("PosPrinter");
         jPanel13.setName("DANFe"); // NOI18N
 
-        cmbModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ppCustomPos", "ppEscBematech", "ppEscDaruma", "ppEscDiebold", "ppEscEpsonP2", "ppEscGPrinter", "ppEscPosEpson", "ppEscPosStar", "ppEscVox", "ppEscZJiang", "ppTexto" }));
+        cmbModelo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ppTexto", "ppEscPosEpson", "ppEscBematec", "ppEscDaruma", "ppEscVox", "ppEscDiebold", "ppEscEpsonP2", "ppCustomPos", "ppEscPosStar", "ppEscZJiang", "ppEscGPrinter", "ppEscDatecs", " " }));
         cmbModelo.setToolTipText("cmbModelo");
 
-        cmbPagCodigo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "pc1252", "pc437", "pc850", "pc852", "pc860", "pcUTF8" }));
+        cmbPagCodigo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "pcNone", "pc437", "pc850", "pc852", "pc860", "pcUTF8", "pc1252" }));
         cmbPagCodigo.setToolTipText("cmbModelo");
 
         lblModelo.setText("Modelo");
@@ -1440,7 +1495,10 @@ public class FrmMain extends javax.swing.JFrame {
 
         lblPorta.setText("Porta");
 
-        nudColunas.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        cmbPorta.setEditable(true);
+        cmbPorta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "COM1", "COM2", "LPT1", "LPT2", "\\\\localhost\\Epson", "c:\\temp\\ecf.txt", "TCP:192.168.0.31:9100" }));
+
+        nudColunas.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         lblColunas.setText("Colunas");
 
@@ -1448,13 +1506,13 @@ public class FrmMain extends javax.swing.JFrame {
 
         lblBuffer.setText("Buffer");
 
-        nudBuffer.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudBuffer.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         lblLinhasPular.setText("Linhas Pular");
 
-        nudLinhasPular.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudLinhasPular.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
-        nudEspacos.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudEspacos.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         cbxControlePorta.setText("Controle Porta");
 
@@ -1614,7 +1672,7 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel21.setText("Porta");
 
-        nudPorta.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudPorta.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Usuário");
@@ -1779,7 +1837,7 @@ public class FrmMain extends javax.swing.JFrame {
             }
 
             acbrNFe.configGravarValor(ACBrSessao.Principal, "LogNivel", 4);
-            acbrNFe.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog);
+            acbrNFe.configGravarValor(ACBrSessao.Principal, "LogPath", pathLog.toString());
             acbrNFe.configGravar();
 
             loadConfig();
@@ -1829,17 +1887,13 @@ public class FrmMain extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe Path com Schema", "Validação", JOptionPane.ERROR_MESSAGE);
             return false;
             
-        } else if (txtCertPath.getText().equals("")){
+        } else if ((txtCertPath.getText().equals("")) && (txtDadosPFX.getText().equals("")) ) {
             JOptionPane.showMessageDialog(null, "Informe o certificado", "Validação", JOptionPane.ERROR_MESSAGE);
             return false;
             
         } else if (txtCertPassword.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Informe a senha", "Validação", JOptionPane.ERROR_MESSAGE);
-            return false;
-            
-        }  else if (txtCertNumero.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Informe o número de série", "Validação", JOptionPane.ERROR_MESSAGE);
-            return false;
+            return false;            
             
         }   else if (cmbCrypt.getSelectedItem().equals("cryNone")){
             JOptionPane.showMessageDialog(null, "Informe Criptografia", "Validação", JOptionPane.ERROR_MESSAGE);
@@ -1853,9 +1907,6 @@ public class FrmMain extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe assinatura do XML", "Validação", JOptionPane.ERROR_MESSAGE);
             return false;
             
-        }   else if (cmbSSlType.getSelectedItem().equals("LT_all")){
-            JOptionPane.showMessageDialog(null, "Informe o tipo SSL", "Validação", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
         return true;
     }
@@ -2040,6 +2091,8 @@ public class FrmMain extends javax.swing.JFrame {
                                 "",
                                 "",
                                 txtMensagem.getText());  
+            rtbRespostas.append("Enviado."); 
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2052,13 +2105,14 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnLogomarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogomarcaActionPerformed
         try{
             JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new java.io.File("."));
-            chooser.setDialogTitle("Selecione o diretorio");
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooser.setAcceptAllFileFilterUsed(false);
+            OpenFileFilter filter = new OpenFileFilter("png", "logotipo (*.png)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);                      
 
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-            txtLogomarca.setText(chooser.getCurrentDirectory().getPath());
+            txtLogomarca.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.DANFE, "PathLogo", txtLogomarca.getText());
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2074,7 +2128,9 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);           
      
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
-            txtLogs.setText(chooser.getCurrentDirectory().getPath());
+            txtLogs.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.NFe, "PathSalvar", txtLogs.getText()); 
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2090,10 +2146,12 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);           
      
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
-            txtSchemaPath.setText(chooser.getCurrentDirectory().getPath());
+            txtSchemaPath.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.NFe, "PathSchemas", txtSchemaPath.getText());
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }       
         
     }//GEN-LAST:event_btnSelectSchemaActionPerformed
 
@@ -2107,7 +2165,9 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);           
      
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
-            txtArqNFe.setText(chooser.getCurrentDirectory().getPath());
+            txtArqNFe.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.NFe, "PathNFe", txtArqNFe.getText());
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2124,7 +2184,9 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);           
      
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
-            txtArqInu.setText(chooser.getCurrentDirectory().getPath());
+            txtArqInu.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.NFe, "PathInu", txtArqInu.getText());
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2141,7 +2203,9 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);           
      
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
-            txtArqEvento.setText(chooser.getCurrentDirectory().getPath());
+            txtArqEvento.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.NFe, "PathEvento", txtArqEvento.getText());
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2157,62 +2221,51 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setFileFilter(filter);
             
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-            txtCertPath.setText(chooser.getSelectedFile().getPath());
+            txtCertPath.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.DFe, "ArquivoPFX", txtCertPath.getText());
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnSelecionarCertificadoActionPerformed
 
-    private void btnDadosPFXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDadosPFXActionPerformed
-
-        try{
-            JFileChooser chooser = new JFileChooser(); 
-            chooser.setCurrentDirectory(new java.io.File("."));
-            chooser.setDialogTitle("Selecione o diretorio");
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooser.setAcceptAllFileFilterUsed(false);           
-     
-            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
-            txtDadosPFX.setText(chooser.getCurrentDirectory().getPath());
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_btnDadosPFXActionPerformed
-
     private void btnObterCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObterCertificadosActionPerformed
         
         try {   
-            acbrNFe.obterCertificados();
-            rtbRespostas.append(rtbRespostas.getText());   
+            String ret = acbrNFe.obterCertificados();
+            rtbRespostas.append(ret);   
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnObterCertificadosActionPerformed
 
-    private void btnGerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarXmlActionPerformed
+    private void btnCriarEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarEnviarActionPerformed
 
         if (!validacao()){
             JOptionPane.showMessageDialog(null,"Erro verifique as configurações do certificado","Erro", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
-        try {
-         acbrNFe.limparLista();
-         JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+         try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo Ini NFe (*.ini)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-            acbrNFe.limparLista();
-            acbrNFe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
-            rtbRespostas.append(rtbRespostas.getText());   
-        }catch (Exception ex){
+            acbrNFe.limparLista(); 
+            acbrNFe.carregarIni(chooser.getSelectedFile().getAbsolutePath());            
+            
+            String ret = acbrNFe.enviar(1,false,false,false);
+            rtbRespostas.append(ret);   
+            
+        } catch (Exception ex) {
+            rtbRespostas.append(ex.getMessage());  
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnGerarXmlActionPerformed
+         
+    }//GEN-LAST:event_btnCriarEnviarActionPerformed
 
     private void btnCarregarIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarIniActionPerformed
         try {
@@ -2225,7 +2278,8 @@ public class FrmMain extends javax.swing.JFrame {
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
             acbrNFe.limparLista();
             acbrNFe.carregarIni(chooser.getSelectedFile().getAbsolutePath());
-            rtbRespostas.append(rtbRespostas.getText());   
+            rtbRespostas.append("dados carregados."); 
+            
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2240,6 +2294,7 @@ public class FrmMain extends javax.swing.JFrame {
         
         try{
             acbrNFe.assinar();
+            rtbRespostas.append("ok."); 
         } catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2269,8 +2324,8 @@ public class FrmMain extends javax.swing.JFrame {
           int numero = Integer.parseInt(num);
           int emissao = Integer.parseInt(tipoEmissao);
           
-          acbrNFe.gerarChave(uf, cod, doc, serie, numero, emissao, date, cnpjCPF);
-          rtbRespostas.append(rtbRespostas.getText());   
+          String ret = acbrNFe.gerarChave(uf, cod, doc, serie, numero, emissao, date, cnpjCPF);
+          rtbRespostas.append(ret);   
           
         }catch (Exception ex){
              Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2289,8 +2344,9 @@ public class FrmMain extends javax.swing.JFrame {
              String aLote = JOptionPane.showInputDialog("Digite o lote");
              int lote = Integer.parseInt(aLote);
              
-             acbrNFe.enviar(lote,false,true,false);
-             rtbRespostas.append(rtbRespostas.getText());
+             String ret = acbrNFe.enviar(lote,false,true,false);
+             rtbRespostas.append(ret);
+             
         } catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2308,7 +2364,8 @@ public class FrmMain extends javax.swing.JFrame {
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
             acbrNFe.limparLista();
             acbrNFe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
-            rtbRespostas.append(rtbRespostas.getText());   
+            rtbRespostas.append("xml carregado."); 
+ 
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2325,7 +2382,7 @@ public class FrmMain extends javax.swing.JFrame {
             acbrNFe.limparLista();
             acbrNFe.carregarXml(chooser.getSelectedFile().getAbsolutePath());
             acbrNFe.imprimirPDF();
-            rtbRespostas.append("Impresso com sucesso.");            
+            rtbRespostas.append("Gerado com sucesso.");            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2334,8 +2391,8 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnValidarRegraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarRegraActionPerformed
         
         try {
-            acbrNFe.validarRegrasdeNegocios();
-            rtbRespostas.append(rtbRespostas.getText());
+            String ret= acbrNFe.validarRegrasdeNegocios();
+            rtbRespostas.append(ret);
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2354,8 +2411,9 @@ public class FrmMain extends javax.swing.JFrame {
              String aLote = JOptionPane.showInputDialog("Digite o lote");
              int lote = Integer.parseInt(aLote);
              
-             acbrNFe.enviar(lote);
-             rtbRespostas.append(rtbRespostas.getText());
+             String ret = acbrNFe.enviar(lote);
+             rtbRespostas.append(ret);             
+             
         } catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2363,8 +2421,9 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnLimparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparListaActionPerformed
         try{
-            acbrNFe.limparLista();
-            rtbRespostas.append(rtbRespostas.getText());
+            acbrNFe.limparLista(); 
+            rtbRespostas.append("Lista Limpa."); 
+            
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2381,7 +2440,7 @@ public class FrmMain extends javax.swing.JFrame {
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
             acbrNFe.limparLista();
             acbrNFe.carregarEventoINI(chooser.getSelectedFile().getAbsolutePath());
-            rtbRespostas.append(rtbRespostas.getText());   
+            rtbRespostas.append("Evento carregado.");    
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2410,7 +2469,7 @@ public class FrmMain extends javax.swing.JFrame {
             }
             
             acbrNFe.imprimirEvento(eArquivoXmlNFe.getSelectedFile().getAbsolutePath(),eArquivoXmlEvento.getSelectedFile().getAbsolutePath());
-            rtbRespostas.append(rtbRespostas.getText());
+            rtbRespostas.append("Impresso com sucesso."); ;
             
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2453,6 +2512,8 @@ public class FrmMain extends javax.swing.JFrame {
                                 "",
                                 "",
                                 txtMensagem.getText());  
+            rtbRespostas.append("Enviado."); 
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2472,8 +2533,8 @@ public class FrmMain extends javax.swing.JFrame {
              String aLote = JOptionPane.showInputDialog("Digite o lote");
              int lote = Integer.parseInt(aLote);
              
-             acbrNFe.enviarEvento(lote);
-             rtbRespostas.append(rtbRespostas.getText());
+             String ret= acbrNFe.enviarEvento(lote);
+             rtbRespostas.append(ret);
         } catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2484,7 +2545,7 @@ public class FrmMain extends javax.swing.JFrame {
 
         try{
             acbrNFe.limparListaEventos();
-            rtbRespostas.append(rtbRespostas.getText());
+            rtbRespostas.append("Lista limpa."); 
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2513,7 +2574,7 @@ public class FrmMain extends javax.swing.JFrame {
             }
             
             acbrNFe.imprimirEventoPDF(eArquivoXmlNFe.getSelectedFile().getAbsolutePath(),eArquivoXmlEvento.getSelectedFile().getAbsolutePath());
-            rtbRespostas.append(rtbRespostas.getText());
+            rtbRespostas.append("Gerado com sucesso."); 
             
         }catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2572,8 +2633,8 @@ public class FrmMain extends javax.swing.JFrame {
           
           int uf = Integer.parseInt(codUf);
           
-          acbrNFe.distribuicaoDFeporChave(uf, cnpj, chave);
-          rtbRespostas.append(rtbRespostas.getText());   
+          String ret= acbrNFe.distribuicaoDFeporChave(uf, cnpj, chave);
+          rtbRespostas.append(ret);   
           
         }catch (Exception ex){
              Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2594,8 +2655,8 @@ public class FrmMain extends javax.swing.JFrame {
           
           int uf = Integer.parseInt(codUf);
           
-          acbrNFe.distribuicaoDFeporChave(uf, cnpj, nsu);
-          rtbRespostas.append(rtbRespostas.getText());   
+          String ret = acbrNFe.distribuicaoDFeporChave(uf, cnpj, nsu);
+          rtbRespostas.append(ret);   
           
         }catch (Exception ex){
              Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2617,8 +2678,8 @@ public class FrmMain extends javax.swing.JFrame {
           
           int uf = Integer.parseInt(codUf);
           
-          acbrNFe.distribuicaoDFeporUltNSU(uf, cnpj, nsu);
-          rtbRespostas.append(rtbRespostas.getText());   
+          String ret = acbrNFe.distribuicaoDFeporUltNSU(uf, cnpj, nsu);
+          rtbRespostas.append(ret);   
           
         }catch (Exception ex){
              Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2648,8 +2709,8 @@ public class FrmMain extends javax.swing.JFrame {
             ie = true;
             }
           
-          acbrNFe.consultaCadastro(codUf, numDoc, ie);
-          rtbRespostas.append(rtbRespostas.getText());   
+          String ret= acbrNFe.consultaCadastro(codUf, numDoc, ie);
+          rtbRespostas.append(ret);   
           
         }catch (Exception ex){
              Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2657,33 +2718,88 @@ public class FrmMain extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnConsultarCadastroActionPerformed
 
+    private void btnArqSalvarRetornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArqSalvarRetornoActionPerformed
+        try{          
+            JFileChooser chooser = new JFileChooser(); 
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Selecione o diretorio");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);           
+     
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;            
+            txtSalvarXMLDistribuicao.setText(chooser.getSelectedFile().toString());
+            acbrNFe.configGravarValor(ACBrSessao.NFe, "Download.PathDownload", txtSalvarXMLDistribuicao.getText());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnArqSalvarRetornoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo Ini NFe (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrNFe.limparLista();
+            acbrNFe.carregarIni(chooser.getSelectedFile().getAbsolutePath());
+
+            String ret = acbrNFe.obterXml(0);
+            acbrNFe.gravarXml(0);
+            rtbRespostas.append(ret);
+
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void loadConfig() {
         try {
             acbrNFe.configLer();
-            cmbModeloDocumento.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "ModeloDF")));
-            txtIdCSC.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "IdCSC"));
-            txtCSC.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "CSC"));
-            cmbModelo.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLCryptLib")));            
+            
+            //Certificado
+            cmbCrypt.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLCryptLib")));            
             cmbHttp.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLHttpLib")));    
             cmbXmlSign.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.DFe, "SSLXmlSignLib")));
             txtCertPath.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "ArquivoPFX"));
+            txtDadosPFX.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "DadosPFX"));
             txtCertPassword.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "Senha"));
             txtCertNumero.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "NumeroSerie"));
-            txtLogomarca.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathSchemas"));
-            cmbUfDestino.setSelectedItem(acbrNFe.configLerValor(ACBrSessao.DFe, "UF"));
             
+            //WebService
+            cmbUfDestino.setSelectedItem(acbrNFe.configLerValor(ACBrSessao.DFe, "UF"));
+            cmbSSlType.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "SSLType")));
             String ambiente = acbrNFe.configLerValor(ACBrSessao.NFe, "Ambiente");            
-            rdbFortes.setSelected("1".equals(ambiente));
-            rdbEscPos.setSelected("0".equals(ambiente));
-                        
-            cmbSSlType.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "SSLType"))); 
+            rdbHomologacao.setSelected("1".equals(ambiente));
+            rdbProducao.setSelected("0".equals(ambiente));            
+            
             nudTimeOut.setValue(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "Timeout")));
             txtProxyServidor.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Servidor"));
-            String Value = acbrNFe.configLerValor(ACBrSessao.Proxy, "Porta");
+            String Value = acbrNFe.configLerValor(ACBrSessao.Proxy, "Porta");        
             if(Value.matches("-?\\d+"))
-            nudProxyPorta.setValue(Integer.parseInt(Value));
+              nudProxyPorta.setValue(Integer.parseInt(Value));           
             txtProxyUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Usuario"));
             txtProxySenha.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Senha"));
+            ckbVisualizar.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "Visualizar").equals("1"));
+            ckbSalvarSOAP.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SalvarWS").equals("1"));
+            
+            //Geral    
+            cmbFormaEmissao.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "FormaEmissao")));
+            cmbModeloDocumento.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "ModeloDF")));   
+            cmbVersaoDF.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "VersaoDF")));
+            txtIdCSC.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "IdCSC"));
+            txtCSC.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "CSC"));
+            txtSchemaPath.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathSchemas"));
+            txtLogs.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathSalvar"));
+            txtFormatoAlerta.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "FormatoAlerta"));
+            ckbExibirErroSchema.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "ExibirErroSchema").equals("1"));
+            ckbAttXML.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "AtualizarXMLCancelado").equals("1"));
+            ckbRetirarAcentos.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "RetirarAcentos").equals("1"));
+            ckbSalvar.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SalvarGer").equals("1"));
+            
+            //e-mail
             txtNome.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Nome"));
             txtEmail.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Conta"));
             txtUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Usuario"));
@@ -2694,6 +2810,50 @@ public class FrmMain extends javax.swing.JFrame {
                 nudPorta.setValue(Integer.parseInt(Value));          
             ckbSSL.setSelected(acbrNFe.configLerValor(ACBrSessao.Email, "SSL").equals("1"));            
             ckbTLS.setSelected(acbrNFe.configLerValor(ACBrSessao.Email, "TLS").equals("1"));
+            
+            //Arquivos
+            txtArqNFe.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathNFe"));
+            txtArqEvento.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathEvento"));
+            txtArqInu.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "PathInu"));   
+            txtSalvarXMLDistribuicao.setText(acbrNFe.configLerValor(ACBrSessao.NFe, "Download.PathDownload")); 
+            ckbSalvarArqs.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SalvarArq").equals("1"));
+            ckbPastaMensal.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SepararPorMes").equals("1"));
+            ckbAdicionaLiteral.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "AdicionarLiteral").equals("1"));     
+            ckbEmissaoPathNFe.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "EmissaoPathNFe").equals("1"));
+            ckbSalvaPathEvento.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SalvarEvento").equals("1"));            
+            ckbSepararPorCNPJ.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SepararPorCNPJ").equals("1"));
+            ckbSepararPorModelo.setSelected(acbrNFe.configLerValor(ACBrSessao.NFe, "SepararPorModelo").equals("1"));
+            
+            //Impressao            
+            txtLogomarca.setText(acbrNFe.configLerValor(ACBrSessao.DANFE, "PathLogo"));
+            String tipoDanfe = acbrNFe.configLerValor(ACBrSessao.DANFE, "TipoDANFE");            
+            rdbRetrato.setSelected("1".equals(tipoDanfe));
+            rdbPaisagem.setSelected("2".equals(tipoDanfe));
+            String TipoRelatorioBobina = acbrNFe.configLerValor(ACBrSessao.DANFENFCe, "TipoRelatorioBobina");            
+            rdbFortes.setSelected("0".equals(TipoRelatorioBobina));
+            rdbEscPos.setSelected("1".equals(TipoRelatorioBobina));
+            rdbFortesA4.setSelected("2".equals(TipoRelatorioBobina));
+            cmbModelo.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "Modelo")));
+            cmbPagCodigo.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "PaginaDeCodigo")));
+            cmbPorta.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "Porta")));
+            Value = acbrNFe.configLerValor(ACBrSessao.PosPrinter, "ColunasFonteNormal");
+            if(Value.matches("-?\\d+"))
+                nudColunas.setValue(Integer.parseInt(Value));
+            Value = acbrNFe.configLerValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas");
+            if(Value.matches("-?\\d+"))
+                nudEspacos.setValue(Integer.parseInt(Value));
+            Value = acbrNFe.configLerValor(ACBrSessao.PosPrinter, "LinhasBuffer");
+            if(Value.matches("-?\\d+"))
+                nudBuffer.setValue(Integer.parseInt(Value));
+            Value = acbrNFe.configLerValor(ACBrSessao.PosPrinter, "LinhasEntreCupons");
+            if(Value.matches("-?\\d+"))
+                nudLinhasPular.setValue(Integer.parseInt(Value));   
+            cbxControlePorta.setSelected(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "ControlePorta").equals("1"));
+            cbxTraduzirTags.setSelected(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "TraduzirTags").equals("1"));
+            cbxCortarPapel.setSelected(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "CortaPapel").equals("1"));
+            cbxIgnorarTags.setSelected(acbrNFe.configLerValor(ACBrSessao.PosPrinter, "IgnorarTags").equals("1"));
+
+           
 
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -2701,22 +2861,12 @@ public class FrmMain extends javax.swing.JFrame {
     }
 
     private void saveConfig() {
-        try {            
-            acbrNFe.configGravarValor(ACBrSessao.NFe, 
-                    "ModeloDF", 
-                    cmbModeloDocumento.getSelectedIndex());            
-
-            acbrNFe.configGravarValor(ACBrSessao.NFe, 
-                    "IdCSC", 
-                    txtIdCSC.getText());            
+        try {   
             
-            acbrNFe.configGravarValor(ACBrSessao.NFe, 
-                    "CSC", 
-                    txtCSC.getText());            
-            
-            acbrNFe.configGravarValor(ACBrSessao.DFe, 
+            //Certificado
+             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "SSLCryptLib", 
-                    cmbModelo.getSelectedIndex());            
+                    cmbCrypt.getSelectedIndex());            
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "SSLHttpLib", 
@@ -2728,32 +2878,34 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "ArquivoPFX", 
-                    txtCertPath.getText());            
+                    txtCertPath.getText());     
+            
+            acbrNFe.configGravarValor(ACBrSessao.DFe, 
+                    "DadosPFX", 
+                    txtDadosPFX.getText()); 
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "Senha", 
-                    txtCertPassword.getText());            
+                    new String(txtCertPassword.getPassword()));            
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "NumeroSerie", 
-                    txtCertNumero.getText());            
+                    txtCertNumero.getText()); 
             
-            acbrNFe.configGravarValor(ACBrSessao.NFe, 
-                    "PathSchemas", 
-                    txtLogomarca.getText());            
             
+           //WebService           
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "UF", 
-                    cmbUfDestino.getSelectedItem().toString());           
+                    cmbUfDestino.getSelectedItem().toString()); 
             
-            acbrNFe.configGravarValor(ACBrSessao.NFe, 
-                    "Ambiente", 
-                    rdbFortes.isSelected() ? "1" : "0");
-                        
             acbrNFe.configGravarValor(ACBrSessao.NFe, 
                     "SSLType", 
                     cmbSSlType.getSelectedIndex());
-                        
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "Ambiente", 
+                    rdbHomologacao.isSelected() ? "1" : "0");
+            
             acbrNFe.configGravarValor(ACBrSessao.NFe, 
                     "Timeout", 
                     nudTimeOut.getValue().toString());            
@@ -2772,8 +2924,68 @@ public class FrmMain extends javax.swing.JFrame {
 
             acbrNFe.configGravarValor(ACBrSessao.Proxy, 
                     "Senha", 
-                    txtProxySenha.getText());            
+                    txtProxySenha.getText()); 
             
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "Visualizar", 
+                    ckbVisualizar.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SalvarWS", 
+                    ckbSalvarSOAP.isSelected()? "1" : "0");  
+            
+            
+            //Geral                          
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "FormaEmissao", 
+                    cmbFormaEmissao.getSelectedIndex());  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "ModeloDF", 
+                    cmbModeloDocumento.getSelectedIndex()); 
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "VersaoDF", 
+                    cmbVersaoDF.getSelectedIndex());
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "IdCSC", 
+                    txtIdCSC.getText());            
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "CSC", 
+                    txtCSC.getText());                          
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "PathSchemas", 
+                    txtSchemaPath.getText());            
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "PathSalvar", 
+                    txtLogs.getText()); 
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "FormatoAlerta", 
+                    txtFormatoAlerta.getText());
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "ExibirErroSchema", 
+                    ckbExibirErroSchema.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "AtualizarXMLCancelado", 
+                    ckbAttXML.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "RetirarAcentos", 
+                    ckbRetirarAcentos.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SalvarGer", 
+                    ckbSalvar.isSelected()? "1" : "0");  
+                        
+            
+            //e-mail                       
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "Nome", 
                     txtNome.getText());            
@@ -2800,12 +3012,116 @@ public class FrmMain extends javax.swing.JFrame {
                         
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "SSL", 
-                    ckbSSL.isSelected());           
+                    ckbSSL.isSelected()? "1" : "0");             
             
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "TLS", 
-                    ckbTLS.isSelected());
-                        
+                    ckbTLS.isSelected()? "1" : "0");  
+            
+             //Arquivos         
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "PathNFe", 
+                    txtArqNFe.getText()); 
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "PathEvento", 
+                    txtArqEvento.getText());
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "PathInu", 
+                    txtArqInu.getText());
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "Download.PathDownload", 
+                    txtSalvarXMLDistribuicao.getText());
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SalvarArq", 
+                    ckbSalvarArqs.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SepararPorMes", 
+                    ckbPastaMensal.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "AdicionarLiteral", 
+                    ckbAdicionaLiteral.isSelected()? "1" : "0");            
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "EmissaoPathNFe", 
+                    ckbEmissaoPathNFe.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SalvarEvento", 
+                    ckbSalvaPathEvento.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SepararPorCNPJ", 
+                    ckbSepararPorCNPJ.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.NFe, 
+                    "SepararPorModelo", 
+                    ckbSepararPorModelo.isSelected()? "1" : "0");  
+            
+            
+            //Impressao  
+            acbrNFe.configGravarValor(ACBrSessao.DANFE, 
+                    "PathLogo", 
+                    txtLogomarca.getText());
+            
+            acbrNFe.configGravarValor(ACBrSessao.DANFE, 
+                    "TipoDANFE", 
+                    rdbRetrato.isSelected() ? "1" : "2");
+            
+            acbrNFe.configGravarValor(ACBrSessao.DANFENFCe, 
+                    "TipoRelatorioBobina", 
+                    rdbFortes.isSelected() ? "0" : (rdbEscPos.isSelected() ? "1" : "2"));
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "Modelo", 
+                    cmbModelo.getSelectedIndex()); 
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "PaginaDeCodigo", 
+                    cmbPagCodigo.getSelectedIndex());
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "Porta", 
+                    cmbPorta.getSelectedIndex());
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "ColunasFonteNormal", 
+                    nudColunas.getValue().toString());
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "EspacoEntreLinhas", 
+                    nudEspacos.getValue().toString());
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "LinhasBuffer", 
+                    nudBuffer.getValue().toString());
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "LinhasEntreCupons", 
+                    nudLinhasPular.getValue().toString());
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "ControlePorta", 
+                    cbxControlePorta.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "TraduzirTags", 
+                    cbxTraduzirTags.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "CortaPapel", 
+                    cbxCortarPapel.isSelected()? "1" : "0");  
+            
+            acbrNFe.configGravarValor(ACBrSessao.PosPrinter, 
+                    "IgnorarTags", 
+                    cbxIgnorarTags.isSelected()? "1" : "0");              
+            
+                                               
              acbrNFe.configGravar();            
             
         } catch (Exception ex) {
@@ -2817,6 +3133,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnArqEvento;
     private javax.swing.JButton btnArqInu;
     private javax.swing.JButton btnArqNFe;
+    private javax.swing.JButton btnArqSalvarRetorno;
     private javax.swing.JButton btnAssinar;
     private javax.swing.JButton btnCancelarNFe;
     private javax.swing.JButton btnCarregarConfiguracoes;
@@ -2827,17 +3144,16 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultaXml;
     private javax.swing.JButton btnConsultarCadastro;
     private javax.swing.JButton btnConsultarRecibo;
+    private javax.swing.JButton btnCriarEnviar;
     private javax.swing.JButton btnDFePorChave;
     private javax.swing.JButton btnDFePorNSU;
     private javax.swing.JButton btnDFePorUltNSU;
-    private javax.swing.JButton btnDadosPFX;
     private javax.swing.JButton btnEnviarAssincrono;
     private javax.swing.JButton btnEnviarEmail;
     private javax.swing.JButton btnEnviarEmailEvento;
     private javax.swing.JButton btnEnviarEvento;
     private javax.swing.JButton btnEnviarSincrono;
     private javax.swing.JButton btnGerarChave;
-    private javax.swing.JButton btnGerarXml;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnImprimirEvento;
     private javax.swing.JButton btnImprimirEventoPDF;
@@ -2855,6 +3171,9 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnSelectSchema;
     private javax.swing.JButton btnStatusServ;
     private javax.swing.JButton btnValidarRegra;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup8;
+    private javax.swing.ButtonGroup buttonGroup9;
     private javax.swing.JCheckBox cbxControlePorta;
     private javax.swing.JCheckBox cbxCortarPapel;
     private javax.swing.JCheckBox cbxIgnorarTags;
@@ -2887,6 +3206,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbUfDestino;
     private javax.swing.JComboBox<String> cmbVersaoDF;
     private javax.swing.JComboBox<String> cmbXmlSign;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2919,6 +3239,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2979,7 +3300,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtAssunto;
     private javax.swing.JTextField txtCSC;
     private javax.swing.JTextField txtCertNumero;
-    private javax.swing.JTextField txtCertPassword;
+    private javax.swing.JPasswordField txtCertPassword;
     private javax.swing.JTextField txtCertPath;
     private javax.swing.JTextField txtDadosPFX;
     private javax.swing.JTextField txtEmail;
@@ -2993,6 +3314,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtProxySenha;
     private javax.swing.JTextField txtProxyServidor;
     private javax.swing.JTextField txtProxyUsuario;
+    private javax.swing.JTextField txtSalvarXMLDistribuicao;
     private javax.swing.JTextField txtSchemaPath;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;

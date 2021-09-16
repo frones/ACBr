@@ -50,8 +50,8 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
                         library = Platform.is64Bit() ? "acbrnfe64" : "acbrnfe32";
                     }
                   }
-                }
                 return library;
+                
             }
 
             public static ACBrNFeLib getInstance() {

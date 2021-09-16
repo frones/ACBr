@@ -1806,6 +1806,7 @@ begin
   begin
     ACBrNFSeX1.NotasFiscais.Clear;
     ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+//    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
     ACBrNFSeX1.NotasFiscais.Imprimir;
     ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 
@@ -2420,6 +2421,7 @@ var
 begin
   memoLog.Clear;
   memoLog.Lines.Clear;
+  memoLog.Update;
 
   with ACBrNFSeX1.WebService do
   begin
@@ -2429,15 +2431,18 @@ begin
         begin
           with Emite do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + ModoEnvioToStr(ModoEnvio));
+            memoLog.Lines.Add('Método Executado: ' + ModoEnvioToStr(ModoEnvio));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
             memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-            memoLog.Lines.Add(' ');
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2476,12 +2481,15 @@ begin
             begin
               with ConsultaSituacao do
               begin
-                memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmConsultarSituacao));
-                memoLog.Lines.Add('Numero do Lote: ' + Lote);
+                memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarSituacao));
+                memoLog.Lines.Add(' ');
+                memoLog.Lines.Add('Parâmetros de Envio');
                 memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
+                memoLog.Lines.Add('Numero do Lote: ' + Lote);
+                memoLog.Lines.Add(' ');
+                memoLog.Lines.Add('Parâmetros de Retorno');
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-                memoLog.Lines.Add(' ');
 
                 LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
                 LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2518,12 +2526,15 @@ begin
             begin
               with ConsultaLoteRps do
               begin
-                memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmConsultarLote));
-                memoLog.Lines.Add('Numero do Lote: ' + Lote);
+                memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarLote));
+                memoLog.Lines.Add(' ');
+                memoLog.Lines.Add('Parâmetros de Envio');
                 memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
+                memoLog.Lines.Add('Numero do Lote: ' + Lote);
+                memoLog.Lines.Add(' ');
+                memoLog.Lines.Add('Parâmetros de Retorno');
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-                memoLog.Lines.Add(' ');
 
                 LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
                 LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2563,15 +2574,18 @@ begin
         begin
           with Emite do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + ModoEnvioToStr(ModoEnvio));
+            memoLog.Lines.Add('Método Executado: ' + ModoEnvioToStr(ModoEnvio));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
             memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-            memoLog.Lines.Add(' ');
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2608,12 +2622,15 @@ begin
         begin
           with ConsultaSituacao do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmConsultarSituacao));
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarSituacao));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
+            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-            memoLog.Lines.Add(' ');
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2650,12 +2667,15 @@ begin
         begin
           with ConsultaLoteRps do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmConsultarLote));
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarLote));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
+            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-            memoLog.Lines.Add(' ');
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2692,15 +2712,18 @@ begin
         begin
           with ConsultaNFSeporRps do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmConsultarNFSePorRps));
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarNFSePorRps));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Numero do Rps : ' + NumRPS);
+            memoLog.Lines.Add('Série do Rps  : ' + Serie);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Numero do Lote: ' + Lote);
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
             memoLog.Lines.Add('Situação Lote : ' + Situacao);
-            memoLog.Lines.Add('Numero do Rps : ' + NumRPS);
-            memoLog.Lines.Add('Série do Rps  : ' + Serie);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
-            memoLog.Lines.Add(' ');
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2741,12 +2764,16 @@ begin
         begin
           with ConsultaNFSe do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(Metodo));
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
-            memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Situação Lote : ' + Situacao);
-            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(Metodo));
             memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Num. Ini. NFSe: ' + InfConsultaNFSe.NumeroIniNFSe);
+            memoLog.Lines.Add('Num. Fin. NFSe: ' + InfConsultaNFSe.NumeroFinNFSe);
+            memoLog.Lines.Add('Data Inicial  : ' + DateToStr(InfConsultaNFSe.DataInicial));
+            memoLog.Lines.Add('Data Final    : ' + DateToStr(InfConsultaNFSe.DataFinal));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2783,23 +2810,23 @@ begin
         begin
           with CancelaNFSe do
           begin
-            memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmCancelarNFSe));
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
-            memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Situação Lote : ' + Situacao);
-            memoLog.Lines.Add('Link          : ' + Link);
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmCancelarNFSe));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero da NFSe: ' + InfCancelamento.NumeroNFSe);
             memoLog.Lines.Add('Série da NFSe : ' + InfCancelamento.SerieNFSe);
-            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Situação: ' + Situacao);
+            memoLog.Lines.Add('Link    : ' + Link);
+            memoLog.Lines.Add('Sucesso : ' + BoolToStr(Sucesso, True));
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Retorno do Pedido de Cancelamento:');
-            memoLog.Lines.Add('Situação  : ' + RetCancelamento.Situacao);
-            memoLog.Lines.Add('Data/Hora : ' + DateToStr(RetCancelamento.DataHora));
-            memoLog.Lines.Add('Mensagem  : ' + RetCancelamento.MsgCanc);
-            memoLog.Lines.Add('Sucesso   : ' + RetCancelamento.Sucesso);
-            memoLog.Lines.Add('Link      : ' + RetCancelamento.Link);
-
-            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Situação : ' + RetCancelamento.Situacao);
+            memoLog.Lines.Add('Data/Hora: ' + DateToStr(RetCancelamento.DataHora));
+            memoLog.Lines.Add('Mensagem : ' + RetCancelamento.MsgCanc);
+            memoLog.Lines.Add('Sucesso  : ' + RetCancelamento.Sucesso);
+            memoLog.Lines.Add('Link     : ' + RetCancelamento.Link);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2836,12 +2863,13 @@ begin
           begin
             with ConsultaNFSe do
             begin
-              memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(Metodo));
-              memoLog.Lines.Add('Numero do Lote: ' + Lote);
-              memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-              memoLog.Lines.Add('Situação Lote : ' + Situacao);
-              memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+              memoLog.Lines.Add('Método Executado: ' + MetodoToStr(Metodo));
+              memoLog.Lines.Add('Parâmetros de Envio');
+              memoLog.Lines.Add('Num. Ini. NFSe: ' + InfConsultaNFSe.NumeroIniNFSe);
+              memoLog.Lines.Add('Num. Fin. NFSe: ' + InfConsultaNFSe.NumeroFinNFSe);
               memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Parâmetros de Retorno');
+              memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
               LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
               LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2879,18 +2907,23 @@ begin
         begin
           with SubstituiNFSe do
           begin
-
-            memoLog.Lines.Add('Modo de Envio : ' + MetodoToStr(tmSubstituirNFSe));
-            memoLog.Lines.Add('Numero do Lote: ' + Lote);
-            memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Situação Lote : ' + Situacao);
-            memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmSubstituirNFSe));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
             memoLog.Lines.Add('Numero da NFSe: ' + InfCancelamento.NumeroNFSe);
             memoLog.Lines.Add('Série da NFSe : ' + InfCancelamento.SerieNFSe);
             memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Situação: ' + Situacao);
+            memoLog.Lines.Add('Link    : ' + Link);
+            memoLog.Lines.Add('Sucesso : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Retorno do Pedido de Cancelamento:');
             memoLog.Lines.Add('Situação : ' + RetCancelamento.Situacao);
-            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Data/Hora: ' + DateToStr(RetCancelamento.DataHora));
+            memoLog.Lines.Add('Mensagem : ' + RetCancelamento.MsgCanc);
+            memoLog.Lines.Add('Sucesso  : ' + RetCancelamento.Sucesso);
+            memoLog.Lines.Add('Link     : ' + RetCancelamento.Link);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
@@ -2941,8 +2974,14 @@ begin
     memoLog.Lines.Add(' ');
     memoLog.Lines.Add('NFS-e Numero....: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Numero);
     memoLog.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
+    memoLog.Lines.Add('Prestador.......: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Prestador.RazaoSocial);
+    memoLog.Lines.Add('Tomador.........: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Tomador.RazaoSocial);
     memoLog.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.Configuracoes.Arquivos.GetPathNFSe() + '\' +
                                              ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
+    if ACBrNFSeX1.Configuracoes.Arquivos.Salvar then
+      memoLog.Lines.Add('==> Xml da nota salvo na pasta e com o nome informado acima.')
+    else
+      memoLog.Lines.Add('==> Xml da nota não salvo em disco.');
 
     // Na propriedade XML temos o XML da NFS-e
     LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XML, WBXmlNotas);
@@ -3118,9 +3157,6 @@ begin
                       AnsiString(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq);
-
-  if ACBrNFSeX1.NotasFiscais.Count > 0then
-    memoLog.Lines.Add('Empresa: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Prestador.RazaoSocial);
 
   sleep(1000);
 end;

@@ -569,6 +569,8 @@ procedure TNFSeR_ABRASFv1.LerSubstituicaoNfse(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('SubstituicaoNfse');
 
   if AuxNode <> nil then

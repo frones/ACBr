@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/09/2021
+-- GeisWeb.LerXml/ACBrNFSeXLerXml --
+[*] Ajuste para ler datas contendo somente mês e ano na tag Competencia.
+   Por: Italo Giurizzato Junior
 -- GeisWeb.Provider --
 [*] Possível correção para o erro de AV.
    Por: Italo Giurizzato Junior

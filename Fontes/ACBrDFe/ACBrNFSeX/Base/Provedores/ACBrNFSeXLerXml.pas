@@ -105,6 +105,15 @@ begin
   begin
     xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
 
+    // Alguns provedores retorna a data de competencia só com o mês e ano
+    if Length(xData) = 7 then
+    begin
+      if Pos('/', xData) = 3 then
+        xData := '01/' + xData
+      else
+        xData := xData + '/01';
+    end;
+
     if (Length(xData) >= 16) and CharInSet(xData[11], ['T', ' ']) then
     begin
       if Pos('/', xData) = 5 then

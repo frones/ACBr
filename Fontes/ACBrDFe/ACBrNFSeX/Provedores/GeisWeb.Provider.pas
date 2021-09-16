@@ -247,7 +247,7 @@ begin
       ANode := Document.Root;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
-      if not Assigned(ANode) then
+      if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;

@@ -412,7 +412,7 @@ begin
         ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
     end;
 
-    tcBoolStr:
+    tcBool:
     begin
       ConteudoProcessado := LowerCase(BoolToStr(valor, True));
       EstaVazio := ConteudoProcessado = '';

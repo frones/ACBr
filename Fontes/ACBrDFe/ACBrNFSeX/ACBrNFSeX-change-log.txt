@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 16/09/2021
+-- GeisWeb.Provider --
+[*] Possível correção para o erro de AV.
+   Por: Italo Giurizzato Junior
+-- ACBrXmlBase/ACBrXmlWrite/ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajuste na leitura de tags com valores booleanos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Incluido a Limpeza da lista <NotasFiscais> ao Consultar as notas.
    Por: Italo Giurizzato Junior

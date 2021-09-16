@@ -48,7 +48,7 @@ type
 
   TACBrTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                     tcDe6, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
-                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr);
+                    tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
 
 const
   LineBreak = #13#10;
@@ -298,7 +298,7 @@ begin
           result := 0;
       end;
 
-    tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
+    tcDe2, tcDe3, tcDe4, tcDe6, tcDe8, tcDe10:
       begin
         if length(ConteudoTag) > 0 then
           result := StringToFloatDef(ConteudoTag, 0)
@@ -313,6 +313,26 @@ begin
         else
           result := 0;
       end;
+
+    tcBool:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := StrToBool(ConteudoTag)
+        else
+          result := False;
+      end;
+
+    tcStrOrig:
+      begin
+        // Falta implementar
+        Result := '';
+      end;
+
+    tcNumStr:
+      begin
+        // Falta implementar
+        Result := '';
+      end
 
   else
     raise Exception.Create('Node <' + ANode.Name + '> com conteúdo inválido. '+ ConteudoTag);

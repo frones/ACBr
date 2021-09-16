@@ -104,6 +104,8 @@ procedure TNFSeR_ABRASFv1.LerConfirmacao(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Confirmacao');
 
   if AuxNode <> nil then
@@ -347,7 +349,7 @@ begin
   begin
     with NFSe.NfseCancelamento do
     begin
-      Sucesso  := StrToBool(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBoolStr));
+      Sucesso  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBool);
       DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
 
       if DataHora > 0 then
@@ -396,17 +398,25 @@ begin
 end;
 
 procedure TNFSeR_ABRASFv1.LerNfseCancelamento(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  LerConfirmacao(ANode);
+  AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+  LerConfirmacao(AuxNode);
 end;
 
 procedure TNFSeR_ABRASFv1.LerNfseSubstituicao(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  LerSubstituicaoNfse(ANode);
+  AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
+
+  LerSubstituicaoNfse(AuxNode);
 end;
 
 procedure TNFSeR_ABRASFv1.LerInfPedidoCancelamento(const ANode: TACBrXmlNode);
@@ -681,13 +691,7 @@ begin
     AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
 
   LerInfNfse(AuxNode);
-
-  AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
-
   LerNfseCancelamento(AuxNode);
-
-  AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
-
   LerNfseSubstituicao(AuxNode);
 end;
 

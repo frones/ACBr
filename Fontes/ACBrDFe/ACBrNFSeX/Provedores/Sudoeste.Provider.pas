@@ -139,7 +139,7 @@ begin
 
   ANodeArray := ANode.Childrens.FindAllAnyNs('Erro');
 
-  if not Assigned(ANodeArray) then
+  if not Assigned(ANodeArray) and (ANodeArray <> nil) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);

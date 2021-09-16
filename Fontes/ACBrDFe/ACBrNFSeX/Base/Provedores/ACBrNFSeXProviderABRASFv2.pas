@@ -813,6 +813,8 @@ begin
 
   try
     try
+      TACBrNFSeX(FAOwner).NotasFiscais.Clear;
+
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
@@ -1106,6 +1108,8 @@ begin
 
   try
     try
+      TACBrNFSeX(FAOwner).NotasFiscais.Clear;
+
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
@@ -1359,6 +1363,8 @@ begin
 
   try
     try
+      TACBrNFSeX(FAOwner).NotasFiscais.Clear;
+
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
@@ -1623,6 +1629,8 @@ begin
 
   try
     try
+      TACBrNFSeX(FAOwner).NotasFiscais.Clear;
+
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;

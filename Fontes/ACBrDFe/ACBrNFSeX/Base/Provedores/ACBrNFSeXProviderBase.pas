@@ -643,19 +643,15 @@ var
   aPath, NomeArq: string;
   aConfig: TConfiguracoesNFSe;
 begin
+  aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+  aPath := aConfig.Arquivos.GetPathNFSe;
+
+  NomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';
+  aNota.NomeArq := NomeArq;
   aNota.Confirmada := True;
-  aNota.NomeArq := '';
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
-  begin
-    aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
-    aPath := aConfig.Arquivos.GetPathNFSe;
-
-    NomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';
-    aNota.NomeArq := NomeArq;
-
     TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XML, aPath);
-  end;
 end;
 
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);

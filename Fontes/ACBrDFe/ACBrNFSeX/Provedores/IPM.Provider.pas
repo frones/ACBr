@@ -412,11 +412,12 @@ procedure TACBrNFSeProviderIPM.TratarRetornoConsultaLoteRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
-  NumRps: String;
-  ANota: NotaFiscal;
-  I: Integer;
+  ANode: TACBrXmlNode;
+//  ANode, AuxNode: TACBrXmlNode;
+//  ANodeArray: TACBrXmlNodeArray;
+//  NumRps: String;
+//  ANota: NotaFiscal;
+//  I: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 

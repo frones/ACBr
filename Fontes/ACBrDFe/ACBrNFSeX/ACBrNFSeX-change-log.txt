@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/09/2021
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Incluido a Limpeza da lista <NotasFiscais> ao Consultar as notas.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderBase --
+[*] Imposto a condição somente no método Gravar.
+   Por: Italo Giurizzato Junior
+
 15/09/2021
 -- Betha.GravarXml --
 [*] Incluido a linha para alterar o formato do ItemListaServico.

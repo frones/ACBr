@@ -2481,6 +2481,8 @@ begin
             begin
               with ConsultaSituacao do
               begin
+                memoLog.Lines.Add(' ');
+                memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarSituacao));
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Envio');
@@ -2526,6 +2528,8 @@ begin
             begin
               with ConsultaLoteRps do
               begin
+                memoLog.Lines.Add(' ');
+                memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Método Executado: ' + MetodoToStr(tmConsultarLote));
                 memoLog.Lines.Add(' ');
                 memoLog.Lines.Add('Parâmetros de Envio');
@@ -2863,6 +2867,8 @@ begin
           begin
             with ConsultaNFSe do
             begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add(' ');
               memoLog.Lines.Add('Método Executado: ' + MetodoToStr(Metodo));
               memoLog.Lines.Add('Parâmetros de Envio');
               memoLog.Lines.Add('Num. Ini. NFSe: ' + InfConsultaNFSe.NumeroIniNFSe);

@@ -360,12 +360,8 @@ begin
 
     Gerador.wCampo(tcStr, '', 'tpInscContrat', 1,  1, 1, eStpInscContratanteToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscContrat));
     Gerador.wCampo(tcStr, '', 'nrInscContrat', 1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscContrat);
-
-    if VersaoDF <= ve02_05_00 then
-    begin
-      Gerador.wCampo(tcStr, '', 'tpInscProp',    1,  1, 1, eSTpInscPropToStr(self.infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
-      Gerador.wCampo(tcStr, '', 'nrInscProp',    1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
-    end;
+    Gerador.wCampo(tcStr, '', 'tpInscProp',    1,  1, 1, eSTpInscPropToStr(self.infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
+    Gerador.wCampo(tcStr, '', 'nrInscProp',    1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
 
     Gerador.wGrupo('/infoEmprParcial');
   end;

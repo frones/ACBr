@@ -59,11 +59,23 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TInfoFGTS = class;
-  TInfoBaseFGTS = class;
-  TInfoDpsFGTS = class;
   TEvtFGTS = class;
-
+  TInfoFGTS = class;
+  TIdeEstabCollection = class;
+  TIdeEstabCollectionItem = class;
+  TIdeLotacaoCollection = class;
+  TIdeLotacaoCollectionItem = class;
+  TInfoBaseFGTS = class;
+  TBasePerApurCollection = class;
+  TBasePerApurCollectionItem = class;
+  TInfoBasePerAntECollection = class;
+  TInfoBasePerAntECollectionItem = class;
+  TBasePerAntECollection = class;
+  TBasePerAntECollectionItem = class;
+  TInfoDpsFGTS = class;
+  TDpsPerApurCollection = class;
+  TDpsPerApurCollectionItem = class;
+  
   TS5013 = class(TInterfacedObject, IEventoeSocial)
   private
     FTipoEvento: TTipoEvento;
@@ -82,43 +94,212 @@ type
     property EvtFGTS: TEvtFGTS read FEvtFGTS write FEvtFGTS;
   end;
 
-  TDpsPerApurCollectionItem = class(TObject)
+  TBasePerApurCollectionItem = class(TObject)
   private
-    FtpDps: Integer;
+    FtpValor: Integer;
+    FindIncid: Integer;
+    FbaseFGTS: Currency;
     FvrFGTS: Currency;
   public
-    property tpDps: Integer read FtpDps write FtpDps;
+    property tpValor: Integer read FtpValor write FtpValor;
+    property baseFGTS: Currency read FbaseFGTS write FbaseFGTS;
+    property indIncid: Integer read FindIncid write FindIncid;
     property vrFGTS: Currency read FvrFGTS write FvrFGTS;
   end;
 
-  TDpsPerApurCollection = class(TACBrObjectList)
+  TInfoBasePerAntECollection = class(TACBrObjectList)
   private
-    function GetItem(Index: Integer): TDpsPerApurCollectionItem;
-    procedure SetItem(Index: Integer; Value: TDpsPerApurCollectionItem);
+    function GetItem(Index: Integer): TInfoBasePerAntECollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoBasePerAntECollectionItem);
   public
-    function Add: TDpsPerApurCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TDpsPerApurCollectionItem;
-    property Items[Index: Integer]: TDpsPerApurCollectionItem read GetItem write SetItem;
+    function Add: TInfoBasePerAntECollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoBasePerAntECollectionItem;
+    property Items[Index: Integer]: TInfoBasePerAntECollectionItem read GetItem write SetItem;
+  end;
+
+  TInfoBasePerAntECollectionItem = class(TObject)
+  private
+    FperRef: string;
+    FtpAcConv: string;
+    FBasePerAntE: TBasePerAntECollection;
+   
+    function getBasePerAntE(): TBasePerAntECollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    
+    function BasePerAntEInst(): Boolean;
+    
+    property perRef: string read FperRef write FperRef;
+    property tpAcConv: string read FtpAcConv write FtpAcConv;
+    property basePerAntE: TBasePerAntECollection read getBasePerAntE write FBasePerAntE;
+  end;
+
+  TBasePerAntECollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TBasePerAntECollectionItem;
+    procedure SetItem(Index: Integer; Value: TBasePerAntECollectionItem);
+  public
+    function Add: TBasePerAntECollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TBasePerAntECollectionItem;
+    property Items[Index: Integer]: TBasePerAntECollectionItem read GetItem write SetItem;
+  end;
+
+  TBasePerAntECollectionItem = class(TObject)
+  private
+    FtpValorE: Integer;
+    FindIncidE: Integer;
+    FbaseFGTSE: Currency;
+    FvrFGTSE: Currency;
+  public
+    property tpValorE: Integer read FtpValorE write FtpValorE;
+    property baseFGTSE: Currency read FbaseFGTSE write FbaseFGTSE;
+    property indIncidE: Integer read FindIncidE write FindIncidE;
+    property vrFGTSE: Currency read FvrFGTSE write FvrFGTSE;
+  end;
+
+  TInfoBaseFGTS = class(TObject)
+  private
+    FBasePerApur: TBasePerApurCollection;
+    FInfoBasePerAntE: TInfoBasePerAntECollection;
+    
+    function getBasePerApur(): TBasePerApurCollection;
+    function getInfoBasePerAntE(): TInfoBasePerAntECollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function BasePerApurInst(): Boolean;
+    function InfoBasePerAntEInst(): Boolean;
+    
+    property basePerApur: TBasePerApurCollection read getBasePerApur write FBasePerApur;
+    property infoBasePerAntE: TInfoBasePerAntECollection read getInfoBasePerAntE write FInfoBasePerAntE;
+  end;
+
+  TInfoFGTS = class(TObject)
+  private
+    FNrRecArqBase: String;
+    FIndExistInfo: Integer;
+    FInfoBaseFGTS: TInfoBaseFGTS;
+    FInfoDpsFGTS: TInfoDpsFGTS;
+    FIdeEstab: TIdeEstabCollection;
+
+    function getInfoBaseFGTS(): TInfoBaseFGTS;
+    function getInfoDpsFGTS(): TInfoDpsFGTS;
+    function getIdeEstab(): TIdeEstabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+             
+    function IdeEstabInst(): Boolean;
+    function InfoBaseFGTSInst(): Boolean;
+    function InfoDpsFGTSInst(): Boolean;
+    
+    property ideEstab: TIdeEstabCollection read getIdeEstab write FIdeEstab;
+    property indExistInfo: Integer read FindExistInfo write FindExistInfo;
+    property infoBaseFGTS: TInfoBaseFGTS read getInfoBaseFGTS write FInfoBaseFGTS;
+    property infoDpsFGTS: TInfoDpsFGTS read getInfoDpsFGTS write FInfoDpsFGTS;
+    property nrRecArqBase: string read FNrRecArqBase write FNrRecArqBase;
+  end;
+
+  TEvtFGTS = class(TObject)
+  private
+    FLeitor: TLeitor;
+    FId: String;
+    FXML: String;
+    FVersaoDF: TVersaoeSocial;
+
+    FIdeEvento: TIdeEvento5;
+    FIdeEmpregador: TIdeEmpregador;
+    FInfoFGTS: TInfoFGTS;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    function LerXML: Boolean;
+    function SalvarINI: boolean;
+
+    property ideEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
+    property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property infoFGTS: TInfoFGTS read FInfoFGTS write FInfoFGTS;
+    property Leitor: TLeitor read FLeitor write FLeitor;
+    property Id: String read FId;
+    property XML: String read FXML;
+    property VersaoDF: TVersaoeSocial read FVersaoDF write FVersaoDF;
+  end;
+
+  TIdeEstabCollectionItem = class(TObject)
+  private
+    FNrInsc: string;
+    FTpInsc: tpTpInsc;
+    FIdeLotacao: TIdeLotacaoCollection;
+
+    function getIdeLotacao(): TIdeLotacaoCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function IdeLotacaoInst(): Boolean;
+    
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property ideLotacao: TIdeLotacaoCollection read getIdeLotacao write FIdeLotacao;
+  end;
+
+  TIdeEstabCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TIdeEstabCollectionItem;
+    procedure SetItem(Index: Integer; Value: TIdeEstabCollectionItem);
+  public
+    function Add: TIdeEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeEstabCollectionItem;
+    property Items[Index: Integer]: TIdeEstabCollectionItem read GetItem write SetItem;
+  end;
+
+  TIdeLotacaoCollectionItem = class(TObject)
+  private
+    FCodLotacao: String;
+    FTpLotacao: String;
+    FTpInsc: tpTpInsc;
+    FNrInsc: string;
+    FInfoBaseFGTS: TInfoBaseFGTS;
+
+    function getInfoBaseFGTS(): TInfoBaseFGTS;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function InfoBaseFGTSInst(): Boolean;
+    
+    property codLotacao: string read FCodLotacao write FCodLotacao;
+    property tpLotacao: string read FTpLotacao write FTpLotacao;
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property infoBaseFGTS: TInfoBaseFGTS read getInfoBaseFGTS write FInfoBaseFGTS;
+  end;
+
+  TIdeLotacaoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TIdeLotacaoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TIdeLotacaoCollectionItem);
+  public
+    function Add: TIdeLotacaoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeLotacaoCollectionItem;
+    property Items[Index: Integer]: TIdeLotacaoCollectionItem read GetItem write SetItem;
   end;
 
   TInfoDpsFGTS = class(TObject)
   private
     FDpsPerApur: TDpsPerApurCollection;
 
-    procedure SetDpsPerApur(const Value: TDpsPerApurCollection);
+    function getDpsPerApur(): TDpsPerApurCollection;
   public
     constructor Create;
     destructor Destroy; override;
-    property dpsPerApur: TDpsPerApurCollection read FDpsPerApur write SetDpsPerApur;
-  end;
 
-  TBasePerApurCollectionItem = class(TObject)
-  private
-    FtpValor: Integer;
-    FbaseFGTS: Currency;
-  public
-    property tpValor: Integer read FtpValor write FtpValor;
-    property baseFGTS: Currency read FbaseFGTS write FbaseFGTS;
+    function DpsPerApurInst(): Boolean;
+    
+    property dpsPerApur: TDpsPerApurCollection read getDpsPerApur write FDpsPerApur;
   end;
 
   TBasePerApurCollection = class(TACBrObjectList)
@@ -131,59 +312,23 @@ type
     property Items[Index: Integer]: TBasePerApurCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoBaseFGTS = class(TObject)
+  TDpsPerApurCollection = class(TACBrObjectList)
   private
-    FBasePerApur: TBasePerApurCollection;
-//    FInfoDpsFGTS: TDpsPerApurCollection;
-
-    procedure SetBasePerApur(const Value: TBasePerApurCollection);
+    function GetItem(Index: Integer): TDpsPerApurCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDpsPerApurCollectionItem);
   public
-    constructor Create;
-    destructor Destroy; override;
-    property basePerApur: TBasePerApurCollection read FBasePerApur write SetBasePerApur;
+    function Add: TDpsPerApurCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDpsPerApurCollectionItem;
+    property Items[Index: Integer]: TDpsPerApurCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoFGTS = class(TObject)
+  TDpsPerApurCollectionItem = class(TObject)
   private
-    FnrRecArqBase: String;
-    FindExistInfo: Integer;
-    FInfoBaseFGTS: TInfoBaseFGTS;
-    FInfoDpsFGTS: TInfoDpsFGTS;
-
-    procedure SetInfoBaseFGTS(const Value: TInfoBaseFGTS);
-    procedure SetInfoDpsFGTS(const Value: TInfoDpsFGTS);
+    FtpDps: Integer;
+    FvrFGTS: Currency;
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    property nrRecArqBase: String read FnrRecArqBase;
-    property indExistInfo: Integer read FindExistInfo;
-    property infoBaseFGTS: TInfoBaseFGTS read FInfoBaseFGTS write SetInfoBaseFGTS;
-    property infoDpsFGTS: TInfoDpsFGTS read FInfoDpsFGTS write SetInfoDpsFGTS;
-  end;
-
-  TEvtFGTS = class(TObject)
-  private
-    FLeitor: TLeitor;
-    FId: String;
-    FXML: String;
-
-    FIdeEvento: TIdeEvento5;
-    FIdeEmpregador: TIdeEmpregador;
-    FInfoIRRF: TInfoFGTS;
-  public
-    constructor Create;
-    destructor  Destroy; override;
-
-    function LerXML: Boolean;
-    function SalvarINI: boolean;
-
-    property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property InfoFGTS: TInfoFGTS read FInfoIRRF write FInfoIRRF;
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property Id: String      read FId;
-    property XML: String     read FXML;
+    property tpDps: Integer read FtpDps write FtpDps;
+    property vrFGTS: Currency read FvrFGTS write FvrFGTS;
   end;
 
 implementation
@@ -223,7 +368,6 @@ begin
   FEvtFGTS.FXML := Value;
   FEvtFGTS.Leitor.Arquivo := Value;
   FEvtFGTS.LerXML;
-
 end;
 
 function TS5013.GetTipoEvento : TTipoEvento;
@@ -239,7 +383,7 @@ begin
   FLeitor        := TLeitor.Create;
   FIdeEvento     := TIdeEvento5.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FInfoIRRF      := TInfoFGTS.Create;
+  FInfoFGTS      := TInfoFGTS.Create;
 end;
 
 destructor TEvtFGTS.Destroy;
@@ -247,53 +391,36 @@ begin
   FLeitor.Free;
   FIdeEvento.Free;
   FIdeEmpregador.Free;
-  FInfoIRRF.Free;
+  FInfoFGTS.Free;
 
   inherited;
-end;
-
-{ TInfoFGTS }
-
-constructor TInfoFGTS.Create;
-begin
-  inherited Create;
-  FInfoBaseFGTS := TInfoBaseFGTS.Create;
-  FInfoDpsFGTS  := TInfoDpsFGTS.Create;
-end;
-
-destructor TInfoFGTS.Destroy;
-begin
-  FInfoBaseFGTS.Free;
-  FInfoDpsFGTS.Free;
-
-  inherited;
-end;
-
-procedure TInfoFGTS.SetInfoBaseFGTS(const Value: TInfoBaseFGTS);
-begin
-  FInfoBaseFGTS := Value;
-end;
-
-procedure TInfoFGTS.SetInfoDpsFGTS(const Value: TInfoDpsFGTS);
-begin
-  FInfoDpsFGTS := Value;
 end;
 
 function TEvtFGTS.LerXML: Boolean;
 var
   ok: Boolean;
-  i: Integer;
+  i, j, k, l, m: Integer;
+  s: String;
 begin
   Result := False;
   try
     FXML := Leitor.Arquivo;
+
+    // Capturar a versão do evento
+    s := Copy(FXML, Pos('/evt/evtFGTS/', FXML)+13, 16);
+    s := Copy(s, 1, Pos('"', s)-1);
+    VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
     
     if leitor.rExtrai(1, 'evtFGTS') <> '' then
     begin
       FId := Leitor.rAtributo('Id=');
 
       if leitor.rExtrai(2, 'ideEvento') <> '' then
+      begin
+        if VersaoDF >= veS01_00_00 then
+          IdeEvento.indApuracao := leitor.rCampo(tcStr, 'indApuracao');
         IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
+      end;
 
       if leitor.rExtrai(2, 'ideEmpregador') <> '' then
       begin
@@ -306,28 +433,94 @@ begin
         InfoFGTS.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
         InfoFGTS.FindExistInfo := leitor.rCampo(tcInt, 'indExistInfo');
 
-        if leitor.rExtrai(3, 'infoBaseFGTS') <> '' then
+        if VersaoDF <= ve02_05_00 then
         begin
-           i := 0;
-           while Leitor.rExtrai(4, 'basePerApur', '', i + 1) <> '' do
-           begin
-             InfoFGTS.infoBaseFGTS.basePerApur.New;
-             InfoFGTS.infoBaseFGTS.basePerApur.Items[i].tpValor  := leitor.rCampo(tcInt, 'tpValor');
-             InfoFGTS.infoBaseFGTS.basePerApur.Items[i].baseFGTS := leitor.rCampo(tcDe2, 'baseFGTS');
-             inc(i);
-           end;
-        end;
+          if leitor.rExtrai(3, 'infoBaseFGTS') <> '' then
+          begin
+             i := 0;
+             while Leitor.rExtrai(4, 'basePerApur', '', i + 1) <> '' do
+             begin
+               InfoFGTS.infoBaseFGTS.basePerApur.New;
+               InfoFGTS.infoBaseFGTS.basePerApur.Items[i].tpValor  := leitor.rCampo(tcInt, 'tpValor');
+               InfoFGTS.infoBaseFGTS.basePerApur.Items[i].baseFGTS := leitor.rCampo(tcDe2, 'baseFGTS');
+               inc(i);
+             end;
+          end;
+         
+          if leitor.rExtrai(3, 'infoDpsFGTS') <> '' then
+          begin
+             i := 0;
+             while Leitor.rExtrai(4, 'dpsPerApur', '', i + 1) <> '' do
+             begin
+               InfoFGTS.infoDpsFGTS.dpsPerApur.New;
+               InfoFGTS.infoDpsFGTS.dpsPerApur.Items[i].tpDps  := leitor.rCampo(tcInt, 'tpDps');
+               InfoFGTS.infoDpsFGTS.dpsPerApur.Items[i].vrFGTS := leitor.rCampo(tcDe2, 'vrFGTS');
+               inc(i);
+             end;
+          end;
+        end
+        else
+        begin
+          i := 0;
+          while Leitor.rExtrai(3, 'ideEstab', '', i + 1) <> '' do
+          begin
+            InfoFGTS.IdeEstab.New;
+            InfoFGTS.IdeEstab.Items[i].TpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+            InfoFGTS.IdeEstab.Items[i].NrInsc := leitor.rCampo(tcStr, 'nrInsc');
 
-        if leitor.rExtrai(3, 'infoDpsFGTS') <> '' then
-        begin
-           i := 0;
-           while Leitor.rExtrai(4, 'dpsPerApur', '', i + 1) <> '' do
-           begin
-             InfoFGTS.infoDpsFGTS.dpsPerApur.New;
-             InfoFGTS.infoDpsFGTS.dpsPerApur.Items[i].tpDps  := leitor.rCampo(tcInt, 'tpDps');
-             InfoFGTS.infoDpsFGTS.dpsPerApur.Items[i].vrFGTS := leitor.rCampo(tcDe2, 'vrFGTS');
-             inc(i);
-           end;
+            j := 0;
+            while Leitor.rExtrai(4, 'ideLotacao', '', j + 1) <> '' do
+            begin
+              InfoFGTS.IdeEstab.Items[i].IdeLotacao.New;
+              InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
+              InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].tpLotacao  := leitor.rCampo(tcStr, 'tpLotacao');
+
+              if leitor.rCampo(tcStr, 'nrInsc') <> '' then
+              begin
+                InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].TpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+                InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].NrInsc     := leitor.rCampo(tcStr, 'nrInsc');
+              end;
+
+              if Leitor.rExtrai(5, 'infoBaseFGTS') <> '' then
+              begin
+                k := 0;
+                while Leitor.rExtrai(6, 'basePerApur', '', k + 1) <> '' do
+                begin
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.BasePerApur.New;
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.BasePerApur.Items[k].tpValor  := leitor.rCampo(tcInt, 'tpValor');
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.BasePerApur.Items[k].indIncid := leitor.rCampo(tcInt, 'indIncid');
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoBaseFGTS.basePerApur.Items[k].baseFGTS := leitor.rCampo(tcDe2, 'baseFGTS');
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoBaseFGTS.basePerApur.Items[k].vrFGTS   := leitor.rCampo(tcDe2, 'vrFGTS');
+                
+                  inc(k);
+                end;
+
+                if leitor.rExtrai(6, 'infoBasePerAntE') <> '' then
+                begin
+                  l := 0;
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.InfoBasePerAntE.New;
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.InfoBasePerAntE.Items[l].perRef   := leitor.rCampo(tcStr, 'perRef');
+                  InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.InfoBasePerAntE.Items[l].tpAcConv := leitor.rCampo(tcStr, 'tpAcConv');
+
+                  m := 0;
+                  while Leitor.rExtrai(7, 'basePerAntE', '', m + 1) <> '' do
+                  begin
+                    InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.InfoBasePerAntE.Items[l].BasePerAntE.New;
+                    InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.InfoBasePerAntE.Items[l].BasePerAntE.Items[m].tpValorE  := leitor.rCampo(tcInt, 'tpValorE');
+                    InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].InfoBaseFGTS.InfoBasePerAntE.Items[l].BasePerAntE.Items[m].indIncidE := leitor.rCampo(tcInt, 'indIncidE');
+                    InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoBaseFGTS.InfoBasePerAntE.Items[l].basePerAntE.Items[m].baseFGTSE := leitor.rCampo(tcDe2, 'baseFGTSE');
+                    InfoFGTS.IdeEstab.Items[i].IdeLotacao.Items[j].infoBaseFGTS.InfoBasePerAntE.Items[l].basePerAntE.Items[m].vrFGTSE   := leitor.rCampo(tcDe2, 'vrFGTSE');
+                                                                                               
+                    inc(m);
+                  end;
+                end;  
+              end;
+
+              inc(j);
+            end;
+
+            inc(i);
+          end;
         end;
       end;
 
@@ -355,23 +548,110 @@ begin
 //  end;
 end;
 
+{ TInfoFGTS }
+
+constructor TInfoFGTS.Create;
+begin
+  inherited Create;
+  
+  FInfoBaseFGTS := nil;
+  FInfoDpsFGTS := nil;
+  FIdeEstab := nil;
+end;
+
+destructor TInfoFGTS.Destroy;
+begin
+  if InfoBaseFGTSInst() then
+    FInfoBaseFGTS.Free;
+    
+  if InfoDpsFGTSInst() then
+    FInfoDpsFGTS.Free;
+
+  if IdeEstabInst() then
+    FIdeEstab.Free;
+
+  inherited;
+end;
+
+function TInfoFGTS.InfoBaseFGTSInst(): Boolean;
+begin
+  Result := Assigned(FInfoBaseFGTS);
+end;
+
+function TInfoFGTS.getInfoBaseFGTS(): TInfoBaseFGTS;
+begin
+  if not(InfoBaseFGTSInst()) then
+    FInfoBaseFGTS := TInfoBaseFGTS.Create;
+  Result := FInfoBaseFGTS;
+end;
+
+function TInfoFGTS.InfoDpsFGTSInst(): Boolean;
+begin
+  Result := Assigned(FInfoDpsFGTS);
+end;
+
+function TInfoFGTS.getInfoDpsFGTS(): TInfoDpsFGTS;
+begin
+  if not(InfoDpsFGTSInst()) then
+    FInfoDpsFGTS := TInfoDpsFGTS.Create;
+  Result := FInfoDpsFGTS;
+end;
+
+function TInfoFGTS.IdeEstabInst(): Boolean;
+begin
+  Result := Assigned(FIdeEstab);
+end;
+
+function TInfoFGTS.getIdeEstab(): TIdeEstabCollection;
+begin
+  if not(IdeEstabInst()) then
+    FIdeEstab := TIdeEstabCollection.Create;
+  Result := FIdeEstab;
+end;
+
 { TInfoBaseFGTS }
 
 constructor TInfoBaseFGTS.Create;
 begin
   inherited Create;
-  FBasePerApur := TBasePerApurCollection.Create;
+  
+  FBasePerApur := nil;
+  FInfoBasePerAntE := nil;
 end;
 
 destructor TInfoBaseFGTS.Destroy;
 begin
-  FBasePerApur.Free;
+  if BasePerApurInst() then
+    FBasePerApur.Free;
+  
+  if InfoBasePerAntEInst() then
+    FInfoBasePerAntE.Free;
+    
   inherited;
 end;
 
-procedure TInfoBaseFGTS.SetBasePerApur(const Value: TBasePerApurCollection);
+function TInfoBaseFGTS.getBasePerApur(): TBasePerApurCollection;
 begin
-  FBasePerApur := Value;
+  if not(BasePerApurInst()) then
+    FBasePerApur := TBasePerApurCollection.Create;
+  Result := FBasePerApur;
+end;
+
+function TInfoBaseFGTS.BasePerApurInst(): Boolean;
+begin
+  Result := Assigned(FBasePerApur);
+end;
+
+function TInfoBaseFGTS.getInfoBasePerAntE(): TInfoBasePerAntECollection;
+begin
+  if not(InfoBasePerAntEInst()) then
+    FInfoBasePerAntE := TInfoBasePerAntECollection.Create;
+  Result := FInfoBasePerAntE;
+end;
+
+function TInfoBaseFGTS.InfoBasePerAntEInst(): Boolean;
+begin
+  Result := Assigned(FInfoBasePerAntE);
 end;
 
 { TBasePerApurCollection }
@@ -391,7 +671,65 @@ begin
   inherited Items[Index] := Value;
 end;
 
-{ TInfoDpsFGTSCollection }
+function TBasePerApurCollection.New: TBasePerApurCollectionItem;
+begin
+  Result := TBasePerApurCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TInfoBasePerAntECollection }
+
+function TInfoBasePerAntECollection.Add: TInfoBasePerAntECollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TInfoBasePerAntECollection.GetItem(Index: Integer): TInfoBasePerAntECollectionItem;
+begin
+  Result := TInfoBasePerAntECollectionItem(inherited Items[Index]);
+end;
+
+procedure TInfoBasePerAntECollection.SetItem(Index: Integer; Value: TInfoBasePerAntECollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TInfoBasePerAntECollection.New: TInfoBasePerAntECollectionItem;
+begin
+  Result := TInfoBasePerAntECollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TInfoBasePerAntECollectionItem }
+
+constructor TInfoBasePerAntECollectionItem.Create;
+begin
+  inherited Create;
+
+  FBasePerAntE := nil;
+end;
+
+destructor TInfoBasePerAntECollectionItem.Destroy;
+begin
+  if BasePerAntEInst() then
+    FBasePerAntE.Free;
+  
+  inherited;
+end;
+
+function TInfoBasePerAntECollectionItem.getBasePerAntE(): TBasePerAntECollection;
+begin
+  if not(BasePerAntEInst()) then
+    FBasePerAntE := TBasePerAntECollection.Create;
+  Result := FBasePerAntE;
+end;
+
+function TInfoBasePerAntECollectionItem.BasePerAntEInst(): Boolean;
+begin
+  Result := Assigned(FBasePerAntE);
+end;
+
+{ TDpsPerApurCollection }
 
 function TDpsPerApurCollection.Add: TDpsPerApurCollectionItem;
 begin
@@ -408,9 +746,9 @@ begin
   inherited Items[Index] := Value;
 end;
 
-function TBasePerApurCollection.New: TBasePerApurCollectionItem;
+function TDpsPerApurCollection.New: TDpsPerApurCollectionItem;
 begin
-  Result := TBasePerApurCollectionItem.Create;
+  Result := TDpsPerApurCollectionItem.Create;
   Self.Add(Result);
 end;
 
@@ -419,24 +757,161 @@ end;
 constructor TInfoDpsFGTS.Create;
 begin
   inherited Create;
-  FDpsPerApur := TDpsPerApurCollection.Create;
+  
+  FDpsPerApur := nil;
 end;
 
 destructor TInfoDpsFGTS.Destroy;
 begin
-  FDpsPerApur.Free;
+  if DpsPerApurInst() then
+    FDpsPerApur.Free;
+
   inherited;
 end;
 
-procedure TInfoDpsFGTS.SetDpsPerApur(const Value: TDpsPerApurCollection);
+function TInfoDpsFGTS.getDpsPerApur(): TDpsPerApurCollection;
 begin
-  FDpsPerApur := Value;
+  if not(DpsPerApurInst()) then
+    FDpsPerApur := TDpsPerApurCollection.Create;
+  Result := FDpsPerApur;
 end;
 
-function TDpsPerApurCollection.New: TDpsPerApurCollectionItem;
+function TInfoDpsFGTS.DpsPerApurInst(): Boolean;
 begin
-  Result := TDpsPerApurCollectionItem.Create;
+  Result := Assigned(FDpsPerApur);
+end;
+
+{ TIdeEstabCollection }
+
+function TIdeEstabCollection.Add: TIdeEstabCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TIdeEstabCollection.GetItem(
+  Index: Integer): TIdeEstabCollectionItem;
+begin
+  Result := TIdeEstabCollectionItem(inherited Items[Index]);
+end;
+
+procedure TIdeEstabCollection.SetItem(Index: Integer;
+  Value: TIdeEstabCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TIdeEstabCollection.New: TIdeEstabCollectionItem;
+begin
+  Result := TIdeEstabCollectionItem.Create;
   Self.Add(Result);
 end;
 
+{ TIdeEstabCollectionItem }
+
+constructor TIdeEstabCollectionItem.Create;
+begin
+  inherited Create;
+
+  FIdeLotacao := nil;
+end;
+
+destructor TIdeEstabCollectionItem.Destroy;
+begin
+  if IdeLotacaoInst() then
+    FIdeLotacao.Free;
+
+  inherited;
+end;
+
+function TIdeEstabCollectionItem.getIdeLotacao: TIdeLotacaoCollection;
+begin
+  if not(IdeLotacaoInst()) then
+    FIdeLotacao := TIdeLotacaoCollection.Create;
+  Result := FIdeLotacao;
+end;
+
+function TIdeEstabCollectionItem.IdeLotacaoInst(): Boolean;
+begin
+  Result := Assigned(FIdeLotacao);
+end;
+
+{ TIdeLotacaoCollection }
+
+function TIdeLotacaoCollection.Add: TIdeLotacaoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TIdeLotacaoCollection.GetItem(
+  Index: Integer): TIdeLotacaoCollectionItem;
+begin
+  Result := TIdeLotacaoCollectionItem(inherited Items[Index]);
+end;
+
+procedure TIdeLotacaoCollection.SetItem(Index: Integer;
+  Value: TIdeLotacaoCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TIdeLotacaoCollection.New: TIdeLotacaoCollectionItem;
+begin
+  Result := TIdeLotacaoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TIdeLotacaoCollectionItem }
+
+constructor TIdeLotacaoCollectionItem.Create;
+begin
+  inherited Create;
+
+  FInfoBaseFGTS := nil;
+end;
+
+destructor TIdeLotacaoCollectionItem.Destroy;
+begin
+  if InfoBaseFGTSInst() then
+    FInfoBaseFGTS.Free;
+
+  inherited;
+end;
+
+function TIdeLotacaoCollectionItem.InfoBaseFGTSInst(): Boolean;
+begin
+  Result := Assigned(FInfoBaseFGTS);
+end;
+
+function TIdeLotacaoCollectionItem.getInfoBaseFGTS(): TInfoBaseFGTS;
+begin
+  if not(InfoBaseFGTSInst()) then
+    FInfoBaseFGTS := TInfoBaseFGTS.Create;
+  Result := FInfoBaseFGTS;
+end;
+
+{ TBasePerAntECollection }
+
+function TBasePerAntECollection.Add: TBasePerAntECollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TBasePerAntECollection.GetItem(
+  Index: Integer): TBasePerAntECollectionItem;
+begin
+  Result := TBasePerAntECollectionItem(inherited Items[Index]);
+end;
+
+procedure TBasePerAntECollection.SetItem(Index: Integer;
+  Value: TBasePerAntECollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TBasePerAntECollection.New: TBasePerAntECollectionItem;
+begin
+  Result := TBasePerAntECollectionItem.Create;
+  Self.Add(Result);
+end;
+ 
 end.

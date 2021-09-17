@@ -478,7 +478,7 @@ begin
   IniciarOperacao;
   StatusVenda := stsOperacaoTEF;
   try
-    ACBrTEFAPI1.EfetuarAdministrativa(tefadmGeral);
+    ACBrTEFAPI1.EfetuarAdministrativa(tefopAdministrativo);
   finally
     StatusVenda := stsFinalizada;
   end;
@@ -492,10 +492,10 @@ var
 begin
   if (Mensagem = '') then
   begin
-    if Terminal = telaCliente then
-      MensagemTEF('',' ') ;
-    if Terminal = telaOperador then
-      MensagemTEF(' ','') ;
+    if (Terminal in [telaCliente, telaTodas]) then
+      MensagemTEF('',' ');
+    if (Terminal in [telaOperador, telaTodas]) then
+      MensagemTEF(' ','');
   end
   else if (MilissegundosExibicao >= 0) then
   begin
@@ -510,10 +510,10 @@ begin
   end
   else
   begin
-    if Terminal = telaCliente then
-      MensagemTEF('',Mensagem) ;
-    if Terminal = telaOperador then
-      MensagemTEF(Mensagem,'') ;
+    if (Terminal in [telaCliente, telaTodas]) then
+      MensagemTEF('',Mensagem);
+    if (Terminal in [telaOperador, telaTodas]) then
+      MensagemTEF(Mensagem,'');
   end;
 end;
 
@@ -736,13 +736,12 @@ begin
   // a sua regra de negócios
 
   // ----------- Exemplo 0 - Deixe o ACBrTEFAndroid CONFIRMAR todas transações pendentes automaticamente
-  // ACBrTEFAndroid1.AutoConfirmarTransacoesPendente := True;
+  // ACBrTEFAPI1.TratamentoTransacaoPendente := tefpenConfirmar;
   // Nesse caso... esse evento nem será disparado.
-
 
   // ----------- Exemplo 1 - Envio de confirmação automática -----------
   // AStatus := stsSucessoManual;
-  // ACBrTEFAndroid1.ResolverOperacaoPendente(AStatus);
+  // ACBrTEFAPI1.ResolverOperacaoPendente(AStatus);
   // ---------- Fim Exemplo 1 ------------
 
 
@@ -792,7 +791,7 @@ end;
 procedure TFormPrincipal.ACBrTEFAPI1QuandoEsperarOperacao(
   OperacaoAPI: TACBrTEFAPIOperacaoAPI; var Cancelar: Boolean);
 begin
-  AdicionarLinhaLog( 'QuandoOcorrerOperacao: '+
+  AdicionarLinhaLog( 'QuandoEsperarOperacao: '+
                      GetEnumName(TypeInfo(TACBrTEFAPIOperacaoAPI), integer(OperacaoAPI) ) );
 
   if FCanceladoPeloOperador then
@@ -1216,7 +1215,7 @@ begin
   try
     try
       AtivarTEF;
-      ACBrTEFAPI1.EfetuarAdministrativa(tefadmTesteComunicacao);
+      ACBrTEFAPI1.EfetuarAdministrativa(tefopTesteComunicacao);
       if ACBrTEFAPI1.UltimaRespostaTEF.Sucesso then
         MessageDlg(Format('TEF %S ATIVO', [NomeTEF]), mtInformation, [mbOK], 0)
       else
@@ -1601,7 +1600,7 @@ begin
   if (ATEFResp.ImagemComprovante1aVia.Count > 0) then
     if ImprimirViaCliente then
       ImprimirRelatorio( ATEFResp.ImagemComprovante1aVia.Text );
-  end;
+end;
 
 procedure TFormPrincipal.ImprimirRelatorio(ATexto: String);
 begin

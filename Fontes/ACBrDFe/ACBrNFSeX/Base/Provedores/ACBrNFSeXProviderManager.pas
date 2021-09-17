@@ -86,6 +86,7 @@ uses
   AEG.Provider,
   Asten.Provider,
   Centi.Provider,
+  Citta.Provider,
   Coplan.Provider,
   DataSmart.Provider,
   DeISS.Provider,
@@ -233,6 +234,7 @@ begin
     proAsten:        Result := TACBrNFSeProviderAsten.Create(ACBrNFSe);
     proBetha_2:      Result := TACBrNFSeProviderBethav2.Create(ACBrNFSe);
     proCenti:        Result := TACBrNFSeProviderCenti.Create(ACBrNFSe);
+    proCitta:        Result := TACBrNFSeProviderCitta.Create(ACBrNFSe);
     proCoplan:       Result := TACBrNFSeProviderCoplan.Create(ACBrNFSe);
     proDataSmart:    Result := TACBrNFSeProviderDataSmart.Create(ACBrNFSe);
     proDeISS:        Result := TACBrNFSeProviderDeISS.Create(ACBrNFSe);

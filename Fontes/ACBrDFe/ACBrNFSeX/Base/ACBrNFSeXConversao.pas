@@ -138,7 +138,7 @@ type
                    proSystemPro, proTcheInfo_2, proTecnos, proTiplan_2,
                    proVersaTecnologia_201, proVersaTecnologia_202, proVirtual,
                    proVitoria, proWebISS_2, proSiapSistemas, proDSF_2,
-                   proTributus, proSudoeste, proSintese,
+                   proTributus, proSudoeste, proSintese, proCitta,
                    // Provedores com layout proprio
                    proAgili, proAgili_2, proAssessorPublico, proConam,
                    proeGoverneISS, proEL, proEquiplano, proGeisWeb, proGiap,
@@ -628,7 +628,7 @@ begin
          'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
          'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste', 'Simple',
-         'Sintese'],
+         'Sintese', 'Citta'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
          proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -653,7 +653,7 @@ begin
          proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
          proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
          proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste, proSimple,
-         proSintese]);
+         proSintese, proCitta]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
@@ -681,7 +681,7 @@ begin
          'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
          'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste', 'Simple',
-         'Sintese'],
+         'Sintese', 'Citta'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
          proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -706,7 +706,7 @@ begin
          proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
          proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
          proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste, proSimple,
-         proSintese]);
+         proSintese, proCitta]);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

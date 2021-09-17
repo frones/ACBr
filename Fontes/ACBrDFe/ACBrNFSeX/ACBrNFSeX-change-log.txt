@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/09/2021
+-- Diversos --
+[+] Implementação do provedor Citta.
+   Por: Italo Giurizzato Junior
+
 16/09/2021
 -- GeisWeb.LerXml/ACBrNFSeXLerXml --
 [*] Ajuste para ler datas contendo somente mês e ano na tag Competencia.

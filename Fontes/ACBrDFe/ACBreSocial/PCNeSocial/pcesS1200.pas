@@ -1331,8 +1331,8 @@ begin
 
       if INIRec.ReadString(sSecao, 'nrInsc', '') <> '' then
       begin
-        ideTrabalhador.infoComplem.sucessaoVinc.tpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-        ideTrabalhador.infoComplem.sucessaoVinc.nrInsc        := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+        ideTrabalhador.infoComplem.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
         ideTrabalhador.infoComplem.sucessaoVinc.matricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
         ideTrabalhador.infoComplem.sucessaoVinc.dtAdm         := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
         ideTrabalhador.infoComplem.sucessaoVinc.observacao    := INIRec.ReadString(sSecao, 'observacao', '');

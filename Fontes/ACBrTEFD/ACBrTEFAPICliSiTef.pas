@@ -89,7 +89,7 @@ type
     procedure InterpretarRetornoCliSiTef(const Ret: Integer);
 
   protected
-    procedure InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao); override;
+    procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
 
   public
@@ -107,7 +107,7 @@ type
       Parcelas: Byte = 0;
       DataPreDatado: TDateTime = 0): Boolean; override;
 
-    function EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; override;
+    function EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
     function CancelarTransacao(
@@ -447,8 +447,7 @@ begin
           3:  // Mensagem para os dois visores
           begin
             Mensagem := AjustarMensagemTela(Mensagem);
-            TefAPI.QuandoExibirMensagem(Mensagem, telaOperador, EsperaMensagem);
-            TefAPI.QuandoExibirMensagem(Mensagem, telaCliente, EsperaMensagem);
+            TefAPI.QuandoExibirMensagem(Mensagem, telaTodas, EsperaMensagem);
           end;
 
           4:  // Texto que deverá ser utilizado como título na apresentação do menu ( vide comando 21)
@@ -461,10 +460,7 @@ begin
             TefAPI.QuandoExibirMensagem('', telaCliente, -1);
 
            13: // Deve remover mensagem apresentada no visor do operador e do cliente (comando 3)
-           begin
-             TefAPI.QuandoExibirMensagem('', telaOperador, -1);
-             TefAPI.QuandoExibirMensagem('', telaCliente, -1);
-           end;
+             TefAPI.QuandoExibirMensagem('', telaTodas, -1);
 
            14:  // Deve limpar o texto utilizado como título na apresentação do menu (comando 4)
              TituloMenu := '';
@@ -632,10 +628,7 @@ begin
         Continua := -1 ;  // Cancela operacao
 
       if (Voltar and (fUltimoRetornoAPI = 10000)) or (not Digitado) then
-      begin
-        TefAPI.QuandoExibirMensagem('', telaOperador, -1);
-        TefAPI.QuandoExibirMensagem('', telaCliente, -1);
-      end ;
+        TefAPI.QuandoExibirMensagem('', telaTodas, -1);
 
       StrPCopy(Buffer, Resposta);
     until (fUltimoRetornoAPI <> 10000);
@@ -725,7 +718,7 @@ begin
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.InicializarChamadaAPI(
-  AOperacao: TACBrTEFAPIOperacao);
+  AMetodoOperacao: TACBrTEFAPIMetodo);
 begin
   inherited;
 end;
@@ -739,34 +732,37 @@ begin
     fpACBrTEFAPI.UltimaRespostaTEF.TextoEspecialOperador := fTEFCliSiTefAPI.TraduzirErroTransacao(fUltimoRetornoAPI);
 end;
 
-function TACBrTEFAPIClassCliSiTef.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
+function TACBrTEFAPIClassCliSiTef.EfetuarAdministrativa(
+  OperacaoAdm: TACBrTEFOperacao): Boolean;
 var
   Op: Integer;
 begin
   case OperacaoAdm of
-    tefadmGeral:
+    tefopPagamento:
+      Op := CSITEF_OP_Venda;
+    tefopAdministrativo:
       Op := CSITEF_OP_Administrativo;
-    tefadmTesteComunicacao, tefadmVersao:
+    tefopTesteComunicacao, tefopVersao:
       Op := 111;
-    tefadmFechamento:
+    tefopFechamento:
       Op := 999;
-    tefadmCancelamento:
+    tefopCancelamento:
       Op := 200;
-    tefadmReimpressao:
+    tefopReimpressao:
       Op := 112;
-    tefadmPrePago:
+    tefopPrePago:
       Op := 314;
-    tefadmPreAutorizacao:
+    tefopPreAutorizacao:
       Op := 115;
-    tefadmConsultaSaldo:
+    tefopConsultaSaldo:
       Op := 600;
-    tefadmConsultaCheque:
+    tefopConsultaCheque:
       Op := 1;
-    tefadmPagamentoConta:
+    tefopPagamentoConta:
       Op := 310;
-    tefadmRelatResumido, tefadmRelatSintetico, tefadmRelatDetalhado:
-      fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPIAdministrativaNaoSuportada),
-        [GetEnumName(TypeInfo(TACBrTEFOperacaoAdmin), integer(OperacaoAdm) ), ClassName] ));
+  else
+    fpACBrTEFAPI.DoException(Format(ACBrStr(sACBrTEFAPIAdministrativaNaoSuportada),
+      [GetEnumName(TypeInfo(TACBrTEFOperacao), integer(OperacaoAdm) ), ClassName] ));
   end;
 
   Result := EfetuarAdministrativa(IntToStr(Op));

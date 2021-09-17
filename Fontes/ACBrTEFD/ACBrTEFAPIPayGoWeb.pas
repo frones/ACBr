@@ -83,7 +83,7 @@ type
     procedure SetDiretorioTrabalho(const AValue: String);
 
   protected
-    procedure InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao); override;
+    procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
 
   public
@@ -102,7 +102,7 @@ type
       DataPreDatado: TDateTime = 0): Boolean; override;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; override;
+      OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(
       const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
@@ -227,7 +227,7 @@ begin
 end;
 
 procedure TACBrTEFAPIClassPayGoWeb.InicializarChamadaAPI(
-  AOperacao: TACBrTEFAPIOperacao);
+  AMetodoOperacao: TACBrTEFAPIMetodo);
 begin
   inherited;
   LimparUltimaTransacaoPendente;
@@ -307,12 +307,18 @@ end;
 procedure TACBrTEFAPIClassPayGoWeb.QuandoExibirMensagemAPI(Mensagem: String;
   Terminal: TACBrTEFPGWebAPITerminalMensagem; MilissegundosExibicao: Integer);
 var
-  i: Integer;
+  TelaMsg: TACBrTEFAPITela;
 begin
-  i := Integer(Terminal);
+  case Terminal of
+    tmOperador: TelaMsg := telaOperador;
+    tmCliente: TelaMsg := telaCliente;
+  else
+    TelaMsg := telaTodas;
+  end;
+
   TACBrTEFAPI(fpACBrTEFAPI).QuandoExibirMensagem(
     Mensagem,
-    TACBrTEFAPITela(i),
+    TelaMsg,
     MilissegundosExibicao );
 end;
 
@@ -369,7 +375,8 @@ begin
   Status := 0;
 end;
 
-function TACBrTEFAPIClassPayGoWeb.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
+function TACBrTEFAPIClassPayGoWeb.EfetuarAdministrativa(
+  OperacaoAdm: TACBrTEFOperacao): Boolean;
 begin
   Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)) );
 end;
@@ -464,7 +471,7 @@ begin
     else
       FinanciamentoInt := 0;
     end;
-    if (ModalidadeInt > 0) then
+    if (FinanciamentoInt > 0) then
       PA.ValueInfo[PWINFO_FINTYPE] := IntToStr(FinanciamentoInt);
 
     if (Parcelas > 0) then

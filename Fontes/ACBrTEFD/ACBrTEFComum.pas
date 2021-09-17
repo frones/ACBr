@@ -49,7 +49,8 @@ uses
 
 type
 
-  TACBrTEFTipoCartao = ( teftcCredito,
+  TACBrTEFTipoCartao = ( teftcNaoDefinido,
+                         teftcCredito,
                          teftcDebito,
                          teftcVoucher,
                          teftcFrota,
@@ -76,28 +77,29 @@ type
                               tefstsErroDispesador,
                               tefstsErroDiverso );
 
-  TACBrTEFOperacaoAdmin = ( tefadmGeral,
-                            tefadmTesteComunicacao,
-                            tefadmVersao,
-                            tefadmFechamento,
-                            tefadmCancelamento,
-                            tefadmReimpressao,
-                            tefadmPrePago,
-                            tefadmPreAutorizacao,
-                            tefadmConsultaSaldo,
-                            tefadmConsultaCheque,
-                            tefadmPagamentoConta,
-                            tefadmRelatResumido,
-                            tefadmRelatSintetico,
-                            tefadmRelatDetalhado );
+  TACBrTEFOperacao = ( tefopPagamento,
+                       tefopAdministrativo,
+                       tefopTesteComunicacao,
+                       tefopVersao,
+                       tefopFechamento,
+                       tefopCancelamento,
+                       tefopReimpressao,
+                       tefopPrePago,
+                       tefopPreAutorizacao,
+                       tefopConsultaSaldo,
+                       tefopConsultaCheque,
+                       tefopPagamentoConta,
+                       tefopRelatResumido,
+                       tefopRelatSintetico,
+                       tefopRelatDetalhado );
 
   TACBrTEFTratamentoTransacaoPendente = ( tefpenConfirmar,
                                           tefpenEstornar,
                                           tefpenPerguntar );
 
   TACBrTEFTratamentoTransacaoInicializacao = ( tefopiNenhum,
-                                              tefopiProcessarPendentes,
-                                              tefopiCancelarOuEstornar);
+                                               tefopiProcessarPendentes,
+                                               tefopiCancelarOuEstornar);
 
   EACBrTEFErro = class(Exception);
   EACBrTEFArquivo = class(EACBrTEFErro);

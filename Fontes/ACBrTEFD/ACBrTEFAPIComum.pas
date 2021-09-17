@@ -30,6 +30,14 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+(*
+    * DEFINIÇÃO IMPORTANTE: OPERAÇAO vs TRANSAÇÃO *
+
+    OPERACAO TEF: É o ato de iniciar uma chamada a API de TEF, gerando uma Transação TEF
+    TRANSACAO TEF: É a resposta obtida ao Termino de uma Operação TEF.
+                   Geralmente associada a uma Resposta, mapeada na classe "TACBrTEFResp"
+*)
+
 {$I ACBr.inc}
 
 unit ACBrTEFAPIComum;
@@ -66,15 +74,6 @@ const
   CHEADER_PAGAMENTO = 'CRT';
   CHEADER_ADMINISTRATIVA = 'ADM';
   CHEADER_CANCELAMENTO = 'CNC';
-
-
-(*
-    * DEFINIÇÃO IMPORTANTE, OPERAÇAO vs TRANSAÇÃO *
-
-    OPERACAO TEF: É o ato de iniciar uma chamada a API de TEF, gerando uma Transação TEF
-    TRANSACAO TEF: É a resposta obtida ao Termino de uma Operação TEF.
-                   Geralmente associada a uma Resposta, mapeada na classe "TACBrTEFResp"
-*)
 
 type
   EACBrTEFAPIErro = class(EACBrTEFErro);
@@ -166,7 +165,7 @@ type
     property PortaPinPad: String read fPortaPinPad write fPortaPinPad;
   end;
 
-  TACBrTEFAPIOperacao = (tefopNenhuma, tefopPagamento, tefopCancelamento, tefopAdministrativa);
+  TACBrTEFAPIMetodo = (tefmtdNenhuma, tefmtdPagamento, tefmtdCancelamento, tefmtdAdministrativa);
 
   TACBrTEFAPIComum = class;
 
@@ -179,13 +178,13 @@ type
   protected
     fpACBrTEFAPI: TACBrTEFAPIComum;
     fpInicializado: Boolean;
-    fpOperacao: TACBrTEFAPIOperacao;
+    fpMetodoOperacao: TACBrTEFAPIMetodo;
     fpTEFRespClass: TACBrTEFRespClass;
 
     procedure ErroAbstract(const NomeProcedure: String);
     procedure VerificarIdentificadorVendaInformado;
 
-    procedure InicializarChamadaAPI( AOperacao: TACBrTEFAPIOperacao); virtual;
+    procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); virtual;
     procedure FinalizarChamadaAPI; virtual;
     procedure InterpretarRespostaAPI; virtual;
 
@@ -210,7 +209,7 @@ type
       DataPreDatado: TDateTime = 0 ): Boolean; virtual;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; virtual;
+      OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; virtual;
     function EfetuarAdministrativa(const CodOperacaoAdm: string = ''):
       Boolean; overload; virtual;
 
@@ -231,7 +230,7 @@ type
     procedure AbortarTransacaoEmAndamento; virtual;
 
     property Inicializado: Boolean read fpInicializado;
-    property OperacaoEmAndamento: TACBrTEFAPIOperacao read fpOperacao;
+    property OperacaoEmAndamento: TACBrTEFAPIMetodo read fpMetodoOperacao;
 
     property TEFRespClass: TACBrTEFRespClass read fpTEFRespClass;
   end;
@@ -336,7 +335,7 @@ type
     procedure DoException(const AErrorMsg: String); virtual;
 
     function EfetuarAdministrativa(
-      Operacao: TACBrTEFOperacaoAdmin = tefadmGeral;
+      Operacao: TACBrTEFOperacao = tefopAdministrativo;
       const IdentificadorTransacao: string = ''): Boolean; overload; virtual;
     function EfetuarAdministrativa(
       const Operacao: string = '';
@@ -368,8 +367,8 @@ type
     procedure ResolverTransacaoPendente(
       Status: TACBrTEFStatusTransacao = tefstsSucessoManual); virtual;
 
-//  function VerificarTEF: Boolean;
-//  procedure AbortarTransacaoEmAndamento;
+    //  function VerificarTEF: Boolean;
+    //  procedure AbortarTransacaoEmAndamento;
 
     procedure LimparRespostasTEF;
     procedure CarregarRespostasDoDiretorioTrabalho;
@@ -813,7 +812,7 @@ begin
   inherited Create;
   fpACBrTEFAPI := AACBrTEFAPI;
   fpInicializado := False;
-  fpOperacao := tefopNenhuma;
+  fpMetodoOperacao := tefmtdNenhuma;
   fpTEFRespClass := TACBrTEFResp;
 end;
 
@@ -844,14 +843,14 @@ begin
 end;
 
 procedure TACBrTEFAPIComumClass.InicializarChamadaAPI(
-  AOperacao: TACBrTEFAPIOperacao);
+  AMetodoOperacao: TACBrTEFAPIMetodo);
 begin
-  fpOperacao := AOperacao;
+  fpMetodoOperacao := AMetodoOperacao;
 end;
 
 procedure TACBrTEFAPIComumClass.FinalizarChamadaAPI;
 begin
-  fpOperacao := tefopNenhuma;
+  fpMetodoOperacao := tefmtdNenhuma;
 end;
 
 function TACBrTEFAPIComumClass.EfetuarAdministrativa(const CodOperacaoAdm: string): Boolean;
@@ -859,7 +858,8 @@ begin
   Result := False;
 end;
 
-function TACBrTEFAPIComumClass.EfetuarAdministrativa(OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
+function TACBrTEFAPIComumClass.EfetuarAdministrativa(
+  OperacaoAdm: TACBrTEFOperacao): Boolean;
 begin
   Result := False;
 end;
@@ -949,9 +949,9 @@ begin
   // Traduzindo Tipo de Opertação, com Header compatível com ACBrTEFD
   with fpACBrTEFAPI do
   begin
-    case fpOperacao of
-      tefopPagamento: AHeader := CHEADER_PAGAMENTO;
-      tefopCancelamento: AHeader := CHEADER_CANCELAMENTO;
+    case fpMetodoOperacao of
+      tefmtdPagamento: AHeader := CHEADER_PAGAMENTO;
+      tefmtdCancelamento: AHeader := CHEADER_CANCELAMENTO;
     else
       AHeader := CHEADER_ADMINISTRATIVA;
     end;
@@ -1169,7 +1169,7 @@ end;
 
 function TACBrTEFAPIComum.GetEmTransacao: Boolean;
 begin
-  Result := (fpTEFAPIClass.OperacaoEmAndamento <> tefopNenhuma);
+  Result := (fpTEFAPIClass.OperacaoEmAndamento <> tefmtdNenhuma);
 end;
 
 function TACBrTEFAPIComum.EfetuarAdministrativa(const Operacao: string;
@@ -1179,7 +1179,7 @@ begin
 
   fRespostasTEF.IdentificadorTransacao := IdentificadorTransacao;
 
-  fpTEFAPIClass.InicializarChamadaAPI(tefopAdministrativa);
+  fpTEFAPIClass.InicializarChamadaAPI(tefmtdAdministrativa);
   try
     Result := fpTEFAPIClass.EfetuarAdministrativa(Operacao);
   finally
@@ -1187,17 +1187,16 @@ begin
   end;
 end;
 
-function TACBrTEFAPIComum.EfetuarAdministrativa(
-  Operacao: TACBrTEFOperacaoAdmin; const IdentificadorTransacao: string
-  ): Boolean;
+function TACBrTEFAPIComum.EfetuarAdministrativa(Operacao: TACBrTEFOperacao;
+  const IdentificadorTransacao: string): Boolean;
 begin
   GravarLog('EfetuarAdministrativa( '+
-            GetEnumName(TypeInfo(TACBrTEFOperacaoAdmin), integer(Operacao) )+', '+
+            GetEnumName(TypeInfo(TACBrTEFOperacao), integer(Operacao) )+', '+
             IdentificadorTransacao+' )');
 
   fRespostasTEF.IdentificadorTransacao := IdentificadorTransacao;
 
-  fpTEFAPIClass.InicializarChamadaAPI(tefopAdministrativa);
+  fpTEFAPIClass.InicializarChamadaAPI(tefmtdAdministrativa);
   try
     Result := fpTEFAPIClass.EfetuarAdministrativa(Operacao);
   finally
@@ -1237,7 +1236,7 @@ begin
 
   fRespostasTEF.IdentificadorTransacao := IdentificadorTransacao;
 
-  fpTEFAPIClass.InicializarChamadaAPI(tefopPagamento);
+  fpTEFAPIClass.InicializarChamadaAPI(tefmtdPagamento);
   try
     Result := fpTEFAPIClass.EfetuarPagamento( ValorPagto, Modalidade,
                                               CartoesAceitos, Financiamento,
@@ -1259,7 +1258,7 @@ begin
              CodigoFinalizacao+', '+
              Rede+' )' );
 
-  fpTEFAPIClass.InicializarChamadaAPI(tefopCancelamento);
+  fpTEFAPIClass.InicializarChamadaAPI(tefmtdCancelamento);
   try
     Result := fpTEFAPIClass.CancelarTransacao( NSU, CodigoAutorizacaoTransacao,
                                                DataHoraTransacao, Valor,
@@ -1530,8 +1529,4 @@ begin
 end;
 
 end.
-
-
-Evento com mensagem
-uasar dasdos da transação atual, se não tiver a pendente
 

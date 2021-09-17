@@ -68,7 +68,7 @@ type
     procedure LimparTransacaoPendente;
 
   protected
-    procedure InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao); override;
+    procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
 
   public
@@ -87,7 +87,7 @@ type
       DataPreDatado: TDateTime = 0): Boolean; override;
 
     function EfetuarAdministrativa(
-      OperacaoAdm: TACBrTEFOperacaoAdmin = tefadmGeral): Boolean; overload; override;
+      OperacaoAdm: TACBrTEFOperacao = tefopAdministrativo): Boolean; overload; override;
     function EfetuarAdministrativa(
       const CodOperacaoAdm: string = ''): Boolean; overload; override;
 
@@ -193,7 +193,7 @@ begin
   inherited;
 end;
 
-procedure TACBrTEFAndroidPayGoClass.InicializarChamadaAPI(AOperacao: TACBrTEFAPIOperacao);
+procedure TACBrTEFAndroidPayGoClass.InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo);
 begin
   inherited;
   LimparTransacaoPendente;
@@ -307,7 +307,7 @@ begin
 end;
 
 function TACBrTEFAndroidPayGoClass.EfetuarAdministrativa(
-  OperacaoAdm: TACBrTEFOperacaoAdmin): Boolean;
+  OperacaoAdm: TACBrTEFOperacao): Boolean;
 begin
   Result := Self.EfetuarAdministrativa( IntToStr(OperacaoAdminToPWOPER_(OperacaoAdm)) );
 end;

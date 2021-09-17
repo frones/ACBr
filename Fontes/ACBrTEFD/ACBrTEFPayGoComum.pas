@@ -307,7 +307,7 @@ function MoedaToISO4217(AMoeda: Byte): Word;
 function ISO4217ToMoeda(AIso4217: Word): Byte;
 
 function StatusTransacaoToPWCNF_( AStatus: TACBrTEFStatusTransacao): LongWord;
-function OperacaoAdminToPWOPER_( AOperacao: TACBrTEFOperacaoAdmin): Byte;
+function OperacaoAdminToPWOPER_( AOperacao: TACBrTEFOperacao): Byte;
 
 implementation
 
@@ -985,22 +985,24 @@ begin
   end;
 end;
 
-function OperacaoAdminToPWOPER_( AOperacao: TACBrTEFOperacaoAdmin): Byte;
+function OperacaoAdminToPWOPER_(AOperacao: TACBrTEFOperacao): Byte;
 begin
   case AOperacao of
-    tefadmTesteComunicacao: Result := PWOPER_NULL;
-    tefadmVersao: Result := PWOPER_VERSION;
-    tefadmFechamento: Result := PWOPER_SETTLEMNT;
-    tefadmCancelamento: Result := PWOPER_SALEVOID;
-    tefadmReimpressao:  Result := PWOPER_REPRINT;
-    tefadmPrePago: Result := PWOPER_PREPAID;
-    tefadmPreAutorizacao: Result := PWOPER_PREAUTH;
-    tefadmConsultaSaldo: Result := PWOPER_CRDBALINQ;
-    tefadmConsultaCheque: Result := PWOPER_CHECKINQ;
-    tefadmPagamentoConta: Result := PWOPER_BILLPAYMENT;
-    tefadmRelatResumido: Result := PWOPER_RPTSUMMARY;
-    tefadmRelatSintetico: Result := PWOPER_RPTTRUNC;
-    tefadmRelatDetalhado: Result := PWOPER_RPTDETAIL;
+    tefopPagamento: Result := PWOPER_SALE;
+    tefopAdministrativo: Result := PWOPER_ADMIN;
+    tefopTesteComunicacao: Result := PWOPER_NULL;
+    tefopVersao: Result := PWOPER_VERSION;
+    tefopFechamento: Result := PWOPER_SETTLEMNT;
+    tefopCancelamento: Result := PWOPER_SALEVOID;
+    tefopReimpressao:  Result := PWOPER_REPRINT;
+    tefopPrePago: Result := PWOPER_PREPAID;
+    tefopPreAutorizacao: Result := PWOPER_PREAUTH;
+    tefopConsultaSaldo: Result := PWOPER_CRDBALINQ;
+    tefopConsultaCheque: Result := PWOPER_CHECKINQ;
+    tefopPagamentoConta: Result := PWOPER_BILLPAYMENT;
+    tefopRelatResumido: Result := PWOPER_RPTSUMMARY;
+    tefopRelatSintetico: Result := PWOPER_RPTTRUNC;
+    tefopRelatDetalhado: Result := PWOPER_RPTDETAIL;
   else
     Result := PWOPER_ADMIN;
   end;

@@ -58,32 +58,45 @@ type
                              opapiRemoveCartao,
                              opapiLeituraQRCode );
 
-  TACBrTEFAPITela = (telaOperador, telaCliente);
 
-  TACBrTEFAPITiposEntrada = ( tedApenasLeitura,
-                              tedTodos,
-                              tedNumerico,
-                              tedAlfabetico,
-                              tedAlfaNum );
+    TACBrTEFAPITela = ( telaTodas,
+                        telaOperador,
+                        telaCliente );
 
-  TACBrTEFAPIValidacaoDado = ( valdNenhuma,
-                               valdNaoVazio,
-                               valdDigMod10,
-                               valdCPF,
-                               valdCNPJ,
-                               valdCPFouCNPJ,
-                               valdMesAno,
-                               valdDiaMesAno,
-                               valdDuplaDigitacao,
-                               valdSenhaGerente,
-                               valdSenhaLojista,
-                               valdSenhaTecnica);
+    TACBrTEFAPITiposEntrada = ( tedApenasLeitura,
+                                tedTodos,
+                                tedNumerico,
+                                tedAlfabetico,
+                                tedAlfaNum );
 
-  TACBrTEFAPITipoBarras = ( tbQualquer,
-                            tbDigitado,
-                            tbLeitor );
+    TACBrTEFAPIValidacaoDado = ( valdNenhuma,
+                                 valdNaoVazio,
+                                 valdDigMod10,
+                                 valdCPF,
+                                 valdCNPJ,
+                                 valdCPFouCNPJ,
+                                 valdMesAno,
+                                 valdDiaMesAno,
+                                 valdDuplaDigitacao,
+                                 valdSenhaGerente,
+                                 valdSenhaLojista,
+                                 valdSenhaTecnica);
 
-  TACBrTEFAPIDadoPinPad = ( dpDDD, dpRedDDD,
+    TACBrTEFAPITipoBarras = ( tbQualquer,
+                              tbDigitado,
+                              tbLeitor );
+
+    TACBrTEFAPIComandoAplicacao = ( tefcmdExibirMensagem,  // Exibir Mensagem, temporária ou definitiva, para Cliente ou Operador
+                                    tefcmdExibirAlerta,    // Exibir Mensagem, de alerta para Cliente ou Operador
+                                    tefcmdPerguntarMenu,   // Exibir Menu de Perguntas, com Título e Opções em Texto
+                                    tefcmdPerguntarCampo,  // Perguntar Campo, com mascara e algumas validações
+                                    tefcmdLerCodBarras);   // Ler Código de Barra
+
+    TACBrTEFAPIRecibo = ( recNenhum, recCliente, recEstabelecimento, recAmbos );
+
+    TACBrTEFTipoIdCarteiraDigital = ( wuidOutro, wuidQRCode, wuidCPF );
+
+    TACBrTEFAPIDadoPinPad = ( dpDDD, dpRedDDD,
                             dpFone, dpRedFone,
                             dpDDDeFone, dpRedDDDeFone,
                             dpCPF, dpRedCPF,

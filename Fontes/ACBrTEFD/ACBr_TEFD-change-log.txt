@@ -46,6 +46,29 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/21
+-- ACBrTEFComum --
+[*] Tipo "TACBrTEFTipoCartao", adicionado o item: "teftcNaoDefinido"
+[*] Tipo "TACBrTEFOperacaoAdmin" renomeado para "TACBrTEFOperacao".
+    Enumeradores renomeados de tefadm* para tefop*
+    Adicionado "tefopPagamento"
+
+-- ACBrTEFAPI --
+[*] Tipo "TACBrTEFAPITela", adicionado o item: "telaTodas"
+[+] Adicionado os Tipos: "TACBrTEFAPIComandoAplicacao", "TACBrTEFAPIRecibo",
+    "TACBrTEFTipoIdCarteiraDigital"
+
+-- ACBrTEFAPIComum --
+[*] Tipo "TACBrTEFAPIOperacao", renomeado para "TACBrTEFAPIMetodo"
+    Enumeradores renomeados de tefop* para tefmt*
+
+-- ACBrTEFAndroidPayGo, ACBrTEFAPICliSiTef,, ACBrTEFAPIPayGoWeb, ACBrTEFPayGoComum --
+[*] Ajustes devido a mudanças de Tipos em ACBrTEFComum e ACBrTEFAPIComum
+
+-- ACBrTEFAPIPayGoWeb --
+[-] Correção em EfetuarPagamento, para não iformar PWINFO_FINTYPE inválido
+    (por: DSA)
+
 24/08/21
 -- ACBrTEFAPIComum --
 [*] Módificado os métodos "CancelarOuEstornarTransacoesDiretorioTrabalho" e

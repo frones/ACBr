@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2021
+-- pcteCTeW --
+[*] Alterado os campos UF para opcional por conta da placa Mercosul no CTeOS.
+   Por: Túlio de Pádua
+
 10/09/2021
 -- ACBrCTeWebServices --
 [*] Possível correção no retorno da consulta quando tem eventos vinculados.

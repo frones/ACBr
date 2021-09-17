@@ -2193,17 +2193,21 @@ begin
             Gerador.wAlerta('#13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
       end;
 
-      Gerador.wCampo(tcStr, '#14', 'UF', 02, 02, 0, CTe.infCTeNorm.rodoOS.veic.prop.UF, DSC_CUF);
+      Gerador.wCampo(tcStr, '#14', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.prop.UF, DSC_CUF);
 
-      if CTe.infCTeNorm.rodoOS.veic.prop.UF <> '' then
-        if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.prop.UF) then
-          Gerador.wAlerta('#14', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+      if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.prop.UF) then
+        Gerador.wAlerta('#14', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
       Gerador.wCampo(tcStr, '#15', 'tpProp', 01, 01, 1, TpPropToStr(CTe.infCTeNorm.rodoOS.veic.prop.tpProp), DSC_TPPROP);
       Gerador.wGrupo('/prop');
     end;
 
-    Gerador.wCampo(tcStr, '#16', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.UF, DSC_CUF);
+    Gerador.wCampo(tcStr, '#16', 'UF', 02, 02, 0, CTe.infCTeNorm.rodoOS.veic.UF, DSC_CUF);
+
+    if CTe.infCTeNorm.rodoOS.veic.UF <> '' then
+      if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.UF) then
+        Gerador.wAlerta('#16', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+
     Gerador.wGrupo('/veic');
   end;
 

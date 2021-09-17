@@ -294,6 +294,9 @@ type
     FValorMaxPagamento: Currency;
     FPercentualMinPagamento: Currency;
     FPercentualMaxPagamento: Currency;
+    Femv: String;
+    Furl_Pix: String;
+    FTx_ID: String;
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
@@ -362,6 +365,9 @@ type
     property ValorMaxPagamento: currency read FValorMaxPagamento write FValorMaxPagamento ;
     property PercentualMinPagamento: currency read FPercentualMinPagamento write FPercentualMinPagamento ;
     property PercentualMaxPagamento: currency read FPercentualMaxPagamento write FPercentualMaxPagamento ;
+    property emv: String read Femv write Femv;
+    property url_Pix: String read Furl_Pix write Furl_Pix;
+    property Tx_ID: String read FTx_ID write FTx_ID;
 
   end;
 
@@ -511,9 +517,14 @@ end;
 
 constructor TRetornoTituloWeb.Create(AID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+var
+  AChave: String;
 begin
-  inherited Create(CSessaoTituloRetorno, ATipo, AFormato);
+  AChave := CSessaoTituloRetorno + IntToStr(AID + 1);
+
+  inherited Create(AChave, ATipo, AFormato);
   FAID:= AID;
+
 end;
 
 procedure TRetornoTituloWeb.Processar(const ACBrBoleto: TACBrBoleto);
@@ -582,6 +593,13 @@ begin
     ValorMaxPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorMaxPagamento;
     PercentualMinPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.PercentualMinPagamento;
     PercentualMaxPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.PercentualMaxPagamento;
+
+    if ( ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.EMV  <> EmptyStr) then
+    begin
+      emv:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.EMV;
+      url_Pix:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.UrlPix;
+      Tx_ID:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.TxId;
+    end;
 
   end;
 
@@ -674,7 +692,7 @@ constructor TRetornoRejeicoesTitulo.Create(const AIDRej: Integer; const AID: Int
 var
   AChave: String;
 begin
-  AChave := CSessaoMotivoRejeicao + IntToStr(AID + 1) + '-' + IntToStr(AIDRej + 1);
+  AChave := CSessaoMotivoRejeicao + IntToStr(AID + 1) + '-' + IntToStr(AIDRej);
 
   inherited Create( AChave, ATipo, AFormato);
   FID:= AID;

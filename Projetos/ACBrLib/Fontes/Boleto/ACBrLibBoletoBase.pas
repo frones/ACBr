@@ -88,7 +88,7 @@ type
     function MontarNossoNumero(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaLinhaDigitavel(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaCodigoBarras(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
-    function EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
+    function EnviarBoleto(eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
 
   end;
 
@@ -957,7 +957,7 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.ListaBancos: AnsiString;
+function TACBrLibBoleto.ListaBancos(): AnsiString;
 var
    SBanco : String;
    I: Integer;
@@ -974,7 +974,7 @@ begin
       Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.ListaCaractTitulo: AnsiString;
+function TACBrLibBoleto.ListaCaractTitulo(): AnsiString;
 var
    ICaractTitulo : TACBrCaracTitulo;
    SCaractTitulo : String;
@@ -991,7 +991,7 @@ begin
       Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.ListaOcorrencias: AnsiString;
+function TACBrLibBoleto.ListaOcorrencias(): AnsiString;
 var
    ITipoOcorrencia : TACBrTipoOcorrencia;
    SOcorrencia     : String;
@@ -1006,7 +1006,7 @@ begin
     Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.ListaOcorrenciasEX: AnsiString;
+function TACBrLibBoleto.ListaOcorrenciasEX(): AnsiString;
 var
    ITipoOcorrencia : TACBrTipoOcorrencia;
    SOcorrencia     : String;
@@ -1025,18 +1025,23 @@ begin
     Result := copy(Result, 1, Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
+function TACBrLibBoleto.EnviarBoleto(eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resposta: AnsiString;
   Resp : TRetornoRegistroWeb;
   I: Integer;
+  CodigoOperacao: Integer;
 begin
+  CodigoOperacao := 0;
+    if (eCodigoOperacao >= 0) then
+      CodigoOperacao := eCodigoOperacao;
   try
     GravarLog('Boleto_EnviarBoleto', logNormal);
 
     BoletoDM.Travar;
 
     try
+      BoletoDM.ACBrBoleto1.Configuracoes.WebService.Operacao:= TOperacao(CodigoOperacao);
       BoletoDM.ACBrBoleto1.EnviarBoleto;
 
       if BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count > 0 then

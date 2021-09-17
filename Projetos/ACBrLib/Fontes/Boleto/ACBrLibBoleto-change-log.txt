@@ -40,11 +40,16 @@ Símbolo : Significado
 
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
-[-]     : Correção de Bug (assim esperamos) Boleto_SetDiretorioArquivo
+[-]     : Correção de Bug (assim esperamos)
 
-28/06/2020
---- ACBrLibBoletoBase --
-[-] Correcao na função RetornaLinhaDigitavel para obter o retorno na lib.
+06/07/2021
+--- ACBrLibBoletoDataModule, ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST, ACBrLibBoletoConsts,
+    ACBrLibBoletoConfig, ACBrLibBoletoRespostas, ACBrLibBoletoStaticImport --
+[*] Adicionado as parametrizações e o método EnviarBoleto para integração da ACBrLibBoleto via API ou WebService
+
+20/06/2021
+--- ACBrLibBoletoDataModule, ACBrLibBoletoBase --
+[*] Atualização da propriedade LayoutBol, lendo a partir do arquivo .ini de Dados Cedente
     (Por: José M S Junior)
 
 30/04/2020

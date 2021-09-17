@@ -162,7 +162,7 @@ function Boleto_RetornaLinhaDigitavel(const libHandle: longint; eIndice: longint
 function Boleto_RetornaCodigoBarras(const libHandle: longint; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_EnviarBoleto(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_EnviarBoleto(const libHandle: longint; eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 {%endregion}

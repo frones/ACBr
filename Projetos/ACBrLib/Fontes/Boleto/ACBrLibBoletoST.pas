@@ -111,7 +111,7 @@ function Boleto_RetornaLinhaDigitavel(eIndice: longint; const sResposta: PChar; 
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_RetornaCodigoBarras(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_EnviarBoleto(eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
@@ -562,12 +562,12 @@ begin
   end;
 end;
 
-function Boleto_EnviarBoleto(const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_EnviarBoleto(eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada(pLib);
-    Result := TACBrLibBoleto(pLib^.Lib).EnviarBoleto(sResposta, esTamanho);
+    Result := TACBrLibBoleto(pLib^.Lib).EnviarBoleto(eCodigoOperacao, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;
@@ -576,6 +576,7 @@ begin
       Result := ErrExecutandoMetodo;
   end;
 end;
+
 
 {%endregion}
 

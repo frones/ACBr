@@ -74,7 +74,7 @@ uses
   ACBrTEFAndroid, ACBrTEFComum,
   ACBrPosPrinterElginE1Service, ACBrPosPrinterElginE1Lib,
   ACBrPosPrinterGEDI,
-  ACBrBase, ACBrPosPrinter;
+  ACBrBase, ACBrPosPrinter, ACBrTEFAPIComum;
 
 const
   CNOME_CONFIG = 'ACBrTEFDemoAndroid.ini';
@@ -286,7 +286,6 @@ type
     swSuportaAbaterVouchere: TSwitch;
     tiStartUp: TTimer;
     lbiAutoconfirmarPendente: TListBoxItem;
-    swAutoConfirmarTransacaoPendente: TSwitch;
     tabsUltimaTransacao: TTabControl;
     tabDadosUltimaTransacao: TTabItem;
     memoDadosUltimaTransacao: TMemo;
@@ -314,6 +313,7 @@ type
     GridPanelLayout6: TGridPanelLayout;
     rbClasseInterna: TRadioButton;
     rbClasseExterna: TRadioButton;
+    cbxTransacaoPendente: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btVendaPagarClick(Sender: TObject);
     procedure ClickBotaoNumero(Sender: TObject);
@@ -352,10 +352,6 @@ type
     procedure btnProcurarBthClick(Sender: TObject);
     procedure seColunasEnter(Sender: TObject);
     procedure ACBrTEFAndroid1QuandoIniciarTransacao(AIntent: JIntent);
-    procedure ACBrTEFAndroid1QuandoFinalizarTransacao(Sucesso: Boolean;
-      MsgFinal: string; RespostaTEF: TACBrTEFResp);
-    procedure ACBrTEFAndroid1QuandoDetectarTransacaoPendente(MsgErro: string;
-      RespostaTEF: TACBrTEFResp);
     procedure SpeedButton1Click(Sender: TObject);
     procedure lbAdminItemClick(const Sender: TCustomListBox;
       const Item: TListBoxItem);
@@ -366,6 +362,9 @@ type
     procedure rbMudaClasseImpressora(Sender: TObject);
     procedure cbxModeloChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ACBrTEFAndroid1QuandoFinalizarOperacao(RespostaTEF: TACBrTEFResp);
+    procedure ACBrTEFAndroid1QuandoDetectarTransacaoPendente(
+      RespostaTEF: TACBrTEFResp; const MsgErro: string);
   private
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
@@ -721,8 +720,8 @@ procedure TFrTEFDemoAndroid.AplicarConfiguracaoTEF;
 begin
   ACBrTEFAndroid1.DesInicializar;
   ACBrTEFAndroid1.Modelo := tefPayGo;
-  ACBrTEFAndroid1.PathBackup := TPath.Combine(TPath.GetPublicPath, 'tef');
-  ACBrTEFAndroid1.ArqLOG := TPath.Combine(ACBrTEFAndroid1.PathBackup, 'acbrtefandroid.log');
+  ACBrTEFAndroid1.DiretorioTrabalho := TPath.Combine(TPath.GetPublicPath, 'tef');
+  ACBrTEFAndroid1.ArqLOG := TPath.Combine(ACBrTEFAndroid1.DiretorioTrabalho, 'acbrtefandroid.log');
 
   ACBrTEFAndroid1.DadosAutomacao.NomeSoftwareHouse := edtNomeSwHouse.Text;
   ACBrTEFAndroid1.DadosAutomacao.CNPJSoftwareHouse := edtCNPJSwHouse.Text;
@@ -737,8 +736,10 @@ begin
   ACBrTEFAndroid1.DadosEstabelecimento.RazaoSocial := edtNomeFantasiaEstabelecimento.Text;
   ACBrTEFAndroid1.DadosEstabelecimento.CNPJ := edtCNPJEstabelecimento.Text;
 
-  ACBrTEFAndroid1.ConfirmarTransacoesAutomaticamente := not swConfirmacaoManual.IsChecked;
-  ACBrTEFAndroid1.AutoConfirmarTransacoesPendente := swAutoConfirmarTransacaoPendente.IsChecked;
+  ACBrTEFAndroid1.ConfirmarTransacaoAutomaticamente := not swConfirmacaoManual.IsChecked;
+  if (cbxTransacaoPendente.ItemIndex >= 0) then
+    ACBrTEFAndroid1.TratamentoTransacaoPendente := TACBrTEFTratamentoTransacaoPendente(
+      cbxTransacaoPendente.ItemIndex);
 
   AplicarConfiguracaoPersonalizacao;
   AplicarConfiguracaoTransacao;
@@ -1209,8 +1210,8 @@ begin
 
   ACBrTEFAndroid1.EfetuarPagamento( IdentificadorTransacao,
                                     ValTransacao,
-                                    TipoCartao,
                                     ModPagto,
+                                    TipoCartao,
                                     ModFinanc,
                                     Parcelas,
                                     DataPre );
@@ -1300,12 +1301,13 @@ begin
     AjustarScroll(TControl(Sender));
 end;
 
-procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoDetectarTransacaoPendente(MsgErro: string;
-  RespostaTEF: TACBrTEFResp);
+procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoDetectarTransacaoPendente(
+  RespostaTEF: TACBrTEFResp; const MsgErro: string);
 var
   AStatus: TACBrTEFStatusTransacao;
   i: Integer;
   ATEFResp: TACBrTEFResp;
+  aMsgErro: String;
 begin
   // Aqui você pode Confirmar ou Desfazer as transações pendentes de acordo com
   // a sua regra de negócios
@@ -1319,7 +1321,12 @@ begin
   // ACBrTEFAndroid1.ResolverOperacaoPendente(AStatus);
 
   // Exemplo 2 -  Fazer uma pergunta ao usuário:
-  TDialogService.MessageDialog( MsgErro + sLineBreak+sLineBreak +
+  if (MsgErro = '') then
+    AMsgErro := RespostaTEF.TextoEspecialOperador
+  else
+    AMsgErro := MsgErro;
+
+  TDialogService.MessageDialog( AMsgErro + sLineBreak+sLineBreak +
                                 'Confirmar ?',
                                 TMsgDlgType.mtConfirmation,
                                 [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
@@ -1332,7 +1339,7 @@ begin
         else
           AStatus := TACBrTEFStatusTransacao.tefstsErroDiverso;
 
-        ACBrTEFAndroid1.ResolverOperacaoPendente(AStatus);
+        ACBrTEFAndroid1.ResolverTransacaoPendente(AStatus);
       end
   );
 
@@ -1355,11 +1362,12 @@ begin
   end;
 end;
 
-procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoFinalizarTransacao(Sucesso: Boolean;
-  MsgFinal: string; RespostaTEF: TACBrTEFResp);
+procedure TFrTEFDemoAndroid.ACBrTEFAndroid1QuandoFinalizarOperacao(
+  RespostaTEF: TACBrTEFResp);
 var
   i, nINFO: Integer;
   TheKey, TheValue: string;
+  MsgFinal: String;
 begin
   MostrarTelaUltimaTransacao;
 
@@ -1367,10 +1375,12 @@ begin
   begin
     Clear;
 
+    MsgFinal := RespostaTEF.TextoEspecialOperador;
+
     Add('');
     Add('');
     Add('------ Fim da Transação ------');
-    Add('Sucesso: '+IfThen(Sucesso, 'SIM', 'NÃO'));
+    Add('Sucesso: '+IfThen(RespostaTEF.Sucesso, 'SIM', 'NÃO'));
     Add('Resultado: '+MsgFinal);
 
     // Usando as propriedades de TACBrTEFResp
@@ -1391,13 +1401,15 @@ begin
   memoViaEstabelecimento.Lines.Text := RespostaTEF.ImagemComprovante2aVia.Text;
   memoViaCliente.Lines.Text  := RespostaTEF.ImagemComprovante1aVia.Text;
 
-  // Processando a Impressão dos comprovantes
-  if not Sucesso then
+  // Exemplo de como processar a Impressão dos comprovantes
+  if not RespostaTEF.Sucesso then
   begin
     if MsgFinal.ToUpper.Contains('PENDENTE') then
     begin
-      if ACBrTEFAndroid1.AutoConfirmarTransacoesPendente then
+      if (ACBrTEFAndroid1.TratamentoTransacaoPendente = tefpenConfirmar) then
         MsgFinal := MsgFinal + sLineBreak + 'Transação será CONFIRMADA'
+      else if (ACBrTEFAndroid1.TratamentoTransacaoPendente = tefpenEstornar) then
+          MsgFinal := MsgFinal + sLineBreak + 'Transação será ESTORNADA'
       else
         MsgFinal := '';  // Ignora esse erro, pois será tratado em QuandoDetectarTransacaoPendente
     end;
@@ -1425,7 +1437,7 @@ begin
             else
               AStatus := TACBrTEFStatusTransacao.tefstsErroDiverso;
 
-            ACBrTEFAndroid1.FinalizarOperacao(AStatus);
+            ACBrTEFAndroid1.FinalizarTransacao(AStatus);
 
             if (AResult = mrYes) then
               ImprimirComprovantes(RespostaTEF);
@@ -1445,7 +1457,7 @@ begin
 
   end;
 
-  // Usando as Propriedades da API, fazendo TypeCast
+  // Exemplo de como usar as Propriedades da API, fazendo TypeCast
   if (ACBrTEFAndroid1.TEF is TACBrTEFAndroidPayGoClass) then
   begin
     memoDadosUltimaTransacao.Lines.Add('');
@@ -1568,7 +1580,7 @@ begin
     swConfirmacaoManual.IsChecked := Ini.ReadBool('Geral', 'ConfirmacaoManual', False);
     swInterfaceAlternativa.IsChecked := Ini.ReadBool('Geral', 'InterfaceAlternativa', True);
     swMenuAdministrativo.IsChecked := Ini.ReadBool('Geral', 'MenuAdministrativo', False);
-    swAutoConfirmarTransacaoPendente.IsChecked  := Ini.ReadBool('Geral', 'AutoConfirmarTransacaoPendente', False);
+    cbxTransacaoPendente.ItemIndex := INI.ReadInteger('Geral', 'TransacaoPendente', 0);
     cbxImpressaoViaCliente.ItemIndex := Ini.ReadInteger('Geral', 'ImpressaoViaCliente', 1);
 
     swSuportaTroco.IsChecked := Ini.ReadBool('Capacidades', 'SuportaTroco', False);
@@ -1630,7 +1642,7 @@ begin
     Ini.WriteBool('Geral', 'ConfirmacaoManual', swConfirmacaoManual.IsChecked);
     Ini.WriteBool('Geral', 'InterfaceAlternativa', swInterfaceAlternativa.IsChecked);
     Ini.WriteBool('Geral', 'MenuAdministrativo', swMenuAdministrativo.IsChecked);
-    Ini.WriteBool('Geral', 'AutoConfirmarTransacaoPendente', swAutoConfirmarTransacaoPendente.IsChecked);
+    INI.WriteInteger('Geral', 'TransacaoPendente', cbxTransacaoPendente.ItemIndex);
     Ini.WriteInteger('Geral', 'ImpressaoViaCliente', cbxImpressaoViaCliente.ItemIndex);
 
     Ini.WriteBool('Capacidades', 'SuportaTroco', swSuportaTroco.IsChecked);

@@ -631,7 +631,7 @@ begin
    with ARegistro1999 do
    begin
      Add(REG+
-         LFill(QTD_LIN,4),
+         LFill(QTD_LIN,0),
          False);
    end;
 end;

@@ -108,7 +108,7 @@ begin
     LQTD_LIN := QTD_LIN + AQTD_LIN;
     Add(
         REG +
-        LFill(LQTD_LIN,4),
+        LFill(LQTD_LIN,0),
         False);
   end;
 end;

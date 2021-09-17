@@ -103,6 +103,10 @@ begin
   if (Copy(wResposta, 1, 1) = 'D') then
     wResposta := Copy(wResposta, 2, Length(wResposta));
 
+  { Retira E }
+  if (Copy(wResposta, 1, 1) = 'E') then
+    wResposta := Copy(wResposta, 2, Length(wResposta));
+
   { Retira F }
   if (Copy(wResposta, 1, 1) = 'F') then
     wResposta := Copy(wResposta, 2, Length(wResposta));

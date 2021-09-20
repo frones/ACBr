@@ -415,7 +415,7 @@ var
   I, J: Integer;
   Inicio, Agora, UltVencto: TDateTime;
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
-  fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
+  fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag, fsvPISST, fsvCOFINSST : Currency;
   fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup, fsvPISServico, fsvCOFINSServico : Currency;
   FaturamentoDireto, NFImportacao, UFCons, bServico : Boolean;
 
@@ -999,6 +999,8 @@ begin
     fsvIPIDevol:= 0;
     fsvPISServico := 0;
     fsvCOFINSServico := 0;
+    fsvPISST     := 0;
+    fsvCOFINSST  := 0;
     FaturamentoDireto := False;
     NFImportacao := False;
     UFCons := False;
@@ -1279,15 +1281,21 @@ begin
               fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
               fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
             end;
+          if (Imposto.PISST.indSomaPISST = ispPISSTCompoe) then
+            fsvPISST     := fsvPISST + Imposto.PISST.vPIS;
+          if (Imposto.COFINSST.indSomaCOFINSST = iscCOFINSSTCompoe ) then
+            fsvCOFINSST  := fsvCOFINSST + Imposto.COFINSST.vCOFINS;
+
           fsvOutro   := fsvOutro + Prod.vOutro;
-          fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;;
-          fsvFCPST   := fsvFCPST + Imposto.ICMS.vFCPST;;
-          fsvFCPSTRet:= fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;;
+          fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;
+          fsvFCPST   := fsvFCPST + Imposto.ICMS.vFCPST;
+          fsvFCPSTRet:= fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;
           fsvIPIDevol:= fsvIPIDevol + vIPIDevol;
 
           // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
           if (not bServico) or (NFe.Ide.finNFe = fnAjuste) then
             fsvProd := fsvProd + Prod.vProd;
+
         end;
 
         if Prod.veicProd.tpOP = toFaturamentoDireto then
@@ -1311,9 +1319,9 @@ begin
     end;
 
     if FaturamentoDireto then
-      fsvNF := (fsvProd+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ)-(fsvDesc+fsvICMSDeson)
+      fsvNF := (fsvProd+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvPISST+fsvCOFINSST)-(fsvDesc+fsvICMSDeson)
     else
-      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvFCPST+fsvIPIDevol)-(fsvDesc+fsvICMSDeson);
+      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvFCPST+fsvIPIDevol+fsvPISST+fsvCOFINSST)-(fsvDesc+fsvICMSDeson);
 
     GravaLog('Validar: 531-Total BC ICMS');
     if (NFe.Total.ICMSTot.vBC <> fsvBC) then

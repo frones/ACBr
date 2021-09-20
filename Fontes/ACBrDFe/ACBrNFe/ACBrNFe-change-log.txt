@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2021
+-- ACBrNFeNotasFiscais --
+[*] Validação da regra de negócio Rejeição: 610, conforme NT2020_005.
+
 01/09/2021
 -- ACBrNFeXmlWriter--
 [*] Aplicado a mesma alteração realizada em pcnNFeW.

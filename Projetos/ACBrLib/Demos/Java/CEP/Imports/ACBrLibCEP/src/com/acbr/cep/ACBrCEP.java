@@ -22,7 +22,12 @@ public final class ACBrCEP extends ACBrLibBase implements AutoCloseable {
             
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    library = Platform.is64Bit() ? "ACBrCEP64" : "ACBrCEP32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrCEP64" : "ACBrCEP32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrcep64" : "acbrcep32";
+                    }
+                    
                 }
                 return library;
             }

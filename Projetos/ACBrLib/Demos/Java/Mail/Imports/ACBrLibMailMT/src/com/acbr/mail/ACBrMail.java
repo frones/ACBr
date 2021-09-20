@@ -25,7 +25,12 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
             
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    library = Platform.is64Bit() ? "ACBrMail64" : "ACBrMail32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrMail64" : "ACBrMail32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrmail64" : "acbrmail32";
+                    }
+                    
                 }
                 
                 return library;

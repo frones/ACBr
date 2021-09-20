@@ -33,7 +33,11 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    library = Platform.is64Bit() ? "ACBrPosPrinter64" : "ACBrPosPrinter32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrPosPrinter64" : "ACBrPosPrinter32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrposprinter64" : "acbrposprinter32";
+                    }
                 }
                 return library;
             }

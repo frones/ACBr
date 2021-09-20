@@ -24,7 +24,12 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
             
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    library = Platform.is64Bit() ? "ACBrSAT64" : "ACBrSAT32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrSAT64" : "ACBrSAT32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrsat64" : "acbrsat32";
+                    }
+                         
                 }
                 return library;
             }

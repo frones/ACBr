@@ -28,7 +28,12 @@ public final class ACBrBAL extends ACBrLibBase implements AutoCloseable {
                         
             private static String getLibraryName() {
                 if ( library.isEmpty() ) {
-                    library = Platform.is64Bit() ? "ACBrBAL64" : "ACBrBAL32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrBAL64" : "ACBrBAL32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrbal64" : "acbrbal32";
+                    }
+                    
                 }  
                 return library;
             }

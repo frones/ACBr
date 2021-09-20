@@ -22,7 +22,11 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    library = Platform.is64Bit() ? "ACBrBoleto64" : "ACBrBoleto32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrBoleto64" : "ACBrBoleto32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrboleto64" : "acbrboleto32";
+                    }
                 }
                 return library;
             }           

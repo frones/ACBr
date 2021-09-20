@@ -24,7 +24,11 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
 
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    library = Platform.is64Bit() ? "ACBrETQ64" : "ACBrETQ32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrETQ64" : "ACBrETQ32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbretq64" : "acbretq32";
+                    }
                 }
                 return library;
             }

@@ -144,7 +144,11 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
 
       private static String getLibraryName() {
         if ( library.isEmpty() ) {
-          library = Platform.is64Bit() ? "ACBrCTe64" : "ACBrCTe32";
+            if(Platform.isWindows()){
+                library = Platform.is64Bit() ? "ACBrCTe64" : "ACBrCTe32";                        
+            }else{
+                library = Platform.is64Bit() ? "acbrcte64" : "acbrcte32";
+            }
         }
         return library;
       }

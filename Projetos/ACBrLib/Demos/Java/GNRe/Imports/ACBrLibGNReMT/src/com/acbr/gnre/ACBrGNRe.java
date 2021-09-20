@@ -49,7 +49,12 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
 
             private static String getLibraryName() {
                 if ( library.isEmpty() ) {
-                library = Platform.is64Bit() ? "ACBrGNRe64" : "ACBrGNRe32";
+                    if(Platform.isWindows()){
+                        library = Platform.is64Bit() ? "ACBrGNRe64" : "ACBrGNRe32";                        
+                    }else{
+                        library = Platform.is64Bit() ? "acbrgnre64" : "acbrgnre32";
+                    }
+                    
             }
             return library;
             }

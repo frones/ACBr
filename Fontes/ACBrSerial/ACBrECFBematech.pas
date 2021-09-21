@@ -1478,7 +1478,7 @@ begin
        begin
           DataHora := Self.GetDataHora;
           Data := DateOf(DataHora);
-          if (DataMov < Data) and ((HoursBetween(Data, DataHora) > 2)) then
+          if (DataMov < Data) and ((HoursBetween(Data, DataHora) >= 2)) then
             fpEstado := estRequerZ ;
        end;
 //     else

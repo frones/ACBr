@@ -41,6 +41,10 @@ uses
   inifiles, fpjson, jsonparser, TypInfo,
   rttiutils, ACBrUtil, ACBrLibResposta;
 
+const
+  CSessionFormat = '%s%.3d';
+  CSufixFormat = '%.3d';
+
 type
   { TACBrObjectSerializer }
   TACBrObjectSerializer = class

@@ -320,7 +320,7 @@ uses
 constructor TEventoItemResposta.Create(const ItemID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create('Evento' + Trim(IntToStrZero(ItemID +1, 3)), ATipo, AFormato);
+  inherited Create('Evento' + Trim(IntToStrZero(ItemID, 3)), ATipo, AFormato);
 end;
 
 procedure TEventoItemResposta.Processar(const Item: TRetInfEvento);

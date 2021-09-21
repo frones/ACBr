@@ -42,8 +42,6 @@ uses
 
 const
   CSessaoHttpResposta = 'RespostaHttp';
-  CSessionFormat = '%s%.3d';
-  CSufixFormat = '%.3d';
 
 type
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);

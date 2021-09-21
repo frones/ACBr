@@ -499,7 +499,8 @@ begin
       L := True;
       
     if infoEstab.DadosEstab.infoTrab.infoAprInst() then
-      if infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '' then
+      if (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') or
+         (Assigned(infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc)) then
         L := True;
         
     if infoEstab.DadosEstab.infoTrab.infoPCDInst() then
@@ -545,13 +546,16 @@ begin
   if infoEstab.DadosEstab.infoTrab.infoAprInst() then
   begin
     if (VersaoDF <= ve02_05_00) or 
-       (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') then
+       (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') or
+       (Assigned(infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc)) then
     begin
       Gerador.wGrupo('infoApr');
 
       if VersaoDF <= ve02_05_00 then
         Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
-      Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
+
+      if (infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud <> '') then
+        Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
 
       if VersaoDF <= ve02_05_00 then
         if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then

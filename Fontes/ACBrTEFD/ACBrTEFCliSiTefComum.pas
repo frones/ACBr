@@ -70,7 +70,11 @@ const
 {$IFDEF LINUX}
   CACBrTEFCliSiTef_Lib = 'libclisitef.so';
 {$ELSE}
-  CACBrTEFCliSiTef_Lib = 'CliSiTef32I.dll';
+  {$IFDEF WIN64}
+   CACBrTEFCliSiTef_Lib = 'CliSiTef64I.dll';
+  {$ELSE}
+   CACBrTEFCliSiTef_Lib = 'CliSiTef32I.dll';
+  {$ENDIF}
 {$ENDIF}
 
 
@@ -579,8 +583,6 @@ begin
 end;
 
 function TACBrTEFCliSiTefAPI.TraduzirErroInicializacao(Sts: Integer): String;
-var
-  Erro: String;
 begin
   Case Sts of
      1 :	Result := CACBrTEFCliSiTef_Erro1;

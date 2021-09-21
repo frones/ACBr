@@ -198,7 +198,7 @@ type
   PSPDevInfoData = ^TSPDevInfoData;
 
   SP_DEVINFO_DATA = packed record
-    cbSize: NativeUInt;
+    cbSize: DWORD;
     ClassGuid: TGUID;
     DevInst: DWORD;
     Reserved: ULONG_PTR;
@@ -207,7 +207,7 @@ type
 
   PSPDeviceInterfaceData = ^TSPDeviceInterfaceData;
   SP_DEVICE_INTERFACE_DATA = packed record
-    cbSize: NativeUInt;
+    cbSize: DWORD;
     InterfaceClassGuid: TGUID;
     Flags: DWORD;
     Reserved: ULONG_PTR;
@@ -928,6 +928,7 @@ var
     VendorId, ProductId: String;
   ADevice: TACBrUSBWinDevice;
   ADeviceListToAdd: TACBrUSBWinDeviceList;
+  //E: DWORD;
 
   function TryGetDeviceRegistryPropertyString(AProp: Cardinal): String;
   begin
@@ -964,7 +965,7 @@ begin
       begin
         InterfaceDetail := AllocMem(RequiredSize);
         try
-          InterfaceDetail^.cbSize := SizeOf(TSPDeviceInterfaceDetailData);
+          InterfaceDetail^.cbSize := max(SizeOf(SizeUInt), SizeOf(TSPDeviceInterfaceDetailData));  // 64bits = 8, 32bits = 6, 32bits,ANSI = 5
           DeviceInfoData.cbSize := SizeOf(TSPDevInfoData);
           if xSetupDiGetDeviceInterfaceDetail(DevInfo, @DeviceInterface, InterfaceDetail, RequiredSize, RequiredSize, @DeviceInfoData) then
           begin
@@ -981,6 +982,9 @@ begin
             if (RequiredSize > 1) then
               DevInterface := copy(DevInterface, 1, RequiredSize-1);
           end;
+          //else
+          //  E := GetLastError;
+
         finally
           Freemem(InterfaceDetail);
         end;

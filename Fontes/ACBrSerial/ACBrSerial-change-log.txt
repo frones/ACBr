@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- ACBrWinUSBDevice --
+[-] Correções para funcionamento da SetupApi.dll em Win64
+    (por: DSA)
+
 Data: 04/08/2021
 -- ACBrPosPrinterGEDI --
 [-] Ajuste para compatibilizar com G800Interface

@@ -338,14 +338,16 @@ type
 
   TSucessaoVinc = class(TObject)
   private
-    FTpInscAnt: TpTpInsc;
-    FCnpjEmpregAnt: string;
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
     FMatricAnt: string;
     FdtAdm: TDateTime;
     FObservacao: string;
   public
-    property tpInscAnt: TpTpInsc read FTpInscAnt write FTpInscAnt;
-    property cnpjEmpregAnt: string read FCnpjEmpregAnt write FCnpjEmpregAnt;
+    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
+    property tpInscAnt: tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc: string read FnrInsc write FnrInsc;
+    property cnpjEmpregAnt: string read FnrInsc write FnrInsc;
     property matricAnt: string read FMatricAnt write FMatricAnt;
     property dtAdm: TDateTime read FdtAdm write FdtAdm;
     property observacao: string read FObservacao write FObservacao;
@@ -1331,8 +1333,8 @@ begin
 
       if INIRec.ReadString(sSecao, 'nrInsc', '') <> '' then
       begin
-        ideTrabalhador.infoComplem.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-        ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+        ideTrabalhador.infoComplem.sucessaoVinc.tpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        ideTrabalhador.infoComplem.sucessaoVinc.nrInsc        := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
         ideTrabalhador.infoComplem.sucessaoVinc.matricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
         ideTrabalhador.infoComplem.sucessaoVinc.dtAdm         := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
         ideTrabalhador.infoComplem.sucessaoVinc.observacao    := INIRec.ReadString(sSecao, 'observacao', '');

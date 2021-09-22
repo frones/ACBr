@@ -395,10 +395,10 @@ begin
 end;
 
 function TEvtCdBenAlt.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec: TMemIniFile;
-  Ok: Boolean;
-  sSecao: String;
+//var
+//  INIRec: TMemIniFile;
+//  Ok: Boolean;
+//  sSecao: String;
 begin
   Result := True;
 end;

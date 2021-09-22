@@ -137,7 +137,7 @@ type
     function getFimCessao(): TFimCessao;
   public
     constructor Create;
-    destructor  Destroy;
+    destructor  Destroy; override;
     
     function iniCessaoInst(): Boolean;
     function fimCessaoInst(): Boolean;
@@ -322,11 +322,11 @@ begin
 end;
 
 function TEvtCessao.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec: TMemIniFile;
-  Ok: Boolean;
-  sSecao, sFim: String;
-  I: Integer;
+//var
+//  INIRec: TMemIniFile;
+//  Ok: Boolean;
+//  sSecao, sFim: String;
+//  I: Integer;
 begin
   Result := True;
 end;

@@ -136,7 +136,7 @@ type
     property cpfInst: string read FCpfInst write FCpfInst;
     property dtInst: TDateTime read FDtInst write FDtInst;
   end;
-  
+
   TInfoPenMorte = class(TObject)
   private
     FTpTpPenMorte: tpTpPenMorte;
@@ -145,7 +145,7 @@ type
     function getInstPenMorte(): TInstPenMorte;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     
     function instPenMorteInst(): Boolean;
     
@@ -593,10 +593,10 @@ begin
 end;
 
 function TEvtCdBenIn.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec: TMemIniFile;
-  Ok: Boolean;
-  sSecao: String;
+//var
+//  INIRec: TMemIniFile;
+//  Ok: Boolean;
+//  sSecao: String;
 begin
   Result := True;
 end;

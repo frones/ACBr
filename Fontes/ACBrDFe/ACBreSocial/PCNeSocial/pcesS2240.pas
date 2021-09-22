@@ -558,8 +558,8 @@ begin
 end;
 
 procedure TEvtExpRisco.GerarInfoAtiv(objInfoAtiv: TInfoAtiv);
-var
-  I: integer;
+//var
+//  I: integer;
 begin
   Gerador.wGrupo('infoAtiv');
 

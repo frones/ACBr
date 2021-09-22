@@ -113,7 +113,7 @@ type
     FinfoRegCTPS: TinfoRegCTPS;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
     property cpfTrab: string read FcpfTrab write FcpfTrab;
     property dtNascto: TDateTime read FdtNascto write FdtNascto;

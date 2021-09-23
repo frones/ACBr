@@ -92,7 +92,7 @@ begin
   { Banco }
   vImprime := #27+ '¢' + fpBanco + #13;
   { Valor }
-  ValStr := FormatFloatBr(fpValor);
+  ValStr := FormatFloat('#####0.00',fpValor);
   vImprime := vImprime + #27+'£' + ValStr + #13;
   { Data }
   //caso habilitado para emitir bom para, a data enviada sera impressa no campo bom para e

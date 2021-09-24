@@ -1,0 +1,57 @@
+Dentro da pasta (...\Exemplos\ACBrDFe\Schemas\NFSe) temos uma pasta para cada provedor.
+O nome da pasta é o mesmo do provedor respeitado a grafia das letras (minusculas e maiusculas).
+
+Dentro da pasta do provedor sempre teremos uma pasta com a versão do layout utilizado por ele.
+Por exemplo: 1.00, 2.04, etc.
+
+Caso o provedor tenha dois mais webservices de versões diferentes teremos dentro da pasta do 
+provedor uma pasta para cada versão.
+
+Dentro da pasta versão teremos os arquivos XSD (Schemas).
+
+Exemplo:
+
+ABase             <=== Nome do provedor
+  2.01            <=== Versão do Layout / Schemas dessa versão utilizado por todas as cidades desse provedor
+
+WebISS            <=== Nome do provedor
+  1.00            <=== Versão do Layout / Schemas dessa versão
+  2.02            <=== Versão do Layout / Schemas dessa versão
+
+
+Caso o provedor tenha Schemas diferentes para cada ambinente teremos que ter as pastas:
+Homologacao e Producao
+
+Exemplo:
+
+ISSJoinvile       <=== Nome do provedor
+  2.04            <=== Versão do Layout 
+    Homologacao   <=== Schemas para o ambiente de Homologação dessa cidade
+    Producao      <=== Schemas para o ambiente de Produção dessa cidade
+
+
+Caso o provedor tenha Schemas diferentes para cada cidade teremos que ter uma pasta para cada 
+cidade, neste caso o nome da pasta será o código IBGE da cidade.
+
+Exemplo:
+
+fintelISS         <=== Nome do provedor
+  2.00            <=== Versão do Layout 
+    3167702       <=== Código IBGE da cidade que utiliza essa versão / Schemas dessa versão
+  2.02            <=== Versão do Layout 
+    3303609       <=== Código IBGE da cidade que utiliza essa versão / Schemas dessa versão
+    3523404       <=== Código IBGE da cidade que utiliza essa versão / Schemas dessa versão
+
+
+Caso o provedor tenha Schemas diferentes para cada cidade e ambiente teremos que ter uma pasta 
+para cada cidade (código IBGE da cidade) e para cada ambiente: Homologacao e Producao.
+
+Exemplo:
+
+Actcon            <=== Nome do provedor
+  2.01            <=== Versão do Layout 
+    3138401       <=== Código IBGE da cidade que utiliza essa versão
+      Homologacao <=== Schemas para o ambiente de Homologação dessa cidade
+      Producao    <=== Schemas para o ambiente de Produção dessa cidade
+
+

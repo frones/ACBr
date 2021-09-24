@@ -60,7 +60,7 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
 												<xs:whiteSpace value="preserve"/>
-												<xs:pattern value="[0-9]{8}"/>
+												<xs:pattern value="[0-9]{7}"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -88,6 +88,19 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 											<xs:documentation>1 - Normal
 ; 2 - Contingência Off Line</xs:documentation>
 										</xs:annotation>
+									</xs:element>
+									<xs:element name="nSiteAutoriz">
+										<xs:annotation>
+											<xs:documentation>Identificação do número do Site do Autorizador de recepção da NF3e</xs:documentation>
+											<xs:documentation>Se o autorizador da NF3e possuir apenas um site deverá ser informado com Zero (0), em caso de Autorizador trabalhar com múltiplos sites indicar o número do site para qual foi endereçada a NF3e (1 a 9).
+Observação: O ambiente autorizador que trabalhar com mais de um Site deverá divulgar para cada endereço de site qual número correspondente de nSiteAutoriz o contribuinte pode usar</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:pattern value="[0-9]{1}"/>
+											</xs:restriction>
+										</xs:simpleType>
 									</xs:element>
 									<xs:element name="cMunFG" type="TCodMunIBGE">
 										<xs:annotation>
@@ -539,7 +552,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														</xs:annotation>
 														<xs:simpleType>
 															<xs:restriction base="TString">
-																<xs:minLength value="3"/>
+																<xs:minLength value="1"/>
 																<xs:maxLength value="3"/>
 															</xs:restriction>
 														</xs:simpleType>
@@ -734,9 +747,11 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														<xs:documentation>1-Hidráulica, 
 2-Solar, 
 3-Eólica,
-4-Biomassa, 
+ 4-Térmica, 5 - Hibrida
 
-5-Biogás, 6 - Hibrida</xs:documentation>
+ 
+
+</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:sequence maxOccurs="unbounded">
@@ -918,14 +933,44 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 																		<xs:documentation>Valor do ICMS</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
+																<xs:element name="vFCP" type="TDec_1302" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="vBCST" type="TDec_1302" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Valor da BC do ICMS ST</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="vICMSST" type="TDec_1302" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Valor do ICMS ST retido</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="vFCPST" type="TDec_1302" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
 																<xs:element name="vPIS" type="TDec_1302" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Valor do PIS</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
+																<xs:element name="vPISEfet" type="TDec_1302" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Valor efetivo do PIS</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
 																<xs:element name="vCOFINS" type="TDec_1302" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Valor do COFINS</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="vCOFINSEfet" type="TDec_1302" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Valor Efetivo do COFINS</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
 																<xs:element name="retTrib" minOccurs="0">
@@ -984,7 +1029,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="gTarif" minOccurs="0" maxOccurs="4">
+																<xs:element name="gTarif" minOccurs="0" maxOccurs="6">
 																	<xs:annotation>
 																		<xs:documentation>Grupo de Tarifas por Período</xs:documentation>
 																	</xs:annotation>
@@ -1926,14 +1971,71 @@ item.
 																					<xs:documentation>Valor do ICMS</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
+																			<xs:sequence minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Sequencia XML</xs:documentation>
+																				</xs:annotation>
+																				<xs:element name="pFCP" type="TDec_0302a04Opc">
+																					<xs:annotation>
+																						<xs:documentation>Percentual de ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vFCP" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																			</xs:sequence>
+																			<xs:sequence minOccurs="0">
+																				<xs:element name="vBCST" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor da BC do ICMS ST</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="pICMSST" type="TDec_0302">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota do ICMS ST</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSST" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS ST retido</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:sequence minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Sequencia XML</xs:documentation>
+																					</xs:annotation>
+																					<xs:element name="pFCPST" type="TDec_0302a04Opc">
+																						<xs:annotation>
+																							<xs:documentation>Percentual de ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="vFCPST" type="TDec_1302">
+																						<xs:annotation>
+																							<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																				</xs:sequence>
+																			</xs:sequence>
 																			<xs:element name="vPIS" type="TDec_1302" minOccurs="0">
 																				<xs:annotation>
 																					<xs:documentation>Valor do PIS</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
+																			<xs:element name="vPISEfet" type="TDec_1302" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Valor efetivo do PIS</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
 																			<xs:element name="vCOFINS" type="TDec_1302" minOccurs="0">
 																				<xs:annotation>
 																					<xs:documentation>Valor do COFINS</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="vCOFINSEfet" type="TDec_1302" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Valor Efetivo do COFINS</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
 																			<xs:element name="gProc" maxOccurs="10">
@@ -3467,7 +3569,6 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 			<xs:enumeration value="3"/>
 			<xs:enumeration value="4"/>
 			<xs:enumeration value="5"/>
-			<xs:enumeration value="6"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TAjusteNF3eAnt_v2">

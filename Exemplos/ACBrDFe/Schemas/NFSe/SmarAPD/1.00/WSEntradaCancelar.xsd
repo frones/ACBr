@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="nfd">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:int" name="inscricaomunicipalemissor"/>			
+				<xs:element type="xs:int" name="numeronf"/>
+				
+				<xs:element name="motivocancelamento">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">				
+						  <xs:maxLength value="255"/>				
+						</xs:restriction>				
+					</xs:simpleType>				
+				</xs:element>				
+				
+				<xs:element name="datacancelamento">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="([0-9]{2}/){2}[0-9]{4}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>		
+			</xs:sequence>
+		</xs:complexType>		
+	</xs:element>
+</xs:schema>

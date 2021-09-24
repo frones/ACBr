@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.abrasf.org.br/nfse" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.abrasf.org.br/nfse" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:include schemaLocation="tipos_complexos.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd"/>
+	<xsd:element name="EnviarLoteRpsEnvio">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="LoteRps" type="tcLoteRps"/>
+				<xsd:element ref="dsig:Signature" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

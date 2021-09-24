@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.betha.com.br/e-nota-contribuinte-ws" 
+           xmlns:tipos="http://www.betha.com.br/e-nota-contribuinte-ws/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://www.betha.com.br/e-nota-contribuinte-ws/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  
+  <xs:element name="ConsultarNfseEnvio">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Prestador" type="tipos:tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1" />
+        <xs:element name="NumeroNfse" type="tipos:TsNumeroNfse" minOccurs="0" maxOccurs="1" />
+        <xs:element name="PeriodoEmissao" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="1">
+              <xs:element name="DataInicial" type="xs:date" minOccurs="1" maxOccurs="1" />
+              <xs:element name="DataFinal" type="xs:date" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Tomador" type="tipos:tcIdentificacaoTomador" minOccurs="0" maxOccurs="1" />
+        <xs:element name="IntermediarioServico" type="tipos:TcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>      
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

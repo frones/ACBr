@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+           targetNamespace="http://www.abrasf.org.br/nfse.xsd" 
+           xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+ schemaLocation="xmldsig-core-schema20020212.xsd" />
+  <xs:element name="CancelarNfseEnvio">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Pedido">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="InfPedidoCancelamento">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="IdentificacaoNfse">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Numero" type="xs:unsignedLong" />
+                          <xs:element name="CpfCnpj">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Cnpj" type="xs:unsignedLong" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="InscricaoMunicipal" type="xs:unsignedLong" />
+                          <xs:element name="CodigoMunicipio" type="xs:unsignedLong" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="CodigoCancelamento" type="xs:unsignedByte" />
+                    <xs:element name="MotivoCancelamento" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="Id" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="dsig:Signature" minOccurs="1"></xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

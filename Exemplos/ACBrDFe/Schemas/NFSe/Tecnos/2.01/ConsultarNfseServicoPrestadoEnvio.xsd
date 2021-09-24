@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.abrasf.org.br/nfse.xsd">
+  <xsd:element name="ConsultarNfseServicoPrestadoEnvio">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Prestador">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CpfCnpj">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Cnpj" type="xsd:unsignedLong" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="RazaoSocial" type="xsd:string" />
+              <xsd:element name="InscricaoMunicipal" type="xsd:unsignedInt" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="NumeroNfse" type="xsd:unsignedShort" />
+        <xsd:element name="Tomador">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CpfCnpj">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Cpf" type="xsd:unsignedLong" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="InscricaoMunicipal" type="xsd:unsignedInt" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Intermediario">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CpfCnpj">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Cpf" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="InscricaoMunicipal" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Pagina" type="xsd:unsignedByte" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.nfse-tecnos.com.br/nfse.xsd">
+  <xsd:element name="ConsultarNfseRpsResposta">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ListaNfse">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CompNfse" type="xsd:string" />
+              <xsd:element name="ListaMensagemAlertaRetorno">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="MensagemRetorno">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="Codigo" type="xsd:string" />
+                          <xsd:element name="Mensagem" type="xsd:string" />
+                          <xsd:element name="Correcao" />
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

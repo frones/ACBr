@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.prefeitura.sp.gov.br/nfe" 
+           xmlns:tipos="http://www.prefeitura.sp.gov.br/nfe/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://www.prefeitura.sp.gov.br/nfe/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="PedidoConsultaCNPJ">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para PEDIDO de consultas de CNPJ.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelos tomadores e/ou prestadores de serviços consultarem quais Inscrições Municipais (CCM) estão vinculadas a um determinado CNPJ e se estes CCM emitem NFS-e ou não.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do pedido.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1" >
+                <xs:annotation>
+                  <xs:documentation>Informe o CPF/CNPJ do Remetente autorizado a transmitir a mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Informe a Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CNPJContribuinte" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Informe o CNPJ do Contribuinte que se deseja consultar.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Assinatura digital do CNPJ tomador/prestador que gerou a mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

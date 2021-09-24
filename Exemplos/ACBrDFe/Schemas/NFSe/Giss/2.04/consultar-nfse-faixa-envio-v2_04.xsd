@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.giss.com.br/consultar-nfse-faixa-envio-v2_04.xsd"
+	xmlns="http://www.giss.com.br/consultar-nfse-faixa-envio-v2_04.xsd"
+	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
+		schemaLocation="xmldsig-core-schema20020212.xsd" />
+
+	<xsd:import namespace="http://www.giss.com.br/tipos-v2_04.xsd"
+		schemaLocation="tipos-v2_04.xsd" />
+
+	<xsd:element name="ConsultarNfseFaixaEnvio">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Prestador" type="tipos:tcIdentificacaoPessoaEmpresa"
+					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="Faixa" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="NumeroNfseInicial" type="tipos:tsNumeroNfse"
+								minOccurs="1" maxOccurs="1" />
+							<xsd:element name="NumeroNfseFinal" type="tipos:tsNumeroNfse"
+								minOccurs="1" maxOccurs="1" />
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Pagina" type="tipos:tsPagina"
+					minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>
+

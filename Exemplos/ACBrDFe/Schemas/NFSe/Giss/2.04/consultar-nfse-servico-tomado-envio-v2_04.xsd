@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.giss.com.br/consultar-nfse-servico-tomado-envio-v2_04.xsd"
+	xmlns="http://www.giss.com.br/consultar-nfse-servico-tomado-envio-v2_04.xsd"
+	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
+		schemaLocation="xmldsig-core-schema20020212.xsd" />
+
+	<xsd:import namespace="http://www.giss.com.br/tipos-v2_04.xsd"
+		schemaLocation="tipos-v2_04.xsd" />
+
+	<xsd:element name="ConsultarNfseServicoTomadoEnvio">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Consulente" type="tipos:tcIdentificacaoPessoaEmpresa"
+					minOccurs="1" maxOccurs="1" />
+				<xsd:choice>
+					<xsd:element name="NumeroNfse" type="tipos:tsNumeroNfse"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="PeriodoEmissao" minOccurs="1"
+						maxOccurs="1">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="DataInicial" type="xsd:date"
+									minOccurs="1" maxOccurs="1" />
+								<xsd:element name="DataFinal" type="xsd:date"
+									minOccurs="1" maxOccurs="1" />
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="PeriodoCompetencia" minOccurs="1"
+						maxOccurs="1">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="DataInicial" type="xsd:date"
+									minOccurs="1" maxOccurs="1" />
+								<xsd:element name="DataFinal" type="xsd:date"
+									minOccurs="1" maxOccurs="1" />
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+				<xsd:element name="Prestador" type="tipos:tcIdentificacaoPessoaEmpresa"
+					minOccurs="0" maxOccurs="1" />
+				<xsd:element name="Tomador" type="tipos:tcIdentificacaoPessoaEmpresa"
+					minOccurs="0" maxOccurs="1" />
+				<xsd:element name="Intermediario" type="tipos:tcIdentificacaoPessoaEmpresa"
+					minOccurs="0" maxOccurs="1" />
+				<xsd:element name="Pagina" type="tipos:tsPagina"
+					minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>
+

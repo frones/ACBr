@@ -1,0 +1,1039 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NotaFiscal-Retorno"
+    targetNamespace="NotaFiscal-Retorno.xsd"
+    elementFormDefault="qualified"
+    xmlns="NotaFiscal-Retorno.xsd"
+    xmlns:mstns="NotaFiscal-Retorno.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:element name="Retorno">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="Nota">
+          <xs:complexType>
+            <xs:sequence>
+
+              <!-- DADOS DA VERSÃO XML-->
+              <xs:element name="Versao" type="xs:decimal"/>
+
+              <!-- DADOS DO PRESTADOR -->
+              <xs:element name="Prestador" id="Prestador" nillable="false">
+                <xs:annotation>
+                  <xs:documentation xml:lang="br">
+                    Dados do prestador de serviços.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <xs:element name="Inscricao" nillable="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          CPF ou CNPJ do Prestador de Serviços
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="14"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="RazaoSocial" nillable="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Nome ou Razão Social do Prestador de Serviços
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="70"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="NomeFantasia">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Nome Fantasia da empresa prestadora de serviços, caso tenha
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="70"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="SuperSimples" nillable="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Indica se o Prestador de Serviços é Optante do Simples Nacional
+                          0: Não Optante pelo Simples Nacional
+                          1: Optante pelo Simples Nacional
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:totalDigits value="1"/>
+                          <xs:enumeration value="0"/>
+                          <xs:enumeration value="1"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="InscricaoMunicipal" nillable="false" type="xs:positiveInteger">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Define a inscrição municipal utilizada para a emissão da nota fiscal. (Sem o dígito)
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+
+                    <!-- DADOS DO ENDEREÇO DO PRESTADOR DE SERVIÇOS -->
+                    <xs:element name="Endereco">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Define o endereço do tomador de serviços.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Logradouro" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Nome do logradouro do prestador de serviços
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="95"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Numero" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Número do estabelecimento
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="15"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Complemento" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Complemento de Endereço
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="20"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Bairro" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Nome do Bairro
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="75"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Cidade">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Nome da cidade por extenso
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType >
+                              <xs:restriction base ="xs:string">
+                                <xs:maxLength value="50"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Estado">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Sigla do Estado
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType >
+                              <xs:restriction base ="xs:string">
+                                <xs:length value="2"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="CidadeIBGE" type="xs:integer" nillable="false">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Código do municipio.
+                                Referência da Tabela IBGE
+                              </xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!-- DADOS DA ATIVIDADE DE SERVIÇO -->
+              <xs:element name="Atividade">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Codigo">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Código da atividade executada
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="5"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Descricao">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Descrição da atividade
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="80"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!-- DADOS DA NOTA FISCAL -->
+              <xs:element name="Numero">
+                <xs:annotation>
+                  <xs:documentation>
+                    Número da Nota Fiscal
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:positiveInteger">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxExclusive value="2147483647"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmissaoData" type="xs:date" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>
+                    Data da Emissão da Nota Fiscal
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="EmissaoHora" type="xs:time" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>
+                    Horário de Emissão da Nota Fiscal
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="CodigoValidacao">
+                <xs:annotation>
+                  <xs:documentation>
+                    Código HASH de validação da Nota Fiscal
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:length value="11"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Situacao">
+                <xs:annotation>
+                  <xs:documentation>
+                    Situacao da Nota Fiscal
+                    0: Cancelada
+                    1: Ativa (Normal)
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="ExecucaoLocal" type="xs:positiveInteger">
+                <xs:annotation>
+                  <xs:documentation>
+                    Indica se o serviço foi executado no município de Lençóis Paulista
+                    0: Não
+                    1: Sim
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+
+              <xs:element name="CidadeExecucao" type="xs:positiveInteger">
+                <xs:annotation>
+                  <xs:documentation>
+                    Código IBGE do município onde foi realizado o serviço.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+
+              <!-- DADOS DO TOMADOR DE SERVIÇOS -->
+              <xs:element name="Tomador">
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <xs:element name="Inscricao" nillable="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          CPF ou CNPJ do Prestador de Serviços
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="14"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="InscricaoMunicipal" nillable="false" type="xs:positiveInteger">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Define a inscrição municipal utilizada para a emissão da nota fiscal. (Sem o dígito)
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+
+                    <xs:element name="Nome" nillable="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Nome ou Razão Social do Prestador de Serviços
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="70"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+
+                    <xs:element name="TipoPessoa">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Tipo de Pessoa
+                          0: Pessoa Física
+                          1: Pessoa Jurídica
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+
+                    <!-- DADOS DO ENDEREÇO DO PRESTADOR DO TOMADOR -->
+                    <xs:element name="Endereco">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Define o endereço do tomador de serviços.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Logradouro" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Nome do logradouro do prestador de serviços
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="95"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Numero" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Número do estabelecimento
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="15"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Complemento" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Complemento de Endereço
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="20"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Bairro" nillable="true">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Nome do Bairro
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="75"></xs:maxLength>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Cidade">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Nome da cidade por extenso
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType >
+                              <xs:restriction base ="xs:string">
+                                <xs:maxLength value="50"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Estado">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Sigla do Estado
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType >
+                              <xs:restriction base ="xs:string">
+                                <xs:length value="2"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="CidadeIBGE" type="xs:integer" nillable="false">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Código do municipio.
+                                Referência da Tabela IBGE
+                              </xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="Email" nillable="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          E-mail do tomador de serviços
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50"></xs:maxLength>
+                          <xs:pattern value="^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z_])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}|)$"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="Particular" nillable="false" default="0">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Define se a Nota Fiscal emitida foi para consumidor ou contribuinte.
+                          Este opção é destinada para pessoas físicas que possuem inscrição de autônomo no município.
+                          0 - Contribuinte
+                          1 - Consumidor
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:enumeration value="0" id="Contribuinte"></xs:enumeration>
+                          <xs:enumeration value="1" id="Consumidor"></xs:enumeration>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!-- Procedimento de autorização de serviços para NFSe que foram geradas via WebService -->
+              <xs:element name="PAS">
+                <xs:annotation>
+                  <xs:documentation>
+                    Controlde de Procedimentos de Autorização para WebService
+                    Maiores informações vide manual
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Numero" type="xs:positiveInteger">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Número do procedimento
+                          - Sequencial
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element >
+                    <xs:element name="DataGeracao" type="xs:date">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Data da Geração da solicitação de serviços
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element >
+                    <xs:element name="DataProcessamento" type="xs:dateTime">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Data e Hora em que o procedimento foi recebido e processado
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element >
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!-- RPS -->
+              <xs:element name="RPS">
+                <xs:annotation>
+                  <xs:documentation>
+                    Dados do Recibo Provisorio de Serviço
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Numero" type="xs:positiveInteger">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Número sequencial do RPS
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="EmissaoData" type="xs:date">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Data da emissão do RPS
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!-- DESCRICAO DOS SERVICOS -->
+              <xs:element name="Descricao" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>
+                    Descrição dos serviços realizados (corpo da NFS-e)
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1000"></xs:maxLength>
+                    <xs:whiteSpace value="preserve"></xs:whiteSpace>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <!-- VALORES -->
+              <xs:element name="ValorTotal" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor total dos serviços realizados
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minExclusive value="0"></xs:minExclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="ValorDeducao" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor das Deduções - Caso seja aplicável
+                    OBS: Para utilizar valores de dedução, é necessário amparo legal. Dedução não é desconto!
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0.00"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="BaseDeCalculo" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor da Base de Cálculo (Valot Total - Deduções)
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0.00"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="ValorISS" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor do ISS gerado pela NFSe
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0.00"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="Aliquota" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Alíquota utilizada na geração da NFS-e original.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0.00"></xs:minInclusive>
+                    <xs:maxInclusive value ="6.00"></xs:maxInclusive>
+                    <xs:totalDigits value="3"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="AliquotaRecalculada" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>
+                    Alíquota recalculada pelo sistema tributário para correção de divergências de alíquotas.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0.00"></xs:minInclusive>
+                    <xs:maxInclusive value ="6.00"></xs:maxInclusive>
+                    <xs:totalDigits value="3"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RecolhimentoObrigacao" nillable="false" >
+                <xs:annotation>
+                  <xs:documentation>
+                    Obrigação de recolhimento
+                    0: Prestador
+                    1: Tomador
+                    3: Sem Recolhimento
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                    <xs:enumeration value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RecolhimentoObrigacaoCorrigida" nillable="false" >
+                <xs:annotation>
+                  <xs:documentation>
+                    Obrigação de recolhimento
+                    0: Prestador
+                    1: Tomador
+                    3: Sem Recolhimento
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                    <xs:enumeration value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RecolhimentoForma" nillable="false" >
+                <xs:annotation>
+                  <xs:documentation>
+                    Forma de Recolhimento
+                    0 – Guia Prefeitura
+                    1 – Guia DAS
+                    2 – Recolhimento Fora
+                    3 – Sem Recolhimento
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                    <xs:enumeration value="2"/>
+                    <xs:enumeration value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RecolhimentoFormaCorrigida" nillable="false" >
+                <xs:annotation>
+                  <xs:documentation>
+                    Forma de Recolhimento
+                    0 – Guia Prefeitura
+                    1 – Guia DAS
+                    2 – Recolhimento Fora
+                    3 – Sem Recolhimento
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                    <xs:enumeration value="2"/>
+                    <xs:enumeration value="3"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="ValorPIS" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor de PIS gerado pela emissão da NFSe.
+                    Este valor corresponde aos valores de impostos gerados informandos de acordo com a lei 12.741/2012.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="ValorCOFINS" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor de CONFIS gerado pela emissão da NFSe.
+                    Este valor corresponde aos valores de impostos gerados informandos de acordo com a lei 12.741/2012.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RetencaoIRRF" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor do IRRF retido pelo tomador de serviços da NFSe.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RetencaoINSS" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor do INSS retido pelo tomador de serviços da NFSe.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RetencaoPIS" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor do PIS retido pelo tomador de serviços da NFSe.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RetencaoCOFINS" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor do COFINS retido pelo tomador de serviços da NFSe.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="RetencaoCSLL" nillable="false"  default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Valor do CSLL retido pelo tomador de serviços da NFSe.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="2"></xs:fractionDigits>
+                    <xs:minInclusive value="0"></xs:minInclusive>
+                    <xs:totalDigits value="15"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <!-- DEFINE SE ENVIO DE E-MAIL SERÁ AUTOMATICO VIA NFSE -->
+              <xs:element name="EnviadoEmail" type="xs:integer" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Informa se sistema enviou email automaticamente
+                    1: Enviado
+                    0: Não Enviado
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+
+              <xs:element name="TributacaoISS">
+                <xs:annotation>
+                  <xs:documentation>
+                    Refere-se a forma de tributação da Nota Fiscal.
+                    0 = Tributação Normal / 1 = Não Tributado
+                    2 = Isento            / 3 = Imune
+                    4 = Sem Incidência    / 10 = Tributado, informado pelo prestador
+                    11 = Não Tributado, informado pelo prestador
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0" />
+                    <xs:enumeration value="1" />
+                    <xs:enumeration value="2" />
+                    <xs:enumeration value="3" />
+                    <xs:enumeration value="4" />
+                    <xs:enumeration value="10" />
+                    <xs:enumeration value="11" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <!-- CARTAS DE CORREÇÃO -->
+              <xs:element name="CartasCorrecao">
+                <xs:annotation>
+                  <xs:documentation>
+                    Cartas de correção emitidas para nota fiscal
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="CartaCorrecao" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Numero" type="xs:positiveInteger"></xs:element>
+                          <xs:element name="EmissaoData" type="xs:date"></xs:element>
+                          <xs:element name="PAS" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Controlde de Procedimentos de Autorização para WebService
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Numero" type="xs:positiveInteger">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Número do procedimento
+                                      - Sequencial
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element >
+                                <xs:element name="DataGeracao" type="xs:date">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Data da Geração da solicitação de serviços
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element >
+                                <xs:element name="DataProcessamento" type="xs:dateTime">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Data e Hora em que o procedimento foi recebido e processado
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element >
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!--DADOS DE CANCELAMENTO-->
+              <xs:element name="Cancelamento">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="DataCancelamento" type="xs:date"></xs:element>
+                    <xs:element name="MotivoCodigo" type="xs:positiveInteger">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Código do motivo de cancelamento
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="MotivoDescricao" type="xs:string">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Descrição dos motivos de cancelamento - Pre justificados
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Descricao">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Descrição dos motivos de cancelamento
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base ="xs:string">
+                          <xs:maxLength value="250"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="PAS" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Controlde de Procedimentos de Autorização para WebService
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Numero" type="xs:positiveInteger">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Número do procedimento
+                                - Sequencial
+                              </xs:documentation>
+                            </xs:annotation>
+                          </xs:element >
+                          <xs:element name="DataGeracao" type="xs:date">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Data da Geração da solicitação de serviços
+                              </xs:documentation>
+                            </xs:annotation>
+                          </xs:element >
+                          <xs:element name="DataProcessamento" type="xs:dateTime">
+                            <xs:annotation>
+                              <xs:documentation>
+                                Data e Hora em que o procedimento foi recebido e processado
+                              </xs:documentation>
+                            </xs:annotation>
+                          </xs:element >
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <!-- AVISOS DA NOTA FISCAL -->
+              <xs:element name="Informacoes">
+                <xs:annotation>
+                  <xs:documentation>
+                    Define informações adicionais contidas no rodapé da Nota Fiscal
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Informacao" minOccurs="0" maxOccurs="unbounded">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
+        <!-- URL DE CONSULTA DE NOTA FISCAL-->
+        <xs:element name="url" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>
+              URL completa para consulta da nota fiscal
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        
+        <!--LISTA DE ALERTAS -->
+        <xs:element name="Alertas">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Alerta" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Codigo" type="xs:positiveInteger"/>
+                    <xs:element name="Descricao" type="xs:string"/>
+                    <xs:element name="AvisoTecnico" type ="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

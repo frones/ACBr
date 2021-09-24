@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by bg (bg) -->
+<xs:schema xmlns="http://iss.londrina.pr.gov.br/nfse/xmlschema/v1_03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://iss.londrina.pr.gov.br/nfse/xmlschema/v1_03" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.03">
+	<xs:complexType name="tcIdentificacaoNfse">
+		<xs:annotation>
+			<xs:documentation>Dados identificadores de uma NFS-e emitida.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Numero" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Numero sequencial da NFS-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodigoVerificacao">
+				<xs:annotation>
+					<xs:documentation>Identificador de oito caracteres Ãºnico da NFS-e</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LinkImpressao" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>URL para acesso ao espelho em PDF da NFS-e no website do ISS.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataEmissao" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Data de envio da NFS-e ao sistema.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Competencia" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>CompetÃªncia da NFS-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatusNfse">
+				<xs:annotation>
+					<xs:documentation>Indica se a NFS-e encontra-se cancelada.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tcDadosNfse">
+		<xs:annotation>
+			<xs:documentation>Dados descritivos de uma NFS-e emitida.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrestadorInscricaoMunicipal" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>InscriÃ§Ã£o Municipal (CMC) do prestador</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrestadorCnpj">
+				<xs:annotation>
+					<xs:documentation>CNPJ do prestador</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorInscricaoEstadual" type="xs:string"/>
+			<xs:element name="PrestadorRazaoSocial">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorNomeFantasia" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorEndereco">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="125"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorNumero">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorComplemento">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorBairro">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorCep">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorCodigoMunicipio">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrestadorUf">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CodigoTributacaoMunicipio" type="xs:int"/>
+			<xs:element name="Discriminacao">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1400"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Aliquota" type="xs:float"/>
+			<xs:element name="Situacao">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ValorServicos" type="xs:float"/>
+			<xs:element name="ValorDeducoes" type="xs:float" minOccurs="0"/>
+			<xs:element name="BaseCalculo" type="xs:float"/>
+			<xs:element name="ValorIss" type="xs:float" minOccurs="0"/>
+			<xs:element name="ValorIr" type="xs:float" minOccurs="0"/>
+			<xs:element name="ValorPis" type="xs:float" minOccurs="0"/>
+			<xs:element name="ValorCofins" type="xs:float" minOccurs="0"/>
+			<xs:element name="ValorCsll" type="xs:float" minOccurs="0"/>
+			<xs:element name="ValorInss" type="xs:float" minOccurs="0"/>
+			<xs:element name="IssRetido" type="xs:boolean"/>
+			<xs:element name="ValorLiquidoNfse" type="xs:float"/>
+			<xs:element name="CodigoMunicipio">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CodigoPais" type="xs:string" minOccurs="0"/>
+			<xs:element name="ExigibilidadeISS" type="xs:int"/>
+			<xs:element name="MunicipioIncidencia">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorTipo">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorCpfCnpj" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorInscricaoEstadual" type="xs:string" minOccurs="0"/>
+			<xs:element name="TomadorInscricaoMunicipal" type="xs:string" minOccurs="0"/>
+			<xs:element name="TomadorRazaoSocial" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorEndereco" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="125"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorNumero" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorComplemento" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorBairro" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorCep" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorCodigoMunicipio" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TomadorUf" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RpsNumero" type="xs:int" minOccurs="0"/>
+			<xs:element name="RpsSerie" type="xs:string" minOccurs="0"/>
+			<xs:element name="RpsDia" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RpsMes" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RpsAno" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Observacoes">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="2000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OrgaoGeradorMunicipio">
+				<xs:annotation>
+					<xs:documentation>CÃ³digo IBGE do municÃ­pio de Londrina.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OrgaoGeradorUf">
+				<xs:annotation>
+					<xs:documentation>PR</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CodigoObra" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Art" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RegimeEspecialTributacao" type="xs:int" minOccurs="0"/>
+			<xs:element name="OptanteSimplesNacional" type="xs:boolean"/>
+			<xs:element name="IncentivoFiscal" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EspelhoNfse" type="tcEspelhoNfse">
+		<xs:annotation>
+			<xs:documentation>Elemento raiz.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="tcNfse">
+		<xs:annotation>
+			<xs:documentation>ConteÃºdo de Nota Fiscal de ServiÃ§os</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdentificacaoNfse" type="tcIdentificacaoNfse">
+				<xs:annotation>
+					<xs:documentation>Dados identificadores da NFS-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubstituicaoNfse" type="tcSubstituicaoNfse" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dados sobre substituiÃ§Ã£o de NFS-e. Somente serÃ¡ incluÃ­do se houver substituiÃ§Ã£o relacionada Ã  presente nota.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DadosNfse" type="tcDadosNfse">
+				<xs:annotation>
+					<xs:documentation>ConteÃºdo da NFS-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tcEspelhoNfse">
+		<xs:annotation>
+			<xs:documentation>InformaÃ§Ãµes armazenadas sobre Nota Fiscal de ServiÃ§os EletrÃ´nica emitida junto ao mÃ³dulo emissor.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Nfse" type="tcNfse"/>
+			<xs:element name="NfseHash" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Somente para uso da Prefeitura.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataConsulta" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Data da consulta.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConsultaHash" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Somente para uso da prefeitura.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="VersaoSchema" type="xs:string" default="1.03">
+			<xs:annotation>
+				<xs:documentation>VersÃ£o do layout utilizado neste espelho</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="tcSubstituicaoNfse">
+		<xs:annotation>
+			<xs:documentation>Dados relativos a substituiÃ§Ã£o de Notas Fiscais</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NfseSubstituta" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>IdentificaÃ§Ã£o da NFS-e que substituiu a presente nota. Somente serÃ¡ incluÃ­do se esta nota estiver cancelada.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Numero"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NfseSubstituida" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>IdentificaÃ§Ã£o da NFS-e que a presente nota substituiu. Somente serÃ¡ incluÃ­do se houver.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Numero"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

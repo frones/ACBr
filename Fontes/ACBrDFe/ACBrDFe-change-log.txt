@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/09/2021
+-- ACBrXmlBase --
+[*] Incluido o tratamento para quanto existe no XML o caractere "<br >" usado por 
+    alguns provedores para quebra de linha.
+  Por: Italo Giurizzato Junior
+
 11/09/2021
 -- ACBrXmlBase --
 [*] Trocado o StringReplace por FastStringReplace.

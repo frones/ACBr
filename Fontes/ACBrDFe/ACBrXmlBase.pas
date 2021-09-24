@@ -160,6 +160,7 @@ begin
   Result := FaststringReplace(Result, '&quot;', '"', [rfReplaceAll]);
   Result := FaststringReplace(Result, ''#$A'', '', [rfReplaceAll]);
   Result := FaststringReplace(Result, ''#$A#$A'', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '<br >', ';', [rfReplaceAll]);
 end;
 
 function IncluirCDATA(const aXML: string): string;

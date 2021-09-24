@@ -43,7 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+
 24/09/2021
+-- IPM.GravarXml --
+[*] Incluido a linha para gerar a tag que indica que o ambiente é de homologação.
+   Por: rlind
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção no tratamento do retorno do cancelamento.
    Por: Italo Giurizzato Junior

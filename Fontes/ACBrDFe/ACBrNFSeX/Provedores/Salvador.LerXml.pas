@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_Salvador }
+  { TNFSeR_ISSSalvador }
 
-  TNFSeR_Salvador = class(TNFSeR_ABRASFv1)
+  TNFSeR_ISSSalvador = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     Salvador
+//     ISSSalvador
 //==============================================================================
 
 end.

@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_PVH }
+  { TNFSeR_ISSPortoVelho200 }
 
-  TNFSeR_PVH = class(TNFSeR_ABRASFv2)
+  TNFSeR_ISSPortoVelho200 = class(TNFSeR_ABRASFv2)
   protected
 
   public

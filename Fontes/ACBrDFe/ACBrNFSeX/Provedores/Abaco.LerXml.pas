@@ -53,18 +53,9 @@ type
 
   end;
 
-  { TNFSeR_AbacoA }
+  { TNFSeR_Abaco204 }
 
-  TNFSeR_AbacoA = class(TNFSeR_ABRASFv1)
-  protected
-
-  public
-
-  end;
-
-  { TNFSeR_Abacov204 }
-
-  TNFSeR_Abacov204 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Abaco204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

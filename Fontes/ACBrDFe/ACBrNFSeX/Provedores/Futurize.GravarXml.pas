@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Futurize }
+  { TNFSeW_Futurize202 }
 
-  TNFSeW_Futurize = class(TNFSeW_ABRASFv2)
+  TNFSeW_Futurize202 = class(TNFSeW_ABRASFv2)
   protected
 
   end;

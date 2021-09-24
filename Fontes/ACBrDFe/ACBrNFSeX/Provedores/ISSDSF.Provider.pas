@@ -246,7 +246,6 @@ begin
     CancelarNFSe := 'ReqCancelamentoNFSe.xsd';
     RecepcionarSincrono := 'ReqEnvioLoteRPS.xsd';
     Teste := 'ReqEnvioLoteRPS.xsd';
-//    Validar := False;
   end;
 end;
 
@@ -274,7 +273,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderISSDSF.ProcessarMensagemErros(
@@ -725,6 +724,14 @@ begin
       Document.LoadFromXml(Response.XmlRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaLote');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
 
       ProcessarMensagemErros(ANode, Response);
 

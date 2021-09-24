@@ -63,9 +63,9 @@ type
 
   end;
 
-  { TNFSeW_SigISS_103 }
+  { TNFSeW_SigISS103 }
 
-  TNFSeW_SigISS_103 = class(TNFSeW_SigISS)
+  TNFSeW_SigISS103 = class(TNFSeW_SigISS)
   protected
     procedure Configuracao; override;
   end;
@@ -342,9 +342,9 @@ begin
   Result := True;
 end;
 
-{ TNFSeW_SigISSA }
+{ TNFSeW_SigISS103 }
 
-procedure TNFSeW_SigISS_103.Configuracao;
+procedure TNFSeW_SigISS103.Configuracao;
 begin
   inherited Configuracao;
 

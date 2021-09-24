@@ -74,6 +74,15 @@ type
     // uso diverso
     FParams2: string;
 
+    // Provedor lido do arquivo ACBrNFSeXServicos
+    FProvedor: TnfseProvedor;
+    // Versão lido do arquivo ACBrNFSeXServicos
+    FVersao: TVersaoNFSe;
+    // Ambiente setando na configuração do componente
+    FAmbiente: TACBrTipoAmbiente;
+    // Código IBGE da Cidade lido do arquivo ACBrNFSeXServicos
+    FCodIBGE: string;
+
   public
     procedure LoadParams1(AINI: TCustomIniFile; ASession: string);
     procedure LoadParams2(AINI: TCustomIniFile; ASession: string);
@@ -94,6 +103,10 @@ type
     property Params1: string read FParams1;
     property Params2: string read FParams2;
 
+    property Provedor: TnfseProvedor read FProvedor write FProvedor;
+    property Versao: TVersaoNFSe read FVersao write FVersao;
+    property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente;
+    property CodIBGE: string read FCodIBGE write FCodIBGE;
   end;
 
   { TWebserviceInfo }

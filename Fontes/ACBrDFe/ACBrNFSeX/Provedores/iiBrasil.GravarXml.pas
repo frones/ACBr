@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_iiBrasil }
+  { TNFSeW_iiBrasil204 }
 
-  TNFSeW_iiBrasil = class(TNFSeW_ABRASFv2)
+  TNFSeW_iiBrasil204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -64,9 +64,9 @@ implementation
 //     iiBrasil
 //==============================================================================
 
-{ TNFSeW_iiBrasil }
+{ TNFSeW_iiBrasil204 }
 
-procedure TNFSeW_iiBrasil.Configuracao;
+procedure TNFSeW_iiBrasil204.Configuracao;
 begin
   inherited Configuracao;
 
@@ -84,13 +84,13 @@ begin
   NrOcorrIncentCultural := -1;
 end;
 
-procedure TNFSeW_iiBrasil.DefinirIDRps;
+procedure TNFSeW_iiBrasil204.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'Rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
                     NFSe.IdentificacaoRps.Serie;
 end;
 
-function TNFSeW_iiBrasil.GerarQuarto: TACBrXmlNodeArray;
+function TNFSeW_iiBrasil204.GerarQuarto: TACBrXmlNodeArray;
 var
   i: integer;
 begin
@@ -121,7 +121,7 @@ begin
     wAlerta('#54', 'Quarto', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TNFSeW_iiBrasil.GerarQuartos: TACBrXmlNode;
+function TNFSeW_iiBrasil204.GerarQuartos: TACBrXmlNode;
 var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;

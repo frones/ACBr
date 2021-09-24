@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceRecife = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSRecife = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
@@ -55,7 +55,7 @@ type
 
   end;
 
-  TACBrNFSeProviderRecife = class (TACBrNFSeProviderABRASFv1)
+  TACBrNFSeProviderISSRecife = class (TACBrNFSeProviderABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -74,9 +74,9 @@ uses
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, Recife.GravarXml, Recife.LerXml;
 
-{ TACBrNFSeXWebserviceRecife }
+{ TACBrNFSeXWebserviceISSRecife }
 
-function TACBrNFSeXWebserviceRecife.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.Recepcionar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -91,7 +91,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceRecife.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
   xXml, NS1, NS2: string;
@@ -113,7 +113,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceRecife.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -128,7 +128,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceRecife.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarSituacao(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -143,7 +143,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceRecife.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -158,7 +158,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceRecife.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.ConsultarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -173,7 +173,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceRecife.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSRecife.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -188,9 +188,9 @@ begin
                      []);
 end;
 
-{ TACBrNFSeProviderRecife }
+{ TACBrNFSeProviderISSRecife }
 
-procedure TACBrNFSeProviderRecife.Configuracao;
+procedure TACBrNFSeProviderISSRecife.Configuracao;
 begin
   inherited Configuracao;
 
@@ -202,31 +202,31 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderRecife.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderISSRecife.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Recife.Create(Self);
+  Result := TNFSeW_ISSRecife.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderRecife.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderISSRecife.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Recife.Create(Self);
+  Result := TNFSeR_ISSRecife.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderRecife.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderISSRecife.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceRecife.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSRecife.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderRecife.PrepararEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProviderISSRecife.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Nota: NotaFiscal;
@@ -307,7 +307,7 @@ begin
                        '</' + Prefixo + 'GerarNfseEnvio' + '>';
 end;
 
-procedure TACBrNFSeProviderRecife.TratarRetornoEmitir(
+procedure TACBrNFSeProviderISSRecife.TratarRetornoEmitir(
   Response: TNFSeEmiteResponse);
 var
   Document: TACBrXmlDocument;

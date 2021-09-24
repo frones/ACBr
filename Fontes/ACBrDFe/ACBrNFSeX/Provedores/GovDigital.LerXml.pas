@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_GovDigital }
+  { TNFSeR_GovDigital200 }
 
-  TNFSeR_GovDigital = class(TNFSeR_ABRASFv2)
+  TNFSeR_GovDigital200 = class(TNFSeR_ABRASFv2)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     GovDigital
+//     GovDigital200
 //==============================================================================
 
 end.

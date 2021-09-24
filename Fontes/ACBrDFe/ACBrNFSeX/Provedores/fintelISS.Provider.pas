@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebservicefintelISS = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebservicefintelISS200 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -58,7 +58,7 @@ type
 
   end;
 
-  TACBrNFSeProviderfintelISS = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderfintelISS200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -66,33 +66,21 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function GetSchemaPath: string; override;
   end;
 
-  TACBrNFSeXWebservicefintelISS_A = class(TACBrNFSeXWebservicefintelISS)
+  TACBrNFSeXWebservicefintelISS202 = class(TACBrNFSeXWebservicefintelISS200)
   public
-    {
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
-    }
+
   end;
 
-  TACBrNFSeProviderfintelISS_A = class (TACBrNFSeProviderfintelISS)
+  TACBrNFSeProviderfintelISS202 = class (TACBrNFSeProviderfintelISS200)
   protected
     procedure Configuracao; override;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
-    {
-    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
-    }
+
   end;
 
 implementation
@@ -101,9 +89,242 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, fintelISS.GravarXml, fintelISS.LerXml;
 
-{ TACBrNFSeProviderfintelISS }
+{ TACBrNFSeProviderfintelISS200 }
 
-procedure TACBrNFSeProviderfintelISS.Configuracao;
+procedure TACBrNFSeProviderfintelISS200.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+  end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.02';
+    VersaoAtrib := '2.02';
+    AtribVerLote := 'versao';
+  end;
+
+  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
+
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+
+  SetNomeXSD('nfseV202.xsd');
+end;
+
+function TACBrNFSeProviderfintelISS200.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_fintelISS200.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderfintelISS200.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_fintelISS200.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderfintelISS200.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebservicefintelISS200.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_SEM_URL);
+end;
+
+function TACBrNFSeProviderfintelISS200.GetSchemaPath: string;
+begin
+  Result := inherited GetSchemaPath;
+
+  Result := Result + ConfigGeral.CodIBGE + '\';
+end;
+
+{ TACBrNFSeXWebservicefintelISS200 }
+
+function TACBrNFSeXWebservicefintelISS200.Recepcionar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:RecepcionarLoteRps>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:RecepcionarLoteRps>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/RecepcionarLoteRps', Request,
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.RecepcionarSincrono(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:RecepcionarLoteRpsSincrono>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:RecepcionarLoteRpsSincrono>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/RecepcionarLoteRpsSincrono', Request,
+                     ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.GerarNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:GerarNfse>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:GerarNfse>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/GerarNfse', Request,
+                     ['GerarNfseResult', 'GerarNfseResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.ConsultarLote(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:ConsultarLoteRps>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:ConsultarLoteRps>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/ConsultarLoteRps', Request,
+                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSePorFaixa(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:ConsultarNfseFaixa>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:ConsultarNfseFaixa>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfseFaixa', Request,
+                     ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSePorRps(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:ConsultarNfsePorRps>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:ConsultarNfsePorRps>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfsePorRps', Request,
+                     ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSeServicoPrestado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:ConsultarNfseServicoPrestado>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:ConsultarNfseServicoPrestado>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfseServicoPrestado', Request,
+                     ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.ConsultarNFSeServicoTomado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:ConsultarNfseServicoTomado>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:ConsultarNfseServicoTomado>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfseServicoTomado', Request,
+                     ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.Cancelar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:CancelarNfse>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:CancelarNfse>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/CancelarNfse', Request,
+                     ['CancelarNfseResult', 'CancelarNfseResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.SubstituirNFSe(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<web:SubstituirNfse>';
+  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
+  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
+  Request := Request + '</web:SubstituirNfse>';
+
+  Result := Executar('http://www.fintel.com.br/WebService/SubstituirNfse', Request,
+                     ['SubstituirNfseResult', 'SubstituirNfseResposta'],
+                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+{ TACBrNFSeProviderfintelISS202 }
+
+procedure TACBrNFSeProviderfintelISS202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -137,243 +358,17 @@ begin
   SetNomeXSD('nfseV202.xsd');
 end;
 
-function TACBrNFSeProviderfintelISS.CriarGeradorXml(
+function TACBrNFSeProviderfintelISS202.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_fintelISS.Create(Self);
+  Result := TNFSeW_fintelISS202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderfintelISS.CriarLeitorXml(
+function TACBrNFSeProviderfintelISS202.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_fintelISS.Create(Self);
-  Result.NFSe := ANFSe;
-end;
-
-function TACBrNFSeProviderfintelISS.CriarServiceClient(
-  const AMetodo: TMetodo): TACBrNFSeXWebservice;
-var
-  URL: string;
-begin
-  URL := GetWebServiceURL(AMetodo);
-
-  if URL <> '' then
-    Result := TACBrNFSeXWebservicefintelISS.Create(FAOwner, AMetodo, URL)
-  else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
-end;
-
-{ TACBrNFSeXWebservicefintelISS }
-
-function TACBrNFSeXWebservicefintelISS.Recepcionar(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:RecepcionarLoteRps>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:RecepcionarLoteRps>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.RecepcionarSincrono(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:RecepcionarLoteRpsSincrono>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:RecepcionarLoteRpsSincrono>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/RecepcionarLoteRpsSincrono', Request,
-                     ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsSincronoResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.GerarNFSe(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:GerarNfse>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:GerarNfse>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/GerarNfse', Request,
-                     ['GerarNfseResult', 'GerarNfseResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.ConsultarLote(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:ConsultarLoteRps>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:ConsultarLoteRps>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/ConsultarLoteRps', Request,
-                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.ConsultarNFSePorFaixa(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:ConsultarNfseFaixa>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:ConsultarNfseFaixa>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfseFaixa', Request,
-                     ['ConsultarNfseFaixaResult', 'ConsultarNfseFaixaResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.ConsultarNFSePorRps(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:ConsultarNfsePorRps>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:ConsultarNfsePorRps>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfsePorRps', Request,
-                     ['ConsultarNfsePorRpsResult', 'ConsultarNfseRpsResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.ConsultarNFSeServicoPrestado(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:ConsultarNfseServicoPrestado>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:ConsultarNfseServicoPrestado>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfseServicoPrestado', Request,
-                     ['ConsultarNfseServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.ConsultarNFSeServicoTomado(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:ConsultarNfseServicoTomado>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:ConsultarNfseServicoTomado>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/ConsultarNfseServicoTomado', Request,
-                     ['ConsultarNfseServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.Cancelar(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:CancelarNfse>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:CancelarNfse>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/CancelarNfse', Request,
-                     ['CancelarNfseResult', 'CancelarNfseResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-function TACBrNFSeXWebservicefintelISS.SubstituirNFSe(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<web:SubstituirNfse>';
-  Request := Request + '<web:cabecalho>' + XmlToStr(ACabecalho) + '</web:cabecalho>';
-  Request := Request + '<web:xml>' + XmlToStr(AMSG) + '</web:xml>';
-  Request := Request + '</web:SubstituirNfse>';
-
-  Result := Executar('http://www.fintel.com.br/WebService/SubstituirNfse', Request,
-                     ['SubstituirNfseResult', 'SubstituirNfseResposta'],
-                     ['xmlns:web="http://www.fintel.com.br/WebService"']);
-end;
-
-{ TACBrNFSeProviderfintelISS_A }
-
-procedure TACBrNFSeProviderfintelISS_A.Configuracao;
-begin
-  inherited Configuracao;
-
-  with ConfigAssinar do
-  begin
-    Rps := True;
-    LoteRps := True;
-    CancelarNFSe := True;
-    RpsGerarNFSe := True;
-  end;
-
-  with ConfigWebServices do
-  begin
-    VersaoDados := '2.02';
-    VersaoAtrib := '2.02';
-    AtribVerLote := 'versao';
-  end;
-
-  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-
-  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
-
-  SetNomeXSD('nfseV202.xsd');
-end;
-
-function TACBrNFSeProviderfintelISS_A.CriarGeradorXml(
-  const ANFSe: TNFSe): TNFSeWClass;
-begin
-  Result := TNFSeW_fintelISS_A.Create(Self);
-  Result.NFSe := ANFSe;
-end;
-
-function TACBrNFSeProviderfintelISS_A.CriarLeitorXml(
-  const ANFSe: TNFSe): TNFSeRClass;
-begin
-  Result := TNFSeR_fintelISS_A.Create(Self);
+  Result := TNFSeR_fintelISS202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 

@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_DeISS }
+  { TNFSeW_DeISS203 }
 
-  TNFSeW_DeISS = class(TNFSeW_ABRASFv2)
+  TNFSeW_DeISS203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     DeISS
 //==============================================================================
 
-{ TNFSeW_DeISS }
+{ TNFSeW_DeISS203 }
 
-procedure TNFSeW_DeISS.Configuracao;
+procedure TNFSeW_DeISS203.Configuracao;
 begin
   inherited Configuracao;
 

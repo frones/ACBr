@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_ABase }
+  { TNFSeR_ABase201 }
 
-  TNFSeR_ABase = class(TNFSeR_ABRASFv2)
+  TNFSeR_ABase201 = class(TNFSeR_ABRASFv2)
   protected
 
   public

@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeR_Bethav2 }
+  { TNFSeR_Betha202 }
 
-  TNFSeR_Bethav2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Betha202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

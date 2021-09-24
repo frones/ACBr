@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceDataSmart = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceDataSmart202 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetDadosUsuario: string;
 
@@ -56,7 +56,7 @@ type
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
-  TACBrNFSeProviderDataSmart = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderDataSmart202 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -72,9 +72,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, DataSmart.GravarXml, DataSmart.LerXml;
 
-{ TACBrNFSeProviderDataSmart }
+{ TACBrNFSeProviderDataSmart202 }
 
-procedure TACBrNFSeProviderDataSmart.Configuracao;
+procedure TACBrNFSeProviderDataSmart202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -93,21 +93,21 @@ begin
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
-function TACBrNFSeProviderDataSmart.CriarGeradorXml(
+function TACBrNFSeProviderDataSmart202.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_DataSmart.Create(Self);
+  Result := TNFSeW_DataSmart202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderDataSmart.CriarLeitorXml(
+function TACBrNFSeProviderDataSmart202.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_DataSmart.Create(Self);
+  Result := TNFSeR_DataSmart202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderDataSmart.CriarServiceClient(
+function TACBrNFSeProviderDataSmart202.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -115,14 +115,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceDataSmart.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceDataSmart202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceDataSmart }
+{ TACBrNFSeXWebserviceDataSmart202 }
 
-function TACBrNFSeXWebserviceDataSmart.GetDadosUsuario: string;
+function TACBrNFSeXWebserviceDataSmart202.GetDadosUsuario: string;
 var
   xPref: string;
 begin
@@ -140,7 +140,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceDataSmart.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceDataSmart202.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -181,7 +181,7 @@ begin
                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"']);
 end;
 
-function TACBrNFSeXWebserviceDataSmart.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -201,7 +201,7 @@ begin
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceDataSmart.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -221,7 +221,7 @@ begin
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceDataSmart.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceDataSmart202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

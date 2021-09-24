@@ -44,9 +44,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv1;
 
 type
-  { TNFSeW_Natal }
+  { TNFSeW_ISSNatal }
 
-  TNFSeW_Natal = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSNatal = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -56,12 +56,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Natal
+//     ISSNatal
 //==============================================================================
 
-{ TNFSeW_Natal }
+{ TNFSeW_ISSNatal }
 
-procedure TNFSeW_Natal.Configuracao;
+procedure TNFSeW_ISSNatal.Configuracao;
 begin
   inherited Configuracao;
 

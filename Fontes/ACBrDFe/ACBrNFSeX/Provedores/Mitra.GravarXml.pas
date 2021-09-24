@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_Mitra }
+  { TNFSeW_Mitra200 }
 
-  TNFSeW_Mitra = class(TNFSeW_ABRASFv2)
+  TNFSeW_Mitra200 = class(TNFSeW_ABRASFv2)
   protected
 
   end;

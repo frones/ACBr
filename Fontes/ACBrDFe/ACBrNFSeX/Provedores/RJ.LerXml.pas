@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_RJ }
+  { TNFSeR_ISSRio }
 
-  TNFSeR_RJ = class(TNFSeR_ABRASFv1)
+  TNFSeR_ISSRio = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     RJ
+//     ISSRio
 //==============================================================================
 
 end.

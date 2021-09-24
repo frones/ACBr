@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceNatal = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSNatal = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNameSpace: string;
   public
@@ -57,7 +57,7 @@ type
     property NameSpace: string read GetNameSpace;
   end;
 
-  TACBrNFSeProviderNatal = class (TACBrNFSeProviderABRASFv1)
+  TACBrNFSeProviderISSNatal = class (TACBrNFSeProviderABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -73,9 +73,9 @@ uses
   ACBrDFeException,
   ACBrNFSeX, Natal.GravarXml, Natal.LerXml;
 
-{ TACBrNFSeXWebserviceNatal }
+{ TACBrNFSeXWebserviceISSNatal }
 
-function TACBrNFSeXWebserviceNatal.GetNameSpace: string;
+function TACBrNFSeXWebserviceISSNatal.GetNameSpace: string;
 begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices do
   begin
@@ -88,7 +88,7 @@ begin
   Result := 'xmlns:wsn="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceNatal.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSNatal.Recepcionar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -104,7 +104,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNatal.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSNatal.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -120,7 +120,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNatal.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSNatal.ConsultarSituacao(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -136,7 +136,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNatal.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSNatal.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -152,7 +152,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNatal.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSNatal.ConsultarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -168,7 +168,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNatal.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSNatal.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -184,9 +184,9 @@ begin
                      [NameSpace]);
 end;
 
-{ TACBrNFSeProviderNatal }
+{ TACBrNFSeProviderISSNatal }
 
-procedure TACBrNFSeProviderNatal.Configuracao;
+procedure TACBrNFSeProviderISSNatal.Configuracao;
 begin
   inherited Configuracao;
 
@@ -206,28 +206,28 @@ begin
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
-function TACBrNFSeProviderNatal.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderISSNatal.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Natal.Create(Self);
+  Result := TNFSeW_ISSNatal.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderNatal.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderISSNatal.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Natal.Create(Self);
+  Result := TNFSeR_ISSNatal.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderNatal.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderISSNatal.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceNatal.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSNatal.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 end.

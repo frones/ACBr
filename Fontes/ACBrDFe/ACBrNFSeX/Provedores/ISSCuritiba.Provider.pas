@@ -82,8 +82,6 @@ begin
   SetXmlNameSpace('http://srv2-isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd');
 
   ConfigAssinar.LoteRps := True;
-
-  SetNomeXSD('nfse.xsd');
 end;
 
 function TACBrNFSeProviderISSCuritiba.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
@@ -107,7 +105,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceISSCuritiba.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 { TACBrNFSeXWebserviceISSCuritiba }

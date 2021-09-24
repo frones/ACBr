@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Virtual }
+  { TNFSeR_Virtual202 }
 
-  TNFSeR_Virtual = class(TNFSeR_ABRASFv2)
+  TNFSeR_Virtual202 = class(TNFSeR_ABRASFv2)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     Virtual - erro ao acessar o ws
+//     Virtual
 //==============================================================================
 
 end.

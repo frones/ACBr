@@ -46,9 +46,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Goiania }
+  { TNFSeW_ISSGoiania200 }
 
-  TNFSeW_Goiania = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSGoiania200 = class(TNFSeW_ABRASFv2)
   protected
     procedure DefinirIDRps; override;
     procedure Configuracao; override;
@@ -59,12 +59,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Goiania
+//     ISSGoiania
 //==============================================================================
 
-{ TNFSeW_Goiania }
+{ TNFSeW_ISSGoiania200 }
 
-procedure TNFSeW_Goiania.Configuracao;
+procedure TNFSeW_ISSGoiania200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -87,7 +87,7 @@ begin
   GerarIDRps := True;
 end;
 
-procedure TNFSeW_Goiania.DefinirIDRps;
+procedure TNFSeW_ISSGoiania200.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
                     NFSe.IdentificacaoRps.Serie;

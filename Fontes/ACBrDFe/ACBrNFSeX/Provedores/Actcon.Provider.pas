@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceActconv2 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceActcon200 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNamespace: string;
     function GetSoapAction: string;
@@ -65,7 +65,7 @@ type
     property SoapAction: string read GetSoapAction;
   end;
 
-  TACBrNFSeProviderActconv201 = class(TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderActcon201 = class(TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -73,9 +73,10 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function GetSchemaPath: string; override;
   end;
 
-  TACBrNFSeProviderActconv202 = class(TACBrNFSeProviderActconv201)
+  TACBrNFSeProviderActcon202 = class(TACBrNFSeProviderActcon201)
   protected
     procedure Configuracao; override;
 
@@ -89,9 +90,9 @@ implementation
 uses
   ACBrDFeException, ACBrNFSeX, Actcon.GravarXml, Actcon.LerXml;
 
-{ TACBrNFSeXWebserviceActconv2 }
+{ TACBrNFSeXWebserviceActcon200 }
 
-function TACBrNFSeXWebserviceActconv2.GetNamespace: string;
+function TACBrNFSeXWebserviceActcon200.GetNamespace: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
     Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.NameSpace
@@ -101,7 +102,7 @@ begin
   Result := 'xmlns:nfse="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceActconv2.GetSoapAction: string;
+function TACBrNFSeXWebserviceActcon200.GetSoapAction: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
     Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.SoapAction
@@ -109,7 +110,7 @@ begin
     Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Producao.SoapAction;
 end;
 
-function TACBrNFSeXWebserviceActconv2.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceActcon200.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -127,7 +128,7 @@ begin
                      ['outputXML', 'EnviarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceActcon200.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -145,7 +146,7 @@ begin
                      ['outputXML', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceActcon200.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -162,7 +163,7 @@ begin
                      ['outputXML', 'ConsultarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceActcon200.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -179,7 +180,7 @@ begin
                      ['outputXML', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceActcon200.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -197,7 +198,7 @@ begin
                      ['outputXML', 'ConsultarNfseFaixaResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceActcon200.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -215,7 +216,7 @@ begin
                      ['outputXML', 'ConsultarNfseServicoPrestadoResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceActcon200.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -233,7 +234,7 @@ begin
                      ['outputXML', 'ConsultarNfseServicoTomadoResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceActcon200.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -250,7 +251,7 @@ begin
                      ['outputXML', 'GerarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceActcon200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -267,7 +268,7 @@ begin
                      ['outputXML', 'CancelarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceActconv2.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceActcon200.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -285,9 +286,9 @@ begin
                      ['outputXML', 'SubstituirNfseResposta'], []);
 end;
 
-{ TACBrNFSeProviderActconv201 }
+{ TACBrNFSeProviderActcon201 }
 
-procedure TACBrNFSeProviderActconv201.Configuracao;
+procedure TACBrNFSeProviderActcon201.Configuracao;
 var
   NameSpace: string;
 begin
@@ -323,33 +324,43 @@ begin
   SetNomeXSD('nfse_v201.xsd');
 end;
 
-function TACBrNFSeProviderActconv201.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderActcon201.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Actconv201.Create(Self);
+  Result := TNFSeW_Actcon201.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderActconv201.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderActcon201.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Actconv201.Create(Self);
+  Result := TNFSeR_Actcon201.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderActconv201.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderActcon201.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceActconv2.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceActcon200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeProviderActconv202 }
+function TACBrNFSeProviderActcon201.GetSchemaPath: string;
+begin
+  Result := inherited GetSchemaPath;
 
-procedure TACBrNFSeProviderActconv202.Configuracao;
+  if ConfigGeral.Ambiente = taProducao then
+    Result := Result + ConfigGeral.CodIBGE + '\Producao\'
+  else
+    Result := Result + ConfigGeral.CodIBGE + '\Homologacao\';
+end;
+
+{ TACBrNFSeProviderActcon202 }
+
+procedure TACBrNFSeProviderActcon202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -364,17 +375,17 @@ begin
   SetNomeXSD('nfse_v202.xsd');
 end;
 
-function TACBrNFSeProviderActconv202.CriarGeradorXml(
+function TACBrNFSeProviderActcon202.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Actconv202.Create(Self);
+  Result := TNFSeW_Actcon202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderActconv202.CriarLeitorXml(
+function TACBrNFSeProviderActcon202.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Actconv202.Create(Self);
+  Result := TNFSeR_Actcon202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 

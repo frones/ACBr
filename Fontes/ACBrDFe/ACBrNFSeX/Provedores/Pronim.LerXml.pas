@@ -53,14 +53,15 @@ type
 
   end;
 
-  { TNFSeR_Pronimv2 }
+  { TNFSeR_Pronim202 }
 
-  TNFSeR_Pronimv2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Pronim202 = class(TNFSeR_ABRASFv2)
   protected
 
   public
 
   end;
+
 implementation
 
 //==============================================================================

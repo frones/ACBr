@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeR_WebISSv2 }
+  { TNFSeR_WebISS202 }
 
-  TNFSeR_WebISSv2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_WebISS202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

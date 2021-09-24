@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_TcheInfo }
+  { TNFSeW_TcheInfo204 }
 
-  TNFSeW_TcheInfo = class(TNFSeW_ABRASFv2)
+  TNFSeW_TcheInfo204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     TcheInfo
 //==============================================================================
 
-{ TNFSeW_TcheInfo }
+{ TNFSeW_TcheInfo204 }
 
-procedure TNFSeW_TcheInfo.Configuracao;
+procedure TNFSeW_TcheInfo204.Configuracao;
 begin
   inherited Configuracao;
 

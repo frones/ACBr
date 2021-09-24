@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_SiapNet }
+  { TNFSeW_SiapNet200 }
 
-  TNFSeW_SiapNet = class(TNFSeW_ABRASFv2)
+  TNFSeW_SiapNet200 = class(TNFSeW_ABRASFv2)
   protected
 
   end;

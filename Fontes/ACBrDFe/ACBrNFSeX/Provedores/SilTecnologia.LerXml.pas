@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeR_SilTecnologiaV203 }
+  { TNFSeR_SilTecnologia203 }
 
-  TNFSeR_SilTecnologiaV203 = class(TNFSeR_ABRASFv2)
+  TNFSeR_SilTecnologia203 = class(TNFSeR_ABRASFv2)
   protected
 
   public

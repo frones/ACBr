@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceVitoria = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSVitoria200 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -58,7 +58,7 @@ type
 
   end;
 
-  TACBrNFSeProviderVitoria = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderISSVitoria200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -74,9 +74,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Vitoria.GravarXml, Vitoria.LerXml;
 
-{ TACBrNFSeProviderVitoria }
+{ TACBrNFSeProviderISSVitoria200 }
 
-procedure TACBrNFSeProviderVitoria.Configuracao;
+procedure TACBrNFSeProviderISSVitoria200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -94,21 +94,21 @@ begin
   ConfigMsgDados.XmlRps.xmlns := 'http://www.abrasf.org.br/';
 end;
 
-function TACBrNFSeProviderVitoria.CriarGeradorXml(
+function TACBrNFSeProviderISSVitoria200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Vitoria.Create(Self);
+  Result := TNFSeW_ISSVitoria200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderVitoria.CriarLeitorXml(
+function TACBrNFSeProviderISSVitoria200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Vitoria.Create(Self);
+  Result := TNFSeR_ISSVitoria200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderVitoria.CriarServiceClient(
+function TACBrNFSeProviderISSVitoria200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -116,14 +116,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceVitoria.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSVitoria200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceVitoria }
+{ TACBrNFSeXWebserviceISSVitoria200 }
 
-function TACBrNFSeXWebserviceVitoria.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -139,7 +139,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -155,7 +155,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -171,7 +171,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -187,7 +187,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -203,7 +203,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -219,7 +219,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -235,7 +235,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -251,7 +251,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSVitoria200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -266,7 +266,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceVitoria.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSVitoria200.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

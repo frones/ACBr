@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_NotaInteligente }
+  { TNFSeW_NotaInteligente200 }
 
-  TNFSeW_NotaInteligente = class(TNFSeW_ABRASFv2)
+  TNFSeW_NotaInteligente200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     NotaInteligente
 //==============================================================================
 
-{ TNFSeW_NotaInteligente }
+{ TNFSeW_NotaInteligente200 }
 
-procedure TNFSeW_NotaInteligente.Configuracao;
+procedure TNFSeW_NotaInteligente200.Configuracao;
 begin
   inherited Configuracao;
 

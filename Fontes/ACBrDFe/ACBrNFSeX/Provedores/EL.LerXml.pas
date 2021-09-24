@@ -73,9 +73,9 @@ type
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
   end;
 
-  { TNFSeR_ELv2 }
+  { TNFSeR_EL204 }
 
-  TNFSeR_ELv2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_EL204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

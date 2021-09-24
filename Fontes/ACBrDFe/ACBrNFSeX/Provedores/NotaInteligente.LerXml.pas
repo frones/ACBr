@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_NotaInteligente }
+  { TNFSeR_NotaInteligente200 }
 
-  TNFSeR_NotaInteligente = class(TNFSeR_ABRASFv2)
+  TNFSeR_NotaInteligente200 = class(TNFSeR_ABRASFv2)
   protected
 
   public

@@ -79,6 +79,7 @@ type
     procedure SalvarXmlNfse(aNota: NotaFiscal);
 
     function GetWebServiceURL(const AMetodo: TMetodo): string;
+    function GetSchemaPath: string; virtual;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; virtual; abstract;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; virtual; abstract;
@@ -252,6 +253,13 @@ begin
   Result := TACBrNFSeX(FAOwner).Webservice.CancelaNFSe;
 end;
 
+function TACBrNFSeXProvider.GetSchemaPath: string;
+begin
+  with TACBrNFSeX(FAOwner).Configuracoes do
+    Result := Arquivos.PathSchemas + Geral.xProvedor + '\' +
+              VersaoNFSeToStr(Geral.Versao) + '\';
+end;
+
 function TACBrNFSeXProvider.GetSubstituiNFSeResponse: TNFSeSubstituiNFSeResponse;
 begin
   Result := TACBrNFSeX(FAOwner).Webservice.SubstituiNFSe;
@@ -398,6 +406,19 @@ begin
     ConsultaLote := True;
     ConsultaNFSe := True;
     QuebradeLinha := ';';
+
+    with TACBrNFSeX(FAOwner) do
+    begin
+      Provedor := Configuracoes.Geral.Provedor;
+      Versao := Configuracoes.Geral.Versao;
+
+      if Configuracoes.WebServices.AmbienteCodigo = 1 then
+        Ambiente := taProducao
+      else
+        Ambiente := taHomologacao;
+
+      CodIBGE := IntToStr(Configuracoes.Geral.CodigoMunicipio);
+    end;
   end;
 
   // Inicializa os parâmetros de configuração: MsgDados
@@ -577,6 +598,41 @@ begin
   try
     with TACBrNFSeX(FAOwner) do
     begin
+      // Primeiro verifica as URLs definidas para a cidade
+      Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
+      ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
+      ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
+      ConfigGeral.LoadParams1(IniParams, Sessao);
+      ConfigGeral.LoadParams2(IniParams, Sessao);
+
+      // Depois verifica as URls definidas para o provedor
+      if ConfigWebServices.Producao.Recepcionar = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.Recepcionar = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
+      end;
+
+      // Se Params1 estiver vazio usar o que foi definido para o provedor
+      if ConfigGeral.Params1 = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigGeral.LoadParams1(IniParams, Sessao);
+      end;
+
+      // Se Params2 estiver vazio usar o que foi definido para o provedor
+      if ConfigGeral.Params2 = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigGeral.LoadParams2(IniParams, Sessao);
+      end;
+
+      {
       Sessao := Configuracoes.Geral.xProvedor;
       ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
       ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
@@ -618,6 +674,7 @@ begin
         Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
         ConfigGeral.LoadParams2(IniParams, Sessao);
       end;
+      }
     end;
   finally
     IniParams.Free;
@@ -814,7 +871,10 @@ begin
     Schema := ConfigSchemas.Teste;
   end;
 
-  Schema := FAOwner.Configuracoes.Arquivos.PathSchemas + Schema;
+  if TACBrNFSeX(FAOwner).Configuracoes.Geral.MontarPathSchema then
+    Schema := PathWithDelim(GetSchemaPath) + Schema
+  else
+    Schema := FAOwner.Configuracoes.Arquivos.PathSchemas + Schema;
 
   FAOwner.SSL.Validar(Response.XmlEnvio, Schema, Erros);
 

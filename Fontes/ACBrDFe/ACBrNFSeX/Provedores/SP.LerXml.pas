@@ -46,9 +46,9 @@ uses
   ACBrNFSeXConversao, ACBrNFSeXLerXml;
 
 type
-  { TNFSeR_SP }
+  { TNFSeR_ISSSaoPaulo }
 
-  TNFSeR_SP = class(TNFSeRClass)
+  TNFSeR_ISSSaoPaulo = class(TNFSeRClass)
   protected
 
     procedure SetxItemListaServico(Codigo: string);
@@ -73,9 +73,9 @@ implementation
 //     SP
 //==============================================================================
 
-{ TNFSeR_SP }
+{ TNFSeR_ISSSaoPaulo }
 
-procedure TNFSeR_SP.LerChaveNFe(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerChaveNFe(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -90,7 +90,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_SP.LerChaveRPS(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerChaveRPS(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -110,7 +110,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_SP.LerCPFCNPJIntermediario(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerCPFCNPJIntermediario(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -125,7 +125,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_SP.LerCPFCNPJPrestador(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerCPFCNPJPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -135,7 +135,7 @@ begin
     NFSe.Prestador.IdentificacaoPrestador.Cnpj := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
 end;
 
-procedure TNFSeR_SP.LerCPFCNPJTomador(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerCPFCNPJTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -145,7 +145,7 @@ begin
     NFSe.Tomador.IdentificacaoTomador.CpfCnpj := ProcessarCNPJCPF(AuxNode);
 end;
 
-procedure TNFSeR_SP.LerEnderecoPrestador(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerEnderecoPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -168,7 +168,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_SP.LerEnderecoTomador(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSSaoPaulo.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -193,7 +193,7 @@ begin
   end;
 end;
 
-function TNFSeR_SP.LerXml: Boolean;
+function TNFSeR_ISSSaoPaulo.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
@@ -225,7 +225,7 @@ begin
     Result := LerXmlRps(XmlNode);
 end;
 
-function TNFSeR_SP.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+function TNFSeR_ISSSaoPaulo.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 var
   AuxNode: TACBrXmlNode;
   aValor: string;
@@ -314,7 +314,7 @@ begin
   LerEnderecoTomador(AuxNode);
 end;
 
-function TNFSeR_SP.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
+function TNFSeR_ISSSaoPaulo.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 var
   aValor: string;
 begin
@@ -424,7 +424,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_SP.SetxItemListaServico(Codigo: string);
+procedure TNFSeR_ISSSaoPaulo.SetxItemListaServico(Codigo: string);
 var
   Item: Integer;
   ItemServico: string;

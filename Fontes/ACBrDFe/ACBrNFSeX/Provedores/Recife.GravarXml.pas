@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Recife }
+  { TNFSeW_ISSRecife }
 
-  TNFSeW_Recife = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSRecife = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -56,12 +56,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Recife
+//     ISSRecife
 //==============================================================================
 
-{ TNFSeW_Recife }
+{ TNFSeW_ISSRecife }
 
-procedure TNFSeW_Recife.Configuracao;
+procedure TNFSeW_ISSRecife.Configuracao;
 begin
   inherited Configuracao;
 

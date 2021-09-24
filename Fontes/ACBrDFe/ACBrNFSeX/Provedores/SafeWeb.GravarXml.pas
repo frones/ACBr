@@ -46,9 +46,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_SafeWeb }
+  { TNFSeW_SafeWeb200 }
 
-  TNFSeW_SafeWeb = class(TNFSeW_ABRASFv2)
+  TNFSeW_SafeWeb200 = class(TNFSeW_ABRASFv2)
   protected
     procedure DefinirIDDeclaracao; override;
     procedure DefinirIDRps; override;
@@ -64,9 +64,9 @@ implementation
 //     SafeWeb
 //==============================================================================
 
-{ TNFSeW_SafeWeb }
+{ TNFSeW_SafeWeb200 }
 
-procedure TNFSeW_SafeWeb.Configuracao;
+procedure TNFSeW_SafeWeb200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -80,12 +80,12 @@ begin
   GerarIDRps := True;
 end;
 
-procedure TNFSeW_SafeWeb.DefinirIDDeclaracao;
+procedure TNFSeW_SafeWeb200.DefinirIDDeclaracao;
 begin
   NFSe.InfID.ID := '';
 end;
 
-procedure TNFSeW_SafeWeb.DefinirIDRps;
+procedure TNFSeW_SafeWeb200.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
                     NFSe.IdentificacaoRps.Serie;

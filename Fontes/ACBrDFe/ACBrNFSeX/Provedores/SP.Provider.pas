@@ -47,7 +47,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceSP = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSSaoPaulo = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
@@ -60,7 +60,7 @@ type
 
   end;
 
-  TACBrNFSeProviderSP = class (TACBrNFSeProviderProprio)
+  TACBrNFSeProviderISSSaoPaulo = class (TACBrNFSeProviderProprio)
   protected
     procedure Configuracao; override;
 
@@ -102,9 +102,9 @@ uses
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   SP.GravarXml, SP.LerXml;
 
-{ TACBrNFSeProviderSP }
+{ TACBrNFSeProviderISSSaoPaulo }
 
-procedure TACBrNFSeProviderSP.AssinaturaAdicional(Nota: NotaFiscal);
+procedure TACBrNFSeProviderISSSaoPaulo.AssinaturaAdicional(Nota: NotaFiscal);
 var
   sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
   sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
@@ -166,7 +166,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.Configuracao;
+procedure TACBrNFSeProviderISSSaoPaulo.Configuracao;
 begin
   inherited Configuracao;
 
@@ -257,21 +257,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderSP.CriarGeradorXml(
+function TACBrNFSeProviderISSSaoPaulo.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_SP.Create(Self);
+  Result := TNFSeW_ISSSaoPaulo.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSP.CriarLeitorXml(
+function TACBrNFSeProviderISSSaoPaulo.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_SP.Create(Self);
+  Result := TNFSeR_ISSSaoPaulo.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSP.CriarServiceClient(
+function TACBrNFSeProviderISSSaoPaulo.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -279,12 +279,12 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSP.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSSaoPaulo.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderSP.ProcessarMensagemErros(
+procedure TACBrNFSeProviderISSSaoPaulo.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
 var
@@ -305,7 +305,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.PrepararEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProviderISSSaoPaulo.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
@@ -483,7 +483,7 @@ begin
                        '</' + TagEnvio + '>';
 end;
 
-procedure TACBrNFSeProviderSP.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
@@ -594,7 +594,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.PrepararConsultaSituacao(
+procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaSituacao(
   Response: TNFSeConsultaSituacaoResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -633,7 +633,7 @@ begin
                        '</PedidoInformacoesLote>';
 end;
 
-procedure TACBrNFSeProviderSP.TratarRetornoConsultaSituacao(
+procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoConsultaSituacao(
   Response: TNFSeConsultaSituacaoResponse);
 var
   Document: TACBrXmlDocument;
@@ -714,7 +714,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.PrepararConsultaLoteRps(
+procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaLoteRps(
   Response: TNFSeConsultaLoteRpsResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -750,7 +750,7 @@ begin
                        '</PedidoConsultaLote>';
 end;
 
-procedure TACBrNFSeProviderSP.TratarRetornoConsultaLoteRps(
+procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoConsultaLoteRps(
   Response: TNFSeConsultaLoteRpsResponse);
 var
   Document: TACBrXmlDocument;
@@ -837,7 +837,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.PrepararConsultaNFSeporRps(
+procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaNFSeporRps(
   Response: TNFSeConsultaNFSeporRpsResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -887,7 +887,7 @@ begin
                        '</PedidoConsultaNFe>';
 end;
 
-procedure TACBrNFSeProviderSP.TratarRetornoConsultaNFSeporRps(
+procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoConsultaNFSeporRps(
   Response: TNFSeConsultaNFSeporRpsResponse);
 var
   Document: TACBrXmlDocument;
@@ -974,7 +974,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderISSSaoPaulo.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -1019,7 +1019,7 @@ begin
                        '</PedidoConsultaNFe>';
 end;
 
-procedure TACBrNFSeProviderSP.TratarRetornoConsultaNFSe(
+procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   Document: TACBrXmlDocument;
@@ -1106,7 +1106,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderSP.PrepararCancelaNFSe(
+procedure TACBrNFSeProviderISSSaoPaulo.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -1171,7 +1171,7 @@ begin
                        '</PedidoCancelamentoNFe>';
 end;
 
-procedure TACBrNFSeProviderSP.TratarRetornoCancelaNFSe(
+procedure TACBrNFSeProviderISSSaoPaulo.TratarRetornoCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
   Document: TACBrXmlDocument;
@@ -1222,9 +1222,9 @@ begin
   end;
 end;
 
-{ TACBrNFSeXWebserviceSP }
+{ TACBrNFSeXWebserviceISSSaoPaulo }
 
-function TACBrNFSeXWebserviceSP.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1241,7 +1241,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSaoPaulo.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -1257,7 +1257,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.TesteEnvio(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSaoPaulo.TesteEnvio(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -1273,7 +1273,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.ConsultarSituacao(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarSituacao(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1290,7 +1290,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1307,7 +1307,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -1324,7 +1324,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSaoPaulo.ConsultarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -1340,7 +1340,7 @@ begin
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceSP.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSaoPaulo.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

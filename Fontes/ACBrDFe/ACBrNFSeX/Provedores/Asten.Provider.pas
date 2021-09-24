@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceAsten = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceAsten202 = class(TACBrNFSeXWebserviceSoap11)
   private
 
   public
@@ -60,13 +60,16 @@ type
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
   end;
 
-  TACBrNFSeProviderAsten = class(TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderAsten202 = class(TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
@@ -76,9 +79,9 @@ uses
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
   Asten.GravarXml, Asten.LerXml;
 
-{ TACBrNFSeXWebserviceAsten }
+{ TACBrNFSeXWebserviceAsten202 }
 
-function TACBrNFSeXWebserviceAsten.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceAsten202.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -96,7 +99,7 @@ begin
                         ['return', 'outputXML', 'EnviarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceAsten202.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -114,7 +117,7 @@ begin
                 ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAsten202.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -131,7 +134,7 @@ begin
                      ['return', 'outputXML', 'ConsultarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAsten202.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -148,7 +151,7 @@ begin
                      ['return', 'outputXML', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceAsten202.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -166,7 +169,7 @@ begin
                 ['return', 'outputXML', 'ConsultarNfseFaixaResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceAsten202.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -184,7 +187,7 @@ begin
          ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceAsten202.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -202,7 +205,7 @@ begin
            ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAsten202.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -219,7 +222,7 @@ begin
                             ['return', 'outputXML', 'GerarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAsten202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -236,7 +239,7 @@ begin
                          ['return', 'outputXML', 'CancelarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceAsten.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceAsten202.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -254,9 +257,9 @@ begin
                        ['return', 'outputXML', 'SubstituirNfseResposta'], []);
 end;
 
-{ TACBrNFSeProviderAsten }
+{ TACBrNFSeProviderAsten202 }
 
-procedure TACBrNFSeProviderAsten.Configuracao;
+procedure TACBrNFSeProviderAsten202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -280,28 +283,81 @@ begin
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
-function TACBrNFSeProviderAsten.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderAsten202.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Asten.Create(Self);
+  Result := TNFSeW_Asten202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderAsten.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderAsten202.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Asten.Create(Self);
+  Result := TNFSeR_Asten202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderAsten.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderAsten202.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceAsten.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceAsten202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
+end;
+
+procedure TACBrNFSeProviderAsten202.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  Prestador: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    if Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono] then
+    begin
+      if ConfigMsgDados.GerarPrestadorLoteRps then
+      begin
+        Prestador := '<' + Prefixo2 + 'Prestador>' +
+                       '<' + Prefixo2 + 'CpfCnpj>' +
+                         GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                       '</' + Prefixo2 + 'CpfCnpj>' +
+                       GetInscMunic(Emitente.InscMun, Prefixo2) +
+                     '</' + Prefixo2 + 'Prestador>'
+      end
+      else
+        Prestador := '<' + Prefixo2 + 'CpfCnpj>' +
+                       GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                     '</' + Prefixo2 + 'CpfCnpj>' +
+                     GetInscMunic(Emitente.InscMun, Prefixo2);
+
+      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                             '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
+                               '<' + Prefixo2 + 'NumeroLote>' +
+                                  Response.Lote +
+                               '</' + Prefixo2 + 'NumeroLote>' +
+                               Prestador +
+                               '<' + Prefixo2 + 'Token>' +
+                                  Emitente.WSChaveAutoriz +
+                               '</' + Prefixo2 + 'Token>' +
+
+                               '<' + Prefixo2 + 'QuantidadeRps>' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</' + Prefixo2 + 'QuantidadeRps>' +
+                               '<' + Prefixo2 + 'ListaRps>' +
+                                  Xml +
+                               '</' + Prefixo2 + 'ListaRps>' +
+                             '</' + Prefixo + 'LoteRps>' +
+                           '</' + Prefixo + TagEnvio + '>';
+    end
+    else
+      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                              Xml +
+                           '</' + Prefixo + TagEnvio + '>';
+  end;
 end;
 
 end.

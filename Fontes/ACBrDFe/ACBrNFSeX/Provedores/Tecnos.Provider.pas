@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceTecnos = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceTecnos201 = class(TACBrNFSeXWebserviceSoap11)
   public
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
@@ -56,7 +56,7 @@ type
 
   end;
 
-  TACBrNFSeProviderTecnos = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderTecnos201 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -74,9 +74,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Tecnos.GravarXml, Tecnos.LerXml;
 
-{ TACBrNFSeProviderTecnos }
+{ TACBrNFSeProviderTecnos201 }
 
-procedure TACBrNFSeProviderTecnos.AssinarConsultaLoteRps(
+procedure TACBrNFSeProviderTecnos201.AssinarConsultaLoteRps(
   Response: TNFSeConsultaLoteRpsResponse);
 var
   xXml: string;
@@ -97,7 +97,7 @@ begin
   inherited AssinarConsultaLoteRps(Response);
 end;
 
-procedure TACBrNFSeProviderTecnos.AssinarConsultaNFSeporRps(
+procedure TACBrNFSeProviderTecnos201.AssinarConsultaNFSeporRps(
   Response: TNFSeConsultaNFSeporRpsResponse);
 var
   xXml: string;
@@ -118,7 +118,7 @@ begin
   inherited AssinarConsultaNFSeporRps(Response);
 end;
 
-procedure TACBrNFSeProviderTecnos.Configuracao;
+procedure TACBrNFSeProviderTecnos201.Configuracao;
 begin
   inherited Configuracao;
 
@@ -164,21 +164,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderTecnos.CriarGeradorXml(
+function TACBrNFSeProviderTecnos201.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Tecnos.Create(Self);
+  Result := TNFSeW_Tecnos201.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderTecnos.CriarLeitorXml(
+function TACBrNFSeProviderTecnos201.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Tecnos.Create(Self);
+  Result := TNFSeR_Tecnos201.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderTecnos.CriarServiceClient(
+function TACBrNFSeProviderTecnos201.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -186,14 +186,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceTecnos.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceTecnos201.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceTecnos }
+{ TACBrNFSeXWebserviceTecnos201 }
 
-function TACBrNFSeXWebserviceTecnos.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceTecnos201.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -209,7 +209,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTecnos201.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -224,7 +224,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceTecnos201.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -240,7 +240,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceTecnos201.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -256,7 +256,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceTecnos201.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -272,7 +272,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceTecnos201.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -288,7 +288,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceTecnos201.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -304,7 +304,7 @@ begin
                      []);
 end;
 
-function TACBrNFSeXWebserviceTecnos.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTecnos201.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

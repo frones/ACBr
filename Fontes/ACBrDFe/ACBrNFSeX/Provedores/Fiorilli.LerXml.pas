@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Fiorilli }
+  { TNFSeR_Fiorilli200 }
 
-  TNFSeR_Fiorilli = class(TNFSeR_ABRASFv2)
+  TNFSeR_Fiorilli200 = class(TNFSeR_ABRASFv2)
   protected
 
   public

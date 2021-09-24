@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_PVH }
+  { TNFSeW_ISSPortoVelho200 }
 
-  TNFSeW_PVH = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSPortoVelho200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -59,9 +59,9 @@ implementation
 //     PVH
 //==============================================================================
 
-{ TNFSeW_PVH }
+{ TNFSeW_ISSPortoVelho200 }
 
-procedure TNFSeW_PVH.Configuracao;
+procedure TNFSeW_ISSPortoVelho200.Configuracao;
 begin
   inherited Configuracao;
 

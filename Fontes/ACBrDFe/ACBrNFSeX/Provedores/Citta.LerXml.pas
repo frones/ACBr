@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Citta }
+  { TNFSeR_Citta203 }
 
-  TNFSeR_Citta = class(TNFSeR_ABRASFv2)
+  TNFSeR_Citta203 = class(TNFSeR_ABRASFv2)
   protected
 
   public

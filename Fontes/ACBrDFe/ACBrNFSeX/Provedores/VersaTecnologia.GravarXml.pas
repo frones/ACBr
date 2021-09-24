@@ -46,24 +46,24 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_VersaTecnologia }
+  { TNFSeW_VersaTecnologia200 }
 
-  TNFSeW_VersaTecnologia = class(TNFSeW_ABRASFv2)
+  TNFSeW_VersaTecnologia200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
   end;
 
-  { TNFSeW_VersaTecnologiav201 }
+  { TNFSeW_VersaTecnologia201 }
 
-  TNFSeW_VersaTecnologiav201 = class(TNFSeW_VersaTecnologia)
+  TNFSeW_VersaTecnologia201 = class(TNFSeW_VersaTecnologia200)
   protected
     procedure Configuracao; override;
   end;
 
   { TNFSeW_VersaTecnologia202 }
 
-  TNFSeW_VersaTecnologiav202 = class(TNFSeW_VersaTecnologia)
+  TNFSeW_VersaTecnologia202 = class(TNFSeW_VersaTecnologia200)
   protected
     procedure Configuracao; override;
 
@@ -76,9 +76,9 @@ implementation
 //     VersaTecologia
 //==============================================================================
 
-{ TNFSeW_VersaTecnologia }
+{ TNFSeW_VersaTecnologia200 }
 
-procedure TNFSeW_VersaTecnologia.Configuracao;
+procedure TNFSeW_VersaTecnologia200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -98,7 +98,7 @@ end;
 
 { TNFSeW_VersaTecnologia201 }
 
-procedure TNFSeW_VersaTecnologiav201.Configuracao;
+procedure TNFSeW_VersaTecnologia201.Configuracao;
 begin
   inherited Configuracao;
 
@@ -107,7 +107,7 @@ end;
 
 { TNFSeW_VersaTecnologia202 }
 
-procedure TNFSeW_VersaTecnologiav202.Configuracao;
+procedure TNFSeW_VersaTecnologia202.Configuracao;
 begin
   inherited Configuracao;
 

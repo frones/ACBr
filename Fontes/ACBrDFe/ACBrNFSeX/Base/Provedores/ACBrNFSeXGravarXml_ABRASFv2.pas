@@ -119,6 +119,7 @@ type
     FNrOcorrNIFTomador: Integer;
     FGerarEnderecoExterior: Boolean;
     FNrOcorrID: Integer;
+    FNrOcorrToken: Integer;
     FNrOcorrValorCsll: Integer;
     FNrOcorrValorPis: Integer;
     FNrOcorrValorCofins: Integer;
@@ -234,9 +235,11 @@ type
     property NrOcorrProducao: Integer     read FNrOcorrProducao     write FNrOcorrProducao;
     property NrOcorrNIFTomador: Integer   read FNrOcorrNIFTomador   write FNrOcorrNIFTomador;
     property NrOcorrID: Integer           read FNrOcorrID           write FNrOcorrID;
+    property NrOcorrToken: Integer        read FNrOcorrToken        write FNrOcorrToken;
 
     property NrOcorrCodigoPaisServico: Integer read FNrOcorrCodigoPaisServico write FNrOcorrCodigoPaisServico;
     property NrOcorrCodigoPaisTomador: Integer read FNrOcorrCodigoPaisTomador write FNrOcorrCodigoPaisTomador;
+
 
     property GerarTagServicos: Boolean  read FGerarTagServicos  write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
@@ -334,6 +337,7 @@ begin
   FNrOcorrCodigoMunic_2 := -1;
   FNrOcorrNIFTomador := -1;
   FNrOcorrID := -1;
+  FNrOcorrToken := -1;
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
@@ -692,6 +696,9 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#35', 'InscricaoMunicipal', 1, 15, 0,
              NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, DSC_IM));
+
+  Result.AppendChild(AddNode(tcStr, '#35', 'Token', 1, 255, NrOcorrToken,
+                                             ChaveAutoriz, DSC_CHAVESEGURANCA));
 
   if GerarTagSenhaFraseSecreta then
   begin

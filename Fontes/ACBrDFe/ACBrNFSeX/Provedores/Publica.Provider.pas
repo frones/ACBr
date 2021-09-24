@@ -213,8 +213,6 @@ begin
 //  ConfigMsgDados.ConsultarNFSe.InfElemento := 'Prestador';
 
   ConfigWebServices.AtribVerLote := 'versao';
-
-  SetNomeXSD('schema_nfse_v03.xsd');
 end;
 
 function TACBrNFSeProviderPublica.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
@@ -238,7 +236,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebservicePublica.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderPublica.PrepararEmitir(Response: TNFSeEmiteResponse);

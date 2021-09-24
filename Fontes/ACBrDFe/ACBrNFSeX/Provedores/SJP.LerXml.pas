@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_SJP }
+  { TNFSeR_ISSSJP }
 
-  TNFSeR_SJP = class(TNFSeR_ABRASFv1)
+  TNFSeR_ISSSJP = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     SJP
+//     ISSSJP
 //==============================================================================
 
 end.

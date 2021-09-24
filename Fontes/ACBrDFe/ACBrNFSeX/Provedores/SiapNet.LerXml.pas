@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_SiapNet }
+  { TNFSeR_SiapNet200 }
 
-  TNFSeR_SiapNet = class(TNFSeR_ABRASFv2)
+  TNFSeR_SiapNet200 = class(TNFSeR_ABRASFv2)
   protected
 
   public

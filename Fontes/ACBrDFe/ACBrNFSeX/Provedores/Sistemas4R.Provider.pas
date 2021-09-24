@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebservice4R = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebservice4R200 = class(TACBrNFSeXWebserviceSoap11)
 
   public
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -54,7 +54,7 @@ type
 
   end;
 
-  TACBrNFSeProvider4R = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProvider4R200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -69,9 +69,9 @@ implementation
 uses
   ACBrDFeException, Sistemas4R.GravarXml, Sistemas4R.LerXml;
 
-{ TACBrNFSeXWebservice4R }
+{ TACBrNFSeXWebservice4R200 }
 
-function TACBrNFSeXWebservice4R.RecepcionarSincrono(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservice4R200.RecepcionarSincrono(ACabecalho, AMSG: String): string;
 var
   Request: string;
   xTag, xSoap: string;
@@ -96,7 +96,7 @@ begin
   Result := Executar(xSoap, Request, ['Resposta', 'EnviarLoteRpsSincronoResposta'], []);
 end;
 
-function TACBrNFSeXWebservice4R.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservice4R200.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
   xTag, xSoap: string;
@@ -121,7 +121,7 @@ begin
   Result := Executar(xSoap, Request, ['Resposta', 'ConsultarLoteRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebservice4R.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservice4R200.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
   xTag, xSoap: string;
@@ -146,7 +146,7 @@ begin
   Result := Executar(xSoap, Request, ['Resposta', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebservice4R.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservice4R200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
   xTag, xSoap: string;
@@ -171,9 +171,9 @@ begin
   Result := Executar(xSoap, Request, ['Resposta', 'CancelarNfseResposta'], []);
 end;
 
-{ TACBrNFSeProvider4R }
+{ TACBrNFSeProvider4R200 }
 
-procedure TACBrNFSeProvider4R.Configuracao;
+procedure TACBrNFSeProvider4R200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -197,28 +197,28 @@ begin
   end;
 end;
 
-function TACBrNFSeProvider4R.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProvider4R200.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Sistemas4R.Create(Self);
+  Result := TNFSeW_Sistemas4R200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProvider4R.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProvider4R200.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Sistemas4R.Create(Self);
+  Result := TNFSeR_Sistemas4R200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProvider4R.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProvider4R200.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebservice4R.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebservice4R200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 end.

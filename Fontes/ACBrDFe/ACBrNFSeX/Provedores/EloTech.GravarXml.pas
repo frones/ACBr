@@ -46,9 +46,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Elotech }
+  { TNFSeW_Elotech203 }
 
-  TNFSeW_Elotech = class(TNFSeW_ABRASFv2)
+  TNFSeW_Elotech203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -64,9 +64,9 @@ implementation
 //     Chave de Acesso tem que ter 32 caracteres.
 //==============================================================================
 
-{ TNFSeW_Elotech }
+{ TNFSeW_Elotech203 }
 
-procedure TNFSeW_Elotech.Configuracao;
+procedure TNFSeW_Elotech203.Configuracao;
 begin
   inherited Configuracao;
 
@@ -80,7 +80,7 @@ begin
   GerarIDDeclaracao := False;
 end;
 
-function TNFSeW_Elotech.GerarItemServico: TACBrXmlNodeArray;
+function TNFSeW_Elotech203.GerarItemServico: TACBrXmlNodeArray;
 var
   i: integer;
 begin
@@ -120,7 +120,7 @@ begin
     wAlerta('#54', 'ItemServico', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
-function TNFSeW_Elotech.GerarListaItensServico: TACBrXmlNode;
+function TNFSeW_Elotech203.GerarListaItensServico: TACBrXmlNode;
 var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;

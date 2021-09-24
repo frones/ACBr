@@ -44,9 +44,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_ABase }
+  { TNFSeW_ABase201 }
 
-  TNFSeW_ABase = class(TNFSeW_ABRASFv2)
+  TNFSeW_ABase201 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -61,7 +61,7 @@ implementation
 
 { TNFSeW_ABase }
 
-procedure TNFSeW_ABase.Configuracao;
+procedure TNFSeW_ABase201.Configuracao;
 begin
   inherited Configuracao;
 end;

@@ -225,7 +225,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceThema.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderThema.PrepararEmitir(Response: TNFSeEmiteResponse);

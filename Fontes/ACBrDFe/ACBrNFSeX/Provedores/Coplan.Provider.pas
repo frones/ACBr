@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceCoplan = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceCoplan201 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNamespace: string;
 
@@ -62,7 +62,7 @@ type
     property Namespace: string read GetNamespace;
   end;
 
-  TACBrNFSeProviderCoplan = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderCoplan201 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -78,9 +78,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Coplan.GravarXml, Coplan.LerXml;
 
-{ TACBrNFSeProviderCoplan }
+{ TACBrNFSeProviderCoplan201 }
 
-procedure TACBrNFSeProviderCoplan.Configuracao;
+procedure TACBrNFSeProviderCoplan201.Configuracao;
 begin
   inherited Configuracao;
 
@@ -103,21 +103,21 @@ begin
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
-function TACBrNFSeProviderCoplan.CriarGeradorXml(
+function TACBrNFSeProviderCoplan201.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Coplan.Create(Self);
+  Result := TNFSeW_Coplan201.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderCoplan.CriarLeitorXml(
+function TACBrNFSeProviderCoplan201.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Coplan.Create(Self);
+  Result := TNFSeR_Coplan201.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderCoplan.CriarServiceClient(
+function TACBrNFSeProviderCoplan201.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -125,14 +125,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceCoplan.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceCoplan201.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceCoplan }
+{ TACBrNFSeXWebserviceCoplan201 }
 
-function TACBrNFSeXWebserviceCoplan.GetNamespace: string;
+function TACBrNFSeXWebserviceCoplan201.GetNamespace: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
     Result := 'Tributario_PRODUCAO_FULL'
@@ -142,7 +142,7 @@ begin
   Result := 'xmlns:trib1="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceCoplan.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -161,7 +161,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -180,7 +180,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -199,7 +199,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -218,7 +218,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -242,7 +242,7 @@ begin
   }
 end;
 
-function TACBrNFSeXWebserviceCoplan.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -261,7 +261,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -280,7 +280,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -299,7 +299,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCoplan201.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -317,7 +317,7 @@ begin
                      ['xmlns:trib="Tributario"', NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceCoplan.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCoplan201.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

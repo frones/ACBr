@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Salvador }
+  { TNFSeW_ISSSalvador }
 
-  TNFSeW_Salvador = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSSalvador = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -61,12 +61,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Salvador
+//     ISSSalvador
 //==============================================================================
 
-{ TNFSeW_Salvador }
+{ TNFSeW_ISSSalvador }
 
-procedure TNFSeW_Salvador.Configuracao;
+procedure TNFSeW_ISSSalvador.Configuracao;
 begin
   inherited Configuracao;
 
@@ -83,12 +83,12 @@ begin
   NrOcorrDescCond := 1;
 end;
 
-procedure TNFSeW_Salvador.DefinirIDRps;
+procedure TNFSeW_ISSSalvador.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero);
 end;
 
-function TNFSeW_Salvador.GerarXml: Boolean;
+function TNFSeW_ISSSalvador.GerarXml: Boolean;
 begin
   Opcoes.SuprimirDecimais := True;
 

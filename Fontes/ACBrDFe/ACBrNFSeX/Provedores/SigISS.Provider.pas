@@ -85,13 +85,13 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceSigISS_103 = class(TACBrNFSeXWebserviceSigISS)
+  TACBrNFSeXWebserviceSigISS103 = class(TACBrNFSeXWebserviceSigISS)
   public
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
 
   end;
 
-  TACBrNFSeProviderSigISS_103 = class (TACBrNFSeProviderSigISS)
+  TACBrNFSeProviderSigISS103 = class (TACBrNFSeProviderSigISS)
   protected
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
@@ -151,7 +151,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceSigISS.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderSigISS.ProcessarMensagemErros(
@@ -505,9 +505,9 @@ begin
                       'xmlns:urn="' + SoapAction + '"']);
 end;
 
-{ TACBrNFSeXWebserviceSigISS_103 }
+{ TACBrNFSeXWebserviceSigISS103 }
 
-function TACBrNFSeXWebserviceSigISS_103.ConsultarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigISS103.ConsultarNFSe(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -519,23 +519,23 @@ begin
                       'xmlns:urn="' + SoapAction + '"']);
 end;
 
-{ TACBrNFSeProviderSigISS_103 }
+{ TACBrNFSeProviderSigISS103 }
 
-function TACBrNFSeProviderSigISS_103.CriarGeradorXml(
+function TACBrNFSeProviderSigISS103.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_SigISS_103.Create(Self);
+  Result := TNFSeW_SigISS103.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSigISS_103.CriarLeitorXml(
+function TACBrNFSeProviderSigISS103.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_SigISS_103.Create(Self);
+  Result := TNFSeR_SigISS103.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-procedure TACBrNFSeProviderSigISS_103.PrepararConsultaNFSe(
+procedure TACBrNFSeProviderSigISS103.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -566,7 +566,7 @@ begin
                        '</ConsultarNfseServicoPrestado>';
 end;
 
-procedure TACBrNFSeProviderSigISS_103.PrepararCancelaNFSe(
+procedure TACBrNFSeProviderSigISS103.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;

@@ -54,9 +54,9 @@ type
     function GerarParcelas: TACBrXmlNodeArray; override;
   end;
 
-  { TNFSeW_Bethav2 }
+  { TNFSeW_Betha202 }
 
-  TNFSeW_Bethav2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_Betha202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -138,9 +138,9 @@ begin
     wAlerta('#54', 'Parcelas', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
-{ TNFSeW_Bethav2 }
+{ TNFSeW_Betha202 }
 
-procedure TNFSeW_Bethav2.Configuracao;
+procedure TNFSeW_Betha202.Configuracao;
 begin
   inherited Configuracao;
 

@@ -223,7 +223,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceTinus.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderTinus.ValidarSchema(
@@ -238,11 +238,7 @@ begin
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 2 then
     xXml := StringReplace(xXml, 'www.tinus', 'www2.tinus', [rfReplaceAll]);
 
-  {
-    Temos o provedor Tinus e TinusA, somente o Tinus se faz necessário trocar
-    a tag de envio de cada método por <Arg>.
-  }
-  if TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor = proTinus then
+  if ConfigGeral.Versao = ve100 then
   begin
     case aMetodo of
         tmRecepcionar:

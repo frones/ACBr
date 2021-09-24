@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_SH3 }
+  { TNFSeW_SH3200 }
 
-  TNFSeW_SH3 = class(TNFSeW_ABRASFv2)
+  TNFSeW_SH3200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -59,9 +59,9 @@ implementation
 //     SH3
 //==============================================================================
 
-{ TNFSeW_SH3 }
+{ TNFSeW_SH3200 }
 
-procedure TNFSeW_SH3.Configuracao;
+procedure TNFSeW_SH3200.Configuracao;
 begin
   inherited Configuracao;
 

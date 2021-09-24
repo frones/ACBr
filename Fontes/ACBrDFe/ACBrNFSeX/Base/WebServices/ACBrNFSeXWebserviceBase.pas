@@ -55,6 +55,7 @@ uses
 
 resourcestring
   ERR_NAO_IMP = 'Serviço não implementado para este provedor.';
+  ERR_SEM_URL = 'Não informado a URL de Homologação/Produção, favor entrar em contato com a Prefeitura ou Provedor.';
 
 type
 
@@ -666,6 +667,9 @@ begin
       else   // Envio interno, por TDFeSSL
       begin
         try
+          if FPURL = '' then
+            raise EACBrDFeException.Create('Não informado a URL de homologação favor entrar em contato com a prefeitura/provedor');
+
           HttpClient.URL := FPURL;
           HttpClient.Method := 'POST';
           HttpClient.MimeType := FPMimeType;

@@ -45,9 +45,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_ISSJoinville }
+  { TNFSeW_ISSJoinville204 }
 
-  TNFSeW_ISSJoinville = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSJoinville204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     ISSJoinville
 //==============================================================================
 
-{ TNFSeW_ISSJoinville }
+{ TNFSeW_ISSJoinville204 }
 
-procedure TNFSeW_ISSJoinville.Configuracao;
+procedure TNFSeW_ISSJoinville204.Configuracao;
 begin
   inherited Configuracao;
 

@@ -203,7 +203,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceCIGA.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 end.

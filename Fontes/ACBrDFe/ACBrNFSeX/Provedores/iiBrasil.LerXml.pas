@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_iiBrasil }
+  { TNFSeR_iiBrasil204 }
 
-  TNFSeR_iiBrasil = class(TNFSeR_ABRASFv2)
+  TNFSeR_iiBrasil204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

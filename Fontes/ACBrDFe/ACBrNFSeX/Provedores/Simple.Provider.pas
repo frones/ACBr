@@ -51,7 +51,7 @@ type
   private
     function GetDadosUsuario: string;
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
@@ -105,8 +105,7 @@ begin
 
   with ConfigGeral do
   begin
-    ModoEnvio := meLoteAssincrono;
-    ConsultaPorFaixa := True;
+    ModoEnvio := meLoteSincrono;
   end;
 
   ConfigSchemas.Validar := False;
@@ -136,7 +135,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceSimple.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderSimple.ProcessarMensagemErros(
@@ -732,7 +731,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceSimple.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceSimple.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

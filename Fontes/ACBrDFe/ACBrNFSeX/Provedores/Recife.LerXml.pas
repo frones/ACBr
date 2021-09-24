@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_Recife }
+  { TNFSeR_ISSRecife }
 
-  TNFSeR_Recife = class(TNFSeR_ABRASFv1)
+  TNFSeR_ISSRecife = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     Recife
+//     ISSRecife
 //==============================================================================
 
 end.

@@ -47,14 +47,14 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceLencois = class(TACBrNFSeXWebserviceSoap12)
+  TACBrNFSeXWebserviceISSLencois = class(TACBrNFSeXWebserviceSoap12)
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
   end;
 
-  TACBrNFSeProviderLencois = class (TACBrNFSeProviderProprio)
+  TACBrNFSeProviderISSLencois = class (TACBrNFSeProviderProprio)
   protected
     procedure Configuracao; override;
 
@@ -85,9 +85,9 @@ uses
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Lencois.GravarXml, Lencois.LerXml;
 
-{ TACBrNFSeProviderLencois }
+{ TACBrNFSeProviderISSLencois }
 
-procedure TACBrNFSeProviderLencois.Configuracao;
+procedure TACBrNFSeProviderISSLencois.Configuracao;
 begin
   inherited Configuracao;
 
@@ -119,21 +119,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderLencois.CriarGeradorXml(
+function TACBrNFSeProviderISSLencois.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Lencois.Create(Self);
+  Result := TNFSeW_ISSLencois.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderLencois.CriarLeitorXml(
+function TACBrNFSeProviderISSLencois.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Lencois.Create(Self);
+  Result := TNFSeR_ISSLencois.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderLencois.CriarServiceClient(
+function TACBrNFSeProviderISSLencois.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -141,12 +141,12 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceLencois.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSLencois.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderLencois.ProcessarMensagemErros(
+procedure TACBrNFSeProviderISSLencois.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
 var
@@ -176,19 +176,19 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderLencois.PrepararRpsParaLote(
+function TACBrNFSeProviderISSLencois.PrepararRpsParaLote(
   const aXml: string): string;
 begin
   Result := aXml;
 end;
 
-procedure TACBrNFSeProviderLencois.GerarMsgDadosEmitir(
+procedure TACBrNFSeProviderISSLencois.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 begin
   Response.XmlEnvio := Params.Xml;
 end;
 
-procedure TACBrNFSeProviderLencois.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProviderISSLencois.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
@@ -248,7 +248,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderLencois.PrepararCancelaNFSe(
+procedure TACBrNFSeProviderISSLencois.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
@@ -316,7 +316,7 @@ begin
                        '</Nota>';
 end;
 
-procedure TACBrNFSeProviderLencois.TratarRetornoCancelaNFSe(
+procedure TACBrNFSeProviderISSLencois.TratarRetornoCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
   Document: TACBrXmlDocument;
@@ -369,9 +369,9 @@ begin
   end;
 end;
 
-{ TACBrNFSeXWebserviceLencois }
+{ TACBrNFSeXWebserviceISSLencois }
 
-function TACBrNFSeXWebserviceLencois.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSLencois.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request, DadosUsuario: string;
@@ -395,7 +395,7 @@ begin
                      ['xmlns:apl2="http://apl2.lencoispaulista.sp.gov.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLencois.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSLencois.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request, DadosUsuario: string;
 begin

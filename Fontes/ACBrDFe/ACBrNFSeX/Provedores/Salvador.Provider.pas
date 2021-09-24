@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceSalvador = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSSalvador = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
@@ -53,7 +53,7 @@ type
 
   end;
 
-  TACBrNFSeProviderSalvador = class (TACBrNFSeProviderABRASFv1)
+  TACBrNFSeProviderISSSalvador = class (TACBrNFSeProviderABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -69,9 +69,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrXmlBase,
   Salvador.GravarXml, Salvador.LerXml;
 
-{ TACBrNFSeXWebserviceSalvador }
+{ TACBrNFSeXWebserviceISSSalvador }
 
-function TACBrNFSeXWebserviceSalvador.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSalvador.Recepcionar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -86,7 +86,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSalvador.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSalvador.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -101,7 +101,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSalvador.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSalvador.ConsultarSituacao(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -116,7 +116,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSalvador.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSalvador.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -131,7 +131,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSalvador.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSalvador.ConsultarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -146,9 +146,9 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-{ TACBrNFSeProviderSalvador }
+{ TACBrNFSeProviderISSSalvador }
 
-procedure TACBrNFSeProviderSalvador.Configuracao;
+procedure TACBrNFSeProviderISSSalvador.Configuracao;
 begin
   inherited Configuracao;
 
@@ -163,28 +163,28 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderSalvador.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderISSSalvador.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Salvador.Create(Self);
+  Result := TNFSeW_ISSSalvador.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSalvador.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderISSSalvador.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Salvador.Create(Self);
+  Result := TNFSeR_ISSSalvador.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSalvador.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderISSSalvador.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSalvador.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSSalvador.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 end.

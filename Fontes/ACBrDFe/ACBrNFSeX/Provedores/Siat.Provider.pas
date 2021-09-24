@@ -113,7 +113,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceSiat.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 { TACBrNFSeXWebserviceSiat }

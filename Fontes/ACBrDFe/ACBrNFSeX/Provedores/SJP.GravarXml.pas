@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_SJP }
+  { TNFSeW_ISSSJP }
 
-  TNFSeW_SJP = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSSJP = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -56,12 +56,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     SJP
+//     ISSSJP
 //==============================================================================
 
-{ TNFSeW_SJP }
+{ TNFSeW_ISSSJP }
 
-procedure TNFSeW_SJP.Configuracao;
+procedure TNFSeW_ISSSJP.Configuracao;
 begin
   inherited Configuracao;
 

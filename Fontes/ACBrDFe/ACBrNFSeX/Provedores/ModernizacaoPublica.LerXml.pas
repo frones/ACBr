@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_ModernizacaoPublica }
+  { TNFSeR_ModernizacaoPublica202 }
 
-  TNFSeR_ModernizacaoPublica = class(TNFSeR_ABRASFv2)
+  TNFSeR_ModernizacaoPublica202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

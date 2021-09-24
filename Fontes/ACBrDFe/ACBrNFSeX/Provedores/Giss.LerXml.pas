@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Giss }
+  { TNFSeR_Giss204 }
 
-  TNFSeR_Giss = class(TNFSeR_ABRASFv2)
+  TNFSeR_Giss204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

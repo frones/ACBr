@@ -38,13 +38,13 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrXmlBase, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv2,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceISSJoinville = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSJoinville204 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNamespace: string;
     function GetSoapAction: string;
@@ -58,9 +58,10 @@ type
     property SoapAction: string read GetSoapAction;
   end;
 
-  TACBrNFSeProviderISSJoinville = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderISSJoinville204 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
+    function GetSchemaPath: string; override;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
@@ -75,9 +76,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, ISSJoinville.GravarXml, ISSJoinville.LerXml;
 
-{ TACBrNFSeProviderISSJoinville }
+{ TACBrNFSeProviderISSJoinville204 }
 
-procedure TACBrNFSeProviderISSJoinville.Configuracao;
+procedure TACBrNFSeProviderISSJoinville204.Configuracao;
 begin
   inherited Configuracao;
 
@@ -116,21 +117,21 @@ begin
   SetNomeXSD('nfse_v2-04.xsd');
 end;
 
-function TACBrNFSeProviderISSJoinville.CriarGeradorXml(
+function TACBrNFSeProviderISSJoinville204.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_ISSJoinville.Create(Self);
+  Result := TNFSeW_ISSJoinville204.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderISSJoinville.CriarLeitorXml(
+function TACBrNFSeProviderISSJoinville204.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_ISSJoinville.Create(Self);
+  Result := TNFSeR_ISSJoinville204.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderISSJoinville.CriarServiceClient(
+function TACBrNFSeProviderISSJoinville204.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -138,12 +139,22 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceISSJoinville.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSJoinville204.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderISSJoinville.ValidarSchema(
+function TACBrNFSeProviderISSJoinville204.GetSchemaPath: string;
+begin
+  Result := inherited GetSchemaPath;
+
+  if ConfigGeral.Ambiente = taProducao then
+    Result := Result + '\Producao\'
+  else
+    Result := Result + '\Homologacao\';
+end;
+
+procedure TACBrNFSeProviderISSJoinville204.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 var
   xXml, FpNameSpace: string;
@@ -200,9 +211,9 @@ begin
   Response.XmlEnvio := xXml;
 end;
 
-{ TACBrNFSeXWebserviceISSJoinville }
+{ TACBrNFSeXWebserviceISSJoinville204 }
 
-function TACBrNFSeXWebserviceISSJoinville.GetNamespace: string;
+function TACBrNFSeXWebserviceISSJoinville204.GetNamespace: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
     Result := 'xmlns:nfem="https://nfemws.joinville.sc.gov.br"'
@@ -210,7 +221,7 @@ begin
     Result := 'xmlns:nfem="https://nfemwshomologacao.joinville.sc.gov.br"';
 end;
 
-function TACBrNFSeXWebserviceISSJoinville.GetSoapAction: string;
+function TACBrNFSeXWebserviceISSJoinville204.GetSoapAction: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
     Result := 'https://nfemws.joinville.sc.gov.br/'
@@ -218,7 +229,7 @@ begin
     Result := 'https://nfemwshomologacao.joinville.sc.gov.br/';
 end;
 
-function TACBrNFSeXWebserviceISSJoinville.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceISSJoinville204.Recepcionar(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -228,7 +239,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSJoinville.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceISSJoinville204.ConsultarLote(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -238,7 +249,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSJoinville.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSJoinville204.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -248,7 +259,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceISSJoinville.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSJoinville204.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 

@@ -53,25 +53,11 @@ type
 
   end;
 
-  { TNFSeW_Pronimv2 }
-
-  TNFSeW_Pronimv2 = class(TNFSeW_ABRASFv2)
-  protected
-    procedure Configuracao; override;
-
-  end;
-
   { TNFSeW_Pronim202 }
 
-  TNFSeW_Pronim202 = class(TNFSeW_Pronimv2)
+  TNFSeW_Pronim202 = class(TNFSeW_ABRASFv2)
   protected
-
-  end;
-
-  { TNFSeW_Pronim203 }
-
-  TNFSeW_Pronim203 = class(TNFSeW_Pronimv2)
-  protected
+    procedure Configuracao; override;
 
   end;
 
@@ -101,9 +87,9 @@ begin
   NrOcorrValorISSRetido_2 := 0;
 end;
 
-{ TNFSeW_Pronimv2 }
+{ TNFSeW_Pronim202 }
 
-procedure TNFSeW_Pronimv2.Configuracao;
+procedure TNFSeW_Pronim202.Configuracao;
 begin
   inherited Configuracao;
 

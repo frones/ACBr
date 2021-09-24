@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_SigCorp }
+  { TNFSeW_SigCorp203 }
 
-  TNFSeW_SigCorp = class(TNFSeW_ABRASFv2)
+  TNFSeW_SigCorp203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     SigCorp
 //==============================================================================
 
-{ TNFSeW_SigCorp }
+{ TNFSeW_SigCorp203 }
 
-procedure TNFSeW_SigCorp.Configuracao;
+procedure TNFSeW_SigCorp203.Configuracao;
 begin
   inherited Configuracao;
 

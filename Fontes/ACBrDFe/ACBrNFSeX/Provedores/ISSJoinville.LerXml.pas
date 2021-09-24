@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_ISSJoinville }
+  { TNFSeR_ISSJoinville204 }
 
-  TNFSeR_ISSJoinville = class(TNFSeR_ABRASFv2)
+  TNFSeR_ISSJoinville204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

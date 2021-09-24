@@ -109,7 +109,7 @@ begin
     5104526: FpAtividadeEconomica := 'CodigoCnaeAtividadeEconomica';
 
     5105150,
-    5107305: FpAtividadeEconomica := 'ItemLei116AtividadeEconomica';
+    5107305: FpAtividadeEconomica := 'ItemLei116AtividadeEconomica'; //1.00
   else
     FpAtividadeEconomica := 'CodigoAtividadeEconomica';
   end;

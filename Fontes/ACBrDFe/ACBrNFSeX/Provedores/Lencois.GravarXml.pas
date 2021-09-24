@@ -47,9 +47,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Lencois }
+  { TNFSeW_ISSLencois }
 
-  TNFSeW_Lencois = class(TNFSeWClass)
+  TNFSeW_ISSLencois = class(TNFSeWClass)
   protected
     function GerarPASNF: TACBrXmlNode;
     function GerarTomador: TACBrXmlNode;
@@ -67,9 +67,9 @@ implementation
 //     Lencois
 //==============================================================================
 
-{ TNFSeW_Lencois }
+{ TNFSeW_ISSLencois }
 
-function TNFSeW_Lencois.GerarXml: Boolean;
+function TNFSeW_ISSLencois.GerarXml: Boolean;
 var
   NFSeNode, xmlNode: TACBrXmlNode;
 begin
@@ -145,7 +145,7 @@ begin
   Result := True;
 end;
 
-function TNFSeW_Lencois.GerarPASNF: TACBrXmlNode;
+function TNFSeW_ISSLencois.GerarPASNF: TACBrXmlNode;
 begin
   Result := CreateElement('PASNF');
 
@@ -155,7 +155,7 @@ begin
                                                          NFSe.DataEmissao, ''));
 end;
 
-function TNFSeW_Lencois.GerarRecolhimentoFora: TACBrXmlNode;
+function TNFSeW_ISSLencois.GerarRecolhimentoFora: TACBrXmlNode;
 begin
   Result := nil;
 
@@ -175,7 +175,7 @@ begin
   end;
 end;
 
-function TNFSeW_Lencois.GerarTomador: TACBrXmlNode;
+function TNFSeW_ISSLencois.GerarTomador: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
 begin
@@ -207,7 +207,7 @@ begin
   end;
 end;
 
-function TNFSeW_Lencois.GerarEnderecoTomador: TACBrXmlNode;
+function TNFSeW_ISSLencois.GerarEnderecoTomador: TACBrXmlNode;
 begin
   Result := CreateElement('Endereco');
 

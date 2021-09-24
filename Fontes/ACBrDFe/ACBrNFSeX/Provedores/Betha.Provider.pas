@@ -73,7 +73,7 @@ type
     procedure AssinarCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
-  TACBrNFSeXWebserviceBethav2 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceBetha202 = class(TACBrNFSeXWebserviceSoap11)
 
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
@@ -89,7 +89,7 @@ type
 
   end;
 
-  TACBrNFSeProviderBethav2 = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderBetha202 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -203,7 +203,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceBetha.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -309,9 +309,9 @@ begin
                        '</ns3:CancelarNfseEnvio>';
 end;
 
-{ TACBrNFSeProviderBethav2 }
+{ TACBrNFSeProviderBetha202 }
 
-procedure TACBrNFSeProviderBethav2.Configuracao;
+procedure TACBrNFSeProviderBetha202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -338,21 +338,21 @@ begin
   SetNomeXSD('nfse_v202.xsd');
 end;
 
-function TACBrNFSeProviderBethav2.CriarGeradorXml(
+function TACBrNFSeProviderBetha202.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Bethav2.Create(Self);
+  Result := TNFSeW_Betha202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderBethav2.CriarLeitorXml(
+function TACBrNFSeProviderBetha202.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Bethav2.Create(Self);
+  Result := TNFSeR_Betha202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderBethav2.CriarServiceClient(
+function TACBrNFSeProviderBetha202.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -360,14 +360,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceBethav2.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceBetha202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceBethav2 }
+{ TACBrNFSeXWebserviceBetha202 }
 
-function TACBrNFSeXWebserviceBethav2.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -384,7 +384,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -401,7 +401,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -418,7 +418,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -435,7 +435,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -452,7 +452,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -469,7 +469,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -486,7 +486,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -503,7 +503,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceBetha202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -519,7 +519,7 @@ begin
                 ['xmlns:tns="http://www.betha.com.br/e-nota-contribuinte-ws"']);
 end;
 
-function TACBrNFSeXWebserviceBethav2.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceBetha202.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

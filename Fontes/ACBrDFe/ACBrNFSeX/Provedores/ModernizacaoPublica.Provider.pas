@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceModernizacaoPublica = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceModernizacaoPublica202 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -59,7 +59,7 @@ type
 
   end;
 
-  TACBrNFSeProviderModernizacaoPublica = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderModernizacaoPublica202 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -79,9 +79,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, ModernizacaoPublica.GravarXml, ModernizacaoPublica.LerXml;
 
-{ TACBrNFSeProviderModernizacaoPublica }
+{ TACBrNFSeProviderModernizacaoPublica202 }
 
-procedure TACBrNFSeProviderModernizacaoPublica.Configuracao;
+procedure TACBrNFSeProviderModernizacaoPublica202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -106,21 +106,21 @@ begin
   SetNomeXSD('nfse_v202.xsd');
 end;
 
-function TACBrNFSeProviderModernizacaoPublica.CriarGeradorXml(
+function TACBrNFSeProviderModernizacaoPublica202.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_ModernizacaoPublica.Create(Self);
+  Result := TNFSeW_ModernizacaoPublica202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderModernizacaoPublica.CriarLeitorXml(
+function TACBrNFSeProviderModernizacaoPublica202.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_ModernizacaoPublica.Create(Self);
+  Result := TNFSeR_ModernizacaoPublica202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderModernizacaoPublica.CriarServiceClient(
+function TACBrNFSeProviderModernizacaoPublica202.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -128,12 +128,12 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceModernizacaoPublica.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceModernizacaoPublica202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderModernizacaoPublica.ProcessarMensagemErros(
+procedure TACBrNFSeProviderModernizacaoPublica202.ProcessarMensagemErros(
   const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
   AListTag, AMessageTag: string);
 var
@@ -171,9 +171,9 @@ begin
 }
 end;
 
-{ TACBrNFSeXWebserviceModernizacaoPublica }
+{ TACBrNFSeXWebserviceModernizacaoPublica202 }
 
-function TACBrNFSeXWebserviceModernizacaoPublica.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -190,7 +190,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -207,7 +207,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -224,7 +224,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -241,7 +241,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -258,7 +258,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -275,7 +275,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -292,7 +292,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -309,7 +309,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceModernizacaoPublica202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -325,7 +325,7 @@ begin
                      ['xmlns:def="http://DefaultNamespace"']);
 end;
 
-function TACBrNFSeXWebserviceModernizacaoPublica.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceModernizacaoPublica202.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

@@ -44,6 +44,17 @@ Símbolo : Significado
 
 
 24/09/2021
+-- Diversos --
+[*] Realizado duas alterações muito importantes no componente ACBrNFSeX.
+    1. O componente agora acusa que ele não encontrou a URL de homologação ou
+       de produção e aborta o envio. Antes ele se utilizava da URL de produção
+       na ausencia da de homologação.
+    2. O componente agora se utiliza da estrutura de pastas que se encontra em:
+       ...\Exemplos\ACBrDFe\Schemas\NFSe
+       caso a nova propriedade de configuração: MontarPathSchema for igual a True.
+       Isso faz com que o componente encontre os schemas de forma automatica. 
+       Se desejar usar uma estrutura diferente basta atribuir o valor False.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Correção na leitura do grupo <Confirmacao> estava ocorrendo AV.
    Por: Elias LS Tech

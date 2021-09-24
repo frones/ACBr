@@ -79,9 +79,9 @@ type
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
   end;
 
-  { TNFSeR_Infiscv2 }
+  { TNFSeR_Infisc201 }
 
-  TNFSeR_Infiscv2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Infisc201 = class(TNFSeR_ABRASFv2)
   protected
 
   public

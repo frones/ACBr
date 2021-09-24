@@ -44,9 +44,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_Sudoeste }
+  { TNFSeW_Sudoeste202 }
 
-  TNFSeW_Sudoeste = class(TNFSeW_ABRASFv2)
+  TNFSeW_Sudoeste202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
     procedure DefinirIDRps; override;
@@ -60,9 +60,9 @@ implementation
 //     Sudoeste
 //==============================================================================
 
-{ TNFSeW_Sudoeste }
+{ TNFSeW_Sudoeste202 }
 
-procedure TNFSeW_Sudoeste.Configuracao;
+procedure TNFSeW_Sudoeste202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -71,7 +71,7 @@ begin
   DivAliq100 := True;
 end;
 
-procedure TNFSeW_Sudoeste.DefinirIDRps;
+procedure TNFSeW_Sudoeste202.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'Rps_' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
                    NFSe.IdentificacaoRps.Serie;

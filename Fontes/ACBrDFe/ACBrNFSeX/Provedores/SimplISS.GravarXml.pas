@@ -57,9 +57,9 @@ type
     function GerarItensServico: TACBrXmlNodeArray; override;
   end;
 
-  { TNFSeW_SimplISSv2 }
+  { TNFSeW_SimplISS203 }
 
-  TNFSeW_SimplISSv2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_SimplISS203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -109,9 +109,9 @@ begin
     wAlerta('#54', 'ItensServico', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-{ TNFSeW_SimplISSv2 }
+{ TNFSeW_SimplISS203 }
 
-procedure TNFSeW_SimplISSv2.Configuracao;
+procedure TNFSeW_SimplISS203.Configuracao;
 begin
   inherited Configuracao;
 

@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Siam }
+  { TNFSeW_Siam200 }
 
-  TNFSeW_Siam = class(TNFSeW_ABRASFv2)
+  TNFSeW_Siam200 = class(TNFSeW_ABRASFv2)
   protected
 
   end;

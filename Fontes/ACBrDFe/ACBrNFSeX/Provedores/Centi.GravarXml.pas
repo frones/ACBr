@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Centi }
+  { TNFSeW_Centi202 }
 
-  TNFSeW_Centi = class(TNFSeW_ABRASFv2)
+  TNFSeW_Centi202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     Centi
 //==============================================================================
 
-{ TNFSeW_Centi }
+{ TNFSeW_Centi202 }
 
-procedure TNFSeW_Centi.Configuracao;
+procedure TNFSeW_Centi202.Configuracao;
 begin
   inherited Configuracao;
 

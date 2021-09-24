@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeR_SimplISSv2 }
+  { TNFSeR_SimplISS203 }
 
-  TNFSeR_SimplISSv2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_SimplISS203 = class(TNFSeR_ABRASFv2)
   protected
 
   public

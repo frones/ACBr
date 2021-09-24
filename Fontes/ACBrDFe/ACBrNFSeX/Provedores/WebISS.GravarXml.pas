@@ -40,7 +40,7 @@ uses
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
+  SysUtils, Classes, StrUtils, ACBrXmlBase,
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXGravarXml_ABRASFv2,
   ACBrNFSeXConversao;
 
@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeW_WebISSv2 }
+  { TNFSeW_WebISS202 }
 
-  TNFSeW_WebISSv2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_WebISS202 = class(TNFSeW_ABRASFv2)
   protected
 
   end;
@@ -73,6 +73,8 @@ procedure TNFSeW_WebISS.Configuracao;
 begin
   inherited Configuracao;
 
+  DivAliq100 := True;
+  FormatoItemListaServico := filsSemFormatacao;
   NrOcorrAliquota := 1;
 end;
 

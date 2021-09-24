@@ -69,16 +69,9 @@ type
 
   end;
 
-  { TNFSeW_IPMV110 }
+  { TNFSeW_IPM101 }
 
-  TNFSeW_IPMV110 = class(TNFSeW_IPM)
-  protected
-
-  end;
-
-  { TNFSeW_IPMV120 }
-
-  TNFSeW_IPMV120 = class(TNFSeW_IPM)
+  TNFSeW_IPM101 = class(TNFSeW_IPM)
   protected
     procedure Configuracao; override;
 
@@ -136,7 +129,7 @@ begin
   xmlNode := GerarItens;
   NFSeNode.AppendChild(xmlNode);
 
-  if (NFSe.Status = srNormal) and (Provedor in [proIPM_110, proIPM_120]) then
+  if (NFSe.Status = srNormal) and (VersaoNFSe = ve101 ) then
   begin
     xmlNode := GerarCondicaoPagamento;
     NFSeNode.AppendChild(xmlNode);
@@ -466,9 +459,9 @@ begin
                                         NFSe.OutrasInformacoes, DSC_OUTRASINF));
 end;
 
-{ TNFSeW_IPMV120 }
+{ TNFSeW_IPM101 }
 
-procedure TNFSeW_IPMV120.Configuracao;
+procedure TNFSeW_IPM101.Configuracao;
 begin
   inherited Configuracao;
 

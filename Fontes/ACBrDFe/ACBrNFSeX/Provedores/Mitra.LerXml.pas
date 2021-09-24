@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Mitra }
+  { TNFSeR_Mitra200 }
 
-  TNFSeR_Mitra = class(TNFSeR_ABRASFv2)
+  TNFSeR_Mitra200 = class(TNFSeR_ABRASFv2)
   protected
 
   public

@@ -73,9 +73,9 @@ type
 
   end;
 
-  { TNFSeW_ELv2 }
+  { TNFSeW_EL204 }
 
-  TNFSeW_ELv2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_EL204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -528,9 +528,9 @@ begin
                                      NFSe.Servico.Valores.OutrosDescontos, ''));
 end;
 
-{ TNFSeW_ELv2 }
+{ TNFSeW_EL204 }
 
-procedure TNFSeW_ELv2.Configuracao;
+procedure TNFSeW_EL204.Configuracao;
 begin
   inherited Configuracao;
 

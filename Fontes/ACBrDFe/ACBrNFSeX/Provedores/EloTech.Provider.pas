@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceEloTech = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceEloTech203 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -57,7 +57,7 @@ type
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
   end;
 
-  TACBrNFSeProviderEloTech = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderEloTech203 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -92,9 +92,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, EloTech.GravarXml, EloTech.LerXml;
 
-{ TACBrNFSeProviderEloTech }
+{ TACBrNFSeProviderEloTech203 }
 
-procedure TACBrNFSeProviderEloTech.Configuracao;
+procedure TACBrNFSeProviderEloTech203.Configuracao;
 begin
   inherited Configuracao;
 
@@ -117,21 +117,21 @@ begin
   SetNomeXSD('nfse_v2_03.xsd');
 end;
 
-function TACBrNFSeProviderEloTech.CriarGeradorXml(
+function TACBrNFSeProviderEloTech203.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_EloTech.Create(Self);
+  Result := TNFSeW_EloTech203.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderEloTech.CriarLeitorXml(
+function TACBrNFSeProviderEloTech203.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_EloTech.Create(Self);
+  Result := TNFSeR_EloTech203.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderEloTech.CriarServiceClient(
+function TACBrNFSeProviderEloTech203.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -139,12 +139,12 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceEloTech.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceEloTech203.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-function TACBrNFSeProviderEloTech.GerarRequerente(const CNPJ, InscMunc,
+function TACBrNFSeProviderEloTech203.GerarRequerente(const CNPJ, InscMunc,
   Senha: string): string;
 var
   Homologacao: Boolean;
@@ -163,7 +163,7 @@ begin
             '</IdentificacaoRequerente>';
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosEmitir(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -205,7 +205,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosConsultaLoteRps(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosConsultaLoteRps(
   Response: TNFSeConsultaLoteRpsResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -226,7 +226,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosConsultaporRps(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosConsultaporRps(
   Response: TNFSeConsultaNFSeporRpsResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -255,7 +255,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosConsultaNFSeporFaixa(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosConsultaNFSeporFaixa(
   Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -277,7 +277,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosConsultaNFSeServicoPrestado(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosConsultaNFSeServicoPrestado(
   Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -299,7 +299,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosConsultaNFSeServicoTomado(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosConsultaNFSeServicoTomado(
   Response: TNFSeConsultaNFSeResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -321,7 +321,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosCancelaNFSe(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -367,7 +367,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderEloTech.GerarMsgDadosSubstituiNFSe(
+procedure TACBrNFSeProviderEloTech203.GerarMsgDadosSubstituiNFSe(
   Response: TNFSeSubstituiNFSeResponse; Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
@@ -391,9 +391,9 @@ begin
   end;
 end;
 
-{ TACBrNFSeXWebserviceEloTech }
+{ TACBrNFSeXWebserviceEloTech203 }
 
-function TACBrNFSeXWebserviceEloTech.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.Recepcionar(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -404,7 +404,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -415,7 +415,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarLote(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -426,7 +426,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -437,7 +437,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -448,7 +448,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -459,7 +459,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
@@ -470,7 +470,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceEloTech203.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
@@ -480,7 +480,7 @@ begin
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceEloTech.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceEloTech203.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;

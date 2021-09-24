@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Digifred }
+  { TNFSeW_Digifred200 }
 
-  TNFSeW_Digifred = class(TNFSeW_ABRASFv2)
+  TNFSeW_Digifred200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     Digifred
 //==============================================================================
 
-{ TNFSeW_Digifred }
+{ TNFSeW_Digifred200 }
 
-procedure TNFSeW_Digifred.Configuracao;
+procedure TNFSeW_Digifred200.Configuracao;
 begin
   inherited Configuracao;
 

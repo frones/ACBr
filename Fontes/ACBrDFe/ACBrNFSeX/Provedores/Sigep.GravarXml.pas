@@ -46,9 +46,9 @@ uses
   ACBrNFSeXConsts;
 
 type
-  { TNFSeW_Sigep }
+  { TNFSeW_Sigep200 }
 
-  TNFSeW_Sigep = class(TNFSeW_ABRASFv2)
+  TNFSeW_Sigep200 = class(TNFSeW_ABRASFv2)
   protected
     function GerarStatus: TACBrXmlNode; override;
     function GerarTipoRPS: TACBrXmlNode; override;
@@ -64,9 +64,9 @@ implementation
 //     Sigep
 //==============================================================================
 
-{ TNFSeW_Sigep }
+{ TNFSeW_Sigep200 }
 
-procedure TNFSeW_Sigep.Configuracao;
+procedure TNFSeW_Sigep200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -96,12 +96,12 @@ begin
   NrOcorrIncentCultural := -1;
 end;
 
-function TNFSeW_Sigep.GerarStatus: TACBrXmlNode;
+function TNFSeW_Sigep200.GerarStatus: TACBrXmlNode;
 begin
   Result := AddNode(tcStr, '#9', 'Status', 2, 2, 1, 'CO', DSC_INDSTATUS);
 end;
 
-function TNFSeW_Sigep.GerarTipoRPS: TACBrXmlNode;
+function TNFSeW_Sigep200.GerarTipoRPS: TACBrXmlNode;
 begin
   Result := AddNode(tcStr, '#3', 'Tipo', 2, 2, 1, 'R1', DSC_TIPORPS);
 end;

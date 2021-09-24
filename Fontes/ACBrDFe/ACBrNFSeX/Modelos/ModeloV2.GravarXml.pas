@@ -47,9 +47,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_ModeloV2 }
+  { TNFSeW_ModeloV2200 }
 
-  TNFSeW_ModeloV2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_ModeloV2200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -62,9 +62,9 @@ implementation
 //     ModeloV2
 //==============================================================================
 
-{ TNFSeW_ModeloV2 }
+{ TNFSeW_ModeloV2200 }
 
-procedure TNFSeW_ModeloV2.Configuracao;
+procedure TNFSeW_ModeloV2200.Configuracao;
 begin
   // Executa a Configuração Padrão
   inherited Configuracao;
@@ -181,6 +181,7 @@ begin
   NrOcorrCodigoMunic_2 := -1;
   NrOcorrNIFTomador := -1;
   NrOcorrID := -1;
+  NrOcorrToken := -1;
 end;
 
 end.

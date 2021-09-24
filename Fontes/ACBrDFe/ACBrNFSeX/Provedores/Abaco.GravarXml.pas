@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeW_Abacov204 }
+  { TNFSeW_Abaco204 }
 
-  TNFSeW_Abacov204 = class(TNFSeW_ABRASFv2)
+  TNFSeW_Abaco204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -77,9 +77,9 @@ begin
   NrOcorrCodPaisTomador := -1;
 end;
 
-{ TNFSeW_Abacov204 }
+{ TNFSeW_Abaco204 }
 
-procedure TNFSeW_Abacov204.Configuracao;
+procedure TNFSeW_Abaco204.Configuracao;
 begin
   inherited Configuracao;
 

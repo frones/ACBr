@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Adm }
+  { TNFSeW_Adm201 }
 
-  TNFSeW_Adm = class(TNFSeW_ABRASFv2)
+  TNFSeW_Adm201 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
   end;
@@ -61,7 +61,7 @@ implementation
 
 { TNFSeW_Adm }
 
-procedure TNFSeW_Adm.Configuracao;
+procedure TNFSeW_Adm201.Configuracao;
 begin
   inherited Configuracao;
 

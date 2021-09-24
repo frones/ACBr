@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceCenti = class(TACBrNFSeXWebserviceRest)
+  TACBrNFSeXWebserviceCenti202 = class(TACBrNFSeXWebserviceRest)
   private
     function GetDadosUsuario: string;
 
@@ -55,7 +55,7 @@ type
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
-  TACBrNFSeProviderCenti = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderCenti202 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -71,9 +71,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Centi.GravarXml, Centi.LerXml;
 
-{ TACBrNFSeProviderCenti }
+{ TACBrNFSeProviderCenti202 }
 
-procedure TACBrNFSeProviderCenti.Configuracao;
+procedure TACBrNFSeProviderCenti202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -101,21 +101,21 @@ begin
   SetXmlNameSpace('http://www.centi.com.br/files/nfse.xsd');
 end;
 
-function TACBrNFSeProviderCenti.CriarGeradorXml(
+function TACBrNFSeProviderCenti202.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Centi.Create(Self);
+  Result := TNFSeW_Centi202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderCenti.CriarLeitorXml(
+function TACBrNFSeProviderCenti202.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Centi.Create(Self);
+  Result := TNFSeR_Centi202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderCenti.CriarServiceClient(
+function TACBrNFSeProviderCenti202.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -123,14 +123,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceCenti.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceCenti202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceCenti }
+{ TACBrNFSeXWebserviceCenti202 }
 
-function TACBrNFSeXWebserviceCenti.GetDadosUsuario: string;
+function TACBrNFSeXWebserviceCenti202.GetDadosUsuario: string;
 begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
@@ -139,7 +139,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceCenti.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceCenti202.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request, Operacao: string;
@@ -160,7 +160,7 @@ begin
                             ['return', 'outputXML', 'GerarNfseResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceCenti.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceCenti202.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -176,7 +176,7 @@ begin
                      ['return', 'outputXML', 'ConsultarNfseRpsResposta'], []);
 end;
 
-function TACBrNFSeXWebserviceCenti.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceCenti202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

@@ -46,9 +46,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_Virtual }
+  { TNFSeW_Virtual202 }
 
-  TNFSeW_Virtual = class(TNFSeW_ABRASFv2)
+  TNFSeW_Virtual202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -61,12 +61,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Virtual - erro ao acessar o ws
+//     Virtual
 //==============================================================================
 
-{ TNFSeW_Virtual }
+{ TNFSeW_Virtual202 }
 
-procedure TNFSeW_Virtual.Configuracao;
+procedure TNFSeW_Virtual202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -88,12 +88,12 @@ begin
   NrOcorrRazaoSocialInterm := 1;
 end;
 
-procedure TNFSeW_Virtual.DefinirIDDeclaracao;
+procedure TNFSeW_Virtual202.DefinirIDDeclaracao;
 begin
   NFSe.InfID.ID := '""';
 end;
 
-procedure TNFSeW_Virtual.DefinirIDRps;
+procedure TNFSeW_Virtual202.DefinirIDRps;
 begin
   NFSe.InfID.ID := '""';
 end;

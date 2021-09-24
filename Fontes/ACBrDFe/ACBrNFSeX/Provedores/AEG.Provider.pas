@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceAEG = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceAEG202 = class(TACBrNFSeXWebserviceSoap11)
   private
 
   public
@@ -60,7 +60,7 @@ type
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
   end;
 
-  TACBrNFSeProviderAEG = class(TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderAEG202 = class(TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -69,6 +69,11 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
+                                     const Response: TNFSeWebserviceResponse;
+                                     AListTag: string = '';
+                                     AMessageTag: string = 'Resultado'); override;
+
   end;
 
 implementation
@@ -78,9 +83,9 @@ uses
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
   AEG.GravarXml, AEG.LerXml;
 
-{ TACBrNFSeXWebserviceAEG }
+{ TACBrNFSeXWebserviceAEG202 }
 
-function TACBrNFSeXWebserviceAEG.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -95,7 +100,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -110,7 +115,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -124,7 +129,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -138,7 +143,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -153,7 +158,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -168,7 +173,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -183,7 +188,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.GerarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -197,7 +202,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceAEG202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -211,7 +216,7 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-function TACBrNFSeXWebserviceAEG.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceAEG202.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -226,9 +231,9 @@ begin
                      Request, ['return', 'DocumentElement'], []);
 end;
 
-{ TACBrNFSeProviderAEG }
+{ TACBrNFSeProviderAEG202 }
 
-procedure TACBrNFSeProviderAEG.Configuracao;
+procedure TACBrNFSeProviderAEG202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -243,31 +248,53 @@ begin
   ConfigMsgDados.GerarNSLoteRps := True;
 end;
 
-function TACBrNFSeProviderAEG.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderAEG202.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_AEG.Create(Self);
+  Result := TNFSeW_AEG202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderAEG.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderAEG202.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_AEG.Create(Self);
+  Result := TNFSeR_AEG202.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderAEG.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderAEG202.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceAEG.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceAEG202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderAEG.ValidarSchema(Response: TNFSeWebserviceResponse;
+procedure TACBrNFSeProviderAEG202.ProcessarMensagemErros(
+  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
+  AListTag, AMessageTag: string);
+var
+  I: Integer;
+  ANodeArray: TACBrXmlNodeArray;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  ANodeArray := RootNode.Childrens.FindAllAnyNs('Resultado');
+
+  if Assigned(ANodeArray) then
+  begin
+    for I := Low(ANodeArray) to High(ANodeArray) do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ResultadoCodigo'), tcStr);
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ResultadoErro'), tcStr);
+      AErro.Correcao := '';
+    end;
+  end;
+end;
+
+procedure TACBrNFSeProviderAEG202.ValidarSchema(Response: TNFSeWebserviceResponse;
   aMetodo: TMetodo);
 var
   Seguranca: string;

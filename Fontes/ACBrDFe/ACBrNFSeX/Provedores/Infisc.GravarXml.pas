@@ -48,13 +48,14 @@ uses
   ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Infiscv100 }
+  { TNFSeW_Infisc }
 
-  TNFSeW_Infiscv100 = class(TNFSeWClass)
+  TNFSeW_Infisc = class(TNFSeWClass)
   private
     FPdTotBCISS: Double;
     FPdTotISS: Double;
     FPVersao: TVersaoNFSe;
+
   protected
     procedure Configuracao; override;
 
@@ -85,17 +86,17 @@ type
 
   end;
 
-  { TNFSeW_Infiscv110 }
+  { TNFSeW_Infisc101 }
 
-  TNFSeW_Infiscv110 = class(TNFSeW_Infiscv100)
+  TNFSeW_Infisc101 = class(TNFSeW_Infisc)
   protected
     procedure Configuracao; override;
 
   end;
 
-  { TNFSeW_Infiscv2 }
+  { TNFSeW_Infisc201 }
 
-  TNFSeW_Infiscv2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_Infisc201 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -112,7 +113,7 @@ implementation
 
 { TNFSeW_Infisc }
 
-function TNFSeW_Infiscv100.GerarXml: Boolean;
+function TNFSeW_Infisc.GerarXml: Boolean;
 var
   NFSeNode, xmlNode: TACBrXmlNode;
 begin
@@ -136,14 +137,14 @@ begin
   Result := True;
 end;
 
-procedure TNFSeW_Infiscv100.Configuracao;
+procedure TNFSeW_Infisc.Configuracao;
 begin
   inherited Configuracao;
 
   FPVersao := ve100;
 end;
 
-function TNFSeW_Infiscv100.GerarCobrancav100: TACBrXmlNode;
+function TNFSeW_Infisc.GerarCobrancav100: TACBrXmlNode;
 var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;
@@ -161,7 +162,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarCobrancav110: TACBrXmlNode;
+function TNFSeW_Infisc.GerarCobrancav110: TACBrXmlNode;
 var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;
@@ -179,7 +180,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarDadosdaObra: TACBrXmlNode;
+function TNFSeW_Infisc.GerarDadosdaObra: TACBrXmlNode;
 begin
   Result := CreateElement('dadosDaObra');
 
@@ -228,7 +229,7 @@ begin
                                               NFSe.ConstrucaoCivil.nMatri, ''));
 end;
 
-function TNFSeW_Infiscv100.GerarDespesa: TACBrXmlNode;
+function TNFSeW_Infisc.GerarDespesa: TACBrXmlNode;
 var
   nodeArray: TACBrXmlNodeArray;
   i: Integer;
@@ -246,7 +247,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarDespesas: TACBrXmlNodeArray;
+function TNFSeW_Infisc.GerarDespesas: TACBrXmlNodeArray;
 var
   i: Integer;
 begin
@@ -274,7 +275,7 @@ begin
     wAlerta('#54', 'despesa', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TNFSeW_Infiscv100.GerarDetalhamento: TACBrXmlNodeArray;
+function TNFSeW_Infisc.GerarDetalhamento: TACBrXmlNodeArray;
 var
   i: Integer;
   xmlNode: TACBrXmlNode;
@@ -307,7 +308,7 @@ begin
     wAlerta('#54', 'det', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TNFSeW_Infiscv100.GerarDuplicatasv100: TACBrXmlNodeArray;
+function TNFSeW_Infisc.GerarDuplicatasv100: TACBrXmlNodeArray;
 var
   i: Integer;
 begin
@@ -334,7 +335,7 @@ begin
     wAlerta('#54', 'fat', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TNFSeW_Infiscv100.GerarDuplicatasv110: TACBrXmlNodeArray;
+function TNFSeW_Infisc.GerarDuplicatasv110: TACBrXmlNodeArray;
 var
   i: Integer;
 begin
@@ -361,11 +362,11 @@ begin
     wAlerta('#54', 'fat', '', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TNFSeW_Infiscv100.GerarEmitente: TACBrXmlNode;
+function TNFSeW_Infisc.GerarEmitente: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
 begin
-  if FPVersao = ve100 then
+  if  FPVersao = ve100 then
     Result := CreateElement('emit')
   else
     Result := CreateElement('prest');
@@ -382,7 +383,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'IM', 1, 15, 1,
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
     Result.AppendChild(AddNode(tcStr, '#1', 'xEmail', 1, 50, 1,
                                              NFSe.Prestador.Contato.Email, ''));
 
@@ -410,7 +411,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarEnderecoEmitente: TACBrXmlNode;
+function TNFSeW_Infisc.GerarEnderecoEmitente: TACBrXmlNode;
 begin
   Result := CreateElement('end');
 
@@ -448,7 +449,7 @@ begin
                                             NFSe.Prestador.Endereco.xPais, ''));
 end;
 
-function TNFSeW_Infiscv100.GerarEnderecoTomador: TACBrXmlNode;
+function TNFSeW_Infisc.GerarEnderecoTomador: TACBrXmlNode;
 begin
   Result := CreateElement('ender');
 
@@ -481,7 +482,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'xPais', 1, 100, 0, 'Brasil', ''));
 end;
 
-function TNFSeW_Infiscv100.GerarID: TACBrXmlNode;
+function TNFSeW_Infisc.GerarID: TACBrXmlNode;
 var
   cUF, CNPJ, Modelo, aSerie, Numero, Codigo, sChave: string;
 
@@ -559,7 +560,7 @@ begin
   if FPVersao = ve100 then
     Result.AppendChild(AddNode(tcStr, '#1', 'anulada', 1, 1, 1, 'N', ''));
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1,
                                         SimNaoInFiscToStr(NFSe.Cancelada), ''));
@@ -577,7 +578,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarinfNFSe: TACBrXmlNode;
+function TNFSeW_Infisc.GerarinfNFSe: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
   nodeArray: TACBrXmlNodeArray;
@@ -587,7 +588,7 @@ var
 begin
   Result := CreateElement('infNFSe');
 
-//  if FPVersao = ve100 then
+//  if FPVersao = ve101 then
     Result.SetAttribute('versao', FAOwner.ConfigWebServices.VersaoDados);
 
   xmlNode := GerarID;
@@ -624,7 +625,7 @@ begin
     Usado para inclusão de serviços que não são tributaveis e
     agregam valor no total da nota
   }
-  if (NFSe.Despesa.Count > 0) and (FPVersao = ve110) then
+  if (NFSe.Despesa.Count > 0) and (FPVersao = ve101) then
   begin
     xmlNode := GerarDespesa;
 
@@ -650,7 +651,7 @@ begin
     Result.AppendChild(xmlNode);
   end;
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
   begin
     {
       Quando é tributado fora do municipio temos que ter o IBGE o mesmo do
@@ -688,7 +689,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarISS: TACBrXmlNode;
+function TNFSeW_Infisc.GerarISS: TACBrXmlNode;
 begin
   Result := CreateElement('ISS');
 
@@ -710,11 +711,11 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarISSST(Item: Integer): TACBrXmlNode;
+function TNFSeW_Infisc.GerarISSST(Item: Integer): TACBrXmlNode;
 begin
   Result := CreateElement('ISSST');
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcDe2, '#1', 'vBCST', 1, 15, 0,
                          NFSe.Servico.ItemServico.Items[Item].BaseCalculo, ''));
@@ -727,7 +728,7 @@ begin
                           NFSe.Servico.ItemServico.Items[Item].ValorISSST, ''));
 end;
 
-function TNFSeW_Infiscv100.GerarObservacoes: TACBrXmlNode;
+function TNFSeW_Infisc.GerarObservacoes: TACBrXmlNode;
 begin
   Result := CreateElement('Observacoes');
 
@@ -735,7 +736,7 @@ begin
                                      copy(NFSe.OutrasInformacoes, 1, 100), ''));
 end;
 
-function TNFSeW_Infiscv100.GerarRetencao: TACBrXmlNode;
+function TNFSeW_Infisc.GerarRetencao: TACBrXmlNode;
 begin
   Result := CreateElement('Ret');
 
@@ -790,7 +791,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarServico(Item: Integer): TACBrXmlNode;
+function TNFSeW_Infisc.GerarServico(Item: Integer): TACBrXmlNode;
 var
   GeraTag: Integer;
   xServ: String;
@@ -806,13 +807,13 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cServ', 1, 2, 1,
                              NFSe.Servico.ItemServico.Items[Item].codServ, ''));
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
     Result.AppendChild(AddNode(tcStr, '#1', 'cLCServ', 1, 2, 1,
                            NFSe.Servico.ItemServico.Items[Item].codLCServ, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xServ', 1, 12, 1, xServ, ''));
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'localTributacao', 1, 4, 1,
                                IntToStr(NFSe.Servico.MunicipioIncidencia), ''));
@@ -840,7 +841,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'vDesc', 1, 15, 0,
               NFSe.Servico.ItemServico.Items[Item].DescontoIncondicionado, ''));
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
     Result.AppendChild(AddNode(tcDe2, '#1', 'vDed', 1, 15, 0,
                        NFSe.Servico.ItemServico.Items[Item].ValorDeducoes, ''));
 
@@ -871,7 +872,7 @@ begin
   // Retenção INSS
   if NFSe.Servico.ItemServico.Items[item].ValorINSS > 0 then
   begin
-    if FPVersao = ve110 then
+    if FPVersao = ve101 then
     begin
       Result.AppendChild(AddNode(tcDe2, '#1', 'vBCINSS', 1, 15, 1,
                              NFSe.Servico.ItemServico.Items[Item].ValorBCINSS, ''));
@@ -908,7 +909,7 @@ begin
     end;
   end;
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
   begin
     // Retenção COFINS
     if NFSe.Servico.ItemServico.Items[Item].ValorCOFINS > 0 then
@@ -985,7 +986,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarTomador: TACBrXmlNode;
+function TNFSeW_Infisc.GerarTomador: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
 begin
@@ -1030,7 +1031,7 @@ begin
   end;
 end;
 
-function TNFSeW_Infiscv100.GerarTotal: TACBrXmlNode;
+function TNFSeW_Infisc.GerarTotal: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
 begin
@@ -1069,7 +1070,7 @@ begin
 
   // incluir tag 'fat' aqui!
 
-  if FPVersao = ve110 then
+  if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcDe2, '#1', 'vtLiqFaturas', 1, 15, 0,
                                     NFSe.Servico.Valores.ValorLiquidoNfse, ''));
@@ -1083,7 +1084,7 @@ begin
   Result.AppendChild(xmlNode);
 end;
 
-function TNFSeW_Infiscv100.GerarTransportadora: TACBrXmlNode;
+function TNFSeW_Infisc.GerarTransportadora: TACBrXmlNode;
 begin
   Result := CreateElement('transportadora');
 
@@ -1121,23 +1122,23 @@ begin
                       TipoFreteToStr(NFSe.Transportadora.vTipoFreteTrans), ''));
 end;
 
-{ TNFSeW_Infiscv110 }
+{ TNFSeW_Infisc101 }
 
-procedure TNFSeW_Infiscv110.Configuracao;
+procedure TNFSeW_Infisc101.Configuracao;
 begin
   inherited Configuracao;
 
-  FPVersao := ve110;
+  FPVersao := ve101;
 end;
 
-{ TNFSeW_Infiscv2 }
+{ TNFSeW_Infisc201 }
 
-procedure TNFSeW_Infiscv2.Configuracao;
+procedure TNFSeW_Infisc201.Configuracao;
 begin
   inherited Configuracao;
 end;
 
-procedure TNFSeW_Infiscv2.DefinirIDRps;
+procedure TNFSeW_Infisc201.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + NFSe.IdentificacaoRps.Numero +
                    NFSe.IdentificacaoRps.Serie;

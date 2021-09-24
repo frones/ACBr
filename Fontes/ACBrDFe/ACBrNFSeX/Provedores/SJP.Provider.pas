@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceSJP = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSSJP = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
@@ -54,7 +54,7 @@ type
 
   end;
 
-  TACBrNFSeProviderSJP = class (TACBrNFSeProviderABRASFv1)
+  TACBrNFSeProviderISSSJP = class (TACBrNFSeProviderABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -70,9 +70,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, SJP.GravarXml, SJP.LerXml;
 
-{ TACBrNFSeXWebserviceSJP }
+{ TACBrNFSeXWebserviceISSSJP }
 
-function TACBrNFSeXWebserviceSJP.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSJP.Recepcionar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -88,7 +88,7 @@ begin
                      ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceSJP.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSJP.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -104,7 +104,7 @@ begin
                      ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceSJP.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSJP.ConsultarSituacao(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -120,7 +120,7 @@ begin
                      ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceSJP.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSJP.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -136,7 +136,7 @@ begin
                      ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceSJP.ConsultarNFSe(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSJP.ConsultarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -152,7 +152,7 @@ begin
                      ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
 end;
 
-function TACBrNFSeXWebserviceSJP.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSSJP.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -168,9 +168,9 @@ begin
                      ['xmlns:nfe="http://nfe.sjp.pr.gov.br"']);
 end;
 
-{ TACBrNFSeProviderSJP }
+{ TACBrNFSeProviderISSSJP }
 
-procedure TACBrNFSeProviderSJP.Configuracao;
+procedure TACBrNFSeProviderISSSJP.Configuracao;
 begin
   inherited Configuracao;
 
@@ -217,28 +217,28 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderSJP.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderISSSJP.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_SJP.Create(Self);
+  Result := TNFSeW_ISSSJP.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSJP.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderISSSJP.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_SJP.Create(Self);
+  Result := TNFSeR_ISSSJP.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSJP.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderISSSJP.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSJP.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSSJP.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 end.

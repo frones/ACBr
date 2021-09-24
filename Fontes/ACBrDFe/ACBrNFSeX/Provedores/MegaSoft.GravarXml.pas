@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_MegaSoft }
+  { TNFSeW_MegaSoft200 }
 
-  TNFSeW_MegaSoft = class(TNFSeW_ABRASFv2)
+  TNFSeW_MegaSoft200 = class(TNFSeW_ABRASFv2)
   protected
     function GerarContatoTomador: TACBrXmlNode; override;
     function GerarStatus: TACBrXmlNode; override;
@@ -63,9 +63,9 @@ implementation
 //     MegaSoft
 //==============================================================================
 
-{ TNFSeW_MegaSoft }
+{ TNFSeW_MegaSoft200 }
 
-procedure TNFSeW_MegaSoft.Configuracao;
+procedure TNFSeW_MegaSoft200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -91,14 +91,15 @@ begin
   NrOcorrDiscriminacao_1 := -1;
   NrOcorrExigibilidadeISS := -1;
   NrOcorrMunIncid := -1;
+  NrOcorrRespRetencao := -1;
 end;
 
-function TNFSeW_MegaSoft.GerarContatoTomador: TACBrXmlNode;
+function TNFSeW_MegaSoft200.GerarContatoTomador: TACBrXmlNode;
 begin
   Result := nil;
 end;
 
-function TNFSeW_MegaSoft.GerarStatus: TACBrXmlNode;
+function TNFSeW_MegaSoft200.GerarStatus: TACBrXmlNode;
 begin
   Result := nil;
 end;

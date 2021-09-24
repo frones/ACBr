@@ -44,27 +44,27 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Actconv2 }
+  { TNFSeR_Actcon200 }
 
-  TNFSeR_Actconv2 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Actcon200 = class(TNFSeR_ABRASFv2)
   protected
 
   public
 
   end;
 
-  { TNFSeR_Actconv201 }
+  { TNFSeR_Actcon201 }
 
-  TNFSeR_Actconv201 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Actcon201 = class(TNFSeR_ABRASFv2)
   protected
 
   public
 
   end;
 
-  { TNFSeR_Actconv202 }
+  { TNFSeR_Actcon202 }
 
-  TNFSeR_Actconv202 = class(TNFSeR_ABRASFv2)
+  TNFSeR_Actcon202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

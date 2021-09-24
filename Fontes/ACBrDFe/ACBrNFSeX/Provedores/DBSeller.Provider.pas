@@ -179,7 +179,7 @@ begin
 
   with ConfigGeral do
   begin
-    Identificador := 'id';
+    Identificador := 'Id';
     UseCertificateHTTP := False;
   end;
 
@@ -211,7 +211,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceDBSeller.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 (*

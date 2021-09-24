@@ -118,6 +118,7 @@ type
 
     FCodigoMunicipio: Integer;
     FProvedor: TnfseProvedor;
+    FVersao: TVersaoNFSe;
     FxProvedor: String;
     FxMunicipio: String;
     FxUF: String;
@@ -125,6 +126,7 @@ type
     FConsultaLoteAposEnvio: Boolean;
     FConsultaAposCancelar: Boolean;
     FEmitente: TEmitenteConfNFSe;
+    FMontarPathSchema: Boolean;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -138,6 +140,7 @@ type
   published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
+    property Versao: TVersaoNFSe read FVersao;
     property xProvedor: String read FxProvedor;
     property xMunicipio: String read FxMunicipio;
     property xUF: String read FxUF;
@@ -147,6 +150,8 @@ type
     property ConsultaAposCancelar: Boolean  read FConsultaAposCancelar  write FConsultaAposCancelar default True;
 
     property Emitente: TEmitenteConfNFSe read FEmitente write FEmitente;
+    property MontarPathSchema: Boolean read FMontarPathSchema
+      write FMontarPathSchema default True;
   end;
 
   { TArquivosConfNFSe }
@@ -314,6 +319,7 @@ begin
 
   FConsultaLoteAposEnvio := True;
   FConsultaAposCancelar := True;
+  FMontarPathSchema := True;
 end;
 
 destructor TGeralConfNFSe.Destroy;
@@ -331,6 +337,8 @@ begin
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'CNPJPrefeitura', CNPJPrefeitura);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'ConsultaLoteAposEnvio', ConsultaLoteAposEnvio);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'ConsultaAposCancelar', ConsultaAposCancelar);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'MontarPathSchema', MontarPathSchema);
+
   // Emitente
   with Emitente do
   begin
@@ -369,6 +377,8 @@ begin
   CNPJPrefeitura := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CNPJPrefeitura', CNPJPrefeitura);
   ConsultaLoteAposEnvio := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'ConsultaLoteAposEnvio', ConsultaLoteAposEnvio);
   ConsultaAposCancelar := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'ConsultaAposCancelar', ConsultaAposCancelar);
+  MontarPathSchema := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'MontarPathSchema', MontarPathSchema);
+
   // Emitente
   with Emitente do
   begin
@@ -413,6 +423,7 @@ begin
   FPIniParams.SetStrings(fpConfiguracoes.WebServices.Params);
 
   FxProvedor := FPIniParams.ReadString(CodIBGE, 'Provedor', '');
+  FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', ''));
 
   FProvedor := StrToProvedor(Ok, FxProvedor);
 

@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Centi }
+  { TNFSeR_Centi202 }
 
-  TNFSeR_Centi = class(TNFSeR_ABRASFv2)
+  TNFSeR_Centi202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

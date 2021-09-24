@@ -53,9 +53,9 @@ type
 
   end;
 
-  { TNFSeW_SilTecnologiaV203 }
+  { TNFSeW_SilTecnologia203 }
 
-  TNFSeW_SilTecnologiaV203 = class(TNFSeW_ABRASFv2)
+  TNFSeW_SilTecnologia203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -68,9 +68,9 @@ implementation
 //     SilTecnologia
 //==============================================================================
 
-{ TNFSeW_SilTecnologiaV203 }
+{ TNFSeW_SilTecnologia203 }
 
-procedure TNFSeW_SilTecnologiaV203.Configuracao;
+procedure TNFSeW_SilTecnologia203.Configuracao;
 begin
   inherited Configuracao;
 

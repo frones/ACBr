@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceSiapSistemas = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceSiapSistemas203 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNamespace: string;
     function GetSoapAction: string;
@@ -58,7 +58,7 @@ type
     property SoapAction: string read GetSoapAction;
   end;
 
-  TACBrNFSeProviderSiapSistemas = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderSiapSistemas203 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -74,9 +74,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, SiapSistemas.GravarXml, SiapSistemas.LerXml;
 
-{ TACBrNFSeProviderSiapSistemas }
+{ TACBrNFSeProviderSiapSistemas203 }
 
-procedure TACBrNFSeProviderSiapSistemas.Configuracao;
+procedure TACBrNFSeProviderSiapSistemas203.Configuracao;
 begin
   inherited Configuracao;
 
@@ -105,21 +105,21 @@ begin
   ConfigSchemas.Validar := False;
 end;
 
-function TACBrNFSeProviderSiapSistemas.CriarGeradorXml(
+function TACBrNFSeProviderSiapSistemas203.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_SiapSistemas.Create(Self);
+  Result := TNFSeW_SiapSistemas203.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSiapSistemas.CriarLeitorXml(
+function TACBrNFSeProviderSiapSistemas203.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_SiapSistemas.Create(Self);
+  Result := TNFSeR_SiapSistemas203.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSiapSistemas.CriarServiceClient(
+function TACBrNFSeProviderSiapSistemas203.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -127,25 +127,25 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSiapSistemas.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceSiapSistemas203.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceSiapSistemas }
+{ TACBrNFSeXWebserviceSiapSistemas203 }
 
-function TACBrNFSeXWebserviceSiapSistemas.GetNamespace: string;
+function TACBrNFSeXWebserviceSiapSistemas203.GetNamespace: string;
 begin
   Result := 'xmlns:nfse="' + TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1 +
             'RPS"';
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas.GetSoapAction: string;
+function TACBrNFSeXWebserviceSiapSistemas203.GetSoapAction: string;
 begin
   Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1 + 'RPSaction/';
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -161,7 +161,7 @@ begin
                      ['Enviarloterpsresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -177,7 +177,7 @@ begin
                      ['Enviarloterpssincronoresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -193,7 +193,7 @@ begin
                      ['Gerarnfseresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSiapSistemas203.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -209,7 +209,7 @@ begin
                      ['Consultarloterpsresposta'], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceSiapSistemas.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSiapSistemas203.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

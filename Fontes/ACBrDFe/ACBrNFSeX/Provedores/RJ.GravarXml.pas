@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_RJ }
+  { TNFSeW_ISSRio }
 
-  TNFSeW_RJ = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSRio = class(TNFSeW_ABRASFv1)
   protected
 
   end;
@@ -55,7 +55,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     RJ
+//     ISSRio
 //==============================================================================
 
 end.

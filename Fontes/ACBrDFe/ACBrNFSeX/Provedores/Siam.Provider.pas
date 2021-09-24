@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceSiam = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceSiam200 = class(TACBrNFSeXWebserviceSoap11)
   public
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
@@ -51,7 +51,7 @@ type
 
   end;
 
-  TACBrNFSeProviderSiam = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderSiam200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -67,9 +67,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Siam.GravarXml, Siam.LerXml;
 
-{ TACBrNFSeProviderSiam }
+{ TACBrNFSeProviderSiam200 }
 
-procedure TACBrNFSeProviderSiam.Configuracao;
+procedure TACBrNFSeProviderSiam200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -78,21 +78,21 @@ begin
   SetXmlNameSpace('https://ws.imap.org.br/siam/nfse.xsd');
 end;
 
-function TACBrNFSeProviderSiam.CriarGeradorXml(
+function TACBrNFSeProviderSiam200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Siam.Create(Self);
+  Result := TNFSeW_Siam200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSiam.CriarLeitorXml(
+function TACBrNFSeProviderSiam200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Siam.Create(Self);
+  Result := TNFSeR_Siam200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSiam.CriarServiceClient(
+function TACBrNFSeProviderSiam200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -100,14 +100,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSiam.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceSiam200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceSiam }
+{ TACBrNFSeXWebserviceSiam200 }
 
-function TACBrNFSeXWebserviceSiam.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSiam200.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -123,7 +123,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSiam.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSiam200.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -139,7 +139,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSiam.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSiam200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

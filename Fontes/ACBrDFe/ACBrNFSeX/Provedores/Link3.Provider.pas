@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceLink3 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceLink3200 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -58,7 +58,7 @@ type
 
   end;
 
-  TACBrNFSeProviderLink3 = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderLink3200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -74,9 +74,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Link3.GravarXml, Link3.LerXml;
 
-{ TACBrNFSeProviderLink3 }
+{ TACBrNFSeProviderLink3200 }
 
-procedure TACBrNFSeProviderLink3.Configuracao;
+procedure TACBrNFSeProviderLink3200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -89,21 +89,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderLink3.CriarGeradorXml(
+function TACBrNFSeProviderLink3200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Link3.Create(Self);
+  Result := TNFSeW_Link3200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderLink3.CriarLeitorXml(
+function TACBrNFSeProviderLink3200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Link3.Create(Self);
+  Result := TNFSeR_Link3200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderLink3.CriarServiceClient(
+function TACBrNFSeProviderLink3200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -111,14 +111,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceLink3.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceLink3200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceLink3 }
+{ TACBrNFSeXWebserviceLink3200 }
 
-function TACBrNFSeXWebserviceLink3.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -134,7 +134,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -150,7 +150,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -166,7 +166,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -182,7 +182,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -198,7 +198,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -214,7 +214,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -230,7 +230,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -246,7 +246,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceLink3200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -261,7 +261,7 @@ begin
                      ['xmlns:tns="http://impl.nfse.services.l3grp.link3.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceLink3.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceLink3200.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

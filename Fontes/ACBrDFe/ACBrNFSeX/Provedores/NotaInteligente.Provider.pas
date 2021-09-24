@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceNotaInteligente = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceNotaInteligente200 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNamespace: string;
   public
@@ -56,7 +56,7 @@ type
     property Namespace: string read GetNamespace;
   end;
 
-  TACBrNFSeProviderNotaInteligente = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderNotaInteligente200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -72,9 +72,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, NotaInteligente.GravarXml, NotaInteligente.LerXml;
 
-{ TACBrNFSeProviderNotaInteligente }
+{ TACBrNFSeProviderNotaInteligente200 }
 
-procedure TACBrNFSeProviderNotaInteligente.Configuracao;
+procedure TACBrNFSeProviderNotaInteligente200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -94,21 +94,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderNotaInteligente.CriarGeradorXml(
+function TACBrNFSeProviderNotaInteligente200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_NotaInteligente.Create(Self);
+  Result := TNFSeW_NotaInteligente200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderNotaInteligente.CriarLeitorXml(
+function TACBrNFSeProviderNotaInteligente200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_NotaInteligente.Create(Self);
+  Result := TNFSeR_NotaInteligente200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderNotaInteligente.CriarServiceClient(
+function TACBrNFSeProviderNotaInteligente200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -116,14 +116,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceNotaInteligente.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceNotaInteligente200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceNotaInteligente }
+{ TACBrNFSeXWebserviceNotaInteligente200 }
 
-function TACBrNFSeXWebserviceNotaInteligente.GetNamespace: string;
+function TACBrNFSeXWebserviceNotaInteligente200.GetNamespace: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
     Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigWebServices.Homologacao.NameSpace
@@ -133,7 +133,7 @@ begin
   Result := 'xmlns="' + Result + '"';
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -147,7 +147,7 @@ begin
   Result := Executar('RecepcionarLoteRps', Request, [''], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -161,7 +161,7 @@ begin
   Result := Executar('GerarNfse', Request, [''], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -175,7 +175,7 @@ begin
   Result := Executar('ConsultarLoteRps', Request, [''], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceNotaInteligente200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -188,7 +188,7 @@ begin
   Result := Executar('CancelarNfse', Request, [''], [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceNotaInteligente.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceNotaInteligente200.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

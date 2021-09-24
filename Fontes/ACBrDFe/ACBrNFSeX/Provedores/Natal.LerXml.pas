@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_Natal }
+  { TNFSeR_ISSNatal }
 
-  TNFSeR_Natal = class(TNFSeR_ABRASFv1)
+  TNFSeR_ISSNatal = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     Natal
+//     ISSNatal
 //==============================================================================
 
 end.

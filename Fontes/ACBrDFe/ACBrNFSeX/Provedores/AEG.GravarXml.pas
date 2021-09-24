@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_AEG }
+  { TNFSeW_AEG202 }
 
-  TNFSeW_AEG = class(TNFSeW_ABRASFv2)
+  TNFSeW_AEG202 = class(TNFSeW_ABRASFv2)
   protected
 
   public

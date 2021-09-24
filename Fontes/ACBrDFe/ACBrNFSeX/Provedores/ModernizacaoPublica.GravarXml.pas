@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_ModernizacaoPublica }
+  { TNFSeW_ModernizacaoPublica202 }
 
-  TNFSeW_ModernizacaoPublica = class(TNFSeW_ABRASFv2)
+  TNFSeW_ModernizacaoPublica202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -62,9 +62,9 @@ implementation
 //     ModernizacaoPublica
 //==============================================================================
 
-{ TNFSeW_ModernizacaoPublica }
+{ TNFSeW_ModernizacaoPublica202 }
 
-procedure TNFSeW_ModernizacaoPublica.Configuracao;
+procedure TNFSeW_ModernizacaoPublica202.Configuracao;
 begin
   inherited Configuracao;
 
@@ -73,7 +73,7 @@ begin
   GerarIDRps := True;
 end;
 
-procedure TNFSeW_ModernizacaoPublica.DefinirIDRps;
+procedure TNFSeW_ModernizacaoPublica202.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
                     NFSe.IdentificacaoRps.Serie +

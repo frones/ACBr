@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceSigCorp = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceSigCorp203 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -58,7 +58,7 @@ type
 
   end;
 
-  TACBrNFSeProviderSigCorp = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderSigCorp203 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -74,9 +74,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, SigCorp.GravarXml, SigCorp.LerXml;
 
-{ TACBrNFSeProviderSigCorp }
+{ TACBrNFSeProviderSigCorp203 }
 
-procedure TACBrNFSeProviderSigCorp.Configuracao;
+procedure TACBrNFSeProviderSigCorp203.Configuracao;
 begin
   inherited Configuracao;
 
@@ -98,21 +98,21 @@ begin
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 end;
 
-function TACBrNFSeProviderSigCorp.CriarGeradorXml(
+function TACBrNFSeProviderSigCorp203.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_SigCorp.Create(Self);
+  Result := TNFSeW_SigCorp203.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSigCorp.CriarLeitorXml(
+function TACBrNFSeProviderSigCorp203.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_SigCorp.Create(Self);
+  Result := TNFSeR_SigCorp203.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderSigCorp.CriarServiceClient(
+function TACBrNFSeProviderSigCorp203.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -120,14 +120,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceSigCorp.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceSigCorp203.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceSigCorp }
+{ TACBrNFSeXWebserviceSigCorp203 }
 
-function TACBrNFSeXWebserviceSigCorp.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -144,7 +144,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -161,7 +161,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -178,7 +178,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -195,7 +195,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -212,7 +212,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -229,7 +229,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -246,7 +246,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -263,7 +263,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceSigCorp203.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -279,7 +279,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebserviceSigCorp.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceSigCorp203.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

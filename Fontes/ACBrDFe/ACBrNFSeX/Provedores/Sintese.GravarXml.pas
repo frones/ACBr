@@ -44,9 +44,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_Sintese }
+  { TNFSeW_Sintese204 }
 
-  TNFSeW_Sintese = class(TNFSeW_ABRASFv2)
+  TNFSeW_Sintese204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -59,9 +59,9 @@ implementation
 //     Sintese
 //==============================================================================
 
-{ TNFSeW_Sintese }
+{ TNFSeW_Sintese204 }
 
-procedure TNFSeW_Sintese.Configuracao;
+procedure TNFSeW_Sintese204.Configuracao;
 begin
   // Executa a Configuração Padrão
   inherited Configuracao;

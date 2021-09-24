@@ -62,17 +62,17 @@ type
 
   end;
 
-  { TNFSeW_SmarAPDv203 }
+  { TNFSeW_SmarAPD203 }
 
-  TNFSeW_SmarAPDv203 = class(TNFSeW_ABRASFv2)
+  TNFSeW_SmarAPD203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
   end;
 
-  { TNFSeW_SmarAPDv204 }
+  { TNFSeW_SmarAPD204 }
 
-  TNFSeW_SmarAPDv204 = class(TNFSeW_ABRASFv2)
+  TNFSeW_SmarAPD204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -374,31 +374,38 @@ begin
   end;
 end;
 
-{ TNFSeW_SmarAPDv203 }
+{ TNFSeW_SmarAPD203 }
 
-procedure TNFSeW_SmarAPDv203.Configuracao;
+procedure TNFSeW_SmarAPD203.Configuracao;
 begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
+  NrOcorrValTotTrib := 0;
   NrOcorrCodigoPaisServico := -1;
+
   GerarEnderecoExterior := True;
 end;
 
-{ TNFSeW_SmarAPDv204 }
+{ TNFSeW_SmarAPD204 }
 
-procedure TNFSeW_SmarAPDv204.Configuracao;
+procedure TNFSeW_SmarAPD204.Configuracao;
 begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
+  NrOcorrValTotTrib := 0;
   NrOcorrCodigoPaisServico := -1;
   NrOcorrCodigoPaisTomador := -1;
+
   GerarEnderecoExterior := True;
+
   TagTomador := 'TomadorServico';
 end;
 

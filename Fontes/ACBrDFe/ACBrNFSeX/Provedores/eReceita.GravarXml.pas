@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_eReceita }
+  { TNFSeW_eReceita202 }
 
-  TNFSeW_eReceita = class(TNFSeW_ABRASFv2)
+  TNFSeW_eReceita202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     eReceita
 //==============================================================================
 
-{ TNFSeW_eReceita }
+{ TNFSeW_eReceita202 }
 
-procedure TNFSeW_eReceita.Configuracao;
+procedure TNFSeW_eReceita202.Configuracao;
 begin
   inherited Configuracao;
 

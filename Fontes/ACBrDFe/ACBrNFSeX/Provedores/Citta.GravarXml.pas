@@ -44,9 +44,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_Citta }
+  { TNFSeW_Citta203 }
 
-  TNFSeW_Citta = class(TNFSeW_ABRASFv2)
+  TNFSeW_Citta203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -59,9 +59,9 @@ implementation
 //     Citta
 //==============================================================================
 
-{ TNFSeW_Citta }
+{ TNFSeW_Citta203 }
 
-procedure TNFSeW_Citta.Configuracao;
+procedure TNFSeW_Citta203.Configuracao;
 begin
   inherited Configuracao;
 

@@ -189,13 +189,7 @@ begin
   end;
 
   SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-  {
-  with ConfigWebServices do
-  begin
-    VersaoDados := '3';
-    VersaoAtrib := '3';
-  end;
-  }
+
   ConfigWebServices.AtribVerLote := 'versao';
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
@@ -222,7 +216,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceDSFSJC.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 end.

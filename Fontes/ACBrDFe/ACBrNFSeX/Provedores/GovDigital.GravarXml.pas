@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_GovDigital }
+  { TNFSeW_GovDigital200 }
 
-  TNFSeW_GovDigital = class(TNFSeW_ABRASFv2)
+  TNFSeW_GovDigital200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -59,9 +59,9 @@ implementation
 //     GovDigital
 //==============================================================================
 
-{ TNFSeW_GovDigital }
+{ TNFSeW_GovDigital200 }
 
-procedure TNFSeW_GovDigital.Configuracao;
+procedure TNFSeW_GovDigital200.Configuracao;
 begin
   inherited Configuracao;
 

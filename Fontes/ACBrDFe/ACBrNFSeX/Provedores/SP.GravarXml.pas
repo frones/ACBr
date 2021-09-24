@@ -46,9 +46,9 @@ uses
   ACBrNFSeXConversao, ACBrNFSeXConsts, ACBrNFSeXGravarXml;
 
 type
-  { TNFSeW_SP }
+  { TNFSeW_ISSSaoPaulo }
 
-  TNFSeW_SP = class(TNFSeWClass)
+  TNFSeW_ISSSaoPaulo = class(TNFSeWClass)
   protected
     function GerarChaveRPS: TACBrXmlNode;
     function GerarCPFCNPJTomador: TACBrXmlNode;
@@ -66,9 +66,9 @@ implementation
 //     SP
 //==============================================================================
 
-{ TNFSeW_SP }
+{ TNFSeW_ISSSaoPaulo }
 
-function TNFSeW_SP.GerarChaveRPS: TACBrXmlNode;
+function TNFSeW_ISSSaoPaulo.GerarChaveRPS: TACBrXmlNode;
 begin
   Result := CreateElement('ChaveRPS');
 
@@ -82,7 +82,7 @@ begin
                                      NFSe.IdentificacaoRps.Numero, DSC_NUMRPS));
 end;
 
-function TNFSeW_SP.GerarCPFCNPJIntermediario: TACBrXmlNode;
+function TNFSeW_ISSSaoPaulo.GerarCPFCNPJIntermediario: TACBrXmlNode;
 begin
   Result := nil;
 
@@ -95,7 +95,7 @@ begin
   end;
 end;
 
-function TNFSeW_SP.GerarCPFCNPJTomador: TACBrXmlNode;
+function TNFSeW_ISSSaoPaulo.GerarCPFCNPJTomador: TACBrXmlNode;
 begin
   Result := nil;
 
@@ -108,7 +108,7 @@ begin
   end;
 end;
 
-function TNFSeW_SP.GerarEnderecoTomador: TACBrXmlNode;
+function TNFSeW_ISSSaoPaulo.GerarEnderecoTomador: TACBrXmlNode;
 begin
   Result := CreateElement('EnderecoTomador');
 
@@ -137,7 +137,7 @@ begin
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
 end;
 
-function TNFSeW_SP.GerarXml: Boolean;
+function TNFSeW_ISSSaoPaulo.GerarXml: Boolean;
 var
   NFSeNode, xmlNode: TACBrXmlNode;
   TipoRPS, Situacao, aliquota, ISSRetido, sISSRetidoInter: String;

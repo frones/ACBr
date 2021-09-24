@@ -145,7 +145,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceAgili.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderAgili.ProcessarMensagemErros(

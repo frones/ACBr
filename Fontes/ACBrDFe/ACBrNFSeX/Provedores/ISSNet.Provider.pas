@@ -82,7 +82,6 @@ procedure TACBrNFSeProviderISSNet.Configuracao;
 begin
   inherited Configuracao;
 
-//  ConfigGeral.Identificador := 'id';
   ConfigGeral.Identificador := '';
 
   with ConfigMsgDados do
@@ -145,7 +144,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceISSNet.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderISSNet.ValidarSchema(

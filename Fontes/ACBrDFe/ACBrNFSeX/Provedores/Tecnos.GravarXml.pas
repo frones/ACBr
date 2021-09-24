@@ -48,9 +48,9 @@ uses
   ACBrNFSeXConsts;
 
 type
-  { TNFSeW_Tecnos }
+  { TNFSeW_Tecnos201 }
 
-  TNFSeW_Tecnos = class(TNFSeW_ABRASFv2)
+  TNFSeW_Tecnos201 = class(TNFSeW_ABRASFv2)
   protected
     function DefinirNameSpaceDeclaracao: string; override;
 
@@ -68,9 +68,9 @@ implementation
 //     Tecnos
 //==============================================================================
 
-{ TNFSeW_Tecnos }
+{ TNFSeW_Tecnos201 }
 
-procedure TNFSeW_Tecnos.Configuracao;
+procedure TNFSeW_Tecnos201.Configuracao;
 begin
   inherited Configuracao;
 
@@ -121,19 +121,19 @@ begin
   GerarTagServicos := False;
 end;
 
-function TNFSeW_Tecnos.DefinirNameSpaceDeclaracao: string;
+function TNFSeW_Tecnos201.DefinirNameSpaceDeclaracao: string;
 begin
   Result := 'http://www.abrasf.org.br/nfse.xsd';
 end;
 
-function TNFSeW_Tecnos.GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;
+function TNFSeW_Tecnos201.GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;
 begin
   Result := CreateElement('tcDeclaracaoPrestacaoServico');
 
   Result.AppendChild(inherited GerarInfDeclaracaoPrestacaoServico);
 end;
 
-function TNFSeW_Tecnos.GerarValores: TACBrXmlNode;
+function TNFSeW_Tecnos201.GerarValores: TACBrXmlNode;
 begin
   Result := CreateElement('tcDadosServico');
 

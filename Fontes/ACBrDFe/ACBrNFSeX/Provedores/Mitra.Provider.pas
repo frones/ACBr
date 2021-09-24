@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceMitra = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceMitra200 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetNameSpace: string;
   public
@@ -61,7 +61,7 @@ type
     property NameSpace: string read GetNameSpace;
   end;
 
-  TACBrNFSeProviderMitra = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderMitra200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -77,9 +77,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Mitra.GravarXml, Mitra.LerXml;
 
-{ TACBrNFSeProviderMitra }
+{ TACBrNFSeProviderMitra200 }
 
-procedure TACBrNFSeProviderMitra.Configuracao;
+procedure TACBrNFSeProviderMitra200.Configuracao;
 var
   NameSpace: string;
 begin
@@ -87,42 +87,29 @@ begin
 
   ConfigGeral.UseCertificateHTTP := False;
 
-  with ConfigWebServices do
-  begin
-    VersaoDados := '2.00';
-    VersaoAtrib := '2.00';
-  end;
-
   NameSpace := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
   SetXmlNameSpace(NameSpace);
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
-  {
-  with ConfigMsgDados do
-  begin
-    DadosCabecalho := '<cabecalho versao="1.00" xmlns="' + NameSpace + '">' +
-                      '<versaoDados>1.00</versaoDados>' +
-                      '</cabecalho>';
-  end;
-  }
+
   SetNomeXSD('rps_importacao_manual.xsd');
 end;
 
-function TACBrNFSeProviderMitra.CriarGeradorXml(
+function TACBrNFSeProviderMitra200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Mitra.Create(Self);
+  Result := TNFSeW_Mitra200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderMitra.CriarLeitorXml(
+function TACBrNFSeProviderMitra200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Mitra.Create(Self);
+  Result := TNFSeR_Mitra200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderMitra.CriarServiceClient(
+function TACBrNFSeProviderMitra200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -130,19 +117,19 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceMitra.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceMitra200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceMitra }
+{ TACBrNFSeXWebserviceMitra200 }
 
-function TACBrNFSeXWebserviceMitra.GetNameSpace: string;
+function TACBrNFSeXWebserviceMitra200.GetNameSpace: string;
 begin
   Result := 'https://nfe.progam.com.br/cruzeiro/nfse/xsd/rps_importacao_manual.xsd';
 end;
 
-function TACBrNFSeXWebserviceMitra.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -159,7 +146,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -176,7 +163,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -193,7 +180,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -210,7 +197,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -227,7 +214,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -244,7 +231,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -261,7 +248,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -278,7 +265,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceMitra200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -294,7 +281,7 @@ begin
                      [NameSpace]);
 end;
 
-function TACBrNFSeXWebserviceMitra.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceMitra200.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

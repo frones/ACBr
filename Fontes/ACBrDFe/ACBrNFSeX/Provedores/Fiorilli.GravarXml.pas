@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Fiorilli }
+  { TNFSeW_Fiorilli200 }
 
-  TNFSeW_Fiorilli = class(TNFSeW_ABRASFv2)
+  TNFSeW_Fiorilli200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
   end;
@@ -59,9 +59,9 @@ implementation
 //     Fiorilli
 //==============================================================================
 
-{ TNFSeW_Fiorilli }
+{ TNFSeW_Fiorilli200 }
 
-procedure TNFSeW_Fiorilli.Configuracao;
+procedure TNFSeW_Fiorilli200.Configuracao;
 begin
   inherited Configuracao;
 

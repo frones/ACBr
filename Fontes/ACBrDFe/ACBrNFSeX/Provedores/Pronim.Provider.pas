@@ -67,7 +67,7 @@ type
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
-  TACBrNFSeXWebservicePronimv2 = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebservicePronim202 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -82,7 +82,7 @@ type
 
   end;
 
-  TACBrNFSeProviderPronimv2 = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderPronim202 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -93,13 +93,7 @@ type
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
-  TACBrNFSeProviderPronimv202 = class (TACBrNFSeProviderPronimv2)
-  protected
-    procedure Configuracao; override;
-
-  end;
-
-  TACBrNFSeProviderPronimv203 = class (TACBrNFSeProviderPronimv2)
+  TACBrNFSeProviderPronim203 = class (TACBrNFSeProviderPronim202)
   protected
     procedure Configuracao; override;
 
@@ -157,7 +151,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebservicePronim.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderPronim.ValidarSchema(
@@ -272,67 +266,18 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-{ TACBrNFSeProviderPronimv2 }
+{ TACBrNFSeProviderPronim202 }
 
-procedure TACBrNFSeProviderPronimv2.Configuracao;
+procedure TACBrNFSeProviderPronim202.Configuracao;
 begin
   inherited Configuracao;
 
-  {italo
-  with ConfigGeral do
-  begin
-    QtdDigNumNFSe := 15;
-  end;
-  }
   with ConfigAssinar do
   begin
     LoteRps := True;
     RpsGerarNFSe := True;
     CancelarNFSe := True;
   end;
-end;
-
-function TACBrNFSeProviderPronimv2.CriarGeradorXml(
-  const ANFSe: TNFSe): TNFSeWClass;
-begin
-  Result := TNFSeW_Pronimv2.Create(Self);
-  Result.NFSe := ANFSe;
-end;
-
-function TACBrNFSeProviderPronimv2.CriarLeitorXml(
-  const ANFSe: TNFSe): TNFSeRClass;
-begin
-  Result := TNFSeR_Pronimv2.Create(Self);
-  Result.NFSe := ANFSe;
-end;
-
-function TACBrNFSeProviderPronimv2.CriarServiceClient(
-  const AMetodo: TMetodo): TACBrNFSeXWebservice;
-var
-  URL: string;
-begin
-  URL := GetWebServiceURL(AMetodo);
-
-  if URL <> '' then
-    Result := TACBrNFSeXWebservicePronimv2.Create(FAOwner, AMetodo, URL)
-  else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
-end;
-
-procedure TACBrNFSeProviderPronimv2.ValidarSchema(
-  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
-begin
-  inherited ValidarSchema(Response, aMetodo);
-
-  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
-              ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
-end;
-
-{ TACBrNFSeProviderPronimv202 }
-
-procedure TACBrNFSeProviderPronimv202.Configuracao;
-begin
-  inherited Configuracao;
 
   with ConfigWebServices do
   begin
@@ -348,11 +293,54 @@ begin
   end;
 end;
 
-{ TACBrNFSeProviderPronimv203 }
+function TACBrNFSeProviderPronim202.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_Pronim202.Create(Self);
+  Result.NFSe := ANFSe;
+end;
 
-procedure TACBrNFSeProviderPronimv203.Configuracao;
+function TACBrNFSeProviderPronim202.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_Pronim202.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderPronim202.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebservicePronim202.Create(FAOwner, AMetodo, URL)
+  else
+    raise EACBrDFeException.Create(ERR_SEM_URL);
+end;
+
+procedure TACBrNFSeProviderPronim202.ValidarSchema(
+  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
+begin
+  inherited ValidarSchema(Response, aMetodo);
+
+  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+              ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
+end;
+
+{ TACBrNFSeProviderPronim203 }
+
+procedure TACBrNFSeProviderPronim203.Configuracao;
 begin
   inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    LoteRps := True;
+    RpsGerarNFSe := True;
+    CancelarNFSe := True;
+  end;
 
   with ConfigWebServices do
   begin
@@ -368,9 +356,9 @@ begin
   end;
 end;
 
-{ TACBrNFSeXWebservicePronimv2 }
+{ TACBrNFSeXWebservicePronim202 }
 
-function TACBrNFSeXWebservicePronimv2.Recepcionar(ACabecalho,
+function TACBrNFSeXWebservicePronim202.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -387,7 +375,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebservicePronim202.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -404,7 +392,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebservicePronim202.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -421,7 +409,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -438,7 +426,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -455,7 +443,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -472,7 +460,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -489,7 +477,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebservicePronim202.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -506,7 +494,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebservicePronim202.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -522,7 +510,7 @@ begin
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
-function TACBrNFSeXWebservicePronimv2.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebservicePronim202.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

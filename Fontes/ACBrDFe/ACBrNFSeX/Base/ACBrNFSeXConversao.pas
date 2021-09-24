@@ -59,7 +59,8 @@ type
   TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe,
                  schAbrirSessao, schFecharSessao);
 
-  TVersaoNFSe = (ve100, ve110, ve200);
+  TVersaoNFSe = (ve100, ve101, ve103,
+                 ve200, ve201, ve202, ve203, ve204);
 
   TnfseTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
                         taSomenteParaNaoAssinada);
@@ -113,39 +114,29 @@ type
   TnfseTipoDeducao = (tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao);
 
   TnfseProvedor = (proNenhum,
-                   // provedores com layout ABRASF v1
-                   proAbaco, proAbaco_A, proActcon, proBetha, proBHISS,
-                   proCIGA, proDBSeller, proDSFSJC, proFISSLex, progeNFe,
-                   proGinfes, proGovBR, proISSCuritiba, proISSFortaleza,
-                   proISSIntel, proISSNet, proLexsom, proMetropolisWeb,
-                   proNatal, proNFSeBrasil, proPronim, proPublica, proRecife,
-                   proRJ, proSalvador, proSilTecnologia, proSimplISS, proSJP,
-                   proSpeedGov, proThema, proTinus, proTinus_A, proTiplan,
-                   proWebISS,
-                   // provedores com layout ABRASF v2
-                   proSistemas4R, proAbaco_204, proABase, proActcon_201,
-                   proActcon_202, proADPM, proAdm, proAEG, proAsten,
-                   proBetha_2, proCenti, proCoplan, proDataSmart, proDeISS,
-                   proDesenvolve, proDigifred, proEL_2, proElotech, proeReceita,
-                   profintelISS, profintelISS_A, proFiorilli, proFuturize, proGiss,
-                   proGoiania, proGovDigital, proiiBrasil_2, proInfisc_2,
-                   proISSDigital, proISSe, proISSJoinville, proLink3, proMegaSoft,
-                   proMitra, proModernizacaoPublica, proNEAInformatica,
-                   proNotaInteligente, proProdata, proPronim_202, proPronim_203,
-                   proPVH, proRLZ, proSaatri, proSafeWeb, proSH3, proSiam,
-                   proSiapNet, proSigCorp, proSigep, proSilTecnologia_203,
-                   proSimplISS_2, proSisPMJP, proSmarAPD_204, proSmarAPD_203,
-                   proSystemPro, proTcheInfo_2, proTecnos, proTiplan_2,
-                   proVersaTecnologia_201, proVersaTecnologia_202, proVirtual,
-                   proVitoria, proWebISS_2, proSiapSistemas, proDSF_2,
-                   proTributus, proSudoeste, proSintese, proCitta,
-                   // Provedores com layout proprio
-                   proAgili, proAgili_2, proAssessorPublico, proConam,
-                   proeGoverneISS, proEL, proEquiplano, proGeisWeb, proGiap,
-                   proGoverna, proInfisc_100, proInfisc_110, proIPM, proIPM_120,
-                   proIPM_110, proISSDSF, proLencois, proSiat, proSigISS,
-                   proSigISS_103, proSmarAPD, proSP, proWebFisco, proFGMaiss,
-                   proSimple);
+                   proAbaco, proABase, proActcon, proAdm, proADPM, proAEG,
+                   proAgili, proAssessorPublico, proAsten, proBetha, proBHISS,
+                   proCenti, proCIGA, proCitta, proConam, proCoplan, proDataSmart,
+                   proDBSeller, proDeISS, proDesenvolve, proDigifred, proDSF,
+                   proDSFSJC, proeGoverneISS, proEL, proEloTech, proEquiplano,
+                   proeReceita, proFGMaiss, profintelISS, proFiorilli, proFISSLex,
+                   proFuturize, proGeisWeb, progeNFe, proGiap, proGinfes, proGiss,
+                   proGovBR, proGovDigital, proGoverna, proiiBrasil, proInfisc,
+                   proIPM, proISSCuritiba, proISSDigital, proISSDSF, proISSe,
+                   proISSFortaleza, proISSGoiania, proISSIntel, proISSJoinville,
+                   proISSLencois, proISSNatal, proISSNet, proISSPortoVelho,
+                   proISSRecife, proISSRio, proISSSalvador, proISSSaoPaulo,
+                   proISSSJP, proISSVitoria, proLexsom, proLink3, proMegaSoft,
+                   proMetropolisWeb, proMitra, proModernizacaoPublica,
+                   proNEAInformatica, proNFSeBrasil, proNotaInteligente,
+                   proProdata, proPronim, proPublica, proRLZ, proSaatri,
+                   proSafeWeb, proSH3, proSiam, proSiapNet, proSiapSistemas,
+                   proSiat, proSigCorp, proSigep, proSigISS, proSilTecnologia,
+                   proSimple, proSimplISS, proSintese, proSisPMJP, proSistemas4R,
+                   proSmarAPD, proSpeedGov, proSudoeste, proSystemPro,
+                   proTcheInfo, proTecnos, proThema, proTinus, proTiplan,
+                   proTributus, proVersaTecnologia, proVirtual, proWebFisco,
+                   proWebISS);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao);
 
@@ -323,9 +314,6 @@ function StrToSchemaNFSe(const s: string): TSchemaNFSe;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: string): TVersaoNFSe;
 function VersaoNFSeToStr(const t: TVersaoNFSe): string;
-
-function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
-function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 
 function ObtemNameSpaceXML(const AXML: string): string;
 function RemoverNameSpace(const AXML: string): string;
@@ -606,106 +594,98 @@ end;
 function ProvedorToStr(const t: TnfseProvedor): string;
 begin
   Result := EnumeradoToStr(t,
-        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'WebISS_2', 'Ginfes', 'ISSDSF',
-         'Abaco', 'Abaco_A', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'Recife',
-         'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred',
-         'Saatri', 'FISSLex', 'Goiania', 'ISSCuritiba', 'BHISS', 'Natal',
+        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'Ginfes', 'ISSDSF',
+         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'ISSRecife',
+         'SimplISS', 'Thema', 'ISSRio', 'Publica', 'fintelISS', 'Digifred',
+         'Saatri', 'FISSLex', 'ISSGoiania', 'ISSCuritiba', 'BHISS', 'ISSNatal',
          'ISSDigital', 'ISSe', 'Sistemas4R', 'GovDigital', 'Fiorilli', 'Coplan',
-         'Prodata', 'Agili', 'Virtual', 'PVH', 'Link3', 'SpeedGov',
-         'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'eGoverneISS',
-         'SisPMJP', 'SystemPro', 'Infisc_100', 'Salvador', 'DBSeller', 'Lexsom',
-         'NFSeBrasil', 'Tinus', 'Tinus_A', 'SJP', 'Conam',
-         'eReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
-         'Pronim_202', 'Pronim_203', 'ABase', 'VersaTecnologia_201',
-         'VersaTecnologia_202', 'CIGA', 'Siam',
-         'Agili_2', 'Betha_2', 'Actcon_201', 'Actcon_202', 'Adm',
-         'Infisc_110', 'SmarAPD', 'SmarAPD_204', 'SmarAPD_203', 'Sigep', 'SafeWeb',
-         'SH3', 'SiapNet', 'IPM', 'IPM_120', 'ISSJoinville', 'Asten', 'EL_2',
-         'Tiplan_2', 'Giss', 'DeISS', 'TcheInfo_2', 'DataSmart', 'MetropolisWeb',
+         'Prodata', 'Agili', 'Virtual', 'ISSPortoVelho', 'Link3', 'SpeedGov',
+         'ISSVitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'eGoverneISS',
+         'SisPMJP', 'SystemPro', 'Infisc', 'ISSSalvador', 'DBSeller', 'Lexsom',
+         'NFSeBrasil', 'Tinus', 'ISSSJP', 'Conam',
+         'eReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'ISSSaoPaulo',
+         'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Adm',
+         'SmarAPD', 'Sigep', 'SafeWeb',
+         'SH3', 'SiapNet', 'IPM', 'ISSJoinville', 'Asten',
+         'Giss', 'DeISS', 'TcheInfo', 'DataSmart', 'MetropolisWeb',
          'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico',
-         'SigISS', 'SigISS_103', 'Elotech', 'SilTecnologia', 'iiBrasil_2', 'WebFisco',
-         'DSFSJC', 'SimplISS_2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
-         'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
-         'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
-         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste', 'Simple',
+         'SigISS', 'EloTech', 'SilTecnologia', 'iiBrasil', 'WebFisco',
+         'DSFSJC', 'ISSLencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
+         'Siat', 'ISSFortaleza', 'Futurize', 'AEG', 'GeisWeb',
+         'SiapSistemas', 'DSF', 'Tributus',
+         'ADPM', 'FGMaiss', 'Sudoeste', 'Simple',
          'Sintese', 'Citta'],
-        [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
-         proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
-         proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
-         profintelISS, proDigifred, proSaatri, proFISSLex, proGoiania,
-         proISSCuritiba, proBHISS, proNatal, proISSDigital, proISSe, proSistemas4R,
+        [proNenhum, proTiplan, proISSNet, proWebISS, proGinfes, proISSDSF,
+         proAbaco, proBetha, proEquiplano, proISSIntel, proGovBR, proISSRecife,
+         proSimplISS, proThema, proISSRio, proPublica,
+         profintelISS, proDigifred, proSaatri, proFISSLex, proISSGoiania,
+         proISSCuritiba, proBHISS, proISSNatal, proISSDigital, proISSe, proSistemas4R,
          proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
-         proPVH, proLink3, proSpeedGov, proVitoria, proMitra,
+         proISSPortoVelho, proLink3, proSpeedGov, proISSVitoria, proMitra,
          proTecnos, proPronim, proActcon, proEL, proeGoverneISS, proSisPMJP,
-         proSystemPro, proInfisc_100, proSalvador, proDBSeller, proLexsom,
-         proNFSeBrasil, proTinus, proTinus_A, proSJP,
+         proSystemPro, proInfisc, proISSSalvador, proDBSeller, proLexsom,
+         proNFSeBrasil, proTinus, proISSSJP,
          proConam, proeReceita, proGoverna, proNEAInformatica, proNotaInteligente,
-         proSP, proPronim_202, proPronim_203, proABase, proVersaTecnologia_201,
-         proVersaTecnologia_202, proCIGA,
-         proSiam, proAgili_2, proBetha_2, proActcon_201, proActcon_202, proAdm,
-         proInfisc_110, proSmarAPD, proSmarAPD_204, proSmarAPD_203, proSigep,
-         proSafeWeb, proSH3, proSiapNet, proIPM, proIPM_120, proISSJoinville,
-         proAsten, proEL_2, proTiplan_2, proGiss, proDeISS, proTcheInfo_2,
+         proISSSaoPaulo, proABase, proVersaTecnologia, proCIGA, proSiam, proAdm,
+         proSmarAPD, proSigep,
+         proSafeWeb, proSH3, proSiapNet, proIPM, proISSJoinville,
+         proAsten, proGiss, proDeISS, proTcheInfo,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-         proGiap, proAssessorPublico, proSigISS, proSigISS_103, proElotech,
-         proSilTecnologia, proiiBrasil_2, proWebFisco, proDSFSJC, proSimplISS_2,
-         proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
-         proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
-         proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
-         proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste, proSimple,
+         proGiap, proAssessorPublico, proSigISS, proEloTech,
+         proSilTecnologia, proiiBrasil, proWebFisco, proDSFSJC,
+         proISSLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
+         proISSFortaleza, proFuturize, proAEG, proGeisWeb,
+         proSiapSistemas, proDSF, proTributus,
+         proADPM, proFGMaiss, proSudoeste, proSimple,
          proSintese, proCitta]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
 begin
   Result := StrToEnumerado(ok, s,
-        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'WebISS_2', 'Ginfes', 'ISSDSF',
-         'Abaco', 'Abaco_A', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'Recife',
-         'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred',
-         'Saatri', 'FISSLex', 'Goiania', 'ISSCuritiba', 'BHISS', 'Natal',
+        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'Ginfes', 'ISSDSF',
+         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'ISSRecife',
+         'SimplISS', 'Thema', 'ISSRio', 'Publica', 'fintelISS', 'Digifred',
+         'Saatri', 'FISSLex', 'ISSGoiania', 'ISSCuritiba', 'BHISS', 'ISSNatal',
          'ISSDigital', 'ISSe', 'Sistemas4R', 'GovDigital', 'Fiorilli', 'Coplan',
-         'Prodata', 'Agili', 'Virtual', 'PVH', 'Link3', 'SpeedGov',
-         'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'eGoverneISS',
-         'SisPMJP', 'SystemPro', 'Infisc_100', 'Salvador', 'DBSeller', 'Lexsom',
-         'NFSeBrasil', 'Tinus', 'Tinus_A', 'SJP', 'Conam',
-         'eReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
-         'Pronim_202', 'Pronim_203', 'ABase', 'VersaTecnologia_201',
-         'VersaTecnologia_202', 'CIGA', 'Siam',
-         'Agili_2', 'Betha_2', 'Actcon_201', 'Actcon_202', 'Adm',
-         'Infisc_110', 'SmarAPD', 'SmarAPD_204', 'SmarAPD_203', 'Sigep', 'SafeWeb',
-         'SH3', 'SiapNet', 'IPM', 'IPM_120', 'ISSJoinville', 'Asten', 'EL_2',
-         'Tiplan_2', 'Giss', 'DeISS', 'TcheInfo_2', 'DataSmart', 'MetropolisWeb',
+         'Prodata', 'Agili', 'Virtual', 'ISSPortoVelho', 'Link3', 'SpeedGov',
+         'ISSVitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'eGoverneISS',
+         'SisPMJP', 'SystemPro', 'Infisc', 'ISSSalvador', 'DBSeller', 'Lexsom',
+         'NFSeBrasil', 'Tinus', 'ISSSJP', 'Conam',
+         'eReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'ISSSaoPaulo',
+         'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Adm',
+         'SmarAPD', 'Sigep', 'SafeWeb',
+         'SH3', 'SiapNet', 'IPM', 'ISSJoinville', 'Asten',
+         'Giss', 'DeISS', 'TcheInfo', 'DataSmart', 'MetropolisWeb',
          'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
-         'SigISS', 'SigISS_103', 'Elotech', 'SilTecnologia', 'iiBrasil_2', 'WebFisco',
-         'DSFSJC', 'SimplISS_2', 'Lencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
-         'Siat', 'ISSFortaleza', 'Futurize', 'Infisc_2', 'AEG', 'GeisWeb',
-         'SiapSistemas', 'DSF_2', 'Abaco_204', 'Tributus', 'SilTecnologia_203',
-         'ADPM', 'IPM_110', 'FGMaiss', 'fintelISS_A', 'Sudoeste', 'Simple',
+         'SigISS', 'EloTech', 'SilTecnologia', 'iiBrasil', 'WebFisco',
+         'DSFSJC', 'ISSLencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
+         'Siat', 'ISSFortaleza', 'Futurize', 'AEG', 'GeisWeb',
+         'SiapSistemas', 'DSF', 'Tributus',
+         'ADPM', 'FGMaiss', 'Sudoeste', 'Simple',
          'Sintese', 'Citta'],
-        [proNenhum, proTiplan, proISSNet, proWebISS, proWebISS_2, proGinfes, proISSDSF,
-         proAbaco, proAbaco_A, proBetha, proEquiplano, proISSIntel,
-         proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
-         profintelISS, proDigifred, proSaatri, proFISSLex, proGoiania,
-         proISSCuritiba, proBHISS, proNatal, proISSDigital, proISSe, proSistemas4R,
+        [proNenhum, proTiplan, proISSNet, proWebISS, proGinfes, proISSDSF,
+         proAbaco, proBetha, proEquiplano, proISSIntel, proGovBR, proISSRecife,
+         proSimplISS, proThema, proISSRio, proPublica,
+         profintelISS, proDigifred, proSaatri, proFISSLex, proISSGoiania,
+         proISSCuritiba, proBHISS, proISSNatal, proISSDigital, proISSe, proSistemas4R,
          proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
-         proPVH, proLink3, proSpeedGov, proVitoria, proMitra,
+         proISSPortoVelho, proLink3, proSpeedGov, proISSVitoria, proMitra,
          proTecnos, proPronim, proActcon, proEL, proeGoverneISS, proSisPMJP,
-         proSystemPro, proInfisc_100, proSalvador, proDBSeller, proLexsom,
-         proNFSeBrasil, proTinus, proTinus_A, proSJP,
+         proSystemPro, proInfisc, proISSSalvador, proDBSeller, proLexsom,
+         proNFSeBrasil, proTinus, proISSSJP,
          proConam, proeReceita, proGoverna, proNEAInformatica, proNotaInteligente,
-         proSP, proPronim_202, proPronim_203, proABase, proVersaTecnologia_201,
-         proVersaTecnologia_202, proCIGA, proSiam, proAgili_2,
-         proBetha_2, proActcon_201, proActcon_202, proAdm, proInfisc_110,
-         proSmarAPD, proSmarAPD_204, proSmarAPD_203, proSigep,
-         proSafeWeb, proSH3, proSiapNet, proIPM, proIPM_120, proISSJoinville,
-         proAsten, proEL_2, proTiplan_2, proGiss, proDeISS, proTcheInfo_2,
-         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-         proGiap, proAssessorPublico, proSigISS, proSigISS_103, proElotech,
-         proSilTecnologia, proiiBrasil_2, proWebFisco, proDSFSJC, proSimplISS_2,
-         proLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
-         proISSFortaleza, proFuturize, proInfisc_2, proAEG, proGeisWeb,
-         proSiapSistemas, proDSF_2, proAbaco_204, proTributus, proSilTecnologia_203,
-         proADPM, proIPM_110, proFGMaiss, profintelISS_A, proSudoeste, proSimple,
+         proISSSaoPaulo, proABase, proVersaTecnologia, proCIGA, proSiam, proAdm,
+         proSmarAPD, proSigep,
+         proSafeWeb, proSH3, proSiapNet, proIPM, proISSJoinville,
+         proAsten, proGiss, proDeISS, proTcheInfo,
+         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp,
+         proGiap, proAssessorPublico, proSigISS, proEloTech,
+         proSilTecnologia, proiiBrasil, proWebFisco, proDSFSJC,
+         proISSLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
+         proISSFortaleza, proFuturize, proAEG, proGeisWeb,
+         proSiapSistemas, proDSF, proTributus,
+         proADPM, proFGMaiss, proSudoeste, proSimple,
          proSintese, proCitta]);
 end;
 
@@ -18420,42 +18400,18 @@ end;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: string): TVersaoNFSe;
 begin
-  Result := StrToEnumerado(ok, s, ['1.00', '1.10', '2.00'],
-                                  [ve100, ve110, ve200]);
+  Result := StrToEnumerado(ok, s, ['1.00', '1.01', '1.03',
+                                   '2.00', '2.01', '2.02', '2.03', '2.04'],
+                                  [ve100, ve101, ve103,
+                                   ve200, ve201, ve202, ve203, ve204]);
 end;
 
 function VersaoNFSeToStr(const t: TVersaoNFSe): string;
 begin
-  Result := EnumeradoToStr(t, ['1.00', '1.10', '2.00'],
-                              [ve100, ve110, ve200]);
-end;
-
-function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
-begin
-  ok := True;
-
-  if (d = 1.0) then
-    Result := ve100
-  else if (d = 1.1) then
-    Result := ve110
-  else if (d = 2.0) then
-    Result := ve200
-  else
-  begin
-    Result := ve100;
-    ok := False;
-  end;
-end;
-
-function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
-begin
-  case t of
-    ve100: Result := 1.00;
-    ve110: Result := 1.10;
-    ve200: Result := 2.00;
-  else
-    Result := 0;
-  end;
+  Result := EnumeradoToStr(t, ['1.00', '1.01', '1.03',
+                               '2.00', '2.01', '2.02', '2.03', '2.04'],
+                              [ve100, ve101, ve103,
+                               ve200, ve201, ve202, ve203, ve204]);
 end;
 
 function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao; AProvedor: TnfseProvedor = proNenhum): string;

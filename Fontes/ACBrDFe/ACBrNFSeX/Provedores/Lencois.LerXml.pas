@@ -47,9 +47,9 @@ uses
 
 type
   { Provedor com layout próprio }
-  { TNFSeR_Lencois }
+  { TNFSeR_ISSLencois }
 
-  TNFSeR_Lencois = class(TNFSeRClass)
+  TNFSeR_ISSLencois = class(TNFSeRClass)
   protected
 
     procedure LerPASNF(const ANode: TACBrXmlNode);
@@ -69,9 +69,9 @@ implementation
 //     Lencois
 //==============================================================================
 
-{ TNFSeR_Lencois }
+{ TNFSeR_ISSLencois }
 
-procedure TNFSeR_Lencois.LerEnderecoTomador(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSLencois.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -90,7 +90,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_Lencois.LerPASNF(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSLencois.LerPASNF(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -106,7 +106,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_Lencois.LerRecolhimentoFora(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSLencois.LerRecolhimentoFora(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   aValor: string;
@@ -129,7 +129,7 @@ begin
   end;
 end;
 
-procedure TNFSeR_Lencois.LerTomador(const ANode: TACBrXmlNode);
+procedure TNFSeR_ISSLencois.LerTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
@@ -159,7 +159,7 @@ begin
   end;
 end;
 
-function TNFSeR_Lencois.LerXml: Boolean;
+function TNFSeR_ISSLencois.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
@@ -191,7 +191,7 @@ begin
     Result := LerXmlRps(XmlNode);
 end;
 
-function TNFSeR_Lencois.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+function TNFSeR_ISSLencois.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 //var
 //  AuxNode: TACBrXmlNode;
 begin
@@ -210,7 +210,7 @@ begin
   *)
 end;
 
-function TNFSeR_Lencois.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
+function TNFSeR_ISSLencois.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
 

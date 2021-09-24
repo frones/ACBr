@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Sudoeste }
+  { TNFSeR_Sudoeste202 }
 
-  TNFSeR_Sudoeste = class(TNFSeR_ABRASFv2)
+  TNFSeR_Sudoeste202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

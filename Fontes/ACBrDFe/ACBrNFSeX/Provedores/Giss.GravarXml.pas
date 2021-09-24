@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Giss }
+  { TNFSeW_Giss204 }
 
-  TNFSeW_Giss = class(TNFSeW_ABRASFv2)
+  TNFSeW_Giss204 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     Giss
 //==============================================================================
 
-{ TNFSeW_Giss }
+{ TNFSeW_Giss204 }
 
-procedure TNFSeW_Giss.Configuracao;
+procedure TNFSeW_Giss204.Configuracao;
 begin
   inherited Configuracao;
 

@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_SisPMJP }
+  { TNFSeW_SisPMJP202 }
 
-  TNFSeW_SisPMJP = class(TNFSeW_ABRASFv2)
+  TNFSeW_SisPMJP202 = class(TNFSeW_ABRASFv2)
   protected
 
   end;

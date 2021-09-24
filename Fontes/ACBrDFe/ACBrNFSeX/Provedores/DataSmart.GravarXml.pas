@@ -44,9 +44,9 @@ uses
   ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_DataSmart }
+  { TNFSeW_DataSmart202 }
 
-  TNFSeW_DataSmart = class(TNFSeW_ABRASFv2)
+  TNFSeW_DataSmart202 = class(TNFSeW_ABRASFv2)
   protected
 
   end;

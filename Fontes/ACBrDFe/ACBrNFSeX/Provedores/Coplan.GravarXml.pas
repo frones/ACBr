@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Coplan }
+  { TNFSeW_Coplan201 }
 
-  TNFSeW_Coplan = class(TNFSeW_ABRASFv2)
+  TNFSeW_Coplan201 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     Coplan
 //==============================================================================
 
-{ TNFSeW_Coplan }
+{ TNFSeW_Coplan201 }
 
-procedure TNFSeW_Coplan.Configuracao;
+procedure TNFSeW_Coplan201.Configuracao;
 begin
   inherited Configuracao;
 

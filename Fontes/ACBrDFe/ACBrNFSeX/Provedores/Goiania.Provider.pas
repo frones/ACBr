@@ -43,14 +43,14 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceGoiania = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceISSGoiania200 = class(TACBrNFSeXWebserviceSoap11)
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
 
   end;
 
-  TACBrNFSeProviderGoiania = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderISSGoiania200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -67,9 +67,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Goiania.GravarXml, Goiania.LerXml;
 
-{ TACBrNFSeProviderGoiania }
+{ TACBrNFSeProviderISSGoiania200 }
 
-procedure TACBrNFSeProviderGoiania.Configuracao;
+procedure TACBrNFSeProviderISSGoiania200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -92,21 +92,21 @@ begin
   ConfigSchemas.Validar := False;
 end;
 
-function TACBrNFSeProviderGoiania.CriarGeradorXml(
+function TACBrNFSeProviderISSGoiania200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Goiania.Create(Self);
+  Result := TNFSeW_ISSGoiania200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderGoiania.CriarLeitorXml(
+function TACBrNFSeProviderISSGoiania200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Goiania.Create(Self);
+  Result := TNFSeR_ISSGoiania200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderGoiania.CriarServiceClient(
+function TACBrNFSeProviderISSGoiania200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -114,12 +114,12 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceGoiania.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceISSGoiania200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-procedure TACBrNFSeProviderGoiania.ValidarSchema(
+procedure TACBrNFSeProviderISSGoiania200.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 var
   xAux, xXml, xXmlEnvio: string;
@@ -146,9 +146,9 @@ begin
   inherited ValidarSchema(Response, aMetodo);
 end;
 
-{ TACBrNFSeXWebserviceGoiania }
+{ TACBrNFSeXWebserviceISSGoiania200 }
 
-function TACBrNFSeXWebserviceGoiania.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceISSGoiania200.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -164,7 +164,7 @@ begin
                      ['xmlns:ws="http://nfse.goiania.go.gov.br/ws/"']);
 end;
 
-function TACBrNFSeXWebserviceGoiania.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceISSGoiania200.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

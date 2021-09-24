@@ -62,18 +62,18 @@ type
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
   end;
 
-  { TNFSeR_SmarAPDv203 }
+  { TNFSeR_SmarAPD203 }
 
-  TNFSeR_SmarAPDv203 = class(TNFSeR_ABRASFv2)
+  TNFSeR_SmarAPD203 = class(TNFSeR_ABRASFv2)
   protected
 
   public
 
   end;
 
-  { TNFSeR_SmarAPDv204 }
+  { TNFSeR_SmarAPD204 }
 
-  TNFSeR_SmarAPDv204 = class(TNFSeR_ABRASFv2)
+  TNFSeR_SmarAPD204 = class(TNFSeR_ABRASFv2)
   protected
 
   public

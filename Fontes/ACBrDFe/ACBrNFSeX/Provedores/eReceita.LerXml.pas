@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_eReceita }
+  { TNFSeR_eReceita202 }
 
-  TNFSeR_eReceita = class(TNFSeR_ABRASFv2)
+  TNFSeR_eReceita202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

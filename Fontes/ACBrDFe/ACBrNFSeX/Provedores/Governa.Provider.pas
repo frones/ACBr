@@ -132,7 +132,7 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceGoverna.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
 procedure TACBrNFSeProviderGoverna.ProcessarMensagemErros(

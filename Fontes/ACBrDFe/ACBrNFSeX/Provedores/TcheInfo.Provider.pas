@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceTcheInfo = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceTcheInfo204 = class(TACBrNFSeXWebserviceSoap11)
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
@@ -51,7 +51,7 @@ type
 
   end;
 
-  TACBrNFSeProviderTcheInfo = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderTcheInfo204 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -67,9 +67,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, TcheInfo.GravarXml, TcheInfo.LerXml;
 
-{ TACBrNFSeProviderTcheInfo }
+{ TACBrNFSeProviderTcheInfo204 }
 
-procedure TACBrNFSeProviderTcheInfo.Configuracao;
+procedure TACBrNFSeProviderTcheInfo204.Configuracao;
 var
   CodigoIBGE: string;
 begin
@@ -119,21 +119,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderTcheInfo.CriarGeradorXml(
+function TACBrNFSeProviderTcheInfo204.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_TcheInfo.Create(Self);
+  Result := TNFSeW_TcheInfo204.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderTcheInfo.CriarLeitorXml(
+function TACBrNFSeProviderTcheInfo204.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_TcheInfo.Create(Self);
+  Result := TNFSeR_TcheInfo204.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderTcheInfo.CriarServiceClient(
+function TACBrNFSeProviderTcheInfo204.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -141,14 +141,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceTcheInfo.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceTcheInfo204.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceTcheInfo }
+{ TACBrNFSeXWebserviceTcheInfo204 }
 
-function TACBrNFSeXWebserviceTcheInfo.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceTcheInfo204.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -166,7 +166,7 @@ begin
                      ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceTcheInfo.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceTcheInfo204.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -184,7 +184,7 @@ begin
                      ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
-function TACBrNFSeXWebserviceTcheInfo.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceTcheInfo204.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin

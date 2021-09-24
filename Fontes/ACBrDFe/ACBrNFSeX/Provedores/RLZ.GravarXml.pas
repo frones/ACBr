@@ -45,9 +45,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_RLZ }
+  { TNFSeW_RLZ203 }
 
-  TNFSeW_RLZ = class(TNFSeW_ABRASFv2)
+  TNFSeW_RLZ203 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -60,9 +60,9 @@ implementation
 //     RLZ
 //==============================================================================
 
-{ TNFSeW_RLZ }
+{ TNFSeW_RLZ203 }
 
-procedure TNFSeW_RLZ.Configuracao;
+procedure TNFSeW_RLZ203.Configuracao;
 begin
   inherited Configuracao;
 

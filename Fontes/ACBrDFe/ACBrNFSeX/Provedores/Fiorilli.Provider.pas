@@ -43,7 +43,7 @@ uses
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
-  TACBrNFSeXWebserviceFiorilli = class(TACBrNFSeXWebserviceSoap11)
+  TACBrNFSeXWebserviceFiorilli200 = class(TACBrNFSeXWebserviceSoap11)
   private
     function GetDadosUsuario: string;
   public
@@ -61,7 +61,7 @@ type
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
-  TACBrNFSeProviderFiorilli = class (TACBrNFSeProviderABRASFv2)
+  TACBrNFSeProviderFiorilli200 = class (TACBrNFSeProviderABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -77,9 +77,9 @@ uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Fiorilli.GravarXml, Fiorilli.LerXml;
 
-{ TACBrNFSeProviderFiorilli }
+{ TACBrNFSeProviderFiorilli200 }
 
-procedure TACBrNFSeProviderFiorilli.Configuracao;
+procedure TACBrNFSeProviderFiorilli200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -96,21 +96,21 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderFiorilli.CriarGeradorXml(
+function TACBrNFSeProviderFiorilli200.CriarGeradorXml(
   const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_Fiorilli.Create(Self);
+  Result := TNFSeW_Fiorilli200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderFiorilli.CriarLeitorXml(
+function TACBrNFSeProviderFiorilli200.CriarLeitorXml(
   const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_Fiorilli.Create(Self);
+  Result := TNFSeR_Fiorilli200.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderFiorilli.CriarServiceClient(
+function TACBrNFSeProviderFiorilli200.CriarServiceClient(
   const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
@@ -118,14 +118,14 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceFiorilli.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceFiorilli200.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_NAO_IMP);
+    raise EACBrDFeException.Create(ERR_SEM_URL);
 end;
 
-{ TACBrNFSeXWebserviceFiorilli }
+{ TACBrNFSeXWebserviceFiorilli200 }
 
-function TACBrNFSeXWebserviceFiorilli.GetDadosUsuario: string;
+function TACBrNFSeXWebserviceFiorilli200.GetDadosUsuario: string;
 begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
@@ -134,7 +134,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXWebserviceFiorilli.Recepcionar(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -151,7 +151,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.RecepcionarSincrono(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -168,7 +168,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.GerarNFSe(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -185,7 +185,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -202,7 +202,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.ConsultarNFSePorFaixa(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSePorFaixa(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -219,7 +219,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.ConsultarNFSePorRps(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -236,7 +236,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSeServicoPrestado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -253,7 +253,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.ConsultarNFSeServicoTomado(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.ConsultarNFSeServicoTomado(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -270,7 +270,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceFiorilli200.Cancelar(ACabecalho, AMSG: String): string;
 var
   Request: string;
 begin
@@ -286,7 +286,7 @@ begin
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
 end;
 
-function TACBrNFSeXWebserviceFiorilli.SubstituirNFSe(ACabecalho,
+function TACBrNFSeXWebserviceFiorilli200.SubstituirNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;

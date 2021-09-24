@@ -45,23 +45,23 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_Actconv2 }
+  { TNFSeW_Actcon200 }
 
-  TNFSeW_Actconv2 = class(TNFSeW_ABRASFv2)
+  TNFSeW_Actcon200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
   end;
 
-  { TNFSeW_Actconv201 }
+  { TNFSeW_Actcon201 }
 
-  TNFSeW_Actconv201 = class(TNFSeW_Actconv2)
+  TNFSeW_Actcon201 = class(TNFSeW_Actcon200)
   protected
     procedure Configuracao; override;
   end;
 
-  { TNFSeW_Actconv202 }
+  { TNFSeW_Actcon202 }
 
-  TNFSeW_Actconv202 = class(TNFSeW_Actconv2)
+  TNFSeW_Actcon202 = class(TNFSeW_Actcon200)
   protected
     procedure Configuracao; override;
   end;
@@ -73,9 +73,9 @@ implementation
 //     Actcon
 //==============================================================================
 
-{ TNFSeW_Actconv2 }
+{ TNFSeW_Actcon200 }
 
-procedure TNFSeW_Actconv2.Configuracao;
+procedure TNFSeW_Actcon200.Configuracao;
 begin
   inherited Configuracao;
 
@@ -86,14 +86,14 @@ end;
 
 { TNFSeW_Actcon201 }
 
-procedure TNFSeW_Actconv201.Configuracao;
+procedure TNFSeW_Actcon201.Configuracao;
 begin
   inherited Configuracao;
 end;
 
 { TNFSeW_Actcon202 }
 
-procedure TNFSeW_Actconv202.Configuracao;
+procedure TNFSeW_Actcon202.Configuracao;
 begin
   inherited Configuracao;
 

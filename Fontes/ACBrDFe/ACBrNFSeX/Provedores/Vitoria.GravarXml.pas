@@ -44,9 +44,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_Vitoria }
+  { TNFSeW_ISSVitoria200 }
 
-  TNFSeW_Vitoria = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSVitoria200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -56,12 +56,12 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     Vitoria
+//     ISSVitoria
 //==============================================================================
 
-{ TNFSeW_Vitoria }
+{ TNFSeW_ISSVitoria200 }
 
-procedure TNFSeW_Vitoria.Configuracao;
+procedure TNFSeW_ISSVitoria200.Configuracao;
 begin
   inherited Configuracao;
 

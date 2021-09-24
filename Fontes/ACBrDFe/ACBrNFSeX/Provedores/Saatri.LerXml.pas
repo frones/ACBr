@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Saatri }
+  { TNFSeR_Saatri201 }
 
-  TNFSeR_Saatri = class(TNFSeR_ABRASFv2)
+  TNFSeR_Saatri201 = class(TNFSeR_ABRASFv2)
   protected
 
   public

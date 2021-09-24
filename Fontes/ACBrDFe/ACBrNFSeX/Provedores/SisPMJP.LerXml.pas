@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_SisPMJP }
+  { TNFSeR_SisPMJP202 }
 
-  TNFSeR_SisPMJP = class(TNFSeR_ABRASFv2)
+  TNFSeR_SisPMJP202 = class(TNFSeR_ABRASFv2)
   protected
 
   public

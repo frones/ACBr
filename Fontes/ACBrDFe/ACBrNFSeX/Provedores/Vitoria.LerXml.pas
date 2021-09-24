@@ -44,9 +44,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_Vitoria }
+  { TNFSeR_ISSVitoria200 }
 
-  TNFSeR_Vitoria = class(TNFSeR_ABRASFv2)
+  TNFSeR_ISSVitoria200 = class(TNFSeR_ABRASFv2)
   protected
 
   public
@@ -57,7 +57,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     Vitoria
+//     ISSVitoria
 //==============================================================================
 
 end.

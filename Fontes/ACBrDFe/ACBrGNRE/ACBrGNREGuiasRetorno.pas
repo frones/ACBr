@@ -368,7 +368,10 @@ begin
               GNRERetorno.ValorPrincICMS := Leitor.rCampo(tcDe2, 'valor');
 
             if Leitor.rAtributo('tipo=', 'valor') = '12' then
+            begin
               GNRERetorno.ValorFECP := Leitor.rCampo(tcDe2, 'valor');
+              GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincipal - GNRERetorno.ValorFECP;
+            end;
 
             if Leitor.rAtributo('tipo=', 'valor') = '21' then
               GNRERetorno.ValorICMS := Leitor.rCampo(tcDe2, 'valor');

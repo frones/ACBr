@@ -398,7 +398,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Left = 3
               Top = 12
               Width = 265
-              Height = 285
+              Height = 365
               Caption = 'Geral'
               TabOrder = 0
               object sbtnPathSalvar: TSpeedButton
@@ -438,7 +438,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               end
               object spPathSchemas: TSpeedButton
                 Left = 238
-                Top = 204
+                Top = 235
                 Width = 23
                 Height = 24
                 Glyph.Data = {
@@ -459,17 +459,37 @@ object frmACBrNFSe: TfrmACBrNFSe
               end
               object Label6: TLabel
                 Left = 9
-                Top = 189
+                Top = 220
                 Width = 108
                 Height = 13
                 Caption = 'Schemas do Provedor:'
               end
               object lblSchemas: TLabel
                 Left = 121
-                Top = 189
+                Top = 220
                 Width = 65
                 Height = 13
                 Caption = 'lblSchemas'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clRed
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object Label45: TLabel
+                Left = 9
+                Top = 264
+                Width = 106
+                Height = 13
+                Caption = 'Vers'#227'o dos Schemasr:'
+              end
+              object lblVersaoSchemas: TLabel
+                Left = 121
+                Top = 264
+                Width = 53
+                Height = 13
+                Caption = 'lblVersao'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clRed
                 Font.Height = -11
@@ -538,14 +558,14 @@ object frmACBrNFSe: TfrmACBrNFSe
               end
               object edtPathSchemas: TEdit
                 Left = 8
-                Top = 204
+                Top = 235
                 Width = 228
                 Height = 21
                 TabOrder = 7
               end
               object chkConsultaLoteAposEnvio: TCheckBox
                 Left = 9
-                Top = 231
+                Top = 304
                 Width = 152
                 Height = 17
                 Caption = 'Consultar Lote Ap'#243's Envio'
@@ -553,11 +573,19 @@ object frmACBrNFSe: TfrmACBrNFSe
               end
               object chkConsultaAposCancelar: TCheckBox
                 Left = 9
-                Top = 247
+                Top = 320
                 Width = 152
                 Height = 17
                 Caption = 'Consultar Ap'#243's Cancelar'
                 TabOrder = 9
+              end
+              object chkMontarPathSchemas: TCheckBox
+                Left = 9
+                Top = 199
+                Width = 240
+                Height = 17
+                Caption = 'Montar automaticamente o Path dos Schemas'
+                TabOrder = 10
               end
             end
           end

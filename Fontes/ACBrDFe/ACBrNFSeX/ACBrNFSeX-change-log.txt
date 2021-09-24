@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/09/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível correção no tratamento do retorno do cancelamento.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Realizado duas alterações muito importantes no componente ACBrNFSeX.
     1. O componente agora acusa que ele não encontrou a URL de homologação ou

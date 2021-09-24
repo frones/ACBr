@@ -1886,6 +1886,10 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetCancelamento');
+
+      if ANode = nil then
+        ANode := Document.Root.Childrens.FindAnyNs('RetornoCancelamento');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;

@@ -606,7 +606,7 @@ extern "C" {
      */
     PHPCPP_EXPORT void *get_module() 
     {
-        putenv((char *)"DISPLAY=:99");
+        //putenv((char *)"DISPLAY=:99");
         
         // static(!) Php::Extension object that should stay in memory
         // for the entire duration of the process (that's why it's static)

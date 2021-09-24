@@ -1,0 +1,32 @@
+version: '3.8'
+
+networks:
+    acbrlib:
+      driver: bridge
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: acbrlibphp
+    restart: unless-stopped
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - acbrlib
+
+  nginx:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./site.conf:/etc/nginx/conf.d/site.conf
+    volumes_from:
+      - app
+    ports:
+      - "8080:80"
+      - "4430:443"
+    networks:
+      - acbrlib

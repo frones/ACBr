@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/09/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Correção na leitura do grupo <Confirmacao> estava ocorrendo AV.
+   Por: Elias LS Tech
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Possível correção na leitura dos grupos para evitar AV.
+   Por: Italo Giurizzato Junior
+
 17/09/2021
 -- Diversos --
 [+] Implementação do provedor Citta.

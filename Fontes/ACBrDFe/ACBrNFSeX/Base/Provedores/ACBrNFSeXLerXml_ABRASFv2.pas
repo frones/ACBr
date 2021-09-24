@@ -112,6 +112,8 @@ procedure TNFSeR_ABRASFv2.LerConfirmacao(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Confirmacao');
 
   if AuxNode <> nil then
@@ -133,6 +135,8 @@ procedure TNFSeR_ABRASFv2.LerConstrucaoCivil(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('ConstrucaoCivil');
 
   if AuxNode <> nil then
@@ -149,6 +153,8 @@ procedure TNFSeR_ABRASFv2.LerContatoPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Contato');
 
   if AuxNode <> nil then
@@ -165,6 +171,8 @@ procedure TNFSeR_ABRASFv2.LerContatoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Contato');
 
   if AuxNode <> nil then
@@ -182,6 +190,8 @@ procedure TNFSeR_ABRASFv2.LerDeclaracaoPrestacaoServico(
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
 
   if AuxNode <> nil then
@@ -195,6 +205,8 @@ procedure TNFSeR_ABRASFv2.LerEnderecoPrestadorServico(const ANode: TACBrXmlNode;
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs(aTag);
 
   if AuxNode <> nil then
@@ -218,6 +230,8 @@ procedure TNFSeR_ABRASFv2.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Endereco');
 
   if AuxNode <> nil then
@@ -240,6 +254,8 @@ procedure TNFSeR_ABRASFv2.LerIdentificacaoNfse(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
   if AuxNode <> nil then
@@ -258,6 +274,8 @@ procedure TNFSeR_ABRASFv2.LerIdentificacaoPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode, AuxNodeCpfCnpj: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoPrestador');
 
   if AuxNode <> nil then
@@ -317,6 +335,8 @@ var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoRps');
 
   if AuxNode <> nil then
@@ -334,6 +354,8 @@ procedure TNFSeR_ABRASFv2.LerIdentificacaoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode, AuxNodeCpfCnpj: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoTomador');
 
   if AuxNode <> nil then
@@ -366,6 +388,8 @@ procedure TNFSeR_ABRASFv2.LerInfConfirmacaoCancelamento(
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
 
   NFSe.SituacaoNfse := snNormal;
@@ -389,6 +413,8 @@ var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
 
   if AuxNode <> nil then
@@ -470,6 +496,8 @@ procedure TNFSeR_ABRASFv2.LerInfPedidoCancelamento(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
 
   if AuxNode <> nil then
@@ -485,6 +513,8 @@ procedure TNFSeR_ABRASFv2.LerIntermediarioServico(const ANode: TACBrXmlNode);
 var
   AuxNode, AuxNodeCpfCnpj: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Intermediario');
 
   if AuxNode <> nil then
@@ -512,6 +542,8 @@ procedure TNFSeR_ABRASFv2.LerOrgaoGerador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('OrgaoGerador');
 
   if AuxNode <> nil then
@@ -528,6 +560,8 @@ procedure TNFSeR_ABRASFv2.LerPedido(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Pedido');
 
   if AuxNode <> nil then
@@ -540,6 +574,8 @@ procedure TNFSeR_ABRASFv2.LerPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Prestador');
 
   if AuxNode <> nil then
@@ -552,6 +588,8 @@ procedure TNFSeR_ABRASFv2.LerPrestadorServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('PrestadorServico');
 
   if AuxNode = nil then
@@ -578,6 +616,8 @@ var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Rps');
 
   if AuxNode <> nil then
@@ -598,6 +638,8 @@ var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('RpsSubstituido');
 
   if AuxNode <> nil then
@@ -617,6 +659,8 @@ var
   Ok: Boolean;
   CodigoItemServico: string;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Servico');
 
   if AuxNode <> nil then
@@ -676,6 +720,8 @@ procedure TNFSeR_ABRASFv2.LerTomadorServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('TomadorServico');
 
   if AuxNode = nil then
@@ -697,6 +743,8 @@ var
   AuxNode: TACBrXmlNode;
   Valor: Currency;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('Valores');
 
   if AuxNode <> nil then
@@ -729,6 +777,8 @@ procedure TNFSeR_ABRASFv2.LerValoresNfse(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
 begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
   AuxNode := ANode.Childrens.FindAnyNs('ValoresNfse');
 
   if AuxNode <> nil then

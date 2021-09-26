@@ -235,8 +235,17 @@ begin
 
       ANode := ANode.Childrens.FindAnyNs('nfeResposta');
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('notaFiscal');
       if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('notaFiscal');
+
+      if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
@@ -428,7 +437,8 @@ begin
       Response.Lote := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
-      if not Assigned(ANode) then
+
+      if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;

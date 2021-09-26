@@ -194,7 +194,7 @@ type
              tmConsultarNFSePorRps, tmConsultarNFSe, tmConsultarNFSeURL,
              tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
              tmConsultarNFSeServicoTomado, tmCancelarNFSe,
-             tmGerar, tmRecepcionarSincrono, tmSubstituirNFSe,
+             tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos);
 
   TFormatoIDLote = (fidInt, fidStr, fidCNPJIMLote);
@@ -18895,13 +18895,13 @@ begin
                         'ConsultarNFSePorRps', 'ConsultarNFSe', 'ConsultarNFSeURL',
                         'ConsultarNFSePorFaixa', 'ConsultarNFSeServicoPrestado',
                         'ConsultarNFSeServicoTomado', 'CancelarNFSe',
-                        'Gerar', 'RecepcionarSincrono', 'SubstituirNFSe',
+                        'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe, tmConsultarNFSeURL,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
                         tmConsultarNFSeServicoTomado, tmCancelarNFSe,
-                        tmGerar, tmRecepcionarSincrono, tmSubstituirNFSe,
+                        tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
                         tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos]);
 end;
 

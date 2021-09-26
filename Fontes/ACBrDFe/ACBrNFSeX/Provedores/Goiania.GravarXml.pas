@@ -72,14 +72,18 @@ begin
   FormatoCompetencia := tcDatHor;
 
   NrOcorrAliquota := 0;
+
   NrOcorrCodTribMun_1 := 1;
-  NrOcorrCompetencia := -1;
+
   NrOcorrValorISS := -1;
+  NrOcorrDescCond := -1;
   NrOcorrIssRetido := -1;
+  NrOcorrRespRetencao := -1;
   NrOcorrItemListaServico := -1;
   NrOcorrCodigoCNAE := -1;
   NrOcorrExigibilidadeISS := -1;
   NrOcorrMunIncid := -1;
+  NrOcorrCompetencia := -1;
   NrOcorrOptanteSimplesNacional := -1;
   NrOcorrIncentCultural := -1;
 

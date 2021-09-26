@@ -44,6 +44,28 @@ Símbolo : Significado
 
 
 
+26/09/2021
+-- IPM.Provider --
+[*] Possível ajuste para tratar a falta de padronização do provedor no que se refere ao 
+    retorno, pois em algumas cidades o retorno é o XML completo em outras apenas um resumo.
+   Por: Italo Giurizzato Junior
+-- Goiania.GravarXml --
+[*] Definico com o valor -1 as propriedades NrOcorrDescCond e NrOcorrRespRetencao,
+    para esse provedor não se deve gerar as tag: DescontoCondicionado e ResponsavelRetencao
+   Por: Italo Giurizzato Junior
+-- Giap.Provider --
+[-] Correção no tratamento de retorno de alguns métodos, estava ocorrendo AV.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXWebservicesReponse --
+[+] Incluido a propriedade NomeArq a ser utilizado pelo método GerarLote.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderBase --
+[*] Ajustes no método GerarLote.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXConversao --
+[+] Criado o enumerador para o método GerarLote.
+   Por: Italo Giurizzato Junior
+
 24/09/2021
 -- IPM.GravarXml --
 [*] Incluido a linha para gerar a tag que indica que o ambiente é de homologação.

@@ -197,6 +197,7 @@ type
     FModoEnvio: TmodoEnvio;
     FMaxRps: Integer;
     FCodVerificacao: string;
+    FNomeArq: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -204,6 +205,7 @@ type
     property MaxRps: Integer read FMaxRps write FMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property NomeArq: string read FNomeArq write FNomeArq;
   end;
 
   TNFSeConsultaSituacaoResponse = class(TNFSeWebserviceResponse)

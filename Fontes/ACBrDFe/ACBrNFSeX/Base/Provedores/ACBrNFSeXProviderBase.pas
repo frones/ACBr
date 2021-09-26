@@ -890,6 +890,14 @@ procedure TACBrNFSeXProvider.GeraLote;
 begin
   TACBrNFSeX(FAOwner).SetStatus(stNFSeRecepcao);
 
+  if GerarResponse.ModoEnvio = meAutomatico then
+    GerarResponse.ModoEnvio := ConfigGeral.ModoEnvio;
+
+  if GerarResponse.ModoEnvio <> meUnitario then
+    GerarResponse.MaxRps := ConfigGeral.NumMaxRpsEnviar
+  else
+    GerarResponse.MaxRps := ConfigGeral.NumMaxRpsGerar;
+
   PrepararEmitir(GerarResponse);
   if (GerarResponse.Erros.Count > 0) then
   begin
@@ -903,9 +911,6 @@ begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;
   end;
-
-  if GerarResponse.ModoEnvio = meAutomatico then
-    GerarResponse.ModoEnvio := ConfigGeral.ModoEnvio;
 
   case GerarResponse.ModoEnvio of
     meLoteAssincrono,
@@ -922,13 +927,13 @@ begin
     Exit;
   end;
 
-  if not GerarResponse.Sucesso then
-  begin
-    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-    Exit;
-  end;
+  GerarResponse.NomeArq := GerarResponse.Lote + '-env-lot.xml';
 
-  FAOwner.Gravar(GerarResponse.Lote + 'env-lot.xml', GerarResponse.XmlEnvio);
+  FAOwner.Gravar(GerarResponse.NomeArq, GerarResponse.XmlEnvio);
+
+  GerarResponse.NomeArq := PathWithDelim(TACBrNFSeX(FAOwner).Configuracoes.Arquivos.PathSalvar) +
+                           GerarResponse.NomeArq;
+
   TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
 end;
 

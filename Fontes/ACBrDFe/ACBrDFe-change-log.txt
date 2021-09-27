@@ -39,9 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2021
+-- ACBrXmlBase --
+[*] Incluido o tratamento para quando existe no XML o caractere #9 usado por 
+    alguns provedores.
+  Por: Italo Giurizzato Junior
+
 24/09/2021
 -- ACBrXmlBase --
-[*] Incluido o tratamento para quanto existe no XML o caractere "<br >" usado por 
+[*] Incluido o tratamento para quando existe no XML o caractere "<br >" usado por 
     alguns provedores para quebra de linha.
   Por: Italo Giurizzato Junior
 

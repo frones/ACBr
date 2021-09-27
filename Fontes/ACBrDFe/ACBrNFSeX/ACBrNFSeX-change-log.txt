@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+27/09/2021
+-- GeisWeb.LerXml --
+[*] Ao ler o XMl incluido o tratamento para remover as vogais acentuadas.
+   Por: Italo Giurizzato Junior
+
 26/09/2021
 -- IPM.Provider --
 [*] Possível ajuste para tratar a falta de padronização do provedor no que se refere ao 

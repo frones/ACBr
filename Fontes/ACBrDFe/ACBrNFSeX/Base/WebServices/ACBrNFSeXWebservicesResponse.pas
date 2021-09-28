@@ -101,7 +101,7 @@ type
     FMsgCanc: String;
     FSucesso: String;
     FLink: String;
-    FNumeroNota: Integer;
+    FNumeroNota: string;
     FPedido: TPedidocancelamento;
     FNotasCanceladas: TNotasCanceladasCollection;
   public
@@ -114,7 +114,7 @@ type
     property MsgCanc: String read FMsgCanc write FMsgCanc;
     property Sucesso: String read FSucesso write FSucesso;
     property Link: String read FLink write FLink;
-    property NumeroNota: Integer read FNumeroNota  write FNumeroNota;
+    property NumeroNota: string read FNumeroNota  write FNumeroNota;
     property Pedido: TPedidocancelamento read FPedido;
     property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas;
   end;
@@ -154,7 +154,7 @@ type
     FDescSituacao: String;
     FLote: string;
     FSucesso: Boolean;
-    FNumeroNota: Integer;
+    FNumeroNota: string;
     FData: TDateTime;
     FidNota: string;
     FLink: String;
@@ -177,7 +177,7 @@ type
     property DescSituacao: String read FDescSituacao write FDescSituacao;
     property Lote: string read FLote write FLote;
     property Sucesso: Boolean read FSucesso write FSucesso;
-    property NumeroNota: Integer read FNumeroNota write FNumeroNota;
+    property NumeroNota: string read FNumeroNota write FNumeroNota;
     property Data: TDateTime read FData write FData;
     property idNota: string read FidNota write FidNota;
     property Link: String read FLink write FLink;
@@ -394,7 +394,7 @@ begin
   DescSituacao := '';
   Lote := '';
   Sucesso := False;
-  NumeroNota := 0;
+  NumeroNota := '';
   Data := 0;
   idNota := '';
   Link := '';
@@ -404,20 +404,13 @@ begin
   begin
     for i := FErros.Count - 1 downto 0 do
       FErros.Delete(i);
-
-//    FreeAndNil(FErros);
   end;
 
   if Assigned(FAlertas) then
   begin
     for i := FAlertas.Count - 1 downto 0 do
       FAlertas.Delete(i);
-
-//    FreeAndNil(FAlertas);
   end;
-
-//  FAlertas: TNFSeEventoCollection;
-//  FErros: TNFSeEventoCollection;
 
   XmlEnvio := '';
   XmlRetorno := '';
@@ -455,8 +448,6 @@ procedure TNFSeConsultaNFSeResponse.Clear;
 var
   i: Integer;
 begin
-//  inherited Clear;
-
   if Assigned(FInfConsultaNFSe) then
     FInfConsultaNFSe.Free;
 
@@ -497,8 +488,6 @@ procedure TNFSeCancelaNFSeResponse.Clear;
 var
   i: Integer;
 begin
-//  inherited Clear;
-
   if Assigned(FInfCancelamento) then
     FInfCancelamento.Free;
 

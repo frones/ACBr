@@ -881,7 +881,7 @@ begin
         begin
           Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
           idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcInt);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
@@ -961,7 +961,7 @@ begin
           // Verificar o que é retornado
           Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
           idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcInt);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
@@ -1043,7 +1043,7 @@ begin
           // Verificar o que é retornado
           Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
           idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcInt);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
@@ -1123,7 +1123,7 @@ begin
           // Verificar o que é retornado
           Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
           idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcInt);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
           Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;

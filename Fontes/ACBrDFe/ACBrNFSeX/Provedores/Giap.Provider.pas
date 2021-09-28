@@ -259,7 +259,7 @@ begin
 
         with Response do
         begin
-          NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcInt);
+          NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
           CodVerificacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
           Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('statusEmissao'), tcStr);
           Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('link'), tcStr);
@@ -355,7 +355,7 @@ begin
       if ANode <> nil then
       begin
         Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('notaExiste'), tcStr);
-        Response.NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcInt);
+        Response.NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
       end;
     except
       on E:Exception do

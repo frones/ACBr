@@ -45,6 +45,23 @@ Símbolo : Significado
 
 
 27/09/2021
+-- Diversos --
+[*] Ajuste por conta da alteração do tipo do campo NumeroNota.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXWebservicesResponses --
+[*] Alterado o tipo do campo: NumeroNota de Integer para String, pois tem provedor que retorna
+    o numero da nota acrescido do ano.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderBase --
+[*] Incluido a passagem da versao do layout do provedor em GerarXml.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Ajuste na leitura do retorno em TratarRetornoConsultaNFSeporRps.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXConfiguracoes --
+[*] Possível correção de vazamento de memória e incluido em SetCodigoMunicipio a chamada
+    para LerCidades.
+   Por: Italo Giurizzato Junior
 -- GeisWeb.LerXml --
 [*] Ao ler o XMl incluido o tratamento para remover as vogais acentuadas.
    Por: Italo Giurizzato Junior

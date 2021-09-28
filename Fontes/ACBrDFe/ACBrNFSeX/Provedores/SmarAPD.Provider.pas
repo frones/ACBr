@@ -465,8 +465,7 @@ begin
         begin
           NumNFSe := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroNota'), tcStr);
 
-          if NumNFSe <> '' then
-            Response.NumeroNota := StrToInt(NumNFSe);
+          Response.NumeroNota := NumNFSe;
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 

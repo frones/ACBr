@@ -114,8 +114,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#2', 'identificador', 1, 80, 0,
     'nfse_' + NFSe.IdentificacaoRps.Numero + '.' + NFSe.IdentificacaoRps.Serie, ''));
 
-  if Ambiente = taHomologacao then
-//  if NFSe.Producao =  snNao then
+  if (VersaoNFSe = ve100) and (Ambiente = taHomologacao) then
     NFSeNode.AppendChild(AddNode(tcStr, '#3', 'nfse_teste', 1, 1, 1, '1', ''));
 
   xmlNode := GerarIdentificacaoRPS;

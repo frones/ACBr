@@ -655,7 +655,7 @@ begin
 
         with Response do
         begin
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrNfse'), tcInt);
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
         end;
       end;
     except

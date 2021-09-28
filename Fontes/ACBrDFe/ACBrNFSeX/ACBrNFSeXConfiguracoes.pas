@@ -325,6 +325,7 @@ end;
 destructor TGeralConfNFSe.Destroy;
 begin
   FEmitente.Free;
+  FPIniParams.Free;
 
   inherited;
 end;
@@ -448,6 +449,8 @@ end;
 
 procedure TGeralConfNFSe.SetCodigoMunicipio(const Value: Integer);
 begin
+  TACBrNFSeX(fpConfiguracoes.Owner).LerCidades;
+
   FCodigoMunicipio := Value;
 
   if FCodigoMunicipio <> 0 then

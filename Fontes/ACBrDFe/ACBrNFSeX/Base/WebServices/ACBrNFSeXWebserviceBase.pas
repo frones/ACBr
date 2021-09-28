@@ -166,24 +166,34 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceRest = class(TACBrNFSeXWebserviceNoSoap)
+  TACBrNFSeXWebserviceRest = class abstract (TACBrNFSeXWebserviceNoSoap)
+  protected
+    function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
+                           namespace: array of string): string; override;
+
+  public
+    constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURl: string);
+
+  end;
+
+  TACBrNFSeXWebserviceMulti1 = class(TACBrNFSeXWebserviceNoSoap)
+  protected
+    FPBound: string;
+
+    function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
+                                  namespace: array of string): string; override;
+  public
+    constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string);
+
+  end;
+
+  TACBrNFSeXWebserviceMulti2 = class(TACBrNFSeXWebserviceNoSoap)
   protected
     FPBound: string;
 
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                            namespace: array of string): string; override;
 
-  public
-    constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string);
-
-  end;
-
-  TACBrNFSeXWebserviceMulti = class(TACBrNFSeXWebserviceNoSoap)
-  protected
-    FPBound: string;
-
-    function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
-                                  namespace: array of string): string; override;
   public
     constructor Create(AOwner: TACBrDFe; AMetodo: TMetodo; AURL: string);
 
@@ -551,7 +561,6 @@ var
   xRetorno: string;
 begin
   xRetorno := TratarXmlRetorno(ARetorno);
-//  xRetorno := TiraAcentos(xRetorno);
 
   if xRetorno = '' then
   begin
@@ -667,9 +676,6 @@ begin
       else   // Envio interno, por TDFeSSL
       begin
         try
-          if FPURL = '' then
-            raise EACBrDFeException.Create('Não informado a URL de homologação favor entrar em contato com a prefeitura/provedor');
-
           HttpClient.URL := FPURL;
           HttpClient.Method := 'POST';
           HttpClient.MimeType := FPMimeType;
@@ -971,39 +977,44 @@ end;
 { TACBrNFSeXWebserviceRest }
 
 constructor TACBrNFSeXWebserviceRest.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
-  AURL: string);
+  AURl: string);
 begin
-  inherited Create(AOwner, AMetodo, AURL);
+  inherited Create(AOwner, AMetodo, AURl);
 
-  FPBound := '----=_Part_1_' + IntToHex(Random(MaxInt), 8);
-  FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr(FPBound, '"');
+  FPMimeType := 'application/json';
 end;
 
 function TACBrNFSeXWebserviceRest.PrepararEnvio(const Message, SoapAction,
   SoapHeader: string; namespace: array of string): string;
 var
-  NomeArq: String;
+  UsuarioWeb, SenhaWeb, Texto: String;
 begin
-  NomeArq := GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
+  UsuarioWeb := Trim(TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSUser);
 
-  Result := '--' + FPBound + sLineBreak +
-            'Content-Type: text/xml; charset=Cp1252; name=' +
-            NomeArq + sLineBreak +
-            'Content-Transfer-Encoding: binary' + sLineBreak +
-            'Content-Disposition: form-data; name=' + AnsiQuotedStr(NomeArq, '"') +
-            '; filename=' + AnsiQuotedStr(NomeArq, '"') + sLineBreak +
-            sLineBreak +
-            Message + sLineBreak +
-            '--' + FPBound + '--' + sLineBreak;
+  if UsuarioWeb = '' then
+    GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSUser seja informada.'));
+
+  SenhaWeb := Trim(TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSSenha);
+
+  if SenhaWeb = '' then
+    GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSSenha seja informada.'));
+
+  Texto := StringReplace(Message, '"', '''', [rfReplaceAll]);
+  Texto := StringReplace(Texto, #10, '', [rfReplaceAll]);
+  Texto := StringReplace(Texto, #13, '', [rfReplaceAll]);
+
+  Result := Format('{"xml": "%s", "usuario": "%s", "senha": "%s"}', [Texto, UsuarioWeb, SenhaWeb]);
 
   HttpClient := FPDFeOwner.SSL.SSLHttpClass;
 
   HttpClient.Clear;
 end;
 
-{ TACBrNFSeXWebserviceMulti }
+{ TACBrNFSeXWebserviceMulti1 }
 
-constructor TACBrNFSeXWebserviceMulti.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
+constructor TACBrNFSeXWebserviceMulti1.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
   AURL: string);
 begin
   inherited Create(AOwner, AMetodo, AURL);
@@ -1012,7 +1023,7 @@ begin
   FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr(FPBound, '"');
 end;
 
-function TACBrNFSeXWebserviceMulti.PrepararEnvio(const Message, SoapAction,
+function TACBrNFSeXWebserviceMulti1.PrepararEnvio(const Message, SoapAction,
   SoapHeader: string; namespace: array of string): string;
 var
   UsuarioWeb, SenhaWeb: String;
@@ -1040,6 +1051,39 @@ begin
             AnsiQuotedStr('f1', '"' ) + '; ' + 'filename=' +
             AnsiQuotedStr(GerarPrefixoArquivo + '-' + FPArqEnv + '.xml', '"') + sLineBreak +
             'Content-Type: text/xml' + sLineBreak + sLineBreak + Message + sLineBreak +
+            '--' + FPBound + '--' + sLineBreak;
+
+  HttpClient := FPDFeOwner.SSL.SSLHttpClass;
+
+  HttpClient.Clear;
+end;
+
+{ TACBrNFSeXWebserviceMulti2 }
+
+constructor TACBrNFSeXWebserviceMulti2.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
+  AURL: string);
+begin
+  inherited Create(AOwner, AMetodo, AURL);
+
+  FPBound := '----=_Part_1_' + IntToHex(Random(MaxInt), 8);
+  FPMimeType := 'multipart/form-data; boundary=' + AnsiQuotedStr(FPBound, '"');
+end;
+
+function TACBrNFSeXWebserviceMulti2.PrepararEnvio(const Message, SoapAction,
+  SoapHeader: string; namespace: array of string): string;
+var
+  NomeArq: String;
+begin
+  NomeArq := GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
+
+  Result := '--' + FPBound + sLineBreak +
+            'Content-Type: text/xml; charset=Cp1252; name=' +
+            NomeArq + sLineBreak +
+            'Content-Transfer-Encoding: binary' + sLineBreak +
+            'Content-Disposition: form-data; name=' + AnsiQuotedStr(NomeArq, '"') +
+            '; filename=' + AnsiQuotedStr(NomeArq, '"') + sLineBreak +
+            sLineBreak +
+            Message + sLineBreak +
             '--' + FPBound + '--' + sLineBreak;
 
   HttpClient := FPDFeOwner.SSL.SSLHttpClass;

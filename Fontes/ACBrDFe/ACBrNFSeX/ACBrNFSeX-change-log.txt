@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 28/09/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível correção para o erro de AV ao tratar o retorno do Emitir.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --
 [*] Possível correção para a compilação em Delphi 7.
    Por: Italo Giurizzato Junior

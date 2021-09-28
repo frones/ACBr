@@ -384,7 +384,7 @@ procedure TACBrNFSeProviderABRASFv2.TratarRetornoEmitir(Response: TNFSeEmiteResp
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, AuxNode2: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
   ANota: NotaFiscal;
@@ -438,14 +438,15 @@ begin
           ANode := ANodeArray[I];
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
           AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-          AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+          AuxNode2 := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
 
           // Tem provedor que mudou a tag de <DeclaracaoPrestacaoServico>
           // para <Rps>
-          if AuxNode = nil then
-            AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+          if AuxNode2 = nil then
+            AuxNode2 := AuxNode.Childrens.FindAnyNs('Rps');
 
-          AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          AuxNode := AuxNode2.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
           AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
           AuxNode := AuxNode.Childrens.FindAnyNs('Numero');

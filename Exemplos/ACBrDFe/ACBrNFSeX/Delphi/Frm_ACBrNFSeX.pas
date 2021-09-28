@@ -2221,7 +2221,7 @@ begin
 
     Ini.WriteBool(   'Geral', 'ConsultaAposEnvio',    chkConsultaLoteAposEnvio.Checked);
     Ini.WriteBool(   'Geral', 'ConsultaAposCancelar', chkConsultaAposCancelar.Checked);
-    Ini.WriteBool(   'Geral', 'chkMontarPathSchemas', chkMontarPathSchemas.Checked);
+    Ini.WriteBool(   'Geral', 'MontarPathSchemas', chkMontarPathSchemas.Checked);
 
     Ini.WriteInteger('WebService', 'Ambiente',     rgTipoAmb.ItemIndex);
     Ini.WriteBool(   'WebService', 'Visualizar',   cbxVisualizar.Checked);

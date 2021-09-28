@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2021
+-- ACBrXmlDocument --
+[*] Possível correção para o vazamento de memória.
+  Por: Italo Giurizzato Junior
+
 27/09/2021
 -- ACBrXmlBase --
 [*] Incluido o tratamento para quando existe no XML o caractere #9 usado por 

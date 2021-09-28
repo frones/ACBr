@@ -346,10 +346,15 @@ end;
 
 destructor TACBrXmlNode.Destroy;
 begin
+  FNamespaceEnumerator.Free;
+  FChildEnumerator.Free;
+  FAttributeEnumerator.Free;
+
   if FXmlNode <> nil then
   begin
     FNodeList.Destroy;
     FAttributeList.Destroy;
+    FNamespaceList.Destroy;
 
     xmlUnlinkNode(FXmlNode);
     xmlFreeNode(FXmlNode);
@@ -554,6 +559,7 @@ begin
 end;
 
 { TACBrXmlNamespace }
+
 constructor TACBrXmlNamespace.Create(ParentNode: TACBrXmlNode; xmlNs: xmlNsPtr);
 begin
   FParentNode := ParentNode;

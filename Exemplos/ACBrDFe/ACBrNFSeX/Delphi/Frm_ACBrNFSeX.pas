@@ -794,7 +794,7 @@ begin
   IniCidades := TMemIniFile.Create('');
   Cidades    := TStringList.Create;
 
-  ACBrNFSeX1.LerCidades;
+//  ACBrNFSeX1.LerCidades;
   IniCidades.SetStrings(ACBrNFSeX1.Configuracoes.WebServices.Params);
 
   try
@@ -1748,12 +1748,12 @@ begin
   // Não ocorre o envio para nenhum webservice.
   //
   // **************************************************************************
-  vNumRPS := '';
-  if not(InputQuery('Gerar e Enviar Lote', 'Numero do RPS', vNumRPS)) then
+  vNumLote := '';
+  if not(InputQuery('Gerar e Enviar Lote', 'Numero do Lote', vNumLote)) then
     exit;
 
-  vNumLote := vNumRPS;
-  if not(InputQuery('Gerar e Enviar Lote', 'Numero do Lote', vNumLote)) then
+  vNumRPS := vNumLote;
+  if not(InputQuery('Gerar e Enviar Lote', 'Numero do RPS', vNumRPS)) then
     exit;
 
   ACBrNFSeX1.NotasFiscais.Clear;
@@ -1761,11 +1761,13 @@ begin
 
   ACBrNFSeX1.GerarLote(vNumLote);
 
-  ShowMessage('Arquivo gerado em: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
+//  ShowMessage('Arquivo gerado em: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
 
-  ACBrNFSeX1.NotasFiscais.Clear;
+  ChecarResposta(tmGerarLote);
 
-  pgRespostas.ActivePageIndex := 0;
+//  ACBrNFSeX1.NotasFiscais.Clear;
+
+//  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFSe.btnHTTPSClick(Sender: TObject);
@@ -2443,7 +2445,7 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
+            memoLog.Lines.Add('Numero da Nota: ' + NumeroNota);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
@@ -2590,7 +2592,7 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
+            memoLog.Lines.Add('Numero da Nota: ' + NumeroNota);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
@@ -2934,6 +2936,49 @@ begin
             memoLog.Lines.Add('Mensagem : ' + RetCancelamento.MsgCanc);
             memoLog.Lines.Add('Sucesso  : ' + RetCancelamento.Sucesso);
             memoLog.Lines.Add('Link     : ' + RetCancelamento.Link);
+
+            LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
+            LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+
+            if Erros.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Erro(s):');
+              for i := 0 to Erros.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Erros[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Erros[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Erros[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+
+            if Alertas.Count > 0 then
+            begin
+              memoLog.Lines.Add(' ');
+              memoLog.Lines.Add('Alerta(s):');
+              for i := 0 to Alertas.Count -1 do
+              begin
+                memoLog.Lines.Add('Código  : ' + Alertas[i].Codigo);
+                memoLog.Lines.Add('Mensagem: ' + Alertas[i].Descricao);
+                memoLog.Lines.Add('Correção: ' + Alertas[i].Correcao);
+                memoLog.Lines.Add('---------');
+              end;
+            end;
+          end;
+        end;
+
+      tmGerarLote:
+        begin
+          with Gerar do
+          begin
+            memoLog.Lines.Add('Método Executado: ' + ModoEnvioToStr(ModoEnvio));
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Envio');
+            memoLog.Lines.Add('Numero do Lote: ' + Lote);
+            memoLog.Lines.Add(' ');
+            memoLog.Lines.Add('Parâmetros de Retorno');
+            memoLog.Lines.Add('Nome Arquivo : ' + NomeArq);
 
             LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
             LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');

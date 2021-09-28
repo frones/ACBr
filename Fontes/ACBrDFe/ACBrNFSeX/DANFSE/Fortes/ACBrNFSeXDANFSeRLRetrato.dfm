@@ -3,15 +3,17 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Top = 55
   Caption = 'frlXDANFSeRLRetrato'
   ClientHeight = 1003
+  ExplicitHeight = 1042
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Top = 2
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 8.000000000000000000
-    Margins.RightMargin = 5.100000000000000000
+    Margins.RightMargin = 5.099999999999999000
     Margins.BottomMargin = 8.000000000000000000
     BeforePrint = RLNFSeBeforePrint
+    ExplicitTop = 2
     object rlbCabecalho: TRLBand
       Left = 23
       Top = 30
@@ -1221,7 +1223,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 56
         Width = 76
         Height = 14
-        Caption = 'C'#195#179'digo da Obra:'
+        Caption = 'C'#243'digo da Obra:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1263,7 +1265,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 56
         Width = 64
         Height = 14
-        Caption = 'C'#195#179'digo ART:'
+        Caption = 'C'#243'digo ART:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1981,8 +1983,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllMsgTeste: TRLLabel
-        Left = 15
-        Top = 57
+        Left = 13
+        Top = 56
         Width = 724
         Height = 31
         Alignment = taCenter

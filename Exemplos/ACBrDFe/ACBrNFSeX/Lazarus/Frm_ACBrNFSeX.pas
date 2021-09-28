@@ -2401,7 +2401,7 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
+            memoLog.Lines.Add('Numero da Nota: ' + NumeroNota);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
@@ -2548,7 +2548,7 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Data de Envio : ' + DateToStr(Data));
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Numero da Nota: ' + IntToStr(NumeroNota));
+            memoLog.Lines.Add('Numero da Nota: ' + NumeroNota);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Código Verif. : ' + CodVerificacao);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));

@@ -1629,6 +1629,7 @@ type
     procedure sbPathInuClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
     procedure sbPathPDFClick(Sender: TObject);
+    procedure sbPathSalvarClick(Sender: TObject);
     procedure sbPosPrinterLogClick(Sender: TObject);
     procedure sbSchemaDFeClick(Sender: TObject);
     procedure sbSerialClick(Sender: TObject);
@@ -7719,18 +7720,17 @@ end;
 
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.sbLogClick(Sender: TObject);
-var
-  level: integer;
 begin
-  //PathClick(edLogArq);
 
-  //TreeViewMenu.Items.Item[2].Expanded:= true;
-  //level:= TreeViewMenu.Items.Item[3].Level;
-  //TreeViewMenu.Items.Item[3].Selected:= true;
-
-  //
-  TreeViewMenu.Items.Item[2].Selected:= True;
-  TreeViewMenu.Items.Item[2].Expanded:= true;
+  OpenDialog1.Title := 'Selecione o arquivo de log';
+  OpenDialog1.DefaultExt := '*.txt';
+  OpenDialog1.Filter :=
+    'Arquivos LOG (*.txt)|*.txt';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edLogArq.Text := OpenDialog1.FileName;
+  end;
 
 end;
 
@@ -8427,6 +8427,11 @@ end;
 procedure TFrmACBrMonitor.sbPathPDFClick(Sender: TObject);
 begin
   PathClick(edtPathPDF);
+end;
+
+procedure TFrmACBrMonitor.sbPathSalvarClick(Sender: TObject);
+begin
+  PathClick(edtPathLogs);
 end;
 
 procedure TFrmACBrMonitor.sbPosPrinterLogClick(Sender: TObject);

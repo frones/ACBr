@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2021
+--- ACBrMonior1--
+[*] Ajustes de campos em tela  
+
 13/09/2021
 --DoACBrBoleto--
 [*] Adicionado parâmetro no Método EnviarBoleto para definir o Tipo de Operação.

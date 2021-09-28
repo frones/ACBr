@@ -848,8 +848,9 @@ begin
   AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
   LerInfNfse(AuxNode);
-  LerNfseCancelamento(AuxNode);
-  LerNfseSubstituicao(AuxNode);
+
+  LerNfseCancelamento(ANode);
+  LerNfseSubstituicao(ANode);
 end;
 
 function TNFSeR_ABRASFv2.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

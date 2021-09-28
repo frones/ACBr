@@ -719,22 +719,26 @@ end;
 
 function TNFSeR_ABRASFv1.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 var
-  AuxNode: TACBrXmlNode;
+  AuxNode1, AuxNode2: TACBrXmlNode;
 begin
   Result := True;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
+  AuxNode1 := ANode.Childrens.FindAnyNs('tcCompNfse');
 
-  if AuxNode = nil then
-    AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+  if AuxNode1 = nil then
+  begin
+    AuxNode1 := ANode;
+    AuxNode2 := ANode.Childrens.FindAnyNs('Nfse')
+  end
   else
-    AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
+    AuxNode2 := AuxNode1.Childrens.FindAnyNs('Nfse');
 
-  LerInfNfse(AuxNode);
-  LerNfseCancelamento(AuxNode);
-  LerNfseSubstituicao(AuxNode);
+  LerInfNfse(AuxNode2);
+
+  LerNfseCancelamento(AuxNode1);
+  LerNfseSubstituicao(AuxNode1);
 end;
 
 function TNFSeR_ABRASFv1.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

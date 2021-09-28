@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+28/09/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Correção para realizar a leitura dos grupos <NfseCancelamento> e <NfseSubstituicao>.
+   Por: Diego A Folieni
+
 27/09/2021
 -- Diversos --
 [*] Ajuste por conta da alteração do tipo do campo NumeroNota.

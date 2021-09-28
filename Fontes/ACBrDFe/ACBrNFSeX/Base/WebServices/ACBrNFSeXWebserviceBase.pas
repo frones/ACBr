@@ -166,7 +166,7 @@ type
 
   end;
 
-  TACBrNFSeXWebserviceRest = class abstract (TACBrNFSeXWebserviceNoSoap)
+  TACBrNFSeXWebserviceRest = class(TACBrNFSeXWebserviceNoSoap)
   protected
     function PrepararEnvio(const Message, SoapAction, SoapHeader: string;
                            namespace: array of string): string; override;

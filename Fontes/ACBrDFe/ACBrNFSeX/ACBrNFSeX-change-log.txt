@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 28/09/2021
+-- ACBrNFSeXWebserviceBase --
+[*] Possível correção para a compilação em Delphi 7.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Correção para realizar a leitura dos grupos <NfseCancelamento> e <NfseSubstituicao>.
    Por: Diego A Folieni

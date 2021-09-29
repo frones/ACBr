@@ -418,8 +418,8 @@ begin
 
       with Response do
       begin
-        Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
-        Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('stLote'), tcStr);
+        Lote := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
+        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('stLote'), tcStr);
       end;
     except
       on E:Exception do
@@ -518,10 +518,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      AuxNode := AuxNode.Childrens.FindAnyNs('nrProtocolo');
-
-      if AuxNode <> nil then
-        Response.Protocolo := AuxNode.AsString;
+      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
 
       AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
@@ -531,8 +528,8 @@ begin
         if not Assigned(ANodeArray) then
         begin
           AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
           Exit;
         end;
 
@@ -651,10 +648,9 @@ begin
 
       if AuxNode <> nil then
       begin
-        Response.CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
-
         with Response do
         begin
+          CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
           NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
         end;
       end;

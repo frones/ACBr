@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+29/09/2021
+-- Equiplano.Provider --
+[*] Ajustes nos tratamento de retornos dos serviços.
+   Por: Everton
+
 28/09/2021
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção para o erro de AV ao tratar o retorno do Emitir.

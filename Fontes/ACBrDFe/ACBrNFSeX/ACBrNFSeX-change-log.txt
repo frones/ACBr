@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 29/09/2021
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Possível correção para que a descrição do código do serviço não saia truncado.
+   Por: Eloildo Vieira
 -- Equiplano.Provider --
 [*] Ajustes nos tratamento de retornos dos serviços.
    Por: Everton

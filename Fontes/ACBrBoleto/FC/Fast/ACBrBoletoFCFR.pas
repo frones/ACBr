@@ -277,6 +277,9 @@ end;
 constructor TACBrBoletoFCFR.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  {$IfDef DELPHI2007_UP}// delphi 2007 em diante
+     Quality := 95;
+  {$endif}
   fFastReportFile := '';
   FImpressora := '';
   fIndice := 0;

@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 30/09/2021
+-- Giap.GravarXml --
+[*] Corrigido a geração das tags CEP que devem ser informado formatado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Prossível correção na leitura dos valores.
    Por: Italo Giurizzato Junior

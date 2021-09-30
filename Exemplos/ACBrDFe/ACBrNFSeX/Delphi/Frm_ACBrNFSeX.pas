@@ -1761,13 +1761,7 @@ begin
 
   ACBrNFSeX1.GerarLote(vNumLote);
 
-//  ShowMessage('Arquivo gerado em: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
-
   ChecarResposta(tmGerarLote);
-
-//  ACBrNFSeX1.NotasFiscais.Clear;
-
-//  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFSe.btnHTTPSClick(Sender: TObject);
@@ -3207,9 +3201,6 @@ end;
 
 procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser; NomeArq: string);
 begin
-//  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-//                      AnsiString(ACBrUtil.ConverteXMLtoUTF8(RetWS)), False, False);
-
   ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
                       AnsiString(RetWS), False, False);
 

@@ -741,7 +741,6 @@ end;
 procedure TNFSeR_ABRASFv2.LerValores(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  Valor: Currency;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -760,15 +759,28 @@ begin
       ValorCsll       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
       ValorIss        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
       OutrasRetencoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
-      BaseCalculo     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
-      Aliquota        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
-      Valor           := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorLiquidoNfse'), tcDe2);
 
-      if Valor <> 0 then
-        ValorLiquidoNfse := Valor;
+      if NFSe.ValoresNfse.BaseCalculo = 0 then
+      begin
+        BaseCalculo := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
+        NFSe.ValoresNfse.BaseCalculo := BaseCalculo;
+      end;
+
+      Aliquota := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
+
+      if NFSe.ValoresNfse.ValorLiquidoNfse = 0 then
+      begin
+        ValorLiquidoNfse := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorLiquidoNfse'), tcDe2);
+        NFSe.ValoresNfse.ValorLiquidoNfse := ValorLiquidoNfse;
+      end;
 
       DescontoCondicionado   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
       DescontoIncondicionado := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);
+
+      if ValorLiquidoNfse = 0 then
+        ValorLiquidoNfse := ValorServicos - ValorPis - ValorCofins - ValorInss -
+          ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
+          DescontoIncondicionado - DescontoCondicionado;
     end;
   end;
 end;
@@ -792,7 +804,10 @@ begin
     end;
 
     with NFSe.Servico.Valores do
+    begin
+      BaseCalculo := NFSe.ValoresNfse.BaseCalculo;
       ValorLiquidoNfse := NFSe.ValoresNfse.ValorLiquidoNfse;
+    end;
   end;
 end;
 

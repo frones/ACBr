@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 30/09/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Prossível correção na leitura dos valores.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.GravarXml/ISSDSF.Provider --
 [*] Incluido o atributo "Id" no Rps e no Lote.
    Por: Italo Giurizzato Junior

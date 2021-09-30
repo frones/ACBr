@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+30/09/2021
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Remoção da propriedade ExplicitHeight do arquivo *.dfm.
+   Por: Italo Giurizzato Junior
+
 29/09/2021
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Possível correção para que a descrição do código do serviço não saia truncado.

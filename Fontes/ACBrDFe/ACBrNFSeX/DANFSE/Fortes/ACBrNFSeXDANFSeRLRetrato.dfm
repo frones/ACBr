@@ -3,7 +3,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Top = 55
   Caption = 'frlXDANFSeRLRetrato'
   ClientHeight = 1003
-  ExplicitHeight = 1042
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
@@ -13,7 +12,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     Margins.RightMargin = 5.099999999999999000
     Margins.BottomMargin = 8.000000000000000000
     BeforePrint = RLNFSeBeforePrint
-    ExplicitTop = 2
     object rlbCabecalho: TRLBand
       Left = 23
       Top = 30
@@ -2407,5 +2405,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         end
       end
     end
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    Left = 104
   end
 end

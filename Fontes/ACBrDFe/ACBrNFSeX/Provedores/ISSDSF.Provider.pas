@@ -412,7 +412,7 @@ begin
 
     xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
 
-    xRps := '<RPS>' + SeparaDados(xRps, 'RPS') + '</RPS>';
+//    xRps := '<RPS>' + SeparaDados(xRps, 'RPS') + '</RPS>';
 
     ListaRps := ListaRps + xRps;
   end;
@@ -510,6 +510,8 @@ begin
     end;
   end;
 
+  IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"';
+
   NameSpace := NameSpace +
     ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
     ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
@@ -517,7 +519,7 @@ begin
 
   Response.XmlEnvio := '<' + Prefixo + 'ReqEnvioLoteRPS' + NameSpace + '>' +
                           xCabecalho +
-                          '<Lote>' + ListaRps + '</Lote>' +
+                          '<Lote' + IdAttr + '>' + ListaRps + '</Lote>' +
                        '</' + Prefixo + 'ReqEnvioLoteRPS>';
 end;
 
@@ -542,7 +544,7 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
+      ANode := Document.Root;
 
       if ANode = nil then
       begin
@@ -552,14 +554,10 @@ begin
         Exit
       end;
 
-      ProcessarMensagemErros(ANode, Response);
-
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
       if AuxNode <> nil then
       begin
-        ProcessarMensagemErros(AuxNode, Response);
-
         with Response do
         begin
           Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
@@ -580,6 +578,8 @@ begin
           }
         end;
       end;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
       {

@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 30/09/2021
+-- ISSDSF.GravarXml/ISSDSF.Provider --
+[*] Incluido o atributo "Id" no Rps e no Lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Remoção da propriedade ExplicitHeight do arquivo *.dfm.
    Por: Italo Giurizzato Junior

@@ -217,10 +217,10 @@ begin
 
   FDocument.Clear();
 
-  NFSe.InfID.ID := 'rps:' + NFSe.IdentificacaoRps.Numero;
+  NFSe.InfID.ID := 'Rps_' + NFSe.IdentificacaoRps.Numero;
 
   NFSeNode := CreateElement('RPS');
-  NFSeNode.SetNamespace(FAOwner.ConfigMsgDados.LoteRps.xmlns, Self.PrefixoPadrao);
+  NFSeNode.SetAttribute(FAOwner.ConfigGeral.Identificador, NFSe.infID.ID);
 
   FDocument.Root := NFSeNode;
 

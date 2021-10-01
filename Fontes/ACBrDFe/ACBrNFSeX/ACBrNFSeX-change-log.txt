@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 01/10/2021
+-- Thema.GravarXml --
+[*] O provedor exige que a aliquota seja dividida por 100.
+   Por: Tiago Rizzon
 -- Diversos --
 [*] Possível correção de vazamento de memória.
    Por: Italo Giurizzato Junior

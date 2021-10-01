@@ -41,7 +41,7 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao, ACBrXmlBase;
 
 type
   { TNFSeW_Thema }
@@ -72,6 +72,7 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
+  DivAliq100 := True;
 end;
 
 end.

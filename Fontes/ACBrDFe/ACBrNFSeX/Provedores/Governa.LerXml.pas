@@ -123,6 +123,8 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     Result := LerXmlRps(XmlNode);
+
+  FreeAndNil(FDocument);
 end;
 
 function TNFSeR_Governa.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;

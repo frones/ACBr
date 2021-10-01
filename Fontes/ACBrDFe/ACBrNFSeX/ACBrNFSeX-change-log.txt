@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 01/10/2021
+-- Diversos --
+[*] Possível correção de vazamento de memória.
+   Por: Italo Giurizzato Junior
 -- Giap.Provider --
 [*] Corrigido o TratarRetornoEmitir, esta tentando ler a tag root do XML.
    Por: Italo Giurizzato Junior

@@ -320,6 +320,8 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     Result := LerXmlRps(XmlNode);
+
+  FreeAndNil(FDocument);
 end;
 
 function TNFSeR_IPM.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;

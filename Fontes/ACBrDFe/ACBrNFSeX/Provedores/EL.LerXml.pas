@@ -407,6 +407,8 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     Result := LerXmlRps(XmlNode);
+
+  FreeAndNil(FDocument);
 end;
 
 function TNFSeR_EL.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;

@@ -104,7 +104,6 @@ type
                                      const Response: TNFSeWebserviceResponse;
                                      AListTag: string = 'ListaMensagemRetorno';
                                      AMessageTag: string = 'MensagemRetorno'); virtual;
-
   end;
 
 implementation
@@ -2130,8 +2129,45 @@ var
   Document: TACBrXmlDocument;
   ANode, AuxNode: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
-  ANota: NotaFiscal;
-  NumNFSe: String;
+
+  procedure LocalizarNFSeRetorno(const RootNode: TACBrXmlNode);
+  var
+    ANode, AuxNode: TACBrXmlNode;
+    NumNFSe: String;
+    ANota: NotaFiscal;
+  begin
+    ANode := RootNode.Childrens.FindAnyNs('CompNfse');
+
+    if not Assigned(ANode) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod203;
+      AErro.Descricao := Desc203;
+      Exit;
+    end;
+
+    AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+    AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+    AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+
+    if AuxNode <> nil then
+    begin
+      NumNFSe := AuxNode.AsString;
+
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+      if Assigned(ANota) then
+        ANota.XML := ANode.OuterXml
+      else
+      begin
+        TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+      end;
+
+      SalvarXmlNfse(ANota);
+    end;
+  end;
+
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -2150,6 +2186,7 @@ begin
       ProcessarMensagemErros(Document.Root, Response);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetSubstituicao');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -2162,8 +2199,9 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := ANode.Childrens.FindAnyNs('NfseSubstituida');
-      if not Assigned(ANode) then
+      AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituida');
+
+      if not Assigned(AuxNode) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod206;
@@ -2172,6 +2210,8 @@ begin
       end
       else
       begin
+        LocalizarNFSeRetorno(AuxNode);
+        {
         ANode := ANode.Childrens.FindAnyNs('CompNfse');
         if not Assigned(ANode) then
         begin
@@ -2201,10 +2241,12 @@ begin
 
           SalvarXmlNfse(ANota);
         end;
+        }
       end;
 
-      ANode := Document.Root.Childrens.FindAnyNs('NfseSubstituidora');
-      if not Assigned(ANode) then
+      AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituidora');
+
+      if not Assigned(AuxNode) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod207;
@@ -2213,6 +2255,8 @@ begin
       end
       else
       begin
+        LocalizarNFSeRetorno(AuxNode);
+        {
         ANode := ANode.Childrens.FindAnyNs('CompNfse');
         if not Assigned(ANode) then
         begin
@@ -2242,6 +2286,7 @@ begin
 
           SalvarXmlNfse(ANota);
         end;
+        }
       end;
     except
       on E:Exception do

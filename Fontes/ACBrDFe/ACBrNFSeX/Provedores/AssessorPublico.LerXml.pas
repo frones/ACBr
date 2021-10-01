@@ -96,6 +96,8 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     Result := LerXmlRps(XmlNode);
+
+  FreeAndNil(FDocument);
 end;
 
 function TNFSeR_AssessorPublico.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;

@@ -71,6 +71,8 @@ begin
   FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
 
+  DivAliq100 := True;
+
   NrOcorrAliquota := 0;
 
   NrOcorrCodTribMun_1 := 1;

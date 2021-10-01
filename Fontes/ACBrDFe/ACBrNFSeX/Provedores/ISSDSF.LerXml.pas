@@ -190,6 +190,8 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     Result := LerXmlRps(XmlNode);
+
+  FreeAndNil(FDocument);
 end;
 
 function TNFSeR_ISSDSF.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;

@@ -51,6 +51,7 @@ type
   protected
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
     //function DefinePosicaoNossoNumeroRetorno: Integer; override;
+    procedure GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);override;
   public
     Constructor create(AOwner: TACBrBanco);
 
@@ -631,6 +632,8 @@ function TACBrBancoUnicredES.GerarRegistroHeader240 ( NumeroRemessa: Integer ) :
 var
   ListHeader: TStringList;
   ACodBeneficiario: String;
+  sNomeBanco : String;
+  LayoutLote : Integer;
 begin
   Result := '';
   //ErroAbstract('GerarRemessa240');
@@ -641,6 +644,13 @@ begin
       DigitoVerificadorAgenciaConta:=  copy(ContaDigito,length(ContaDigito ),1) ;
   end;
   ACodBeneficiario:= trim(DefineCodBeneficiarioHeader);
+  LayoutLote := fpLayoutVersaoLote;
+  if (fpLayoutVersaoLote = 944) then
+  begin
+    sNomeBanco := 'UNICRED';
+    LayoutLote := 44;
+  end else
+    sNomeBanco := fpNome;
 
   ListHeader:= TStringList.Create;
   try
@@ -659,7 +669,7 @@ begin
       DefineCampoDigitoAgencia                         + //58 - Dígito da agência do cedente -Alfa
       Padleft(ACodBeneficiario,14,'0')                 + //59 a 72 - Código do Beneficiário
       PadRight(nome, 30, ' ')                          + //73 102 - Nome da Empresa-Alfa
-      PadRight(fpNome, 30, ' ')                        + //103 a 132 -Nome do banco-Alfa
+      PadRight(sNomeBanco, 30, ' ')                        + //103 a 132 -Nome do banco-Alfa
       PadRight('', 10, ' ')                            + //133 a 142 - Uso exclusivo FEBRABAN/CNAB  -Alfa
       '1'                                              + //143 - Código de Remessa (1) / Retorno (2)
       FormatDateTime('ddmmyyyy', Now)                  + //144 a 151 - Data do de geração do arquivo
@@ -679,7 +689,7 @@ begin
       'R'                                        + //9 - Tipo de operação 'R'
       '01'                                       + //10 a 11 - Tipo de serviço: 01 (Cobrança)
       '  '                                       + //12 a 13 - Uso Exclusivo FEBRABAN/CNAB /Alfa
-      PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0') + //14 a 16 - Número da versão do layout do lote
+      PadLeft(IntToStr(LayoutLote), 3, '0')      + //14 a 16 - Número da versão do layout do lote
       ' '                                        + //17 - Uso exclusivo FEBRABAN/CNAB
       DefineTipoInscricao                        + //18 - Tipo de inscrição do cedente
       PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente
@@ -707,7 +717,19 @@ begin
 
 end;
 
-
+procedure TACBrBancoUnicredES.GerarRegistroHeader400(NumeroRemessa: Integer;
+  ARemessa: TStringList);
+var sNome : String;
+begin
+  sNome := fpNome;
+  try
+    if (fpLayoutVersaoLote = 944) then
+      fpNome := 'UNICRED';
+    inherited;
+  finally
+    fpNome := sNome;
+  end;
+end;
 
 end.
 

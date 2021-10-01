@@ -449,8 +449,6 @@ end;
 
 procedure TGeralConfNFSe.SetCodigoMunicipio(const Value: Integer);
 begin
-  TACBrNFSeX(fpConfiguracoes.Owner).LerCidades;
-
   FCodigoMunicipio := Value;
 
   if FCodigoMunicipio <> 0 then

@@ -45,6 +45,10 @@ Símbolo : Significado
 
 
 01/10/2021
+-- ACBrNFSeXConfiguracoes --
+[*] Removido de SetCodigoMunicipio a chamada para LerCidades, pois estava ocorrendo
+    erro em tempo de design.
+   Por: Italo Giurizzato Junior
 -- Thema.GravarXml --
 [*] O provedor exige que a aliquota seja dividida por 100.
    Por: Tiago Rizzon

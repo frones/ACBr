@@ -700,15 +700,20 @@ end;
 function TACBrBancoDaycoval.CalcularNomeArquivoRemessa: String;
 var
   Sequencia :Integer;
-  NomeFixo, NomeArq: String;
+  NomeFixo, Prefix, NomeArq: String;
 begin
    Sequencia := 0;
+
+   if (ACBrBanco.ACBrBoleto.PrefixArqRemessa <> '') then
+     Prefix := ACBrBanco.ACBrBoleto.PrefixArqRemessa
+   else
+     Prefix := '2HQ';
 
    with ACBrBanco.ACBrBoleto do
    begin
       if NomeArqRemessa = '' then
        begin
-         NomeFixo := DirArqRemessa + PathDelim + '2HQ' + FormatDateTime( 'ddmm', Now );
+         NomeFixo := DirArqRemessa + PathDelim + Prefix + FormatDateTime( 'ddmm', Now );
 
          repeat
             Inc( Sequencia );

@@ -1666,6 +1666,7 @@ type
     fLerNossoNumeroCompleto: Boolean;
     fConfiguracoes: TConfiguracoes;
     fListaRetornoWeb: TListaRetEnvio;
+    fPrefixArqRemessa : string;
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
 
@@ -1711,6 +1712,7 @@ type
     property Homologacao    : Boolean            read fHomologacao            write fHomologacao default False;
     property Banco          : TACBrBanco         read fBanco                  write fBanco;
     property Cedente        : TACBrCedente       read fCedente                write fCedente ;
+    property PrefixArqRemessa : String           read fPrefixArqRemessa       write fPrefixArqRemessa;
     property NomeArqRemessa : String             read fNomeArqRemessa         write fNomeArqRemessa;
     property DirArqRemessa  : String             read fDirArqRemessa          write fDirArqRemessa;
     property NomeArqRetorno : String             read fNomeArqRetorno         write fNomeArqRetorno;

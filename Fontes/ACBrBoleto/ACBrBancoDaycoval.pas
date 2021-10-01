@@ -499,7 +499,7 @@ begin
         Space(24) +                                                  // 84 a 107 - Brancos
         ACodigoRemessa +                                             // 108 - Código da Remessa
         ATipoOcorrencia +                                            // 109 a 110 - Código da ocorrência
-        PadLeft(RightStr(SeuNumero,10), 10, ' ') +                   // 111 a 120 - Identificação do título na empresa
+        PadRight(SeuNumero, 10, ' ') +                               // 111 a 120 - Identificação do título na empresa
         FormatDateTime('ddmmyy', Vencimento) +                       // 121 a 126 - Data de vencimento do título
         IntToStrZero(Round(ValorDocumento * 100), 13) +              // 127 a 139 - Valor nominal do título
         '707' +                                                      // 140 a 142 - Banco encarregado da cobrança: 707 = Banco Daycoval

@@ -320,6 +320,8 @@ end;
 
 destructor TACBrSATExtratoFR.Destroy;
 begin
+  if Assigned(frxReport) then
+    frxReport.Free;
   inherited Destroy;
 end;
 

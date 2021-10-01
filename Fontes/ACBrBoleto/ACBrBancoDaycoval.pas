@@ -397,7 +397,7 @@ var
   wQtdRegNFes, J, I: Integer;
   wLinha, NFeSemDados: String;
   Continua: Boolean;
-begin  // Obrigatorio o envio da linha referente a nota fiscal 
+begin  // Obrigatorio o envio da linha referente a nota fiscal
   NFeSemDados:= StringOfChar(' ',15) + StringOfChar('0', 65);
   wQtdRegNFes:= trunc(ACBrTitulo.ListaDadosNFe.Count / 3);
 
@@ -422,7 +422,7 @@ begin  // Obrigatorio o envio da linha referente a nota fiscal
          Inc(J);
          Continua:= (J mod 3) <> 0 ;
       end;
-	  
+
       wLinha:= PadRight(wLinha,81) + StringOfChar(' ', 313) +  IntToStrZero(aRemessa.Count + 1, 6);
       aRemessa.Add(wLinha);
       Inc(I);
@@ -433,7 +433,7 @@ end;
 procedure TACBrBancoDaycoval.GerarRegistroTransacao400( ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   ATipoOcorrencia, AEspecieDoc, ACodigoRemessa : String;
-  DiasProtesto, TipoSacado, ATipoAceite: String;
+  DiasProtesto, TipoSacado, ATipoAceite, AComplemento: String;
   wLinha: String;
 begin
   with ACBrTitulo do
@@ -483,19 +483,33 @@ begin
     // Conforme manual o aceite deve ser sempre 'N'
     ATipoAceite := 'N';
 
-    // Código de Remessa Fixo 6
-    ACodigoRemessa := '6';
+    // Código de Remessa Fixo pelo Layout (peculiaridades)
+
+    case fpLayoutVersaoLote of
+      4 : begin
+          ACodigoRemessa := '4';
+          AComplemento   := PadLeft('', 5, '0') + Copy(PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0'), 3, 8);
+        end;
+      6 : begin
+          ACodigoRemessa := '6';
+          AComplemento   := Space(13);
+        end;
+    else
+      begin
+        ACodigoRemessa := '6';
+        AComplemento := Space(13);
+      end;
+    end;
 
     with ACBrBoleto do
     begin
-      wLinha :=
-        '1' +                                                        // 1 - Código do registro: 1 - Transação
-        TipoSacado +                                                 // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
+      wLinha := '1' + // 1 - Código do registro: 1 - Transação
+        TipoSacado + // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
         PadLeft(OnlyNumber(Cedente.CNPJCPF), 14, '0') +              // 4 a 17 - Número de inscrição
         PadRight(Cedente.CodigoCedente, 20) +                        // 18 a 37 - Código da empresa no banco
         PadRight(SeuNumero, 25) +                                    // 38 a 62 - Identificação do título na empresa
         Copy(PadLeft(NossoNumero,TamanhoMaximoNossoNum,'0'), 3, 8) + // 63 a 70 - Nosso número
-        Space(13) +                                                  // 71 a 83 - Brancos
+        AComplemento +                                               // 71 a 83 - Brancos layout 6 ou zeros layout 4 complemento
         Space(24) +                                                  // 84 a 107 - Brancos
         ACodigoRemessa +                                             // 108 - Código da Remessa
         ATipoOcorrencia +                                            // 109 a 110 - Código da ocorrência
@@ -536,7 +550,7 @@ begin
     end;
   end;
 
-  if ACBrTitulo.ListaDadosNFe.Count > 0 then  //Informações da nota fiscal 
+  if ACBrTitulo.ListaDadosNFe.Count > 0 then  //Informações da nota fiscal
     GerarRegistrosNFe(ACBrTitulo, aRemessa);
 end;
 

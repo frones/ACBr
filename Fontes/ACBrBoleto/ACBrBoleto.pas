@@ -2644,6 +2644,7 @@ end;
 
 destructor TACBrTitulo.Destroy;
 begin
+   fRetornoWeb.Free;
    fMensagem.Free;
    fDetalhamento.Free;
    fInformativo.Free;

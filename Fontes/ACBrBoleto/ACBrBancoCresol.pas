@@ -61,6 +61,7 @@ begin
   inherited;
   fpNome                   := 'Cresol';
   fpNumero                 := 133;
+  fpDigito                 := 3;
   fpNumeroCorrespondente   := 0;
 end;
 

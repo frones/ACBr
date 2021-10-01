@@ -318,6 +318,7 @@ begin
           GNRERetorno.CodReceita     := Leitor.rCampo(tcInt, 'receita');
           GNRERetorno.DataVencimento := DateToStr(Leitor.rCampo(tcDat, 'dataVencimento'));
           GNRERetorno.NumDocOrigem   := Leitor.rCampo(tcStr, 'documentoOrigem');
+          GNRERetorno.Convenio       := Leitor.rCampo(tcStr, 'convenio');
 
           // se o tamanho for 44 o conteudo de NumDocOrigem é a chave da NF-e
           // neste caso devemos extrair o numero da nota da chave.

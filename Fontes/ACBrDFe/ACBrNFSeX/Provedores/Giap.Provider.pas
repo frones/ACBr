@@ -232,7 +232,7 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root;
-
+      {
       ANode := ANode.Childrens.FindAnyNs('nfeResposta');
 
       if not Assigned(ANode) then
@@ -242,7 +242,7 @@ begin
         AErro.Descricao := Desc203;
         Exit;
       end;
-
+      }
       ANodeArray := ANode.Childrens.FindAllAnyNs('notaFiscal');
 
       if not Assigned(ANodeArray) then

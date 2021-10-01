@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+01/10/2021
+-- Giap.Provider --
+[*] Corrigido o TratarRetornoEmitir, esta tentando ler a tag root do XML.
+   Por: Italo Giurizzato Junior
+
 30/09/2021
 -- Giap.GravarXml --
 [*] Corrigido a geração das tags CEP que devem ser informado formatado.

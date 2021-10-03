@@ -134,6 +134,8 @@ const
   CSessaoRegistro = 'REGISTRO';
   CSessaoTituloRetorno = 'TITULORETORNO';
   CSessaoRejeicao = 'REJEICAO';
+  CSessaoSacado = 'Sacado';
+  CSessaoSacadoAvalista = 'SacadoAvalista';
 
 Resourcestring
   SInfBoletosCarregados = '%d Boletos(s) Carregado(s)';

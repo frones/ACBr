@@ -95,10 +95,10 @@ begin
 
   For I := 0 to High(Items) do
   begin
-    Item := Items[I];
+    Item := Items[I] as TACBrLibRespostaBase;
     case Tipo of
       resXML: Result := Result + TACBrObjectSerializer.GerarXml(Item);
-      resJSON: Result := Result + TACBrObjectSerializer.GerarJson(Item);
+      resJSON: Result := Result + ',' + TACBrObjectSerializer.GerarJson(Item);
     else
       Result := Result + TACBrObjectSerializer.GerarIni(Item);
     end;

@@ -97,7 +97,7 @@ implementation
 uses
   ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, ACBrUtil, strutils, typinfo,
   ACBrLibResposta, ACBrBoleto, ACBrLibBoletoConfig, ACBrMail,
-  ACBrLibBoletoRespostas;
+  ACBrLibBoletoRespostas, ACBrObjectSerializer;
   
 constructor TACBrLibBoleto.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
@@ -509,7 +509,11 @@ begin
   try
     Dir := ConverterAnsiParaUTF8(eDir);
     NomeArq:= ConverterAnsiParaUTF8(eNomeArq);
-    GravarLog('Boleto_ObterRetorno', logNormal);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_ObterRetorno(' + eDir + ', ' + eNomeArq + ')', logCompleto, True)
+    else
+      GravarLog('Boleto_ObterRetorno', logNormal);
 
     BoletoDM.Travar;
     try
@@ -557,8 +561,7 @@ begin
     CC := ConverterAnsiParaUTF8(eCC);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('Boleto_EnviarEmail(' + Para + ',' + Assunto
-      + ',' + Mensagem + ',' + CC +')', logCompleto, True)
+      GravarLog('Boleto_EnviarEmail(' + Para + ', ' + Assunto + ', ' + Mensagem + ', ' + CC +')', logCompleto, True)
     else
       GravarLog('Boleto_EnviarEmail', logNormal);
 
@@ -604,8 +607,8 @@ begin
     CC := ConverterAnsiParaUTF8(eCC);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('Boleto_EnviarEmailBoleto(' + IntToStr(eIndice) + ',' + Para + ',' + Assunto
-      + ',' + Mensagem + ',' + CC +')', logCompleto, True)
+      GravarLog('Boleto_EnviarEmailBoleto(' + IntToStr(eIndice) + ', ' + Para + ', ' + Assunto
+      + ', ' + Mensagem + ', ' + CC +')', logCompleto, True)
     else
       GravarLog('Boleto_EnviarEmailBoleto', logNormal);
 
@@ -651,8 +654,7 @@ begin
      Arq := ConverterAnsiParaUTF8(eArq);
 
      if Config.Log.Nivel > logNormal then
-       GravarLog('Boleto_SetDiretorioArquivo( Diretorio: ' + Dir +
-       ' Arquivo: ' + Arq + ' )', logCompleto, True)
+       GravarLog('Boleto_SetDiretorioArquivo(' + Dir + ', ' + Arq + ' )', logCompleto, True)
      else
        GravarLog('Boleto_SetDiretorioArquivo', logNormal);
 
@@ -789,7 +791,10 @@ begin
     NossoNumero:= ConverterAnsiParaUTF8(enossoNumero);
     Convenio:= ConverterAnsiParaUTF8(eConvenio);
 
-    GravarLog('Boleto_TamNossoNumero', logNormal);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_TamNossoNumero(' + eCarteira + ', ' + enossoNumero + ', ' +  eConvenio + ')', logCompleto, True)
+    else
+      GravarLog('Boleto_TamNossoNumero', logNormal);
 
     BoletoDM.Travar;
     try
@@ -837,7 +842,10 @@ begin
   try
     CodBanco := ConverterAnsiParaUTF8(eCodBanco);
 
-    GravarLog('Boleto_SelecionaBanco', logNormal);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_SelecionaBanco(' + eCodBanco + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_SelecionaBanco', logNormal);
 
     BoletoDM.Travar;
 
@@ -865,7 +873,10 @@ begin
     if (eIndice >= 0) then
       Indice := eIndice;
 
-    GravarLog('Boleto_MontarNossoNumero', logNormal);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_MontarNossoNumero(' + IntToStr(eIndice) + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_MontarNossoNumero', logNormal);
 
     if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
         raise  EACBrLibException.Create(ErrIndex, 'Titulo não encontrado.');
@@ -899,7 +910,10 @@ begin
     if (eIndice >= 0) then
       Indice := eIndice;
 
-    GravarLog('RetornaLinhaDigitavel', logNormal);
+    if Config.Log.Nivel > logNormal then
+       GravarLog('Boleto_RetornaLinhaDigitavel(' + IntToStr(eIndice) + ' )', logCompleto, True)
+     else
+       GravarLog('Boleto_RetornaLinhaDigitavel', logNormal);
 
     if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
       raise  EACBrLibException.Create(ErrIndex, 'Titulo não encontrado.');
@@ -934,7 +948,10 @@ begin
     if (eIndice >= 0) then
       Indice := eIndice;
 
-    GravarLog('Boleto_RetornaCodigoBarras', logNormal);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_RetornaCodigoBarras(' + IntToStr(eIndice) + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_RetornaCodigoBarras', logNormal);
 
     if (BoletoDM.ACBrBoleto1.ListadeBoletos.Count = 0) then
       raise  EACBrLibException.Create(ErrIndex, 'Titulo não encontrado.');
@@ -1028,15 +1045,20 @@ end;
 function TACBrLibBoleto.EnviarBoleto(eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resposta: AnsiString;
-  Resp : TRetornoRegistroWeb;
+  Titulo : TRetornoRegistroWeb;
   I: Integer;
   CodigoOperacao: Integer;
+  Titulos: TArray<TRetornoRegistroWeb>;
 begin
   CodigoOperacao := 0;
     if (eCodigoOperacao >= 0) then
       CodigoOperacao := eCodigoOperacao;
+
   try
-    GravarLog('Boleto_EnviarBoleto', logNormal);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_EnviarBoleto(' + IntToStr(eCodigoOperacao) + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_EnviarBoleto', logNormal);
 
     BoletoDM.Travar;
 
@@ -1045,18 +1067,28 @@ begin
       BoletoDM.ACBrBoleto1.EnviarBoleto;
 
       if BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count > 0 then
-      for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
       begin
-        Resp := TRetornoRegistroWeb.Create(I , Config.TipoResposta, Config.CodResposta);
+        SetLength(Titulos, BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count);
         try
-          Resp.Processar(BoletoDM.ACBrBoleto1);
-          Resposta := Resp.Gerar;
-        Finally
-          Resp.Free;
+          for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
+          begin
+            Titulo := TRetornoRegistroWeb.Create(I + 1, Config.TipoResposta, Config.CodResposta);
+            Titulos[I] := Titulo;
+          end;
+
+          Resposta := TACBrObjectSerializer.Gerar<TRetornoRegistroWeb>(Titulos, Config.TipoResposta, Config.CodResposta);
+        finally
+          for I:= 0 to High(Titulos) do
+          begin
+            Titulo := Titulos[I] as TRetornoRegistroWeb;
+            FreeAndNil(Titulo);
+          end;
+
+          SetLength(Titulos, 0);
+          Titulos := nil;
         end;
       end;
 
-      Resposta := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Resposta), Resposta);
       MoverStringParaPChar(Resposta, sResposta, esTamanho);
       Result := SetRetorno(ErrOK, Resposta);
     finally

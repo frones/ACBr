@@ -43,20 +43,8 @@ uses
 
 type
 
-  { TLibBoletoServiceResposta }
-  TLibBoletoServiceResposta = class abstract(TACBrLibResposta<TACBrBoleto>)
-  private
-
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
-
-    procedure Processar(const ACBrBoleto: TACBrBoleto); virtual; abstract; reintroduce;
-
-  end;
-
   { TRetornoDadosCedente }
-  TRetornoDadosCedente = class(TLibBoletoServiceResposta)
+  TRetornoDadosCedente = class(TACBrLibRespostaBase)
   private
     FNome: String;
     FCNPJCPF: String;
@@ -67,7 +55,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
-    procedure Processar(const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar(const ACBrBoleto: TACBrBoleto);
 
   published
     property Nome : String read FNome Write FNome;
@@ -80,7 +68,7 @@ type
   end;
 
   { TRetornoDadosBanco }
-  TRetornoDadosBanco = class(TLibBoletoServiceResposta)
+  TRetornoDadosBanco = class(TACBrLibRespostaBase)
   private
     FNumero : Integer;
     FIndiceACBr : Integer;
@@ -91,7 +79,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
-    procedure Processar(const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar(const ACBrBoleto: TACBrBoleto);
 
   published
     property Numero : Integer read FNumero write FNumero;
@@ -103,7 +91,7 @@ type
   end;
 
   { TRetornoDadosConta }
-  TRetornoDadosConta = class(TLibBoletoServiceResposta)
+  TRetornoDadosConta = class(TACBrLibRespostaBase)
   private
     FConta : String;
     FDigitoConta : String;
@@ -114,7 +102,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
-    procedure Processar(const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar(const ACBrBoleto: TACBrBoleto);
 
   published
     property Conta : String read FConta write FConta;
@@ -142,7 +130,7 @@ type
   end;
 
   { TRetornoDadosTitulo }
-  TRetornoDadosTitulo = class(TLibBoletoServiceResposta)
+  TRetornoDadosTitulo = class(TACBrLibRespostaBase)
   private
     FID: Integer;
     FSacado_Nome : String;
@@ -153,7 +141,7 @@ type
     FDataProcessamento: TDateTime;
     FNossoNumero: String;
     FCarteira: String;
-    FValorDocumento: TDateTime;
+    FValorDocumento: Currency;
     FDataOcorrencia: TDateTime;
     FDataCredito: TDateTime;
     FDataBaixa: TDateTime;
@@ -174,7 +162,7 @@ type
   public
     constructor Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
-    procedure Processar( const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar( const ACBrBoleto: TACBrBoleto);
 
   published
     property Sacado_Nome : String read FSacado_Nome write FSacado_Nome;
@@ -185,11 +173,11 @@ type
     property DataProcessamento: TDateTime read FDataProcessamento write FDataProcessamento;
     property NossoNumero: String read FNossoNumero write FNossoNumero;
     property Carteira: String read FCarteira write FCarteira;
-    property ValorDocumento: TDateTime read FValorDocumento write FValorDocumento;
     property DataOcorrencia: TDateTime read FDataOcorrencia write FDataOcorrencia;
     property DataCredito: TDateTime read FDataCredito write FDataCredito;
     property DataBaixa: TDateTime read FDataBaixa write FDataBaixa;
     property DataMoraJuros: TDateTime read FDataMoraJuros write FDataMoraJuros;
+    property ValorDocumento: Currency read FValorDocumento write FValorDocumento;
     property ValorDespesaCobranca: Currency read FValorDespesaCobranca write FValorDespesaCobranca;
     property ValorAbatimento: Currency read FValorAbatimento write FValorAbatimento;
     property ValorDesconto: Currency read FValorDesconto write FValorDesconto;
@@ -206,8 +194,7 @@ type
   end;
 
   { TRetornoBoleto }
-
-  TRetornoBoleto = class(TLibBoletoServiceResposta)
+  TRetornoBoleto = class(TACBrLibRespostaBase)
   private
     FCedente: TRetornoDadosCedente;
     FBanco: TRetornoDadosBanco;
@@ -218,7 +205,7 @@ type
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
-    procedure Processar(const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar(const ACBrBoleto: TACBrBoleto);
 
   published
     property Cedente: TRetornoDadosCedente read FCedente write FCedente;
@@ -228,8 +215,62 @@ type
 
   end;
 
+  { TSacadoWeb }
+  TSacadoWeb = class(TACBrLibRespostaBase)
+  private
+    FTipoPessoa: TACBrPessoa;
+    FNomeSacado: String;
+    FCNPJCPF: String;
+    FLogradouro: String;
+    FNumero: String;
+    FComplemento: String;
+    FBairro: String;
+    FCidade: String;
+    FUF: String;
+    FCEP: String;
+    FEmail: String;
+    FFone: String;
+
+  public
+    constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+    procedure Processar(const ASacado: TSacadoRet);
+
+  published
+    property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
+    property NomeSacado: String   read FNomeSacado   write FNomeSacado;
+    property CNPJCPF: String      read FCNPJCPF      write FCNPJCPF;
+    property Logradouro: String   read FLogradouro   write FLogradouro;
+    property Numero: String       read FNumero       write FNumero;
+    property Complemento: String  read FComplemento  write FComplemento;
+    property Bairro: String       read FBairro       write FBairro;
+    property Cidade: String       read FCidade       write FCidade;
+    property UF: String           read FUF           write FUF;
+    property CEP: String          read FCEP          write FCEP;
+    property Email: String        read FEmail        write FEmail;
+    property Fone: String         read FFone         write FFone;
+
+  end;
+
+  { TSacadoAvalistaWeb }
+  TSacadoAvalistaWeb = class(TACBrLibRespostaBase)
+  private
+    FTipoPessoa: TACBrPessoa;
+    FNomeAvalista: String;
+    FCNPJCPF: String;
+
+  public
+    constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+    procedure Processar(const ASacadoAvalista: TSacadoAvalistaRet);
+
+  published
+    property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
+    property NomeAvalista: String read FNomeAvalista write FNomeAvalista;
+    property CNPJCPF: String      read FCNPJCPF      write FCNPJCPF;
+
+  end;
+
   {TRetornoTituloWeb}
-  TRetornoTituloWeb =  class(TLibBoletoServiceResposta)
+  TRetornoTituloWeb =  class(TACBrLibRespostaBase)
   private
     FAID: Integer;
 
@@ -258,8 +299,8 @@ type
     FMensagem: TStrings;
     FInformativo: TStrings;
     FInstrucoes: TStrings;
-    FSacado: TSacadoRet;
-    FSacadoAvalista: TSacadoAvalistaRet;
+    FSacado: TSacadoWeb;
+    FSacadoAvalista: TSacadoAvalistaWeb;
     FDataCredito: TDateTime;
     FDataAbatimento: TDateTime;
     FDataDesconto: TDateTime;
@@ -300,7 +341,7 @@ type
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    procedure Processar(const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar(const DadosRet: TDadosRet);
     destructor Destroy; override;
 
   published
@@ -329,8 +370,8 @@ type
     property Mensagem: TStrings read FMensagem write FMensagem ;
     property Informativo: TStrings read FInformativo write FInformativo ;
     property Instrucoes: TStrings read FInstrucoes write FInstrucoes ;
-    property Sacado: TSacadoRet read FSacado write FSacado ;
-    property SacadoAvalista: TSacadoAvalistaRet read FSacadoAvalista write FSacadoAvalista ;
+    property Sacado: TSacadoWeb read FSacado;
+    property SacadoAvalista: TSacadoAvalistaWeb read FSacadoAvalista;
     property DataCredito: TDateTime read FDataCredito write FDataCredito ;
     property DataAbatimento: TDateTime read FDataAbatimento write FDataAbatimento ;
     property DataDesconto: TDateTime read FDataDesconto write FDataDesconto ;
@@ -385,7 +426,7 @@ type
 
   public
     constructor Create( const AID: Integer; const AIDRej: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    procedure Processar(const ACBrBoleto: TACBrBoleto);
+    procedure Processar(const ARejeicao: TRejeicao);
 
   published
     property Campo : String read FCampo write FCampo;
@@ -398,7 +439,7 @@ type
   end;
 
   { TRetornoRegistroWeb }
-  TRetornoRegistroWeb = class(TLibBoletoServiceResposta)
+  TRetornoRegistroWeb = class(TACBrLibRespostaBase)
   private
     FID: Integer;
 
@@ -434,13 +475,13 @@ type
     FIDNossoNum: String;
     FIDURL: String;
 
-    FRejeicao: TRetornoRejeicoesWeb;
+    FRejeicoes: TObjectList;
     FTituloRetorno: TRetornoTituloWeb;
 
   public
     constructor Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
-    procedure Processar(const ACBrBoleto: TACBrBoleto); override;
+    procedure Processar(const RetEnvio: TRetEnvio);
 
   published
     property CodRetorno: String                  read FCodRetorno                  write FCodRetorno;
@@ -475,7 +516,7 @@ type
     property IDNossoNum: String                   read FIDNossoNum                 write FIDNossoNum;
     property IDURL: String                        read FIDURL                      write FIDURL;
 
-    property Rejeicao: TRetornoRejeicoesWeb       read FRejeicao                   write FRejeicao;
+    property Rejeicoes: TObjectList               read FRejeicoes                  write FRejeicoes;
     property TituloRetorno: TRetornoTituloWeb     read FTituloRetorno              write FTituloRetorno;
 
 
@@ -488,33 +529,73 @@ uses
   ACBrUtil, ACBrLibBoletoConsts;
 
 { TRetornoRejeicoesWeb }
-
 constructor TRetornoRejeicoesWeb.Create(const AID, AIDRej: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 var
   AChave: String;
 begin
-  AChave := CSessaoRejeicao+ IntToStr(AID + 1) + '-' + IntToStr(AIDRej + 1);
+  AChave := CSessaoRejeicao+ IntToStr(AID) + '-' + IntToStr(AIDRej);
 
-  inherited Create( AChave, ATipo, AFormato);
+  inherited Create(AChave, ATipo, AFormato);
   FID:= AID;
   FIDRej:= AIDRej;
 
 end;
 
-procedure TRetornoRejeicoesWeb.Processar(const ACBrBoleto: TACBrBoleto);
+procedure TRetornoRejeicoesWeb.Processar(const ARejeicao: TRejeicao);
 begin
-  Campo := ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Campo;
-  Mensagem := ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Mensagem;
-  Valor:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Valor;
-  Codigo:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Codigo;
-  Ocorrencia:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Ocorrencia;
-  Versao:= ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao[FIDRej].Versao;
+  Campo := ARejeicao.Campo;
+  Mensagem := ARejeicao.Mensagem;
+  Valor:= ARejeicao.Valor;
+  Codigo:= ARejeicao.Codigo;
+  Ocorrencia:= ARejeicao.Ocorrencia;
+  Versao:= ARejeicao.Versao;
+end;
 
+{ TSacadoWeb }
+constructor TSacadoWeb.Create(AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+var
+  AChave: String;
+begin
+  AChave := CSessaoSacado+ IntToStr(AID);
+
+  inherited Create(AChave, ATipo, AFormato);
+end;
+
+procedure TSacadoWeb.Processar(const ASacado: TSacadoRet);
+begin
+  Pessoa := ASacado.Pessoa;
+  NomeSacado := ASacado.NomeSacado;
+  CNPJCPF := ASacado.CNPJCPF;
+  Logradouro := ASacado.Logradouro;
+  Numero := ASacado.Numero;
+  Complemento := ASacado.Complemento;
+  Bairro := ASacado.Bairro;
+  Cidade := ASacado.Cidade;
+  UF := ASacado.UF;
+  CEP := ASacado.CEP;
+  Email := ASacado.Email;
+  Fone := ASacado.Fone;
+end;
+
+{ TSacadoAvalistaWeb }
+constructor TSacadoAvalistaWeb.Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+var
+  AChave: String;
+begin
+  AChave := CSessaoSacadoAvalista+ IntToStr(AID);
+
+  inherited Create(AChave, ATipo, AFormato);
+end;
+
+procedure TSacadoAvalistaWeb.Processar(const ASacadoAvalista: TSacadoAvalistaRet);
+begin
+  Pessoa := ASacadoAvalista.Pessoa;
+  NomeAvalista := ASacadoAvalista.NomeAvalista;
+  CNPJCPF := ASacadoAvalista.CNPJCPF;
 end;
 
 { TRetornoTituloWeb }
-
 constructor TRetornoTituloWeb.Create(AID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 var
@@ -524,169 +605,165 @@ begin
 
   inherited Create(AChave, ATipo, AFormato);
   FAID:= AID;
-
-end;
-
-procedure TRetornoTituloWeb.Processar(const ACBrBoleto: TACBrBoleto);
-begin
-  if ACBrBoleto.ListaRetornoWeb.Count > 0 then
-  begin
-
-    CodBarras:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CodBarras;
-    LinhaDig:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.LinhaDig;
-    URL:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.URL;
-    Instrucao1:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Instrucao1;
-    Instrucao2:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Instrucao2;
-    Instrucao3:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Instrucao3;
-    Parcela:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Parcela;
-    PercentualMulta:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.PercentualMulta;
-    MultaValorFixo:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.MultaValorFixo;
-    SeuNumero:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.SeuNumero;
-    TipoDiasProtesto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.TipoDiasProtesto;
-    Vencimento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Vencimento;
-    DataDocumento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataDocumento;
-    NumeroDocumento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.NumeroDocumento;
-    EspecieDoc:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.EspecieDoc;
-    Aceite:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Aceite;
-    DataProcessamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataProcessamento;
-    NossoNumero:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.NossoNumero;
-    UsoBanco:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.UsoBanco;
-    Carteira:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Carteira;
-    EspecieMod:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.EspecieMod;
-    ValorDocumento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorDocumento;
-    Mensagem:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Mensagem;
-    Informativo:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Informativo;
-    Instrucoes:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Instrucoes;
-    Sacado:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.Sacado;
-    SacadoAvalista:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.SacadoAvalista;
-    DataCredito:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataCredito;
-    DataAbatimento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataAbatimento;
-    DataDesconto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataDesconto;
-    DataDesconto2:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataDesconto2;
-    DataMoraJuros:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataMoraJuros;
-    DataMulta:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataMulta;
-    DataProtesto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataProtesto;
-    DiasDeProtesto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DiasDeProtesto;
-    DataBaixa:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataBaixa;
-    DataLimitePagto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.DataLimitePagto;
-    ValorDespesaCobranca:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorDespesaCobranca;
-    ValorAbatimento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorAbatimento;
-    ValorDesconto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorDesconto;
-    ValorDesconto2:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorDesconto2;
-    ValorMoraJuros:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorMoraJuros;
-    ValorIOF:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorIOF;
-    ValorOutrasDespesas:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorOutrasDespesas;
-    ValorOutrosCreditos:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorOutrosCreditos;
-    ValorRecebido:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorRecebido;
-    CodigoMora:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CodigoMora;
-    CarteiraEnvio:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CarteiraEnvio;
-    CodigoNegativacao:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CodigoNegativacao;
-    CodigoDesconto:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CodigoDesconto;
-    CodigoMoraJuros:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CodigoMoraJuros;
-    CodigoMulta:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CodigoMulta;
-    ValorPago:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorPago;
-    CaracTitulo:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.CaracTitulo;
-    TipoPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.TipoPagamento;
-    QtdePagamentoParcial:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.QtdePagamentoParcial;
-    QtdeParcelas:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.QtdeParcelas;
-    ValorMinPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorMinPagamento;
-    ValorMaxPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.ValorMaxPagamento;
-    PercentualMinPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.PercentualMinPagamento;
-    PercentualMaxPagamento:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.PercentualMaxPagamento;
-
-    if ( ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.EMV  <> EmptyStr) then
-    begin
-      emv:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.EMV;
-      url_Pix:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.UrlPix;
-      Tx_ID:= ACBrBoleto.ListaRetornoWeb[FAID].DadosRet.TituloRet.TxId;
-    end;
-
-  end;
-
+  FSacado := TSacadoWeb.Create(AID, ATipo, AFormato);
+  FSacadoAvalista := TSacadoAvalistaWeb.Create(AID, ATipo, AFormato);
 end;
 
 destructor TRetornoTituloWeb.Destroy;
 begin
   inherited Destroy;
+
+  FSacado.Free;
+  FSacadoAvalista.Free;
+end;
+
+procedure TRetornoTituloWeb.Processar(const DadosRet: TDadosRet);
+begin
+    CodBarras:= DadosRet.TituloRet.CodBarras;
+    LinhaDig:= DadosRet.TituloRet.LinhaDig;
+    URL:= DadosRet.TituloRet.URL;
+    Instrucao1:= DadosRet.TituloRet.Instrucao1;
+    Instrucao2:= DadosRet.TituloRet.Instrucao2;
+    Instrucao3:= DadosRet.TituloRet.Instrucao3;
+    Parcela:= DadosRet.TituloRet.Parcela;
+    PercentualMulta:= DadosRet.TituloRet.PercentualMulta;
+    MultaValorFixo:= DadosRet.TituloRet.MultaValorFixo;
+    SeuNumero:= DadosRet.TituloRet.SeuNumero;
+    TipoDiasProtesto:= DadosRet.TituloRet.TipoDiasProtesto;
+    Vencimento:= DadosRet.TituloRet.Vencimento;
+    DataDocumento:= DadosRet.TituloRet.DataDocumento;
+    NumeroDocumento:= DadosRet.TituloRet.NumeroDocumento;
+    EspecieDoc:= DadosRet.TituloRet.EspecieDoc;
+    Aceite:= DadosRet.TituloRet.Aceite;
+    DataProcessamento:= DadosRet.TituloRet.DataProcessamento;
+    NossoNumero:= DadosRet.TituloRet.NossoNumero;
+    UsoBanco:= DadosRet.TituloRet.UsoBanco;
+    Carteira:= DadosRet.TituloRet.Carteira;
+    EspecieMod:= DadosRet.TituloRet.EspecieMod;
+    ValorDocumento:= DadosRet.TituloRet.ValorDocumento;
+    Mensagem:= DadosRet.TituloRet.Mensagem;
+    Informativo:= DadosRet.TituloRet.Informativo;
+    Instrucoes:= DadosRet.TituloRet.Instrucoes;
+    Sacado.Processar(DadosRet.TituloRet.Sacado);
+    SacadoAvalista.Processar(DadosRet.TituloRet.SacadoAvalista);
+    DataCredito:= DadosRet.TituloRet.DataCredito;
+    DataAbatimento:= DadosRet.TituloRet.DataAbatimento;
+    DataDesconto:= DadosRet.TituloRet.DataDesconto;
+    DataDesconto2:= DadosRet.TituloRet.DataDesconto2;
+    DataMoraJuros:= DadosRet.TituloRet.DataMoraJuros;
+    DataMulta:= DadosRet.TituloRet.DataMulta;
+    DataProtesto:= DadosRet.TituloRet.DataProtesto;
+    DiasDeProtesto:= DadosRet.TituloRet.DiasDeProtesto;
+    DataBaixa:= DadosRet.TituloRet.DataBaixa;
+    DataLimitePagto:= DadosRet.TituloRet.DataLimitePagto;
+    ValorDespesaCobranca:= DadosRet.TituloRet.ValorDespesaCobranca;
+    ValorAbatimento:= DadosRet.TituloRet.ValorAbatimento;
+    ValorDesconto:= DadosRet.TituloRet.ValorDesconto;
+    ValorDesconto2:= DadosRet.TituloRet.ValorDesconto2;
+    ValorMoraJuros:= DadosRet.TituloRet.ValorMoraJuros;
+    ValorIOF:= DadosRet.TituloRet.ValorIOF;
+    ValorOutrasDespesas:= DadosRet.TituloRet.ValorOutrasDespesas;
+    ValorOutrosCreditos:= DadosRet.TituloRet.ValorOutrosCreditos;
+    ValorRecebido:= DadosRet.TituloRet.ValorRecebido;
+    CodigoMora:= DadosRet.TituloRet.CodigoMora;
+    CarteiraEnvio:= DadosRet.TituloRet.CarteiraEnvio;
+    CodigoNegativacao:= DadosRet.TituloRet.CodigoNegativacao;
+    CodigoDesconto:= DadosRet.TituloRet.CodigoDesconto;
+    CodigoMoraJuros:= DadosRet.TituloRet.CodigoMoraJuros;
+    CodigoMulta:= DadosRet.TituloRet.CodigoMulta;
+    ValorPago:= DadosRet.TituloRet.ValorPago;
+    CaracTitulo:= DadosRet.TituloRet.CaracTitulo;
+    TipoPagamento:= DadosRet.TituloRet.TipoPagamento;
+    QtdePagamentoParcial:= DadosRet.TituloRet.QtdePagamentoParcial;
+    QtdeParcelas:= DadosRet.TituloRet.QtdeParcelas;
+    ValorMinPagamento:= DadosRet.TituloRet.ValorMinPagamento;
+    ValorMaxPagamento:= DadosRet.TituloRet.ValorMaxPagamento;
+    PercentualMinPagamento:= DadosRet.TituloRet.PercentualMinPagamento;
+    PercentualMaxPagamento:= DadosRet.TituloRet.PercentualMaxPagamento;
+
+    if ( DadosRet.TituloRet.EMV  <> EmptyStr) then
+    begin
+      emv:= DadosRet.TituloRet.EMV;
+      url_Pix:= DadosRet.TituloRet.UrlPix;
+      Tx_ID:= DadosRet.TituloRet.TxId;
+    end;
 end;
 
 { TRetornoWebHeader }
-
 constructor TRetornoRegistroWeb.Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 var
   AChave: String;
 begin
-  AChave := CSessaoRegistro + IntToStr(AID + 1) ;
+  AChave := CSessaoRegistro + IntToStr(AID);
   inherited Create(AChave, ATipo, AFormato);
 
   FID:= AID;
-  FRejeicao:= Nil;
+  FRejeicoes := TObjectList.Create(True);
   FTituloRetorno:= Nil;
-
 end;
 
 destructor TRetornoRegistroWeb.Destroy;
 begin
   if Assigned(FTituloRetorno) then FreeAndNil(FTituloRetorno);
-  if Assigned(FRejeicao) then FreeAndNil(FRejeicao);
+
+  FRejeicoes.Clear;
+  FRejeicoes.Free;
 
   inherited Destroy;
 end;
 
-procedure TRetornoRegistroWeb.Processar(const ACBrBoleto: TACBrBoleto);
+procedure TRetornoRegistroWeb.Processar(const RetEnvio: TRetEnvio);
 var
   J: Integer;
+  Rejeicao: TRetornoRejeicoesWeb;
 begin
-  if ACBrBoleto.ListaRetornoWeb.Count > 0 then
+
+  CodRetorno:= RetEnvio.CodRetorno;
+  OriRetorno:= RetEnvio.OriRetorno;
+  MsgRetorno:= RetEnvio.MsgRetorno;
+  Excecao:= RetEnvio.DadosRet.Excecao;
+  IndicadorContinuidade:= RetEnvio.indicadorContinuidade;
+
+  ProximoIndice:= RetEnvio.proximoIndice;
+
+  Header_Versao:= RetEnvio.Header.Versao;
+  Header_Autenticacao:= RetEnvio.Header.Autenticacao;
+  Header_Usuario_Servico:= RetEnvio.Header.Usuario_Servico;
+  Header_Usuario:= RetEnvio.Header.Usuario;
+  Header_Operacao:= TipoOperacaoToStr( RetEnvio.Header.Operacao );
+  Header_Indice:= RetEnvio.Header.Indice;
+  Header_Sistema_Origem:= RetEnvio.Header.Sistema_Origem;
+  Header_Agencia:= RetEnvio.Header.Agencia;
+  Header_Id_Origem:= RetEnvio.Header.Id_Origem;
+  Header_Data_Hora:= RetEnvio.Header.Data_Hora;
+  Header_Id_Processo:= RetEnvio.Header.Id_Processo;
+  Header_CNPJCPF_Beneficiario:= RetEnvio.Header.CNPJCPF_Beneficiario;
+
+  ControleOriRetorno:= RetEnvio.DadosRet.ControleNegocial.OriRetorno;
+  ControleCodRetorno:= RetEnvio.DadosRet.ControleNegocial.CodRetorno;
+  ControleNSU:= RetEnvio.DadosRet.ControleNegocial.NSU;
+  ControleRetorno:= RetEnvio.DadosRet.ControleNegocial.CodRetorno;
+  ControleHora:= RetEnvio.DadosRet.Comprovante.Hora;
+  ControleData:= RetEnvio.DadosRet.Comprovante.Data;
+
+  IDCodBarras:= RetEnvio.DadosRet.IDBoleto.CodBarras;
+  IDLinhaDig:= RetEnvio.DadosRet.IDBoleto.LinhaDig;
+  IDNossoNum:= RetEnvio.DadosRet.IDBoleto.NossoNum;
+  IDURL:= RetEnvio.DadosRet.IDBoleto.URL;
+
+  for J:= 0 to  RetEnvio.ListaRejeicao.Count -1 do
   begin
-
-    CodRetorno:= ACBrBoleto.ListaRetornoWeb[FID].CodRetorno;
-    OriRetorno:= ACBrBoleto.ListaRetornoWeb[FID].OriRetorno;
-    MsgRetorno:= ACBrBoleto.ListaRetornoWeb[FID].MsgRetorno;
-    Excecao:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.Excecao;
-    IndicadorContinuidade:= ACBrBoleto.ListaRetornoWeb[FID].indicadorContinuidade;
-    ProximoIndice:= ACBrBoleto.ListaRetornoWeb[FID].proximoIndice;
-
-    Header_Versao:= ACBrBoleto.ListaRetornoWeb[FID].Header.Versao;
-    Header_Autenticacao:= ACBrBoleto.ListaRetornoWeb[FID].Header.Autenticacao;
-    Header_Usuario_Servico:= ACBrBoleto.ListaRetornoWeb[FID].Header.Usuario_Servico;
-    Header_Usuario:= ACBrBoleto.ListaRetornoWeb[FID].Header.Usuario;
-    Header_Operacao:= TipoOperacaoToStr( ACBrBoleto.ListaRetornoWeb[FID].Header.Operacao );
-    Header_Indice:= ACBrBoleto.ListaRetornoWeb[FID].Header.Indice;
-    Header_Sistema_Origem:= ACBrBoleto.ListaRetornoWeb[FID].Header.Sistema_Origem;
-    Header_Agencia:= ACBrBoleto.ListaRetornoWeb[FID].Header.Agencia;
-    Header_Id_Origem:= ACBrBoleto.ListaRetornoWeb[FID].Header.Id_Origem;
-    Header_Data_Hora:= ACBrBoleto.ListaRetornoWeb[FID].Header.Data_Hora;
-    Header_Id_Processo:= ACBrBoleto.ListaRetornoWeb[FID].Header.Id_Processo;
-    Header_CNPJCPF_Beneficiario:= ACBrBoleto.ListaRetornoWeb[FID].Header.CNPJCPF_Beneficiario;
-
-    ControleOriRetorno:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.ControleNegocial.OriRetorno;
-    ControleCodRetorno:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.ControleNegocial.CodRetorno;
-    ControleNSU:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.ControleNegocial.NSU;
-    ControleRetorno:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.ControleNegocial.CodRetorno;
-    ControleHora:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.Comprovante.Hora;
-    ControleData:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.Comprovante.Data;
-
-    IDCodBarras:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.IDBoleto.CodBarras;
-    IDLinhaDig:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.IDBoleto.LinhaDig;
-    IDNossoNum:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.IDBoleto.NossoNum;
-    IDURL:= ACBrBoleto.ListaRetornoWeb[FID].DadosRet.IDBoleto.URL;
-
-    for J:= 0 to  ACBrBoleto.ListaRetornoWeb[FID].ListaRejeicao.Count -1 do
-    begin
-      Rejeicao := TRetornoRejeicoesWeb.Create( FID, J, Tipo, Formato);
-      Rejeicao.Processar(ACBrBoleto);
-    end;
-
-    TituloRetorno := TRetornoTituloWeb.Create(FID, Tipo, Formato);
-    TituloRetorno.Processar(ACBrBoleto);
+    Rejeicao := TRetornoRejeicoesWeb.Create(FID, J+1, Tipo, Formato);
+    Rejeicao.Processar(RetEnvio.ListaRejeicao[J]);
+    Rejeicoes.Add(Rejeicao);
   end;
 
+  TituloRetorno := TRetornoTituloWeb.Create(FID, Tipo, Formato);
+  TituloRetorno.Processar(RetEnvio.DadosRet);
 end;
 
 { TRetornoRejeicoesTitulo }
-
 constructor TRetornoRejeicoesTitulo.Create(const AIDRej: Integer; const AID: Integer; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 var
@@ -705,7 +782,6 @@ begin
 end;
 
 { TRetornoBoleto }
-
 constructor TRetornoBoleto.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
@@ -750,11 +826,9 @@ begin
     Item.Processar(ACBrBoleto);
     FTitulo.Add(Item);
   end;
-
 end;
 
 { TRetornoDadosTitulo }
-
 constructor TRetornoDadosTitulo.Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
@@ -815,7 +889,6 @@ begin
 end;
 
 { TRetornoDadosConta }
-
 constructor TRetornoDadosConta.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
@@ -836,13 +909,10 @@ begin
     Agencia := ACBrBoleto.Cedente.Agencia;
     DigitoAgencia := ACBrBoleto.Cedente.AgenciaDigito;
     DigitoVerificadorAgenciaConta := ACBrBoleto.Cedente.DigitoVerificadorAgenciaConta;
-
   end;
-
 end;
 
 { TRetornoDadosBanco }
-
 constructor TRetornoDadosBanco.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
@@ -868,16 +938,7 @@ begin
 
 end;
 
-{ TLibBoletoServiceResposta }
-
-constructor TLibBoletoServiceResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-begin
-  inherited Create(ASessao, ATipo, AFormato);
-end;
-
 { TRetornoDadosCedente }
-
 constructor TRetornoDadosCedente.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
@@ -899,12 +960,8 @@ begin
     Modalidade := ACBrBoleto.Cedente.Modalidade;
     CodTransmissao := ACBrBoleto.Cedente.CodigoTransmissao;
     Convenio := ACBrBoleto.Cedente.Convenio;
-
   end;
-
 end;
-
-
 
 end.
 

@@ -8,6 +8,9 @@ namespace ACBrLib.Core.DFe
 
         public string Id { get; set; }
 
+        [IniIgnore]
+        public string Numero { get; set; }
+
         public string tpAmb { get; set; }
 
         public string verAplic { get; set; }

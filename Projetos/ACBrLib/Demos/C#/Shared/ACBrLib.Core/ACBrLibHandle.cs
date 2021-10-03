@@ -47,6 +47,9 @@ namespace ACBrLib.Core
 
             var pNewSession = LibLoader.LoadLibrary(dllName);
             if (pNewSession == IntPtr.Zero || pNewSession == MinusOne)
+                pNewSession = LibLoader.LoadLibrary(Path.Combine(LibraryPath, dllName));
+
+            if (pNewSession == IntPtr.Zero || pNewSession == MinusOne)
                 throw CreateException("Não foi possivel carregar a biblioteca.");
 
             SetHandle(pNewSession);

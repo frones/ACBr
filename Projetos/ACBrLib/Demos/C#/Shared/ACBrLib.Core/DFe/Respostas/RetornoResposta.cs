@@ -51,8 +51,7 @@ namespace ACBrLib.Core.DFe
             var sections = iniresposta.Where(x => x.Name.StartsWith(prefix));
             foreach (var section in sections)
             {
-                var item = new RetornoItemResposta();
-                section.ReadFromINi(item);
+                var item = section.ReadFromINi<RetornoItemResposta>();
                 ret.Items.Add(item);
             }
 

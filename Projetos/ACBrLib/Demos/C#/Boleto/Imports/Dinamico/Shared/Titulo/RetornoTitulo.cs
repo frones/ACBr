@@ -21,7 +21,7 @@ namespace ACBrLib.Boleto
 
         public string Carteira { get; set; }
 
-        public DateTime ValorDocumento { get; set; }
+        public decimal ValorDocumento { get; set; }
 
         public DateTime DataOcorrencia { get; set; }
 

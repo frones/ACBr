@@ -74,6 +74,13 @@ namespace ACBrLib.Core
             return ret;
         }
 
+        public static T ReadFromINi<T>(this ACBrIniSection section) where T : class
+        {
+            var ret = (T)Activator.CreateInstance(typeof(T));
+            section.ReadFromINi(typeof(T), ret);
+            return ret;
+        }
+
         public static void ReadFromINi<T>(this ACBrIniSection section, T item) where T : class
         {
             section.ReadFromINi(typeof(T), item);

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ACBrLib.Core.DFe
 {
@@ -31,8 +32,7 @@ namespace ACBrLib.Core.DFe
                 var section = iniresposta.SingleOrDefault(x => x.Name.StartsWith(prefix));
                 if (section == null) return ret;
 
-                var item = new RetornoItemResposta();
-                section.ReadFromINi(item);
+                var item = section.ReadFromINi<RetornoItemResposta>();
                 ret.Envio.ItemResposta = item;
             }
             else
@@ -40,8 +40,8 @@ namespace ACBrLib.Core.DFe
                 var sections = iniresposta.Where(x => x.Name.StartsWith("NFe"));
                 foreach (var section in sections)
                 {
-                    var item = new RetornoItemResposta();
-                    section.ReadFromINi(item);
+                    var item = section.ReadFromINi<RetornoItemResposta>();
+                    item.Numero = Regex.Replace(section.Name, "[^0-9]", string.Empty);
                     ret.Retorno.Items.Add(item);
                 }
             }

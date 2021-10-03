@@ -34,17 +34,17 @@ namespace ACBrLib.Boleto
 
             foreach (var section in iniFile.Where(x => x.Name.StartsWith("TITULO")))
             {
-                var item = new RetornoTitulo();
-                section.ReadFromINi(item);
+                var item = section.ReadFromINi<RetornoTitulo>();
+                section.ReadFromINi(item.Sacado);
 
                 var id = Regex.Replace(section.Name, "[^0-9]", string.Empty);
-                if (string.IsNullOrEmpty(id)) continue;
-
-                foreach (var sec in iniFile.Where(x => x.Name.StartsWith($"MotivoRejeicao{id}-")))
+                if (!string.IsNullOrWhiteSpace(id))
                 {
-                    var rejeicao = new RetornoRejeicao();
-                    sec.ReadFromINi(rejeicao);
-                    item.Rejeicoes.Add(rejeicao);
+                    foreach (var sec in iniFile.Where(x => x.Name.StartsWith($"MotivoRejeicao{id}-")))
+                    {
+                        var rejeicao = sec.ReadFromINi<RetornoRejeicao>();
+                        item.Rejeicoes.Add(rejeicao);
+                    }
                 }
 
                 ret.Titulos.Add(item);

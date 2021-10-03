@@ -397,6 +397,19 @@ namespace ACBrLib.Boleto
             return ProcessResult(buffer, bufferLen);
         }
 
+        public RetornoWeb EnviarBoleto(OperacaoBoleto opercao)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_EnviarBoleto>();
+            var ret = ExecuteMethod(() => method((int)opercao, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return RetornoWeb.LerRetorno(ProcessResult(buffer, bufferLen));
+        }
+
         #region Private Methods
 
         protected override void FinalizeLib()

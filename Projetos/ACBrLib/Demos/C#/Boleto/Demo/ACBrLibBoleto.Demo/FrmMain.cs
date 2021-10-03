@@ -24,7 +24,8 @@ namespace ACBrLibBoleto.Demo
             InitializeComponent();
 
             // Inicializando a dll
-            boleto = new ACBrBoleto();
+            //boleto = new ACBrBoleto();
+            boleto = new ACBrBoleto("[Memory]");
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -285,7 +286,8 @@ namespace ACBrLibBoleto.Demo
         private void BtnLerRetorno_Click(object sender, EventArgs e)
         {
             boleto.LerRetorno(txtDirRetorno.Text, txtNomeRetorno.Text);
-            rtbRespostas.AppendLine("Retorno Gerado.");
+            var ret = boleto.ObterRetorno(txtDirRetorno.Text, txtNomeRetorno.Text);
+            rtbRespostas.AppendLine(ret.Retorno);
         }
 
         private void BtnListarOcorrencias_Click(object sender, EventArgs e)

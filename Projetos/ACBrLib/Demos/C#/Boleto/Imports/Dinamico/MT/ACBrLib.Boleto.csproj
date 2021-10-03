@@ -16,6 +16,8 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>0.2.0.97</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ProJetoACBr.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -52,6 +54,11 @@
     <Compile Include="..\Shared\CedenteConfig.cs" Link="CedenteConfig.cs" />
     <Compile Include="..\Shared\DiretorioConfig.cs" Link="DiretorioConfig.cs" />
     <Compile Include="..\Shared\ImpressaoConfig.cs" Link="ImpressaoConfig.cs" />
+    <Compile Include="..\Shared\Titulo\ACBrCaracTitulo.cs" Link="Titulo\ACBrCaracTitulo.cs" />
+    <Compile Include="..\Shared\Titulo\ACBrCarteiraEnvio.cs" Link="Titulo\ACBrCarteiraEnvio.cs" />
+    <Compile Include="..\Shared\Titulo\ACBrCodigoDesconto.cs" Link="Titulo\ACBrCodigoDesconto.cs" />
+    <Compile Include="..\Shared\Titulo\ACBrCodigoMulta.cs" Link="Titulo\ACBrCodigoMulta.cs" />
+    <Compile Include="..\Shared\Titulo\ACBrCodigoNegativacao.cs" Link="Titulo\ACBrCodigoNegativacao.cs" />
     <Compile Include="..\Shared\Titulo\AceiteTitulo.cs" Link="Titulo\AceiteTitulo.cs" />
     <Compile Include="..\Shared\Titulo\Banco.cs" Link="Titulo\Banco.cs" />
     <Compile Include="..\Shared\Titulo\BoletoInfo.cs" Link="Titulo\BoletoInfo.cs" />
@@ -65,24 +72,27 @@
     <Compile Include="..\Shared\Titulo\RetornoBoleto.cs" Link="Titulo\RetornoBoleto.cs" />
     <Compile Include="..\Shared\Titulo\RetornoCedente.cs" Link="Titulo\RetornoCedente.cs" />
     <Compile Include="..\Shared\Titulo\RetornoConta.cs" Link="Titulo\RetornoConta.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoRegistroWeb.cs" Link="Titulo\RetornoRegistroWeb.cs" />
     <Compile Include="..\Shared\Titulo\RetornoRejeicao.cs" Link="Titulo\RetornoRejeicao.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoRejeicaoWeb.cs" Link="Titulo\RetornoRejeicaoWeb.cs" />
     <Compile Include="..\Shared\Titulo\RetornoSacado.cs" Link="Titulo\RetornoSacado.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoSacadoAvalistaWeb.cs" Link="Titulo\RetornoSacadoAvalistaWeb.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoSacadoWeb.cs" Link="Titulo\RetornoSacadoWeb.cs" />
     <Compile Include="..\Shared\Titulo\RetornoTitulo.cs" Link="Titulo\RetornoTitulo.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoTituloWeb.cs" Link="Titulo\RetornoTituloWeb.cs" />
+    <Compile Include="..\Shared\Titulo\RetornoWeb.cs" Link="Titulo\RetornoWeb.cs" />
     <Compile Include="..\Shared\Titulo\Sacado.cs" Link="Titulo\Sacado.cs" />
     <Compile Include="..\Shared\Titulo\SacadoAvalista.cs" Link="Titulo\SacadoAvalista.cs" />
     <Compile Include="..\Shared\Titulo\TipoDesconto.cs" Link="Titulo\TipoDesconto.cs" />
     <Compile Include="..\Shared\Titulo\TipoDiasIntrucao.cs" Link="Titulo\TipoDiasIntrucao.cs" />
     <Compile Include="..\Shared\Titulo\TipoImpressao.cs" Link="Titulo\TipoImpressao.cs" />
     <Compile Include="..\Shared\Titulo\TipoOcorrencia.cs" Link="Titulo\TipoOcorrencia.cs" />
+    <Compile Include="..\Shared\Titulo\TipoPagamento.cs" Link="Titulo\TipoPagamento.cs" />
     <Compile Include="..\Shared\Titulo\Titulo.cs" Link="Titulo\Titulo.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Titulo\" />
   </ItemGroup>
 
 </Project>

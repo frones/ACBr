@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2021
+--- ACBrMonior1, ACBrMonitorConfig--
+[+] Adicionado configuração de impressão de cupom sem os itens em DFe / Impressão / NFCe
+
 28/09/2021
 --- ACBrMonior1--
 [*] Ajustes de campos em tela  

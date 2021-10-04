@@ -383,6 +383,7 @@ type
     cbxImprimirItem1LinhaNFCe: TCheckBox;
     cbxImprimirItem1LinhaSAT: TCheckBox;
     cbxImprimirLogoLateralNFCe: TCheckBox;
+    cbxImprimeItens: TCheckBox;
     cbxImprimirNomeFantasiaNFCe: TCheckBox;
     cbxImprimirQRCodeLateralNFCe: TCheckBox;
     cbxImprimirTributos: TCheckBox;
@@ -5672,6 +5673,7 @@ begin
       cbxExibeTotalTributosItem.Checked   := ExibeTotalTributosItem;
       rgImprimeTributos.ItemIndex         := ImprimeTributos;
       cbxImprimirLogoLateralNFCe.Checked  := LogoLateral;
+      cbxImprimeItens.Checked             := ImprimeItens;
     end;
 
     with Impressao.NFCe.Emissao.DANFCe do
@@ -6877,6 +6879,7 @@ begin
         ExibeTotalTributosItem    := cbxExibeTotalTributosItem.Checked;
         ImprimeTributos           := rgImprimeTributos.ItemIndex;
         LogoLateral               := cbxImprimirLogoLateralNFCe.Checked;
+        ImprimeItens              := cbxImprimeItens.Checked;
       end;
 
       with Impressao.NFCe.Emissao.DANFCe do
@@ -10593,6 +10596,7 @@ begin
       ACBrNFeDANFCeFortesA4_1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
       ACBrNFeDANFCeFortesA4_1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
       ACBrNFeDANFCeFortesA4_1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
+      ACBrNFeDANFCeFortesA4_1.ImprimeItens          := cbxImprimeItens.Checked;
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFCeFortesA4_1.Logo                := edtLogoMarcaNFCeSAT.Text
       else
@@ -10617,6 +10621,7 @@ begin
       ACBrNFeDANFCeFortes1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
       ACBrNFeDANFCeFortes1.NumCopias             := edtNumCopiaNFCe.Value;
       ACBrNFEDANFCeFortes1.ImprimeLogoLateral    := cbxImprimirLogoLateralNFCe.Checked;
+      ACBrNFEDANFCeFortes1.ImprimeItens          := cbxImprimeItens.Checked;
 
       ACBrNFeDANFCeFortes1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
@@ -10645,6 +10650,7 @@ begin
       ACBrNFeDANFeESCPOS1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
       ACBrNFeDANFeESCPOS1.NumCopias             := edtNumCopiaNFCe.Value;
       ACBrNFeDANFeESCPOS1.ImprimeLogoLateral    := cbxImprimirLogoLateralNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeItens          := cbxImprimeItens.Checked;
 
       ACBrNFeDANFeESCPOS1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do

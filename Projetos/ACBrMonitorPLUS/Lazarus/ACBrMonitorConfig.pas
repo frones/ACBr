@@ -252,6 +252,7 @@ type
     ImprimeTributos   : Integer;
     ExibeTotalTributosItem : Boolean;
     LogoLateral       : Boolean;
+    ImprimeItens      : Boolean;
   end;
 
   TNFCe = record
@@ -1115,6 +1116,7 @@ begin
       Ini.WriteInteger( CSecNFCe, CKeyNFCeImprimeTributos, ImprimeTributos);
       Ini.WriteBool( CSecNFCe, CKeyNFCeExibeTotalTributosItem, ExibeTotalTributosItem);
       Ini.WriteBool( CSecNFCe, CKeyNFCeLogoLateral, LogoLateral);
+      Ini.WriteBool( CSecNFCe, CKeyNFCeImprimeItens, imprimeitens);
     end;
 
     with DFE.Impressao.NFCe.Emissao.DANFCe do
@@ -1821,6 +1823,7 @@ begin
       ImprimeTributos           := Ini.ReadInteger( CSecNFCe, CKeyNFCeImprimeTributos, ImprimeTributos );
       ExibeTotalTributosItem    := Ini.ReadBool( CSecNFCe, CKeyNFCeExibeTotalTributosItem, ExibeTotalTributosItem);
       LogoLateral               := Ini.ReadBool( CSecNFCe, CKeyNFCeLogoLateral, LogoLateral );
+      ImprimeItens              := Ini.ReadBool( CSecNFCe, CKeyNFCeImprimeItens, ImprimeItens );
     end;
 
     with DFE.Impressao.NFCe.Emissao.DANFCe do
@@ -2534,6 +2537,7 @@ begin
     ImprimeTributos           := 1;
     ExibeTotalTributosItem    := False;
     LogoLateral               := False;
+    ImprimeItens              := True;
   end;
 
   with DFE.Impressao.NFCe.Emissao.DANFCe do

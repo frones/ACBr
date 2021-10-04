@@ -28601,12 +28601,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object gbDANFeESCPOS: TGroupBox
                     Left = 216
-                    Height = 200
+                    Height = 224
                     Top = 0
                     Width = 752
                     Anchors = [akTop, akLeft, akRight]
                     Caption = 'Impressão dos Itens'
-                    ClientHeight = 178
+                    ClientHeight = 202
                     ClientWidth = 748
                     Font.Height = -13
                     ParentFont = False
@@ -28696,7 +28696,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnFonteItens: TButton
                       Left = 690
                       Height = 25
-                      Top = 150
+                      Top = 172
                       Width = 30
                       Anchors = []
                       Caption = '...'
@@ -28713,7 +28713,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       AnchorSideBottom.Control = btnFonteItens
                       Left = 532
                       Height = 17
-                      Top = 150
+                      Top = 172
                       Width = 158
                       Alignment = taRightJustify
                       Anchors = [akTop, akRight]
@@ -28769,6 +28769,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Height = -13
                       ParentFont = False
                       TabOrder = 9
+                    end
+                    object cbxImprimeItens: TCheckBox
+                      Left = 9
+                      Height = 21
+                      Top = 170
+                      Width = 99
+                      Caption = 'Imprime Itens'
+                      Font.Height = -13
+                      ParentFont = False
+                      TabOrder = 10
                     end
                   end
                   object cbxImpressoraNFCe: TComboBox

@@ -1019,6 +1019,7 @@ const
   CKeyNFCEImprimeTributos =            'ImprimeTributos';
   CKeyNFCeExibeTotalTributosItem =     'ExibeTotalTributosItem';
   CKeyNFCeLogoLateral =                'LogoLateral';
+  CKeyNFCeImprimeItens =               'ImprimeItens';
 
   CSecDANFE =                          'DANFE';
   CKeyDANFEModelo =                    'Modelo';

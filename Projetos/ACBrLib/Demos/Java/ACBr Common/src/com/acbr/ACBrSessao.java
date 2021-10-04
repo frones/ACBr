@@ -39,5 +39,7 @@ public enum  ACBrSessao {
     BoletoCedenteConfig,
     BoletoBancoConfig,
     BoletoDiretorioConfig,
-    BoletoBancoFCFortesConfig,;
+    BoletoBancoFCFortesConfig,
+    IBGE,
+    Sedex,;
 }

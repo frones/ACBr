@@ -961,9 +961,9 @@ begin
       if ACBrBoleto.ListaRetornoWeb.Count > 0 then
       for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
       begin
-        RespRetornoWeb := TRetornoRegistroWeb.Create(I , TpResp, codUTF8);
+        RespRetornoWeb := TRetornoRegistroWeb.Create(I+1 , TpResp, codUTF8);
         try
-          RespRetornoWeb.Processar(ACBrBoleto);
+          RespRetornoWeb.Processar(ACBrBoleto.ListaRetornoWeb[I]);
           fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetornoWeb.Gerar;
         Finally
           RespRetornoWeb.Free;

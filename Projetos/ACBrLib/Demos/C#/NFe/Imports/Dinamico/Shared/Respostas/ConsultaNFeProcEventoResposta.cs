@@ -25,6 +25,8 @@ namespace ACBrLib.NFe
 
         public string verEvento { get; set; }
 
+        public string Xml { get; set; }
+
         public ConsultaNFeDetEventoResposta DetEvento { get; set; }
 
         #endregion Properties

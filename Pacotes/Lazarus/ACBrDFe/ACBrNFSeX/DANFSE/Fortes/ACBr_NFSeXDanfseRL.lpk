@@ -10,7 +10,7 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes"/>
         <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\DANFSE\Fortes"/>
-        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Files Count="1">

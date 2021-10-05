@@ -415,6 +415,7 @@ type
     FtpEvento: String;
     FnSeqEvento: Integer;
     FverEvento: String;
+    FXml: String;
     FDetEvento: TConsultaNFeDetEventoResposta;
     FRetEventos: TObjectList;
 
@@ -423,7 +424,7 @@ type
       const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
-    procedure Processar(const AEvento: TRetEventoNFeCollectionItem); reintroduce;
+    procedure Processar(const AEvento: TRetEventoNFeCollectionItem);
 
   published
     property ID: Integer read FID;
@@ -435,6 +436,7 @@ type
     property tpEvento: String read FtpEvento write FtpEvento;
     property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
     property verEvento: String read FverEvento write FverEvento;
+    property Xml: String read FXml write FXml;
     property detEvento: TConsultaNFeDetEventoResposta read FDetEvento write FDetEvento;
     property RetEventos: TObjectList read FRetEventos;
 
@@ -771,6 +773,7 @@ begin
    tpEvento := TpEventoToStr(AEvento.RetEventoNFe.InfEvento.tpEvento);
    nSeqEvento := AEvento.RetEventoNFe.InfEvento.nSeqEvento;
    verEvento := AEvento.RetEventoNFe.InfEvento.versaoEvento;
+   Xml := AEvento.RetEventoNFe.XML;
 
    FDetEvento.Processar(AEvento.RetEventoNFe.InfEvento.detEvento);
 
@@ -935,6 +938,7 @@ begin
   begin
     NumeroNota := IntToStr(ExtrairNumeroChaveAcesso(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe));
     if Trim(NumeroNota) = '' then Exit;
+    if Trim(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt) = '' then Exit;
 
     FItemRetorno := TRetornoItemResposta.Create('NFe' + NumeroNota, Tipo, Formato);
     FItemRetorno.Id := 'ID' + ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;

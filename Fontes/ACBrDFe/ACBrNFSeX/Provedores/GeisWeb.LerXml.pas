@@ -50,6 +50,8 @@ type
 
   TNFSeR_GeisWeb = class(TNFSeRClass)
   protected
+    function StrToRegime(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
+
     // Leitura da NFS-e
     procedure LerIdentificacaoNfse(const ANode: TACBrXmlNode);
     procedure LerEnderecoPrestador(const ANode: TACBrXmlNode);
@@ -80,6 +82,15 @@ implementation
 //==============================================================================
 
 { TNFSeR_GeisWeb }
+
+function TNFSeR_GeisWeb.StrToRegime(out ok: boolean;
+  const s: string): TnfseRegimeEspecialTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                          ['1', '2', '4', '6'],
+                          [retSimplesNacional, retMicroempresarioIndividual,
+                           retImune, retOutros]);
+end;
 
 procedure TNFSeR_GeisWeb.LerContatoPrestador(const ANode: TACBrXmlNode);
 var
@@ -349,6 +360,8 @@ begin
 end;
 
 function TNFSeR_GeisWeb.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+var
+  Ok: Boolean;
 begin
   Result := True;
 
@@ -359,7 +372,7 @@ begin
     DataEmissao := LerDatas(ProcessarConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr));
     Competencia := LerDatas(ProcessarConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcStr));
 //           <xs:element name="DataLancamento" type="xs:string"></xs:element>
-//           <xs:element name="Regime" type="xs:string"></xs:element>
+    RegimeEspecialTributacao := StrToRegime(Ok, ProcessarConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
 
     LerServico(ANode);
     LerPrestadorServico(ANode);

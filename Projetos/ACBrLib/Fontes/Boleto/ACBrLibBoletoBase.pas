@@ -1073,6 +1073,7 @@ begin
           for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
           begin
             Titulo := TRetornoRegistroWeb.Create(I + 1, Config.TipoResposta, Config.CodResposta);
+            Titulo.Processar(BoletoDM.ACBrBoleto1.ListaRetornoWeb[I]);
             Titulos[I] := Titulo;
           end;
 

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 06/10/2021
+-- IPM.GravarXml --
+[*] Alterado a quantidade de casas decimais da tag referente a aliquota de 
+    2 para 4.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado o provedor RLZ layout próprio.
    Por: Italo Giurizzato Junior

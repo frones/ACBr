@@ -254,10 +254,10 @@ begin
        NFSe.Servico.Discriminacao, NFSe.Servico.ItemServico[I].Descricao), ''));
 
     if NFSe.Servico.ItemServico[I].Aliquota = 0 then
-      Result[i].AppendChild(AddNode(tcDe2, '#', 'aliquota_item_lista_servico', 1, 15, 1,
+      Result[i].AppendChild(AddNode(tcDe4, '#', 'aliquota_item_lista_servico', 1, 15, 1,
                                              NFSe.Servico.Valores.Aliquota, ''))
     else
-      Result[i].AppendChild(AddNode(tcDe2, '#', 'aliquota_item_lista_servico', 1, 15, 1,
+      Result[i].AppendChild(AddNode(tcDe4, '#', 'aliquota_item_lista_servico', 1, 15, 1,
                                      NFSe.Servico.ItemServico[I].Aliquota, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'situacao_tributaria', 1, 4, 1,

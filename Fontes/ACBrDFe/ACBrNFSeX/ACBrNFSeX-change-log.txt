@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/10/2021
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Ajuste na impressão quando detalhamento específico de construção civil presente.
+   Por: Douglas GV
 -- IPM.GravarXml --
 [*] Alterado a quantidade de casas decimais da tag referente a aliquota de 
     2 para 4.

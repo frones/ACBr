@@ -1013,7 +1013,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       BeforePrint = rlbISSQNBeforePrint
       object RLDraw52: TRLDraw
         Left = 1
-        Top = 72
+        Top = 76
         Width = 751
         Height = 1
         DrawKind = dkLine
@@ -1210,15 +1210,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object rlsLinhaH1: TRLDraw
         Left = 0
-        Top = 38
+        Top = 56
         Width = 752
         Height = 1
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rllCodigoObra: TRLLabel
-        Left = 12
-        Top = 56
+        Left = 346
+        Top = 61
         Width = 76
         Height = 14
         Caption = 'C'#243'digo da Obra:'
@@ -1231,8 +1231,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodObra: TRLLabel
-        Left = 92
-        Top = 56
+        Left = 426
+        Top = 61
         Width = 64
         Height = 13
         Font.Charset = DEFAULT_CHARSET
@@ -1244,8 +1244,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllTituloConstCivil: TRLLabel
-        Left = 205
-        Top = 40
+        Left = 6
+        Top = 60
         Width = 334
         Height = 15
         Alignment = taCenter
@@ -1259,8 +1259,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodigoArt: TRLLabel
-        Left = 404
-        Top = 56
+        Left = 527
+        Top = 61
         Width = 64
         Height = 14
         Caption = 'C'#243'digo ART:'
@@ -1273,8 +1273,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodART: TRLLabel
-        Left = 484
-        Top = 56
+        Left = 597
+        Top = 62
         Width = 59
         Height = 13
         Font.Charset = DEFAULT_CHARSET
@@ -1442,7 +1442,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLLabel44: TRLLabel
         Left = 311
-        Top = 75
+        Top = 79
         Width = 130
         Height = 15
         Alignment = taCenter
@@ -1982,7 +1982,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object rllMsgTeste: TRLLabel
         Left = 13
-        Top = 56
+        Top = 45
         Width = 724
         Height = 31
         Alignment = taCenter
@@ -2407,6 +2407,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 104
+    Left = 96
   end
 end

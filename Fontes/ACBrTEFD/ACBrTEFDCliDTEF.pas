@@ -316,6 +316,8 @@ begin
          fpDesconto   := Linha.Informacao.AsFloat;
          fpValorTotal := fpValorTotal - fpDesconto ;
         end;
+      //CNPJ da rede Adquirente
+      140: fpNFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
 
 //       156 : fpRede                        := LinStr;
 //       157 : fpQRCode                      := LinStr;
@@ -1139,6 +1141,8 @@ begin
     ValorTemp := StrToFloat(copy(sDadosEstendido,51,12));
     if ValorTemp > 0 then
       aResposta.Add('135-000 = ' + FloatToStr(ValorTemp));
+    //CNPJ da Rede Adquirente
+    aResposta.Add('140-000 = ' + Copy(sDadosEstendido,120,14));
 
     aRetorno.Text := aResposta.Text;
   finally

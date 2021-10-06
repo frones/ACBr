@@ -285,7 +285,7 @@ end;
 function TACBrNFSeXProvider.GetInscMunic(const InscMunic: string; const Prefixo: string): string;
 begin
   if NaoEstaVazio(InscMunic) then
-    Result := '<' + Prefixo + 'InscricaoMunicipal>' + OnlyNumber(InscMunic) +
+    Result := '<' + Prefixo + 'InscricaoMunicipal>' + InscMunic +
               '</' + Prefixo + 'InscricaoMunicipal>'
   else
     Result := '';

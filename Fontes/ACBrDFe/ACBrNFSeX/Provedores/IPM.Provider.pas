@@ -481,10 +481,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
   ANota: NotaFiscal;
-  I: Integer;
   NotaCompleta: Boolean;
 begin
   Document := TACBrXmlDocument.Create;

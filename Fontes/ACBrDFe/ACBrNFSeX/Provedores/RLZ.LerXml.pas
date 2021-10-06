@@ -41,9 +41,23 @@ uses
   LResources, Controls, Graphics, Dialogs,
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv2;
+  ACBrUtil,
+  ACBrXmlBase, ACBrXmlDocument,
+  ACBrNFSeXLerXml_ABRASFv2, ACBrNFSeXConversao, ACBrNFSeXLerXml;
 
 type
+  { TNFSeR_RLZ }
+
+  TNFSeR_RLZ = class(TNFSeRClass)
+  protected
+    procedure LerServicos(const ANode: TACBrXmlNode);
+    procedure LerPrestador(const ANode: TACBrXmlNode);
+    procedure LerTomador(const ANode: TACBrXmlNode);
+  public
+    function LerXml: Boolean; override;
+    function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+  end;
+
   { TNFSeR_RLZ203 }
 
   TNFSeR_RLZ203 = class(TNFSeR_ABRASFv2)
@@ -59,5 +73,169 @@ implementation
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     RLZ
 //==============================================================================
+
+{ TNFSeR_RLZ }
+
+procedure TNFSeR_RLZ.LerServicos(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+  ANodes: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('servicos');
+
+  if AuxNode <> nil then
+  begin
+    ANodes := AuxNode.Childrens.FindAllAnyNs('servico');
+
+    for i := 0 to Length(ANodes) - 1 do
+    begin
+      NFSe.Servico.ItemServico.New;
+      with NFSe.Servico.ItemServico[i] do
+      begin
+        Quantidade := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('quantidade'), tcDe6);
+        Descricao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('atividade'), tcStr);
+        ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor'), tcDe2);
+        DescontoIncondicionado := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('deducao'), tcDe2);
+        ItemListaServico := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('codigoservico'), tcStr);
+        Aliquota := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('aliquota'), tcDe2);
+        ValorINSS := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('inss'), tcDe2);
+        ValorTotal := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('total'), tcDe2);
+      end;
+    end;
+  end;
+end;
+
+procedure TNFSeR_RLZ.LerPrestador(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('prestador');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.Prestador do
+    begin
+      with Endereco do
+      begin
+        Endereco := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('endereco'), tcStr);
+        Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+        Complemento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
+        Bairro := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
+        CEP := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
+        CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
+        UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
+      end;
+
+      RazaoSocial := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nome'), tcStr);
+
+      with IdentificacaoPrestador do
+      begin
+        InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('inscricao'), tcStr);
+        Cnpj := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cpfcnpj'), tcStr);
+      end;
+    end;
+  end;
+end;
+
+procedure TNFSeR_RLZ.LerTomador(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('tomador');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.Tomador do
+    begin
+      with Endereco do
+      begin
+        Endereco := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('endereco'), tcStr);
+        Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+        Complemento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('complemento'), tcStr);
+        Bairro := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
+        CEP := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
+        CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
+        UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('uf'), tcStr);
+      end;
+
+      RazaoSocial := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nome'), tcStr);
+
+      with IdentificacaoTomador do
+      begin
+        InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('inscricao'), tcStr);
+        CpfCnpj := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cpfcnpj'), tcStr);
+      end;
+    end;
+  end;
+end;
+
+function TNFSeR_RLZ.LerXml: Boolean;
+var
+  XmlNode: TACBrXmlNode;
+  xRetorno: string;
+begin
+  xRetorno := TratarXmlRetorno(Arquivo);
+
+  if EstaVazio(xRetorno) then
+    raise Exception.Create('Arquivo xml não carregado.');
+
+  if FDocument = nil then
+    FDocument := TACBrXmlDocument.Create();
+
+  Document.Clear();
+  Document.LoadFromXml(xRetorno);
+
+  XmlNode := Document.Root;
+
+  if XmlNode = nil then
+    raise Exception.Create('Arquivo xml vazio.');
+
+  Result := LerXmlNfse(XmlNode);
+
+  FreeAndNil(FDocument);
+end;
+
+function TNFSeR_RLZ.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+var
+  Ok: Boolean;
+begin
+  Result := True;
+
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  with NFSe do
+  begin
+    // <guia>?</guia>
+    Numero := ProcessarConteudo(ANode.Childrens.FindAnyNs('numero'), tcStr);
+    // <mes>?</mes>
+    // <cidade>?</cidade>
+    // <uf>?</uf>
+    // <exercicio>?</exercicio>
+    DataEmissao := ProcessarConteudo(ANode.Childrens.FindAnyNs('data'), tcDat);
+    // <modelo>?</modelo>
+    SeriePrestacao := ProcessarConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
+    // <apuracao>?</apuracao>
+    // <valor>/valor>
+    // <valorimposto>?</valorimposto>
+    OptanteSimplesNacional := StrToSimNao(Ok, ProcessarConteudo(ANode.Childrens.FindAnyNs('optantesimples'), tcStr));
+    // <situacao>?</situacao>
+    // <deducao>?</deducao>
+    // <basecalculo>?</basecalculo>
+    // <retido>?</ retido >
+    // <incidencia>?</incidencia>
+    Link := ProcessarConteudo(ANode.Childrens.FindAnyNs('url'), tcStr);
+
+    LerServicos(ANode);
+    LerPrestador(ANode);
+    LerTomador(ANode);
+  end;
+end;
 
 end.

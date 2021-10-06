@@ -371,7 +371,17 @@ begin
         end;
 
       proPublica: Result := TACBrNFSeProviderPublica.Create(ACBrNFSe);
-      proRLZ:     Result := TACBrNFSeProviderRLZ203.Create(ACBrNFSe);
+
+      proRLZ:
+        begin
+          case Versao of
+            ve100: Result := TACBrNFSeProviderRLZ.Create(ACBrNFSe);
+            ve203: Result := TACBrNFSeProviderRLZ203.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
+
       proSaatri:  Result := TACBrNFSeProviderSaatri201.Create(ACBrNFSe);
       proSafeWeb: Result := TACBrNFSeProviderSafeWeb200.Create(ACBrNFSe);
       proSH3:     Result := TACBrNFSeProviderSH3200.Create(ACBrNFSe);

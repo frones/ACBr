@@ -537,7 +537,7 @@ begin
 
   Response.XmlEnvio := '<notas>' +
                          '<ano>' + Ano + '</ano>' +
-                         '<mes>' + Ano + '</mes>' +
+                         '<mes>' + Mes + '</mes>' +
                          '<cpfcnpj>' +
                            OnlyNumber(Emitente.CNPJ) +
                          '</cpfcnpj>' +

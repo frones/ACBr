@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/10/2021
+-- ISSNet.Provider --
+[*] Ajustes no corpo do Envelope.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Ajuste na impressão quando detalhamento específico de construção civil presente.
    Por: Douglas GV

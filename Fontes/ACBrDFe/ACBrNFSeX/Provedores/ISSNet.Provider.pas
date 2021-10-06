@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrConsts, ACBrXmlBase, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
@@ -178,14 +178,13 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfd:RecepcionarLoteRps>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:RecepcionarLoteRps>';
+  Request := '<RecepcionarLoteRps xmlns="http://www.issnetonline.com.br/webservice/nfd">';
+  Request := Request + '<xml>' + XmlToStr(CUTF8DeclaracaoXML + AMSG) + '</xml>';
+  Request := Request + '</RecepcionarLoteRps>';
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/RecepcionarLoteRps',
                      Request,
-                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -194,14 +193,13 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfd:ConsultarLoteRps>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:ConsultarLoteRps>';
+  Request := '<ConsultarLoteRps xmlns="http://www.issnetonline.com.br/webservice/nfd">';
+  Request := Request + '<xml>' + XmlToStr(CUTF8DeclaracaoXML + AMSG) + '</xml>';
+  Request := Request + '</ConsultarLoteRps>';
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarLoteRps',
                      Request,
-                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
+                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -210,14 +208,13 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfd:ConsultaSituacaoLoteRPS>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:ConsultaSituacaoLoteRPS>';
+  Request := '<ConsultaSituacaoLoteRPS xmlns="http://www.issnetonline.com.br/webservice/nfd">';
+  Request := Request + '<xml>' + XmlToStr(CUTF8DeclaracaoXML + AMSG) + '</xml>';
+  Request := Request + '</ConsultaSituacaoLoteRPS>';
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultaSituacaoLoteRPS',
                      Request,
-                     ['ConsultaSituacaoLoteRPSResult', 'ConsultarSituacaoLoteRpsResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
+                     ['ConsultaSituacaoLoteRPSResult', 'ConsultarSituacaoLoteRpsResposta'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -226,14 +223,13 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfd:ConsultarNFSePorRPS>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:ConsultarNFSePorRPS>';
+  Request := '<ConsultarNFSePorRPS xmlns="http://www.issnetonline.com.br/webservice/nfd">';
+  Request := Request + '<xml>' + XmlToStr(CUTF8DeclaracaoXML + AMSG) + '</xml>';
+  Request := Request + '</ConsultarNFSePorRPS>';
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarNFSePorRPS',
                      Request,
-                     ['ConsultarNFSePorRPSResult', 'ConsultarNfseRpsResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
+                     ['ConsultarNFSePorRPSResult', 'ConsultarNfseRpsResposta'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -242,14 +238,13 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfd:ConsultarNfse>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:ConsultarNfse>';
+  Request := '<ConsultarNfse xmlns="http://www.issnetonline.com.br/webservice/nfd">';
+  Request := Request + '<xml>' + XmlToStr(CUTF8DeclaracaoXML + AMSG) + '</xml>';
+  Request := Request + '</ConsultarNfse>';
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarNfse',
                      Request,
-                     ['ConsultarNfseResult', 'ConsultarNfseResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
+                     ['ConsultarNfseResult', 'ConsultarNfseResposta'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSNet.Cancelar(ACabecalho, AMSG: String): string;
@@ -258,14 +253,13 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfd:CancelarNfse>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:CancelarNfse>';
+  Request := '<CancelarNfse xmlns="http://www.issnetonline.com.br/webservice/nfd">';
+  Request := Request + '<xml>' + XmlToStr(CUTF8DeclaracaoXML + AMSG) + '</xml>';
+  Request := Request + '</CancelarNfse>';
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/CancelarNfse',
                      Request,
-                     ['CancelarNfseResult', 'CancelarNfseResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
+                     ['CancelarNfseResult', 'CancelarNfseResposta'], ['']);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarNFSeUrl(ACabecalho,

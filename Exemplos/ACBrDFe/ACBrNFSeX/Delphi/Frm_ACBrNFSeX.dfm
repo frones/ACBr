@@ -480,9 +480,9 @@ object frmACBrNFSe: TfrmACBrNFSe
               object Label45: TLabel
                 Left = 9
                 Top = 264
-                Width = 106
+                Width = 102
                 Height = 13
-                Caption = 'Vers'#227'o dos Schemasr:'
+                Caption = 'Vers'#227'o dos Schemas:'
               end
               object lblVersaoSchemas: TLabel
                 Left = 121

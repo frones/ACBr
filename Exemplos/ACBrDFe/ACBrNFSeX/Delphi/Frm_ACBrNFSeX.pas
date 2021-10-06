@@ -3016,8 +3016,6 @@ begin
 
   end;
 
-//  MemoDados.Lines.Clear;
-
   for i := 0 to ACBrNFSeX1.NotasFiscais.Count -1 do
   begin
     memoLog.Lines.Add(' ');
@@ -3025,15 +3023,19 @@ begin
     memoLog.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
     memoLog.Lines.Add('Prestador.......: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Prestador.RazaoSocial);
     memoLog.Lines.Add('Tomador.........: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Tomador.RazaoSocial);
-    memoLog.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.Configuracoes.Arquivos.GetPathNFSe() + '\' +
-                                             ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
-    if ACBrNFSeX1.Configuracoes.Arquivos.Salvar then
-      memoLog.Lines.Add('==> Xml da nota salvo na pasta e com o nome informado acima.')
-    else
-      memoLog.Lines.Add('==> Xml da nota não salvo em disco.');
 
-    // Na propriedade XML temos o XML da NFS-e
-    LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XML, WBXmlNotas);
+    if ACBrNFSeX1.NotasFiscais.Items[i].NomeArq <> '' then
+    begin
+      memoLog.Lines.Add('Nome do arquivo.: ' + ACBrNFSeX1.Configuracoes.Arquivos.GetPathNFSe() + '\' +
+                                               ACBrNFSeX1.NotasFiscais.Items[i].NomeArq);
+      if ACBrNFSeX1.Configuracoes.Arquivos.Salvar then
+        memoLog.Lines.Add('==> Xml da nota salvo na pasta e com o nome informado acima.')
+      else
+        memoLog.Lines.Add('==> Xml da nota não salvo em disco.');
+
+      // Na propriedade XML temos o XML da NFS-e
+      LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XML, WBXmlNotas);
+    end;
   end;
 
   pgRespostas.ActivePageIndex := 0;

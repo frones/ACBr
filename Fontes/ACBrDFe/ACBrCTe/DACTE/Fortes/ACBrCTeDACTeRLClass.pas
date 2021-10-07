@@ -116,8 +116,15 @@ begin
   begin
     for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
     begin
-      FPArquivoPDF := PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) +
+      if trim(TACBrCTe(ACBrCTe).DACTE.NomeDocumento) <> '' then
+      begin
+        FPArquivoPDF := PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) + TACBrCTe(ACBrCTe).DACTE.NomeDocumento;
+      end
+      else
+      begin
+        FPArquivoPDF := PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) +
           OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe.infCTe.ID) + '-cte.pdf';
+      end;
 
       TACBrCTe(ACBrCTE).Conhecimentos.Items[i].NomeArqPDF := FPArquivoPDF;
 //      if i < TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 then

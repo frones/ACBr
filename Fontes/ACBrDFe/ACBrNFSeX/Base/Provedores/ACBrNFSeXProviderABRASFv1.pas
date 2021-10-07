@@ -788,7 +788,7 @@ end;
 procedure TACBrNFSeProviderABRASFv1.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, AuxNodeCanc: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
   NumNFSe: String;
@@ -828,9 +828,33 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('tcCompNfse');
 
       if AuxNode = nil then
+      begin
+        AuxNodeCanc := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+        if AuxNodeCanc <> nil then
+        begin
+          AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('Confirmacao');
+
+          Response.Data := ProcessarConteudoXml(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), tcDatHor);
+          Response.DescSituacao := 'Nota Cancelada';
+        end;
+
         AuxNode := ANode.Childrens.FindAnyNs('Nfse')
+      end
       else
+      begin
+        AuxNodeCanc := AuxNode.Childrens.FindAnyNs('NfseCancelamento');
+
+        if AuxNodeCanc <> nil then
+        begin
+          AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('Confirmacao');
+
+          Response.Data := ProcessarConteudoXml(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), tcDatHor);
+          Response.DescSituacao := 'Nota Cancelada';
+        end;
+
         AuxNode := AuxNode.Childrens.FindAnyNs('Nfse');
+      end;
 
       if AuxNode <> nil then
       begin

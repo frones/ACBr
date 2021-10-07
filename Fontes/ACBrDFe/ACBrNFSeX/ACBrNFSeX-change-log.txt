@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 07/10/2021
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Ajustes no Tratamento de retorno do Consultar NFS-e Por Rps.
+    Agora vai retornar em Data a data do cancelamento da nota e em
+    DescSituacao a mensagem: Nota Cancelada.
+   Por: Italo Giurizzato Junior
+-- Simple.Provider --
+[*] Simplificação de código.
+   Por: Italo Giurizzato Junior
 -- RLZ.Provider --
 [*] Ajustes no Tratamento de retorno do Emitir.
    Por: Italo Giurizzato Junior

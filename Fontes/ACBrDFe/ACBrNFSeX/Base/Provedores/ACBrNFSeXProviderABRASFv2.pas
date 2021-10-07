@@ -812,6 +812,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
   NumNFSe: String;
+  Ret: TRetCancelamento;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -846,6 +847,16 @@ begin
         AErro.Codigo := Cod203;
         AErro.Descricao := Desc203;
         Exit;
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+      if AuxNode <> nil then
+      begin
+        AuxNode := AuxNode.Childrens.FindAnyNs('Confirmacao');
+
+        Response.Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Response.DescSituacao := 'Nota Cancelada';
       end;
 
       AuxNode := ANode.Childrens.FindAnyNs('Nfse');

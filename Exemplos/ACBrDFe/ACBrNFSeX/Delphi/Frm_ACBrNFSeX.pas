@@ -727,8 +727,8 @@ begin
       // Para o provedor SigISS usar os valores acima de forma adquada
       Tomador.IdentificacaoTomador.Tipo := tpPJdoMunicipio;
       Tomador.IdentificacaoTomador.CpfCnpj := '11222333000144';
-      Tomador.IdentificacaoTomador.InscricaoMunicipal := '123456';
-      Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := '12345678';
+      Tomador.IdentificacaoTomador.InscricaoEstadual := '12345678';
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
 
@@ -2725,7 +2725,9 @@ begin
             memoLog.Lines.Add('Parâmetros de Retorno');
             memoLog.Lines.Add('Numero do Lote: ' + Lote);
             memoLog.Lines.Add('Numero do Prot: ' + Protocolo);
-            memoLog.Lines.Add('Situação Lote : ' + Situacao);
+            memoLog.Lines.Add('Situação      : ' + Situacao);
+            memoLog.Lines.Add('Data          : ' + DateToStr(Data));
+            memoLog.Lines.Add('Desc. Situação: ' + DescSituacao);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 

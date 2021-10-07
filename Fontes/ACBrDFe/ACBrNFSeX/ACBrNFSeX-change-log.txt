@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/10/2021
+-- Diversos --
+[*] Remoção de quebra de linha que estava sendo gerado ao gerar o XML do Rps.
+    Isso pode resolver o problema de Assinatura invalida.
+   Por: Italo Giurizzato Junior
+
 06/10/2021
 -- ISSNet.Provider --
 [*] Ajustes no corpo do Envelope.

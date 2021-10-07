@@ -219,22 +219,28 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'modelo', 1, 10, 1,
                                                              'Eletronica', ''));
 
-  NFSeNode.AppendChild(AddNode(tcDat, '#1', 'serie', 1, 5, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'serie', 1, 5, 1,
                                               NFse.IdentificacaoRps.Serie, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 10, 1,
-                                                                  'Valor', ''));
+//  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 10, 1,
+//                                                                  'Valor', ''));
 
-  NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'pis', 1, 15, 0,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'fatura', 1, 10, 1, '', ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'orcamento', 1, 10, 1, '', ''));
+
+  NFSeNode.AppendChild(AddNode(tcDat, '#1', 'vencimento', 1, 10, 1,
+                                                         NFse.DataEmissao, ''));
+
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'pis', 1, 15, 1,
                                             NFSe.Servico.Valores.ValorPis, ''));
 
-  NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'csll', 1, 15, 0,
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'csll', 1, 15, 1,
                                            NFSe.Servico.Valores.ValorCsll, ''));
 
-  NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'cofins', 1, 15, 0,
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'cofins', 1, 15, 1,
                                          NFSe.Servico.Valores.ValorCofins, ''));
 
-  NFSeNode.AppendChild(AddNode(tcDe4, '#1', 'irff', 1, 15, 0,
+  NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'irff', 1, 15, 1,
                                              NFSe.Servico.Valores.ValorIr, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 10, 1,

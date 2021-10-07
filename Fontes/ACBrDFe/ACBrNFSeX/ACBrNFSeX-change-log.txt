@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 07/10/2021
+-- RLZ.Provider --
+[*] Ajustes no Tratamento de retorno do Emitir.
+   Por: Italo Giurizzato Junior
+-- RLZ.GravarXml --
+[*] Ajustes na geração do Xml da nota.
+   Por: Lucio Bittes
 -- Diversos --
 [*] Remoção de quebra de linha que estava sendo gerado ao gerar o XML do Rps.
     Isso pode resolver o problema de Assinatura invalida.

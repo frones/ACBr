@@ -365,6 +365,7 @@ var
   I: Integer;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Codigo: string;
 begin
   ANodeArray := RootNode.Childrens.FindAllAnyNs(AMessageTag);
 
@@ -372,10 +373,15 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('mensagem'), tcStr);
-    AErro.Correcao := '';
+    Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+
+    if Codigo <> '1' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Codigo;
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('mensagem'), tcStr);
+      AErro.Correcao := '';
+    end;
   end;
 end;
 
@@ -475,17 +481,20 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       with Response do
       begin
         NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero'), tcStr);
         NumNfse := NumeroNota;
         Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('guia'), tcStr);
+        CodVerificacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
+        Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('url'), tcStr);
+        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao'), tcStr);
       end;
 
       if Response.NumeroNota = '' then

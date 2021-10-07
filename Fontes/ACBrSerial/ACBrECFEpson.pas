@@ -76,6 +76,7 @@ type
   end;
 
   TPosicaoCheque = class
+  private
     Posicao: TPosicaoChequeUnit;
   public
     function getEE18: Ansistring;

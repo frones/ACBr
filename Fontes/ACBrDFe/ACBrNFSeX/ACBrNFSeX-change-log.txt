@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/10/2021
+-- RLZ.Provider --
+[*] Ajustes no Tratamento de retorno do Emitir.
+   Por: Italo Giurizzato Junior
+
 07/10/2021
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Ajustes no Tratamento de retorno do Consultar NFS-e Por Rps.

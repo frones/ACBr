@@ -487,6 +487,8 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
+      ANode := ANode.Childrens.FindAnyNs('nota');
+
       with Response do
       begin
         NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero'), tcStr);

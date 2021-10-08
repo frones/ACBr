@@ -46,6 +46,39 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/21
+-- ACBrTEFComum --
+[+] Adicionado o enumerado TACBrTEFOperacao.tefopNenhuma
+
+-- ACBrTEFAPIComum --
+[+] Adicionado método: TACBrTEFAPIComum.AbortarTransacaoEmAndamento
+
+-- ACBrTEFAPI --
+[*] Removendo Tipos não utilizados, TACBrTEFAPIComandoAplicacao, TACBrTEFAPIRecibo
+    TACBrTEFTipoIdCarteiraDigital
+
+-- ACBrTEFAPIPayGoWeb --
+[+] Implementado o método: AbortarTransacaoEmAndamento
+
+-- ACBrTEFAPICliSiTef --
+[*] Removendo método não utilzado: InicializarChamadaAPI
+[+] Implementado o método: AbortarTransacaoEmAndamento
+[-] Correção em ContinuarRequisicaoSiTef, para correta sinalização de Cancelamento
+
+-- ACBrTEFPayGoComum --
+[+] Adicionado métodos auxiliares:
+    function DadoStrToCurrency(ADadosDaTransacao: TACBrTEFParametros; iINFO: Word): Currency;
+    function DadoStrToDateTime(ADado: String): TDateTime;
+[+] Método ConteudoToPropertyPayGoWeb, adicionado os mapeamentos:
+    PWINFO_AUTRESPCODE -> Autenticacao
+    PWINFO_POSID -> SerialPOS
+
+-- ACBrTEFPayGoWebComum --
+[+] Adicionado o Enumerado: TACBrTEFPGWebAPITerminalMensagem.tmTodas
+    Agora método "ExibirMensagem" pode chamar evento com parâmetro:
+    Terminal = tmTodas, quando a mensagem deve ir para Tela do Cliente e Operador
+    (por: DSA)
+
 17/09/21
 -- ACBrTEFComum --
 [*] Tipo "TACBrTEFTipoCartao", adicionado o item: "teftcNaoDefinido"

@@ -86,24 +86,14 @@ type
                               tbDigitado,
                               tbLeitor );
 
-    TACBrTEFAPIComandoAplicacao = ( tefcmdExibirMensagem,  // Exibir Mensagem, temporária ou definitiva, para Cliente ou Operador
-                                    tefcmdExibirAlerta,    // Exibir Mensagem, de alerta para Cliente ou Operador
-                                    tefcmdPerguntarMenu,   // Exibir Menu de Perguntas, com Título e Opções em Texto
-                                    tefcmdPerguntarCampo,  // Perguntar Campo, com mascara e algumas validações
-                                    tefcmdLerCodBarras);   // Ler Código de Barra
-
-    TACBrTEFAPIRecibo = ( recNenhum, recCliente, recEstabelecimento, recAmbos );
-
-    TACBrTEFTipoIdCarteiraDigital = ( wuidOutro, wuidQRCode, wuidCPF );
-
     TACBrTEFAPIDadoPinPad = ( dpDDD, dpRedDDD,
-                            dpFone, dpRedFone,
-                            dpDDDeFone, dpRedDDDeFone,
-                            dpCPF, dpRedCPF,
-                            dpRG, dpRedRG,
-                            dp4UltDigitos,
-                            dpCodSeguranca,
-                            dpCNPJ, dpRedCNPJ );
+                              dpFone, dpRedFone,
+                              dpDDDeFone, dpRedDDDeFone,
+                              dpCPF, dpRedCPF,
+                              dpRG, dpRedRG,
+                              dp4UltDigitos,
+                              dpCodSeguranca,
+                              dpCNPJ, dpRedCNPJ );
 
   TACBrTEFAPIDefinicaoCampo = record
     TituloPergunta: String;
@@ -137,7 +127,7 @@ type
   TACBrTEFAPIQuandoPerguntarMenu = procedure(
     const Titulo: String;
     Opcoes: TStringList;
-    var ItemSelecionado: Integer) of object;  // Retorna o Item Selecionado, iniciando com 1
+    var ItemSelecionado: Integer) of object;  // Retorna o Item Selecionado, iniciando com 0
                                               // -2 - Volta no Fluxo
                                               // -1 - Cancela o Fluxo
 

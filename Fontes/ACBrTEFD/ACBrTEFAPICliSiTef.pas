@@ -89,7 +89,6 @@ type
     procedure InterpretarRetornoCliSiTef(const Ret: Integer);
 
   protected
-    procedure InicializarChamadaAPI(AMetodoOperacao: TACBrTEFAPIMetodo); override;
     procedure InterpretarRespostaAPI; override;
 
   public
@@ -123,6 +122,7 @@ type
 
     procedure ResolverTransacaoPendente(
       AStatus: TACBrTEFStatusTransacao = tefstsSucessoManual); override;
+    procedure AbortarTransacaoEmAndamento; override;
 
     procedure ExibirMensagemPinPad(const MsgPinPad: String); override;
     function ObterDadoPinPad(TipoDado: TACBrTEFAPIDadoPinPad; TimeOut: SmallInt = 30000
@@ -365,6 +365,8 @@ begin
   Interromper := False;
   fCancelamento := False ;
   fReimpressao := False;
+  Continua := 0;
+  Resposta := '';
   Buffer := '';
 
   TefAPI := TACBrTEFAPI(fpACBrTEFAPI);
@@ -372,8 +374,6 @@ begin
   RespCliSiTef.Clear;
   try
     repeat
-      Continua := 0;
-      Resposta := '';
       fpACBrTEFAPI.GravarLog( 'ContinuaFuncaoSiTefInterativo, Chamando: Continua = '+
                               IntToStr(Continua)+' Buffer = '+Resposta ) ;
 
@@ -389,6 +389,8 @@ begin
                              Buffer, sizeof(Buffer),
                              Continua );
 
+      Continua := 0;
+      Resposta := '';
       Mensagem := TrimRight(Buffer);
       fpACBrTEFAPI.GravarLog( 'ContinuaFuncaoSiTefInterativo, '+
                               ' Retornos: STS = '+IntToStr(fUltimoRetornoAPI)+
@@ -617,17 +619,21 @@ begin
              TefAPI.QuandoEsperarOperacao(opapiLeituraQRCode, Interromper);
            end;
         end;
-      end
-      else
+      end;
+
+      if (fUltimoRetornoAPI <> 10000) then
+      begin
         fpACBrTEFAPI.GravarLog( '*** ContinuaFuncaoSiTefInterativo, Finalizando: STS = '+
                                 IntToStr(fUltimoRetornoAPI) ) ;
+        Interromper := True;
+      end;
 
       if Voltar then
         Continua := 1     // Volta para o menu anterior
       else if (not Digitado) or Interromper then
         Continua := -1 ;  // Cancela operacao
 
-      if (Voltar and (fUltimoRetornoAPI = 10000)) or (not Digitado) then
+      if (Voltar and (fUltimoRetornoAPI = 10000)) or (not Digitado) or Interromper then
         TefAPI.QuandoExibirMensagem('', telaTodas, -1);
 
       StrPCopy(Buffer, Resposta);
@@ -715,12 +721,6 @@ end;
 procedure TACBrTEFAPIClassCliSiTef.SetPathDLL(AValue: string);
 begin
   fTEFCliSiTefAPI.PathDLL := AValue;
-end;
-
-procedure TACBrTEFAPIClassCliSiTef.InicializarChamadaAPI(
-  AMetodoOperacao: TACBrTEFAPIMetodo);
-begin
-  inherited;
 end;
 
 procedure TACBrTEFAPIClassCliSiTef.InterpretarRespostaAPI;
@@ -910,6 +910,11 @@ begin
                       fpACBrTEFAPI.UltimaRespostaTEF.NSU,
                       fpACBrTEFAPI.UltimaRespostaTEF.Finalizacao,
                       AStatus );
+end;
+
+procedure TACBrTEFAPIClassCliSiTef.AbortarTransacaoEmAndamento;
+begin
+  fUltimoRetornoAPI := -10000;
 end;
 
 function TACBrTEFAPIClassCliSiTef.CancelarTransacao(const NSU,

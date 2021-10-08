@@ -518,7 +518,7 @@ type
     var Validado: Boolean;
     var Cancelado: Boolean) of object ;
 
-  TACBrTEFPGWebAPITerminalMensagem = (tmOperador, tmCliente);
+  TACBrTEFPGWebAPITerminalMensagem = (tmTodas, tmOperador, tmCliente);
 
   TACBrTEFPGWebAPIExibeMensagem = procedure(
     Mensagem: String;
@@ -687,7 +687,7 @@ type
 
     function RealizarOperacaoPinPad(AGetData: TPW_GetData; OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
     function AguardarOperacaoPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad): SmallInt;
-    procedure ExibirMensagem(const AMsg: String; Terminal: TACBrTEFPGWebAPITerminalMensagem = tmOperador; TempoEspera: Integer = -1);
+    procedure ExibirMensagem(const AMsg: String; Terminal: TACBrTEFPGWebAPITerminalMensagem = tmTodas; TempoEspera: Integer = -1);
     procedure ExibirQRCode(const Dados: String);
     procedure ChamarOnAguardaPinPad(OperacaoPinPad: TACBrTEFPGWebAPIOperacaoPinPad; var Cancelado: Boolean);
 
@@ -1889,9 +1889,9 @@ begin
               ExibirMensagem(sInfoRemovaCartao);
               fUsouPinPad := False;
             end;
-
             iRet := RealizarOperacaoPinPad(AGetData, ppRemoveCard);
           end;
+
           PWDAT_PPGENCMD:
             iRet := RealizarOperacaoPinPad(AGetData, ppGenericCMD);
           PWDAT_PPDATAPOSCNF:
@@ -1911,6 +1911,7 @@ begin
             else
               AdicionarParametro(AGetData.wIdentificador, '');
           end;
+
           PWDAT_DSPQRCODE:
           begin
             DadosQRCode := ObterInfo(PWINFO_AUTHPOSQRCODE);
@@ -2629,8 +2630,7 @@ begin
     AjustarTempoOcioso;
 
     // Limpando mensagens do Operador e Cliente
-    ExibirMensagem('', tmOperador);
-    ExibirMensagem('', tmCliente);
+    ExibirMensagem('', tmTodas);
   end;
 end;
 

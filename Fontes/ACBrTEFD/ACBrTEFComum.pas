@@ -77,7 +77,8 @@ type
                               tefstsErroDispesador,
                               tefstsErroDiverso );
 
-  TACBrTEFOperacao = ( tefopPagamento,
+  TACBrTEFOperacao = ( tefopNenhuma,
+                       tefopPagamento,
                        tefopAdministrativo,
                        tefopTesteComunicacao,
                        tefopVersao,

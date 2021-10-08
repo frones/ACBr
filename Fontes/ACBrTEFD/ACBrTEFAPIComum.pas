@@ -368,7 +368,7 @@ type
       Status: TACBrTEFStatusTransacao = tefstsSucessoManual); virtual;
 
     //  function VerificarTEF: Boolean;
-    //  procedure AbortarTransacaoEmAndamento;
+    procedure AbortarTransacaoEmAndamento;
 
     procedure LimparRespostasTEF;
     procedure CarregarRespostasDoDiretorioTrabalho;
@@ -1338,6 +1338,12 @@ begin
   fRespostasTEF.AtualizarTransacaoComTerceiraPerna(UltimaRespostaTEF);
 end;
 
+procedure TACBrTEFAPIComum.AbortarTransacaoEmAndamento;
+begin
+  GravarLog( 'AbortarTransacaoEmAndamento');
+  fpTEFAPIClass.AbortarTransacaoEmAndamento;
+end;
+
 procedure TACBrTEFAPIComum.LimparRespostasTEF;
 begin
   GravarLog('LimparRespostasTEF');
@@ -1482,11 +1488,6 @@ end;
 //function TACBrTEFAPIComum.VerificarTEF: Boolean;
 //begin
 //  Result := fTEFAndroidClass.VerificarTEF;
-//end;
-
-//procedure TACBrTEFAPIComum.AbortarTransacaoEmAndamento;
-//begin
-//  fTEFAndroidClass.AbortarTransacaoEmAndamento;
 //end;
 
 procedure TACBrTEFAPIComum.GravarLog(const AString: AnsiString);

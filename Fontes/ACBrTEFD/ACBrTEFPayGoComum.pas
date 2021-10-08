@@ -297,6 +297,8 @@ type
 
 procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
 procedure DadosDaTransacaoToTEFResp(ADadosDaTransacao: TACBrTEFParametros; ATefResp: TACBrTEFResp);
+function DadoStrToCurrency(ADadosDaTransacao: TACBrTEFParametros; iINFO: Word): Currency;
+function DadoStrToDateTime(ADado: String): TDateTime;
 
 function ParseKeyValue(const AKeyValueStr: String; out TheKey: String; out TheValue: String): Boolean;
 function PWINFOToString(iINFO: Word): String;
@@ -578,8 +580,8 @@ begin
         PWINFO_AUTHCODE:
           CodigoAutorizacaoTransacao := LinStr;
 
-        //PWINFO_AUTRESPCODE:
-        //  Autenticacao := LinStr;
+        PWINFO_AUTRESPCODE:
+          Autenticacao := LinStr;
 
         PWINFO_FINTYPE:
         begin
@@ -633,6 +635,9 @@ begin
         PWINFO_AUTHPOSQRCODE:
           QRCode := LinStr;
 
+        PWINFO_POSID:
+          SerialPOS := LinStr;
+
         //PWINFO_PRODUCTID   3Eh até 8 Identificação do produto utilizado, de acordo com a nomenclatura do Provedor.
         //PWINFO_PRODUCTNAME 2Ah até 20 Nome/tipo do produto utilizado, na nomenclatura do Provedor
         //PWINFO_AUTMERCHID  38h até 50 Identificador do estabelecimento para o Provedor (código de afiliação)
@@ -684,6 +689,45 @@ begin
   end;
 
   ConteudoToPropertyPayGoWeb( ATefResp );
+end;
+
+function DadoStrToCurrency(ADadosDaTransacao: TACBrTEFParametros; iINFO: Word): Currency;
+var
+  ADado: String;
+  Centavos: Integer;
+  Pow: Extended;
+begin
+  Result := 0;
+  ADado := Trim(ADadosDaTransacao.ValueInfo[iINFO]);
+  if (ADado = '') then
+    Exit;
+
+  Centavos := StrToIntDef( Trim(ADadosDaTransacao.ValueInfo[PWINFO_CURREXP]), 2);
+  Pow := IntPower(10, Centavos);
+
+  Result := StrToFloatDef(ADado, 0);
+  Result := Result / Pow;
+end;
+
+function DadoStrToDateTime(ADado: String): TDateTime;
+var
+  DateTimeStr : String;
+begin
+  Result := 0;
+  if (ADado = '') then
+    Exit;
+
+  DateTimeStr := OnlyNumber(Trim(ADado));
+  try
+    Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),
+                              StrToInt(copy(DateTimeStr,5,2)),
+                              StrToInt(copy(DateTimeStr,7,2)),
+                              StrToIntDef(copy(DateTimeStr,9,2),0),
+                              StrToIntDef(copy(DateTimeStr,11,2),0),
+                              StrToIntDef(copy(DateTimeStr,13,2),0), 0) ;
+  except
+    Result := 0 ;
+  end;
 end;
 
 function ParseKeyValue(const AKeyValueStr: String; out TheKey: String; out

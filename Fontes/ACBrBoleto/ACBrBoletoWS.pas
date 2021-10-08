@@ -1163,7 +1163,7 @@ end;
 
 function TBoletoWS.Enviar: Boolean;
 var
-  i: Integer;
+  indice: Integer;
 begin
   Banco := FBoleto.Banco.TipoCobranca;
   Result := False;
@@ -1171,22 +1171,19 @@ begin
   if FBoleto.ListadeBoletos.Count > 0 then
   begin
     FBoleto.ListaRetornoWeb.Clear;
-    for i:= 0 to Pred(FBoleto.ListadeBoletos.Count) do
+    for indice:= 0 to Pred(FBoleto.ListadeBoletos.Count) do
     begin
-      FBoletoWSClass.FTitulos := FBoleto.ListadeBoletos[i];
+      FBoletoWSClass.FTitulos := FBoleto.ListadeBoletos[indice];
       FBoletoWSClass.GerarRemessa;
       Result :=  FBoletoWSClass.Enviar;
       FRetornoWS := BoletoWSClass.FRetornoWS;
 
       FRetornoBanco.FRetWS:= FRetornoWS;
       FRetornoBanco.RetornoEnvio;
+      FBoletoWSClass.FTitulos.RetornoWeb.Assign(FBoleto.ListaRetornoWeb[indice]);
+
       if(Result) then
       begin
-        if Assigned(FRetornoBanco) then
-        begin
-          FBoletoWSClass.FTitulos.RetornoWeb:= FBoleto.ListaRetornoWeb[i];
-        end;
-
         if Assigned(FRetornoBanco.QrCodeRet) then
         begin
           FBoletoWSClass.FTitulos.QrCode.url := FRetornoBanco.QrCodeRet.url;

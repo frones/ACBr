@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/10/2021
+--ACBrBoletoWS, ACBrBoletoRetorno--
+[*] Ajuste na atualização do Retorno WebService na lista de títulos
+
 18/08/2021
 --ACBrBancoBanrisul--
 [*] Correção na geração do SeuNumero na remessa

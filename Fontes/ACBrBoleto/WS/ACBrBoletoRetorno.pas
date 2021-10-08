@@ -41,6 +41,8 @@ uses
 
 type
 
+  { THeader }
+
   THeader = class
   private
     FVersao: String;
@@ -56,6 +58,8 @@ type
     FId_Processo: String;
     FCNPJCPF_Beneficiario: String;
   public
+    procedure Assign(DeACBrBoletoHeader: THeader); reintroduce; virtual;
+
     property Versao: String               read FVersao               write FVersao;
     property Autenticacao: String         read FAutenticacao         write FAutenticacao;
     property Usuario_Servico: String      read FUsuario_Servico      write FUsuario_Servico;
@@ -70,6 +74,8 @@ type
     property CNPJCPF_Beneficiario: String read FCNPJCPF_Beneficiario write FCNPJCPF_Beneficiario;
   end;
 
+  { TControleNegocial }
+
   TControleNegocial = class
   private
     FOriRetorno: String;
@@ -77,20 +83,28 @@ type
     FNSU: String;
     FRetorno: String;
   public
+    procedure Assign(DeACBrBoletoControleNegocial: TControleNegocial); reintroduce; virtual;
+
     property OriRetorno: String  read FOriRetorno write FOriRetorno;
     property CodRetorno: String  read FCodRetorno write FCodRetorno;
     property NSU: String         read FNSU        write FNSU;
     property Retorno: String     read FRetorno    write FRetorno;
   end;
 
+  { TComprovante }
+
   TComprovante = class
   private
     FHora: String;
     FData: TDateTime;
   public
+    procedure Assign(DeACBrBoletoComprovante: TComprovante); reintroduce; virtual;
+
     property Data: TDateTime read FData write FData;
     property Hora: String    read FHora write FHora;
   end;
+
+  { TIDBoleto }
 
   TIDBoleto = class
   private
@@ -99,11 +113,15 @@ type
     FNossoNum: String;
     FURL: String;
   public
+    procedure Assign(DeACBrBoletoIDBoleto: TIDBoleto); reintroduce; virtual;
+
     property CodBarras: String read FCodBarras write FCodBarras;
     property LinhaDig: String  read FLinhaDig  write FLinhaDig;
     property NossoNum: String  read FNossoNum  write FNossoNum;
     property URL: String       read FURL       write FURL;
   end;
+
+  { TSacadoAvalistaRet }
 
   TSacadoAvalistaRet = class
   private
@@ -112,12 +130,16 @@ type
     FCNPJCPF: String;
 
   public
+    procedure Assign(DeACBrBoletoSacadoAvalistaRet: TSacadoAvalistaRet); reintroduce; virtual;
+
     property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
     property NomeAvalista: String read FNomeAvalista write FNomeAvalista;
     property CNPJCPF: String      read FCNPJCPF      write FCNPJCPF;
 
   end;
 
+
+  { TSacadoRet }
 
   TSacadoRet = class
   private
@@ -134,6 +156,8 @@ type
     FEmail: String;
     FFone: String;
   public
+    procedure Assign(DeACBrBoletoSacadoRet: TSacadoRet); reintroduce; virtual;
+
     property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
     property NomeSacado: String   read FNomeSacado   write FNomeSacado;
     property CNPJCPF: String      read FCNPJCPF      write FCNPJCPF;
@@ -229,6 +253,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure Assign(DeACBrBoletoTituloRet: TTituloRet); reintroduce; virtual;
+
     property CodBarras: String read FCodBarras write FCodBarras;
     property LinhaDig: String read FLinhaDig write FLinhaDig;
     property URL: String read FURL write FURL;
@@ -317,6 +343,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure Assign(DeACBrBoletoDadosRet: TDadosRet); reintroduce; virtual;
+
     property ControleNegocial: TControleNegocial read FControleNegocial write FControleNegocial;
     property Comprovante: TComprovante           read FComprovante      write FComprovante;
     property Excecao: String                     read FExcecao          write FExcecao;
@@ -324,6 +352,8 @@ type
     property TituloRet: TTituloRet               read FTituloRet        write FTituloRet;
 
   end;
+
+  { TRejeicao }
 
   TRejeicao = class
   private
@@ -334,6 +364,8 @@ type
     FVersao     : String;
     FOcorrencia : String;
   public
+    procedure Assign(DeACBrBoletoRejeicao: TRejeicao); reintroduce; virtual;
+
     property Campo      : String  read FCampo      write FCampo;
     property Mensagem   : String  read FMensagem   write FMensagem;
     property Valor      : String  read FValor      write FValor;
@@ -371,6 +403,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure Assign(DeACBrBoletoRetEnvio: TRetEnvio); reintroduce; virtual;
+
     function CriarRejeicaoLista : TRejeicao;
     property Header                : THeader        read FHeader                write FHeader;
     property CodRetorno            : String         read FCodRetorno            write FCodRetorno;
@@ -396,6 +430,97 @@ type
   end;
 
 implementation
+
+{ TRejeicao }
+
+procedure TRejeicao.Assign(DeACBrBoletoRejeicao: TRejeicao);
+begin
+  Campo      := DeACBrBoletoRejeicao.Campo;
+  Mensagem   := DeACBrBoletoRejeicao.Mensagem;
+  Valor      := DeACBrBoletoRejeicao.Valor;
+  Codigo     := DeACBrBoletoRejeicao.Codigo;
+  Versao     := DeACBrBoletoRejeicao.Versao;
+  Ocorrencia := DeACBrBoletoRejeicao.Ocorrencia;
+
+end;
+
+{ TComprovante }
+
+procedure TComprovante.Assign(DeACBrBoletoComprovante: TComprovante);
+begin
+  Hora:= DeACBrBoletoComprovante.Hora;
+  Data:= DeACBrBoletoComprovante.Data;
+end;
+
+{ TSacadoRet }
+
+procedure TSacadoRet.Assign(DeACBrBoletoSacadoRet: TSacadoRet);
+begin
+  Pessoa:= DeACBrBoletoSacadoRet.Pessoa;
+  NomeSacado:= DeACBrBoletoSacadoRet.NomeSacado;
+  CNPJCPF:= DeACBrBoletoSacadoRet.CNPJCPF;
+  Logradouro:= DeACBrBoletoSacadoRet.Logradouro;
+  Numero:= DeACBrBoletoSacadoRet.Numero;
+  Complemento:= DeACBrBoletoSacadoRet.Complemento;
+  Bairro:= DeACBrBoletoSacadoRet.Bairro;
+  Cidade:= DeACBrBoletoSacadoRet.Cidade;
+  UF:= DeACBrBoletoSacadoRet.UF;
+  CEP:= DeACBrBoletoSacadoRet.CEP;
+  Email:= DeACBrBoletoSacadoRet.Email;
+  Fone:= DeACBrBoletoSacadoRet.Fone;
+
+end;
+
+{ TSacadoAvalistaRet }
+
+procedure TSacadoAvalistaRet.Assign( DeACBrBoletoSacadoAvalistaRet: TSacadoAvalistaRet);
+begin
+  Pessoa:= DeACBrBoletoSacadoAvalistaRet.Pessoa;
+  NomeAvalista:= DeACBrBoletoSacadoAvalistaRet.NomeAvalista;
+  CNPJCPF:= DeACBrBoletoSacadoAvalistaRet.CNPJCPF;
+
+end;
+
+{ TIDBoleto }
+
+procedure TIDBoleto.Assign(DeACBrBoletoIDBoleto: TIDBoleto);
+begin
+  CodBarras:= DeACBrBoletoIDBoleto.CodBarras;
+  LinhaDig:= DeACBrBoletoIDBoleto.LinhaDig;
+  NossoNum:= DeACBrBoletoIDBoleto.NossoNum;
+  URL:= DeACBrBoletoIDBoleto.URL;
+
+end;
+
+{ TControleNegocial }
+
+procedure TControleNegocial.Assign( DeACBrBoletoControleNegocial: TControleNegocial);
+begin
+  OriRetorno:= DeACBrBoletoControleNegocial.OriRetorno;
+  CodRetorno:= DeACBrBoletoControleNegocial.CodRetorno;
+  NSU:= DeACBrBoletoControleNegocial.NSU;
+  Retorno:= DeACBrBoletoControleNegocial.Retorno;
+
+end;
+
+{ THeader }
+
+procedure THeader.Assign(DeACBrBoletoHeader: THeader);
+begin
+  Versao:= DeACBrBoletoHeader.Versao;
+  Autenticacao:= DeACBrBoletoHeader.Autenticacao;
+  Usuario_Servico:= DeACBrBoletoHeader.Usuario_Servico;
+  Usuario:= DeACBrBoletoHeader.Usuario;
+  Operacao:= DeACBrBoletoHeader.Operacao;
+  Indice:= DeACBrBoletoHeader.Indice;
+  Sistema_Origem:= DeACBrBoletoHeader.Sistema_Origem;
+  Agencia:= DeACBrBoletoHeader.Agencia;
+  Id_Origem:= DeACBrBoletoHeader.Id_Origem;
+  Data_Hora:= DeACBrBoletoHeader.Data_Hora;
+  Id_Processo:= DeACBrBoletoHeader.Id_Processo;
+  CNPJCPF_Beneficiario:= DeACBrBoletoHeader.CNPJCPF_Beneficiario;
+
+end;
 
 { TListaRejeicao }
 
@@ -432,12 +557,91 @@ end;
 
 destructor TTituloRet.Destroy;
 begin
-  FSacadoAvalista.Free;
-  FSacado.Free;
   FMensagem.Free;
   FInformativo.Free;
   FInstrucoes.Free;
+  FSacado.Free;
+  FSacadoAvalista.Free;
+
   inherited Destroy;
+end;
+
+procedure TTituloRet.Assign(DeACBrBoletoTituloRet: TTituloRet);
+begin
+  CodBarras:= DeACBrBoletoTituloRet.CodBarras;
+  LinhaDig:= DeACBrBoletoTituloRet.LinhaDig;
+  URL:= DeACBrBoletoTituloRet.URL;
+  Instrucao1:= DeACBrBoletoTituloRet.Instrucao1;
+  Instrucao2:= DeACBrBoletoTituloRet.Instrucao2;
+  Instrucao3:= DeACBrBoletoTituloRet.Instrucao3;
+  Parcela:= DeACBrBoletoTituloRet.Parcela;
+  PercentualMulta:= DeACBrBoletoTituloRet.PercentualMulta;
+  MultaValorFixo:= DeACBrBoletoTituloRet.MultaValorFixo;
+  SeuNumero:= DeACBrBoletoTituloRet.SeuNumero;
+  TipoDiasProtesto:= DeACBrBoletoTituloRet.TipoDiasProtesto;
+  Vencimento:= DeACBrBoletoTituloRet.Vencimento;
+  DataDocumento:= DeACBrBoletoTituloRet.DataDocumento;
+  NumeroDocumento:= DeACBrBoletoTituloRet.NumeroDocumento;
+  EspecieDoc:= DeACBrBoletoTituloRet.EspecieDoc;
+  Aceite:= DeACBrBoletoTituloRet.Aceite;
+  DataProcessamento:= DeACBrBoletoTituloRet.DataProcessamento;
+  NossoNumero:= DeACBrBoletoTituloRet.NossoNumero;
+  UsoBanco:= DeACBrBoletoTituloRet.UsoBanco;
+  Carteira:= DeACBrBoletoTituloRet.Carteira;
+  EspecieMod:= DeACBrBoletoTituloRet.EspecieMod;
+  ValorDocumento:= DeACBrBoletoTituloRet.ValorDocumento;
+  Mensagem.Text:= DeACBrBoletoTituloRet.Mensagem.Text;
+  Informativo.text:= DeACBrBoletoTituloRet.Informativo.Text;
+  Instrucoes.Text:= DeACBrBoletoTituloRet.Instrucoes.Text;
+  DataCredito:= DeACBrBoletoTituloRet.DataCredito;
+  DataAbatimento:= DeACBrBoletoTituloRet.DataAbatimento;
+  DataDesconto:= DeACBrBoletoTituloRet.DataDesconto;
+  DataDesconto2:= DeACBrBoletoTituloRet.DataDesconto2;
+  DataMoraJuros:= DeACBrBoletoTituloRet.DataMoraJuros;
+  DataMulta:= DeACBrBoletoTituloRet.DataMulta;
+  DataProtesto:= DeACBrBoletoTituloRet.DataProtesto;
+  DiasDeProtesto:= DeACBrBoletoTituloRet.DiasDeProtesto;
+  DataBaixa:= DeACBrBoletoTituloRet.DataBaixa;
+  HoraBaixa:= DeACBrBoletoTituloRet.HoraBaixa;
+  DataLimitePagto:= DeACBrBoletoTituloRet.DataLimitePagto;
+  ValorDespesaCobranca:= DeACBrBoletoTituloRet.ValorDespesaCobranca;
+  ValorAbatimento:= DeACBrBoletoTituloRet.ValorAbatimento;
+  ValorDesconto:= DeACBrBoletoTituloRet.ValorDesconto;
+  ValorDesconto2:= DeACBrBoletoTituloRet.ValorDesconto2;
+  ValorMoraJuros:= DeACBrBoletoTituloRet.ValorMoraJuros;
+  ValorIOF:= DeACBrBoletoTituloRet.ValorIOF;
+  ValorOutrasDespesas:= DeACBrBoletoTituloRet.ValorOutrasDespesas;
+  ValorOutrosCreditos:= DeACBrBoletoTituloRet.ValorOutrosCreditos;
+  ValorRecebido:= DeACBrBoletoTituloRet.ValorRecebido;
+  CodigoMora:= DeACBrBoletoTituloRet.CodigoMora;
+  CarteiraEnvio:= DeACBrBoletoTituloRet.CarteiraEnvio;
+  CodigoNegativacao:= DeACBrBoletoTituloRet.CodigoNegativacao;
+  CodigoDesconto:= DeACBrBoletoTituloRet.CodigoDesconto;
+  CodigoMoraJuros:= DeACBrBoletoTituloRet.CodigoMoraJuros;
+  CodigoMulta:= DeACBrBoletoTituloRet.CodigoMulta;
+  ValorPago:= DeACBrBoletoTituloRet.ValorPago;
+  CaracTitulo:= DeACBrBoletoTituloRet.CaracTitulo;
+  TipoPagamento:= DeACBrBoletoTituloRet.TipoPagamento;
+  QtdePagamentoParcial:= DeACBrBoletoTituloRet.QtdePagamentoParcial;
+  QtdeParcelas:= DeACBrBoletoTituloRet.QtdeParcelas;
+  ValorMinPagamento:= DeACBrBoletoTituloRet.ValorMinPagamento;
+  ValorMaxPagamento:= DeACBrBoletoTituloRet.ValorMaxPagamento;
+  PercentualMinPagamento:= DeACBrBoletoTituloRet.PercentualMinPagamento;
+  PercentualMaxPagamento:= DeACBrBoletoTituloRet.PercentualMaxPagamento;
+  Modalidade := DeACBrBoletoTituloRet.Modalidade;
+  CodigoCliente := DeACBrBoletoTituloRet.CodigoCliente;
+  DataRegistro:= DeACBrBoletoTituloRet.DataRegistro;
+  ValorAtual:= DeACBrBoletoTituloRet.ValorAtual;
+  Contrato:= DeACBrBoletoTituloRet.Contrato;
+  CodigoEstadoTituloCobranca:= DeACBrBoletoTituloRet.CodigoEstadoTituloCobranca;
+  EstadoTituloCobranca:= DeACBrBoletoTituloRet.EstadoTituloCobranca;
+  DataMovimento:= DeACBrBoletoTituloRet.DataMovimento;
+  emv:= DeACBrBoletoTituloRet.EMV;
+  urlPix:= DeACBrBoletoTituloRet.UrlPix;
+  txId:= DeACBrBoletoTituloRet.TxId;
+  Sacado.Assign(DeACBrBoletoTituloRet.Sacado);
+  SacadoAvalista.Assign(DeACBrBoletoTituloRet.SacadoAvalista);
+
 end;
 
 { TListaRetEnvio }
@@ -466,17 +670,46 @@ end;
 
 constructor TRetEnvio.Create;
 begin
-  FHeader    := THeader.Create;
-  FDadosRet  := TDadosRet.Create;
-  FListaRejeicao := TListaRejeicao.Create(true);
+  FHeader:= THeader.Create;
+  FDadosRet:= TDadosRet.Create;
+  FListaRejeicao:= TListaRejeicao.Create(true);
 end;
 
 destructor TRetEnvio.Destroy;
 begin
-  FHeader.Free;
-  FDadosRet.Free;
   FListaRejeicao.Free;
+  FDadosRet.Free;
+  FHeader.Free;
+
   inherited;
+end;
+
+procedure TRetEnvio.Assign(DeACBrBoletoRetEnvio: TRetEnvio);
+var
+  I: Integer;
+  Rej: TRejeicao;
+begin
+  CodRetorno:= DeACBrBoletoRetEnvio.CodRetorno;
+  OriRetorno:= DeACBrBoletoRetEnvio.OriRetorno;
+  MsgRetorno:= DeACBrBoletoRetEnvio.MsgRetorno;
+  HTTPResultCode:= DeACBrBoletoRetEnvio.HTTPResultCode;
+  JSON:= DeACBrBoletoRetEnvio.JSON;
+  IndicadorContinuidade:= DeACBrBoletoRetEnvio.indicadorContinuidade;
+  ProximoIndice:= DeACBrBoletoRetEnvio.proximoIndice;
+  Header.Assign(DeACBrBoletoRetEnvio.Header);
+  DadosRet.Assign(DeACBrBoletoRetEnvio.DadosRet);
+
+  for I := 0 to DeACBrBoletoRetEnvio.ListaRejeicao.Count -1 do
+  begin
+    Rej := CriarRejeicaoLista;
+    Rej.Campo      := DeACBrBoletoRetEnvio.ListaRejeicao[I].Ocorrencia;
+    Rej.Codigo     := DeACBrBoletoRetEnvio.ListaRejeicao[I].Codigo;
+    Rej.Versao     := DeACBrBoletoRetEnvio.ListaRejeicao[I].Versao;
+    Rej.Mensagem   := DeACBrBoletoRetEnvio.ListaRejeicao[I].Mensagem;
+    Rej.Ocorrencia := DeACBrBoletoRetEnvio.ListaRejeicao[I].Ocorrencia;
+
+  end;
+
 end;
 
 
@@ -501,12 +734,22 @@ end;
 
 destructor TDadosRet.Destroy;
 begin
-  FControleNegocial.Free;
-  FTituloRet.Free;
-  FComprovante.Free;
   FIDBoleto.Free;
+  FComprovante.Free;
+  FTituloRet.Free;
+  FControleNegocial.Free;
 
   inherited;
+end;
+
+procedure TDadosRet.Assign(DeACBrBoletoDadosRet: TDadosRet);
+begin
+  Excecao:= DeACBrBoletoDadosRet.Excecao;
+  ControleNegocial.Assign(DeACBrBoletoDadosRet.ControleNegocial);
+  Comprovante.Assign(DeACBrBoletoDadosRet.Comprovante);
+  IDBoleto.Assign(DeACBrBoletoDadosRet.IDBoleto);
+  TituloRet.Assign(DeACBrBoletoDadosRet.TituloRet);
+
 end;
 
 

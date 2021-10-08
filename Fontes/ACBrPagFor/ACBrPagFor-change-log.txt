@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2021
+-- ACBrPagForGravarTxt/ACBrPagForLerTxt --
+[-] https://www.projetoacbr.com.br/forum/topic/64494-pagfor-sicredi-retornando-dv-ag%C3%AAncia-inv%C3%A1lido-durante-homologa%C3%A7%C3%A3o/
+   Por: Leandro Ledo
+
 21/07/2021
 -- ACBrPagForConversao/ACBrPagForLerTxt --
 [*] Alterações visando a leitura do retorno do banco Santander.

@@ -313,7 +313,7 @@ begin
         FPagFor.Lote.Last.SegmentoA.Last.Informacao2            := Copy(FArquivoTXT.Strings[i], 178, 40);
         FPagFor.Lote.Last.SegmentoA.Last.CodigoDOC              := Copy(FArquivoTXT.Strings[i], 218, 2);
         FPagFor.Lote.Last.SegmentoA.Last.CodigoTED              := Copy(FArquivoTXT.Strings[i], 220, 5);
-        FPagFor.Lote.Last.SegmentoA.Last.Aviso                  := StrToInt(Copy(FArquivoTXT.Strings[i], 230, 1));
+        FPagFor.Lote.Last.SegmentoA.Last.Aviso                  := StrToIntDef(Copy(FArquivoTXT.Strings[i], 230, 1),0);
         FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia          := Trim(Copy(FArquivoTXT.Strings[i], 231, 10));
 
         if (FPagFor.Geral.Banco = PagItau) then

@@ -396,7 +396,7 @@ begin
       begin
         wregistro := wregistro + PadRight(FPagFor.Lote.Items[I].Registro1.Empresa.Convenio, 20);
         wregistro := wregistro + FormatFloat('00000', FPagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.Codigo);
-        wregistro := wregistro + FormatFloat('0', FPagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.TipoConta);
+        wregistro := wregistro + PadRight(FPagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Agencia.DV,1);
         wregistro := wregistro + FormatFloat('000000000000', FPagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.Numero);
         wregistro := wregistro + PadRight(FPagFor.Lote.Items[I].Registro1.Empresa.ContaCorrente.Conta.DV, 1);
         wregistro := wregistro + ' ';

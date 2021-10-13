@@ -1270,7 +1270,7 @@ procedure TACBrNFSeProviderABRASFv1.TratarRetornoCancelaNFSe(Response: TNFSeCanc
 var
   AErro: TNFSeEventoCollectionItem;
   Document: TACBrXmlDocument;
-  ANode: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
   Ret: TRetCancelamento;
   IdAttr: string;
 begin
@@ -1293,6 +1293,10 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root.Childrens.FindAnyNs('Cancelamento');
+
+      if ANode = nil then
+        ANode := Document.Root.Childrens.FindAnyNs('RetCancelamento');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -1301,7 +1305,13 @@ begin
         Exit;
       end;
 
+      AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+      if AuxNode <> nil then
+        ANode := AuxNode;
+
       ANode := ANode.Childrens.FindAnyNs('Confirmacao');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -1312,6 +1322,9 @@ begin
 
       Ret :=  Response.RetCancelamento;
       Ret.DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
+
+      if Ret.DataHora = 0 then
+        Ret.DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
@@ -1325,7 +1338,7 @@ begin
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
-      with  Ret.Pedido.IdentificacaoNfse do
+      with Ret.Pedido.IdentificacaoNfse do
       begin
         Numero := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
         Cnpj := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);

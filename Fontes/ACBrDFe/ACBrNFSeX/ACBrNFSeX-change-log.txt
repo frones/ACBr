@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/10/2021
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Possível correção no tratamento do retorno de cancelamento de NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais --
 [*] Incluido uma função para remover namespace não esperados no XML ao ler
     um lote de XML de NFS-e.

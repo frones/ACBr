@@ -105,7 +105,7 @@ end;
 
 procedure TBoletoW_Itau.DefinirContentType;
 begin
-  FPContentType := 'RAW';
+  FPContentType := '';
 end;
 
 
@@ -173,12 +173,35 @@ end;
 
 procedure TBoletoW_Itau.RequisicaoJson;
 var
-  Data: string;
+  Data, AEspecieDoc: string;
   Json: TJSONObject;
 begin
   if Assigned(Titulos) then
     with Titulos do
     begin
+      if AnsiSameText(EspecieDoc,'DM') then
+         AEspecieDoc:= '01'
+      else if AnsiSameText(EspecieDoc, 'NP') then
+         AEspecieDoc:= '02'
+      else if AnsiSameText(EspecieDoc, 'NS') then
+         AEspecieDoc:= '03'
+      else if AnsiSameText(EspecieDoc, 'CS') then
+         AEspecieDoc:= '04'
+      else if AnsiSameText(EspecieDoc, 'REC') then
+         AEspecieDoc:= '05'
+      else if AnsiSameText(EspecieDoc, 'LC') then
+         AEspecieDoc:= '09'
+      else if AnsiSameText(EspecieDoc, 'DS') then
+         AEspecieDoc:= '08'
+      else if AnsiSameText(EspecieDoc, 'ND') then
+         AEspecieDoc:= '13'
+      else if AnsiSameText(EspecieDoc, 'PS') then
+         AEspecieDoc:= '17'
+      else if AnsiSameText(EspecieDoc, 'BP') then
+         AEspecieDoc:= '18'
+      else
+         AEspecieDoc:= '99';
+
       Json := TJsonObject.Create;
       try
         Json.Add('tipo_ambiente').Value.AsInteger := ValidaAmbiente;
@@ -191,45 +214,56 @@ begin
         GerarDebito(Json);
 
         Json.Add('identificador_titulo_empresa').Value.AsString := NumeroDocumento;
-        Json.Add('uso_banco').Value.AsString := '';
+        //Json.Add('uso_banco').Value.AsString := '';
         Json.Add('titulo_aceite').Value.AsString := 'S';
 
         GerarPagador(Json);
         GerarSacadorAvalista(Json);
 
-        Json.Add('tipo_carteira_titulo').Value.AsString := Carteira;
+        Json.Add('tipo_carteira_titulo').Value.AsInteger := StrToInt(Carteira);
         GerarMoeda(Json);
 
         Json.Add('nosso_numero').Value.AsString := NossoNumero;
         Json.Add('digito_verificador_nosso_numero').Value.AsString :=
           ACBrBoleto.Banco.CalcularDigitoVerificador(Titulos);
-        Json.Add('codigo_barras').Value.AsString := '';
+        //Json.Add('codigo_barras').Value.AsString := '';
         Json.Add('data_vencimento').Value.AsString :=
           FormatDateTime('yyyy-mm-dd', Vencimento);
         Json.Add('valor_cobrado').Value.AsString :=
           IntToStrZero(round(ValorDocumento * 100), 17);
         Json.Add('seu_numero').Value.AsString := SeuNumero;
-        Json.Add('especie').Value.AsString := EspecieDoc;
+        Json.Add('especie').Value.AsString := AEspecieDoc;
         Json.Add('data_emissao').Value.AsString :=
           FormatDateTime('yyyy-mm-dd', DataDocumento);
-        Json.Add('data_limite_pagamento').Value.AsString :=
-          FormatDateTime('yyyy-mm-dd', DataLimitePagto);
+        if DataLimitePagto > 0 then
+          Json.Add('data_limite_pagamento').Value.AsString := FormatDateTime('yyyy-mm-dd', DataLimitePagto);
+
         Json.Add('tipo_pagamento').Value.AsInteger := 3;
-        Json.Add('indicador_pagamento_parcial').Value.AsBoolean :=
-          (TipoPagamento <> tpNao_Aceita_Valor_Divergente);
-        Json.Add('quantidade_pagamento_parcial').Value.AsInteger := QtdePagamentoParcial;
-        Json.Add('quantidade_parcelas').Value.AsInteger := QtdeParcelas;
-        Json.Add('instrucao_cobranca_1').Value.AsString := Copy(trim((Instrucao1)), 1, 2);
-        Json.Add('quantidade_dias_1').Value.AsString := Copy(trim((Instrucao1)), 3, 2);
-        Json.Add('data_instrucao_1').Value.AsString := '';
-        Json.Add('instrucao_cobranca_2').Value.AsString := Copy(trim((Instrucao2)), 1, 2);
-        Json.Add('quantidade_dias_2').Value.AsString := Copy(trim((Instrucao2)), 3, 2);
-        Json.Add('data_instrucao_2').Value.AsString := '';
-        Json.Add('instrucao_cobranca_3').Value.AsString := Copy(trim((Instrucao3)), 1, 2);
-        Json.Add('quantidade_dias_3').Value.AsString := Copy(trim((Instrucao3)), 3, 2);
-        Json.Add('data_instrucao_3').Value.AsString := '';
-        Json.Add('valor_abatimento').Value.AsString :=
-          IntToStrZero(round(ValorAbatimento * 100), 17);
+        Json.Add('indicador_pagamento_parcial').Value.AsBoolean := (TipoPagamento <> tpNao_Aceita_Valor_Divergente);
+        if TipoPagamento <> tpNao_Aceita_Valor_Divergente then
+          Json.Add('quantidade_pagamento_parcial').Value.AsInteger := QtdePagamentoParcial;
+        if QtdeParcelas > 0 then
+          Json.Add('quantidade_parcelas').Value.AsInteger := QtdeParcelas;
+          if Instrucao1 <> '' then
+        begin
+          Json.Add('instrucao_cobranca_1').Value.AsString := Copy(trim((Instrucao1)), 1, 2);
+          Json.Add('quantidade_dias_1').Value.AsString := Copy(trim((Instrucao1)), 3, 2);
+          //Json.Add('data_instrucao_1').Value.AsString := '';
+        end;
+        if Instrucao2 <> '' then
+        begin
+          Json.Add('instrucao_cobranca_2').Value.AsString := Copy(trim((Instrucao2)), 1, 2);
+          Json.Add('quantidade_dias_2').Value.AsString := Copy(trim((Instrucao2)), 3, 2);
+          //Json.Add('data_instrucao_2').Value.AsString := '';
+        end;
+        if Instrucao3 <> '' then
+        begin
+          Json.Add('instrucao_cobranca_3').Value.AsString := Copy(trim((Instrucao3)), 1, 2);
+          Json.Add('quantidade_dias_3').Value.AsString := Copy(trim((Instrucao3)), 3, 2);
+          //Json.Add('data_instrucao_3').Value.AsString := '';
+        end;
+        if ValorAbatimento > 0 then
+          Json.Add('valor_abatimento').Value.AsString := IntToStrZero(round(ValorAbatimento * 100), 17);
 
         GerarJuros(Json);
         GerarMulta(Json);
@@ -333,16 +367,15 @@ begin
         JsonDadosPagador := TJSONObject.Create;
 
         try
-          JsonDadosPagador.Add('cpf_cnpj_pagador').Value.AsString := Sacado.CNPJCPF;
-          JsonDadosPagador.Add('nome_pagador').Value.AsString := Sacado.NomeSacado;
-          JsonDadosPagador.Add('logradouro_pagador').Value.AsString :=
-            Sacado.Logradouro + ' ' + Sacado.Numero;
-          JsonDadosPagador.Add('bairro_pagador').Value.AsString := Sacado.Bairro;
-          JsonDadosPagador.Add('cidade_pagador').Value.AsString := Sacado.Cidade;
+          JsonDadosPagador.Add('cpf_cnpj_pagador').Value.AsString := ACBrUtil.PadLeft(OnlyNumber(Sacado.CNPJCPF), 11, '0');
+          JsonDadosPagador.Add('nome_pagador').Value.AsString := Copy(Sacado.NomeSacado, 1, 30);
+          JsonDadosPagador.Add('logradouro_pagador').Value.AsString := Trim(Copy(Sacado.Logradouro + ' ' + Sacado.Numero, 1, 40));
+          JsonDadosPagador.Add('bairro_pagador').Value.AsString := Copy(Sacado.Bairro, 1, 15);
+          JsonDadosPagador.Add('cidade_pagador').Value.AsString := Copy(Sacado.Cidade, 1, 20);
           JsonDadosPagador.Add('uf_pagador').Value.AsString := Sacado.UF;
-          JsonDadosPagador.Add('cep_pagador').Value.AsString := Sacado.CEP;
-
-          GerarEmailPagador(JsonDadosPagador);
+          JsonDadosPagador.Add('cep_pagador').Value.AsString := ACBrUtil.PadLeft(OnlyNumber(Sacado.CEP), 8, '0');
+          if (Sacado.Email <> '') then
+            GerarEmailPagador(JsonDadosPagador);
 
           JsonPairPagador := TJsonPair.Create(AJson, 'pagador');
           try
@@ -461,7 +494,7 @@ begin
 
         try
           JsonMoeda.Add('codigo_moeda_cnab').Value.AsString := '09';
-          JsonMoeda.Add('quantidade_moeda').Value.AsString := '';
+          //JsonMoeda.Add('quantidade_moeda').Value.AsString := '';
 
           JsonPairMoeda := TJsonPair.Create(AJson, 'moeda');
           try
@@ -490,20 +523,32 @@ begin
       if Assigned(AJson) then
       begin
         JsonJuros := TJSONObject.Create;
-
         try
-          JsonJuros.Add('tipo_juros').Value.AsInteger := StrToInt64Def(CodigoMora, 5);
-          if DataMoraJuros > 0 then
+          if CodigoMora = '' then
           begin
-            JsonJuros.Add('data_juros').Value.AsString :=
-              FormatDateTime('yyyy-mm-dd', DataMoraJuros);
-            if ((StrToInt64Def(CodigoMora, 5)) in [1, 6]) then
-              JsonJuros.Add('valor_juros').Value.AsString :=
-                IntToStrZero(round(ValorMoraJuros * 100), 17)
-            else
-              JsonJuros.Add('percentual_juros').Value.AsString :=
-                IntToStrZero(round(ValorMoraJuros * 100000), 12);
+            case CodigoMoraJuros of
+              cjValorDia: CodigoMora := '1';
+              cjTaxaDiaria: CodigoMora := '2';
+              cjTaxaMensal: CodigoMora := '3';
+              cjIsento: CodigoMora := '5';
+            end;
+          end;
 
+          JsonJuros.Add('tipo_juros').Value.AsInteger := StrToInt64Def(CodigoMora, 5);
+
+          if StrToInt64Def(CodigoMora, 5) <> 5 then // se isento (5) não informar o bloco
+          begin
+            if DataMoraJuros > 0 then
+            begin
+              JsonJuros.Add('data_juros').Value.AsString :=
+                FormatDateTime('yyyy-mm-dd', DataMoraJuros);
+              if ((StrToInt64Def(CodigoMora, 5)) in [1, 6]) then
+                JsonJuros.Add('valor_juros').Value.AsString :=
+                  IntToStrZero(round(ValorMoraJuros * 100), 17)
+              else
+                JsonJuros.Add('percentual_juros').Value.AsString :=
+                  IntToStrZero(round(ValorMoraJuros * 100000), 12);
+            end;
           end;
 
           JsonPairJuros := TJsonPair.Create(AJson, 'juros');
@@ -550,9 +595,9 @@ begin
           begin
             JsonMulta.Add('data_multa').Value.AsString := FormatDateTime('yyyy-mm-dd', DataMulta);
             if MultaValorFixo then
-              JsonMulta.Add('valor_multa').Value.AsString := IntToStrZero(round(PercentualMulta), 17)
+              JsonMulta.Add('valor_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 100), 17)
             else
-              JsonMulta.Add('percentual_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 100000), 12);
+              JsonMulta.Add('percentual_multa').Value.AsString := IntToStrZero(round(PercentualMulta * 10000), 12);
 
           end;
 

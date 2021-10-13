@@ -230,13 +230,15 @@ begin
   then
     Gerador.wCampo(tcStr, '', 'indExcApur1250', 1, 1, 1, eSSimNaoFacultativoToStr(self.InfoFech.indExcApur1250));
 
+  { De acordo com a NT S-1.0 de 03/2021 a tag "transDCTFWeb" só poderá ser 
+    preenchida com "S" a partir da competência 10/2021 e a data de envio ao ambiente nacional
+    a partir de 21/11/2021 }
 
-{ Ate a presente data, o campo a seguir consta no manual, mas nao consta no xsd.
-  if (VersaoDF >= ve02_05_00) and
-     (Self.InfoFech.transDCTFWeb <> snfNada) and
-     (Self.ideEvento.IndApuracao = iapuMensal) then
-    Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 0, eSSimNaoFacultativoToStr(self.InfoFech.FtransDCTFWeb));
-  }
+  if (VersaoDF >= veS01_00_00) and
+     (Self.infoFech.transDCTFWeb = snfSim) and
+     (Self.ideEvento.indApuracao = iapuMensal) then
+    Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 1, eSSimNaoFacultativoToStr(self.infoFech.transDCTFWeb));
+
   Gerador.wGrupo('/infoFech');
 end;
 

@@ -226,6 +226,9 @@ type
     Label45: TLabel;
     lblVersaoSchemas: TLabel;
     chkMontarPathSchemas: TCheckBox;
+    Label46: TLabel;
+    edtPathPDF: TEdit;
+    sbtnPathPDF: TSpeedButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -290,6 +293,7 @@ type
     procedure btnConsultarNFSeServicoTomadoPorTomadorClick(Sender: TObject);
     procedure btnConsultarNFSeGenericoClick(Sender: TObject);
     procedure btnConsNFSeURLClick(Sender: TObject);
+    procedure sbtnPathPDFClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1803,8 +1807,8 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFSeX1.NotasFiscais.Clear;
-    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
-//    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
+//    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
     ACBrNFSeX1.NotasFiscais.Imprimir;
     ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 
@@ -2274,8 +2278,12 @@ begin
 
     StreamMemo.Free;
 
+    if edtPathPDF.Text = '' then
+      edtPathPDF.Text := edtPathNFSe.Text;
+
     Ini.WriteInteger('DANFSE', 'Tipo',      rgTipoDANFSE.ItemIndex);
     Ini.WriteString( 'DANFSE', 'LogoMarca', edtLogoMarca.Text);
+    Ini.WriteString( 'DANFSE', 'PathPDF',   edtPathPDF.Text);
 
     ConfigurarComponente;
   finally
@@ -2407,7 +2415,8 @@ begin
     StreamMemo.Free;
 
     rgTipoDANFSe.ItemIndex := Ini.ReadInteger('DANFSE', 'Tipo',       0);
-    edtLogoMarca.Text      := Ini.ReadString( 'DANFSE', 'LogoMarca',  '');
+    edtLogoMarca.Text      := Ini.ReadString( 'DANFSE', 'LogoMarca', '');
+    edtPathPDF.Text        := Ini.ReadString( 'DANFSE', 'PathPDF',   '');
 
     ConfigurarComponente;
   finally
@@ -3138,13 +3147,11 @@ begin
     AdicionarLiteral := cbxAdicionaLiteral.Checked;
     EmissaoPathNFSe  := cbxEmissaoPathNFSe.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
-//    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathGer          := edtPathLogs.Text;
     PathMensal       := GetPathGer(0);
     PathSalvar       := PathMensal;
     PathCan          := PathMensal;
-//    PathNFSe         := PathMensal;
   end;
 
   if ACBrNFSeX1.DANFSe <> nil then
@@ -3153,7 +3160,7 @@ begin
     ACBrNFSeX1.DANFSe.TipoDANFSE := tpPadrao;
     ACBrNFSeX1.DANFSe.Logo       := edtLogoMarca.Text;
     ACBrNFSeX1.DANFSe.Prefeitura := edtPrefeitura.Text;
-    ACBrNFSeX1.DANFSe.PathPDF    := PathMensal;
+    ACBrNFSeX1.DANFSe.PathPDF    := edtPathPDF.Text;
 
     ACBrNFSeX1.DANFSe.Prestador.Logo := edtPrestLogo.Text;
 
@@ -3346,6 +3353,11 @@ begin
 
   if frmSelecionarCertificado.ModalResult = mrOK then
     edtNumSerie.Text := frmSelecionarCertificado.StringGrid1.Cells[0, frmSelecionarCertificado.StringGrid1.Row];
+end;
+
+procedure TfrmACBrNFSe.sbtnPathPDFClick(Sender: TObject);
+begin
+  PathClick(edtPathPDF);
 end;
 
 procedure TfrmACBrNFSe.sbtnPathSalvarClick(Sender: TObject);

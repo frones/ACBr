@@ -475,7 +475,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -692,7 +692,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -894,7 +894,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1114,8 +1114,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1195,7 +1195,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1368,8 +1368,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1450,7 +1450,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1634,8 +1634,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1716,7 +1716,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1974,7 +1974,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -2311,7 +2311,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally

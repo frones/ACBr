@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 13/10/2021
+-- Diversos --
+[*] Melhoria ao apresentar uma mensagem de erro, agora informa se erro de validação,
+    erro ao assinar ou erro de conexão.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Possível correção no tratamento do retorno de cancelamento de NFS-e.
    Por: Italo Giurizzato Junior

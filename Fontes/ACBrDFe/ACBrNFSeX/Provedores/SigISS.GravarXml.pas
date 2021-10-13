@@ -114,7 +114,7 @@ begin
     Result.AppendChild(AddNode(tcDe2, '#2', 'aliquota_simples', 1, 15, 1,
                                           NFSE.Servico.Valores.AliquotaSN, ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'id_sis_legado', 1, 15, 1,
+    Result.AppendChild(AddNode(tcInt, '#1', 'id_sis_legado', 1, 15, 0,
                                                        NFSe.id_sis_legado, ''));
   end;
 

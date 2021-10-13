@@ -150,7 +150,13 @@ const
   Cod210 = 'X210';
   Desc210 = 'Nfse do Cancelamento não encontrada.';
 
+  Cod800 = 'X800';
+  Desc800 = 'Erro de Validação: ';
+  Cod801 = 'X801';
+  Desc801 = 'Erro ao Assinar: ';
+
   Cod999 = 'X999';
+  Desc999 = 'Erro de Conexão: ';
 
 implementation
 

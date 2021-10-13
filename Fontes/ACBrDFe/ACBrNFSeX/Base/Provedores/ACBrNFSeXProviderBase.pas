@@ -882,8 +882,8 @@ begin
   if NaoEstaVazio(Erros) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod999;
-    AErro.Descricao := Erros;
+    AErro.Codigo := Cod800;
+    AErro.Descricao := 'Erro de Validação: ' + Erros;
   end;
 end;
 
@@ -1024,7 +1024,7 @@ begin
       begin
         AErro := EmiteResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1087,7 +1087,7 @@ begin
       begin
         AErro := ConsultaSituacaoResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1149,7 +1149,7 @@ begin
       begin
         AErro := ConsultaLoteRpsResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1212,7 +1212,7 @@ begin
       begin
         AErro := ConsultaNFSeporRpsResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1305,7 +1305,7 @@ begin
       begin
         AErro := ConsultaNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1372,7 +1372,7 @@ begin
       begin
         AErro := CancelaNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1468,7 +1468,7 @@ begin
       begin
         AErro := SubstituiNFSeResponse.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -1512,8 +1512,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1544,8 +1544,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1576,8 +1576,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1608,8 +1608,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1639,8 +1639,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1695,8 +1695,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;
@@ -1726,8 +1726,8 @@ begin
     on E:Exception do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := Cod999;
-      AErro.Descricao := E.Message;
+      AErro.Codigo := Cod801;
+      AErro.Descricao := Desc801 + E.Message;
     end;
   end;
 end;

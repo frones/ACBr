@@ -244,7 +244,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -357,7 +357,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally
@@ -452,7 +452,7 @@ begin
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod999;
-        AErro.Descricao := E.Message;
+        AErro.Descricao := Desc999 + E.Message;
       end;
     end;
   finally

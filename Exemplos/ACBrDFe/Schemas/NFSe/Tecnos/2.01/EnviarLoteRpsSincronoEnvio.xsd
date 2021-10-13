@@ -24,7 +24,7 @@
               <xsd:element name="ListaRps">
                 <xsd:complexType>
                   <xsd:sequence>
-                    <xsd:element name="Rps">
+                    <xsd:element name="Rps" minOccurs="1" maxOccurs="unbounded">
                       <xsd:complexType>
                         <xsd:sequence>
                           <xsd:element name="tcDeclaracaoPrestacaoServico">

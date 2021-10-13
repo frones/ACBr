@@ -655,6 +655,8 @@ begin
       INIRec.WriteString('ide','indGlobalizado', TIndicadorToStr(Ide.indGlobalizado));
       INIRec.WriteString('ide','indIEToma', indIEDestToStr(Ide.indIEToma));
       INIRec.WriteInteger('ide', 'cUF', ide.cUF);
+      INIRec.WriteString('ide', 'dhCont', DateToStr(Ide.dhCont));
+      INIRec.WriteString('ide', 'xJust', Ide.xJust);
 
       INIRec.WriteString('toma3', 'toma', TpTomadorToStr(Ide.toma03.Toma));
 
@@ -680,8 +682,25 @@ begin
 
       INIRec.WriteString('toma4', 'email', Ide.toma4.email);
 
-      INIRec.WriteString('ide', 'dhCont', DateToStr(Ide.dhCont));
-      INIRec.WriteString('ide', 'xJust', Ide.xJust);
+      {informações do Tomador apenas para emissão de CTe-OS}
+      INIRec.WriteString('toma', 'CNPJCPF', toma.CNPJCPF);
+      INIRec.WriteString('toma', 'IE', toma.IE);
+      INIRec.WriteString('toma', 'xNome', toma.xNome);
+      INIRec.WriteString('toma', 'xFant', toma.xFant);
+      INIRec.WriteString('toma', 'fone', toma.fone );
+      with toma.enderToma do
+      begin
+        INIRec.WriteString('toma', 'xLgr', xLgr);
+        INIRec.WriteString('toma', 'nro', nro);
+        INIRec.WriteString('toma', 'xCpl', xCpl);
+        INIRec.WriteString('toma', 'xBairro', xBairro);
+        INIRec.WriteInteger('toma' ,'cMun', cMun);
+        INIRec.WriteString('toma', 'xMun', xMun);
+        INIRec.WriteInteger('toma', 'CEP', CEP);
+        INIRec.WriteString('toma', 'UF', UF);
+        INIRec.WriteInteger('toma', 'cPais', cPais);
+        INIRec.WriteString('toma', 'xPais', xPais);
+      end;
 
       INIRec.WriteString('compl', 'xCaracAd', compl.xCaracAd);
       INIRec.WriteString('compl', 'xCaracSer', compl.xCaracSer);
@@ -700,7 +719,6 @@ begin
       INIRec.WriteString('emit', 'IE', Emit.IE);
       INIRec.WriteString('emit', 'xNome', Emit.xNome);
       INIRec.WriteString('emit', 'xFant', Emit.xFant);
-
       INIRec.WriteString('emit', 'xLgr', Emit.enderEmit.xLgr);
       INIRec.WriteString('emit', 'nro', Emit.enderEmit.nro);
       INIRec.WriteString('emit', 'xCpl', Emit.enderEmit.xCpl);
@@ -716,7 +734,6 @@ begin
       INIRec.WriteString('rem', 'xNome', Rem.xNome);
       INIRec.WriteString('rem', 'xFant', Rem.xFant);
       INIRec.WriteString('rem', 'fone', Rem.fone);
-
       INIRec.WriteString('rem', 'xLgr', Rem.enderReme.xLgr);
       INIRec.WriteString('rem', 'nro', Rem.enderReme.nro);
       INIRec.WriteString('rem', 'xCpl', Rem.enderReme.xCpl);
@@ -770,7 +787,6 @@ begin
       INIRec.WriteString('Dest', 'IE', Dest.IE);
       INIRec.WriteString('Dest', 'xNome', Dest.xNome);
       INIRec.WriteString('Dest', 'fone', Dest.fone);
-
       INIRec.WriteString('Dest', 'xLgr', Dest.enderDest.xLgr);
       INIRec.WriteString('Dest', 'nro', Dest.enderDest.nro);
       INIRec.WriteString('Dest', 'xCpl', Dest.enderDest.xCpl);
@@ -779,12 +795,44 @@ begin
       INIRec.WriteString('Dest', 'xMun', Dest.enderDest.xMun);
       INIRec.WriteInteger('Dest', 'CEP', Dest.enderDest.CEP);
       INIRec.WriteString('Dest', 'UF', Dest.enderDest.UF);
-
       INIRec.WriteInteger('Dest', 'cPais', Dest.enderDest.cPais);
       INIRec.WriteString('Dest', 'xPais', Dest.enderDest.xPais);
 
+      INIRec.WriteString('Exped', 'CNPJCPF', Dest.CNPJCPF);
+      INIRec.WriteString('Exped', 'IE', Dest.IE);
+      INIRec.WriteString('Exped', 'xNome', Dest.xNome);
+      INIRec.WriteString('Exped', 'fone', Dest.fone);
+      INIRec.WriteString('Exped', 'xLgr', Dest.enderDest.xLgr);
+      INIRec.WriteString('Exped', 'nro', Dest.enderDest.nro);
+      INIRec.WriteString('Exped', 'xCpl', Dest.enderDest.xCpl);
+      INIRec.WriteString('Exped', 'xBairro', Dest.enderDest.xBairro);
+      INIRec.WriteInteger('Exped', 'cMun', Dest.enderDest.cMun);
+      INIRec.WriteString('Exped', 'xMun', Dest.enderDest.xMun);
+      INIRec.WriteInteger('Exped', 'CEP', Dest.enderDest.CEP);
+      INIRec.WriteString('Exped', 'UF', Dest.enderDest.UF);
+      INIRec.WriteInteger('Exped', 'cPais', Dest.enderDest.cPais);
+      INIRec.WriteString('Exped', 'xPais', Dest.enderDest.xPais);
+
+      INIRec.WriteString('Receb', 'CNPJCPF', Dest.CNPJCPF);
+      INIRec.WriteString('Receb', 'IE', Dest.IE);
+      INIRec.WriteString('Receb', 'xNome', Dest.xNome);
+      INIRec.WriteString('Receb', 'fone', Dest.fone);
+      INIRec.WriteString('Receb', 'xLgr', Dest.enderDest.xLgr);
+      INIRec.WriteString('Receb', 'nro', Dest.enderDest.nro);
+      INIRec.WriteString('Receb', 'xCpl', Dest.enderDest.xCpl);
+      INIRec.WriteString('Receb', 'xBairro', Dest.enderDest.xBairro);
+      INIRec.WriteInteger('Receb', 'cMun', Dest.enderDest.cMun);
+      INIRec.WriteString('Receb', 'xMun', Dest.enderDest.xMun);
+      INIRec.WriteInteger('Receb', 'CEP', Dest.enderDest.CEP);
+      INIRec.WriteString('Receb', 'UF', Dest.enderDest.UF);
+      INIRec.WriteInteger('Receb', 'cPais', Dest.enderDest.cPais);
+      INIRec.WriteString('Receb', 'xPais', Dest.enderDest.xPais);
+
       INIRec.WriteString('vPrest', 'vTPrest', CurrToStr(vPrest.vTPrest));
       INIRec.WriteString('vPrest', 'vRec', CurrToStr(vPrest.vRec));
+
+      INIRec.WriteString('Imp', 'vTotTrib', CurrToStr(Imp.vTotTrib));
+      INIRec.WriteString('Imp', 'infAdFisco', Imp.infAdFisco);
 
       for i := 0 to vPrest.comp.Count - 1 do
       begin
@@ -861,11 +909,19 @@ begin
       INIRec.WriteString('infCarga', 'vCarga', CurrToStr(infCTeNorm.infCarga.vCarga));
       INIRec.WriteString('infCarga', 'proPred', infCTeNorm.infCarga.proPred);
       INIRec.WriteString('infCarga', 'xOutCat', infCTeNorm.infCarga.xOutCat);
+      INIRec.WriteString('infCarga', 'vCargaAverb', CurrToStr(infCTeNorm.infCarga.vCargaAverb));
       {$ELSE}
       INIRec.WriteString('infCarga', 'vCarga', CurrToStr(infCarga.vCarga));
       INIRec.WriteString('infCarga', 'proPred', infCarga.proPred);
       INIRec.WriteString('infCarga', 'xOutCat', infCarga.xOutCat);
       {$ENDIF}
+
+      //CT-e OS
+      INIRec.WriteString('infTribFed', 'vPIS', CurrToStr(Imp.infTribFed.vPIS) );
+      INIRec.WriteString('infTribFed', 'vCOFINS', CurrToStr(Imp.infTribFed.vCOFINS) );
+      INIRec.WriteString('infTribFed', 'vIR', CurrToStr(Imp.infTribFed.vIR) );
+      INIRec.WriteString('infTribFed', 'vINSS', CurrToStr(Imp.infTribFed.vINSS) );
+      INIRec.WriteString('infTribFed', 'vCSLL', CurrToStr(Imp.infTribFed.vCSLL) );
 
       {$IFDEF PL_200}
       for i := 0 to infCTeNorm.infCarga.infQ.Count -1 do
@@ -884,6 +940,92 @@ begin
           INIRec.WriteString(sSecao, 'cUnid', UnidMedToStr(cUnid));
           INIRec.WriteString(sSecao, 'tpMed', tpMed);
           INIRec.WriteString(sSecao, 'qCarga', CurrToStr(qCarga));
+        end;
+      end;
+
+      //CT-e OS
+      INIRec.WriteString('infServico', 'xDescServ', infCTeNorm.infServico.xDescServ );
+      INIRec.WriteString('infServico', 'qCarga', CurrToStr(infCTeNorm.infServico.qCarga) );
+
+      //CT-e OS infDocRef
+      for i := 0 to infCTeNorm.infDocRef.Count -1 do
+      begin
+        sSecao := 'infDocRef' + IntToStrZero(I+1, 3);
+
+        with infCTeNorm.infDocRef.Items[i] do
+        begin
+          INIRec.WriteString(sSecao, 'chBPe', chBPe);
+          INIRec.WriteString(sSecao, 'nDoc', nDoc);
+          INIRec.WriteString(sSecao, 'serie', serie);
+          INIRec.WriteString(sSecao, 'serie', subserie);
+          INIRec.WriteString(sSecao, 'dEmi', DateToStr(dEmi));
+          INIRec.WriteString(sSecao, 'vDoc', CurrToStr(vDoc));
+        end;
+      end;
+
+      //CT-e OS Seguradora
+      for i := 0 to infCTeNorm.seg.Count -1 do
+      begin
+        sSecao := 'Seg' + IntToStrZero(I+1, 3);
+
+        with infCTeNorm.seg.Items[i] do
+        begin
+          INIRec.WriteString(sSecao, 'respSeg', TpRspSeguroToStr(respSeg));
+          INIRec.WriteString(sSecao, 'xSeg', xSeg);
+          INIRec.WriteString(sSecao, 'nApol', nApol);
+        end;
+      end;
+
+      //CT-e OS Rodoviário
+      sSecao := 'RodoOS';
+      if (infCTeNorm.rodoOS.TAF <> '')  then
+      begin
+        INIRec.WriteString(sSecao, 'TAF', infCTeNorm.rodoOS.TAF);
+        INIRec.WriteString(sSecao, 'NroRegEstadual', infCTeNorm.rodoOS.NroRegEstadual);
+
+        if infCTeNorm.rodoOS.veic.placa <> '' then
+        begin
+          sSecao := 'veic'+IntToStrZero(1,3);
+          with infCTeNorm.rodoOS.veic do
+          begin
+            INIRec.WriteString(sSecao, 'placa', placa);
+            INIRec.WriteString(sSecao, 'RENAVAM', RENAVAM);
+            INIRec.WriteString(sSecao, 'UF', UF);
+
+            INIRec.WriteString(sSecao, 'CNPJCPF', prop.CNPJCPF);
+            INIRec.WriteString(sSecao, 'TAF', prop.TAF);
+            INIRec.WriteString(sSecao, 'NroRegEstadual', prop.NroRegEstadual);
+            INIRec.WriteString(sSecao, 'xNome', prop.xNome);
+            INIRec.WriteString(sSecao, 'IE', prop.IE);
+            INIRec.WriteString(sSecao, 'UF', prop.UF);
+            INIRec.WriteString(sSecao, 'tpProp', TpPropToStr( prop.tpProp) );
+          end;
+        end;
+
+        sSecao := 'infFretamento';
+        with infCTeNorm.rodoOS.infFretamento do
+        begin
+          INIRec.WriteString(sSecao, 'tpFretamento', TpFretamentoToStr( tpFretamento) );
+          INIRec.WriteString(sSecao, 'dhViagem', DateTimeToStr(dhViagem) );
+        end;
+
+      end;
+
+      for i := 0 to infCTeNorm.Rodo.Occ.Count -1 do
+      begin
+        sSecao := 'occ' + IntToStrZero(I+1, 3);
+
+        with infCTeNorm.Rodo.Occ.Items[i] do
+        begin
+          INIRec.WriteString(sSecao, 'serie', serie);
+          INIRec.WriteInteger(sSecao, 'nOcc', nOcc);
+          INIRec.WriteString(sSecao, 'dEmi', DateToStr(dEmi));
+          INIRec.WriteString(sSecao, 'CNPJ', emiOcc.CNPJ);
+          INIRec.WriteString(sSecao, 'cInt', emiOcc.cInt);
+          INIRec.WriteString(sSecao, 'IE', emiOcc.IE);
+          INIRec.WriteString(sSecao, 'UF', emiOcc.UF);
+          INIRec.WriteString(sSecao, 'fone', emiOcc.fone);
+
         end;
       end;
 
@@ -961,6 +1103,30 @@ begin
         INIRec.WriteString('Rodo', 'lota', TpLotacaoToStr(Rodo.Lota));
       end;
       {$ENDIF}
+
+      {$IFDEF PL_200}
+      with infCTeNorm do
+      begin
+      {$ENDIF}
+        INIRec.WriteString('cobr', 'nFat', cobr.fat.nFat);
+        INIRec.WriteString('cobr', 'vOrig', CurrToStr(cobr.fat.vOrig));
+        INIRec.WriteString('cobr', 'vDesc', CurrToStr(cobr.fat.vDesc));
+        INIRec.WriteString('cobr', 'vLiq', CurrToStr(cobr.fat.vLiq));
+      {$IFDEF PL_200}
+      end;
+      {$ENDIF}
+
+      for i := 0 to infCTeNorm.Cobr.Dup.Count -1 do
+      begin
+        sSecao := 'dup' + IntToStrZero(I+1, 3);
+
+        with infCTeNorm.Cobr.Dup.Items[i] do
+        begin
+          INIRec.WriteString(sSecao, 'nDup', nDup);
+          INIRec.WriteString(sSecao, 'dVenc', DateToStr(dVenc));
+          INIRec.WriteString(sSecao, 'vLiq', CurrToStr(vDup));
+        end;
+      end;
 
       {$IFDEF PL_200}
       for i := 0 to autXML.Count - 1 do

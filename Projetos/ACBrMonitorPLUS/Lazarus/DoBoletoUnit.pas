@@ -32,15 +32,15 @@
 {                                                                               }
 {*******************************************************************************}
 
-{$mode objfpc}{$H+}
+{$I ACBr.inc}
 
 unit DoBoletoUnit;
 
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, ACBrBoleto,
-  ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao, ACBrLibResposta, ACBrLibBoletoRespostas;
+  Classes, TypInfo, SysUtils, strutils, CmdUnit, ACBrUtil, ACBrBoleto,
+  ACBrMonitorConfig, ACBrMonitorConsts, ACBrBoletoConversao ;
 
 type
 
@@ -247,8 +247,8 @@ end;
 
 implementation
 
-uses ACBrUtil, DoACBrUnit, strutils, typinfo,
-  DoEmailUnit, ACBrBoletoRelatorioRetorno;
+uses DoACBrUnit, DoEmailUnit, ACBrBoletoRelatorioRetorno, ACBrLibComum,
+  ACBrLibResposta, ACBrLibBoletoRespostas, ACBrObjectSerializer;
 
 { TACBrObjetoBoleto }
 
@@ -948,9 +948,10 @@ procedure TMetodoEnviarBoleto.Executar;
 var
   I : Integer;
   AOperacao: Integer;
-  RespRetornoWeb : TRetornoRegistroWeb;
-begin
+  Titulos: TArray<TRetornoRegistroWeb>;
+  Titulo : TRetornoRegistroWeb;
 
+begin
   AOperacao := StrToIntDef(fpCmd.Params(0),0);
 
   with TACBrObjetoBoleto(fpObjetoDono) do
@@ -959,6 +960,30 @@ begin
       ACBrBoleto.Configuracoes.WebService.Operacao:= TOperacao(AOperacao);
       ACBrBoleto.EnviarBoleto;
       if ACBrBoleto.ListaRetornoWeb.Count > 0 then
+      begin
+        SetLength(Titulos, ACBrBoleto.ListaRetornoWeb.Count);
+        try
+          for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
+          begin
+            Titulo := TRetornoRegistroWeb.Create(I + 1, TpResp, codUTF8);
+            Titulo.Processar(ACBrBoleto.ListaRetornoWeb[I]);
+            Titulos[I] := Titulo;
+          end;
+
+          fpCmd.Resposta := TACBrObjectSerializer.Gerar<TRetornoRegistroWeb>(Titulos, TpResp, codUTF8);
+        finally
+          for I:= 0 to High(Titulos) do
+          begin
+            Titulo := Titulos[I] as TRetornoRegistroWeb;
+            FreeAndNil(Titulo);
+          end;
+
+          SetLength(Titulos, 0);
+          Titulos := nil;
+        end;
+      end;
+
+      {if ACBrBoleto.ListaRetornoWeb.Count > 0 then
       for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
       begin
         RespRetornoWeb := TRetornoRegistroWeb.Create(I+1 , TpResp, codUTF8);
@@ -969,7 +994,7 @@ begin
           RespRetornoWeb.Free;
         end;
 
-      end;
+      end;}
 
     except
       on E: Exception do

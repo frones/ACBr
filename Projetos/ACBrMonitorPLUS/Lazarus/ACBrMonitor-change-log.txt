@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2021
+--- DoACBrBoleto--
+[*] Atualização no retorno da função EnviarBoleto baseado nas alterações da ACBLibBoletoRespostas
+
 30/09/2021
 --- ACBrMonior1, ACBrMonitorConfig--
 [+] Adicionado configuração de impressão de cupom sem os itens em DFe / Impressão / NFCe

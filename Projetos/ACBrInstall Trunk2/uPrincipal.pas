@@ -109,6 +109,7 @@ type
     Label13: TLabel;
     Label14: TLabel;
     scrlbxDelphiVersion: TScrollBox;
+    chkSobrescreverDLLs: TCheckBox;
     procedure btnDesmarcarTodasClick(Sender: TObject);
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -212,6 +213,8 @@ begin
   try
     edtDirDestino.Text             := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
     rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL', 0);
+    chkSobrescreverDLLs.Checked    := ArqIni.ReadBool('CONFIG','SobrescreverDLL', False);
+
     ckbCopiarTodasDll.Checked      := True;
     ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder', False);
     chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib', False);
@@ -266,6 +269,7 @@ begin
   try
     ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', edtDirDestino.Text);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
+    ArqIni.WriteBool('CONFIG','SobrescreverDLL', chkSobrescreverDLLs.Checked);
     ArqIni.WriteBool('CONFIG','C++Builder', ckbBCB.Checked);
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
     ArqIni.WriteBool('CONFIG','RemoveOpenSSL', ckbRemoveOpenSSL.Checked);

@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -89,7 +89,7 @@ object frmPrincipal: TfrmPrincipal
       object Label20: TLabel
         Left = 15
         Top = 305
-        Width = 514
+        Width = 489
         Height = 32
         Caption = 
           'Quer suporte profissional do ACBr, cursos e outras vantagens e d' +
@@ -1002,8 +1002,8 @@ object frmPrincipal: TfrmPrincipal
       object Label7: TLabel
         Left = 15
         Top = 392
-        Width = 482
-        Height = 32
+        Width = 465
+        Height = 16
         Alignment = taCenter
         Caption = 
           'Este instalador '#233' mantido gra'#231'as aos usu'#225'rios que assinam o ACBr' +
@@ -1266,7 +1266,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object ckbCopiarTodasDll: TCheckBox
           Left = 6
-          Top = 137
+          Top = 121
           Width = 350
           Height = 17
           Hint = 
@@ -1279,7 +1279,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object rdgDLL: TRadioGroup
           Left = 6
-          Top = 160
+          Top = 144
           Width = 350
           Height = 105
           Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1289,6 +1289,15 @@ object frmPrincipal: TfrmPrincipal
             'Diret'#243'rio bin'#225'rio do Delphi'
             'N'#227'o copiar (N'#227'o recomendado)')
           TabOrder = 5
+        end
+        object chkSobrescreverDLLs: TCheckBox
+          Left = 6
+          Top = 255
+          Width = 350
+          Height = 17
+          Hint = 'Se marcado vai sobrescrever as DLLs ao copiar caso encontre.'
+          Caption = 'Sobrescrever DLLs ao copiar'
+          TabOrder = 6
         end
       end
     end

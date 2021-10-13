@@ -54,6 +54,7 @@ type
     DeveInstalarXMLSec: Boolean;
     UsarCargaTardiaDLL: Boolean;
     RemoverStringCastWarnings: Boolean;
+    DeveSobrescreverDllsExistentes: Boolean;
   end;
 
   TACBrInstallOpcoes = record
@@ -178,6 +179,7 @@ begin
   OpcoesCompilacao.DeveInstalarXMLSec        := False;
   OpcoesCompilacao.UsarCargaTardiaDLL        := False;
   OpcoesCompilacao.RemoverStringCastWarnings := False;
+  OpcoesCompilacao.DeveSobrescreverDllsExistentes := False;
 
   FArquivoLog := '';
   FNivelLog  := nlMedio;
@@ -714,7 +716,10 @@ var
   PathOrigem: String;
   PathDestino: String;
   DirSystem: String;
+  VaiSobrescrever: Boolean;
 begin
+  VaiSobrescrever := OpcoesCompilacao.DeveSobrescreverDllsExistentes;
+
   case ADestino of
     tdSystem: DirSystem := Trim(PathSystem);
     tdDelphi: DirSystem := APathBin;
@@ -728,7 +733,7 @@ begin
   PathOrigem  := OpcoesInstall.DiretorioRaizACBr + 'DLLs\' + ANomeArquivo;
   PathDestino := DirSystem + ExtractFileName(ANomeArquivo);
 
-  if (FileExists(PathDestino)) then
+  if (FileExists(PathDestino)) and (not VaiSobrescrever) then
   begin
     InformaSituacao(Format('AVISO: Arquivo já se encontra no destino. Não sobrescrito: "%s"', [PathDestino]));
     Exit;
@@ -740,7 +745,7 @@ begin
     raise EFileNotFoundException.Create(Format('ERRO: Arquivo não encontrado na origem: "%s"', [PathOrigem]));
   end;
 
-  if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), True) then
+  if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), (not VaiSobrescrever)) then
   begin
     raise EFilerError.CreateFmt(
       'Ocorreu o seguinte erro ao tentar copiar o arquivo "%s": %d - %s', [

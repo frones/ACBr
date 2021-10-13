@@ -105,7 +105,6 @@ type
      fQuandoIniciarTransacao: TACBrTEFAndroidEstadoTransacao;
     {$EndIf}
     fPersonalizacao: TACBrTEFAndroidPersonalizacao;
-    fpTEFAPIClass: TACBrTEFAPIComumClass;
 
     procedure SetModelo(const AValue: TACBrTEFAndroidModelo);
     procedure SetPersonalizacao(const Value: TACBrTEFAndroidPersonalizacao);

@@ -64,7 +64,7 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; Override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia : TACBrTipoOcorrencia ; CodMotivo : Integer) : String ; override;
     function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
 
   end;
@@ -189,6 +189,7 @@ var
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
   rCodEmpresa               :String;
+  codInstrucao              :String;
 begin
 
   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
@@ -266,6 +267,13 @@ begin
           OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                          copy(Linha,109,2),0));
 
+          codInstrucao := copy(Linha,327,2);
+          MotivoRejeicaoComando.Add(codInstrucao);
+
+          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,StrToIntDef(codInstrucao,0)));
+
+
+
           if (StrToIntDef(Copy(Linha,111,6),0) > 0) then
             DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
                                                  Copy(Linha,113,2)+'/'+
@@ -338,6 +346,29 @@ begin
       result := '5';
     end;
   End;
+end;
+
+function TACBrBancoUnicredES.CodMotivoRejeicaoToDescricao(
+  const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
+begin
+  case CodMotivo of
+    00 : Result := '00 – Sem Tipo de Instrução Origem a informar';
+    01 : Result := '01 - Remessa';
+    02 : Result := '02 - Pedido de Baixa';
+    04 : Result := '04 - Concessão de Abatimento';
+    05 : Result := '05 - Cancelamento de Abatimento';
+    06 : Result := '06 - Alteração de vencimento';
+    08 : Result := '08 - Alteração de Seu Número';
+    09 : Result := '09 – Protestar';
+    10 : Result := '10 - Baixa por Decurso de Prazo – Solicitação CIP';
+    11 : Result := '11 - Sustar Protesto e Manter em Carteira';
+    31 : Result := '31 - Alteração de outros dados (Alteração de dados do pagador)';
+    25 : Result := '25 - Sustar Protesto e Baixar Título';
+    26 : Result := '26 – Protesto automático';
+    40 : Result := '40 - Alteração de Carteira';
+    else
+      Result := 'XX – Evento Não Mapeado';
+  end;
 end;
 
 function TACBrBancoUnicredES.CodMultaToStr(const pCodigoMulta: TACBrCodigoMulta): String;

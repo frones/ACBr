@@ -172,7 +172,7 @@ type
 implementation
 
 uses
-  ACBrUtil, synautil, IniFiles,
+  ACBrUtil, synautil, IniFiles, StrUtilsEx,
   ACBrNFSeX, ACBrNFSeXInterface;
 
 function CompRpsPorNumero(const Item1,
@@ -960,6 +960,11 @@ var
     until (j = High(TagF)) or (Result <> 0);
   end;
 
+  function LimparXml(const XMLStr: string): string;
+  begin
+    Result := FaststringReplace(XMLStr, ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '', [rfReplaceAll]);
+    Result := FaststringReplace(Result, ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"', '', [rfReplaceAll]);
+  end;
 begin
   MS := TMemoryStream.Create;
   try
@@ -973,6 +978,7 @@ begin
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
+  XMLStr := LimparXml(XMLStr);
 
   aXmlLote := XMLStr;
   Result := False;

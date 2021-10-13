@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/10/2021
+-- ACBrNFSeXNotasFiscais --
+[*] Incluido uma função para remover namespace não esperados no XML ao ler
+    um lote de XML de NFS-e.
+   Por: Italo Giurizzato Junior
+
 08/10/2021
 -- RLZ.Provider --
 [*] Ajustes no Tratamento de retorno do Emitir.

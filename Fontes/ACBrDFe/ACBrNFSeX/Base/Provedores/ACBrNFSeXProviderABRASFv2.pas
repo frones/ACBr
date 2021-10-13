@@ -812,7 +812,6 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
   NumNFSe: String;
-  Ret: TRetCancelamento;
 begin
   Document := TACBrXmlDocument.Create;
 

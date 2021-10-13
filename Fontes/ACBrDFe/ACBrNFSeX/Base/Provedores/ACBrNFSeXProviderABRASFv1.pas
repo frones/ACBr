@@ -1392,6 +1392,9 @@ var
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
+  if (ANode = nil) then
+    ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetornoLote');
+
   if ANode = nil then
     ANode := RootNode.Childrens.FindAnyNs('Listamensagemretorno');
 

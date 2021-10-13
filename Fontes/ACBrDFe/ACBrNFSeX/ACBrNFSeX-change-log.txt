@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/10/2021
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Possível correção na leitura das mensagens de retorno.
+   Por: Italo Giurizzato Junior
 -- SigISS.Provider --
 [*] Possível correção para a leitura correta do XML retorno pelo WebService.
    Por: Italo Giurizzato Junior

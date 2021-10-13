@@ -83,6 +83,7 @@ type
                                      AListTag: string = '';
                                      AMessageTag: string = 'Erro'); override;
 
+    function AjustarRetorno(const Retorno: string): string;
   end;
 
   TACBrNFSeXWebserviceSigISS103 = class(TACBrNFSeXWebserviceSigISS)
@@ -187,6 +188,18 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderSigISS.AjustarRetorno(const Retorno: string): string;
+begin
+  Result := StringReplace(Retorno, ' xmlns:ns1="urn:sigiss_ws"', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:type="tns:tcRetornoNota"', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:type="xsd:int"', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:type="xsd:string"', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="tns:tcEstruturaDescricaoErros[1]"', '', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:type="tns:tcEstruturaDescricaoErros"', '', [rfReplaceAll]);
+
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+end;
+
 function TACBrNFSeProviderSigISS.PrepararRpsParaLote(
   const aXml: string): string;
 begin
@@ -218,6 +231,8 @@ begin
         AErro.Descricao := Desc201;
         Exit
       end;
+
+      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
 
       Document.LoadFromXml(Response.XmlRetorno);
 
@@ -304,6 +319,8 @@ begin
         AErro.Descricao := Desc201;
         Exit
       end;
+
+      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
 
       Document.LoadFromXml(Response.XmlRetorno);
 
@@ -426,6 +443,8 @@ begin
         AErro.Descricao := Desc201;
         Exit
       end;
+
+      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
 
       Document.LoadFromXml(Response.XmlRetorno);
 

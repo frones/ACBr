@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/10/2021
+-- SigISS.Provider --
+[*] Possível correção para a leitura correta do XML retorno pelo WebService.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Melhoria ao apresentar uma mensagem de erro, agora informa se erro de validação,
     erro ao assinar ou erro de conexão.

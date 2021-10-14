@@ -10,7 +10,7 @@ namespace ACBrLib.MDFe
 
         public EventoIncDFe()
         {
-            tpEvento = TipoEvento.teInclusaoDFe;
+            evento = TipoEvento.teInclusaoDFe;
             versaoEvento = "3.00";
         }
 

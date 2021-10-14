@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using ACBrLib.Core.Extensions;
 
@@ -20,7 +21,7 @@ namespace ACBrLib.Core
         {
             if (obj == null) return;
 
-            var sectionData = new ACBrIniSection(sectionName);
+            var sectionData = iniData.SingleOrDefault(x => x.Name == sectionName) ?? new ACBrIniSection(sectionName);
             sectionData.WriteToIni(tipo, obj);
             if (sectionData.Count > 0)
                 iniData.Add(sectionData);

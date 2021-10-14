@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoManifDestOperNaoRealizada()
         {
-            tpEvento = TipoEvento.teManifDestOperNaoRealizada;
+            evento = TipoEvento.teManifDestOperNaoRealizada;
             cOrgao = 91;
         }
 

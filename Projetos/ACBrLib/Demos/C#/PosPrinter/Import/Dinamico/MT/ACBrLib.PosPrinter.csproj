@@ -18,6 +18,8 @@
     <AssemblyVersion>1.0.0.65</AssemblyVersion>
     <FileVersion>1.0.0.65</FileVersion>
     <Version>1.0.0.65</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ProJetoACBr.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -51,7 +53,7 @@
   <ItemGroup>
     <Compile Include="..\Shared\PosPrinterConfig.cs" Link="PosPrinterConfig.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj" />
   </ItemGroup>

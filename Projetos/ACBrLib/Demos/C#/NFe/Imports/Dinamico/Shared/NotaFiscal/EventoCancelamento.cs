@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoCancelamento()
         {
-            tpEvento = TipoEvento.teCancelamento;
+            evento = TipoEvento.teCancelamento;
         }
 
         #endregion Constructor

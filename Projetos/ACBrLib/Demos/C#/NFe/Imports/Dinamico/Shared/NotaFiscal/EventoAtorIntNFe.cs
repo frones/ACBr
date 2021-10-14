@@ -10,7 +10,7 @@ namespace ACBrLib.NFe
         public EventoAtorIntNFe()
         {
             verAplic = "1.0";
-            tpEvento = TipoEvento.teAtorInteressadoNFe;
+            evento = TipoEvento.teAtorInteressadoNFe;
             AutXml = new AutXML();
         }
 

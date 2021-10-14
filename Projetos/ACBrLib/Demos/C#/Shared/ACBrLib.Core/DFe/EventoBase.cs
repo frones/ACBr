@@ -1,9 +1,16 @@
 ﻿using System;
+using ACBrLib.Core.Extensions;
 
 namespace ACBrLib.Core.DFe
 {
     public abstract class EventoBase
     {
+        #region Fields
+
+        protected TipoEvento evento;
+
+        #endregion
+
         #region Constructor
 
         protected EventoBase()
@@ -22,7 +29,7 @@ namespace ACBrLib.Core.DFe
 
         public DateTime dhEvento { get; set; }
 
-        public TipoEvento tpEvento { get; protected set; }
+        public TipoEvento tpEvento => evento;
 
         public int nSeqEvento { get; set; }
 
@@ -46,6 +53,7 @@ namespace ACBrLib.Core.DFe
             };
 
             iniData.WriteToIni(GetType(), this, "EVENTO001");
+            iniData["EVENTO001"]["tpEvento"] = evento.GetEnumValueOrInt();
             return iniData;
         }
 

@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoCancSubstituicao()
         {
-            tpEvento = TipoEvento.teCancSubst;
+            evento = TipoEvento.teCancSubst;
             verAplic = "1.0";
         }
 

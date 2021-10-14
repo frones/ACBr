@@ -10,7 +10,7 @@ namespace ACBrLib.MDFe
 
         public EventoPagOpTrasnporte()
         {
-            tpEvento = TipoEvento.tePagamentoOperacao;
+            evento = TipoEvento.tePagamentoOperacao;
             versaoEvento = "3.00";
         }
 

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/10/2021
+-- SigISS.Provider --
+[*] Melhorias no TratarRetornoEmitir.
+   Por: Douglas GV
 -- NFSeBrasil.Provider --
 [*] Alterado os campos de Emitente.WSUser para Emitente.CNPJ e Emitente.WSSenha para 
     Emitente.WSChaveAcesso ao gerar as tags <cnpjPrestador> e <hashValidador>.

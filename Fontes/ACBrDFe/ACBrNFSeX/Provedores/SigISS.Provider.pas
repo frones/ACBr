@@ -218,7 +218,6 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   AuxNode: TACBrXmlNode;
-  xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -248,8 +247,9 @@ begin
       begin
         with Response do
         begin
-          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
-          Sucesso := not (xSucesso = 'N');
+          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
+          Sucesso := not (Situacao = 'N');
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
           NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
           Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
         end;

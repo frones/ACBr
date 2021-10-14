@@ -3,7 +3,7 @@ object Form6: TForm6
   Top = 265
   BorderStyle = bsDialog
   Caption = 'Demo do ACBrPAF'
-  ClientHeight = 391
+  ClientHeight = 461
   ClientWidth = 585
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object Form6: TForm6
   TextHeight = 13
   object Image1: TImage
     Left = 0
-    Top = 351
+    Top = 421
     Width = 585
     Height = 40
     Align = alBottom
@@ -346,7 +346,7 @@ object Form6: TForm6
   end
   object pc1: TPageControl
     Left = 0
-    Top = 180
+    Top = 250
     Width = 585
     Height = 171
     ActivePage = ts1
@@ -404,6 +404,24 @@ object Form6: TForm6
     Caption = 'Registros PAF-NFC-e'
     TabOrder = 7
     OnClick = btnRegistrosPAFNFCeClick
+  end
+  object Button3: TButton
+    Left = 340
+    Top = 178
+    Width = 204
+    Height = 27
+    Caption = 'Paf-NFCe Registro Z'
+    TabOrder = 8
+    OnClick = Button3Click
+  end
+  object Button2: TButton
+    Left = 340
+    Top = 210
+    Width = 204
+    Height = 27
+    Caption = 'Paf-NFCe Registro W'
+    TabOrder = 9
+    OnClick = Button2Click
   end
   object ACBrPAF: TACBrPAF
     LinesBuffer = 1000

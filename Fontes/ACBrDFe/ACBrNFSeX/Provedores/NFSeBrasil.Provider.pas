@@ -87,8 +87,8 @@ begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
     Result := '<codMunicipio>' + IntToStr(CodigoMunicipio) + '</codMunicipio>' +
-              '<cnpjPrestador>' + Emitente.WSUser + '</cnpjPrestador>' +
-              '<hashValidador>' + Emitente.WSSenha + '</hashValidador>';
+              '<cnpjPrestador>' + OnlyNumber(Emitente.CNPJ) + '</cnpjPrestador>' +
+              '<hashValidador>' + LowerCase(Emitente.WSChaveAcesso) + '</hashValidador>';
   end;
 end;
 

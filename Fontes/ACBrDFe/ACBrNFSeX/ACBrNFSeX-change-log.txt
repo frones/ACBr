@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/10/2021
+-- NFSeBrasil.Provider --
+[*] Alterado os campos de Emitente.WSUser para Emitente.CNPJ e Emitente.WSSenha para 
+    Emitente.WSChaveAcesso ao gerar as tags <cnpjPrestador> e <hashValidador>.
+   Por: Italo Giurizzato Junior
+
 13/10/2021
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Possível correção na leitura das mensagens de retorno.

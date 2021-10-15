@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2021
+-- ACBrNFSeDANFSeRLClass --
+[*] Ao gerar o PDF não estava sendo levado em consideração o conteudo de
+    NomeDocumento.
+  Por: Icozeira
+
 21/07/2021
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/63365-provedor-el-cidade-colatina/

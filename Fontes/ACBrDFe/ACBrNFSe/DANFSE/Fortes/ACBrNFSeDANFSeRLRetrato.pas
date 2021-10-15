@@ -459,7 +459,9 @@ begin
           rllCodTributacaoMunicipio.Visible     := True;
           rlmDescCodTributacaoMunicipio.Visible := True;
           rlmDescCodTributacaoMunicipio.Lines.Append( Servico.xCodigoTributacaoMunicipio );
-        end;
+        end 
+        else
+          rlmCodServico.Height := Trunc(rlmCodServico.Height * 2.5);
       end
       else
       begin

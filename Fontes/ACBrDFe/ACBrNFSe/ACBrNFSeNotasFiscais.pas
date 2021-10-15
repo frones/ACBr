@@ -267,7 +267,8 @@ begin
 
     case Configuracoes.Geral.Provedor of
       proIPM:     DocElemento := 'nfse';
-      proNotaBlu: DocElemento := 'RPS';
+      proNotaBlu,
+      proSP:      DocElemento := 'RPS';
       proSMARAPD: DocElemento := 'tbnfd';
       proGiap:    DocElemento := 'nfe';
       proInfiscv11: DocElemento := 'infNFSe';
@@ -282,6 +283,7 @@ begin
       pro4R:          InfElemento := 'Rps';
 
       proCTA,
+      proSP,
       proNotaBlu:     InfElemento := 'RPS';
 
       proIPM:         InfElemento := 'nfse';

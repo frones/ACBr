@@ -1986,7 +1986,7 @@ object frmACBrNFSe: TfrmACBrNFSe
       Top = 137
       Width = 567
       Height = 474
-      ActivePage = TabSheet9
+      ActivePage = TabSheet8
       Align = alClient
       TabOrder = 1
       object TabSheet8: TTabSheet

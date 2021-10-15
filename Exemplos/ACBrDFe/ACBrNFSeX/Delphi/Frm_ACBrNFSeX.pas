@@ -1239,9 +1239,6 @@ begin
         end;
       end;
 
-//      ACBrNFSeX1.ConsultarNFSePorPeriodo(StrToDateDef(DataIni, 0),
-//                  StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1), NumLote);
-
     proFGMaiss,
     proWebFisco:
       begin
@@ -1321,8 +1318,7 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeRPSClick(Sender: TObject);
 var
-  NumeroRps, SerieRps, TipoRps, //NumeroLote,
-  CodVerificacao: String;
+  NumeroRps, SerieRps, TipoRps, CodVerificacao: String;
   iTipoRps: Integer;
 begin
   NumeroRps := '';
@@ -1367,11 +1363,7 @@ begin
       3: TipoRps := '-5';
     end;
   end;
-  {
-  NumeroLote := '';
-  if not (InputQuery('Consultar NFSe por RPS', 'Numero do Lote:', NumeroLote)) then
-    exit;
-  }
+
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proGiap, proGoverna] then
   begin
     CodVerificacao := '123';
@@ -1379,8 +1371,7 @@ begin
       exit;
   end;
 
-  ACBrNFSeX1.ConsultarNFSeporRps(NumeroRps, SerieRps, TipoRps, //NumeroLote,
-    CodVerificacao);
+  ACBrNFSeX1.ConsultarNFSeporRps(NumeroRps, SerieRps, TipoRps, CodVerificacao);
 
   ChecarResposta(tmConsultarNFSePorRps);
 end;
@@ -1578,6 +1569,14 @@ begin
     inc(iAux);
   end;
 
+  {
+     O método Emitir possui os seguintes parâmetros:
+     aNumLote (String)
+     aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario, meTeste]
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
+  }
+  // como não foi informado o segundo parâmetro o método assume o valor
+  // meAutomatico, isso faz com que ele se ajusta ao provedor selecionado
   ACBrNFSeX1.Emitir(vNumLote);
 
   ChecarResposta(tmRecepcionar);
@@ -1650,10 +1649,11 @@ begin
 
   {
      O método Emitir possui os seguintes parâmetros:
-     aNumLote (Integer ou String)
+     aNumLote (String)
      aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario, meTeste]
-     aImprimir (Boolean)
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
   }
+  // meLoteAssincrono: Ajusta o Emitir para enviar um lote de Rps no modo Assincrono
   ACBrNFSeX1.Emitir(vNumLote, meLoteAssincrono);
 
   ChecarResposta(tmRecepcionar);
@@ -1661,13 +1661,8 @@ end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarNFSeClick(Sender: TObject);
 var
-  vNumRPS, vNumLote, sNomeArq: String;
+  vNumRPS, vNumLote: String;
 begin
-  // **************************************************************************
-  //
-  // A function Gerar só esta disponivel para alguns provedores.
-  //
-  // **************************************************************************
   vNumRPS := '';
   if not(InputQuery('Gerar e Enviar um RPS', 'Numero do RPS', vNumRPS)) then
     exit;
@@ -1681,24 +1676,14 @@ begin
 
   {
      O método Emitir possui os seguintes parâmetros:
-     aNumLote (Integer ou String)
+     aNumLote (String)
      aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario]
-     aImprimir (Boolean)
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
   }
+  // meUnitario: Ajusta o Emitir para enviar somente um Rps
   ACBrNFSeX1.Emitir(vNumLote, meUnitario);
 
   ChecarResposta(tmGerar);
-
-  sNomeArq := ACBrNFSeX1.NotasFiscais.Items[0].NomeArq;
-
-  if sNomeArq <> '' then
-  begin
-    ACBrNFSeX1.NotasFiscais.Clear;
-    ACBrNFSeX1.NotasFiscais.LoadFromFile(sNomeArq, False);
-    ACBrNFSeX1.NotasFiscais.Imprimir;
-
-    memoLog.Lines.Add('Arquivo Carregado de: ' + sNomeArq);
-  end;
 end;
 
 procedure TfrmACBrNFSe.btnGerarEnviarSincronoClick(Sender: TObject);
@@ -1732,10 +1717,11 @@ begin
 
   {
      O método Emitir possui os seguintes parâmetros:
-     aNumLote (Integer ou String)
+     aNumLote (String)
      aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario, meTeste]
-     aImprimir (Boolean)
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
   }
+  // meLoteSincrono: Ajusta o Emitir para enviar um lote de Rps no modo Sincrono
   ACBrNFSeX1.Emitir(vNumLote, meLoteSincrono);
 
   ChecarResposta(tmRecepcionarSincrono);
@@ -1747,7 +1733,7 @@ var
 begin
   // **************************************************************************
   //
-  // A function GerarLote apenas gera o XML do lote, assina se necessário
+  // O método GerarLote apenas gera o XML do lote, assina se necessário
   // e valida, salvando o arquivo com o nome: <lote>-lot-rps.xml na pasta Ger
   // Não ocorre o envio para nenhum webservice.
   //
@@ -1807,8 +1793,13 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFSeX1.NotasFiscais.Clear;
-//    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
-    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
+
+    // LoadFromFile - Usado para carregar o Xml de apenas uma nota
+    ACBrNFSeX1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+
+    // LoadFromLoteNfse - Usado para carregar um lote de notas
+//    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
+
     ACBrNFSeX1.NotasFiscais.Imprimir;
     ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 
@@ -1979,9 +1970,6 @@ begin
                                         Motivo, NumLote, CodVerif);
 
   ChecarResposta(tmSubstituirNFSe);
-
-  memoLog.Lines.Add('Retorno da Substituição:');
-//  MemoDados.Lines.Add('Cód. Cancelamento: ' + Response.InfCancelamento.CodCancelamento);
 end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeServicoTomadoPorPeriodoClick(Sender: TObject);
@@ -2088,9 +2076,9 @@ begin
 
   {
      O método Emitir possui os seguintes parâmetros:
-     aNumLote (Integer ou String)
+     aNumLote (String)
      aModEnvio [meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario, meTeste]
-     aImprimir (Boolean)
+     aImprimir (Boolean) Valor Padrão = True, portanto imprime o DANFSE
   }
   ACBrNFSeX1.Emitir(vNumLote, meTeste);
 
@@ -2154,32 +2142,32 @@ var
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
-    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
+    cbSSLLib.Items.Add(GetEnumName(TypeInfo(TSSLLib), integer(T)));
   cbSSLLib.ItemIndex := 0;
 
   cbCryptLib.Items.Clear;
   for U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
-    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) );
+    cbCryptLib.Items.Add(GetEnumName(TypeInfo(TSSLCryptLib), integer(U)));
   cbCryptLib.ItemIndex := 0;
 
   cbHttpLib.Items.Clear;
   for V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
-    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) );
+    cbHttpLib.Items.Add(GetEnumName(TypeInfo(TSSLHttpLib), integer(V)));
   cbHttpLib.ItemIndex := 0;
 
   cbXmlSignLib.Items.Clear;
   for X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
-    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) );
+    cbXmlSignLib.Items.Add(GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X)));
   cbXmlSignLib.ItemIndex := 0;
 
   cbSSLType.Items.Clear;
   for Y := Low(TSSLType) to High(TSSLType) do
-    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) );
+    cbSSLType.Items.Add(GetEnumName(TypeInfo(TSSLType), integer(Y)));
   cbSSLType.ItemIndex := 0;
 
   cbFormaEmissao.Items.Clear;
   for I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-    cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) );
+    cbFormaEmissao.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I)));
   cbFormaEmissao.ItemIndex := 0;
 
   LerConfiguracao;
@@ -2219,7 +2207,7 @@ begin
 
     Ini.WriteBool(   'Geral', 'ConsultaAposEnvio',    chkConsultaLoteAposEnvio.Checked);
     Ini.WriteBool(   'Geral', 'ConsultaAposCancelar', chkConsultaAposCancelar.Checked);
-    Ini.WriteBool(   'Geral', 'MontarPathSchemas', chkMontarPathSchemas.Checked);
+    Ini.WriteBool(   'Geral', 'MontarPathSchemas',    chkMontarPathSchemas.Checked);
 
     Ini.WriteInteger('WebService', 'Ambiente',     rgTipoAmb.ItemIndex);
     Ini.WriteBool(   'WebService', 'Visualizar',   cbxVisualizar.Checked);
@@ -2354,23 +2342,23 @@ begin
     edtPrestLogo.Text         := Ini.ReadString('Geral', 'PrestLogo',      '');
     edtPrefeitura.Text        := Ini.ReadString('Geral', 'Prefeitura',     '');
 
-    chkConsultaLoteAposEnvio.Checked := Ini.ReadBool('Geral', 'ConsultaAposEnvio', False);
+    chkConsultaLoteAposEnvio.Checked := Ini.ReadBool('Geral', 'ConsultaAposEnvio',    False);
     chkConsultaAposCancelar.Checked  := Ini.ReadBool('Geral', 'ConsultaAposCancelar', False);
-    chkMontarPathSchemas.Checked  := Ini.ReadBool('Geral', 'MontarPathSchemas', True);
+    chkMontarPathSchemas.Checked     := Ini.ReadBool('Geral', 'MontarPathSchemas',    True);
 
-    rgTipoAmb.ItemIndex     := Ini.ReadInteger('WebService', 'Ambiente',    0);
-    cbxVisualizar.Checked   := Ini.ReadBool(   'WebService', 'Visualizar',  False);
-    cbxSalvarSOAP.Checked   := Ini.ReadBool(   'WebService', 'SalvarSOAP',  False);
-    cbxAjustarAut.Checked   := Ini.ReadBool(   'WebService', 'AjustarAut',  False);
-    edtAguardar.Text        := Ini.ReadString( 'WebService', 'Aguardar',    '0');
-    edtTentativas.Text      := Ini.ReadString( 'WebService', 'Tentativas',  '5');
-    edtIntervalo.Text       := Ini.ReadString( 'WebService', 'Intervalo',   '0');
-    seTimeOut.Value         := Ini.ReadInteger('WebService', 'TimeOut',     5000);
-    cbSSLType.ItemIndex     := Ini.ReadInteger('WebService', 'SSLType',     0);
-    edtSenhaWeb.Text        := Ini.ReadString( 'WebService', 'SenhaWeb',    '');
-    edtUserWeb.Text         := Ini.ReadString( 'WebService', 'UserWeb',     '');
-    edtFraseSecWeb.Text     := Ini.ReadString( 'WebService', 'FraseSecWeb', '');
-    edtChaveAcessoWeb.Text  := Ini.ReadString( 'WebService', 'ChAcessoWeb', '');
+    rgTipoAmb.ItemIndex     := Ini.ReadInteger('WebService', 'Ambiente',     0);
+    cbxVisualizar.Checked   := Ini.ReadBool(   'WebService', 'Visualizar',   False);
+    cbxSalvarSOAP.Checked   := Ini.ReadBool(   'WebService', 'SalvarSOAP',   False);
+    cbxAjustarAut.Checked   := Ini.ReadBool(   'WebService', 'AjustarAut',   False);
+    edtAguardar.Text        := Ini.ReadString( 'WebService', 'Aguardar',     '0');
+    edtTentativas.Text      := Ini.ReadString( 'WebService', 'Tentativas',   '5');
+    edtIntervalo.Text       := Ini.ReadString( 'WebService', 'Intervalo',    '0');
+    seTimeOut.Value         := Ini.ReadInteger('WebService', 'TimeOut',      5000);
+    cbSSLType.ItemIndex     := Ini.ReadInteger('WebService', 'SSLType',      0);
+    edtSenhaWeb.Text        := Ini.ReadString( 'WebService', 'SenhaWeb',     '');
+    edtUserWeb.Text         := Ini.ReadString( 'WebService', 'UserWeb',      '');
+    edtFraseSecWeb.Text     := Ini.ReadString( 'WebService', 'FraseSecWeb',  '');
+    edtChaveAcessoWeb.Text  := Ini.ReadString( 'WebService', 'ChAcessoWeb',  '');
     edtChaveAutorizWeb.Text := Ini.ReadString( 'WebService', 'ChAutorizWeb', '');
 
     edtProxyHost.Text  := Ini.ReadString('Proxy', 'Host',  '');
@@ -2378,12 +2366,12 @@ begin
     edtProxyUser.Text  := Ini.ReadString('Proxy', 'User',  '');
     edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass',  '');
 
-    cbxSalvarArqs.Checked       := Ini.ReadBool(  'Arquivos', 'Salvar',           false);
-    cbxPastaMensal.Checked      := Ini.ReadBool(  'Arquivos', 'PastaMensal',      false);
-    cbxAdicionaLiteral.Checked  := Ini.ReadBool(  'Arquivos', 'AddLiteral',       false);
-    cbxEmissaoPathNFSe.Checked  := Ini.ReadBool(  'Arquivos', 'EmissaoPathNFSe',   false);
-    cbxSepararPorCNPJ.Checked   := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',   false);
-    edtPathNFSe.Text            := Ini.ReadString('Arquivos', 'PathNFSe',          '');
+    cbxSalvarArqs.Checked      := Ini.ReadBool(  'Arquivos', 'Salvar',          False);
+    cbxPastaMensal.Checked     := Ini.ReadBool(  'Arquivos', 'PastaMensal',     False);
+    cbxAdicionaLiteral.Checked := Ini.ReadBool(  'Arquivos', 'AddLiteral',      False);
+    cbxEmissaoPathNFSe.Checked := Ini.ReadBool(  'Arquivos', 'EmissaoPathNFSe', False);
+    cbxSepararPorCNPJ.Checked  := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',  False);
+    edtPathNFSe.Text           := Ini.ReadString('Arquivos', 'PathNFSe',        '');
 
     edtEmitCNPJ.Text       := Ini.ReadString('Emitente', 'CNPJ',        '');
     edtEmitIM.Text         := Ini.ReadString('Emitente', 'IM',          '');
@@ -3091,9 +3079,6 @@ begin
     Emitente.WSSenha        := edtSenhaWeb.Text;
     Emitente.WSFraseSecr    := edtFraseSecWeb.Text;
     Emitente.WSChaveAcesso  := edtChaveAcessoWeb.Text;
-
-    // Para o provedor Giap a Chave de Autorização deve ser composta:
-    // Inscrição Municipal - Chave
     Emitente.WSChaveAutoriz := edtChaveAutorizWeb.Text;
 
     {

@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/10/2021
+-- ACBrNFSeXDANFSeRLClass --
+[*] Ao gerar o PDF não estava sendo levado em consideração o conteudo de
+    NomeDocumento.
+  Por: Icozeira
+
 14/10/2021
 -- SigISS.Provider --
 [*] Melhorias no TratarRetornoEmitir.

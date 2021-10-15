@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2021
+--- DoACBrSAT--
+[*] Ajuste na função EnviarCFe.
+
 11/10/2021
 --- DoACBrBoleto--
 [*] Atualização no retorno da função EnviarBoleto baseado nas alterações da ACBLibBoletoRespostas

@@ -841,6 +841,7 @@ end;
 procedure TMetodoEnviarCFe.Executar;
 var
   cArqXML, Resultado: String;
+  SL: TStringList;
 begin
   cArqXML := fpCmd.Params(0);
 
@@ -851,9 +852,15 @@ begin
       ACBrSAT.CFe.Clear;
       if (pos(#10,cArqXML) = 0) and FileExists(cArqXML) then
       begin
-        if not(ACBrSAT.CFe.LoadFromFile(cArqXML)) then
-          raise Exception.Create('Falha ao carregar o arquivo '+cArqXML+'. XML inválido! ');
-        Resultado := ACBrSAT.EnviarDadosVenda;
+        SL:= TStringList.Create;
+        try
+          SL.LoadFromFile(cArqXML);
+          if not(StringIsXML( SL.Text )) then
+            raise Exception.Create('Falha ao carregar o arquivo '+cArqXML+'. XML inválido! ');
+          Resultado := ACBrSAT.EnviarDadosVenda(SL.Text);
+        finally
+          SL.Free;
+        end;
       end
       else
       if StringIsXML( cArqXML ) then

@@ -194,10 +194,11 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
 
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('Rps');
+
   if AuxNode <> nil then
-  begin
     LerInfDeclaracaoPrestacaoServico(AuxNode);
-  end;
 end;
 
 procedure TNFSeR_ABRASFv2.LerEnderecoPrestadorServico(const ANode: TACBrXmlNode;

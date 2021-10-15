@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/10/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Prossível correção na leitura do grupo DeclaracaoPrestacaoServico.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLClass --
 [*] Ao gerar o PDF não estava sendo levado em consideração o conteudo de
     NomeDocumento.

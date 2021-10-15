@@ -234,9 +234,12 @@ begin
 
   with ConfigAssinar do
   begin
-//    Rps := True;
     LoteRps := True;
+    ConsultarLote := True;
     ConsultarNFSeRps := True;
+    ConsultarNFSePorFaixa := True;
+    ConsultarNFSeServicoPrestado := True;
+    ConsultarNFSeServicoTomado := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
@@ -388,7 +391,7 @@ begin
   Request := Request + '</nfse:consultarNfseServicoPrestado>';
 
   Result := Executar('', Request,
-                     ['return', 'ConsultarNfseServicoPrestadoResposta'],
+                     ['return', 'ConsultarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -404,7 +407,7 @@ begin
   Request := Request + '</nfse:consultarNfseServicoTomado>';
 
   Result := Executar('', Request,
-                     ['return', 'ConsultarNfseServicoTomadoResposta'],
+                     ['return', 'ConsultarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

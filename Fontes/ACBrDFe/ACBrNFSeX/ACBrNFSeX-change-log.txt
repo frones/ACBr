@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/10/2021
+-- Diversos --
+[*] Ajustes para o provedor SilTecnologia.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Prossível correção na leitura do grupo DeclaracaoPrestacaoServico.
    Por: Italo Giurizzato Junior

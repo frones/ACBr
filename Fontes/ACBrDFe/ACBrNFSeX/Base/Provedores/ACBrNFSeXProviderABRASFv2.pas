@@ -629,11 +629,17 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
 
-      Response.Situacao := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('Situacao'), tcStr);
+      ProcessarMensagemErros(ANode, Response);
 
-      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
+      Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
+
+      if Response.Situacao = '' then
+        Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('SituacaoLoteRps'), tcStr);
+
+      ANode := ANode.Childrens.FindAnyNs('ListaNfse');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -1667,16 +1673,14 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
 
-      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
-      if not Assigned(ANode) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod202;
-        AErro.Descricao := Desc202;
-        Exit;
-      end;
+      ProcessarMensagemErros(ANode, Response);
+
+      ANode := ANode.Childrens.FindAnyNs('ListaNfse');
+
+      if ANode = nil then
+        ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response);
 

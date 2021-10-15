@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/20
+-- ACBrTEFPayGoComum --
+[-] Correção para mensagem indevida no TEF PayGoWeb, "Favor anotar no verso do Cheque"
+    Bug acidentalmente introduzido em 08/10
+    (por: DSA)
+
 08/10/21
 -- ACBrTEFComum --
 [+] Adicionado o enumerado TACBrTEFOperacao.tefopNenhuma

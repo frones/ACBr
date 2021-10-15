@@ -580,8 +580,8 @@ begin
         PWINFO_AUTHCODE:
           CodigoAutorizacaoTransacao := LinStr;
 
-        PWINFO_AUTRESPCODE:
-          Autenticacao := LinStr;
+        //PWINFO_AUTRESPCODE:
+        //  Autenticacao := LinStr;
 
         PWINFO_FINTYPE:
         begin

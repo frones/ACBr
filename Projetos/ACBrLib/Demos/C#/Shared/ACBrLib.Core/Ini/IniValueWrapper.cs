@@ -17,7 +17,7 @@ namespace ACBrLib.Core
 
         static IniValueWrapper()
         {
-            NumberFormatInfo = new NumberFormatInfo() { NumberGroupSeparator = "", NumberDecimalSeparator = "." };
+            NumberFormatInfo = new NumberFormatInfo() { NumberGroupSeparator = "", NumberDecimalSeparator = "," };
         }
 
         #endregion Constructor

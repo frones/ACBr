@@ -647,7 +647,6 @@ end;
 procedure TBoletoW_BancoBrasil_API.GerarDesconto(AJson: TJsonObject);
 var
   JsonDesconto: TJsonObject;
-  JsonArrGrupoDesconto: TJsonArray;
   JsonPairDesconto: TJsonPair;
 begin
   if Assigned(Titulos) then
@@ -655,7 +654,6 @@ begin
     if Assigned(AJson) then
     begin
       JsonDesconto := TJSONObject.Create;
-      JsonArrGrupoDesconto := TJsonArray.Create;
       try
 
         if (Titulos.DataDesconto > 0) then
@@ -667,22 +665,19 @@ begin
             2 : JsonDesconto.Add('porcentagem').Value.AsNumber := Titulos.ValorDesconto;
           end;
 
-          JsonArrGrupoDesconto.Add.AsObject := JsonDesconto;
           JsonPairDesconto := TJsonPair.Create(AJson, 'desconto');
           try
-            JsonPairDesconto.Value.AsArray := JsonArrGrupoDesconto;
+            JsonPairDesconto.Value.AsObject := JsonDesconto;
             AJson.Add('desconto').Assign(JsonPairDesconto);
           finally
             JsonPairDesconto.Free;
           end;
         end;
       finally
-        JsonArrGrupoDesconto.Free;
         JsonDesconto.Free;
       end;
 
       JsonDesconto := TJSONObject.Create;
-      JsonArrGrupoDesconto := TJsonArray.Create;
       try
         JsonDesconto.Add('tipo').Value.AsInteger := integer(Titulos.TipoDesconto);
         if Titulos.DataDesconto2 > 0 then
@@ -693,17 +688,15 @@ begin
             2 : JsonDesconto.Add('porcentagem').Value.AsNumber := Titulos.ValorDesconto2;
           end;
 
-          JsonArrGrupoDesconto.Add.AsObject := JsonDesconto;
           JsonPairDesconto                  := TJsonPair.Create(AJson, 'segundoDesconto');
           try
-            JsonPairDesconto.Value.AsArray  := JsonArrGrupoDesconto;
+            JsonPairDesconto.Value.AsObject := JsonDesconto;
             AJson.Add('segundoDesconto').Assign(JsonPairDesconto);
           finally
             JsonPairDesconto.Free;
           end;
         end;
       finally
-        JsonArrGrupoDesconto.Free;
         JsonDesconto.Free;
       end;
 

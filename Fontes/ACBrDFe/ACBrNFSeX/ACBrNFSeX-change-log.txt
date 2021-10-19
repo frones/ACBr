@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/10/2021
+-- DataSmart.Provider --
+[*] Ajustes na montagem do soap.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Alterações no Tratamento do Retorno do Consultar Lote Rps.
    Por: Marcelo HGV / Italo Giurizzato Junior

@@ -136,7 +136,6 @@ begin
     Result := '<Username>' + Emitente.WSUser + '</Username>' +
               '<Password>' + Emitente.WSSenha + '</Password>' +
               '<Prefeitura>' + xPref + '</Prefeitura>';
-//              '<Prefeitura>' + IntToStr(CodigoMunicipio) + '</Prefeitura>';
   end;
 end;
 
@@ -146,39 +145,18 @@ var
   Request: string;
 begin
   FPMsgOrig := AMSG;
-(*
-      <dat:GerarNfse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-         <parameters xsi:type="nfse:GerarNfseEnvio" xmlns:nfse="http://www.abrasf.org.br/nfse.xsd">
-            <nfseCabecMsg xsi:type="xsd:string">?</nfseCabecMsg>
-            <nfseDadosMsg xsi:type="xsd:string">?</nfseDadosMsg>
-            <Username xsi:type="xsd:string">?</Username>
-            <Password xsi:type="xsd:string">?</Password>
-            <Prefeitura xsi:type="xsd:string">?</Prefeitura>
-         </parameters>
-      </dat:GerarNfse>
-*)
 
-  Request := '<dat:GerarNfse>';
-  Request := Request + '<parameters xsi:type="nfse:GerarNfseEnvio" xmlns:nfse="http://www.abrasf.org.br/nfse.xsd">';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + DadosUsuario;
-  Request := Request + '</parameters>';
-  Request := Request + '</dat:GerarNfse>';
-
-  {
   Request := '<dat:GerarNfse><parameters href="#1"/></dat:GerarNfse>';
   Request := Request + '<nfse:GerarNfseEnvio id="1">';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + DadosUsuario;
   Request := Request + '</nfse:GerarNfseEnvio>';
-  }
+
   Result := Executar('http://www.datasmart.com.br/GerarNfse', Request,
-                     ['gerarNfseResponse', 'GerarNfseResposta'],
+                     ['return', 'outputXML', 'gerarNfseResponse', 'GerarNfseResposta'],
                      ['xmlns:dat="http://www.datasmart.com.br/"',
-//                      'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"',
-                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"']);
+                      'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
 
 function TACBrNFSeXWebserviceDataSmart202.ConsultarNFSePorFaixa(ACabecalho,
@@ -196,7 +174,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseFaixaEnvio>';
 
   Result := Executar('http://www.datasmart.com.br/ConsultarNfseFaixa', Request,
-                     ['gerarNfseResponse', 'GerarNfseResposta'],
+                     ['return', 'outputXML', 'gerarNfseResponse', 'GerarNfseResposta'],
                      ['xmlns:dat="http://www.datasmart.com.br/"',
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
@@ -216,7 +194,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorRpsEnvio>';
 
   Result := Executar('http://www.datasmart.com.br/ConsultarNfsePorRps', Request,
-                     ['gerarNfseResponse', 'GerarNfseResposta'],
+                     ['return', 'outputXML', 'gerarNfseResponse', 'GerarNfseResposta'],
                      ['xmlns:dat="http://www.datasmart.com.br/"',
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;
@@ -235,7 +213,7 @@ begin
   Request := Request + '</nfse:CancelarNfseEnvio>';
 
   Result := Executar('http://www.datasmart.com.br/CancelarNfse', Request,
-                     ['gerarNfseResponse', 'GerarNfseResposta'],
+                     ['return', 'outputXML', 'gerarNfseResponse', 'GerarNfseResposta'],
                      ['xmlns:dat="http://www.datasmart.com.br/"',
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
 end;

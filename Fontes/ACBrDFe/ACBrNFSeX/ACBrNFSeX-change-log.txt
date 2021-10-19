@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/10/2021
+-- DataSmart.GravarXml --
+[*] Incluido a procedure de configuração.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Possível correção na leitura do grupo CompNfse.
    Por: Italo Giurizzato Junior

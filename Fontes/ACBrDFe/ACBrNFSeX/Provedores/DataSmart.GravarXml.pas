@@ -48,6 +48,7 @@ type
 
   TNFSeW_DataSmart202 = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -57,5 +58,17 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     DataSmart
 //==============================================================================
+
+{ TNFSeW_DataSmart202 }
+
+procedure TNFSeW_DataSmart202.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrCodTribMun_1 := -1;
+
+  GerarIDDeclaracao := False;
+  GerarIDRps := True;
+end;
 
 end.

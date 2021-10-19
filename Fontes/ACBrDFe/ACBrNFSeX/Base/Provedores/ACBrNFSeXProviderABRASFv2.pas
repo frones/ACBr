@@ -817,14 +817,13 @@ var
   ANode, AuxNode: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
-  NumNFSe: String;
+  NumNFSe, NumRps: String;
+  i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
   try
     try
-      TACBrNFSeX(FAOwner).NotasFiscais.Clear;
-
       if Response.XmlRetorno = '' then
       begin
         AErro := Response.Erros.New;
@@ -879,12 +878,26 @@ begin
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
+        if ANota = nil then
+        begin
+          AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+          AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+          AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        end;
+
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml
         else
         begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+//          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+
+          i := TACBrNFSeX(FAOwner).NotasFiscais.IndexOf(ANota);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[i];
         end;
 
         SalvarXmlNfse(ANota);

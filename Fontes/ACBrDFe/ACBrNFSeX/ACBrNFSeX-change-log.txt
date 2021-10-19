@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/10/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Alterações no Tratamento do Retorno do Consultar Lote Rps.
+   Por: Marcelo HGV / Italo Giurizzato Junior
 -- Thema.Provider --
 [*] Removido a tag <ConsultarLoteRpsResposta> da lista de tags ao ler o retorno.
    Por: Italo Giurizzato Junior

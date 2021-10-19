@@ -103,7 +103,7 @@ implementation
 uses
   dateutils, math,
   {$IfDef ANDROID}
-   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, System.Permissions,
+   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, System.Types, System.Permissions,
   {$EndIf}
   ACBrDevice, ACBrUtil;
 
@@ -132,7 +132,11 @@ begin
     Ok := False;
     PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
                                             JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN)],
+      {$IfDef DELPHI28_UP}
+      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+      {$Else}
       procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
+      {$EndIf}
       var
         GR: TPermissionStatus;
       begin
@@ -149,7 +153,7 @@ begin
             end;
           end;
         end;
-      end );
+      end, nil );
   {$Else}
     Ok := True;
   {$EndIf}

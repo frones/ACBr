@@ -28,6 +28,8 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+{$I ACBr.inc}
+
 unit ACBrPosPrinterAndroidFr;
 
 interface
@@ -230,7 +232,11 @@ begin
   PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
                                           JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN),
                                           JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_PRIVILEGED)],
+      {$IfDef DELPHI28_UP}
+      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+      {$Else}
       procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
+      {$EndIf}
       var
         GR: TPermissionStatus;
       begin

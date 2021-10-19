@@ -121,9 +121,7 @@ begin
   Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
   Request := Request + '</consultarLoteRps>';
 
-  Result := Executar('urn:consultarLoteRps', Request,
-                     ['return', 'ConsultarLoteRpsResposta'],
-                     []);
+  Result := Executar('urn:consultarLoteRps', Request, ['return'], []);
 end;
 
 function TACBrNFSeXWebserviceThema.ConsultarSituacao(ACabecalho, AMSG: String): string;

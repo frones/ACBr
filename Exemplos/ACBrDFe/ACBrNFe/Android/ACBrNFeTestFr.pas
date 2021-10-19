@@ -631,7 +631,11 @@ begin
                                           JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN),
                                           JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_PRIVILEGED),
                                           JStringToString(TJManifest_permission.JavaClass.INTERNET)],
+      {$IfDef DELPHI28_UP}
+      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+      {$Else}
       procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
+      {$EndIf}
       var
         GR: TPermissionStatus;
       begin
@@ -815,7 +819,7 @@ begin
 
   ACBrNFe1.WebServices.ConsultaCadastro.Executar;
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('----- RetWS -----');
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.WebServices.ConsultaCadastro.RetWS )));
@@ -836,7 +840,6 @@ begin
   mLog.Lines.Add('CNPJ: '+ACBrNFe1.WebServices.ConsultaCadastro.CNPJ);
   mLog.Lines.Add('CPF: '+ACBrNFe1.WebServices.ConsultaCadastro.CPF);
 
-
   ExibirLogs;
 end;
 
@@ -852,7 +855,7 @@ begin
 
   ConfigurarACBrNFe;
   ACBrNFe1.SSL.CarregarCertificado;
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('---- Informações do Certificado ----');
   mLog.Lines.Add('Número de Série: '+ACBrNFe1.SSL.CertNumeroSerie);
   mLog.Lines.Add('Válido até: '+FormatDateBr(ACBrNFe1.SSL.CertDataVenc));
@@ -880,7 +883,7 @@ begin
   ACBrNFe1.WebServices.Consulta.NFeChave := vChave;
   ACBrNFe1.WebServices.Consulta.Executar;
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('----- RetWS -----');
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.WebServices.Consulta.RetWS )));
@@ -934,7 +937,7 @@ begin
   ACBrNFe1.NotasFiscais.GravarXML;
 
   NomeArqXML := ACBrNFe1.NotasFiscais.Items[0].NomeArq;
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('----- Gerar NFCe -----');
   mLog.Lines.Add('Arquivo gerado em:');
   mLog.Lines.Add(NomeArqXML);
@@ -1006,7 +1009,7 @@ begin
   if (LerXMLNFCe(fraXMLs.FileName) < 1) then
     Exit;
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('----- VER XML -----');
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.NotasFiscais.Items[0].XML )));
@@ -1023,7 +1026,7 @@ begin
   if (LerXMLNFCe(fraXMLs.FileName) < 1) then
     Exit;
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('---- ASSINATURA ----');
 
   if not ACBrNFe1.NotasFiscais.VerificarAssinatura(Msg) then
@@ -1054,7 +1057,7 @@ begin
   if (LerXMLNFCe(fraXMLs.FileName) < 1) then
     Exit;
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('---- VALIDAÇÃO DO XML ----');
   try
     ACBrNFe1.NotasFiscais.Validar;
@@ -1118,7 +1121,7 @@ procedure TACBrNFCeTestForm.btnStatusServicoClick(Sender: TObject);
 begin
   ACBrNFe1.WebServices.StatusServico.Executar;
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('----- RetWS -----');
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.WebServices.StatusServico.RetWS )));
@@ -1149,7 +1152,7 @@ end;
 
 procedure TACBrNFCeTestForm.btnSobreClick(Sender: TObject);
 begin
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('Projeto ACBr - DSA');
   mLog.Lines.Add('https://projetoacbr.com.br/');
   mLog.Lines.Add('');
@@ -1749,7 +1752,7 @@ begin
 
   ACBrNFe1.Enviar(IntToStr(Trunc(sbLote.Value)), False, True, False);  // NãoImprimir, Sincrono
 
-  mLog.Lines.Add('');
+  mLog.Lines.Clear;
   mLog.Lines.Add('----- RetWS -----');
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.WebServices.Enviar.RetWS )));

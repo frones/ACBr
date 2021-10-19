@@ -730,6 +730,8 @@ begin
     FPosPrinter.Buffer.Add('</ce><c>' + ATexto);
   end;
 
+  FPosPrinter.Buffer.Add('</zera>');
+
   if FPosPrinter.CortaPapel then
     FPosPrinter.Buffer.Add('</corte>')
   else

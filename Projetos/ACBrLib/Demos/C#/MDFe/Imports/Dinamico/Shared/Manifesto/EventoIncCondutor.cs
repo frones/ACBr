@@ -9,7 +9,7 @@ namespace ACBrLib.MDFe
 
         public EventoIncCondutor()
         {
-            evento = TipoEvento.teInclusaoCondutor;
+            tpEvento = TipoEventoMDFe.teInclusaoCondutor;
             versaoEvento = "3.00";
         }
 

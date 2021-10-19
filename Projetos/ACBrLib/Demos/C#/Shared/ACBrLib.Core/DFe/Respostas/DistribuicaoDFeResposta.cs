@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ACBrLib.Core.DFe
 {
-    public sealed class DistribuicaoDFeResposta
+    public sealed class DistribuicaoDFeResposta<TEvento> where TEvento : Enum
     {
         #region Properties
 
@@ -37,20 +37,20 @@ namespace ACBrLib.Core.DFe
 
         public List<ResDFeResposta> ResDFeResposta { get; } = new List<ResDFeResposta>();
 
-        public List<ResEveResposta> ResEveResposta { get; } = new List<ResEveResposta>();
+        public List<ResEveResposta<TEvento>> ResEveResposta { get; } = new List<ResEveResposta<TEvento>>();
 
-        public List<ProcEveResposta> ProEveResposta { get; } = new List<ProcEveResposta>();
+        public List<ProcEveResposta<TEvento>> ProEveResposta { get; } = new List<ProcEveResposta<TEvento>>();
 
-        public List<InfEventoResposta> InfEventoResposta { get; } = new List<InfEventoResposta>();
+        public List<InfEventoResposta<TEvento>> InfEventoResposta { get; } = new List<InfEventoResposta<TEvento>>();
 
         #endregion Properties
 
         #region Methods
 
-        public static DistribuicaoDFeResposta LerResposta(string resposta)
+        public static DistribuicaoDFeResposta<TEvento> LerResposta(string resposta)
         {
             var iniresposta = ACBrIniFile.Parse(resposta);
-            var ret = iniresposta.ReadFromIni<DistribuicaoDFeResposta>("DistribuicaoDFe");
+            var ret = iniresposta.ReadFromIni<DistribuicaoDFeResposta<TEvento>>("DistribuicaoDFe");
             ret.Resposta = resposta;
 
             var i = 0;
@@ -65,33 +65,33 @@ namespace ACBrLib.Core.DFe
             } while (resDFe != null);
 
             i = 0;
-            ResEveResposta resEve;
+            ResEveResposta<TEvento> resEve;
             do
             {
                 i++;
-                resEve = iniresposta.ReadFromIni<ResEveResposta>($"ResEve{i:000}");
+                resEve = iniresposta.ReadFromIni<ResEveResposta<TEvento>>($"ResEve{i:000}");
                 if (resEve == null) continue;
 
                 ret.ResEveResposta.Add(resEve);
             } while (resEve != null);
 
             i = 0;
-            ProcEveResposta proEve;
+            ProcEveResposta<TEvento> proEve;
             do
             {
                 i++;
-                proEve = iniresposta.ReadFromIni<ProcEveResposta>($"ProEve{i:000}");
+                proEve = iniresposta.ReadFromIni<ProcEveResposta<TEvento>>($"ProEve{i:000}");
                 if (proEve == null) continue;
 
                 ret.ProEveResposta.Add(proEve);
             } while (proEve != null);
 
             i = 0;
-            InfEventoResposta infEvento;
+            InfEventoResposta<TEvento> infEvento;
             do
             {
                 i++;
-                infEvento = iniresposta.ReadFromIni<InfEventoResposta>($"InfEve{i:000}");
+                infEvento = iniresposta.ReadFromIni<InfEventoResposta<TEvento>>($"InfEve{i:000}");
                 if (infEvento == null) continue;
 
                 ret.InfEventoResposta.Add(infEvento);

@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoCCe()
         {
-            evento = TipoEvento.teCCe;
+            tpEvento = TipoEventoNFe.teCCe;
         }
 
         #endregion Constructor

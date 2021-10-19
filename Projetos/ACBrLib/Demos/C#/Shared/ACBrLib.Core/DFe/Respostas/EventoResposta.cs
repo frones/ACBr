@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ACBrLib.Core.DFe
 {
-    public abstract class EventoResposta<TClass, TEvento> : DFeRespostaBase
-        where TEvento : EventoItemBase, new()
-        where TClass : EventoResposta<TClass, TEvento>, new()
+    public abstract class EventoResposta<TClass, TEvento, TTipoEvento> : DFeRespostaBase
+        where TEvento : EventoItemBase<TTipoEvento>, new()
+        where TClass : EventoResposta<TClass, TEvento, TTipoEvento>, new()
+        where TTipoEvento : Enum
 
     {
         #region Properties

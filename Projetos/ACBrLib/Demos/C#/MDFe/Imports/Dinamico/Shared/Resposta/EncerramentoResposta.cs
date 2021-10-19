@@ -11,7 +11,7 @@ namespace ACBrLib.MDFe
 
         public string NProt { get; set; }
 
-        public TipoEvento TpEvento => TipoEvento.teEncerramento;
+        public TipoEventoMDFe TpEvento {get; set; }
 
         public string XEvento { get; set; }
 

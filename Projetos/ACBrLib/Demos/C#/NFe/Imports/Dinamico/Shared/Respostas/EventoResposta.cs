@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoResposta : EventoResposta<EventoResposta, EventoItemResposta>
+    public sealed class EventoResposta : EventoResposta<EventoResposta, EventoItemResposta, TipoEventoNFe>
     {
     }
 }

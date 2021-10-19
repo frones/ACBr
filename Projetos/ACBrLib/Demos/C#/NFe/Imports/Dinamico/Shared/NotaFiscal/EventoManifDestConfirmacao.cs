@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoManifDestConfirmacao()
         {
-            evento = TipoEvento.teManifDestConfirmacao;
+            tpEvento = TipoEventoNFe.teManifDestConfirmacao;
             cOrgao = 91;
         }
 

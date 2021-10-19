@@ -1,12 +1,16 @@
-﻿namespace ACBrLib.Core.DFe
+﻿using System;
+
+namespace ACBrLib.Core.DFe
 {
-    public abstract class CancelamentoRespostaBase<TClass> : DFeRespostaBase where TClass : CancelamentoRespostaBase<TClass>, new()
+    public abstract class CancelamentoRespostaBase<TClass, TEvento> : DFeRespostaBase 
+        where TClass : CancelamentoRespostaBase<TClass, TEvento>, new()
+        where TEvento : Enum
     {
         #region Properties
 
         public string nProt { get; set; }
 
-        public TipoEvento tpEvento { get; set; }
+        public TEvento tpEvento { get; set; }
 
         public string xEvento { get; set; }
 

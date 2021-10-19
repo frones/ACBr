@@ -309,7 +309,7 @@ namespace ACBrLib.MDFe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string GetPathEvento(TipoEvento evento)
+        public string GetPathEvento(TipoEventoMDFe evento)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -425,7 +425,7 @@ namespace ACBrLib.MDFe
             return NaoEncerradosResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)
+        public DistribuicaoDFeResposta<TipoEventoMDFe> DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -435,10 +435,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return DistribuicaoDFeResposta<TipoEventoMDFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
+        public DistribuicaoDFeResposta<TipoEventoMDFe>DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -448,10 +448,10 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return DistribuicaoDFeResposta<TipoEventoMDFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
+        public DistribuicaoDFeResposta<TipoEventoMDFe> DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -461,7 +461,7 @@ namespace ACBrLib.MDFe
 
             CheckResult(ret);
 
-            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return DistribuicaoDFeResposta<TipoEventoMDFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void EnviarEmail(string ePara, string eChaveNFe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)

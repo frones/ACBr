@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public sealed class EventoItemResposta : EventoItemBase
+    public sealed class EventoItemResposta : EventoItemBase<TipoEventoNFe>
     {
         #region Properties
 

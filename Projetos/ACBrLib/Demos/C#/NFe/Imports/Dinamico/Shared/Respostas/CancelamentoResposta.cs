@@ -3,7 +3,7 @@ using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
-    public sealed class CancelamentoNFeResposta : CancelamentoRespostaBase<CancelamentoNFeResposta>
+    public sealed class CancelamentoNFeResposta : CancelamentoRespostaBase<CancelamentoNFeResposta, TipoEventoNFe>
     {
         #region Properties
 

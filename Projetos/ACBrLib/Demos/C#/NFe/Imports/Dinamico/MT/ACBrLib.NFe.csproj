@@ -137,6 +137,7 @@
     <Compile Include="..\Shared\NotaFiscal\TipoArma.cs" Link="NotaFiscal\TipoArma.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoAutor.cs" Link="NotaFiscal\TipoAutor.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoAutorizacao.cs" Link="NotaFiscal\TipoAutorizacao.cs" />
+    <Compile Include="..\Shared\NotaFiscal\TipoEventoNFe.cs" Link="NotaFiscal\TipoEventoNFe.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoOperacao.cs" Link="NotaFiscal\TipoOperacao.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoRef.cs" Link="NotaFiscal\TipoRef.cs" />
     <Compile Include="..\Shared\NotaFiscal\TipoViaTransp.cs" Link="NotaFiscal\TipoViaTransp.cs" />

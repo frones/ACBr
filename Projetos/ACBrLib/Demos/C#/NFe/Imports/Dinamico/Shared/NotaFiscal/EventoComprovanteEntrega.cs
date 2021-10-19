@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoComprovanteEntrega()
         {
-            evento = TipoEvento.teComprEntregaNFe;
+            tpEvento = TipoEventoNFe.teComprEntregaNFe;
             verAplic = "1.0";
         }
 

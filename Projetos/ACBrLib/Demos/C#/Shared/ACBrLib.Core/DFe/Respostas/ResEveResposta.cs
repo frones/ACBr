@@ -2,7 +2,7 @@
 
 namespace ACBrLib.Core.DFe
 {
-    public sealed class ResEveResposta : DistribuicaoDFeItemResposta
+    public sealed class ResEveResposta<TEvento> : DistribuicaoDFeItemResposta where TEvento : Enum
     {
         #region Properties
 
@@ -10,7 +10,7 @@ namespace ACBrLib.Core.DFe
 
         public DateTime dhEvento { get; set; }
 
-        public TipoEvento tpEvento { get; set; }
+        public TEvento tpEvento { get; set; }
 
         public string xEvento { get; set; }
 

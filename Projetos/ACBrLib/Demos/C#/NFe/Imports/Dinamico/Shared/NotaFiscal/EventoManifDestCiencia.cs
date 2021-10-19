@@ -8,7 +8,7 @@ namespace ACBrLib.NFe
 
         public EventoManifDestCiencia()
         {
-            evento = TipoEvento.teManifDestCiencia;
+            tpEvento = TipoEventoNFe.teManifDestCiencia;
             cOrgao = 91;
         }
 

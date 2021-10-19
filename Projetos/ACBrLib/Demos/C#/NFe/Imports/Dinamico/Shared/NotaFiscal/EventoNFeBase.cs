@@ -2,7 +2,7 @@
 
 namespace ACBrLib.NFe
 {
-    public abstract class EventoNFeBase : EventoBase
+    public abstract class EventoNFeBase : EventoBase<TipoEventoNFe>
     {
         #region Properties
 

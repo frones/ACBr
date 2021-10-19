@@ -2,7 +2,7 @@
 
 namespace ACBrLib.MDFe
 {
-    public sealed class CancelamentoMDFeResposta : CancelamentoRespostaBase<CancelamentoMDFeResposta>
+    public sealed class CancelamentoMDFeResposta : CancelamentoRespostaBase<CancelamentoMDFeResposta, TipoEventoMDFe>
     {
         #region Properties
 

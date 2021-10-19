@@ -2,7 +2,7 @@
 
 namespace ACBrLib.Core.DFe
 {
-    public sealed class ProcEveResposta : DistribuicaoDFeItemResposta
+    public sealed class ProcEveResposta<TEvento> : DistribuicaoDFeItemResposta where TEvento : Enum
     {
         #region Properties
 
@@ -18,7 +18,7 @@ namespace ACBrLib.Core.DFe
 
         public TipoAmbiente tpAmb { get; set; }
 
-        public TipoEvento tpEvento { get; set; }
+        public TEvento tpEvento { get; set; }
 
         public string verEvento { get; set; }
 

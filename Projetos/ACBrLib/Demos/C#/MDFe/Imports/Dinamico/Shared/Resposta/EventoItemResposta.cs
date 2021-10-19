@@ -2,7 +2,7 @@
 
 namespace ACBrLib.MDFe
 {
-    public sealed class EventoItemResposta : EventoItemBase
+    public sealed class EventoItemResposta : EventoItemBase<TipoEventoMDFe>
     {
         #region Properties
 

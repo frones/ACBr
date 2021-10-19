@@ -2,7 +2,7 @@
 
 namespace ACBrLib.MDFe
 {
-    public abstract class EventoMDFeBase : EventoBase
+    public abstract class EventoMDFeBase : EventoBase<TipoEventoMDFe>
     {
         #region Properties
 

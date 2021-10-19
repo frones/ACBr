@@ -20,6 +20,7 @@ namespace ACBrLib.NFe
             CheckResult(ret);
 
             Config = new ACBrNFeConfig(this);
+            
         }
 
         #endregion Constructors
@@ -433,7 +434,7 @@ namespace ACBrLib.NFe
             return EventoResposta.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)
+        public DistribuicaoDFeResposta<TipoEventoNFe> DistribuicaoDFePorUltNSU(int acUFAutor, string eCnpjcpf, string eultNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -443,10 +444,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return DistribuicaoDFeResposta<TipoEventoNFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
+        public DistribuicaoDFeResposta<TipoEventoNFe> DistribuicaoDFePorNSU(int acUFAutor, string eCnpjcpf, string eNsu)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -456,10 +457,10 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return DistribuicaoDFeResposta<TipoEventoNFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
-        public DistribuicaoDFeResposta DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
+        public DistribuicaoDFeResposta<TipoEventoNFe> DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -469,7 +470,7 @@ namespace ACBrLib.NFe
 
             CheckResult(ret);
 
-            return DistribuicaoDFeResposta.LerResposta(ProcessResult(buffer, bufferLen));
+            return DistribuicaoDFeResposta<TipoEventoNFe>.LerResposta(ProcessResult(buffer, bufferLen));
         }
 
         public void EnviarEmail(string ePara, string eChaveNFe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)

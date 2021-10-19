@@ -43,12 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/10/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção na leitura do grupo CompNfse.
+   Por: Italo Giurizzato Junior
+
 15/10/2021
 -- Diversos --
 [*] Ajustes para o provedor SilTecnologia.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
-[*] Prossível correção na leitura do grupo DeclaracaoPrestacaoServico.
+[*] Possível correção na leitura do grupo DeclaracaoPrestacaoServico.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLClass --
 [*] Ao gerar o PDF não estava sendo levado em consideração o conteudo de

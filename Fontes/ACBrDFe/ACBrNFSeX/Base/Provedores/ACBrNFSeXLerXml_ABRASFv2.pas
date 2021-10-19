@@ -865,6 +865,9 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
+  if AuxNode = nil then
+    AuxNode := ANode;
+
   LerInfNfse(AuxNode);
 
   LerNfseCancelamento(ANode);

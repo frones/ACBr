@@ -484,7 +484,7 @@ procedure TFrTEFDemoAndroid.FormCreate(Sender: TObject);
     for i := Low(Items) to High(Items) do
     begin
       AItem := TListBoxItem.Create(AComboBox);
-      AItem.StyledSettings := AItem.StyledSettings - [TStyledSetting.ssOther];
+      AItem.StyledSettings := AItem.StyledSettings - [TStyledSetting.Other];
       AItem.TextSettings.HorzAlign := TTextAlign.Center;
       AItem.TextSettings.VertAlign := TTextAlign.Center;
       AItem.TextSettings.WordWrap := True;
@@ -1719,7 +1719,7 @@ begin
     for i := Low(CITENS_MENU_ADMIN) to High(CITENS_MENU_ADMIN) do
     begin
       AItem := TListBoxItem.Create(lbAdmin);
-      AItem.StyledSettings := AItem.StyledSettings - [TStyledSetting.ssOther];
+      AItem.StyledSettings := AItem.StyledSettings - [TStyledSetting.Other];
       AItem.TextSettings.HorzAlign := TTextAlign.Leading;
       AItem.TextSettings.VertAlign := TTextAlign.Center;
       AItem.TextSettings.WordWrap := True;
@@ -1825,6 +1825,7 @@ begin
     Abort;
   end;
 
+  AplicarConfiguracoes;
   if FileExists(ACBrTEFAndroid1.ArqLOG) then
     DeleteFile(ACBrTEFAndroid1.ArqLOG);
 

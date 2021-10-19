@@ -57,7 +57,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   pcnConversao, pcnLeitor, pcnEventoNFe, pcnSignature,
-  ACBrBase;
+  ACBrBase, ACBrUtil;
 
 type
   TRetInfEventoCollectionItem = class;
@@ -287,7 +287,7 @@ begin
         FretEvento.New;
 
         // Incluido por Italo em 07/05/2014
-        FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
+        FretEvento.Items[i].FRetInfEvento.XML := ConverteXMLtoUTF8(Leitor.Grupo);
 
 //        (*HR10 *)FretEvento.versao               := Leitor.rCampo(tcStr, 'versao');
         (*HR12 *)FretEvento.Items[i].FRetInfEvento.Id         := Leitor.rAtributo('Id');

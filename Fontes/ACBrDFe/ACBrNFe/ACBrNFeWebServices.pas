@@ -3472,6 +3472,8 @@ begin
             end;
 
             // Se o evento for rejeitado a propriedade XML conterá uma string vazia
+            if Texto <> '' then
+              Texto := ConverteXMLtoUTF8(Texto);
             FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
             FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 

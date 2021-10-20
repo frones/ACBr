@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/10/2021
+-- Equiplano.Provider --
+[*] Correção para o erro de AV ao Tratar o retorno do cancelamento.
+   Por: Everton Neres
+
 19/10/2021
 -- IPM.Provider --
 [*] Possível correção para o erro de AV ao tentar cancelar uma nota.

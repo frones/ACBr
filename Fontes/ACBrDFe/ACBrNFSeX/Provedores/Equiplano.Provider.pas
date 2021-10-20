@@ -750,8 +750,8 @@ begin
         if not Assigned(ANodeArray) then
         begin
           AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
           Exit;
         end;
 
@@ -876,8 +876,8 @@ begin
       begin
         with Response.RetCancelamento do
         begin
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('sucesso'), tcStr);
-          DataHora := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
+          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('sucesso'), tcStr);
+          DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
         end;
       end;
     except

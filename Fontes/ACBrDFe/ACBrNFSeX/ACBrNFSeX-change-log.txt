@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/10/2021
+-- DataSmart.Provider --
+[*] Ajustes no tratamento do retorno do emitir e do consultar Nfse por Rps.
+   Por: Italo Giurizzato Junior
 -- Equiplano.Provider --
 [*] Correção para o erro de AV ao Tratar o retorno do cancelamento.
    Por: Everton Neres

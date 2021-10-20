@@ -730,12 +730,12 @@ begin
     FPosPrinter.Buffer.Add('</ce><c>' + ATexto);
   end;
 
-  FPosPrinter.Buffer.Add('</zera>');
-
   if FPosPrinter.CortaPapel then
     FPosPrinter.Buffer.Add('</corte>')
   else
     FPosPrinter.Buffer.Add('</pular_linhas>');
+
+  FPosPrinter.Buffer.Add('</reset>');
 end;
 
 function TACBrSATExtratoESCPOS.SuportaQRCodeLateral: Boolean;

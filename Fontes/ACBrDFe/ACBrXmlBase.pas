@@ -74,6 +74,7 @@ function RemoverPrefixosDesnecessarios(const aXML: string): string;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
+function LerDatas(const DataStr: string): TDateTime;
 //procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix: string; excludeElements: array of string);
 
 implementation
@@ -239,7 +240,7 @@ begin
     tcStr,
     tcEsp:
       result := ConteudoTag;
-
+{
     tcDat:
       begin
         if length(ConteudoTag) > 0 then
@@ -256,14 +257,6 @@ begin
           Result := 0;
       end;
 
-    tcDatCFe:
-      begin
-        if length(ConteudoTag) > 0 then
-          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)), StrToInt(copy(ConteudoTag, 5, 2)), StrToInt(copy(ConteudoTag, 7, 2)))
-        else
-          result := 0;
-      end;
-
     tcDatHor:
       begin
         if length(ConteudoTag) > 0 then
@@ -274,11 +267,29 @@ begin
         else
           result := 0;
       end;
+}
+    tcDat,
+    tcDatHor,
+    tcDatVcto:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := LerDatas(ConteudoTag)
+        else
+          result := 0;
+      end;
 
     tcHor:
       begin
         if length(ConteudoTag) > 0 then
           result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
+        else
+          result := 0;
+      end;
+
+    tcDatCFe:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)), StrToInt(copy(ConteudoTag, 5, 2)), StrToInt(copy(ConteudoTag, 7, 2)))
         else
           result := 0;
       end;
@@ -341,6 +352,65 @@ begin
   end;
 end;
 
+function LerDatas(const DataStr: string): TDateTime;
+var
+  xData: string;
+begin
+  xData := Trim(DataStr);
+
+  if xData = '' then
+    Result := 0
+  else
+  begin
+    xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
+
+    // Alguns provedores retorna a data de competencia só com o mês e ano
+    if Length(xData) = 7 then
+    begin
+      if Pos('/', xData) = 3 then
+        xData := '01/' + xData
+      else
+        xData := xData + '/01';
+    end;
+
+    if (Length(xData) >= 16) and CharInSet(xData[11], ['T', ' ']) then
+    begin
+      if Pos('/', xData) = 5 then
+        // Le a data/hora no formato YYYY/MM/DDTHH:MM:SS
+        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
+                             StrToInt(copy(xData, 6, 2)),
+                             StrToInt(copy(xData, 9, 2))) +
+                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
+                             StrToIntDef(copy(xData, 15, 2), 0),
+                             StrToIntDef(copy(xData, 18, 2), 0),
+                             0)
+      else
+        // Le a data/hora no formato DD/MM/YYYYTHH:MM:SS
+        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                             StrToInt(copy(xData, 4, 2)),
+                             StrToInt(copy(xData, 1, 2))) +
+                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
+                             StrToIntDef(copy(xData, 15, 2), 0),
+                             StrToIntDef(copy(xData, 18, 2), 0),
+                             0)
+    end
+    else
+    begin
+      if Pos('/', xData) = 5 then
+        // Le a data no formato YYYY/MM/DD
+        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
+                             StrToInt(copy(xData, 6, 2)),
+                             StrToInt(copy(xData, 9, 2)))
+      else
+        // Le a data no formato DD/MM/YYYY
+        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                             StrToInt(copy(xData, 4, 2)),
+                             StrToInt(copy(xData, 1, 2)));
+    end;
+  end;
+end;
+
+{
 procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix : string; excludeElements: array of string);
 var
   i: Integer;
@@ -363,5 +433,5 @@ begin
   for i := 0 to ANode.Childrens.Count -1 do
     ApplyNamespacePrefix(ANode.Childrens[i], nsPrefix, excludeElements);
 end;
-
+}
 end.

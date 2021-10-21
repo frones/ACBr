@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2021
+-- ACBrXmlBase --
+[*] Ao ler um campo data o seu conteudo vai ser passado pela função LerDatas
+    que tem como objetivo interpretar os varios tipos de formatação de data/hora.
+  Por: Italo Giurizzato Junior
+
 28/09/2021
 -- ACBrXmlDocument --
 [*] Possível correção para o vazamento de memória.

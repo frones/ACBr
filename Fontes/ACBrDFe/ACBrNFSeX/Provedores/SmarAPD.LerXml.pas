@@ -255,7 +255,7 @@ begin
   begin
     Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroNota'), tcStr);
     CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ChaveValidacao'), tcStr);
-    DataEmissaoRps    := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+    DataEmissaoRps    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
     Competencia       := DataEmissaoRps;
     DataEmissao       := DataEmissaoRps;
     dhRecebimento     := DataEmissaoRps;

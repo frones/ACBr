@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/10/2021
+-- Diversos --
+[*] Ajustes por conta da alteração na leitura de campos data/hora.
+   Por: Italo Giurizzato Junior
+
 20/10/2021
 -- DataSmart.Provider --
 [*] Ajustes no tratamento do retorno do emitir e do consultar Nfse por Rps.

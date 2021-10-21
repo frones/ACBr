@@ -865,6 +865,7 @@ begin
         begin
           NumeroNota := NumNFSe;
           CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
         end;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);

@@ -115,7 +115,7 @@ begin
 
     with NFSe.NfseCancelamento do
     begin
-      DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHoraCancelamento'), tcStr));
+      DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDat);
 
       if DataHora > 0 then
         NFSe.SituacaoNfse := snCancelado;
@@ -370,7 +370,7 @@ begin
     with NFSe.NfseCancelamento do
     begin
       Sucesso  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBool);
-      DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
+      DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcDat);
 
       if DataHora > 0 then
         NFSe.SituacaoNfse := snCancelado;
@@ -391,17 +391,17 @@ begin
   begin
     NFSe.Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
     NFSe.CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-    NFSe.DataEmissao       := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+    NFSe.DataEmissao       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
     NFSe.NfseSubstituida   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
 
     LerIdentificacaoRps(AuxNode);
 
-    NFSe.DataEmissaoRps           := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRps'), tcStr));
+    NFSe.DataEmissaoRps           := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRps'), tcDat);
     NFSe.NaturezaOperacao         := StrToNaturezaOperacao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr));
     NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
     NFSe.OptanteSimplesNacional   := StrToSimNao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
     NFSe.IncentivadorCultural     := StrToSimNao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('IncentivadorCultural'), tcStr));
-    NFSe.Competencia              := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcStr));
+    NFSe.Competencia              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcDat);
     NFSe.NfseSubstituida          := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
     NFSe.OutrasInformacoes        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
 
@@ -760,7 +760,7 @@ begin
 
     with NFSe do
     begin
-      DataEmissao := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+      DataEmissao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
       NaturezaOperacao := StrToNaturezaOperacao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr));
       RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
       OptanteSimplesNacional := StrToSimNao(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));

@@ -217,7 +217,7 @@ begin
     NFSe.CodigoVerificacao := ProcessarConteudo(ANode.Childrens.FindAnyNs('CodigoVerificao'), tcStr);
 
   NFSe.DataEmissaoRps := ProcessarConteudo(ANode.Childrens.FindAnyNs('DataEmissaoRPS'), tcDat);
-  
+
   NFSe.DataEmissao    := ProcessarConteudo(ANode.Childrens.FindAnyNs('DataProcessamento'), tcDatHor);
   if (NFSe.DataEmissao = 0) then
     NFSe.DataEmissao := NFSe.DataEmissaoRps;

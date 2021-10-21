@@ -123,7 +123,7 @@ begin
 
     with NFSe.NfseCancelamento do
     begin
-      DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
+      DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 
       if DataHora > 0 then
         NFSe.SituacaoNfse := snCancelado;
@@ -400,7 +400,7 @@ begin
     with NFSe.NfseCancelamento do
     begin
       Sucesso  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBool);
-      DataHora := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
+      DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
     end;
 
     if NFSe.NfseCancelamento.DataHora > 0 then
@@ -422,7 +422,7 @@ begin
   begin
     LerRps(AuxNode);
 
-    NFSe.Competencia := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcStr));
+    NFSe.Competencia := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcDatHor);
 
     LerServico(AuxNode);
     LerPrestador(AuxNode);
@@ -448,7 +448,7 @@ begin
   begin
     NFSe.Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
     NFSe.CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-    NFSe.DataEmissao       := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+    NFSe.DataEmissao       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
     NFSe.NfseSubstituida   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
 
     NFSe.OutrasInformacoes := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
@@ -626,7 +626,7 @@ begin
     LerIdentificacaoRps(AuxNode);
 
     if NFSe.DataEmissao = 0 then
-      NFSe.DataEmissao := LerDatas(ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+      NFSe.DataEmissao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
 
     NFSe.Status := StrToStatusRPS(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 

@@ -369,8 +369,8 @@ begin
   begin
     LerIdentificacaoNfse(ANode);
 
-    DataEmissao := LerDatas(ProcessarConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr));
-    Competencia := LerDatas(ProcessarConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcStr));
+    DataEmissao := ProcessarConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+    Competencia := ProcessarConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDat);
 //           <xs:element name="DataLancamento" type="xs:string"></xs:element>
     RegimeEspecialTributacao := StrToRegime(Ok, ProcessarConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
 
@@ -390,7 +390,7 @@ begin
 
   with NFSe do
   begin
-    DataEmissao := LerDatas(ProcessarConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+    DataEmissao := ProcessarConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDat);
 
     LerIdentificacaoRps(ANode);
     LerServico(ANode);

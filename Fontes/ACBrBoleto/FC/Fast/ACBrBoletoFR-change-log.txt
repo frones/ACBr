@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2021
+--ACBrBoletoFR--
+[*] Remoção da classe TdmACBrBoletoFCFR e do .dfm associado, com criação dos
+    objetos via código.
+    https://www.projetoacbr.com.br/forum/topic/64675-fast-report-4-5-e-202106-property-does-not-exists-no-dfm/
+  Por: BigWings
+
 25/05/2021
 --ACBrBoletoFR--
 [+] Adicionado o campo CIP para impressão no Boleto

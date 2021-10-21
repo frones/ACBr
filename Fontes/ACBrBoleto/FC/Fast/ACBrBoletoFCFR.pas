@@ -43,8 +43,6 @@ uses
 type
   EACBrBoletoFCFR = class(Exception);
 
-  TdmACBrBoletoFCFR = class;
-
   { TACBrBoletoFCFR }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -52,19 +50,33 @@ type
   TACBrBoletoFCFR = class(TACBrBoletoFCClass)
   private
     MensagemPadrao: TStringList;
-    { Private declarations }
     fFastReportFile: String;
     FImpressora: String;
     fIndice: Integer;
-    FdmBoleto: TdmACBrBoletoFCFR;
     FModoThread: Boolean;
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
     FCustomPreview: TfrxCustomPreview;
+    FfrxReport: TfrxReport;
+    FfrxHTMLExport: TfrxHTMLExport;
+    FfrxJPEGExport: TfrxJPEGExport;
+    FfrxPDFExport: TfrxPDFExport;
+    FfrxBarCodeObject: TfrxBarCodeObject;
+    FcdsBanco: TClientDataSet;
+    FfrxBanco: TfrxDBDataset;
+    FcdsCedente: TClientDataSet;
+    FfrxCedente: TfrxDBDataset;
+    FcdsTitulo: TClientDataSet;
+    FfrxTitulo: TfrxDBDataset;
     function PrepareBoletos: Boolean;
     function PreparaRelatorio: Boolean;
     function GetACBrTitulo: TACBrTitulo;
     procedure SetCustomPreview(const Value: TfrxCustomPreview);
+    procedure ImprimeLogoMarca(const sfrxPicture: string);
+    procedure SetDataSetsToFrxReport;
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+    procedure frxReportProgressStart(Sender: TfrxReport;
+      ProgressType: TfrxProgressType; Progress: Integer);
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -77,52 +89,22 @@ type
     property FastReportFile: String read fFastReportFile write fFastReportFile;
     property Impressora: String read FImpressora write FImpressora;
     property ModoThread: Boolean read FModoThread write FModoThread;
-    property dmBoleto: TdmACBrBoletoFCFR read FdmBoleto write FdmBoleto;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
     property CustomPreview: TfrxCustomPreview read FCustomPreview write SetCustomPreview;
   end;
 
-  { TdmACbrBoletoFCFR }
-  TdmACBrBoletoFCFR = class(TDataModule)
-    frxPDFExport: TfrxPDFExport;
-    cdsTitulo: TClientDataSet;
-    frxTitulo: TfrxDBDataset;
-    frxBarCodeObject: TfrxBarCodeObject;
-    frxReport: TfrxReport;
-    frxHTMLExport: TfrxHTMLExport;
-    cdsCedente: TClientDataSet;
-    frxCedente: TfrxDBDataset;
-    cdsBanco: TClientDataSet;
-    frxBanco: TfrxDBDataset;
-    frxJPEGExport: TfrxJPEGExport;
-    procedure DataModuleCreate(Sender: TObject);
-    procedure frxReportProgressStart(Sender: TfrxReport;
-      ProgressType: TfrxProgressType; Progress: Integer);
-    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
-  private
-    { Private declarations }
-    FACBrBoletoReport: TACBrBoletoFCFR;
-    procedure SetDataSetsToFrxReport;
-    procedure ImprimeLogoMarca(const sfrxPicture: string);
-  public
-    { Public declarations }
-    constructor Create( AOwner : TComponent); override;
-  end;
-
 implementation
-
-{$R *.dfm}
 
 uses ACBrUtil, ACBrBancoBanestes, ACBrDFeReport, ACBrDelphiZXingQRCode;
 
 { TdmACBrBoletoFCFR }
 
-procedure TdmACBrBoletoFCFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+procedure TACBrBoletoFCFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   emvQrCode: String;
 begin
-  emvQrCode := Trim(FACBrBoletoReport.Titulo.QrCode.emv);
+  emvQrCode := Trim(Titulo.QrCode.emv);
   if Assigned(Sender) and (Trim(emvQrCode) = '') and (Sender.Name = 'ImgEmvQrcode') then
     TfrxPictureView(Sender).Visible := False
   else
@@ -130,7 +112,7 @@ begin
      PintarQRCode(emvQrCode, TfrxPictureView(Sender).Picture.Bitmap, qrAuto);
 end;
 
-procedure TdmACBrBoletoFCFR.frxReportProgressStart(Sender: TfrxReport;
+procedure TACBrBoletoFCFR.frxReportProgressStart(Sender: TfrxReport;
   ProgressType: TfrxProgressType; Progress: Integer);
 begin
   ImprimeLogoMarca('Logo_1');
@@ -143,137 +125,24 @@ begin
   Result := fACBrBoleto.ListadeBoletos[fIndice];
 end;
 
-procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(const sfrxPicture: string);
+procedure TACBrBoletoFCFR.ImprimeLogoMarca(const sfrxPicture: string);
 var
   frxPict: TfrxPictureView; // Componente para inserção de imagem na impressão.
 begin
-  frxPict := TfrxPictureView(Self.frxReport.FindObject(sfrxPicture));
+  frxPict := TfrxPictureView(FfrxReport.FindObject(sfrxPicture));
   if Assigned(frxPict) then
-  Begin
-    FACBrBoletoReport.CarregaLogo(frxPict.Picture, FACBrBoletoReport.ACBrBoleto.Banco.Numero);
-  End;
+    CarregaLogo(frxPict.Picture, ACBrBoleto.Banco.Numero);
 end;
 
-procedure TdmACBrBoletoFCFR.SetDataSetsToFrxReport;
+procedure TACBrBoletoFCFR.SetDataSetsToFrxReport;
 begin
-  frxReport.EnabledDataSets.Clear;
-  frxReport.EnabledDataSets.Add(frxBanco);
-  frxReport.EnabledDataSets.Add(frxTitulo);
-  frxReport.EnabledDataSets.Add(frxCedente);
-end;
-
-constructor TdmACBrBoletoFCFR.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner);
-
-  FACBrBoletoReport := TACBrBoletoFCFR(AOwner);
-end;
-
-procedure TdmACBrBoletoFCFR.DataModuleCreate(Sender: TObject);
-begin
-  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
-  frxReport.EngineOptions.UseGlobalDataSetList := False;
-
-  // Banco
-  with cdsBanco do
-  begin
-    Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('Numero', ftString, 20);
-    FieldDefs.Add('Digito', ftString, 1);
-    FieldDefs.Add('Nome', ftString, 100);
-    FieldDefs.Add('DirLogo', ftString, 254);
-    FieldDefs.Add('OrientacoesBanco', ftString, 254);
-    FieldDefs.Add('CIP', ftString, 3);
-    CreateDataSet;
-  end;
-  // Cedente
-  with cdsCedente do
-  begin
-    Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('Nome', ftString, 100);
-    FieldDefs.Add('CodigoCedente', ftString, 20);
-    FieldDefs.Add('CodigoTransmissao', ftString, 20);
-    FieldDefs.Add('Agencia', ftString, 5);
-    FieldDefs.Add('AgenciaDigito', ftString, 2);
-    FieldDefs.Add('Conta', ftString, 20);
-    FieldDefs.Add('ContaDigito', ftString, 2);
-    FieldDefs.Add('Modalidade', ftString, 20);
-    FieldDefs.Add('Convenio', ftString, 20);
-    FieldDefs.Add('ResponEmissao', ftInteger);
-    FieldDefs.Add('CNPJCPF', ftString, 18);
-    FieldDefs.Add('TipoInscricao', ftInteger);
-    FieldDefs.Add('Logradouro', ftString, 100);
-    FieldDefs.Add('NumeroRes', ftString, 10);
-    FieldDefs.Add('Complemento', ftString, 100);
-    FieldDefs.Add('Bairro', ftString, 100);
-    FieldDefs.Add('Cidade', ftString, 100);
-    FieldDefs.Add('UF', ftString, 2);
-    FieldDefs.Add('CEP', ftString, 9);
-    FieldDefs.Add('Telefone', ftString, 15);
-    CreateDataSet;
-  end;
-  // Titulo
-  with cdsTitulo do
-  begin
-    Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('NossoNum', ftString, 100);
-    FieldDefs.Add('CodCedente', ftString, 100);
-    FieldDefs.Add('CodBarras', ftString, 100);
-    FieldDefs.Add('LinhaDigitavel', ftString, 100);
-    FieldDefs.Add('TipoDoc', ftString, 10);
-    FieldDefs.Add('Vencimento', ftDateTime);
-    FieldDefs.Add('DataDocumento', ftDateTime);
-    FieldDefs.Add('NumeroDocumento', ftString, 20);
-    FieldDefs.Add('TotalParcelas', ftInteger);
-    FieldDefs.Add('Parcela', ftInteger);
-    FieldDefs.Add('EspecieDoc', ftString, 10);
-    FieldDefs.Add('EspecieMod', ftString, 10);
-    FieldDefs.Add('UsoBanco', ftString, 4);
-    FieldDefs.Add('Aceite', ftInteger);
-    FieldDefs.Add('DataProcessamento', ftDateTime);
-    FieldDefs.Add('NossoNumero', ftString, 20);
-    FieldDefs.Add('Carteira', ftString, 20);
-    FieldDefs.Add('ValorDocumento', ftBCD, 18);
-    FieldDefs.Add('LocalPagamento', ftString, 100);
-    FieldDefs.Add('ValorMoraJuros', ftBCD, 18);
-    FieldDefs.Add('ValorDesconto', ftBCD, 18);
-    FieldDefs.Add('ValorAbatimento', ftBCD, 18);
-    FieldDefs.Add('DataMoraJuros', ftDateTime);
-    FieldDefs.Add('DataDesconto', ftDateTime);
-    FieldDefs.Add('DataAbatimento', ftDateTime);
-    FieldDefs.Add('DataProtesto', ftDateTime);
-    FieldDefs.Add('PercentualMulta', ftFloat);
-    FieldDefs.Add('Mensagem', ftString, 600);
-    FieldDefs.Add('OcorrenciaOriginal', ftInteger);
-    FieldDefs.Add('Instrucao1', ftString, 300);
-    FieldDefs.Add('Instrucao2', ftString, 300);
-    FieldDefs.Add('TextoLivre', ftMemo, 2000);
-    FieldDefs.Add('Asbace', ftString, 40);
-    FieldDefs.Add('EMV', ftString, 500);
-    // Sacado
-    FieldDefs.Add('Sacado_NomeSacado', ftString, 100);
-    FieldDefs.Add('Sacado_CNPJCPF', ftString, 18);
-    FieldDefs.Add('Sacado_Logradouro', ftString, 100);
-    FieldDefs.Add('Sacado_Complemento', ftString, 100);
-    FieldDefs.Add('Sacado_Numero', ftString, 10);
-    FieldDefs.Add('Sacado_Bairro', ftString, 100);
-    FieldDefs.Add('Sacado_Cidade', ftString, 100);
-    FieldDefs.Add('Sacado_UF', ftString, 2);
-    FieldDefs.Add('Sacado_CEP', ftString, 9);
-    FieldDefs.Add('Sacado_Avalista', ftString, 100);
-    FieldDefs.Add('Sacado_Avalista_CNPJCPF', ftString, 18);
-    FieldDefs.Add('Sacado_Fone', ftString, 100);
-    CreateDataSet;
-  end;
+  FfrxReport.EnabledDataSets.Clear;
+  FfrxReport.EnabledDataSets.Add(FfrxBanco);
+  FfrxReport.EnabledDataSets.Add(FfrxTitulo);
+  FfrxReport.EnabledDataSets.Add(FfrxCedente);
 end;
 
 { TACBrBoletoFCFR }
-
-
-
 constructor TACBrBoletoFCFR.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -283,15 +152,147 @@ begin
   FModoThread := False;
   FIncorporarBackgroundPdf := False;
   FIncorporarFontesPdf := False;
-  FdmBoleto := TdmACBrBoletoFCFR.Create(Self);
   MensagemPadrao  := TStringList.Create;
   FCustomPreview := Nil;
+
+  FfrxReport := TfrxReport.Create(Self);
+  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, {$IFNDEF FMX} pbFind, {$ENDIF}
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
+  FfrxReport.EngineOptions.UseGlobalDataSetList := False;
+  FfrxReport.StoreInDFM := False;
+  FfrxReport.OnBeforePrint := frxReportBeforePrint;
+  FfrxReport.OnProgressStart := frxReportProgressStart;
+
+  FfrxHTMLExport := TfrxHTMLExport.Create(Self);
+  FfrxHTMLExport.ShowProgress := False;
+
+  FfrxJPEGExport := TfrxJPEGExport.Create(Self);
+  FfrxJPEGExport.ShowProgress := False;
+
+  FfrxPDFExport := TfrxPDFExport.Create(Self);
+  FfrxPDFExport.ShowProgress := False;
+
+  FfrxBarCodeObject := TfrxBarCodeObject.Create(Self);
+
+  // Banco
+  FcdsBanco := TClientDataSet.Create(Self);
+  FcdsBanco.FieldDefs.Clear;
+  FcdsBanco.FieldDefs.Add('Numero', ftString, 20);
+  FcdsBanco.FieldDefs.Add('Digito', ftString, 1);
+  FcdsBanco.FieldDefs.Add('Nome', ftString, 100);
+  FcdsBanco.FieldDefs.Add('DirLogo', ftString, 254);
+  FcdsBanco.FieldDefs.Add('OrientacoesBanco', ftString, 254);
+  FcdsBanco.FieldDefs.Add('CIP', ftString, 3);
+  FcdsBanco.CreateDataSet;
+
+  FfrxBanco := TfrxDBDataset.Create(Self);
+  FfrxBanco.DataSet := FcdsBanco;
+  FfrxBanco.OpenDataSource := False;
+  FfrxBanco.UserName := 'Banco';
+
+  // Cedente
+  FcdsCedente := TClientDataSet.Create(Self);
+  FcdsCedente.FieldDefs.Clear;
+  FcdsCedente.FieldDefs.Add('Nome', ftString, 100);
+  FcdsCedente.FieldDefs.Add('CodigoCedente', ftString, 20);
+  FcdsCedente.FieldDefs.Add('CodigoTransmissao', ftString, 20);
+  FcdsCedente.FieldDefs.Add('Agencia', ftString, 5);
+  FcdsCedente.FieldDefs.Add('AgenciaDigito', ftString, 2);
+  FcdsCedente.FieldDefs.Add('Conta', ftString, 20);
+  FcdsCedente.FieldDefs.Add('ContaDigito', ftString, 2);
+  FcdsCedente.FieldDefs.Add('Modalidade', ftString, 20);
+  FcdsCedente.FieldDefs.Add('Convenio', ftString, 20);
+  FcdsCedente.FieldDefs.Add('ResponEmissao', ftInteger);
+  FcdsCedente.FieldDefs.Add('CNPJCPF', ftString, 18);
+  FcdsCedente.FieldDefs.Add('TipoInscricao', ftInteger);
+  FcdsCedente.FieldDefs.Add('Logradouro', ftString, 100);
+  FcdsCedente.FieldDefs.Add('NumeroRes', ftString, 10);
+  FcdsCedente.FieldDefs.Add('Complemento', ftString, 100);
+  FcdsCedente.FieldDefs.Add('Bairro', ftString, 100);
+  FcdsCedente.FieldDefs.Add('Cidade', ftString, 100);
+  FcdsCedente.FieldDefs.Add('UF', ftString, 2);
+  FcdsCedente.FieldDefs.Add('CEP', ftString, 9);
+  FcdsCedente.FieldDefs.Add('Telefone', ftString, 15);
+  FcdsCedente.CreateDataSet;
+
+  FfrxCedente := TfrxDBDataset.Create(Self);
+  FfrxCedente.DataSet := FcdsCedente;
+  FfrxCedente.OpenDataSource := False;
+  FfrxCedente.UserName := 'Cedente';
+
+  // Titulo
+  FcdsTitulo := TClientDataSet.Create(Self);
+  FcdsTitulo.FieldDefs.Clear;
+  FcdsTitulo.FieldDefs.Add('NossoNum', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('CodCedente', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('CodBarras', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('LinhaDigitavel', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('TipoDoc', ftString, 10);
+  FcdsTitulo.FieldDefs.Add('Vencimento', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('DataDocumento', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('NumeroDocumento', ftString, 20);
+  FcdsTitulo.FieldDefs.Add('TotalParcelas', ftInteger);
+  FcdsTitulo.FieldDefs.Add('Parcela', ftInteger);
+  FcdsTitulo.FieldDefs.Add('EspecieDoc', ftString, 10);
+  FcdsTitulo.FieldDefs.Add('EspecieMod', ftString, 10);
+  FcdsTitulo.FieldDefs.Add('UsoBanco', ftString, 4);
+  FcdsTitulo.FieldDefs.Add('Aceite', ftInteger);
+  FcdsTitulo.FieldDefs.Add('DataProcessamento', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('NossoNumero', ftString, 20);
+  FcdsTitulo.FieldDefs.Add('Carteira', ftString, 20);
+  FcdsTitulo.FieldDefs.Add('ValorDocumento', ftBCD, 18);
+  FcdsTitulo.FieldDefs.Add('LocalPagamento', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('ValorMoraJuros', ftBCD, 18);
+  FcdsTitulo.FieldDefs.Add('ValorDesconto', ftBCD, 18);
+  FcdsTitulo.FieldDefs.Add('ValorAbatimento', ftBCD, 18);
+  FcdsTitulo.FieldDefs.Add('DataMoraJuros', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('DataDesconto', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('DataAbatimento', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('DataProtesto', ftDateTime);
+  FcdsTitulo.FieldDefs.Add('PercentualMulta', ftFloat);
+  FcdsTitulo.FieldDefs.Add('Mensagem', ftString, 600);
+  FcdsTitulo.FieldDefs.Add('OcorrenciaOriginal', ftInteger);
+  FcdsTitulo.FieldDefs.Add('Instrucao1', ftString, 300);
+  FcdsTitulo.FieldDefs.Add('Instrucao2', ftString, 300);
+  FcdsTitulo.FieldDefs.Add('TextoLivre', ftMemo, 2000);
+  FcdsTitulo.FieldDefs.Add('Asbace', ftString, 40);
+  FcdsTitulo.FieldDefs.Add('EMV', ftString, 500);
+    // Sacado
+  FcdsTitulo.FieldDefs.Add('Sacado_NomeSacado', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_CNPJCPF', ftString, 18);
+  FcdsTitulo.FieldDefs.Add('Sacado_Logradouro', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Complemento', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Numero', ftString, 10);
+  FcdsTitulo.FieldDefs.Add('Sacado_Bairro', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Cidade', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_UF', ftString, 2);
+  FcdsTitulo.FieldDefs.Add('Sacado_CEP', ftString, 9);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista', ftString, 100);
+  FcdsTitulo.FieldDefs.Add('Sacado_Avalista_CNPJCPF', ftString, 18);
+  FcdsTitulo.FieldDefs.Add('Sacado_Fone', ftString, 100);
+  FcdsTitulo.CreateDataSet;
+
+  FfrxTitulo := TfrxDBDataset.Create(Self);
+  FfrxTitulo.DataSet := FcdsTitulo;
+  FfrxTitulo.OpenDataSource := False;
+  FfrxTitulo.UserName := 'Titulo';
+
 end;
 
 destructor TACBrBoletoFCFR.Destroy;
 begin
   MensagemPadrao.Free;
-  FdmBoleto.Free;
+  FfrxReport.Free;
+  FfrxPDFExport.Free;
+  FfrxHTMLExport.Free;
+  FfrxJPEGExport.Free;
+  FfrxBarCodeObject.Free;
+  FcdsBanco.Free;
+  FfrxBanco.Free;
+  FcdsCedente.Free;
+  FfrxCedente.Free;
+  FcdsTitulo.Free;
+  FfrxTitulo.Free;
   inherited;
 end;
 
@@ -299,17 +300,14 @@ function TACBrBoletoFCFR.PreparedReport: TfrxReport;
 begin
   ACBrBoleto.ChecarDadosObrigatorios;
   inherited Imprimir; // Verifica se a lista de boletos está vazia
-    with FdmBoleto do
-    begin
-      cdsBanco.EmptyDataSet;
-      cdsCedente.EmptyDataSet;
-      cdsTitulo.EmptyDataSet;
+  FcdsBanco.EmptyDataSet;
+  FcdsCedente.EmptyDataSet;
+  FcdsTitulo.EmptyDataSet;
 
-      if PreparaRelatorio then
-        Result := frxReport
-      else
-        Result := nil;
-    end;
+  if PreparaRelatorio then
+    Result := FfrxReport
+  else
+    Result := nil;
 end;
 
 procedure TACBrBoletoFCFR.SetCustomPreview(const Value: TfrxCustomPreview);
@@ -320,100 +318,97 @@ end;
 procedure TACBrBoletoFCFR.Imprimir;
 begin
   inherited Imprimir; // Verifica se a lista de boletos está vazia
-  with FdmBoleto do
-	begin
-      cdsBanco.EmptyDataSet;
-      cdsCedente.EmptyDataSet;
-      cdsTitulo.EmptyDataSet;
+  FcdsBanco.EmptyDataSet;
+  FcdsCedente.EmptyDataSet;
+  FcdsTitulo.EmptyDataSet;
 
-      if PreparaRelatorio then
-      begin
-        frxReport.Preview := CustomPreview;
-        frxReport.PrintOptions.ShowDialog := (MostrarSetup) and (not FModoThread);
-        frxReport.PrintOptions.Copies := NumCopias;
-        if TituloPreview <> '' then
-          frxReport.ReportOptions.Name := TituloPreview;
+  if PreparaRelatorio then
+  begin
+    FfrxReport.Preview := CustomPreview;
+    FfrxReport.PrintOptions.ShowDialog := (MostrarSetup) and (not FModoThread);
+    FfrxReport.PrintOptions.Copies := NumCopias;
+    if TituloPreview <> '' then
+      FfrxReport.ReportOptions.Name := TituloPreview;
 
-        if Length(Impressora) > 0 then
-          frxReport.PrintOptions.Printer := Impressora;
+    if Length(Impressora) > 0 then
+      FfrxReport.PrintOptions.Printer := Impressora;
 
-        case Filtro of
-          fiNenhum:
-            begin
-              if (MostrarPreview) and (not FModoThread) then
-              begin
-                frxPDFExport.Keywords      := frxPDFExport.Title;
-                frxPDFExport.Background    := IncorporarBackgroundPdf; // False diminui 70% do tamanho do pdf
-                frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
-                frxPDFExport.Author        := SoftwareHouse;
-                frxPDFExport.Creator       := SoftwareHouse;
-                frxPDFExport.Producer      := SoftwareHouse;
-                frxPDFExport.Title         := 'Boleto';
-                frxPDFExport.Subject       := frxPDFExport.Title;
-                frxPDFExport.Keywords      := frxPDFExport.Title;
-                frxPDFExport.Background    := IncorporarBackgroundPdf; // False diminui 70% do tamanho do pdf
-                frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    case Filtro of
+      fiNenhum:
+        begin
+          if (MostrarPreview) and (not FModoThread) then
+          begin
+            FfrxPDFExport.Keywords      := FfrxPDFExport.Title;
+            FfrxPDFExport.Background    := IncorporarBackgroundPdf; // False diminui 70% do tamanho do pdf
+            FfrxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+            FfrxPDFExport.Author        := SoftwareHouse;
+            FfrxPDFExport.Creator       := SoftwareHouse;
+            FfrxPDFExport.Producer      := SoftwareHouse;
+            FfrxPDFExport.Title         := 'Boleto';
+            FfrxPDFExport.Subject       := FfrxPDFExport.Title;
+            FfrxPDFExport.Keywords      := FfrxPDFExport.Title;
+            FfrxPDFExport.Background    := IncorporarBackgroundPdf; // False diminui 70% do tamanho do pdf
+            FfrxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
 
-                frxReport.Engine.Report.FileName := NomeArquivo; // Nome do arquivo a ser exportado
-                frxReport.ShowReport(false)
-              end else
-                frxReport.Print;
-            end;
-          fiPDF:
-            begin
-              if FModoThread then
-              begin
-                frxPDFExport.ShowDialog := False;
-                frxPDFExport.ShowProgress := False;
-              end
-              else
-              begin
-                frxPDFExport.ShowDialog := MostrarSetup;
-                frxPDFExport.ShowProgress := MostrarProgresso;
-              end;
-              frxPDFExport.FileName := NomeArquivo;
-              frxPDFExport.Author := SoftwareHouse;
-              frxPDFExport.Creator := SoftwareHouse;
-              frxPDFExport.Producer := SoftwareHouse;
-              frxPDFExport.Title := 'Boleto';
-              frxPDFExport.Subject := frxPDFExport.Title;
-              frxPDFExport.Keywords := frxPDFExport.Title;
-              frxPDFExport.Background := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
-              frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
-              frxPDFExport.UserPassword := PdfSenha;
-              if NaoEstaVazio(frxPDFExport.UserPassword) then
-                frxPDFExport.ProtectionFlags := [ePrint];
-              frxReport.Export(FdmBoleto.frxPDFExport);
-              if frxPDFExport.FileName <> NomeArquivo then
-                NomeArquivo := frxPDFExport.FileName;
-            end;
-          fiHTML:
-            begin
-              frxHTMLExport.FileName := NomeArquivo;
-              frxHTMLExport.ShowDialog := MostrarSetup;
-              frxHTMLExport.ShowProgress := MostrarSetup;
-              frxReport.Export(FdmBoleto.frxHTMLExport);
-              if frxHTMLExport.FileName <> NomeArquivo then
-                NomeArquivo := frxHTMLExport.FileName;
-            end;
-          fiJPG:
-            begin
-              frxJPEGExport.FileName      := NomeArquivo;
-              frxJPEGExport.ShowDialog    := False;
-              frxJPEGExport.ShowProgress  := True;
-              frxJPEGExport.Monochrome    := True;
-              frxJPEGExport.SeparateFiles := True;
-              frxJPEGExport.JPEGQuality   := 200;
-              frxJPEGExport.Resolution    := 160;
-              frxReport.Export(FdmBoleto.frxJPEGExport);
-              if frxJPEGExport.FileName <> NomeArquivo then
-                NomeArquivo := frxJPEGExport.FileName;
-            end;
-        else
-          exit;
+            FfrxReport.Engine.Report.FileName := NomeArquivo; // Nome do arquivo a ser exportado
+            FfrxReport.ShowReport(false)
+          end else
+            FfrxReport.Print;
         end;
-      end;
+      fiPDF:
+        begin
+          if FModoThread then
+          begin
+            FfrxPDFExport.ShowDialog := False;
+            FfrxPDFExport.ShowProgress := False;
+          end
+          else
+          begin
+            FfrxPDFExport.ShowDialog := MostrarSetup;
+            FfrxPDFExport.ShowProgress := MostrarProgresso;
+          end;
+          FfrxPDFExport.FileName := NomeArquivo;
+          FfrxPDFExport.Author := SoftwareHouse;
+          FfrxPDFExport.Creator := SoftwareHouse;
+          FfrxPDFExport.Producer := SoftwareHouse;
+          FfrxPDFExport.Title := 'Boleto';
+          FfrxPDFExport.Subject := FfrxPDFExport.Title;
+          FfrxPDFExport.Keywords := FfrxPDFExport.Title;
+          FfrxPDFExport.Background := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
+          FfrxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+          FfrxPDFExport.UserPassword := PdfSenha;
+          if NaoEstaVazio(FfrxPDFExport.UserPassword) then
+            FfrxPDFExport.ProtectionFlags := [ePrint];
+          FfrxReport.Export(FfrxPDFExport);
+          if FfrxPDFExport.FileName <> NomeArquivo then
+            NomeArquivo := FfrxPDFExport.FileName;
+        end;
+      fiHTML:
+        begin
+          FfrxHTMLExport.FileName := NomeArquivo;
+          FfrxHTMLExport.ShowDialog := MostrarSetup;
+          FfrxHTMLExport.ShowProgress := MostrarSetup;
+          FfrxReport.Export(FfrxHTMLExport);
+          if FfrxHTMLExport.FileName <> NomeArquivo then
+            NomeArquivo := FfrxHTMLExport.FileName;
+        end;
+      fiJPG:
+        begin
+          FfrxJPEGExport.FileName      := NomeArquivo;
+          FfrxJPEGExport.ShowDialog    := False;
+          FfrxJPEGExport.ShowProgress  := True;
+          FfrxJPEGExport.Monochrome    := True;
+          FfrxJPEGExport.SeparateFiles := True;
+          FfrxJPEGExport.JPEGQuality   := 200;
+          FfrxJPEGExport.Resolution    := 160;
+          FfrxReport.Export(FfrxJPEGExport);
+          if FfrxJPEGExport.FileName <> NomeArquivo then
+            NomeArquivo := FfrxJPEGExport.FileName;
+        end;
+    else
+      exit;
     end;
+  end;
 end;
 
 function TACBrBoletoFCFR.CarregaFastReportFile: Boolean;
@@ -426,14 +421,14 @@ begin
   	if Pos('.FR3',UpperCase(fFastReportFile)) = 0 then
   	begin
 			BoletoStreamFR3:=TStringStream.Create(fFastReportFile);
-      FdmBoleto.frxReport.FileName := '';
-      FdmBoleto.frxReport.LoadFromStream(BoletoStreamFR3);
+      FfrxReport.FileName := '';
+      FfrxReport.LoadFromStream(BoletoStreamFR3);
       BoletoStreamFR3.Free;
    	end
    	else
    	begin
       if FileExists(fFastReportFile) then
-         FdmBoleto.frxReport.LoadFromFile(fFastReportFile)
+         FfrxReport.LoadFromFile(fFastReportFile)
       else
         raise EACBrBoletoFCFR.CreateFmt('Caminho do arquivo de impressão do boleto "%s" inválido.', [fFastReportFile]);
       Result := True;
@@ -446,45 +441,42 @@ end;
 function TACBrBoletoFCFR.PreparaRelatorio: Boolean;
 begin
   Result := False;
-  with FdmBoleto do
+  SetDataSetsToFrxReport;
+  if FModoThread then
   begin
-    SetDataSetsToFrxReport;
-    if FModoThread then
+    //*****************
+    //* Em modo thread não pode ficar carregando o arquivo a cada execução
+    //* pois começa a gerar exception e memory leak
+    //* Caso tenha mudança de arquivo pode ser chamando o CarregaFastReportFile que está public
+    //*****************
+    if Trim(FfrxReport.FileName) = '' then
     begin
-      //*****************
-      //* Em modo thread não pode ficar carregando o arquivo a cada execução
-      //* pois começa a gerar exception e memory leak
-      //* Caso tenha mudança de arquivo pode ser chamando o CarregaFastReportFile que está public
-      //*****************
-      if Trim(frxReport.FileName) = '' then
-      begin
-        CarregaFastReportFile;
-
-        frxReport.PrintOptions.ShowDialog := False;
-        frxReport.ShowProgress := False;
-
-        frxReport.EngineOptions.SilentMode := True;
-        frxReport.EngineOptions.EnableThreadSafe := True;
-        frxReport.EngineOptions.DestroyForms := False;
-        frxReport.PreviewOptions.AllowEdit := False;
-      end;
-    end
-    else
-    begin
-      frxReport.PrintOptions.ShowDialog := MostrarSetup;
-      frxReport.ShowProgress := MostrarProgresso;
-
-      frxReport.EngineOptions.SilentMode := False;
-      frxReport.EngineOptions.EnableThreadSafe := False;
-      frxReport.EngineOptions.DestroyForms := True;
-      frxReport.PreviewOptions.AllowEdit := True;
       CarregaFastReportFile;
-    end;
 
-    if PrepareBoletos then
-    begin
-      Result := FdmBoleto.frxReport.PrepareReport;
+      FfrxReport.PrintOptions.ShowDialog := False;
+      FfrxReport.ShowProgress := False;
+
+      FfrxReport.EngineOptions.SilentMode := True;
+      FfrxReport.EngineOptions.EnableThreadSafe := True;
+      FfrxReport.EngineOptions.DestroyForms := False;
+      FfrxReport.PreviewOptions.AllowEdit := False;
     end;
+  end
+  else
+  begin
+    FfrxReport.PrintOptions.ShowDialog := MostrarSetup;
+    FfrxReport.ShowProgress := MostrarProgresso;
+
+    FfrxReport.EngineOptions.SilentMode := False;
+    FfrxReport.EngineOptions.EnableThreadSafe := False;
+    FfrxReport.EngineOptions.DestroyForms := True;
+    FfrxReport.PreviewOptions.AllowEdit := True;
+    CarregaFastReportFile;
+  end;
+
+  if PrepareBoletos then
+  begin
+    Result := FfrxReport.PrepareReport;
   end;
 end;
 
@@ -560,7 +552,7 @@ var
       MensagemPadrao.Text := ListadeBoletos[Indice].Mensagem.Text;
       AdicionarMensagensPadroes(ListadeBoletos[Indice], MensagemPadrao);
 
-      with FdmBoleto.cdsTitulo do
+      with FcdsTitulo do
       begin
         Append;
         Field_NossNum.AsString := Banco.MontarCampoNossoNumero(ListadeBoletos[Indice]);
@@ -620,7 +612,7 @@ begin
   with ACBrBoleto do
   begin
     // Banco
-    with FdmBoleto.cdsBanco do
+    with FcdsBanco do
     begin
       Append;
       FieldByName('Numero').AsString           := FormatFloat('000', Banco.Numero);
@@ -632,7 +624,7 @@ begin
       Post;
     end;
     // Cedente
-    with FdmBoleto.cdsCedente do
+    with FcdsCedente do
     begin
       Append;
       FieldByName('Nome').AsString := Cedente.Nome;
@@ -659,7 +651,7 @@ begin
     end;
     // Titulos
 
-    with FdmBoleto.cdsTitulo do
+    with FcdsTitulo do
     begin
       Field_NossNum := FieldByName('NossoNum');
       Field_CodCendente := FieldByName('CodCedente');

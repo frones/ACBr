@@ -138,7 +138,7 @@ begin
 
    if (Length(trim(NossoNumero)) > 10) and
       (((wTamConvenio = 6) and ((wCarteira = '16') or (wCarteira = '18'))) or
-      ((wTamConvenio = 7) and (wCarteira = '18'))) then
+      ((wTamConvenio = 7) and ((wCarteira = '17') or (wCarteira = '18')))) then
       Result:= 17
    else if (wTamConvenio <= 4) then
       Result := 7

@@ -59,42 +59,42 @@ const
  {$EndIf}
 
 {%region Constructor/Destructor}
-function CEP_Inicializar(var libHandle: longint; const eArqConfig, eChaveCrypt: PChar): longint;
+function CEP_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
-function CEP_Finalizar(const libHandle: longint): longint;
+function CEP_Finalizar(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function CEP_Nome(const libHandle: longint; const sNome: PChar; var esTamanho: longint): longint;
+function CEP_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
-function CEP_Versao(const libHandle: longint; const sVersao: PChar; var esTamanho: longint): longint;
+function CEP_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
-function CEP_UltimoRetorno(const libHandle: longint; const sMensagem: PChar; var esTamanho: longint): longint;
+function CEP_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function CEP_ConfigLer(const libHandle: longint; const eArqConfig: PChar): longint;
+function CEP_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
-function CEP_ConfigGravar(const libHandle: longint; const eArqConfig: PChar): longint;
+function CEP_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
-function CEP_ConfigLerValor(const libHandle: longint; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function CEP_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 
-function CEP_ConfigGravarValor(const libHandle: longint; const eSessao, eChave, eValor: PChar): longint;
+function CEP_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}
 
 {%region CEPança}
-function CEP_BuscarPorCEP(const libHandle: longint; eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function CEP_BuscarPorCEP(const libHandle: TLibHandle; eCEP: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
-function CEP_BuscarPorLogradouro(const libHandle: longint; eCidade, eTipo_Logradouro, eLogradouro, eUF,
+function CEP_BuscarPorLogradouro(const libHandle: TLibHandle; eCidade, eTipo_Logradouro, eLogradouro, eUF,
   eBairro: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrCEPLIBName;
 {%endregion}

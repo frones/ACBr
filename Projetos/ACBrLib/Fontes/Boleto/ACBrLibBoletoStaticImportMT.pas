@@ -62,107 +62,107 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function Boleto_Inicializar(var libHandle: longint; const eArqConfig, eChaveCrypt: PChar): longint;
+function Boleto_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_Finalizar(const libHandle: longint): longint;
+function Boleto_Finalizar(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function Boleto_Nome(const libHandle: longint; const sNome: PChar; var esTamanho: longint): longint;
+function Boleto_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_Versao(const libHandle: longint; const sVersao: PChar; var esTamanho: longint): longint;
+function Boleto_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_UltimoRetorno(const libHandle: longint; const sMensagem: PChar; var esTamanho: longint): longint;
+function Boleto_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function Boleto_ConfigLer(const libHandle: longint; const eArqConfig: PChar): longint;
+function Boleto_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ConfigGravar(const libHandle: longint; const eArqConfig: PChar): longint;
+function Boleto_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ConfigLerValor(const libHandle: longint; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function Boleto_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ConfigGravarValor(const libHandle: longint; const eSessao, eChave, eValor: PChar): longint;
+function Boleto_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 {%endregion}
 
 {%region Boleto}
-function Boleto_ConfigurarDados(const libHandle: longint; eArquivoIni: PChar): longint;
+function Boleto_ConfigurarDados(const libHandle: TLibHandle; eArquivoIni: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_IncluirTitulos(const libHandle: longint; eArquivoIni, eTpSaida: PChar): longint;
+function Boleto_IncluirTitulos(const libHandle: TLibHandle; eArquivoIni, eTpSaida: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_LimparLista(const libHandle: longint): longint;
+function Boleto_LimparLista(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_TotalTitulosLista(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_TotalTitulosLista(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_Imprimir(const libHandle: longint; NomeImpressora: PChar): longint;
+function Boleto_Imprimir(const libHandle: TLibHandle; NomeImpressora: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_GerarPDF(const libHandle: longint): longint;
+function Boleto_GerarPDF(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_GerarHTML(const libHandle: longint): longint;
+function Boleto_GerarHTML(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_GerarRemessa(const libHandle: longint; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
+function Boleto_GerarRemessa(const libHandle: TLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_LerRetorno(const libHandle: longint; eDir, eNomeArq: PChar): longint;
+function Boleto_LerRetorno(const libHandle: TLibHandle; eDir, eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ObterRetorno(const libHandle: longint; eDir, eNomeArq: PChar; const sResposta: PChar;
+function Boleto_ObterRetorno(const libHandle: TLibHandle; eDir, eNomeArq: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_EnviarEmail(const libHandle: longint; ePara, eAssunto, eMensagem, eCC: PChar): longint;
+function Boleto_EnviarEmail(const libHandle: TLibHandle; ePara, eAssunto, eMensagem, eCC: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_SetDiretorioArquivo(const libHandle: longint; eDir, eArq: PChar): longint;
+function Boleto_SetDiretorioArquivo(const libHandle: TLibHandle; eDir, eArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ListaBancos(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaBancos(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ListaCaractTitulo(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaCaractTitulo(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ListaOcorrencias(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaOcorrencias(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_ListaOcorrenciasEX(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_ListaOcorrenciasEX(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_TamNossoNumero(const libHandle: longint; eCarteira, enossoNumero, eConvenio: PChar): longint;
+function Boleto_TamNossoNumero(const libHandle: TLibHandle; eCarteira, enossoNumero, eConvenio: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_CodigosMoraAceitos(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_CodigosMoraAceitos(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_SelecionaBanco(const libHandle: longint; eCodBanco: PChar): longint;
+function Boleto_SelecionaBanco(const libHandle: TLibHandle; eCodBanco: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_MontarNossoNumero(const libHandle: longint; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_MontarNossoNumero(const libHandle: TLibHandle; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_RetornaLinhaDigitavel(const libHandle: longint; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_RetornaLinhaDigitavel(const libHandle: TLibHandle; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_RetornaCodigoBarras(const libHandle: longint; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_RetornaCodigoBarras(const libHandle: TLibHandle; eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_EnviarBoleto(const libHandle: longint; eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_EnviarBoleto(const libHandle: TLibHandle; eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 {%endregion}

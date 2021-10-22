@@ -115,7 +115,7 @@ end;
 procedure TTestACBrPosPrinterLib.ConfigurarImpressora(APorta: String;
   AModelo: String);
 var
-  Handle: longint;
+  Handle: TLibHandle;
   SaidaImpressao, Modelo, PagCod: String;
 begin
   if APorta <> '' then
@@ -141,15 +141,16 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioValido;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   fileName: String;
 begin
   fileName := ApplicationPath+'ACBrLib.ini';
+
   if FileExists(fileName) then
     DeleteFile(fileName);
 
   try
-    AssertEquals(ErrOK, POS_Inicializar(Handle, PChar(fileName),''));
+    AssertEquals(ErrOK, POS_Inicializar(Handle, PChar(fileName), ''));
     AssertTrue(FileExists(fileName));
     AssertEquals(ErrOK, POS_Finalizar(Handle));
   finally
@@ -159,11 +160,11 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
 
   try
-    POS_Finalizar(Handle);
+    //POS_Finalizar(Handle);
     AssertEquals(ErrDiretorioNaoExiste, POS_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
   except
     on E: Exception do
@@ -174,7 +175,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, POS_Finalizar(Handle));
@@ -182,7 +183,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Ja_Inicializado;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, POS_Finalizar(Handle));
@@ -190,7 +191,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Finalizar;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, POS_Finalizar(Handle));
@@ -198,7 +199,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Finalizar_Ja_Finalizado;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
 
   try
@@ -214,7 +215,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Nome_Obtendo_LenBuffer;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -227,7 +228,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -242,7 +243,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -258,7 +259,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -273,7 +274,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Versao;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -293,7 +294,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ConfigLerValor;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -309,7 +310,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ConfigGravarValor;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -328,14 +329,13 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_InicializarConfigGravarValoresEFinalizar;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
 
   try
-     AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
      ConfigurarImpressora('USB','ELGIN i9(USB)');
+     AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
      AssertEquals(ErrExecutandoMetodo, POS_Ativar(Handle));
-
      AssertEquals(ErrOK, POS_Finalizar(Handle));
   except
     on E: Exception do
@@ -346,14 +346,14 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_InicializarAtivarEFinalizar;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
 
   try
-     AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
      ConfigurarImpressora('USB','ELGIN i9(USB)');
+     AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
      AssertEquals(ErrOK, POS_Ativar(Handle));
 
      // Checando se é possivel pegar a descrição do erro //
@@ -372,10 +372,10 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ImpressaoDeTags;
 var
-  Handle: longint;
+  Handle: TLibHandle;
 begin
-  AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   ConfigurarImpressora('USB','ELGIN i9(USB)');
+  AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   AssertEquals(ErrOK, POS_Ativar(Handle));
   AssertEquals(ErrOK, POS_ImprimirTags(Handle));
   AssertEquals(ErrOK, POS_Desativar(Handle));
@@ -384,12 +384,12 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_RetornarEInterpretarTags;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
-  AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   ConfigurarImpressora('USB','ELGIN i9(USB)');
+  AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   AssertEquals(ErrOK, POS_Ativar(Handle));
   Bufflen := 0;   // chama com Zero, para achar o tamanho do Buffer
   AStr := '';
@@ -404,12 +404,12 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ImprimirAcentos;
 var
-  Handle: longint;
+  Handle: TLibHandle;
   AStr: String;
 begin
   AStr := 'Áá Éé Íí Óó Úú Çç Ââ Êê Îî Ôo Ûû';    // Essa UNIT está em UTF8
-  AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   ConfigurarImpressora('USB','ELGIN i9(USB)');
+  AssertEquals(ErrOk, POS_Inicializar(Handle, '',''));
   AssertEquals(ErrOK, POS_Ativar(Handle));
   AssertEquals(ErrOK, POS_Imprimir(Handle, PChar(Astr), True, True, True, 1) );
   AssertEquals(ErrOK, POS_PularLinhas(Handle, 7) );

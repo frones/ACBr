@@ -61,81 +61,81 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function POS_Inicializar(var libHandle: longint; const eArqConfig, eChaveCrypt: PChar): longint;
+function POS_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_Finalizar(const libHandle: longint): longint;
+function POS_Finalizar(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function POS_Nome(const libHandle: longint; const sNome: PChar; var esTamanho: longint): longint;
+function POS_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_Versao(const libHandle: longint; const sVersao: PChar; var esTamanho: longint): longint;
+function POS_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_UltimoRetorno(const libHandle: longint; const sMensagem: PChar; var esTamanho: longint): longint;
+function POS_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function POS_ConfigLer(const libHandle: longint; const eArqConfig: PChar): longint;
+function POS_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_ConfigGravar(const libHandle: longint; const eArqConfig: PChar): longint;
+function POS_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_ConfigLerValor(const libHandle: longint; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function POS_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_ConfigGravarValor(const libHandle: longint; const eSessao, eChave, eValor: PChar): longint;
+function POS_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 
 {%region Ativar}
-function POS_Ativar(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_Ativar(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_Desativar(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_Desativar(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 
 {%region Impressão}
-function POS_Imprimir(const libHandle: longint; eString: PChar; PulaLinha, DecodificarTags, CodificarPagina: Boolean; Copias: Integer): longint;
+function POS_Imprimir(const libHandle: TLibHandle; eString: PChar; PulaLinha, DecodificarTags, CodificarPagina: Boolean; Copias: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_ImprimirLinha(const libHandle: longint; eString: PChar): longint;
+function POS_ImprimirLinha(const libHandle: TLibHandle; eString: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_ImprimirCmd(const libHandle: longint; eComando: PChar): longint;
+function POS_ImprimirCmd(const libHandle: TLibHandle; eComando: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_ImprimirTags(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_ImprimirTags(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 
 {%region Diversos}
-function POS_TxRx(const libHandle: longint; eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
+function POS_TxRx(const libHandle: TLibHandle; eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_Zerar(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_Zerar(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_InicializarPos(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_InicializarPos(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_Reset(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_Reset(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_PularLinhas(const libHandle: longint; NumLinhas: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_PularLinhas(const libHandle: TLibHandle; NumLinhas: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_CortarPapel(const libHandle: longint; Parcial: Boolean): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_CortarPapel(const libHandle: TLibHandle; Parcial: Boolean): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_AbrirGaveta(const libHandle: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
+function POS_AbrirGaveta(const libHandle: TLibHandle): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_LerInfoImpressora(const libHandle: longint; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerInfoImpressora(const libHandle: TLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_LerStatusImpressora(const libHandle: longint; Tentativas: Integer; var status: longint): longint;
+function POS_LerStatusImpressora(const libHandle: TLibHandle; Tentativas: Integer; var status: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 
-function POS_RetornarTags(const libHandle: longint; IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+function POS_RetornarTags(const libHandle: TLibHandle; IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrPosPrinterLIBName;
 {%endregion}
 

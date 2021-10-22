@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
-      <BuildNr Value="83"/>
+      <BuildNr Value="86"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
@@ -236,7 +236,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\Testes\PosPrinter\bin\acbrposprinter32"/>
+            <Filename Value="..\..\Testes\PosPrinter\bin\acbrposprinter64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -249,7 +249,8 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <TargetCPU Value="i386"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -262,7 +263,8 @@
           </Linking>
           <Other>
             <CustomOptions Value="-dDEBUG
--dNOGUI"/>
+-dNOGUI
+-dMT"/>
           </Other>
         </CompilerOptions>
       </Item7>
@@ -519,13 +521,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+        <HostApplicationFilename Value="\home\tux\Fontes\Pascal\Comp\ACBr\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+            <HostApplicationFilename Value="\home\tux\Fontes\Pascal\Comp\ACBr\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest"/>
           </local>
         </Mode0>
       </Modes>

@@ -62,66 +62,66 @@ const
 {$I ACBrLibErros.inc}
 
 {%region Constructor/Destructor}
-function MAIL_Inicializar(var libHandle: longint; const eArqConfig, eChaveCrypt: PChar): longint;
+function MAIL_Inicializar(var libHandle: TLibHandle; const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 
-function MAIL_Finalizar(const libHandle: longint): longint;
+function MAIL_Finalizar(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 
 {%region Versao/Retorno}
-function MAIL_Nome(const libHandle: longint; const sNome: PChar; var esTamanho: longint): longint;
+function MAIL_Nome(const libHandle: TLibHandle; const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 
-function MAIL_Versao(const libHandle: longint; const sVersao: PChar; var esTamanho: longint): longint;
+function MAIL_Versao(const libHandle: TLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 
-function MAIL_UltimoRetorno(const libHandle: longint; const sMensagem: PChar; var esTamanho: longint): longint;
+function MAIL_UltimoRetorno(const libHandle: TLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function MAIL_ConfigLer(const libHandle: longint; const eArqConfig: PChar): longint;
+function MAIL_ConfigLer(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 
-function MAIL_ConfigGravar(const libHandle: longint; const eArqConfig: PChar): longint;
+function MAIL_ConfigGravar(const libHandle: TLibHandle; const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 
-function MAIL_ConfigLerValor(const libHandle: longint; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function MAIL_ConfigLerValor(const libHandle: TLibHandle; const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 
-function MAIL_ConfigGravarValor(const libHandle: longint; const eSessao, eChave, eValor: PChar): longint;
+function MAIL_ConfigGravarValor(const libHandle: TLibHandle; const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 
 {%region Diversos}
-function MAIL_SetSubject(const libHandle: longint; const eSubject: PChar): longint;
+function MAIL_SetSubject(const libHandle: TLibHandle; const eSubject: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddAddress(const libHandle: longint; const eEmail, eName: PChar): longint;
+function MAIL_AddAddress(const libHandle: TLibHandle; const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddReplyTo(const libHandle: longint; const eEmail, eName: PChar): longint;
+function MAIL_AddReplyTo(const libHandle: TLibHandle; const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddCC(const libHandle: longint; const eEmail, eName: PChar): longint;
+function MAIL_AddCC(const libHandle: TLibHandle; const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddBCC(const libHandle: longint; const eEmail: PChar): longint;
+function MAIL_AddBCC(const libHandle: TLibHandle; const eEmail: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_ClearAttachment(const libHandle: longint): longint;
+function MAIL_ClearAttachment(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddAttachment(const libHandle: longint; const eFileName, eDescription: PChar;
+function MAIL_AddAttachment(const libHandle: TLibHandle; const eFileName, eDescription: PChar;
             const aDisposition: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddBody(const libHandle: longint; const eBody: PChar): longint;
+function MAIL_AddBody(const libHandle: TLibHandle; const eBody: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddAltBody(const libHandle: longint; const eAltBody: PChar): longint;
+function MAIL_AddAltBody(const libHandle: TLibHandle; const eAltBody: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_SaveToFile(const libHandle: longint; const eFileName: PChar): longint;
+function MAIL_SaveToFile(const libHandle: TLibHandle; const eFileName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 
 {%region Envio}
-function MAIL_Clear(const libHandle: longint): longint;
+function MAIL_Clear(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_Send(const libHandle: longint): longint;
+function MAIL_Send(const libHandle: TLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 

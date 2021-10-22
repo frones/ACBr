@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  ACBrNFSeXDANFSEClass, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
+  ACBrNFSeXDANFSeClass, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
   ACBrNFSeXClass, ACBrXmlBase, ACBrNFSeXWebservices,
   ACBrNFSeXInterface, ACBrNFSeXWebserviceBase,
   ACBrNFSeXWebservicesResponse, ACBrNFSeXProviderManager, ACBrNFSeXConversao;
@@ -57,7 +57,7 @@ type
   TACBrNFSeX = class(TACBrDFe)
   private
     FProvider: IACBrNFSeXProvider;
-    FDANFSE: TACBrNFSeXDANFSEClass;
+    FDANFSE: TACBrNFSeXDANFSeClass;
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
     fpCidadesJaCarregadas: Boolean;
@@ -65,7 +65,7 @@ type
 
     function GetConfiguracoes: TConfiguracoesNFSe;
     procedure SetConfiguracoes(AValue: TConfiguracoesNFSe);
-    procedure SetDANFSE(const Value: TACBrNFSeXDANFSEClass);
+    procedure SetDANFSE(const Value: TACBrNFSeXDANFSeClass);
 
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
@@ -181,7 +181,7 @@ type
 
   published
     property Configuracoes: TConfiguracoesNFSe read GetConfiguracoes write SetConfiguracoes;
-    property DANFSE: TACBrNFSeXDANFSEClass     read FDANFSE          write SetDANFSE;
+    property DANFSE: TACBrNFSeXDANFSeClass     read FDANFSE          write SetDANFSE;
 
   end;
 
@@ -237,7 +237,7 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FDANFSE <> nil) and
-     (AComponent is TACBrNFSeXDANFSEClass) then
+     (AComponent is TACBrNFSeXDANFSeClass) then
     FDANFSE := nil;
 end;
 
@@ -246,9 +246,9 @@ begin
   Result := TConfiguracoesNFSe.Create(Self);
 end;
 
-procedure TACBrNFSeX.SetDANFSE(const Value: TACBrNFSeXDANFSEClass);
+procedure TACBrNFSeX.SetDANFSE(const Value: TACBrNFSeXDANFSeClass);
 var
-  OldValue: TACBrNFSeXDANFSEClass;
+  OldValue: TACBrNFSeXDANFSeClass;
 begin
   if Value <> FDANFSE then
   begin

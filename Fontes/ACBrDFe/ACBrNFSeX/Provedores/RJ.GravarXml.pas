@@ -48,6 +48,7 @@ type
 
   TNFSeW_ISSRio = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -57,5 +58,14 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     ISSRio
 //==============================================================================
+
+{ TNFSeW_ISSRio }
+
+procedure TNFSeW_ISSRio.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsSemFormatacao;
+end;
 
 end.

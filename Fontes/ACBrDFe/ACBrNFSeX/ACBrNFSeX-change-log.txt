@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/10/2021
+-- RJ.GravarXml --
+[*] Incluido a configuração da formatação do ItemListaServicos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [*] Ajustes no nome da Unit para que não ocorra erro de compilação no Lazarus.
    Por: Italo Giurizzato Junior

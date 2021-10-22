@@ -37,9 +37,6 @@ unit Sintese.GravarXml;
 interface
 
 uses
-{$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
-{$ENDIF}
   SysUtils, Classes, StrUtils,
   ACBrNFSeXGravarXml_ABRASFv2;
 

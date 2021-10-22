@@ -37,9 +37,6 @@ unit ACBrNFSeXLerXml_ABRASFv1;
 interface
 
 uses
-{$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
-{$ENDIF}
   SysUtils, Classes, StrUtils,
   ACBrUtil, ACBrConsts,
   ACBrXmlBase, ACBrXmlDocument,

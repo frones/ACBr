@@ -37,9 +37,6 @@ unit Sudoeste.GravarXml;
 interface
 
 uses
-{$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
-{$ENDIF}
   SysUtils, Classes, StrUtils, ACBrUtil, ACBrXmlBase,
   ACBrNFSeXGravarXml_ABRASFv2;
 

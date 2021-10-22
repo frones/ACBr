@@ -37,9 +37,6 @@ unit ACBrNFSeXLerXml;
 interface
 
 uses
-{$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
-{$ENDIF}
   SysUtils, Classes,
   ACBrUtil, ACBrDFeException, ACBrXmlReader, ACBrNFSeXInterface,
   ACBrNFSeXParametros, ACBrNFSeXClass, ACBrNFSeXConversao;

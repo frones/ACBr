@@ -37,9 +37,6 @@ unit WebFisco.GravarXml;
 interface
 
 uses
-{$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
-{$ENDIF}
   SysUtils, Classes, StrUtils,
   ACBrXmlBase, ACBrXmlDocument,
   pcnAuxiliar,

@@ -959,48 +959,6 @@ type
     property NfseSubstituidora: string read FNfseSubstituidora write FNfseSubstituidora;
   end;
 
-// =============================================================================
-// Classes utilizadas pelos retornos
-(*
-  TChaveNFeRPS = class(TObject)
-  private
-    FInscricaoPrestador: string;
-    FNumero: string;
-    FCodigoVerificacao: string;
-    FLink: string;
-    FNumeroRPS: string;
-    FSerieRPS: string;
-  public
-    property InscricaoPrestador: string read FInscricaoPrestador write FInscricaoPrestador;
-    // NFS-e
-    property Numero: string            read FNumero            write FNumero;
-    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
-    property Link: string              read FLink              write FLink;
-    // RPS
-    property SerieRPS: string  read FSerieRPS  write FSerieRPS;
-    property NumeroRPS: string read FNumeroRPS write FNumeroRPS;
-  end;
-
-  TChaveNFeRPSCollectionItem = class(TObject)
-  private
-    FChaveNFeRPS: TChaveNFeRPS;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
-  end;
-
-  TChaveNFeRPSCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TChaveNFeRPSCollectionItem;
-    procedure SetItem(Index: Integer; Value: TChaveNFeRPSCollectionItem);
-  public
-    function Add: TChaveNFeRPSCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TChaveNFeRPSCollectionItem;
-    property Items[Index: Integer]: TChaveNFeRPSCollectionItem read GetItem write SetItem; default;
-  end;
-*)
 const
   CMUN_EXTERIOR = 9999999;
   XMUN_EXTERIOR = 'EXTERIOR';
@@ -1444,47 +1402,6 @@ begin
   Self.Add(Result);
 end;
 
-{ TChaveNFeRPSCollectionItem }
-(*
-constructor TChaveNFeRPSCollectionItem.Create;
-begin
-  inherited Create;
-
-  FChaveNFeRPS := TChaveNFeRPS.Create;
-end;
-
-destructor TChaveNFeRPSCollectionItem.Destroy;
-begin
-  FChaveNFeRPS.Free;
-
-  inherited;
-end;
-*)
-{ TChaveNFeRPSCollection }
-(*
-function TChaveNFeRPSCollection.Add: TChaveNFeRPSCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TChaveNFeRPSCollection.GetItem(
-  Index: Integer): TChaveNFeRPSCollectionItem;
-begin
-  Result := TChaveNFeRPSCollectionItem(inherited Items[Index]);
-end;
-
-function TChaveNFeRPSCollection.New: TChaveNFeRPSCollectionItem;
-begin
-  Result := TChaveNFeRPSCollectionItem.Create;
-  Self.Add(Result);
-end;
-
-procedure TChaveNFeRPSCollection.SetItem(Index: Integer;
-  Value: TChaveNFeRPSCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-*)
 { TQuartoCollection }
 
 function TQuartoCollection.GetItem(Index: Integer): TQuartoCollectionItem;

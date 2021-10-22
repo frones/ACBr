@@ -487,9 +487,9 @@ begin
   inherited;
 
   rlmDescricao.Lines.Clear;
-  rlmDescricao.Lines.Add(fpNFSe.Servico.Discriminacao);
-//  rlmDescricao.Lines.Add( StringReplace( fpNFSe.Servico.Discriminacao,
-//                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+//  rlmDescricao.Lines.Add(fpNFSe.Servico.Discriminacao);
+  rlmDescricao.Lines.Add( StringReplace( fpNFSe.Servico.Discriminacao,
+                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);

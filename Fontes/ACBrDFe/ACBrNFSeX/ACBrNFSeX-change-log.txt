@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/10/2021
+-- Diversos --
+[*] Remoção de Units declaradas não necessárias em diversas Units do componente.
+   Por: Italo Giurizzato Junior
 -- RJ.GravarXml --
 [*] Incluido a configuração da formatação do ItemListaServicos.
    Por: Italo Giurizzato Junior

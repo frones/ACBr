@@ -43,6 +43,7 @@ uses
 
 type
   { TPrestadorConfig }
+
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
@@ -79,6 +80,7 @@ type
   end;
 
   { TTomadorConfig }
+
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
@@ -103,6 +105,8 @@ type
     property Email: String read FEmail write FEmail;
 
   end;
+
+  { TACBrNFSeXDANFSeClass }
 
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
@@ -161,6 +165,7 @@ uses
   ACBrNFSeX, ACBrUtil;
 
 { TPrestadorConfig }
+
 constructor TPrestadorConfig.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -177,6 +182,7 @@ begin
 end;
 
 { TTomadorConfig }
+
 constructor TTomadorConfig.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);

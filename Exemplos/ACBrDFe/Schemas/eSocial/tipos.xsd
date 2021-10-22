@@ -308,8 +308,7 @@
             <xs:element name="qtdRubr" minOccurs="0" type="TS_qtdRubr">
                 <xs:annotation>
                     <xs:documentation>Informar a quantidade de referência para apuração (em horas, cotas, meses, etc.).</xs:documentation>
-                    <xs:documentation>Preenchimento obrigatório quando se tratar de rubrica relativa a faltas ou Descanso Semanal Remunerado - DSR sobre faltas (nesse caso, informar a quantidade de dias).</xs:documentation>
-                    <xs:documentation>Validação: Deve ser maior que 0 (zero). Informação obrigatória se {codRubr}(./codRubr) tiver {natRubr}(1010_infoRubrica_inclusao_dadosRubrica_natRubr) em S-1010 igual a [9207, 9211].</xs:documentation>
+                    <xs:documentation>Validação: Deve ser maior que 0 (zero).</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="fatorRubr" minOccurs="0" type="TS_fator">
@@ -489,7 +488,7 @@
                     <xs:restriction base="xs:string">
                         <xs:minLength value="1" />
                         <xs:maxLength value="80" />
-                        <xs:pattern value=".*[^\s].*" />
+                        <xs:pattern value="[^\s]{1}[\S\s]*" />
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -669,6 +668,22 @@
                     <xs:documentation>Preencher com o código da categoria do trabalhador.</xs:documentation>
                     <xs:documentation>Informar somente no caso de TSVE sem informação de matrícula no evento S-2300.</xs:documentation>
                     <xs:documentation>Validação: Informação obrigatória e exclusiva se não houver preenchimento de {matricula}(./matricula). Se informado, deve ser um código válido e existente na Tabela 01.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="T_ideVinculo_baixa">
+        <xs:annotation>
+            <xs:documentation>Informações de identificação do trabalhador e do vínculo.</xs:documentation>
+            <xs:documentation>CHAVE_GRUPO: {cpfTrab}, {matricula}</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="cpfTrab" type="TS_cpfTrab" />
+            <xs:element name="matricula" type="TS_codigo_esocial">
+                <xs:annotation>
+                    <xs:documentation>Matrícula atribuída ao trabalhador pela empresa ou, no caso de servidor público, a matrícula constante no Sistema de Administração de Recursos Humanos do órgão.</xs:documentation>
+                    <xs:documentation>Validação: Deve corresponder à matrícula informada pelo empregador no evento S-2190 ou S-2200 do respectivo vínculo trabalhista.</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
@@ -1469,7 +1484,7 @@
     <xs:simpleType name="TS_cnae">
         <xs:annotation>
             <xs:documentation>Preencher com o código CNAE conforme legislação vigente, referente à atividade econômica preponderante do estabelecimento.</xs:documentation>
-            <xs:documentation>Validação: Deve ser um número existente na tabela CNAE.</xs:documentation>
+            <xs:documentation>Validação: Deve ser um número existente na tabela CNAE, com 7 (sete) algarismos.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:integer">
             <xs:pattern value="\d{7}" />
@@ -1967,10 +1982,11 @@
     <xs:simpleType name="TS_dia">
         <xs:annotation>
             <xs:documentation>Dia do mês efetivamente trabalhado pelo empregado com contrato de trabalho intermitente.</xs:documentation>
-            <xs:documentation>Validação: Deve ser um número entre 1 e 31, de acordo com o calendário anual.</xs:documentation>
+            <xs:documentation>Caso não tenha havido trabalho no mês, informar 0 (zero).</xs:documentation>
+            <xs:documentation>Validação: Deve ser um número entre 0 e 31, de acordo com o calendário anual.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:byte">
-            <xs:minInclusive value="1" />
+            <xs:minInclusive value="0" />
             <xs:maxInclusive value="31" />
             <xs:pattern value="\d{1,2}" />
         </xs:restriction>
@@ -1993,9 +2009,9 @@
     <xs:simpleType name="TS_tpInsc_EstabLot">
         <xs:annotation>
             <xs:documentation>Preencher com o código correspondente ao tipo de inscrição do estabelecimento, de acordo com as opções da Tabela 05.</xs:documentation>
-            <xs:documentation>Validação: Se {classTrib}(1000_infoEmpregador_inclusao_infoCadastro_classTrib) em S-1000 = [21], deve ser igual a [3, 4].</xs:documentation>
-            <xs:documentation>Se {classTrib}(1000_infoEmpregador_inclusao_infoCadastro_classTrib) em S-1000 = [22], deve ser igual a [3, 4] e, se for igual a [3] e não se tratar de empregado doméstico, o CAEPF deve constar na Tabela S-1005 como sendo de segurado especial.</xs:documentation>
-            <xs:documentation>Nos demais casos ({classTrib}(1000_infoEmpregador_inclusao_infoCadastro_classTrib) em S-1000 diferente de [21, 22]), deve ser igual a [1, 4].</xs:documentation>
+            <xs:documentation>Validação: Se {classTrib}(1000_infoEmpregador_inclusao_infoCadastro_classTrib) em S-1000 = [21, 22], deve ser igual a [3, 4].</xs:documentation>
+            <xs:documentation>Se {classTrib}(1000_infoEmpregador_inclusao_infoCadastro_classTrib) em S-1000 = [04], deve ser igual a [1].</xs:documentation>
+            <xs:documentation>Nos demais casos ({classTrib}(1000_infoEmpregador_inclusao_infoCadastro_classTrib) em S-1000 diferente de [04, 21, 22]), deve ser igual a [1, 4].</xs:documentation>
         </xs:annotation>
         <xs:restriction base="TS_tpInsc_1_3_4" />
     </xs:simpleType>
@@ -2068,8 +2084,7 @@
     <xs:simpleType name="TS_qtdRubr">
         <xs:annotation>
             <xs:documentation>Informar a quantidade de referência para apuração (em horas, cotas, meses, etc.). Ex.: Quantidade de horas extras trabalhadas relacionada com uma rubrica de hora extra, quantidade de dias trabalhados relacionada com uma rubrica de salário, etc.</xs:documentation>
-            <xs:documentation>Preenchimento obrigatório quando se tratar de rubrica relativa a faltas ou Descanso Semanal Remunerado - DSR sobre faltas (nesse caso, informar a quantidade de dias).</xs:documentation>
-            <xs:documentation>Validação: Deve ser maior que 0 (zero). Informação obrigatória se {codRubr}(./codRubr) tiver {natRubr}(1010_infoRubrica_inclusao_dadosRubrica_natRubr) em S-1010 igual a [9207, 9211].</xs:documentation>
+            <xs:documentation>Validação: Deve ser maior que 0 (zero).</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:decimal">
             <xs:totalDigits value="12" />
@@ -3131,7 +3146,7 @@
     <!-- Campo {tpBeneficio} -->
     
     <xs:simpleType name="TS_tpBeneficio">
-        <xs:restriction base="xs:integer">
+        <xs:restriction base="xs:string">
             <xs:pattern value="\d{4}" />
         </xs:restriction>
     </xs:simpleType>
@@ -3306,7 +3321,7 @@
         <xs:restriction base="xs:string">
             <xs:minLength value="1" />
             <xs:maxLength value="100" />
-            <xs:pattern value=".*[^\s].*" />
+            <xs:pattern value="[^\s]{1}[\S\s]*" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -3316,7 +3331,7 @@
         <xs:restriction base="xs:string">
             <xs:minLength value="1" />
             <xs:maxLength value="255" />
-            <xs:pattern value=".*[^\s].*" />
+            <xs:pattern value="[^\s]{1}[\S\s]*" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -3326,7 +3341,7 @@
         <xs:restriction base="xs:string">
             <xs:minLength value="1" />
             <xs:maxLength value="999" />
-            <xs:pattern value=".*[^\s].*" />
+            <xs:pattern value="[^\s]{1}[\S\s]*" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -3413,7 +3428,7 @@
     <!-- Campo hora -->
 
     <xs:simpleType name="TS_hora">
-        <xs:restriction base="xs:integer">
+        <xs:restriction base="xs:string">
             <xs:pattern value="\d{4}" />
             <xs:pattern value="(([0-1][0-9]|2[0-3])[0-5][0-9])" />
         </xs:restriction>

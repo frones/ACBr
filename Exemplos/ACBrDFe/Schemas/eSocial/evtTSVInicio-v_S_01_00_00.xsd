@@ -17,7 +17,6 @@
                         <xs:documentation>REGRA:REGRA_COMPATIB_CATEG_EVENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_ENVIO_PROC_FECHAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTOS_EXTEMP</xs:documentation>
-                        <xs:documentation>REGRA:REGRA_EVENTO_IMPACTO_FOPAG</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVETRAB_VALIDA_OPCAO_FGTS</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_GERAL_VALIDA_DADOS_TABCONTRIB</xs:documentation>
@@ -73,7 +72,7 @@
                                                     <xs:element name="tmpResid" minOccurs="0" type="TS_tmpResid">
                                                         <xs:annotation>
                                                             <xs:documentation>Tempo de residência do trabalhador imigrante.</xs:documentation>
-                                                            <xs:documentation>Validação: Preenchimento obrigatório se {dtInicio}(2300_infoTSVInicio_dtInicio) >= [2021-05-10].</xs:documentation>
+                                                            <xs:documentation>Validação: Preenchimento obrigatório se {dtInicio}(2300_infoTSVInicio_dtInicio) >= [2021-07-19].</xs:documentation>
                                                         </xs:annotation>
                                                     </xs:element>
                                                     <xs:element name="condIng" type="TS_condIng" />

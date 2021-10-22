@@ -881,14 +881,11 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="vItem">
+																<xs:element name="vItem" type="TDec_1302_1310">
 																	<xs:annotation>
 																		<xs:documentation>Valor unitário do item</xs:documentation>
 																		<xs:documentation>Informar o valor sem a influência da decisão judicial/administrativa.</xs:documentation>
 																	</xs:annotation>
-																	<xs:simpleType>
-																		<xs:restriction base="TDec_1302_1308"/>
-																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="qFaturada" type="TDec_1100_1104">
 																	<xs:annotation>
@@ -896,13 +893,10 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 																		<xs:documentation>Informar a quantidade de comercialização do produto .</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element name="vProd">
+																<xs:element name="vProd" type="TDec_1302_1310">
 																	<xs:annotation>
 																		<xs:documentation>Valor total do item</xs:documentation>
 																	</xs:annotation>
-																	<xs:simpleType>
-																		<xs:restriction base="TDec_1302_1308"/>
-																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="cClass">
 																	<xs:annotation>
@@ -1184,10 +1178,10 @@ Formato AAAA-MM-DD)</xs:documentation>
 																				<xs:annotation>
 																					<xs:documentation>Tipo da bandeira tarifária</xs:documentation>
 																					<xs:documentation>1 – Verde; 2 – Amarela; 3 – Vermelha patamar 1; 4 – Vermelha patamar 2
-</xs:documentation>
+; 5 - Escassez Hidrica</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="vAdBand" type="TDec_1302_1308">
+																			<xs:element name="vAdBand" type="TDec_1302_1310">
 																				<xs:annotation>
 																					<xs:documentation>Valor do Adicional tarifário</xs:documentation>
 																					<xs:documentation>Resultado decorrente da aplicação do adicional de cada bandeira sobre o consumo faturado no período considerado entre as datas de início e fim.
@@ -1199,7 +1193,7 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																					<xs:documentation>Sequencia XML</xs:documentation>
 																					<xs:documentation>Somente preenchido se a tarifa aplicada for diferente da homologada </xs:documentation>
 																				</xs:annotation>
-																				<xs:element name="vAdBandAplic" type="TDec_1302_1308">
+																				<xs:element name="vAdBandAplic" type="TDec_1302_1310">
 																					<xs:annotation>
 																						<xs:documentation>Valor do adicional tarifário aplicado</xs:documentation>
 																					</xs:annotation>
@@ -1349,23 +1343,17 @@ Quando for bandeira verde o campo valor do adicional tarifário deverá ser pree
 																					<xs:documentation>Informar a quantidade de comercialização do produto .</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="vItem">
+																			<xs:element name="vItem" type="TDec_1302_1310">
 																				<xs:annotation>
 																					<xs:documentation>Valor unitário do item</xs:documentation>
 																					<xs:documentation>O valor unitário do item no caso de energia elétrica corresponde ao valor da tarifa e dos tributos que devam compor a base de cálculo. O item pode estar acrescido do adicional da bandeira tarifária ou o adicional de bandeira poderá ser lançado como um item específico.
 Este campo também corresponde ao preço médio efetivo relativo ao consumo ativo do período, quando aplicáveis os termos do inciso I da clausula primeira do Convênio ICMS 77/11 (DEVEC).</xs:documentation>
 																				</xs:annotation>
-																				<xs:simpleType>
-																					<xs:restriction base="TDec_1302_1308"/>
-																				</xs:simpleType>
 																			</xs:element>
-																			<xs:element name="vProd">
+																			<xs:element name="vProd" type="TDec_1302_1310">
 																				<xs:annotation>
 																					<xs:documentation>Valor total do item</xs:documentation>
 																				</xs:annotation>
-																				<xs:simpleType>
-																					<xs:restriction base="TDec_1302_1308"/>
-																				</xs:simpleType>
 																			</xs:element>
 																			<xs:element name="indDevolucao" minOccurs="0">
 																				<xs:annotation>
@@ -1919,14 +1907,11 @@ item.
 																	</xs:annotation>
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element name="vItem">
+																			<xs:element name="vItem" type="TDec_1302_1310">
 																				<xs:annotation>
 																					<xs:documentation>Valor unitário do item</xs:documentation>
 																					<xs:documentation>Informar o valor sem a influência da decisão judicial/administrativa.</xs:documentation>
 																				</xs:annotation>
-																				<xs:simpleType>
-																					<xs:restriction base="TDec_1302_1308"/>
-																				</xs:simpleType>
 																			</xs:element>
 																			<xs:element name="qFaturada" type="TDec_1100_1104">
 																				<xs:annotation>
@@ -1934,13 +1919,10 @@ item.
 																					<xs:documentation>Informar a quantidade de comercialização do produto .</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="vProd">
+																			<xs:element name="vProd" type="TDec_1302_1310">
 																				<xs:annotation>
 																					<xs:documentation>Valor total do item</xs:documentation>
 																				</xs:annotation>
-																				<xs:simpleType>
-																					<xs:restriction base="TDec_1302_1308"/>
-																				</xs:simpleType>
 																			</xs:element>
 																			<xs:element name="indDevolucao" minOccurs="0">
 																				<xs:annotation>
@@ -3686,6 +3668,7 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 			<xs:enumeration value="2"/>
 			<xs:enumeration value="3"/>
 			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TAtoANEEL">

@@ -59,7 +59,7 @@
                                                         <xs:simpleType>
                                                             <xs:annotation>
                                                                 <xs:documentation>Preencher com o número de inscrição no CAEPF do estabelecimento rural.</xs:documentation>
-                                                                <xs:documentation>Validação: Deve ser um número de inscrição válido e existente na Tabela de Estabelecimentos (S-1005). Se {indGuia}(1260_ideEvento_indGuia) estiver preenchido, o número de inscrição deve possuir {tpCaepf}(1005_infoEstab_inclusao_dadosEstab_infoCaepf_tpCaepf) em S-1005 = [3].</xs:documentation>
+                                                                <xs:documentation>Validação: Deve ser um número de inscrição válido e existente na Tabela de Estabelecimentos (S-1005).</xs:documentation>
                                                             </xs:annotation>
                                                             <xs:restriction base="xs:string">
                                                                 <xs:pattern value="\d{14}" />
@@ -82,7 +82,6 @@
                                                                     <xs:annotation>
                                                                         <xs:documentation>Preencher com o valor total da comercialização.</xs:documentation>
                                                                         <xs:documentation>Validação: Deve ser maior que 0 (zero).</xs:documentation>
-                                                                        <xs:documentation>Se {indComerc}(./indComerc) for igual a [3, 7], deve corresponder à soma do campo {vrComerc}(1260_infoComProd_ideEstabel_tpComerc_ideAdquir_vrComerc) dos registros vinculados.</xs:documentation>
                                                                     </xs:annotation>
                                                                 </xs:element>
                                                                 <xs:element name="ideAdquir" minOccurs="0" maxOccurs="9999">

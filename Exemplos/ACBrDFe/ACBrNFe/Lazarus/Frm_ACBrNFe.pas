@@ -4198,15 +4198,14 @@ end;
 
 procedure TfrmACBrNFe.sbtnNumSerieClick(Sender: TObject);
 var
-  I: Integer;
-//  ASerie: String;
-  AddRow: Boolean;
+  i: Integer;
 begin
   ACBrNFe1.SSL.LerCertificadosStore;
-  AddRow := False;
 
   with frmSelecionarCertificado.StringGrid1 do
   begin
+    RowCount := 1;
+
     ColWidths[0] := 220;
     ColWidths[1] := 250;
     ColWidths[2] := 120;
@@ -4220,26 +4219,20 @@ begin
     Cells[4, 0] := 'Certificadora';
   end;
 
-  for I := 0 to ACBrNFe1.SSL.ListaCertificados.Count-1 do
+  for i := 0 to ACBrNFe1.SSL.ListaCertificados.Count-1 do
   begin
-    with ACBrNFe1.SSL.ListaCertificados[I] do
+    with ACBrNFe1.SSL.ListaCertificados[i] do
     begin
-//      ASerie := NumeroSerie;
-
       if (CNPJ <> '') then
       begin
         with frmSelecionarCertificado.StringGrid1 do
         begin
-          if Addrow then
-            RowCount := RowCount + 1;
-
+          RowCount := RowCount+1;
           Cells[0, RowCount-1] := NumeroSerie;
           Cells[1, RowCount-1] := RazaoSocial;
           Cells[2, RowCount-1] := CNPJ;
           Cells[3, RowCount-1] := FormatDateBr(DataVenc);
           Cells[4, RowCount-1] := Certificadora;
-
-          AddRow := True;
         end;
       end;
     end;

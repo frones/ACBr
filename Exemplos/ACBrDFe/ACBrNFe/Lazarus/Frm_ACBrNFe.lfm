@@ -1,7 +1,7 @@
 object frmACBrNFe: TfrmACBrNFe
-  Left = 243
+  Left = 287
   Height = 612
-  Top = 83
+  Top = 103
   Width = 866
   Caption = 'ACBrNFe - Programa Exemplo'
   ClientHeight = 612
@@ -39,16 +39,16 @@ object frmACBrNFe: TfrmACBrNFe
           Height = 518
           Top = 0
           Width = 287
-          ActivePage = TabSheet12
+          ActivePage = TabSheet3
           Align = alClient
           MultiLine = True
-          TabIndex = 3
+          TabIndex = 0
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ClientHeight = 0
-            ClientWidth = 0
+            ClientHeight = 474
+            ClientWidth = 279
             object lSSLLib: TLabel
               Left = 39
               Height = 13
@@ -306,7 +306,7 @@ object frmACBrNFe: TfrmACBrNFe
                 Left = 142
                 Height = 19
                 Top = 27
-                Width = 54
+                Width = 55
                 Caption = 'Assinar'
                 Checked = True
                 State = cbChecked
@@ -594,8 +594,8 @@ object frmACBrNFe: TfrmACBrNFe
           end
           object TabSheet7: TTabSheet
             Caption = 'WebService'
-            ClientHeight = 0
-            ClientWidth = 0
+            ClientHeight = 474
+            ClientWidth = 279
             ImageIndex = 2
             object GroupBox4: TGroupBox
               Left = 5
@@ -641,9 +641,9 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object cbxVisualizar: TCheckBox
                 Left = 6
-                Height = 17
+                Height = 19
                 Top = 104
-                Width = 153
+                Width = 119
                 Caption = 'Visualizar Mensagem'
                 Font.Color = clWindowText
                 Font.Height = -11
@@ -721,15 +721,15 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object cbxSalvarSOAP: TCheckBox
                 Left = 6
-                Height = 17
+                Height = 19
                 Top = 122
-                Width = 153
+                Width = 127
                 Caption = 'Salvar envelope SOAP'
                 TabOrder = 3
               end
               object seTimeOut: TSpinEdit
                 Left = 165
-                Height = 22
+                Height = 21
                 Top = 118
                 Width = 66
                 Increment = 10
@@ -858,9 +858,9 @@ object frmACBrNFe: TfrmACBrNFe
               end
               object cbxAjustarAut: TCheckBox
                 Left = 6
-                Height = 17
+                Height = 19
                 Top = 0
-                Width = 234
+                Width = 227
                 Caption = 'Ajustar Automaticamente prop. "Aguardar"'
                 TabOrder = 0
               end

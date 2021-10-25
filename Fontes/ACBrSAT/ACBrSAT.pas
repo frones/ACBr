@@ -97,6 +97,9 @@ type
      fsNumeroTentativasValidarSessao: Integer;
      fsErrosSessaoCount: Integer;
      fsSessaoAVerificar: Integer;
+     // Italo
+     fsLoteCFe: TLoteCFeCollection;
+     fsLoteCFeCanc: TLoteCFeCancCollection;
 
      function CodificarPaginaDeCodigoSAT(const ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(const ATexto: AnsiString): String;
@@ -133,6 +136,8 @@ type
 
      function GetNomeModeloCFe: String;
 
+     function LerLoteCFe(const AFileName: String; AGravarXml: Boolean = True): boolean;
+
      Procedure Inicializar;
      Procedure DesInicializar;
      property Inicializado : Boolean read fsInicializado write SetInicializado ;
@@ -150,6 +155,9 @@ type
 
      property CFe : TCFe read fsCFe ;
      property CFeCanc : TCFeCanc read fsCFeCanc ;
+     // Italo
+     property LoteCFe: TLoteCFeCollection read fsLoteCFe;
+     property LoteCFeCanc: TLoteCFeCancCollection read fsLoteCFeCanc;
 
      property Status : TACBrSATStatus read fsStatus;
      property Resposta : TACBrSATResposta read fsResposta;
@@ -790,6 +798,9 @@ begin
   fsResposta:= TACBrSATResposta.Create;
   fsStatus  := TACBrSATStatus.Create;
   fsSATClass:= TACBrSATClass.Create( Self ) ;
+  // Italo
+  fsLoteCFe := TLoteCFeCollection.Create;
+  fsLoteCFeCanc := TLoteCFeCancCollection.Create;
 
   fsPrefixoCFe := CPREFIXO_CFe;
 end ;
@@ -804,6 +815,9 @@ begin
   fsResposta.Free;
   fsStatus.Free;
   fsSSL.Free;
+  // Italo
+  fsLoteCFe.Free;
+  fsLoteCFeCanc.Free;
 
   if Assigned( fsSATClass ) then
     FreeAndNil( fsSATClass );
@@ -830,6 +844,116 @@ begin
   if (fsConfig.infCFe_versaoDadosEnt <= 0) then
     fsConfig.infCFe_versaoDadosEnt := VerificarVersaoSAT;
 end ;
+
+function TACBrSAT.LerLoteCFe(const AFileName: String;
+  AGravarXml: Boolean = True): boolean;
+var
+  SL: TStringList;
+  aLote, aXml, NomeArq: string;
+  i, f, n, j: Integer;
+  CFeCanc: Boolean;
+
+  function PosCFe: Integer;
+  begin
+    if CFeCanc then
+      Result := Pos('</CFeCanc>', aLote)
+    else
+      Result := Pos('</CFe>', aLote);
+  end;
+
+begin
+  Result := False;
+  CFeCanc := False;
+
+  fsLoteCFe.Clear;
+  fsLoteCFeCanc.Clear;
+  
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile( AFileName );
+    aLote := SL.Text;
+  finally
+    SL.Free;
+  end;
+
+  i := Pos('<LoteCFe>', aLote);
+  f := Pos('</LoteCFe>', aLote);
+
+  if (i = 0) and (f = 0) then
+  begin
+    i := Pos('<LoteCFeCanc>', aLote);
+    f := Pos('</LoteCFeCanc>', aLote);
+    CFeCanc := (i > 0);
+  end;
+
+  if i > 0 then
+  begin
+    aLote := Copy(aLote, 1, f - 1);
+
+    if CFeCanc then
+      aLote := Copy(aLote, i + 13, Length(aLote))
+    else
+      aLote := Copy(aLote, i + 9, Length(aLote));
+
+    n := PosCFe;
+
+    while n > 0 do
+    begin
+      if CFeCanc then
+      begin
+        aXml := copy(aLote, 1, n + 9);
+        aLote := Trim(copy(aLote, N + 10, length(aLote)));
+
+        // Popula a classe fsLoteCFe com os CF-e Cancelados lidos
+        fsLoteCFeCanc.New.SetXMLString(aXML);
+      end
+      else
+      begin
+        aXml := copy(aLote, 1, n + 5);
+        aLote := Trim(copy(aLote, N + 6, length(aLote)));
+
+        // Popula a classe fsLoteCFe com os CF-e lidos
+        fsLoteCFe.New.SetXMLString(aXML);
+      end;
+
+      // Salvar em disco
+      if AGravarXml then
+      begin
+        if CFeCanc then
+        begin
+          j := fsLoteCFeCanc.Count - 1;
+
+          fsCFeCanc.Clear;
+
+          fsCFeCanc.Emit.CNPJ := fsLoteCFeCanc[j].Emit.CNPJ;
+          fsCFeCanc.ide.dEmi := fsLoteCFeCanc[j].ide.dEmi;
+          fsCFeCanc.infCFe.ID := fsLoteCFeCanc[j].infCFe.ID;
+          fsCFeCanc.infCFe.chCanc := fsLoteCFeCanc[j].infCFe.chCanc;
+
+          NomeArq := CalcCFeCancNomeArq(fsConfigArquivos.PastaCFeCancelamento);
+        end
+        else
+        begin
+          j := fsLoteCFe.Count - 1;
+
+          fsCFe.Clear;
+
+          fsCFe.Emit.CNPJ := fsLoteCFe[j].Emit.CNPJ;
+          fsCFe.ide.dEmi := fsLoteCFe[j].ide.dEmi;
+          fsCFe.infCFe.ID := fsLoteCFe[j].infCFe.ID;
+
+          NomeArq := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda);
+        end;
+
+        WriteToTXT(NomeArq, aXml, False, False, True);
+      end;
+
+      n := PosCFe;
+    end;
+
+    Result := True;
+  end;
+end;
 
 procedure TACBrSAT.DesInicializar ;
 begin

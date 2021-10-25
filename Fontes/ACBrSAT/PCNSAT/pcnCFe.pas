@@ -79,6 +79,7 @@ type
   TInfAdic = class;
   TobsFiscoCollection = class;
   TobsFiscoCollectionItem = class;
+  TLoteCFeCollection = class;
 
   { TCFe }
 
@@ -691,6 +692,17 @@ type
   public
     property xCampo: string read FxCampo write FxCampo;
     property xTexto: string read FxTexto write FxTexto;
+  end;
+
+  { TLoteCFeCollection }
+
+  TLoteCFeCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TCFe;
+    procedure SetItem(Index: Integer; Value: TCFe);
+  public
+    function New: TCFe;
+    property Items[Index: Integer]: TCFe read GetItem write SetItem; default;
   end;
 
 implementation
@@ -1705,6 +1717,24 @@ begin
   end;
 
   FXMLOriginal := AValue;
+end;
+
+{ TLoteCFeCollection }
+
+function TLoteCFeCollection.GetItem(Index: Integer): TCFe;
+begin
+  Result := TCFe(inherited Items[Index]);
+end;
+
+function TLoteCFeCollection.New: TCFe;
+begin
+  Result := TCFe.Create;
+  Self.Add(Result);
+end;
+
+procedure TLoteCFeCollection.SetItem(Index: Integer; Value: TCFe);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 241
   Top = 173
+  Width = 964
+  Height = 519
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
-  ClientHeight = 460
-  ClientWidth = 931
   Color = clBtnFace
   Constraints.MinHeight = 460
   Constraints.MinWidth = 850
@@ -22,7 +22,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 242
-    Width = 931
+    Width = 948
     Height = 6
     Cursor = crVSplit
     Align = alTop
@@ -30,7 +30,7 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 248
-    Width = 931
+    Width = 948
     Height = 189
     ActivePage = tsLog
     Align = alClient
@@ -40,7 +40,7 @@ object Form1: TForm1
       object mLog: TMemo
         Left = 0
         Top = 20
-        Width = 923
+        Width = 940
         Height = 141
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
@@ -122,7 +122,7 @@ object Form1: TForm1
           Left = 1
           Top = 1
           Width = 105
-          Height = 23
+          Height = 13
           Align = alLeft
           Caption = 'Chave Cancelamento:'
           Color = clBtnFace
@@ -160,7 +160,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 931
+    Width = 948
     Height = 242
     Align = alTop
     TabOrder = 0
@@ -187,6 +187,7 @@ object Form1: TForm1
         Width = 133
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -223,7 +224,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 760
+      Width = 777
       Height = 240
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -231,7 +232,7 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 756
+        Width = 773
         Height = 223
         ActivePage = tsDadosSAT
         Align = alClient
@@ -239,7 +240,7 @@ object Form1: TForm1
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            748
+            765
             195)
           object Label9: TLabel
             Left = 21
@@ -391,6 +392,7 @@ object Form1: TForm1
             Height = 21
             Style = csDropDownList
             Anchors = [akTop, akRight]
+            ItemHeight = 13
             TabOrder = 2
           end
           object cbxRemoverAcentos: TCheckBox
@@ -627,6 +629,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -635,6 +638,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -643,13 +647,14 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            748
+            765
             195)
           object Label2: TLabel
             Left = 10
@@ -880,6 +885,7 @@ object Form1: TForm1
               Width = 82
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               ItemIndex = 1
               TabOrder = 1
               Text = 'WEP'
@@ -961,6 +967,7 @@ object Form1: TForm1
               Width = 129
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 0
               Text = '0= N'#227'o usa proxy'
@@ -1271,6 +1278,7 @@ object Form1: TForm1
               Width = 145
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 0
               OnChange = cbxModeloChange
             end
@@ -1279,6 +1287,7 @@ object Form1: TForm1
               Top = 32
               Width = 128
               Height = 21
+              ItemHeight = 0
               TabOrder = 1
             end
             object cbxPagCodigo: TComboBox
@@ -1288,6 +1297,7 @@ object Form1: TForm1
               Height = 21
               Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 5
             end
           end
@@ -1457,7 +1467,7 @@ object Form1: TForm1
         object TabSheet1: TTabSheet
           Caption = 'Valida'#231#227'o'
           DesignSize = (
-            748
+            765
             195)
           object Label33: TLabel
             Left = 25
@@ -1530,6 +1540,7 @@ object Form1: TForm1
             Width = 192
             Height = 21
             Style = csDropDownList
+            ItemHeight = 0
             TabOrder = 2
           end
         end
@@ -1539,7 +1550,7 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Top = 437
-    Width = 931
+    Width = 948
     Height = 23
     Panels = <
       item
@@ -1700,6 +1711,13 @@ object Form1: TForm1
       object mExtrairLogs: TMenuItem
         Caption = 'Extrair Logs'
         OnClick = mExtrairLogsClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object CarregarLote1: TMenuItem
+        Caption = 'Carregar Lote'
+        OnClick = CarregarLote1Click
       end
     end
     object mLimpar: TMenuItem

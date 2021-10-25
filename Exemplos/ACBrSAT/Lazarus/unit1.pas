@@ -177,6 +177,8 @@ type
     MenuItem20: TMenuItem;
     MenuItem21: TMenuItem;
     MenuItem22: TMenuItem;
+    MenuItem23: TMenuItem;
+    N1: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -323,6 +325,7 @@ type
     procedure MenuItem18Click(Sender: TObject);
     procedure MenuItem19Click(Sender: TObject);
     procedure MenuItem22Click(Sender: TObject);
+    procedure MenuItem23Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -357,8 +360,6 @@ type
     procedure mLimparClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
-    procedure tsDadosEmitContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
   private
     procedure ConfiguraRedeSAT;
     procedure LeDadosRedeSAT;
@@ -428,21 +429,20 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
-  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
   {$IfDef MSWINDOWS}
   ACBrPosPrinter1.Device.AcharPortasUSB( cbxPorta.Items );
   {$EndIf}
+  ACBrPosPrinter1.Device.AcharPortasRAW( cbxPorta.Items );
 
-  cbxPorta.Items.Add('\\localhost\Epson') ;
-  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
   {$IfNDef MSWINDOWS}
    cbxPorta.Items.Add('/dev/ttyS0') ;
-   cbxPorta.Items.Add('/dev/ttyS1') ;
    cbxPorta.Items.Add('/dev/ttyUSB0') ;
-   cbxPorta.Items.Add('/dev/ttyUSB1') ;
    cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$Else}
+   cbxPorta.Items.Add('\\localhost\Epson') ;
+   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   {$EndIf}
 
   Application.OnException := @TrataErros ;
@@ -1190,6 +1190,40 @@ begin
   end;
 end;
 
+procedure TForm1.MenuItem23Click(Sender: TObject);
+var
+  i: Integer;
+begin
+  OpenDialog1.Filter := 'Arquivo XML|*.xml';
+  if OpenDialog1.Execute then
+  begin
+    ACBrSAT1.LerLoteCFe( OpenDialog1.FileName );
+  end;
+
+  mLog.Lines.Clear;
+
+  if ACBrSAT1.LoteCFe.Count > 0 then
+  begin
+    for i := 0 to ACBrSAT1.LoteCFe.Count -1 do
+      mLog.Lines.Add(ACBrSAT1.LoteCFe[i].infCFe.ID + ' - ' +
+                     IntToStr(ACBrSAT1.LoteCFe[i].ide.nCFe) + ' - ' +
+                     DateToStr(ACBrSAT1.LoteCFe[i].ide.dEmi));
+
+    mLog.Lines.Add('Qtde: ' + IntToStr(ACBrSAT1.LoteCFe.Count));
+  end;
+
+  if ACBrSAT1.LoteCFeCanc.Count > 0 then
+  begin
+    for i := 0 to ACBrSAT1.LoteCFeCanc.Count -1 do
+      mLog.Lines.Add(ACBrSAT1.LoteCFeCanc.Items[i].infCFe.ID + ' - ' +
+                     IntToStr(ACBrSAT1.LoteCFeCanc.Items[i].ide.nCFe) + ' - ' +
+                     DateToStr(ACBrSAT1.LoteCFeCanc.Items[i].ide.dEmi) +
+                     ' - Cancelada');
+
+    mLog.Lines.Add('Qtde: ' + IntToStr(ACBrSAT1.LoteCFeCanc.Count));
+  end;
+end;
+
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
@@ -1740,12 +1774,6 @@ procedure TForm1.sePagCodChange(Sender: TObject);
 begin
   ACBrSAT1.Config.PaginaDeCodigo := sePagCod.Value;
   cbxUTF8.Checked := ACBrSAT1.Config.EhUTF8;
-end;
-
-procedure TForm1.tsDadosEmitContextPopup(Sender: TObject; MousePos: TPoint;
-  var Handled: Boolean);
-begin
-
 end;
 
 procedure TForm1.ConfiguraRedeSAT;

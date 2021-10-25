@@ -1,17 +1,18 @@
 object Form1: TForm1
-  Left = 394
+  Left = 591
   Height = 498
-  Top = 187
+  Top = 281
   Width = 900
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
-  ClientHeight = 498
+  ClientHeight = 478
   ClientWidth = 900
   Constraints.MinHeight = 460
   Constraints.MinWidth = 850
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
+  LCLVersion = '2.0.12.0'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -23,7 +24,7 @@ object Form1: TForm1
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 215
+    Height = 195
     Top = 260
     Width = 900
     ActivePage = tsLog
@@ -33,12 +34,12 @@ object Form1: TForm1
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
-      ClientHeight = 187
+      ClientHeight = 167
       ClientWidth = 892
       ParentFont = False
       object mLog: TMemo
         Left = 0
-        Height = 187
+        Height = 167
         Top = 0
         Width = 892
         Align = alBottom
@@ -2115,7 +2116,7 @@ object Form1: TForm1
             Left = 312
             Height = 15
             Top = 57
-            Width = 58
+            Width = 59
             Caption = 'Num.Caixa'
             ParentColor = False
             ParentFont = False
@@ -2147,7 +2148,6 @@ object Form1: TForm1
             Width = 90
             Increment = 0.01
             MaxValue = 10
-            MinValue = 0
             OnChange = sfeVersaoEntChange
             ParentFont = False
             TabOrder = 9
@@ -2333,7 +2333,7 @@ object Form1: TForm1
               Left = 79
               Height = 19
               Top = 4
-              Width = 47
+              Width = 46
               Caption = 'UTF8'
               OnChange = cbxUTF8Change
               ParentFont = False
@@ -2452,7 +2452,7 @@ object Form1: TForm1
             Left = 192
             Height = 15
             Top = 71
-            Width = 102
+            Width = 101
             Caption = 'Regime Trib. ISSQN'
             ParentColor = False
             ParentFont = False
@@ -2480,7 +2480,7 @@ object Form1: TForm1
             Left = 12
             Height = 15
             Top = 73
-            Width = 94
+            Width = 93
             Caption = 'Regime Tributario'
             ParentColor = False
             ParentFont = False
@@ -2540,7 +2540,7 @@ object Form1: TForm1
         end
         object tsRede: TTabSheet
           Caption = 'Rede'
-          ClientHeight = 192
+          ClientHeight = 204
           ClientWidth = 717
           ParentFont = False
           object gbPPPoE: TGroupBox
@@ -3497,7 +3497,7 @@ object Form1: TForm1
             Left = 8
             Height = 15
             Top = 88
-            Width = 45
+            Width = 44
             Caption = 'Timeout'
             ParentColor = False
             ParentFont = False
@@ -3573,14 +3573,14 @@ object Form1: TForm1
         end
         object TabSheet1: TTabSheet
           Caption = 'Validação'
-          ClientHeight = 196
+          ClientHeight = 204
           ClientWidth = 717
           ParentFont = False
           object Label33: TLabel
             Left = 16
-            Height = 13
+            Height = 15
             Top = 16
-            Width = 118
+            Width = 132
             Alignment = taRightJustify
             Caption = 'Schema Venda Aplicação'
             ParentColor = False
@@ -3589,7 +3589,7 @@ object Form1: TForm1
           object edSchemaVendaAPL: TEdit
             Cursor = crIBeam
             Left = 16
-            Height = 21
+            Height = 23
             Top = 33
             Width = 640
             Anchors = [akTop, akLeft, akRight]
@@ -3603,7 +3603,7 @@ object Form1: TForm1
             AnchorSideTop.Side = asrCenter
             Left = 659
             Height = 22
-            Top = 32
+            Top = 33
             Width = 24
             BorderSpacing.Left = 3
             Caption = '...'
@@ -3617,7 +3617,7 @@ object Form1: TForm1
             AnchorSideTop.Side = asrCenter
             Left = 659
             Height = 22
-            Top = 80
+            Top = 81
             Width = 24
             BorderSpacing.Left = 3
             Caption = '...'
@@ -3627,7 +3627,7 @@ object Form1: TForm1
           object edSchemaVendaSAT: TEdit
             Cursor = crIBeam
             Left = 16
-            Height = 21
+            Height = 23
             Top = 81
             Width = 640
             Anchors = [akTop, akLeft, akRight]
@@ -3636,9 +3636,9 @@ object Form1: TForm1
           end
           object Label34: TLabel
             Left = 16
-            Height = 13
+            Height = 15
             Top = 64
-            Width = 92
+            Width = 99
             Alignment = taRightJustify
             Caption = 'Schema Venda SAT'
             ParentColor = False
@@ -3651,7 +3651,7 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 475
+    Top = 455
     Width = 900
     Panels = <    
       item
@@ -3664,8 +3664,8 @@ object Form1: TForm1
     SimplePanel = False
   end
   object MainMenu1: TMainMenu
-    left = 352
-    top = 296
+    Left = 352
+    Top = 296
     object MenuItem1: TMenuItem
       Caption = 'Ativação'
       object mAtivarSAT: TMenuItem
@@ -3815,6 +3815,13 @@ object Form1: TForm1
         Caption = 'Extrair Logs'
         OnClick = mExtrairLogsClick
       end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem23: TMenuItem
+        Caption = 'Carregar Lote'
+        OnClick = MenuItem23Click
+      end
     end
     object mLimpar: TMenuItem
       Caption = 'Limpar'
@@ -3822,8 +3829,8 @@ object Form1: TForm1
     end
   end
   object OpenDialog1: TOpenDialog
-    left = 464
-    top = 392
+    Left = 464
+    Top = 392
   end
   object ACBrSAT1: TACBrSAT
     Extrato = ACBrSATExtratoFortes1
@@ -3861,8 +3868,8 @@ object Form1: TForm1
     OnGetsignAC = ACBrSAT1GetsignAC
     OnMensagemSEFAZ = ACBrSAT1MensagemSEFAZ
     OnCalcPath = ACBrSAT1CalcPath
-    left = 64
-    top = 296
+    Left = 64
+    Top = 296
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -3886,15 +3893,15 @@ object Form1: TForm1
     ImprimeDescAcrescItem = False
     FormularioContinuo = True
     PosPrinter = ACBrPosPrinter1
-    left = 64
-    top = 344
+    Left = 64
+    Top = 344
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 352
-    top = 344
+    Left = 352
+    Top = 344
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -3920,16 +3927,16 @@ object Form1: TForm1
     FormularioContinuo = True
     EspacoFinal = 50
     LogoWidth = 100
-    left = 64
-    top = 392
+    Left = 64
+    Top = 392
   end
   object PrintDialog1: TPrintDialog
-    left = 464
-    top = 296
+    Left = 464
+    Top = 296
   end
   object SaveDialog1: TSaveDialog
-    left = 464
-    top = 344
+    Left = 464
+    Top = 344
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -3945,19 +3952,19 @@ object Form1: TForm1
     ConfigLogo.KeyCode2 = 48
     LinhasEntreCupons = 7
     ArqLOG = 'c:\temp\posprinter.log'
-    left = 192
-    top = 344
+    Left = 192
+    Top = 344
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'FortesReport Community Edition v4.0 \251 Copyright © 1999-2016 Fortes Informática'
     DisplayName = 'Documento PDF'
-    left = 192
-    top = 392
+    Left = 192
+    Top = 392
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
-    left = 192
-    top = 296
+    Left = 192
+    Top = 296
   end
 end

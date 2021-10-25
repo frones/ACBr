@@ -1,7 +1,7 @@
 object frConfiguraSerial: TfrConfiguraSerial
-  Left = 398
+  Left = 597
   Height = 429
-  Top = 174
+  Top = 261
   Width = 180
   ActiveControl = cmbPortaSerial
   BorderIcons = [biSystemMenu]
@@ -20,7 +20,7 @@ object frConfiguraSerial: TfrConfiguraSerial
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.10.0'
   object Label5: TLabel
     Left = 8
     Height = 13

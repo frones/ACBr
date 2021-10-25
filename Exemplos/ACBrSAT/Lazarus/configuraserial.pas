@@ -146,17 +146,17 @@ end;
 
 procedure TfrConfiguraSerial.cmbParityChange(Sender: TObject);
 begin
-  //Device.Parity := TACBrSerialParity( cmbParity.ItemIndex ) ;
+  Device.Parity := TACBrSerialParity( cmbParity.ItemIndex ) ;
 end;
 
 procedure TfrConfiguraSerial.cmbStopBitsChange(Sender: TObject);
 begin
-  //Device.Stop := TACBrSerialStop( cmbStopBits.ItemIndex ) ;
+  Device.Stop := TACBrSerialStop( cmbStopBits.ItemIndex ) ;
 end;
 
 procedure TfrConfiguraSerial.cmbHandShakingChange(Sender: TObject);
 begin
-  //Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex ) ;
+  Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex ) ;
   VerificaFlow ;
 end;
 

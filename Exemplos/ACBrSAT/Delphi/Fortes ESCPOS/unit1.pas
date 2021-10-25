@@ -272,6 +272,8 @@ type
     cbImprimirDescAcres: TCheckBox;
     cbImprimirChaveUmaLinha: TCheckBox;
     ACBrIntegrador1: TACBrIntegrador;
+    N1: TMenuItem;
+    CarregarLote1: TMenuItem;
     procedure ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
       AData: TDateTime);
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
@@ -337,6 +339,7 @@ type
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
+    procedure CarregarLote1Click(Sender: TObject);
   private
     procedure ConfiguraRedeSAT;
     procedure LeDadosRedeSAT;
@@ -925,6 +928,40 @@ begin
   end;
 end;
 
+procedure TForm1.CarregarLote1Click(Sender: TObject);
+var
+  i: Integer;
+begin
+  OpenDialog1.Filter := 'Arquivo XML|*.xml';
+  if OpenDialog1.Execute then
+  begin
+    ACBrSAT1.LerLoteCFe( OpenDialog1.FileName );
+  end;
+
+  mLog.Lines.Clear;
+
+  if ACBrSAT1.LoteCFe.Count > 0 then
+  begin
+    for i := 0 to ACBrSAT1.LoteCFe.Count -1 do
+      mLog.Lines.Add(ACBrSAT1.LoteCFe[i].infCFe.ID + ' - ' +
+                     IntToStr(ACBrSAT1.LoteCFe[i].ide.nCFe) + ' - ' +
+                     DateToStr(ACBrSAT1.LoteCFe[i].ide.dEmi));
+
+    mLog.Lines.Add('Qtde: ' + IntToStr(ACBrSAT1.LoteCFe.Count));
+  end;
+
+  if ACBrSAT1.LoteCFeCanc.Count > 0 then
+  begin
+    for i := 0 to ACBrSAT1.LoteCFeCanc.Count -1 do
+      mLog.Lines.Add(ACBrSAT1.LoteCFeCanc.Items[i].infCFe.ID + ' - ' +
+                     IntToStr(ACBrSAT1.LoteCFeCanc.Items[i].ide.nCFe) + ' - ' +
+                     DateToStr(ACBrSAT1.LoteCFeCanc.Items[i].ide.dEmi) +
+                     ' - Cancelada');
+
+    mLog.Lines.Add('Qtde: ' + IntToStr(ACBrSAT1.LoteCFeCanc.Count));
+  end;
+end;
+
 procedure TForm1.cbxFormatXMLChange(Sender: TObject);
 begin
   ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
@@ -1429,7 +1466,7 @@ begin
 
     for A := 0 to Loops do  // Ajuste aqui para vender mais itens
     begin
-      with Det.Add do
+      with Det.New do
       begin
         nItem := 1 + (A * 3);
         Prod.cProd := 'ACBR0001';
@@ -1476,7 +1513,7 @@ begin
         infAdProd := 'Informacoes adicionais';
       end;
 
-      with Det.Add do
+      with Det.New do
       begin
         nItem := 2 + (A * 3);
         Prod.cProd := '6291041500213';
@@ -1521,7 +1558,7 @@ begin
         infAdProd := 'Informacoes adicionais';
       end;
 
-      with Det.Add do
+      with Det.New do
       begin
         nItem := 3 + (A * 3);
         Prod.cProd := 'abc123';
@@ -1592,13 +1629,13 @@ begin
 
     Pagto1 := RoundABNT(TotalGeral/2,-2);
 
-    with Pagto.Add do
+    with Pagto.New do
     begin
       cMP := mpCartaodeCredito;
       vMP := Pagto1;
     end;
 
-    with Pagto.Add do
+    with Pagto.New do
     begin
       cMP := mpDinheiro;
       vMP := TotalGeral - Pagto1 + 100;

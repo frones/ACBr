@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/10/2021
+-- Tecnos.Provider --
+[*] Possível correção ao preparar o ConsultarNFSePorFaixa.
+   Por: Italo Giurizzato Junior
 -- Conam.Provider --
 [*] Possível correção ao preparar o Emitir.
    Por: Italo Giurizzato Junior

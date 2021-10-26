@@ -5211,8 +5211,7 @@ begin
             Aceite        := TACBrAceiteTitulo(IniBoletos.ReadInteger(Sessao,'Aceite',1));
 //            Sacado.Pessoa := TACBrPessoa( IniBoletos.ReadInteger(Sessao,'Sacado.Pessoa',2) );
             Sacado.Pessoa := TACBrPessoa( IniBoletos.ReadInteger(Sessao,'Sacado.Pessoa',2) );
-            OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(
-                  IniBoletos.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0) ) ;
+            OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(IniBoletos.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0)) ;
             TipoDiasProtesto := TACBrTipoDiasIntrucao(IniBoletos.ReadInteger(Sessao,'TipoDiasProtesto',0));
             TipoDiasNegativacao := TACBrTipoDiasIntrucao(IniBoletos.ReadInteger(Sessao,'TipoDiasNegativacao',0));
             TipoImpressao := TACBrTipoImpressao(IniBoletos.ReadInteger(Sessao,'TipoImpressao',1));
@@ -5220,6 +5219,8 @@ begin
             TipoDesconto2 := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto2',0));
             CarteiraEnvio:= TACBrCarteiraEnvio(IniBoletos.ReadInteger(Sessao,'CarteiraEnvio', 0));
             MultaValorFixo := IniBoletos.ReadBool(Sessao,'MultaValorFixo',False);
+
+            CodigoNegativacao := TACBrCodigoNegativacao(IniBoletos.ReadInteger(Sessao,'CodigoNegativacao', 3));
 
             wLocalPagto := IniBoletos.ReadString(Sessao,'LocalPagamento','');
 

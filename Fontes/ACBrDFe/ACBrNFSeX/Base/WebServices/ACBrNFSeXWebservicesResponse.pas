@@ -155,6 +155,7 @@ type
     FLote: string;
     FSucesso: Boolean;
     FNumeroNota: string;
+    FSerieNota: string;
     FData: TDateTime;
     FidNota: string;
     FLink: String;
@@ -178,6 +179,7 @@ type
     property Lote: string read FLote write FLote;
     property Sucesso: Boolean read FSucesso write FSucesso;
     property NumeroNota: string read FNumeroNota write FNumeroNota;
+    property SerieNota: string read FSerieNota write FSerieNota;
     property Data: TDateTime read FData write FData;
     property idNota: string read FidNota write FidNota;
     property Link: String read FLink write FLink;
@@ -395,6 +397,7 @@ begin
   Lote := '';
   Sucesso := False;
   NumeroNota := '';
+  SerieNota := '';
   Data := 0;
   idNota := '';
   Link := '';

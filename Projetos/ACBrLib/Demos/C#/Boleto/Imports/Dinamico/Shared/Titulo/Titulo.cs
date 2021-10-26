@@ -142,7 +142,7 @@ namespace ACBrLib.Boleto
                 iniFile[sessao]["Detalhamento"] = string.Join("|", Detalhamento);
 
             var sessaoNfe = Index > 0 ? $"NFe{Index}-" : "NFe";
-            for (var i = 0; i < NotaFiscais.Count; i++)
+            for (var i = 0; i < NotaFiscais.Count - 1; i++)
                 iniFile.WriteToIni(NotaFiscais[i], $"{sessaoNfe}{i + 1}");
         }
 

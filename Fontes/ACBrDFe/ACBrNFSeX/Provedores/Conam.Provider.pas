@@ -181,7 +181,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
   Nota: NotaFiscal;
-  IdAttr, ListaRps, xRps, xOptante, xReg90: string;
+  IdAttr, ListaRps, xRps, xOptante, xReg90, Aliquota: string;
   I, QtdTributos: Integer;
   vTotServicos, vTotISS, vTotISSRetido, vTotDeducoes, vTotTributos,
   AliquotaSN: Double;
@@ -219,7 +219,6 @@ begin
   DataFinal := 0;
   DataOptanteSimples := 0;
   OptanteSimples := snSim;
-  AliquotaSN := 0;
   ExigibilidadeISS := exiExigivel;
   QtdTributos   := 0;
   vTotServicos  := 0;
@@ -266,6 +265,8 @@ begin
       DataInicial := Nota.NFSe.DataEmissao;
       DataFinal := DataInicial;
       AliquotaSN := Nota.NFSe.Servico.Valores.AliquotaSN;
+      Aliquota := FormatFloat('#.00', AliquotaSN);
+      Aliquota := StringReplace(Aliquota, '.', ',', [rfReplaceAll]);
     end;
 
     if Nota.NFSe.DataEmissao < DataInicial then
@@ -334,7 +335,7 @@ begin
                    FormatDateTime('dd/mm/yyyy', DataOptanteSimples) +
                 '</nfe:DtAdeSN>' +
                 '<nfe:AlqIssSN_IP>' +
-                   FormatFloat('#,00', AliquotaSN) +
+                   Aliquota +
                 '</nfe:AlqIssSN_IP>';
   end
   else
@@ -362,22 +363,22 @@ begin
                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
               '</nfe:QtdRegNormal>' +
               '<nfe:ValorNFS>' +
-                 FormatFloat('#,00', vTotServicos) +
+                 StringReplace(FormatFloat('#.00', vTotServicos), '.', ',', [rfReplaceAll]) +
               '</nfe:ValorNFS>' +
               '<nfe:ValorISS>' +
-                 FormatFloat('#,00', vTotISS) +
+                 StringReplace(FormatFloat('#.00', vTotISS), '.', ',', [rfReplaceAll]) +
               '</nfe:ValorISS>' +
               '<nfe:ValorDed>' +
-                 FormatFloat('#,00', vTotDeducoes) +
+                 StringReplace(FormatFloat('#.00', vTotDeducoes), '.', ',', [rfReplaceAll]) +
               '</nfe:ValorDed>' +
               '<nfe:ValorIssRetTom>' +
-                 FormatFloat('#,00', vTotISSRetido) +
+                 StringReplace(FormatFloat('#.00', vTotISSRetido), '.', ',', [rfReplaceAll]) +
               '</nfe:ValorIssRetTom>' +
               '<nfe:QtdReg30>' +
                  IntToStr(QtdTributos) +
               '</nfe:QtdReg30>' +
               '<nfe:ValorTributos>' +
-                 FormatFloat('#,00', vTotTributos) +
+                 StringReplace(FormatFloat('#.00', vTotTributos), '.', ',', [rfReplaceAll]) +
               '</nfe:ValorTributos>' +
             '</nfe:Reg90>';
 

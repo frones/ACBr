@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/10/2021
+-- Conam.Provider --
+[*] Possível correção ao preparar o Emitir.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Criado o campo de retorno "SerieNota" do tipo string, no retorno do provedor IPM
     alem do numero é retornado a série também.

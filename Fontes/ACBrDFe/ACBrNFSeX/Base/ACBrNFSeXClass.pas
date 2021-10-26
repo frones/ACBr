@@ -757,7 +757,7 @@ type
   TNFSe = class(TPersistent)
   private
     // RPS e NFSe
-    FSituacao: TSituacaoLoteRPS;
+    FSituacao: Integer;
 
     FSituacaoNfse: TStatusNFSe;
     FNomeArq: string;
@@ -856,7 +856,7 @@ type
     procedure Clear;
   published
     // RPS e NFSe
-    property Situacao: TSituacaoLoteRPS read FSituacao write FSituacao;
+    property Situacao: Integer read FSituacao write FSituacao;
     property SituacaoNfse: TStatusNFSe read FSituacaoNfse write FSituacaoNfse;
     property NomeArq: string read FNomeArq write FNomeArq;
     property InfID: TInfID read FInfID write FInfID;

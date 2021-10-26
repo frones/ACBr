@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/10/2021
+-- Diversos --
+[*] Alterado o tipo do campo NFSe.Situacao para Integer para ser utilizado corretamente
+    com o provedor AssessorPublico.
+   Por: Italo Giurizzato Junior
+
 22/10/2021
 -- Diversos --
 [*] Remoção de Units declaradas não necessárias em diversas Units do componente.

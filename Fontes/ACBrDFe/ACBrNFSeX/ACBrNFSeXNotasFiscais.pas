@@ -285,6 +285,9 @@ begin
 
       SituacaoTrib := StrToSituacaoTrib(Ok, INIRec.ReadString(sSecao, 'SituacaoTrib', 'tp'));
 
+      // Provedor AssessorPublico
+      Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);
+
       Producao := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
       Status := StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
       OutrasInformacoes := INIRec.ReadString(sSecao, 'OutrasInformacoes', '');

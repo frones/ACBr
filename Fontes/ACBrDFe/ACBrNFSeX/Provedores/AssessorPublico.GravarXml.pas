@@ -106,7 +106,7 @@ begin
 //    Gerador.wCampo(tcStr, '', 'PAISFORA', 1, 1, 1, '1', '');
   end;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SITUACAO', 1, 1, 1,
+  NFSeNode.AppendChild(AddNode(tcInt, '#1', 'SITUACAO', 1, 4, 1,
                                                             NFSe.Situacao, ''));
 
   if NFSe.Servico.Valores.IssRetido = stRetencao then

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 26/10/2021
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Incluido a leitura do numero do Lote ao tratar o retorno do consultar
+    situação.
+   Por: Italo Giurizzato Junior
 -- Tecnos.Provider --
 [*] Possível correção ao preparar o ConsultarNFSePorFaixa.
    Por: Italo Giurizzato Junior

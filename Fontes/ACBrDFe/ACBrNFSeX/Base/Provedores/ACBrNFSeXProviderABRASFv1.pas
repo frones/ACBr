@@ -473,6 +473,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
+      Response.Lote := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('NumeroLote'), tcStr);
       Response.Situacao := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('Situacao'), tcStr);
     except
       on E:Exception do

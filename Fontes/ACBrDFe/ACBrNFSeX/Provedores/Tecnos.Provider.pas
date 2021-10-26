@@ -45,8 +45,9 @@ uses
 type
   TACBrNFSeXWebserviceTecnos201 = class(TACBrNFSeXWebserviceSoap11)
   public
+    function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
-    function GerarNFSe(ACabecalho, AMSG: String): string; override;
+//    function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
@@ -277,6 +278,22 @@ end;
 
 { TACBrNFSeXWebserviceTecnos201 }
 
+function TACBrNFSeXWebserviceTecnos201.Recepcionar(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<mRecepcaoLoteRPS xmlns="http://tempuri.org/">';
+  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '</mRecepcaoLoteRPS>';
+
+  Result := Executar('http://tempuri.org/mRecepcaoLoteRPS', Request,
+                     ['mRecepcaoLoteRPSResult', 'RecepcaoLoteRPSResposta'],
+                     []);
+end;
+
 function TACBrNFSeXWebserviceTecnos201.RecepcionarSincrono(ACabecalho,
   AMSG: String): string;
 var
@@ -293,6 +310,7 @@ begin
                      []);
 end;
 
+{
 function TACBrNFSeXWebserviceTecnos201.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
@@ -307,7 +325,7 @@ begin
                      ['mGerarNfseResult', 'GerarNfseResposta'],
                      []);
 end;
-
+}
 function TACBrNFSeXWebserviceTecnos201.ConsultarLote(ACabecalho,
   AMSG: String): string;
 var
@@ -363,12 +381,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<mConsultaNFSeServicoPrestado xmlns="http://tempuri.org/">';
+  Request := '<mConsultaNFSeServicosPrestados xmlns="http://tempuri.org/">';
   Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
-  Request := Request + '</mConsultaNFSeServicoPrestado>';
+  Request := Request + '</mConsultaNFSeServicosPrestados>';
 
-  Result := Executar('http://tempuri.org/mConsultaNFSeServicoPrestado', Request,
-                     ['mConsultaNFSeServicoPrestadoResult', 'ConsultarNfseServicoPrestadoResposta'],
+  Result := Executar('http://tempuri.org/mConsultaNFSeServicosPrestados', Request,
+                     ['mConsultaNFSeServicoPrestadosResult', 'ConsultarNfseServicoPrestadosResposta'],
                      []);
 end;
 
@@ -379,12 +397,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<mConsultaNFSeServicoTomado xmlns="http://tempuri.org/">';
+  Request := '<mConsultaNFSeServicosTomadosIntermediados xmlns="http://tempuri.org/">';
   Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
-  Request := Request + '</mConsultaNFSeServicoTomado>';
+  Request := Request + '</mConsultaNFSeServicosTomadosIntermediados>';
 
-  Result := Executar('http://tempuri.org/mConsultaNFSeServicoTomado', Request,
-                     ['mConsultaNFSeServicoTomadoResult', 'ConsultarNfseServicoTomadoResposta'],
+  Result := Executar('http://tempuri.org/mConsultaNFSeServicosTomadosIntermediados', Request,
+                     ['mConsultaNFSeServicosTomadosIntermediadosResult', 'ConsultaNFSeServicosTomadosIntermediadosResposta'],
                      []);
 end;
 

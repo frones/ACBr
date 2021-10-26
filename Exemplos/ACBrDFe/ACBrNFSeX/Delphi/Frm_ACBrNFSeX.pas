@@ -428,6 +428,12 @@ begin
       }
       SituacaoTrib := tsTributadaNoPrestador;
 
+      // Usado pelo provedor AssessorPublico
+      {
+        A tag SITUACAO refere-se ao código da situação da NFS-e e aceita números
+        inteiros de até 4 caracteres, sendo que devem estar previamente        cadastradas no sistema.      }
+      Situacao := 1;
+
 //      refNF := '123456789012345678901234567890123456789';
       Numero := NumDFe;
       // Provedor Infisc - Layout Proprio

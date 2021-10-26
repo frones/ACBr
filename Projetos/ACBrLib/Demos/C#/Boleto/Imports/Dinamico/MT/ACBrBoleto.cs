@@ -146,7 +146,7 @@ namespace ACBrLib.Boleto
         public void IncluirTitulos(params Titulo[] titulos)
         {
             var iniFile = new ACBrIniFile();
-            for (var i = 0; i < titulos.Length - 1; i++)
+            for (var i = 0; i < titulos.Length; i++)
             {
                 titulos[i].Index = i + 1;
                 titulos[i].WriteToIni(iniFile);
@@ -158,7 +158,7 @@ namespace ACBrLib.Boleto
         public void IncluirTitulos(BoletoTpSaida eTpSaida, params Titulo[] titulos)
         {
             var iniFile = new ACBrIniFile();
-            for (var i = 0; i < titulos.Length - 1; i++)
+            for (var i = 0; i < titulos.Length; i++)
             {
                 titulos[i].Index = i + 1;
                 titulos[i].WriteToIni(iniFile);

@@ -52,6 +52,8 @@ namespace ACBrLib.Boleto
 
         public DateTime? DataProtesto { get; set; }
 
+        public CodigoNegativacao CodigoNegativacao { get; set; } = CodigoNegativacao.cnNaoProtestar;
+
         public int DiasDeNegativacao { get; set; }
 
         public DateTime? DataNegativacao { get; set; }
@@ -142,7 +144,7 @@ namespace ACBrLib.Boleto
                 iniFile[sessao]["Detalhamento"] = string.Join("|", Detalhamento);
 
             var sessaoNfe = Index > 0 ? $"NFe{Index}-" : "NFe";
-            for (var i = 0; i < NotaFiscais.Count - 1; i++)
+            for (var i = 0; i < NotaFiscais.Count; i++)
                 iniFile.WriteToIni(NotaFiscais[i], $"{sessaoNfe}{i + 1}");
         }
 

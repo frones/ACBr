@@ -1186,7 +1186,7 @@ begin
       mLog.Lines.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
       mLog.Lines.Add('LISTA_FINAL....: '+LISTA_FINAL);
       mLog.Lines.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
-      mLog.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_CFe));
+      mLog.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_ULTIMA));
       mLog.Lines.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
       mLog.Lines.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
       mLog.Lines.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));

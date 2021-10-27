@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/10/2021
+-- AssessorPublico.Provider --
+[*] Possível correção no tratar retorno do consultar lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [+] Incluido o método ConsultarNFSeGenerico que suporta diversos tipos de 
     consultas.

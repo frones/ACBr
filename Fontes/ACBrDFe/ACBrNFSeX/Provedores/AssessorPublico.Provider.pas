@@ -299,13 +299,14 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'INCONSISTENCIA');
+      ANode := ANode.Childrens.FindAnyNs('Mensagem');
+
+      ProcessarMensagemErros(ANode, Response, 'NFSE', 'INCONSISTENCIA');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := ANode.Childrens.FindAnyNs('Mensagem');
-
       ANode := ANode.Childrens.FindAnyNs('NFSE');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -315,6 +316,7 @@ begin
       end;
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('NOTA');
+
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;

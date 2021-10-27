@@ -500,6 +500,7 @@ procedure TACBrNFSeProviderIPM.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
+  TagSerie: string;
 begin
   if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
   begin
@@ -525,14 +526,19 @@ begin
     Exit;
   end;
 
+  if ConfigGeral.Versao = ve101 then
+    TagSerie := 'serie_nfse'
+  else
+    TagSerie := 'serie';
+
   Response.XmlEnvio := '<nfse>' +
                          '<pesquisa>' +
                            '<numero>' +
                              OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
                            '</numero>' +
-                           '<serie>' +
+                           '<' + TagSerie + '>' +
                              OnlyNumber(Response.InfConsultaNFSe.SerieNFSe) +
-                           '</serie>' +
+                           '</' + TagSerie + '>' +
                            '<cadastro>' +
                              OnlyNumber(Response.InfConsultaNFSe.CadEconomico) +
                            '</cadastro>' +

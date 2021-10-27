@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/10/2021
+-- ACBrNFSeX --
+[+] Incluido o método ConsultarNFSeGenerico que suporta diversos tipos de 
+    consultas.
+   Por: Italo Giurizzato Junior
+-- IPM.Provider --
+[*] Possível solução para os dois layouts de consulta da NFSe.
+   Por: Italo Giurizzato Junior
+
 26/10/2021
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Incluido a leitura do numero do Lote ao tratar o retorno do consultar

@@ -155,6 +155,9 @@ type
       aPagina: Integer = 1; aDataInicial: TDateTime = 0; aDataFinal: TDateTime = 0;
       aTipoPeriodo: TtpPeriodo = tpEmissao);
 
+    // Usado Para realizar consultas genericas
+    procedure ConsultarNFSeGenerico(aInfConsultaNFSe: TInfConsultaNFSe);
+
     procedure ConsultarNFSe;
 
     procedure CancelarNFSe(aInfCancelamento: TInfCancelamento);
@@ -481,6 +484,33 @@ begin
   if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FProvider.ConsultaNFSe;
+end;
+
+procedure TACBrNFSeX.ConsultarNFSeGenerico(aInfConsultaNFSe: TInfConsultaNFSe);
+begin
+  FWebService.ConsultaNFSe.Clear;
+
+  with FWebService.ConsultaNFSe.InfConsultaNFSe do
+  begin
+    tpConsulta := aInfConsultaNFSe.tpConsulta;
+    NumeroIniNFSe := aInfConsultaNFSe.NumeroIniNFSe;
+    NumeroFinNFSe := aInfConsultaNFSe.NumeroFinNFSe;
+    SerieNFSe := aInfConsultaNFSe.SerieNFSe;
+    tpPeriodo := aInfConsultaNFSe.tpPeriodo;
+    DataInicial := aInfConsultaNFSe.DataInicial;
+    DataFinal := aInfConsultaNFSe.DataFinal;
+    CNPJPrestador := aInfConsultaNFSe.CNPJPrestador;
+    IMPrestador := aInfConsultaNFSe.IMPrestador;
+    CNPJTomador := aInfConsultaNFSe.CNPJTomador;
+    IMTomador := aInfConsultaNFSe.IMTomador;
+    CNPJInter := aInfConsultaNFSe.CNPJInter;
+    IMInter   := aInfConsultaNFSe.IMInter;
+    NumeroLote := aInfConsultaNFSe.NumeroLote;
+    Pagina := aInfConsultaNFSe.Pagina;
+    CadEconomico := aInfConsultaNFSe.CadEconomico;
+  end;
+
+  ConsultarNFSe;
 end;
 
 procedure TACBrNFSeX.ConsultarNFSePorFaixa(const aNumeroInicial, aNumeroFinal: string; aPagina: Integer);

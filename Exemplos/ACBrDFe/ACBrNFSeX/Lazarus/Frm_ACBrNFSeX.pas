@@ -961,7 +961,7 @@ begin
       CadEconomico := CodTrib;
     end;
 
-    ACBrNFSeX1.ConsultarNFSe;
+    ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
   finally
     InfConsultaNFSe.Free;
   end;
@@ -1016,9 +1016,9 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSeGenericoClick(Sender: TObject);
 var
-  xTitulo, NumIniNFSe, NumFinNFSe, DataIni, DataFin,
+  xTitulo, NumIniNFSe, NumFinNFSe, SerNFSe, DataIni, DataFin,
   CPFCNPJ_Prestador, IM_Prestador, CPFCNPJ_Tomador, IM_Tomador,
-  CPFCNPJ_Inter, IM_Inter, NumLote, NumPagina: String;
+  CPFCNPJ_Inter, IM_Inter, NumLote, NumPagina, CadEcon: String;
   InfConsultaNFSe: TInfConsultaNFSe;
 begin
   xTitulo := 'Consultar NFSe Genérico';
@@ -1029,6 +1029,10 @@ begin
 
   NumFinNFSe := '';
   if not(InputQuery(xTitulo, 'Numero Final da NFSe:', NumFinNFSe)) then
+    exit;
+
+  SerNFSe := '1';
+  if not(InputQuery(xTitulo, 'Série da NFSe:', SerNFSe)) then
     exit;
 
   DataIni := DateToStr(Date);
@@ -1074,6 +1078,10 @@ begin
   if not(InputQuery(xTitulo, 'Pagina:', NumPagina)) then
     exit;
 
+  CadEcon := '';
+  if not(InputQuery(xTitulo, 'Cadastro Economico (Insc. Munic.):', CadEcon)) then
+    exit;
+
   InfConsultaNFSe := TInfConsultaNFSe.Create;
 
   try
@@ -1087,6 +1095,7 @@ begin
       // Necessário para a consulta por numero e por faixa
       NumeroIniNFSe := NumIniNFSe;
       NumeroFinNFSe := NumFinNFSe;
+      SerieNFSe := SerNFSe;
 
       // Valores aceito para o Tipo de Periodo:
       // tpEmissao, tpCompetencia
@@ -1113,9 +1122,11 @@ begin
 
       // Necessário para os provedores que seguem a versão 2 do layout da ABRASF
       Pagina := StrToIntDef(NumPagina, 1);
+
+      CadEconomico := CadEcon;
     end;
 
-    ACBrNFSeX1.ConsultarNFSe;
+    ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
   finally
     InfConsultaNFSe.Free;
   end;
@@ -1187,14 +1198,11 @@ begin
             Pagina := StrToIntDef(NumPagina, 1);
           end;
 
-          ACBrNFSeX1.ConsultarNFSe;
+          ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
         finally
           InfConsultaNFSe.Free;
         end;
       end;
-
-//      ACBrNFSeX1.ConsultarNFSePorPeriodo(StrToDateDef(DataIni, 0),
-//                  StrToDateDef(DataFin, 0), StrToIntDef(NumPagina, 1), NumLote);
 
     proFGMaiss,
     proWebFisco:
@@ -1210,7 +1218,7 @@ begin
             Tipo := xTipo;
           end;
 
-          ACBrNFSeX1.ConsultarNFSe;
+          ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
         finally
           InfConsultaNFSe.Free;
         end;
@@ -1230,7 +1238,7 @@ begin
             Pagina := StrToIntDef(NumPagina, 1);
           end;
 
-          ACBrNFSeX1.ConsultarNFSe;
+          ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
         finally
           InfConsultaNFSe.Free;
         end;

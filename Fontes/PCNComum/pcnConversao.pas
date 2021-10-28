@@ -78,7 +78,8 @@ type
                           oeNacionalConteudoImportacaoSuperior40, oeNacionalProcessosBasicos,
                           oeNacionalConteudoImportacaoInferiorIgual40,
                           oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
-                          oeNacionalConteudoImportacaoSuperior70);
+                          oeNacionalConteudoImportacaoSuperior70, oeReservadoParaUsoFuturo, 
+                          oeVazio);
   TpcnCSTIcms = (cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
                  cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
                  cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60); //80 e 81 apenas para CTe
@@ -595,22 +596,24 @@ end;
 // N11 - Origem da mercadoria **************************************************
 function OrigToStr(const t: TpcnOrigemMercadoria): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6', '7', '8'],
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ''],
      [oeNacional, oeEstrangeiraImportacaoDireta, oeEstrangeiraAdquiridaBrasil,
       oeNacionalConteudoImportacaoSuperior40, oeNacionalProcessosBasicos,
       oeNacionalConteudoImportacaoInferiorIgual40,
       oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
-      oeNacionalConteudoImportacaoSuperior70]);
+      oeNacionalConteudoImportacaoSuperior70, oeReservadoParaUsoFuturo,
+      oeVazio]);
 end;
 
 function StrToOrig(out ok: boolean; const s: string): TpcnOrigemMercadoria;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', '7', '8'],
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ''],
      [oeNacional, oeEstrangeiraImportacaoDireta, oeEstrangeiraAdquiridaBrasil,
       oeNacionalConteudoImportacaoSuperior40, oeNacionalProcessosBasicos,
       oeNacionalConteudoImportacaoInferiorIgual40,
       oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
-      oeNacionalConteudoImportacaoSuperior70]);
+      oeNacionalConteudoImportacaoSuperior70, oeReservadoParaUsoFuturo,
+      oeVazio]);
 end;
 
 function CSTPISToStrTagPosText(const t: TpcnCstPis): string;
@@ -733,7 +736,7 @@ end;
 //CST CSON ICMS ***********************************************************
 function CSOSNIcmsToStr(const t: TpcnCSOSNIcms): string;
 begin
-  result := EnumeradoToStr(t, ['0','101', '102', '103', '201', '202', '203', '300', '400', '500','900'],
+  result := EnumeradoToStr(t, ['','101', '102', '103', '201', '202', '203', '300', '400', '500','900'],
     [csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900]);
 end;
 
@@ -1350,13 +1353,14 @@ begin
   result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
                                '09', '10', '11', '12', '13', '14', '15', '16',
                                '17', '18', '19', '20', '21', '22', '23', '24',
-                               '25', '26', '27', '99'],
+                               '25', '26', '27', '99', ''],
                               [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                                bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
                                bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
                                bcGoodCard, bcGreenCard, bcHiper, bcJcB, bcMais,
                                bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
-                               bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros]);
+                               bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros,
+                               TpcnBandeiraCartao(-1)]);
 end;
 
 function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
@@ -1364,13 +1368,14 @@ begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08',
                                    '09', '10', '11', '12', '13', '14', '15', '16',
                                    '17', '18', '19', '20', '21', '22', '23', '24',
-                                   '25', '26', '27', '99'],
+                                   '25', '26', '27', '99', ''],
                                   [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
                                    bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
                                    bcAlelo, bcBanesCard, bcCalCard, bcCredz, bcDiscover,
                                    bcGoodCard, bcGreenCard, bcHiper, bcJcB, bcMais,
                                    bcMaxVan, bcPolicard, bcRedeCompras, bcSodexo,
-                                   bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros]);
+                                   bcValeCard, bcVerocheque, bcVR, bcTicket, bcOutros,
+                                   TpcnBandeiraCartao(-1)]);
 end;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;

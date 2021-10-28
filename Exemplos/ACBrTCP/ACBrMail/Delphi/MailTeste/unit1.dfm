@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 303
-  Top = 194
+  Left = 294
+  Top = 202
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Exemplo ACBrMail'
-  ClientHeight = 447
+  ClientHeight = 448
   ClientWidth = 749
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -289,7 +289,7 @@ object Form1: TForm1
     Left = 0
     Top = 41
     Width = 749
-    Height = 406
+    Height = 407
     ActivePage = tsMensagem
     Align = alClient
     TabOrder = 1

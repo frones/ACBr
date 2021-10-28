@@ -43,6 +43,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/10/2021
+-- IPM.Provider --
+[*] Possível correção no tratamento do retorno do Consultar NFSe.
+   Por: Italo Giurizzato Junior
+[*] Possível correção no Preparar o Cancelamento da NFSe (layouts diferentes).
+   Por: Italo Giurizzato Junior
+-- Tecnos.GravarXml --
+[*] A tag <InscricaoMunicipal> do tomador é obrigatória.
+   Por: Italo Giurizzato Junior
+-- Conam.Provider --
+[*] Se o Id for igual a OK não significa rejeição ou erro.
+   Por: Italo Giurizzato Junior
+-- AssessorPublico.Provider --
+[*] Possível correção no tratar retorno do consultar NFSe.
+   Por: Italo Giurizzato Junior
+
 27/10/2021
 -- AssessorPublico.Provider --
 [*] Possível correção no tratar retorno do consultar lote.

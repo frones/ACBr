@@ -115,6 +115,8 @@ begin
 
   NrOcorrRegimeEspecialTributacao := 1;
 
+  NrOcorrInscMunTomador := 1;
+
   GerarTagServicos := False;
 end;
 

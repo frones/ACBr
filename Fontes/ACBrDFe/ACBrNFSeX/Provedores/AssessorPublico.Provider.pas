@@ -403,6 +403,10 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  NumNFSe: String;
+  ANota: NotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -418,13 +422,51 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
+      ANode := Document.Root;
 
-      if ANode <> nil then
+      ANode := ANode.Childrens.FindAnyNs('Mensagem');
+
+      ProcessarMensagemErros(ANode, Response, 'NFSE', 'INCONSISTENCIA');
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := ANode.Childrens.FindAnyNs('NFSE');
+
+      if not Assigned(ANode) then
       begin
-        ProcessarMensagemErros(ANode, Response, '', 'INCONSISTENCIA');
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
 
-        Response.Sucesso := (Response.Erros.Count = 0);
+      ANodeArray := ANode.Childrens.FindAllAnyNs('NOTA');
+
+      if not Assigned(ANodeArray) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      for i := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        ANode := ANodeArray[i];
+
+        NumNFSe := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('COD'), tcStr);
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+        if Assigned(ANota) then
+          ANota.XML := ANode.OuterXml
+        else
+        begin
+          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+        end;
+
+        SalvarXmlNfse(ANota);
       end;
     except
       on E:Exception do

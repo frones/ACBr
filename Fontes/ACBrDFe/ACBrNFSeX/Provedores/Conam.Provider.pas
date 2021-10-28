@@ -157,6 +157,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  xId: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -169,10 +170,15 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Id'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
-    AErro.Correcao := '';
+    xId := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Id'), tcStr);
+
+    if xId <> 'OK' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := xId;
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
+      AErro.Correcao := '';
+    end;
   end;
 end;
 
@@ -640,6 +646,7 @@ begin
       if AuxNode <> nil then
       begin
         ANodeArray := AuxNode.Childrens.FindAllAnyNs('Reg20');
+
         if not Assigned(ANodeArray) then
         begin
           AErro := Response.Erros.New;
@@ -651,13 +658,11 @@ begin
         for i := Low(ANodeArray) to High(ANodeArray) do
         begin
           ANode := ANodeArray[i];
-          AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+          AuxNode := ANode.Childrens.FindAnyNs('Reg20Item');
 
           if AuxNode <> nil then
           begin
-            AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-            AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-            AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+            AuxNode := AuxNode.Childrens.FindAnyNs('NumRps');
 
             if AuxNode <> nil then
             begin

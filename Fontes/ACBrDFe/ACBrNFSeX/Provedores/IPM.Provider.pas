@@ -552,10 +552,10 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
+//  ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
   ANota: NotaFiscal;
-  I: Integer;
+//  I: Integer;
   NotaCompleta: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -584,6 +584,35 @@ begin
 
       if NotaCompleta then
       begin
+        AuxNode := ANode.Childrens.FindAnyNs('rps');
+        NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nro_recibo_provisorio'), tcStr);
+
+        with Response do
+        begin
+          AuxNode := ANode.Childrens.FindAnyNs('nf');
+
+          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero_nfse'), tcStr);
+          SerieNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('serie_nfse'), tcStr);
+          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('data_nfse'), tcDatVcto);
+          Data := Data + ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('hora_nfse'), tcHor);
+          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_codigo_nfse'), tcStr);
+          DescSituacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao_descricao_nfse'), tcStr);
+        end;
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+        if Assigned(ANota) then
+          ANota.XML := ANode.OuterXml
+        else
+        begin
+          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+        end;
+
+        SalvarXmlNfse(ANota);
+        {
         ANodeArray := ANode.Childrens.FindAllAnyNs('nfse');
         if not Assigned(ANodeArray) and (Response.Sucesso) then
         begin
@@ -625,6 +654,7 @@ begin
 
           SalvarXmlNfse(ANota);
         end;
+        }
       end
       else
       begin
@@ -658,6 +688,7 @@ procedure TACBrNFSeProviderIPM.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
+  xSerie: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -684,6 +715,13 @@ begin
   end;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  if ConfigGeral.Versao = ve101 then
+    xSerie := '<serie_nfse>' +
+                Response.InfCancelamento.SerieNFSe +
+              '</serie_nfse>'
+  else
+    xSerie := '';
 
   if ConfigGeral.Params1 = 'SolicitarCancelamento' then
   begin
@@ -718,9 +756,7 @@ begin
                              '<numero>' +
                                Response.InfCancelamento.NumeroNFSe +
                              '</numero>' +
-                             '<serie_nfse>' +
-                               Response.InfCancelamento.SerieNFSe +
-                             '</serie_nfse>' +
+                             xSerie +
                              '<situacao>' +
                                'C' +
                              '</situacao>' +

@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Synapse TCP/IP / Serial library - (http://www.synapse.ararat.cz)"/>
     <Version Major="40" Minor="1"/>
-    <Files Count="38">
+    <Files Count="37">
       <Item1>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\asn1util.pas"/>
         <UnitName Value="asn1util"/>
@@ -159,17 +159,13 @@
         <UnitName Value="ssl_openssl_lib"/>
       </Item35>
       <Item36>
-        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl_capi.pas"/>
-        <UnitName Value="ssl_openssl_capi"/>
-      </Item36>
-      <Item37>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl11.pas"/>
         <UnitName Value="ssl_openssl11"/>
-      </Item37>
-      <Item38>
+      </Item36>
+      <Item37>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl11_lib.pas"/>
         <UnitName Value="ssl_openssl11_lib"/>
-      </Item38>
+      </Item37>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

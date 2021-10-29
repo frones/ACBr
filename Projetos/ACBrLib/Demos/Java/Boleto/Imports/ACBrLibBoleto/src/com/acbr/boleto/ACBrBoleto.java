@@ -11,7 +11,7 @@ import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
 public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
-       
+    
     private interface ACBrBoletoLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrBoletoLib INSTANCE = LibraryLoader.getInstance();       
@@ -161,18 +161,10 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
         return processResult(buffer, bufferLen);
     }
-
-    public void configLer() throws Exception {
-        configLer("");
-    }
-
+    
     public void configLer(String eArqConfig) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigLer(toUTF8(eArqConfig));
         checkResult(ret);
-    }
-
-    public void configGravar() throws Exception {
-        configGravar("");
     }
 
     public void configGravar(String eArqConfig) throws Exception {
@@ -180,6 +172,7 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
     }
 
+    @Override
     public String configLerValor(ACBrSessao eSessao, String eChave) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -190,28 +183,25 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }
 
+    @Override
     public void configGravarValor(ACBrSessao eSessao, String eChave, Object value) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigGravarValor(toUTF8(eSessao.name()), toUTF8(eChave), toUTF8(value.toString()));
         checkResult(ret);
     }
     
-    public void ConfigImportar(String eArqConfig) throws Exception {
-        
+    public void importarConfig(String eArqConfig) throws Exception {        
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigImportar(eArqConfig);
-        checkResult(ret);
-        
+        checkResult(ret);        
     }
     
-    public String ConfigExportar() throws Exception {
-		
+    public String exportarConfig() throws Exception {		
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigExportar(buffer, bufferLen);
         checkResult(ret);
 
-        return fromUTF8(buffer, bufferLen.getValue());
-		
+        return fromUTF8(buffer, bufferLen.getValue());		
     }
     
     public void ConfigurarDados(String eArquivoIni) throws Exception {

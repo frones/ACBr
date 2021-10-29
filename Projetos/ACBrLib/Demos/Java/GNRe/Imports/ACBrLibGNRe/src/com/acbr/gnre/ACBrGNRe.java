@@ -10,9 +10,6 @@ import com.sun.jna.ptr.IntByReference;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Implementa AutoCloseable para ser possível usar em try-with-resources
@@ -206,6 +203,7 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
 
+    @Override
   public String configLerValor( ACBrSessao eSessao, String eChave ) throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
     IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
@@ -216,6 +214,7 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
     return processResult( buffer, bufferLen );
   }
 
+    @Override
   public void configGravarValor( ACBrSessao eSessao, String eChave, Object value ) throws Exception {
     int ret = ACBrGNReLib.INSTANCE.GNRE_ConfigGravarValor( toUTF8( eSessao.name() ), toUTF8( eChave ), toUTF8( value.toString() ) );
     checkResult( ret );

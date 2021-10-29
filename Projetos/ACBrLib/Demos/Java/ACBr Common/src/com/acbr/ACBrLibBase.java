@@ -28,6 +28,10 @@ public abstract class ACBrLibBase {
         this.libHandler = value;
     }
     
+    public abstract String configLerValor(ACBrSessao eSessao, String eChave) throws Exception;
+    
+    public abstract void configGravarValor(ACBrSessao eSessao, String eChave, Object value) throws Exception;
+    
     /**
      *
      * @param value
@@ -88,14 +92,11 @@ public abstract class ACBrLibBase {
      */
     protected String processResult(ByteBuffer buffer, IntByReference bufferLen){
         int bLen = bufferLen.getValue();
-        if (bLen <= STR_BUFFER_LEN) {
-            return fromUTF8(buffer, bufferLen);
-        }
-
         if (bLen > STR_BUFFER_LEN) {
-            buffer = ByteBuffer.allocate(bLen);
-            bufferLen = new IntByReference(bLen);
-            UltimoRetorno(buffer, bufferLen);
+            ByteBuffer nBuffer = ByteBuffer.allocate(bLen);
+            IntByReference nBufferLen = new IntByReference(bLen);
+            UltimoRetorno(nBuffer, nBufferLen);
+            return fromUTF8(nBuffer, nBufferLen);
         }
 
         return fromUTF8(buffer, bufferLen);

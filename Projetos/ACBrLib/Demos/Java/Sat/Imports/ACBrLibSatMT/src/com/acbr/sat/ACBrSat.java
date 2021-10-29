@@ -121,14 +121,14 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrSatLib.INSTANCE.SAT_Inicializar(handle, toUTF8(iniFile.getAbsolutePath()), toUTF8(""));
         checkResult(ret);
-		setHandle(handle.getValue());
+        setHandle(handle.getValue());
     }
 
     public ACBrSat(String eArqConfig, String eChaveCrypt) throws Exception {
         PointerByReference handle = new PointerByReference();
         int ret = ACBrSatLib.INSTANCE.SAT_Inicializar(handle, toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
-		setHandle(handle.getValue());
+        setHandle(handle.getValue());
     }
     
     @Override
@@ -154,7 +154,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         int ret = ACBrSatLib.INSTANCE.SAT_Nome(getHandle(), buffer, bufferLen);
         checkResult(ret);
 
-        return fromUTF8(buffer, bufferLen.getValue());
+        return fromUTF8(buffer, bufferLen.getValue());        
     }
 
     public String versao() throws Exception {
@@ -185,6 +185,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
     }
 
+    @Override
     public String configLerValor(ACBrSessao eSessao, String eChave) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -195,6 +196,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }
 
+    @Override
     public void configGravarValor(ACBrSessao eSessao, String eChave, Object value) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_ConfigGravarValor(getHandle(), toUTF8(eSessao.name()), toUTF8(eChave), toUTF8(value.toString()));
         checkResult(ret);

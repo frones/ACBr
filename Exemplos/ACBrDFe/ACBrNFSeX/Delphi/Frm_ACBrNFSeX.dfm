@@ -464,39 +464,6 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Height = 13
                 Caption = 'Schemas do Provedor:'
               end
-              object lblSchemas: TLabel
-                Left = 121
-                Top = 220
-                Width = 65
-                Height = 13
-                Caption = 'lblSchemas'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clRed
-                Font.Height = -11
-                Font.Name = 'MS Sans Serif'
-                Font.Style = [fsBold]
-                ParentFont = False
-              end
-              object Label45: TLabel
-                Left = 9
-                Top = 264
-                Width = 102
-                Height = 13
-                Caption = 'Vers'#227'o dos Schemas:'
-              end
-              object lblVersaoSchemas: TLabel
-                Left = 121
-                Top = 264
-                Width = 53
-                Height = 13
-                Caption = 'lblVersao'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clRed
-                Font.Height = -11
-                Font.Name = 'MS Sans Serif'
-                Font.Style = [fsBold]
-                ParentFont = False
-              end
               object edtPathLogs: TEdit
                 Left = 8
                 Top = 162
@@ -983,6 +950,46 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 76
               Height = 13
               Caption = 'CNPJ Prefeitura'
+            end
+            object Label47: TLabel
+              Left = 8
+              Top = 372
+              Width = 48
+              Height = 13
+              Caption = 'Provedor:'
+            end
+            object lblSchemas: TLabel
+              Left = 61
+              Top = 372
+              Width = 65
+              Height = 13
+              Caption = 'lblSchemas'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clRed
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label45: TLabel
+              Left = 8
+              Top = 389
+              Width = 37
+              Height = 13
+              Caption = 'Vers'#227'o:'
+            end
+            object lblVersaoSchemas: TLabel
+              Left = 61
+              Top = 390
+              Width = 53
+              Height = 13
+              Caption = 'lblVersao'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clRed
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
             end
             object edtEmitCNPJ: TEdit
               Left = 8

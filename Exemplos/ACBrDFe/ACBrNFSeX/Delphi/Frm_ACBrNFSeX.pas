@@ -154,7 +154,6 @@ type
     TabSheet9: TTabSheet;
     OpenDialog1: TOpenDialog;
     Label6: TLabel;
-    lblSchemas: TLabel;
     Label39: TLabel;
     edtPrestLogo: TEdit;
     sbtnPrestLogo: TSpeedButton;
@@ -223,12 +222,14 @@ type
     edtChaveAutorizWeb: TEdit;
     WBXmlEnvio: TWebBrowser;
     WBXmlNotas: TWebBrowser;
-    Label45: TLabel;
-    lblVersaoSchemas: TLabel;
     chkMontarPathSchemas: TCheckBox;
     Label46: TLabel;
     edtPathPDF: TEdit;
     sbtnPathPDF: TSpeedButton;
+    Label47: TLabel;
+    lblSchemas: TLabel;
+    Label45: TLabel;
+    lblVersaoSchemas: TLabel;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -1188,7 +1189,8 @@ end;
 
 procedure TfrmACBrNFSe.btnConsultarNFSePeloNumeroClick(Sender: TObject);
 var
-  xTitulo, NumeroNFSe, NumPagina, NumLote, xDataIni, xDataFin, xTipo: String;
+  xTitulo, NumeroNFSe, SerNFSe, NumPagina, NumLote, xDataIni, xDataFin,
+  xTipo: String;
   InfConsultaNFSe: TInfConsultaNFSe;
 begin
   xTitulo := 'Consultar NFSe Por Numero';
@@ -1196,6 +1198,13 @@ begin
   NumeroNFSe := '';
   if not(InputQuery(xTitulo, 'Numero da NFSe:', NumeroNFSe)) then
     exit;
+
+  SerNFSe := '';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proIPM] then
+  begin
+    if not(InputQuery(xTitulo, 'Série da NFSe:', SerNFSe)) then
+      exit;
+  end;
 
   NumLote := '1';
   xDataIni := '';
@@ -1288,6 +1297,26 @@ begin
             NumeroIniNFSe := NumeroNFSe;
             NumeroLote := NumLote;
             Pagina := StrToIntDef(NumPagina, 1);
+          end;
+
+          ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
+        finally
+          InfConsultaNFSe.Free;
+        end;
+      end;
+
+    proIPM:
+      begin
+        InfConsultaNFSe := TInfConsultaNFSe.Create;
+
+        try
+          with InfConsultaNFSe do
+          begin
+            tpConsulta := tcPorNumero;
+
+            NumeroIniNFSe := NumeroNFSe;
+            SerNFSe := SerNFSe;
+            CadEconomico := edtEmitIM.Text;
           end;
 
           ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);

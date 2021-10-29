@@ -113,8 +113,11 @@ begin
   begin
     for i := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
     begin
-      FPArquivoPDF := PathWithDelim(Self.PathPDF) +
-        TACBrNFSe(ACBrNFSe).NumID[TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe] + '-nfse.pdf';
+      if Trim(self.NomeDocumento) <> ''  then
+        FPArquivoPDF := PathWithDelim(Self.PathPDF) + self.NomeDocumento + '-nfse.pdf'
+      else
+        FPArquivoPDF := PathWithDelim(Self.PathPDF) +
+          TACBrNFSe(ACBrNFSe).NumID[TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe] + '-nfse.pdf';
 
       TfrlDANFSeRLRetrato.SalvarPDF(Self, TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe, FPArquivoPDF);
     end;

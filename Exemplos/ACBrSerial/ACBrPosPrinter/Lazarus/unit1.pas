@@ -37,7 +37,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   strutils, ExtCtrls, Buttons, Spin, ComCtrls, ExtDlgs, ACBrPosPrinter,
-  ACBrDevice, ACBrCMC7, ACBrPosPrinterElginE1Service;
+  ACBrDevice, ACBrCMC7{, ACBrPosPrinterElginE1Service};
 
 type
 
@@ -222,7 +222,7 @@ type
     procedure seQRCodeTipoChange(Sender: TObject);
   private
     { private declarations }
-    fE1Printer: TACBrPosPrinterElginE1Service;
+    //fE1Printer: TACBrPosPrinterElginE1Service;
 
     Procedure GravarINI ;
     Procedure LerINI ;
@@ -264,11 +264,11 @@ begin
   btSearchPortsClick(Sender);
   pgAbas.ActivePageIndex := 0;
 
-  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
-  fE1Printer.Modelo := prnI9;
-  // Usar por TXT
-  fE1Printer.PastaEntradaE1 := 'c:\E1\pathIN';
-  fE1Printer.PastaSaidaE1 := 'c:\E1\pathOUT';
+  //fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  //fE1Printer.Modelo := prnI9;
+  //// Usar por TXT
+  //fE1Printer.PastaEntradaE1 := 'c:\E1\pathIN';
+  //fE1Printer.PastaSaidaE1 := 'c:\E1\pathOUT';
   // Usar por TCP
   //fE1Printer.IPePortaE1 := '192.168.56.1:89';
 
@@ -277,7 +277,7 @@ end;
 
 procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
 begin
-  fE1Printer.Free;
+  //fE1Printer.Free;
 end;
 
 procedure TFrPosPrinterTeste.FormClose(Sender: TObject;
@@ -623,6 +623,12 @@ begin
 end;
 
 procedure TFrPosPrinterTeste.bTagsTestePageModeClick(Sender: TObject);
+const
+  CLarguraRegiaoEsquerda = 270;
+var
+  TextoLateral: String;
+  DadosCabecalho: TStringList;
+  Altura: Integer;
 begin
   LimparTexto;
   mImp.Lines.Add('</zera><barra_mostrar>0</barra_mostrar><barra_largura>2</barra_largura><barra_altura>40</barra_altura>');
@@ -659,6 +665,33 @@ begin
   mImp.Lines.Add('</mp>');
   mImp.Lines.Add('');
   mImp.Lines.Add('</corte_total>');
+{
+  TextoLateral := QuebraLinhas('<n>PROJETO ACBR CONSULTORIA LTDA</n>' +
+                               ' CNPJ:12.345.678/0001-12'+
+                               ' IE:999.888.777.666',
+                               Trunc(ACBrPosPrinter1.ColunasFonteCondensada/2))+sLineBreak+
+                  QuebraLinhas('Rua Coronel Aureliano de Camargo, 963 ' +
+                               'Centro '+
+                               'Tatuí-SP ' +
+                               '<n>(15)2105-0750</n>',
+                               Trunc(ACBrPosPrinter1.ColunasFonteCondensada/2));
+
+  DadosCabecalho := TStringList.Create;
+  try
+    DadosCabecalho.Text := TextoLateral;
+    Altura := max(ACBrPosPrinter1.CalcularAlturaTexto(DadosCabecalho.Count),250);
+  finally
+    DadosCabecalho.Free;
+  end;
+  mImp.Lines.Add('</zera></ae><c><mp>' +
+                 ACBrPosPrinter1.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda) +
+                 '</logo>');
+  mImp.Lines.Add( ACBrPosPrinter1.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
+                  TextoLateral +
+                 '</mp>');
+
+  mImp.Lines.Add('</corte_total>');
+  }
 end;
 
 procedure TFrPosPrinterTeste.btEjetarChequeClick(Sender: TObject);
@@ -841,21 +874,21 @@ end;
 procedure TFrPosPrinterTeste.cbxModeloChange(Sender: TObject);
 begin
   try
-    if cbxModelo.ItemIndex = Integer(ppExterno) then
-    begin
-      ACBrPosPrinter1.ModeloExterno := fE1Printer;
-      ACBrPosPrinter1.Modelo := ppExterno;
-      cbxPorta.Text := 'NULL';
-      cbxPorta.Enabled := False;
-    end
-    else
-    begin
+    //if cbxModelo.ItemIndex = Integer(ppExterno) then
+    //begin
+    //  //ACBrPosPrinter1.ModeloExterno := fE1Printer;
+    //  ACBrPosPrinter1.Modelo := ppExterno;
+    //  cbxPorta.Text := 'NULL';
+    //  cbxPorta.Enabled := False;
+    //end
+    //else
+    //begin
       ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
       if (cbxPorta.Text = 'NULL') then
         cbxPorta.Text := '';
 
       cbxPorta.Enabled := True;
-    end;
+    //end;
   except
      cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
      cbxPorta.Enabled := True;

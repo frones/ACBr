@@ -1,7 +1,7 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 448
+  Left = 253
   Height = 631
-  Top = 132
+  Top = 59
   Width = 1048
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
@@ -13,7 +13,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poScreenCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.0.12.0'
   object Panel1: TPanel
     Left = 256
     Height = 631

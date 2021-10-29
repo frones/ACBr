@@ -2287,12 +2287,12 @@ begin
               (NFe.Det[i].Imposto.ICMS.vFCPST > 0) then
             begin
               xmlNode.AppendChild(AddNode(tcDe2, 'N23a',
-                'vBCFCPST ', 01, 15, 0, NFe.Det[i].Imposto.ICMS.vBCFCPST, DSC_VBCFCPST));
+                'vBCFCPST ', 01, 15, 1, NFe.Det[i].Imposto.ICMS.vBCFCPST, DSC_VBCFCPST));
               xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4, tcDe4, tcDe2),
-                'N23b', 'pFCPST', 01, IIf(Usar_tcDe4, 07, 05), 0,
+                'N23b', 'pFCPST', 01, IIf(Usar_tcDe4, 07, 05), 1,
                 NFe.Det[i].Imposto.ICMS.pFCPST, DSC_PFCPST));
               xmlNode.AppendChild(AddNode(tcDe2, 'N23d', 'vFCPST ',
-                01, 15, 0, NFe.Det[i].Imposto.ICMS.vFCPST, DSC_VFCPST));
+                01, 15, 1, NFe.Det[i].Imposto.ICMS.vFCPST, DSC_VFCPST));
             end;
           end;
           xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4, tcDe4, tcDe2),

@@ -295,7 +295,7 @@ begin
   if Length(FSysLogMessage.PacketBuf) <= 1024 then
   begin
     FSock.Connect(FTargetHost, FTargetPort);
-    FSock.SendString(FSysLogMessage.PacketBuf);
+    FSock.SendString( {$IFDEF UNICODE} AnsiString {$ENDIF} (FSysLogMessage.PacketBuf));
     Result := FSock.LastError = 0;
   end;
 end;

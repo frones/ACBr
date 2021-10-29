@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 001.004.000 |
+| Project : Ararat Synapse                                       | 002.000.000 |
 |==============================================================================|
 | Content: SSL support by OpenSSL                                              |
 |==============================================================================|
-| Copyright (c)1999-2017, Lukas Gebauer                                        |
+| Copyright (c)1999-2021, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,13 +33,11 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c)2005-2017.                |
+| Portions created by Lukas Gebauer are Copyright (c)2005-2021.                |
 | Portions created by Petr Fejfar are Copyright (c)2011-2012.                  |
-| Portions created by Pepak are Copyright (c)2018.                             |
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
-|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -50,17 +48,14 @@
 {:@abstract(SSL plugin for OpenSSL)
 
 Compatibility with OpenSSL versions:
-0.9.6 should work, known mysterious crashing on FreePascal and Linux platform.
-0.9.7 - 1.0.0 working fine.
-1.1.0 should work, under testing.
+1.1.0
+1.1.1
 
 OpenSSL libraries are loaded dynamicly - you not need OpenSSL librares even you
 compile your application with this unit. SSL just not working when you not have
 OpenSSL libraries.
 
-This plugin have limited support for .NET too! Because is not possible to use
-callbacks with CDECL calling convention under .NET, is not supported
-key/certificate passwords and multithread locking. :-(
+This plugin does not have support for .NET!
 
 For handling keys and certificates you can use this properties:
 
@@ -87,41 +82,31 @@ accepting of new connections!
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
 
-{$IFDEF NEXTGEN}
-  {$ZEROBASEDSTRINGS OFF}
-{$ENDIF}
-
-unit ssl_openssl;
+unit ssl_openssl11;
 
 interface
 
 uses
   SysUtils, Classes,
-  blcksock, synsock, synautil, synafpc,
-{$IfDef CIL}
-  System.Text,
-{$EndIf}
-  ssl_openssl_lib;
+  {$IFDEF DELPHI23_UP} AnsiStrings, {$ENDIF}
+  blcksock, synsock, synautil,
+  ssl_openssl11_lib;
 
 type
   {:@abstract(class implementing OpenSSL SSL plugin.)
    Instance of this class will be created for each @link(TTCPBlockSocket).
    You not need to create instance of this class, all is done by Synapse itself!}
   TSSLOpenSSL = class(TCustomSSL)
-  private
-    FServer: boolean;
   protected
     FSsl: PSSL;
     Fctx: PSSL_CTX;
-    function NeedSigningCertificate: boolean; virtual;
     function SSLCheck: Boolean;
-    function SetSslKeys: boolean; virtual;
-    function Init: Boolean;
+    function SetSslKeys: boolean;
+    function Init(server:Boolean): Boolean;
     function DeInit: Boolean;
-    function Prepare: Boolean;
+    function Prepare(server:Boolean): Boolean;
     function LoadPFX(pfxdata: ansistring): Boolean;
     function CreateSelfSignedCert(Host: string): Boolean; override;
-    property Server: boolean read FServer;
   public
     {:See @inherited}
     constructor Create(const Value: TTCPBlockSocket); override;
@@ -174,7 +159,6 @@ implementation
 
 {==============================================================================}
 
-{$IFNDEF CIL}
 function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
 var
   Password: AnsiString;
@@ -185,9 +169,8 @@ begin
   if Length(Password) > (Size - 1) then
     SetLength(Password, Size - 1);
   Result := Length(Password);
-  synafpc.StrLCopy(buf, PAnsiChar(Password + #0), Result + 1);
+  {$IFDEF DELPHI23_UP}AnsiStrings.{$ENDIF}StrLCopy(buf, PAnsiChar(Password + #0), Result + 1);
 end;
-{$ENDIF}
 
 {==============================================================================}
 
@@ -207,19 +190,16 @@ end;
 
 function TSSLOpenSSL.LibVersion: String;
 begin
-  Result := SSLeayversion(0);
+  Result := OpenSSLversion(0);
 end;
 
 function TSSLOpenSSL.LibName: String;
 begin
-  Result := 'ssl_openssl';
+  Result := 'ssl_openssl11';
 end;
 
 function TSSLOpenSSL.SSLCheck: Boolean;
 var
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
   s : AnsiString;
 begin
   Result := true;
@@ -229,15 +209,9 @@ begin
   if FLastError <> 0 then
   begin
     Result := False;
-{$IFDEF CIL}
-    sb := StringBuilder.Create(256);
-    ErrErrorString(FLastError, sb, 256);
-    FLastErrorDesc := Trim(sb.ToString);
-{$ELSE}
     s := StringOfChar(#0, 256);
     ErrErrorString(FLastError, s, Length(s));
     FLastErrorDesc := s;
-{$ENDIF}
   end;
 end;
 
@@ -251,9 +225,6 @@ var
   b: PBIO;
   xn, y: integer;
   s: AnsiString;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   Result := True;
   pk := EvpPkeynew;
@@ -262,7 +233,8 @@ begin
     rsa := RsaGenerateKey(2048, $10001, nil, nil);
     EvpPkeyAssign(pk, EVP_PKEY_RSA, rsa);
     X509SetVersion(x, 2);
-    Asn1IntegerSet(X509getSerialNumber(x), 0);
+//    Asn1IntegerSet(X509getSerialNumber(x), 0);
+    Asn1IntegerSet(X509getSerialNumber(x), GetTick);
     t := Asn1UtctimeNew;
     try
       X509GmtimeAdj(t, -60 * 60 *24);
@@ -277,25 +249,15 @@ begin
     X509NameAddEntryByTxt(Name, 'C', $1001, 'CZ', -1, -1, 0);
     X509NameAddEntryByTxt(Name, 'CN', $1001, host, -1, -1, 0);
     x509SetIssuerName(x, Name);
-    x509Sign(x, pk, EvpGetDigestByName('SHA1'));
+    x509Sign(x, pk, EvpGetDigestByName('SHA256'));
     b := BioNew(BioSMem);
     try
       i2dX509Bio(b, x);
       xn := bioctrlpending(b);
-{$IFDEF CIL}
-      sb := StringBuilder.Create(xn);
-      y := bioread(b, sb, xn);
-      if y > 0 then
-      begin
-        sb.Length := y;
-        s := sb.ToString;
-      end;
-{$ELSE}
       setlength(s, xn);
       y := bioread(b, s, xn);
       if y > 0 then
         setlength(s, y);
-{$ENDIF}
     finally
       BioFreeAll(b);
     end;
@@ -304,20 +266,10 @@ begin
     try
       i2dPrivatekeyBio(b, pk);
       xn := bioctrlpending(b);
-{$IFDEF CIL}
-      sb := StringBuilder.Create(xn);
-      y := bioread(b, sb, xn);
-      if y > 0 then
-      begin
-        sb.Length := y;
-        s := sb.ToString;
-      end;
-{$ELSE}
       setlength(s, xn);
       y := bioread(b, s, xn);
       if y > 0 then
         setlength(s, y);
-{$ENDIF}
     finally
       BioFreeAll(b);
     end;
@@ -350,10 +302,6 @@ begin
           if SSLCTXusecertificate(Fctx, cert) > 0 then
             if SSLCTXusePrivateKey(Fctx, pkey) > 0 then
               Result := True;
-
-        //  Set Certificate Verification chain
-        if Result and (ca <> nil) then
-          SslCtxCtrl(Fctx, SSL_CTRL_CHAIN, 0, ca);
       {pf}
       finally
         EvpPkeyFree(pkey);
@@ -424,50 +372,14 @@ begin
   end;
 end;
 
-function TSSLOpenSSL.NeedSigningCertificate: boolean;
-begin
-  Result := (FCertificateFile = '') and (FCertificate = '') and (FPFXfile = '') and (FPFX = '');
-end;
-
-function TSSLOpenSSL.Init: Boolean;
+function TSSLOpenSSL.Init(server:Boolean): Boolean;
 var
   s: AnsiString;
 begin
   Result := False;
-  if not InitSSLInterface then
-  begin
-    FLastError := -1;
-    FLastErrorDesc := 'Error loading OpenSSL lib';
-    Exit;
-  end;
-
   FLastErrorDesc := '';
   FLastError := 0;
-  Fctx := nil;
-  case FSSLType of
-    LT_SSLv2:
-      Fctx := SslCtxNew(SslMethodV2);
-    LT_SSLv3:
-      Fctx := SslCtxNew(SslMethodV3);
-    LT_TLSv1:
-      Fctx := SslCtxNew(SslMethodTLSV1);
-    LT_TLSv1_1:
-      Fctx := SslCtxNew(SslMethodTLSV11);
-    LT_TLSv1_2:
-      Fctx := SslCtxNew(SslMethodTLSV12);
-    LT_TLSv1_3:
-      Fctx := SslCtxNew(SslMethodTLSV13);
-    LT_all:
-      begin
-        //try new call for OpenSSL 1.1.0 first
-        Fctx := SslCtxNew(SslMethodTLS);
-        if Fctx=nil then
-          //callback to previous versions
-          Fctx := SslCtxNew(SslMethodV23);
-      end;
-  else
-    Exit;
-  end;
+  Fctx := SslCtxNew(SslMethodTLS); // best common protocol
   if Fctx = nil then
   begin
     SSLCheck;
@@ -475,18 +387,39 @@ begin
   end
   else
   begin
+    case FSSLType of
+      LT_TLSv1:
+        begin
+          SslCtxSetMinProtoVersion(Fctx, TLS1_VERSION);
+          SslCtxSetMaxProtoVersion(Fctx, TLS1_VERSION);
+        end;
+      LT_TLSv1_1:
+        begin
+          SslCtxSetMinProtoVersion(Fctx, TLS1_1_VERSION);
+          SslCtxSetMaxProtoVersion(Fctx, TLS1_1_VERSION);
+        end;
+      LT_TLSv1_2:
+        begin
+          SslCtxSetMinProtoVersion(Fctx, TLS1_2_VERSION);
+          SslCtxSetMaxProtoVersion(Fctx, TLS1_2_VERSION);
+        end;
+      LT_TLSv1_3:
+        begin
+          SslCtxSetMinProtoVersion(Fctx, TLS1_3_VERSION);
+          SslCtxSetMaxProtoVersion(Fctx, TLS1_3_VERSION);
+        end;
+    end;
     s := FCiphers;
     SslCtxSetCipherList(Fctx, s);
     if FVerifyCert then
       SslCtxSetVerify(FCtx, SSL_VERIFY_PEER, nil)
     else
       SslCtxSetVerify(FCtx, SSL_VERIFY_NONE, nil);
-{$IFNDEF CIL}
     SslCtxSetDefaultPasswdCb(FCtx, @PasswordCallback);
     SslCtxSetDefaultPasswdCbUserdata(FCtx, self);
-{$ENDIF}
 
-    if server and NeedSigningCertificate then
+    if server and (FCertificateFile = '') and (FCertificate = '')
+      and (FPFXfile = '') and (FPFX = '') then
     begin
       CreateSelfSignedcert(FSocket.ResolveIPToName(FSocket.GetRemoteSinIP));
     end;
@@ -517,16 +450,15 @@ begin
   begin
     SslCtxFree(Fctx);
     Fctx := nil;
-    ErrRemoveState(0);
   end;
   FSSLEnabled := False;
 end;
 
-function TSSLOpenSSL.Prepare: Boolean;
+function TSSLOpenSSL.Prepare(server:Boolean): Boolean;
 begin
   Result := false;
   DeInit;
-  if Init then
+  if Init(server) then
     Result := true
   else
     DeInit;
@@ -541,14 +473,9 @@ begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
     Exit;
-  FServer := False;
-  if Prepare then
+  if Prepare(False) then
   begin
-{$IFDEF CIL}
-    if sslsetfd(FSsl, FSocket.Socket.Handle.ToInt32) < 1 then
-{$ELSE}
     if sslsetfd(FSsl, FSocket.Socket) < 1 then
-{$ENDIF}
     begin
       SSLCheck;
       Exit;
@@ -600,14 +527,9 @@ begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
     Exit;
-  FServer := True;
-  if Prepare then
+  if Prepare(True) then
   begin
-{$IFDEF CIL}
-    if sslsetfd(FSsl, FSocket.Socket.Handle.ToInt32) < 1 then
-{$ELSE}
     if sslsetfd(FSsl, FSocket.Socket) < 1 then
-{$ENDIF}
     begin
       SSLCheck;
       Exit;
@@ -651,19 +573,11 @@ end;
 function TSSLOpenSSL.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
   err: integer;
-{$IFDEF CIL}
-  s: ansistring;
-{$ENDIF}
 begin
   FLastError := 0;
   FLastErrorDesc := '';
   repeat
-{$IFDEF CIL}
-    s := StringOf(Buffer);
-    Result := SslWrite(FSsl, s, Len);
-{$ELSE}
     Result := SslWrite(FSsl, Buffer , Len);
-{$ENDIF}
     err := SslGetError(FSsl, Result);
   until (err <> SSL_ERROR_WANT_READ) and (err <> SSL_ERROR_WANT_WRITE);
   if err = SSL_ERROR_ZERO_RETURN then
@@ -676,26 +590,11 @@ end;
 function TSSLOpenSSL.RecvBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
   err: integer;
-{$IFDEF CIL}
-  sb: stringbuilder;
-  s: ansistring;
-{$ENDIF}
 begin
   FLastError := 0;
   FLastErrorDesc := '';
   repeat
-{$IFDEF CIL}
-    sb := StringBuilder.Create(Len);
-    Result := SslRead(FSsl, sb, Len);
-    if Result > 0 then
-    begin
-      sb.Length := Result;
-      s := sb.ToString;
-      System.Array.Copy(BytesOf(s), Buffer, length(s));
-    end;
-{$ELSE}
     Result := SslRead(FSsl, Buffer , Len);
-{$ENDIF}
     err := SslGetError(FSsl, Result);
   until (err <> SSL_ERROR_WANT_READ) and (err <> SSL_ERROR_WANT_WRITE);
   if err = SSL_ERROR_ZERO_RETURN then
@@ -703,7 +602,7 @@ begin
   {pf}// Verze 1.1.0 byla s else tak jak to ted mam,
       // ve verzi 1.1.1 bylo ELSE zruseno, ale pak je SSL_ERROR_ZERO_RETURN
       // propagovano jako Chyba.
-  {pf} else {/pf} if (err <> 0) then   
+  {pf} else {/pf} if (err <> 0) then
     FLastError := err;
 end;
 
@@ -724,9 +623,6 @@ function TSSLOpenSSL.GetPeerSubject: string;
 var
   cert: PX509;
   s: ansistring;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -739,13 +635,8 @@ begin
     Result := '';
     Exit;
   end;
-{$IFDEF CIL}
-  sb := StringBuilder.Create(4096);
-  Result := X509NameOneline(X509GetSubjectName(cert), sb, 4096);
-{$ELSE}
   setlength(s, 4096);
-  Result := String(X509NameOneline(X509GetSubjectName(cert), s, Length(s)));
-{$ENDIF}
+  Result := X509NameOneline(X509GetSubjectName(cert), s, Length(s));
   X509Free(cert);
 end;
 
@@ -776,7 +667,7 @@ end;
 
 function TSSLOpenSSL.GetPeerName: string;
 var
-  s: string;
+  s: ansistring;
 begin
   s := GetPeerSubject;
   s := SeparateRight(s, '/CN=');
@@ -809,9 +700,6 @@ function TSSLOpenSSL.GetPeerIssuer: string;
 var
   cert: PX509;
   s: ansistring;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -824,13 +712,8 @@ begin
     Result := '';
     Exit;
   end;
-{$IFDEF CIL}
-  sb := StringBuilder.Create(4096);
-  Result := X509NameOneline(X509GetIssuerName(cert), sb, 4096);
-{$ELSE}
   setlength(s, 4096);
-  Result := String(X509NameOneline(X509GetIssuerName(cert), s, Length(s)));
-{$ENDIF}
+  Result := X509NameOneline(X509GetIssuerName(cert), s, Length(s));
   X509Free(cert);
 end;
 
@@ -838,9 +721,6 @@ function TSSLOpenSSL.GetPeerFingerprint: string;
 var
   cert: PX509;
   x: integer;
-{$IFDEF CIL}
-  sb: StringBuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -853,17 +733,9 @@ begin
     Result := '';
     Exit;
   end;
-{$IFDEF CIL}
-  sb := StringBuilder.Create(EVP_MAX_MD_SIZE);
-  X509Digest(cert, EvpGetDigestByName('MD5'), sb, x);
-  sb.Length := x;
-  Result := sb.ToString;
-{$ELSE}
   setlength(Result, EVP_MAX_MD_SIZE);
-  x := 0;
-  X509Digest(cert, EvpGetDigestByName('MD5'), Result, x);
+  X509Digest(cert, EvpGetDigestByName('SHA1'), Result, x); //was MD5 before
   SetLength(Result, x);
-{$ENDIF}
   X509Free(cert);
 end;
 
@@ -873,9 +745,6 @@ var
   x, y: integer;
   b: PBIO;
   s: AnsiString;
-{$IFDEF CIL}
-  sb: stringbuilder;
-{$ENDIF}
 begin
   if not assigned(FSsl) then
   begin
@@ -893,20 +762,10 @@ begin
     try
       X509Print(b, cert);
       x := bioctrlpending(b);
-  {$IFDEF CIL}
-      sb := StringBuilder.Create(x);
-      y := bioread(b, sb, x);
-      if y > 0 then
-      begin
-        sb.Length := y;
-        s := sb.ToString;
-      end;
-  {$ELSE}
       setlength(s,x);
       y := bioread(b,s,x);
       if y > 0 then
         setlength(s, y);
-  {$ENDIF}
       Result := ReplaceString(s, LF, CRLF);
     finally
       BioFreeAll(b);
@@ -930,7 +789,6 @@ function TSSLOpenSSL.GetCipherBits: integer;
 var
   x: integer;
 begin
-  x := 0;
   if not assigned(FSsl) then
     Result := 0
   else
@@ -956,7 +814,7 @@ end;
 {==============================================================================}
 
 initialization
-  //if InitSSLInterface then  // Commented.. It will uses Dynamic loading, and allow inform "SSLLibPath"
+  if InitSSLInterface then
     SSLImplementation := TSSLOpenSSL;
 
 end.

@@ -62,6 +62,7 @@ Supported Privacy encryptions: DES, 3DES, AES
 {$IFDEF UNICODE}
   {$WARN IMPLICIT_STRING_CAST OFF}
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
+  {$TYPEINFO ON}
 {$ENDIF}
 
 unit snmpsend;
@@ -1012,7 +1013,6 @@ function TSNMPSend.SendRequest: Boolean;
 var
   sync: TV3Sync;
 begin
-  Result := False;
   if FQuery.FVersion = 3 then
   begin
     sync := GetV3Sync;

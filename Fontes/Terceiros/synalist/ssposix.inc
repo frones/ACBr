@@ -1,5 +1,5 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 001.001.004 |
+| Project : Ararat Synapse                                       | 001.001.005 |
 |==============================================================================|
 | Content: Socket Independent Platform Layer - Delphi Posix definition include |
 |==============================================================================|
@@ -68,7 +68,6 @@ partially compatible with NextGen Delphi compiler - iOS
 
 }
 
-
 interface
 
 uses
@@ -93,9 +92,7 @@ const
 type
   TSocket = longint;
   TAddrFamily = integer;
-
   TMemory = pointer;
-
 
 type
   TFDSet = fd_set;
@@ -370,9 +367,13 @@ var
   SockEnhancedApi: Boolean;
   SockWship6Api: Boolean;
 
+{$IFDEF MACOS}
+   {$DEFINE SOCK_HAS_SINLEN} // OSX
+{$ENDIF}
+
 type
   TVarSin = packed record
-  {$IF defined(MACOS32) OR defined(MACOS64) OR defined(IOS))}
+  {$ifdef SOCK_HAS_SINLEN}
      sin_len     : UInt8;
   {$endif}
 
@@ -945,7 +946,7 @@ begin
           while PAdrPtr^[i] <> nil do
           begin
             InAddr := PAdrPtr^[i]^;
-            aby := TArray<byte>(Cardinal(InAddr));
+            aby := TArray<byte>(@InAddr);
             s := Format('%d.%d.%d.%d', [aby[0], aby[1],
               aby[2], aby[3]]);
             IPList.Add(s);
@@ -1022,7 +1023,7 @@ begin
       if ServEnt = nil then
         Result := StrToIntDef(Port, 0)
       else
-        Result := htons(ServEnt^.s_port);
+        Result := ntohs(ServEnt^.s_port);
     finally
       SynSockCS.Leave;
     end;
@@ -1040,9 +1041,9 @@ begin
       if (r = 0) and Assigned(Addr) then
       begin
         if Addr^.ai_family = AF_INET then
-          Result := htons(Addr^.ai_addr^.sa_data[0]); // port
+          Result := ntohs(Addr^.ai_addr^.sa_data[0]); // port
         if Addr^.ai_family = AF_INET6 then
-          Result := htons(PSockAddrIn6(Addr^.ai_addr)^.sin6_port);
+          Result := ntohs(PSockAddrIn6(Addr^.ai_addr)^.sin6_port);
       end;
     finally
       if Assigned(Addr) then

@@ -58,9 +58,8 @@ For IPv6 support you must have new API!
 
 {$IFDEF FPC}
   {$MODE DELPHI}
-  {$H+}
 {$ENDIF}
-
+{$H+}
 interface
 
 uses

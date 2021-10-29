@@ -1,5 +1,5 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 005.002.004 |
+| Project : Ararat Synapse                                       | 005.002.005 |
 |==============================================================================|
 | Content: Charset conversion support                                          |
 |==============================================================================|
@@ -87,16 +87,15 @@ uses
   {$IFNDEF FPC}
     {$IFNDEF POSIX}
       Libc,
+    {$ELSE}
+      Posix.Langinfo,
     {$ENDIF}
   {$ENDIF}
 {$ELSE}
   Windows,
 {$ENDIF}
   SysUtils,
-  synautil, synacode, synaicnv
-  {$IFDEF NEXTGEN}
-   ,synafpc
-  {$ENDIF};
+  synautil, synacode, synaicnv, synafpc;
 
 type
   {:Type with all supported charsets.}
@@ -213,9 +212,6 @@ function GetCurOEMCP: TMimeChar;
 
 {:Converting string with charset name to TMimeChar.}
 function GetCPFromID(Value: AnsiString): TMimeChar;
-
-{:Converting a CodePage value to TMimeChar.}
-function CPToMimeChar(Value: Integer): TMimeChar;
 
 {:Converting TMimeChar to string with name of charset.}
 function GetIDFromCP(Value: TMimeChar): AnsiString;
@@ -1512,6 +1508,34 @@ begin
   end;
 end;
 
+{==============================================================================}
+{$IFNDEF MSWINDOWS}
+
+function GetCurCP: TMimeChar;
+begin
+  {$IFNDEF FPC}
+    {$IFNDEF POSIX}
+  Result := GetCPFromID(nl_langinfo(_NL_CTYPE_CODESET_NAME));
+    {$ELSE}
+      {$IFNDEF ANDROID}
+  Result := GetCPFromID(nl_langinfo(CODESET));
+      {$ELSE}
+  Result := UTF_8;
+      {$ENDIF}
+    {$ENDIF}
+  {$ELSE}
+  //How to get system codepage without LIBC?
+  Result := UTF_8;
+{ TODO : Waiting for FPC 2.8 solution }
+  {$ENDIF}
+end;
+
+function GetCurOEMCP: TMimeChar;
+begin
+  Result := GetCurCP;
+end;
+
+{$ELSE}
 
 function CPToMimeChar(Value: Integer): TMimeChar;
 begin
@@ -1669,30 +1693,6 @@ begin
   end;
 end;
 
-{==============================================================================}
-{$IFNDEF MSWINDOWS}
-
-function GetCurCP: TMimeChar;
-begin
-  {$If (NOT DEFINED(FPC)) AND (NOT DEFINED(POSIX))}
-    Result := GetCPFromID(nl_langinfo(_NL_CTYPE_CODESET_NAME));
-  {$Else}
-    //How to get system codepage without LIBC?
-    {$IfDef FPC}
-      Result := UTF_8;
-    {$Else}
-      Result := CPToMimeChar(TEncoding.Default.CodePage);
-    {$EndIf}
-  {$IfEnd}
-end;
-
-function GetCurOEMCP: TMimeChar;
-begin
-  Result := GetCurCP;
-end;
-
-{$ELSE}
-
 function GetCurCP: TMimeChar;
 begin
   Result := CPToMimeChar(GetACP);
@@ -1702,7 +1702,6 @@ function GetCurOEMCP: TMimeChar;
 begin
   Result := CPToMimeChar(GetOEMCP);
 end;
-
 {$ENDIF}
 
 {==============================================================================}
@@ -1758,15 +1757,40 @@ begin
   Result := '';
   case Value of
     UCS_2:
-      Result := #$fe + #$ff;
+    begin
+      SetLength(Result, 2);
+      Result[1] := #$fe;
+      Result[2] := #$ff;
+    end;
     UCS_4:
-      Result := #$00 + #$00 + #$fe + #$ff;
+    begin
+      SetLength(Result, 4);
+      Result[1] := #$00;
+      Result[2] := #$00;
+      Result[3] := #$fe;
+      Result[4] := #$ff;
+    end;
     UCS_2LE:
-      Result := #$ff + #$fe;
+    begin
+      SetLength(Result, 2);
+      Result[1] := #$ff;
+      Result[2] := #$fe;
+    end;
     UCS_4LE:
-      Result := #$ff + #$fe + #$00 + #$00;
+    begin
+      SetLength(Result, 4);
+      Result[1] := #$ff;
+      Result[2] := #$fe;
+      Result[3] := #$00;
+      Result[4] := #$00;
+    end;
     UTF_8:
-      Result := #$ef + #$bb + #$bf;
+    begin
+      SetLength(Result, 3);
+      Result[1] := #$ef;
+      Result[2] := #$bb;
+      Result[3] := #$bf;
+    end;
   end;
 end;
 

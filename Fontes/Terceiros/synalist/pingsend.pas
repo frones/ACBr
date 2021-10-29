@@ -427,7 +427,7 @@ begin
       IcmpEchoHeaderPtr := @FBuffer[IpHdrLen + 1];
     end;
   //check for timeout
-    if TickDelta(x, GetTick) > FTimeout then
+    if TickDelta(x, GetTick) > Cardinal(FTimeout) then
     begin
       t := false;
       Break;
@@ -484,7 +484,6 @@ var
   ip6: TSockAddrIn6;
   x: integer;
 begin
-  Result := 0;
 {$IFDEF MSWINDOWS}
   s := StringOfChar(#0, SizeOf(TICMP6Packet)) + Value;
   ICMP6Ptr := Pointer(s);
@@ -499,6 +498,8 @@ begin
   ICMP6Ptr^.Length := synsock.htonl(Length(Value));
   ICMP6Ptr^.proto := IPPROTO_ICMPV6;
   Result := Checksum(s);
+{$ELSE}
+  Result := 0;
 {$ENDIF}
 end;
 

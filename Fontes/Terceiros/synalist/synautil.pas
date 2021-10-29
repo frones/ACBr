@@ -49,7 +49,7 @@
 
 {:@abstract(Support procedures and functions)}
 
-{$I ACBr_jedi.inc} // load common compiler defines
+{$I jedi.inc} // load common compiler defines
 
 {$Q-}
 {$R-}

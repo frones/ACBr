@@ -1,5 +1,5 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 001.001.001 |
+| Project : Ararat Synapse                                       | 001.001.002 |
 |==============================================================================|
 | Content: SSL/SSH support by Peter Gutmann's CryptLib                         |
 |==============================================================================|
@@ -290,6 +290,8 @@ var
   keysetobj: CRYPT_KEYSET;
   cryptContext: CRYPT_CONTEXT;
   x: integer;
+  aUserName : AnsiString;
+  aPassword: AnsiString;
 begin
   Result := False;
   FLastErrorDesc := '';
@@ -340,10 +342,12 @@ begin
 
   if FUsername <> '' then
   begin
+    aUserName := fUserName;
+    aPassword := fPassword;
     cryptSetAttributeString(FcryptSession, CRYPT_SESSINFO_USERNAME,
-      Pointer(FUsername), Length(FUsername));
+      Pointer(aUsername), Length(aUsername));
     cryptSetAttributeString(FcryptSession, CRYPT_SESSINFO_PASSWORD,
-      Pointer(FPassword), Length(FPassword));
+      Pointer(aPassword), Length(aPassword));
   end;
   if FSSLType = LT_SSHv2 then
     if FSSHChannelType <> '' then

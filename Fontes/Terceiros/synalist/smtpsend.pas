@@ -571,7 +571,7 @@ begin
   Result := ReadResult div 100 = 2;
 end;
 
-function TSMTPSend.MailData(const Value: Tstrings): Boolean;
+function TSMTPSend.MailData(const Value: TStrings): Boolean;
 var
   n: Integer;
   s: string;
@@ -738,9 +738,6 @@ begin
     SMTP.Password := Password;
     if SMTP.Login then
     begin
-      {$IfNDef MSWINDOWS}
-        MailData.LineBreak := CRLF;
-      {$EndIf}
       if SMTP.MailFrom(GetEmailAddr(MailFrom), Length(MailData.Text)) then
       begin
         s := MailTo;

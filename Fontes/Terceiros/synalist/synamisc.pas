@@ -143,8 +143,8 @@ implementation
 procedure WakeOnLan(MAC, IP: string);
 var
   sock: TUDPBlockSocket;
-  HexMac: string;
-  data: string;
+  HexMac: Ansistring;
+  data: Ansistring;
   n: integer;
   b: Byte;
 begin
@@ -158,7 +158,7 @@ begin
     for n := 0 to 5 do
     begin
       b := StrToIntDef('$' + MAC[n * 2 + 1] + MAC[n * 2 + 2], 0);
-      HexMac := HexMac + char(b);
+      HexMac := HexMac + AnsiChar(b);
     end;
     if IP = '' then
       IP := cBroadcast;

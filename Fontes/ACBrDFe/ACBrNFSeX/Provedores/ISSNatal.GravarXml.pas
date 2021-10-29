@@ -32,18 +32,18 @@
 
 {$I ACBr.inc}
 
-unit Vitoria.GravarXml;
+unit ISSNatal.GravarXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrNFSeXGravarXml_ABRASFv1;
 
 type
-  { TNFSeW_ISSVitoria200 }
+  { TNFSeW_ISSNatal }
 
-  TNFSeW_ISSVitoria200 = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSNatal = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -53,21 +53,16 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     ISSVitoria
+//     ISSNatal
 //==============================================================================
 
-{ TNFSeW_ISSVitoria200 }
+{ TNFSeW_ISSNatal }
 
-procedure TNFSeW_ISSVitoria200.Configuracao;
+procedure TNFSeW_ISSNatal.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrValorPis := 1;
-  NrOcorrValorCofins := 1;
-  NrOcorrValorInss := 1;
-  NrOcorrValorIr := 1;
-  NrOcorrValorCsll := 1;
-  NrOcorrValorIss := 1;
+  NrOcorrBaseCalc := 1;
 end;
 
 end.

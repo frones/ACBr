@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit RJ.Provider;
+unit ISSRio.Provider;
 
 interface
 
@@ -72,7 +72,7 @@ implementation
 uses
   ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  ACBrNFSeXNotasFiscais, RJ.GravarXml, RJ.LerXml;
+  ACBrNFSeXNotasFiscais, ISSRio.GravarXml, ISSRio.LerXml;
 
 { TACBrNFSeXWebserviceISSRio }
 

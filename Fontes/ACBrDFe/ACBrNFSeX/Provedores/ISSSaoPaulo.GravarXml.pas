@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit SP.GravarXml;
+unit ISSSaoPaulo.GravarXml;
 
 interface
 
@@ -60,7 +60,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     SP
+//     ISSSaoPaulo
 //==============================================================================
 
 { TNFSeW_ISSSaoPaulo }

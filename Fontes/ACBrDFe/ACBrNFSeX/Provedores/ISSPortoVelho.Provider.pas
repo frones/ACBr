@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit PVH.Provider;
+unit ISSPortoVelho.Provider;
 
 interface
 
@@ -72,7 +72,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, PVH.GravarXml, PVH.LerXml;
+  ACBrNFSeXNotasFiscais, ISSPortoVelho.GravarXml, ISSPortoVelho.LerXml;
 
 { TACBrNFSeProviderISSPortoVelho200 }
 

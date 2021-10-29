@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Goiania.Provider;
+unit ISSGoiania.Provider;
 
 interface
 
@@ -65,7 +65,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, Goiania.GravarXml, Goiania.LerXml;
+  ACBrNFSeXNotasFiscais, ISSGoiania.GravarXml, ISSGoiania.LerXml;
 
 { TACBrNFSeProviderISSGoiania200 }
 

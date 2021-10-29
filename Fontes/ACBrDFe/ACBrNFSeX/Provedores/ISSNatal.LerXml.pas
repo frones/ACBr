@@ -32,47 +32,29 @@
 
 {$I ACBr.inc}
 
-unit Recife.GravarXml;
+unit ISSNatal.LerXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
+  ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeW_ISSRecife }
+  { TNFSeR_ISSNatal }
 
-  TNFSeW_ISSRecife = class(TNFSeW_ABRASFv1)
+  TNFSeR_ISSNatal = class(TNFSeR_ABRASFv1)
   protected
-    procedure Configuracao; override;
+
+  public
 
   end;
 
 implementation
 
 //==============================================================================
-// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     ISSRecife
+// Essa unit tem por finalidade exclusiva ler o XML do provedor:
+//     ISSNatal
 //==============================================================================
-
-{ TNFSeW_ISSRecife }
-
-procedure TNFSeW_ISSRecife.Configuracao;
-begin
-  inherited Configuracao;
-
-  FormatoItemListaServico := filsSemFormatacao;
-  DivAliq100 := True;
-
-  NrOcorrValorPis := 1;
-  NrOcorrValorCofins := 1;
-  NrOcorrValorInss := 1;
-  NrOcorrValorIr := 1;
-  NrOcorrValorCsll := 1;
-  NrOcorrValorIss := 1;
-  NrOcorrAliquota := 0;
-  NrOcorrValorTotalRecebido := 1;
-end;
 
 end.

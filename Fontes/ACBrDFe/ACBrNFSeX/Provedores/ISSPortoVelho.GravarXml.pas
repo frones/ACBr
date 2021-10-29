@@ -32,29 +32,37 @@
 
 {$I ACBr.inc}
 
-unit SJP.LerXml;
+unit ISSPortoVelho.GravarXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeR_ISSSJP }
+  { TNFSeW_ISSPortoVelho200 }
 
-  TNFSeR_ISSSJP = class(TNFSeR_ABRASFv1)
+  TNFSeW_ISSPortoVelho200 = class(TNFSeW_ABRASFv2)
   protected
-
-  public
+    procedure Configuracao; override;
 
   end;
 
 implementation
 
 //==============================================================================
-// Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ISSSJP
+// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+//     PVH
 //==============================================================================
+
+{ TNFSeW_ISSPortoVelho200 }
+
+procedure TNFSeW_ISSPortoVelho200.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrRegimeEspecialTributacao := 1;
+end;
 
 end.

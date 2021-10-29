@@ -32,20 +32,25 @@
 
 {$I ACBr.inc}
 
-unit Natal.GravarXml;
+unit ISSSalvador.GravarXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXGravarXml_ABRASFv1;
+  ACBrUtil,
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_ISSNatal }
+  { TNFSeW_ISSSalvador }
 
-  TNFSeW_ISSNatal = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSSalvador = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
+
+    procedure DefinirIDRps; override;
+  public
+    function GerarXml: Boolean; override;
 
   end;
 
@@ -53,16 +58,38 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     ISSNatal
+//     ISSSalvador
 //==============================================================================
 
-{ TNFSeW_ISSNatal }
+{ TNFSeW_ISSSalvador }
 
-procedure TNFSeW_ISSNatal.Configuracao;
+procedure TNFSeW_ISSSalvador.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrBaseCalc := 1;
+  FormatoItemListaServico := filsSemFormatacao;
+
+  NrOcorrValorDeducoes := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrValorISSRetido_1 := 1;
+  NrOcorrOutrasRet := 1;
+  NrOcorrDescIncond := 1;
+  NrOcorrDescCond := 1;
+end;
+
+procedure TNFSeW_ISSSalvador.DefinirIDRps;
+begin
+  NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero);
+end;
+
+function TNFSeW_ISSSalvador.GerarXml: Boolean;
+begin
+  Opcoes.SuprimirDecimais := True;
+
+  Result := inherited GerarXml;
 end;
 
 end.

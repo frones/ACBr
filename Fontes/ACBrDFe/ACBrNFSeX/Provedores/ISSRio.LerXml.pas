@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Recife.LerXml;
+unit ISSRio.LerXml;
 
 interface
 
@@ -41,9 +41,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_ISSRecife }
+  { TNFSeR_ISSRio }
 
-  TNFSeR_ISSRecife = class(TNFSeR_ABRASFv1)
+  TNFSeR_ISSRio = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -54,7 +54,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ISSRecife
+//     ISSRio
 //==============================================================================
 
 end.

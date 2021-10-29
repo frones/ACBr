@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Goiania.LerXml;
+unit ISSPortoVelho.LerXml;
 
 interface
 
@@ -41,9 +41,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeR_ISSGoiania200 }
+  { TNFSeR_ISSPortoVelho200 }
 
-  TNFSeR_ISSGoiania200 = class(TNFSeR_ABRASFv2)
+  TNFSeR_ISSPortoVelho200 = class(TNFSeR_ABRASFv2)
   protected
 
   public
@@ -54,7 +54,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ISSGoiania
+//     PVH
 //==============================================================================
 
 end.

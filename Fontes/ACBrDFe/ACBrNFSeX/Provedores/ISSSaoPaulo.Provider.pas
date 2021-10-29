@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit SP.Provider;
+unit ISSSaoPaulo.Provider;
 
 interface
 
@@ -100,7 +100,7 @@ implementation
 uses
   ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  SP.GravarXml, SP.LerXml;
+  ISSSaoPaulo.GravarXml, ISSSaoPaulo.LerXml;
 
 { TACBrNFSeProviderISSSaoPaulo }
 

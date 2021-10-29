@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Recife.Provider;
+unit ISSRecife.Provider;
 
 interface
 
@@ -72,7 +72,7 @@ implementation
 uses
   ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  ACBrNFSeXNotasFiscais, Recife.GravarXml, Recife.LerXml;
+  ACBrNFSeXNotasFiscais, ISSRecife.GravarXml, ISSRecife.LerXml;
 
 { TACBrNFSeXWebserviceISSRecife }
 

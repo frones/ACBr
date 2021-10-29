@@ -32,68 +32,29 @@
 
 {$I ACBr.inc}
 
-unit Goiania.GravarXml;
+unit ISSGoiania.LerXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrUtil,
-  ACBrXmlBase,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXLerXml_ABRASFv2;
 
 type
-  { TNFSeW_ISSGoiania200 }
+  { TNFSeR_ISSGoiania200 }
 
-  TNFSeW_ISSGoiania200 = class(TNFSeW_ABRASFv2)
+  TNFSeR_ISSGoiania200 = class(TNFSeR_ABRASFv2)
   protected
-    procedure DefinirIDRps; override;
-    procedure Configuracao; override;
+
+  public
 
   end;
 
 implementation
 
 //==============================================================================
-// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+// Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     ISSGoiania
 //==============================================================================
-
-{ TNFSeW_ISSGoiania200 }
-
-procedure TNFSeW_ISSGoiania200.Configuracao;
-begin
-  inherited Configuracao;
-
-  FormatoEmissao := tcDatHor;
-  FormatoCompetencia := tcDatHor;
-
-  DivAliq100 := True;
-
-  NrOcorrAliquota := 0;
-
-  NrOcorrCodTribMun_1 := 1;
-
-  NrOcorrValorISS := -1;
-  NrOcorrDescCond := -1;
-  NrOcorrIssRetido := -1;
-  NrOcorrRespRetencao := -1;
-  NrOcorrItemListaServico := -1;
-  NrOcorrCodigoCNAE := -1;
-  NrOcorrExigibilidadeISS := -1;
-  NrOcorrMunIncid := -1;
-  NrOcorrCompetencia := -1;
-  NrOcorrOptanteSimplesNacional := -1;
-  NrOcorrIncentCultural := -1;
-
-  GerarIDDeclaracao := False;
-  GerarIDRps := True;
-end;
-
-procedure TNFSeW_ISSGoiania200.DefinirIDRps;
-begin
-  NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
-                    NFSe.IdentificacaoRps.Serie;
-end;
 
 end.

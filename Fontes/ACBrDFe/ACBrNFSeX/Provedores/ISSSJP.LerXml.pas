@@ -32,38 +32,29 @@
 
 {$I ACBr.inc}
 
-unit SJP.GravarXml;
+unit ISSSJP.LerXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
+  ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeW_ISSSJP }
+  { TNFSeR_ISSSJP }
 
-  TNFSeW_ISSSJP = class(TNFSeW_ABRASFv1)
+  TNFSeR_ISSSJP = class(TNFSeR_ABRASFv1)
   protected
-    procedure Configuracao; override;
+
+  public
 
   end;
 
 implementation
 
 //==============================================================================
-// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+// Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     ISSSJP
 //==============================================================================
-
-{ TNFSeW_ISSSJP }
-
-procedure TNFSeW_ISSSJP.Configuracao;
-begin
-  inherited Configuracao;
-
-  DivAliq100 := True;
-  PrefixoPadrao := 'tipos';
-end;
 
 end.

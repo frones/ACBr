@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Natal.Provider;
+unit ISSNatal.Provider;
 
 interface
 
@@ -71,7 +71,7 @@ implementation
 
 uses
   ACBrDFeException,
-  ACBrNFSeX, Natal.GravarXml, Natal.LerXml;
+  ACBrNFSeX, ISSNatal.GravarXml, ISSNatal.LerXml;
 
 { TACBrNFSeXWebserviceISSNatal }
 

@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit SP.LerXml;
+unit ISSSaoPaulo.LerXml;
 
 interface
 
@@ -67,7 +67,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     SP
+//     ISSSaoPaulo
 //==============================================================================
 
 { TNFSeR_ISSSaoPaulo }

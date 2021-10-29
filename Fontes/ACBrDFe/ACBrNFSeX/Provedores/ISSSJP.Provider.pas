@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit SJP.Provider;
+unit ISSSJP.Provider;
 
 interface
 
@@ -68,7 +68,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, SJP.GravarXml, SJP.LerXml;
+  ACBrNFSeXNotasFiscais, ISSSJP.GravarXml, ISSSJP.LerXml;
 
 { TACBrNFSeXWebserviceISSSJP }
 

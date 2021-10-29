@@ -32,18 +32,18 @@
 
 {$I ACBr.inc}
 
-unit PVH.GravarXml;
+unit ISSVitoria.GravarXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
-  { TNFSeW_ISSPortoVelho200 }
+  { TNFSeW_ISSVitoria200 }
 
-  TNFSeW_ISSPortoVelho200 = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSVitoria200 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -53,16 +53,21 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     PVH
+//     ISSVitoria
 //==============================================================================
 
-{ TNFSeW_ISSPortoVelho200 }
+{ TNFSeW_ISSVitoria200 }
 
-procedure TNFSeW_ISSPortoVelho200.Configuracao;
+procedure TNFSeW_ISSVitoria200.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrRegimeEspecialTributacao := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorInss := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrValorIss := 1;
 end;
 
 end.

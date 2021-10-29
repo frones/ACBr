@@ -32,18 +32,18 @@
 
 {$I ACBr.inc}
 
-unit Vitoria.LerXml;
+unit ISSSalvador.LerXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv2;
+  ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_ISSVitoria200 }
+  { TNFSeR_ISSSalvador }
 
-  TNFSeR_ISSVitoria200 = class(TNFSeR_ABRASFv2)
+  TNFSeR_ISSSalvador = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -54,7 +54,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ISSVitoria
+//     ISSSalvador
 //==============================================================================
 
 end.

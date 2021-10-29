@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Vitoria.Provider;
+unit ISSVitoria.Provider;
 
 interface
 
@@ -72,7 +72,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, Vitoria.GravarXml, Vitoria.LerXml;
+  ACBrNFSeXNotasFiscais, ISSVitoria.GravarXml, ISSVitoria.LerXml;
 
 { TACBrNFSeProviderISSVitoria200 }
 

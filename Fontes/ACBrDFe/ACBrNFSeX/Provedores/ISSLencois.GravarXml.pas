@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Lencois.GravarXml;
+unit ISSLencois.GravarXml;
 
 interface
 

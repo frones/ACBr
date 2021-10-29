@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Salvador.Provider;
+unit ISSSalvador.Provider;
 
 interface
 
@@ -67,7 +67,7 @@ implementation
 
 uses
   ACBrUtil, ACBrDFeException, ACBrXmlBase,
-  Salvador.GravarXml, Salvador.LerXml;
+  ISSSalvador.GravarXml, ISSSalvador.LerXml;
 
 { TACBrNFSeXWebserviceISSSalvador }
 

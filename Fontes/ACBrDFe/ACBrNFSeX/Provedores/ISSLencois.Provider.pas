@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit Lencois.Provider;
+unit ISSLencois.Provider;
 
 interface
 
@@ -83,7 +83,7 @@ implementation
 uses
   ACBrUtil, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  Lencois.GravarXml, Lencois.LerXml;
+  ISSLencois.GravarXml, ISSLencois.LerXml;
 
 { TACBrNFSeProviderISSLencois }
 

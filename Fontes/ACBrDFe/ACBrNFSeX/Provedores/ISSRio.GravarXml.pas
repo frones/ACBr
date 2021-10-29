@@ -32,29 +32,37 @@
 
 {$I ACBr.inc}
 
-unit Natal.LerXml;
+unit ISSRio.GravarXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1;
+  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeR_ISSNatal }
+  { TNFSeW_ISSRio }
 
-  TNFSeR_ISSNatal = class(TNFSeR_ABRASFv1)
+  TNFSeW_ISSRio = class(TNFSeW_ABRASFv1)
   protected
-
-  public
+    procedure Configuracao; override;
 
   end;
 
 implementation
 
 //==============================================================================
-// Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ISSNatal
+// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+//     ISSRio
 //==============================================================================
+
+{ TNFSeW_ISSRio }
+
+procedure TNFSeW_ISSRio.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsSemFormatacao;
+end;
 
 end.

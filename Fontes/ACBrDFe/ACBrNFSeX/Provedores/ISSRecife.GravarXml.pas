@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit RJ.GravarXml;
+unit ISSRecife.GravarXml;
 
 interface
 
@@ -41,9 +41,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_ISSRio }
+  { TNFSeW_ISSRecife }
 
-  TNFSeW_ISSRio = class(TNFSeW_ABRASFv1)
+  TNFSeW_ISSRecife = class(TNFSeW_ABRASFv1)
   protected
     procedure Configuracao; override;
 
@@ -53,16 +53,26 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
-//     ISSRio
+//     ISSRecife
 //==============================================================================
 
-{ TNFSeW_ISSRio }
+{ TNFSeW_ISSRecife }
 
-procedure TNFSeW_ISSRio.Configuracao;
+procedure TNFSeW_ISSRecife.Configuracao;
 begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacao;
+  DivAliq100 := True;
+
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorInss := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrValorIss := 1;
+  NrOcorrAliquota := 0;
+  NrOcorrValorTotalRecebido := 1;
 end;
 
 end.

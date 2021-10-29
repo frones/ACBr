@@ -497,8 +497,8 @@ begin
 
   fSMTP := TSMTPSend.Create;
   fMIMEMess := TMimeMess.Create;
-  fAltBody := TStringList.Create;
-  fBody := TStringList.Create;
+  fAltBody := CreateStringList;
+  fBody := CreateStringList;
   fArqMIMe := TMemoryStream.Create;
   fAttachments := TMailAttachments.Create(True); // FreeObjects
   fTimeOut := 0;
@@ -519,13 +519,13 @@ begin
   fFromName := '';
   fSubject := '';
 
-  fReplyTo := TStringList.Create;
+  fReplyTo := CreateStringList;
   {$IfDef HAS_STRICTDELIMITER}
   fReplyTo.StrictDelimiter := True;
   {$EndIf}
   fReplyTo.Delimiter := ';';
 
-  fBCC := TStringList.Create;
+  fBCC := CreateStringList;
   {$IfDef HAS_STRICTDELIMITER}
   fBCC.StrictDelimiter := True;
   {$EndIf}
@@ -668,6 +668,9 @@ begin
   begin
     with fMIMEMess.AddPart( MultiPartParent ) do
     begin
+      {$IFDEF UNICODE}
+       fAltBody.WriteBOM := False;
+      {$ENDIF}
       fAltBody.SaveToStream(DecodedLines);
       Primary := 'text';
       Secondary := 'plain';
@@ -696,6 +699,9 @@ begin
     // Adding HTML Part //
     with fMIMEMess.AddPart( MultiPartParent ) do
     begin
+      {$IFDEF UNICODE}
+       fBody.WriteBOM := False;
+      {$ENDIF}
       fBody.SaveToStream(DecodedLines);
       Primary := 'text';
       Secondary := 'html';
@@ -790,6 +796,8 @@ begin
       Break;
 
     AddErrorMsg(fSMTP.ResultString);
+    AddErrorMsg(IntToStr(fSMTP.Sock.LastError) + ' - ' + fSMTP.Sock.LastErrorDesc);
+
     if vAttempts >= fAttempts then
       SmtpError('SMTP Error: Unable to Login.' + sLineBreak + ErrorMsgs);
   end;
@@ -1093,4 +1101,5 @@ finalization;
   MailCriticalSection.Free;
 
 end.
+
 

@@ -1799,6 +1799,11 @@ begin
     SL.Text := SubstituirVariaveisEmail(mAltBody.Lines.Text);
     ASubject := SubstituirVariaveisEmail(edtSubject.Text);
 
+    {$IfDef DELPHI28_UP}
+     ACBrMail1.AltBody.DefaultEncoding := TEncoding.ANSI;
+     ACBrMail1.Body.DefaultEncoding := TEncoding.ANSI;
+    {$EndIf}
+
     ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
       edtAddressEmail.Text,
       ASubject,

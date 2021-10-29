@@ -12,13 +12,10 @@
         <OtherUnitFiles Value="..\..\..\Fontes\Terceiros\synalist"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\synalist\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Synapse TCP/IP / Serial library - (http://www.synapse.ararat.cz)"/>
     <Version Major="40" Minor="1"/>
-    <Files Count="34">
+    <Files Count="38">
       <Item1>
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\asn1util.pas"/>
         <UnitName Value="asn1util"/>
@@ -157,6 +154,22 @@
         <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl.pas"/>
         <UnitName Value="ssl_openssl"/>
       </Item34>
+      <Item35>
+        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl_lib.pas"/>
+        <UnitName Value="ssl_openssl_lib"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl_capi.pas"/>
+        <UnitName Value="ssl_openssl_capi"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl11.pas"/>
+        <UnitName Value="ssl_openssl11"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\..\Fontes\Terceiros\synalist\ssl_openssl11_lib.pas"/>
+        <UnitName Value="ssl_openssl11_lib"/>
+      </Item38>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>
@@ -169,7 +182,9 @@
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
   </Package>
 </CONFIG>

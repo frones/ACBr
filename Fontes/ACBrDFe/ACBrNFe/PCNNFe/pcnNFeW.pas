@@ -1817,9 +1817,9 @@ begin
                     begin
                       if (nfe.Det[i].Imposto.ICMS.vBCFCPST > 0) or (nfe.Det[i].Imposto.ICMS.pFCPST > 0) or (nfe.Det[i].Imposto.ICMS.vFCPST > 0) then
                       begin
-                        Gerador.wCampo(tcDe2, 'N23a', 'vBCFCPST ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBCFCPST, DSC_VBCFCPST);
-                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N23b', 'pFCPST', 01, IIf(FUsar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pFCPST, DSC_PFCPST);
-                        Gerador.wCampo(tcDe2, 'N23d', 'vFCPST ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vFCPST, DSC_VFCPST);
+                        Gerador.wCampo(tcDe2, 'N23a', 'vBCFCPST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCFCPST, DSC_VBCFCPST);
+                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N23b', 'pFCPST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pFCPST, DSC_PFCPST);
+                        Gerador.wCampo(tcDe2, 'N23d', 'vFCPST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vFCPST, DSC_VFCPST);
                       end;
                     end;
                     Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N29', 'pCredSN ', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pCredSN, DSC_PCREDSN);

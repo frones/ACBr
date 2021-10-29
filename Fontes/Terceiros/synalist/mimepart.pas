@@ -49,15 +49,20 @@ Handling with MIME parts.
 Used RFC: RFC-2045
 }
 
-{$IFDEF FPC}
-  {$MODE DELPHI}
-{$ENDIF}
+{$INCLUDE 'jedi.inc'}
 {$H+}
 {$Q-}
 {$R-}
 {$M+}
 
+{$IFDEF FPC}
+  {$DEFINE HAS_BOM}
+{$ENDIF}
+
 {$IFDEF UNICODE}
+  {$IFDEF DELPHIXE2_UP}
+    {$DEFINE HAS_BOM}
+  {$ENDIF}
   {$WARN IMPLICIT_STRING_CAST OFF}
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
 {$ENDIF}
@@ -1308,7 +1313,7 @@ end;
 function CreateStringList: TStringList;
 begin
   Result := TStringList.Create;
-{$IFDEF UNICODE}
+{$IFDEF HAS_BOM}
   Result.WriteBOM := False;
 {$ENDIF}
 end;

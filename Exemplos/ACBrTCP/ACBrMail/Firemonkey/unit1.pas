@@ -74,7 +74,8 @@ uses
   Data.Bind.Grid,
   Fmx.StdCtrls,
   FMX.Header,
-  FMX.Graphics, ACBrBase, ACBrMail, FMX.ScrollBox, FMX.Controls.Presentation;
+  FMX.Graphics, ACBrBase, ACBrMail, FMX.ScrollBox, FMX.Controls.Presentation,
+  FMX.Memo.Types;
 
 //**   Original VCL Uses section : 
 

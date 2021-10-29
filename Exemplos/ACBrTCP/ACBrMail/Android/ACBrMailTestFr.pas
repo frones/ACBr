@@ -28,17 +28,45 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+{$I ACBr.inc}
+
 unit ACBrMailTestFr;
 
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl, FMX.StdCtrls, FMX.Controls.Presentation,
-  FMX.Gestures, System.Actions, FMX.ActnList,
-  FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
-  FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
-  FMX.ScrollBox, FMX.Memo, System.ImageList, FMX.ImgList, FMX.VirtualKeyboard,
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+  System.Actions,
+  System.ImageList,
+  System.Permissions,
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.TabControl,
+  FMX.StdCtrls,
+  FMX.Controls.Presentation,
+  FMX.Gestures,
+  FMX.ActnList,
+  FMX.ListView.Types,
+  FMX.ListView.Appearances,
+  FMX.ListView.Adapters.Base,
+  FMX.ListView,
+  FMX.ListBox,
+  FMX.Layouts,
+  FMX.Edit,
+  FMX.EditBox,
+  FMX.SpinBox,
+  FMX.ScrollBox,
+  FMX.Memo,
+  FMX.ImgList,
+  FMX.VirtualKeyboard,
+  FMX.Memo.Types,
   ACBrMail, ACBrBase;
 
 type
@@ -173,9 +201,12 @@ var
 implementation
 
 uses
-  System.typinfo, System.IniFiles, System.StrUtils, System.Permissions,
+  System.typinfo, System.IniFiles, System.StrUtils,
   {$IfDef ANDROID}
-  Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes,
+  Androidapi.JNI.Os,
+  Androidapi.JNI.Support,
+  Androidapi.JNI.JavaTypes,
+  Androidapi.Helpers,
   {$EndIf}
   FMX.DialogService, FMX.Platform,
   ssl_openssl_lib,
@@ -209,7 +240,11 @@ begin
   Ok := True;
   {$IfDef ANDROID}
   PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.INTERNET)],
+      {$IfDef DELPHI28_UP}
+      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+      {$Else}
       procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
+      {$EndIf}
       var
         GR: TPermissionStatus;
       begin
@@ -325,12 +360,17 @@ begin
 
   AjustaParametrosDeEnvio;
 
+  {$IfDef DELPHI28_UP}
+   ACBrMail1.AltBody.DefaultEncoding := TEncoding.ANSI;
+   ACBrMail1.Body.DefaultEncoding := TEncoding.ANSI;
+  {$EndIf}
+
   // mensagem principal do e-mail. pode ser html ou texto puro
   if cbUsarTXT.IsChecked  then
-    ACBrMail1.AltBody.Assign(mAltBody.Lines);
+    ACBrMail1.AltBody.Text := mAltBody.Lines.Text;
 
   if cbUsarHTML.IsChecked  then
-    ACBrMail1.Body.Assign(mBody.Lines);
+    ACBrMail1.Body.Text := mBody.Lines.Text;
 
   if cbUsarHTML.IsChecked  and cbAddImgHTML.IsChecked  then
   begin

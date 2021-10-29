@@ -52,7 +52,7 @@ object frmACBrNFe: TfrmACBrNFe
           Size.Width = 295.000000000000000000
           Size.Height = 550.000000000000000000
           Size.PlatformDefault = False
-          TabIndex = 0
+          TabIndex = 3
           TabOrder = 0
           TabPosition = Top
           Sizes = (
@@ -70,7 +70,7 @@ object frmACBrNFe: TfrmACBrNFe
             CustomIcon = <
               item
               end>
-            IsSelected = True
+            IsSelected = False
             Size.Width = 78.000000000000000000
             Size.Height = 26.000000000000000000
             Size.PlatformDefault = False
@@ -946,7 +946,7 @@ object frmACBrNFe: TfrmACBrNFe
             CustomIcon = <
               item
               end>
-            IsSelected = False
+            IsSelected = True
             ImageIndex = 3
             Size.Width = 67.000000000000000000
             Size.Height = 26.000000000000000000
@@ -965,7 +965,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'CNPJ'
-              TabOrder = 13
+              TabOrder = 14
             end
             object Label13: TLabel
               AutoSize = True
@@ -976,7 +976,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Insc.Est.'
-              TabOrder = 14
+              TabOrder = 15
             end
             object Label14: TLabel
               AutoSize = True
@@ -987,7 +987,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Raz'#227'o Social'
-              TabOrder = 15
+              TabOrder = 16
             end
             object Label15: TLabel
               AutoSize = True
@@ -998,7 +998,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Fantasia'
-              TabOrder = 16
+              TabOrder = 17
             end
             object Label16: TLabel
               AutoSize = True
@@ -1009,7 +1009,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Logradouro'
-              TabOrder = 17
+              TabOrder = 18
             end
             object Label17: TLabel
               AutoSize = True
@@ -1020,7 +1020,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'N'#250'mero'
-              TabOrder = 18
+              TabOrder = 19
             end
             object Label18: TLabel
               AutoSize = True
@@ -1031,7 +1031,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Complemento'
-              TabOrder = 19
+              TabOrder = 20
             end
             object Label19: TLabel
               AutoSize = True
@@ -1042,7 +1042,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Bairro'
-              TabOrder = 20
+              TabOrder = 21
             end
             object Label20: TLabel
               AutoSize = True
@@ -1053,7 +1053,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'C'#243'd. Cidade '
-              TabOrder = 21
+              TabOrder = 22
             end
             object Label21: TLabel
               AutoSize = True
@@ -1064,7 +1064,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Cidade'
-              TabOrder = 22
+              TabOrder = 23
             end
             object Label22: TLabel
               AutoSize = True
@@ -1075,7 +1075,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'UF'
-              TabOrder = 23
+              TabOrder = 24
             end
             object Label23: TLabel
               AutoSize = True
@@ -1086,7 +1086,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'CEP'
-              TabOrder = 24
+              TabOrder = 25
             end
             object Label24: TLabel
               AutoSize = True
@@ -1097,7 +1097,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Fone'
-              TabOrder = 25
+              TabOrder = 26
             end
             object edtEmitCNPJ: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -1146,7 +1146,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitCEP: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 5
+              TabOrder = 6
               Position.X = 137.000000000000000000
               Position.Y = 140.000000000000000000
               Size.Width = 123.000000000000000000
@@ -1155,7 +1155,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitLogradouro: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 6
+              TabOrder = 7
               Position.X = 8.000000000000000000
               Position.Y = 180.000000000000000000
               Size.Width = 196.000000000000000000
@@ -1164,7 +1164,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitNumero: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 7
+              TabOrder = 8
               Position.X = 210.000000000000000000
               Position.Y = 180.000000000000000000
               Size.Width = 50.000000000000000000
@@ -1173,7 +1173,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitComp: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 8
+              TabOrder = 9
               Position.X = 8.000000000000000000
               Position.Y = 220.000000000000000000
               Size.Width = 123.000000000000000000
@@ -1182,7 +1182,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitBairro: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 9
+              TabOrder = 10
               Position.X = 137.000000000000000000
               Position.Y = 220.000000000000000000
               Size.Width = 123.000000000000000000
@@ -1191,7 +1191,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitCodCidade: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 10
+              TabOrder = 11
               Position.X = 8.000000000000000000
               Position.Y = 260.000000000000000000
               Size.Width = 61.000000000000000000
@@ -1200,7 +1200,7 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitCidade: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 11
+              TabOrder = 12
               Position.X = 76.000000000000000000
               Position.Y = 260.000000000000000000
               Size.Width = 142.000000000000000000
@@ -1209,12 +1209,37 @@ object frmACBrNFe: TfrmACBrNFe
             end
             object edtEmitUF: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
-              TabOrder = 12
+              TabOrder = 13
               Position.X = 225.000000000000000000
               Position.Y = 260.000000000000000000
               Size.Width = 35.000000000000000000
               Size.Height = 21.000000000000000000
               Size.PlatformDefault = False
+            end
+            object Label52: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 288.000000000000000000
+              Size.Width = 89.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Tipo da Empresa'
+              TabOrder = 27
+            end
+            object cbTipoEmpresa: TComboBox
+              Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
+              Items.Strings = (
+                'Simples Nacional'
+                'Simples Nacional, excesso sublimite de receita bruta'
+                'Regime Normal')
+              Position.X = 8.000000000000000000
+              Position.Y = 305.000000000000000000
+              Size.Width = 252.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 5
+              OnChange = cbSSLTypeChange
             end
           end
           object TabSheet13: TTabItem
@@ -1249,7 +1274,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos NFe'
-              TabOrder = 209
+              TabOrder = 287
             end
             object Label39: TLabel
               AutoSize = True
@@ -1260,7 +1285,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Cancelamento'
-              TabOrder = 210
+              TabOrder = 288
             end
             object sbPathCan: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1280,7 +1305,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
-              TabOrder = 212
+              TabOrder = 290
             end
             object sbPathCCe: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1300,7 +1325,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Inutiliza'#231#227'o'
-              TabOrder = 214
+              TabOrder = 292
             end
             object sbPathInu: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1320,7 +1345,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos DPEC'
-              TabOrder = 216
+              TabOrder = 294
             end
             object sbPathDPEC: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1340,7 +1365,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Evento'
-              TabOrder = 218
+              TabOrder = 296
             end
             object sbPathEvento: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1744,7 +1769,7 @@ object frmACBrNFe: TfrmACBrNFe
             Size.Height = 19.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Text = 'Fortes Report'
+            Text = 'Esc/Pos'
           end
         end
       end

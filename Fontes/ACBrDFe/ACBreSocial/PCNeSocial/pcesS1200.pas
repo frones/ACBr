@@ -1675,6 +1675,20 @@ begin
             Inc(J);
           end;
 
+          // de 0 até 1
+          sSecao := 'infoComplCont' + IntToStrZero(I, 3);
+          if INIRec.SectionExists(sSecao) then
+          begin
+            sFim := INIRec.ReadString(sSecao, 'codCBO', '');
+            if sFim <> '' then
+            begin
+              infoComplCont.codCBO := sFim;
+              infoComplCont.natAtividade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '0'));
+              infoComplCont.qtdDiasTrab := INIRec.ReadInteger(sSecao, 'qtdDiasTrab', 0);
+            end;
+
+          end;
+
         end;
 
         Inc(I);

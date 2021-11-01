@@ -574,8 +574,7 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, NrOcorrDiscriminacao_1,
       StringReplace(NFSe.Servico.Discriminacao, ';', FAOwner.ConfigGeral.QuebradeLinha,
-                                       [rfReplaceAll, rfIgnoreCase]), DSC_DISCR,
-                (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
+                                     [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
 
     Result.AppendChild(AddNode(tcStr, '#33', 'CodigoMunicipio', 1, 7, NrOcorrCodigoMunic_1,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
@@ -585,8 +584,7 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, NrOcorrDiscriminacao_2,
       StringReplace(NFSe.Servico.Discriminacao, ';', FAOwner.ConfigGeral.QuebradeLinha,
-                                       [rfReplaceAll, rfIgnoreCase]), DSC_DISCR,
-                (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
+                                     [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
 
 //    Result.AppendChild(AddNode(tcStr, '#33', 'CodigoNbs', 1, 7, NrOcorrCodigoNBS,
 //                             OnlyNumber(NFSe.Servico.CodigoNBS), DSC_CMUN));

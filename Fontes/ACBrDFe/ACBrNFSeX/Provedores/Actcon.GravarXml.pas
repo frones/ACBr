@@ -94,6 +94,8 @@ procedure TNFSeW_Actcon202.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoEmissao := tcDatHor;
+  FormatoCompetencia := tcDat;
   TagTomador := 'Tomador';
 end;
 

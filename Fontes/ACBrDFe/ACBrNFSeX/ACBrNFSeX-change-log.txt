@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/11/2021
+-- Actcon.GravarXml --
+[*] Ajustes na Configuração da versão 2.02 para gerar o XML do Rps.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade: Pimenta Bueno/RO trocou de provedor.
    Por: Dfox

@@ -183,6 +183,7 @@ var
   GNRERetorno: TGNRERetorno;
   i: Integer;
 begin
+  Result:= False;
   GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
 
   for i := 0 to ArqRetorno.Count - 1 do
@@ -193,6 +194,7 @@ begin
       GNRERetorno.InfoCabec.IdentificadorSolicitante := Trim(Copy(ArqRetorno.Strings[i], 3, 14));
       GNRERetorno.InfoCabec.NumeroProtocoloLote := Trim(Copy(ArqRetorno.Strings[i], 17, 10));
       GNRERetorno.InfoCabec.Ambiente := StrToInt(Copy(ArqRetorno.Strings[i], 27, 1));
+      Result := True;
     end;
 
     if SameText(Copy(ArqRetorno.Strings[i], 1, 1), '1') then
@@ -245,10 +247,10 @@ begin
       GNRERetorno.IdentificadorGuia := Copy(ArqRetorno.Strings[i], 1088, 10);
       GNRERetorno.GuiaGeradaContingencia := StrToInt(Copy(ArqRetorno.Strings[i], 1098, 1));
       GNRERetorno.Reservado := Trim(Copy(ArqRetorno.Strings[i], 1099, 126));
+      Result := True;
     end
   end;
 
-  Result := True;
 end;
 
 function TGuiasRetorno.LerXML(AXML: String): Boolean;

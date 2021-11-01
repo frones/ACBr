@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2021
+-- ACBrGNREGuiasRetorno --
+[-] Ajuste na validação de leitura dos dados da guia GNRe.
+  Por: José M S Junior
+
 11/06/2021
 -- ACBrGNREGuiasRetorno --
 [-] Possível correção, ao imprimir a Guia estava sendo impresso parte da chave

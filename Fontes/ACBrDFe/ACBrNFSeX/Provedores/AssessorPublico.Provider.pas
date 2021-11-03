@@ -209,6 +209,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  Inconsistencia: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -222,15 +223,22 @@ begin
         Exit
       end;
 
+      Inconsistencia := (Pos('<INCONSISTENCIA>', Response.XmlRetorno) > 0);
+
       Document.LoadFromXml(Response.XmlRetorno);
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'INCONSISTENCIA');
+      if Inconsistencia then
+      begin
+        ANode := ANode.Childrens.FindAnyNs('Mensagem');
+
+        ProcessarMensagemErros(ANode, Response, 'NFSE', 'INCONSISTENCIA');
+      end
+      else
+        Response.Protocolo := Trim(ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr));
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
     except
       on E:Exception do
       begin

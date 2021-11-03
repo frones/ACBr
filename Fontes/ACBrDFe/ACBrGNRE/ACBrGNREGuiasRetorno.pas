@@ -379,14 +379,26 @@ begin
             if Leitor.rAtributo('tipo=', 'valor') = '21' then
               GNRERetorno.ValorICMS := Leitor.rCampo(tcDe2, 'valor');
 
+            if Leitor.rAtributo('tipo=', 'valor') = '22' then
+              GNRERetorno.ValorFCP := Leitor.rCampo(tcDe2, 'valor');
+
             if Leitor.rAtributo('tipo=', 'valor') = '31' then
               GNRERetorno.Multa := Leitor.rCampo(tcDe2, 'valor');
+
+            if Leitor.rAtributo('tipo=', 'valor') = '32' then
+              GNRERetorno.MultaFCP := Leitor.rCampo(tcDe2, 'valor');
 
             if Leitor.rAtributo('tipo=', 'valor') = '41' then
               GNRERetorno.Juros := Leitor.rCampo(tcDe2, 'valor');
 
+            if Leitor.rAtributo('tipo=', 'valor') = '42' then
+              GNRERetorno.JurosFCP := Leitor.rCampo(tcDe2, 'valor');
+
             if Leitor.rAtributo('tipo=', 'valor') = '51' then
               GNRERetorno.AtualizacaoMonetaria := Leitor.rCampo(tcDe2, 'valor');
+
+            if Leitor.rAtributo('tipo=', 'valor') = '52' then
+              GNRERetorno.AtualizacaoMonetariaFCP := Leitor.rCampo(tcDe2, 'valor');
 
             Inc(k);
           end;

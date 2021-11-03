@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2021
+-- ACBrGNREGuiasRetorno/pgnreGNRERetorno --
+[+] Incluido os campos: ValorFCP, MultaFCP, JurosFCP e AtualizacaoMonetariaFCP.
+  Por: Danrizzi
+
 01/11/2021
 -- ACBrGNREGuiasRetorno --
 [-] Ajuste na validação de leitura dos dados da guia GNRe.

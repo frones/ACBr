@@ -275,6 +275,9 @@ begin
     Subject        := 'Exportando DACTe para PDF';
     ShowProgress   := False;
   end;
+
+  RttiSetProp(frxPDFExport, 'Transparency', 'False');
+
   // CDS
   cdsIdentificacao := TClientDataSet.Create(Self);
   with cdsIdentificacao, FieldDefs do

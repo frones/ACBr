@@ -172,6 +172,8 @@ begin
   FfrxPDFExport := TfrxPDFExport.Create(Self);
   FfrxPDFExport.ShowProgress := False;
 
+  RttiSetProp(FfrxPDFExport, 'Transparency', 'False');
+
   FfrxBarCodeObject := TfrxBarCodeObject.Create(Self);
 
   // Banco

@@ -241,6 +241,8 @@ begin
   frxPDFExport.PrintOptimized := True;
   frxPDFExport.ShowProgress := False;
 
+  RttiSetProp(frxPDFExport, 'Transparency', 'False');
+
   frxBarCodeObject := TfrxBarCodeObject.Create(Self);
 
   cdsIdentificacao := TClientDataSet.Create(Self);

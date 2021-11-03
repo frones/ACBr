@@ -232,6 +232,8 @@ begin
      ShowProgress  := False;
   end;
 
+  RttiSetProp(FfrxPDFExport, 'Transparency', 'False');
+
   // cdsIdentificacao
   if not Assigned(cdsIdentificacao) then
   begin

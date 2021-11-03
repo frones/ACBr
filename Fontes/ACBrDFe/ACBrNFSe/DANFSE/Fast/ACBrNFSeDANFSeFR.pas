@@ -345,6 +345,8 @@ begin
     PrintScaling    := False;
   end;
 
+  RttiSetProp(frxPDFExport, 'Transparency', 'False');
+
   cdsIdentificacao := TClientDataSet.Create(nil);
   with cdsIdentificacao do
   begin

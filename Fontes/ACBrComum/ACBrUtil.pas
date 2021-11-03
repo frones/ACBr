@@ -397,6 +397,8 @@ function StringIsINI(const AString: String): Boolean;
 function StringIsAFile(const AString: String): Boolean;
 function StringIsXML(const AString: String): Boolean;
 
+procedure RttiSetProp(AObject: TObject; AProp: String; AValue: String);
+
 {$IfDef FPC}
 var ACBrANSIEncoding: String;
 {$EndIf}
@@ -421,7 +423,7 @@ implementation
 
 Uses
   synautil,
-  ACBrCompress, StrUtilsEx;
+  ACBrCompress, StrUtilsEx, typinfo;
 
 var
   Randomized : Boolean ;
@@ -4564,6 +4566,18 @@ begin
 end;
 
 {$ENDIF}
+{------------------------------------------------------------------------------
+   Inserir um valor a propriedade por RTTI
+ ------------------------------------------------------------------------------}
+procedure RttiSetProp(AObject: TObject; AProp, AValue: String);
+var
+  Propinfo: PPropInfo;
+begin
+  PropInfo := GetPropInfo(AObject.ClassInfo, AProp);
+  if (PropInfo = nil) then
+    Exit;
+  SetPropValue(AObject, AProp, AValue);
+end;
 
 initialization
 {$IfDef MSWINDOWS}

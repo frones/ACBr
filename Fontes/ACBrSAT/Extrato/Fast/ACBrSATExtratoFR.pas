@@ -435,6 +435,8 @@ begin
   frxPDFExport.PrintOptimized := True;
   frxPDFExport.ShowProgress := False;
 
+  RttiSetProp(frxPDFExport, 'Transparency', 'False');
+
   frxHTMLExport := TfrxHTMLExport.Create(Self);
 
 

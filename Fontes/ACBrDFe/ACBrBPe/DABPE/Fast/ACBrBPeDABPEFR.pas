@@ -604,6 +604,8 @@ begin
         Subject        := 'Exportando BPe para PDF';
     end;
 
+    RttiSetProp(frxPDFExport, 'Transparency', 'False');
+
     // CDS
     cdsEmitente := TClientDataSet.Create(Self);
     with cdsEmitente, FieldDefs do

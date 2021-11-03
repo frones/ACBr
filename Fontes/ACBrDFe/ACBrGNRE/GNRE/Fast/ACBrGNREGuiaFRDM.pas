@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE;
+uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE, ACBrUtil;
 
   { TdmACBrNFeFR }
 
@@ -285,6 +285,8 @@ begin
     CenterWindow    := False;
     PrintScaling    := False;
   end;
+
+  RttiSetProp(frxPDFExport, 'Transparency', 'False');
 
   cdsGuia := TClientDataSet.Create(nil);
   frxGuia := TfrxDBDataset.Create(nil);

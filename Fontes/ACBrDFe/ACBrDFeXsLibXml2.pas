@@ -483,7 +483,7 @@ begin
     SignElement := String(signBuffer.content);
 
     URI := RetornarConteudoEntre(SignElement, '<Reference URI="', '">');
-    DigestXML := DecodeBase64(AnsiString(LerTagXML(SignElement, cDigestValueNode)));
+    DigestXML := DecodeBase64(AnsiString(SeparaDados(SignElement, cDigestValueNode)));
     DigestAlg := GetSignDigestAlgorithm(SignElement);
 
     // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
@@ -509,12 +509,12 @@ begin
        Exit;
     end;
 
-    X509Certificate := AnsiString(LerTagXML(SignElement, cX509CertificateNode));
+    X509Certificate := AnsiString(SeparaDados(SignElement, cX509CertificateNode));
     FpDFeSSL.CarregarCertificadoPublico(X509Certificate);
 
     CanonXML := CanonC14n(aDoc, cSignedInfoNode);
 
-    XmlSign := DecodeBase64(AnsiString(LerTagXML(SignElement, cSignatureValueNode)) );
+    XmlSign := DecodeBase64(AnsiString(SeparaDados(SignElement, cSignatureValueNode)) );
     Result := FpDFeSSL.ValidarHash(CanonXML, DigestAlg, XmlSign, True);
   finally
     { cleanup }

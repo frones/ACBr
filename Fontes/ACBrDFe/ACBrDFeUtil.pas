@@ -511,7 +511,7 @@ begin
     Result := '<' + Grupo + ' xmlns' + Result + '</' + Grupo + '>'
   else
   begin
-    Result := LerTagXML(AXML, Grupo);
+    Result := SeparaDados(AXML, Grupo);
     if not EstaVazio(Result) then
       Result := '<' + Grupo + ' xmlns="' + NameSpace +'">' +
                 Result + '</' + Grupo + '>'

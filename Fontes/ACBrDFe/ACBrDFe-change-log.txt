@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2021
+-- ACBrDFeUtil/ACBrDFeXsLibXml2 --
+[*] Substituição da função LerTagXML por SeparaDados.
+  Por: Italo Giurizzato Junior
+
 21/10/2021
 -- ACBrXmlBase --
 [*] Ao ler um campo data o seu conteudo vai ser passado pela função LerDatas

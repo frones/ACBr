@@ -44,6 +44,17 @@ Símbolo : Significado
 
 
 03/11/2021
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs (ProLinkURL e HomLinkURL) de algumas cidades atendidas
+    pelo provedor Abaco.
+   Por: Renato Rubinho
+-- ACBrNFSeX --
+[*] Acrescentado o parâmetro AValorServico no método LinkNFSe, o provedor
+    Abaco utiliza essa informação na montagem da URL do Link.
+   Por: Renato Rubinho
+-- Abaco.Provider --
+[*] Alterado a Configuração para assinar o Lote.
+   Por: Renato Rubinho
 -- AssessorPublico.Provider --
 [*] Possível correção no tratamento do retorno do Emitir.
    Por: Italo Giurizzato Junior

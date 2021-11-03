@@ -208,6 +208,11 @@ begin
 
   SetXmlNameSpace('http://www.e-nfs.com.br');
 
+  with ConfigAssinar do
+  begin
+    LoteRps := True;
+  end;
+
   with ConfigWebServices do
   begin
     VersaoDados := 'V2010';

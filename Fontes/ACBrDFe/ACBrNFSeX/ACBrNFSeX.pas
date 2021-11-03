@@ -167,7 +167,7 @@ type
       const ANumLote: String = ''; const ACodVerificacao: String = '');
 
     function LinkNFSe(ANumNFSe: String; const ACodVerificacao: String;
-      const AChaveAcesso: String = ''): String;
+      const AChaveAcesso: String = ''; const AValorServico: String = ''): String;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -861,7 +861,7 @@ begin
 end;
 
 function TACBrNFSeX.LinkNFSe(ANumNFSe: String; const ACodVerificacao,
-  AChaveAcesso: String): String;
+  AChaveAcesso, AValorServico: String): String;
 var
   Texto, xNumeroNFSe, xNomeMunic: String;
 begin
@@ -887,6 +887,7 @@ begin
   Texto := StringReplace(Texto, '%InscMunic%', Configuracoes.Geral.Emitente.InscMun, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%ChaveAcesso%', AChaveAcesso, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Cnpj%', Configuracoes.Geral.Emitente.CNPJ, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%ValorServico%', AValorServico, [rfReplaceAll]);
 
   Result := Texto;
 end;

@@ -1,11 +1,5 @@
-Configuracoes/WebService
 
-SSLHTTPLib: httpWinHTTP
-SSCryptLib: cryWinCry
-SSLType: TLS 1.2
-TimeOut: 30000
-UseCertificateHTTP: False
-versao:= 1.2
+[EXEMPLOS DE PARAMETRIZAÇÃO DO COMPONENTE ACBRBOLETO PARA BOLETO ONLINE]
 
 
 ------------------------------------------------------------------------------------
@@ -16,13 +10,35 @@ Banco do Brasil API //Dados para Homologaçao devem sem adquiridos no portal do 
  ACBrBoleto.Cedente.CedenteWS.KeyUser       := developer_application_key
  ACBrBoleto.Cedente.CedenteWS.IndicadorPix  := True; //utilizado para boleto hibrido, necessário o cliente possuir chave PIX no banco do brasil
  ACBrBoleto.WebServices.Ambiente            := taHomologacao
+ 
+ ACBrBoleto.WebServices.SSCryptLib          := cryOpenSSL
+ ACBrBoleto.WebServices.SSLHTTPLib          := httpOpenSSL
+ ACBrBoleto.WebServices.SSLType             := LT_TLSv1_2
+ ACBrBoleto.WebServices.TimeOut             := 30000
+ ACBrBoleto.WebServices.UseCertificateHTTP  := False
+ ACBrBoleto.WebServices.Operacao            := tpConsulta; [tpConsulta,tpAltera,tpBaixa,tpInclui] // utilizado para o tipo de operação
+ 
  Título ex campos:
- 	ACBrBoleto.Cedente.CodigoCedente     := '4863177';
- 	ACBrBoleto.Cedente.Convenio	         := '1014051';
- 	ACBrBoleto.Cedente.Modalidade        := '35'; 
- 	Carteira                             := '17'; 
- 	EspecieDoc 	                         := 'DM'; 
+ 	ACBrBoleto.Cedente.CodigoCedente        := '4863177';
+ 	ACBrBoleto.Cedente.Convenio	            := '1014051';
+ 	ACBrBoleto.Cedente.Modalidade           := '35'; 
+ 	Carteira                                := '17'; 
+ 	EspecieDoc 	                            := 'DM'; 
 //Campos devem ser preenchidos conforme dados do Banco
+
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Configuracoes/WebService
+
+SSLHTTPLib: httpWinHTTP
+SSCryptLib: cryWinCry
+SSLType: TLS 1.2
+TimeOut: 30000
+UseCertificateHTTP: False
+versao:= 1.2
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
  
 ------------------------------------------------------------------------------------
 Banco do Brasil WS //Dados para Homologaçao

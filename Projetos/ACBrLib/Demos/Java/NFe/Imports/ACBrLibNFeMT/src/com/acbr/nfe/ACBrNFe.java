@@ -16,21 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Implementa AutoCloseable para ser possível usar em try-with-resources
- *  Uso:
- *  try( ACBrNFe wrapper =  new ACBrNFe(...) ){
- *  nfe.statusServico();
- *  }
- *  Dessa forma ele retirará o ACBrNFe da memória ao terminar de utilizar, então não precisa do bloco
- *  finally, para setar tirar o nfe da memória, pois ele chama o finalize() no método close();
- *
- *  É melhor utilizar em um try-with-resources, que depender do método finalize(), pois o finalize() será
- *  chamado somente quando for efetuado o garbage collection do objeto, então fica impossível determinar
- *  QUANDO e SE o finalize() será chamado. Já o try-with-resources chama o close() ao finalizar seu escopo.
- */
-
-public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
+public final class ACBrNFe extends ACBrLibBase {
 
     private interface ACBrNFeLib extends Library {
     
@@ -57,7 +43,7 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
             public static ACBrNFeLib getInstance() {
                 if ( instance == null ) {
                     instance = ( ACBrNFeLib ) Native.synchronizedLibrary(
-                ( Library ) Native.loadLibrary( JNA_LIBRARY_NAME, ACBrNFeLib.class ) );
+                ( Library ) Native.load( JNA_LIBRARY_NAME, ACBrNFeLib.class ) );
                 }
                 return instance;
             }
@@ -190,20 +176,9 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
   }
 
   @Override
-  public void close() throws Exception {
+  protected void dispose() throws Exception {
     int ret = ACBrNFeLib.INSTANCE.NFE_Finalizar(getHandle());
     checkResult( ret );
-  }
-
-  @Override
-  protected void finalize() throws Throwable {
-    try {
-      int ret = ACBrNFeLib.INSTANCE.NFE_Finalizar(getHandle());
-      checkResult( ret );
-    }
-    finally {
-      super.finalize();
-    }
   }
 
   public String nome() throws Exception {

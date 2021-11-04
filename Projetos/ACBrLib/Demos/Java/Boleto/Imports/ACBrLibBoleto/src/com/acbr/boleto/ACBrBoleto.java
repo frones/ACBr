@@ -10,7 +10,7 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
+public final class ACBrBoleto extends ACBrLibBase {   
     
     private interface ACBrBoletoLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
@@ -33,7 +33,7 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
 
             public static ACBrBoletoLib getInstance() {
                 if (instance == null) {
-                    instance = (ACBrBoletoLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, ACBrBoletoLib.class));
+                    instance = (ACBrBoletoLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, ACBrBoletoLib.class));
                 }
                 return instance;
             }
@@ -124,22 +124,12 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
     public ACBrBoleto(String eArqConfig, String eChaveCrypt) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
-    }   
-    
-    @Override
-    public void close() throws Exception {
-        int ret = ACBrBoletoLib.INSTANCE.Boleto_Finalizar();
-        checkResult(ret);
     }
     
     @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = ACBrBoletoLib.INSTANCE.Boleto_Finalizar();
-            checkResult(ret);
-        } finally {
-            super.finalize();
-        }
+    protected void dispose() throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_Finalizar();
+        checkResult(ret);
     }
     
     public String nome() throws Exception {
@@ -162,11 +152,19 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }
     
+     public void configLer() throws Exception {
+         configLer("");
+     }
+    
     public void configLer(String eArqConfig) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigLer(toUTF8(eArqConfig));
         checkResult(ret);
     }
-
+    
+    public void configGravar() throws Exception {
+        configGravar("");
+    }
+    
     public void configGravar(String eArqConfig) throws Exception {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_ConfigGravar(toUTF8(eArqConfig));
         checkResult(ret);

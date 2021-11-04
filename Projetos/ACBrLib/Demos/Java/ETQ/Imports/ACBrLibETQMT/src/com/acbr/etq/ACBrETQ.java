@@ -12,10 +12,8 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
-    
+public final class ACBrETQ extends ACBrLibBase {    
     interface ACBrETQLib extends Library {
-
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrETQLib INSTANCE = LibraryLoader.getInstance();
 
@@ -30,15 +28,14 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
                         library = Platform.is64Bit() ? "ACBrETQ64" : "ACBrETQ32";                        
                     }else{
                         library = Platform.is64Bit() ? "acbretq64" : "acbretq32";
-                    }
-                    
+                    }                    
                 }
                 return library;
             }
 
             public static ACBrETQLib getInstance() {
                 if (instance == null) {
-                    instance = (ACBrETQLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, ACBrETQLib.class));
+                    instance = (ACBrETQLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, ACBrETQLib.class));
                 }
                 return instance;
             }
@@ -117,19 +114,9 @@ public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
     }
     
     @Override
-    public void close() throws Exception {
+    protected void dispose() throws Exception {
         int ret = ACBrETQLib.INSTANCE.ETQ_Finalizar(getHandle());
         checkResult(ret);
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = ACBrETQLib.INSTANCE.ETQ_Finalizar(getHandle());
-            checkResult(ret);
-        } finally {
-            super.finalize();
-        }
     }
 
     public String nome() throws Exception {

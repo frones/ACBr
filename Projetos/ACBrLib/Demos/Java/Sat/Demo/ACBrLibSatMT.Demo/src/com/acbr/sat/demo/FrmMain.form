@@ -426,9 +426,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="CNPJ Contribuinte"/>
               </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="CNPJ Contribuinte"/>
-              </AccessibilityProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCNPJContribuinte">
               <Properties>
@@ -1257,9 +1254,6 @@
       <Properties>
         <Property name="label" type="java.lang.String" value="Ativar SAT"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Ativar SAT"/>
-      </AccessibilityProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtivarSATActionPerformed"/>
       </Events>

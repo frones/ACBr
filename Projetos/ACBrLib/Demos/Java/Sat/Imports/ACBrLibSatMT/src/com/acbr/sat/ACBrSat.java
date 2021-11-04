@@ -12,8 +12,8 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
-      
+public final class ACBrSat extends ACBrLibBase {
+         
     private interface ACBrSatLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrSatLib INSTANCE = LibraryLoader.getInstance();
@@ -36,7 +36,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
             
             public static ACBrSatLib getInstance() {
                 if (instance == null) {
-                    instance = (ACBrSatLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, ACBrSatLib.class));
+                    instance = (ACBrSatLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, ACBrSatLib.class));
                 }
                 return instance;
             }
@@ -130,21 +130,11 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
         setHandle(handle.getValue());
     }
-    
+           
     @Override
-    public void close() throws Exception {
-        int ret = ACBrSatLib.INSTANCE.SAT_Finalizar(getHandle());
-        checkResult(ret);
-    }
-    
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = ACBrSatLib.INSTANCE.SAT_Finalizar(getHandle());
-            checkResult(ret);
-        } finally {
-            super.finalize();
-        }
+    protected void dispose() throws Exception {
+        int ret = ACBrSatLib.INSTANCE.SAT_Finalizar(this.getHandle());
+        checkResult(ret);        
     }
     
     public String nome() throws Exception {

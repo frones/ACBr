@@ -10,85 +10,86 @@ import com.acbr.ACBrSessao;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {    
-       
+public final class ACBrMail extends ACBrLibBase {
+
     private interface ACBrMailLib extends Library {
-        
+
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrMailLib INSTANCE = LibraryLoader.getInstance();
-        
+
         class LibraryLoader {
+
             private static String library = "";
             private static ACBrMailLib instance = null;
-            
+
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    if(Platform.isWindows()){
-                        library = Platform.is64Bit() ? "ACBrMail64" : "ACBrMail32";                        
-                    }else{
+                    if (Platform.isWindows()) {
+                        library = Platform.is64Bit() ? "ACBrMail64" : "ACBrMail32";
+                    } else {
                         library = Platform.is64Bit() ? "acbrmail64" : "acbrmail32";
                     }
                 }
-                
+
                 return library;
             }
-            
+
             public static ACBrMailLib getInstance() {
                 if (instance == null) {
-                    instance = (ACBrMailLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, ACBrMailLib.class));
+                    instance = (ACBrMailLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, ACBrMailLib.class));
                 }
-                
+
                 return instance;
             }
         }
-        
+
         int MAIL_Inicializar(String eArqConfig, String eChaveCrypt);
-        
+
         int MAIL_Finalizar();
-        
+
         int MAIL_Nome(ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int MAIL_Versao(ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int MAIL_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int MAIL_ConfigImportar(String eArqConfig);
-        
-	    int MAIL_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
-        
+
+        int MAIL_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
+
         int MAIL_ConfigLer(String eArqConfig);
-        
+
         int MAIL_ConfigGravar(String eArqConfig);
-        
+
         int MAIL_ConfigLerValor(String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int MAIL_ConfigGravarValor(String eSessao, String eChave, String valor);
-          
-        int MAIL_SetSubject(String eSubject);  
-        
+
+        int MAIL_SetSubject(String eSubject);
+
         int MAIL_AddAddress(String eEmail, String eName);
-        
+
         int MAIL_AddReplyTo(String eEmail, String eName);
-        
+
         int MAIL_AddCC(String eEmail, String eName);
-        
+
         int MAIL_AddBCC(String eEmail);
-        
+
         int MAIL_ClearAttachment();
-        
+
         int MAIL_AddAttachment(String eFileName, String eDescription, int aDisposition);
-        
+
         int MAIL_AddBody(String eBody);
-        
+
         int MAIL_AddAltBody(String eAltBody);
-        
+
         int MAIL_SaveToFile(String eFileName);
-        
+
         int MAIL_Clear();
-        
+
         int MAIL_Send();
     }
- 
+
     public ACBrMail() throws Exception {
         File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
         if (!iniFile.exists()) {
@@ -103,23 +104,13 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
         int ret = ACBrMailLib.INSTANCE.MAIL_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
     }
-    
+
     @Override
-    public void close() throws Exception {
+    protected void dispose() throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_Finalizar();
         checkResult(ret);
     }
-    
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = ACBrMailLib.INSTANCE.MAIL_Finalizar();
-            checkResult(ret);
-        } finally {
-            super.finalize();
-        }
-    }
-    
+
     public String nome() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -165,7 +156,7 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
 
         int ret = ACBrMailLib.INSTANCE.MAIL_ConfigLerValor(toUTF8(eSessao.name()), toUTF8(eChave), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
 
@@ -174,77 +165,77 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
         int ret = ACBrMailLib.INSTANCE.MAIL_ConfigGravarValor(toUTF8(eSessao.name()), toUTF8(eChave), toUTF8(value.toString()));
         checkResult(ret);
     }
-    
+
     public void setSubject(String eMail) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_SetSubject(toUTF8(eMail));
         checkResult(ret);
     }
-    
+
     public void addAddress(String eMail, String eName) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_AddAddress(toUTF8(eMail), toUTF8(eName));
         checkResult(ret);
     }
-    
+
     public void addReplyTo(String eMail, String eName) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_AddReplyTo(toUTF8(eMail), toUTF8(eName));
         checkResult(ret);
     }
-    
+
     public void addCC(String eMail, String eName) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_AddCC(toUTF8(eMail), toUTF8(eName));
         checkResult(ret);
     }
-    
+
     public void addBCC(String eMail) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_AddBCC(toUTF8(eMail));
         checkResult(ret);
     }
-    
+
     public void clearAttachment() throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_ClearAttachment();
         checkResult(ret);
     }
-    
+
     public void addAttachment(String eFileName, String eDescription, MailAttachmentDisposition aDisposition) throws Exception {
-        int ret = ACBrMailLib.INSTANCE.MAIL_AddAttachment(toUTF8(eFileName), 
+        int ret = ACBrMailLib.INSTANCE.MAIL_AddAttachment(toUTF8(eFileName),
                 toUTF8(eDescription), aDisposition.asInt());
         checkResult(ret);
     }
-    
+
     public void addBody(String eBody) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_AddBody(toUTF8(eBody));
         checkResult(ret);
     }
-    
+
     public void addAltBody(String eAltBody) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_AddAltBody(toUTF8(eAltBody));
         checkResult(ret);
     }
-    
+
     public void saveToFile(String eFileName) throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_SaveToFile(toUTF8(eFileName));
         checkResult(ret);
     }
-    
+
     public void clear() throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_Clear();
         checkResult(ret);
     }
-    
+
     public void send() throws Exception {
         int ret = ACBrMailLib.INSTANCE.MAIL_Send();
         checkResult(ret);
     }
-    
+
     public void ConfigImportar(String eArqConfig) throws Exception {
-        
+
         int ret = ACBrMailLib.INSTANCE.MAIL_ConfigImportar(eArqConfig);
         checkResult(ret);
-        
+
     }
-    
+
     public String ConfigExportar() throws Exception {
-		
+
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
@@ -252,9 +243,9 @@ public final class ACBrMail extends ACBrLibBase implements AutoCloseable  {
         checkResult(ret);
 
         return fromUTF8(buffer, bufferLen.getValue());
-		
+
     }
-    
+
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         ACBrMailLib.INSTANCE.MAIL_UltimoRetorno(buffer, bufferLen);

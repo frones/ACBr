@@ -12,7 +12,7 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrCEP extends ACBrLibBase implements AutoCloseable {
+public final class ACBrCEP extends ACBrLibBase {
       
     private interface ACBrCEPLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
@@ -35,7 +35,7 @@ public final class ACBrCEP extends ACBrLibBase implements AutoCloseable {
             
             public static ACBrCEPLib getInstance() {
                 if (instance == null) {
-                    instance = (ACBrCEPLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, ACBrCEPLib.class));
+                    instance = (ACBrCEPLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, ACBrCEPLib.class));
                 }
                 return instance;
             }
@@ -89,19 +89,9 @@ public final class ACBrCEP extends ACBrLibBase implements AutoCloseable {
     }
     
     @Override
-    public void close() throws Exception {
+    protected void dispose() throws Exception {
         int ret = ACBrCEPLib.INSTANCE.CEP_Finalizar(getHandle());
         checkResult(ret);
-    }
-    
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = ACBrCEPLib.INSTANCE.CEP_Finalizar(getHandle());
-            checkResult(ret);
-        } finally {
-            super.finalize();
-        }
     }
     
     public String nome() throws Exception {

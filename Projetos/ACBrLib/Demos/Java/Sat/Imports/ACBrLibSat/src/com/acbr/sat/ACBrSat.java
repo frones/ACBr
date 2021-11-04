@@ -10,105 +10,107 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
-      
+public final class ACBrSat extends ACBrLibBase {
+
     private interface ACBrSatLib extends Library {
+
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrSatLib INSTANCE = LibraryLoader.getInstance();
-        
+
         class LibraryLoader {
+
             private static String library = "";
             private static ACBrSatLib instance = null;
-            
+
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    if(Platform.isWindows()){
-                        library = Platform.is64Bit() ? "ACBrSAT64" : "ACBrSAT32";                        
-                    }else{
+                    if (Platform.isWindows()) {
+                        library = Platform.is64Bit() ? "ACBrSAT64" : "ACBrSAT32";
+                    } else {
                         library = Platform.is64Bit() ? "acbrsat64" : "acbrsat32";
                     }
                 }
                 return library;
             }
-            
+
             public static ACBrSatLib getInstance() {
                 if (instance == null) {
-                    instance = (ACBrSatLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, ACBrSatLib.class));
+                    instance = (ACBrSatLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, ACBrSatLib.class));
                 }
                 return instance;
             }
         }
 
-    int SAT_Inicializar(String eArqConfig, String eChaveCrypt);
+        int SAT_Inicializar(String eArqConfig, String eChaveCrypt);
 
-    int SAT_Finalizar();
-    
-    int SAT_Nome(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_Finalizar();
 
-    int SAT_Versao(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_Nome(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_Versao(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ConfigImportar(String eArqConfig);
-        
-    int SAT_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
-    
-    int SAT_ConfigLer(String eArqConfig);
+        int SAT_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ConfigGravar(String eArqConfig);
+        int SAT_ConfigImportar(String eArqConfig);
 
-    int SAT_ConfigLerValor(String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_ConfigExportar(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ConfigGravarValor(String eSessao, String eChave, String valor);
+        int SAT_ConfigLer(String eArqConfig);
 
-    int SAT_InicializarSAT();
+        int SAT_ConfigGravar(String eArqConfig);
 
-    int SAT_DesInicializar();
+        int SAT_ConfigLerValor(String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_AtivarSAT(String CNPJValue, Integer cUF, ByteBuffer buffer, IntByReference bufferSize);
-    
-    int SAT_AssociarAssinatura(String CNPJValue, String assinaturaCNPJs, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_ConfigGravarValor(String eSessao, String eChave, String valor);
 
-    int SAT_BloquearSAT(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_InicializarSAT();
 
-    int SAT_DesbloquearSAT(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_DesInicializar();
 
-    int SAT_TrocarCodigoDeAtivacao(String codigoDeAtivacaoOuEmergencia, int opcao, String novoCodigo, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_AtivarSAT(String CNPJValue, Integer cUF, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ConsultarSAT(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_AssociarAssinatura(String CNPJValue, String assinaturaCNPJs, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ConsultarStatusOperacional(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_BloquearSAT(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ConsultarNumeroSessao(int cNumeroDeSessao, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_DesbloquearSAT(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_AtualizarSoftwareSAT(ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_TrocarCodigoDeAtivacao(String codigoDeAtivacaoOuEmergencia, int opcao, String novoCodigo, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ComunicarCertificadoICPBRASIL(String certificado, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_ConsultarSAT(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ExtrairLogs(String eArquivo);
+        int SAT_ConsultarStatusOperacional(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_TesteFimAFim(String eArquivoXmlVenda);
+        int SAT_ConsultarNumeroSessao(int cNumeroDeSessao, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_CriarCFe(String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_AtualizarSoftwareSAT(ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_CriarEnviarCFe(String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_ComunicarCertificadoICPBRASIL(String certificado, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_EnviarCFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_ExtrairLogs(String eArquivo);
 
-    int SAT_CancelarCFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_TesteFimAFim(String eArquivoXmlVenda);
 
-    int SAT_ImprimirExtratoVenda(String eArquivoXml, String eNomeImpressora);
+        int SAT_CriarCFe(String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_ImprimirExtratoResumido(String eArquivoXml, String eNomeImpressora);
+        int SAT_CriarEnviarCFe(String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_GerarPDFExtratoVenda(String eArquivoXml, String eNomeArquivo, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_EnviarCFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_GerarImpressaoFiscalMFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
+        int SAT_CancelarCFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_EnviarEmail(String eArquivoXml, String ePara, String eAssunto, String eNomeArquivo,
-            String sMensagem, String sCC, String eAnexos);
+        int SAT_ImprimirExtratoVenda(String eArquivoXml, String eNomeImpressora);
+
+        int SAT_ImprimirExtratoResumido(String eArquivoXml, String eNomeImpressora);
+
+        int SAT_GerarPDFExtratoVenda(String eArquivoXml, String eNomeArquivo, ByteBuffer buffer, IntByReference bufferSize);
+
+        int SAT_GerarImpressaoFiscalMFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
+
+        int SAT_EnviarEmail(String eArquivoXml, String ePara, String eAssunto, String eNomeArquivo,
+                String sMensagem, String sCC, String eAnexos);
     }
-        
+
     public ACBrSat() throws Exception {
         File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
         if (!iniFile.exists()) {
@@ -123,23 +125,13 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         int ret = ACBrSatLib.INSTANCE.SAT_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
     }
-    
+
     @Override
-    public void close() throws Exception {
+    protected void dispose() throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_Finalizar();
         checkResult(ret);
     }
-    
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = ACBrSatLib.INSTANCE.SAT_Finalizar();
-            checkResult(ret);
-        } finally {
-            super.finalize();
-        }
-    }
-    
+
     public String nome() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -185,7 +177,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
 
         int ret = ACBrSatLib.INSTANCE.SAT_ConfigLerValor(toUTF8(eSessao.name()), toUTF8(eChave), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
 
@@ -194,222 +186,222 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         int ret = ACBrSatLib.INSTANCE.SAT_ConfigGravarValor(toUTF8(eSessao.name()), toUTF8(eChave), toUTF8(value.toString()));
         checkResult(ret);
     }
-    
-    public void inicializar() throws Exception  {  
+
+    public void inicializar() throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_InicializarSAT();
         checkResult(ret);
     }
-    
-    public void desInicializar() throws Exception  { 
+
+    public void desInicializar() throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_DesInicializar();
         checkResult(ret);
     }
-    
+
     public String ativarSAT(String CNPJValue, Integer cUF) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);          
-        
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
         int ret = ACBrSatLib.INSTANCE.SAT_AtivarSAT(toUTF8(CNPJValue), cUF, buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }
-    
+
     public String associarAssinatura(String CNPJValue, String assinaturaCNPJs) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);          
-        
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
         int ret = ACBrSatLib.INSTANCE.SAT_AssociarAssinatura(toUTF8(CNPJValue), toUTF8(assinaturaCNPJs), buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }
-    
+
     public String bloquearSAT() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-        
+
         int ret = ACBrSatLib.INSTANCE.SAT_BloquearSAT(buffer, bufferLen);
-        checkResult(ret);        
+        checkResult(ret);
         return processResult(buffer, bufferLen);
     }
-    
+
     public String desbloquearSAT() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-        
+
         int ret = ACBrSatLib.INSTANCE.SAT_DesbloquearSAT(buffer, bufferLen);
-        checkResult(ret);        
+        checkResult(ret);
         return processResult(buffer, bufferLen);
     }
-        
+
     public String trocarCodigoDeAtivacao(String codigoDeAtivacaoOuEmergencia, int opcao, String novoCodigo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-        
+
         int ret = ACBrSatLib.INSTANCE.SAT_TrocarCodigoDeAtivacao(toUTF8(codigoDeAtivacaoOuEmergencia), opcao,
-                toUTF8(novoCodigo), buffer, bufferLen);        
+                toUTF8(novoCodigo), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String consultarSAT() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-        
+
         int ret = ACBrSatLib.INSTANCE.SAT_ConsultarSAT(buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String consultarStatusOperacional() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_ConsultarStatusOperacional(buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String consultarNumeroSessao(int cNumeroDeSessao) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_ConsultarNumeroSessao(cNumeroDeSessao, buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String atualizarSoftwareSAT() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_AtualizarSoftwareSAT(buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String comunicarCertificadoICPBRASIL(String certificado) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_ComunicarCertificadoICPBRASIL(toUTF8(certificado), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-           
+
     public void extrairLogs(String eArquivo) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_ExtrairLogs(toUTF8(eArquivo));
         checkResult(ret);
     }
-    
+
     public void testeFimAFim(String eArquivoXmlVenda) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_TesteFimAFim(toUTF8(eArquivoXmlVenda));
         checkResult(ret);
     }
-    
+
     public String criarCFe(String eArquivoIni) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_CriarCFe(toUTF8(eArquivoIni), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String criarEnviarCFe(String eArquivoIni) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_CriarEnviarCFe(toUTF8(eArquivoIni), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String enviarCFe(String eArquivoXml) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_EnviarCFe(toUTF8(eArquivoXml), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String cancelarCFe(String eArquivoXml) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_CancelarCFe(toUTF8(eArquivoXml), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public void imprimirExtratoVenda(String eArquivoXml) throws Exception {
         imprimirExtratoVenda(eArquivoXml, "");
     }
-    
+
     public void imprimirExtratoVenda(String eArquivoXml, String eNomeImpressora) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_ImprimirExtratoVenda(toUTF8(eArquivoXml), toUTF8(eNomeImpressora));
         checkResult(ret);
     }
-    
+
     public void imprimirExtratoResumido(String eArquivoXml) throws Exception {
         imprimirExtratoResumido(eArquivoXml, "");
     }
-    
+
     public void imprimirExtratoResumido(String eArquivoXml, String eNomeImpressora) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_ImprimirExtratoResumido(toUTF8(eArquivoXml), toUTF8(eNomeImpressora));
         checkResult(ret);
     }
-    
+
     public String gerarPDFExtratoVenda(String eArquivoXml) throws Exception {
         return gerarPDFExtratoVenda(eArquivoXml, "");
     }
-    
+
     public String gerarPDFExtratoVenda(String eArquivoXml, String eNomeArquivo) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_GerarPDFExtratoVenda(toUTF8(eArquivoXml), toUTF8(eNomeArquivo), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public String GerarImpressaoFiscalMFe(String eArquivoXml) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
         int ret = ACBrSatLib.INSTANCE.SAT_GerarImpressaoFiscalMFe(toUTF8(eArquivoXml), buffer, bufferLen);
         checkResult(ret);
-        
+
         return processResult(buffer, bufferLen);
     }
-    
+
     public void EnviarEmail(String eArquivoXml, String ePara, String eAssunto, String eNomeArquivo,
             String sMensagem, String sCC, String eAnexos) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_EnviarEmail(toUTF8(eArquivoXml), toUTF8(ePara), toUTF8(eAssunto),
                 toUTF8(eNomeArquivo), toUTF8(sMensagem), toUTF8(sCC), toUTF8(eAnexos));
         checkResult(ret);
     }
-    
+
     public void ConfigImportar(String eArqConfig) throws Exception {
-        
+
         int ret = ACBrSatLib.INSTANCE.SAT_ConfigImportar(eArqConfig);
         checkResult(ret);
-        
+
     }
-    
+
     public String ConfigExportar() throws Exception {
-		
+
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
@@ -417,9 +409,9 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
 
         return fromUTF8(buffer, bufferLen.getValue());
-		
+
     }
-    
+
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         ACBrSatLib.INSTANCE.SAT_UltimoRetorno(buffer, bufferLen);

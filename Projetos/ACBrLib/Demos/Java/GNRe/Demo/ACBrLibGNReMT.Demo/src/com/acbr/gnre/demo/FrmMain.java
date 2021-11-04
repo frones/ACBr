@@ -1216,8 +1216,8 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         try {
-           int ret = acbrGNRe.enviar();
-           rtbRespostas.append(Integer.toString(ret));
+           String ret = acbrGNRe.enviar(1);
+           rtbRespostas.append(ret);
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }

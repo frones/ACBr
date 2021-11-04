@@ -1,4 +1,4 @@
-  package com.acbr.posprinter;
+package com.acbr.posprinter;
 
 import com.acbr.ACBrLibBase;
 import com.acbr.ACBrSessao;
@@ -6,9 +6,8 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
-import com.sun.jna.ptr.PointerByReference;  
+import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.IntByReference;
-import com.sun.tools.javac.util.StringUtils;
 import java.io.File;
 
 import java.nio.ByteBuffer;
@@ -19,7 +18,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 
-public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  {
+public final class ACBrPosPrinter extends ACBrLibBase {
 
     public interface PosPrinterLib extends Library {
 
@@ -33,9 +32,9 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
             public static String getLibraryName() {
                 if (library.isEmpty()) {
-                    if(Platform.isWindows()){
-                        library = Platform.is64Bit() ? "ACBrPosPrinter64" : "ACBrPosPrinter32";                        
-                    }else{
+                    if (Platform.isWindows()) {
+                        library = Platform.is64Bit() ? "ACBrPosPrinter64" : "ACBrPosPrinter32";
+                    } else {
                         library = Platform.is64Bit() ? "acbrposprinter64" : "acbrposprinter32";
                     }
                 }
@@ -44,7 +43,7 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
             public static PosPrinterLib getInstance() {
                 if (instance == null) {
-                    instance = (PosPrinterLib) Native.synchronizedLibrary((Library) Native.loadLibrary(JNA_LIBRARY_NAME, PosPrinterLib.class));
+                    instance = (PosPrinterLib) Native.synchronizedLibrary((Library) Native.load(JNA_LIBRARY_NAME, PosPrinterLib.class));
                 }
                 return instance;
             }
@@ -61,11 +60,11 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int POS_UltimoRetorno(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
 
         int POS_ConfigLer(Pointer libHandler, String eArqConfig);
-        
+
         int POS_ConfigImportar(Pointer libHandler, String eArqConfig);
 
         int POS_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int POS_ConfigGravar(Pointer libHandler, String eArqConfig);
 
         int POS_ConfigLerValor(Pointer libHandler, String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
@@ -83,14 +82,14 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int POS_ImprimirCmd(Pointer libHandler, String aString);
 
         int POS_ImprimirTags(Pointer libHandler);
-        
+
         int POS_ImprimirImagemArquivo(Pointer libHandler, String APath);
-                       
+
         int POS_ImprimirLogo(Pointer libHandler, int nAKC1, int nAKC2, int nFatorX, int nFatorY);
-        
+
         int POS_ImprimirCheque(Pointer libHandler, int CodBanco, String AValor, String ADataEmissao, String AFavorecido,
-                  String ACidade, String AComplemento, boolean LerCMC7, int SegundosEspera);
-        
+                String ACidade, String AComplemento, boolean LerCMC7, int SegundosEspera);
+
         int POS_ImprimirTextoCheque(Pointer libHandler, int X, int Y, String AString, boolean AguardaCheque, int SegundosEspera);
 
         int POS_TxRx(Pointer libHandler, String aString, byte bytesToRead, int aTimeOut, boolean waitForTerminator, ByteBuffer buffer, IntByReference bufferSize);
@@ -112,21 +111,21 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int POS_LerStatusImpressora(Pointer libHandler, int tentativas, IntByReference status);
 
         int POS_RetornarTags(Pointer libHandler, boolean incluiAjuda, ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int POS_AcharPortas(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int POS_GravarLogoArquivo(Pointer libHandler, String APath, int nAKC1, int nAKC2);
-        
+
         int POS_ApagarLogo(Pointer libHandler, int nAKC1, int nAKC2);
-        
+
         int POS_LeituraCheque(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
 
         int POS_LerCMC7(Pointer libHandler, boolean AguardaCheque, int SegundosEspera, ByteBuffer buffer, IntByReference bufferSize);
-        
+
         int POS_EjetarCheque(Pointer libHandler);
-        
+
         int POS_PodeLerDaPorta(Pointer libHandler);
-        
+
         int POS_LerCaracteristicas(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
     }
 
@@ -150,21 +149,10 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
     }
 
     @Override
-    public void close() throws Exception {
+    protected void dispose() throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_Finalizar(getHandle());
         checkResult(ret);
         setHandle(Pointer.NULL);
-    }
-    
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            int ret = PosPrinterLib.INSTANCE.POS_Finalizar(getHandle());
-            checkResult(ret);
-            setHandle(Pointer.NULL);
-        } finally {
-            super.finalize();
-        }
     }
 
     public String nome() throws Exception {
@@ -190,7 +178,7 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
     public void configLer() throws Exception {
         configLer("");
     }
-    
+
     public void configLer(String eArqConfig) throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_ConfigLer(getHandle(), toUTF8(eArqConfig));
         checkResult(ret);
@@ -311,7 +299,7 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
         return processResult(buffer, bufferLen).split("|");
     }
-    
+
     public String[] AcharPortas() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
@@ -321,49 +309,49 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
         String portas = processResult(buffer, bufferLen);
         return Arrays.stream(portas.split("\\|"))
-                     .filter(x -> !x.isBlank() && !x.isEmpty())
-                     .toArray(String[]::new);
+                .filter(x -> !x.isBlank() && !x.isEmpty())
+                .toArray(String[]::new);
     }
-    
+
     public void gravarLogoArquivo(String aPath) throws Exception {
         gravarLogoArquivo(aPath, -1, -1);
     }
-    
+
     public void gravarLogoArquivo(String aPath, int nAKC1, int nAKC2) throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_GravarLogoArquivo(getHandle(), toUTF8(aPath), nAKC1, nAKC2);
         checkResult(ret);
     }
-    
+
     public void apagarLogo() throws Exception {
         apagarLogo(-1, -1);
     }
-    
+
     public void apagarLogo(int nAKC1, int nAKC2) throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_ApagarLogo(getHandle(), nAKC1, nAKC2);
         checkResult(ret);
     }
-    
+
     public String leituraCheque() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-                
+
         int ret = PosPrinterLib.INSTANCE.POS_LeituraCheque(getHandle(), buffer, bufferLen);
-        
+
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }
-    
+
     public String lerCMC7(boolean AguardaCheque, int SegundosEspera) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-                   
+
         int ret = PosPrinterLib.INSTANCE.POS_LerCMC7(getHandle(), AguardaCheque, SegundosEspera, buffer, bufferLen);
         checkResult(ret);
         return processResult(buffer, bufferLen);
     }
-    
+
     public void EjetarCheque() throws Exception {
-        int ret = PosPrinterLib.INSTANCE.POS_EjetarCheque(getHandle());        
+        int ret = PosPrinterLib.INSTANCE.POS_EjetarCheque(getHandle());
         checkResult(ret);
     }
 
@@ -372,14 +360,14 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         checkResult(ret);
         return ret == 1;
     }
-    
+
     public String LerCaracteristicas() throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-        
+
         int ret = PosPrinterLib.INSTANCE.POS_LerCaracteristicas(getHandle(), buffer, bufferLen);
-        
-        checkResult(ret);        
+
+        checkResult(ret);
         return processResult(buffer, bufferLen);
     }
 
@@ -406,31 +394,31 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int ret = PosPrinterLib.INSTANCE.POS_ImprimirTags(getHandle());
         checkResult(ret);
     }
-    
+
     public void imprimirImagemArquivo(String aPath) throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_ImprimirImagemArquivo(getHandle(), toUTF8(aPath));
         checkResult(ret);
-    }  
-    
+    }
+
     public void imprimirLogo() throws Exception {
         imprimirLogo(-1, -1, -1, -1);
     }
-    
+
     public void imprimirLogo(int nAKC1, int nAKC2, int nFatorX, int nFatorY) throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_ImprimirLogo(getHandle(), nAKC1, nAKC2, nFatorX, nFatorY);
         checkResult(ret);
-    }  
-    
+    }
+
     public void imprimirCheque(int CodBanco, Double AValor, Date ADataEmissao, String AFavorecido,
             String ACidade, String AComplemento, boolean LerCMC7, int SegundosEspera) throws Exception {
-                
+
         String valor = String.valueOf(AValor);
-        
+
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String data = df.format(ADataEmissao);
-        
+
         int ret = PosPrinterLib.INSTANCE.POS_ImprimirCheque(getHandle(), CodBanco, toUTF8(valor), toUTF8(data), toUTF8(AFavorecido), toUTF8(ACidade),
-                                             toUTF8(AComplemento), LerCMC7, SegundosEspera);
+                toUTF8(AComplemento), LerCMC7, SegundosEspera);
         checkResult(ret);
     }
 
@@ -454,7 +442,7 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
     }
 
     public String ConfigExportar() throws Exception {
-		
+
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
@@ -462,9 +450,9 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         checkResult(ret);
 
         return fromUTF8(buffer, bufferLen.getValue());
-		
+
     }
-    
+
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         PosPrinterLib.INSTANCE.POS_UltimoRetorno(getHandle(), buffer, bufferLen);

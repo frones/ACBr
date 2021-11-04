@@ -25,18 +25,10 @@ import java.nio.file.Paths;
  *  QUANDO e SE o finalize() será chamado. Já o try-with-resources chama o close() ao finalizar seu escopo.
  */
 
-public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
-
-    public int enviar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+public final class ACBrGNRe extends ACBrLibBase {    
     private interface ACBrGNReLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrGNReLib INSTANCE = LibraryLoader.getInstance();
-
-        
-    
     
         class LibraryLoader {
             private static String library = "";
@@ -56,7 +48,7 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
             public static ACBrGNReLib getInstance() {
                 if ( instance == null ) {
                 instance = ( ACBrGNReLib ) Native.synchronizedLibrary(
-                ( Library ) Native.loadLibrary( JNA_LIBRARY_NAME, ACBrGNReLib.class ) );
+                ( Library ) Native.load( JNA_LIBRARY_NAME, ACBrGNReLib.class ) );
             }
             return instance;
         }
@@ -134,20 +126,9 @@ public final class ACBrGNRe extends ACBrLibBase implements AutoCloseable {
   }
 
   @Override
-  public void close() throws Exception {
+  protected void dispose() throws Exception {
     int ret = ACBrGNReLib.INSTANCE.GNRE_Finalizar();
     checkResult( ret );
-  }
-
-  @Override
-  protected void finalize() throws Throwable {
-    try {
-      int ret = ACBrGNReLib.INSTANCE.GNRE_Finalizar();
-      checkResult( ret );
-    }
-    finally {
-      super.finalize();
-    }
   }
 
   public String nome() throws Exception {

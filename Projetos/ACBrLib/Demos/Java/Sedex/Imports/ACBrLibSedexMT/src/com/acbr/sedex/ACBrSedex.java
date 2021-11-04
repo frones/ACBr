@@ -2,7 +2,6 @@ package com.acbr.sedex;
 
 import com.acbr.ACBrLibBase;
 import com.acbr.ACBrSessao;
-import com.acbr.nfe.TipoPathNFe;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
@@ -13,193 +12,181 @@ import com.sun.jna.ptr.PointerByReference;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public final class ACBrSedex extends ACBrLibBase implements AutoCloseable {
-    
-  private interface ACBrSedexLib extends Library {
-    static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
-    public final static ACBrSedexLib INSTANCE = LibraryLoader.getInstance();
+public final class ACBrSedex extends ACBrLibBase {
 
-    int Sedex_Inicializar( PointerByReference libHandler, String eArqConfig, String eChaveCrypt );
+    private interface ACBrSedexLib extends Library {
 
-    int Sedex_Finalizar(Pointer libHandler);
+        static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
+        public final static ACBrSedexLib INSTANCE = LibraryLoader.getInstance();
 
-    int Sedex_Nome( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
+        class LibraryLoader {
 
-    int Sedex_Versao( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
+            private static String library = "";
+            private static ACBrSedexLib instance = null;
 
-    int Sedex_UltimoRetorno( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
+            private static String getLibraryName() {
+                if (library.isEmpty()) {
+                    if (Platform.isWindows()) {
+                        library = Platform.is64Bit() ? "ACBrSedex64" : "ACBrSedex32";
+                    } else {
+                        library = Platform.is64Bit() ? "acbrsedex64" : "acbrsedex32";
+                    }
+                }
+                return library;
+            }
 
-    int Sedex_ConfigImportar(Pointer libHandler, String eArqConfig);
-        
-    int Sedex_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
-    
-    int Sedex_ConfigLer( Pointer libHandler, String eArqConfig );
+            public static ACBrSedexLib getInstance() {
+                if (instance == null) {
+                    instance = (ACBrSedexLib) Native.synchronizedLibrary(
+                            (Library) Native.load(JNA_LIBRARY_NAME, ACBrSedexLib.class));
+                }
 
-    int Sedex_ConfigGravar( Pointer libHandler, String eArqConfig );
-
-    int Sedex_ConfigLerValor( Pointer libHandler, String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize );
-
-    int Sedex_ConfigGravarValor( Pointer libHandler, String eSessao, String eChave, String valor );
-    
-    int Sedex_Consultar( Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize );
-    
-    int Sedex_Rastrear( Pointer libHandler, String eCodRastreio, ByteBuffer buffer, IntByReference bufferSize );
-    
-    
-    class LibraryLoader {
-      private static String library = "";
-      private static ACBrSedexLib instance = null;
-
-      private static String getLibraryName() {
-        if ( library.isEmpty() ) {
-            if(Platform.isWindows()){
-          library = Platform.is64Bit() ? "ACBrSedex64" : "ACBrSedex32";
-        } else {
-          library = Platform.is64Bit() ? "acbrsedex64" : "acbrsedex32";  
+                return instance;
+            }
         }
-      }
-        return library;
-      }
 
-      public static ACBrSedexLib getInstance() {
-        if ( instance == null ) {
-          instance = ( ACBrSedexLib ) Native.synchronizedLibrary(
-              ( Library ) Native.loadLibrary( JNA_LIBRARY_NAME, ACBrSedexLib.class ) );
+        int Sedex_Inicializar(PointerByReference libHandler, String eArqConfig, String eChaveCrypt);
+
+        int Sedex_Finalizar(Pointer libHandler);
+
+        int Sedex_Nome(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+
+        int Sedex_Versao(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+
+        int Sedex_UltimoRetorno(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+
+        int Sedex_ConfigImportar(Pointer libHandler, String eArqConfig);
+
+        int Sedex_ConfigExportar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+
+        int Sedex_ConfigLer(Pointer libHandler, String eArqConfig);
+
+        int Sedex_ConfigGravar(Pointer libHandler, String eArqConfig);
+
+        int Sedex_ConfigLerValor(Pointer libHandler, String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
+
+        int Sedex_ConfigGravarValor(Pointer libHandler, String eSessao, String eChave, String valor);
+
+        int Sedex_Consultar(Pointer libHandler, ByteBuffer buffer, IntByReference bufferSize);
+
+        int Sedex_Rastrear(Pointer libHandler, String eCodRastreio, ByteBuffer buffer, IntByReference bufferSize);
+
+    }
+
+    public ACBrSedex() throws Exception {
+        File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
+        if (!iniFile.exists()) {
+            iniFile.createNewFile();
         }
-        
-        return instance;
-      }
+
+        PointerByReference handle = new PointerByReference();
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Inicializar(handle, toUTF8(iniFile.getAbsolutePath()), toUTF8(""));
+        checkResult(ret);
+        setHandle(handle.getValue());
     }
-  }
-    
-  public ACBrSedex() throws Exception {
-    File iniFile = Paths.get( System.getProperty( "user.dir" ), "ACBrLib.ini" ).toFile();
-    if ( !iniFile.exists() ) {
-      iniFile.createNewFile();
+
+    public ACBrSedex(String eArqConfig, String eChaveCrypt) throws Exception {
+        PointerByReference handle = new PointerByReference();
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Inicializar(handle, toUTF8(eArqConfig), toUTF8(eChaveCrypt));
+        checkResult(ret);
+        setHandle(handle.getValue());
     }
-    
-    PointerByReference handle = new PointerByReference();
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Inicializar( handle, toUTF8( iniFile.getAbsolutePath() ), toUTF8( "" ) );
-    checkResult( ret );
-    setHandle(handle.getValue());
-  }
 
-  public ACBrSedex( String eArqConfig, String eChaveCrypt ) throws Exception {
-    PointerByReference handle = new PointerByReference();  
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Inicializar( handle, toUTF8( eArqConfig ), toUTF8( eChaveCrypt ) );
-    checkResult( ret );
-      setHandle(handle.getValue());
-  }
-
-  @Override
-  public void close() throws Exception {
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Finalizar(getHandle());
-    checkResult( ret );
-  }
-
-  @Override
-  protected void finalize() throws Throwable {
-    try {
-      int ret = ACBrSedexLib.INSTANCE.Sedex_Finalizar(getHandle());
-      checkResult( ret );
+    @Override
+    protected void dispose() throws Exception {
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Finalizar(getHandle());
+        checkResult(ret);
     }
-    finally {
-      super.finalize();
+
+    public String nome() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Nome(getHandle(), buffer, bufferLen);
+        checkResult(ret);
+
+        return fromUTF8(buffer, bufferLen.getValue());
     }
-  }
 
-  public String nome() throws Exception {
-    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    public String versao() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Nome(getHandle(), buffer, bufferLen );
-    checkResult( ret );
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Versao(getHandle(), buffer, bufferLen);
+        checkResult(ret);
 
-    return fromUTF8( buffer, bufferLen.getValue() );
-  }
+        return fromUTF8(buffer, bufferLen.getValue());
+    }
 
-  public String versao() throws Exception {
-    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    public void configLer() throws Exception {
+        configLer("");
+    }
 
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Versao( getHandle(), buffer, bufferLen );
-    checkResult( ret );
+    public void configLer(String eArqConfig) throws Exception {
+        int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigLer(getHandle(), toUTF8(eArqConfig));
+        checkResult(ret);
+    }
 
-    return fromUTF8( buffer, bufferLen.getValue() );
-  }
+    public void configGravar() throws Exception {
+        configGravar("");
+    }
 
-  public void configLer() throws Exception {
-    configLer( "" );
-  }
+    public void configGravar(String eArqConfig) throws Exception {
+        int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigGravar(getHandle(), toUTF8(eArqConfig));
+        checkResult(ret);
+    }
 
-  public void configLer( String eArqConfig ) throws Exception {
-    int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigLer( getHandle(), toUTF8( eArqConfig ) );
-    checkResult( ret );
-  }
+    @Override
+    public String configLerValor(ACBrSessao eSessao, String eChave) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-  public void configGravar() throws Exception {
-    configGravar( "" );
-  }
+        int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigLerValor(getHandle(), toUTF8(eSessao.name()), toUTF8(eChave), buffer, bufferLen);
+        checkResult(ret);
 
-  public void configGravar( String eArqConfig ) throws Exception {
-    int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigGravar( getHandle(), toUTF8( eArqConfig ) );
-    checkResult( ret );
-  }
+        return processResult(buffer, bufferLen);
+    }
 
-  @Override
-  public String configLerValor( ACBrSessao eSessao, String eChave ) throws Exception {
-    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    @Override
+    public void configGravarValor(ACBrSessao eSessao, String eChave, Object value) throws Exception {
+        int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigGravarValor(getHandle(), toUTF8(eSessao.name()), toUTF8(eChave), toUTF8(value.toString()));
+        checkResult(ret);
+    }
 
-    int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigLerValor( getHandle(), toUTF8( eSessao.name() ), toUTF8( eChave ), buffer, bufferLen );
-    checkResult( ret );
+    public String consultar() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-    return processResult( buffer, bufferLen );
-  }
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Consultar(getHandle(), buffer, bufferLen);
+        checkResult(ret);
 
-  @Override
-  public void configGravarValor( ACBrSessao eSessao, String eChave, Object value ) throws Exception {
-    int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigGravarValor( getHandle(), toUTF8( eSessao.name() ), toUTF8( eChave ), toUTF8( value.toString() ) );
-    checkResult( ret );
-  }
-  
-  public String consultar() throws Exception {
-    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+        return processResult(buffer, bufferLen);
+    }
 
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Consultar(getHandle(), buffer, bufferLen);
-    checkResult( ret );
+    public String Rastrear(String eCodRastreio) throws Exception {
+        return rastrear(eCodRastreio);
+    }
 
-    return processResult( buffer, bufferLen );
-  }
-  
-  public String Rastrear( String eCodRastreio) throws Exception {
-    return rastrear( eCodRastreio );
-  }
+    public String rastrear(String eCodRastreio) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-  public String rastrear( String eCodRastreio ) throws Exception {
-    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+        int ret = ACBrSedexLib.INSTANCE.Sedex_Rastrear(getHandle(), toUTF8(eCodRastreio), buffer, bufferLen);
+        checkResult(ret);
 
-    int ret = ACBrSedexLib.INSTANCE.Sedex_Rastrear(getHandle(), toUTF8(eCodRastreio), buffer, bufferLen );
-    checkResult( ret );
+        return processResult(buffer, bufferLen);
+    }
 
-    return processResult( buffer, bufferLen );
-  }
+    public void ConfigImportar(String eArqConfig) throws Exception {
 
-  public void ConfigImportar(String eArqConfig) throws Exception {
-        
         int ret = ACBrSedexLib.INSTANCE.Sedex_ConfigImportar(getHandle(), eArqConfig);
         checkResult(ret);
-        
+
     }
-    
+
     public String ConfigExportar() throws Exception {
-		
+
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
@@ -207,11 +194,11 @@ public final class ACBrSedex extends ACBrLibBase implements AutoCloseable {
         checkResult(ret);
 
         return fromUTF8(buffer, bufferLen.getValue());
-		
+
     }
-  
+
     @Override
-  protected void UltimoRetorno( ByteBuffer buffer, IntByReference bufferLen ) {
-    ACBrSedexLib.INSTANCE.Sedex_UltimoRetorno( getHandle(), buffer, bufferLen );
-  }
+    protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
+        ACBrSedexLib.INSTANCE.Sedex_UltimoRetorno(getHandle(), buffer, bufferLen);
+    }
 }

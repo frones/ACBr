@@ -10,12 +10,8 @@ import com.acbr.sedex.ACBrSedex;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Preloader;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 

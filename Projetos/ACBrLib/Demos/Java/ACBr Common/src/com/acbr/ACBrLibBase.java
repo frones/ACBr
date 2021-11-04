@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
  *
  * @author Rafael Dias
  */
-public abstract class ACBrLibBase {
+public abstract class ACBrLibBase implements AutoCloseable {
     
     protected static final Charset UTF8 = Charset.forName("UTF-8");
     protected static final int STR_BUFFER_LEN = 256;
@@ -28,9 +28,39 @@ public abstract class ACBrLibBase {
         this.libHandler = value;
     }
     
+    @Override
+    public void close() throws Exception {
+        if(libHandler != null)
+            dispose();
+        
+        libHandler = null;
+    }
+    
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            if(libHandler != null)
+                dispose();
+            
+            libHandler = null;
+        } finally {
+            super.finalize();
+        }
+    }
+    
     public abstract String configLerValor(ACBrSessao eSessao, String eChave) throws Exception;
     
     public abstract void configGravarValor(ACBrSessao eSessao, String eChave, Object value) throws Exception;
+    
+    protected abstract void dispose() throws Exception;
+        
+    /**
+     * Função para pegar o ultimo retorno da biblioteca caso o retorno seja 
+     * maior que o esperado, ou tenha ocorrido um erro.
+     * @param buffer
+     * @param bufferLen
+     */
+    protected abstract void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen);
     
     /**
      *
@@ -100,13 +130,5 @@ public abstract class ACBrLibBase {
         }
 
         return fromUTF8(buffer, bufferLen);
-    }
-    
-    /**
-     * Função para pegar o ultimo retorno da biblioteca caso o retorno seja 
-     * maior que o esperado, ou tenha ocorrido um erro.
-     * @param buffer
-     * @param bufferLen
-     */
-    protected abstract void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen);
+    }    
 }

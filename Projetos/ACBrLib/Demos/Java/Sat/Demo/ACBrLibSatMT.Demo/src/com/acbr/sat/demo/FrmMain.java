@@ -331,8 +331,6 @@ public class FrmMain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel25.getAccessibleContext().setAccessibleName("CNPJ Contribuinte");
-
         jTabbedPane1.addTab("Configuração CFe", jPanel1);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -840,8 +838,6 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnImprimirPDFCFe)))
                 .addContainerGap())
         );
-
-        btnAtivarSAT.getAccessibleContext().setAccessibleName("Ativar SAT");
 
         setBounds(0, 0, 809, 500);
     }// </editor-fold>//GEN-END:initComponents

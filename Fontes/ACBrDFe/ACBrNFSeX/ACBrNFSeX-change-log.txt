@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 04/11/2021
+-- MegaSoft.Provider --
+[*] Alterado a versão do cabeçalho para 1.00.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Criado as propriedades CancPreencherSerieNfse e CancPreencherCodVerificacao 
     que definem se devem ser gerado ou não os grupos SerieNfse e CodigoVerificacao
@@ -53,7 +56,7 @@ Símbolo : Significado
 [+] Criado a propriedade CancPreencherMotivo que define se deve ser gerado ou 
     não o grupo MotCancelamento no pedido de cancelamento.
    Por: Renato Rubinho
--- Abaco.Provedir --
+-- Abaco.Provider --
 [*] Ajustes nas listas de tag dos XML de retorno.
    Por: Renato Rubinho
 -- ACBrNFSeXServicos --

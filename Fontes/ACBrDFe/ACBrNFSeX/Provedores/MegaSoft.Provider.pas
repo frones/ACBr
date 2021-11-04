@@ -82,7 +82,15 @@ begin
 
   ConfigAssinar.RpsGerarNFSe := True;
 
+  with ConfigWebServices do
+  begin
+    VersaoDados := '1.00';
+    VersaoAtrib := '1.00';
+  end;
+
   SetXmlNameSpace('http://megasoftarrecadanet.com.br/xsd/nfse_v01.xsd');
+
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
 
   SetNomeXSD('nfse_v01.xsd');
 end;

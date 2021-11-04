@@ -86,6 +86,7 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
+    CancPreencherSerieNfse := True;
   end;
 
   with ConfigWebServices do

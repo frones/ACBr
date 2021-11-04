@@ -69,6 +69,12 @@ type
     FConsultaNFSe: Boolean;
     // define se vai consultar a NFS-e por faixa ou não, após o cancelamento
     FConsultaPorFaixa: Boolean;
+    // define se precisa preencher o MotCancelamento ou não ao cancelar Nfse
+    FCancPreencherMotivo: Boolean;
+    // define se precisa preencher o SerieNfse ou não ao cancelar Nfse
+    FCancPreencherSerieNfse: Boolean;
+    // define se precisa preencher o CodVerificacao ou não ao cancelar Nfse
+    FCancPreencherCodVerificacao: Boolean;
     // uso diverso
     FParams1: string;
     // uso diverso
@@ -99,6 +105,9 @@ type
     property ConsultaLote: Boolean read FConsultaLote write FConsultaLote;
     property ConsultaNFSe: Boolean read FConsultaNFSe write FConsultaNFSe;
     property ConsultaPorFaixa: Boolean read FConsultaPorFaixa write FConsultaPorFaixa;
+    property CancPreencherMotivo: Boolean read FCancPreencherMotivo write FCancPreencherMotivo;
+    property CancPreencherSerieNfse: Boolean read FCancPreencherSerieNfse write FCancPreencherSerieNfse;
+    property CancPreencherCodVerificacao: Boolean read FCancPreencherCodVerificacao write FCancPreencherCodVerificacao;
     // Parametros lidos no arquivo .Res ou .ini
     property Params1: string read FParams1;
     property Params2: string read FParams2;

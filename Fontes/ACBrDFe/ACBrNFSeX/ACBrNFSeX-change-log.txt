@@ -44,6 +44,18 @@ Símbolo : Significado
 
 
 04/11/2021
+-- Diversos --
+[+] Criado as propriedades CancPreencherSerieNfse e CancPreencherCodVerificacao 
+    que definem se devem ser gerado ou não os grupos SerieNfse e CodigoVerificacao
+    no pedido de cancelamento.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[+] Criado a propriedade CancPreencherMotivo que define se deve ser gerado ou 
+    não o grupo MotCancelamento no pedido de cancelamento.
+   Por: Renato Rubinho
+-- Abaco.Provedir --
+[*] Ajustes nas listas de tag dos XML de retorno.
+   Por: Renato Rubinho
 -- ACBrNFSeXServicos --
 [*] Inclusão da cidade Terezopolis de Goias/GO.
    Por: jcsnt

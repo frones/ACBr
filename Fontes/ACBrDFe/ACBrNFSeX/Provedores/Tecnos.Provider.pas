@@ -125,6 +125,8 @@ procedure TACBrNFSeProviderTecnos201.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.CancPreencherMotivo := True;
+
   with ConfigAssinar do
   begin
     Rps := True;

@@ -194,6 +194,7 @@ begin
   begin
     Identificador := 'id';
     UseCertificateHTTP := False;
+    CancPreencherMotivo := True;
   end;
 
   with ConfigAssinar do

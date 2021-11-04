@@ -146,7 +146,7 @@ begin
   Request := Request + '</e:ConsultarSituacaoLoteRps.Execute>';
 
   Result := Executar('http://www.e-nfs.com.braction/ACONSULTARSITUACAOLOTERPS.Execute', Request,
-                     ['Outputxml', 'ConsultarLoteRpsResposta'],
+                     ['Outputxml', 'ConsultarSituacaoLoteRpsResposta'],
                      ['xmlns:e="http://www.e-nfs.com.br"']);
 end;
 
@@ -162,7 +162,7 @@ begin
   Request := Request + '</e:ConsultarNfsePorRps.Execute>';
 
   Result := Executar('http://www.e-nfs.com.braction/ACONSULTARNFSEPORRPS.Execute', Request,
-                     ['Outputxml', 'ConsultarLoteRpsResposta'],
+                     ['Outputxml', 'ConsultarNfseRpsResposta'],
                      ['xmlns:e="http://www.e-nfs.com.br"']);
 end;
 
@@ -178,7 +178,7 @@ begin
   Request := Request + '</e:ConsultarNfse.Execute>';
 
   Result := Executar('http://www.e-nfs.com.braction/ACONSULTARNFSE.Execute', Request,
-                     ['Outputxml', 'ConsultarLoteRpsResposta'],
+                     ['Outputxml', 'ConsultarNfseResposta'],
                      ['xmlns:e="http://www.e-nfs.com.br"']);
 end;
 

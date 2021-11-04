@@ -81,6 +81,8 @@ begin
   begin
     Identificador := '';
     ConsultaNFSe := False;
+    CancPreencherMotivo := True;
+    CancPreencherCodVerificacao := True;
   end;
 
   with ConfigAssinar do

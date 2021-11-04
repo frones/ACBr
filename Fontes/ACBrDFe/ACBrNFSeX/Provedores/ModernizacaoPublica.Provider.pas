@@ -85,7 +85,11 @@ procedure TACBrNFSeProviderModernizacaoPublica202.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.UseCertificateHTTP := False;
+  with ConfigGeral do
+  begin
+    UseCertificateHTTP := False;
+    CancPreencherMotivo := True;
+  end;
 
   with ConfigAssinar do
   begin

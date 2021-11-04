@@ -1818,24 +1818,56 @@ begin
   else
     IdAttr := '';
 
-  xSerie := Trim(InfoCanc.SerieNFSe);
+  if ConfigGeral.CancPreencherSerieNfse then
+  begin
+    if EstaVazio(InfoCanc.SerieNFSe) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod112;
+      AErro.Descricao := Desc112;
+      Exit;
+    end;
 
-  if xSerie <> '' then
     xSerie := '<' + PrefixoTS + 'Serie>' +
-                 xSerie +
-              '</' + PrefixoTS + 'Serie>';
+                 Trim(InfoCanc.SerieNFSe) +
+               '</' + PrefixoTS + 'Serie>';
+  end
+  else
+    xSerie := '';
 
-  xMotivo := Trim(InfoCanc.MotCancelamento);
+  if ConfigGeral.CancPreencherMotivo then
+  begin
+    if EstaVazio(InfoCanc.MotCancelamento) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod110;
+      AErro.Descricao := Desc110;
+      Exit;
+    end;
 
-  if xMotivo <> '' then
     xMotivo := '<' + Prefixo + 'MotivoCancelamento>' +
-                 xMotivo +
+                 Trim(InfoCanc.MotCancelamento) +
                '</' + Prefixo + 'MotivoCancelamento>';
+  end
+  else
+    xMotivo := '';
 
-  xCodVerif := Trim(InfoCanc.CodVerificacao);
+  if ConfigGeral.CancPreencherCodVerificacao then
+  begin
+    if EstaVazio(InfoCanc.CodVerificacao) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod117;
+      AErro.Descricao := Desc117;
+      Exit;
+    end;
 
-  if xCodVerif <> '' then
-    xCodVerif := '<CodigoVerificacao>' + xCodVerif + '</CodigoVerificacao>';
+    xCodVerif := '<' + Prefixo + 'CodigoVerificacao>' +
+                   Trim(InfoCanc.CodVerificacao) +
+                 '</' + Prefixo + 'CodigoVerificacao>';
+  end
+  else
+    xCodVerif := '';
 
   aParams := TNFSeParamsResponse.Create;
   aParams.Clear;

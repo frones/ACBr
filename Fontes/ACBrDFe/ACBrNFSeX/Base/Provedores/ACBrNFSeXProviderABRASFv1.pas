@@ -1204,10 +1204,20 @@ begin
     end;
   end;
 
-  if InfoCanc.MotCancelamento <> '' then
+  if ConfigGeral.CancPreencherMotivo then
+  begin
+    if EstaVazio(InfoCanc.MotCancelamento) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod110;
+      AErro.Descricao := Desc110;
+      Exit;
+    end;
+
     xMotivo := '<' + PrefixoTS + 'MotivoCancelamento>' +
-                 InfoCanc.MotCancelamento +
-               '</' + PrefixoTS + 'MotivoCancelamento>'
+                 Trim(InfoCanc.MotCancelamento) +
+               '</' + PrefixoTS + 'MotivoCancelamento>';
+  end
   else
     xMotivo := '';
 

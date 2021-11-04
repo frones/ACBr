@@ -102,6 +102,7 @@ begin
   begin
     UseCertificateHTTP := False;
     Identificador := '';
+    CancPreencherCodVerificacao := True;
   end;
 
   with ConfigWebServices do

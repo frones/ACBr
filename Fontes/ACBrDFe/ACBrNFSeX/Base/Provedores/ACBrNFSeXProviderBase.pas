@@ -406,6 +406,9 @@ begin
     ConsultaLote := True;
     ConsultaNFSe := True;
     QuebradeLinha := ';';
+    CancPreencherMotivo := False;
+    CancPreencherSerieNfse := False;
+    CancPreencherCodVerificacao := False;
 
     with TACBrNFSeX(FAOwner) do
     begin

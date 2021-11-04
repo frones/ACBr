@@ -112,6 +112,9 @@ begin
     ConsultaLote := True;
     ConsultaNFSe := True;
     ConsultaPorFaixa := True;
+    CancPreencherMotivo := False;
+    CancPreencherSerieNfse := False;
+    CancPreencherCodVerificacao := False;
   end;
 
   // Inicializa os parâmetros de configuração: WebServices

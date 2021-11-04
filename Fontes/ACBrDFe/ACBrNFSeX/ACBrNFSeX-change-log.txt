@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/11/2021
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade Terezopolis de Goias/GO.
+   Por: jcsnt
+-- Conam.LerXml --
+[*] Possível correção para a leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
+
 03/11/2021
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs (ProLinkURL e HomLinkURL) de algumas cidades atendidas

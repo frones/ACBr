@@ -123,6 +123,7 @@ var
   xRetorno: string;
 begin
   xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := TiraAcentos(xRetorno);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');

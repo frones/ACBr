@@ -22,7 +22,8 @@ namespace ACBrLib.Core
 
             var sectionData = iniData.SingleOrDefault(x => x.Name == sectionName) ?? new ACBrIniSection(sectionName);
             sectionData.WriteToIni(tipo, obj);
-            if (sectionData.Count > 0)
+
+            if (sectionData.Count > 0 && !iniData.Contains(sectionName))
                 iniData.Add(sectionData);
         }
 

@@ -547,24 +547,10 @@ begin
     Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, NrOcorrRespRetencao,
      ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
 
-    item := PadronizarItemServico(NFSe.Servico.ItemListaServico);
+    item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
 
-    case FormatoItemListaServico of
-      filsSemFormatacao:
-        Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 4, NrOcorrItemListaServico,
-                              StringReplace(item, '.', '', []), DSC_CLISTSERV));
-
-      filsComFormatacaoSemZeroEsquerda:
-        if Copy(NFSe.Servico.ItemListaServico, 1, 1) = '0' then
-          Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
-                                               Copy(item, 2, 4), DSC_CLISTSERV))
-        else
-          Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
+    Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
                                                           item, DSC_CLISTSERV));
-    else
-      Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
-                                                          item, DSC_CLISTSERV));
-    end;
 
     Result.AppendChild(AddNode(tcStr, '#30', 'CodigoCnae', 1, 7, NrOcorrCodigoCNAE,
                                 OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));

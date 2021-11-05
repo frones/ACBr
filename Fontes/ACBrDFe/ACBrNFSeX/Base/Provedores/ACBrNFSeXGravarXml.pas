@@ -109,6 +109,7 @@ type
     function GerarCNPJ(const CNPJ: string): TACBrXmlNode; virtual;
     function GerarCPFCNPJ(const CPFCNPJ: string): TACBrXmlNode; virtual;
     function PadronizarItemServico(const Codigo: string): string;
+    function FormatarItemServico(const Codigo: string; Formato: TFormatoItemListaServico): string;
     function AjustarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
 
  public
@@ -188,6 +189,27 @@ procedure TNFSeWClass.DefinirIDRps;
 begin
   FNFSe.InfID.ID := 'Rps_' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                     FNFSe.IdentificacaoRps.Serie;
+end;
+
+function TNFSeWClass.FormatarItemServico(const Codigo: string;
+  Formato: TFormatoItemListaServico): string;
+var
+  item: string;
+begin
+  item := PadronizarItemServico(Codigo);
+
+  case Formato of
+    filsSemFormatacao:
+      Result := OnlyNumber(item);
+
+    filsComFormatacaoSemZeroEsquerda:
+      if Copy(item, 1, 1) = '0' then
+        Result := Copy(item, 2, 4)
+      else
+        Result := item;
+  else
+    Result := item;
+  end;
 end;
 
 procedure TNFSeWClass.DefinirIDDeclaracao;

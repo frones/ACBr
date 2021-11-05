@@ -43,6 +43,24 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/11/2021
+-- BHISS.GravarXml --
+[*] Incluído na Procedure Configuracao a definição do FormatoItemListaServico.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXGravarXml --
+[+] Inclusão da função FormatarItemServico com base na colaboração de
+    Tiago Ropke.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXGravarXml_ABRASFv1/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Ajustes para usar a função FormatarItemServico.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Melhorias no método TratarRetornoEmitir.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade Antonio Prado/RS.
+   Por: Maurício Sareto
+
 04/11/2021
 -- MegaSoft.Provider --
 [*] Alterado a versão do cabeçalho para 1.00.

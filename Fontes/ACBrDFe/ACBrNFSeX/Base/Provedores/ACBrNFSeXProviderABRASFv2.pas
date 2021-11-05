@@ -407,16 +407,21 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
-
       ANode := Document.Root;
-      Response.Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
-      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+
+      ProcessarMensagemErros(ANode, Response);
+
+      with Response do
+      begin
+        Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+      end;
 
       if Response.ModoEnvio in [meLoteSincrono, meUnitario] then
       begin
         // Retorno do EnviarLoteRpsSincrono e GerarNfse
-        ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
+        ANode := ANode.Childrens.FindAnyNs('ListaNfse');
+
         if not Assigned(ANode) then
         begin
           AErro := Response.Erros.New;
@@ -428,6 +433,7 @@ begin
         ProcessarMensagemErros(ANode, Response);
 
         ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+
         if not Assigned(ANodeArray) then
         begin
           AErro := Response.Erros.New;

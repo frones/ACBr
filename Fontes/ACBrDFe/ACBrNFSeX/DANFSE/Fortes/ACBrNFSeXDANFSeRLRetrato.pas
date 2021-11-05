@@ -284,10 +284,10 @@ begin
   rlmDadosAdicionais.Lines.Clear;
 
   if fpNFSe.OutrasInformacoes <> '' then
-    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes, ';', #13#10, [rfReplaceAll,rfIgnoreCase]))
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.OutrasInformacoes, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]))
   else
     if fpDANFSe.OutrasInformacaoesImp <> '' then
-      rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, ';', #13#10, [rfReplaceAll,rfIgnoreCase]));
+      rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
 
   if ( (pos('http://', LowerCase( fpNFSe.OutrasInformacoes) ) > 0) or (pos('http://', LowerCase( fpNFSe.Link) ) > 0) or (pos('https://', LowerCase( fpNFSe.Link) ) > 0) ) then
   begin
@@ -359,7 +359,7 @@ begin
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
   rlmPrefeitura.Lines.Clear;
-  rlmPrefeitura.Lines.Add(StringReplace( fpDANFSe.Prefeitura, ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
+  rlmPrefeitura.Lines.Add(StringReplace( fpDANFSe.Prefeitura, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
   With fpNFSe do
   begin

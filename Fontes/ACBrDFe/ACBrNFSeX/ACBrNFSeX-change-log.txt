@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 05/11/2021
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Trocado o ';' pela propriedade que contem o caractere de quebra de linha.
+   Por: Renato Rubinho
 -- BHISS.GravarXml --
 [*] Incluído na Procedure Configuracao a definição do FormatoItemListaServico.
    Por: Italo Giurizzato Junior

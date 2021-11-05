@@ -529,8 +529,14 @@ type
 
   tpInclContr             = (icNenhum, icLocaisSemFiliais, icEstudoDeMercado, icContratacaoSuperior3Meses);
 
-  tpPlanRP                = (prpNenhum = -1, prpSemSegregacaoDaMassa, prpFundoEmCapitalizacao, prpFundoEmReparticao, prpMantidoPeloTesouro);
-  
+  tpPlanRP                = (prpNenhum = -1,
+                             prpSemSegregacaoDaMassa,
+                             prpFundoEmCapitalizacao,
+                             prpFundoEmReparticao,
+                             prpMantidoPeloTesouro,
+                             prpPlanoPrevidenciarioOuUnico,
+                             prpPlanoFinanceiro);
+
   tpMtvAlt                = (maPromocao, maReadaptacao, maAproveitamento, maOutros);
 
   tpOrigemAltAfast        = (oaaPorIniciativaDoEmpregador, oaaRevisaoAdministrativa, oaaDeterminacaoJudicial);
@@ -1375,12 +1381,12 @@ end;
 
 function eStpPlanRPToStr(const t: tpPlanRP): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString0_3 );
+  result := EnumeradoToStr2(t, [ '0', '1', '2', '3', '1', '2' ] );
 end;
 
 function eSStrTotpPlanRP(var ok: Boolean; const s: string): tpPlanRP;
 begin
-  result := tpPlanRP( StrToEnumerado2(ok, s, TGenericosString0_3) );
+  result := tpPlanRP( StrToEnumerado2(ok, s, [ '0', '1', '2', '3', '1', '2' ]) );
 end;
 
 function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;

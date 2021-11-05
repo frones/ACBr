@@ -789,18 +789,16 @@ begin
   
   if (obj.mtvDeslig='17') then
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
-  
-  if VersaoDF <= ve02_05_00 then
+
+  //O campo é sempre obrigatório para a categoria 111 (Intermitente)
+  if (VersaoDF <= ve02_05_00) then
   begin
     Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-    
-    //O campo é sempre obrigatório para a categoria 111 (Intermitente)
-    if (VersaoDF <> ve02_04_01) and
-       ((obj.QtdDiasInterm > 0) or (obj.CodCateg = 111))  then
+    if ((obj.QtdDiasInterm >= 0) or (obj.CodCateg = 111))  then
       Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 1, obj.QtdDiasInterm);
   end;
 
-  if (VersaoDF > ve02_05_00) and (obj.infoIntermInst()) then
+  if (VersaoDF >= veS01_00_00) and (obj.infoIntermInst()) then
     GerarinfoInterm(obj.infoInterm);
     
   if VersaoDF = ve02_04_01 then

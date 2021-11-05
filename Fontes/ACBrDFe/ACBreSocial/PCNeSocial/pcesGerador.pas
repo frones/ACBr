@@ -1100,7 +1100,8 @@ begin
     if pAliqRat.ProcAdmJudFap.nrProc <> EmptyStr then
       bProcJudFap := True;
 
-  if not(VersaoDF <= veS01_00_00) and not(bProcJudRat) and not(bProcJudFap) and not(pTpInscEstab = tiCNO) then
+  if (VersaoDF >= veS01_00_00) and (not bProcJudRat) and (not bProcJudFap) and 
+     (pTpInscEstab <> tiCNO) and (pAliqRat.Fap <= 0) then
     Exit;
 
   Gerador.wGrupo(GroupName);

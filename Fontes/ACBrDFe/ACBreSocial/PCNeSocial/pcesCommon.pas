@@ -206,7 +206,6 @@ type
     FAliqRatAjust: Double;
     FProcAdmJudRat: TProcAdmJudRat;
     FProcAdmJudFap: TProcAdmJudFap;
-    FReenvioFap: tpSimNao;
     function getProcAdmJudRat(): TProcAdmJudRat;
     function getProcAdmJudFap(): TProcAdmJudFap;
   public
@@ -220,7 +219,6 @@ type
     property AliqRatAjust: Double read FAliqRatAjust write FAliqRatAjust;
     property ProcAdmJudRat: TProcAdmJudRat read getProcAdmJudRat write FProcAdmJudRat;
     property ProcAdmJudFap: TProcAdmJudFap read getProcAdmJudFap write FProcAdmJudFap;
-    property ReenvioFap: tpSimNao read FReenvioFap write FReenvioFap;
   end;
 
   TAlvaraJudicial = class
@@ -1858,7 +1856,6 @@ begin
   inherited;
   FProcAdmJudRat := nil;
   FProcAdmJudFap := nil;
-  FReenvioFap    := tpNao;
 end;
 
 destructor TAliqGilRat.Destroy;

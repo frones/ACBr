@@ -638,10 +638,14 @@ procedure TeSocialEvento.GerarEndereco(pEndereco: TEndereco;
 begin
   Gerador.wGrupo('endereco');
 
-  if not pExterior then
-    GerarEnderecoBrasil(pEndereco.Brasil)
+  if (not pExterior) or (pEndereco.Exterior.PaisResid = '105') or (pEndereco.Exterior.PaisResid = '') then
+  begin // Mora no Brasil
+     GerarEnderecoBrasil(pEndereco.Brasil);
+  end
   else
-    GerarEnderecoExterior(pEndereco.Exterior);
+  begin
+     GerarEnderecoExterior(pEndereco.Exterior);
+  end;
 
   Gerador.wGrupo('/endereco');
 end;

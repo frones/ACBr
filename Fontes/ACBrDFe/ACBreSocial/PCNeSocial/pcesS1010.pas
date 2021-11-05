@@ -322,7 +322,7 @@ begin
 
   if VersaoDF >= veS01_00_00 then
   Begin
-        Gerador.wCampo(tcStr, '', 'codIncCPRP', 2,   2, 1, eSCodIncCPRPToStr(InfoRubrica.dadosRubrica.codIncCPRP));
+        Gerador.wCampo(tcStr, '', 'codIncCPRP', 2, 2, 0, eSCodIncCPRPToStr(InfoRubrica.dadosRubrica.codIncCPRP));
         if InfoRubrica.dadosRubrica.tetoRemun <> snfNada then
                 Gerador.wCampo(tcStr, '', 'tetoRemun', 0, 2, 0, eSSimNaoFacultativoToStr(InfoRubrica.dadosRubrica.tetoRemun));
   End;
@@ -333,7 +333,8 @@ begin
 
   GerarProcessos('ideProcessoIRRF', InfoRubrica.dadosRubrica.IdeProcessoIRRF);
   GerarProcessos('ideProcessoFGTS', InfoRubrica.dadosRubrica.IdeProcessoFGTS);
-  GerarProcessos('ideProcessoSIND', InfoRubrica.dadosRubrica.IdeProcessoSIND);
+  if VersaoDF <= ve02_05_00 then
+     GerarProcessos('ideProcessoSIND', InfoRubrica.dadosRubrica.IdeProcessoSIND);
 
   Gerador.wGrupo('/dadosRubrica');
 end;

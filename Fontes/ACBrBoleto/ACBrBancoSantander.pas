@@ -301,14 +301,16 @@ function TACBrBancoSantander.DefineCarteira(const ACBrTitulo: TACBrTitulo): Stri
 begin
   with ACBrTitulo do
   begin
-    Result := PadLeft(Carteira, 1, '0' );
+    Result := PadLeft(Carteira, 1, '0');
 
-    if ((Carteira = '101') or (Carteira = '005'))  then
-       Result:= '5'
+    if (ACBrTitulo.ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and ((Carteira = '101') or (Carteira = '005')) then
+      Result := '1'
+    else if ((Carteira = '101') or (Carteira = '005')) then
+      Result := '5'
     else if ((Carteira = '201') or (Carteira = '006')) then
-       Result:= '6'
+      Result := '6'
     else if ((Carteira = '102') or (Carteira = '004')) then
-       Result:= '4';
+      Result := '4';
   end;
 end;
 
@@ -831,7 +833,7 @@ begin
                      Space(10) + '01'                            +
                      PadRight(Mensagem[I],50)                    +
                      Space(283) + 'I'                            +
-                     Copy( Cedente.Conta, length( Cedente.Conta ),1 )   + 
+                     Copy( Cedente.Conta, length( Cedente.Conta ),1 )   +
                      PadLeft( Cedente.ContaDigito, 1 )                  +
                      Space(9)                                           +
                      IntToStrZero( aRemessa.Count + 1 , 6 );
@@ -958,7 +960,7 @@ var
         else if AOcorrencia = '28' then
           Tipo := toRetornoDebitoTarifas
         else if AOcorrencia = '29' then
-          Tipo := toRetornoOcorrenciasDoSacado        
+          Tipo := toRetornoOcorrenciasDoSacado
         else if AOcorrencia = '32' then
           Tipo := toRetornoIOFInvalido
         else if AOcorrencia = '51' then
@@ -1031,7 +1033,7 @@ begin
       begin
         NossoNumero          := Copy(Linha, 41, ACBrBanco.TamanhoMaximoNossoNum);
         NumeroDocumento      := Copy(Linha, 55, 15);
-        SeuNumero            := Copy(Linha, 101, 25);        
+        SeuNumero            := Copy(Linha, 101, 25);
         Carteira             := Copy(Linha, 54, 1);
         Vencimento           := StringToDateTimeDef(Copy(Linha, 70, 2)+'/'+
                                                     Copy(Linha, 72, 2)+'/'+
@@ -1082,7 +1084,7 @@ var
   ContLinha, CodOcorrencia, CodMotivo : Integer;
   Linha, rCedente, rAgencia, rConta, rDigitoConta, rCNPJCPF : String;
   wCodBanco: Integer;
-begin   
+begin
    wCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
    if (wCodBanco <> Numero) and (wCodBanco <> 353) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1131,7 +1133,7 @@ begin
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
-   
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1370,7 +1372,7 @@ begin
     09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
     10 : Result:= toRemessaConcederDesconto;                {Concessão de Desconto}
     11 : Result:= toRemessaCancelarDesconto;                {Cancelamento de desconto}
-    18 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}    
+    18 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
     31 : Result:= toRemessaAlterarOutrosDados;              {Alteração de outros dados}
     98 : Result:= toRemessaNaoProtestar;                    {Sustar protesto antes do início do ciclo de protesto}
   else
@@ -1786,5 +1788,3 @@ begin
 end;
 
 end.
-
-

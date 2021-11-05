@@ -267,6 +267,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    function epcEpiInst: Boolean;
 
     property codAgNoc: String read FcodAgNoc write FcodAgNoc;
     property dscAgNoc: String read FdscAgNoc write FdscAgNoc;
@@ -526,7 +527,8 @@ begin
 //    Gerador.wCampo(tcStr, '', 'periculosidade', 1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].periculosidade));
 //    Gerador.wCampo(tcStr, '', 'aposentEsp',     1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].aposentEsp));
 
-    GerarEpcEpi(objFatRisco.Items[i].epcEpi);
+    if objFatRisco.Items[i].epcEpiInst() then
+      GerarEpcEpi(objFatRisco.Items[i].epcEpi);
 
     Gerador.wGrupo('/agNoc');
   end;
@@ -823,15 +825,19 @@ end;
 constructor TAgNocCollectionItem.Create;
 begin
   inherited Create;
-
-  FEpcEpi := TEpcEpi.Create;
 end;
 
 destructor TAgNocCollectionItem.Destroy;
 begin
-  FEpcEpi.Free;
+  if Assigned(FEpcEpi) then
+    FEpcEpi.Free;
   
   inherited;
+end;
+
+function TAgNocCollectionItem.epcEpiInst: Boolean;
+begin
+   Result := Assigned(FEpcEpi);
 end;
 
 function TAgNocCollectionItem.getEpcEpi: TEpcEpi;

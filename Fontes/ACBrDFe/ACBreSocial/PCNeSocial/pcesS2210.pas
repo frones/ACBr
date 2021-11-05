@@ -493,13 +493,13 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtAcid',           10,  10, 1, Self.Cat.dtAcid);
   Gerador.wCampo(tcStr, '', 'tpAcid',            1,   6, 1, Self.Cat.tpAcid);
-  Gerador.wCampo(tcStr, '', 'hrAcid',            4,   4, 1, Self.Cat.hrAcid);
-  Gerador.wCampo(tcStr, '', 'hrsTrabAntesAcid',  4,   4, 1, Self.Cat.hrsTrabAntesAcid);
+  Gerador.wCampo(tcStr, '', 'hrAcid',            4,   4, 0, Self.Cat.hrAcid);
+  Gerador.wCampo(tcStr, '', 'hrsTrabAntesAcid',  4,   4, 0, Self.Cat.hrsTrabAntesAcid);
   Gerador.wCampo(tcStr, '', 'tpCat',             1,   1, 1, eSTpCatToStr(Self.Cat.tpCat));
   Gerador.wCampo(tcStr, '', 'indCatObito',       1,   1, 1, eSSimNaoToStr(Self.Cat.indCatObito));
   Gerador.wCampo(tcDat, '', 'dtObito',          10,  10, 0, Self.Cat.dtOBito);
   Gerador.wCampo(tcStr, '', 'indComunPolicia',   1,   1, 1, eSSimNaoToStr(Self.Cat.indComunPolicia));
-  Gerador.wCampo(tcInt, '', 'codSitGeradora',    1,   9, 0, Self.Cat.codSitGeradora);
+  Gerador.wCampo(tcInt, '', 'codSitGeradora',    1,   9, 1, Self.Cat.codSitGeradora);
   Gerador.wCampo(tcStr, '', 'iniciatCAT',        1,   1, 1, eSIniciatCATToStr(Self.Cat.iniciatCAT));
   Gerador.wCampo(tcStr, '', 'obsCAT',            1, 255, 0, Self.Cat.obsCAT);
 

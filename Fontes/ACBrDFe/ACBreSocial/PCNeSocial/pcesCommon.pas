@@ -608,28 +608,35 @@ type
     property NrRecibo: string read FNrRecibo write FNrRecibo;
   end;
 
-  TIdeEvento3 = class(TideEvento2)
-  private
-    FIndApuracao: tpIndApuracao;
-    FPerApur: string;
+  TIdeEventoGuia = class(TIdeEvento2) { Classe Criada para atender a Tag indGuia do S-2299 }
+   private
     FindGuia: string;
-  public
-    property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;
-    property perApur: string read FPerApur write FPerApur;
+   public
     property indGuia: string read FindGuia write FindGuia;
   end;
 
-  TIdeEvento4 = class(TObject)
+  TIdeEvento3 = class(TIdeEventoGuia)
+  private
+    FIndApuracao: tpIndApuracao;
+    FPerApur: string;
+  public
+    property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;
+    property perApur: string read FPerApur write FPerApur;
+  end;
+
+  TIdeEvento4 = class(TIdeEvento)
   private
     FIndApuracao: tpIndApuracao;
     FPerApur: string;
     FProcEmi: TpProcEmi;
     FVerProc: string;
+    FindGuia: string;
   public
     property ProcEmi: TpProcEmi read FProcEmi write FProcEmi;
     property VerProc: string read FVerProc write FVerProc;
     property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;
     property perApur: string read FPerApur write FPerApur;
+    property indGuia: string read FindGuia write FindGuia;
   end;
 
   TIdeEvento5 = class(TObject)

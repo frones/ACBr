@@ -89,7 +89,7 @@ type
 
   TEvtTSVTermino = class(TeSocialEvento)
   private
-    FIdeEvento: TIdeEvento2;
+    FIdeEvento: TIdeEventoGuia;
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabSemVInc : TideTrabSemVinc;
     FInfoTSVTermino: TInfoTSVTermino;
@@ -105,7 +105,7 @@ type
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
 
-    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEvento: TIdeEventoGuia read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeTrabSemVInc: TideTrabSemVinc read FIdeTrabSemVInc write FIdeTrabSemVInc;
     property InfoTSVTermino: TInfoTSVTermino read FInfoTSVTermino write FInfoTSVTermino;
@@ -276,7 +276,7 @@ constructor TEvtTSVTermino.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
-  FIdeEvento      := TIdeEvento2.Create;
+  FIdeEvento      := TIdeEventoGuia.Create;
   FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTrabSemVInc := TideTrabSemVinc.Create;
   FInfoTSVTermino := TInfoTSVTermino.Create;

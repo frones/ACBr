@@ -726,7 +726,7 @@ begin
       MimePartAttach.Disposition := 'attachment';
     end;
     if fIsHTML and BodyHasImage then
-      MimePartAttach.ContentID := '<' + AAttachment.Description + '>';
+      MimePartAttach.ContentID := AAttachment.Description;
 
     MimePartAttach.FileName    := ExtractFileName(AAttachment.FileName);
     MimePartAttach.EncodingCode:= ME_BASE64;

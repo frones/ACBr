@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2021
+-- pcnInutNFe, pcnRetInutNFe --
+[*] Inutilização de NFe para emitente CPF no MT.
+    https://www.projetoacbr.com.br/forum/topic/64667-inutiliza%C3%A7%C3%A3o-de-nfe-para-cpf-em-mt/
+    Por: Túlio de Pádua / BigWings
+
 29/10/2021
 -- pcnNFeW, ACBrNFeXMLWriter --
 [-] Correção na geração das tags de FCP-ST para o CSOSN 201.

@@ -140,9 +140,14 @@ begin
 end;
 
 function TinutNFe.GerarXML: Boolean;
+var
+  ACNPJ: String;
 begin
+  ACNPJ := OnlyNumber(FCNPJ);
+  if (FcUF in [51]) and (Length(ACNPJ) = 11) then
+    ACNPJ := '000' + ACNPJ;
   FIDInutilizacao := 'ID' + IntToStrZero(FcUF, 2) +  Copy(IntToStrZero(Fano, 4), 3, 2) +
-                     OnlyNumber(FCNPJ) + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
+                     ACNPJ + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
                      IntToStrZero(FnNFIni, 9) + IntToStrZero(FnNFFin, 9);
 
   Gerador.ArquivoFormatoXML := '';
@@ -158,9 +163,14 @@ begin
   if Fano > 2000 then
     Fano := Fano - 2000;
   Gerador.wCampo(tcInt, 'DP08', 'ano   ', 002, 002, 1, Fano, DSC_ANO);
-  Gerador.wCampo(tcStr, 'DP09', 'CNPJ  ', 014, 014, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
-  if not ValidarCNPJ(FCNPJ) then
-    Gerador.wAlerta('DP09', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+  if FcUF in [51] then
+    Gerador.wCampoCNPJCPF('DP09', 'DP09', OnlyNumber(FCNPJ), True, True)
+  else
+  begin
+    Gerador.wCampo(tcStr, 'DP09', 'CNPJ  ', 014, 014, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
+    if not ValidarCNPJ(FCNPJ) then
+      Gerador.wAlerta('DP09', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+  end;
   Gerador.wCampo(tcInt, 'DP10', 'mod   ', 002, 002, 1, Fmodelo, DSC_MOD);
   Gerador.wCampo(tcInt, 'DP11', 'serie ', 001, 003, 1, Fserie, DSC_SERIE);
   Gerador.wCampo(tcInt, 'DP12', 'nNFIni', 001, 009, 1, FnNFIni, DSC_NNFINI);
@@ -217,7 +227,10 @@ begin
       (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*DR09 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
       (*DR10 *)Fano      := Leitor.rCampo(tcInt, 'ano');
-      (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+      if FcUF in [51] then
+        (*DR11 *)FCNPJ   := Leitor.rCampoCNPJCPF
+      else
+        (*DR11 *)FCNPJ   := Leitor.rCampo(tcStr, 'CNPJ');
       (*DR12 *)FModelo   := Leitor.rCampo(tcInt, 'mod');
       (*DR13 *)FSerie    := Leitor.rCampo(tcInt, 'serie');
       (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');

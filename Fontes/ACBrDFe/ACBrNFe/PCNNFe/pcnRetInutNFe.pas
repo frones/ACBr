@@ -141,7 +141,10 @@ begin
       (*DR08 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       (*DR09 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
       (*DR10 *)Fano      := Leitor.rCampo(tcInt, 'ano');
-      (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+      if FcUF in [51] then
+        (*DR11 *)FCNPJ     := Leitor.rCampoCNPJCPF
+      else
+        (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
       (*DR12 *)FModelo   := Leitor.rCampo(tcInt, 'mod');
       (*DR13 *)FSerie    := Leitor.rCampo(tcInt, 'serie');
       (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');

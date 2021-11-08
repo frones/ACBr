@@ -1915,6 +1915,26 @@ Var
   {$ELSE}
   OldShortDateFormat: String ;
   {$ENDIF}
+
+  function AjustarDateTimeString(const DateTimeString: String; DS, TS: Char): String;
+  var
+    AStr: String;
+  begin
+    AStr := Trim(DateTimeString);
+    if (DS <> '.') then
+      AStr := StringReplace(AStr, '.', DS, [rfReplaceAll]);
+
+    if (DS <> '-') then
+      AStr := StringReplace(AStr, '-', DS, [rfReplaceAll]);
+
+    if (DS <> '/') then
+      AStr := StringReplace(AStr, '/', DS, [rfReplaceAll]);
+
+    if (TS <> ':') then
+      AStr := StringReplace(AStr, ':', TS, [rfReplaceAll]) ;
+
+    Result := AStr;
+  end;
 begin
   Result := 0;
   if (DateTimeString = '0') or (DateTimeString = '') then
@@ -1922,21 +1942,26 @@ begin
 
   {$IFDEF HAS_FORMATSETTINGS}
   FS := CreateFormatSettings;
-  if Format <> '' then
+  if (Format <> '') then
     FS.ShortDateFormat := Format;
 
   DS := FS.DateSeparator;
   TS := FS.TimeSeparator;
+                           
+  if (Format <> '') then
+  begin
+    if (DS <> '/') and (pos('/', Format) > 0) then
+      DS := '/'
+    else if (DS <> '-') and (pos('-', Format) > 0) then
+      DS := '-'
+    else if (DS <> '.') and (pos('.', Format) > 0) then
+      DS := '.';
 
-  if DS <> '-' then
-    AStr := Trim( StringReplace(DateTimeString,'-',DS, [rfReplaceAll])) ;
+    if (DS <> FS.DateSeparator) then
+      FS.DateSeparator := DS;
+  end;
 
-  if DS <> '/' then
-    AStr := Trim( StringReplace(DateTimeString,'/',DS, [rfReplaceAll])) ;
-
-  if TS <> ':' then
-    AStr := StringReplace(AStr,':',TS, [rfReplaceAll]) ;
-
+  AStr := AjustarDateTimeString(DateTimeString, DS, TS);
   Result := StrToDateTime(AStr, FS);
   {$ELSE}
   OldShortDateFormat := ShortDateFormat ;
@@ -1947,15 +1972,7 @@ begin
     DS := DateSeparator;
     TS := TimeSeparator;
 
-    if DS <> '-' then
-      AStr := Trim( StringReplace(DateTimeString,'-',DS, [rfReplaceAll])) ;
-
-    if DS <> '/' then
-      AStr := Trim( StringReplace(DateTimeString,'/',DS, [rfReplaceAll])) ;
-
-    if TS <> ':' then
-      AStr := StringReplace(AStr,':',TS, [rfReplaceAll]) ;
-
+    AStr := AjustarDateTimeString(DateTimeString, DS, TS);
     Result := StrToDateTime( AStr ) ;
   finally
     ShortDateFormat := OldShortDateFormat ;

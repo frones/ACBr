@@ -2043,13 +2043,13 @@ begin
       DataArquivo     := StringToDateTimeDef( Copy(ARetorno[0],144,2) +'/'+
                                               Copy(ARetorno[0],146,2) +'/'+
                                               Copy(ARetorno[0],148,4),
-                                              0, 'dd/mm/yyyy' );
+                                              0, 'DD/MM/YYYY' );
       if (Copy(ARetorno[1], 200, 2) <> '00') and (Trim(Copy(ARetorno[1], 200, 2)) <> '') then
         begin
         DataCreditoLanc := StringToDateTimeDef( Copy(ARetorno[1], 200, 2) +'/'+
                                                 Copy(ARetorno[1], 202, 2) +'/'+
                                                 Copy(ARetorno[1], 204, 4),
-                                                0, 'dd/mm/yyyy' );
+                                                0, 'DD/MM/YYYY' );
         end;
 
    end;
@@ -2112,7 +2112,7 @@ begin
         Vencimento           := StringToDateTimeDef( Copy(SegT,74,2) +'/'+
                                                      Copy(SegT,76,2) +'/'+
                                                      Copy(SegT,78,4),
-                                                     0, 'dd/mm/yyyy' );
+                                                     0, 'DD/MM/YYYY' );
         ValorDocumento       := StrToFloatDef(Copy(SegT, 82,15),0)/100;
         ValorDespesaCobranca := StrToFloatDef(Copy(SegT,199,15),0)/100;
         ValorMoraJuros       := StrToFloatDef(Copy(SegU, 18,15),0)/100;
@@ -2126,13 +2126,13 @@ begin
         DataOcorrencia       := StringToDateTimeDef( Copy(SegU,138,2) +'/'+
                                                      Copy(SegU,140,2) +'/'+
                                                      Copy(SegU,142,4),
-                                                     0, 'dd/mm/yyyy' );
+                                                     0, 'DD/MM/YYYY' );
         if Trim(Copy(SegU,146,2))<>'' then
           begin
           DataCredito          := StringToDateTimeDef( Copy(SegU,146,2) +'/'+
                                                       Copy(SegU,148,2) +'/'+
                                                       Copy(SegU,150,4),
-                                                      0, 'dd/mm/yyyy' );
+                                                      0, 'DD/MM/YYYY' );
           end
         else
           begin

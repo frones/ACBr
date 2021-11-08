@@ -721,7 +721,7 @@ begin
 
                          TempData := Copy(Linha, 74, 2) + '/' + Copy(Linha, 76, 2) + '/' + Copy(Linha, 78, 4);
                          if TempData <> '00/00/0000' then
-                              Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+                              Vencimento := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
 
                          ValorDocumento := StrToFloatDef(Copy(Linha, 82, 15), 0) / 100;
 
@@ -757,10 +757,10 @@ begin
                          ValorRecebido := StrToFloatDef(Copy(Linha, 78, 15), 0) / 100;
                          TempData := Copy(Linha, 138, 2) + '/' + Copy(Linha, 140, 2) + '/' + Copy(Linha, 142, 4);
                          if TempData <> '00/00/0000' then
-                              DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+                           DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
                          TempData := Copy(Linha, 146, 2) + '/' + Copy(Linha, 148, 2) + '/' + Copy(Linha, 150, 4);
                          if TempData <> '00/00/0000' then
-                              DataCredito := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+                           DataCredito := StringToDateTimeDef(TempData, 0, 'DD/MM/YYYY');
                     end;
                end;
      end;

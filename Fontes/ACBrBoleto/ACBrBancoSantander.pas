@@ -1106,7 +1106,7 @@ begin
    ACBrBanco.ACBrBoleto.DataCreditoLanc :=
      StringToDateTimeDef(Copy(ARetorno[0], 95, 2) + '/' +
                          Copy(ARetorno[0], 97, 2) + '/' +
-                         Copy(ARetorno[0], 99, 2), 0, 'dd/mm/yy');
+                         Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY');
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],392,3),0);
 

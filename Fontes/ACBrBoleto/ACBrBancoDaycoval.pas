@@ -592,7 +592,7 @@ begin
     StringToDateTimeDef(
       Copy(ARetorno[0], 95, 2) + '/' +
       Copy(ARetorno[0], 97, 2) + '/' +
-      Copy(ARetorno[0], 99, 2), 0, 'dd/mm/yy');
+      Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY');
 
   case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
     1: rCNPJCPF := Copy(ARetorno[1], 7, 11);
@@ -650,14 +650,14 @@ begin
         StringToDateTimeDef(
           Copy(Linha, 111, 2) + '/' +
           Copy(Linha, 113, 2) + '/'+
-          Copy(Linha, 115, 2), 0, 'dd/mm/yy');
+          Copy(Linha, 115, 2), 0, 'DD/MM/YY');
 
       if Copy(Linha, 147, 2) <> '00' then
         Vencimento :=
           StringToDateTimeDef(
             Copy(Linha, 147, 2) + '/' +
             Copy(Linha, 149, 2) + '/'+
-            Copy(Linha, 151, 2), 0, 'dd/mm/yy');
+            Copy(Linha, 151, 2), 0, 'DD/MM/YY');
 
       ValorDocumento       := StrToFloatDef(Copy(Linha, 153, 13), 0) / 100;
       ValorIOF             := StrToFloatDef(Copy(Linha, 215, 13), 0) / 100;

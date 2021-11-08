@@ -872,7 +872,7 @@ begin
     ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno.Strings[0], 144, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 146, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 148, 4),
-                                                            0, 'dd/mm/yyyy');
+                                                            0, 'DD/MM/YYYY');
   except
     ACBrBanco.ACBrBoleto.DataArquivo   := 0;
   end;
@@ -881,7 +881,7 @@ begin
     ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno.Strings[1], 200, 2) +'/'+
                                                                  Copy(ARetorno.Strings[1], 202, 2) +'/'+
                                                                  Copy(ARetorno.Strings[1], 204, 4),
-                                                                 0, 'dd/mm/yyyy');
+                                                                 0, 'DD/MM/YYYY');
   except
     ACBrBanco.ACBrBoleto.DataCreditoLanc := 0;
   end;
@@ -950,7 +950,7 @@ begin
 //            NossoNumero          := Trim(Copy(FSegT, 38, 20));
             Vencimento           := StringToDateTimeDef(Copy(FSegT, 74, 2) +'/'+
                                                         Copy(FSegT, 76, 2) +'/'+
-                                                        Copy(FSegT, 78, 4), 0, 'dd/mm/yyyy');
+                                                        Copy(FSegT, 78, 4), 0, 'DD/MM/YYYY');
             ValorDocumento       := StrToInt64Def(Copy(FSegT,  82, 15), 0) / 100;
             ValorDespesaCobranca := StrToInt64Def(Copy(FSegT, 199, 15), 0) / 100;
             ValorMoraJuros       := StrToInt64Def(Copy(FSegU,  18, 15), 0) / 100;
@@ -965,7 +965,7 @@ begin
             try
               DataOcorrencia     := StringToDateTimeDef(Copy(FSegU, 138, 2) +'/'+
                                                         Copy(FSegU, 140, 2) +'/'+
-                                                        Copy(FSegU, 142, 4), 0, 'dd/mm/yyyy');
+                                                        Copy(FSegU, 142, 4), 0, 'DD/MM/YYYY');
             except
               DataOcorrencia     := 0;
             end;
@@ -973,7 +973,7 @@ begin
             try
               DataCredito        := StringToDateTimeDef(Copy(FSegU, 146, 2) +'/'+
                                                         Copy(FSegU, 148, 2) +'/'+
-                                                        Copy(FSegU, 150, 4), 0, 'dd/mm/yyyy');
+                                                        Copy(FSegU, 150, 4), 0, 'DD/MM/YYYY');
             except
               DataCredito        := 0;
             end;
@@ -1048,7 +1048,7 @@ begin
     ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 97, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 99, 2),
-                                                            0, 'dd/mm/yy');
+                                                            0, 'DD/MM/YY');
   except
     ACBrBanco.ACBrBoleto.DataArquivo := 0;
   end;

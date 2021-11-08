@@ -44,6 +44,8 @@ type
 { TBoletoW_BancoBrasil}
 
   TBoletoW_BancoBrasil  = class(TBoletoWSSOAP)
+  private
+    function CodigoTipoTitulo(AEspecieDoc:String): Integer;
   protected
 
     procedure DefinirEnvelopeSoap; override;
@@ -264,7 +266,8 @@ begin
     else
       Gerador.wCampo(tcStr, '#21', PrefixTag('codigoAceiteTitulo' ), 01, 01, 1, 'N' , DSC_ACEITE);
 
-    Gerador.wCampo(tcStr, '#22', PrefixTag('codigoTipoTitulo'     ), 01, 04, 1, EspecieDoc, DSC_TIPO_ESPECIE);
+    Gerador.wCampo(tcStr, '#22', PrefixTag('codigoTipoTitulo'     ), 01, 04, 1, IntToStr(codigoTipoTitulo(EspecieDoc)), DSC_TIPO_ESPECIE); //TK-2081
+
     Gerador.wCampo(tcStr, '#23', PrefixTag('textoDescricaoTipoTitulo'), 00, 30, 1, EspecieDoc, DSC_TIPO_ESPECIE);
 
     if (integer(TipoPagamento) <> 2) then
@@ -322,6 +325,56 @@ end;
 function TBoletoW_BancoBrasil.PrefixTag(AValue: String): String;
 begin
   Result := C_PREFIX + trim(AValue);
+end;
+
+function TBoletoW_BancoBrasil.CodigoTipoTitulo(AEspecieDoc: String): Integer;
+begin
+{ Pegando o tipo de EspecieDoc }
+  if AEspecieDoc = 'CH' then
+    AEspecieDoc   := '01'
+  else if AEspecieDoc = 'DM' then
+    AEspecieDoc   := '02'
+  else if AEspecieDoc = 'DMI' then
+    AEspecieDoc   := '03'
+  else if AEspecieDoc = 'DS' then
+    AEspecieDoc   := '04'
+  else if AEspecieDoc = 'DSI' then
+    AEspecieDoc   := '05'
+  else if AEspecieDoc = 'DR' then
+    AEspecieDoc   := '06'
+  else if AEspecieDoc = 'LC' then
+    AEspecieDoc   := '07'
+  else if AEspecieDoc = 'NCC' then
+    AEspecieDoc   := '08'
+  else if AEspecieDoc = 'NCE' then
+    AEspecieDoc   := '09'
+  else if AEspecieDoc = 'NCI' then
+    AEspecieDoc   := '10'
+  else if AEspecieDoc = 'NCR' then
+    AEspecieDoc   := '11'
+  else if AEspecieDoc = 'NP' then
+    AEspecieDoc   := '12'
+  else if AEspecieDoc = 'NPR' then
+    AEspecieDoc   := '13'
+  else if AEspecieDoc = 'TM' then
+    AEspecieDoc   := '14'
+  else if AEspecieDoc = 'TS' then
+    AEspecieDoc   := '15'
+  else if AEspecieDoc = 'NS' then
+    AEspecieDoc   := '16'
+  else if AEspecieDoc = 'RC' then
+    AEspecieDoc   := '17'
+  else if AEspecieDoc = 'FAT' then
+    AEspecieDoc   := '18'
+  else if AEspecieDoc = 'ND' then
+    AEspecieDoc   := '19'
+  else if AEspecieDoc = 'AP' then
+    AEspecieDoc   := '20'
+  else if AEspecieDoc = 'ME' then
+    AEspecieDoc   := '21'
+  else if AEspecieDoc = 'PC' then
+    AEspecieDoc   := '22';
+  Result := StrToIntDef(AEspecieDoc,0);
 end;
 
 constructor TBoletoW_BancoBrasil.Create(ABoletoWS: TBoletoWS);

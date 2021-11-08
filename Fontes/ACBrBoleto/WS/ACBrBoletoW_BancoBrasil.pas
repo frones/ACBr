@@ -218,7 +218,11 @@ begin
     end;
 
     Gerador.wCampo(tcDe2, '#12', PrefixTag('valorAbatimentoTitulo'    ), 01, 15, 1, ValorAbatimento, DSC_VALOR_ABATIMENTO);
-    Gerador.wCampo(tcInt, '#13', PrefixTag('quantidadeDiaProtesto'    ), 03, 03, 1, DiasDeProtesto, DSC_DIAS_PROTESTO);
+
+    //TK-2079
+    if DiasDeProtesto > 0 then
+      Gerador.wCampo(tcInt, '#13', PrefixTag('quantidadeDiaProtesto'    ), 01, 03, 1, DiasDeProtesto, DSC_DIAS_PROTESTO);
+    //FIM TK-2079
 
     case (Integer(CodigoMoraJuros) ) of
       0: lCodMora:= 1;

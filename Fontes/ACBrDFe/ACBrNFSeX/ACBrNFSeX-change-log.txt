@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/11/2021
+-- ACBrNFSeXServicos --
+[*] A cidade Garopaba/SC trocou de provedor.
+   Por: Eliandro.may
 -- ISSSaoPaulo.Provider --
 [*] Ao gerar a AssinaturaCancelamento não estava removendo a formatação da
     Inscrição Municipal.

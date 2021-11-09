@@ -434,8 +434,8 @@ begin
               StringOfChar(' ', 15)                                                    + // 155 a 169 Número de inscrição
               StringOfChar(' ', 40)                                                    + // 170 a 209 Nome do sacador/avalista
               PadRight('097', 3, ' ')                                                  + // 210 a 212 Uso exclusivo FEBRABAN/CNAB
-              PadRight(Copy(ANossoNumero,4,20),20, ' ')                                + // 213 a 232 Identificação do Título - Nosso Numero
-              PadRight('', 8, ' ');                                                      // 233 a 240 Uso exclusivo FEBRABAN/CNAB
+              PadRight(ANossoNumero,20, ' ')                                           + // 213 a 232 Identificação do Título - Nosso Numero
+              StringOfChar(' ', 8);                                                      // 233 a 240 Uso exclusivo FEBRABAN/CNAB
 
      {SEGMENTO R}
      Result:= Result + #13#10 +

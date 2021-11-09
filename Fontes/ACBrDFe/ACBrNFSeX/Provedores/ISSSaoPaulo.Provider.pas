@@ -1116,7 +1116,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  NameSpace, sAssinatura: string;
+  NameSpace, sAssinatura, InscMun, NumeroNFSe: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -1145,8 +1145,10 @@ begin
             outras NFS-e deste lote.
   }
 
-  sAssinatura := Poem_Zeros(Emitente.InscMun, 8) +
-                 Poem_Zeros(Response.InfCancelamento.NumeroNFSe, 12);
+  InscMun := OnlyNumber(Emitente.InscMun);
+  NumeroNFSe := OnlyNumber(Response.InfCancelamento.NumeroNFSe);
+
+  sAssinatura := Poem_Zeros(InscMun, 8) + Poem_Zeros(NumeroNFSe, 12);
 
   sAssinatura := string(TACBrNFSeX(FAOwner).SSL.CalcHash(AnsiString(sAssinatura),
                                                     dgstSHA1, outBase64, True));
@@ -1163,10 +1165,10 @@ begin
                          '<Detalhe xmlns="">' +
                            '<ChaveNFe>' +
                              '<InscricaoPrestador>' +
-                               OnlyNumber(Emitente.InscMun) +
+                               InscMun +
                              '</InscricaoPrestador>' +
                              '<NumeroNFe>' +
-                                Response.InfCancelamento.NumeroNFSe +
+                                NumeroNFSe +
                              '</NumeroNFe>' +
                            '</ChaveNFe>' +
                            '<AssinaturaCancelamento>' +

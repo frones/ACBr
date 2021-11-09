@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 09/11/2021
+-- ISSSaoPaulo.Provider --
+[*] Ao gerar a AssinaturaCancelamento não estava removendo a formatação da
+    Inscrição Municipal.
+   Por: Italo Giurizzato Junior
 -- WebISS.GravarXml --
 [*] Incluído na Procedure Configuracao a definição do FormatoItemListaServico.
    Por: Edmar Frazao

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 09/11/2021
+-- Publica.Provider --
+[*] Possível correção para o problema de assinatura inválida ao usar o método
+    Emitir com o tipo de emissão unitário.
+   Por: Italo Giurizzato Junior
 -- Conam.GravarXml --
 [*] Realizado algumas alterações para atender algumas regras que constam no 
     manual do provedor.

@@ -205,13 +205,23 @@ begin
     ConsultarNFSeRps := True;
     ConsultarNFSe := True;
     CancelarNFSe := True;
-    RpsGerarNFSe := True;
+//    RpsGerarNFSe := True;
+    LoteGerarNFSe := True;
   end;
 
   SetXmlNameSpace('http://www.publica.inf.br');
 
-  ConfigMsgDados.ConsultarNFSe.DocElemento := 'ConsultarNfseFaixaEnvio';
-//  ConfigMsgDados.ConsultarNFSe.InfElemento := 'Prestador';
+  with ConfigMsgDados do
+  begin
+    ConsultarNFSe.DocElemento := 'ConsultarNfseFaixaEnvio';
+//  ConsultarNFSe.InfElemento := 'Prestador';
+
+    with GerarNFSe do
+    begin
+      InfElemento := 'InfRps';
+      DocElemento := 'Rps';
+    end;
+  end;
 
   ConfigWebServices.AtribVerLote := 'versao';
 end;

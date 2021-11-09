@@ -40,7 +40,8 @@ uses
   SysUtils, Classes,
   ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceSilTecnologia = class(TACBrNFSeXWebserviceSoap11)
@@ -87,6 +88,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
   end;
 
 implementation
@@ -279,6 +281,24 @@ begin
     Result := TACBrNFSeXWebserviceSilTecnologia203.Create(FAOwner, AMetodo, URL)
   else
     raise EACBrDFeException.Create(ERR_SEM_URL);
+end;
+
+procedure TACBrNFSeProviderSilTecnologia203.TratarRetornoEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+begin
+  inherited TratarRetornoEmitir(Response);
+
+  if not Response.Sucesso then
+  begin
+    if Pos(Response.XmlRetorno, '<return>') > 0 then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := '';
+      AErro.Descricao := SeparaDados(Response.XmlRetorno, 'return');
+    end;
+  end;
 end;
 
 { TACBrNFSeXWebserviceSilTecnologia203 }

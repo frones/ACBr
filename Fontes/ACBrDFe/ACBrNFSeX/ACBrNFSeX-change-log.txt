@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/11/2021
+-- SilTecnologia.Provider --
+[*] Possível correção para o tratamento das mensagens de erros.
+   Por: Italo Giurizzato Junior
+
 05/11/2021
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Trocado o ';' pela propriedade que contem o caractere de quebra de linha.

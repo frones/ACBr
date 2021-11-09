@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/11/2021
+-- WebISS.GravarXml --
+[*] Incluído na Procedure Configuracao a definição do FormatoItemListaServico.
+   Por: Edmar Frazao
 -- SilTecnologia.Provider --
 [*] Possível correção para o tratamento das mensagens de erros.
    Por: Italo Giurizzato Junior

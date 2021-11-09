@@ -54,6 +54,7 @@ type
 
   TNFSeW_WebISS202 = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -73,6 +74,15 @@ begin
   DivAliq100 := True;
   FormatoItemListaServico := filsSemFormatacao;
   NrOcorrAliquota := 1;
+end;
+
+{ TNFSeW_WebISS202 }
+
+procedure TNFSeW_WebISS202.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsSemFormatacao;
 end;
 
 end.

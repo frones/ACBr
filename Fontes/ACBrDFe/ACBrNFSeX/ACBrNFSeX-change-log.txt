@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 09/11/2021
+-- Conam.GravarXml --
+[*] Realizado algumas alterações para atender algumas regras que constam no 
+    manual do provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção no TratarRetornoConsultaNFSePorRps.
    Por: Edmar Frazao

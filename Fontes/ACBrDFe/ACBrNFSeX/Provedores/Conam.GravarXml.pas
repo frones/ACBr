@@ -147,7 +147,10 @@ begin
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'VlIssRet', 1, 16, 1,
                                       NFSe.Servico.Valores.ValorIssRetido, ''));
 
-  CpfCnpj := OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
+  CpfCnpj := Trim(NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
+
+  if (CpfCnpj <> 'CONSUMIDOR') and (CpfCnpj <> 'EXTERIOR') then
+    CpfCnpj := OnlyNumber(CpfCnpj);
 
   {
     Se hover municipios com apostofro deve ser substituido por espaço,
@@ -178,7 +181,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'BairroTom', 1, 60, 1,
                                              NFSe.Tomador.Endereco.Bairro, ''));
 
-  if Length(CpfCnpj) < 14  then
+  if CpfCnpj = 'CONSUMIDOR'  then
   begin
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunTom', 1, 60, 1,
                                                              MunPrestador, ''));
@@ -188,21 +191,43 @@ begin
   end
   else
   begin
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunTom', 1, 60, 1,
-                                                               MunTomador, ''));
+    if CpfCnpj = 'EXTERIOR' then
+    begin
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunTom', 1, 60, 1,
+                                                               'EXTERIOR', ''));
 
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SiglaUFTom', 2, 2, 1,
-                                                 NFSe.Tomador.Endereco.UF, ''));
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SiglaUFTom', 2, 2, 1,
+                                                                     'EX', ''));
+    end
+    else
+    begin
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunTom', 1, 60, 1,
+                                                                 MunTomador, ''));
+
+      NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SiglaUFTom', 2, 2, 1,
+                                                   NFSe.Tomador.Endereco.UF, ''));
+    end;
   end;
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CepTom', 1, 8, 1,
-                                    OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
+  if (CpfCnpj <> 'CONSUMIDOR') and (CpfCnpj <> 'EXTERIOR') then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CepTom', 1, 8, 1,
+                                    OnlyNumber(NFSe.Tomador.Endereco.CEP), ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CepTom', 1, 8, 1,
+                                                                '00000000',''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Telefone', 1, 10, 1,
+  if (CpfCnpj = 'CONSUMIDOR') then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Telefone', 1, 10, 1, '', ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Telefone', 1, 10, 1,
                    RightStr(OnlyNumber(NFSe.Tomador.Contato.Telefone), 8), ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 20, 1,
-                     NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''));
+  if (CpfCnpj <> 'CONSUMIDOR') and (CpfCnpj <> 'EXTERIOR') then
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 20, 1,
+                     NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, ''))
+  else
+    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 20, 1,
+                                                                       '', ''));
 
   {
     segundo o manual: Informar somente se Local de Prestação de Serviços

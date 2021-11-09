@@ -824,7 +824,6 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANota: NotaFiscal;
   NumNFSe, NumRps: String;
-  i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -901,10 +900,7 @@ begin
         else
         begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-//          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-
-          i := TACBrNFSeX(FAOwner).NotasFiscais.IndexOf(ANota);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[i];
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
         end;
 
         SalvarXmlNfse(ANota);

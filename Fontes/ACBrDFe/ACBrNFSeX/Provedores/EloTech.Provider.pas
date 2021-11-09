@@ -84,12 +84,14 @@ type
       Params: TNFSeParamsResponse); override;
     procedure GerarMsgDadosSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse;
       Params: TNFSeParamsResponse); override;
+
+    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, EloTech.GravarXml, EloTech.LerXml;
 
 { TACBrNFSeProviderEloTech203 }
@@ -162,6 +164,109 @@ begin
                  LowerCase(booltostr(Homologacao, True)) +
               '</Homologa>' +
             '</IdentificacaoRequerente>';
+end;
+
+procedure TACBrNFSeProviderEloTech203.TratarRetornoCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  ANode, AuxNode: TACBrXmlNode;
+  Ret: TRetCancelamento;
+  IdAttr: string;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.XmlRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.XmlRetorno);
+
+      ProcessarMensagemErros(Document.Root, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := Document.Root.Childrens.FindAnyNs('tcRetCancelamento');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod209;
+        AErro.Descricao := Desc209;
+        Exit;
+      end;
+
+      ANode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod210;
+        AErro.Descricao := Desc210;
+        Exit;
+      end;
+
+      ANode := ANode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod204;
+        AErro.Descricao := Desc204;
+        Exit;
+      end;
+
+      Ret :=  Response.RetCancelamento;
+      Ret.DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+
+      if ConfigAssinar.IncluirURI then
+        IdAttr := ConfigGeral.Identificador
+      else
+        IdAttr := 'ID';
+
+      ANode := ANode.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
+
+      Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
+
+      ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
+
+      with  Ret.Pedido.IdentificacaoNfse do
+      begin
+        Numero := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+
+        AuxNode := ANode.Childrens.FindAnyNs('CpfCnpj');
+
+        if AuxNode <> nil then
+        begin
+          Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+          if Cnpj = '' then
+            Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+        end
+        else
+          Cnpj := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+        InscricaoMunicipal := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+        CodigoMunicipio := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
 end;
 
 procedure TACBrNFSeProviderEloTech203.GerarMsgDadosEmitir(

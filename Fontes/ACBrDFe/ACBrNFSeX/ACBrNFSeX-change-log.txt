@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 09/11/2021
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível correção no TratarRetornoConsultaNFSePorRps.
+   Por: Edmar Frazao
+-- EloTech.Provider --
+[+] Incluido o método TratarRetornoCancelaNfse por ser um pouco diferente do
+    padrão ABRASF.
+   Por: Diego Reckziegel
 -- ACBrNFSeXServicos --
 [*] A cidade Garopaba/SC trocou de provedor.
    Por: Eliandro.may

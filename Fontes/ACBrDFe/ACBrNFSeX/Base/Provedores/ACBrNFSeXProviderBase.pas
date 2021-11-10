@@ -815,11 +815,7 @@ begin
   AReader.Arquivo := aXML;
 
   try
-    with TACBrNFSeX(FAOwner) do
-    begin
-      AReader.Provedor     := Configuracoes.Geral.Provedor;
-      AReader.ProvedorConf := Configuracoes.Geral.Provedor;
-    end;
+    AReader.Provedor := TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor;
 
     Result := AReader.LerXml;
   finally

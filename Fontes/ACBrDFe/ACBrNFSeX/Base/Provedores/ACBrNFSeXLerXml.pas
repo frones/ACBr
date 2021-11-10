@@ -48,7 +48,6 @@ type
   private
     FNFSe: TNFSe;
     FtpXML: TtpXML;
-    FProvedorConf: TNFSeProvedor;
     FProvedor: TnfseProvedor;
 
   protected
@@ -62,10 +61,9 @@ type
 
     function LerXml: Boolean; Override;
 
-    property NFSe: TNFSe                 read FNFSe         write FNFSe;
-    property Provedor: TnfseProvedor     read FProvedor     write FProvedor;
-    property ProvedorConf: TNFSeProvedor read FProvedorConf write FProvedorConf;
-    property tpXML: TtpXML               read FtpXML        write FtpXML;
+    property NFSe: TNFSe             read FNFSe     write FNFSe;
+    property Provedor: TnfseProvedor read FProvedor write FProvedor;
+    property tpXML: TtpXML           read FtpXML    write FtpXML;
   end;
 
 implementation

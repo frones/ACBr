@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2021
+-- pcnConversao --
+[*] Ajuste nos métodos de conversão dos enumerados "TpcnOrigemMercadoria", 
+    "TpcnCSOSNIcms" e "TpcnBandeiraCartao" para permitir valores vazios.
+  Por: BigWings
+
 21/07/2021
 -- pcnConversao --
 [+] Inclusão dos novos Meios de Pagamento a serem utilizados no SAT.

@@ -200,7 +200,8 @@ type
   TSchemaDFe = (schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
                 schresCTe, schprocCTe, schprocCTeOS, schprocEventoCTe,
                 schresMDFe, schprocMDFe, schprocEventoMDFe,
-                schresBPe, schprocBPe, schprocEventoBPe);
+                schresBPe, schprocBPe, schprocEventoBPe,
+                schprocGTVe);
 
   TForcarGeracaoTag = (fgtNunca, fgtSomenteProducao, fgtSomenteHomologacao, fgtSempre);
 

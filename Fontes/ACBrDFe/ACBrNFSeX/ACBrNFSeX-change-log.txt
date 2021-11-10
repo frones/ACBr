@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/11/2021
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] O provedor ISSNet gera o XML da nota com as tags: Cidade/Estado em vez de
+    CodigoMunicipio/Uf. Realizado ajustes para contornar o problema.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml/ACBrNFSeXProviderBase --
 [*] Remoção da propriedade ProvedorConf que não estava sendo utilizada.
    Por: Italo Giurizzato Junior

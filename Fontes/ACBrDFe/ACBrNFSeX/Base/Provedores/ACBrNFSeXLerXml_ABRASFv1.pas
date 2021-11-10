@@ -192,10 +192,18 @@ begin
       Complemento     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro          := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
-      UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
-      CodigoPais      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
-      CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      if CodigoMunicipio = '' then
+        CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
+
+      UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
+
+      if UF = '' then
+        UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
+
+      CodigoPais := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
+      CEP        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;
@@ -217,9 +225,17 @@ begin
       Complemento     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Complemento'), tcStr);
       Bairro          := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
       CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
-      UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
-      CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      if CodigoMunicipio = '' then
+        CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
+
+      UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
+
+      if UF = '' then
+        UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
+
+      CEP        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
     end;
   end;
 end;

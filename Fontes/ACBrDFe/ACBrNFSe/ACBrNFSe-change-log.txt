@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2021
+-- pnfsNFSeR --
+[*] Ajuste na leitura de XML do provedor ISSDSF.
+  Por: Olimpio Rocha
+
 29/10/2021
 -- ACBrNFSeDANFSeRLClass --
 [*] Ao gerar o PDF não estava sendo levado em consideração o conteudo de

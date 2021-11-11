@@ -3225,38 +3225,25 @@ begin
     end;
   end;
 
-  if ((FNFSe.Servico.Valores.ValorIssRetido = 0) or (FNFSe.Servico.Valores.ValorIss = 0)) and
-      (FNFSe.Servico.Valores.Aliquota > 0)  then
+  with FNFSe.Servico.Valores do
   begin
-    if FNFSe.Servico.Valores.IssRetido = stRetencao then
-       FNFSe.Servico.Valores.ValorIssRetido := (FNFSe.Servico.Valores.ValorServicos * (FNFSe.Servico.Valores.Aliquota / 100));
+    if ((ValorIssRetido = 0) or (ValorIss = 0)) and (Aliquota > 0)  then
+    begin
+      if IssRetido = stRetencao then
+         ValorIssRetido := (ValorServicos * (Aliquota / 100));
 
-    FNFSe.Servico.Valores.ValorIss := (FNFSe.Servico.Valores.ValorServicos * (FNFSe.Servico.Valores.Aliquota / 100));
+      ValorIss := (ValorServicos * (Aliquota / 100));
+    end;
+
+    // Correção para o cálculo de VALOR LIQUIDO da NFSE -
+    // estavam faltando PIS, COFINS, INSS, IR e CSLL
+    ValorLiquidoNfse := ValorServicos -
+                        (ValorPis + ValorCofins + ValorInss + ValorIr +
+                         ValorCsll + ValorDeducoes + DescontoCondicionado+
+                         DescontoIncondicionado + ValorIssRetido);
+
+    BaseCalculo := ValorServicos - (ValorDeducoes + DescontoIncondicionado);
   end;
-
-
-  (**** calculo anterior
-  FNFSe.Servico.Valores.ValorLiquidoNfse := (FNfse.Servico.Valores.ValorServicos -
-                                            (FNfse.Servico.Valores.ValorDeducoes +
-                                             FNfse.Servico.Valores.DescontoCondicionado+
-                                             FNfse.Servico.Valores.DescontoIncondicionado+
-                                             FNFSe.Servico.Valores.ValorIssRetido));
-  *)
-
-  // Correção para o cálculo de VALOR LIQUIDO da NFSE - estavam faltando PIS, COFINS, INSS, IR e CSLL
-  NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
-                                            (NFSe.Servico.Valores.ValorPis +
-                                             NFSe.Servico.Valores.ValorCofins +
-                                             NFSe.Servico.Valores.ValorInss +
-                                             NFSe.Servico.Valores.ValorIr +
-                                             NFSe.Servico.Valores.ValorCsll +
-                                             FNfse.Servico.Valores.ValorDeducoes +
-                                             FNfse.Servico.Valores.DescontoCondicionado+
-                                             FNfse.Servico.Valores.DescontoIncondicionado+
-                                             FNFSe.Servico.Valores.ValorIssRetido);
-
-
-  FNfse.Servico.Valores.BaseCalculo := NFSe.Servico.Valores.ValorLiquidoNfse;
 
   Result := True;
 end;

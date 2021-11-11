@@ -75,6 +75,9 @@ type
     FCancPreencherSerieNfse: Boolean;
     // define se precisa preencher o CodVerificacao ou não ao cancelar Nfse
     FCancPreencherCodVerificacao: Boolean;
+    // define se vai gerar ou não a tag <NumeroNfseFinal> na consulta por faixa
+    FConsultaPorFaixaPreencherNumNfseFinal: Boolean;
+
     // uso diverso
     FParams1: string;
     // uso diverso
@@ -108,6 +111,8 @@ type
     property CancPreencherMotivo: Boolean read FCancPreencherMotivo write FCancPreencherMotivo;
     property CancPreencherSerieNfse: Boolean read FCancPreencherSerieNfse write FCancPreencherSerieNfse;
     property CancPreencherCodVerificacao: Boolean read FCancPreencherCodVerificacao write FCancPreencherCodVerificacao;
+    property ConsultaPorFaixaPreencherNumNfseFinal: Boolean read FConsultaPorFaixaPreencherNumNfseFinal write FConsultaPorFaixaPreencherNumNfseFinal;
+
     // Parametros lidos no arquivo .Res ou .ini
     property Params1: string read FParams1;
     property Params2: string read FParams2;

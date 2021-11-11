@@ -39,8 +39,8 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXConsts,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceTecnos201 = class(TACBrNFSeXWebserviceSoap11)
@@ -64,8 +64,6 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
-
-    procedure PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure AssinarConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure AssinarConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
@@ -125,7 +123,11 @@ procedure TACBrNFSeProviderTecnos201.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.CancPreencherMotivo := True;
+  with ConfigGeral do
+  begin
+    CancPreencherMotivo := True;
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
+  end;
 
   with ConfigAssinar do
   begin
@@ -195,87 +197,6 @@ begin
     Result := TACBrNFSeXWebserviceTecnos201.Create(FAOwner, AMetodo, URL)
   else
     raise EACBrDFeException.Create(ERR_SEM_URL);
-end;
-
-procedure TACBrNFSeProviderTecnos201.PrepararConsultaNFSeporFaixa(
-  Response: TNFSeConsultaNFSeResponse);
-var
-  AErro: TNFSeEventoCollectionItem;
-  aParams: TNFSeParamsResponse;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
-begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod001;
-    AErro.Descricao := Desc001;
-    Exit;
-  end;
-
-  Prefixo := '';
-  PrefixoTS := '';
-
-  if EstaVazio(ConfigMsgDados.ConsultarNFSePorFaixa.xmlns) then
-    NameSpace := ''
-  else
-  begin
-    if ConfigMsgDados.Prefixo = '' then
-      NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSePorFaixa.xmlns + '"'
-    else
-    begin
-      NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' + ConfigMsgDados.ConsultarNFSePorFaixa.xmlns + '"';
-      Prefixo := ConfigMsgDados.Prefixo + ':';
-    end;
-  end;
-
-  if ConfigMsgDados.XmlRps.xmlns <> '' then
-  begin
-    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.ConsultarNFSePorFaixa.xmlns) and
-       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
-    begin
-      if ConfigMsgDados.PrefixoTS = '' then
-        NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
-      else
-      begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-      end;
-    end
-    else
-    begin
-      if ConfigMsgDados.PrefixoTS <> '' then
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-    end;
-  end;
-
-  Response.Metodo := tmConsultarNFSePorFaixa;
-
-  XmlConsulta := '<' + Prefixo + 'Faixa>' +
-                   '<' + PrefixoTS + 'NumeroNfseInicial>' +
-                      OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
-                   '</' + PrefixoTS + 'NumeroNfseInicial>' +
-                   '<' + PrefixoTS + 'NumeroNfseFinal>' +
-                      OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
-                   '</' + PrefixoTS + 'NumeroNfseFinal>' +
-                 '</' + Prefixo + 'Faixa>';
-
-  aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
-  try
-    aParams.Xml := XmlConsulta;
-    aParams.TagEnvio := '';
-    aParams.Prefixo := Prefixo;
-    aParams.Prefixo2 := PrefixoTS;
-    aParams.NameSpace := NameSpace;
-    aParams.NameSpace2 := '';
-    aParams.IdAttr := '';
-    aParams.Versao := '';
-
-    GerarMsgDadosConsultaNFSeporFaixa(Response, aParams);
-  finally
-    aParams.Free;
-  end;
 end;
 
 { TACBrNFSeXWebserviceTecnos201 }

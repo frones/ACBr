@@ -111,7 +111,10 @@ begin
     ConsultaSitLote := False;
     ConsultaLote := True;
     ConsultaNFSe := True;
+
     ConsultaPorFaixa := True;
+    ConsultaPorFaixaPreencherNumNfseFinal := False;
+
     CancPreencherMotivo := False;
     CancPreencherSerieNfse := False;
     CancPreencherCodVerificacao := False;

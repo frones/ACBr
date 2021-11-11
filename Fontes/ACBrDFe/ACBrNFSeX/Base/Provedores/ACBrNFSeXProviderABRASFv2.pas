@@ -129,6 +129,7 @@ begin
   begin
     ModoEnvio := meLoteSincrono;
     ConsultaPorFaixa := True;
+    ConsultaPorFaixaPreencherNumNfseFinal := False;
   end;
 
   SetXmlNameSpace(NameSpace);
@@ -1001,7 +1002,7 @@ procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeporFaixa(Response: TNFSe
 var
   AErro: TNFSeEventoCollectionItem;
   aParams: TNFSeParamsResponse;
-  XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
+  XmlConsulta, xNumFinal, NameSpace, Prefixo, PrefixoTS: string;
 begin
   if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
   begin
@@ -1050,21 +1051,20 @@ begin
 
   Response.Metodo := tmConsultarNFSePorFaixa;
 
-  if OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) <> OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) then
-    XmlConsulta := '<' + Prefixo + 'Faixa>' +
-                     '<' + PrefixoTS + 'NumeroNfseInicial>' +
-                        OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
-                     '</' + PrefixoTS + 'NumeroNfseInicial>' +
-                     '<' + PrefixoTS + 'NumeroNfseFinal>' +
-                        OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
-                     '</' + PrefixoTS + 'NumeroNfseFinal>' +
-                   '</' + Prefixo + 'Faixa>'
+  if (OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) <> OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe)) or
+     ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal then
+    xNumFinal := '<' + PrefixoTS + 'NumeroNfseFinal>' +
+                    OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
+                 '</' + PrefixoTS + 'NumeroNfseFinal>'
   else
-    XmlConsulta := '<' + Prefixo + 'Faixa>' +
-                     '<' + PrefixoTS + 'NumeroNfseInicial>' +
-                        OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
-                     '</' + PrefixoTS + 'NumeroNfseInicial>' +
-                   '</' + Prefixo + 'Faixa>';
+    xNumFinal := '';
+
+  XmlConsulta := '<' + Prefixo + 'Faixa>' +
+                   '<' + PrefixoTS + 'NumeroNfseInicial>' +
+                      OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
+                   '</' + PrefixoTS + 'NumeroNfseInicial>' +
+                   xNumFinal +
+                 '</' + Prefixo + 'Faixa>';
 
   aParams := TNFSeParamsResponse.Create;
   aParams.Clear;

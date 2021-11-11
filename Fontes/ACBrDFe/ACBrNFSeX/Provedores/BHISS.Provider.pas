@@ -272,15 +272,14 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  XmlConsulta := XmlConsulta +
-                   '<Faixa>' +
-                     '<NumeroNfseInicial>' +
-                        OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
-                     '</NumeroNfseInicial>' +
-                     '<NumeroNfseFinal>' +
-                        OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
-                     '</NumeroNfseFinal>' +
-                   '</Faixa>';
+  XmlConsulta := '<Faixa>' +
+                   '<NumeroNfseInicial>' +
+                      OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
+                   '</NumeroNfseInicial>' +
+                   '<NumeroNfseFinal>' +
+                      OnlyNumber(Response.InfConsultaNFSe.NumeroFinNFSe) +
+                   '</NumeroNfseFinal>' +
+                 '</Faixa>';
 
   if EstaVazio(ConfigMsgDados.ConsultarNFSe.xmlns) then
     NameSpace := ''

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 11/11/2021
+-- Diversos --
+[*] Foi criado uma nova propriedade para determinar se a tag <NumeroNfseFinal> 
+    deve ser gerada ou não mesmo quando o numero inicial e final são iguais ao 
+    consultar uma NFS-e por faixa.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.LerXml --
 [*] Ajuste na leitura de XML do provedor ISSDSF.
    Por: Italo Giurizzato Junior

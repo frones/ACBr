@@ -72,7 +72,6 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
-
   end;
 
 implementation
@@ -87,7 +86,11 @@ procedure TACBrNFSeProviderISSe200.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.QuebradeLinha := '\s\n';
+  with ConfigGeral do
+  begin
+    QuebradeLinha := '\s\n';
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
+  end;
 
   with ConfigAssinar do
   begin

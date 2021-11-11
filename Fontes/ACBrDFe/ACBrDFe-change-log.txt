@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2021
+-- ACBrXmlBase --
+[*] Melhoria na leitura de data de competencia.
+  Por: Italo Giurizzato Junior
+
 10/11/2021
 -- ACBrXmlBase --
 [*] Possível correção para a leitura de data de competencia.

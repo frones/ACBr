@@ -80,7 +80,7 @@ function LerDatas(const DataStr: string): TDateTime;
 implementation
 
 uses
-  StrUtilsEx, ACBrUtil;
+  StrUtilsEx, ACBrUtil, DateUtils;
 
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
   RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; const QuebraLinha: String): String;
@@ -369,7 +369,7 @@ begin
     // Correção: Inclusão da barra "/"
     if (Pos('/', xData) = 0) and (Length(xData) = 6) then
     begin
-      if Copy(xData, 1, 2) = '20' then
+      if Copy(xData, 1, 2) = Copy(IntToStr(YearOf(Date)), 1, 2) then
         xData := copy(xData, 1, 4) + '/' + copy(xData, 5, 2)
       else
         xData := copy(xData, 1, 2) + '/' + copy(xData, 3, 4);

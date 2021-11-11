@@ -97,7 +97,10 @@ begin
   NrMaxExigISS := 1;
 
   GerarTagServicos := True;
+
+  // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
   GerarIDRps := False;
+
   GerarIDDeclaracao := True;
   GerarTagSenhaFraseSecreta := False;
   GerarEnderecoExterior := False;

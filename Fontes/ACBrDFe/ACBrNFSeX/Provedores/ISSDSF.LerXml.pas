@@ -400,7 +400,7 @@ begin
                          ValorCsll + ValorDeducoes + DescontoCondicionado+
                          DescontoIncondicionado + ValorIssRetido);
 
-    BaseCalculo := ValorLiquidoNfse;
+    BaseCalculo := ValorServicos - (ValorDeducoes + DescontoIncondicionado);
   end;
 end;
 

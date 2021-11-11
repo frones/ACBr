@@ -96,8 +96,6 @@ begin
   NrMinExigISS := 1;
   NrMaxExigISS := 1;
 
-  GerarIDRps := False;
-
   // Numero de Ocorrencias Minimas de uma tag
   // se for  0 só gera a tag se o conteudo for diferente de vazio ou zero
   // se for  1 sempre vai gerar a tag

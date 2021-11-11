@@ -91,6 +91,7 @@ type
 
     FNrOcorrItemListaServico: Integer;
 
+    // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
     FGerarIDRps: Boolean;
 
     function GetOpcoes: TACBrXmlWriterOptions;
@@ -182,6 +183,7 @@ begin
 
   FNrOcorrItemListaServico := 1;
 
+  // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
   FGerarIDRps := False;
 end;
 

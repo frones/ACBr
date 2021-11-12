@@ -174,6 +174,7 @@ begin
     CTe.Ide.dhChegadaDest := Leitor.rCampo(tcDatHor, 'dhChegadaDest');
 
     i01 := 0;
+    CTe.Ide.infPercurso.Clear;
     while Leitor.rExtrai(2, 'infPercurso', '', i01 + 1) <> '' do
     begin
       CTe.Ide.infPercurso.New;
@@ -239,6 +240,7 @@ begin
       CTe.Compl.fluxo.xRota := Leitor.rCampo(tcstr,'xRota');
 
       i01 := 0;
+      CTe.Compl.fluxo.pass.Clear;
       while Leitor.rExtrai(3, 'pass', '', i01 + 1) <> '' do
       begin
         CTe.Compl.fluxo.pass.New;
@@ -297,6 +299,7 @@ begin
 
     i01 := 0;
     I := 0;
+    CTe.Compl.ObsCont.Clear;
     while Leitor.rExtrai(2, 'ObsCont', '', i01 + 1) <> '' do
     begin
       I := RetornarPosEx('ObsCont xCampo=', Leitor.Arquivo, I + 1);
@@ -309,6 +312,7 @@ begin
 
     i01 := 0;
     I := 0;
+    CTe.Compl.ObsFisco.Clear;
     while Leitor.rExtrai(2, 'ObsFisco', '', i01 + 1) <> '' do
     begin
       I := RetornarPosEx('ObsFisco xCampo=', Leitor.Arquivo, I + 1);
@@ -408,6 +412,7 @@ begin
     end;
 
     i01 := 0;
+    CTe.infCTeNorm.infDoc.InfNFE.Clear;
     if CTe.infCTe.versao < 2 then
     begin
       while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
@@ -418,6 +423,7 @@ begin
         inc(i01);
       end;
 
+      CTe.infCTeNorm.infDoc.infNF.Clear;
       while Leitor.rExtrai(2, 'infNF', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.infNF.New;
@@ -439,6 +445,7 @@ begin
         inc(i01);
       end;
 
+      CTe.infCTeNorm.infDoc.InfOutros.Clear;
       while Leitor.rExtrai(2, 'infOutros', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfOutros.New;
@@ -567,6 +574,7 @@ begin
     CTe.detGTV.qCarga := Leitor.rCampo(tcDe4, 'qCarga');
 
     i01 := 0;
+    CTe.detGTV.infEspecie.Clear;
     while Leitor.rExtrai(2, 'infEspecie', '', i01 + 1) <> '' do
     begin
       CTe.detGTV.infEspecie.New;
@@ -579,6 +587,7 @@ begin
     end;
 
     i01 := 0;
+    CTe.detGTV.infVeiculo.Clear;
     while Leitor.rExtrai(2, 'infVeiculo', '', i01 + 1) <> '' do
     begin
       CTe.detGTV.infVeiculo.New;
@@ -597,6 +606,7 @@ begin
     CTe.vPrest.vRec    := Leitor.rCampo(tcDe2,'vRec');
 
     i01 := 0;
+    CTe.vPrest.Comp.Clear;
     while Leitor.rExtrai(2, 'Comp', '', i01 + 1) <> '' do
     begin
       CTe.vPrest.Comp.New;
@@ -735,6 +745,7 @@ begin
     end;
 
     i01 := 0;
+    CTe.infCTeNorm.infDocRef.Clear;
     while Leitor.rExtrai(2, 'infDocRef', '', i01 + 1) <> '' do
     begin
       CTe.infCTeNorm.infDocRef.New;
@@ -757,6 +768,7 @@ begin
       CTe.infCTeNorm.infCarga.vCargaAverb := Leitor.rCampo(tcDe2,'vCargaAverb');
 
       i01 := 0;
+      CTe.infCTeNorm.InfCarga.infQ.Clear;
       while Leitor.rExtrai(3, 'infQ', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.InfCarga.infQ.New;
@@ -770,6 +782,7 @@ begin
     if Leitor.rExtrai(2, 'infDoc') <> ''
     then begin
       i01 := 0;
+      CTe.infCTeNorm.infDoc.infNF.Clear;
       while Leitor.rExtrai(3, 'infNF', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.infNF.New;
@@ -873,6 +886,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.infDoc.InfNFE.Clear;
       while Leitor.rExtrai(3, 'infNFe', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfNFE.New;
@@ -963,6 +977,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.infDoc.InfOutros.Clear;
       while Leitor.rExtrai(3, 'infOutros', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfOutros.New;
@@ -1059,6 +1074,7 @@ begin
     if Leitor.rExtrai(2, 'docAnt') <> ''
     then begin
       i01 := 0;
+      CTe.infCTeNorm.docAnt.emiDocAnt.Clear;
       while Leitor.rExtrai(3, 'emiDocAnt', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.docAnt.emiDocAnt.New;
@@ -1101,6 +1117,7 @@ begin
     end;
 
     i01 := 0;
+    CTe.infCTeNorm.seg.Clear;
     while Leitor.rExtrai(2, 'seg', '', i01 + 1) <> '' do
     begin
       CTe.infCTeNorm.seg.New;
@@ -1136,6 +1153,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.rodo.occ.Clear;
       while Leitor.rExtrai(3, 'occ', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.rodo.occ.New;
@@ -1155,6 +1173,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.rodo.valePed.Clear;
       while Leitor.rExtrai(3, 'valePed', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.rodo.valePed.New;
@@ -1166,6 +1185,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.rodo.veic.Clear;
       while Leitor.rExtrai(3, 'veic', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.rodo.veic.New;
@@ -1194,6 +1214,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.rodo.lacRodo.Clear;
       while Leitor.rExtrai(3, 'lacRodo', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.rodo.lacRodo.New;
@@ -1202,6 +1223,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.Rodo.moto.Clear;
       while Leitor.rExtrai(3, 'moto', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.Rodo.moto.New;
@@ -1293,6 +1315,7 @@ begin
       CTe.infCTeNorm.aquav.irin     := Leitor.rCampo(tcStr,'irin');
 
       i01 := 0;
+      CTe.infCTeNorm.aquav.balsa.Clear;
       while Leitor.rExtrai(3, 'balsa', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.aquav.balsa.New;
@@ -1301,6 +1324,7 @@ begin
       end;
 
       i01 := 0;
+      CTe.infCTeNorm.aquav.detCont.Clear;
       while Leitor.rExtrai(3, 'detCont', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.aquav.detCont.New;
@@ -1355,6 +1379,7 @@ begin
           CTe.infCTeNorm.ferrov.trafMut.chCTeFerroOrigem := Leitor.rCampo(tcStr,'chCTeFerroOrigem');
 
           i01 := 0;
+          CTe.infCTeNorm.ferrov.ferroEnv.Clear;
           while Leitor.rExtrai(4, 'ferroEnv', '', i01 + 1) <> '' do
           begin
             CTe.infCTeNorm.ferrov.ferroEnv.New;
@@ -1389,6 +1414,7 @@ begin
         end;
 
         i01 := 0;
+        CTe.infCTeNorm.ferrov.ferroEnv.Clear;
         while Leitor.rExtrai(3, 'ferroEnv', '', i01 + 1) <> '' do
         begin
           CTe.infCTeNorm.ferrov.ferroEnv.New;
@@ -1412,6 +1438,7 @@ begin
         end;
 
         i01 := 0;
+        CTe.infCTeNorm.ferrov.detVag.Clear;
         while Leitor.rExtrai(3, 'detVag', '', i01 + 1) <> '' do
         begin
           CTe.infCTeNorm.ferrov.detVag.New;
@@ -1445,6 +1472,7 @@ begin
     end; // fim das informações do Multimodal
 
     i01 := 0;
+    CTe.infCTeNorm.peri.Clear;
     while Leitor.rExtrai(2, 'peri', '', i01 + 1) <> '' do
     begin
       CTe.infCTeNorm.peri.New;
@@ -1461,6 +1489,7 @@ begin
     end;
 
     i01 := 0;
+    CTe.infCTeNorm.veicNovos.Clear;
     while Leitor.rExtrai(2, 'veicNovos', '', i01 + 1) <> '' do
     begin
       CTe.infCTeNorm.veicNovos.New;
@@ -1481,6 +1510,7 @@ begin
       CTe.infCTeNorm.cobr.fat.vLiq  := Leitor.rCampo(tcDe2, 'vLiq');
 
       i01 := 0;
+      CTe.infCTeNorm.cobr.dup.Clear;
       while Leitor.rExtrai(3, 'dup', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.cobr.dup.New;
@@ -1492,6 +1522,7 @@ begin
     end;
 
     i01 := 0;
+    CTe.infCTeNorm.infGTVe.Clear;
     while Leitor.rExtrai(2, 'infGTVe', '', i01 + 1) <> '' do
     begin
       CTe.infCTeNorm.infGTVe.New;
@@ -1546,6 +1577,7 @@ begin
     if Leitor.rExtrai(2, 'infServVinc') <> '' then
     begin
       i01 := 0;
+      CTe.infCTeNorm.infServVinc.infCTeMultimodal.Clear;
       while Leitor.rExtrai(3, 'infCTeMultimodal', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infServVinc.infCTeMultimodal.New;
@@ -1573,6 +1605,7 @@ begin
 
   (* Grupo da TAG <autXML> ****************************************************)
   i01 := 0;
+  CTe.autXML.Clear;
   while Leitor.rExtrai(1, 'autXML', '', i01 + 1) <> '' do
   begin
     CTe.autXML.New;

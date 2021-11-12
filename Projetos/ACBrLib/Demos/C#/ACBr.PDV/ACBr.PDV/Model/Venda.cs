@@ -99,6 +99,7 @@ namespace ACBr.PDV.Model
             ret.Identificacao.idDest = DestinoOperacao.doInterna;
             ret.Identificacao.indFinal = ConsumidorFinal.cfConsumidorFinal;
             ret.Identificacao.indPres = PresencaComprador.pcPresencial;
+            ret.Identificacao.indIntermed = IndIntermed.iiSemOperacao;
             ret.Identificacao.tpImp = TipoDANFE.tiNFCe;
             ret.Identificacao.tpAmb = TipoAmbiente.taHomologacao;
 
@@ -119,7 +120,7 @@ namespace ACBr.PDV.Model
             ret.Emitente.UF = Configuracao.Instance.Emitente.UF;
 
             //Destinatario
-            ret.Destinatario.indIEDest = IndIEDest.inNaoContribuinte;
+            ret.Destinatario.indIEDest = IndicadorIE.inNaoContribuinte;
             if (!string.IsNullOrEmpty(Cliente.Documento))
                 ret.Destinatario.CNPJCPF = Cliente.Documento.OnlyNumbers();
             if (!string.IsNullOrEmpty(Cliente.Nome))

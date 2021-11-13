@@ -25,7 +25,8 @@ Private Declare Function GNRE_Inicializar _
 Private Declare Function GNRE_Finalizar Lib "ACBrGNRe32.dll" (ByVal libHandler As Long) As Long
 
 Private Declare Function GNRE_Nome _
-                Lib "ACBrGNRe32.dll" (ByVal buffer As String, _
+                Lib "ACBrGNRe32.dll" (ByVal libHandler As Long, _
+                                      ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function GNRE_Versao _

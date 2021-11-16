@@ -1199,7 +1199,11 @@ begin
                 PadRight( trim(Sacado.Cidade), 15)                      + // Cidade do sacado
                 PadRight( Sacado.UF, 2 )                                + // UF da cidade do sacado
                 PadRight( AMensagem, 40)                                + // Observações
-                PadLeft(DiasProtesto,2,'0')+ ' '                        + // Número de dias para protesto + Branco
+
+                IfThen(DiasDeNegativacao > 0,
+                  PadLeft(IntToStr(DiasDeNegativacao),2,'0'),
+                  PadLeft(DiasProtesto,2,'0')  ) + ' '                  + // Número de dias para protesto ou negativacao + Branco
+
                 IntToStrZero( aRemessa.Count + 1, 6 );
 
        if ATipoOcorrencia = '01' then

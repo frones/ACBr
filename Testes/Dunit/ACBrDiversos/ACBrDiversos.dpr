@@ -14,6 +14,8 @@ program ACBrDiversos;
 {$APPTYPE CONSOLE}
 {$ENDIF}
 
+//{$DEFINE DUNITX}
+
 uses
   Forms,
   {$IFDEF TESTINSIGHT}

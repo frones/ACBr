@@ -1,18 +1,21 @@
 unit acbrtxtclasstest2;
 
-{$IFDEF FPC}
-{$mode objfpc}{$H+}
-{$ENDIF}
+{$I ACBr.inc}
+
 interface
 
 uses
-  Classes,
+  Classes, SysUtils,
   {$ifdef FPC}
-  fpcunit, testutils, testregistry,
+  fpcunit, testutils, testregistry, 
   {$else}
-  TestFramework,
+   {$IFDEF DUNITX}
+    DUnitX.TestFramework, DUnitX.DUnitCompatibility,
+   {$ELSE}
+    TestFramework,
+   {$ENDIF}
   {$endif}
-  SysUtils, ACBrTXTClass;
+  ACBrTXTClass;
 
 type
 
@@ -374,11 +377,18 @@ begin
   CheckEquals('|99999999999999', fACBrTXTClass.LFill(vValue, 14, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
 end;
 
-
+procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
+begin
+  {$IfDef DUNITX}
+   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
+  {$ELSE}
+   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
+  {$EndIf}
+end;
 
 initialization
-
-  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_Arredondamentos{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_ValoresAltos{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_Arredondamentos);
+  _RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_ValoresAltos);
+  
 end.
 

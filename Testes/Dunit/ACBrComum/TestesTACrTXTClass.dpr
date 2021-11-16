@@ -12,7 +12,9 @@ program TestesTACrTXTClass;
 
 {$IFDEF CONSOLE_TESTRUNNER}
 {$APPTYPE CONSOLE}
-{$ENDIF}{$STRONGLINKTYPES ON}
+{$ENDIF}
+                  
+//{$DEFINE DUNITX}
 
 uses
   Forms,

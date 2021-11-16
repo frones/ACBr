@@ -2,10 +2,6 @@ unit ACBrUtilTest;
 
 {$I ACBr.inc}
 
-{$IFDEF DELPHIXE_UP}
-  {$DEFINE DUNITX}
-{$ENDIF}
-
 interface
 
 uses
@@ -4028,7 +4024,7 @@ end;
 
 procedure StringToFloatDefTest.ValorDefault;
 begin
-  CheckEquals(0, StringToFloatDef('12,12,1', 0));
+  CheckEquals(1212.10, StringToFloatDef('12,12,1', 0), 0.001);
   CheckEquals(10, StringToFloatDef('ewerwt', 10));
 end;
 

@@ -2,10 +2,6 @@ unit ACBrValidadorTest;
 
 {$I ACBr.inc}
 
-{$IFDEF DELPHIXE_UP}
-  {$DEFINE DUNITX}
-{$ENDIF}
-
 interface
 
 uses
@@ -1369,14 +1365,14 @@ begin
 end;
 
 initialization
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCPF{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCNPJ{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorUF{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorEmail{$ifndef FPC}.Suite{$endif});
-  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorPlaca{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCPF);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCNPJ);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorUF);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorIE);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorTelefone);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCEP);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorEmail);
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorPlaca);
 
 end.
 

@@ -14,6 +14,8 @@ program ACBrComumTestCases;
 {$APPTYPE CONSOLE}
 {$ENDIF}
 
+//{$DEFINE DUNITX}
+
 uses
   Forms,
   {$IFDEF TESTINSIGHT}

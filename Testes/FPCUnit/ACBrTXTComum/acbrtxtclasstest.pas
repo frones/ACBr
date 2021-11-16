@@ -1,19 +1,21 @@
 unit ACBrTXTClassTest;
 
-{$IFDEF FPC}
-{$mode objfpc}{$H+}
-{$ENDIF}
+{$I ACBr.inc}
 
 interface
 
 uses
-  Classes,
+  Classes, SysUtils,
   {$ifdef FPC}
-  fpcunit, testutils, testregistry,
+  fpcunit, testutils, testregistry, 
   {$else}
-  TestFramework,
+   {$IFDEF DUNITX}
+    DUnitX.TestFramework, DUnitX.DUnitCompatibility,
+   {$ELSE}
+    TestFramework,
+   {$ENDIF}
   {$endif}
-  SysUtils, ACBrTXTClass;
+  ACBrTXTClass;
 
 type
 
@@ -250,10 +252,18 @@ begin
   FreeAndNil(fACBrTXTClass);
 end;
 
-initialization
+procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
+begin
+  {$IfDef DUNITX}
+   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
+  {$ELSE}
+   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
+  {$EndIf}
+end;
 
-  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_CasosVazios{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosVLFill_Numericos{$ifndef FPC}.Suite{$endif});
+initialization
+  _RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_CasosVazios);
+  _RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosVLFill_Numericos);
 
 end.
 

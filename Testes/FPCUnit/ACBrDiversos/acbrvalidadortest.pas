@@ -1,19 +1,25 @@
 unit ACBrValidadorTest;
 
-{$IFDEF FPC}
-{$mode objfpc}{$H+}
+{$I ACBr.inc}
+
+{$IFDEF DELPHIXE_UP}
+  {$DEFINE DUNITX}
 {$ENDIF}
 
 interface
 
 uses
-  Classes,
+  Classes, SysUtils,
   {$ifdef FPC}
-  fpcunit, testutils, testregistry,
+   fpcunit, testutils, testregistry,
   {$else}
-  TestFramework,
+   {$IFDEF DUNITX}
+    DUnitX.TestFramework, DUnitX.DUnitCompatibility,
+   {$ELSE}
+    TestFramework,
+   {$ENDIF}
   {$endif}
-  SysUtils, ACBrValidador;
+  ACBrValidador;
 
 type
 
@@ -1353,16 +1359,24 @@ begin
    CheckEquals('', ValidarPlaca('9999999'));
 end;
 
-initialization
+procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
+begin
+  {$IfDef DUNITX}
+   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
+  {$ELSE}
+   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
+  {$EndIf}
+end;
 
-  RegisterTest(TTestCaseACBrValidadorCPF{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorCNPJ{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorUF{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorEmail{$ifndef FPC}.Suite{$endif});
-  RegisterTest(TTestCaseACBrValidadorPlaca{$ifndef FPC}.Suite{$endif});
+initialization
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCPF{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCNPJ{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorUF{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorEmail{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrDiversos.ACBrValidador', TTestCaseACBrValidadorPlaca{$ifndef FPC}.Suite{$endif});
 
 end.
 

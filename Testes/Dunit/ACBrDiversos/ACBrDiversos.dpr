@@ -12,7 +12,7 @@ program ACBrDiversos;
 
 {$IFDEF CONSOLE_TESTRUNNER}
 {$APPTYPE CONSOLE}
-{$ENDIF}{$STRONGLINKTYPES ON}
+{$ENDIF}
 
 uses
   Forms,

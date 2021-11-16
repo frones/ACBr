@@ -2,9 +2,8 @@ unit ACBrUtilTest;
 
 {$I ACBr.inc}
 
-{$DEFINE DUNITX}
-{$ifdef FPC}
-  {$UnDef DUNITX}
+{$IFDEF DELPHIXE_UP}
+  {$DEFINE DUNITX}
 {$ENDIF}
 
 interface
@@ -4921,115 +4920,111 @@ begin
   CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S));
 end;
 
-procedure RegisterTest(ATesteName: String; ATestClass: TClass);
+procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
-{$IfDef DUNITX}
-  TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
-{$ELSE}
-  {$IfDef FPC}
-    testregistry.RegisterTest(ATesteName, TTestCaseClass(ATestClass) );
+  {$IfDef DUNITX}
+   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
   {$ELSE}
-    TestFramework.RegisterTest(ATesteName, ATestClass.Suite);
+   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
   {$EndIf}
-{$EndIf}
 end;
 
 initialization
-  RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste);
-  RegisterTest('ACBrComum.ACBrUtil', SplitTeste);
-  RegisterTest('ACBrComum.ACBrUtil', FindDelimiterInTextTest);
-  RegisterTest('ACBrComum.ACBrUtil', ChangeLineBreakTest);
-  RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest);
-  RegisterTest('ACBrComum.ACBrUtil', IncWorkingDayTest);
-  RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest);
-  RegisterTest('ACBrComum.ACBrUtil', ParseTextTest);
-  RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest);
-  RegisterTest('ACBrComum.ACBrUtil', TestXmlEhUTF8);
-  RegisterTest('ACBrComum.ACBrUtil', DecodeToStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest);
-  RegisterTest('ACBrComum.ACBrUtil', QuebrarLinhaTest);
-  RegisterTest('ACBrComum.ACBrUtil', ACBrStrToAnsiTest);
-  RegisterTest('ACBrComum.ACBrUtil', TruncFixTest);
-  RegisterTest('ACBrComum.ACBrUtil', TruncToTest);
-  RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
-  RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest);
-  RegisterTest('ACBrComum.ACBrUtil', TestBitTest);
-  RegisterTest('ACBrComum.ACBrUtil', TesteSetBit);
-  RegisterTest('ACBrComum.ACBrUtil', TesteClearBit);
-  RegisterTest('ACBrComum.ACBrUtil', TestePutBit);
-  RegisterTest('ACBrComum.ACBrUtil', IntToBinTest);
-  RegisterTest('ACBrComum.ACBrUtil', BinToIntTest);
-  RegisterTest('ACBrComum.ACBrUtil', BcdToAscTest);
-  RegisterTest('ACBrComum.ACBrUtil', AscToBcdTest);
-  RegisterTest('ACBrComum.ACBrUtil', IntToLEStrTest);
-  RegisterTest('ACBrComum.ACBrUtil', LEStrToIntTest);
-  RegisterTest('ACBrComum.ACBrUtil', HexToAsciiTest);
-  RegisterTest('ACBrComum.ACBrUtil', AsciiToHexTest);
-  RegisterTest('ACBrComum.ACBrUtil', BinaryStringToStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', StringToBinaryStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', padRightTest);
-  RegisterTest('ACBrComum.ACBrUtil', padLeftTest);
-  RegisterTest('ACBrComum.ACBrUtil', padCenterTest);
-  RegisterTest('ACBrComum.ACBrUtil', padSpaceTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoveStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoveStringsTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoverEspacosDuplosTest);
-  RegisterTest('ACBrComum.ACBrUtil', StripHTMLTest);
-  RegisterTest('ACBrComum.ACBrUtil', RemoveEmptyLinesTest);
-  RegisterTest('ACBrComum.ACBrUtil', RandomNameTest);
-  RegisterTest('ACBrComum.ACBrUtil', IfEmptyThenTest);
-  RegisterTest('ACBrComum.ACBrUtil', PosAtTest);
-  RegisterTest('ACBrComum.ACBrUtil', PosLastTest);
-  RegisterTest('ACBrComum.ACBrUtil', CountStrTest);
-  RegisterTest('ACBrComum.ACBrUtil', Poem_ZerosTest);
-  RegisterTest('ACBrComum.ACBrUtil', IntToStrZeroTest);
-  RegisterTest('ACBrComum.ACBrUtil', FloatToIntStrTest);
-  RegisterTest('ACBrComum.ACBrUtil', FloatToStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', FormatFloatBrTest);
-  RegisterTest('ACBrComum.ACBrUtil', FloatMaskTest);
-  RegisterTest('ACBrComum.ACBrUtil', StringToFloatTest);
-  RegisterTest('ACBrComum.ACBrUtil', StringToFloatDefTest);
-  RegisterTest('ACBrComum.ACBrUtil', FormatDateBrTest);
-  RegisterTest('ACBrComum.ACBrUtil', FormatDateTimeBrTest);
-  RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeTest);
-  RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeDefTest);
-  RegisterTest('ACBrComum.ACBrUtil', StoDTest);
-  RegisterTest('ACBrComum.ACBrUtil', DtoSTest);
-  RegisterTest('ACBrComum.ACBrUtil', DTtoSTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaNumTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsNumberTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsHexaTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsBinaryTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsBase64Test);
-  RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaTest);
-  RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaNumTest);
-  RegisterTest('ACBrComum.ACBrUtil', CharIsNumTest);
-  RegisterTest('ACBrComum.ACBrUtil', OnlyNumberTest);
-  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaTest);
-  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaNumTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrIsIPTest);
-  RegisterTest('ACBrComum.ACBrUtil', EstaVazio_NaoEstaVazioTest);
-  RegisterTest('ACBrComum.ACBrUtil', EstaZerado_NaoEstaZeradoTest);
-  RegisterTest('ACBrComum.ACBrUtil', TamanhoIgualTest);
-  RegisterTest('ACBrComum.ACBrUtil', TamanhoMenorTest);
-  RegisterTest('ACBrComum.ACBrUtil', TiraAcentosTest);
-  RegisterTest('ACBrComum.ACBrUtil', TiraAcentoTest);
-  RegisterTest('ACBrComum.ACBrUtil', AjustaLinhasTest);
-  RegisterTest('ACBrComum.ACBrUtil', QuebraLinhasTest);
-  RegisterTest('ACBrComum.ACBrUtil', TraduzComandoTest);
-  RegisterTest('ACBrComum.ACBrUtil', StringToAscTest);
-  RegisterTest('ACBrComum.ACBrUtil', AscToStringTest);
-  RegisterTest('ACBrComum.ACBrUtil', StrCryptTest);
-  RegisterTest('ACBrComum.ACBrUtil', SomaAscIITest);
-  RegisterTest('ACBrComum.ACBrUtil', StringCrc16Test);
-  RegisterTest('ACBrComum.ACBrUtil', PathWithDelimTest);
-  RegisterTest('ACBrComum.ACBrUtil', PathWithoutDelimTest);
-  RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest);
-  RegisterTest('ACBrComum.ACBrUtil', EAN13Test);
-  RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest);
-  RegisterTest('ACBrComum.ACBrUtil', ZipUnzip);
-  RegisterTest('ACBrComum.ACBrUtil', RemoverQuebraLinhaFinalTest);
+  _RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste);
+  _RegisterTest('ACBrComum.ACBrUtil', SplitTeste);
+  _RegisterTest('ACBrComum.ACBrUtil', FindDelimiterInTextTest);
+  _RegisterTest('ACBrComum.ACBrUtil', ChangeLineBreakTest);
+  _RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest);
+  _RegisterTest('ACBrComum.ACBrUtil', IncWorkingDayTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest);
+  _RegisterTest('ACBrComum.ACBrUtil', ParseTextTest);
+  _RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TestXmlEhUTF8);
+  _RegisterTest('ACBrComum.ACBrUtil', DecodeToStringTest);
+  _RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest);
+  _RegisterTest('ACBrComum.ACBrUtil', QuebrarLinhaTest);
+  _RegisterTest('ACBrComum.ACBrUtil', ACBrStrToAnsiTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TruncFixTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TruncToTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
+  _RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TestBitTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TesteSetBit);
+  _RegisterTest('ACBrComum.ACBrUtil', TesteClearBit);
+  _RegisterTest('ACBrComum.ACBrUtil', TestePutBit);
+  _RegisterTest('ACBrComum.ACBrUtil', IntToBinTest);
+  _RegisterTest('ACBrComum.ACBrUtil', BinToIntTest);
+  _RegisterTest('ACBrComum.ACBrUtil', BcdToAscTest);
+  _RegisterTest('ACBrComum.ACBrUtil', AscToBcdTest);
+  _RegisterTest('ACBrComum.ACBrUtil', IntToLEStrTest);
+  _RegisterTest('ACBrComum.ACBrUtil', LEStrToIntTest);
+  _RegisterTest('ACBrComum.ACBrUtil', HexToAsciiTest);
+  _RegisterTest('ACBrComum.ACBrUtil', AsciiToHexTest);
+  _RegisterTest('ACBrComum.ACBrUtil', BinaryStringToStringTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringToBinaryStringTest);
+  _RegisterTest('ACBrComum.ACBrUtil', padRightTest);
+  _RegisterTest('ACBrComum.ACBrUtil', padLeftTest);
+  _RegisterTest('ACBrComum.ACBrUtil', padCenterTest);
+  _RegisterTest('ACBrComum.ACBrUtil', padSpaceTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RemoveStringTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RemoveStringsTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RemoverEspacosDuplosTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StripHTMLTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RemoveEmptyLinesTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RandomNameTest);
+  _RegisterTest('ACBrComum.ACBrUtil', IfEmptyThenTest);
+  _RegisterTest('ACBrComum.ACBrUtil', PosAtTest);
+  _RegisterTest('ACBrComum.ACBrUtil', PosLastTest);
+  _RegisterTest('ACBrComum.ACBrUtil', CountStrTest);
+  _RegisterTest('ACBrComum.ACBrUtil', Poem_ZerosTest);
+  _RegisterTest('ACBrComum.ACBrUtil', IntToStrZeroTest);
+  _RegisterTest('ACBrComum.ACBrUtil', FloatToIntStrTest);
+  _RegisterTest('ACBrComum.ACBrUtil', FloatToStringTest);
+  _RegisterTest('ACBrComum.ACBrUtil', FormatFloatBrTest);
+  _RegisterTest('ACBrComum.ACBrUtil', FloatMaskTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringToFloatTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringToFloatDefTest);
+  _RegisterTest('ACBrComum.ACBrUtil', FormatDateBrTest);
+  _RegisterTest('ACBrComum.ACBrUtil', FormatDateTimeBrTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeDefTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StoDTest);
+  _RegisterTest('ACBrComum.ACBrUtil', DtoSTest);
+  _RegisterTest('ACBrComum.ACBrUtil', DTtoSTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaNumTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsNumberTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsHexaTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsBinaryTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsBase64Test);
+  _RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaTest);
+  _RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaNumTest);
+  _RegisterTest('ACBrComum.ACBrUtil', CharIsNumTest);
+  _RegisterTest('ACBrComum.ACBrUtil', OnlyNumberTest);
+  _RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaTest);
+  _RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaNumTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrIsIPTest);
+  _RegisterTest('ACBrComum.ACBrUtil', EstaVazio_NaoEstaVazioTest);
+  _RegisterTest('ACBrComum.ACBrUtil', EstaZerado_NaoEstaZeradoTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TamanhoIgualTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TamanhoMenorTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TiraAcentosTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TiraAcentoTest);
+  _RegisterTest('ACBrComum.ACBrUtil', AjustaLinhasTest);
+  _RegisterTest('ACBrComum.ACBrUtil', QuebraLinhasTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TraduzComandoTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringToAscTest);
+  _RegisterTest('ACBrComum.ACBrUtil', AscToStringTest);
+  _RegisterTest('ACBrComum.ACBrUtil', StrCryptTest);
+  _RegisterTest('ACBrComum.ACBrUtil', SomaAscIITest);
+  _RegisterTest('ACBrComum.ACBrUtil', StringCrc16Test);
+  _RegisterTest('ACBrComum.ACBrUtil', PathWithDelimTest);
+  _RegisterTest('ACBrComum.ACBrUtil', PathWithoutDelimTest);
+  _RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest);
+  _RegisterTest('ACBrComum.ACBrUtil', EAN13Test);
+  _RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest);
+  _RegisterTest('ACBrComum.ACBrUtil', ZipUnzip);
+  _RegisterTest('ACBrComum.ACBrUtil', RemoverQuebraLinhaFinalTest);
   //TODO: WriteToTXT, WriteLog,
 end.
 

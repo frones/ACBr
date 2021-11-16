@@ -44,6 +44,19 @@ Símbolo : Significado
 
 
 16/11/2021
+-- Agili.Provider --
+[*] Melhorias no TratarRetornoEmitir visando o tratamento correto ao usar o
+    modo de envio meUnitario.
+   Por: Diego Reckziegel/Italo Giurizzato Junior
+-- Agili.GravarXml/Agili.LerXml --
+[*] Ajustes nos fontes visando o uso dos campos Params1 e Params2 e com isso
+    evitar futuras alterações no código do componente.
+   Por: Diego Reckziegel/Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Incluido os campos Params1 e Params2 nas cidades atendidas pelo provedor Agili
+    com o objetivo de atender as diferentes implementações do webservice desse
+    provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Ajustes na função GetSchemaPath que monta o path dos schemas visando atender
     os diversos Sistemas Operacionais.

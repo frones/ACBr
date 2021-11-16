@@ -50,6 +50,8 @@ type
   TNFSeW_Agili = class(TNFSeWClass)
   private
     FpAtividadeEconomica: string;
+    FpNrOcorrCodigoCnae: Integer;
+    FpNrOcorrItemLei116: Integer;
 
   protected
     procedure Configuracao; override;
@@ -101,15 +103,16 @@ procedure TNFSeW_Agili.Configuracao;
 begin
   inherited Configuracao;
 
-  case CodMunEmit of
-    1505031,
-    5104526: FpAtividadeEconomica := 'CodigoCnaeAtividadeEconomica';
+  FpAtividadeEconomica := Trim(FAOwner.ConfigGeral.Params1);
 
-    5105150,
-    5107305: FpAtividadeEconomica := 'ItemLei116AtividadeEconomica'; //1.00
-  else
-    FpAtividadeEconomica := 'CodigoAtividadeEconomica';
-  end;
+  FpNrOcorrCodigoCnae := 1;
+  FpNrOcorrItemLei116 := 1;
+
+  if Pos('NaoGerarCodigoCnae', FAOwner.ConfigGeral.Params2) > 0 then
+    FpNrOcorrCodigoCnae := -1;
+
+  if Pos('NaoGerarItemLei116', FAOwner.ConfigGeral.Params2) > 0 then
+    FpNrOcorrItemLei116 := -1;
 end;
 
 function TNFSeW_Agili.ExigibISSToStr(
@@ -200,35 +203,14 @@ begin
       StringReplace( NFSe.Servico.ItemServico[i].Descricao, ';',
         FAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), ''));
 
-    case StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0) of
-      // Ipiranga do Norte/MT
-      5104526:
-        begin
-          Result[i].AppendChild(AddNode(tcStr, '#1', 'ItemLei116', 1, 140, 1,
-                                                               CodServico, ''));
-
-          Result[i].AppendChild(AddNode(tcDe4, '#1', 'Quantidade', 1, 17, 1,
-                                   NFSe.Servico.ItemServico[i].Quantidade, ''));
-        end;
-
-      1505031, // Novo Progresso/PA
-      5105150: // Juina/MT
-        begin
-          Result[i].AppendChild(AddNode(tcDe4, '#1', 'Quantidade', 1, 17, 1,
-                                   NFSe.Servico.ItemServico[i].Quantidade, ''));
-        end;
-    else
-      begin
-          Result[i].AppendChild(AddNode(tcStr, '#1', 'CodigoCnae', 1, 7, 1,
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'CodigoCnae', 1, 7, FpNrOcorrCodigoCnae,
                                     FormatarCnae(NFSe.Servico.CodigoCnae), ''));
 
-          Result[i].AppendChild(AddNode(tcStr, '#1', 'ItemLei116', 1, 140, 1,
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'ItemLei116', 1, 140, FpNrOcorrItemLei116,
                                                                CodServico, ''));
 
-          Result[i].AppendChild(AddNode(tcDe4, '#1', 'Quantidade', 1, 17, 1,
+    Result[i].AppendChild(AddNode(tcDe4, '#1', 'Quantidade', 1, 17, 1,
                                    NFSe.Servico.ItemServico[i].Quantidade, ''));
-      end;
-    end;
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorServico', 1, 15, 1,
                                 NFSe.Servico.ItemServico[i].ValorUnitario, ''));
@@ -449,8 +431,11 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'ISSQNRetido', 1, 1, 1,
                                                   SimNaoAgiliToStr(snNao), ''));
 
-  xmlNode := GerarResponsavelISSQN;
-  Result.AppendChild(xmlNode);
+  if NFSe.Servico.Valores.IssRetido <> stNormal then
+  begin
+    xmlNode := GerarResponsavelISSQN;
+    Result.AppendChild(xmlNode);
+  end;
 
   if NaoEstaVazio(NFSe.Servico.CodigoTributacaoMunicipio) then
     Result.AppendChild(AddNode(tcStr, '#1', FpAtividadeEconomica, 1, 140, 1,

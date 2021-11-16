@@ -118,6 +118,8 @@ begin
 
   SetXmlNameSpace('http://www.agili.com.br/nfse_v_1.00.xsd');
 
+  TACBrNFSeX(FAOwner).SSL.NameSpaceURI := 'http://www.agili.com.br/nfse_v_1.00.xsd';
+
   SetNomeXSD('nfse_v_1.00.xsd');
 end;
 
@@ -250,6 +252,8 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
+  ANota: NotaFiscal;
+  NumRps: String;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -278,6 +282,33 @@ begin
           Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
           Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
+      end;
+
+      if Response.ModoEnvio = meUnitario then
+      begin
+        ANode := ANode.Childrens.FindAnyNs('Nfse');
+
+        if not Assigned(ANode) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit;
+        end;
+
+        NumRps := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
+
+        if Assigned(ANota) then
+          ANota.XML := ANode.OuterXml
+        else
+        begin
+          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+        end;
+
+        SalvarXmlNfse(ANota);
       end;
     except
       on E:Exception do

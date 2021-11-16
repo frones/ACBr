@@ -380,7 +380,7 @@ begin
         begin
           if not TryStrToInt('$' + Copy(S, I, 4), ubuf) then
             raise Exception.Create(format('Invalid unicode \u%s',[Copy(S, I, 4)]));
-          result := result + WideChar(ubuf);
+          result := result + Chr(ubuf);
           Inc(I, 4);
         end;
         else Result := Result + C;
@@ -414,7 +414,7 @@ begin
       #12: Result := Result + '\f';
       #13: Result := Result + '\r';
       else
-      if (WideChar(C) < WideChar(32)) or (WideChar(C) > WideChar(127)) then
+      if (Ord(C) < 32) or (Ord(C) > 127) then
       begin
         Result := result + '\u';
         UnicodeValue := Ord(C);

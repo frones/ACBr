@@ -352,7 +352,8 @@ begin
     Gerador.wCampo(tcStr, '', 'procRealizado',  1,   4, 1, self.exMedOcup.Aso.Exame.Items[i].procRealizado);
     Gerador.wCampo(tcStr, '', 'obsProc',        1, 999, 0, self.exMedOcup.Aso.Exame.Items[i].obsProc);
     Gerador.wCampo(tcInt, '', 'ordExame',       1,   1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
-    Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
+    if self.exMedOcup.Aso.Exame.Items[i].indResult >= irNormal then
+        Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
 
     Gerador.wGrupo('/exame');
   end;

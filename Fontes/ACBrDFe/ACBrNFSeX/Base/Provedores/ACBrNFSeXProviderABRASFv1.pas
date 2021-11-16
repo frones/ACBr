@@ -1265,7 +1265,7 @@ begin
                                  '</' + Prefixo2 + 'Cnpj>' +
                                  GetInscMunic(Emitente.InscMun, Prefixo2) +
                                  '<' + Prefixo2 + 'CodigoMunicipio>' +
-                                    IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                                    ConfigGeral.CodIBGE +
                                  '</' + Prefixo2 + 'CodigoMunicipio>' +
                                '</' + Prefixo2 + 'IdentificacaoNfse>' +
                                '<' + Prefixo2 + 'CodigoCancelamento>' +

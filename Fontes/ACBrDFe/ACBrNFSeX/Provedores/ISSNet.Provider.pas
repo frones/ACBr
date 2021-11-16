@@ -68,12 +68,14 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSNet.GravarXml, ISSNet.LerXml;
 
 { TACBrNFSeProviderISSNet }
@@ -82,7 +84,19 @@ procedure TACBrNFSeProviderISSNet.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.Identificador := '';
+  with ConfigGeral do
+  begin
+    Identificador := '';
+    CancPreencherMotivo := True;
+
+    with TACBrNFSeX(FAOwner) do
+    begin
+      if Configuracoes.WebServices.AmbienteCodigo = 1 then
+        CodIBGE := IntToStr(Configuracoes.Geral.CodigoMunicipio)
+      else
+        CodIBGE := '999';
+    end;
+  end;
 
   with ConfigMsgDados do
   begin
@@ -145,6 +159,116 @@ begin
     Result := TACBrNFSeXWebserviceISSNet.Create(FAOwner, AMetodo, URL)
   else
     raise EACBrDFeException.Create(ERR_SEM_URL);
+end;
+
+procedure TACBrNFSeProviderISSNet.PrepararCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  aParams: TNFSeParamsResponse;
+  Emitente: TEmitenteConfNFSe;
+  InfoCanc: TInfCancelamento;
+  IdAttr, NameSpace, Prefixo, PrefixoTS, xMotivo: string;
+begin
+  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod108;
+    AErro.Descricao := Desc108;
+    Exit;
+  end;
+
+  if EstaVazio(Response.InfCancelamento.CodCancelamento) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod109;
+    AErro.Descricao := Desc109;
+    Exit;
+  end;
+
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  Prefixo := '';
+  PrefixoTS := '';
+
+  InfoCanc := Response.InfCancelamento;
+
+  if ConfigGeral.Identificador <> '' then
+    IdAttr := ' ' + ConfigGeral.Identificador + '="Canc_' +
+                    OnlyNumber(Emitente.CNPJ) + OnlyNumber(Emitente.InscMun) +
+                    InfoCanc.NumeroNFSe + '"'
+  else
+    IdAttr := '';
+
+  if EstaVazio(ConfigMsgDados.CancelarNFSe.xmlns) then
+    NameSpace := ''
+  else
+  begin
+    if ConfigMsgDados.Prefixo = '' then
+      NameSpace := ' xmlns="' + ConfigMsgDados.CancelarNFSe.xmlns + '"'
+    else
+    begin
+      NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' + ConfigMsgDados.CancelarNFSe.xmlns + '"';
+      Prefixo := ConfigMsgDados.Prefixo + ':';
+    end;
+  end;
+
+  if ConfigMsgDados.XmlRps.xmlns <> '' then
+  begin
+    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns) and
+       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
+    begin
+      if ConfigMsgDados.PrefixoTS = '' then
+        NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
+      else
+      begin
+        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
+                                            ConfigMsgDados.XmlRps.xmlns + '"';
+        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
+      end;
+    end
+    else
+    begin
+      if ConfigMsgDados.PrefixoTS <> '' then
+        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
+    end;
+  end;
+
+  if ConfigGeral.CancPreencherMotivo then
+  begin
+    if EstaVazio(InfoCanc.MotCancelamento) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod110;
+      AErro.Descricao := Desc110;
+      Exit;
+    end;
+
+    xMotivo := '<' + PrefixoTS + 'MotivoCancelamentoNfse>' +
+                 Trim(InfoCanc.MotCancelamento) +
+               '</' + PrefixoTS + 'MotivoCancelamentoNfse>';
+  end
+  else
+    xMotivo := '';
+
+  aParams := TNFSeParamsResponse.Create;
+  aParams.Clear;
+  try
+    aParams.Xml := '';
+    aParams.TagEnvio := '';
+    aParams.Prefixo := Prefixo;
+    aParams.Prefixo2 := PrefixoTS;
+    aParams.NameSpace := NameSpace;
+    aParams.NameSpace2 := '';
+    aParams.IdAttr := IdAttr;
+    aParams.Versao := '';
+    aParams.Serie := '';
+    aParams.Motivo := xMotivo;
+    aParams.CodVerif := '';
+
+    GerarMsgDadosCancelaNFSe(Response, aParams);
+  finally
+    aParams.Free;
+  end;
 end;
 
 procedure TACBrNFSeProviderISSNet.ValidarSchema(

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 16/11/2021
+-- ACBrNFSeXProviderBase --
+[*] Ajustes na função GetSchemaPath que monta o path dos schemas visando atender
+    os diversos Sistemas Operacionais.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1/ISSNet.Provider --
 [*] Ajustes pois para o provedor ISSNet em ambinete de homologação o código da
     cidade a ser informado no pedido de cancelamento tem que ser 999 e não o

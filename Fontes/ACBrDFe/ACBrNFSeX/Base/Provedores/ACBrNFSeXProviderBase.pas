@@ -256,8 +256,10 @@ end;
 function TACBrNFSeXProvider.GetSchemaPath: string;
 begin
   with TACBrNFSeX(FAOwner).Configuracoes do
-    Result := Arquivos.PathSchemas + Geral.xProvedor + '\' +
-              VersaoNFSeToStr(Geral.Versao) + '\';
+  begin
+    Result := PathWithDelim(Arquivos.PathSchemas + Geral.xProvedor);
+    Result := PathWithDelim(Result + VersaoNFSeToStr(Geral.Versao));
+  end;
 end;
 
 function TACBrNFSeXProvider.GetSubstituiNFSeResponse: TNFSeSubstituiNFSeResponse;

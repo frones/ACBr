@@ -656,13 +656,14 @@ type
   TACBrSituacaoTribCOFINS = TACBrCstCofins;
 
 
-  TACBrMotivoRessarcimento = (tmrVendaOutraUF,             // 1 – Venda para outra UF;
-                              tmrSaidaInsetaNaoIncidencia, // 2 – Saída amparada por isenção ou não incidência;
-                              tmrPerdaDeterioracao,        // 3 – Perda ou deterioração;
-                              tmrFurtoRoubo,               // 4 – Furto ou roubo;
-                              tmrExportacao,               // 5 – Exportação;
-                              tmrVendaSimpleNacional,      // 6 – Venda interna para Simples Nacional
-                              tmrOutros);                  // 9 – Outros
+  TACBrMotivoRessarcimento = (tmrVendaOutraUF = 1,             // 1 – Venda para outra UF;
+                              tmrSaidaInsetaNaoIncidencia = 2, // 2 – Saída amparada por isenção ou não incidência;
+                              tmrPerdaDeterioracao = 3,        // 3 – Perda ou deterioração;
+                              tmrFurtoRoubo = 4,               // 4 – Furto ou roubo;
+                              tmrExportacao = 5,               // 5 – Exportação;
+                              tmrVendaSimpleNacional = 6,      // 6 – Venda interna para Simples Nacional
+                              tmrOutros = 9,                   // 9 – Outros
+                              tmrNenhum = 0);                  // 0  - Nenhum
 
    TACBrIndicadorDeducao = (tidCompensacaoISS,        // 0- Compensação do ISS calculado a maior;
                             tidBeneficioFiscal,       // 1- Benefício fiscal por incentivo à cultura;
@@ -1773,12 +1774,14 @@ begin
       Result := '6';
     tmrOutros:
       Result := '9';
+    tmrNenhum:
+      Result := EmptyStr;
   end;
 end;
 
 function StrToMotivoRessarcimento(const AValue: string): TACBrMotivoRessarcimento;
 begin
- Result := tmrOutros; //podemos criar um tmrNenhum se o campo for opcional
+ Result := tmrNenhum;
   if AValue = '1' then
     Result := tmrVendaOutraUF
   else

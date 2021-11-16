@@ -86,6 +86,7 @@ type
     procedure ImprimirDANFECancelado(ANFe: TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(ANFe: TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(ANFe: TNFe = nil); virtual;
+    procedure StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil); virtual;
     procedure ImprimirDANFEResumidoPDF(ANFe: TNFe = nil); virtual;
     procedure ImprimirEVENTO(ANFe: TNFe = nil); virtual;
     procedure ImprimirEVENTOPDF(ANFe: TNFe = nil); virtual;
@@ -270,6 +271,11 @@ end;
 procedure TACBrDFeDANFeReport.ImprimirDANFEPDF(ANFe: TNFe = nil);
 begin
   ErroAbstract('ImprimirDANFEPDF');
+end;
+
+procedure TACBrDFeDANFeReport.StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil);
+begin
+  ErroAbstract('StreamDANFEPDF');
 end;
 
 procedure TACBrDFeDANFeReport.ImprimirDANFEResumidoPDF(ANFe: TNFe);

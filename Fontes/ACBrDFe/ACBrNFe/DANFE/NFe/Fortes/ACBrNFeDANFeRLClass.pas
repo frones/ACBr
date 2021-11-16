@@ -104,6 +104,7 @@ type
     procedure ImprimirDANFE(ANFe: TNFe = nil); override;
     procedure ImprimirDANFECancelado(ANFe: TNFe = nil); override;
     procedure ImprimirDANFEPDF(ANFe: TNFe = nil); override;
+    procedure StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil); override;
     procedure ImprimirEVENTO(ANFe: TNFe = nil); override;
     procedure ImprimirEVENTOPDF(ANFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(ANFe: TNFe = nil); override;
@@ -138,7 +139,7 @@ type
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, ACBrNFeNotasFiscais, pcnEnvEventoNFe,
+  synautil, ACBrNFe, ACBrUtil, ACBrNFeNotasFiscais, pcnEnvEventoNFe,
   ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
   ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado,
@@ -281,6 +282,56 @@ begin
   end
   else
     FPArquivoPDF := ImprimirDANFEPDFTipo(ANFe);
+end;
+
+procedure TACBrNFeDANFeRL.StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil);
+var
+  i: Integer;
+  AStringStream: TStringStream;
+
+  procedure StreamDANFEPDFTipo(ANFe: TNFe; const AStream: TStream);
+  var
+    AStringStream: TStringStream;
+  begin
+    AStringStream := TStringStream.Create('');
+    try
+      AStream.Size := 0;
+      case Self.TipoDANFE of
+        tiPaisagem:
+          TfrlDANFeRLPaisagem.StreamPDF(Self, ANFe, AStringStream);
+        tiSimplificado:
+          TfrlDANFeRLSimplificado.StreamPDF(Self, ANFe, AStringStream);
+      else
+          TfrlDANFeRLRetrato.StreamPDF(Self, ANFe, AStringStream);
+      end;
+      WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
+      //AStream.SaveToFile('C:\temp\teste2.pdf');
+    finally
+      AStringStream.Free;
+    end;
+  end;
+
+begin
+  if not Assigned(AStream) then
+  begin
+    raise EACBrException.Create('AStream precisa estar definido');
+  end;
+
+  AStringStream := TStringStream.Create('');
+  try
+    AStream.Size := 0;
+    if (ANFe = nil) then
+    begin
+      for i := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
+        StreamDANFEPDFTipo(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe, AStringStream);
+    end
+    else
+      StreamDANFEPDFTipo(ANFe, AStringStream);
+    WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
+    //AStream.SaveToFile('C:\temp\teste3.pdf');
+  finally
+    AStringStream.Free;
+  end;
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirEVENTO(ANFe: TNFe);

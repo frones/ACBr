@@ -43,7 +43,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, Qt,
   {$ELSE}
-  Graphics, Controls, Forms,
+  Graphics, Controls, Forms, synautil,
   {$ENDIF}
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
   pcnNFe, RLReport, RLPDFFilter, RLFilters;
@@ -57,6 +57,9 @@ type
     RLPDFFilter1: TRLPDFFilter;
     procedure FormCreate(Sender: TObject);
 
+  private
+    procedure AdicionaInformacaoPDF;
+    procedure AjustarEscala;
   protected
     fpNFe: TNFe;
     fpDANFe: TACBrNFeDANFeRL;
@@ -71,6 +74,7 @@ type
   public
     class procedure Imprimir(ADANFe: TACBrNFeDANFeRL; ANotas: array of TNFe);
     class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; const AFile: String);
+    class procedure StreamPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream);
   end;
 
 implementation
@@ -83,6 +87,18 @@ uses
 {$Else}
  {$R *.lfm}
 {$EndIf}
+
+procedure TfrlDANFeRL.AdicionaInformacaoPDF;
+begin
+  RLPDFFilter1.DocumentInfo.Title := ACBrStr('DANFE - Nota fiscal nº ') +
+    FormatFloat('000,000,000', fpNFe.Ide.nNF);
+  RLPDFFilter1.DocumentInfo.KeyWords := ACBrStr(
+    'Número:' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
+    '; Data de emissão: ' + FormatDateBr(fpNFe.Ide.dEmi) +
+    '; Destinatário: ' + fpNFe.Dest.xNome +
+    '; CNPJ: ' + fpNFe.Dest.CNPJCPF +
+    '; Valor total: ' + FormatFloatBr(fpNFe.Total.ICMSTot.vNF));
+end;
 
 class procedure TfrlDANFeRL.Imprimir(ADANFe: TACBrNFeDANFeRL; ANotas: array of TNFe);
 var
@@ -104,11 +120,7 @@ begin
       DANFeReport := Create(nil);
       DANFeReport.fpNFe := ANotas[i];
       DANFeReport.fpDANFe := ADANFe;
-      if ADANFe.AlterarEscalaPadrao then
-      begin
-        DANFeReport.Scaled := False;
-        DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
-      end;
+      DANFeReport.AjustarEscala;
 
       DANFeReport.RLNFe.CompositeOptions.ResetPageNumber := True;
       DANFeReport.fpAuxDiferencaPDF := 0;
@@ -159,32 +171,59 @@ begin
   try
     DANFeReport.fpNFe := ANFe;
     DANFeReport.fpDANFe := ADANFe;
-    if ADANFe.AlterarEscalaPadrao then
-    begin
-      DANFeReport.Scaled := False;
-      DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
-    end;
+    DANFeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFe, DANFeReport.fpDANFe);
     TDFeReportFortes.AjustarFiltroPDF(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe, AFile);
 
-    with DANFeReport.RLPDFFilter1.DocumentInfo do
-    begin
-      Title := ACBrStr('DANFE - Nota fiscal nº ') +
-        FormatFloat('000,000,000', DANFeReport.fpNFe.Ide.nNF);
-      KeyWords := ACBrStr(
-        'Número:' + FormatFloat('000,000,000', DANFeReport.fpNFe.Ide.nNF) +
-        '; Data de emissão: ' + FormatDateBr(DANFeReport.fpNFe.Ide.dEmi) +
-        '; Destinatário: ' + DANFeReport.fpNFe.Dest.xNome +
-        '; CNPJ: ' + DANFeReport.fpNFe.Dest.CNPJCPF +
-        '; Valor total: ' + FormatFloatBr(DANFeReport.fpNFe.Total.ICMSTot.vNF));
-    end;
+    DANFeReport.AdicionaInformacaoPDF();
 
     DANFeReport.fpAuxDiferencaPDF := 10;
     DANFeReport.RLNFe.Prepare;
     DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFe.Pages);
   finally
     FreeAndNil(DANFeReport);
+  end;
+end;
+
+class procedure TfrlDANFeRL.StreamPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream);
+var
+  DANFeReport: TfrlDANFeRL;
+  AStringStream: TStringStream;
+begin
+  DANFeReport := Create(nil);
+  try
+    DANFeReport.fpNFe := ANFe;
+    DANFeReport.fpDANFe := ADANFe;
+    DANFeReport.AjustarEscala;
+
+    TDFeReportFortes.AjustarReport(DANFeReport.RLNFe, DANFeReport.fpDANFe);
+//    TDFeReportFortes.AjustarFiltroStream(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe);
+
+    DANFeReport.AdicionaInformacaoPDF;
+
+    DANFeReport.fpAuxDiferencaPDF := 10;
+    DANFeReport.RLNFe.Prepare;
+    AStringStream := TStringStream.Create('');
+    try
+      AStream.Size := 0;
+      DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFe.Pages, AStringStream);
+      WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
+      //AStream.SaveToFile('C:\Temp\teste1.pdf');
+    finally
+      AStringStream.Free;
+    end;
+  finally
+    FreeAndNil(DANFeReport);
+  end;
+end;
+
+procedure TfrlDANFeRL.AjustarEscala;
+begin
+  if fpDANFe.AlterarEscalaPadrao then
+  begin
+    Scaled := False;
+    ScaleBy(fpDANFe.NovaEscala, Screen.PixelsPerInch);
   end;
 end;
 

@@ -91,6 +91,7 @@ type
     destructor Destroy; override;
     procedure Imprimir;
     procedure ImprimirPDF;
+    function StreamPDF(AStream: TStream): Boolean;
 
     procedure Assinar;
     procedure Validar;
@@ -161,6 +162,7 @@ type
     procedure ImprimirCancelado;
     procedure ImprimirResumido;
     procedure ImprimirPDF;
+    function StreamPDF(AStream: TStream): Boolean;
     procedure ImprimirResumidoPDF;
     function Add: NotaFiscal;
     function Insert(Index: integer): NotaFiscal;
@@ -255,6 +257,29 @@ begin
       raise EACBrNFeException.Create('Componente DA'+ModeloDFToPrefixo(Configuracoes.Geral.ModeloDF)+' não associado.')
     else
       DANFE.ImprimirDANFEPDF(NFe);
+  end;
+end;
+
+function NotaFiscal.StreamPDF(AStream: TStream): Boolean;
+var
+  AStringStream: TStringStream;
+begin
+  with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
+  begin
+    if not Assigned(DANFE) then
+      raise EACBrNFeException.Create('Componente DA'+ModeloDFToPrefixo(Configuracoes.Geral.ModeloDF)+' não associado.')
+    else
+    begin
+      AStringStream := TStringStream.Create('');
+      try
+        AStream.Size := 0;
+        DANFE.StreamDANFEPDF(NFe, AStringStream);
+        WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
+        Result := True;
+      finally
+        AStringStream.Free;
+      end;
+    end;
   end;
 end;
 
@@ -3875,6 +3900,22 @@ procedure TNotasFiscais.ImprimirPDF;
 begin
   VerificarDANFE;
   TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEPDF(nil);
+end;
+
+function TNotasFiscais.StreamPDF(AStream: TStream): Boolean;
+var
+  AStringStream: TStringStream;
+begin
+  VerificarDANFE;
+  AStringStream := TStringStream.Create('');
+  try
+    AStream.Size := 0;
+    TACBrNFe(FACBrNFe).DANFE.StreamDANFEPDF(nil, AStringStream);
+    WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
+    Result := True;
+  finally
+    AStringStream.Free;
+  end;
 end;
 
 procedure TNotasFiscais.ImprimirResumidoPDF;

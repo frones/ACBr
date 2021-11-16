@@ -2840,8 +2840,8 @@ type
     fNUM_CFE: String;                   /// Número do Cupom Fiscal Eletrônico
     fDT_DOC: TDateTime;                 /// Data da emissão do documento fiscal Eletrônico
     fVL_CFE: currency;                  /// Valor total do Cupom Fiscal Eletrônico
-    fVL_PIS: currency;                  /// Valor total do PIS
-    fVL_COFINS: currency;               /// Valor total da COFINS
+    fVL_PIS: Variant;                   /// Valor total do PIS
+    fVL_COFINS: Variant;                /// Valor total da COFINS
     fCNPJ_CPF: String;                  /// CNPJ ou CPF do destinatário
     fNR_SAT: String;                    /// Número de Série do equipamento SAT
     fCHV_CFE: String;                   /// Chave do Cupom Fiscal Eletrônico
@@ -2849,8 +2849,8 @@ type
     fVL_MERC: currency;                 /// Valor das mercadorias e serviço
     fVL_OUT_DA: currency;               /// Valor de outras desp. acessórias (acréscimo)
     fVL_ICMS: currency;                 /// Valor do ICMS
-    fVL_PIS_ST: currency;               /// Valor total do PIS retido por substituição tributária
-    fVL_COFINS_ST: currency;            /// Valor total da COFINS retido por substituição tributária
+    fVL_PIS_ST: Variant;                /// Valor total do PIS retido por substituição tributária
+    fVL_COFINS_ST: Variant;             /// Valor total da COFINS retido por substituição tributária
 
     FRegistroC810: TRegistroC810List;
     FRegistroC850: TRegistroC850List;   /// BLOCO C - Lista de RegistroC850 (FILHO)
@@ -2863,8 +2863,8 @@ type
     property NUM_CFE: String read FNUM_CFE write FNUM_CFE;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property VL_CFE: currency read FVL_CFE write FVL_CFE;
-    property VL_PIS: currency read FVL_PIS write FVL_PIS;
-    property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
+    property VL_PIS: Variant read FVL_PIS write FVL_PIS;
+    property VL_COFINS: Variant read FVL_COFINS write FVL_COFINS;
     property CNPJ_CPF: String read FCNPJ_CPF write FCNPJ_CPF;
     property NR_SAT: String read FNR_SAT write FNR_SAT;
     property CHV_CFE: String read FCHV_CFE write FCHV_CFE;
@@ -2872,8 +2872,8 @@ type
     property VL_MERC: currency read FVL_MERC write FVL_MERC;
     property VL_OUT_DA: currency read FVL_OUT_DA write FVL_OUT_DA;
     property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
-    property VL_PIS_ST: currency read FVL_PIS_ST write FVL_PIS_ST;
-    property VL_COFINS_ST: currency read FVL_COFINS_ST write FVL_COFINS_ST;
+    property VL_PIS_ST: Variant read FVL_PIS_ST write FVL_PIS_ST;
+    property VL_COFINS_ST: Variant read FVL_COFINS_ST write FVL_COFINS_ST;
     /// Registros FILHOS
     property RegistroC810: TRegistroC810List read FRegistroC810 write FRegistroC810;
     property RegistroC850: TRegistroC850List read FRegistroC850 write FRegistroC850;

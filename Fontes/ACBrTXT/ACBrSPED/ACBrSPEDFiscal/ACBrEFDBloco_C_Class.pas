@@ -410,7 +410,7 @@ type
 
 implementation
 
-uses ACBrSpedFiscal, ACBrTXTUtils, ACBrUtil, strutils;
+uses ACBrSpedFiscal, ACBrTXTUtils, ACBrUtil, strutils, Variants;
 
 { TBloco_C }
 
@@ -3790,6 +3790,13 @@ begin
 
           /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05 
           booNFCancelada := Pos(strCOD_SIT,'02, 03, 04, 05') > 0;
+          if booNFCancelada then
+          begin
+            VL_PIS       := Null;
+            VL_COFINS    := Null;
+            VL_PIS_ST    := Null;
+            VL_COFINS_ST := Null;
+          end;
 
           Add( LFill('C800') +
                LFill( COD_MOD,2 ) +
@@ -3797,8 +3804,8 @@ begin
                LFill( NUM_CFE,6 ) +
                LFill( DT_DOC, 'ddmmyyyy', booNFCancelada ) +
                LFill( VL_CFE,0,2, booNFCancelada ) +
-               LFill( VL_PIS,0,2, booNFCancelada ) +
-               LFill( VL_COFINS,0,2, booNFCancelada ) +
+               VLFill( VL_PIS,0,2 ) +
+               VLFill( VL_COFINS,0,2) +
                LFill( CNPJ_CPF ) + // LFill( CNPJ_CPF, 14, True )  Não pode Formatar ( Versão 2.1.5 PVA )
                LFill( NR_SAT,9 ) +
                LFill( CHV_CFE ) +
@@ -3806,8 +3813,8 @@ begin
                LFill( VL_MERC,0,2, booNFCancelada ) +
                LFill( VL_OUT_DA,0,2, booNFCancelada ) +
                LFill( VL_ICMS,0,2, booNFCancelada ) +
-               LFill( VL_PIS_ST,0,2, booNFCancelada ) +
-               LFill( VL_COFINS_ST,0,2, booNFCancelada ) ) ;
+               VLFill( VL_PIS_ST,0,2 ) +
+               VLFill( VL_COFINS_ST,0,2) ) ;
         end;
 
         /// Registros FILHOS

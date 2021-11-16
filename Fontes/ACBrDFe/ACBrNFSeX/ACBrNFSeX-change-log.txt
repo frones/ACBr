@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/11/2021
+-- ACBrNFSeXServicos --
+[*] A cidade Boituca teve a sua url alterada pelo provedor Sistema4R.
+   Por: Leonard Miranda
+
 11/11/2021
 -- Diversos --
 [*] Foi criado uma nova propriedade para determinar se a tag <NumeroNfseFinal> 

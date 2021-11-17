@@ -314,7 +314,7 @@ var
 begin
   if not Assigned(AStream) then
   begin
-    raise EACBrException.Create('AStream precisa estar definido');
+    raise EACBrNFeException.Create('AStream precisa estar definido');
   end;
 
   AStringStream := TStringStream.Create('');

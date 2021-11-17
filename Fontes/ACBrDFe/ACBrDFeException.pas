@@ -37,13 +37,13 @@ unit ACBrDFeException;
 interface
 
 uses
-  Classes, SysUtils ;
+  Classes, SysUtils, ACBrBase;
 
 
 type
   { EACBrDFeException }
 
-  EACBrDFeException = class(Exception)
+  EACBrDFeException = class(EACBrException)
   public
     constructor Create(const Msg: String);
     constructor CreateDef(const Msg: String; Dummy: Integer = 0);

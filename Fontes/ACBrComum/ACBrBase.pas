@@ -154,6 +154,8 @@ type
 
 type
 
+  EACBrException = class(Exception);
+
 TACBrAboutInfo = (ACBrAbout);
 
 { ACBrComponente contém apenas a propriedade ACBrAbout }

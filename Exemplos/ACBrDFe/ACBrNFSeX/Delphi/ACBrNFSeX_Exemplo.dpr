@@ -9,7 +9,7 @@ uses
 {$R *.res}
 
 begin
-  ReportMemoryLeaksOnShutdown := True;
+//  ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.CreateForm(TfrmACBrNFSe, frmACBrNFSe);
   Application.CreateForm(TfrmSelecionarCertificado, frmSelecionarCertificado);

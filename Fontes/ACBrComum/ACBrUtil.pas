@@ -1912,6 +1912,8 @@ Var
   DS, TS: Char;
   {$IFDEF HAS_FORMATSETTINGS}
   FS: TFormatSettings;
+  DateFormat, TimeFormat: String;
+  p: Integer;
   {$ELSE}
   OldShortDateFormat: String ;
   {$ENDIF}
@@ -1943,7 +1945,19 @@ begin
   {$IFDEF HAS_FORMATSETTINGS}
   FS := CreateFormatSettings;
   if (Format <> '') then
-    FS.ShortDateFormat := Format;
+  begin
+    DateFormat := Format;
+    TimeFormat := '';
+    p := pos(' ',Format);
+    if (p > 0) then
+    begin
+      TimeFormat := Trim(Copy(Format, p, Length(Format)));
+      DateFormat := Trim(copy(Format, 1, p));
+    end;
+    FS.ShortDateFormat := DateFormat;
+    if (TimeFormat <> '') then
+      FS.ShortTimeFormat := TimeFormat;
+  end;
 
   DS := FS.DateSeparator;
   TS := FS.TimeSeparator;

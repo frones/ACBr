@@ -853,12 +853,12 @@ begin
        begin
          s := '';
          st := Nil;
-         if (saque.valor > 0) then
+         if (saque.modalidadeAgente <> tpixmaNENHUM) then
          begin
            st := saque;
            s := 'saque';
          end
-         else if (troco.valor > 0) then
+         else if (troco.modalidadeAgente <> tpixmaNENHUM) then
          begin
            st := troco;
            s := 'troco';

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/11/2021
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade Pedra Preta/MT.
+   Por: Diego Reckziegel
+-- ACBrNFSeXServicos --
+[*] A cidade de Cubatão trocou de provedor.
+   Por: CAlmeida
+
 16/11/2021
 -- Agili.Provider --
 [*] Melhorias no TratarRetornoEmitir visando o tratamento correto ao usar o

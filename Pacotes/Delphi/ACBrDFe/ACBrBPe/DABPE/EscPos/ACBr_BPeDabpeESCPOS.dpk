@@ -74,7 +74,6 @@ package ACBr_BPeDabpeESCPOS;
 
 requires
   rtl,
-  designide,
   ACBr_Serial,
   ACBr_BPe;
 

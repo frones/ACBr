@@ -1,4 +1,4 @@
-package ACBrDFeReportRL;
+﻿package ACBrDFeReportRL;
 
 {$R *.res}
 {$ALIGN 8}
@@ -29,7 +29,6 @@ package ACBrDFeReportRL;
 requires
   rtl,
   vcl,
-  designide,  
   frce,
   ACBr_DFeComum;
 

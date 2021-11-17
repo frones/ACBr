@@ -31,7 +31,6 @@ package ACBr_SEF2;
 
 requires
   rtl,
-  designide,
   ACBr_TXTComum,
   ACBr_PCNComum;
 

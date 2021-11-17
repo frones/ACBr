@@ -72,7 +72,6 @@ package ACBr_NFeDanfeESCPOS;
 
 requires
   rtl,
-  designide,
   ACBr_Serial,
   ACBr_NFe;
 

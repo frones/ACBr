@@ -30,7 +30,6 @@ package ACBr_DFeComum;
 requires
   rtl,
   vcl,
-  designide,
   inet,
   soaprtl,  
   ACBr_Integrador,

@@ -31,7 +31,6 @@ package ACBr_ADRCST;
 
 requires
   rtl,
-  designide,
   ACBr_TXTComum,
   ACBr_PCNComum;
 

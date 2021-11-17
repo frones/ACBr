@@ -31,7 +31,6 @@ package ACBr_NFCeECFVirtual;
 
 requires
   rtl,
-  designide,
   ACBr_NFe,
   ACBr_Serial;
 

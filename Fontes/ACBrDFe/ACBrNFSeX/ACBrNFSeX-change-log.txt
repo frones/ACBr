@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/11/2021
+-- Saatri.Provider --
+[*] Removido da lista de tags de retorno a tag <return>.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Inclusão da cidade Pedra Preta/MT.
    Por: Diego Reckziegel

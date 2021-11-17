@@ -90,7 +90,6 @@ type
     FNrOcorrOptanteSimplesNacional: Integer;
     FNrOcorrIncentCultural: Integer;
     FGerarIDDeclaracao: Boolean;
-    FTagTomador: String;
     FNrOcorrInscEstInter: Integer;
     FNrOcorrCompetencia: Integer;
     FNrOcorrEndereco: Integer;
@@ -125,6 +124,9 @@ type
     FNrOcorrCodigoPaisServico: Integer;
     FNrOcorrCodigoPaisTomador: Integer;
     FNrOcorrInscMunTomador: Integer;
+
+    FTagTomador: String;
+    FTagIntermediario: String;
 
   protected
     procedure Configuracao; override;
@@ -245,6 +247,7 @@ type
     property GerarEnderecoExterior: Boolean     read FGerarEnderecoExterior     write FGerarEnderecoExterior;
 
     property TagTomador: String read FTagTomador write FTagTomador;
+    property TagIntermediario: String read FTagIntermediario write FTagIntermediario;
   end;
 
 implementation
@@ -346,6 +349,7 @@ begin
   FormatoCompetencia := tcDat;
 
   FTagTomador := 'Tomador';
+  FTagIntermediario := 'IntermediarioServico';
 end;
 
 function TNFSeW_ABRASFv2.GerarXml: Boolean;
@@ -851,7 +855,7 @@ begin
   if (NFSe.IntermediarioServico.RazaoSocial <> '') or
      (NFSe.IntermediarioServico.CpfCnpj <> '') then
   begin
-    Result := CreateElement('IntermediarioServico');
+    Result := CreateElement(FTagIntermediario);
 
     Result.AppendChild(GerarIdentificacaoIntermediarioServico);
 

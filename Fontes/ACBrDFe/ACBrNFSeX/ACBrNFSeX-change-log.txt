@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/11/2021
+-- Tecnos.GravarXml/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Criado a propriedade TagIntermediario, pois o provedor Tecnos não segue
+    o padrão que é <IntermediarioServico>.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Cacoal/RO passou a utilizar a versão 2.02 da ABRASF, antes era
     a versão 1.

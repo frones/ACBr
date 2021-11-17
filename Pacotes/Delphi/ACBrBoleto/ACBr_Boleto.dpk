@@ -33,7 +33,6 @@ requires
   ACBr_DFeComum,
   rtl,
   vcl,
-  designide,
   ACBr_Diversos;
 
 contains
@@ -78,7 +77,16 @@ contains
   ACBrBoletoW_Caixa in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Caixa.pas',
   ACBrBoletoRet_Caixa in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Caixa.pas',
   ACBrBoletoW_BancoBrasil in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BancoBrasil.pas',
-  ACBrBoletoRet_BancoBrasil in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BancoBrasil.pas';
+  ACBrBoletoRet_BancoBrasil in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BancoBrasil.pas',
+  ACBrBoletoW_BancoBrasil_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_BancoBrasil_API.pas',
+  ACBrBoletoRet_BancoBrasil_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BancoBrasil_API.pas',
+  ACBrBoletoW_Itau in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Itau.pas',
+  ACBrBancoUnicredSC in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoUnicredSC.pas',
+  ACBrBancoAlfa in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoAlfa.pas',
+  ACBrBancoCresolSCRS in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoCresolSCRS.pas',
+  ACBrBancoBradescoMoneyPlus in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoBradescoMoneyPlus.pas',
+  ACBrBancoC6 in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoC6.pas',
+  ACBrBoletoRet_Itau in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Itau.pas';
 
 end.
 

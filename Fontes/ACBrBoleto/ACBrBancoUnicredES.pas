@@ -51,7 +51,6 @@ type
   protected
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
     //function DefinePosicaoNossoNumeroRetorno: Integer; override;
-    procedure GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);override;
   public
     Constructor create(AOwner: TACBrBanco);
 
@@ -59,6 +58,7 @@ type
     function GerarRegistroHeader240 ( NumeroRemessa: Integer ) : String;override;
     function GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String; override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
+    procedure GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);override;
     Procedure LerRetorno400(ARetorno:TStringList); override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia; override;

@@ -57,7 +57,7 @@ type
 
     procedure GerarRegistroHeader400(NumeroRemessa: Integer;  ARemessa: TStringList); override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
-    function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; virtual;
+    function MontaInstrucoesCNAB400(const ACBrTitulo :TACBrTitulo; const nRegistro: Integer ): String; override;
 //    function  GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String; override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
@@ -363,7 +363,7 @@ var
   aPercMulta: Double;
   sOcorrencia, sEspecie{, aAgencia}: String;
   sProtesto, sTipoSacado{, MensagemCedente, aConta, aDigitoConta}: String;
-  {aCarteira,} wLinha, {sNossoNumero,} sDigitoNossoNumero, sTipoBoleto: String;
+  {aCarteira,} wLinha, {sNossoNumero,} sDigitoNossoNumero{, sTipoBoleto}: String;
 begin
    with ACBrTitulo do begin
 //     ValidaNossoNumeroResponsavel(sNossoNumero, sDigitoNossoNumero, ACBrTitulo);

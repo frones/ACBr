@@ -31,7 +31,8 @@ requires
   rtl,
   vcl,
   inet,
-  soaprtl,  
+  soaprtl,
+  designide,
   ACBr_Integrador,
   ACBr_OpenSSL,
   ACBr_TCP;

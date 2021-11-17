@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/11/2021
+-- ACBrNFSeXServicos --
+[*] A cidade de Cacoal/RO passou a utilizar a versão 2.02 da ABRASF, antes era
+    a versão 1.
+   Por: Adelson Uchoa
 -- Saatri.Provider --
 [*] Removido da lista de tags de retorno a tag <return>.
    Por: Italo Giurizzato Junior

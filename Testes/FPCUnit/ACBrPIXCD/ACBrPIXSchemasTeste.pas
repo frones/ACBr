@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXSchemas,
+  ACBrPIXSchemas, ACBrPIXQRCodeEstatico,
   {$ifdef FPC}
    fpcunit, testutils, testregistry
   {$else}
@@ -73,6 +73,18 @@ type
   published
     procedure AtribuirELerValores;
     procedure AtribuirLerReatribuirEComparar;
+  end;
+
+  { TTestQRCodeEstatico }
+
+  TTestQRCodeEstatico = class(TTestCase)
+  private
+    fQREstatico: TACBrPIXQRCodeEstatico;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirECalcular;
   end;
 
 implementation
@@ -209,7 +221,7 @@ begin
   CheckEquals(fACBrPixCob.valor.modalidadeAlteracao, False);
   CheckEquals(fACBrPixCob.valor.retirada.saque.valor, 5);
   CheckEquals(fACBrPixCob.valor.retirada.saque.modalidadeAlteracao, False);
-  CheckTrue(fACBrPixCob.valor.retirada.saque.modalidadeAgente = tpixmaAGPSS);
+  CheckTrue(fACBrPixCob.valor.retirada.saque.modalidadeAgente = maAGPSS);
   CheckEquals(fACBrPixCob.valor.retirada.saque.prestadorDoServicoDeSaque, '12345678');
   CheckEquals(fACBrPixCob.chave, '7d9f0335-8dcc-4054-9bf9-0dbd61d36906');
 end;
@@ -283,7 +295,7 @@ begin
   CheckEquals(fACBrPixCob.valor.modalidadeAlteracao, False);
   CheckEquals(fACBrPixCob.valor.retirada.saque.valor, 20);
   CheckEquals(fACBrPixCob.valor.retirada.saque.modalidadeAlteracao, True);
-  CheckTrue(fACBrPixCob.valor.retirada.saque.modalidadeAgente = tpixmaAGPSS);
+  CheckTrue(fACBrPixCob.valor.retirada.saque.modalidadeAgente = maAGPSS);
   CheckEquals(fACBrPixCob.valor.retirada.saque.prestadorDoServicoDeSaque, '12345678');
   CheckEquals(fACBrPixCob.chave, '7d9f0335-8dcc-4054-9bf9-0dbd61d36906');
 end;
@@ -357,7 +369,7 @@ begin
   CheckEquals(fACBrPixCob.valor.modalidadeAlteracao, False);
   CheckEquals(fACBrPixCob.valor.retirada.troco.valor, 0);
   CheckEquals(fACBrPixCob.valor.retirada.troco.modalidadeAlteracao, True);
-  CheckTrue(fACBrPixCob.valor.retirada.troco.modalidadeAgente = tpixmaAGPSS);
+  CheckTrue(fACBrPixCob.valor.retirada.troco.modalidadeAgente = maAGPSS);
   CheckEquals(fACBrPixCob.valor.retirada.troco.prestadorDoServicoDeSaque, '12345678');
   CheckEquals(fACBrPixCob.chave, '7d9f0335-8dcc-4054-9bf9-0dbd61d36906');
 end;
@@ -395,12 +407,39 @@ begin
   {$EndIf}
 end;
 
+{ TTestQRCodeEstatico }
+
+procedure TTestQRCodeEstatico.SetUp;
+begin
+  inherited SetUp;
+  fQREstatico := TACBrPIXQRCodeEstatico.Create;
+end;
+
+procedure TTestQRCodeEstatico.TearDown;
+begin
+  fQREstatico.Free;
+  inherited TearDown;
+end;
+
+procedure TTestQRCodeEstatico.AtribuirECalcular;
+begin
+  fQREstatico.ChavePix := '123e4567-e12b-12d1-a456-426655440000';
+  fQREstatico.NomeRecebedor := 'Fulano de Tal';
+  fQREstatico.CidadeRecebedor := 'BRASILIA';
+
+  CheckEquals(fQREstatico.QRCode, '00020126580014br.gov.bcb.pix'+
+                                  '0136123e4567-e12b-12d1-a456-42665544000052040000'+
+                                  '53039865802BR5913Fulano de Tal6008BRASILIA62070503***63041D3D');
+end;
+
+
 initialization
 
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataExemplo1);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX2);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX3);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestQRCodeEstatico);
 
 end.
 

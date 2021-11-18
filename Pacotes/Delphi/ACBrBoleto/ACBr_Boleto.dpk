@@ -83,7 +83,7 @@ contains
   ACBrBoletoW_Itau in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Itau.pas',
   ACBrBancoUnicredSC in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoUnicredSC.pas',
   ACBrBancoAlfa in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoAlfa.pas',
-  ACBrBancoCresolSCRS in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoCresolSCRS.pas',
+  ACBrBancoCresolSCRS in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCresolSCRS.pas',
   ACBrBancoBradescoMoneyPlus in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoBradescoMoneyPlus.pas',
   ACBrBancoC6 in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBancoC6.pas',
   ACBrBoletoRet_Itau in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Itau.pas';

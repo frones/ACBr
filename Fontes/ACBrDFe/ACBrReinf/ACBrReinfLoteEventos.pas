@@ -200,11 +200,11 @@ end;
 procedure TLoteEventos.GerarXML;
 var
   i: Integer;
-  Eventosxml: AnsiString;
+  EventosXml: AnsiString;
 begin
   CarregarXmlEventos;
 
-  Eventosxml := EmptyStr;
+  EventosXml := EmptyStr;
 
   FXML :=
   '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/v'+
@@ -212,12 +212,12 @@ begin
     '<loteEventos>';
 
    for i := 0 to Self.Count - 1 do
-     Eventosxml := Eventosxml +
+     EventosXml := EventosXml +
                    '<evento id="' + Self.Items[i].IDEvento +'"> ' +
-                    StringReplace(Self.Items[i].XML, '<' + ENCODING_UTF8 + '>', '', []) +
+                     RemoverDeclaracaoXML(Self.Items[i].XML) +
                    '</evento>';
 
-  FXML := FXML + Eventosxml;
+  FXML := FXML + EventosXml;
   FXML := FXML +
             '</loteEventos>'+
           '</Reinf>';

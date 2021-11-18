@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2021
+-- ACBrReinfLoteEventos --
+[-] Trocado o StringReplace por RemoverDeclaracaoXML ao concatenar os eventos.
+   Por: Italo Giurizzato Junior
+
 10/09/2021
 -- pcnReinfR2055 --
 [*] Remoção de variável definida e não utilizada.

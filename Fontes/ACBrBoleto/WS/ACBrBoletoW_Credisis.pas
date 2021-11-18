@@ -11,14 +11,13 @@ Uses
    pcnConversao,
    pcnGerador,
    ACBrBoletoConversao,
-   Soap.InvokeRegistry,
-   Soap.SOAPHTTPClient,
-   System.Types,
+   //Soap.InvokeRegistry,
+   //Soap.SOAPHTTPClient,
+   //Soap.XSBuiltIns,
+   Types,
 
    ACBrValidador,
-   ACBrBoleto,
-
-   Soap.XSBuiltIns;
+   ACBrBoleto;
 
 const
     IS_OPTN = $0001;

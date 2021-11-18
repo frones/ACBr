@@ -41,7 +41,7 @@
 
 //{$undef USE_JSONDATAOBJECTS_UNIT}
 
-unit ACBrPIXSchemas;
+unit ACBrPIXSchemasCobranca;
 
 interface
 
@@ -208,12 +208,6 @@ type
     property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
     property retirada: TACBrPIXRetirada read fretirada;
   end;
-
-  TACBrPIXStatusCobranca = ( stcNENHUM,
-                             stcATIVA,
-                             stcCONCLUIDA,
-                             stcREMOVIDA_PELO_USUARIO_RECEBEDOR,
-                             stcREMOVIDA_PELO_PSP);
 
   { TACBrPIXCobBase }
 
@@ -468,13 +462,7 @@ var
 begin
   Clear;
   for i := 0 to Source.Count-1 do
-  begin
-    with New do
-    begin
-      nome := Source[i].nome;
-      valor := Source[i].valor;
-    end;
-  end;
+    New.Assign(Source[i]);
 end;
 
 function TACBrPIXInfoAdicionais.Add(AInfoAdicional: TACBrPIXInfoAdicional): Integer;

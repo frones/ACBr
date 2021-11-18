@@ -55,7 +55,22 @@ const
   cEMVLimit = 99;
 
 type
-  TACBrPIXTipoChave = (tcNenhuma, tcCPF, tcCNPJ, tcCelular, tcAleatoria);
+  TACBrPIXTipoChave = ( tcNenhuma,
+                        tcCPF,
+                        tcCNPJ,
+                        tcCelular,
+                        tcAleatoria );
+
+  TACBrPIXStatusCobranca = ( stcNENHUM,
+                             stcATIVA,
+                             stcCONCLUIDA,
+                             stcREMOVIDA_PELO_USUARIO_RECEBEDOR,
+                             stcREMOVIDA_PELO_PSP );
+
+  TACBrPIXStatusDevolucao = ( stdNENHUM,
+                              stdEM_PROCESSAMENTO,
+                              stdDEVOLVIDO,
+                              stdNAO_REALIZADO );
 
   EACBrPixException = class(EACBrException);
 

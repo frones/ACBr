@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/11/2021
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade Orizona/GO.
+   Por: Maiquel
+
 17/11/2021
 -- Tecnos.GravarXml/ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Criado a propriedade TagIntermediario, pois o provedor Tecnos não segue

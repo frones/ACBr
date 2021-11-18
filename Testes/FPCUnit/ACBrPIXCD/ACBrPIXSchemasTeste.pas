@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXSchemas, ACBrPIXQRCodeEstatico,
+  ACBrPIXSchemasCobranca, ACBrPIXQRCodeEstatico, ACBrPIXSchemasProblema,
   {$ifdef FPC}
    fpcunit, testutils, testregistry
   {$else}
@@ -88,6 +88,21 @@ type
     procedure AtribuirDadosECalcularQRCode;
     procedure AtribuirQRCodeEVerificarDados;
   end;
+
+  { TTestProblema }
+
+  TTestProblema = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixProblema: TACBrPIXProblema;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
+  end;
+
 
 implementation
 
@@ -435,6 +450,66 @@ begin
   CheckEquals(fQREstatico.QRCode, fQRStr);
 end;
 
+{ TTestProblema }
+
+procedure TTestProblema.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixProblema := TACBrPIXProblema.Create;
+  fJSON :=  ACBrStr(
+      '{'+
+        '"type": "https://pix.bcb.gov.br/api/v2/error/CobOperacaoInvalida",'+
+        '"title": "Cobrança inválida.",'+
+        '"status": 400,'+
+        '"detail": "A requisição que busca alterar ou criar uma cobrança para pagamento imediato não respeita o _schema_ ou está semanticamente errada.",'+
+        '"violacoes": ['+
+          '{'+
+            '"razao": "O campo cob.valor.original não respeita o _schema_.",'+
+            '"propriedade": "cob.valor.original"'+
+          '}'+
+        ']'+
+      '}');
+end;
+
+procedure TTestProblema.TearDown;
+begin
+  fACBrPixProblema.Free;
+  inherited TearDown;
+end;
+
+procedure TTestProblema.AtribuirELerValores;
+begin
+  fACBrPixProblema.AsJSON := fJSON;
+  CheckEquals(fACBrPixProblema.type_uri, 'https://pix.bcb.gov.br/api/v2/error/CobOperacaoInvalida');
+  CheckEquals(fACBrPixProblema.title, ACBrStr('Cobrança inválida.'));
+  CheckEquals(fACBrPixProblema.status, 400);
+  CheckEquals(fACBrPixProblema.detail, ACBrStr('A requisição que busca alterar ou criar uma cobrança para pagamento imediato não respeita o _schema_ ou está semanticamente errada.'));
+  CheckEquals(fACBrPixProblema.violacoes[0].razao, ACBrStr('O campo cob.valor.original não respeita o _schema_.'));
+  CheckEquals(fACBrPixProblema.violacoes[0].propriedade, 'cob.valor.original');
+end;
+
+procedure TTestProblema.AtribuirLerReatribuirEComparar;
+var
+  pb: TACBrPIXProblema;
+  s: String;
+begin
+  fACBrPixProblema.AsJSON := fJSON;
+  s := fACBrPixProblema.AsJSON;
+  pb := TACBrPIXProblema.Create;
+  try
+    pb.AsJSON := s;
+    CheckEquals(fACBrPixProblema.type_uri, pb.type_uri);
+    CheckEquals(fACBrPixProblema.title, pb.title);
+    CheckEquals(fACBrPixProblema.status, pb.status);
+    CheckEquals(fACBrPixProblema.detail, pb.detail);
+    CheckEquals(fACBrPixProblema.violacoes[0].razao, pb.violacoes[0].razao);
+    CheckEquals(fACBrPixProblema.violacoes[0].propriedade, pb.violacoes[0].propriedade);
+  finally
+    pb.Free;
+  end;
+end;
+
+
 procedure TTestQRCodeEstatico.AtribuirQRCodeEVerificarDados;
 begin
   fQREstatico.QRCode := fQRStr;
@@ -452,6 +527,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX2);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX3);
   _RegisterTest('ACBrPIXCD.Schemas', TTestQRCodeEstatico);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestProblema);
 
 end.
 

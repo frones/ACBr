@@ -79,12 +79,14 @@ type
 
   TTestQRCodeEstatico = class(TTestCase)
   private
+    fQRStr: String;
     fQREstatico: TACBrPIXQRCodeEstatico;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure AtribuirECalcular;
+    procedure AtribuirDadosECalcularQRCode;
+    procedure AtribuirQRCodeEVerificarDados;
   end;
 
 implementation
@@ -413,6 +415,9 @@ procedure TTestQRCodeEstatico.SetUp;
 begin
   inherited SetUp;
   fQREstatico := TACBrPIXQRCodeEstatico.Create;
+  fQRStr := '00020126580014br.gov.bcb.pix'+
+            '0136123e4567-e12b-12d1-a456-42665544000052040000'+
+            '53039865802BR5913Fulano de Tal6008BRASILIA62070503***63041D3D';
 end;
 
 procedure TTestQRCodeEstatico.TearDown;
@@ -421,15 +426,22 @@ begin
   inherited TearDown;
 end;
 
-procedure TTestQRCodeEstatico.AtribuirECalcular;
+procedure TTestQRCodeEstatico.AtribuirDadosECalcularQRCode;
 begin
   fQREstatico.ChavePix := '123e4567-e12b-12d1-a456-426655440000';
   fQREstatico.NomeRecebedor := 'Fulano de Tal';
   fQREstatico.CidadeRecebedor := 'BRASILIA';
 
-  CheckEquals(fQREstatico.QRCode, '00020126580014br.gov.bcb.pix'+
-                                  '0136123e4567-e12b-12d1-a456-42665544000052040000'+
-                                  '53039865802BR5913Fulano de Tal6008BRASILIA62070503***63041D3D');
+  CheckEquals(fQREstatico.QRCode, fQRStr);
+end;
+
+procedure TTestQRCodeEstatico.AtribuirQRCodeEVerificarDados;
+begin
+  fQREstatico.QRCode := fQRStr;
+  CheckEquals(fQREstatico.ChavePix, '123e4567-e12b-12d1-a456-426655440000');
+  CheckEquals(fQREstatico.NomeRecebedor, 'Fulano de Tal');
+  CheckEquals(fQREstatico.CidadeRecebedor, 'BRASILIA');
+  CheckEquals(fQREstatico.QRCode, fQRStr);
 end;
 
 

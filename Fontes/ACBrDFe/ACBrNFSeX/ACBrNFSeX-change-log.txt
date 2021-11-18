@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/11/2021
+-- ACBrNFSeXServicos --
+[*] A cidade Irani/SC trocou de provedor.
+   Por: Douglas GV
 -- Diversos --
 [*] Separado em duas mensagens distintas quando o componente não encontra as
     URLs de homologação ou de produção.

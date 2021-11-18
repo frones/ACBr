@@ -287,27 +287,17 @@ end;
 procedure TACBrNFeDANFeRL.StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil);
 var
   i: Integer;
-  AStringStream: TStringStream;
 
   procedure StreamDANFEPDFTipo(ANFe: TNFe; const AStream: TStream);
-  var
-    AStringStream: TStringStream;
   begin
-    AStringStream := TStringStream.Create('');
-    try
-      AStream.Size := 0;
-      case Self.TipoDANFE of
-        tiPaisagem:
-          TfrlDANFeRLPaisagem.StreamPDF(Self, ANFe, AStringStream);
-        tiSimplificado:
-          TfrlDANFeRLSimplificado.StreamPDF(Self, ANFe, AStringStream);
-      else
-          TfrlDANFeRLRetrato.StreamPDF(Self, ANFe, AStringStream);
-      end;
-      WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
-      //AStream.SaveToFile('C:\temp\teste2.pdf');
-    finally
-      AStringStream.Free;
+    AStream.Size := 0;
+    case Self.TipoDANFE of
+      tiPaisagem:
+        TfrlDANFeRLPaisagem.StreamPDF(Self, ANFe, AStream);
+      tiSimplificado:
+        TfrlDANFeRLSimplificado.StreamPDF(Self, ANFe, AStream);
+    else
+      TfrlDANFeRLRetrato.StreamPDF(Self, ANFe, AStream);
     end;
   end;
 
@@ -317,21 +307,14 @@ begin
     raise EACBrNFeException.Create('AStream precisa estar definido');
   end;
 
-  AStringStream := TStringStream.Create('');
-  try
-    AStream.Size := 0;
-    if (ANFe = nil) then
-    begin
-      for i := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
-        StreamDANFEPDFTipo(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe, AStringStream);
-    end
-    else
-      StreamDANFEPDFTipo(ANFe, AStringStream);
-    WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
-    //AStream.SaveToFile('C:\temp\teste3.pdf');
-  finally
-    AStringStream.Free;
-  end;
+  AStream.Size := 0;
+  if (ANFe = nil) then
+  begin
+    for i := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
+      StreamDANFEPDFTipo(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe, AStream);
+  end
+  else
+    StreamDANFEPDFTipo(ANFe, AStream);
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirEVENTO(ANFe: TNFe);

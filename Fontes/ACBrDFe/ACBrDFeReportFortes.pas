@@ -54,6 +54,7 @@ type
     class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; const AFile: String);
+    class procedure AjustarFiltroStream(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport);
     class function CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;
     class procedure DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer);
     class function EspacejarTextoGrafico(const AText: String; AWidth: Integer;
@@ -119,6 +120,11 @@ begin
 
   PDFFilter.ShowProgress := AConfig.MostraStatus;
   PDFFilter.FileName := NomeArquivoFinal;
+end;
+
+class procedure TDFeReportFortes.AjustarFiltroStream(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport);
+begin
+  PDFFilter.ShowProgress := AConfig.MostraStatus;
 end;
 
 class function TDFeReportFortes.CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;

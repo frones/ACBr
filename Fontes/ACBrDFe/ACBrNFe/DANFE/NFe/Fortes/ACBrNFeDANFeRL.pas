@@ -189,7 +189,6 @@ end;
 class procedure TfrlDANFeRL.StreamPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream);
 var
   DANFeReport: TfrlDANFeRL;
-  AStringStream: TStringStream;
 begin
   DANFeReport := Create(nil);
   try
@@ -198,21 +197,14 @@ begin
     DANFeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFe, DANFeReport.fpDANFe);
-//    TDFeReportFortes.AjustarFiltroStream(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe);
+    TDFeReportFortes.AjustarFiltroStream(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe);
 
     DANFeReport.AdicionaInformacaoPDF;
 
     DANFeReport.fpAuxDiferencaPDF := 10;
     DANFeReport.RLNFe.Prepare;
-    AStringStream := TStringStream.Create('');
-    try
-      AStream.Size := 0;
-      DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFe.Pages, AStringStream);
-      WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
-      //AStream.SaveToFile('C:\Temp\teste1.pdf');
-    finally
-      AStringStream.Free;
-    end;
+    AStream.Size := 0;
+    DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFe.Pages, AStream);
   finally
     FreeAndNil(DANFeReport);
   end;

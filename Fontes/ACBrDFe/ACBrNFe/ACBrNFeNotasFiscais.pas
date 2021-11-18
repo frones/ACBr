@@ -261,8 +261,6 @@ begin
 end;
 
 function NotaFiscal.StreamPDF(AStream: TStream): Boolean;
-var
-  AStringStream: TStringStream;
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
@@ -270,15 +268,9 @@ begin
       raise EACBrNFeException.Create('Componente DA'+ModeloDFToPrefixo(Configuracoes.Geral.ModeloDF)+' não associado.')
     else
     begin
-      AStringStream := TStringStream.Create('');
-      try
-        AStream.Size := 0;
-        DANFE.StreamDANFEPDF(NFe, AStringStream);
-        WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
-        Result := True;
-      finally
-        AStringStream.Free;
-      end;
+      AStream.Size := 0;
+      DANFE.StreamDANFEPDF(NFe, AStream);
+      Result := True;
     end;
   end;
 end;
@@ -3903,19 +3895,11 @@ begin
 end;
 
 function TNotasFiscais.StreamPDF(AStream: TStream): Boolean;
-var
-  AStringStream: TStringStream;
 begin
   VerificarDANFE;
-  AStringStream := TStringStream.Create('');
-  try
-    AStream.Size := 0;
-    TACBrNFe(FACBrNFe).DANFE.StreamDANFEPDF(nil, AStringStream);
-    WriteStrToStream(AStream, AnsiString(AStringStream.DataString));
-    Result := True;
-  finally
-    AStringStream.Free;
-  end;
+  AStream.Size := 0;
+  TACBrNFe(FACBrNFe).DANFE.StreamDANFEPDF(nil, AStream);
+  Result := True;
 end;
 
 procedure TNotasFiscais.ImprimirResumidoPDF;

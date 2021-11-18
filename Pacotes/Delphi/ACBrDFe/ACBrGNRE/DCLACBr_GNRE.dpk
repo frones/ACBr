@@ -75,7 +75,8 @@ requires
   rtl,
   designide,
   ACBr_GNRE,
-  DCLACBr_Comum;
+  DCLACBr_Comum,
+  DCLACBr_DFeComum;
 
 contains
   ACBrGNREReg in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREReg.pas';

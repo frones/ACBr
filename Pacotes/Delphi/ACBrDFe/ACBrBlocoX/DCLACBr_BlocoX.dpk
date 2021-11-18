@@ -33,7 +33,8 @@ requires
   rtl,
   ACBr_BlocoX,
   designide,
-  DCLACBr_Comum;
+  DCLACBr_Comum,
+  DCLACBr_DFeComum;
 
 contains
   ACBrBlocoX_Reg in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Reg.pas';

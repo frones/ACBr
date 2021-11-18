@@ -33,7 +33,8 @@ requires
   rtl,
   ACBr_BPe,
   designide,
-  DCLACBr_Comum;
+  DCLACBr_Comum,
+  DCLACBr_DFeComum;
 
 contains
   ACBrBPeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeReg.pas';

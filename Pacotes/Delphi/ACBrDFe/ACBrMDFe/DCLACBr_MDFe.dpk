@@ -67,7 +67,8 @@ requires
   rtl,
   designide,
   ACBr_MDFe,
-  DCLACBr_Comum;
+  DCLACBr_Comum,
+  DCLACBr_DFeComum;
 
 contains
   ACBrMDFeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeReg.pas';

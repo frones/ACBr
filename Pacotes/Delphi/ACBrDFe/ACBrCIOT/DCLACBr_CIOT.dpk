@@ -67,7 +67,8 @@ requires
   rtl,
   designide,
   DCLACBr_Comum,
-  ACBr_CIOT;
+  ACBr_CIOT,
+  DCLACBr_DFeComum;
 
 contains
   ACBrCIOTReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTReg.pas';

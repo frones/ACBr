@@ -76,7 +76,8 @@ requires
   rtl,
   designide,
   DCLACBr_Comum,
-  ACBre_Social;
+  ACBre_Social,
+  DCLACBr_DFeComum;
 
 contains
   ACBreSocialReg in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialReg.pas';

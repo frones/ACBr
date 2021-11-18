@@ -67,7 +67,8 @@ requires
   rtl,
   designide,
   DCLACBr_Comum,
-  ACBr_ONE;
+  ACBr_ONE,
+  DCLACBr_DFeComum;
 
 contains
   ACBrONEReg in '..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEReg.pas';

@@ -75,6 +75,7 @@ const
   DSC_CIDADE = 'Cidade do Sacado';
   DSC_UF = 'UF do Sacado';
   DSC_CEP = 'CEP do Sacado';
+  DSC_NUMERO_SACADO = 'Número do Endereço do Sacado';
   DSC_FONE = 'Fone do Sacado';
   DSC_NOME_AVALISTA = 'Nome Avalista';
   DSC_DATA_MULTA = 'Data Multa';
@@ -95,6 +96,7 @@ const
   DSC_PERCENTUAL_MIN_PAGAMENTO = 'Percentual Min Pagamento';
   DSC_PERCENTUAL_MAX_PAGAMENTO = 'Percentual Max Pagamento';
   DSC_CANAL_SOLICITACAO = 'Canal de Solicitação do Serviço';
+  DSC_DATA_LIMITE_PAGAMENTO = 'Data limite para pagamento';
 
 implementation
 

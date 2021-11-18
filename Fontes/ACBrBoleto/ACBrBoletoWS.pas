@@ -375,7 +375,9 @@ ResourceString
 implementation
 
 uses
-  ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API, ACBrBoletoW_Itau, ACBrBoletoRet_Itau;
+  ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API, ACBrBoletoW_Itau, ACBrBoletoRet_Itau,
+  ACBrBoletoW_Credisis,
+  ACBrBoletoRet_Credisis;
 
 { TOAuth }
 
@@ -1072,6 +1074,12 @@ begin
         FBoletoWSClass := TBoletoW_Itau.Create(Self);
         FRetornoBanco  := TRetornoEnvio_Itau.Create(FBoleto);
       end;
+    cobCrediSIS:
+      begin
+        FBoletoWSClass := TBoletoW_Credisis.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_Credisis.Create(FBoleto);
+        FBoletoWSClass.FDFeSSL.UseCertificateHTTP := False;
+      end;  
 
   else
     FBoletoWSClass := TBoletoWSClass.Create(Self);

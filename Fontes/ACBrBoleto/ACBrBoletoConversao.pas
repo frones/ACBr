@@ -72,7 +72,7 @@ type
   TACBrCodigoJuros       = (cjValorDia, cjTaxaMensal, cjIsento, cjValorMensal, cjTaxaDiaria);
 
   {Definir codigo Multa }
-  TACBrCodigoMulta       = (cmValorFixo, cmPercentual);
+  TACBrCodigoMulta       = (cmValorFixo, cmPercentual, cmIsento);
 
   {Definir se o titulo será protestado, não protestado ou negativado }
   TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar, cnCancelamento);

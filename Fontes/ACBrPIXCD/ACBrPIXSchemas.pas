@@ -54,7 +54,7 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase;
+  ACBrBase, ACBrPIXBase;
 
 type
 
@@ -154,7 +154,7 @@ type
     property Items[Index: Integer]: TACBrPIXInfoAdicional read GetItem write SetItem; default;
   end;
 
-  TACBrPIXModalidadeAgente = ( tpixmaNENHUM, tpixmaAGTEC, tpixmaAGTOT, tpixmaAGPSS );
+  TACBrPIXModalidadeAgente = ( maNENHUM, maAGTEC, maAGTOT, maAGPSS );
 
   { TACBrPIXSaqueTroco }
 
@@ -209,11 +209,11 @@ type
     property retirada: TACBrPIXRetirada read fretirada;
   end;
 
-  TACBrPIXStatus = ( tpixstsNENHUM,
-                     tpixstsATIVA,
-                     tpixstsCONCLUIDA,
-                     tpixstsREMOVIDA_PELO_USUARIO_RECEBEDOR,
-                     tpixstsREMOVIDA_PELO_PSP);
+  TACBrPIXStatusCobranca = ( stcNENHUM,
+                             stcATIVA,
+                             stcCONCLUIDA,
+                             stcREMOVIDA_PELO_USUARIO_RECEBEDOR,
+                             stcREMOVIDA_PELO_PSP);
 
   { TACBrPIXCobBase }
 
@@ -224,7 +224,7 @@ type
     fchave: String;
     finfoAdicionais: TACBrPIXInfoAdicionais;
     fsolicitacaoPagador: String;
-    fstatus: TACBrPIXStatus;
+    fstatus: TACBrPIXStatusCobranca;
     ftxid: String;
 
     function GetAsJSON: String; virtual;
@@ -241,7 +241,7 @@ type
     property solicitacaoPagador: String read fsolicitacaoPagador write fsolicitacaoPagador;
     property infoAdicionais: TACBrPIXInfoAdicionais read finfoAdicionais;
     property assinatura: String read fassinatura write fassinatura;
-    property status: TACBrPIXStatus read fstatus write fstatus;
+    property status: TACBrPIXStatusCobranca read fstatus write fstatus;
 
     property AsJSON: String read GetAsJSON write SetAsJSON;
   end;
@@ -267,13 +267,11 @@ type
     property valor: TACBrPIXCobValor read fvalor;
   end;
 
-function PIXStatusToString(AStatus: TACBrPIXStatus): String;
-function StringToPIXStatus(AString: String): TACBrPIXStatus;
+function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
+function StringToPIXStatus(AString: String): TACBrPIXStatusCobranca;
 
 function PIXModalidadeAgenteToString(AModalidadeAgente: TACBrPIXModalidadeAgente): String;
 function StringToPIXModalidadeAgente(AString: String): TACBrPIXModalidadeAgente;
-
-function CurrencyToString(AValor: Currency): String;
 
 implementation
 
@@ -284,40 +282,40 @@ uses
   {$Else}
    Jsons,
   {$EndIf}
-  ACBrUtil, ACBrConsts;
+  ACBrUtil, ACBrConsts, ACBrPIXUtil;
 
-function PIXStatusToString(AStatus: TACBrPIXStatus): String;
+function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
 begin
   case AStatus of
-    tpixstsATIVA: Result := 'ATIVA';
-    tpixstsCONCLUIDA: Result := 'CONCLUIDA';
-    tpixstsREMOVIDA_PELO_USUARIO_RECEBEDOR: Result := 'REMOVIDA_PELO_USUARIO_RECEBEDOR';
-    tpixstsREMOVIDA_PELO_PSP: Result := 'REMOVIDA_PELO_PSP';
+    stcATIVA: Result := 'ATIVA';
+    stcCONCLUIDA: Result := 'CONCLUIDA';
+    stcREMOVIDA_PELO_USUARIO_RECEBEDOR: Result := 'REMOVIDA_PELO_USUARIO_RECEBEDOR';
+    stcREMOVIDA_PELO_PSP: Result := 'REMOVIDA_PELO_PSP';
   else
     Result := '';
   end;
 end;
 
-function StringToPIXStatus(AString: String): TACBrPIXStatus;
+function StringToPIXStatus(AString: String): TACBrPIXStatusCobranca;
 begin
   if (AString = 'ATIVA') then
-    Result := tpixstsATIVA
+    Result := stcATIVA
   else if (AString = 'CONCLUIDA') then
-    Result := tpixstsCONCLUIDA
+    Result := stcCONCLUIDA
   else if (AString = 'REMOVIDA_PELO_USUARIO_RECEBEDOR') then
-    Result := tpixstsREMOVIDA_PELO_USUARIO_RECEBEDOR
+    Result := stcREMOVIDA_PELO_USUARIO_RECEBEDOR
   else if (AString = 'REMOVIDA_PELO_PSP') then
-    Result := tpixstsREMOVIDA_PELO_PSP
+    Result := stcREMOVIDA_PELO_PSP
   else
-    Result := tpixstsNENHUM;
+    Result := stcNENHUM;
 end;
 
 function PIXModalidadeAgenteToString(AModalidadeAgente: TACBrPIXModalidadeAgente): String;
 begin
   case AModalidadeAgente of
-    tpixmaAGTEC: Result := 'AGTEC';
-    tpixmaAGTOT: Result := 'AGTOT';
-    tpixmaAGPSS: Result := 'AGPSS';
+    maAGTEC: Result := 'AGTEC';
+    maAGTOT: Result := 'AGTOT';
+    maAGPSS: Result := 'AGPSS';
   else
     Result := '';
   end;
@@ -326,18 +324,13 @@ end;
 function StringToPIXModalidadeAgente(AString: String): TACBrPIXModalidadeAgente;
 begin
   if (AString = 'AGTEC') then
-    Result := tpixmaAGTEC
+    Result := maAGTEC
   else if (AString = 'AGTOT') then
-    Result := tpixmaAGTOT
+    Result := maAGTOT
   else if (AString = 'AGPSS') then
-    Result := tpixmaAGPSS
+    Result := maAGPSS
   else
-    Result := tpixmaNENHUM;
-end;
-
-function CurrencyToString(AValor: Currency): String;
-begin
-  Result := StringReplace( FormatFloatBr(AValor, FloatMask(2,False)), DecimalSeparator, '.', []);
+    Result := maNENHUM;
 end;
 
 
@@ -512,7 +505,7 @@ procedure TACBrPIXSaqueTroco.Clear;
 begin
   fvalor := 0;
   fmodalidadeAlteracao := False;
-  fmodalidadeAgente := tpixmaAGTEC;
+  fmodalidadeAgente := maAGTEC;
   fprestadorDoServicoDeSaque := ''
 end;
 
@@ -639,7 +632,7 @@ begin
 
      if (fassinatura <> '') then
        jo['assinatura'].AsString := fassinatura;
-     if (fstatus <> tpixstsNENHUM) then
+     if (fstatus <> stcNENHUM) then
        jo['status'].AsString := PIXStatusToString(fstatus);
 
      Result := jo.Stringify;
@@ -726,7 +719,7 @@ begin
   ftxid := '';
   fassinatura := '';
   fsolicitacaoPagador := '';
-  fstatus := tpixstsNENHUM;
+  fstatus := stcNENHUM;
   finfoAdicionais.Clear;
 end;
 
@@ -779,19 +772,19 @@ begin
      with fvalor do
      begin
        jsv := js.O['valor'];
-       jsv.S['original'] := CurrencyToString(original);
+       jsv.S['original'] := FormatarValorPIX(original);
        jsv.I['modalidadeAlteracao'] := IfThen(modalidadeAlteracao, 1, 0);
 
        with retirada do
        begin
          s := '';
          st := Nil;
-         if (saque.valor > 0) then
+         if  (saque.modalidadeAgente <> maNENHUM) then
          begin
            st := saque;
            s := 'saque';
          end
-         else if (troco.valor > 0) then
+         else if (troco.modalidadeAgente <> maNENHUM) then
          begin
            st := troco;
            s := 'troco';
@@ -802,7 +795,7 @@ begin
            jsr := jsv.O['retirada'];
            jsst := jsr.O[s];
 
-           jsst.S['valor'] := CurrencyToString(st.valor);
+           jsst.S['valor'] := FormatarValorPIX(st.valor);
            jsst.I['modalidadeAlteracao'] := IfThen(st.modalidadeAlteracao, 1, 0);
            jsst.S['modalidadeAgente'] := PIXModalidadeAgenteToString(st.modalidadeAgente);
            jsst.S['prestadorDoServicoDeSaque'] := st.prestadorDoServicoDeSaque;
@@ -846,19 +839,19 @@ begin
      with fvalor do
      begin
        jsv := js['valor'].AsObject;
-       jsv['original'].AsString := CurrencyToString(original);
+       jsv['original'].AsString := FormatarValorPIX(original);
        jsv['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
 
        with retirada do
        begin
          s := '';
          st := Nil;
-         if (saque.modalidadeAgente <> tpixmaNENHUM) then
+         if (saque.modalidadeAgente <> maNENHUM) then
          begin
            st := saque;
            s := 'saque';
          end
-         else if (troco.modalidadeAgente <> tpixmaNENHUM) then
+         else if (troco.modalidadeAgente <> maNENHUM) then
          begin
            st := troco;
            s := 'troco';
@@ -869,7 +862,7 @@ begin
            jsr := jsv['retirada'].AsObject;
            jsst := jsr[s].AsObject;
 
-           jsst['valor'].AsString := CurrencyToString(st.valor);
+           jsst['valor'].AsString := FormatarValorPIX(st.valor);
            jsst['modalidadeAlteracao'].AsInteger := IfThen(st.modalidadeAlteracao, 1, 0);
            jsst['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(st.modalidadeAgente);
            jsst['prestadorDoServicoDeSaque'].AsString := st.prestadorDoServicoDeSaque;

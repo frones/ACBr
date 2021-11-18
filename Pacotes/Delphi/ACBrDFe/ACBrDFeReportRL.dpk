@@ -1,4 +1,4 @@
-﻿package ACBrDFeReportRL;
+package ACBrDFeReportRL;
 
 {$R *.res}
 {$ALIGN 8}
@@ -22,7 +22,7 @@
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - Biblioteca Base para os Relatórios de DFe com Fortes Report'}
+{$DESCRIPTION 'ACBr - Biblioteca Base para os Relat�rios de DFe com Fortes Report'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

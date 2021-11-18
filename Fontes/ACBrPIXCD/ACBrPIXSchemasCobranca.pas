@@ -594,7 +594,7 @@ begin
 
      if (fassinatura <> '') then
        jo.S['assinatura'] := fassinatura;
-     if (fstatus <> tpixstsNENHUM) then
+     if (fstatus <> stcNENHUM) then
        jo.S['status'] := PIXStatusToString(fstatus);
 
      Result := jo.ToJSON();

@@ -228,29 +228,55 @@ var
 begin
   jo := TJsonObject.Create();
   try
-    jo['type'].AsString := ftype_uri;
-    jo['title'].AsString := ftitle;
-    jo['status'].AsInteger := fstatus;
-    if (fdetail <> '') then
-      jo['detail'].AsString := fdetail;
-    if (fcorrelationId <> '') then
-      jo['correlationId'].AsString := fcorrelationId;
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     jo.S['type'] := ftype_uri;
+     jo.S['title'] := ftitle;
+     jo.I['status'] := fstatus;
+     if (fdetail <> '') then
+       jo.S['detail'] := fdetail;
+     if (fcorrelationId <> '') then
+       jo.S['correlationId'] := fcorrelationId;
 
-    for i := 0 to fviolacoes.Count-1 do
-    begin
-      vi := fviolacoes[i];
-      with jo['violacoes'].AsArray.Add.AsObject do
-      begin
-        if (vi.razao <> '') then
-          Values['razao'].AsString := vi.razao;
-        if (vi.propriedade <> '') then
-          Values['propriedade'].AsString := vi.propriedade;
-        if (vi.valor <> '') then
-          Values['valor'].AsString := vi.valor;
-      end;
-    end;
+     for i := 0 to fviolacoes.Count-1 do
+     begin
+       vi := fviolacoes[i];
+       with jo.A['violacoes'].AddObject do
+       begin
+         if (vi.razao <> '') then
+           S['razao'] := vi.razao;
+         if (vi.propriedade <> '') then
+           S['propriedade'] := vi.propriedade;
+         if (vi.valor <> '') then
+           S['valor'] := vi.valor;
+       end;
+     end;
 
-    Result := jo.Stringify;
+     Result := jo.ToJSON();
+    {$Else}
+     jo['type'].AsString := ftype_uri;
+     jo['title'].AsString := ftitle;
+     jo['status'].AsInteger := fstatus;
+     if (fdetail <> '') then
+       jo['detail'].AsString := fdetail;
+     if (fcorrelationId <> '') then
+       jo['correlationId'].AsString := fcorrelationId;
+
+     for i := 0 to fviolacoes.Count-1 do
+     begin
+       vi := fviolacoes[i];
+       with jo['violacoes'].AsArray.Add.AsObject do
+       begin
+         if (vi.razao <> '') then
+           Values['razao'].AsString := vi.razao;
+         if (vi.propriedade <> '') then
+           Values['propriedade'].AsString := vi.propriedade;
+         if (vi.valor <> '') then
+           Values['valor'].AsString := vi.valor;
+       end;
+     end;
+
+     Result := jo.Stringify;
+    {$EndIf}
   finally
     jo.Free;
   end;
@@ -263,29 +289,53 @@ var
   i: Integer;
 begin
   Clear;
-  jo := TJsonObject.Create();
-  try
-    jo.Parse(AValue);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jo := TJsonObject.Parse(AValue) as TJsonObject;
+   try
+     ftype_uri := jo.S['type'];
+     ftitle := jo.S['title'];
+     fstatus := jo.I['status'];
+     fdetail := jo.S['detail'];
+     fcorrelationId := jo.S['correlationId'];
+     ja := jo.A['violacoes'];
+     for i := 0 to ja.Count-1 do
+     begin
+       jai := ja.O[i];
+       with fviolacoes.New do
+       begin
+         razao := jai.S['razao'];
+         propriedade := jai.S['propriedade'];
+         valor := jai.S['valor'];
+       end;
+     end;
+   finally
+     jo.Free;
+   end;
+  {$Else}
+   jo := TJsonObject.Create();
+   try
+     jo.Parse(AValue);
 
-    ftype_uri := jo['type'].AsString;
-    ftitle := jo['title'].AsString;
-    fstatus := jo['status'].AsInteger;
-    fdetail := jo['detail'].AsString;
-    fcorrelationId := jo['correlationId'].AsString;
-    ja := jo['violacoes'].AsArray;
-    for i := 0 to ja.Count-1 do
-    begin
-      jai := ja[i].AsObject;
-      with fviolacoes.New do
-      begin
-        razao := jai['razao'].AsString;
-        propriedade := jai['propriedade'].AsString;
-        valor := jai['valor'].AsString;
-      end;
-    end;
-  finally
-    jo.Free;
-  end;
+     ftype_uri := jo['type'].AsString;
+     ftitle := jo['title'].AsString;
+     fstatus := jo['status'].AsInteger;
+     fdetail := jo['detail'].AsString;
+     fcorrelationId := jo['correlationId'].AsString;
+     ja := jo['violacoes'].AsArray;
+     for i := 0 to ja.Count-1 do
+     begin
+       jai := ja[i].AsObject;
+       with fviolacoes.New do
+       begin
+         razao := jai['razao'].AsString;
+         propriedade := jai['propriedade'].AsString;
+         valor := jai['valor'].AsString;
+       end;
+     end;
+   finally
+     jo.Free;
+   end;
+  {$EndIf}
 end;
 
 end.

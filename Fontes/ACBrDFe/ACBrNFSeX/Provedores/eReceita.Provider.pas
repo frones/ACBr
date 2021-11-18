@@ -124,7 +124,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceeReceita202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 { TACBrNFSeXWebserviceeReceita202 }

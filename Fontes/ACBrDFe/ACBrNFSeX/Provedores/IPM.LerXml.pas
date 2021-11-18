@@ -293,6 +293,7 @@ var
   xRetorno: string;
 begin
   xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := TiraAcentos(xRetorno);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');
@@ -331,7 +332,8 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('nfse');
 
-  if AuxNode = nil then Exit;
+  if AuxNode = nil then
+    AuxNode := ANode;
 
   LerRps(AuxNode);
   LerNota(AuxNode);

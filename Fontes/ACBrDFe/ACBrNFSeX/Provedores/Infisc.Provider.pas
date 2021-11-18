@@ -172,7 +172,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceInfisc.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 function TACBrNFSeProviderInfisc.PrepararRpsParaLote(
@@ -783,7 +788,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceInfisc201.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 procedure TACBrNFSeProviderInfisc201.ValidarSchema(

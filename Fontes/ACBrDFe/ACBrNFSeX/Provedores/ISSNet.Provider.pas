@@ -61,6 +61,8 @@ type
 
   TACBrNFSeProviderISSNet = class (TACBrNFSeProviderABRASFv1)
   protected
+    FpNameSpaceCanc: string;
+
     procedure Configuracao; override;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
@@ -69,7 +71,8 @@ type
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
 
-    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
@@ -87,7 +90,6 @@ begin
   with ConfigGeral do
   begin
     Identificador := '';
-    CancPreencherMotivo := True;
 
     with TACBrNFSeX(FAOwner) do
     begin
@@ -134,7 +136,12 @@ begin
     ConsultarNFSe := 'servico_consultar_nfse_envio.xsd';
     ConsultarNFSeURL := 'servico_consultar_url_visualizacao_nfse_envio.xsd';
     CancelarNFSe := 'servico_cancelar_nfse_envio.xsd';
+//    Validar := False;
   end;
+
+  FpNameSpaceCanc := ' xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"' +
+                     ' xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"' +
+                     ' xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd"';
 end;
 
 function TACBrNFSeProviderISSNet.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
@@ -158,116 +165,47 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceISSNet.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
-procedure TACBrNFSeProviderISSNet.PrepararCancelaNFSe(
-  Response: TNFSeCancelaNFSeResponse);
+procedure TACBrNFSeProviderISSNet.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
-  aParams: TNFSeParamsResponse;
   Emitente: TEmitenteConfNFSe;
   InfoCanc: TInfCancelamento;
-  IdAttr, NameSpace, Prefixo, PrefixoTS, xMotivo: string;
 begin
-  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
-    Exit;
-  end;
-
-  if EstaVazio(Response.InfCancelamento.CodCancelamento) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod109;
-    AErro.Descricao := Desc109;
-    Exit;
-  end;
-
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-  Prefixo := '';
-  PrefixoTS := '';
-
   InfoCanc := Response.InfCancelamento;
 
-  if ConfigGeral.Identificador <> '' then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Canc_' +
-                    OnlyNumber(Emitente.CNPJ) + OnlyNumber(Emitente.InscMun) +
-                    InfoCanc.NumeroNFSe + '"'
-  else
-    IdAttr := '';
-
-  if EstaVazio(ConfigMsgDados.CancelarNFSe.xmlns) then
-    NameSpace := ''
-  else
+  with Params do
   begin
-    if ConfigMsgDados.Prefixo = '' then
-      NameSpace := ' xmlns="' + ConfigMsgDados.CancelarNFSe.xmlns + '"'
-    else
-    begin
-      NameSpace := ' xmlns:' + ConfigMsgDados.Prefixo + '="' + ConfigMsgDados.CancelarNFSe.xmlns + '"';
-      Prefixo := ConfigMsgDados.Prefixo + ':';
-    end;
-  end;
+    NameSpace := FpNameSpaceCanc;
 
-  if ConfigMsgDados.XmlRps.xmlns <> '' then
-  begin
-    if (ConfigMsgDados.XmlRps.xmlns <> ConfigMsgDados.CancelarNFSe.xmlns) and
-       ((ConfigMsgDados.Prefixo <> '') or (ConfigMsgDados.PrefixoTS <> '')) then
-    begin
-      if ConfigMsgDados.PrefixoTS = '' then
-        NameSpace := NameSpace + ' xmlns="' + ConfigMsgDados.XmlRps.xmlns + '"'
-      else
-      begin
-        NameSpace := NameSpace+ ' xmlns:' + ConfigMsgDados.PrefixoTS + '="' +
-                                            ConfigMsgDados.XmlRps.xmlns + '"';
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-      end;
-    end
-    else
-    begin
-      if ConfigMsgDados.PrefixoTS <> '' then
-        PrefixoTS := ConfigMsgDados.PrefixoTS + ':';
-    end;
-  end;
-
-  if ConfigGeral.CancPreencherMotivo then
-  begin
-    if EstaVazio(InfoCanc.MotCancelamento) then
-    begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Cod110;
-      AErro.Descricao := Desc110;
-      Exit;
-    end;
-
-    xMotivo := '<' + PrefixoTS + 'MotivoCancelamentoNfse>' +
-                 Trim(InfoCanc.MotCancelamento) +
-               '</' + PrefixoTS + 'MotivoCancelamentoNfse>';
-  end
-  else
-    xMotivo := '';
-
-  aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
-  try
-    aParams.Xml := '';
-    aParams.TagEnvio := '';
-    aParams.Prefixo := Prefixo;
-    aParams.Prefixo2 := PrefixoTS;
-    aParams.NameSpace := NameSpace;
-    aParams.NameSpace2 := '';
-    aParams.IdAttr := IdAttr;
-    aParams.Versao := '';
-    aParams.Serie := '';
-    aParams.Motivo := xMotivo;
-    aParams.CodVerif := '';
-
-    GerarMsgDadosCancelaNFSe(Response, aParams);
-  finally
-    aParams.Free;
+    Response.XmlEnvio := '<Pedido' + NameSpace + '>' +
+                           '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + '>' +
+                             '<' + Prefixo2 + 'IdentificacaoNfse>' +
+                               '<' + Prefixo2 + 'Numero>' +
+                                 InfoCanc.NumeroNFSe +
+                               '</' + Prefixo2 + 'Numero>' +
+                               '<' + Prefixo2 + 'Cnpj>' +
+                                 OnlyNumber(Emitente.CNPJ) +
+                               '</' + Prefixo2 + 'Cnpj>' +
+                               GetInscMunic(Emitente.InscMun, Prefixo2) +
+                               '<' + Prefixo2 + 'CodigoMunicipio>' +
+                                  ConfigGeral.CodIBGE +
+                               '</' + Prefixo2 + 'CodigoMunicipio>' +
+                             '</' + Prefixo2 + 'IdentificacaoNfse>' +
+                             '<' + Prefixo2 + 'CodigoCancelamento>' +
+                                InfoCanc.CodCancelamento +
+                             '</' + Prefixo2 + 'CodigoCancelamento>' +
+                             Motivo +
+                           '</' + Prefixo2 + 'InfPedidoCancelamento>' +
+                         '</Pedido>';
   end;
 end;
 
@@ -289,9 +227,19 @@ begin
             Copy(xXml, j, Length(xXml));
 
     Response.XmlEnvio := xXml;
-  end;
 
-  inherited ValidarSchema(Response, aMetodo);
+    inherited ValidarSchema(Response, aMetodo);
+  end
+  else
+  begin
+    xXml := Response.XmlEnvio;
+    xXml := StringReplace(xXml, FpNameSpaceCanc, '', []);
+    xXml := '<p1:CancelarNfseEnvio' + FpNameSpaceCanc + '>' +
+              xXml +
+            '</p1:CancelarNfseEnvio>';
+
+    Response.XmlEnvio := xXml;
+  end;
 end;
 
 { TACBrNFSeXWebserviceISSNet }

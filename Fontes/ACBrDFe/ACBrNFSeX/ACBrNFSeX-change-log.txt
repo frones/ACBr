@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/11/2021
+-- Diversos --
+[*] Separado em duas mensagens distintas quando o componente não encontra as
+    URLs de homologação ou de produção.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Inclusão da cidade Orizona/GO.
    Por: Maiquel

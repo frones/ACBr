@@ -55,7 +55,8 @@ uses
 
 resourcestring
   ERR_NAO_IMP = 'Serviço não implementado para este provedor.';
-  ERR_SEM_URL = 'Não informado a URL de Homologação/Produção, favor entrar em contato com a Prefeitura ou Provedor.';
+  ERR_SEM_URL_PRO = 'Não informado a URL de Produção, favor entrar em contato com a Prefeitura ou Provedor.';
+  ERR_SEM_URL_HOM = 'Não informado a URL de Homologação, favor entrar em contato com a Prefeitura ou Provedor.';
 
 type
 

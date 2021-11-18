@@ -203,7 +203,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceBetha.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 procedure TACBrNFSeProviderBetha.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -362,7 +367,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceBetha202.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 { TACBrNFSeXWebserviceBetha202 }

@@ -273,7 +273,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceISSDSF.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 procedure TACBrNFSeProviderISSDSF.ProcessarMensagemErros(
@@ -549,7 +554,10 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ANode := Document.Root;
+      ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
+
+      if ANode = nil then
+        ANode := Document.Root;
 
       if ANode = nil then
       begin
@@ -1456,9 +1464,7 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:enviarSincrono>';
 
-  Result := Executar('', Request,
-                     ['enviarSincronoReturn', 'RetornoEnvioLoteRPS'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['enviarSincronoReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.TesteEnvio(ACabecalho, AMSG: String): string;
@@ -1471,9 +1477,7 @@ begin
   Request := Request + '<mensagemXml>' + IncluirCDATA(AMSG) + '</mensagemXml>';
   Request := Request + '</lot:testeEnviar>';
 
-  Result := Executar('', Request,
-                     ['testeEnviarReturn', 'RetornoEnvioLoteRPS'],
-                     [NameSpace]);
+  Result := Executar('', Request, ['testeEnviarReturn'], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceISSDSF.ConsultarLote(ACabecalho,

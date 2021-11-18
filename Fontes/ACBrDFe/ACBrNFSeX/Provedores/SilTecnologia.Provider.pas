@@ -225,7 +225,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceSilTecnologia.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 { TACBrNFSeProviderSilTecnologia203 }
@@ -280,7 +285,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceSilTecnologia203.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 procedure TACBrNFSeProviderSilTecnologia203.TratarRetornoEmitir(

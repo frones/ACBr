@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXWebservicesResponse,
   ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
 
@@ -87,8 +87,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:RecepcionarLoteRpsV3>';
-  Request := Request + '<arg0><![CDATA[' + ACabecalho + ']]></arg0>';
-  Request := Request + '<arg1><![CDATA[' + AlterarNameSpace(AMSG) + ']]></arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
   Request := Request + '</nfse:RecepcionarLoteRpsV3>';
 
   Result := Executar('', Request,
@@ -103,8 +103,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarLoteRpsV3>';
-  Request := Request + '<arg0><![CDATA[' + ACabecalho + ']]></arg0>';
-  Request := Request + '<arg1><![CDATA[' + AlterarNameSpace(AMSG) + ']]></arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
   Request := Request + '</nfse:ConsultarLoteRpsV3>';
 
   Result := Executar('', Request,
@@ -119,8 +119,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarSituacaoLoteRpsV3>';
-  Request := Request + '<arg0><![CDATA[' + ACabecalho + ']]></arg0>';
-  Request := Request + '<arg1><![CDATA[' + AlterarNameSpace(AMSG) + ']]></arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
   Request := Request + '</nfse:ConsultarSituacaoLoteRpsV3>';
 
   Result := Executar('', Request,
@@ -135,8 +135,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarNfsePorRpsV3>';
-  Request := Request + '<arg0><![CDATA[' + ACabecalho + ']]></arg0>';
-  Request := Request + '<arg1><![CDATA[' + AlterarNameSpace(AMSG) + ']]></arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
   Request := Request + '</nfse:ConsultarNfsePorRpsV3>';
 
   Result := Executar('', Request,
@@ -151,8 +151,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:ConsultarNfseV3>';
-  Request := Request + '<arg0><![CDATA[' + ACabecalho + ']]></arg0>';
-  Request := Request + '<arg1><![CDATA[' + AlterarNameSpace(AMSG) + ']]></arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
   Request := Request + '</nfse:ConsultarNfseV3>';
 
   Result := Executar('', Request,
@@ -167,8 +167,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:CancelarNfseV3>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<arg1><![CDATA[' + AlterarNameSpace(AMSG) + ']]></arg1>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
   Request := Request + '</nfse:CancelarNfseV3>';
 
   Result := Executar('', Request,
@@ -192,7 +192,9 @@ begin
 
   ConfigWebServices.AtribVerLote := 'versao';
 
-  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+  ConfigMsgDados.DadosCabecalho := '<ns2:cabecalho versao="3" xmlns:ns2="http:/www.abrasf.org.br/nfse.xsd">' +
+                                   '<versaoDados>3</versaoDados>' +
+                                   '</ns2:cabecalho>';
 end;
 
 function TACBrNFSeProviderDSFSJC.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
@@ -216,7 +218,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceDSFSJC.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

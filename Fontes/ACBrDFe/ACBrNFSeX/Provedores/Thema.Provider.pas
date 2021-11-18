@@ -223,7 +223,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceThema.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 procedure TACBrNFSeProviderThema.PrepararEmitir(Response: TNFSeEmiteResponse);

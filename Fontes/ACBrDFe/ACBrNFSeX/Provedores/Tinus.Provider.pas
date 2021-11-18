@@ -73,7 +73,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrXmlBase, ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Tinus.GravarXml, Tinus.LerXml;
 
 { TACBrNFSeXWebserviceTinus }
@@ -223,7 +223,12 @@ begin
   if URL <> '' then
     Result := TACBrNFSeXWebserviceTinus.Create(FAOwner, AMetodo, URL)
   else
-    raise EACBrDFeException.Create(ERR_SEM_URL);
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 procedure TACBrNFSeProviderTinus.ValidarSchema(

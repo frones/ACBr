@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2021
+-- ACBreSocialLoteEventos --
+[-] Trocado o StringReplace por RemoverDeclaracaoXML ao concatenar os eventos.
+   Por: Italo Giurizzato Junior
+
 01/11/2021
 -- pcesS1200 --
 [+] Adicionado grupo infoComplCont na leitura do .ini

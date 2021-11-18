@@ -294,13 +294,11 @@ end;
 procedure TLoteEventos.GerarXML(const AGrupo: TeSocialGrupo);
 var
   i: Integer;
-//  Eventosxml: AnsiString;
-  Eventosxml: String;
+  EventosXml: String;
 begin
   CarregarXmlEventos;
 
-  Eventosxml := EmptyStr;
-//  FXML := EmptyStr;
+  EventosXml := EmptyStr;
 
   FXML :=
   '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/v1_1_1">'+
@@ -316,12 +314,12 @@ begin
     '<eventos>';
 
    for i := 0 to Self.Count - 1 do
-     Eventosxml := Eventosxml +
+     EventosXml := EventosXml +
                    '<evento Id="' + Self.Items[i].IDEvento +'"> ' +
-                    StringReplace(Self.Items[i].XML, '<' + ENCODING_UTF8 + '>', '', []) +
+                     RemoverDeclaracaoXML(Self.Items[i].XML) +
                    '</evento>';
 
-  FXML := FXML + Eventosxml;
+  FXML := FXML + EventosXml;
   FXML := FXML +
               '</eventos>'+
             '</envioLoteEventos>'+

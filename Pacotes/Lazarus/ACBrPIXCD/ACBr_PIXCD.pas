@@ -8,7 +8,8 @@ unit ACBr_PIXCD;
 interface
 
 uses
-  ACBrPIXSchemas, LazarusPackageIntf;
+  ACBrPIXSchemas, ACBrPIXQRCodeEstatico, ACBrPIXUtil, ACBrPIXBase, 
+  LazarusPackageIntf;
 
 implementation
 

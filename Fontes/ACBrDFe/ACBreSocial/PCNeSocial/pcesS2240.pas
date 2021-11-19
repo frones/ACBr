@@ -1090,7 +1090,7 @@ begin
       begin
         // de 1 até 9
         sSecao := 'respReg' + IntToStrZero(I, 1);
-        sFim   := INIRec.ReadString(sSecao, 'dtIni', 'FIM');
+        sFim   := INIRec.ReadString(sSecao, 'cpfResp', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;

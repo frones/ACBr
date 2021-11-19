@@ -432,7 +432,7 @@ var
   jsd: TJsonObject;
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jsd := js.O['devedor'];
+   jsd := AJSon.O['devedor'];
    cnpj := jsd.S['cnpj'];
    cpf  := jsd.S['cpf'];
    nome := jsd.S['nome'];
@@ -687,10 +687,17 @@ end;
 
 procedure TACBrPIXSaqueTroco.ReadFromJSon(AJSon: TJsonObject);
 begin
-  valor := StringToFloatDef( AJSon['valor'].AsString, 0 );
-  modalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
-  modalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
-  prestadorDoServicoDeSaque := AJSon['prestadorDoServicoDeSaque'].AsString;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   valor := StringToFloatDef( AJSon.S['valor'], 0 );
+   modalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
+   modalidadeAgente := StringToPIXModalidadeAgente( AJSon.S['modalidadeAgente'] );
+   prestadorDoServicoDeSaque := AJSon.S['prestadorDoServicoDeSaque'];
+  {$Else}
+   valor := StringToFloatDef( AJSon['valor'].AsString, 0 );
+   modalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
+   modalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
+   prestadorDoServicoDeSaque := AJSon['prestadorDoServicoDeSaque'].AsString;
+  {$EndIf}
 end;
 
 { TACBrPIXRetirada }
@@ -758,7 +765,7 @@ var
   jsr, jss, jst: TJsonObject;
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jsr := jsv.O['retirada'];
+   jsr := AJSon.O['retirada'];
    jss := jsr.O['saque'];
    jst := jsr.O['troco'];
    saque.ReadFromJSon(jss);

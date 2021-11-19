@@ -192,7 +192,7 @@ var
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.A['violacoes'].Clear;
-   for i := 0 to fviolacoes.Count-1 do
+   for i := 0 to Count-1 do
    begin
      vi := Items[i];
      with AJSon.A['violacoes'].AddObject do

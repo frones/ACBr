@@ -761,7 +761,9 @@ begin
                  sTipoDocto                                                            + // 060-060 / Tipo de Documento
                  sTipoCobranca                                                         + // 061-061 / Identificação da Emissão do Bloqueto
                  '2'                                                                   + // 062-062 / Identificação da Distribuição
-                 PadRight(ACBrTitulo.NossoNumero, 15)                                  + // 063-077 / Número do Documento de Cobrança
+                 ifThen(NaoEstaVazio(ACBrTitulo.NumeroDocumento),
+                        PadRight(ACBrTitulo.NumeroDocumento, 15),
+                        PadRight(ACBrTitulo.NossoNumero, 15))                          + // 063-077 / Número do Documento de Cobrança
                  FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                     + // 078-085 / Data de Vencimento do Título
                  IntToStrZero(round(ACBrTitulo.ValorDocumento * 100), 15)              + // 086-100 / Valor Nominal do Título
                  PadRight(Agencia, 5, '0')                                             + // 101-105 / Agência Encarregada da Cobrança

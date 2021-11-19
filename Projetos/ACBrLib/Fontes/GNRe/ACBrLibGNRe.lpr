@@ -43,7 +43,7 @@ exports
   GNRE_ObterXml,
   GNRE_GravarXml,
   GNRE_LimparListaGuiaRetorno,
-  GNRe_CarregarGuiaRetorno,
+  GNRE_CarregarGuiaRetorno,
   GNRE_Assinar,
   GNRE_Validar,
   GNRE_VerificarAssinatura,

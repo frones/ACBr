@@ -260,8 +260,8 @@ begin
                                                       NFSe.DataEmissaoRps, ''));
 
   if NFSe.Competencia <> 0 then
-    NFSeNode.AppendChild(AddNode(tcDatVcto, '#2', 'fatorgerador', 1, 21, 1,
-                                                         NFSe.Competencia, ''));
+    NFSeNode.AppendChild(AddNode(tcStr, '#2', 'fatorgerador', 1, 21, 1,
+                                 FormatDateBr(NFSe.Competencia, 'MMYYYY'), ''));
 
   Result := True;
 end;

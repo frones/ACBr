@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/11/2021
+-- SmarAPD.GravarXml --
+[*] Possível correção para a geração da data em <fatorgerador>.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade Santa Izabel do Oeste/PR trocou de provedor.
    Por: Maiko Bito

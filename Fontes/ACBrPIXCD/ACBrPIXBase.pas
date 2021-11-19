@@ -72,6 +72,11 @@ type
                               stdDEVOLVIDO,
                               stdNAO_REALIZADO );
 
+  TACBrPIXModalidadeAgente = ( maNENHUM,
+                               maAGTEC,
+                               maAGTOT,
+                               maAGPSS );
+
   EACBrPixException = class(EACBrException);
 
 implementation

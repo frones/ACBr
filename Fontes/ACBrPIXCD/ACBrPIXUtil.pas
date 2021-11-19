@@ -48,11 +48,12 @@ uses
   ACBrPIXBase;
 
 resourcestring
-  sErroTxIdMuitoLonga = 'Chave TxId excede 25 Caracteres';
+  sErroTxIdMuitoLonga = 'Chave TxId excede %d Caracteres';
+  sErroTxIdMuitoCurta = 'Chave TxId inferior a %d Caracteres';
   sErroTxIdInvalido = 'Caracteres inválidos no TxId';
 
 function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
-function ValidarTxId(const ATxId: String): String;
+function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
 function FormatarQRCodeId(AId: Byte; const ValorId: String): String;
 function FormatarValorPIX(AValor: Double): String;
 function Crc16PIX(const AString: String): String;
@@ -102,7 +103,8 @@ begin
   end;
 end;
 
-function ValidarTxId(const ATxId: String): String;
+function ValidarTxId(const ATxId: String; MaiorTamanho: Integer;
+  MenorTamanho: Integer): String;
 var
   e, s: String;
   l: Integer;
@@ -111,8 +113,10 @@ begin
   s := Trim(ATxId);
   l := Length(s);
 
-  if (l > 25) then
-    e := sErroTxIdMuitoLonga
+  if (l < MenorTamanho) then
+    e := Format(sErroTxIdMuitoCurta, [MenorTamanho])
+  else if (l > MaiorTamanho) then
+    e := Format(sErroTxIdMuitoLonga, [MaiorTamanho])
   else
   begin
     if not StrIsAlpha(s) then

@@ -52,7 +52,12 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrPIXBase;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   JsonDataObjects_ACBr,
+  {$Else}
+   Jsons,
+  {$EndIf}
+  ACBrBase;
 
 type
 
@@ -85,6 +90,9 @@ type
     Procedure Insert(Index: Integer; AViolacao: TACBrPIXViolacao);
     function New: TACBrPIXViolacao;
     property Items[Index: Integer]: TACBrPIXViolacao read GetItem write SetItem; default;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXProblema }
@@ -117,14 +125,6 @@ type
   end;
 
 implementation
-
-uses
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrUtil;
 
 { TACBrPIXViolacao }
 
@@ -185,6 +185,78 @@ begin
   Self.Add(Result);
 end;
 
+procedure TACBrPIXViolacoes.WriteToJSon(AJSon: TJsonObject);
+var
+  i: Integer;
+  vi: TACBrPIXViolacao;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.A['violacoes'].Clear;
+   for i := 0 to fviolacoes.Count-1 do
+   begin
+     vi := Items[i];
+     with AJSon.A['violacoes'].AddObject do
+     begin
+       if (vi.razao <> '') then
+         S['razao'] := vi.razao;
+       if (vi.propriedade <> '') then
+         S['propriedade'] := vi.propriedade;
+       if (vi.valor <> '') then
+         S['valor'] := vi.valor;
+     end;
+   end;
+  {$Else}
+   AJSon['violacoes'].AsArray.Clear;
+   for i := 0 to Count-1 do
+   begin
+     vi := Items[i];
+     with AJSon['violacoes'].AsArray.Add.AsObject do
+     begin
+       if (vi.razao <> '') then
+         Values['razao'].AsString := vi.razao;
+       if (vi.propriedade <> '') then
+         Values['propriedade'].AsString := vi.propriedade;
+       if (vi.valor <> '') then
+         Values['valor'].AsString := vi.valor;
+     end;
+   end;
+  {$EndIf}
+end;
+
+procedure TACBrPIXViolacoes.ReadFromJSon(AJSon: TJsonObject);
+var
+  ja: TJsonArray;
+  i: Integer;
+  jai: TJsonObject;
+begin
+  Clear;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   ja := AJSon.A['violacoes'];
+   for i := 0 to ja.Count-1 do
+   begin
+     jai := ja.O[i];
+     with New do
+     begin
+       razao := jai.S['razao'];
+       propriedade := jai.S['propriedade'];
+       valor := jai.S['valor'];
+     end;
+   end;
+  {$Else}
+   ja := AJSon['violacoes'].AsArray;
+   for i := 0 to ja.Count-1 do
+   begin
+     jai := ja[i].AsObject;
+     with New do
+     begin
+       razao := jai['razao'].AsString;
+       propriedade := jai['propriedade'].AsString;
+       valor := jai['valor'].AsString;
+     end;
+   end;
+  {$EndIf}
+end;
+
 { TACBrPIXProblema }
 
 constructor TACBrPIXProblema.Create;
@@ -223,8 +295,6 @@ end;
 function TACBrPIXProblema.GetAsJSON: String;
 var
   jo: TJsonObject;
-  vi: TACBrPIXViolacao;
-  i: Integer;
 begin
   jo := TJsonObject.Create();
   try
@@ -237,19 +307,7 @@ begin
      if (fcorrelationId <> '') then
        jo.S['correlationId'] := fcorrelationId;
 
-     for i := 0 to fviolacoes.Count-1 do
-     begin
-       vi := fviolacoes[i];
-       with jo.A['violacoes'].AddObject do
-       begin
-         if (vi.razao <> '') then
-           S['razao'] := vi.razao;
-         if (vi.propriedade <> '') then
-           S['propriedade'] := vi.propriedade;
-         if (vi.valor <> '') then
-           S['valor'] := vi.valor;
-       end;
-     end;
+     fviolacoes.WriteToJSon(jo);
 
      Result := jo.ToJSON();
     {$Else}
@@ -261,19 +319,7 @@ begin
      if (fcorrelationId <> '') then
        jo['correlationId'].AsString := fcorrelationId;
 
-     for i := 0 to fviolacoes.Count-1 do
-     begin
-       vi := fviolacoes[i];
-       with jo['violacoes'].AsArray.Add.AsObject do
-       begin
-         if (vi.razao <> '') then
-           Values['razao'].AsString := vi.razao;
-         if (vi.propriedade <> '') then
-           Values['propriedade'].AsString := vi.propriedade;
-         if (vi.valor <> '') then
-           Values['valor'].AsString := vi.valor;
-       end;
-     end;
+     fviolacoes.WriteToJSon(jo);
 
      Result := jo.Stringify;
     {$EndIf}
@@ -284,9 +330,7 @@ end;
 
 procedure TACBrPIXProblema.SetAsJSON(AValue: String);
 var
-  jo, jai: TJsonObject;
-  ja: TJsonArray;
-  i: Integer;
+  jo: TJsonObject;
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
@@ -297,17 +341,7 @@ begin
      fstatus := jo.I['status'];
      fdetail := jo.S['detail'];
      fcorrelationId := jo.S['correlationId'];
-     ja := jo.A['violacoes'];
-     for i := 0 to ja.Count-1 do
-     begin
-       jai := ja.O[i];
-       with fviolacoes.New do
-       begin
-         razao := jai.S['razao'];
-         propriedade := jai.S['propriedade'];
-         valor := jai.S['valor'];
-       end;
-     end;
+     fviolacoes.ReadFromJSon(jo);
    finally
      jo.Free;
    end;
@@ -321,17 +355,7 @@ begin
      fstatus := jo['status'].AsInteger;
      fdetail := jo['detail'].AsString;
      fcorrelationId := jo['correlationId'].AsString;
-     ja := jo['violacoes'].AsArray;
-     for i := 0 to ja.Count-1 do
-     begin
-       jai := ja[i].AsObject;
-       with fviolacoes.New do
-       begin
-         razao := jai['razao'].AsString;
-         propriedade := jai['propriedade'].AsString;
-         valor := jai['valor'].AsString;
-       end;
-     end;
+     fviolacoes.ReadFromJSon(jo);
    finally
      jo.Free;
    end;

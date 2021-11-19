@@ -313,7 +313,7 @@ begin
     Exit;
   end;
 
-  e := ValidarTxId(AValue);
+  e := ValidarTxId(AValue, 25);
   if (e <> '') then
     raise EACBrPixException.Create(ACBrStr(e));
 

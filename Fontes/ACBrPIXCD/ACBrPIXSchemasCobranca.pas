@@ -54,6 +54,11 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   JsonDataObjects_ACBr,
+  {$Else}
+   Jsons,
+  {$EndIf}
   ACBrBase, ACBrPIXBase;
 
 type
@@ -105,6 +110,9 @@ type
     property cpf: String read fcpf write SetCpf;
     property cnpj: String read fcnpj write SetCnpj;
     property nome: String read fnome write fnome;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXCalendario }
@@ -123,6 +131,9 @@ type
     property criacao: TDateTime read fcriacao write fcriacao;
     property apresentacao: TDateTime read fapresentacao write fapresentacao;
     property expiracao: Integer read fexpiracao write fexpiracao;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXInfoAdicional }
@@ -152,9 +163,10 @@ type
     Procedure Insert(Index: Integer; AInfoAdicional: TACBrPIXInfoAdicional);
     function New: TACBrPIXInfoAdicional;
     property Items[Index: Integer]: TACBrPIXInfoAdicional read GetItem write SetItem; default;
-  end;
 
-  TACBrPIXModalidadeAgente = ( maNENHUM, maAGTEC, maAGTOT, maAGPSS );
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
+  end;
 
   { TACBrPIXSaqueTroco }
 
@@ -173,6 +185,9 @@ type
     property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
     property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
     property prestadorDoServicoDeSaque: String read fprestadorDoServicoDeSaque write fprestadorDoServicoDeSaque;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXRetirada }
@@ -189,6 +204,9 @@ type
 
     property saque: TACBrPIXSaqueTroco read fsaque;
     property troco: TACBrPIXSaqueTroco read ftroco;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXCobValor }
@@ -207,6 +225,9 @@ type
     property original: Currency read foriginal write foriginal;
     property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
     property retirada: TACBrPIXRetirada read fretirada;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXCobBase }
@@ -220,9 +241,6 @@ type
     fsolicitacaoPagador: String;
     fstatus: TACBrPIXStatusCobranca;
     ftxid: String;
-
-    function GetAsJSON: String; virtual;
-    procedure SetAsJSON(AValue: String); virtual;
   public
     constructor Create;
     destructor Destroy; override;
@@ -237,7 +255,8 @@ type
     property assinatura: String read fassinatura write fassinatura;
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
 
-    property AsJSON: String read GetAsJSON write SetAsJSON;
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXCobSolicitada }
@@ -248,8 +267,8 @@ type
     fdevedor: TACBrPIXDevedor;
     fvalor: TACBrPIXCobValor;
 
-    function GetAsJSON: String; override;
-    procedure SetAsJSON(AValue: String); override;
+    function GetAsJSON: String;
+    procedure SetAsJSON(AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -259,6 +278,8 @@ type
     property calendario: TACBrPIXCalendario read fcalendario;
     property devedor: TACBrPIXDevedor read fdevedor;
     property valor: TACBrPIXCobValor read fvalor;
+
+    property AsJSON: String read GetAsJSON write SetAsJSON;
   end;
 
 function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
@@ -271,11 +292,6 @@ implementation
 
 uses
   StrUtils, DateUtils, Math,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
   ACBrUtil, ACBrConsts, ACBrPIXUtil;
 
 function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
@@ -390,6 +406,44 @@ begin
   fnome := Source.nome;
 end;
 
+procedure TACBrPIXDevedor.WriteToJSon(AJSon: TJsonObject);
+var
+  jsd: TJsonObject;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jsd := AJSon.O['devedor'];
+   if (cnpj <> '') then
+     jsd.S['cnpj'] := cnpj
+   else if (cpf <> '') then
+     jsd.S['cpf'] := cnpj;
+   jsd.S['nome'] := nome;
+  {$Else}
+   jsd := AJSon['devedor'].AsObject;
+   if (cnpj <> '') then
+     jsd['cnpj'].AsString := cnpj
+   else if (cpf <> '') then
+     jsd['cpf'].AsString := cnpj;
+   jsd['nome'].AsString := nome;
+  {$EndIf}
+end;
+
+procedure TACBrPIXDevedor.ReadFromJSon(AJSon: TJsonObject);
+var
+  jsd: TJsonObject;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jsd := js.O['devedor'];
+   cnpj := jsd.S['cnpj'];
+   cpf  := jsd.S['cpf'];
+   nome := jsd.S['nome'];
+  {$Else}
+   jsd := AJSon['devedor'].AsObject;
+   cnpj := jsd['cnpj'].AsString;
+   cpf  := jsd['cpf'].AsString;
+   nome := jsd['nome'].AsString;
+  {$EndIf}
+end;
+
 procedure TACBrPIXDevedor.SetCnpj(AValue: String);
 begin
   if fcnpj = AValue then Exit;
@@ -422,6 +476,55 @@ begin
   fcriacao := Source.criacao;
   fapresentacao := Source.apresentacao;
   fexpiracao := Source.expiracao;
+end;
+
+procedure TACBrPIXCalendario.WriteToJSon(AJSon: TJsonObject);
+var
+  jsc: TJsonObject;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jsc := AJSon.O['calendario'];
+   if (criacao <> 0) then
+     jsc.S['criacao'] := DateTimeToIso8601(criacao);
+   if (apresentacao <> 0) then
+     jsc.S['apresentacao'] := DateTimeToIso8601(apresentacao);
+   if (expiracao > 0) then
+     jsc.I['expiracao'] := expiracao;
+  {$Else}
+   jsc := AJSon['calendario'].AsObject;
+   if (criacao <> 0) then
+     jsc['criacao'].AsString := DateTimeToIso8601(criacao);
+   if (apresentacao <> 0) then
+     jsc['apresentacao'].AsString := DateTimeToIso8601(apresentacao);
+   if (expiracao > 0) then
+     jsc['expiracao'].AsInteger := expiracao;
+  {$EndIf}
+end;
+
+procedure TACBrPIXCalendario.ReadFromJSon(AJSon: TJsonObject);
+var
+  jsc: TJsonObject;
+  s: String;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jsc := AJSon.O['calendario'];
+   s := jsc.S['criacao'];
+   if (s <> '') then
+     criacao := Iso8601ToDateTime(s);
+   s := jsc.S['apresentacao'];
+   if (s <> '') then
+     apresentacao := Iso8601ToDateTime(s);
+   expiracao := jsc.I['expiracao'];
+  {$Else}
+   jsc := AJSon['calendario'].AsObject;
+   s := jsc['criacao'].AsString;
+   if (s <> '') then
+     criacao := Iso8601ToDateTime(s);
+   s := jsc['apresentacao'].AsString;
+   if (s <> '') then
+     apresentacao := Iso8601ToDateTime(s);
+   expiracao := jsc['expiracao'].AsInteger;
+  {$EndIf}
 end;
 
 { TACBrPIXInfoAdicional }
@@ -481,6 +584,68 @@ begin
   Self.Add(Result);
 end;
 
+procedure TACBrPIXInfoAdicionais.WriteToJSon(AJSon: TJsonObject);
+var
+  i: Integer;
+  ia: TACBrPIXInfoAdicional;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.A['infoAdicionais'].Clear;
+   for i := 0 to Count-1 do
+   begin
+     ia := Items[i];
+     with AJSon.A['infoAdicionais'].AddObject do
+     begin
+       S['nome'] := ia.nome;
+       S['valor'] := ia.valor;
+     end;
+   end;
+  {$Else}
+   AJSon['infoAdicionais'].AsArray.Clear;
+   for i := 0 to Count-1 do
+   begin
+     ia := Items[i];
+     with AJSon['infoAdicionais'].AsArray.Add.AsObject do
+     begin
+       Values['nome'].AsString := ia.nome;
+       Values['valor'].AsString := ia.valor;
+     end;
+   end;
+  {$EndIf}
+end;
+
+procedure TACBrPIXInfoAdicionais.ReadFromJSon(AJSon: TJsonObject);
+var
+  ja: TJsonArray;
+  i: Integer;
+  jai: TJsonObject;
+begin
+  Clear;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   ja := AJSon.A['infoAdicionais'];
+   for i := 0 to ja.Count-1 do
+   begin
+     jai := ja.O[i];
+     with New do
+     begin
+       nome := jai.S['nome'];
+       valor := jai.S['valor'];
+     end;
+   end;
+  {$Else}
+   ja := AJSon['infoAdicionais'].AsArray;
+   for i := 0 to ja.Count-1 do
+   begin
+     jai := ja[i].AsObject;
+     with New do
+     begin
+       nome := jai['nome'].AsString;
+       valor := jai['valor'].AsString;
+     end;
+   end;
+  {$EndIf}
+end;
+
 { TACBrPIXSaqueTroco }
 
 constructor TACBrPIXSaqueTroco.Create;
@@ -503,6 +668,29 @@ begin
   fmodalidadeAlteracao := Source.modalidadeAlteracao;
   fmodalidadeAgente := Source.modalidadeAgente;
   fprestadorDoServicoDeSaque := Source.prestadorDoServicoDeSaque;
+end;
+
+procedure TACBrPIXSaqueTroco.WriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.S['valor'] := FormatarValorPIX(valor);
+   AJSon.I['modalidadeAlteracao'] := IfThen(modalidadeAlteracao, 1, 0);
+   AJSon.S['modalidadeAgente'] := PIXModalidadeAgenteToString(modalidadeAgente);
+   AJSon.S['prestadorDoServicoDeSaque'] := prestadorDoServicoDeSaque;
+  {$Else}
+   AJSon['valor'].AsString := FormatarValorPIX(valor);
+   AJSon['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
+   AJSon['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(modalidadeAgente);
+   AJSon['prestadorDoServicoDeSaque'].AsString := prestadorDoServicoDeSaque;
+  {$EndIf}
+end;
+
+procedure TACBrPIXSaqueTroco.ReadFromJSon(AJSon: TJsonObject);
+begin
+  valor := StringToFloatDef( AJSon['valor'].AsString, 0 );
+  modalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
+  modalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
+  prestadorDoServicoDeSaque := AJSon['prestadorDoServicoDeSaque'].AsString;
 end;
 
 { TACBrPIXRetirada }
@@ -531,6 +719,57 @@ procedure TACBrPIXRetirada.Assign(Source: TACBrPIXRetirada);
 begin
   fsaque.Assign(Source.saque);
   ftroco.Assign(Source.troco);
+end;
+
+procedure TACBrPIXRetirada.WriteToJSon(AJSon: TJsonObject);
+var
+  s: String;
+  st: TACBrPIXSaqueTroco;
+  jsr, jsst: TJsonObject;
+begin
+  s := '';
+  st := Nil;
+  if (saque.modalidadeAgente <> maNENHUM) then
+  begin
+    st := saque;
+    s := 'saque';
+  end
+  else if (troco.modalidadeAgente <> maNENHUM) then
+  begin
+    st := troco;
+    s := 'troco';
+  end;
+
+  if (st <> nil) then
+  begin
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     jsr := AJSon.O['retirada'];
+     jsst := jsr.O[s];
+    {$Else}
+     jsr := AJSon['retirada'].AsObject;
+     jsst := jsr[s].AsObject;
+    {$EndIf}
+    st.WriteToJSon(jsst);
+  end;
+end;
+
+procedure TACBrPIXRetirada.ReadFromJSon(AJSon: TJsonObject);
+var
+  jsr, jss, jst: TJsonObject;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jsr := jsv.O['retirada'];
+   jss := jsr.O['saque'];
+   jst := jsr.O['troco'];
+   saque.ReadFromJSon(jss);
+   troco.ReadFromJSon(jst);
+  {$Else}
+   jsr := AJSon['retirada'].AsObject;
+   jss := jsr['saque'].AsObject;
+   jst := jsr['troco'].AsObject;
+   saque.ReadFromJSon(jss);
+   troco.ReadFromJSon(jst);
+  {$EndIf}
 end;
 
 { TACBrPIXCobValor }
@@ -562,130 +801,39 @@ begin
   fretirada.Assign(Source.retirada);
 end;
 
-{ TACBrPIXCobBase }
-
-function TACBrPIXCobBase.GetAsJSON: String;
+procedure TACBrPIXCobValor.WriteToJSon(AJSon: TJsonObject);
 var
-  jo: TJsonObject;
-  i: Integer;
-  ia: TACBrPIXInfoAdicional;
+  jsv: TJsonObject;
 begin
-  jo := TJsonObject.Create;
-  try
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-     if (frevisao > 0) then
-       jo.I['revisao'] := frevisao;
-     if (fchave <> '') then
-       jo.S['chave'] := fchave;
-     if (ftxid <> '') then
-       jo.S['txid'] := ftxid;
-     if (fsolicitacaoPagador <> '') then
-       jo.S['solicitacaoPagador'] := fsolicitacaoPagador;
-
-     for i := 0 to finfoAdicionais.Count-1 do
-     begin
-       ia := finfoAdicionais[i];
-       with jo.A['infoAdicionais'].AddObject do
-       begin
-         S['nome'] := ia.nome;
-         S['valor'] := ia.valor;
-       end;
-     end;
-
-     if (fassinatura <> '') then
-       jo.S['assinatura'] := fassinatura;
-     if (fstatus <> stcNENHUM) then
-       jo.S['status'] := PIXStatusToString(fstatus);
-
-     Result := jo.ToJSON();
-    {$Else}
-     if (frevisao > 0) then
-       jo['revisao'].AsInteger := frevisao;
-     if (fchave <> '') then
-       jo['chave'].AsString := fchave;
-     if (ftxid <> '') then
-       jo['txid'].AsString := ftxid;
-     if (fsolicitacaoPagador <> '') then
-       jo['solicitacaoPagador'].AsString := fsolicitacaoPagador;
-
-     for i := 0 to finfoAdicionais.Count-1 do
-     begin
-       ia := finfoAdicionais[i];
-       with jo['infoAdicionais'].AsArray.Add.AsObject do
-       begin
-         Values['nome'].AsString := ia.nome;
-         Values['valor'].AsString := ia.valor;
-       end;
-     end;
-
-     if (fassinatura <> '') then
-       jo['assinatura'].AsString := fassinatura;
-     if (fstatus <> stcNENHUM) then
-       jo['status'].AsString := PIXStatusToString(fstatus);
-
-     Result := jo.Stringify;
-    {$EndIf}
-  finally
-    jo.Free;
-  end;
-end;
-
-procedure TACBrPIXCobBase.SetAsJSON(AValue: String);
-var
-  jo, jai: TJsonObject;
-  ja: TJsonArray;
-  i: Integer;
-begin
-  Clear;
-
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jo := TJsonObject.Parse(AValue) as TJsonObject;
-   try
-     frevisao := jo.I['revisao'];
-     fchave := jo.S['chave'];
-     fsolicitacaoPagador := jo.S['solicitacaoPagador'];
-     ftxid := jo.S['txid'];
-     fassinatura := jo.S['assinatura'];
-     fstatus := StringToPIXStatus(jo.S['status']);
-     ja := jo.A['infoAdicionais'];
-     for i := 0 to ja.Count-1 do
-     begin
-       jai := ja.O[i];
-       with finfoAdicionais.New do
-       begin
-         nome := jai.S['nome'];
-         valor := jai.S['valor'];
-       end;
-     end;
-   finally
-     jo.Free;
-   end;
+   jsv := AJSon.O['valor'];
+   jsv.S['original'] := FormatarValorPIX(original);
+   jsv.I['modalidadeAlteracao'] := IfThen(modalidadeAlteracao, 1, 0);
   {$Else}
-   jo := TJsonObject.Create;
-   try
-     jo.Parse(AValue);
-
-     frevisao := jo['revisao'].AsInteger;
-     fchave := jo['chave'].AsString;
-     fsolicitacaoPagador := jo['solicitacaoPagador'].AsString;
-     ftxid := jo['txid'].AsString;
-     fassinatura := jo['assinatura'].AsString;
-     fstatus := StringToPIXStatus(jo['status'].AsString);
-     ja := jo['infoAdicionais'].AsArray;
-     for i := 0 to ja.Count-1 do
-     begin
-       jai := ja[i].AsObject;
-       with finfoAdicionais.New do
-       begin
-         nome := jai['nome'].AsString;
-         valor := jai['valor'].AsString;
-       end;
-     end;
-   finally
-     jo.Free;
-   end;
+   jsv := AJSon['valor'].AsObject;
+   jsv['original'].AsString := FormatarValorPIX(original);
+   jsv['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
   {$EndIf}
+  retirada.WriteToJSon(jsv);
 end;
+
+procedure TACBrPIXCobValor.ReadFromJSon(AJSon: TJsonObject);
+var
+  jsv: TJsonObject;
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   jsv := AJSon.O['valor'];
+   original := StringToFloatDef( jsv.S['original'], 0 );
+   modalidadeAlteracao := (jsv.I['modalidadeAlteracao'] = 1);
+  {$Else}
+   jsv := AJSon['valor'].AsObject;
+   original := StringToFloatDef( jsv['original'].AsString, 0 );
+   modalidadeAlteracao := (jsv['modalidadeAlteracao'].AsInteger = 1);
+  {$EndIf}
+  retirada.ReadFromJSon(jsv);
+end;
+
+{ TACBrPIXCobBase }
 
 constructor TACBrPIXCobBase.Create;
 begin
@@ -722,259 +870,62 @@ begin
   finfoAdicionais.Assign(Source.infoAdicionais);
 end;
 
+procedure TACBrPIXCobBase.WriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (frevisao > 0) then
+     AJSon.I['revisao'] := frevisao;
+   if (fchave <> '') then
+     AJSon.S['chave'] := fchave;
+   if (ftxid <> '') then
+     AJSon.S['txid'] := ftxid;
+   if (fsolicitacaoPagador <> '') then
+     AJSon.S['solicitacaoPagador'] := fsolicitacaoPagador;
+   finfoAdicionais.WriteToJSon(AJSon);
+   if (fassinatura <> '') then
+     AJSon.S['assinatura'] := fassinatura;
+   if (fstatus <> stcNENHUM) then
+     AJSon.S['status'] := PIXStatusToString(fstatus);
+  {$Else}
+   if (frevisao > 0) then
+     AJSon['revisao'].AsInteger := frevisao;
+   if (fchave <> '') then
+     AJSon['chave'].AsString := fchave;
+   if (ftxid <> '') then
+     AJSon['txid'].AsString := ftxid;
+   if (fsolicitacaoPagador <> '') then
+     AJSon['solicitacaoPagador'].AsString := fsolicitacaoPagador;
+   finfoAdicionais.WriteToJSon(AJSon);
+   if (fassinatura <> '') then
+     AJSon['assinatura'].AsString := fassinatura;
+   if (fstatus <> stcNENHUM) then
+     AJSon['status'].AsString := PIXStatusToString(fstatus);
+  {$EndIf}
+end;
+
+procedure TACBrPIXCobBase.ReadFromJSon(AJSon: TJsonObject);
+begin
+  Clear;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   frevisao := AJSon.I['revisao'];
+   fchave := AJSon.S['chave'];
+   fsolicitacaoPagador := AJSon.S['solicitacaoPagador'];
+   ftxid := AJSon.S['txid'];
+   fassinatura := AJSon.S['assinatura'];
+   fstatus := StringToPIXStatus(AJSon.S['status']);
+   finfoAdicionais.ReadFromJSon(AJSon);
+  {$Else}
+   frevisao := AJSon['revisao'].AsInteger;
+   fchave := AJSon['chave'].AsString;
+   fsolicitacaoPagador := AJSon['solicitacaoPagador'].AsString;
+   ftxid := AJSon['txid'].AsString;
+   fassinatura := AJSon['assinatura'].AsString;
+   fstatus := StringToPIXStatus(AJSon['status'].AsString);
+   finfoAdicionais.ReadFromJSon(AJSon);
+  {$EndIf}
+end;
+
 { TACBrPIXCobSolicitada }
-
-function TACBrPIXCobSolicitada.GetAsJSON: String;
-var
-  js, jsc, jsd, jsv, jsr, jsst: TJsonObject;
-  st: TACBrPIXSaqueTroco;
-  s, u: String;
-begin
-  s := inherited GetAsJSON;
-
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Parse(s) as TJsonObject;
-   try
-     with fcalendario do
-     begin
-       jsc := js.O['calendario'];
-       if (criacao <> 0) then
-         jsc.S['criacao'] := DateTimeToIso8601(criacao);
-       if (apresentacao <> 0) then
-         jsc.S['apresentacao'] := DateTimeToIso8601(apresentacao);
-       if (expiracao > 0) then
-         jsc.I['expiracao'] := expiracao;
-     end;
-
-     with fdevedor do
-     begin
-       jsd := js.O['devedor'];
-       if (cnpj <> '') then
-         jsd.S['cnpj'] := cnpj
-       else if (cpf <> '') then
-         jsd.S['cpf'] := cnpj;
-
-       jsd.S['nome'] := nome;
-     end;
-
-     with fvalor do
-     begin
-       jsv := js.O['valor'];
-       jsv.S['original'] := FormatarValorPIX(original);
-       jsv.I['modalidadeAlteracao'] := IfThen(modalidadeAlteracao, 1, 0);
-
-       with retirada do
-       begin
-         s := '';
-         st := Nil;
-         if  (saque.modalidadeAgente <> maNENHUM) then
-         begin
-           st := saque;
-           s := 'saque';
-         end
-         else if (troco.modalidadeAgente <> maNENHUM) then
-         begin
-           st := troco;
-           s := 'troco';
-         end;
-
-         if (st <> nil) then
-         begin
-           jsr := jsv.O['retirada'];
-           jsst := jsr.O[s];
-
-           jsst.S['valor'] := FormatarValorPIX(st.valor);
-           jsst.I['modalidadeAlteracao'] := IfThen(st.modalidadeAlteracao, 1, 0);
-           jsst.S['modalidadeAgente'] := PIXModalidadeAgenteToString(st.modalidadeAgente);
-           jsst.S['prestadorDoServicoDeSaque'] := st.prestadorDoServicoDeSaque;
-         end;
-       end;
-     end;
-
-     Result := js.ToJSON();
-   finally
-     js.Free;
-   end;
-  {$Else}
-   js := TJsonObject.Create;
-   try
-     u := js.Decode(s);
-     js.Parse(u);
-
-     with fcalendario do
-     begin
-       jsc := js['calendario'].AsObject;
-       if (criacao <> 0) then
-         jsc['criacao'].AsString := DateTimeToIso8601(criacao);
-       if (apresentacao <> 0) then
-         jsc['apresentacao'].AsString := DateTimeToIso8601(apresentacao);
-       if (expiracao > 0) then
-         jsc['expiracao'].AsInteger := expiracao;
-
-     end;
-
-     with fdevedor do
-     begin
-       jsd := js['devedor'].AsObject;
-       if (cnpj <> '') then
-         jsd['cnpj'].AsString := cnpj
-       else if (cpf <> '') then
-         jsd['cpf'].AsString := cnpj;
-
-       jsd['nome'].AsString := nome;
-     end;
-
-     with fvalor do
-     begin
-       jsv := js['valor'].AsObject;
-       jsv['original'].AsString := FormatarValorPIX(original);
-       jsv['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
-
-       with retirada do
-       begin
-         s := '';
-         st := Nil;
-         if (saque.modalidadeAgente <> maNENHUM) then
-         begin
-           st := saque;
-           s := 'saque';
-         end
-         else if (troco.modalidadeAgente <> maNENHUM) then
-         begin
-           st := troco;
-           s := 'troco';
-         end;
-
-         if (st <> nil) then
-         begin
-           jsr := jsv['retirada'].AsObject;
-           jsst := jsr[s].AsObject;
-
-           jsst['valor'].AsString := FormatarValorPIX(st.valor);
-           jsst['modalidadeAlteracao'].AsInteger := IfThen(st.modalidadeAlteracao, 1, 0);
-           jsst['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(st.modalidadeAgente);
-           jsst['prestadorDoServicoDeSaque'].AsString := st.prestadorDoServicoDeSaque;
-         end;
-       end;
-     end;
-
-     Result := js.Stringify;
-   finally
-     js.Free;
-   end;
-  {$EndIf}
-end;
-
-procedure TACBrPIXCobSolicitada.SetAsJSON(AValue: String);
-var
-  js, jsr, jsc, jsd, jsv, jss, jst: TJsonObject;
-  jsa: TJsonArray;
-  s: String;
-begin
-  inherited SetAsJSON(AValue);
-
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Parse(AValue) as TJsonObject;
-   try
-     with fcalendario do
-     begin
-       jsc := js.O['calendario'];
-       s := jsc.S['criacao'];
-       if (s <> '') then
-         criacao := Iso8601ToDateTime(s);
-       s := jsc.S['apresentacao'];
-       if (s <> '') then
-         apresentacao := Iso8601ToDateTime(s);
-       expiracao := jsc.I['expiracao'];
-     end;
-
-     with fdevedor do
-     begin
-       jsd := js.O['devedor'];
-       cnpj := jsd.S['cnpj'];
-       cpf  := jsd.S['cpf'];
-       nome := jsd.S['nome'];
-     end;
-
-     with fvalor do
-     begin
-       jsv := js.O['valor'];
-       original := StringToFloatDef( jsv.S['original'], 0 );
-       modalidadeAlteracao := (jsv.I['modalidadeAlteracao'] = 1);
-
-       with retirada do
-       begin
-         jsr := jsv.O['retirada'];
-         jss := jsr.O['saque'];
-         jst := jsr.O['troco'];
-
-         saque.valor := StringToFloatDef( jss.S['valor'], 0 );
-         saque.modalidadeAlteracao := (jss.I['modalidadeAlteracao'] = 1);
-         saque.modalidadeAgente := StringToPIXModalidadeAgente( jss.S['modalidadeAgente'] );
-         saque.prestadorDoServicoDeSaque := jss.S['prestadorDoServicoDeSaque'];
-
-         troco.valor := StringToFloatDef( jst.S['valor'], 0 );
-         troco.modalidadeAlteracao := (jst.I['modalidadeAlteracao'] = 1);
-         troco.modalidadeAgente := StringToPIXModalidadeAgente( jst.S['modalidadeAgente'] );
-         troco.prestadorDoServicoDeSaque := jst.S['prestadorDoServicoDeSaque'];
-       end;
-     end;
-   finally
-     js.Free;
-   end;
-  {$Else}
-   js := TJsonObject.Create;
-   try
-     js.Parse(AValue);
-
-     with fcalendario do
-     begin
-       jsc := js['calendario'].AsObject;
-       s := jsc['criacao'].AsString;
-       if (s <> '') then
-         criacao := Iso8601ToDateTime(s);
-       s := jsc['apresentacao'].AsString;
-       if (s <> '') then
-         apresentacao := Iso8601ToDateTime(s);
-       expiracao := jsc['expiracao'].AsInteger;
-     end;
-
-     with fdevedor do
-     begin
-       jsd := js['devedor'].AsObject;
-       cnpj := jsd['cnpj'].AsString;
-       cpf  := jsd['cpf'].AsString;
-       nome := jsd['nome'].AsString;
-     end;
-
-     with fvalor do
-     begin
-       jsv := js['valor'].AsObject;
-       original := StringToFloatDef( jsv['original'].AsString, 0 );
-       modalidadeAlteracao := (jsv['modalidadeAlteracao'].AsInteger = 1);
-
-       with retirada do
-       begin
-         jsr := jsv['retirada'].AsObject;
-         jss := jsr['saque'].AsObject;
-         jst := jsr['troco'].AsObject;
-
-         saque.valor := StringToFloatDef( jss['valor'].AsString, 0 );
-         saque.modalidadeAlteracao := (jss['modalidadeAlteracao'].AsInteger = 1);
-         saque.modalidadeAgente := StringToPIXModalidadeAgente( jss['modalidadeAgente'].AsString );
-         saque.prestadorDoServicoDeSaque := jss['prestadorDoServicoDeSaque'].AsString;
-
-         troco.valor := StringToFloatDef( jst['valor'].AsString, 0 );
-         troco.modalidadeAlteracao := (jst['modalidadeAlteracao'].AsInteger = 1);
-         troco.modalidadeAgente := StringToPIXModalidadeAgente( jst['modalidadeAgente'].AsString );
-         troco.prestadorDoServicoDeSaque := jst['prestadorDoServicoDeSaque'].AsString;
-       end;
-     end;
-   finally
-     js.Free;
-   end;
-  {$EndIf}
-end;
 
 constructor TACBrPIXCobSolicitada.Create;
 begin
@@ -1007,6 +958,59 @@ begin
   fcalendario.Assign(Source.calendario);
   fdevedor.Assign(Source.devedor);
   fvalor.Assign(Source.valor);
+end;
+
+function TACBrPIXCobSolicitada.GetAsJSON: String;
+var
+  js: TJsonObject;
+begin
+  js := TJsonObject.Create;
+  try
+    inherited WriteToJSon(js);
+    fcalendario.WriteToJSon(js);
+    fdevedor.WriteToJSon(js);
+    fvalor.WriteToJSon(js);
+
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     Result := js.ToJSON();
+    {$Else}
+     Result := js.Stringify;
+    {$EndIf}
+  finally
+    js.Free;
+  end;
+end;
+
+procedure TACBrPIXCobSolicitada.SetAsJSON(AValue: String);
+var
+  js: TJsonObject;
+
+  procedure _ReadFromJSon(AJSon: TJsonObject);
+  begin
+    inherited ReadFromJSon(AJSon);
+    fcalendario.ReadFromJSon(AJSon);
+    fdevedor.ReadFromJSon(AJSon);
+    fvalor.ReadFromJSon(AJSon);
+  end;
+
+begin
+  Clear;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   js := TJsonObject.Parse(AValue) as TJsonObject;
+   try
+     _ReadFromJSon(js);
+   finally
+     js.Free;
+   end;
+  {$Else}
+   js := TJsonObject.Create;
+   try
+     js.Parse(AValue);
+     _ReadFromJSon(js);
+   finally
+     js.Free;
+   end;
+  {$EndIf}
 end;
 
 end.

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/11/2021
+-- ACBrNFSeXServicos --
+[*] A cidade Santa Izabel do Oeste/PR trocou de provedor.
+   Por: Maiko Bito
+
 18/11/2021
 -- ACBrNFSeXServicos --
 [*] A cidade Irani/SC trocou de provedor.

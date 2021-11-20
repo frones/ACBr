@@ -165,7 +165,6 @@ end;
 function TACBrPIXQRCodeEstatico.GetQRCode: String;
 var
   vs: String;
-  l: Integer;
 begin
   if (fTipoChavePix = tcNenhuma) then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroChaveInvalida), [fChavePix]);

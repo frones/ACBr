@@ -238,7 +238,6 @@ procedure TACBrPIXViolacoes.ReadFromJSon(AJSon: TJsonObject);
 var
   ja: TJsonArray;
   i: Integer;
-  jai: TJsonObject;
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}

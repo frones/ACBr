@@ -287,7 +287,7 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, Math,
+  DateUtils, Math,
   ACBrUtil, ACBrConsts, ACBrPIXUtil;
 
 { TACBrPIXPessoaFisica }

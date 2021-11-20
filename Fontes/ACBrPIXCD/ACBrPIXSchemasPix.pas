@@ -84,9 +84,9 @@ type
   private
     fObjectName: String;
     fmodalidadeAgente: TACBrPIXModalidadeAgente;
-    fprestadorDoServicoDeSaque: Integer;
+    fprestadorDeServicoDeSaque: Integer;
     fvalor: Currency;
-    procedure SetprestadorDoServicoDeSaque(AValue: Integer);
+    procedure SetPrestadorDeServicoDeSaque(AValue: Integer);
   public
     constructor Create(const ObjectName: String);
     procedure Clear; override;
@@ -94,7 +94,7 @@ type
 
     property valor: Currency read fvalor write fvalor;
     property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
-    property prestadorDoServicoDeSaque: Integer read fprestadorDoServicoDeSaque write SetprestadorDoServicoDeSaque;
+    property prestadorDeServicoDeSaque: Integer read fprestadorDeServicoDeSaque write SetPrestadorDeServicoDeSaque;
 
     procedure WriteToJSon(AJSon: TJsonObject); override;
     procedure ReadFromJSon(AJSon: TJsonObject); override;
@@ -249,14 +249,14 @@ procedure TACBrPIXSaqueTroco.Clear;
 begin
   fvalor := 0;
   fmodalidadeAgente := maNENHUM;
-  fprestadorDoServicoDeSaque := -1;
+  fprestadorDeServicoDeSaque := -1;
 end;
 
 procedure TACBrPIXSaqueTroco.Assign(Source: TACBrPIXSaqueTroco);
 begin
   fvalor := Source.valor;
   fmodalidadeAgente := Source.modalidadeAgente;
-  prestadorDoServicoDeSaque := Source.prestadorDoServicoDeSaque;
+  prestadorDeServicoDeSaque := Source.prestadorDeServicoDeSaque;
 end;
 
 procedure TACBrPIXSaqueTroco.WriteToJSon(AJSon: TJsonObject);
@@ -268,15 +268,15 @@ begin
    jso.S['valor'] := FormatarValorPIX(valor);
    if (fmodalidadeAgente <> maNENHUM) then
      jso.S['modalidadeAgente'] := PIXModalidadeAgenteToString(modalidadeAgente);
-   if (prestadorDoServicoDeSaque >= 0) then
-     jso.S['prestadorDoServicoDeSaque'] := IntToStrZero(prestadorDoServicoDeSaque, 8);
+   if (prestadorDeServicoDeSaque >= 0) then
+     jso.S['prestadorDeServicoDeSaque'] := IntToStrZero(prestadorDeServicoDeSaque, 8);
   {$Else}
    jso := AJSon[fObjectName].AsObject;
    jso['valor'].AsString := FormatarValorPIX(valor);
    if (fmodalidadeAgente <> maNENHUM) then
-     AJSon['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(modalidadeAgente);
-   if (prestadorDoServicoDeSaque >= 0) then
-     AJSon['prestadorDoServicoDeSaque'].AsString := IntToStrZero(prestadorDoServicoDeSaque, 8);
+     jso['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(modalidadeAgente);
+   if (prestadorDeServicoDeSaque >= 0) then
+     jso['prestadorDeServicoDeSaque'].AsString := IntToStrZero(prestadorDeServicoDeSaque, 8);
   {$EndIf}
 end;
 
@@ -287,29 +287,29 @@ begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jso := AJSon.O[fObjectName];
-   valor := StringToFloatDef(jso.S['valor'], 0);
-   modalidadeAgente := StringToPIXModalidadeAgente( AJSon.S['modalidadeAgente'] );
-   prestadorDoServicoDeSaque := StrToIntDef(AJSon.S['prestadorDoServicoDeSaque'], -1);
+   valor := StringToFloatDef( jso.S['valor'], 0);
+   modalidadeAgente := StringToPIXModalidadeAgente( jso.S['modalidadeAgente'] );
+   prestadorDeServicoDeSaque := StrToIntDef(jso.S['prestadorDeServicoDeSaque'], -1);
   {$Else}
    jso := AJSon[fObjectName].AsObject;
-   valor := StringToFloatDef(jso['valor'].AsString, 0);
-   modalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
-   prestadorDoServicoDeSaque := StrToIntDef(AJSon['prestadorDoServicoDeSaque'].AsString, -1);
+   valor := StringToFloatDef( jso['valor'].AsString, 0);
+   modalidadeAgente := StringToPIXModalidadeAgente( jso['modalidadeAgente'].AsString );
+   prestadorDeServicoDeSaque := StrToIntDef(jso['prestadorDeServicoDeSaque'].AsString, -1);
   {$EndIf}
 end;
 
-procedure TACBrPIXSaqueTroco.SetprestadorDoServicoDeSaque(AValue: Integer);
+procedure TACBrPIXSaqueTroco.SetPrestadorDeServicoDeSaque(AValue: Integer);
 var
   e: String;
 begin
-  if (fprestadorDoServicoDeSaque = AValue) then
+  if (fprestadorDeServicoDeSaque = AValue) then
     Exit;
 
   e := ValidarPSS(AValue);
   if (e <> '') then
     raise EACBrPixException.Create(ACBrStr(e));
 
-  fprestadorDoServicoDeSaque := AValue;
+  fprestadorDeServicoDeSaque := AValue;
 end;
 
 { TACBrPIXComponentesValor }
@@ -495,6 +495,8 @@ begin
 end;
 
 procedure TACBrPIX.ReadFromJSon(AJSon: TJsonObject);
+var
+  s: String;
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
@@ -503,7 +505,9 @@ begin
    fvalor := StringToFloatDef(AJSon.S['valor'], 0);
    fcomponentesValor.ReadFromJSon(AJSon);
    fchave := AJSon.S['chave'];
-   fhorario := Iso8601ToDateTime( AJSon.S['horario'] );
+   s := AJSon.S['horario'];
+   if (s <> '') then
+     fhorario := Iso8601ToDateTime(s);
    finfoPagador := AJSon.S['infoPagador'];
    fdevolucoes.ReadFromJSon(AJSon);
   {$Else}
@@ -512,7 +516,9 @@ begin
    fvalor := StringToFloatDef(AJSon['valor'].AsString, 0);
    fcomponentesValor.ReadFromJSon(AJSon);
    fchave := AJSon['chave'].AsString;
-   fhorario := Iso8601ToDateTime( AJSon['horario'].AsString );
+   s := AJSon['horario'].AsString;
+   if (s <> '') then
+     fhorario := Iso8601ToDateTime(s);
    finfoPagador := AJSon['infoPagador'].AsString;
    fdevolucoes.ReadFromJSon(AJSon);
   {$EndIf}

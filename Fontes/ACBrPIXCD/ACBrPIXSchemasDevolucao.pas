@@ -169,15 +169,23 @@ end;
 
 procedure TACBrPIXHorario.ReadFromJSon(AJSon: TJsonObject);
 var
-  jso: TJsonObject;
+  s: String;
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fsolicitacao := Iso8601ToDateTime( AJSon.S['solicitacao'] );
-   fliquidacao := Iso8601ToDateTime( AJSon.S['liquidacao'] );
+   s := AJSon.S['solicitacao'];
+   if (s <> '') then
+     fsolicitacao := Iso8601ToDateTime(s);
+   s := AJSon.S['liquidacao'];
+   if (s <> '') then
+     fliquidacao := Iso8601ToDateTime(s);
   {$Else}
-   fsolicitacao := Iso8601ToDateTime( AJSon['solicitacao'].AsString );
-   fliquidacao := Iso8601ToDateTime( AJSon['liquidacao'].AsString );
+   s := AJSon['solicitacao'].AsString;
+   if (s <> '') then
+     fsolicitacao := Iso8601ToDateTime(s);
+   s := AJSon['liquidacao'].AsString;
+   if (s <> '') then
+     fliquidacao := Iso8601ToDateTime(s);
   {$EndIf}
 end;
 

@@ -140,30 +140,42 @@ begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['inicio'] := DateTimeToIso8601( finicio );
    AJSon.S['fim'] := DateTimeToIso8601( ffim );
-   AJSon.S['txid'] := ftxid;
+   if (ftxid <> '') then
+     AJSon.S['txid'] := ftxid;
    AJSon.B['txIdPresente'] := ftxIdPresente;
    AJSon.B['devolucaoPresente'] := fdevolucaoPresente;
-   AJSon.S['cpf'] := fcpf;
-   AJSon.S['cnpj'] := fcnpj;
+   if (fcpf <> '') then
+     AJSon.S['cpf'] := fcpf;
+   if (fcnpj <> '') then
+     AJSon.S['cnpj'] := fcnpj;
    fpaginacao.WriteToJSon(AJSon.O['paginacao']);
   {$Else}
    AJSon['inicio'].AsString := DateTimeToIso8601( finicio );
    AJSon['fim'].AsString := DateTimeToIso8601( ffim );
-   AJSon['txid'].AsString := ftxid;
+   if (ftxid <> '') then
+     AJSon['txid'].AsString := ftxid;
    AJSon['txIdPresente'].AsBoolean := ftxIdPresente;
    AJSon['devolucaoPresente'].AsBoolean := fdevolucaoPresente;
-   AJSon['cpf'].AsString := fcpf;
-   AJSon['cnpj'].AsString := fcnpj;
+   if (fcpf <> '') then
+     AJSon['cpf'].AsString := fcpf;
+   if (fcnpj <> '') then
+     AJSon['cnpj'].AsString := fcnpj;
    fpaginacao.WriteToJSon(AJSon['paginacao'].AsObject);
   {$EndIf}
 end;
 
 procedure TACBrPIXParametrosConsultaPix.ReadFromJSon(AJSon: TJsonObject);
+var
+  s: String;
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   finicio := Iso8601ToDateTime( AJSon.S['inicio'] );
-   ffim := Iso8601ToDateTime( AJSon.S['fim'] );
+   s := AJSon.S['inicio'];
+   if (s <> '') then
+     finicio := Iso8601ToDateTime(s);
+   s := AJSon.S['fim'];
+   if (s <> '') then
+     ffim := Iso8601ToDateTime(s);
    ftxid := AJSon.S['txid'];
    ftxIdPresente := AJSon.B['txIdPresente'];
    fdevolucaoPresente := AJSon.B['devolucaoPresente'];
@@ -171,8 +183,12 @@ begin
    fcnpj := AJSon.S['cnpj'];
    fpaginacao.ReadFromJSon(AJSon.O['paginacao']);
   {$Else}
-   finicio := Iso8601ToDateTime( AJSon['inicio'].AsString );
-   ffim := Iso8601ToDateTime( AJSon['fim'].AsString );
+   s := AJSon['inicio'].AsString;
+   if (s <> '') then
+     finicio := Iso8601ToDateTime(s);
+   s := AJSon['fim'].AsString;
+   if (s <> '') then
+     ffim := Iso8601ToDateTime(s);
    ftxid := AJSon['txid'].AsString;
    ftxIdPresente := AJSon['txIdPresente'].AsBoolean;
    fdevolucaoPresente := AJSon['devolucaoPresente'].AsBoolean;

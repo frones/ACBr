@@ -139,7 +139,7 @@ begin
     e := Format(sErroTxIdMuitoLonga, [MaiorTamanho])
   else
   begin
-    if not StrIsAlpha(s) then
+    if not StrIsAlphaNum(s) then
       e := sErroTxIdInvalido;
   end;
 

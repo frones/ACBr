@@ -76,6 +76,20 @@ type
     procedure AtribuirLerReatribuirEComparar;
   end;
 
+  { TTestCobrancaGerada }
+
+  TTestCobrancaGerada = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixCobGerada: TACBrPIXCobGerada;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
+  end;
+
   { TTestQRCodeEstatico }
 
   TTestQRCodeEstatico = class(TTestCase)
@@ -430,13 +444,107 @@ begin
   end;
 end;
 
-procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
+{ TTestCobrancaGerada }
+
+procedure TTestCobrancaGerada.SetUp;
 begin
-  {$IfDef DUNITX}
-   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
-  {$ELSE}
-   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
-  {$EndIf}
+  inherited SetUp;
+  fACBrPixCobGerada := TACBrPIXCobGerada.Create;
+  fJSON := ACBrStr(
+  '{'+
+    '"calendario": {'+
+      '"criacao": "2020-09-09T20:15:00.358Z",'+
+      '"expiracao": 3600'+
+    '},'+
+    '"txid": "33beb661beda44a8928fef47dbeb2dc5",'+
+    '"revisao": 0,'+
+    '"loc": {'+
+      '"id": 1004,'+
+      '"location": "pix.example.com/qr/7faa6893c4e64893a503baf0d40af213",'+
+      '"tipoCob": "cob"'+
+    '},'+
+    '"location": "pix.example.com/qr/7faa6893c4e64893a503baf0d40af213",'+
+    '"status": "ATIVA",'+
+    '"devedor": {'+
+      '"cnpj": "12345678000195",'+
+      '"nome": "Empresa de Serviços SA"'+
+    '},'+
+    '"valor": {'+
+      '"original": "0.00",'+
+      '"modalidadeAlteracao": 0,'+
+      '"retirada": {'+
+        '"saque": {'+
+          '"valor": "5.00",'+
+          '"modalidadeAlteracao": 0,'+
+          '"modalidadeAgente": "AGPSS",'+
+          '"prestadorDoServicoDeSaque": "12345678"'+
+        '}'+
+      '}'+
+    '},'+
+    '"chave": "7d9f0335-8dcc-4054-9bf9-0dbd61d36906"'+
+  '}' );
+end;
+
+procedure TTestCobrancaGerada.TearDown;
+begin
+  fACBrPixCobGerada.Free;
+  inherited TearDown;
+end;
+
+procedure TTestCobrancaGerada.AtribuirELerValores;
+begin
+  fACBrPixCobGerada.AsJSON := fJSON;
+  CheckEquals(fACBrPixCobGerada.calendario.criacao, EncodeDateTime(2020,09,09,20,15,0,358));
+  CheckEquals(fACBrPixCobGerada.calendario.expiracao, 3600);
+  CheckEquals(fACBrPixCobGerada.txId, '33beb661beda44a8928fef47dbeb2dc5');
+  CheckEquals(fACBrPixCobGerada.revisao, 0);
+  CheckEquals(fACBrPixCobGerada.loc.id, '1004');
+  CheckEquals(fACBrPixCobGerada.loc.location, 'pix.example.com/qr/7faa6893c4e64893a503baf0d40af213');
+  CheckTrue(fACBrPixCobGerada.loc.tipoCob = tcoCob);
+  CheckEquals(fACBrPixCobGerada.location, 'pix.example.com/qr/7faa6893c4e64893a503baf0d40af213');
+  CheckTrue(fACBrPixCobGerada.status = stcATIVA);
+  CheckEquals(fACBrPixCobGerada.devedor.cnpj, '12345678000195');
+  CheckEquals(fACBrPixCobGerada.devedor.nome, ACBrStr('Empresa de Serviços SA'));
+  CheckEquals(fACBrPixCobGerada.valor.original, 0);
+  CheckEquals(fACBrPixCobGerada.valor.modalidadeAlteracao, False);
+  CheckEquals(fACBrPixCobGerada.valor.retirada.saque.valor, 5);
+  CheckEquals(fACBrPixCobGerada.valor.retirada.saque.modalidadeAlteracao, False);
+  CheckTrue(fACBrPixCobGerada.valor.retirada.saque.modalidadeAgente = maAGPSS);
+  CheckEquals(fACBrPixCobGerada.valor.retirada.saque.prestadorDoServicoDeSaque, 12345678);
+  CheckEquals(fACBrPixCobGerada.chave, '7d9f0335-8dcc-4054-9bf9-0dbd61d36906');
+end;
+
+procedure TTestCobrancaGerada.AtribuirLerReatribuirEComparar;
+var
+  cg: TACBrPIXCobGerada;
+  s: String;
+begin
+  fACBrPixCobGerada.AsJSON := fJSON;
+  s := fACBrPixCobGerada.AsJSON;
+  cg := TACBrPIXCobGerada.Create;
+  try
+    cg.AsJSON := s;
+    CheckEquals(fACBrPixCobGerada.calendario.criacao, cg.calendario.criacao);
+    CheckEquals(fACBrPixCobGerada.calendario.expiracao, cg.calendario.expiracao);
+    CheckEquals(fACBrPixCobGerada.txId, cg.txId);
+    CheckEquals(fACBrPixCobGerada.revisao, cg.revisao);
+    CheckEquals(fACBrPixCobGerada.loc.id, cg.loc.id);
+    CheckEquals(fACBrPixCobGerada.loc.location, cg.loc.location);
+    CheckTrue(fACBrPixCobGerada.loc.tipoCob = cg.loc.tipoCob);
+    CheckEquals(fACBrPixCobGerada.location, cg.location);
+    CheckTrue(fACBrPixCobGerada.status = cg.status);
+    CheckEquals(fACBrPixCobGerada.devedor.cnpj, cg.devedor.cnpj);
+    CheckEquals(fACBrPixCobGerada.devedor.nome, cg.devedor.nome);
+    CheckEquals(fACBrPixCobGerada.valor.original, cg.valor.original);
+    CheckEquals(fACBrPixCobGerada.valor.modalidadeAlteracao, cg.valor.modalidadeAlteracao);
+    CheckEquals(fACBrPixCobGerada.valor.retirada.saque.valor, cg.valor.retirada.saque.valor);
+    CheckEquals(fACBrPixCobGerada.valor.retirada.saque.modalidadeAlteracao, cg.valor.retirada.saque.modalidadeAlteracao);
+    CheckTrue(fACBrPixCobGerada.valor.retirada.saque.modalidadeAgente = cg.valor.retirada.saque.modalidadeAgente);
+    CheckEquals(fACBrPixCobGerada.valor.retirada.saque.prestadorDoServicoDeSaque, cg.valor.retirada.saque.prestadorDoServicoDeSaque);
+    CheckEquals(fACBrPixCobGerada.chave, cg.chave);
+  finally
+    cg.Free;
+  end;
 end;
 
 { TTestQRCodeEstatico }
@@ -616,22 +724,22 @@ begin
   CheckEquals(fACBrPixConsultados.pix[0].endToEndId, 'E12345678202009091221abcdef12345');
   CheckEquals(fACBrPixConsultados.pix[0].txid, 'cd1fe328c875481285a6f233ae41b662');
   CheckEquals(fACBrPixConsultados.pix[0].valor, 100);
-  CheckEquals(fACBrPixConsultados.pix[0].horario, EncodeDateTime(2020,09,10,13,03,33,0));
+  CheckEquals(fACBrPixConsultados.pix[0].horario, EncodeDateTime(2020,09,10,13,03,33,902));
   CheckEquals(fACBrPixConsultados.pix[0].infoPagador, 'Reforma da casa');
   CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].id, '000AAA111');
   CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].rtrId, 'D12345678202009091000abcde123456');
   CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].valor, 11);
-  CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].horario.solicitacao, EncodeDateTime(2020,09,10,13,03,33,0));
+  CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].horario.solicitacao, EncodeDateTime(2020,09,10,13,03,33,902));
   CheckTrue(fACBrPixConsultados.pix[0].devolucoes[0].status = stdEM_PROCESSAMENTO);
   CheckEquals(fACBrPixConsultados.pix[1].endToEndId, 'E12345678202009091221ghijk78901234');
   CheckEquals(fACBrPixConsultados.pix[1].txid, '5b933948f3224266b1050ac54319e775');
   CheckEquals(fACBrPixConsultados.pix[1].valor, 200);
-  CheckEquals(fACBrPixConsultados.pix[1].horario, EncodeDateTime(2020,09,10,13,03,33,0));
+  CheckEquals(fACBrPixConsultados.pix[1].horario, EncodeDateTime(2020,09,10,13,03,33,902));
   CheckEquals(fACBrPixConsultados.pix[1].infoPagador, ACBrStr('Revisão do carro'));
   CheckEquals(fACBrPixConsultados.pix[2].endToEndId, 'E88631478202009091221ghijk78901234');
   CheckEquals(fACBrPixConsultados.pix[2].txid, '82433415910c47e5adb6ac3527cca160');
   CheckEquals(fACBrPixConsultados.pix[2].valor, 200);
-  CheckEquals(fACBrPixConsultados.pix[2].horario, EncodeDateTime(2020,09,10,13,03,33,0));
+  CheckEquals(fACBrPixConsultados.pix[2].horario, EncodeDateTime(2020,09,10,13,03,33,902));
   CheckEquals(fACBrPixConsultados.pix[2].infoPagador, 'Saque Pix');
   CheckEquals(fACBrPixConsultados.pix[2].componentesValor.original.valor, 180);
   CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.valor, 20);
@@ -640,10 +748,59 @@ begin
 end;
 
 procedure TTestPixConsultados.AtribuirLerReatribuirEComparar;
+var
+  pc: TACBrPIXConsultados;
+  s: String;
 begin
-
+  fACBrPixConsultados.AsJSON := fJSON;
+  s := fACBrPixConsultados.AsJSON;
+  pc := TACBrPIXConsultados.Create;
+  try
+    pc.AsJSON := s;
+    CheckEquals(fACBrPixConsultados.parametros.inicio, pc.parametros.inicio);
+    CheckEquals(fACBrPixConsultados.parametros.fim, pc.parametros.fim);
+    CheckEquals(fACBrPixConsultados.parametros.paginacao.paginaAtual, pc.parametros.paginacao.paginaAtual);
+    CheckEquals(fACBrPixConsultados.parametros.paginacao.itensPorPagina, pc.parametros.paginacao.itensPorPagina);
+    CheckEquals(fACBrPixConsultados.parametros.paginacao.quantidadeDePaginas, pc.parametros.paginacao.quantidadeDePaginas);
+    CheckEquals(fACBrPixConsultados.parametros.paginacao.quantidadeTotalDeItens, pc.parametros.paginacao.quantidadeTotalDeItens);
+    CheckEquals(fACBrPixConsultados.pix[0].endToEndId, pc.pix[0].endToEndId);
+    CheckEquals(fACBrPixConsultados.pix[0].txid, pc.pix[0].txid);
+    CheckEquals(fACBrPixConsultados.pix[0].valor, pc.pix[0].valor);
+    CheckEquals(fACBrPixConsultados.pix[0].horario, pc.pix[0].horario);
+    CheckEquals(fACBrPixConsultados.pix[0].infoPagador, pc.pix[0].infoPagador);
+    CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].id, pc.pix[0].devolucoes[0].id);
+    CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].rtrId, pc.pix[0].devolucoes[0].rtrId);
+    CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].valor, pc.pix[0].devolucoes[0].valor);
+    CheckEquals(fACBrPixConsultados.pix[0].devolucoes[0].horario.solicitacao, pc.pix[0].devolucoes[0].horario.solicitacao);
+    CheckTrue(fACBrPixConsultados.pix[0].devolucoes[0].status = pc.pix[0].devolucoes[0].status);
+    CheckEquals(fACBrPixConsultados.pix[1].endToEndId, pc.pix[1].endToEndId);
+    CheckEquals(fACBrPixConsultados.pix[1].txid, pc.pix[1].txid);
+    CheckEquals(fACBrPixConsultados.pix[1].valor, pc.pix[1].valor);
+    CheckEquals(fACBrPixConsultados.pix[1].horario, pc.pix[1].horario);
+    CheckEquals(fACBrPixConsultados.pix[1].infoPagador, pc.pix[1].infoPagador);
+    CheckEquals(fACBrPixConsultados.pix[2].endToEndId, pc.pix[2].endToEndId);
+    CheckEquals(fACBrPixConsultados.pix[2].txid, pc.pix[2].txid);
+    CheckEquals(fACBrPixConsultados.pix[2].valor, pc.pix[2].valor);
+    CheckEquals(fACBrPixConsultados.pix[2].horario, pc.pix[2].horario);
+    CheckEquals(fACBrPixConsultados.pix[2].infoPagador, pc.pix[2].infoPagador);
+    CheckEquals(fACBrPixConsultados.pix[2].componentesValor.original.valor, pc.pix[2].componentesValor.original.valor);
+    CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.valor, pc.pix[2].componentesValor.saque.valor);
+    CheckTrue(fACBrPixConsultados.pix[2].componentesValor.saque.modalidadeAgente = pc.pix[2].componentesValor.saque.modalidadeAgente);
+    CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.prestadorDeServicoDeSaque, pc.pix[2].componentesValor.saque.prestadorDeServicoDeSaque);
+  finally
+    pc.Free;
+  end;
 end;
 
+
+procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
+begin
+  {$IfDef DUNITX}
+   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
+  {$ELSE}
+   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
+  {$EndIf}
+end;
 
 initialization
 
@@ -651,6 +808,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX2);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX3);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaGerada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestQRCodeEstatico);
   _RegisterTest('ACBrPIXCD.Schemas', TTestProblema);
   _RegisterTest('ACBrPIXCD.Schemas', TTestPixConsultados);

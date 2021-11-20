@@ -49,13 +49,14 @@ uses
    JsonDataObjects_ACBr
   {$Else}
    Jsons
-  {$EndIf};
+  {$EndIf},
+  ACBrPIXBase;
 
 type
 
   { TACBrPIXPaginacao }
 
-  TACBrPIXPaginacao = class
+  TACBrPIXPaginacao = class(TACBrPIXSchema)
   private
     fitensPorPagina: Integer;
     fpaginaAtual: Integer;
@@ -63,7 +64,7 @@ type
     fquantidadeTotalDeItens: Integer;
   public
     constructor Create;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXPaginacao);
 
     property paginaAtual: Integer read fpaginaAtual write fpaginaAtual;
@@ -71,8 +72,8 @@ type
     property quantidadeDePaginas: Integer read fquantidadeDePaginas write fquantidadeDePaginas;
     property quantidadeTotalDeItens: Integer read fquantidadeTotalDeItens write fquantidadeTotalDeItens;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
@@ -118,6 +119,7 @@ end;
 
 procedure TACBrPIXPaginacao.ReadFromJSon(AJSon: TJsonObject);
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fitensPorPagina := AJSon.I['itensPorPagina'];
    fpaginaAtual := AJSon.I['paginaAtual'];

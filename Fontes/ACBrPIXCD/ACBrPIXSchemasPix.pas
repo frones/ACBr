@@ -63,24 +63,24 @@ type
 
   { TACBrPIXValor }
 
-  TACBrPIXValor = class
+  TACBrPIXValor = class(TACBrPIXSchema)
   private
     fObjectName: String;
     fvalor: Currency;
   public
     constructor Create(const ObjectName: String);
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXValor);
 
     property valor: Currency read fvalor write fvalor;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXSaqueTroco }
 
-  TACBrPIXSaqueTroco = class
+  TACBrPIXSaqueTroco = class(TACBrPIXSchema)
   private
     fObjectName: String;
     fmodalidadeAgente: TACBrPIXModalidadeAgente;
@@ -89,20 +89,20 @@ type
     procedure SetprestadorDoServicoDeSaque(AValue: Integer);
   public
     constructor Create(const ObjectName: String);
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXSaqueTroco);
 
     property valor: Currency read fvalor write fvalor;
     property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
     property prestadorDoServicoDeSaque: Integer read fprestadorDoServicoDeSaque write SetprestadorDoServicoDeSaque;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXComponentesValor }
 
-  TACBrPIXComponentesValor = class
+  TACBrPIXComponentesValor = class(TACBrPIXSchema)
   private
     fabatimento: TACBrPIXValor;
     fdesconto: TACBrPIXValor;
@@ -114,7 +114,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXComponentesValor);
 
     property original: TACBrPIXValor read foriginal;
@@ -125,13 +125,13 @@ type
     property abatimento: TACBrPIXValor read fabatimento;
     property desconto: TACBrPIXValor read fdesconto;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIX }
 
-  TACBrPIX = class
+  TACBrPIX = class(TACBrPIXSchema)
   private
     fchave: String;
     fcomponentesValor: TACBrPIXComponentesValor;
@@ -141,8 +141,6 @@ type
     finfoPagador: String;
     ftxid: String;
     fvalor: Currency;
-    function GetAsJSON: String;
-    procedure SetAsJSON(AValue: String);
     procedure SetChave(AValue: String);
     procedure SetendToEndId(const AValue: String);
     procedure SetinfoPagador(AValue: String);
@@ -150,7 +148,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIX);
 
     property endToEndId: String read fendToEndId write SetendToEndId;   //"Id fim a fim da transação"
@@ -162,9 +160,8 @@ type
     property infoPagador: String read finfoPagador write SetinfoPagador;
     property devolucoes: TACBrPIXDevolucoes read fdevolucoes;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
-    property AsJSON: String read GetAsJSON write SetAsJSON;
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXArray }
@@ -229,6 +226,7 @@ procedure TACBrPIXValor.ReadFromJSon(AJSon: TJsonObject);
 var
   jso: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jso := AJSon.O[fObjectName];
    valor := StringToFloatDef(jso.S['valor'], 0);
@@ -286,6 +284,7 @@ procedure TACBrPIXSaqueTroco.ReadFromJSon(AJSon: TJsonObject);
 var
   jso: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jso := AJSon.O[fObjectName];
    valor := StringToFloatDef(jso.S['valor'], 0);
@@ -384,6 +383,7 @@ procedure TACBrPIXComponentesValor.ReadFromJSon(AJSon: TJsonObject);
 var
   jso: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jso := AJSon.O['componentesValor'];
   {$Else}
@@ -496,6 +496,7 @@ end;
 
 procedure TACBrPIX.ReadFromJSon(AJSon: TJsonObject);
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fendToEndId := AJSon.S['endToEndId'];
    ftxid := AJSon.S['txid'];
@@ -514,46 +515,6 @@ begin
    fhorario := Iso8601ToDateTime( AJSon['horario'].AsString );
    finfoPagador := AJSon['infoPagador'].AsString;
    fdevolucoes.ReadFromJSon(AJSon);
-  {$EndIf}
-end;
-
-function TACBrPIX.GetAsJSON: String;
-var
-  js: TJsonObject;
-begin
-  js := TJsonObject.Create;
-  try
-    WriteToJSon(js);
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-     Result := js.ToJSON();
-    {$Else}
-     Result := js.Stringify;
-    {$EndIf}
-  finally
-    js.Free;
-  end;
-end;
-
-procedure TACBrPIX.SetAsJSON(AValue: String);
-var
-  js: TJsonObject;
-begin
-  Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Parse(AValue) as TJsonObject;
-   try
-     ReadFromJSon(js);
-   finally
-     js.Free;
-   end;
-  {$Else}
-   js := TJsonObject.Create;
-   try
-     js.Parse(AValue);
-     ReadFromJSon(js);
-   finally
-     js.Free;
-   end;
   {$EndIf}
 end;
 

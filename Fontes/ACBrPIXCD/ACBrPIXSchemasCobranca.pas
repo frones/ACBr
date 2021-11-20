@@ -95,7 +95,7 @@ type
 
   { TACBrPIXDevedor }
 
-  TACBrPIXDevedor = class
+  TACBrPIXDevedor = class(TACBrPIXSchema)
   private
     fcnpj: String;
     fcpf: String;
@@ -104,27 +104,27 @@ type
     procedure SetCpf(AValue: String);
   public
     constructor Create;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXDevedor);
 
     property cpf: String read fcpf write SetCpf;
     property cnpj: String read fcnpj write SetCnpj;
     property nome: String read fnome write fnome;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXCalendario }
 
-  TACBrPIXCalendario = class
+  TACBrPIXCalendario = class(TACBrPIXSchema)
   private
     fapresentacao: TDateTime;
     fcriacao: TDateTime;
     fexpiracao: Integer;
   public
     constructor Create;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXCalendario);
 
     // "Tempo de vida da cobrança, especificado em segundos."
@@ -132,26 +132,26 @@ type
     property apresentacao: TDateTime read fapresentacao write fapresentacao;
     property expiracao: Integer read fexpiracao write fexpiracao;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXInfoAdicional }
 
-  TACBrPIXInfoAdicional = class
+  TACBrPIXInfoAdicional = class(TACBrPIXSchema)
   private
     fnome: String;
     fvalor: String;
   public
     constructor Create;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXInfoAdicional);
 
     property nome: String read fnome write fnome;
     property valor: String read fvalor write fvalor;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXInfoAdicionais }
@@ -173,7 +173,7 @@ type
 
   { TACBrPIXSaqueTroco }
 
-  TACBrPIXSaqueTroco = class
+  TACBrPIXSaqueTroco = class(TACBrPIXSchema)
   private
     fmodalidadeAgente: TACBrPIXModalidadeAgente;
     fmodalidadeAlteracao: Boolean;
@@ -182,7 +182,7 @@ type
     procedure SetprestadorDoServicoDeSaque(AValue: Integer);
   public
     constructor Create;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXSaqueTroco);
 
     property valor: Currency read fvalor write fvalor;
@@ -190,32 +190,32 @@ type
     property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
     property prestadorDoServicoDeSaque: Integer read fprestadorDoServicoDeSaque write SetprestadorDoServicoDeSaque;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXRetirada }
 
-  TACBrPIXRetirada = class
+  TACBrPIXRetirada = class(TACBrPIXSchema)
   private
     fsaque: TACBrPIXSaqueTroco;
     ftroco: TACBrPIXSaqueTroco;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXRetirada);
 
     property saque: TACBrPIXSaqueTroco read fsaque;
     property troco: TACBrPIXSaqueTroco read ftroco;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXCobValor }
 
-  TACBrPIXCobValor = class
+  TACBrPIXCobValor = class(TACBrPIXSchema)
   private
     fmodalidadeAlteracao: Boolean;
     foriginal: Currency;
@@ -223,20 +223,20 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXCobValor);
 
     property original: Currency read foriginal write foriginal;
     property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
     property retirada: TACBrPIXRetirada read fretirada;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXCobBase }
 
-  TACBrPIXCobBase = class
+  TACBrPIXCobBase = class(TACBrPIXSchema)
   private
     frevisao: Integer;
     fassinatura: String;
@@ -248,7 +248,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXCobBase);
 
     property revisao: Integer read frevisao write frevisao;
@@ -259,8 +259,8 @@ type
     property assinatura: String read fassinatura write fassinatura;
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXCobSolicitada }
@@ -270,20 +270,18 @@ type
     fcalendario: TACBrPIXCalendario;
     fdevedor: TACBrPIXDevedor;
     fvalor: TACBrPIXCobValor;
-
-    function GetAsJSON: String;
-    procedure SetAsJSON(AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; reintroduce;
     procedure Assign(Source: TACBrPIXCobSolicitada);
 
     property calendario: TACBrPIXCalendario read fcalendario;
     property devedor: TACBrPIXDevedor read fdevedor;
     property valor: TACBrPIXCobValor read fvalor;
 
-    property AsJSON: String read GetAsJSON write SetAsJSON;
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
@@ -379,6 +377,7 @@ procedure TACBrPIXDevedor.ReadFromJSon(AJSon: TJsonObject);
 var
   jsd: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jsd := AJSon.O['devedor'];
    cnpj := jsd.S['cnpj'];
@@ -454,6 +453,7 @@ var
   jsc: TJsonObject;
   s: String;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jsc := AJSon.O['calendario'];
    s := jsc.S['criacao'];
@@ -508,6 +508,7 @@ end;
 
 procedure TACBrPIXInfoAdicional.ReadFromJSon(AJSon: TJsonObject);
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    nome := AJSon.S['nome'];
    valor := AJSon.S['valor'];
@@ -634,6 +635,7 @@ end;
 
 procedure TACBrPIXSaqueTroco.ReadFromJSon(AJSon: TJsonObject);
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    valor := StringToFloatDef( AJSon.S['valor'], 0 );
    modalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
@@ -725,6 +727,7 @@ procedure TACBrPIXRetirada.ReadFromJSon(AJSon: TJsonObject);
 var
   jsr, jss, jst: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jsr := AJSon.O['retirada'];
    jss := jsr.O['saque'];
@@ -789,6 +792,7 @@ procedure TACBrPIXCobValor.ReadFromJSon(AJSon: TJsonObject);
 var
   jsv: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    jsv := AJSon.O['valor'];
    original := StringToFloatDef( jsv.S['original'], 0 );
@@ -928,57 +932,21 @@ begin
   fvalor.Assign(Source.valor);
 end;
 
-function TACBrPIXCobSolicitada.GetAsJSON: String;
-var
-  js: TJsonObject;
+procedure TACBrPIXCobSolicitada.WriteToJSon(AJSon: TJsonObject);
 begin
-  js := TJsonObject.Create;
-  try
-    inherited WriteToJSon(js);
-    fcalendario.WriteToJSon(js);
-    fdevedor.WriteToJSon(js);
-    fvalor.WriteToJSon(js);
-
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-     Result := js.ToJSON();
-    {$Else}
-     Result := js.Stringify;
-    {$EndIf}
-  finally
-    js.Free;
-  end;
+  inherited WriteToJSon(AJSon);
+  fcalendario.WriteToJSon(AJSon);
+  fdevedor.WriteToJSon(AJSon);
+  fvalor.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobSolicitada.SetAsJSON(AValue: String);
-var
-  js: TJsonObject;
-
-  procedure _ReadFromJSon(AJSon: TJsonObject);
-  begin
-    inherited ReadFromJSon(AJSon);
-    fcalendario.ReadFromJSon(AJSon);
-    fdevedor.ReadFromJSon(AJSon);
-    fvalor.ReadFromJSon(AJSon);
-  end;
-
+procedure TACBrPIXCobSolicitada.ReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Parse(AValue) as TJsonObject;
-   try
-     _ReadFromJSon(js);
-   finally
-     js.Free;
-   end;
-  {$Else}
-   js := TJsonObject.Create;
-   try
-     js.Parse(AValue);
-     _ReadFromJSon(js);
-   finally
-     js.Free;
-   end;
-  {$EndIf}
+  inherited ReadFromJSon(AJSon);
+  fcalendario.ReadFromJSon(AJSon);
+  fdevedor.ReadFromJSon(AJSon);
+  fvalor.ReadFromJSon(AJSon);
 end;
 
 end.

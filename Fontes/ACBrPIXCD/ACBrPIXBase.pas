@@ -45,7 +45,15 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   JsonDataObjects_ACBr
+  {$Else}
+   Jsons
+  {$EndIf},
   ACBrBase;
+
+resourcestring
+  sErroMetodoNaoImplementado = 'Método %s não implementado para Classe %s';
 
 const
   cGUIPIX = 'br.gov.bcb.pix';
@@ -81,6 +89,21 @@ type
 
   EACBrPixException = class(EACBrException);
 
+  { TACBrPIXSchema }
+
+  TACBrPIXSchema = class
+  private
+    function GetAsJSON: String; virtual;
+    procedure SetAsJSON(AValue: String); virtual;
+  public
+    procedure Clear; virtual;
+    procedure WriteToJSon(AJSon: TJsonObject); virtual;
+    procedure ReadFromJSon(AJSon: TJsonObject); virtual;
+
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+  end;
+
+
   function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
   function StringToPIXStatus(const AString: String): TACBrPIXStatusCobranca;
 
@@ -94,6 +117,9 @@ type
   function StringToPIXNaturezaDevolucao(const AString: String): TACBrPIXNaturezaDevolucao;
 
 implementation
+
+uses
+  ACBrUtil;
 
 function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
 begin
@@ -188,6 +214,63 @@ begin
     Result := ndRETIRADA
   else
     Result := ndNENHUMA;
+end;
+
+{ TACBrPIXSchema }
+
+function TACBrPIXSchema.GetAsJSON: String;
+var
+  js: TJsonObject;
+begin
+  js := TJsonObject.Create;
+  try
+    WriteToJSon(js);
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     Result := js.ToJSON();
+    {$Else}
+     Result := js.Stringify;
+    {$EndIf}
+  finally
+    js.Free;
+  end;
+end;
+
+procedure TACBrPIXSchema.SetAsJSON(AValue: String);
+var
+  js: TJsonObject;
+begin
+  Clear;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   js := TJsonObject.Parse(AValue) as TJsonObject;
+   try
+     ReadFromJSon(js);
+   finally
+     js.Free;
+   end;
+  {$Else}
+   js := TJsonObject.Create;
+   try
+     js.Parse(AValue);
+     ReadFromJSon(js);
+   finally
+     js.Free;
+   end;
+  {$EndIf}
+end;
+
+procedure TACBrPIXSchema.Clear;
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['Clear', ClassName]);
+end;
+
+procedure TACBrPIXSchema.WriteToJSon(AJSon: TJsonObject);
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['WriteToJSon', ClassName]);
+end;
+
+procedure TACBrPIXSchema.ReadFromJSon(AJSon: TJsonObject);
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['ReadFromJSon', ClassName]);
 end;
 
 end.

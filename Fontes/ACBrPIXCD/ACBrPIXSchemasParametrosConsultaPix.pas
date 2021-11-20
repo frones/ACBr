@@ -50,13 +50,13 @@ uses
   {$Else}
    Jsons
   {$EndIf},
-  ACBrPIXSchemasPaginacao;
+  ACBrPIXSchemasPaginacao, ACBrPIXBase;
 
 type
 
   { TACBrPIXParametrosConsultaPix }
 
-  TACBrPIXParametrosConsultaPix = class
+  TACBrPIXParametrosConsultaPix = class(TACBrPIXSchema)
   private
     fcnpj: String;
     fcpf: String;
@@ -66,13 +66,14 @@ type
     fpaginacao: TACBrPIXPaginacao;
     ftxid: String;
     ftxIdPresente: Boolean;
+  private
     procedure SetCnpj(AValue: String);
     procedure SetCpf(AValue: String);
     procedure SetTxid(AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXParametrosConsultaPix);
 
     property inicio: TDateTime read finicio write finicio;
@@ -84,8 +85,8 @@ type
     property cnpj: String read fcnpj write SetCnpj;
     property paginacao: TACBrPIXPaginacao read fpaginacao;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 
@@ -93,7 +94,7 @@ implementation
 
 uses
   ACBrUtil, ACBrValidador,
-  ACBrPIXBase, ACBrPIXUtil;
+  ACBrPIXUtil;
 
 { TACBrPIXParametrosConsultaPix }
 
@@ -159,6 +160,7 @@ end;
 
 procedure TACBrPIXParametrosConsultaPix.ReadFromJSon(AJSon: TJsonObject);
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    finicio := Iso8601ToDateTime( AJSon.S['inicio'] );
    ffim := Iso8601ToDateTime( AJSon.S['fim'] );

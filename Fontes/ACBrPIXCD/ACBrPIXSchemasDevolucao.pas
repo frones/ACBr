@@ -63,25 +63,25 @@ type
 
   { TACBrPIXHorario }
 
-  TACBrPIXHorario = class
+  TACBrPIXHorario = class(TACBrPIXSchema)
   private
     fliquidacao: TDateTime;
     fsolicitacao: TDateTime;
   public
     constructor Create;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXHorario);
 
     property solicitacao: TDateTime read fsolicitacao write fsolicitacao;
     property liquidacao: TDateTime read fliquidacao write fliquidacao;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXDevolucao }
 
-  TACBrPIXDevolucao = class
+  TACBrPIXDevolucao = class(TACBrPIXSchema)
   private
     fdescricao: String;
     fhorario: TACBrPIXHorario;
@@ -97,7 +97,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; override;
     procedure Assign(Source: TACBrPIXDevolucao);
 
     property id: String read fid write Setid;
@@ -109,8 +109,8 @@ type
     property status: TACBrPIXStatusDevolucao read fstatus write fstatus;
     property motivo: String read fmotivo write Setmotivo;
 
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXDevolucoes }
@@ -171,6 +171,7 @@ procedure TACBrPIXHorario.ReadFromJSon(AJSon: TJsonObject);
 var
   jso: TJsonObject;
 begin
+  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fsolicitacao := Iso8601ToDateTime( AJSon.S['solicitacao'] );
    fliquidacao := Iso8601ToDateTime( AJSon.S['liquidacao'] );
@@ -253,6 +254,7 @@ begin
    rtrId := AJSon.S['rtrId'];
    status := StringToPIXStatusDevolucao( AJSon.S['status'] );
    valor := StringToFloat( AJSon.S['valor']);
+   fhorario.ReadFromJSon(AJSon.O['horario']);
   {$Else}
    descricao := AJSon['descricao'].AsString;
    id := AJSon['id'].AsString;
@@ -261,8 +263,8 @@ begin
    rtrId := AJSon['rtrId'].AsString;
    status := StringToPIXStatusDevolucao( AJSon['status'].AsString );
    valor := StringToFloat( AJSon['valor'].AsString);
+   fhorario.ReadFromJSon(AJSon['horario'].AsObject);
   {$EndIf}
-  fhorario.ReadFromJSon(AJSon['horario'].AsObject);
 end;
 
 procedure TACBrPIXDevolucao.SetDescricao(AValue: String);

@@ -106,8 +106,8 @@ type
   end;
 
 
-  function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
-  function StringToPIXStatus(const AString: String): TACBrPIXStatusCobranca;
+  function PIXStatusCobrancaToString(AStatus: TACBrPIXStatusCobranca): String;
+  function StringToPIXStatusCobranca(const AString: String): TACBrPIXStatusCobranca;
 
   function PIXModalidadeAgenteToString(AModalidadeAgente: TACBrPIXModalidadeAgente): String;
   function StringToPIXModalidadeAgente(const AString: String): TACBrPIXModalidadeAgente;
@@ -126,7 +126,7 @@ implementation
 uses
   ACBrUtil;
 
-function PIXStatusToString(AStatus: TACBrPIXStatusCobranca): String;
+function PIXStatusCobrancaToString(AStatus: TACBrPIXStatusCobranca): String;
 begin
   case AStatus of
     stcATIVA: Result := 'ATIVA';
@@ -138,7 +138,7 @@ begin
   end;
 end;
 
-function StringToPIXStatus(const AString: String): TACBrPIXStatusCobranca;
+function StringToPIXStatusCobranca(const AString: String): TACBrPIXStatusCobranca;
 begin
   if (AString = 'ATIVA') then
     Result := stcATIVA

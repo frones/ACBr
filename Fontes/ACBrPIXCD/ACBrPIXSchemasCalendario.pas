@@ -85,6 +85,13 @@ type
     property expiracao;
   end;
 
+  { TACBrPIXCalendarioCobGerada }
+
+  TACBrPIXCalendarioCobGerada = class(TACBrPIXCalendarioBase)
+  public
+    property criacao;
+    property expiracao;
+  end;
 
 implementation
 

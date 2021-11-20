@@ -63,9 +63,10 @@ type
     flocation: String;
     ftipoCob: TACBrPIXTipoCobranca;
     ftxId: String;
+    procedure SetTxId(AValue: String);
   protected
     property id: String read fid write fid;
-    property txId: String read ftxId write ftxId;
+    property txId: String read ftxId write SetTxId;
     property location: String read flocation;
     property tipoCob: TACBrPIXTipoCobranca read ftipoCob write ftipoCob;
     property criacao: TDateTime read fcriacao;
@@ -79,6 +80,23 @@ type
     procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
+  { TACBrPIXLocationCobSolicitada }
+
+  TACBrPIXLocationCobSolicitada = class(TACBrPIXLocationBase)
+  public
+    property location;
+  end;
+
+  { TACBrPIXLocation }
+
+  TACBrPIXLocation = class(TACBrPIXLocationBase)
+  public
+    property id;
+    property location;
+    property tipoCob;
+    property criacao;
+  end;
+
   { TACBrPIXLocationCompleta }
 
   TACBrPIXLocationCompleta = class(TACBrPIXLocationBase)
@@ -90,17 +108,10 @@ type
     property criacao;
   end;
 
-  { TACBrPIXLocationCobSolicitada }
-
-  TACBrPIXLocationCobSolicitada = class(TACBrPIXLocationBase)
-  public
-    property location;
-  end;
-
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil, ACBrPIXUtil;
 
 { TACBrPIXLocationBase }
 
@@ -131,11 +142,10 @@ end;
 procedure TACBrPIXLocationBase.WriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon := AJSon.O['loc'];
    if (fid <> '') then
      AJSon.S['id'] := fid;
    if (ftxId <> '') then
-     AJSon.S['txId'] := ftxId;
+     AJSon.S['txid'] := ftxId;
    if (flocation <> '') then
      AJSon.S['location'] := flocation;
    if (ftipoCob <> tcoNenhuma) then
@@ -143,11 +153,10 @@ begin
    if (fcriacao <> 0) then
      AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
   {$Else}
-   AJSon := AJSon['loc'].AsObject;
    if (fid <> '') then
      AJSon['id'].AsString := fid;
    if (ftxId <> '') then
-     AJSon['txId'].AsString := ftxId;
+     AJSon['txid'].AsString := ftxId;
    if (flocation <> '') then
      AJSon['location'].AsString := flocation;
    if (ftipoCob <> tcoNenhuma) then
@@ -163,7 +172,7 @@ var
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fid := AJSon.S['id'];
-   ftxId := AJSon.S['txId'];
+   ftxId := AJSon.S['txid'];
    flocation := AJSon.S['location'];
    ftipoCob := StringToPIXTipoCobranca(AJSon.S['tipoCob']);
    s := AJSon.S['criacao'];
@@ -171,13 +180,31 @@ begin
      fcriacao := Iso8601ToDateTime(s);
   {$Else}
    fid := AJSon['id'].AsString;
-   ftxId := AJSon['txId'].AsString;
+   ftxId := AJSon['txid'].AsString;
    flocation := AJSon['location'].AsString;
    ftipoCob := StringToPIXTipoCobranca(AJSon['tipoCob'].AsString);
    s := AJSon['criacao'].AsString;
    if (s <> '') then
      fcriacao := Iso8601ToDateTime(s);
   {$EndIf}
+end;
+
+procedure TACBrPIXLocationBase.SetTxId(AValue: String);
+var
+  s, e: String;
+begin
+  if ftxid = AValue then
+    Exit;
+
+  s := Trim(AValue);
+  if (s <> '') then
+  begin
+    e := ValidarTxId(s, 35, 26);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
+
+  fTxId := s;
 end;
 
 end.

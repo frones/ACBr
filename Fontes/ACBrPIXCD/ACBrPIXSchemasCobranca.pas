@@ -211,6 +211,54 @@ type
     procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
+  { TACBrPIXCobBaseCopiaCola }
+
+  TACBrPIXCobBaseCopiaCola = class(TACBrPIXCobBase)
+  private
+    fpixCopiaECola: String;
+  public
+    procedure Clear; reintroduce;
+    procedure Assign(Source: TACBrPIXCobBaseCopiaCola);
+
+    property pixCopiaECola: String read fpixCopiaECola write fpixCopiaECola;
+
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
+  end;
+
+  { TACBrPIXCobGerada }
+
+  TACBrPIXCobGerada = class(TACBrPIXCobBaseCopiaCola)
+  private
+    fcalendario: TACBrPIXCalendarioCobGerada;
+    fdevedor: TACBrPIXDevedor;
+    floc: TACBrPIXLocation;
+    flocation: String;
+    frevisao: Integer;
+    fstatus: TACBrPIXStatusCobranca;
+    ftxId: String;
+    fvalor: TACBrPIXCobValor;
+    procedure SetRevisao(AValue: Integer);
+    procedure SetTxId(AValue: String);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Clear; reintroduce;
+    procedure Assign(Source: TACBrPIXCobGerada);
+
+    property calendario: TACBrPIXCalendarioCobGerada read fcalendario;
+    property txId: String read ftxId write SetTxId;
+    property revisao: Integer read frevisao write SetRevisao;
+    property devedor: TACBrPIXDevedor read fdevedor;
+    property loc: TACBrPIXLocation read floc;
+    property location: String read flocation;
+    property status: TACBrPIXStatusCobranca read fstatus write fstatus;
+    property valor: TACBrPIXCobValor read fvalor;
+
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
+  end;
+
 implementation
 
 uses
@@ -707,6 +755,162 @@ begin
    floc.ReadFromJSon(AJSon['loc'].AsObject);
    fvalor.ReadFromJSon(AJSon['valor'].AsObject);
   {$EndIf}
+end;
+
+{ TACBrPIXCobBaseCopiaCola }
+
+procedure TACBrPIXCobBaseCopiaCola.Clear;
+begin
+  inherited Clear;
+  fpixCopiaECola := '';
+end;
+
+procedure TACBrPIXCobBaseCopiaCola.Assign(Source: TACBrPIXCobBaseCopiaCola);
+begin
+  inherited Assign(Source);
+  fpixCopiaECola := Source.pixCopiaECola;
+end;
+
+procedure TACBrPIXCobBaseCopiaCola.WriteToJSon(AJSon: TJsonObject);
+begin
+  inherited WriteToJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (fpixCopiaECola <> '') then
+     AJSon.S['pixCopiaECola'] := fpixCopiaECola;
+  {$Else}
+   if (fpixCopiaECola <> '') then
+     AJSon['pixCopiaECola'].AsString := fpixCopiaECola;
+  {$EndIf}
+end;
+
+procedure TACBrPIXCobBaseCopiaCola.ReadFromJSon(AJSon: TJsonObject);
+begin
+  inherited ReadFromJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fpixCopiaECola := AJSon.S['pixCopiaECola'];
+  {$Else}
+   fpixCopiaECola := AJSon['pixCopiaECola'].AsString;
+  {$EndIf}
+end;
+
+{ TACBrPIXCobGerada }
+
+constructor TACBrPIXCobGerada.Create;
+begin
+  inherited;
+  fcalendario := TACBrPIXCalendarioCobGerada.Create;
+  fdevedor := TACBrPIXDevedor.Create;
+  floc := TACBrPIXLocation.Create;
+  fvalor := TACBrPIXCobValor.Create;
+  Clear;
+end;
+
+destructor TACBrPIXCobGerada.Destroy;
+begin
+  fcalendario.Free;
+  fdevedor.Free;
+  floc.Free;
+  fvalor.Free;
+  inherited Destroy;
+end;
+
+procedure TACBrPIXCobGerada.Clear;
+begin
+  inherited Clear;
+  fcalendario.Clear;
+  fdevedor.Clear;
+  floc.Clear;
+  fvalor.Clear;
+  flocation := '';
+  frevisao := 0;
+  fstatus := stcNENHUM;
+  ftxId := '';
+end;
+
+procedure TACBrPIXCobGerada.Assign(Source: TACBrPIXCobGerada);
+begin
+  inherited Assign(Source);
+  fcalendario.Assign(Source.calendario);
+  fdevedor.Assign(Source.devedor);
+  floc.Assign(Source.loc);
+  fvalor.Assign(Source.valor);
+  flocation := Source.location;
+  frevisao := Source.revisao;
+  fstatus := Source.status;
+  ftxId := Source.txId;
+end;
+
+procedure TACBrPIXCobGerada.WriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fcalendario.WriteToJSon(AJSon.O['calendario']);
+   AJSon.S['txid'] := ftxId;
+   AJSon.I['revisao'] := frevisao;
+   fdevedor.WriteToJSon(AJSon.O['devedor']);
+   floc.WriteToJSon(AJSon.O['loc']);
+   AJSon.S['location'] := flocation;
+   AJSon.S['status'] := PIXStatusCobrancaToString(fstatus);
+   fvalor.WriteToJSon(AJSon.O['valor']);
+  {$Else}
+   fcalendario.WriteToJSon(AJSon['calendario'].AsObject);
+   AJSon['txid'].AsString := ftxId;
+   AJSon['revisao'].AsInteger := frevisao;
+   fdevedor.WriteToJSon(AJSon['devedor'].AsObject);
+   floc.WriteToJSon(AJSon['loc'].AsObject);
+   AJSon['location'].AsString := flocation;
+   AJSon['status'].AsString := PIXStatusCobrancaToString(fstatus);
+   fvalor.WriteToJSon(AJSon['valor'].AsObject);
+  {$EndIf}
+  inherited WriteToJSon(AJSon);
+end;
+
+procedure TACBrPIXCobGerada.ReadFromJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fcalendario.ReadFromJSon(AJSon.O['calendario']);
+   ftxId := AJSon.S['txid'];
+   frevisao := AJSon.I['revisao'];
+   fdevedor.ReadFromJSon(AJSon.O['devedor']);
+   floc.ReadFromJSon(AJSon.O['loc']);
+   flocation := AJSon.S['location'];
+   fstatus := StringToPIXStatusCobranca(AJSon.S['status']);
+   fvalor.ReadFromJSon(AJSon.O['valor']);
+  {$Else}
+   fcalendario.ReadFromJSon(AJSon['calendario'].AsObject);
+   ftxId := AJSon['txid'].AsString;
+   frevisao := AJSon['revisao'].AsInteger;
+   fdevedor.ReadFromJSon(AJSon['devedor'].AsObject);
+   floc.ReadFromJSon(AJSon['loc'].AsObject);
+   flocation := AJSon['location'].AsString;
+   fstatus := StringToPIXStatusCobranca(AJSon['status'].AsString);
+   fvalor.ReadFromJSon(AJSon['valor'].AsObject);
+  {$EndIf}
+  inherited ReadFromJSon(AJSon);
+end;
+
+procedure TACBrPIXCobGerada.SetTxId(AValue: String);
+var
+  s, e: String;
+begin
+  if ftxid = AValue then
+    Exit;
+
+  s := Trim(AValue);
+  if (s <> '') then
+  begin
+    e := ValidarTxId(s, 35, 26);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
+
+  fTxId := s;
+end;
+
+procedure TACBrPIXCobGerada.SetRevisao(AValue: Integer);
+begin
+  if frevisao = AValue then
+    Exit;
+  frevisao := max(AValue,0);
 end;
 
 end.

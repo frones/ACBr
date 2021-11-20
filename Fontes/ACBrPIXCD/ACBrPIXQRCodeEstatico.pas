@@ -139,7 +139,7 @@ begin
   fCidadeRecebedor := '';
   fCEPRecebedor := '';
   fChavePix := '';
-  fTipoChavePix := tcNenhuma;
+  fTipoChavePix := tchNenhuma;
   finfoAdicional := '';
   fTxId := '';
   fValor := 0;
@@ -166,7 +166,7 @@ function TACBrPIXQRCodeEstatico.GetQRCode: String;
 var
   vs: String;
 begin
-  if (fTipoChavePix = tcNenhuma) then
+  if (fTipoChavePix = tchNenhuma) then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroChaveInvalida), [fChavePix]);
 
   if (fValor > 0) then
@@ -235,7 +235,7 @@ begin
     Exit;
 
   TipoChave := DetectarTipoChave(AValue);
-  if (TipoChave = tcNenhuma) then
+  if (TipoChave = tchNenhuma) then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroChaveInvalida), [AValue]);
 
   fChavePix := Trim(AValue);

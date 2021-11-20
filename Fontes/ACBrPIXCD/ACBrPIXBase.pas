@@ -63,11 +63,11 @@ const
   cEMVLimit = 99;
 
 type
-  TACBrPIXTipoChave = ( tcNenhuma,
-                        tcCPF,
-                        tcCNPJ,
-                        tcCelular,
-                        tcAleatoria );
+  TACBrPIXTipoChave = ( tchNenhuma,
+                        tchCPF,
+                        tchCNPJ,
+                        tchCelular,
+                        tchAleatoria );
 
   TACBrPIXStatusCobranca = ( stcNENHUM,
                              stcATIVA,
@@ -86,6 +86,8 @@ type
                                maAGTEC,
                                maAGTOT,
                                maAGPSS );
+
+  TACBrPIXTipoCobranca = ( tcoNenhuma, tcoCob, tcoCobV );
 
   EACBrPixException = class(EACBrException);
 
@@ -115,6 +117,9 @@ type
 
   function PIXNaturezaDevolucaoToString(AStatus: TACBrPIXNaturezaDevolucao): String;
   function StringToPIXNaturezaDevolucao(const AString: String): TACBrPIXNaturezaDevolucao;
+
+  function PIXTipoCobrancaToString(ACob: TACBrPIXTipoCobranca): String;
+  function StringToPIXTipoCobranca(const AString: String): TACBrPIXTipoCobranca;
 
 implementation
 
@@ -214,6 +219,26 @@ begin
     Result := ndRETIRADA
   else
     Result := ndNENHUMA;
+end;
+
+function PIXTipoCobrancaToString(ACob: TACBrPIXTipoCobranca): String;
+begin
+  case ACob of
+    tcoCobV: Result := 'cobv';
+    tcoCob: Result := 'cob';
+  else
+    Result := '';
+  end;
+end;
+
+function StringToPIXTipoCobranca(const AString: String): TACBrPIXTipoCobranca;
+begin
+  if (AString = 'cobv') then
+    Result := tcoCobV
+  else if (AString = 'cob') then
+    Result := tcoCob
+  else
+    Result := tcoNenhuma;
 end;
 
 { TACBrPIXSchema }

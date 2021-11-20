@@ -79,26 +79,26 @@ var
 begin
   s := trim(AChave);
   l := Length(s);
-  Result := tcNenhuma;
+  Result := tchNenhuma;
 
   if (l = 11) then
   begin
     e := ACBrValidador.ValidarCPF(s);
     if (e = '') then
-      Result := tcCPF;
+      Result := tchCPF;
   end
   else if (l = 14) then
   begin
     if copy(s,1,3) = '+55' then  // Fone BR
     begin
       if StrIsNumber(copy(s,4,l)) then
-        Result := tcCelular;
+        Result := tchCelular;
     end
     else
     begin
       e := ACBrValidador.ValidarCNPJ(s);
       if (e = '') then
-        Result := tcCNPJ;
+        Result := tchCNPJ;
     end;
   end
   else if (l = 36) then
@@ -108,7 +108,7 @@ begin
        (copy(s,19,1) = '-') and
        (copy(s,24,1) = '-') and
        StrIsAlphaNum(StringReplace(s,'-','',[rfReplaceAll])) then
-      Result := tcAleatoria;
+      Result := tchAleatoria;
   end;
 end;
 
@@ -117,7 +117,7 @@ var
   TipoChave: TACBrPIXTipoChave;
 begin
   TipoChave := DetectarTipoChave(AChave);
-  if (TipoChave = tcNenhuma) then
+  if (TipoChave = tchNenhuma) then
     Result := Format(sErroChaveInvalida, [AChave])
   else
     Result := '';

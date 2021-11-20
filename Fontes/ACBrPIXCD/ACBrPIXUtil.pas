@@ -47,13 +47,22 @@ uses
   Classes, SysUtils,
   ACBrPIXBase;
 
+const
+  cPSSMaximo = 99999999;
+
 resourcestring
   sErroTxIdMuitoLonga = 'Chave TxId excede %d Caracteres';
   sErroTxIdMuitoCurta = 'Chave TxId inferior a %d Caracteres';
   sErroTxIdInvalido = 'Caracteres inválidos no TxId';
+  sErroPSSForaDaFaixa = 'Código ISPB fora da Faixa, 0-99999999';
+  sErroEndToEndIdentification = 'EndToEndIdentification deve ser 32 caracteres alfanuméricos';
+  sErroChaveInvalida = 'Chave Inválida: %s';
 
 function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
+function ValidarChave(const AChave: String): String;
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
+function ValidarPSS(const AValue: Integer): String;
+function ValidarEndToEndId(const AValue: String): String;
 function FormatarQRCodeId(AId: Byte; const ValorId: String): String;
 function FormatarValorPIX(AValor: Double): String;
 function Crc16PIX(const AString: String): String;
@@ -103,6 +112,17 @@ begin
   end;
 end;
 
+function ValidarChave(const AChave: String): String;
+var
+  TipoChave: TACBrPIXTipoChave;
+begin
+  TipoChave := DetectarTipoChave(AChave);
+  if (TipoChave = tcNenhuma) then
+    Result := Format(sErroChaveInvalida, [AChave])
+  else
+    Result := '';
+end;
+
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer;
   MenorTamanho: Integer): String;
 var
@@ -124,6 +144,27 @@ begin
   end;
 
   Result := e;
+end;
+
+function ValidarPSS(const AValue: Integer): String;
+begin
+  if (AValue > cPSSMaximo) then
+    Result := sErroPSSForaDaFaixa
+  else
+    Result := '';
+end;
+
+function ValidarEndToEndId(const AValue: String): String;
+var
+  s: String;
+  l: Integer;
+begin
+  s := Trim(AValue);
+  l := Length(s);
+  Result := '';
+  if (l > 0) then
+    if (l <> 32) or (not StrIsAlphaNum(s)) then
+      Result := sErroEndToEndIdentification;
 end;
 
 function FormatarQRCodeId(AId: Byte; const ValorId: String): String;

@@ -48,9 +48,7 @@ uses
   ACBrPIXBase;
 
 resourcestring
-  sErroChaveInvalida = 'Chave Inválida: %s';
   sErroMCCForaDaFaixa = 'MCC fora da Faixa, 0100-9999';
-  sErroPSSForaDaFaixa = 'Código ISPB fora da Faixa, 0-99999999';
   sErroPayloadIndicator = 'Indicador de Formato inválido';
   sErroCRCInvalido = 'CRC inválido';
   sErroSintaxe = 'Erro na sintaxe';
@@ -61,7 +59,6 @@ resourcestring
 const
   cMCCMinimo = 100;
   cMCCMaximo = 9999;
-  cPSSMaximo = 99999999;
   cCrcIdAndSize = '6304';
 
 type
@@ -290,12 +287,15 @@ begin
 end;
 
 procedure TACBrPIXQRCodeEstatico.SetPss(AValue: Integer);
+var
+  e: String;
 begin
   if (fpss = AValue) then
     Exit;
 
-  if (AValue > cPSSMaximo) then
-    raise EACBrPixException.Create(ACBrStr(sErroPSSForaDaFaixa));
+  e := ValidarPSS(AValue);
+  if (e <> '') then
+    raise EACBrPixException.Create(ACBrStr(e));
 
   fpss := AValue;
 end;

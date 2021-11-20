@@ -76,6 +76,9 @@ type
     property razao: String read frazao write frazao;
     property propriedade: String read fpropriedade write fpropriedade;
     property valor: String read fvalor write fvalor;
+
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXViolacoes }
@@ -148,6 +151,38 @@ begin
   fvalor := Source.valor;
 end;
 
+procedure TACBrPIXViolacao.WriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  if (frazao <> '') then
+    AJSon.S['razao'] := frazao;
+  if (fpropriedade <> '') then
+    AJSon.S['propriedade'] := fpropriedade;
+  if (fvalor <> '') then
+    AJSon.S['valor'] := fvalor;
+  {$Else}
+  if (frazao <> '') then
+    AJSon['razao'].AsString := frazao;
+  if (fpropriedade <> '') then
+    AJSon['propriedade'].AsString := fpropriedade;
+  if (fvalor <> '') then
+    AJSon['valor'].AsString := fvalor;
+  {$EndIf}
+end;
+
+procedure TACBrPIXViolacao.ReadFromJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   razao := AJSon.S['razao'];
+   propriedade := AJSon.S['propriedade'];
+   valor := AJSon.S['valor'];
+  {$Else}
+   razao := AJSon['razao'].AsString;
+   propriedade := AJSon['propriedade'].AsString;
+   valor := AJSon['valor'].AsString;
+  {$EndIf}
+end;
+
 { TACBrPIXViolacoes }
 
 function TACBrPIXViolacoes.GetItem(Index: Integer): TACBrPIXViolacao;
@@ -188,38 +223,15 @@ end;
 procedure TACBrPIXViolacoes.WriteToJSon(AJSon: TJsonObject);
 var
   i: Integer;
-  vi: TACBrPIXViolacao;
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.A['violacoes'].Clear;
    for i := 0 to Count-1 do
-   begin
-     vi := Items[i];
-     with AJSon.A['violacoes'].AddObject do
-     begin
-       if (vi.razao <> '') then
-         S['razao'] := vi.razao;
-       if (vi.propriedade <> '') then
-         S['propriedade'] := vi.propriedade;
-       if (vi.valor <> '') then
-         S['valor'] := vi.valor;
-     end;
-   end;
+     Items[i].WriteToJSon(AJSon.A['violacoes'].AddObject);
   {$Else}
    AJSon['violacoes'].AsArray.Clear;
    for i := 0 to Count-1 do
-   begin
-     vi := Items[i];
-     with AJSon['violacoes'].AsArray.Add.AsObject do
-     begin
-       if (vi.razao <> '') then
-         Values['razao'].AsString := vi.razao;
-       if (vi.propriedade <> '') then
-         Values['propriedade'].AsString := vi.propriedade;
-       if (vi.valor <> '') then
-         Values['valor'].AsString := vi.valor;
-     end;
-   end;
+     Items[i].WriteToJSon(AJSon['violacoes'].AsArray.Add.AsObject);
   {$EndIf}
 end;
 
@@ -233,27 +245,11 @@ begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    ja := AJSon.A['violacoes'];
    for i := 0 to ja.Count-1 do
-   begin
-     jai := ja.O[i];
-     with New do
-     begin
-       razao := jai.S['razao'];
-       propriedade := jai.S['propriedade'];
-       valor := jai.S['valor'];
-     end;
-   end;
+     New.ReadFromJSon(ja.O[i]);
   {$Else}
    ja := AJSon['violacoes'].AsArray;
    for i := 0 to ja.Count-1 do
-   begin
-     jai := ja[i].AsObject;
-     with New do
-     begin
-       razao := jai['razao'].AsString;
-       propriedade := jai['propriedade'].AsString;
-       valor := jai['valor'].AsString;
-     end;
-   end;
+     New.ReadFromJSon(ja[i].AsObject);
   {$EndIf}
 end;
 

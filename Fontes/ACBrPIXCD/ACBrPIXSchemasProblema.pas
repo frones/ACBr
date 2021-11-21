@@ -68,6 +68,8 @@ type
     fpropriedade: String;
     frazao: String;
     fvalor: String;
+  protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
   public
     constructor Create;
     procedure Clear; override;
@@ -83,19 +85,17 @@ type
 
   { TACBrPIXViolacoes }
 
-  TACBrPIXViolacoes = class(TACBrObjectList)
+  TACBrPIXViolacoes = class(TACBrPIXSchemaArray)
   private
     function GetItem(Index: Integer): TACBrPIXViolacao;
     procedure SetItem(Index: Integer; Value: TACBrPIXViolacao);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
   public
-    procedure Assign(Source: TACBrPIXViolacoes);
     Function Add(AViolacao: TACBrPIXViolacao): Integer;
     Procedure Insert(Index: Integer; AViolacao: TACBrPIXViolacao);
     function New: TACBrPIXViolacao;
     property Items[Index: Integer]: TACBrPIXViolacao read GetItem write SetItem; default;
-
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXProblema }
@@ -140,6 +140,12 @@ begin
   fpropriedade := '';
   frazao := '';
   fvalor := '';
+end;
+
+procedure TACBrPIXViolacao.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXViolacao) then
+    Assign(TACBrPIXViolacao(ASource));
 end;
 
 procedure TACBrPIXViolacao.Assign(Source: TACBrPIXViolacao);
@@ -194,13 +200,9 @@ begin
   inherited Items[Index] := Value;
 end;
 
-procedure TACBrPIXViolacoes.Assign(Source: TACBrPIXViolacoes);
-var
-  i: Integer;
+function TACBrPIXViolacoes.NewSchema: TACBrPIXSchema;
 begin
-  Clear;
-  for i := 0 to Source.Count-1 do
-    New.Assign(Source[i]);
+  Result := New;
 end;
 
 function TACBrPIXViolacoes.Add(AViolacao: TACBrPIXViolacao): Integer;
@@ -219,44 +221,12 @@ begin
   Self.Add(Result);
 end;
 
-procedure TACBrPIXViolacoes.WriteToJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.A['violacoes'].Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(AJSon.A['violacoes'].AddObject);
-  {$Else}
-   AJSon['violacoes'].AsArray.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(AJSon['violacoes'].AsArray.Add.AsObject);
-  {$EndIf}
-end;
-
-procedure TACBrPIXViolacoes.ReadFromJSon(AJSon: TJsonObject);
-var
-  ja: TJsonArray;
-  i: Integer;
-begin
-  Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A['violacoes'];
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja.O[i]);
-  {$Else}
-   ja := AJSon['violacoes'].AsArray;
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja[i].AsObject);
-  {$EndIf}
-end;
-
 { TACBrPIXProblema }
 
 constructor TACBrPIXProblema.Create;
 begin
   inherited;
-  fviolacoes := TACBrPIXViolacoes.Create();
+  fviolacoes := TACBrPIXViolacoes.Create('violacoes');
   Clear;
 end;
 

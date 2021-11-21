@@ -94,6 +94,8 @@ type
     procedure SetDescricao(AValue: String);
     procedure Setid(AValue: String);
     procedure Setmotivo(AValue: String);
+  protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
   public
     constructor Create;
     destructor Destroy; override;
@@ -115,19 +117,17 @@ type
 
   { TACBrPIXDevolucoes }
 
-  TACBrPIXDevolucoes = class(TACBrObjectList)
+  TACBrPIXDevolucoes = class(TACBrPIXSchemaArray)
   private
     function GetItem(Index: Integer): TACBrPIXDevolucao;
     procedure SetItem(Index: Integer; Value: TACBrPIXDevolucao);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
   public
-    procedure Assign(Source: TACBrPIXDevolucoes);
     Function Add(ADevolucao: TACBrPIXDevolucao): Integer;
     Procedure Insert(Index: Integer; ADevolucao: TACBrPIXDevolucao);
     function New: TACBrPIXDevolucao;
     property Items[Index: Integer]: TACBrPIXDevolucao read GetItem write SetItem; default;
-
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
 
@@ -214,6 +214,12 @@ begin
   fstatus := stdNENHUM;
   fvalor := 0;
   fhorario.Clear;
+end;
+
+procedure TACBrPIXDevolucao.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXDevolucao) then
+    Assign(TACBrPIXDevolucao(ASource));
 end;
 
 procedure TACBrPIXDevolucao.Assign(Source: TACBrPIXDevolucao);
@@ -315,13 +321,9 @@ begin
   inherited Items[Index] := Value;
 end;
 
-procedure TACBrPIXDevolucoes.Assign(Source: TACBrPIXDevolucoes);
-var
-  i: Integer;
+function TACBrPIXDevolucoes.NewSchema: TACBrPIXSchema;
 begin
-  Clear;
-  for i := 0 to Source.Count-1 do
-    New.Assign(Source[i]);
+  Result := New;
 end;
 
 function TACBrPIXDevolucoes.Add(ADevolucao: TACBrPIXDevolucao): Integer;
@@ -339,41 +341,6 @@ function TACBrPIXDevolucoes.New: TACBrPIXDevolucao;
 begin
   Result := TACBrPIXDevolucao.Create;
   Self.Add(Result);
-end;
-
-procedure TACBrPIXDevolucoes.WriteToJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-  ja: TJsonArray;
-begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A['devolucoes'];
-   ja.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(ja.AddObject);
-  {$Else}
-   ja := AJSon['devolucoes'].AsArray;
-   ja.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(ja.Add.AsObject);
-  {$EndIf}
-end;
-
-procedure TACBrPIXDevolucoes.ReadFromJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-  ja: TJsonArray;
-begin
-  Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A['devolucoes'];
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja.O[i]);
-  {$Else}
-   ja := AJSon['devolucoes'].AsArray;
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja[i].AsObject);
-  {$EndIf}
 end;
 
 end.

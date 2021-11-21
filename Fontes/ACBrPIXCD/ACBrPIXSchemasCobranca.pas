@@ -73,6 +73,8 @@ type
     fvalor: String;
     procedure SetNome(AValue: String);
     procedure SetValor(AValue: String);
+  protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
   public
     constructor Create;
     procedure Clear; override;
@@ -87,19 +89,17 @@ type
 
   { TACBrPIXInfoAdicionalArray }
 
-  TACBrPIXInfoAdicionalArray = class(TACBrObjectList)
+  TACBrPIXInfoAdicionalArray = class(TACBrPIXSchemaArray)
   private
     function GetItem(Index: Integer): TACBrPIXInfoAdicional;
     procedure SetItem(Index: Integer; Value: TACBrPIXInfoAdicional);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
   public
-    procedure Assign(Source: TACBrPIXInfoAdicionalArray);
     Function Add(AInfoAdicional: TACBrPIXInfoAdicional): Integer;
     Procedure Insert(Index: Integer; AInfoAdicional: TACBrPIXInfoAdicional);
     function New: TACBrPIXInfoAdicional;
     property Items[Index: Integer]: TACBrPIXInfoAdicional read GetItem write SetItem; default;
-
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
   { TACBrPIXSaqueTroco }
@@ -279,6 +279,12 @@ begin
   fvalor := '';
 end;
 
+procedure TACBrPIXInfoAdicional.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXInfoAdicional) then
+    Assign(TACBrPIXInfoAdicional(ASource));
+end;
+
 procedure TACBrPIXInfoAdicional.Assign(Source: TACBrPIXInfoAdicional);
 begin
   fnome := Source.nome;
@@ -334,13 +340,9 @@ begin
   inherited Items[Index] := Value;
 end;
 
-procedure TACBrPIXInfoAdicionalArray.Assign(Source: TACBrPIXInfoAdicionalArray);
-var
-  i: Integer;
+function TACBrPIXInfoAdicionalArray.NewSchema: TACBrPIXSchema;
 begin
-  Clear;
-  for i := 0 to Source.Count-1 do
-    New.Assign(Source[i]);
+  Result := New;
 end;
 
 function TACBrPIXInfoAdicionalArray.Add(AInfoAdicional: TACBrPIXInfoAdicional): Integer;
@@ -360,41 +362,6 @@ function TACBrPIXInfoAdicionalArray.New: TACBrPIXInfoAdicional;
 begin
   Result := TACBrPIXInfoAdicional.Create;
   Self.Add(Result);
-end;
-
-procedure TACBrPIXInfoAdicionalArray.WriteToJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-  ja: TJsonArray;
-begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A['infoAdicionais'];
-   ja.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(ja.AddObject);
-  {$Else}
-   ja := AJSon['infoAdicionais'].AsArray;
-   ja.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(ja.Add.AsObject);
-  {$EndIf}
-end;
-
-procedure TACBrPIXInfoAdicionalArray.ReadFromJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-  ja: TJsonArray;
-begin
-  Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A['infoAdicionais'];
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja.O[i]);
-  {$Else}
-   ja := AJSon['infoAdicionais'].AsArray;
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja[i].AsObject);
-  {$EndIf}
 end;
 
 { TACBrPIXSaqueTroco }
@@ -609,7 +576,7 @@ end;
 constructor TACBrPIXCobBase.Create;
 begin
   inherited;
-  finfoAdicionais := TACBrPIXInfoAdicionalArray.Create();
+  finfoAdicionais := TACBrPIXInfoAdicionalArray.Create('infoAdicionais');
   Clear;
 end;
 

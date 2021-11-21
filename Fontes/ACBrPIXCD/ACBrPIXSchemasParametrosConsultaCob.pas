@@ -117,8 +117,7 @@ begin
   fpaginacao.Clear
 end;
 
-procedure TACBrPIXParametrosConsultaCob.Assign(
-  Source: TACBrPIXParametrosConsultaCob);
+procedure TACBrPIXParametrosConsultaCob.Assign(Source: TACBrPIXParametrosConsultaCob);
 begin
   fcnpj := Source.cnpj;
   fcpf := Source.cpf;

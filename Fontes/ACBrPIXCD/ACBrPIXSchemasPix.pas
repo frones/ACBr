@@ -145,6 +145,8 @@ type
     procedure SetendToEndId(const AValue: String);
     procedure SetinfoPagador(AValue: String);
     procedure SetTxid(const AValue: String);
+  protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
   public
     constructor Create;
     destructor Destroy; override;
@@ -166,21 +168,17 @@ type
 
   { TACBrPIXArray }
 
-  TACBrPIXArray = class(TACBrObjectList)
+  TACBrPIXArray = class(TACBrPIXSchemaArray)
   private
-    fObjectName: String;
     function GetItem(Index: Integer): TACBrPIX;
     procedure SetItem(Index: Integer; Value: TACBrPIX);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
   public
-    constructor Create(const ObjectName: String);
-    procedure Assign(Source: TACBrPIXArray);
     Function Add(ADevolucao: TACBrPIX): Integer;
     Procedure Insert(Index: Integer; ADevolucao: TACBrPIX);
     function New: TACBrPIX;
     property Items[Index: Integer]: TACBrPIX read GetItem write SetItem; default;
-
-    procedure WriteToJSon(AJSon: TJsonObject);
-    procedure ReadFromJSon(AJSon: TJsonObject);
   end;
 
 
@@ -405,7 +403,7 @@ constructor TACBrPIX.Create;
 begin
   inherited;
   fcomponentesValor := TACBrPIXComponentesValor.Create;
-  fdevolucoes := TACBrPIXDevolucoes.Create();
+  fdevolucoes := TACBrPIXDevolucoes.Create('devolucoes');
   Clear;
 end;
 
@@ -429,6 +427,12 @@ begin
 
   fcomponentesValor.Clear;
   fdevolucoes.Clear
+end;
+
+procedure TACBrPIX.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIX) then
+    Assign(TACBrPIX(ASource));
 end;
 
 procedure TACBrPIX.Assign(Source: TACBrPIX);
@@ -570,19 +574,9 @@ begin
   inherited Items[Index] := Value;
 end;
 
-constructor TACBrPIXArray.Create(const ObjectName: String);
+function TACBrPIXArray.NewSchema: TACBrPIXSchema;
 begin
-  fObjectName := ObjectName;
-  inherited Create(True);
-end;
-
-procedure TACBrPIXArray.Assign(Source: TACBrPIXArray);
-var
-  i: Integer;
-begin
-  Clear;
-  for i := 0 to Source.Count-1 do
-    New.Assign(Source[i]);
+  Result := New;
 end;
 
 function TACBrPIXArray.Add(ADevolucao: TACBrPIX): Integer;
@@ -600,42 +594,6 @@ begin
   Result := TACBrPIX.Create;
   Self.Add(Result);
 end;
-
-procedure TACBrPIXArray.WriteToJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-  ja: TJsonArray;
-begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A[fObjectName];
-   ja.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(ja.AddObject);
-  {$Else}
-   ja := AJSon[fObjectName].AsArray;
-   ja.Clear;
-   for i := 0 to Count-1 do
-     Items[i].WriteToJSon(ja.Add.AsObject);
-  {$EndIf}
-end;
-
-procedure TACBrPIXArray.ReadFromJSon(AJSon: TJsonObject);
-var
-  i: Integer;
-  ja: TJsonArray;
-begin
-  Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ja := AJSon.A[fObjectName];
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja.O[i]);
-  {$Else}
-   ja := AJSon[fObjectName].AsArray;
-   for i := 0 to ja.Count-1 do
-     New.ReadFromJSon(ja[i].AsObject);
-  {$EndIf}
-end;
-
 
 end.
 

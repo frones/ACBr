@@ -181,7 +181,6 @@ type
     property Items[Index: Integer]: TACBrPIX read GetItem write SetItem; default;
   end;
 
-
 implementation
 
 uses

@@ -58,7 +58,8 @@ uses
    Jsons,
   {$EndIf}
   ACBrBase, ACBrPIXBase,
-  ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation;
+  ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
+  ACBrPIXSchemasPix;
 
 resourcestring
   sErroInfoAdicLimit = 'Limite de infoAdicionais atingido (50)';
@@ -258,6 +259,41 @@ type
     procedure WriteToJSon(AJSon: TJsonObject); override;
     procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
+
+  { TACBrPIXCobCompleta }
+
+  TACBrPIXCobCompleta = class(TACBrPIXCobGerada)
+  private
+    fpix: TACBrPIXArray;
+  protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
+  public
+    constructor Create;
+    procedure Clear; reintroduce;
+    destructor Destroy; override;
+    procedure Assign(Source: TACBrPIXCobCompleta);
+
+    property pix: TACBrPIXArray read fpix;
+
+    procedure WriteToJSon(AJSon: TJsonObject); override;
+    procedure ReadFromJSon(AJSon: TJsonObject); override;
+  end;
+
+  { TACBrPIXCobCompletaArray }
+
+  TACBrPIXCobCompletaArray = class(TACBrPIXSchemaArray)
+  private
+    function GetItem(Index: Integer): TACBrPIXCobCompleta;
+    procedure SetItem(Index: Integer; Value: TACBrPIXCobCompleta);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
+  public
+    Function Add(ACob: TACBrPIXCobCompleta): Integer;
+    Procedure Insert(Index: Integer; ACob: TACBrPIXCobCompleta);
+    function New: TACBrPIXCobCompleta;
+    property Items[Index: Integer]: TACBrPIXCobCompleta read GetItem write SetItem; default;
+  end;
+
 
 implementation
 
@@ -878,6 +914,84 @@ begin
   if frevisao = AValue then
     Exit;
   frevisao := max(AValue,0);
+end;
+
+{ TACBrPIXCobCompleta }
+
+constructor TACBrPIXCobCompleta.Create;
+begin
+  inherited;
+  fpix := TACBrPIXArray.Create('pix');
+  Clear;
+end;
+
+destructor TACBrPIXCobCompleta.Destroy;
+begin
+  fpix.Free;
+  inherited Destroy;
+end;
+
+procedure TACBrPIXCobCompleta.Clear;
+begin
+  fpix.Clear;
+  inherited Clear;
+end;
+
+procedure TACBrPIXCobCompleta.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXCobCompleta) then
+    Assign(TACBrPIXCobCompleta(ASource));
+end;
+
+procedure TACBrPIXCobCompleta.Assign(Source: TACBrPIXCobCompleta);
+begin
+  inherited Assign(Source);
+  fpix.Assign(Source.pix);
+end;
+
+procedure TACBrPIXCobCompleta.WriteToJSon(AJSon: TJsonObject);
+begin
+  inherited WriteToJSon(AJSon);
+  fpix.WriteToJSon(AJSon);
+end;
+
+procedure TACBrPIXCobCompleta.ReadFromJSon(AJSon: TJsonObject);
+begin
+  inherited ReadFromJSon(AJSon);
+  fpix.ReadFromJSon(AJSon);
+end;
+
+{ TACBrPIXCobCompletaArray }
+
+function TACBrPIXCobCompletaArray.GetItem(Index: Integer): TACBrPIXCobCompleta;
+begin
+  Result := TACBrPIXCobCompleta(inherited Items[Index]);
+end;
+
+procedure TACBrPIXCobCompletaArray.SetItem(Index: Integer; Value: TACBrPIXCobCompleta);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TACBrPIXCobCompletaArray.NewSchema: TACBrPIXSchema;
+begin
+  Result := New;
+end;
+
+function TACBrPIXCobCompletaArray.Add(ACob: TACBrPIXCobCompleta): Integer;
+begin
+  Result := inherited Add(ACob);
+end;
+
+procedure TACBrPIXCobCompletaArray.Insert(Index: Integer; ACob: TACBrPIXCobCompleta);
+begin
+  inherited Insert(Index, ACob);
+end;
+
+function TACBrPIXCobCompletaArray.New: TACBrPIXCobCompleta;
+begin
+  Result := TACBrPIXCobCompleta.Create;
+  Self.Add(Result);
 end;
 
 end.

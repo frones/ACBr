@@ -560,7 +560,7 @@ begin
   if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1,
-                                        SimNaoInFiscToStr(NFSe.Cancelada), ''));
+                                        SimNaoToStr(NFSe.Cancelada, proInfisc), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'canhoto', 1, 1, 1,
                                                CanhotoToStr(NFSe.Canhoto), ''));

@@ -44,8 +44,14 @@ Símbolo : Significado
 
 
 23/11/2021
+-- Infisc.LerXml/Infisc.GravarXml --
+[*] Ajustes feitos por conta das alterações realizadas na unit ACBrNFSeXConversao.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXConversao/ACBrNFSeXGravarXml_ABRASFv2/Tecnos.GravarXml --
+[*] Ajustes realizados para que o provedor processe com sucesso o Rps enviado.
+   Por: Maurício Sareto / Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
-[*] Incluida a cidade Gaurama/RS.
+[+] Incluida a cidade Gaurama/RS.
    Por: Italo Giurizzato Junior
 
 19/11/2021

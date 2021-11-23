@@ -95,6 +95,7 @@ begin
   NrOcorrCodigoPaisTomador := 1;
   NrOcorrDescIncond := 1;
   NrOcorrDescCond := 1;
+  NrOcorrComplTomador := 1;
 
   NrOcorrNaturezaOperacao := 1;
   NrOcorrBaseCalcCRS := 1;
@@ -114,9 +115,13 @@ begin
   NrOcorrOutrasInformacoes := 1;
 
   NrOcorrRegimeEspecialTributacao := 1;
+  NrOcorrRazaoSocialInterm := 1;
+  NrOcorrInscEstInter := 1;
 
   NrOcorrInscMunTomador := 1;
 
+  NrOcorrRespRetencao := 1;
+  
   GerarTagServicos := False;
 
   TagIntermediario := 'Intermediario';
@@ -144,7 +149,7 @@ begin
        SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
   Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, NrOcorrRespRetencao,
-   ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
+   ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao, proTecnos), DSC_INDRESPRET));
 
   Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, 1,
                                  NFSe.Servico.ItemListaServico, DSC_CLISTSERV));

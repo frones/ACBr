@@ -318,12 +318,12 @@ begin
       ModeloNFSe := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcStr);
 
       aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cancelada'), tcStr);
-      Cancelada := StrToSimNaoInFisc(Ok, aValor);
+      Cancelada := StrToSimNao(Ok, aValor, proInfisc);
 
       MotivoCancelamento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('motCanc'), tcStr);
 
       aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ambienteEmi'), tcStr);
-      Producao := StrToSimNaoInFisc(Ok, aValor);
+      Producao := StrToSimNao(Ok, aValor, proInfisc);
     end;
   end;
 end;

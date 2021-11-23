@@ -249,11 +249,8 @@ function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): 
 function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
 function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string;
 
-function SimNaoToStr(const t: TnfseSimNao): string;
-function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
-
-function SimNaoInFiscToStr(const t: TnfseSimNao): string;
-function StrToSimNaoInFisc(out ok: boolean; const s: string): TnfseSimNao;
+function SimNaoToStr(const t: TnfseSimNao; const provedor: TnfseProvedor = proNenhum): string;
+function StrToSimNao(out ok: boolean; const s: string; const provedor: TnfseProvedor = proNenhum): TnfseSimNao;
 
 function TipoRPSToStr(const t:TTipoRPS): string;
 function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
@@ -273,13 +270,13 @@ function CodIBGEToCidade(const ACodigo: Integer): string;
 function CodIBGEToCodTOM(const ACodigo: Integer): string;
 function CodTOMToCodIBGE(const ACodigo: string): string;
 
-function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string;
-function StrToSituacaoTributaria(out ok: boolean; const s: string; const provedor : TnfseProvedor = proNenhum): TnfseSituacaoTributaria;
-function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string;
+function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria; const provedor: TnfseProvedor = proNenhum): string;
+function StrToSituacaoTributaria(out ok: boolean; const s: string; const provedor: TnfseProvedor = proNenhum): TnfseSituacaoTributaria;
+function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria; const provedor: TnfseProvedor = proNenhum): string;
 
-function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string;
-function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao;
-function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
+function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao; const provedor: TnfseProvedor = proNenhum): string;
+function StrToResponsavelRetencao(out ok: boolean; const s: string; const provedor: TnfseProvedor = proNenhum): TnfseResponsavelRetencao;
+function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao; const provedor: TnfseProvedor = proNenhum): String;
 
 function TipoEmissaoToStr(const t: TTipoEmissao): string;
 function StrToTipoEmissao(out ok: boolean; const s: string): TTipoEmissao;
@@ -460,7 +457,7 @@ end;
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['1','2','3','4','5','6','7','8'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8'],
                            [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
                             exiImunidade, exiSuspensaDecisaoJudicial,
                             exiSuspensaProcessoAdministrativo, exiISSFixo]);
@@ -469,7 +466,7 @@ end;
 function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS;
 begin
   Result := StrToEnumerado(ok, s,
-                          ['1','2','3','4','5','6','7','8'],
+                          ['1', '2', '3', '4', '5', '6', '7', '8'],
                           [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
                            exiImunidade, exiSuspensaDecisaoJudicial,
                            exiSuspensaProcessoAdministrativo,exiISSFixo]);
@@ -478,8 +475,8 @@ end;
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['0','1','2','3','4','5','6','7','8','9','10', '11', '12',
-                            '13', '14'],
+                           ['', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                            '10', '11', '12', '13', '14'],
                            [retNenhum, retMicroempresaMunicipal, retEstimativa,
                            retSociedadeProfissionais, retCooperativa,
                            retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
@@ -491,8 +488,8 @@ end;
 function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
 begin
   Result := StrToEnumerado(ok, s,
-                          ['0','1','2','3','4','5','6','7','8','9','10', '11', '12',
-                           '13', '14'],
+                          ['', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                           '10', '11', '12', '13', '14'],
                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
                            retSociedadeProfissionais, retCooperativa,
                            retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
@@ -501,36 +498,31 @@ begin
                            retMicroEmpresario, retOutros]);
 end;
 
-function SimNaoToStr(const t: TnfseSimNao): string;
+function SimNaoToStr(const t: TnfseSimNao; const provedor: TnfseProvedor): string;
 begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [snSim, snNao]);
-end;
-
-function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [snSim, snNao]);
-end;
-
-function SimNaoInFiscToStr(const t: TnfseSimNao): string;
-begin
-// Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada
-// pois a tag nao existe no XML de retorno
-  Result := EnumeradoToStr(t,
+  case provedor of
+    proInfisc: Result := EnumeradoToStr(t,
                            ['N', 'S'],
                            [snNao, snSim]);
+  else
+    Result := EnumeradoToStr(t,
+                             ['1', '2'],
+                             [snSim, snNao]);
+  end;
 end;
 
-function StrToSimNaoInFisc(out ok: boolean; const s: string): TnfseSimNao;
+function StrToSimNao(out ok: boolean; const s: string;
+  const provedor: TnfseProvedor): TnfseSimNao;
 begin
-// Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada
-// pois a tag nao existe no XML de retorno
-  Result := StrToEnumerado(ok, s,
+  case provedor of
+    proInfisc: Result := StrToEnumerado(ok, s,
                            ['N', 'S'],
                            [snNao, snSim]);
+  else
+    Result := StrToEnumerado(ok, s,
+                             ['1', '2'],
+                             [snSim, snNao]);
+  end;
 end;
 
 function TipoRPSToStr(const t: TTipoRPS): string;
@@ -18109,46 +18101,107 @@ begin
   Result := inttostr(CodIBGE);
 end;
 
-// Situacao Tributária *********************************************************
-
-function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string;
+function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria;
+  const provedor: TnfseProvedor): string;
 begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '3'],
-                           [stRetencao, stNormal, stSubstituicao]);
+  case provedor of
+    proCenti: Result := EnumeradoToStr(t,
+                             ['0', '1', '2'],
+                             [stRetencao, stNormal, stSubstituicao]);
+  else
+    Result := EnumeradoToStr(t,
+                             ['1', '2', '3'],
+                             [stRetencao, stNormal, stSubstituicao]);
+  end;
 end;
 
-function StrToSituacaoTributaria(out ok: boolean; const s: string; const provedor : TnfseProvedor): TnfseSituacaoTributaria;
+function StrToSituacaoTributaria(out ok: boolean; const s: string;
+  const provedor: TnfseProvedor): TnfseSituacaoTributaria;
 begin
-  if provedor = proCenti then
-  begin
-    Result := StrToEnumerado(ok, s,
+  case provedor of
+    proCenti: Result := StrToEnumerado(ok, s,
                              ['0', '1', '2'],
                              [stNormal, stRetencao, stSubstituicao]);
-  end
   else
-  begin
     Result := StrToEnumerado(ok, s,
                              ['1', '2', '3'],
                              [stRetencao, stNormal, stSubstituicao]);
   end;
 end;
 
-function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string;
+function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria;
+  const provedor: TnfseProvedor): string;
 begin
-  Result := EnumeradoToStr(t,
-                           ['1', '', '2', ''],
-                           [rtTomador, rtPrestador, rtIntermediario, rtNenhum]);
+  case provedor of
+    proCenti:
+      case t of
+        stNormal       : Result := '0 - Não' ;
+        stRetencao     : Result := '1 - Sim' ;
+        stSubstituicao : Result := '2 - Substituição' ;
+      else
+        Result := '';
+      end;
+  else
+    case t of
+      stRetencao     : Result := '1 - Sim' ;
+      stNormal       : Result := '2 - Não' ;
+      stSubstituicao : Result := '3 - Substituição' ;
+    else
+      Result := '';
+    end;
+  end;
 end;
 
-function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao;
+function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao;
+  const provedor : TnfseProvedor): string;
 begin
-  Result := StrToEnumerado(ok, s,
+  case provedor of
+    proTecnos: Result := EnumeradoToStr(t,
+                             ['1', '2', '3'],
+                             [rtNenhum, rtTomador, rtIntermediario]);
+  else
+    Result := EnumeradoToStr(t,
                            ['1', '', '2', ''],
                            [rtTomador, rtPrestador, rtIntermediario, rtNenhum]);
+  end;
 end;
 
-// Tipo de Emissão *********************************************************
+function StrToResponsavelRetencao(out ok: boolean; const s: string;
+  const provedor : TnfseProvedor): TnfseResponsavelRetencao;
+begin
+  case provedor of
+    proTecnos: Result := StrToEnumerado(ok, s,
+                             ['1', '2', '3'],
+                             [rtNenhum, rtTomador, rtIntermediario]);
+  else
+    Result := StrToEnumerado(ok, s,
+                           ['1', '', '2', ''],
+                           [rtTomador, rtPrestador, rtIntermediario, rtNenhum]);
+  end;
+end;
+
+function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao;
+  const provedor : TnfseProvedor): String;
+begin
+  case provedor of
+    proTecnos:
+      case t of
+        rtNenhum        : Result := '1 - Nenhum';
+        rtTomador       : Result := '2 - Tomador';
+        rtIntermediario : Result := '3 - Intermediário';
+      else
+        Result := '';
+      end;
+  else
+    case t of
+      rtTomador       : Result := '1 - Tomador';
+      rtIntermediario : Result := '2 - Intermediário';
+      rtPrestador     : Result := '3 - Prestador';
+    else
+      Result := '';
+    end;
+  end;
+end;
 
 function TipoEmissaoToStr(const t: TTipoEmissao): string;
 begin
@@ -18163,8 +18216,6 @@ begin
                            ['N', 'C'],
                            [teNormalNFSe, teContigenciaNFSe]);
 end;
-
-// Empreitada Global *********************************************************
 
 function EmpreitadaGlobalToStr(const t: TEmpreitadaGlobal): string;
 begin
@@ -18514,17 +18565,6 @@ begin
   end;
 end;
 
-function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
-begin
-  case t of
-    rtTomador      : Result := '1 - Tomador';
-    rtIntermediario: Result := '2 - Intermediário';
-    rtPrestador    : Result := '3 - Prestador';
-  else
-    Result := '';
-  end;
-end;
-
 function TipoEmissaoDescricao(const t: TTipoEmissao): String;
 begin
   case t of
@@ -18584,17 +18624,6 @@ begin
     exiSuspensaDecisaoJudicial        : Result := '6 - Suspensa Decisao Judicial';
     exiSuspensaProcessoAdministrativo : Result := '7 - Suspensa Processo Administrativo';
     exiISSFixo                        : Result := '8 - ISS Fixo';
-  else
-    Result := '';
-  end;
-end;
-
-function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string;
-begin
-  case t of
-    stRetencao    : Result := '1 - Sim' ;
-    stNormal      : Result := '2 - Não' ;
-    stSubstituicao: Result := '3 - Substituição' ;
   else
     Result := '';
   end;

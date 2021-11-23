@@ -413,8 +413,7 @@ begin
   Result.AppendChild(GerarIntermediarioServico);
   Result.AppendChild(GerarConstrucaoCivil);
 
-  if (NFSe.RegimeEspecialTributacao <> retNenhum) then
-    Result.AppendChild(AddNode(tcStr, '#6', 'RegimeEspecialTributacao', 1, 1, NrOcorrRegimeEspecialTributacao,
+  Result.AppendChild(AddNode(tcStr, '#6', 'RegimeEspecialTributacao', 1, 2, NrOcorrRegimeEspecialTributacao,
    RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN));
 
   Result.AppendChild(AddNode(tcStr, '#7', 'NaturezaOperacao', 1, 3, NrOcorrNaturezaOperacao,

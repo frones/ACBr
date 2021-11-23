@@ -402,7 +402,7 @@ begin
             nrSiafi := '12345';
 
             infoEnte.nmEnte := 'Ente federativo teste';
-            infoEnte.uf := tpuf(ufSP);
+            infoEnte.uf := 'SP';
             infoEnte.vrSubteto := 100.00;
           end;
 
@@ -2372,7 +2372,7 @@ begin
             Bairro := 'CENTRO';
             Cep := '85500000';
             codMunic := 1234567;
-            uf := tpuf(ufPR);
+            uf := 'PR';
           end;
 
           with Exterior do
@@ -2678,7 +2678,7 @@ begin
             Bairro := 'CENTRO';
             Cep := '85500000';
             codMunic := 11111;
-            uf := tpuf(ufPR);
+            uf := 'PR';
           end;
 
           with Exterior do
@@ -2915,7 +2915,7 @@ begin
           bairro := 'centro';
           cep := '14800000';
           codMunic := 3512345;
-          uf := tpuf(ufPR);
+          uf := 'PR';
           pais := '008';
           CodPostal := '6546';
 
@@ -3725,7 +3725,7 @@ begin
           Brasil.Bairro := 'Jd Filosofia';
           Brasil.Cep := '88888888';
           Brasil.codMunic := 4141414;
-          Brasil.uf := ufPR;
+          Brasil.uf := 'PR';
 
           // Dados de trabalhador estrangeiro
           Exterior.PaisResid := '063';
@@ -3857,7 +3857,7 @@ begin
               Bairro := 'Bairro Empresarial';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'PR';
             end;
 
             supervisorEstagio.cpfSupervisor := '88888888801';
@@ -3931,7 +3931,7 @@ begin
               Bairro := 'Bairro Empresarial';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'PR';
             end;
 
             supervisorEstagio.cpfSupervisor := '12345678901';
@@ -4103,7 +4103,7 @@ begin
               Bairro := 'Jd Filosofia';
               Cep := '88888888';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'PR';
             end;
 
             // Dados de trabalhador estrangeiro

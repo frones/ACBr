@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 23/11/2021
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Ajustes no tratamento de retorno do Consultar Lote Rps, visando a leitura
+    correta de uma lista de notas retornadas pela consulta.
+   Por: Alexandre Felippeto Henzen
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível correção no tratamento de retorno do Consultar Nfse por Rps.
+   Por: Italo Giurizzato Junior
 -- Infisc.LerXml/Infisc.GravarXml --
 [*] Ajustes feitos por conta das alterações realizadas na unit ACBrNFSeXConversao.
    Por: Italo Giurizzato Junior

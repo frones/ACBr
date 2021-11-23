@@ -890,10 +890,14 @@ begin
           AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
           AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
-          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          if AuxNode <> nil then
+          begin
+            AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+            NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          end;
         end;
 
         if Assigned(ANota) then

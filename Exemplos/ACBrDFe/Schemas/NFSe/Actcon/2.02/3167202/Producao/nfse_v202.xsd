@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://nfsesetelagoas.portalfacil.com.br/nfseserv/schema/nfse_v202.xsd" xmlns="http://nfsesetelagoas.portalfacil.com.br/nfseserv/schema/nfse_v202.xsd" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified" elementFormDefault="qualified">
-	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://nfsesetelagoas.portalfacil.com.br/nfseserv/schema/xmldsig-core-schema20020212.xsd"/>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://nfsesetelagoas.portalfacil.com.br/nfseserv/schema/nfse_v202.xsd" 
+        xmlns="http://nfsesetelagoas.portalfacil.com.br/nfseserv/schema/nfse_v202.xsd" 
+        xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" 
+        attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" 
+             schemaLocation="http://nfsesetelagoas.portalfacil.com.br/nfseserv/schema/xmldsig-core-schema20020212.xsd"/>
 
 	<!-- definition of simple elements -->
 	<xsd:simpleType name="tsNumeroNfse">

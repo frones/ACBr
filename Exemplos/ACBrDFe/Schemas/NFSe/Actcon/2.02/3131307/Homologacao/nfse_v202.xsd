@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://nfeipatinga.portalfacil.com.br/homologacao/schema/nfse_v202.xsd" 
-        xmlns="http://nfeipatinga.portalfacil.com.br/homologacao/schema/nfse_v202.xsd"
+	targetNamespace="http://nfeipatinga.portalfacil.com.br/homologacao/schema/nfse_v202.xsd"
+            xmlns="http://nfeipatinga.portalfacil.com.br/homologacao/schema/nfse_v202.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
 	elementFormDefault="qualified">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
-		schemaLocation="http://nfeipatinga.portalfacil.com.br/homologacao/schema/xmldsig-core-schema20020212.xsd" />
+		schemaLocation="xmldsig-core-schema20020212.xsd" />
 
 	<!-- definition of simple elements -->
 	<xsd:simpleType name="tsNumeroNfse">
@@ -500,7 +500,7 @@
 		<xsd:sequence>
 			<xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps"
 				minOccurs="1" maxOccurs="1" />
-			<xsd:element name="DataEmissao" type="xsd:date"
+			<xsd:element name="DataEmissao" type="xsd:dateTime"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="Status" type="tsStatusRps" minOccurs="1"
 				maxOccurs="1" />

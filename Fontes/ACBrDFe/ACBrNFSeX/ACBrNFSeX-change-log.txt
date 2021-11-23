@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 23/11/2021
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Melhorias no método ProcessarMensagemErros para ignorar o grupo de mensagens
+    caso este estiver presente mas sem nenhuma mensagem.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Ajustes no tratamento de retorno do Consultar Lote Rps, visando a leitura
     correta de uma lista de notas retornadas pela consulta.

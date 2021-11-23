@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFSeXDANFSeXFR;
+unit ACBrNFSeXDANFSeFR;
 
 interface
 
@@ -42,11 +42,11 @@ uses
   DB, DBClient, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador;
 
 type
-  EACBrNFSeXDANFSeXFR = class(Exception);
+  EACBrNFSeXDANFSeFR = class(Exception);
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrNFSeXDANFSeXFR = class(TACBrNFSeXDANFSeClass)
+  TACBrNFSeXDANFSeFR = class(TACBrNFSeXDANFSeClass)
   private
     FFastFile        : String;
     FEspessuraBorda  : Integer;
@@ -107,7 +107,7 @@ implementation
 uses
   ACBrNFSeX, ACBrUtil, StrUtils, ACBrDFeUtil, Math;
 
-constructor TACBrNFSeXDANFSeXFR.Create(AOwner: TComponent);
+constructor TACBrNFSeXDANFSeFR.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FDANFSeClassOwner := TACBrNFSeXDANFSeClass(Self);
@@ -117,7 +117,7 @@ begin
   CriarDataSetsFrx;
 end;
 
-destructor TACBrNFSeXDANFSeXFR.Destroy;
+destructor TACBrNFSeXDANFSeFR.Destroy;
 begin
   frxIdentificacao.Free;
   frxPrestador.Free;
@@ -141,7 +141,7 @@ begin
   inherited Destroy;
 end;
 
-function TACBrNFSeXDANFSeXFR.GetPreparedReport: TfrxReport;
+function TACBrNFSeXDANFSeFR.GetPreparedReport: TfrxReport;
 begin
   if Trim(FFastFile) = '' then
     Result := nil
@@ -154,7 +154,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.ImprimirDANFSe(NFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.ImprimirDANFSe(NFSe: TNFSe);
 begin
   if PrepareReport(NFSe) then
   begin
@@ -165,7 +165,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.ImprimirDANFSePDF(NFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.ImprimirDANFSePDF(NFSe: TNFSe);
 const
   TITULO_PDF = 'Nota Fiscal de Serviço Eletrônica';
 var
@@ -205,7 +205,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.AjustaMargensReports;
+procedure TACBrNFSeXDANFSeFR.AjustaMargensReports;
 var
   Page: TfrxReportPage;
   I: Integer;
@@ -225,7 +225,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.SetDataSetsToFrxReport;
+procedure TACBrNFSeXDANFSeFR.SetDataSetsToFrxReport;
 begin
   frxReport.EnabledDataSets.Clear;
   frxReport.EnabledDataSets.Add(frxIdentificacao);
@@ -237,7 +237,7 @@ begin
   frxReport.EnabledDataSets.Add(frxItensServico);
 end;
 
-function TACBrNFSeXDANFSeXFR.PrepareReport(ANFSe: TNFSe): Boolean;
+function TACBrNFSeXDANFSeFR.PrepareReport(ANFSe: TNFSe): Boolean;
 var
   I: Integer;
 	wProjectStream: TStringStream;
@@ -260,11 +260,11 @@ begin
       if FileExists(FastFile) then
         frxReport.LoadFromFile(FastFile)
       else
-        raise EACBrNFSeXDANFSeXFR.CreateFmt('Caminho do arquivo de impressão do DANFSe "%s" inválido.', [FastFile]);
+        raise EACBrNFSeXDANFSeFR.CreateFmt('Caminho do arquivo de impressão do DANFSe "%s" inválido.', [FastFile]);
     end;
   end
   else
-    raise EACBrNFSeXDANFSeXFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
+    raise EACBrNFSeXDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
 
   frxReport.PrintOptions.Copies      := NumCopias;
   frxReport.PrintOptions.ShowDialog  := MostraSetup;
@@ -296,14 +296,14 @@ begin
       end;
     end
     else
-      raise EACBrNFSeXDANFSeXFR.Create('Propriedade ACBrNFSe não assinalada.');
+      raise EACBrNFSeXDANFSeFR.Create('Propriedade ACBrNFSe não assinalada.');
   end;
 
   AjustaMargensReports;
 
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CriarDataSetsFrx;
+procedure TACBrNFSeXDANFSeFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
@@ -783,7 +783,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaDados(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaDados(ANFSe: TNFSe);
 begin
   CarregaIdentificacao(ANFSe);
   CarregaPrestador(ANFSe);
@@ -794,7 +794,7 @@ begin
   CarregaTransortadora(ANFSe);
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaIdentificacao(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaIdentificacao(ANFSe: TNFSe);
 begin
   with cdsIdentificacao do
   begin
@@ -835,7 +835,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaItensServico(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaItensServico(ANFSe: TNFSe);
 var
   I: Integer;
 begin
@@ -862,7 +862,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaParametros(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaParametros(ANFSe: TNFSe);
 begin
   with cdsParametros do
   begin
@@ -967,7 +967,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaPrestador(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaPrestador(ANFSe: TNFSe);
 begin
   with cdsPrestador do
   begin
@@ -1033,7 +1033,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaServicos(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaServicos(ANFSe: TNFSe);
 begin
   with cdsServicos do
   begin
@@ -1103,7 +1103,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaTomador(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaTomador(ANFSe: TNFSe);
 begin
   with cdsTomador do
   begin
@@ -1164,7 +1164,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaLogoPrefeitura;
+procedure TACBrNFSeXDANFSeFR.CarregaLogoPrefeitura;
 var
   vStream      : TMemoryStream;
   vStringStream: TStringStream;
@@ -1198,7 +1198,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaImagemPrestadora;
+procedure TACBrNFSeXDANFSeFR.CarregaImagemPrestadora;
 var
   vStream      : TMemoryStream;
   vStringStream: TStringStream;
@@ -1233,7 +1233,7 @@ begin
   end;
 end;
 
-function TACBrNFSeXDANFSeXFR.ManterDocumento(const sCpfCnpj: String): string;
+function TACBrNFSeXDANFSeFR.ManterDocumento(const sCpfCnpj: String): string;
 begin
   Result := sCpfCnpj;
   if NaoEstaVazio(Result) then
@@ -1245,7 +1245,7 @@ begin
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+procedure TACBrNFSeXDANFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 begin
   if Provedor <> proEL then
   begin

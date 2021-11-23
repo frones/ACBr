@@ -32,12 +32,12 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFSeXDANFSeXFRReg;
+unit ACBrNFSeXDANFSeFRReg;
 
 interface
 
 uses
-  SysUtils, Classes, ACBrNFSeXDANFSeXFR, ACBrReg, DesignIntf
+  SysUtils, Classes, ACBrNFSeXDANFSeFR, ACBrReg, DesignIntf
   {$IFDEF FPC}
      , LResources
   {$ENDIF} ;
@@ -45,9 +45,9 @@ uses
 type
   { Editor de Proriedades de Componente para chamar OpenDialog dos Relatorios }
 
-  { TACBrNFSeXDANFSeXFRFileNameProperty }
+  { TACBrNFSeXDANFSeFRFileNameProperty }
 
-  TACBrNFSeXDANFSeXFRFileNameProperty = class(TACBrFileProperty)
+  TACBrNFSeXDANFSeFRFileNameProperty = class(TACBrFileProperty)
   protected
     function GetFilter: String; override;
   end;
@@ -64,13 +64,13 @@ procedure Register;
 begin
   RegisterComponents('ACBrNFSeX', [TACBrNFSeDANFSeFR]);
   
-  RegisterPropertyEditor(TypeInfo(String), TACBrNFSeXDANFSeXFR, 'FastFile',
-     TACBrNFSeXDANFSeXFRFileNameProperty);
+  RegisterPropertyEditor(TypeInfo(String), TACBrNFSeXDANFSeFR, 'FastFile',
+     TACBrNFSeXDANFSeFRFileNameProperty);
 end;
 
-{ TACBrNFSeXDANFSeXFRFileNameProperty }
+{ TACBrNFSeXDANFSeFRFileNameProperty }
 
-function TACBrNFSeXDANFSeXFRFileNameProperty.GetFilter: String;
+function TACBrNFSeXDANFSeFRFileNameProperty.GetFilter: String;
 begin
   Result := 'Arquivos do FastReport|*.fr3|Todos os arquivos|*.*';
 end;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/11/2021
+-- ACBrNFSeXServicos --
+[*] Incluida a cidade Gaurama/RS.
+   Por: Italo Giurizzato Junior
+
 19/11/2021
 -- SmarAPD.GravarXml --
 [*] Possível correção para a geração da data em <fatorgerador>.

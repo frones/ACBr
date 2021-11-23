@@ -253,7 +253,7 @@ begin
   begin
     if Value <> nil then
       if not (Value is TACBrNFSeX) then
-        raise Exception.Create('ACBrDANFSe.NFSe deve ser do tipo TACBrNFSe');
+        raise Exception.Create('ACBrDANFSeX.ACBrNFSe deve ser do tipo TACBrNFSeX');
 
     if Assigned(FACBrNFSe) then
       FACBrNFSe.RemoveFreeNotification(Self);

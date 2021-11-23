@@ -1,55 +1,55 @@
-{******************************************************************************}
-{ Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ ****************************************************************************** }
+{ Projeto: Componentes ACBr }
+{ Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil }
+{ }
+{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida }
+{ }
+{ Colaboradores nesse arquivo: }
+{ }
+{ Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr }
+{ }
+{ Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
-{******************************************************************************}
+{ qualquer versão posterior. }
+{ }
+{ Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT) }
+{ }
+{ Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc., }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
+{ Você também pode obter uma copia da licença em: }
+{ http://www.opensource.org/licenses/lgpl-license.php }
+{ }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
+{ Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170 }
+{ ****************************************************************************** }
 
 {$I ACBr.inc}
-
 unit ACBrNFSeXDANFSeFR;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrBase, ACBrNFSeXDANFSeClass, ACBrNFSeXClass,  frxClass,
+  ACBrBase, ACBrNFSeXDANFSeClass, ACBrNFSeXClass, frxClass,
   DB, DBClient, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador;
 
 type
   EACBrNFSeXDANFSeFR = class(Exception);
-  {$IFDEF RTL230_UP}
+{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
-  {$ENDIF RTL230_UP}
+{$ENDIF RTL230_UP}
+
   TACBrNFSeXDANFSeFR = class(TACBrNFSeXDANFSeClass)
   private
-    FFastFile        : String;
-    FEspessuraBorda  : Integer;
+    FFastFile: String;
+    FEspessuraBorda: Integer;
     FDANFSeXClassOwner: TACBrNFSeXDANFSeClass;
     function GetPreparedReport: TfrxReport;
     function PrepareReport(ANFSe: TNFSe = nil): Boolean;
@@ -67,52 +67,51 @@ type
 
     function ManterDocumento(const sCpfCnpj: String): string;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
-		procedure SetDataSetsToFrxReport;
+    procedure SetDataSetsToFrxReport;
     procedure AjustaMargensReports;
   public
-    frxReport   : TfrxReport; // Está como public, pois quando declarado em datamodule, tem acesso externo, e pode ser que alguem esteja usando.
+    frxReport: TfrxReport; // Está como public, pois quando declarado em datamodule, tem acesso externo, e pode ser que alguem esteja usando.
     frxPDFExport: TfrxPDFExport;
     // CDSs
     cdsIdentificacao: TClientDataSet;
-    cdsPrestador    : TClientDataSet;
-    cdsServicos     : TClientDataSet;
-    cdsParametros   : TClientDataSet;
-    cdsTomador      : TClientDataSet;
-	  cdsTransportadora : TClientDataSet;
-    cdsItensServico : TClientDataSet;
+    cdsPrestador: TClientDataSet;
+    cdsServicos: TClientDataSet;
+    cdsParametros: TClientDataSet;
+    cdsTomador: TClientDataSet;
+    cdsTransportadora: TClientDataSet;
+    cdsItensServico: TClientDataSet;
 
     // FrxDBs
     frxIdentificacao: TfrxDBDataset;
-    frxPrestador    : TfrxDBDataset;
-    frxTomador      : TfrxDBDataset;
+    frxPrestador: TfrxDBDataset;
+    frxTomador: TfrxDBDataset;
     frxTransportadora: TfrxDBDataset;
-    frxServicos     : TfrxDBDataset;
-    frxParametros   : TfrxDBDataset;
-    frxItensServico : TfrxDBDataset;
+    frxServicos: TfrxDBDataset;
+    frxParametros: TfrxDBDataset;
+    frxItensServico: TfrxDBDataset;
 
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); override;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); override;
-
+    property PreparedReport: TfrxReport read GetPreparedReport;
     property DANFSeXClassOwner: TACBrNFSeXDANFSeClass read FDANFSeXClassOwner;
   published
-    property FastFile      : String read FFastFile write FFastFile;
+    property FastFile: String read FFastFile write FFastFile;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
-    property PreparedReport: TfrxReport read GetPreparedReport;
   end;
 
 implementation
 
 uses
-  ACBrNFSeX, ACBrUtil, StrUtils, ACBrDFeUtil, Math;
+  ACBrNFSeX, ACBrUtil, StrUtils, ACBrDFeUtil, Math, ACBrNFSeXConversao;
 
 constructor TACBrNFSeXDANFSeFR.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FDANFSeClassOwner := TACBrNFSeXDANFSeClass(Self);
-  FFastFile         := '';
-  FEspessuraBorda   := 1;
+  FDANFSeXClassOwner := TACBrNFSeXDANFSeClass(Self);
+  FFastFile := '';
+  FEspessuraBorda := 1;
 
   CriarDataSetsFrx;
 end;
@@ -169,17 +168,17 @@ procedure TACBrNFSeXDANFSeFR.ImprimirDANFSePDF(NFSe: TNFSe);
 const
   TITULO_PDF = 'Nota Fiscal de Serviço Eletrônica';
 var
-  I         : Integer;
+  I: Integer;
   LArquivoPDF: string;
   OldShowDialog: Boolean;
 begin
   if PrepareReport(NFSe) then
   begin
-    frxPDFExport.Author        := Sistema;
-    frxPDFExport.Creator       := Sistema;
-    frxPDFExport.Subject       := TITULO_PDF;
+    frxPDFExport.Author := Sistema;
+    frxPDFExport.Creator := Sistema;
+    frxPDFExport.Subject := TITULO_PDF;
     frxPDFExport.EmbeddedFonts := False;
-    frxPDFExport.Background    := False;
+    frxPDFExport.Background := False;
 
     OldShowDialog := frxPDFExport.ShowDialog;
     try
@@ -187,10 +186,10 @@ begin
       for I := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
 
-        LArquivoPDF := Trim(DANFSEClassOwner.NomeDocumento);
+        LArquivoPDF := Trim(DANFSeXClassOwner.NomeDocumento);
         if EstaVazio(LArquivoPDF) then
-          LArquivoPDF :=  TACBrNFSeX(ACBrNFSe).NumID[TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[I].NFSe] + '-nfse.pdf';
-        frxPDFExport.FileName := PathWithDelim(DANFSEClassOwner.PathPDF) + LArquivoPDF;
+          LArquivoPDF := TACBrNFSeX(ACBrNFSe).NumID[TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[I].NFSe] + '-nfse.pdf';
+        frxPDFExport.FileName := PathWithDelim(DANFSeXClassOwner.PathPDF) + LArquivoPDF;
 
         if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -240,18 +239,18 @@ end;
 function TACBrNFSeXDANFSeFR.PrepareReport(ANFSe: TNFSe): Boolean;
 var
   I: Integer;
-	wProjectStream: TStringStream;
+  wProjectStream: TStringStream;
 begin
   Result := False;
 
   SetDataSetsToFrxReport;
   if Trim(FastFile) <> '' then
   begin
-    if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then
+    if not(uppercase(copy(FastFile, length(FastFile) - 3, 4)) = '.FR3') then
     begin
-      wProjectStream:=TStringStream.Create(FastFile);
+      wProjectStream := TStringStream.Create(FastFile);
       frxReport.FileName := '';
-			wProjectStream.Position := 0;
+      wProjectStream.Position := 0;
       frxReport.LoadFromStream(wProjectStream);
       wProjectStream.Free;
     end
@@ -266,9 +265,9 @@ begin
   else
     raise EACBrNFSeXDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
 
-  frxReport.PrintOptions.Copies      := NumCopias;
-  frxReport.PrintOptions.ShowDialog  := MostraSetup;
-  frxReport.ShowProgress             := MostraStatus;
+  frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PrintOptions.ShowDialog := MostraSetup;
+  frxReport.ShowProgress := MostraStatus;
   frxReport.PreviewOptions.AllowEdit := False;
 
   // Define a impressora
@@ -306,43 +305,42 @@ end;
 procedure TACBrNFSeXDANFSeFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
-	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
-	frxReport.EngineOptions.UseGlobalDataSetList := False;
+  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
+  frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin
     Tag := 1;
     // Version := '5.2.3'
-    DotMatrixReport           := False;
-    IniFile                   := '\Software\Fast Reports';
-    PreviewOptions.Buttons    := [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
-    PreviewOptions.Zoom       := 1.000000000000000000;
-    PrintOptions.Printer      := 'Padrão';
+    DotMatrixReport := False;
+    IniFile := '\Software\Fast Reports';
+    PreviewOptions.Buttons := [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
+    PreviewOptions.Zoom := 1.000000000000000000;
+    PrintOptions.Printer := 'Padrão';
     PrintOptions.PrintOnSheet := 0;
-    ScriptLanguage            := 'PascalScript';
-    StoreInDFM                := False;
-    OnBeforePrint             := frxReportBeforePrint;
-    OnReportPrint             := 'frxReportOnReportPrint';
+    ScriptLanguage := 'PascalScript';
+    StoreInDFM := False;
+    OnBeforePrint := frxReportBeforePrint;
+    OnReportPrint := 'frxReportOnReportPrint';
   end;
 
   frxPDFExport := TfrxPDFExport.Create(nil);
   with frxPDFExport do
   begin
-    UseFileCache    := True;
-    ShowProgress    := True;
+    UseFileCache := True;
+    ShowProgress := True;
     OverwritePrompt := False;
-    PrintOptimized  := True;
-    Outline         := False;
-    Background      := True;
-    HTMLTags        := True;
-    Author          := 'FastReport';
-    Subject         := 'Exportando o DANFSe para PDF';
-    HideToolbar     := False;
-    HideMenubar     := False;
-    HideWindowUI    := False;
-    FitWindow       := False;
-    CenterWindow    := False;
-    PrintScaling    := False;
+    PrintOptimized := True;
+    Outline := False;
+    Background := True;
+    HTMLTags := True;
+    Author := 'FastReport';
+    Subject := 'Exportando o DANFSe para PDF';
+    HideToolbar := False;
+    HideMenubar := False;
+    HideWindowUI := False;
+    FitWindow := False;
+    CenterWindow := False;
+    PrintScaling := False;
   end;
 
   RttiSetProp(frxPDFExport, 'Transparency', 'False');
@@ -557,10 +555,10 @@ begin
   frxIdentificacao := TfrxDBDataset.Create(Self);
   with frxIdentificacao do
   begin
-    UserName        := 'Identificacao';
-    Enabled         := False;
+    UserName := 'Identificacao';
+    Enabled := False;
     CloseDataSource := False;
-    OpenDataSource  := False;
+    OpenDataSource := False;
     with FieldAliases do
     begin
       Clear;
@@ -575,17 +573,17 @@ begin
       Add('CodigoVerificacao=CodigoVerificacao');
       Add('LinkNFSe=LinkNFSe');
     end;
-    DataSet       := cdsIdentificacao;
+    DataSet := cdsIdentificacao;
     BCDToCurrency := False;
   end;
 
   frxPrestador := TfrxDBDataset.Create(Self);
   with frxPrestador do
   begin
-    UserName        := 'Prestador';
-    Enabled         := False;
+    UserName := 'Prestador';
+    Enabled := False;
     CloseDataSource := False;
-    OpenDataSource  := False;
+    OpenDataSource := False;
     with FieldAliases do
     begin
       Clear;
@@ -605,17 +603,17 @@ begin
       Add('CodigoPais=CodigoPais');
       Add('Telefone=Telefone');
       Add('Email=Email');
-      DataSet       := cdsPrestador;
+      DataSet := cdsPrestador;
       BCDToCurrency := False;
     end;
 
     frxTomador := TfrxDBDataset.Create(Self);
     with frxTomador do
     begin
-      UserName        := 'Tomador';
-      Enabled         := False;
+      UserName := 'Tomador';
+      Enabled := False;
       CloseDataSource := False;
-      OpenDataSource  := False;
+      OpenDataSource := False;
       with FieldAliases do
       begin
         Clear;
@@ -636,16 +634,16 @@ begin
         Add('Telefone=Telefone');
         Add('Email=Email');
       end;
-      DataSet       := cdsTomador;
+      DataSet := cdsTomador;
       BCDToCurrency := False;
     end;
 
     frxTransportadora := TfrxDBDataset.Create(Self);
     with frxTransportadora do
     begin
-      UserName        := 'Transportadora';
+      UserName := 'Transportadora';
       CloseDataSource := False;
-      OpenDataSource  := False;
+      OpenDataSource := False;
       with FieldAliases do
       begin
         Clear;
@@ -661,17 +659,17 @@ begin
         Add('NomePais=NomePais');
         Add('TipoFrete=TipoFrete');
       end;
-      DataSet       := cdsTransportadora;
+      DataSet := cdsTransportadora;
       BCDToCurrency := False;
     end;
 
     frxServicos := TfrxDBDataset.Create(Self);
     with frxServicos do
     begin
-      UserName        := 'Servicos';
-      Enabled         := False;
+      UserName := 'Servicos';
+      Enabled := False;
       CloseDataSource := False;
-      OpenDataSource  := False;
+      OpenDataSource := False;
       with FieldAliases do
       begin
         Clear;
@@ -713,17 +711,17 @@ begin
         Add('PercentualCargaTributaria=PercentualCargaTributaria');
         Add('FonteCargaTributaria=FonteCargaTributaria');
       end;
-      DataSet       := cdsServicos;
+      DataSet := cdsServicos;
       BCDToCurrency := False;
     end;
 
     frxParametros := TfrxDBDataset.Create(Self);
     with frxParametros do
     begin
-      UserName        := 'Parametros';
-      Enabled         := False;
+      UserName := 'Parametros';
+      Enabled := False;
       CloseDataSource := False;
-      OpenDataSource  := False;
+      OpenDataSource := False;
       with FieldAliases do
       begin
         Clear;
@@ -752,17 +750,17 @@ begin
         Add('TipoRecolhimento=TipoRecolhimento');
         Add('ValorCredito=ValorCredito');
       end;
-      DataSet       := cdsParametros;
+      DataSet := cdsParametros;
       BCDToCurrency := False;
     end;
 
     frxItensServico := TfrxDBDataset.Create(Self);
     with frxItensServico do
     begin
-      UserName        := 'ItensServico';
-      Enabled         := False;
+      UserName := 'ItensServico';
+      Enabled := False;
       CloseDataSource := False;
-      OpenDataSource  := False;
+      OpenDataSource := False;
       with FieldAliases do
       begin
         Clear;
@@ -777,7 +775,7 @@ begin
         Add('ValorISSST=ValorISSST');
         Add('DescontoIncondicionado=DescontoIncondicionado');
       end;
-      DataSet       := cdsItensServico;
+      DataSet := cdsItensServico;
       BCDToCurrency := False;
     end;
   end;
@@ -803,33 +801,34 @@ begin
 
     with ANFSe do
     begin
-			FieldByName('Id').AsString := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
+      FieldByName('Id').AsString := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
 
-			if(FormatarNumeroDocumentoNFSe) then
-		  	FieldByName('Numero').AsString := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero)
-			else
-		  	FieldByName('Numero').AsString := IdentificacaoRps.Numero;
+      if (FormatarNumeroDocumentoNFSe) then
+        FieldByName('Numero').AsString := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero)
+      else
+        FieldByName('Numero').AsString := IdentificacaoRps.Numero;
 
-      FieldByName('Serie').AsString       := IdentificacaoRPS.Serie;
-			FieldByName('Competencia').AsString := Competencia;
+      FieldByName('Serie').AsString := IdentificacaoRps.Serie;
 
-			if(FormatarNumeroDocumentoNFSe) then
-		  	FieldByName('NFSeSubstituida').AsString := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida)
-			else
-		  	FieldByName('NFSeSubstituida').AsString := ANFSe.NfseSubstituida;
+      FieldByName('Competencia').AsString := FormatDateTime('mm/yyyy', Competencia);
 
-			if(FormatarNumeroDocumentoNFSe) then
-		  	FieldByName('NumeroNFSe').AsString := FormatarNumeroDocumentoFiscalNFSe(Numero)
-			else
-		  	FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
+      if (FormatarNumeroDocumentoNFSe) then
+        FieldByName('NFSeSubstituida').AsString := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida)
+      else
+        FieldByName('NFSeSubstituida').AsString := ANFSe.NfseSubstituida;
 
-			if(Provedor in [proGINFES, proBetha, proDSFSJC] ) then  // Felipe - Otimizy Sistemas
-				FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
-			else
-				FieldByName('DataEmissao').AsString := FormatDateBr(DataEmissao);
+      if (FormatarNumeroDocumentoNFSe) then
+        FieldByName('NumeroNFSe').AsString := FormatarNumeroDocumentoFiscalNFSe(Numero)
+      else
+        FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
+
+      if (Provedor in [proGINFES, proBetha, proDSFSJC]) then
+        FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
+      else
+        FieldByName('DataEmissao').AsString := FormatDateBr(DataEmissao);
 
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
-      FieldByName('LinkNFSe').AsString          := Link;
+      FieldByName('LinkNFSe').AsString := Link;
     end;
     Post;
   end;
@@ -848,15 +847,15 @@ begin
       begin
         Append;
         cdsItensServico.FieldByName('DiscriminacaoServico').AsString := Descricao;
-        cdsItensServico.FieldByName('Quantidade').AsString           := FloatToStr( Quantidade );
-        cdsItensServico.FieldByName('ValorUnitario').AsString        := FormatFloatBr( ValorUnitario, ',0.00');
-        cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, ',0.00');
-        cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
-        cdsItensServico.FieldByName('Aliquota').AsString             := FormatFloatBr( Aliquota, '0.00');
-        cdsItensServico.FieldByName('Unidade').AsString              := Unidade;
-        cdsItensServico.FieldByName('AliquotaISSST').AsString        := FormatFloatBr( AlicotaISSST, '0.00');
-        cdsItensServico.FieldByName('ValorISSST').AsString           := FormatFloatBr( ValorISSST, '0.00');
-        cdsItensServico.FieldByName('DescontoIncondicionado').AsString := FormatFloatBr( DescontoIncondicionado, '0.00');
+        cdsItensServico.FieldByName('Quantidade').AsString := FloatToStr(Quantidade);
+        cdsItensServico.FieldByName('ValorUnitario').AsString := FormatFloatBr(ValorUnitario, ',0.00');
+        cdsItensServico.FieldByName('ValorTotal').AsString := FormatFloatBr(ValorTotal, ',0.00');
+        cdsItensServico.FieldByName('Tributavel').AsString := SimNaoToStr(Tributavel);
+        cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr(Aliquota, '0.00');
+        cdsItensServico.FieldByName('Unidade').AsString := Unidade;
+        cdsItensServico.FieldByName('AliquotaISSST').AsString := FormatFloatBr(AliqISSST, '0.00');
+        cdsItensServico.FieldByName('ValorISSST').AsString := FormatFloatBr(ValorISSST, '0.00');
+        cdsItensServico.FieldByName('DescontoIncondicionado').AsString := FormatFloatBr(DescontoIncondicionado, '0.00');
         Post;
       end;
   end;
@@ -872,7 +871,7 @@ begin
     with ANFSe do
     begin
       FieldByName('OutrasInformacoes').AsString := OutrasInformacoes;
-      FieldByName('NaturezaOperacao').AsString  := NaturezaOperacaoDescricao(NaturezaOperacao);
+      FieldByName('NaturezaOperacao').AsString := NaturezaOperacaoDescricao(NaturezaOperacao);
 
       if Provedor = proEL then
       begin
@@ -890,7 +889,7 @@ begin
 
         with Servico do
         begin
-          FieldByName('CodigoMunicipio').AsString  := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
+          FieldByName('CodigoMunicipio').AsString := CodIBGEToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''), 0));
           FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
 
           if NaturezaOperacao = no2 then
@@ -916,24 +915,24 @@ begin
             FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
         end
         else
-          FieldByName('OptanteSimplesNacional').AsString   := SimNao(Integer(OptanteSimplesNacional));
+          FieldByName('OptanteSimplesNacional').AsString := SimNao(Integer(OptanteSimplesNacional));
 
-        FieldByName('IncentivadorCultural').AsString     := SimNao(Integer(IncentivadorCultural));
+        FieldByName('IncentivadorCultural').AsString := SimNao(Integer(IncentivadorCultural));
 
         with Servico do
         begin
-          FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
-          FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento;
+          FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
+          FieldByName('TipoRecolhimento').AsString := TipoRecolhimento;
 
           if Provedor = proAdm then
           begin
-            FieldByName('CodigoMunicipio').AsString     := CodigoMunicipio;
-            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(MunicipioIncidencia);
+            FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
+            FieldByName('MunicipioIncidencia').AsString := CodIBGEToCidade(MunicipioIncidencia);
           end
           else
           begin
-            FieldByName('CodigoMunicipio').AsString     := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
-            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0)); // Antes:
+            FieldByName('CodigoMunicipio').AsString := CodIBGEToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''), 0));
+            FieldByName('MunicipioIncidencia').AsString := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0)); // Antes:
           end;
         end;
       end;
@@ -941,7 +940,7 @@ begin
       with ConstrucaoCivil do
       begin
         FieldByName('CodigoObra').AsString := CodigoObra;
-        FieldByName('Art').AsString        := Art;
+        FieldByName('Art').AsString := Art;
       end;
 
       FieldByName('InformacoesComplementares').AsString := InformacoesComplementares;
@@ -951,14 +950,14 @@ begin
     CarregaLogoPrefeitura;
     CarregaImagemPrestadora;
 
-    FieldByName('Sistema').AsString := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
-    FieldByName('Usuario').AsString := DANFSeClassOwner.Usuario;
-    FieldByName('Site').AsString    := DANFSeClassOwner.Site;
+    FieldByName('Sistema').AsString := IfThen(DANFSeXClassOwner.Sistema <> '', DANFSeXClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString := DANFSeXClassOwner.Usuario;
+    FieldByName('Site').AsString := DANFSeXClassOwner.Site;
 
     if Provedor = proEL then
       FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'CANCELADA', '')
     else
-      FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'NFSe CANCELADA', '');  // LUIZ
+      FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'NFSe CANCELADA', ''); // LUIZ
 
     if (ANFSe.Producao = snNao) then
       FieldByName('Mensagem0').AsString := Trim(FieldByName('Mensagem0').AsString + sLineBreak + ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'));
@@ -974,59 +973,59 @@ begin
     EmptyDataSet;
     Append;
 
-    with ANFSe.PrestadorServico do
+    with ANFSe.Prestador do
     begin
-      FieldByName('RazaoSocial').AsString  := RazaoSocial;
+      FieldByName('RazaoSocial').AsString := RazaoSocial;
       FieldByName('NomeFantasia').AsString := NomeFantasia;
 
       with IdentificacaoPrestador do
       begin
-        FieldByName('Cnpj').AsString               := FormatarCNPJ(Cnpj);
+        FieldByName('Cnpj').AsString := FormatarCNPJ(Cnpj);
         FieldByName('InscricaoMunicipal').AsString := InscricaoMunicipal;
-        FieldByName('InscricaoEstadual').AsString  := FormatarIE(InscricaoEstadual, Endereco.UF);
+        FieldByName('InscricaoEstadual').AsString := FormatarIE(InscricaoEstadual, Endereco.UF);
       end;
 
       with Endereco do
       begin
-        FieldByName('Endereco').AsString        := Endereco;
-        FieldByName('Numero').AsString          := Numero;
-        FieldByName('Complemento').AsString     := Complemento;
-        FieldByName('Bairro').AsString          := Bairro;
+        FieldByName('Endereco').AsString := Endereco;
+        FieldByName('Numero').AsString := Numero;
+        FieldByName('Complemento').AsString := Complemento;
+        FieldByName('Bairro').AsString := Bairro;
         FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
-        FieldByName('UF').AsString              := UF;
-        FieldByName('CEP').AsString             := FormatarCEP(CEP);
-        FieldByName('xMunicipio').AsString      := xMunicipio;
-        FieldByName('CodigoPais').AsString      := IntToStr(CodigoPais);
+        FieldByName('UF').AsString := UF;
+        FieldByName('CEP').AsString := FormatarCEP(CEP);
+        FieldByName('xMunicipio').AsString := xMunicipio;
+        FieldByName('CodigoPais').AsString := IntToStr(CodigoPais);
       end;
 
       with Contato do
       begin
         FieldByName('Telefone').AsString := FormatarFone(Telefone);
-        FieldByName('Email').AsString    := Email;
+        FieldByName('Email').AsString := Email;
       end;
     end;
 
-    with TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.Geral do
+    with TACBrNFSeX(DANFSeXClassOwner.ACBrNFSe).Configuracoes.Geral do
       if Emitente.DadosEmitente.Endereco <> EmptyStr then
       begin
-        FieldByName('RazaoSocial').AsString  := Emitente.RazSocial;
+        FieldByName('RazaoSocial').AsString := Emitente.RazSocial;
         FieldByName('NomeFantasia').AsString := Emitente.DadosEmitente.NomeFantasia;
 
-        FieldByName('Cnpj').AsString               := FormatarCNPJ(Emitente.CNPJ);
+        FieldByName('Cnpj').AsString := FormatarCNPJ(Emitente.Cnpj);
         FieldByName('InscricaoMunicipal').AsString := Emitente.InscMun;
-        FieldByName('InscricaoEstadual').AsString  := FormatarIE(Emitente.DadosEmitente.InscricaoEstadual, Emitente.DadosEmitente.UF);
+        FieldByName('InscricaoEstadual').AsString := FormatarIE(Emitente.DadosEmitente.InscricaoEstadual, Emitente.DadosEmitente.UF);
 
-        FieldByName('Endereco').AsString        := Emitente.DadosEmitente.Endereco;
-        FieldByName('Numero').AsString          := Emitente.DadosEmitente.Numero;
-        FieldByName('Complemento').AsString     := Emitente.DadosEmitente.Complemento;
-        FieldByName('Bairro').AsString          := Emitente.DadosEmitente.Bairro;
+        FieldByName('Endereco').AsString := Emitente.DadosEmitente.Endereco;
+        FieldByName('Numero').AsString := Emitente.DadosEmitente.Numero;
+        FieldByName('Complemento').AsString := Emitente.DadosEmitente.Complemento;
+        FieldByName('Bairro').AsString := Emitente.DadosEmitente.Bairro;
         FieldByName('CodigoMunicipio').AsString := Emitente.DadosEmitente.CodigoMunicipio;
-        FieldByName('UF').AsString              := Emitente.DadosEmitente.UF;
-        FieldByName('CEP').AsString             := FormatarCEP(Emitente.DadosEmitente.CEP);
-        FieldByName('xMunicipio').AsString      := Emitente.DadosEmitente.Municipio;
+        FieldByName('UF').AsString := Emitente.DadosEmitente.UF;
+        FieldByName('CEP').AsString := FormatarCEP(Emitente.DadosEmitente.CEP);
+        FieldByName('xMunicipio').AsString := Emitente.DadosEmitente.Municipio;
 
         FieldByName('Telefone').AsString := FormatarFone(Emitente.DadosEmitente.Telefone);
-        FieldByName('Email').AsString    := Emitente.DadosEmitente.Email;
+        FieldByName('Email').AsString := Emitente.DadosEmitente.Email;
       end;
 
     Post;
@@ -1044,52 +1043,53 @@ begin
     begin
       if Provedor = proEL then
       begin
-        FieldByName('ItemListaServico').AsString  := ItemListaServico;
-        FieldByName('xItemListaServico').AsString := CodigoToDesc(StringReplace(ItemListaServico, '.', '', [rfReplaceAll, rfIgnoreCase]));
+        FieldByName('ItemListaServico').AsString := ItemListaServico;
+        FieldByName('xItemListaServico').AsString := CodItemServToDesc(StringReplace(ItemListaServico, '.', '', [rfReplaceAll, rfIgnoreCase]));
       end
       else
       begin
-        FieldByName('ItemListaServico').AsString  := ItemListaServico;
+        FieldByName('ItemListaServico').AsString := ItemListaServico;
         FieldByName('xItemListaServico').AsString := xItemListaServico;
       end;
 
-      FieldByName('CodigoCnae').AsString                := CodigoCnae;
+      FieldByName('CodigoCnae').AsString := CodigoCnae;
       FieldByName('CodigoTributacaoMunicipio').AsString := CodigoTributacaoMunicipio;
-      FieldByName('Discriminacao').AsString := StringReplace(Discriminacao, TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13, [rfReplaceAll, rfIgnoreCase]);
-      FieldByName('CodigoPais').AsString                := IntToStr(CodigoPais);
-      FieldByName('NumeroProcesso').AsString            := NumeroProcesso;
-      FieldByName('Descricao').AsString                 := Descricao;
-      FieldByName('ResponsavelRetencao').AsString       := ResponsavelRetencaoToStr(ResponsavelRetencao);
-      FieldByName('Tributacao').AsString                := TributacaoToStr(Tributacao);
+      FieldByName('Discriminacao').AsString := StringReplace(Discriminacao, TACBrNFSeX(DANFSeXClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13,
+        [rfReplaceAll, rfIgnoreCase]);
+      FieldByName('CodigoPais').AsString := IntToStr(CodigoPais);
+      FieldByName('NumeroProcesso').AsString := NumeroProcesso;
+      FieldByName('Descricao').AsString := Descricao;
+      FieldByName('ResponsavelRetencao').AsString := ResponsavelRetencaoToStr(ResponsavelRetencao);
+      FieldByName('Tributacao').AsString := TributacaoToStr(Tributacao);
 
       with Valores do
       begin
-        FieldByName('ValorServicos').AsFloat          := ValorServicos;
-        FieldByName('ValorDeducoes').AsFloat          := ValorDeducoes;
-        FieldByName('ValorPis').AsFloat               := ValorPis;
-        FieldByName('ValorCofins').AsFloat            := ValorCofins;
-        FieldByName('ValorInss').AsFloat              := ValorInss;
-        FieldByName('ValorIr').AsFloat                := ValorIr;
-        FieldByName('ValorCsll').AsFloat              := ValorCsll;
-        FieldByName('IssRetido').AsString             := SituacaoTributariaDescricao(IssRetido);
-        FieldByName('ValorIss').AsFloat               := ValorIss;
-        FieldByName('OutrasRetencoes').AsFloat        := OutrasRetencoes;
-        FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
-        FieldByName('Aliquota').AsFloat               := Aliquota;
-        FieldByName('ValorLiquidoNfse').AsFloat       := ValorLiquidoNfse;
-        FieldByName('ValorIssRetido').AsFloat         := ValorIssRetido;
-        FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;
+        FieldByName('ValorServicos').AsFloat := ValorServicos;
+        FieldByName('ValorDeducoes').AsFloat := ValorDeducoes;
+        FieldByName('ValorPis').AsFloat := ValorPis;
+        FieldByName('ValorCofins').AsFloat := ValorCofins;
+        FieldByName('ValorInss').AsFloat := ValorInss;
+        FieldByName('ValorIr').AsFloat := ValorIr;
+        FieldByName('ValorCsll').AsFloat := ValorCsll;
+        FieldByName('IssRetido').AsString := SituacaoTributariaDescricao(IssRetido);
+        FieldByName('ValorIss').AsFloat := ValorIss;
+        FieldByName('OutrasRetencoes').AsFloat := OutrasRetencoes;
+        FieldByName('BaseCalculo').AsFloat := BaseCalculo;
+        FieldByName('Aliquota').AsFloat := Aliquota;
+        FieldByName('ValorLiquidoNfse').AsFloat := ValorLiquidoNfse;
+        FieldByName('ValorIssRetido').AsFloat := ValorIssRetido;
+        FieldByName('DescontoCondicionado').AsFloat := DescontoCondicionado;
         FieldByName('DescontoIncondicionado').AsFloat := DescontoIncondicionado;
-        FieldByName('OutrosDescontos').AsCurrency     := OutrosDescontos;
+        FieldByName('OutrosDescontos').AsCurrency := OutrosDescontos;
 
         if IssRetido = stRetencao then
         begin
-          FieldByName('DescricaoTotalRetDemo').AsString     := 'TOTAL RETENÇÕES';
+          FieldByName('DescricaoTotalRetDemo').AsString := 'TOTAL RETENÇÕES';
           FieldByName('DescriçãoTributosFederais').AsString := 'RETENÇÕES DOS TRIBUTOS FEDERAIS';
         end
         else
         begin
-          FieldByName('DescricaoTotalRetDemo').AsString     := 'TOTAL DEMONSTRATIVO';
+          FieldByName('DescricaoTotalRetDemo').AsString := 'TOTAL DEMONSTRATIVO';
           FieldByName('DescriçãoTributosFederais').AsString := 'DEMONSTRATIVO DOS TRIBUTOS FEDERAIS';
         end;
 
@@ -1112,35 +1112,35 @@ begin
 
     with ANFSe.Tomador do
     begin
-      FieldByName('RazaoSocial').AsString        := RazaoSocial;
-      FieldByName('CpfCnpj').AsString            := ManterDocumento(IdentificacaoTomador.CpfCnpj);
+      FieldByName('RazaoSocial').AsString := RazaoSocial;
+      FieldByName('CpfCnpj').AsString := ManterDocumento(IdentificacaoTomador.CpfCnpj);
       FieldByName('InscricaoMunicipal').AsString := IdentificacaoTomador.InscricaoMunicipal;
-      FieldByName('InscricaoEstadual').AsString  := IdentificacaoTomador.InscricaoEstadual;
+      FieldByName('InscricaoEstadual').AsString := IdentificacaoTomador.InscricaoEstadual;
 
       with Endereco do
       begin
-        FieldByName('Endereco').AsString        := Endereco;
-        FieldByName('Numero').AsString          := Numero;
-        FieldByName('Complemento').AsString     := Complemento;
-        FieldByName('Bairro').AsString          := Bairro;
+        FieldByName('Endereco').AsString := Endereco;
+        FieldByName('Numero').AsString := Numero;
+        FieldByName('Complemento').AsString := Complemento;
+        FieldByName('Bairro').AsString := Bairro;
         FieldByName('CodigoMunicipio').AsString := CodigoMunicipio;
-        FieldByName('UF').AsString              := UF;
-        FieldByName('CEP').AsString             := FormatarCEP(CEP);
-        FieldByName('xMunicipio').AsString      := xMunicipio;
-        FieldByName('CodigoPais').AsString      := IntToStr(CodigoPais);
+        FieldByName('UF').AsString := UF;
+        FieldByName('CEP').AsString := FormatarCEP(CEP);
+        FieldByName('xMunicipio').AsString := xMunicipio;
+        FieldByName('CodigoPais').AsString := IntToStr(CodigoPais);
       end;
 
       with Contato do
       begin
         FieldByName('Telefone').AsString := FormatarFone(Telefone);
-        FieldByName('Email').AsString    := Email;
+        FieldByName('Email').AsString := Email;
       end;
     end;
     Post;
   end;
 end;
 
-procedure TACBrNFSeXDANFSeXFR.CarregaTransortadora(ANFSe: TNFSe);
+procedure TACBrNFSeXDANFSeFR.CarregaTransortadora(ANFSe: TNFSe);
 begin
   with cdsTransportadora do
   begin
@@ -1148,17 +1148,17 @@ begin
     Append;
     with ANFSe.Transportadora do
     begin
-      FieldByName('Cnpj').AsString              := xCpfCnpjTrans;
-      FieldByName('RazaoSocial').AsString       := xNomeTrans;
-      FieldByName('InscicaoEstadual').AsString  := xInscEstTrans;
-      FieldByName('Placa').AsString             := xPlacaTrans;
-      FieldByName('Endereco').AsString          := xEndTrans;
-      FieldByName('CodigoMunicipio').AsInteger  := cMunTrans;
-      FieldByName('NomeMunicipio').AsString     := xMunTrans;
-      FieldByName('Sigla').AsString             := xUFTrans;
-      FieldByName('NomePais').AsString          := xPaisTrans;
-      FieldByName('BacenPais').AsInteger        := cPaisTrans;
-      FieldByName('TipoFrete').AsInteger        := Ord(vTipoFreteTrans);
+      FieldByName('Cnpj').AsString := xCpfCnpjTrans;
+      FieldByName('RazaoSocial').AsString := xNomeTrans;
+      FieldByName('InscicaoEstadual').AsString := xInscEstTrans;
+      FieldByName('Placa').AsString := xPlacaTrans;
+      FieldByName('Endereco').AsString := xEndTrans;
+      FieldByName('CodigoMunicipio').AsInteger := cMunTrans;
+      FieldByName('NomeMunicipio').AsString := xMunTrans;
+      FieldByName('Sigla').AsString := xUFTrans;
+      FieldByName('NomePais').AsString := xPaisTrans;
+      FieldByName('BacenPais').AsInteger := cPaisTrans;
+      FieldByName('TipoFrete').AsInteger := Ord(vTipoFreteTrans);
     end;
     Post;
   end;
@@ -1166,16 +1166,16 @@ end;
 
 procedure TACBrNFSeXDANFSeFR.CarregaLogoPrefeitura;
 var
-  vStream      : TMemoryStream;
+  vStream: TMemoryStream;
   vStringStream: TStringStream;
 begin
-  With DANFSeClassOwner do
+  With DANFSeXClassOwner do
   begin
     cdsParametros.FieldByName('LogoPrefExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prefeitura
     cdsParametros.FieldByName('Nome_Prefeitura').AsString := Prefeitura;
-    if NaoEstaVazio(DANFSeClassOwner.Logo) then
+    if NaoEstaVazio(DANFSeXClassOwner.Logo) then
     begin
-      cdsParametros.FieldByName('imgPrefeitura').AsString   := Logo;
+      cdsParametros.FieldByName('imgPrefeitura').AsString := Logo;
       vStream := TMemoryStream.Create;
       try
         if FileExists(Logo) then
@@ -1200,24 +1200,25 @@ end;
 
 procedure TACBrNFSeXDANFSeFR.CarregaImagemPrestadora;
 var
-  vStream      : TMemoryStream;
+  vStream: TMemoryStream;
   vStringStream: TStringStream;
+
 begin
-  With DANFSeClassOwner do
+  With DANFSeXClassOwner do
   begin
     cdsParametros.FieldByName('LogoExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prestador
 
-    if NaoEstaVazio(PrestLogo) then
+    if NaoEstaVazio(Prestador.Logo) then
     begin
-      cdsParametros.FieldByName('Imagem').AsString := PrestLogo;
+      cdsParametros.FieldByName('Imagem').AsString := Prestador.Logo;
 
       vStream := TMemoryStream.Create;
       try
-        if FileExists(PrestLogo) then
-          vStream.LoadFromFile(PrestLogo)
+        if FileExists(Prestador.Logo) then
+          vStream.LoadFromFile(Prestador.Logo)
         else
         begin
-          vStringStream := TStringStream.Create(PrestLogo);
+          vStringStream := TStringStream.Create(Prestador.Logo);
           try
             vStream.LoadFromStream(vStringStream);
           finally
@@ -1238,7 +1239,7 @@ begin
   Result := sCpfCnpj;
   if NaoEstaVazio(Result) then
   begin
-    if Length(Result) > 11 then
+    if length(Result) > 11 then
       Result := FormatarCNPJ(Result)
     else
       Result := FormatarCPF(Result);
@@ -1251,12 +1252,17 @@ begin
   begin
     with frxReport do
     begin
-      //validando se encontra cada memo no relatório (permitindo melhor personalização dos DANFSe)
-      if FindObject('Memo23') <> nil then FindObject('Memo23').Visible := DANFSeClassOwner.ImprimeCanhoto;
-      if FindObject('Memo75') <> nil then FindObject('Memo75').Visible := DANFSeClassOwner.ImprimeCanhoto;
-      if FindObject('Memo77') <> nil then FindObject('Memo77').Visible := DANFSeClassOwner.ImprimeCanhoto;
-      if FindObject('Memo68') <> nil then FindObject('Memo68').Visible := DANFSeClassOwner.ImprimeCanhoto;
-      if FindObject('Memo73') <> nil then FindObject('Memo73').Visible := DANFSeClassOwner.ImprimeCanhoto;
+      // validando se encontra cada memo no relatório (permitindo melhor personalização dos DANFSe)
+      if FindObject('Memo23') <> nil then
+        FindObject('Memo23').Visible := DANFSeXClassOwner.ImprimeCanhoto;
+      if FindObject('Memo75') <> nil then
+        FindObject('Memo75').Visible := DANFSeXClassOwner.ImprimeCanhoto;
+      if FindObject('Memo77') <> nil then
+        FindObject('Memo77').Visible := DANFSeXClassOwner.ImprimeCanhoto;
+      if FindObject('Memo68') <> nil then
+        FindObject('Memo68').Visible := DANFSeXClassOwner.ImprimeCanhoto;
+      if FindObject('Memo73') <> nil then
+        FindObject('Memo73').Visible := DANFSeXClassOwner.ImprimeCanhoto;
     end;
   end;
 end;

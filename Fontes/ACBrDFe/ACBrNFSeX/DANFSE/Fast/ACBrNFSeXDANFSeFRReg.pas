@@ -62,7 +62,7 @@ implementation
 
 procedure Register;
 begin
-  RegisterComponents('ACBrNFSeX', [TACBrNFSeDANFSeFR]);
+  RegisterComponents('ACBrNFSeX', [TACBrNFSeXDANFSeFR]);
   
   RegisterPropertyEditor(TypeInfo(String), TACBrNFSeXDANFSeFR, 'FastFile',
      TACBrNFSeXDANFSeFRFileNameProperty);

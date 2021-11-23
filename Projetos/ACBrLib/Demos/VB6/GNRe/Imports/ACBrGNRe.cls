@@ -198,7 +198,7 @@ Public Sub ConfigGravarValor(ByVal eSessao As String, _
 
     Dim retorno As Long
     
-    'retorno = GNRE_ConfigGravarValor(eSessao, eChave, valor)
+    retorno = GNRE_ConfigGravarValor(eSessao, eChave, valor)
     CheckResult retorno
 End Sub
 

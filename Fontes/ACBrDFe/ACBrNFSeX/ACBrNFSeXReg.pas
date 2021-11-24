@@ -87,6 +87,8 @@ begin
 
   RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFSe, 'PathCan',
      TACBrDirProperty);
+
+  UnlistPublishedProperty(TWebServicesConf, 'QuebradeLinha');
 end;
 
 {$ifdef FPC}

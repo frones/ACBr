@@ -209,6 +209,7 @@ begin
   FNotasFiscais := TNotasFiscais.Create(Self);
   FWebService := TWebservices.Create;
 
+
   fpCidadesJaCarregadas := False;
 end;
 

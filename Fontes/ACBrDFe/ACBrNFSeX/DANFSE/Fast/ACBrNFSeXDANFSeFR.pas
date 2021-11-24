@@ -113,7 +113,6 @@ begin
   FDANFSeXClassOwner := TACBrNFSeXDANFSeClass(Self);
   FFastFile := '';
   FEspessuraBorda := 1;
-
   CriarDataSetsFrx;
 end;
 
@@ -210,16 +209,17 @@ var
   Page: TfrxReportPage;
   I: Integer;
 begin
+  //Não tratar quando for margem 0 ou a margem padrão, usar a do FR3
   for I := 0 to (frxReport.PreviewPages.Count - 1) do
   begin
     Page := frxReport.PreviewPages.Page[I];
-    if (MargemSuperior > 0) then
+    if (MargemSuperior > 0) and (MargemSuperior <> 8) then
       Page.TopMargin := MargemSuperior;
-    if (MargemInferior > 0) then
+    if (MargemInferior > 0) and (MargemInferior <> 8) then
       Page.BottomMargin := MargemInferior;
-    if (MargemEsquerda > 0) then
+    if (MargemEsquerda > 0) and (MargemEsquerda <> 6) then
       Page.LeftMargin := MargemEsquerda;
-    if (MargemDireita > 0) then
+    if (MargemDireita > 0) and (MargemDireita <> 5.1) then
       Page.RightMargin := MargemDireita;
     frxReport.PreviewPages.ModifyPage(I, Page);
   end;
@@ -1055,8 +1055,10 @@ begin
 
       FieldByName('CodigoCnae').AsString := CodigoCnae;
       FieldByName('CodigoTributacaoMunicipio').AsString := CodigoTributacaoMunicipio;
-      FieldByName('Discriminacao').AsString := StringReplace(Discriminacao, TACBrNFSeX(DANFSeXClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13,
-        [rfReplaceAll, rfIgnoreCase]);
+      FieldByName('Discriminacao').AsString := StringReplace(Discriminacao,
+                                                             TACBrNFSeX(DANFSeXClassOwner.ACBrNFSe).Provider.ConfigGeral.QuebradeLinha,
+                                                             #13,
+                                                             [rfReplaceAll, rfIgnoreCase]);
       FieldByName('CodigoPais').AsString := IntToStr(CodigoPais);
       FieldByName('NumeroProcesso').AsString := NumeroProcesso;
       FieldByName('Descricao').AsString := Descricao;

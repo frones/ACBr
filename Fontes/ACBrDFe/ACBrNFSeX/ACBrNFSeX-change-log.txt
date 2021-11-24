@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/11/2021
+-- ACBrNFSeXReg --
+[*] Ajuste para não mostrar a propriedade de configuração QuebradeLinha no Object Inspector
+    pois cada provedor tem a sua própria configuração.
+   Por: Italo Giurizzato Junior/Pandaa/Juliomar Marchetti
+
 23/11/2021
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Melhorias no método ProcessarMensagemErros para ignorar o grupo de mensagens

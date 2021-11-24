@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/11/2021
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade Westfalia/RS.
+   Por: Lucas Deinani
 -- ACBrNFSeXReg --
 [*] Ajuste para não mostrar a propriedade de configuração QuebradeLinha no Object Inspector
     pois cada provedor tem a sua própria configuração.

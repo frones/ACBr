@@ -44,9 +44,10 @@ uses
   Windows, Messages, FileCtrl, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, Generics.Collections,
   IOUtils, UITypes, JclIDEUtils, JclCompilerUtils,
-  Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
+  Types, JvComponentBase, JvExControls, JvAnimatedImage,
   JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, CheckLst,
-  uFrameLista, ACBrUtil, ACBrPacotes, UACBrPlataformaInstalacaoAlvo;
+  uFrameLista, ACBrUtil, ACBrPacotes, UACBrPlataformaInstalacaoAlvo,
+  ACBrInstallDelphiComponentes;
 
 type
 
@@ -81,7 +82,6 @@ type
     pnlInfoCompilador: TPanel;
     wizPgPacotes: TJvWizardInteriorPage;
     lbInfo: TListBox;
-    JvCreateProcess1: TJvCreateProcess;
     Label22: TLabel;
     framePacotes1: TframePacotes;
     wizPgSelectIDEs: TJvWizardInteriorPage;
@@ -140,6 +140,9 @@ type
     procedure GravarConfiguracoesEmArquivoIni;
     procedure LerConfiguracoesEmArquivoIni;
     function PathArquivoIni: String;
+    procedure AjustaConfiguracoesConformeTela(var OpcoesInstall: TACBrInstallOpcoes; var OpcoesCompilacao: TACBrCompilerOpcoes);
+    procedure AjustaTelaConformeConfiguracoes(OpcoesInstall: TACBrInstallOpcoes; OpcoesCompilacao: TACBrCompilerOpcoes);
+
     procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; const PastaACBr: string; ListaPacotes:
         TPacotes);
     function ProcedeInstalacao: Boolean;
@@ -150,6 +153,7 @@ type
     procedure IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const NomeCaminhoArquivoLog: string;
           const Cabecalho: string);
     procedure MontaListaIDEsSuportadas;
+    procedure AtualizarArquivoIni;
   public
 
   end;
@@ -160,8 +164,7 @@ var
 implementation
 
 uses
-  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils,
-  ACBrInstallDelphiComponentes;
+  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils;
 
 {$R *.dfm}
 
@@ -188,6 +191,7 @@ begin
       sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
       if Trim(sDirPackage) = '' then
         raise Exception.Create('Não foi possível encontrar o diretório do pacote "' + NomePacote +'" no caminho: '+ PastaACBr);
+
       if IsDelphiPackage(NomePacote) then
       begin
         if not FileExists(IncludeTrailingPathDelimiter(sDirPackage) + NomePacote) then
@@ -208,54 +212,47 @@ var
   I, J: Integer;
   PlataformasMarcadas: string;
   ListaPlataformasStrings: TStringList;
+  OpcoesInstalacao:   TACBrInstallOpcoes;
+  OpcoesCompilacao:   TACBrCompilerOpcoes;
 begin
+  AtualizarArquivoIni;
+
+  OpcoesInstalacao.CarregarDeArquivoIni(PathArquivoIni);
+  OpcoesCompilacao.CarregarDeArquivoIni(PathArquivoIni);
+  AjustaTelaConformeConfiguracoes(OpcoesInstalacao, OpcoesCompilacao);
+
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
-    edtDirDestino.Text             := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
-    rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL', 0);
-    chkSobrescreverDLLs.Checked    := ArqIni.ReadBool('CONFIG','SobrescreverDLL', False);
-
-    ckbCopiarTodasDll.Checked      := True;
-    ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder', False);
-    chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib', False);
-    ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL', False);
-    ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom', False);
-    ckbRemoveXMLSec.Checked        := True;
-    ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia', False);
-    ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings', False);
-    ckbUsarArquivoConfig.Checked   := True;
-
     PlataformasMarcadas := ArqIni.ReadString('PLATAFORMAS', 'Marcadas', '');
-    if PlataformasMarcadas <> '' then
-    begin
-      ListaPlataformasStrings := TStringList.Create;
-      try
-        ListaPlataformasStrings.Delimiter := ';';
-        ListaPlataformasStrings.StrictDelimiter := True;
-        ListaPlataformasStrings.DelimitedText := PlataformasMarcadas;
-
-        for I := 0 to ListaPlataformasStrings.Count - 1 do
-        begin
-          for J := 0 to scrlbxDelphiVersion.ControlCount - 1 do
-          begin
-            if (scrlbxDelphiVersion.Controls[J] as TCheckBox).Caption = ListaPlataformasStrings[I] then
-            begin
-              (scrlbxDelphiVersion.Controls[J] as TCheckBox).Checked := True;
-            end;
-          end;
-        end;
-
-      finally
-        ListaPlataformasStrings.Free;
-      end;
-    end;
-
-
-    for I := 0 to framePacotes1.Pacotes.Count - 1 do
-      framePacotes1.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', framePacotes1.Pacotes[I].Caption, False);
   finally
     ArqIni.Free;
   end;
+
+  if PlataformasMarcadas <> '' then
+  begin
+    ListaPlataformasStrings := TStringList.Create;
+    try
+      ListaPlataformasStrings.Delimiter := ';';
+      ListaPlataformasStrings.StrictDelimiter := True;
+      ListaPlataformasStrings.DelimitedText := PlataformasMarcadas;
+
+      for I := 0 to ListaPlataformasStrings.Count - 1 do
+      begin
+        for J := 0 to scrlbxDelphiVersion.ControlCount - 1 do
+        begin
+          if (scrlbxDelphiVersion.Controls[J] as TCheckBox).Caption = ListaPlataformasStrings[I] then
+          begin
+            (scrlbxDelphiVersion.Controls[J] as TCheckBox).Checked := True;
+          end;
+        end;
+      end;
+
+    finally
+      ListaPlataformasStrings.Free;
+    end;
+  end;
+
+  framePacotes1.CarregarDeArquivoIni(PathArquivoIni);
 end;
 
 // gravar as configurações efetuadas pelo usuário
@@ -264,39 +261,32 @@ var
   ArqIni: TIniFile;
   I: Integer;
   PlataformasMarcadas: string;
+  OpcoesInstalacao:   TACBrInstallOpcoes;
+  OpcoesCompilacao:   TACBrCompilerOpcoes;
 begin
+  AjustaConfiguracoesConformeTela(OpcoesInstalacao, OpcoesCompilacao);
+  OpcoesInstalacao.SalvarEmArquivoIni(PathArquivoIni);
+  OpcoesCompilacao.SalvarEmArquivoIni(PathArquivoIni);
+
+  PlataformasMarcadas := '';
+  for i := 0 to scrlbxDelphiVersion.ControlCount - 1 do
+  begin
+    // só instala as versão marcadas para instalar.
+    if ((scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked) then
+    begin
+      PlataformasMarcadas := PlataformasMarcadas + (scrlbxDelphiVersion.Controls[i] as TCheckBox).Caption +';';
+    end;
+  end;
+
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
-    ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', edtDirDestino.Text);
-    ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
-    ArqIni.WriteBool('CONFIG','SobrescreverDLL', chkSobrescreverDLLs.Checked);
-    ArqIni.WriteBool('CONFIG','C++Builder', ckbBCB.Checked);
-    ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
-    ArqIni.WriteBool('CONFIG','RemoveOpenSSL', ckbRemoveOpenSSL.Checked);
-    ArqIni.WriteBool('CONFIG','RemoveCapicom', ckbRemoveCapicom.Checked);
-    ArqIni.WriteBool('CONFIG','RemoveXmlSec', ckbRemoveXMLSec.Checked);
-    ArqIni.WriteBool('CONFIG','CargaDllTardia', ckbCargaDllTardia.Checked);
-    ArqIni.WriteBool('CONFIG','RemoverCastWarnings', ckbRemoverCastWarnings.Checked);
-
-    PlataformasMarcadas := '';
-    for i := 0 to scrlbxDelphiVersion.ControlCount - 1 do
-    begin
-      // só instala as versão marcadas para instalar.
-      if ((scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked) then
-      begin
-        PlataformasMarcadas := PlataformasMarcadas + (scrlbxDelphiVersion.Controls[i] as TCheckBox).Caption +';';
-      end;
-    end;
-
     ArqIni.EraseSection('PLATAFORMAS');
     ArqIni.WriteString('PLATAFORMAS', 'Marcadas', PlataformasMarcadas);
-
-    ArqIni.EraseSection('PACOTES');
-    for I := 0 to framePacotes1.Pacotes.Count - 1 do
-      ArqIni.WriteBool('PACOTES', framePacotes1.Pacotes[I].Caption, framePacotes1.Pacotes[I].Checked);
   finally
     ArqIni.Free;
   end;
+
+  framePacotes1.SalvarEmArquivoIni(PathArquivoIni);
 end;
 
 procedure TfrmPrincipal.IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const
@@ -320,7 +310,6 @@ var
   achk: TCheckBox;
   ValorTop: Integer;
 begin
-  // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to FUmaListaPlataformasAlvos.Count - 1 do
   begin
     achk := TCheckBox.Create(scrlbxDelphiVersion);
@@ -337,7 +326,6 @@ begin
       begin
         ValorTop   := ValorTop + 8;
       end;
-
     end;
     achk.Width   := scrlbxDelphiVersion.Width - 16;
     achk.Top     := ValorTop;
@@ -353,12 +341,42 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.AtualizarArquivoIni;
+var
+  versao: string;
+  ArqIni: TIniFile;
+begin
+  if not FilesExists(PathArquivoIni) then
+  begin
+    Exit;
+  end;
+
+  ArqIni := TIniFile.Create(PathArquivoIni);
+  try
+    versao := ArqIni.ReadString('CONFIG', 'VersaoArquivoIniConfig', '');
+  finally
+    ArqIni.Free;
+  end;
+
+  if versao <> cVersaoConfig then
+  begin
+    if MessageDlg('Encontramos um arquivo de configuração antigo. Precisamos apagá-lo para continuar.' + sLineBreak +
+                  'Deseja Continuar?', mtWarning, mbYesNo, 0, mbNo) <> mrYes then
+    begin
+      Application.Terminate;
+    end;
+
+    DeleteFile(PathArquivoIni);
+    ShowMessage('Por favor, confira as opções de configuração.');
+  end;
+end;
+
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
-  Caption := Caption + ' ' + sVersaoInstalador;
+  Caption                   := Caption + ' ' + sVersaoInstalador;
   FUmaListaPlataformasAlvos := GeraListaPlataformasAlvos;
-  FUltimoArquivoLog := '';
-  FListaCheckBox := TList<TCheckBox>.Create;
+  FUltimoArquivoLog         := '';
+  FListaCheckBox            := TList<TCheckBox>.Create;
 
   MontaListaIDEsSuportadas;
 
@@ -379,54 +397,48 @@ begin
 end;
 
 function TfrmPrincipal.ProcedeInstalacao: Boolean;
+
+  function GeraListaVersoesMarcadas(): TList<Integer>;
+  var
+    i: integer;
+  begin
+    Result := TList<Integer>.Create;
+    for i := 0 to scrlbxDelphiVersion.ControlCount - 1 do
+    begin
+      // só instala as versão marcadas para instalar.
+      if ((scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked) then
+      begin
+        Result.Add(i)
+      end;
+    end;
+  end;
+
 var
   ACBrInstaladorAux: TACBrInstallComponentes;
   ListaPacotes: TPacotes;
   ListaVersoesInstalacao: TList<Integer>;
-  i: Integer;
 begin
   ListaPacotes := framePacotes1.Pacotes;
 
-  ListaVersoesInstalacao := TList<Integer>.Create;
-
-  for i := 0 to scrlbxDelphiVersion.ControlCount - 1 do
-  begin
-    // só instala as versão marcadas para instalar.
-    if ((scrlbxDelphiVersion.Controls[i] as TCheckBox).Checked) then
-    begin
-      ListaVersoesInstalacao.Add(i)
-    end;
-  end;
-
-  ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
+  ListaVersoesInstalacao := GeraListaVersoesMarcadas;
   try
-    ACBrInstaladorAux.OnIniciaNovaInstalacao := IniciaNovaInstalacao;
-    ACBrInstaladorAux.OnProgresso            := IncrementaBarraProgresso;
-    ACBrInstaladorAux.OnInformaSituacao      := Logar;
+    ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
+    try
+      ACBrInstaladorAux.OnIniciaNovaInstalacao := IniciaNovaInstalacao;
+      ACBrInstaladorAux.OnProgresso            := IncrementaBarraProgresso;
+      ACBrInstaladorAux.OnInformaSituacao      := Logar;
 
-    ACBrInstaladorAux.OpcoesInstall.LimparArquivosACBrAntigos := ckbRemoverArquivosAntigos.Checked;
-    ACBrInstaladorAux.OpcoesInstall.DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
-    ACBrInstaladorAux.OpcoesInstall.DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
-    ACBrInstaladorAux.OpcoesInstall.UsarCpp                   := ckbBCB.Checked;
-    ACBrInstaladorAux.OpcoesInstall.UsarUsarArquivoConfig     := ckbUsarArquivoConfig.Checked;
-    ACBrInstaladorAux.OpcoesCompilacao.DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
-    ACBrInstaladorAux.OpcoesCompilacao.DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
-    ACBrInstaladorAux.OpcoesCompilacao.DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
-    ACBrInstaladorAux.OpcoesCompilacao.UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
-    ACBrInstaladorAux.OpcoesCompilacao.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
-    case rdgdll.ItemIndex of
-      0 : ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs := tdSystem;
-      1 : ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs := tdDelphi;
-      2 : ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs := tdNone;
-    else
-      ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs     := tdNone;
+      AjustaConfiguracoesConformeTela(ACBrInstaladorAux.OpcoesInstall, ACBrInstaladorAux.OpcoesCompilacao);
+
+      Result := ACBrInstaladorAux.Instalar(ListaPacotes, ListaVersoesInstalacao, FUmaListaPlataformasAlvos);
+    finally
+      ACBrInstaladorAux.Free;
     end;
-    ACBrInstaladorAux.OpcoesInstall.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
-    Result := ACBrInstaladorAux.Instalar(ListaPacotes, ListaVersoesInstalacao, FUmaListaPlataformasAlvos);
   finally
-    ACBrInstaladorAux.Free;
+    ListaVersoesInstalacao.Free;
   end;
+
 
   if Result then
   begin
@@ -460,6 +472,50 @@ procedure TfrmPrincipal.AbrirLinkEmNavegadorParaEnderecoDoACBrPro;
 begin
   // ir para o endereço do ACBrSAC
   ShellExecute(Handle, 'open', PWideChar(lblUrlACBrSac1.Caption), '', '', 1);
+end;
+
+procedure TfrmPrincipal.AjustaConfiguracoesConformeTela(var OpcoesInstall: TACBrInstallOpcoes; var OpcoesCompilacao: TACBrCompilerOpcoes);
+begin
+  OpcoesInstall.LimparArquivosACBrAntigos := ckbRemoverArquivosAntigos.Checked;
+  OpcoesInstall.DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
+  OpcoesInstall.DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
+  OpcoesInstall.UsarCpp                   := ckbBCB.Checked;
+  OpcoesInstall.UsarUsarArquivoConfig     := ckbUsarArquivoConfig.Checked;
+  case rdgdll.ItemIndex of
+    0 : OpcoesInstall.sDestinoDLLs := tdSystem;
+    1 : OpcoesInstall.sDestinoDLLs := tdDelphi;
+    2 : OpcoesInstall.sDestinoDLLs := tdNone;
+  else
+    OpcoesInstall.sDestinoDLLs     := tdNone;
+  end;
+  OpcoesInstall.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
+
+  OpcoesCompilacao.DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
+  OpcoesCompilacao.DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
+  OpcoesCompilacao.DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
+  OpcoesCompilacao.UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
+  OpcoesCompilacao.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
+end;
+
+procedure TfrmPrincipal.AjustaTelaConformeConfiguracoes(OpcoesInstall: TACBrInstallOpcoes; OpcoesCompilacao: TACBrCompilerOpcoes);
+begin
+  ckbRemoverArquivosAntigos.Checked := OpcoesInstall.LimparArquivosACBrAntigos;
+  chkDeixarSomenteLIB.Checked       := OpcoesInstall.DeixarSomentePastasLib;
+  ckbCopiarTodasDll.Checked         := OpcoesInstall.DeveCopiarOutrasDLLs;
+  ckbBCB.Checked                    := OpcoesInstall.UsarCpp;
+  ckbUsarArquivoConfig.Checked      := OpcoesInstall.UsarUsarArquivoConfig;
+  case OpcoesInstall.sDestinoDLLs of
+    tdSystem: rdgdll.ItemIndex := 0;
+    tdDelphi: rdgdll.ItemIndex := 1;
+    tdNone:   rdgdll.ItemIndex := 2;
+  end;
+  edtDirDestino.Text := IncludeTrailingPathDelimiter(OpcoesInstall.DiretorioRaizACBr);
+
+  ckbRemoveCapicom.Checked          := not OpcoesCompilacao.DeveInstalarCapicom;
+  ckbRemoveOpenSSL.Checked          := not OpcoesCompilacao.DeveInstalarOpenSSL;
+  ckbRemoveXMLSec.Checked           := not OpcoesCompilacao.DeveInstalarXMLSec;
+  ckbCargaDllTardia.Checked         := OpcoesCompilacao.UsarCargaTardiaDLL;
+  ckbRemoverCastWarnings.Checked    := OpcoesCompilacao.RemoverStringCastWarnings;
 end;
 
 procedure TfrmPrincipal.btnDesmarcarTodasClick(Sender: TObject);

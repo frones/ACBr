@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = edtDirDestino
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgConfiguracao
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1167,7 +1167,10 @@ object frmPrincipal: TfrmPrincipal
           Top = 59
           Width = 379
           Height = 17
+          Hint = 'Desabilita o uso das Dlls da OpenSLL'
           Caption = 'N'#227'o utilizar OpenSSL'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
         end
         object ckbRemoveCapicom: TCheckBox
@@ -1175,7 +1178,12 @@ object frmPrincipal: TfrmPrincipal
           Top = 80
           Width = 379
           Height = 17
+          Hint = 
+            '*Recomendado Desabilita o uso da DLL da Capicom (DLL Depreciada ' +
+            '2015)'
           Caption = 'N'#227'o utilizar Capicom'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
         end
         object ckbRemoveXMLSec: TCheckBox
@@ -1183,8 +1191,11 @@ object frmPrincipal: TfrmPrincipal
           Top = 37
           Width = 379
           Height = 17
+          Hint = '*Recomendado Desabilita o usa da DLL XMLSec'
           Caption = 'N'#227'o utilizar XMLSec'
           Checked = True
+          ParentShowHint = False
+          ShowHint = True
           State = cbChecked
           TabOrder = 2
         end
@@ -1193,7 +1204,12 @@ object frmPrincipal: TfrmPrincipal
           Top = 16
           Width = 379
           Height = 17
+          Hint = 
+            '*Recomendado A Carga de DLL ser'#225' executada quando necess'#225'rio, e ' +
+            'n'#227'o no carregamento inicial da aplica'#231#227'o'
           Caption = 'Usar carga de DLL tardia (em especial xmlSec)'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 3
         end
         object ckbRemoverCastWarnings: TCheckBox
@@ -1202,11 +1218,13 @@ object frmPrincipal: TfrmPrincipal
           Width = 379
           Height = 17
           Hint = 
-            'Sugerimos marcar caso n'#227'o esteja resolvendo problemas com string' +
-            's.'
+            '*Recomendado marcar caso n'#227'o esteja resolvendo problemas com str' +
+            'ings.'
           Caption = 
             'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
             'ng'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 4
         end
       end
@@ -1238,6 +1256,8 @@ object frmPrincipal: TfrmPrincipal
           Height = 17
           Hint = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder.'
           Caption = 'Generate all C++Builder files (including package libs) '
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
         end
         object chkDeixarSomenteLIB: TCheckBox
@@ -1245,7 +1265,12 @@ object frmPrincipal: TfrmPrincipal
           Top = 45
           Width = 350
           Height = 17
+          Hint = 
+            '*Recomendado caso n'#227'o esteja alterando o componente. Quando marc' +
+            'ado n'#227' ir'#225' recompilar o componente na build das aplica'#231#245'es'
           Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
         end
         object ckbRemoverArquivosAntigos: TCheckBox
@@ -1253,7 +1278,10 @@ object frmPrincipal: TfrmPrincipal
           Top = 68
           Width = 379
           Height = 17
+          Hint = 'Remover todas as dependencias da ACBr dos discos do equipamento'
           Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 2
         end
         object ckbUsarArquivoConfig: TCheckBox
@@ -1261,7 +1289,12 @@ object frmPrincipal: TfrmPrincipal
           Top = 92
           Width = 305
           Height = 17
+          Hint = 
+            '*Recomendado Usar arquivo de Configura'#231#227'o de apoio no instalador' +
+            ' (libpath muito grande)'
           Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 3
         end
         object ckbCopiarTodasDll: TCheckBox
@@ -1270,11 +1303,13 @@ object frmPrincipal: TfrmPrincipal
           Width = 350
           Height = 17
           Hint = 
-            'Copia todas as DLL'#180's "Extras" para o destino selecionado (CLX, D' +
-            'iversos, MSVCR, LibXml, etc...)'
+            '*Recomendado Copia todas as DLL'#180's "Extras" para o destino seleci' +
+            'onado (CLX, Diversos, MSVCR, LibXml, etc...)'
           Caption = 
             'Copiar todas as DLL'#39's requeridas (exceto as marcadas '#39'n'#227'o utiliz' +
             'ar'#39')'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 4
         end
         object rdgDLL: TRadioGroup
@@ -1288,6 +1323,8 @@ object frmPrincipal: TfrmPrincipal
             'Diret'#243'rio system do Windows (Recomendado)'
             'Diret'#243'rio bin'#225'rio do Delphi'
             'N'#227'o copiar (N'#227'o recomendado)')
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 5
         end
         object chkSobrescreverDLLs: TCheckBox
@@ -1297,6 +1334,8 @@ object frmPrincipal: TfrmPrincipal
           Height = 17
           Hint = 'Se marcado vai sobrescrever as DLLs ao copiar caso encontre.'
           Caption = 'Sobrescrever DLLs ao copiar'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 6
         end
       end
@@ -1631,7 +1670,6 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
@@ -2767,11 +2805,5 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
     end
-  end
-  object JvCreateProcess1: TJvCreateProcess
-    Priority = ppHigh
-    ConsoleOptions = [coOwnerData, coRedirect, coSeparateError]
-    Left = 50
-    Top = 320
   end
 end

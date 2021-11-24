@@ -191,15 +191,48 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
+    procedure CarregarDeArquivoIni(const ArquivoIni: string);
+    procedure SalvarEmArquivoIni(const ArquivoIni: string);
     property Pacotes: TPacotes read FPacotes write FPacotes;
   end;
 
 implementation
 
 uses
-  StrUtils;
+  StrUtils, IniFiles;
 
 {$R *.dfm}
+
+procedure TframePacotes.CarregarDeArquivoIni(const ArquivoIni: string);
+var
+  ArqIni: TIniFile;
+  I: Integer;
+begin
+  ArqIni := TIniFile.Create(ArquivoIni);
+  try
+    //Não usar ArqIni.ReadSection porque pode ser que houveram mudanças nos pacotes...
+    for I := 0 to Pacotes.Count - 1 do
+      Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', Pacotes[I].Caption, False);
+  finally
+    ArqIni.Free;
+  end;
+end;
+
+procedure TframePacotes.SalvarEmArquivoIni(const ArquivoIni: string);
+var
+  ArqIni: TIniFile;
+  I: Integer;
+begin
+  ArqIni := TIniFile.Create(ArquivoIni);
+  try
+    ArqIni.EraseSection('PACOTES');
+    for I := 0 to Pacotes.Count - 1 do
+      ArqIni.WriteBool('PACOTES', Pacotes[I].Caption, Pacotes[I].Checked);
+  finally
+    ArqIni.Free;
+  end;
+
+end;
 
 constructor TframePacotes.Create(AOwner: TComponent);
 var

@@ -39,6 +39,9 @@ uses
   SysUtils, Windows, Messages, Classes, Forms, System.Generics.Collections,
   JclIDEUtils, JclCompilerUtils, ACBrPacotes, UACBrPlataformaInstalacaoAlvo;
 
+const
+  cVersaoConfig = '1.0';
+
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
   TNivelLog = (nlNenhumLog, nlMinimo, nlMedio, nlMaximo);
@@ -55,6 +58,10 @@ type
     UsarCargaTardiaDLL: Boolean;
     RemoverStringCastWarnings: Boolean;
     DeveSobrescreverDllsExistentes: Boolean;
+  public
+    procedure RedefinirValoresOpcoesParaPadrao;
+    procedure CarregarDeArquivoIni(const ArquivoIni: string);
+    procedure SalvarEmArquivoIni(const ArquivoIni: string);
   end;
 
   TACBrInstallOpcoes = record
@@ -65,6 +72,10 @@ type
     sDestinoDLLs: TDestino;
     DiretorioRaizACBr: string;
     DeveCopiarOutrasDLLs: Boolean;
+  public
+    procedure RedefinirValoresOpcoesParaPadrao;
+    procedure CarregarDeArquivoIni(const ArquivoIni: string);
+    procedure SalvarEmArquivoIni(const ArquivoIni: string);
   end;
 
   TACBrInstallComponentes = class(TObject)
@@ -130,6 +141,8 @@ type
     constructor Create(app: TApplication);
     destructor Destroy; override;
 
+    procedure LerDeArquivoIni(const ArquivoIni: string);
+    procedure SalvarConfiguracoesEmArquivoIni(const ArquivoIni: string);
 
     function Instalar(ListaPacotes: TPacotes; ListaVersoesInstalacao:TList<Integer>;
       ListaPlataformasInstalacao: TListaPlataformasAlvos): Boolean;
@@ -145,7 +158,7 @@ implementation
 
 uses
   ShellApi, Types, IOUtils,
-  ACBrUtil, ACBrInstallUtils,
+  ACBrUtil, ACBrInstallUtils, IniFiles,
   JvVersionInfo;
 
 
@@ -165,21 +178,8 @@ end;
 constructor TACBrInstallComponentes.Create(app: TApplication);
 begin
   inherited Create;
-  //Valores padrões das opções
-  OpcoesInstall.LimparArquivosACBrAntigos := False;
-  OpcoesInstall.DeixarSomentePastasLib    := True;
-  OpcoesInstall.UsarCpp                   := False;
-  OpcoesInstall.UsarUsarArquivoConfig     := True;
-  OpcoesInstall.sDestinoDLLs              := tdNone;
-  OpcoesInstall.DiretorioRaizACBr         := 'C:\ACBr\';
-  OpcoesInstall.DeveCopiarOutrasDLLs      := True;
-
-  OpcoesCompilacao.DeveInstalarCapicom       := False;
-  OpcoesCompilacao.DeveInstalarOpenSSL       := True;
-  OpcoesCompilacao.DeveInstalarXMLSec        := False;
-  OpcoesCompilacao.UsarCargaTardiaDLL        := False;
-  OpcoesCompilacao.RemoverStringCastWarnings := False;
-  OpcoesCompilacao.DeveSobrescreverDllsExistentes := False;
+  OpcoesInstall.RedefinirValoresOpcoesParaPadrao;
+  OpcoesCompilacao.RedefinirValoresOpcoesParaPadrao;
 
   FArquivoLog := '';
   FNivelLog  := nlMedio;
@@ -863,7 +863,7 @@ begin
     // *************************************************************************
     // deixar somente a pasta lib se for configurado assim
     // *************************************************************************
-    if OpcoesInstall.DeixarSomentePastasLib and (tPlatformAtual = bpWin32) then
+    if OpcoesInstall.DeixarSomentePastasLib and (tPlatformAtual in [bpWin32{, bpWin64}]) then
     begin
       try
         DeixarSomenteLib;
@@ -914,6 +914,18 @@ begin
     CopiarArquivoDLLTo(ADestino, 'XMLSec\libxslt.dll', APathBin);
     CopiarArquivoDLLTo(ADestino, 'XMLSec\zlib1.dll', APathBin);
   end;
+end;
+
+procedure TACBrInstallComponentes.LerDeArquivoIni(const ArquivoIni: string);
+begin
+  OpcoesInstall.CarregarDeArquivoIni(ArquivoIni);
+  OpcoesCompilacao.CarregarDeArquivoIni(ArquivoIni);
+end;
+
+procedure TACBrInstallComponentes.SalvarConfiguracoesEmArquivoIni(const ArquivoIni: string);
+begin
+  OpcoesInstall.SalvarEmArquivoIni(ArquivoIni);
+  OpcoesCompilacao.SalvarEmArquivoIni(ArquivoIni);
 end;
 
 procedure TACBrInstallComponentes.AdicionaEnvironmentPathNaVersaoEspecificaDoDelphi(const AProcurarRemover: string);
@@ -1061,7 +1073,7 @@ begin
     // *************************************************************************
     // compilar os pacotes primeiramente
     // *************************************************************************
-    if tPlatformAtual <> bpWin32 then
+    if not (tPlatformAtual in [bpWin32{, bpWin64}]) then
     begin
       InformaSituacao(sLineBreak+'No momento não estamos compilando os pacotes da plataforma ' + sPlatform +'.');
       Exit;
@@ -1101,25 +1113,7 @@ var
 begin
   with FUmaPlataformaDestino do
   begin
-    if (InstalacaoAtual is TJclBDSInstallation) and (InstalacaoAtual.IDEVersionNumber >= 9) then
-    begin
-      case tPlatformAtual of
-        bpWin32:
-        begin
-          InstalacaoAtual.DCC := InstalacaoAtual.DCC32;
-        end;
-        bpWin64:
-        begin
-          InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCC64;
-        end;
-        bpOSX32:
-        begin
-          InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCOSX32;
-        end;
-      else
-        InstalacaoAtual.DCC := InstalacaoAtual.DCC32;
-      end;
-    end;
+    FUmaPlataformaDestino.ConfiguraDCCPelaPlataformaAtual;
 
     for iDpk := 0 to listaPacotes.Count - 1 do
     begin
@@ -1220,6 +1214,125 @@ begin
 end;
 
 
+{ TACBrCompilerOpcoes }
 
+procedure TACBrCompilerOpcoes.CarregarDeArquivoIni(const ArquivoIni: string);
+var
+  ArqIni: TIniFile;
+begin
+  RedefinirValoresOpcoesParaPadrao;
+  ArqIni := TIniFile.Create(ArquivoIni);
+  try
+
+    DeveInstalarCapicom       := ArqIni.ReadBool('CONFIG','InstalaCapicom', DeveInstalarCapicom);
+    DeveInstalarOpenSSL       := ArqIni.ReadBool('CONFIG','InstalaOpenSSL', DeveInstalarOpenSSL);
+//    DeveInstalarXMLSec        := False;
+    UsarCargaTardiaDLL        := ArqIni.ReadBool('CONFIG','CargaDllTardia', True);
+    RemoverStringCastWarnings := ArqIni.ReadBool('CONFIG','RemoverCastWarnings', RemoverStringCastWarnings);
+    DeveSobrescreverDllsExistentes := ArqIni.ReadBool('CONFIG','SobrescreverDLL', DeveSobrescreverDllsExistentes);;
+  finally
+    ArqIni.Free;
+  end;
+
+end;
+
+procedure TACBrCompilerOpcoes.RedefinirValoresOpcoesParaPadrao;
+begin
+  DeveInstalarCapicom            := False;
+  DeveInstalarOpenSSL            := True;
+  DeveInstalarXMLSec             := False;
+  UsarCargaTardiaDLL             := True;
+  RemoverStringCastWarnings      := True;
+  DeveSobrescreverDllsExistentes := False;
+end;
+
+procedure TACBrCompilerOpcoes.SalvarEmArquivoIni(const ArquivoIni: string);
+var
+  ArqIni: TIniFile;
+begin
+  ArqIni := TIniFile.Create(ArquivoIni);
+  try
+    ArqIni.WriteBool('CONFIG','InstalaOpenSSL', DeveInstalarOpenSSL);
+    ArqIni.WriteBool('CONFIG','InstalaCapicom', DeveInstalarCapicom);
+//    ArqIni.WriteBool('CONFIG','InstalaXmlSec', DeveInstalarXMLSec);
+    ArqIni.WriteBool('CONFIG','CargaDllTardia', UsarCargaTardiaDLL);
+    ArqIni.WriteBool('CONFIG','RemoverCastWarnings', RemoverStringCastWarnings);
+    ArqIni.WriteBool('CONFIG','SobrescreverDLL', DeveSobrescreverDllsExistentes);
+  finally
+    ArqIni.Free;
+  end;
+
+end;
+
+{ TACBrInstallOpcoes }
+
+procedure TACBrInstallOpcoes.RedefinirValoresOpcoesParaPadrao;
+begin
+  LimparArquivosACBrAntigos := False;
+  DeixarSomentePastasLib    := True;
+  UsarCpp                   := False;
+  UsarUsarArquivoConfig     := True;
+  sDestinoDLLs              := tdSystem;
+  DiretorioRaizACBr         := 'C:\ACBr\';
+  DeveCopiarOutrasDLLs      := True;
+end;
+
+procedure TACBrInstallOpcoes.SalvarEmArquivoIni(const ArquivoIni: string);
+var
+  ArqIni: TIniFile;
+begin
+  ArqIni := TIniFile.Create(ArquivoIni);
+  try
+    ArqIni.WriteString('CONFIG','VersaoArquivoIniConfig', cVersaoConfig);
+
+    ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', DiretorioRaizACBr);
+    ArqIni.WriteBool('CONFIG','DexarSomenteLib', DeixarSomentePastasLib);
+    ArqIni.WriteBool('CONFIG','C++Builder', UsarCpp);
+    case sDestinoDLLs of
+      tdSystem:
+      begin
+        ArqIni.WriteInteger('CONFIG','DestinoDLL', 0);
+      end;
+      tdDelphi:
+      begin
+        ArqIni.WriteInteger('CONFIG','DestinoDLL', 1);
+      end;
+      tdNone:
+      begin
+        ArqIni.WriteInteger('CONFIG','DestinoDLL', 2);
+      end;
+    end;
+  finally
+    ArqIni.Free;
+  end;
+
+end;
+
+procedure TACBrInstallOpcoes.CarregarDeArquivoIni(const ArquivoIni: string);
+var
+  ArqIni: TIniFile;
+begin
+  RedefinirValoresOpcoesParaPadrao;
+
+  ArqIni := TIniFile.Create(ArquivoIni);
+  try
+//  LimparArquivosACBrAntigos := False;
+    DeixarSomentePastasLib    := ArqIni.ReadBool('CONFIG','DexarSomenteLib', DeixarSomentePastasLib);
+    UsarCpp                   := ArqIni.ReadBool('CONFIG','C++Builder', UsarCpp);
+//    UsarUsarArquivoConfig     := True;
+    case ArqIni.ReadInteger('CONFIG','DestinoDLL', 0) of
+      0 : sDestinoDLLs := tdSystem;
+      1 : sDestinoDLLs := tdDelphi;
+      2 : sDestinoDLLs := tdNone;
+    else
+      sDestinoDLLs     := tdSystem;
+    end;
+
+    DiretorioRaizACBr := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', DiretorioRaizACBr);
+//    DeveCopiarOutrasDLLs      := True;
+  finally
+    ArqIni.Free;
+  end;
+end;
 
 end.

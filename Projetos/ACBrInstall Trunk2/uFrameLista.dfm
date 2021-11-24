@@ -6,7 +6,6 @@ object framePacotes: TframePacotes
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   TabOrder = 0
-  PixelsPerInch = 96
   object pnlBotoesMarcar: TPanel
     Left = 0
     Top = 1159

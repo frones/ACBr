@@ -57,6 +57,7 @@ type
     function GetDirLibrary: string;
     function EhSuportadaPeloACBr: Boolean;
     function EhSuportadaPeloACBrBeta: Boolean;
+    procedure ConfiguraDCCPelaPlataformaAtual;
     constructor CreateNew(AInstalacao: TJclBorRADToolInstallation; UmaPlatform: TJclBDSPlatform;
           const UmasPlatform: string);
   end;
@@ -92,6 +93,7 @@ begin
   Result := TListaPlataformasAlvos.Create;
   for i := 0 to Result.FoACBr.Count - 1 do
   begin
+    //sempre tem a Win32
     InstalacaoAlvo := Result.FoACBr.Installations[i];
     Result.Add(TACBrPlataformaInstalacaoAlvo.CreateNew(InstalacaoAlvo, bpWin32, BDSPlatformWin32));
 
@@ -175,6 +177,58 @@ end;
 function TACBrPlataformaInstalacaoAlvo.GetNomeAlvo: string;
 begin
   Result := InstalacaoAtual.Name + ' ' + sPlatform;
+end;
+
+procedure TACBrPlataformaInstalacaoAlvo.ConfiguraDCCPelaPlataformaAtual;
+begin
+  if (InstalacaoAtual is TJclBDSInstallation) and (InstalacaoAtual.IDEVersionNumber >= 9) then
+  begin
+    case tPlatformAtual of
+      bpWin32:
+      begin
+        InstalacaoAtual.DCC := InstalacaoAtual.DCC32;
+      end;
+      bpWin64:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCC64;
+      end;
+      bpOSX32:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCOSX32;
+      end;
+      bpOSX64:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCOSX64;
+      end;
+      bpAndroid32:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCArm32;
+      end;
+      bpAndroid64:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCArm64;
+      end;
+      bpiOSDevice32:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCiOS32;
+      end;
+      bpiOSDevice64:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCiOS64;
+      end;
+      bpiOSSimulator:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCiOSSimulator;
+      end;
+      bpLinux64:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCLinux64;
+      end;
+
+    else
+      InstalacaoAtual.DCC := InstalacaoAtual.DCC32;
+    end;
+  end;
 end;
 
 constructor TACBrPlataformaInstalacaoAlvo.CreateNew(AInstalacao: TJclBorRADToolInstallation;

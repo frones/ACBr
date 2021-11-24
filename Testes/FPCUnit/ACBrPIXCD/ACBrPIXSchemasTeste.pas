@@ -147,6 +147,22 @@ type
     procedure AtribuirLerReatribuirEComparar;
   end;
 
+  { TTestCobsConsultadas }
+
+  { TTestCobRevisada }
+
+  TTestCobRevisada = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixCobRevisada: TACBrPIXCobRevisada;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValoresCobBody3;
+    procedure AtribuirLerReatribuirECompararCobBody3;
+  end;
+
 implementation
 
 uses
@@ -193,7 +209,7 @@ end;
 procedure TTestCobrancaImediataExemplo1.SetUp;
 begin
   inherited;
-  fACBrPixCob := TACBrPIXCobSolicitada.Create;
+  fACBrPixCob := TACBrPIXCobSolicitada.Create('');
 
   // Nota, os Fontes dessa Unit estão em CP1252, por isso usamos ACBrStr()
   fJSON := ACBrStr(
@@ -253,7 +269,7 @@ var
 begin
   fACBrPixCob.AsJSON := fJSON;
   s := fACBrPixCob.AsJSON;
-  pc := TACBrPIXCobSolicitada.Create;
+  pc := TACBrPIXCobSolicitada.Create('');
   try
     // pc.AsJSON := s;
     pc.Assign(fACBrPixCob);
@@ -278,7 +294,7 @@ end;
 procedure TTestCobrancaImediataComSaquePIX.SetUp;
 begin
   inherited;
-  fACBrPixCob := TACBrPIXCobSolicitada.Create;
+  fACBrPixCob := TACBrPIXCobSolicitada.Create('');
 
   // Nota, os Fontes dessa Unit estão em CP1252, por isso usamos ACBrStr()
   fJSON := ACBrStr(
@@ -330,7 +346,7 @@ var
 begin
   fACBrPixCob.AsJSON := fJSON;
   s := fACBrPixCob.AsJSON;
-  pc := TACBrPIXCobSolicitada.Create;
+  pc := TACBrPIXCobSolicitada.Create('');
   try
     pc.AsJSON := s;
     CheckEquals(fACBrPixCob.devedor.cnpj, pc.devedor.cnpj);
@@ -352,7 +368,7 @@ end;
 procedure TTestCobrancaImediataComSaquePIX2.SetUp;
 begin
   inherited;
-  fACBrPixCob := TACBrPIXCobSolicitada.Create;
+  fACBrPixCob := TACBrPIXCobSolicitada.Create('');
 
   // Nota, os Fontes dessa Unit estão em CP1252, por isso usamos ACBrStr()
   fJSON := ACBrStr(
@@ -404,7 +420,7 @@ var
 begin
   fACBrPixCob.AsJSON := fJSON;
   s := fACBrPixCob.AsJSON;
-  pc := TACBrPIXCobSolicitada.Create;
+  pc := TACBrPIXCobSolicitada.Create('');
   try
     pc.AsJSON := s;
     CheckEquals(fACBrPixCob.devedor.cnpj, pc.devedor.cnpj);
@@ -426,7 +442,7 @@ end;
 procedure TTestCobrancaImediataComSaquePIX3.SetUp;
 begin
   inherited;
-  fACBrPixCob := TACBrPIXCobSolicitada.Create;
+  fACBrPixCob := TACBrPIXCobSolicitada.Create('');
 
   // Nota, os Fontes dessa Unit estão em CP1252, por isso usamos ACBrStr()
   fJSON := ACBrStr(
@@ -478,7 +494,7 @@ var
 begin
   fACBrPixCob.AsJSON := fJSON;
   s := fACBrPixCob.AsJSON;
-  pc := TACBrPIXCobSolicitada.Create;
+  pc := TACBrPIXCobSolicitada.Create('');
   try
     pc.AsJSON := s;
     CheckEquals(fACBrPixCob.devedor.cnpj, pc.devedor.cnpj);
@@ -500,7 +516,7 @@ end;
 procedure TTestCobrancaGerada.SetUp;
 begin
   inherited SetUp;
-  fACBrPixCobGerada := TACBrPIXCobGerada.Create;
+  fACBrPixCobGerada := TACBrPIXCobGerada.Create('');
   fJSON := ACBrStr(
   '{'+
     '"calendario": {'+
@@ -572,7 +588,7 @@ var
 begin
   fACBrPixCobGerada.AsJSON := fJSON;
   s := fACBrPixCobGerada.AsJSON;
-  cg := TACBrPIXCobGerada.Create;
+  cg := TACBrPIXCobGerada.Create('');
   try
     //cg.AsJSON := s;
     cg.Assign(fACBrPixCobGerada);
@@ -604,7 +620,7 @@ end;
 procedure TTestProblema.SetUp;
 begin
   inherited SetUp;
-  fACBrPixProblema := TACBrPIXProblema.Create;
+  fACBrPixProblema := TACBrPIXProblema.Create('');
   fJSON :=  ACBrStr(
       '{'+
         '"type": "https://pix.bcb.gov.br/api/v2/error/CobOperacaoInvalida",'+
@@ -644,7 +660,7 @@ var
 begin
   fACBrPixProblema.AsJSON := fJSON;
   s := fACBrPixProblema.AsJSON;
-  pb := TACBrPIXProblema.Create;
+  pb := TACBrPIXProblema.Create('');
   try
     pb.AsJSON := s;
     CheckEquals(fACBrPixProblema.type_uri, pb.type_uri);
@@ -720,7 +736,7 @@ begin
   		'}'+
   	']'+
   '}');
-  fACBrPixConsultados := TACBrPIXConsultados.Create;
+  fACBrPixConsultados := TACBrPIXConsultados.Create('');
 end;
 
 procedure TTestPixConsultados.TearDown;
@@ -761,7 +777,7 @@ begin
   CheckEquals(fACBrPixConsultados.pix[2].componentesValor.original.valor, 180);
   CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.valor, 20);
   CheckTrue(fACBrPixConsultados.pix[2].componentesValor.saque.modalidadeAgente = maAGPSS);
-  CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.prestadorDeServicoDeSaque, 12345678);
+  CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.prestadorDoServicoDeSaque, 12345678);
 end;
 
 procedure TTestPixConsultados.AtribuirLerReatribuirEComparar;
@@ -771,7 +787,7 @@ var
 begin
   fACBrPixConsultados.AsJSON := fJSON;
   s := fACBrPixConsultados.AsJSON;
-  pc := TACBrPIXConsultados.Create;
+  pc := TACBrPIXConsultados.Create('');
   try
     pc.AsJSON := s;
     CheckEquals(fACBrPixConsultados.parametros.inicio, pc.parametros.inicio);
@@ -803,7 +819,7 @@ begin
     CheckEquals(fACBrPixConsultados.pix[2].componentesValor.original.valor, pc.pix[2].componentesValor.original.valor);
     CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.valor, pc.pix[2].componentesValor.saque.valor);
     CheckTrue(fACBrPixConsultados.pix[2].componentesValor.saque.modalidadeAgente = pc.pix[2].componentesValor.saque.modalidadeAgente);
-    CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.prestadorDeServicoDeSaque, pc.pix[2].componentesValor.saque.prestadorDeServicoDeSaque);
+    CheckEquals(fACBrPixConsultados.pix[2].componentesValor.saque.prestadorDoServicoDeSaque, pc.pix[2].componentesValor.saque.prestadorDoServicoDeSaque);
   finally
     pc.Free;
   end;
@@ -814,7 +830,7 @@ end;
 procedure TTestCobsConsultadas.SetUp;
 begin
   inherited SetUp;
-  fACBrPixCobsConsultadas := TACBrPIXCobsConsultadas.Create;
+  fACBrPixCobsConsultadas := TACBrPIXCobsConsultadas.Create('');
   fJSON := ACBrStr(
   '{'+
   	'"parametros": {'+
@@ -1134,7 +1150,7 @@ var
 begin
   fACBrPixCobsConsultadas.AsJSON := fJSON;
   s := fACBrPixCobsConsultadas.AsJSON;
-  cc := TACBrPIXCobsConsultadas.Create;
+  cc := TACBrPIXCobsConsultadas.Create('');
   try
     cc.AsJSON := s;
     CheckEquals(fACBrPixCobsConsultadas.parametros.inicio, cc.parametros.inicio);
@@ -1250,6 +1266,66 @@ begin
   end;
 end;
 
+{ TTestCobRevisada }
+
+procedure TTestCobRevisada.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixCobRevisada := TACBrPIXCobRevisada.Create('');
+  fJSON := ACBrStr(
+  '{'+
+  	'"loc": {'+
+  		'"id": 7768'+
+  	'},'+
+  	'"devedor": {'+
+  		'"cpf": "12345678909",'+
+  		'"nome": "Francisco da Silva"'+
+  	'},'+
+  	'"valor": {'+
+  		'"original": "123.45"'+
+  	'},'+
+  	'"solicitacaoPagador": "Cobrança dos serviços prestados."'+
+  '}' );
+end;
+
+procedure TTestCobRevisada.TearDown;
+begin
+  fACBrPixCobRevisada.Free;
+  inherited TearDown;
+end;
+
+procedure TTestCobRevisada.AtribuirELerValoresCobBody3;
+begin
+  fACBrPixCobRevisada.AsJSON := fJSON;
+
+  CheckEquals(fACBrPixCobRevisada.loc.id, 7768);
+  CheckEquals(fACBrPixCobRevisada.devedor.cpf, '12345678909');
+  CheckEquals(fACBrPixCobRevisada.devedor.nome, 'Francisco da Silva');
+  CheckEquals(fACBrPixCobRevisada.valor.original, 123.45);
+  CheckEquals(fACBrPixCobRevisada.solicitacaoPagador, ACBrStr('Cobrança dos serviços prestados.'));
+end;
+
+procedure TTestCobRevisada.AtribuirLerReatribuirECompararCobBody3;
+var
+  cr: TACBrPIXCobRevisada;
+  s: String;
+begin
+  fACBrPixCobRevisada.AsJSON := fJSON;
+  s := fACBrPixCobRevisada.AsJSON;
+  cr := TACBrPIXCobRevisada.Create('');
+  try
+    cr.AsJSON := s;
+
+    CheckEquals(fACBrPixCobRevisada.loc.id, cr.loc.id);
+    CheckEquals(fACBrPixCobRevisada.devedor.cpf, cr.devedor.cpf);
+    CheckEquals(fACBrPixCobRevisada.devedor.nome, cr.devedor.nome);
+    CheckEquals(fACBrPixCobRevisada.valor.original, cr.valor.original);
+    CheckEquals(fACBrPixCobRevisada.solicitacaoPagador, cr.solicitacaoPagador);
+  finally
+    cr.Free;
+  end;
+end;
+
 
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
@@ -1271,6 +1347,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestProblema);
   _RegisterTest('ACBrPIXCD.Schemas', TTestPixConsultados);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobsConsultadas);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestCobRevisada);
 
 end.
 

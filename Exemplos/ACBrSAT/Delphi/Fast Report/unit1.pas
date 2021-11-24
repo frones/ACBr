@@ -1306,8 +1306,8 @@ begin
     ide.numeroCaixa := 1;
     ide.cNF := Random(999999);
 
-    Dest.CNPJCPF := '5481336000137';
-    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo';
+    Dest.CNPJCPF := '18760540000139';
+    Dest.xNome := 'Projeto ACBr ÁÉÍÓÚáéíóúÇç teste de nome Longo';
 
     Entrega.xLgr := 'logradouro';
     Entrega.nro := '112233';

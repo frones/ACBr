@@ -67,16 +67,17 @@ type
   private
     fliquidacao: TDateTime;
     fsolicitacao: TDateTime;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXHorario);
 
     property solicitacao: TDateTime read fsolicitacao write fsolicitacao;
     property liquidacao: TDateTime read fliquidacao write fliquidacao;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXDevolucao }
@@ -96,10 +97,13 @@ type
     procedure Setmotivo(AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXDevolucao);
 
     property id: String read fid write Setid;
@@ -110,9 +114,6 @@ type
     property horario: TACBrPIXHorario read fhorario;
     property status: TACBrPIXStatusDevolucao read fstatus write fstatus;
     property motivo: String read fmotivo write Setmotivo;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXDevolucoes }
@@ -138,9 +139,9 @@ uses
 
 { TACBrPIXHorario }
 
-constructor TACBrPIXHorario.Create;
+constructor TACBrPIXHorario.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   Clear;
 end;
 
@@ -150,13 +151,18 @@ begin
   fliquidacao := 0;
 end;
 
+function TACBrPIXHorario.IsEmpty: Boolean;
+begin
+  Result := (fsolicitacao = 0) and (fliquidacao = 0);
+end;
+
 procedure TACBrPIXHorario.Assign(Source: TACBrPIXHorario);
 begin
   fsolicitacao := Source.solicitacao;
   fliquidacao := Source.liquidacao;
 end;
 
-procedure TACBrPIXHorario.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXHorario.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['solicitacao'] := DateTimeToIso8601( fsolicitacao );
@@ -167,7 +173,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXHorario.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXHorario.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
@@ -191,10 +197,10 @@ end;
 
 { TACBrPIXDevolucao }
 
-constructor TACBrPIXDevolucao.Create;
+constructor TACBrPIXDevolucao.Create(const ObjectName: String);
 begin
-  inherited;
-  fhorario := TACBrPIXHorario.Create;
+  inherited Create(ObjectName);
+  fhorario := TACBrPIXHorario.Create('horario');
   Clear;
 end;
 
@@ -216,6 +222,18 @@ begin
   fhorario.Clear;
 end;
 
+function TACBrPIXDevolucao.IsEmpty: Boolean;
+begin
+  Result := (fdescricao = '') and
+            (fid = '') and
+            (fmotivo = '') and
+            (fnatureza = ndNENHUMA) and
+            (frtrId = '') and
+            (fstatus = stdNENHUM) and
+            (fvalor = 0) and
+            fhorario.IsEmpty;
+end;
+
 procedure TACBrPIXDevolucao.AssignSchema(ASource: TACBrPIXSchema);
 begin
   if (ASource is TACBrPIXDevolucao) then
@@ -234,7 +252,7 @@ begin
   fhorario.Assign(Source.horario);
 end;
 
-procedure TACBrPIXDevolucao.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevolucao.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['descricao'] := fdescricao;
@@ -244,7 +262,7 @@ begin
    AJSon.S['rtrId'] := frtrId;
    AJSon.S['status'] := PIXStatusDevolucaoToString(fstatus);
    AJSon.S['valor'] := FormatarValorPIX(fvalor);
-   fhorario.WriteToJSon(AJSon.O['horario']);
+   fhorario.WriteToJSon(AJSon);
   {$Else}
    AJSon['descricao'].AsString := fdescricao;
    AJSon['id'].AsString := fid;
@@ -253,11 +271,11 @@ begin
    AJSon['rtrId'].AsString := frtrId;
    AJSon['status'].AsString := PIXStatusDevolucaoToString(fstatus);
    AJSon['valor'].AsString := FormatarValorPIX(fvalor);
-   fhorario.WriteToJSon(AJSon['horario'].AsObject);
+   fhorario.WriteToJSon(AJSon);
   {$EndIf}
 end;
 
-procedure TACBrPIXDevolucao.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevolucao.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
@@ -268,16 +286,16 @@ begin
    rtrId := AJSon.S['rtrId'];
    status := StringToPIXStatusDevolucao( AJSon.S['status'] );
    valor := StringToFloat( AJSon.S['valor']);
-   fhorario.ReadFromJSon(AJSon.O['horario']);
+   fhorario.ReadFromJSon(AJSon);
   {$Else}
    descricao := AJSon['descricao'].AsString;
    id := AJSon['id'].AsString;
    motivo := AJSon['motivo'].AsString;
-   natureza := StringToPIXNaturezaDevolucao( AJSon['natureza'].AsString );
+   natureza := StringToPIXNaturezaDevolucao(AJSon['natureza'].AsString);
    rtrId := AJSon['rtrId'].AsString;
-   status := StringToPIXStatusDevolucao( AJSon['status'].AsString );
-   valor := StringToFloat( AJSon['valor'].AsString);
-   fhorario.ReadFromJSon(AJSon['horario'].AsObject);
+   status := StringToPIXStatusDevolucao(AJSon['status'].AsString);
+   valor := StringToFloat(AJSon['valor'].AsString);
+   fhorario.ReadFromJSon(AJSon);
   {$EndIf}
 end;
 
@@ -339,7 +357,7 @@ end;
 
 function TACBrPIXDevolucoes.New: TACBrPIXDevolucao;
 begin
-  Result := TACBrPIXDevolucao.Create;
+  Result := TACBrPIXDevolucao.Create('');
   Self.Add(Result);
 end;
 

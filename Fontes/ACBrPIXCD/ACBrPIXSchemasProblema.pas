@@ -70,17 +70,17 @@ type
     fvalor: String;
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXViolacao);
 
     property razao: String read frazao write frazao;
     property propriedade: String read fpropriedade write fpropriedade;
     property valor: String read fvalor write fvalor;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXViolacoes }
@@ -108,10 +108,14 @@ type
     ftitle: String;
     ftype_uri: String;
     fviolacoes: TACBrPIXViolacoes;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXProblema);
 
     property type_uri: String read ftype_uri write ftype_uri;
@@ -120,18 +124,15 @@ type
     property detail: String read fdetail write fdetail;
     property correlationId: String read fcorrelationId write fcorrelationId;
     property violacoes: TACBrPIXViolacoes read fviolacoes;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
 
 { TACBrPIXViolacao }
 
-constructor TACBrPIXViolacao.Create;
+constructor TACBrPIXViolacao.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   Clear;
 end;
 
@@ -140,6 +141,11 @@ begin
   fpropriedade := '';
   frazao := '';
   fvalor := '';
+end;
+
+function TACBrPIXViolacao.IsEmpty: Boolean;
+begin
+  Result := (fpropriedade = '') and (frazao = '') and (fvalor = '');
 end;
 
 procedure TACBrPIXViolacao.AssignSchema(ASource: TACBrPIXSchema);
@@ -155,7 +161,7 @@ begin
   fvalor := Source.valor;
 end;
 
-procedure TACBrPIXViolacao.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXViolacao.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
   if (frazao <> '') then
@@ -174,7 +180,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXViolacao.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXViolacao.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
@@ -217,15 +223,15 @@ end;
 
 function TACBrPIXViolacoes.New: TACBrPIXViolacao;
 begin
-  Result := TACBrPIXViolacao.Create;
+  Result := TACBrPIXViolacao.Create('');
   Self.Add(Result);
 end;
 
 { TACBrPIXProblema }
 
-constructor TACBrPIXProblema.Create;
+constructor TACBrPIXProblema.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   fviolacoes := TACBrPIXViolacoes.Create('violacoes');
   Clear;
 end;
@@ -246,6 +252,16 @@ begin
   fviolacoes.Clear;
 end;
 
+function TACBrPIXProblema.IsEmpty: Boolean;
+begin
+  Result := (fcorrelationId = '') and
+            (fdetail = '') and
+            (fstatus = 0) and
+            (ftitle = '') and
+            (ftype_uri = '') and
+            fviolacoes.IsEmpty;
+end;
+
 procedure TACBrPIXProblema.Assign(Source: TACBrPIXProblema);
 begin
   fcorrelationId := Source.correlationId;
@@ -256,7 +272,7 @@ begin
   fviolacoes.Assign(Source.violacoes);
 end;
 
-procedure TACBrPIXProblema.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXProblema.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['type'] := ftype_uri;
@@ -279,7 +295,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXProblema.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXProblema.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}

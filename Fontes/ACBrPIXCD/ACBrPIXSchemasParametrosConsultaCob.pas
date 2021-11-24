@@ -68,10 +68,15 @@ type
   private
     procedure SetCnpj(AValue: String);
     procedure SetCpf(AValue: String);
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXParametrosConsultaCob);
 
     property inicio: TDateTime read finicio write finicio;
@@ -81,9 +86,6 @@ type
     property locationPresente: Boolean read flocationPresente write flocationPresente;
     property status: String read fstatus write fstatus;
     property paginacao: TACBrPIXPaginacao read fpaginacao;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
@@ -93,10 +95,10 @@ uses
 
 { TACBrPIXParametrosConsultaCob }
 
-constructor TACBrPIXParametrosConsultaCob.Create;
+constructor TACBrPIXParametrosConsultaCob.Create(const ObjectName: String);
 begin
-  inherited;
-  fpaginacao := TACBrPIXPaginacao.Create;
+  inherited Create(ObjectName);
+  fpaginacao := TACBrPIXPaginacao.Create('paginacao');
   Clear;
 end;
 
@@ -117,6 +119,16 @@ begin
   fpaginacao.Clear
 end;
 
+function TACBrPIXParametrosConsultaCob.IsEmpty: Boolean;
+begin
+  Result := (fcnpj = '') and
+            (fcpf = '') and
+            (fstatus = '') and
+            (ffim = 0) and
+            (finicio = 0) and   //flocationPresente := False;
+            fpaginacao.IsEmpty;
+end;
+
 procedure TACBrPIXParametrosConsultaCob.Assign(Source: TACBrPIXParametrosConsultaCob);
 begin
   fcnpj := Source.cnpj;
@@ -128,7 +140,7 @@ begin
   fpaginacao.Assign(Source.paginacao);
 end;
 
-procedure TACBrPIXParametrosConsultaCob.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXParametrosConsultaCob.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['inicio'] := DateTimeToIso8601( finicio );
@@ -139,7 +151,7 @@ begin
      AJSon.S['cnpj'] := fcnpj;
    AJSon.B['locationPresente'] := flocationPresente;
    AJSon.S['status'] := fstatus;
-   fpaginacao.WriteToJSon(AJSon.O['paginacao']);
+   fpaginacao.WriteToJSon(AJSon);
   {$Else}
    AJSon['inicio'].AsString := DateTimeToIso8601( finicio );
    AJSon['fim'].AsString := DateTimeToIso8601( ffim );
@@ -149,11 +161,11 @@ begin
      AJSon['cnpj'].AsString := fcnpj;
    AJSon['locationPresente'].AsBoolean := flocationPresente;
    AJSon['status'].AsString := fstatus;
-   fpaginacao.WriteToJSon(AJSon['paginacao'].AsObject);
+   fpaginacao.WriteToJSon(AJSon);
   {$EndIf}
 end;
 
-procedure TACBrPIXParametrosConsultaCob.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXParametrosConsultaCob.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
@@ -169,7 +181,7 @@ begin
    fcnpj := AJSon.S['cnpj'];
    flocationPresente := AJSon.B['locationPresente'];
    fstatus := AJSon.S['status'];
-   fpaginacao.ReadFromJSon(AJSon.O['paginacao']);
+   fpaginacao.ReadFromJSon(AJSon);
   {$Else}
    s := AJSon['inicio'].AsString;
    if (s <> '') then
@@ -181,7 +193,7 @@ begin
    fcnpj := AJSon['cnpj'].AsString;
    flocationPresente := AJSon['locationPresente'].AsBoolean;
    fstatus := AJSon['status'].AsString;
-   fpaginacao.ReadFromJSon(AJSon['paginacao'].AsObject);
+   fpaginacao.ReadFromJSon(AJSon);
   {$EndIf}
 end;
 

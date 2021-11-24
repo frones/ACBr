@@ -71,19 +71,27 @@ type
     property tipoCob: TACBrPIXTipoCobranca read ftipoCob write ftipoCob;
     property criacao: TDateTime read fcriacao;
 
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXLocationBase);
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXLocationCobSolicitada }
 
   TACBrPIXLocationCobSolicitada = class(TACBrPIXLocationBase)
   public
+    property location;
+  end;
+
+  { TACBrPIXLocationCobRevisada }
+
+  TACBrPIXLocationCobRevisada = class(TACBrPIXLocationBase)
+  public
+    property id;
     property location;
   end;
 
@@ -115,9 +123,9 @@ uses
 
 { TACBrPIXLocationBase }
 
-constructor TACBrPIXLocationBase.Create;
+constructor TACBrPIXLocationBase.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   Clear;
 end;
 
@@ -130,6 +138,15 @@ begin
   ftxId := '';
 end;
 
+function TACBrPIXLocationBase.IsEmpty: Boolean;
+begin
+  Result := (fcriacao = 0) and
+            (fid = 0) and
+            (flocation = '') and
+            (ftipoCob = tcoNenhuma) and
+            (ftxId = '');
+end;
+
 procedure TACBrPIXLocationBase.Assign(Source: TACBrPIXLocationBase);
 begin
   fcriacao := Source.criacao;
@@ -139,7 +156,7 @@ begin
   ftxId := Source.txId;
 end;
 
-procedure TACBrPIXLocationBase.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXLocationBase.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    if (fid <> 0) then
@@ -166,7 +183,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXLocationBase.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXLocationBase.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin

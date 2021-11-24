@@ -61,27 +61,28 @@ type
   private
     fparametros: TACBrPIXParametrosConsultaPix;
     fpix: TACBrPIXArray;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     destructor Destroy; override;
     procedure Assign(Source: TACBrPIXConsultados);
 
     property parametros: TACBrPIXParametrosConsultaPix read fparametros;
     property pix: TACBrPIXArray read fpix;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
 
 { TACBrPIXConsultados }
 
-constructor TACBrPIXConsultados.Create;
+constructor TACBrPIXConsultados.Create(const ObjectName: String);
 begin
-  inherited;
-  fparametros := TACBrPIXParametrosConsultaPix.Create;
+  inherited Create(ObjectName);
+  fparametros := TACBrPIXParametrosConsultaPix.Create('parametros');
   fpix := TACBrPIXArray.Create('pix');
   Clear;
 end;
@@ -99,36 +100,28 @@ begin
   fpix.Clear;
 end;
 
+function TACBrPIXConsultados.IsEmpty: Boolean;
+begin
+  Result := fparametros.IsEmpty and
+            fpix.IsEmpty;
+end;
+
 procedure TACBrPIXConsultados.Assign(Source: TACBrPIXConsultados);
 begin
   fparametros.Assign(Source.parametros);
   fpix.Assign(Source.pix);
 end;
 
-procedure TACBrPIXConsultados.WriteToJSon(AJSon: TJsonObject);
-var
-  jsp: TJsonObject;
+procedure TACBrPIXConsultados.DoWriteToJSon(AJSon: TJsonObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jsp := AJSon.O['parametros'];
-  {$Else}
-   jsp := AJSon['parametros'].AsObject;
-  {$EndIf}
-  fparametros.WriteToJSon(jsp);
+  fparametros.WriteToJSon(AJSon);
   fpix.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXConsultados.ReadFromJSon(AJSon: TJsonObject);
-var
-  jsp: TJsonObject;
+procedure TACBrPIXConsultados.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jsp := AJSon.O['parametros'];
-  {$Else}
-   jsp := AJSon['parametros'].AsObject;
-  {$EndIf}
-  fparametros.ReadFromJSon(jsp);
+  fparametros.ReadFromJSon(AJSon);
   fpix.ReadFromJSon(AJSon);
 end;
 

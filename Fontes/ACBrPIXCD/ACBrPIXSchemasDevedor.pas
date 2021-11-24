@@ -63,17 +63,18 @@ type
     fnome: String;
     procedure SetCnpj(AValue: String);
     procedure SetCpf(AValue: String);
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXDevedor);
 
     property cpf: String read fcpf write SetCpf;
     property cnpj: String read fcnpj write SetCnpj;
     property nome: String read fnome write fnome;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
@@ -83,9 +84,9 @@ uses
 
 { TACBrPIXDevedor }
 
-constructor TACBrPIXDevedor.Create;
+constructor TACBrPIXDevedor.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   Clear;
 end;
 
@@ -96,6 +97,11 @@ begin
   fnome := '';
 end;
 
+function TACBrPIXDevedor.IsEmpty: Boolean;
+begin
+  Result := (fcpf = '') and (fcnpj = '') and (fnome = '')
+end;
+
 procedure TACBrPIXDevedor.Assign(Source: TACBrPIXDevedor);
 begin
   fcpf := Source.cpf;
@@ -103,24 +109,26 @@ begin
   fnome := Source.nome;
 end;
 
-procedure TACBrPIXDevedor.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedor.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    if (cnpj <> '') then
      AJSon.S['cnpj'] := cnpj
    else if (cpf <> '') then
-     AJSon.S['cpf'] := cnpj;
-   AJSon.S['nome'] := nome;
+     AJSon.S['cpf'] := cpf;
+   if (nome <> '') then
+     AJSon.S['nome'] := nome;
   {$Else}
    if (cnpj <> '') then
      AJSon['cnpj'].AsString := cnpj
    else if (cpf <> '') then
-     AJSon['cpf'].AsString := cnpj;
-   AJSon['nome'].AsString := nome;
+     AJSon['cpf'].AsString := cpf;
+   if (nome <> '') then
+     AJSon['nome'].AsString := nome;
   {$EndIf}
 end;
 
-procedure TACBrPIXDevedor.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedor.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}

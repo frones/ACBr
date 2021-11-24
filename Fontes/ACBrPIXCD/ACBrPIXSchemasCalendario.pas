@@ -68,13 +68,14 @@ type
     property criacao: TDateTime read fcriacao write fcriacao;
     property apresentacao: TDateTime read fapresentacao write fapresentacao;
     property expiracao: Integer read fexpiracao write fexpiracao;
-  public
-    constructor Create;
-    procedure Clear; override;
-    procedure Assign(Source: TACBrPIXCalendarioBase);
 
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrPIXCalendarioBase);
   end;
 
   { TACBrPIXCalendarioCobSolicitada }
@@ -100,9 +101,9 @@ uses
 
 { TACBrPIXCalendarioBase }
 
-constructor TACBrPIXCalendarioBase.Create;
+constructor TACBrPIXCalendarioBase.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   Clear;
 end;
 
@@ -113,6 +114,11 @@ begin
   fexpiracao := 0;
 end;
 
+function TACBrPIXCalendarioBase.IsEmpty: Boolean;
+begin
+  Result := (fcriacao = 0) and (fapresentacao = 0) and (fexpiracao = 0);
+end;
+
 procedure TACBrPIXCalendarioBase.Assign(Source: TACBrPIXCalendarioBase);
 begin
   fcriacao := Source.criacao;
@@ -120,7 +126,7 @@ begin
   fexpiracao := Source.expiracao;
 end;
 
-procedure TACBrPIXCalendarioBase.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioBase.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    if (criacao <> 0) then
@@ -139,7 +145,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXCalendarioBase.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioBase.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin

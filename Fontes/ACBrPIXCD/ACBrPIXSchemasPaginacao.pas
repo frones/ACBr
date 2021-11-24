@@ -62,27 +62,28 @@ type
     fpaginaAtual: Integer;
     fquantidadeDePaginas: Integer;
     fquantidadeTotalDeItens: Integer;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXPaginacao);
 
     property paginaAtual: Integer read fpaginaAtual write fpaginaAtual;
     property itensPorPagina: Integer read fitensPorPagina write fitensPorPagina;
     property quantidadeDePaginas: Integer read fquantidadeDePaginas write fquantidadeDePaginas;
     property quantidadeTotalDeItens: Integer read fquantidadeTotalDeItens write fquantidadeTotalDeItens;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
 implementation
 
 { TACBrPIXPaginacao }
 
-constructor TACBrPIXPaginacao.Create;
+constructor TACBrPIXPaginacao.Create(const ObjectName: String);
 begin
-  inherited;
+  inherited Create(ObjectName);
   Clear;
 end;
 
@@ -94,6 +95,14 @@ begin
   fquantidadeTotalDeItens := 0;
 end;
 
+function TACBrPIXPaginacao.IsEmpty: Boolean;
+begin
+  Result := (fitensPorPagina = 0) and
+            (fpaginaAtual = 0) and
+            (fquantidadeDePaginas = 0) and
+            (fquantidadeTotalDeItens = 0);
+end;
+
 procedure TACBrPIXPaginacao.Assign(Source: TACBrPIXPaginacao);
 begin
   fitensPorPagina := Source.itensPorPagina;
@@ -102,7 +111,7 @@ begin
   fquantidadeTotalDeItens := Source.quantidadeTotalDeItens;
 end;
 
-procedure TACBrPIXPaginacao.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXPaginacao.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.I['itensPorPagina'] := fitensPorPagina;
@@ -117,7 +126,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXPaginacao.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXPaginacao.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}

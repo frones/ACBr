@@ -104,12 +104,21 @@ type
   private
     function GetAsJSON: String; virtual;
     procedure SetAsJSON(AValue: String); virtual;
+
+    function GetJSONContext(AJSon: TJsonObject): TJsonObject;
   protected
+    fpObjectName: String;
+
     procedure AssignSchema(ASource: TACBrPIXSchema); virtual;
+    procedure DoWriteToJSon(AJSon: TJsonObject); virtual;
+    procedure DoReadFromJSon(AJSon: TJsonObject); virtual;
+
   public
+    constructor Create(const ObjectName: String); virtual;
     procedure Clear; virtual;
-    procedure WriteToJSon(AJSon: TJsonObject); virtual;
-    procedure ReadFromJSon(AJSon: TJsonObject); virtual;
+    function IsEmpty: Boolean; virtual;
+    procedure WriteToJSon(AJSon: TJsonObject);
+    procedure ReadFromJSon(AJSon: TJsonObject);
 
     property AsJSON: String read GetAsJSON write SetAsJSON;
   end;
@@ -126,7 +135,9 @@ type
   public
     constructor Create(const ArrayName: String);
     procedure Clear; override;
+    function IsEmpty: Boolean; virtual;
     procedure Assign(Source: TACBrObjectList); virtual;
+
     procedure WriteToJSon(AJSon: TJsonObject); virtual;
     procedure ReadFromJSon(AJSon: TJsonObject); virtual;
 
@@ -271,6 +282,27 @@ end;
 
 { TACBrPIXSchema }
 
+constructor TACBrPIXSchema.Create(const ObjectName: String);
+begin
+  inherited Create;
+  fpObjectName := ObjectName;
+end;
+
+procedure TACBrPIXSchema.Clear;
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['Clear', ClassName]);
+end;
+
+function TACBrPIXSchema.IsEmpty: Boolean;
+begin
+  Result := False;
+end;
+
+procedure TACBrPIXSchema.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['AssignSchema', ClassName]);
+end;
+
 function TACBrPIXSchema.GetAsJSON: String;
 var
   js: TJsonObject;
@@ -311,24 +343,43 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXSchema.Clear;
+function TACBrPIXSchema.GetJSONContext(AJSon: TJsonObject): TJsonObject;
 begin
-  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['Clear', ClassName]);
-end;
-
-procedure TACBrPIXSchema.AssignSchema(ASource: TACBrPIXSchema);
-begin
-  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['AssignSchema', ClassName]);
+  if (fpObjectName <> '') then
+  begin
+    {$IfDef USE_JSONDATAOBJECTS_UNIT}
+     Result := AJSon.O[fpObjectName];
+    {$Else}
+     Result := AJSon[fpObjectName].AsObject;
+    {$EndIf}
+  end
+  else
+    Result := AJSon;
 end;
 
 procedure TACBrPIXSchema.WriteToJSon(AJSon: TJsonObject);
+var
+  js: TJsonObject;
 begin
-  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['WriteToJSon', ClassName]);
+  if IsEmpty then
+    Exit;
+
+  DoWriteToJSon(GetJSONContext(AJSon));
+end;
+
+procedure TACBrPIXSchema.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['DoWriteToJSon', ClassName]);
 end;
 
 procedure TACBrPIXSchema.ReadFromJSon(AJSon: TJsonObject);
 begin
-  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['ReadFromJSon', ClassName]);
+  DoReadFromJSon(GetJSONContext(AJSon));
+end;
+
+procedure TACBrPIXSchema.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  raise EACBrPixException.CreateFmt(ACBrStr(sErroMetodoNaoImplementado), ['DoReadFromJSon', ClassName]);
 end;
 
 { TACBrPIXSchemaArray }
@@ -342,6 +393,11 @@ end;
 procedure TACBrPIXSchemaArray.Clear;
 begin
   inherited Clear;
+end;
+
+function TACBrPIXSchemaArray.IsEmpty: Boolean;
+begin
+  Result := (Count < 1);
 end;
 
 function TACBrPIXSchemaArray.NewSchema: TACBrPIXSchema;
@@ -364,6 +420,9 @@ var
   i: Integer;
   ja: TJsonArray;
 begin
+  if IsEmpty then
+    Exit;
+    
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    ja := AJSon.A[fpArrayName];
    ja.Clear;

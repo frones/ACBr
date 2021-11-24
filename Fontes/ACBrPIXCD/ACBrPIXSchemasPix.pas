@@ -65,39 +65,40 @@ type
 
   TACBrPIXValor = class(TACBrPIXSchema)
   private
-    fObjectName: String;
     fvalor: Currency;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String);
     procedure Clear; override;
     procedure Assign(Source: TACBrPIXValor);
 
     property valor: Currency read fvalor write fvalor;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXSaqueTroco }
 
   TACBrPIXSaqueTroco = class(TACBrPIXSchema)
   private
-    fObjectName: String;
+    fprestadorStr: String;
     fmodalidadeAgente: TACBrPIXModalidadeAgente;
-    fprestadorDeServicoDeSaque: Integer;
+    fmodalidadeAlteracao: Boolean;
+    fprestadorDoServicoDeSaque: Integer;
     fvalor: Currency;
-    procedure SetPrestadorDeServicoDeSaque(AValue: Integer);
+    procedure SetprestadorDoServicoDeSaque(AValue: Integer);
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String);
+    constructor Create(const ObjectName: String; prestadorStr: String); reintroduce;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXSaqueTroco);
 
     property valor: Currency read fvalor write fvalor;
+    property modalidadeAlteracao: Boolean read fmodalidadeAlteracao write fmodalidadeAlteracao;
     property modalidadeAgente: TACBrPIXModalidadeAgente read fmodalidadeAgente write fmodalidadeAgente;
-    property prestadorDeServicoDeSaque: Integer read fprestadorDeServicoDeSaque write SetPrestadorDeServicoDeSaque;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
+    property prestadorDoServicoDeSaque: Integer read fprestadorDoServicoDeSaque write SetprestadorDoServicoDeSaque;
   end;
 
   { TACBrPIXComponentesValor }
@@ -111,10 +112,14 @@ type
     foriginal: TACBrPIXValor;
     fsaque: TACBrPIXSaqueTroco;
     ftroco: TACBrPIXSaqueTroco;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXComponentesValor);
 
     property original: TACBrPIXValor read foriginal;
@@ -124,9 +129,6 @@ type
     property multa: TACBrPIXValor read fmulta;
     property abatimento: TACBrPIXValor read fabatimento;
     property desconto: TACBrPIXValor read fdesconto;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIX }
@@ -147,10 +149,13 @@ type
     procedure SetTxid(const AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIX);
 
     property endToEndId: String read fendToEndId write SetendToEndId;   //"Id fim a fim da transação"
@@ -161,9 +166,6 @@ type
     property horario: TDateTime read fhorario write fhorario;
     property infoPagador: String read finfoPagador write SetinfoPagador;
     property devolucoes: TACBrPIXDevolucoes read fdevolucoes;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
 
   { TACBrPIXArray }
@@ -184,17 +186,11 @@ type
 implementation
 
 uses
+  Math,
   ACBrPIXUtil,
   ACBrUtil;
 
 { TACBrPIXValor }
-
-constructor TACBrPIXValor.Create(const ObjectName: String);
-begin
-  inherited Create;
-  fObjectName := ObjectName;
-  Clear;
-end;
 
 procedure TACBrPIXValor.Clear;
 begin
@@ -206,121 +202,121 @@ begin
   fvalor := Source.valor;
 end;
 
-procedure TACBrPIXValor.WriteToJSon(AJSon: TJsonObject);
-var
-  jso: TJsonObject;
+procedure TACBrPIXValor.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jso := AJSon.O[fObjectName];
-   jso.S['valor'] := FormatarValorPIX(valor);
+   AJSon.S['valor'] := FormatarValorPIX(valor);
   {$Else}
-   jso := AJSon[fObjectName].AsObject;
-   jso['valor'].AsString := FormatarValorPIX(valor);
+   AJSon['valor'].AsString := FormatarValorPIX(valor);
   {$EndIf}
 end;
 
-procedure TACBrPIXValor.ReadFromJSon(AJSon: TJsonObject);
-var
-  jso: TJsonObject;
+procedure TACBrPIXValor.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jso := AJSon.O[fObjectName];
-   valor := StringToFloatDef(jso.S['valor'], 0);
+   valor := StringToFloatDef(AJSon.S['valor'], 0);
   {$Else}
-   jso := AJSon[fObjectName].AsObject;
-   valor := StringToFloatDef(jso['valor'].AsString, 0);
+   valor := StringToFloatDef(AJSon['valor'].AsString, 0);
   {$EndIf}
 end;
 
 { TACBrPIXSaqueTroco }
 
-constructor TACBrPIXSaqueTroco.Create(const ObjectName: String);
+constructor TACBrPIXSaqueTroco.Create(const ObjectName: String;
+  prestadorStr: String);
 begin
-  inherited Create;
-  fObjectName := ObjectName;
-  Clear;
+  inherited Create(ObjectName);
+  fprestadorStr := prestadorStr;
 end;
 
 procedure TACBrPIXSaqueTroco.Clear;
 begin
-  fvalor := 0;
+  fvalor := -1;
+  fmodalidadeAlteracao := False;
   fmodalidadeAgente := maNENHUM;
-  fprestadorDeServicoDeSaque := -1;
+  fprestadorDoServicoDeSaque := -1;
+end;
+
+function TACBrPIXSaqueTroco.IsEmpty: Boolean;
+begin
+  Result := (fmodalidadeAgente = maNENHUM);
+  //(fvalor < 0) and // (fmodalidadeAlteracao = False) and
+  //          (fmodalidadeAgente = maNENHUM) and
+  //          (fprestadorDoServicoDeSaque < 0);
 end;
 
 procedure TACBrPIXSaqueTroco.Assign(Source: TACBrPIXSaqueTroco);
 begin
   fvalor := Source.valor;
+  fmodalidadeAlteracao := Source.modalidadeAlteracao;
   fmodalidadeAgente := Source.modalidadeAgente;
-  prestadorDeServicoDeSaque := Source.prestadorDeServicoDeSaque;
+  fprestadorDoServicoDeSaque := Source.prestadorDoServicoDeSaque;
 end;
 
-procedure TACBrPIXSaqueTroco.WriteToJSon(AJSon: TJsonObject);
-var
-  jso: TJsonObject;
+procedure TACBrPIXSaqueTroco.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jso := AJSon.O[fObjectName];
-   jso.S['valor'] := FormatarValorPIX(valor);
+   if (valor >= 0) then
+     AJSon.S['valor'] := FormatarValorPIX(valor);
+   AJSon.I['modalidadeAlteracao'] := IfThen(modalidadeAlteracao, 1, 0);
    if (fmodalidadeAgente <> maNENHUM) then
-     jso.S['modalidadeAgente'] := PIXModalidadeAgenteToString(modalidadeAgente);
-   if (prestadorDeServicoDeSaque >= 0) then
-     jso.S['prestadorDeServicoDeSaque'] := IntToStrZero(prestadorDeServicoDeSaque, 8);
+     AJSon.S['modalidadeAgente'] := PIXModalidadeAgenteToString(modalidadeAgente);
+   if (prestadorDoServicoDeSaque >= 0) then
+     AJSon.S[fprestadorStr] := IntToStrZero(prestadorDoServicoDeSaque, 8);
   {$Else}
-   jso := AJSon[fObjectName].AsObject;
-   jso['valor'].AsString := FormatarValorPIX(valor);
+   if (valor >= 0) then
+     AJSon['valor'].AsString := FormatarValorPIX(valor);
+   AJSon['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
    if (fmodalidadeAgente <> maNENHUM) then
-     jso['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(modalidadeAgente);
-   if (prestadorDeServicoDeSaque >= 0) then
-     jso['prestadorDeServicoDeSaque'].AsString := IntToStrZero(prestadorDeServicoDeSaque, 8);
+     AJSon['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(modalidadeAgente);
+   if (prestadorDoServicoDeSaque >= 0) then
+     AJSon[fprestadorStr].AsString := IntToStrZero(prestadorDoServicoDeSaque, 8);
   {$EndIf}
 end;
 
-procedure TACBrPIXSaqueTroco.ReadFromJSon(AJSon: TJsonObject);
-var
-  jso: TJsonObject;
+procedure TACBrPIXSaqueTroco.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jso := AJSon.O[fObjectName];
-   valor := StringToFloatDef( jso.S['valor'], 0);
-   modalidadeAgente := StringToPIXModalidadeAgente( jso.S['modalidadeAgente'] );
-   prestadorDeServicoDeSaque := StrToIntDef(jso.S['prestadorDeServicoDeSaque'], -1);
+   valor := StringToFloatDef( AJSon.S['valor'], 0 );
+   modalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
+   modalidadeAgente := StringToPIXModalidadeAgente( AJSon.S['modalidadeAgente'] );
+   prestadorDoServicoDeSaque := StrToIntDef(AJSon.S[fprestadorStr], -1);
   {$Else}
-   jso := AJSon[fObjectName].AsObject;
-   valor := StringToFloatDef( jso['valor'].AsString, 0);
-   modalidadeAgente := StringToPIXModalidadeAgente( jso['modalidadeAgente'].AsString );
-   prestadorDeServicoDeSaque := StrToIntDef(jso['prestadorDeServicoDeSaque'].AsString, -1);
+   valor := StringToFloatDef( AJSon['valor'].AsString, 0 );
+   modalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
+   modalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
+   prestadorDoServicoDeSaque := StrToIntDef(AJSon[fprestadorStr].AsString, -1);
   {$EndIf}
 end;
 
-procedure TACBrPIXSaqueTroco.SetPrestadorDeServicoDeSaque(AValue: Integer);
+procedure TACBrPIXSaqueTroco.SetprestadorDoServicoDeSaque(AValue: Integer);
 var
   e: String;
 begin
-  if (fprestadorDeServicoDeSaque = AValue) then
+  if (fprestadorDoServicoDeSaque = AValue) then
     Exit;
 
   e := ValidarPSS(AValue);
   if (e <> '') then
     raise EACBrPixException.Create(ACBrStr(e));
 
-  fprestadorDeServicoDeSaque := AValue;
+  fprestadorDoServicoDeSaque := AValue;
 end;
 
 { TACBrPIXComponentesValor }
 
-constructor TACBrPIXComponentesValor.Create;
+constructor TACBrPIXComponentesValor.Create(const ObjectName: String);
 begin
-  inherited Create;
+  inherited Create(ObjectName);
   fabatimento := TACBrPIXValor.Create('abatimento');
   fdesconto := TACBrPIXValor.Create('desconto');
   fjuros := TACBrPIXValor.Create('juros');
   fmulta := TACBrPIXValor.Create('multa');
   foriginal := TACBrPIXValor.Create('original');
-  fsaque := TACBrPIXSaqueTroco.Create('saque');
-  ftroco := TACBrPIXSaqueTroco.Create('troco');
+  fsaque := TACBrPIXSaqueTroco.Create('saque', 'prestadorDeServicoDeSaque');
+  ftroco := TACBrPIXSaqueTroco.Create('troco', 'prestadorDeServicoDeSaque');
 end;
 
 destructor TACBrPIXComponentesValor.Destroy;
@@ -346,6 +342,17 @@ begin
   ftroco.Clear;
 end;
 
+function TACBrPIXComponentesValor.IsEmpty: Boolean;
+begin
+  Result := fabatimento.IsEmpty and
+            fdesconto.IsEmpty and
+            fjuros.IsEmpty and
+            fmulta.IsEmpty and
+            foriginal.IsEmpty and
+            fsaque.IsEmpty and
+            ftroco.IsEmpty;
+end;
+
 procedure TACBrPIXComponentesValor.Assign(Source: TACBrPIXComponentesValor);
 begin
   fabatimento.Assign(Source.abatimento);
@@ -357,51 +364,35 @@ begin
   ftroco.Assign(Source.troco);
 end;
 
-procedure TACBrPIXComponentesValor.WriteToJSon(AJSon: TJsonObject);
-var
-  jso: TJsonObject;
+procedure TACBrPIXComponentesValor.DoWriteToJSon(AJSon: TJsonObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jso := AJSon.O['componentesValor'];
-  {$Else}
-   jso := AJSon['componentesValor'].AsObject;
-  {$EndIf}
-
-  foriginal.WriteToJSon(jso);
-  fsaque.WriteToJSon(jso);
-  ftroco.WriteToJSon(jso);
-  fjuros.WriteToJSon(jso);
-  fmulta.WriteToJSon(jso);
-  fabatimento.WriteToJSon(jso);
-  fdesconto.WriteToJSon(jso);
+  foriginal.WriteToJSon(AJSon);
+  fsaque.WriteToJSon(AJSon);
+  ftroco.WriteToJSon(AJSon);
+  fjuros.WriteToJSon(AJSon);
+  fmulta.WriteToJSon(AJSon);
+  fabatimento.WriteToJSon(AJSon);
+  fdesconto.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXComponentesValor.ReadFromJSon(AJSon: TJsonObject);
-var
-  jso: TJsonObject;
+procedure TACBrPIXComponentesValor.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jso := AJSon.O['componentesValor'];
-  {$Else}
-   jso := AJSon['componentesValor'].AsObject;
-  {$EndIf}
-
-  foriginal.ReadFromJSon(jso);
-  fsaque.ReadFromJSon(jso);
-  ftroco.ReadFromJSon(jso);
-  fjuros.ReadFromJSon(jso);
-  fmulta.ReadFromJSon(jso);
-  fabatimento.ReadFromJSon(jso);
-  fdesconto.ReadFromJSon(jso);
+  foriginal.ReadFromJSon(AJSon);
+  fsaque.ReadFromJSon(AJSon);
+  ftroco.ReadFromJSon(AJSon);
+  fjuros.ReadFromJSon(AJSon);
+  fmulta.ReadFromJSon(AJSon);
+  fabatimento.ReadFromJSon(AJSon);
+  fdesconto.ReadFromJSon(AJSon);
 end;
 
 { TACBrPIX }
 
-constructor TACBrPIX.Create;
+constructor TACBrPIX.Create(const ObjectName: String);
 begin
-  inherited;
-  fcomponentesValor := TACBrPIXComponentesValor.Create;
+  inherited Create(ObjectName);
+  fcomponentesValor := TACBrPIXComponentesValor.Create('componentesValor');
   fdevolucoes := TACBrPIXDevolucoes.Create('devolucoes');
   Clear;
 end;
@@ -426,6 +417,20 @@ begin
 
   fcomponentesValor.Clear;
   fdevolucoes.Clear
+end;
+
+function TACBrPIX.IsEmpty: Boolean;
+begin
+  Result := (fendToEndId = '') and
+            (ftxid = '') and
+            (fvalor = 0) and
+            (fchave = '') and
+            (fhorario = 0) and
+            (finfoPagador = '') and
+            (ftxid = '') and
+            (fvalor = 0) and
+            fcomponentesValor.IsEmpty and
+            fdevolucoes.IsEmpty;
 end;
 
 procedure TACBrPIX.AssignSchema(ASource: TACBrPIXSchema);
@@ -470,7 +475,7 @@ begin
   finfoPagador := copy(AValue, 1, 140);
 end;
 
-procedure TACBrPIX.WriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIX.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['endToEndId'] := fendToEndId;
@@ -497,7 +502,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIX.ReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIX.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
@@ -590,7 +595,7 @@ end;
 
 function TACBrPIXArray.New: TACBrPIX;
 begin
-  Result := TACBrPIX.Create;
+  Result := TACBrPIX.Create('');
   Self.Add(Result);
 end;
 

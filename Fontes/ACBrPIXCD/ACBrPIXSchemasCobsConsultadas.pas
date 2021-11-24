@@ -62,30 +62,29 @@ type
   private
     fcobs: TACBrPIXCobCompletaArray;
     fparametros: TACBrPIXParametrosConsultaCob;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     destructor Destroy; override;
     procedure Assign(Source: TACBrPIXCobsConsultadas);
 
     property parametros: TACBrPIXParametrosConsultaCob read fparametros;
     property cobs: TACBrPIXCobCompletaArray read fcobs;
-
-    procedure WriteToJSon(AJSon: TJsonObject); override;
-    procedure ReadFromJSon(AJSon: TJsonObject); override;
   end;
-
-
 
 implementation
 
 { TACBrPIXCobsConsultadas }
 
-constructor TACBrPIXCobsConsultadas.Create;
+constructor TACBrPIXCobsConsultadas.Create(const ObjectName: String);
 begin
-  inherited Create;
+  inherited Create(ObjectName);
   fcobs := TACBrPIXCobCompletaArray.Create('cobs');
-  fparametros := TACBrPIXParametrosConsultaCob.Create;
+  fparametros := TACBrPIXParametrosConsultaCob.Create('parametros');
 end;
 
 destructor TACBrPIXCobsConsultadas.Destroy;
@@ -107,30 +106,21 @@ begin
   fcobs.Assign(Source.cobs);
 end;
 
-procedure TACBrPIXCobsConsultadas.WriteToJSon(AJSon: TJsonObject);
-var
-  jsp: TJsonObject;
+procedure TACBrPIXCobsConsultadas.DoWriteToJSon(AJSon: TJsonObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jsp := AJSon.O['parametros'];
-  {$Else}
-   jsp := AJSon['parametros'].AsObject;
-  {$EndIf}
-  fparametros.WriteToJSon(jsp);
+  fparametros.WriteToJSon(AJSon);
   fcobs.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobsConsultadas.ReadFromJSon(AJSon: TJsonObject);
-var
-  jsp: TJsonObject;
+procedure TACBrPIXCobsConsultadas.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   jsp := AJSon.O['parametros'];
-  {$Else}
-   jsp := AJSon['parametros'].AsObject;
-  {$EndIf}
-  fparametros.ReadFromJSon(jsp);
+  fparametros.ReadFromJSon(AJSon);
   fcobs.ReadFromJSon(AJSon);
+end;
+
+function TACBrPIXCobsConsultadas.IsEmpty: Boolean;
+begin
+  Result := fparametros.IsEmpty and fcobs.IsEmpty;
 end;
 
 end.

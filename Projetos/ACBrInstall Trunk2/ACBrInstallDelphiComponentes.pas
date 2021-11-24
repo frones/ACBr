@@ -453,7 +453,7 @@ begin
   end;
 
   if FArquivoLog <> EmptyStr then
-    WriteToTXT(FArquivoLog, Texto, not ReiniciaArquivo);
+    WriteToTXT(FArquivoLog, AnsiString(Texto), not ReiniciaArquivo);
 end;
 
 function TACBrInstallComponentes.RetornaPath(const ADestino: TDestino; const APathBin: string): string;
@@ -1046,7 +1046,7 @@ begin
       ConteudoArquivo := ConteudoArquivo + sLineBreak;
     end;
 
-    WriteToTXT(PathBat, ConteudoArquivo, False);
+    WriteToTXT(PathBat, AnsiString(ConteudoArquivo), False);
   finally
     DriverList.Free;
   end;

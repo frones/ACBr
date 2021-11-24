@@ -180,6 +180,7 @@ type
     lbl3: TLabel;
     ACBr_NFSeXDanfseRL_dpk: TCheckBox;
     Label29: TLabel;
+    ACBr_NFSeXDanfseFR_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -318,6 +319,13 @@ begin
         ACBr_NFSeDanfseRL_dpk.Checked := False;
       end;
 
+      // quando não for selecionado o NFSeX devemos desmarcar
+      if not ACBr_NFSeX_dpk.Checked then
+      begin
+        ACBr_NFSeXDanfseFR_dpk.Checked := False;
+        ACBr_NFSeXDanfseRL_dpk.Checked := False;
+      end;
+
       // quando não for selecionado o Boleto devemos desmarcar
       if not ACBr_Boleto_dpk.Checked then
       begin
@@ -433,7 +441,7 @@ begin
          (ACBr_NFeDanfeRL_dpk.Checked or ACBr_NFSeDanfseRL_dpk.Checked or
           ACBr_CTeDacteRL_dpk.Checked or ACBr_BoletoRL_dpk.Checked or
           ACBr_MDFeDamdfeRL_dpk.Checked or ACBr_SATExtratoRL_dpk.Checked or
-          ACBr_GNREGuiaRL_dpk.Checked) then
+          ACBr_GNREGuiaRL_dpk.Checked or ACBr_NFSeXDanfseRL_dpk.Checked) then
       begin
         ACBr_DFeReportRL_dpk.Checked := True;
       end;

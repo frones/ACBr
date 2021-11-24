@@ -40,7 +40,7 @@ uses
   StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin,
   RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
   dateutils, ACBrSATExtratoFortesFr, ACBrPosPrinter, ACBrDFeSSL,
-  ACBrIntegrador;
+  ACBrIntegrador, Unit2;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -68,6 +68,7 @@ type
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
+    bCronometro: TButton;
     cbImprimir1Linha: TCheckBox;
     cbContinuo: TCheckBox;
     cbLogotipo: TCheckBox;
@@ -293,6 +294,7 @@ type
     procedure ACBrSAT1GetsignAC(var Chave : AnsiString) ;
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
+    procedure bCronometroClick(Sender: TObject);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
@@ -531,6 +533,13 @@ end;
 procedure TForm1.ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
 begin
   MessageDlg('Mensagem do SEFAZ', IntToStr(ACod)+'-'+AMensagem, mtWarning, [mbOK], 0);
+end;
+
+procedure TForm1.bCronometroClick(Sender: TObject);
+begin
+  Form3:=  TForm3.Create(Self);
+  Form3.Show;
+
 end;
 
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
@@ -1141,7 +1150,7 @@ begin
   tfim := now;
   mLog.Lines.Add('Inciado em: '+DateTimeToStr(tini)) ;
   mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
-  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
+  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' milissegundos' ) ;
 end;
 
 procedure TForm1.MenuItem19Click(Sender: TObject);
@@ -1548,8 +1557,8 @@ begin
     ide.numeroCaixa := 1;
     ide.cNF := Random(999999);
 
-    Dest.CNPJCPF := '5481336000137';
-    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo';
+    Dest.CNPJCPF := '18760540000139';
+    Dest.xNome := 'Projeto ACBr ÁÉÍÓÚáéíóúÇç teste de nome Longo';
 
     Entrega.xLgr := 'logradouro';
     Entrega.nro := '112233';
@@ -1747,9 +1756,23 @@ begin
   //ACBrSATExtratoFortes1.ImprimirExtrato;
   ACBrSAT1.ImprimirExtrato;
   tfim := now;
+
+  if (form3 <> nil) then
+  begin
+    if not form3.timer1.enabled then
+      form3.tempo:=time;
+    form3.timer1.enabled:=not form3.timer1.enabled;
+    form3.bitbtn1.caption:='Parar';
+
+  end;
+
+  mLog.Lines.Add('------------------------------------------------') ;
   mLog.Lines.Add('Inciado em: '+DateTimeToStr(tini)) ;
   mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
-  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
+  mLog.Lines.Add('') ;
+  mLog.Lines.Add('Tempo de Envio Impressão: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' milissegundos' ) ;
+  mLog.Lines.Add('------------------------------------------------') ;
+
 end;
 
 procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;

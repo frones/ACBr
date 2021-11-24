@@ -12,7 +12,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.0.10.0'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -2002,6 +2002,15 @@ object Form1: TForm1
           ParentFont = False
           TabOrder = 1
         end
+      end
+      object bCronometro: TButton
+        Left = 30
+        Height = 32
+        Top = 80
+        Width = 105
+        Caption = 'Cronômetro'
+        OnClick = bCronometroClick
+        TabOrder = 3
       end
     end
     object GroupBox1: TGroupBox

@@ -1,0 +1,44 @@
+object Form3: TForm3
+  Left = 344
+  Height = 265
+  Top = 371
+  Width = 566
+  Caption = 'Cronômetro'
+  ClientHeight = 265
+  ClientWidth = 566
+  Color = clBlack
+  OnCreate = FormCreate
+  LCLVersion = '2.0.2.0'
+  object BitBtn1: TBitBtn
+    Left = 224
+    Height = 48
+    Top = 192
+    Width = 96
+    Caption = 'Iniciar'
+    OnClick = BitBtn1Click
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 88
+    Height = 77
+    Top = 64
+    Width = 384
+    Caption = '00:00:00:000'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clLime
+    Font.Height = -64
+    Font.Name = 'Tahoma'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label1Click
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = Timer1Timer
+    left = 488
+    top = 208
+  end
+end

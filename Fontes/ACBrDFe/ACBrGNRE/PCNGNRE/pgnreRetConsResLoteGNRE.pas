@@ -441,7 +441,7 @@ end;
 
 function TTResultLote_GNRE.Ler_Versao_2: boolean;
 var
-  i, j, k, l, m: Integer;
+  i, j, k, l, m, Tipo: Integer;
   aXML: string;
 begin
   Result := False;
@@ -503,10 +503,12 @@ begin
           l := 0;
           while Leitor.rExtrai(6, 'documentoOrigem', '', l + 1) <> '' do
           begin
-            if Leitor.rAtributo('tipo=', 'documentoOrigem') = '22' then
+            Tipo := StrToIntDef(Leitor.rAtributo('tipo=', 'documentoOrigem'), 0);
+
+            if Tipo in [10, 22, 24] then
               resGuia.Items[i].NumDocOrigem := Leitor.rCampo(tcStr, 'documentoOrigem');
 
-             inc(l);
+            inc(l);
           end;
 
           if Leitor.rExtrai(6, 'contribuinteDestinatario') <> '' then

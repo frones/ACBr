@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2021
+-- pgnreRetConsResLoteGNRE --
+[*] Ajuste na leitura do Tipo do Documento Origem, visando contemplar as diferenças de
+    tipos entre as UF.
+  Por: Gutemberg S Costa
+
 03/11/2021
 -- ACBrGNREGuiasRetorno/pgnreGNRERetorno --
 [+] Incluido os campos: ValorFCP, MultaFCP, JurosFCP e AtualizacaoMonetariaFCP.

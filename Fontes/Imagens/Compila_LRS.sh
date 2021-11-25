@@ -192,6 +192,23 @@ echo "* Arquivo    ACBrNFSe.lrs     gerado    *"
 echo "****************************************"
 echo
 
+$LAZRES ACBrNFSeX.lrs TACBrNFSeX.png 
+mv ACBrNFSeX.lrs ../ACBrDFe/ACBrNFSeX
+
+$LAZRES ACBrNFSeXDANFSeFR.lrs TACBrNFSeXDANFSeFR.png
+mv ACBrNFSeXDANFSeFR.lrs ../ACBrDFe/ACBrNFSeX/DANFSE/Fast
+
+$LAZRES ACBrNFSeXDANFSeRL.lrs TACBrNFSeXDANFSeRL.png
+mv ACBrNFSeXDANFSeRL.lrs ../ACBrDFe/ACBrNFSeX/DANFSE/Fortes
+
+echo
+echo "****************************************"
+echo "* Arquivo    ACBrNFSeX.lrs     gerado    *"
+echo "* Arquivo    ACBrNFSeXDANFSeFR.lrs     gerado    *"
+echo "* Arquivo    ACBrNFSeXDANFSeRL.lrs     gerado    *"
+echo "****************************************"
+echo
+
 :PagFor
 $LAZRES ACBrPagFor.lrs TACBrPagFor.png 
 mv ACBrPagFor.lrs ../ACBrPagFor/

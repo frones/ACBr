@@ -1963,7 +1963,7 @@ begin
 end;
 
 procedure TACBrValidador.ValidarCAEPF;
-Var DV1, DV2 : String ;
+Var DV1, DV2, DVFinal : String ;
 begin
   if fsAjustarTamanho then
      fsDocto := PadLeft( fsDocto, 14, '0') ;
@@ -1989,8 +1989,18 @@ begin
   Modulo.Calcular ;
   DV2 := IntToStr( Modulo.DigitoFinal ) ;
 
-  fsDigitoCalculado := DV1+DV2 ;
-
+  Modulo.fsDigitoFinal := StrToInt(DV1) * 10 + StrToInt(DV2)+12;
+  if Modulo.DigitoFinal > 99 then
+    Modulo.fsDigitoFinal := Modulo.fsDigitoFinal - 100;
+  
+  if Modulo.DigitoFinal < 10 then
+    DVFinal := '0';
+    
+  DVFinal := DVFinal + IntToStr(Modulo.DigitoFinal);
+  
+  DV1 := DVFinal[1];
+  DV2 := DVFinal[2];
+  
   if (DV1 <> fsDocto[13]) or (DV2 <> fsDocto[14]) then
   begin
      fsMsgErro := 'CAEPF inválido.' ;

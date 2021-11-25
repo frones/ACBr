@@ -640,6 +640,11 @@ const
                                           'evtCessao', 'evtCdBenAlt', 
                                           'evtReativBen','evtCdBenTerm');
 
+  TTrabalhadorSemVinculo: Array[0..27] of integer = (
+                                          201, 202, 304, 305, 308, 311, 313, 401, 410, 501, 
+                                          701, 711, 712, 721, 722, 723, 731, 734, 738, 741, 
+                                          751, 761, 771, 781, 901, 902, 903, 904);
+
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
@@ -1082,6 +1087,8 @@ function eSStrToTpMotCessBenef(var ok: boolean; const s: string): tpMotCessBenef
 
 function eStpTpMtvSuspensaoToStr(const t: tpMtvSuspensao): string;
 function eSStrToTpMtvSuspensao(var ok: boolean; const s: string): tpMtvSuspensao;
+
+function IntToTpProf(codCateg : Integer): tpTpProf;
 
 implementation
 
@@ -2855,5 +2862,18 @@ begin
                             mtvSuspensaoPorNaoRecadastramento,
                             mtvOutrosMotivosDeSuspensao]);
 end;
+
+function IntToTpProf(codCateg : Integer): tpTpProf;
+var
+        ix : integer;
+Begin
+  result := ttpProfissionalEmpregado;
+  for ix := low(TTrabalhadorSemVinculo) to High(TTrabalhadorSemVinculo) do
+    if TTrabalhadorSemVinculo[ix] = codCateg then
+    Begin
+      result := ttpProfissionalSemVinculo;
+      break;
+    End;
+End;
 
 end.

@@ -1329,8 +1329,9 @@ begin
       else
         Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pIdeVinculo.nisTrab);
     end;
-  
-  Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, pIdeVinculo.matricula);
+
+  if (IntToTpProf(pIdeVinculo.codCateg) = ttpProfissionalEmpregado) then
+          Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, pIdeVinculo.matricula);
   
   if not(pCessao) then
     if (pcodCateg) then

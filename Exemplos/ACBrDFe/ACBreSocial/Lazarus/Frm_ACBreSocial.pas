@@ -330,6 +330,8 @@ type
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
     procedure AtualizarSSLLibsCombo;
+
+    function VersaoDFx: TVersaoeSocial;
   public
     { Public declarations }
   end;
@@ -354,6 +356,12 @@ const
 {$R *.lfm}
 
 { TfrmACBreSocial }
+
+function TfrmACBreSocial.VersaoDFx: TVersaoeSocial;
+begin
+  Result := ACBreSocial1.Configuracoes.Geral.VersaoDF;
+end;
+
 
 procedure TfrmACBreSocial.GerareSocial1000;
 begin
@@ -2355,7 +2363,7 @@ begin
 
           CNH.nrRegCnh := '999';
           CNH.DtExped := date;
-          CNH.ufCnh := tpuf(ufPR);
+          CNH.ufCnh := 'SP';
           CNH.DtValid := date;
           CNH.dtPriHab := date;
           CNH.categoriaCnh := tpCnh(cnA);
@@ -2372,7 +2380,7 @@ begin
             Bairro := 'CENTRO';
             Cep := '85500000';
             codMunic := 1234567;
-            uf := 'PR';
+            uf := 'SP';
           end;
 
           with Exterior do
@@ -2531,7 +2539,7 @@ begin
               Bairro      := 'Bairro';
               Cep         := '85202630';
               CodMunic    := 1234567;
-              Uf          := tpuf(ufPR);
+              Uf          := 'SP';
             end;
           end;
 
@@ -2661,7 +2669,7 @@ begin
 
           CNH.nrRegCnh := '999';
           CNH.DtExped := date;
-          CNH.ufCnh := tpuf(ufPR);
+          CNH.ufCnh := 'SP';
           CNH.DtValid := date;
           CNH.dtPriHab := date;
           CNH.categoriaCnh := tpCnh(cnA);
@@ -2678,7 +2686,7 @@ begin
             Bairro := 'CENTRO';
             Cep := '85500000';
             codMunic := 11111;
-            uf := 'PR';
+            uf := 'SP';
           end;
 
           with Exterior do
@@ -2749,6 +2757,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 procedure TfrmACBreSocial.GerareSocial2206;
@@ -3019,7 +3028,7 @@ begin
           with Exame.New do
           begin
             DtExm := date;
-            procRealizado := 123;
+            procRealizado := '123';
             obsProc := 'observação do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
@@ -3028,7 +3037,7 @@ begin
           with Exame.New do
           begin
             DtExm := date + 1;
-            procRealizado := 456;
+            procRealizado := '456';
             obsProc := 'observação do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
@@ -3038,16 +3047,17 @@ begin
           Medico.nisMed := '12345612345';
           Medico.NmMed  := 'TESTE DE MEDICO EXAMINADOR';
           Medico.nrCRM  := '6655666';
-          Medico.ufCRM := tpuf(ufSP);
+          Medico.ufCRM := 'SP';
         end;
 
         RespMonit.cpfResp := '12345678901';
         RespMonit.nmResp := 'NOME DO RESPONSAVEL';
         RespMonit.nrCRM := '666566';
-        RespMonit.ufCRM := tpuf(ufPR);
+        RespMonit.ufCRM := 'SP';
       end;
     end;
   end;
+
 end;
 
 procedure TfrmACBreSocial.GerareSocial2221;
@@ -3163,7 +3173,7 @@ begin
             nmEmit := 'Nome do emitente na alteração';
             ideOC := idCRM;
             NrOc := '12313';
-            ufOC := ufSP;
+            ufOC := 'SP';
           end;
         end;
 
@@ -3174,6 +3184,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 procedure TfrmACBreSocial.GerareSocial2240;
@@ -3197,7 +3208,7 @@ begin
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
-      IdeVinculo.Matricula := '564545';  
+      IdeVinculo.Matricula := '564545';
 
       with infoExpRisco do
       begin
@@ -3215,50 +3226,50 @@ begin
 
         infoAtiv.dscAtivDes := 'DESCRICAO ATIVIDADE';
 
-        infoAtiv.ativPericInsal.Clear;
-        with infoAtiv.ativPericInsal.New do
-        begin
-          codAtiv := '06.540';
-        end;
-        with infoAtiv.ativPericInsal.New do
-        begin
-          codAtiv := '05.480';
-        end;
+//        infoAtiv.ativPericInsal.Clear;
+//        with infoAtiv.ativPericInsal.New do
+//        begin
+//          codAtiv := '06.540';
+//        end;
+//        with infoAtiv.ativPericInsal.New do
+//        begin
+//          codAtiv := '05.480';
+//        end;
 
-        FatRisco.Clear;
-        with FatRisco.New do
-        begin
-          codFatRis      := '123456789';
-          tpAval         := tpaQualitativo;
-          intConc        := 0.50;
-          limTol         := 0.50;
-          unMed          := 9;
-          tecMedicao     := 'Tecnica de medicao';
-          insalubridade  := tpNao;
-          periculosidade := tpNao;
-          aposentEsp     := tpNao;
-
-          with epcEpi do
-          begin
-            utilizEPC := uEPCNaoAplica;
-            eficEpc   := tpNao;
-            utilizEPI := uEPIUtilizado;
-
-            epi.Clear;
-            with epi.New do
-            begin
-              caEPI         := '321654';
-              dscEPI        := 'CAPACETE';
-              eficEpi       := tpSim;
-              medProtecao   := tpSim;
-              condFuncto    := tpSim;
-              usoInint      := tpSim;
-              przValid      := tpSim;
-              periodicTroca := tpSim;
-              higienizacao  := tpSim;
-            end;
-          end;
-        end;
+//        FatRisco.Clear;
+//        with FatRisco.New do
+//        begin
+//          codFatRis      := '123456789';
+//          tpAval         := tpaQualitativo;
+//          intConc        := 0.50;
+//          limTol         := 0.50;
+//          unMed          := 9;
+//          tecMedicao     := 'Tecnica de medicao';
+//          insalubridade  := tpNao;
+//          periculosidade := tpNao;
+//          aposentEsp     := tpNao;
+//
+//          with epcEpi do
+//          begin
+//            utilizEPC := uEPCNaoAplica;
+//            eficEpc   := tpNao;
+//            utilizEPI := uEPIUtilizado;
+//
+//            epi.Clear;
+//            with epi.New do
+//            begin
+//              caEPI         := '321654';
+//              dscEPI        := 'CAPACETE';
+//              eficEpi       := tpSim;
+//              medProtecao   := tpSim;
+//              condFuncto    := tpSim;
+//              usoInint      := tpSim;
+//              przValid      := tpSim;
+//              periodicTroca := tpSim;
+//              higienizacao  := tpSim;
+//            end;
+//          end;
+//        end;
 
         respReg.Clear;
         with respReg.New do
@@ -3269,7 +3280,7 @@ begin
           ideOC   := idOutros;
           dscOC   := 'ORGAO';
           NrOc    := '51561561';
-          ufOC    := ufSP;
+          ufOC    := 'SP';
         end;
 
         obs.metErg   := 'METODOLOGIA';
@@ -3277,6 +3288,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 procedure TfrmACBreSocial.GerareSocial2245;
@@ -3377,6 +3389,9 @@ end;
 
 procedure TfrmACBreSocial.GerareSocial2260;
 begin
+  if VersaoDFx > ve02_05_00 then
+    exit;
+
  with ACBreSocial1.Eventos.NaoPeriodicos.S2260.New do
   begin
     with EvtConvInterm do
@@ -3420,12 +3435,13 @@ begin
             Bairro      := 'Bairro';
             Cep         := '35570000';
             CodMunic    := 3126109;
-            UF          := ufMG;
+            UF          := 'SP';
           end;
         end;
       end;
     end;
   end;
+
 end;
 
 procedure TfrmACBreSocial.GerareSocial2298;
@@ -3710,7 +3726,7 @@ begin
 
           CNH.nrRegCnh := '123654789632';
           CNH.DtExped := date;
-          CNH.ufCnh := ufPR;
+          CNH.ufCnh := 'SP';
           CNH.DtValid := date;
           CNH.dtPriHab := date;
           CNH.categoriaCnh := cnAB;
@@ -3725,7 +3741,7 @@ begin
           Brasil.Bairro := 'Jd Filosofia';
           Brasil.Cep := '88888888';
           Brasil.codMunic := 4141414;
-          Brasil.uf := 'PR';
+          Brasil.uf := 'SP';
 
           // Dados de trabalhador estrangeiro
           Exterior.PaisResid := '063';
@@ -3857,7 +3873,7 @@ begin
               Bairro := 'Bairro Empresarial';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := 'PR';
+              uf := 'SP';
             end;
 
             supervisorEstagio.cpfSupervisor := '88888888801';
@@ -3867,6 +3883,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 procedure TfrmACBreSocial.GerareSocial2306;
@@ -4059,98 +4076,87 @@ procedure TfrmACBreSocial.GerareSocial2400;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2400.New do
   begin
-    with evtCdBenPrRP do
+    with evtCdBenefIn do
     begin
-      Sequencial := 0;
+      sequencial := 0;
 
-      with IdeEvento do
+      with ideEvento do
       begin
         indRetif := tpIndRetificacao(0);
-        NrRecibo := '65.5454.987798798798';
-        ProcEmi := TpProcEmi(0);
-        VerProc := '1.0';
+        nrRecibo := '65.5454.987798798798';
+        procEmi := TpProcEmi(0);
+        verProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
+      with ideEmpregador do
+      begin
+        tpInsc := tiCNPJ;
+        nrInsc := edtIdEmpregador.Text;
+      end;
 
-      with ideBenef do
+      with beneficiario do
       begin
         cpfBenef := '12345678910';
         nmBenefic := 'Nome do beneficiario';
+        dtNascto := date;
+        dtInicio := date;
+        sexo := 'F';
+        racaCor := 2;
+        estCiv := 1;
+        incFisMen := tpNao;
+//        dtIncFisMen := date;
 
-        with dadosBenef do
+        with endereco do
         begin
-          with dadosNasc do
+          with brasil do
           begin
-            DtNascto := date;;
-            codMunic := 4153623;
-            uf := 'PR';
-            PaisNascto := '063';
-            PaisNac := '105';
-            NmMae := 'Joana das Neve';
-            NmPai := 'Jose das Neve';
+            tpLograd := 'R';
+            dscLograd := 'Rua Parmenides';
+            nrLograd := '123456';
+            complemento := 'fundos';
+            bairro := 'Jd Filosofia';
+            cep := '88888888';
+            codMunic := 4141414;
+            uf := 'SP';
           end;
-
-          with endereco do
+{
+          with exterior do
           begin
-            with Brasil do
-            begin
-              TpLograd := 'R';
-              DscLograd := 'Rua Parmenides';
-              NrLograd := '123456';
-              Complemento := 'fundos';
-              Bairro := 'Jd Filosofia';
-              Cep := '88888888';
-              codMunic := 4141414;
-              uf := 'PR';
-            end;
-
-            // Dados de trabalhador estrangeiro
-            with Exterior do
-            begin
-              PaisResid := '063';
-              DscLograd := 'St. Abbey Road';
-              NrLograd := '123456';
-              Complemento := 'apto 010';
-              Bairro := 'RubberSoul';
-              NmCid := 'Buenos Aires';
-              CodPostal := '987654';
-            end;
+            paisResid := '063';
+            dscLograd := 'St. Abbey Road';
+            nrLograd := '123456';
+            complemento := 'apto 010';
+            bairro := 'RubberSoul';
+            nmCid := 'Buenos Aires';
+            codPostal := '987654';
           end;
-        end;
-      end;
-
-      with infoBeneficio do
-      begin
-        tpPlanRP := prpPlanoPrevidenciarioOuUnico;
-
-        with iniBeneficio do
-        begin
-          tpBenef := 1;
-          nrBenefic := '3156189132131';
-          dtIniBenef := Now;
-          vrBenef := 1500.32;
-          infoPenMorte.idQuota := '1521651651';
-          infoPenMorte.cpfInst := '12345678910';
+}
         end;
 
-        with altBeneficio do
+        dependente.Clear;
+
+        with dependente.New do
         begin
-          tpBenef := 1;
-          nrBenefic := '3156189132131';
-          dtIniBenef := Now;
-          vrBenef := 1500.32;
-          infoPenMorte.idQuota := '1521651651';
-          infoPenMorte.cpfInst := '12345678910';
+          tpDep := tdConjuge;
+          nmDep := 'Dependente 1';
+          dtNascto := date;
+          cpfDep := '12345678901';
+          depIRRF := tpSim;
+          sexoDep := 'F';
+          depSF := tpNao;
+          incTrab := tpNao;
         end;
 
-        with fimBeneficio do
+        with Dependente.New do
         begin
-          tpBenef := 1;
-          nrBenefic := '3156189132131';
-          dtFimBenef := Now;
-          mtvFim := 1;
+          tpDep := tdFilhoOuEnteado;
+          nmDep := 'Dependente 2';
+          DtNascto := date;
+          cpfDep := '12345678901';
+          depIRRF := tpSim;
+          sexoDep := 'M';
+          depSF := tpNao;
+          incTrab := tpNao;
         end;
       end;
     end;

@@ -88,6 +88,9 @@ namespace ACBrLib.MDFe
 
                     iniData.WriteToIni(modal.InfANTT.valePed, "valePed");
 
+                    for (var i = 0; i < modal.InfANTT.valePed.disp.Count; i++)
+                        iniData.WriteToIni(modal.InfANTT.valePed.disp[i], $"disp{i + 1:000}");
+
                     for (var i = 0; i < modal.InfANTT.InfContratante.Count; i++)
                         iniData.WriteToIni(modal.InfANTT.InfContratante[i], $"infContratante{i + 1:000}");
 
@@ -304,9 +307,14 @@ namespace ACBrLib.MDFe
 
             iniData.ReadFromIni(Emitente, "emit");
 
-            if (iniData.Contains("Rodo"))
+            if (iniData.Contains("Rodo") ||
+                iniData.Read("infANTT", "RNTRC", "") != "" ||
+                iniData.Contains("infCIOT001") ||
+                iniData.Contains("valePed001") ||
+                iniData.Contains("infContratante001") ||
+                iniData.Contains("valePed"))
             {
-                var rodo = iniData.ReadFromIni<ModalRodoMDFe>("Rodo");
+                var rodo = iniData.Contains("Rodo") ? iniData.ReadFromIni<ModalRodoMDFe>("Rodo") : new ModalRodoMDFe();
                 iniData.ReadFromIni(rodo.InfANTT, "infANTT");
 
                 i = 0;
@@ -321,6 +329,17 @@ namespace ACBrLib.MDFe
                 } while (CIOT != null);
 
                 iniData.ReadFromIni(rodo.InfANTT.valePed, "valePed");
+
+                i = 0;
+                DispMDFe disp;
+                do
+                {
+                    i++;
+                    disp = iniData.ReadFromIni<DispMDFe>($"disp{i:000}");
+                    if (disp == null) continue;
+
+                    rodo.InfANTT.valePed.disp.Add(disp);
+                } while (disp != null);
 
                 i = 0;
                 InfContratanteMDFe contratante;
@@ -407,10 +426,11 @@ namespace ACBrLib.MDFe
                 Modal = rodo;
             }
 
-            if (iniData.Contains("aereo"))
+            if (iniData.Read("aereo", "nac", "") != "")
                 Modal = iniData.ReadFromIni<ModalAereoMDFe>("aereo");
 
-            if (iniData.Contains("aquav"))
+            if (iniData.Read("aquav", "CNPJAgeNav", "") != "" ||
+                iniData.Read("aquav", "irin", "") != "")
             {
                 var modal = iniData.ReadFromIni<ModalAquaviarioMDFe>("aquav");
 

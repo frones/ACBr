@@ -5387,6 +5387,7 @@ begin
   with FMonitorConfig.BOLETO do
   begin
     edtBOLRazaoSocial.Text            := Nome;
+    cbxBOLF_J.ItemIndex               := Conta.Pessoa;
     edtBOLCNPJ.Text                   := CNPJCPF;
     edtBOLLogradouro.Text             := Logradouro;
     edtBOLNumero.Text                 := Numero;
@@ -5417,7 +5418,6 @@ begin
     with Conta do
     begin
       cbxBOLEmissao.ItemIndex          := RespEmis;
-      cbxBOLF_J.ItemIndex              := Pessoa;
 
       edtModalidade.Text               := Modalidade;
       edtConvenio.Text                 := Convenio;

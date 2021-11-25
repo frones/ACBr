@@ -495,7 +495,8 @@ begin
 
   Gerador.wCampo(tcInt, '', 'utilizEPI', 1, 1, 1, eStpUtilizEPIToStr(pEpcEpi.utilizEPI));
 
-  Gerador.wCampo(tcStr, '', 'eficEpi',         1,   1, 0, eSSimNaoFacultativoToStr(pEpcEpi.eficEpi));
+  if pEpcEpi.utilizEPI = uEPIUtilizado then
+    Gerador.wCampo(tcStr, '', 'eficEpi',         1,   1, 0, eSSimNaoFacultativoToStr(pEpcEpi.eficEpi));
 
   if pEpcEpi.epiInst() then
   begin

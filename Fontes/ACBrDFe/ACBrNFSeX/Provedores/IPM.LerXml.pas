@@ -68,6 +68,8 @@ type
 
 implementation
 
+uses ACBrNFSeXClass;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     IPM
@@ -94,6 +96,9 @@ begin
       Valores.ValorIss       := 0;
 
       ANodes := AuxNode.Childrens.FindAllAnyNs('lista');
+
+      if ANodes = nil then
+        ANodes := AuxNode.Childrens.FindAllAnyNs('item');
 
       for i := 0 to Length(ANodes) - 1 do
       begin
@@ -147,13 +152,18 @@ begin
   begin
     with NFSe do
     begin
-      Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+      Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
       CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('codigo_autenticidade'), tcStr);
+
+      if Trim(CodigoVerificacao) = '' then
+        CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cod_verificador_autenticidade'), tcStr);
+
+      Link := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('link_nfse'), tcStr);
 
       // campos presentes ao baixar do site da prefeitura
       if Numero = '' then
       begin
-        Numero         := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('numero_nfse'), tcStr);
+        Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('numero_nfse'), tcStr);
         SeriePrestacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('serie_nfse'), tcStr);
 
         aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('data_nfse'), tcStr);

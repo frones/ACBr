@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/11/2021
+-- IPM.LerXml --
+[*] Ajustes na leitura do XML da NFS-e.
+   Por: Eliandro.may
+
 24/11/2021
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade Westfalia/RS.

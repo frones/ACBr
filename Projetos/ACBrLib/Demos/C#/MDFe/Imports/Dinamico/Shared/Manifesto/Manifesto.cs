@@ -10,6 +10,13 @@ namespace ACBrLib.MDFe
     {
         #region Constructors
 
+        /// <summary>
+        /// Inicializa uma nova instancia da classe <see cref="Manifesto"/>.
+        /// </summary>
+        public Manifesto()
+        {
+        }
+
         internal Manifesto(ACBrIniFile ini)
         {
             ReadFromIni(ini);

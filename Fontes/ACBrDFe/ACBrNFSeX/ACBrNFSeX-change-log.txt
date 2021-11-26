@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/11/2021
+-- NFSeBrasil.Provider/NFSeBrasil.GravarXml/NFSeBrasil.LerXml --
+[*] Melhorias e correções visando a geração e a leitura do XML.
+   Por: Jéter Rabelo Ferreira
 -- ACBrNFSeX/ACBrNFSeXConfiguracoes --
 [*] O método SetProvedor agora se chama SetProvider e foi criado um novo
     método chamado SetProvedor que possui 2 parâmetros (Provedor e Versao)

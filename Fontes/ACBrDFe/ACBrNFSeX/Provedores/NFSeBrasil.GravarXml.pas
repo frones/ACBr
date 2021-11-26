@@ -56,7 +56,8 @@ type
     function GerarServico: TACBrXmlNode; override;
     function GerarTomador: TACBrXmlNode; override;
     function GerarEnderecoTomador: TACBrXmlNode; override;
-
+  public
+    function GerarXml: Boolean; override;
   end;
 
 implementation
@@ -125,6 +126,12 @@ begin
     Result.AppendChild(AddNode(tcStr, '#42', 'Bairro', 1, 60, 0,
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
+    Result.AppendChild(AddNode(tcStr, '#43', 'CodigoMunicipio', 1, 7, 0,
+                                    NFSe.Tomador.Endereco.xMunicipio, DSC_CMUN));
+
+    Result.AppendChild(AddNode(tcStr, '#44', 'Uf', 1, 2, 0,
+                                    NFSe.Tomador.Endereco.UF, DSC_UF));
+
     Result.AppendChild(AddNode(tcStr, '#45', 'Cep', 8, 8, 0,
                                OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP));
   end;
@@ -183,6 +190,26 @@ begin
     Result.AppendChild(AddNode(tcStr, '#47', 'Telefone', 1, 11, NrOcorrFoneTomador,
                           OnlyNumber(NFSe.Tomador.Contato.Telefone), DSC_FONE));
   end;
+end;
+
+function TNFSeW_NFSeBrasil.GerarXml: Boolean;
+var
+  NFSeNode, xmlNode: TACBrXmlNode;
+begin
+  ListaDeAlertas.Clear;
+
+  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+
+  FDocument.Clear();
+
+  NFSeNode := CreateElement('Rps');
+
+  FDocument.Root := NFSeNode;
+
+  xmlNode := GerarInfRps;
+  NFSeNode.AppendChild(xmlNode);
+
+  Result := True;
 end;
 
 end.

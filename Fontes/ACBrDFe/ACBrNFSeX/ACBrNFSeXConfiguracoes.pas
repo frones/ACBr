@@ -139,8 +139,8 @@ type
     procedure LerParamsMunicipio;
   published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
-    property Provedor: TnfseProvedor read FProvedor;
-    property Versao: TVersaoNFSe read FVersao;
+    property Provedor: TnfseProvedor read FProvedor write FProvedor;
+    property Versao: TVersaoNFSe read FVersao write FVersao;
     property xProvedor: String read FxProvedor;
     property xMunicipio: String read FxMunicipio;
     property xUF: String read FxUF;
@@ -316,6 +316,7 @@ begin
 
   FPIniParams := TMemIniFile.Create('');
   FProvedor := proNenhum;
+  FVersao := ve100;
 
   FConsultaLoteAposEnvio := True;
   FConsultaAposCancelar := True;
@@ -429,7 +430,7 @@ begin
   FProvedor := StrToProvedor(Ok, FxProvedor);
 
   if Assigned(fpConfiguracoes.Owner) then
-    TACBrNFSeX(fpConfiguracoes.Owner).SetProvedor;
+    TACBrNFSeX(fpConfiguracoes.Owner).SetProvider;
 
   if FProvedor = proNenhum then
     raise Exception.Create('Código do Municipio [' + CodIBGE + '] não Encontrado.');

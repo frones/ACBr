@@ -106,7 +106,7 @@ begin
   GerarEnderecoExterior := False;
 
   TagTomador := 'Tomador';
-  TagIntermediario := 'IntermediarioServico';
+  TagIntermediario := 'Intermediario';
 
   // Numero de Ocorrencias Minimas de uma tag
   // se for  0 só gera a tag se o conteudo for diferente de vazio ou zero

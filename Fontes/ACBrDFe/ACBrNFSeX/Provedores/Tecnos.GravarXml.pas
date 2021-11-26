@@ -123,8 +123,6 @@ begin
   NrOcorrRespRetencao := 1;
   
   GerarTagServicos := False;
-
-  TagIntermediario := 'Intermediario';
 end;
 
 function TNFSeW_Tecnos201.DefinirNameSpaceDeclaracao: string;

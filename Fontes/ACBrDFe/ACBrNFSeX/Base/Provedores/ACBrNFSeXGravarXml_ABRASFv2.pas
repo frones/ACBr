@@ -349,7 +349,7 @@ begin
   FormatoCompetencia := tcDat;
 
   FTagTomador := 'Tomador';
-  FTagIntermediario := 'IntermediarioServico';
+  FTagIntermediario := 'Intermediario';
 end;
 
 function TNFSeW_ABRASFv2.GerarXml: Boolean;

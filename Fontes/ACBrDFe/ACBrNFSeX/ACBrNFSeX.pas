@@ -75,7 +75,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure SetProvedor;
+    procedure SetProvedor(aProvedor: TnfseProvedor = proNenhum;
+      aVersao: TVersaoNFSe = ve100);
+    procedure SetProvider;
 
     function GetNumID(ANFSe: TNFSe): String;
 
@@ -274,7 +276,16 @@ begin
   end;
 end;
 
-procedure TACBrNFSeX.SetProvedor;
+procedure TACBrNFSeX.SetProvedor(aProvedor: TnfseProvedor; aVersao: TVersaoNFSe);
+begin
+  Configuracoes.Geral.Provedor := aProvedor;
+  Configuracoes.Geral.Versao := aVersao;
+
+  if aProvedor <> proNenhum then
+    SetProvider;
+end;
+
+procedure TACBrNFSeX.SetProvider;
 begin
   if Assigned(FProvider) then
     FProvider := nil;

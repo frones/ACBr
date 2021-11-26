@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/11/2021
+-- ACBrNFSeX/ACBrNFSeXConfiguracoes --
+[*] O método SetProvedor agora se chama SetProvider e foi criado um novo
+    método chamado SetProvedor que possui 2 parâmetros (Provedor e Versao)
+    com o objetivo de ajustar o provedor sem a necessidade de informar a 
+    cidade.
+   Por: Italo Giurizzato Junior
+
 25/11/2021
 -- IPM.LerXml --
 [*] Ajustes na leitura do XML da NFS-e.

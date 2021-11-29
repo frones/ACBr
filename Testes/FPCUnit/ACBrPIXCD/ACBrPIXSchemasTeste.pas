@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXBase, ACBrPIXSchemasCobranca, ACBrPIXQRCodeEstatico,
+  ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasCobV, ACBrPIXQRCodeEstatico,
   ACBrPIXSchemasProblema, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasCobsConsultadas,
   {$ifdef FPC}
@@ -147,8 +147,6 @@ type
     procedure AtribuirLerReatribuirEComparar;
   end;
 
-  { TTestCobsConsultadas }
-
   { TTestCobRevisada }
 
   TTestCobRevisada = class(TTestCase)
@@ -161,6 +159,20 @@ type
   published
     procedure AtribuirELerValoresCobBody3;
     procedure AtribuirLerReatribuirECompararCobBody3;
+  end;
+
+  { TTestCobVSolicitada }
+
+  TTestCobVSolicitada = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixCobVSolicitada: TACBrPIXCobVSolicitada;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValoresCobrancaComVencimento1;
+    procedure AtribuirLerReatribuirECompararCobrancaComVencimento1;
   end;
 
 implementation
@@ -1326,6 +1338,121 @@ begin
   end;
 end;
 
+{ TTestCobVSolicitada }
+
+procedure TTestCobVSolicitada.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixCobVSolicitada := TACBrPIXCobVSolicitada.Create('');
+  fJSON := ACBrStr(
+  '{'+
+    '"calendario": {'+
+      '"dataDeVencimento": "2020-12-31",'+
+      '"validadeAposVencimento": 30'+
+    '},'+
+    '"loc": {'+
+      '"id": 789'+
+    '},'+
+    '"devedor": {'+
+      '"logradouro": "Alameda Souza, Numero 80, Bairro Braz",'+
+      '"cidade": "Recife",'+
+      '"uf": "PE",'+
+      '"cep": "70011750",'+
+      '"cpf": "12345678909",'+
+      '"nome": "Francisco da Silva"'+
+    '},'+
+    '"valor": {'+
+      '"original": "123.45",'+
+      '"multa": {'+
+        '"modalidade": "2",'+
+        '"valorPerc": "15.00"'+
+      '},'+
+      '"juros": {'+
+        '"modalidade": "2",'+
+        '"valorPerc": "2.00"'+
+      '},'+
+      '"desconto": {'+
+        '"modalidade": "1",'+
+        '"descontoDataFixa": ['+
+          '{'+
+            '"data": "2020-11-30",'+
+            '"valorPerc": "30.00"'+
+          '}'+
+        ']'+
+      '}'+
+    '},'+
+    '"chave": "5f84a4c5-c5cb-4599-9f13-7eb4d419dacc",'+
+    '"solicitacaoPagador": "Cobrança dos serviços prestados."'+
+  '}' );
+
+end;
+
+procedure TTestCobVSolicitada.TearDown;
+begin
+  fACBrPixCobVSolicitada.Free;
+  inherited TearDown;
+end;
+
+procedure TTestCobVSolicitada.AtribuirELerValoresCobrancaComVencimento1;
+begin
+  fACBrPixCobVSolicitada.AsJSON := fJSON;
+
+  CheckEquals(fACBrPixCobVSolicitada.calendario.dataDeVencimento, EncodeDate(2020,12,31));
+  CheckEquals(fACBrPixCobVSolicitada.calendario.validadeAposVencimento, 30);
+  CheckEquals(fACBrPixCobVSolicitada.loc.id, 789);
+  CheckEquals(fACBrPixCobVSolicitada.devedor.logradouro, 'Alameda Souza, Numero 80, Bairro Braz');
+  CheckEquals(fACBrPixCobVSolicitada.devedor.cidade, 'Recife');
+  CheckEquals(fACBrPixCobVSolicitada.devedor.uf, 'PE');
+  CheckEquals(fACBrPixCobVSolicitada.devedor.cep, '70011750');
+  CheckEquals(fACBrPixCobVSolicitada.devedor.cpf, '12345678909');
+  CheckEquals(fACBrPixCobVSolicitada.devedor.nome, 'Francisco da Silva');
+  CheckEquals(fACBrPixCobVSolicitada.valor.original, 123.45);
+  CheckEquals(fACBrPixCobVSolicitada.valor.multa.modalidade, 2);
+  CheckEquals(fACBrPixCobVSolicitada.valor.multa.valorPerc, 15);
+  CheckEquals(fACBrPixCobVSolicitada.valor.juros.modalidade, 2);
+  CheckEquals(fACBrPixCobVSolicitada.valor.juros.valorPerc, 2);
+  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.modalidade, 1);
+  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].data, EncodeDate(2020,11,30));
+  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].valorPerc, 30);
+  CheckEquals(fACBrPixCobVSolicitada.chave, '5f84a4c5-c5cb-4599-9f13-7eb4d419dacc');
+  CheckEquals(fACBrPixCobVSolicitada.solicitacaoPagador, ACBrStr('Cobrança dos serviços prestados.'));
+end;
+
+procedure TTestCobVSolicitada.AtribuirLerReatribuirECompararCobrancaComVencimento1;
+var
+  cs: TACBrPIXCobVSolicitada;
+  s: String;
+begin
+  fACBrPixCobVSolicitada.AsJSON := fJSON;
+  s := fACBrPixCobVSolicitada.AsJSON;
+  cs := TACBrPIXCobVSolicitada.Create('');
+  try
+    cs.AsJSON := s;
+
+    CheckEquals(fACBrPixCobVSolicitada.calendario.dataDeVencimento, cs.calendario.dataDeVencimento);
+    CheckEquals(fACBrPixCobVSolicitada.calendario.validadeAposVencimento, cs.calendario.validadeAposVencimento);
+    CheckEquals(fACBrPixCobVSolicitada.loc.id, cs.loc.id);
+    CheckEquals(fACBrPixCobVSolicitada.devedor.logradouro, cs.devedor.logradouro);
+    CheckEquals(fACBrPixCobVSolicitada.devedor.cidade, cs.devedor.cidade);
+    CheckEquals(fACBrPixCobVSolicitada.devedor.uf, cs.devedor.uf);
+    CheckEquals(fACBrPixCobVSolicitada.devedor.cep, cs.devedor.cep);
+    CheckEquals(fACBrPixCobVSolicitada.devedor.cpf, cs.devedor.cpf);
+    CheckEquals(fACBrPixCobVSolicitada.devedor.nome, cs.devedor.nome);
+    CheckEquals(fACBrPixCobVSolicitada.valor.original, cs.valor.original);
+    CheckEquals(fACBrPixCobVSolicitada.valor.multa.modalidade, cs.valor.multa.modalidade);
+    CheckEquals(fACBrPixCobVSolicitada.valor.multa.valorPerc, cs.valor.multa.valorPerc);
+    CheckEquals(fACBrPixCobVSolicitada.valor.juros.modalidade, cs.valor.juros.modalidade);
+    CheckEquals(fACBrPixCobVSolicitada.valor.juros.valorPerc, cs.valor.juros.valorPerc);
+    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.modalidade, cs.valor.desconto.modalidade);
+    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].data, cs.valor.desconto.descontoDataFixa[0].data);
+    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].valorPerc, cs.valor.desconto.descontoDataFixa[0].valorPerc);
+    CheckEquals(fACBrPixCobVSolicitada.chave, cs.chave);
+    CheckEquals(fACBrPixCobVSolicitada.solicitacaoPagador, cs.solicitacaoPagador);
+  finally
+    cs.Free;
+  end;
+end;
+
 
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
@@ -1348,6 +1475,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestPixConsultados);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobsConsultadas);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobRevisada);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestCobVSolicitada);
 
 end.
 

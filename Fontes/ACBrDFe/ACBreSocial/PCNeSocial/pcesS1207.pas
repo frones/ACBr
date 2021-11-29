@@ -60,15 +60,18 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-
   TEvtBenPrRP = class;
   TS1207CollectionItem = class;
   TS1207Collection = class;
   TDMDevCollection = class;
   TDMDevCollectionItem = class;
   TIdeBenef = class;
-  TItensCollection = class;
-  TItensCollectionItem = class;
+  TInfoPerApur = class;
+  TInfoPerAnt = class;
+  TIdeEstabCollection = class;
+  TIdeEstabCollectionItem = class;
+  TIdePeriodoCollection = class;
+  TIdePeriodoCollectionItem = class;
 
   TS1207Collection = class(TeSocialCollection)
   private
@@ -103,38 +106,24 @@ type
 
   TDMDevCollectionItem = class(TObject)
   private
-    FTpBenef: Integer;
-    FNrBenefic: string;
     FIdeDmDev: string;
-    FItens: TItensCollection;
+    FNrBeneficio: string;
+    FInfoPerApur: TInfoPerApur;
+    FInfoPerAnt: TInfoPerAnt;
+
+    function getInfoPerApur(): TInfoPerApur;
+    function getInfoPerAnt(): TInfoPerAnt;
   public
     constructor Create;
     destructor Destroy; override;
-    property tpBenef: integer read FTpBenef write FTpBenef;
-    property nrBenefic: string read FNrBenefic write FNrBenefic;
+
+    function infoPerApurInst(): boolean;
+    function infoPerAntInst(): boolean;
+
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
-    property itens: TItensCollection read FItens write FItens;
-  end;
-
-  TItensCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: integer): TItensCollectionItem;
-    procedure SetItem(Index: integer; Value: TItensCollectionItem);
-  public
-    function Add: TItensCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TItensCollectionItem;
-    property Items[Index: integer]: TItensCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TItensCollectionItem = class(TObject)
-  private
-    FCodRubr: string;
-    FIdeTabRubr: string;
-    FVrRubr: double;
-  public
-    property codRubr: string read FCodRubr write FCodRubr;
-    property ideTabRubr: string read FIdeTabRubr write FIdeTabRubr;
-    property vrRubr: double read FVrRubr write FVrRubr;
+    property nrBeneficio: string read FNrBeneficio write FNrBeneficio;
+    property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
+    property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
   end;
 
   TEvtBenPrRP = class(TeSocialEvento)
@@ -144,10 +133,12 @@ type
     FIdeBenef: TIdeBenef;
     FDMDev: TDMDevCollection;
 
-    {Geradores específicos desta classe}
+    procedure GerarIdeEstab(objIdeEstab: TIdeEstabCollection);
+    procedure GerarIdePeriodo(objIdePeriodo: TIdePeriodoCollection);
     procedure GerarIdeBenef;
     procedure GerarDmDev;
-    procedure GerarItens(pItens: TItensCollection);
+    procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
+    procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
   public
     constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
@@ -168,34 +159,77 @@ type
     property cpfBenef: string read FCpfBenef write FCpfBenef;
   end;
 
+  TInfoPerApur = class(TObject)
+  private
+    FIdeEstab: TIdeEstabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
+  end;
+
+  TInfoPerAnt = class(TObject)
+  private
+    FIdePeriodo: TIdePeriodoCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
+  end;
+
+  TIdeEstabCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: integer): TIdeEstabCollectionItem;
+    procedure SetItem(Index: integer; Value: TIdeEstabCollectionItem);
+  public
+    function Add: TIdeEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeEstabCollectionItem;
+    property Items[Index: integer]: TIdeEstabCollectionItem read GetItem write SetItem;
+  end;
+
+  TIdeEstabCollectionItem = class(TObject)
+  private
+    FTpInsc: TpTpInsc;
+    FNrInsc: string;
+    FItensRemun: TRubricaCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpInsc: TpTPInsc read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property itensRemun: TRubricaCollection read FItensRemun write FItensRemun;
+  end;
+
+  TIdePeriodoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: integer): TIdePeriodoCollectionItem;
+    procedure SetItem(Index: integer; Value: TIdePeriodoCollectionItem);
+  public
+    function Add: TIdePeriodoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdePeriodoCollectionItem;
+    property Items[Index: integer]: TIdePeriodoCollectionItem read GetItem write SetItem;
+  end;
+
+  TIdePeriodoCollectionItem = class(TObject)
+  private
+    FPerRef: string;
+    FIdeEstab: TIdeEstabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property perRef: string read FPerRef write FPerRef;
+    property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
+  end;
+
 implementation
 
 uses
   IniFiles,
   ACBreSocial;
-
-{ TItensCollection }
-
-function TItensCollection.Add: TItensCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TItensCollection.GetItem(Index: integer): TItensCollectionItem;
-begin
-  Result := TItensCollectionItem(inherited Items[Index]);
-end;
-
-procedure TItensCollection.SetItem(Index: integer; Value: TItensCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-
-function TItensCollection.New: TItensCollectionItem;
-begin
-  Result := TItensCollectionItem.Create;
-  Self.Add(Result);
-end;
 
 { TDMDevCollection }
 
@@ -225,17 +259,39 @@ end;
 constructor TDMDevCollectionItem.Create;
 begin
   inherited Create;
-  FItens := TItensCollection.Create;
 end;
 
 destructor TDMDevCollectionItem.Destroy;
 begin
-  FItens.Free;
 
   inherited;
 end;
+function TDMDevCollectionItem.getInfoPerApur: TInfoPerApur;
+begin
+  if not (Assigned(FInfoPerApur)) then
+    FInfoPerApur := TInfoPerApur.Create;
+  Result := FInfoPerApur;
+end;
+
+function TDMDevCollectionItem.infoPerApurInst: boolean;
+begin
+  Result := Assigned(FInfoPerApur);
+end;
+
+function TDMDevCollectionItem.getInfoPerAnt: TInfoPerAnt;
+begin
+  if not (Assigned(FInfoPerAnt)) then
+    FInfoPerAnt := TInfoPerAnt.Create;
+  Result := FInfoPerAnt;
+end;
+
+function TDMDevCollectionItem.infoPerAntInst: boolean;
+begin
+  Result := Assigned(FInfoPerAnt);
+end;
 
 { TEvtBenPrRP }
+
 constructor TEvtBenPrRP.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
@@ -256,6 +312,45 @@ begin
   inherited;
 end;
 
+procedure TEvtBenPrRP.GerarIdeEstab(objIdeEstab: TIdeEstabCollection);
+var
+  i: integer;
+begin
+  for i := 0 to objIdeEstab.Count - 1 do
+  begin
+    Gerador.wGrupo('ideEstab');
+
+    Gerador.wCampo(tcInt, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(objIdeEstab.Items[i].tpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, objIdeEstab.Items[i].nrInsc);
+
+    GerarItensRemun(objIdeEstab.Items[i].ItensRemun, 'itensRemun');
+
+    Gerador.wGrupo('/ideEstab');
+  end;
+
+  if objIdeEstab.Count > 500 then
+    Gerador.wAlerta('', 'ideEstab', 'Lista de itensRemun', ERR_MSG_MAIOR_MAXIMO + '500');
+end;
+
+procedure TEvtBenPrRP.GerarIdePeriodo(objIdePeriodo: TIdePeriodoCollection);
+var
+  i: integer;
+begin
+  for i := 0 to objIdePeriodo.Count - 1 do
+  begin
+    Gerador.wGrupo('idePeriodo');
+    
+    Gerador.wCampo(tcStr, '', 'perRef', 7, 7, 1, objIdePeriodo.Items[i].perRef);
+
+    GerarIdeEstab(objIdePeriodo.Items[i].ideEstab);
+
+    Gerador.wGrupo('/idePeriodo');
+  end;
+
+  if objIdePeriodo.Count > 180 then
+    Gerador.wAlerta('', 'idePeriodo', 'Lista de Periodos', ERR_MSG_MAIOR_MAXIMO + '180');
+end;
+
 procedure TEvtBenPrRP.GerarIdeBenef;
 begin
   Gerador.wGrupo('ideBenef');
@@ -265,23 +360,22 @@ begin
   Gerador.wGrupo('/ideBenef');
 end;
 
-procedure TEvtBenPrRP.GerarItens(pItens: TItensCollection);
-var
-  i: integer;
+procedure TEvtBenPrRP.GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
 begin
-  for i := 0 to pItens.Count - 1 do
-  begin
-    Gerador.wGrupo('itens');
+  Gerador.wGrupo('infoPerAnt');
 
-    Gerador.wCampo(tcStr, '', 'codRubr',    1, 30, 1, pItens[i].codRubr);
-    Gerador.wCampo(tcStr, '', 'ideTabRubr', 1,  8, 1, pItens[i].ideTabRubr);
-    Gerador.wCampo(tcDe2, '', 'vrRubr',     1, 14, 1, pItens[i].vrRubr);
+  GerarIdePeriodo(pInfoPerAnt.idePeriodo);
 
-    Gerador.wGrupo('/itens');
-  end;
+  Gerador.wGrupo('/infoPerAnt');
+end;
 
-  if pItens.Count > 99 then
-    Gerador.wAlerta('', 'itens', 'Lista de Detalhamento de Valores', ERR_MSG_MAIOR_MAXIMO + '99');
+procedure TEvtBenPrRP.GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
+begin
+  Gerador.wGrupo('infoPerApur');
+
+  GerarIdeEstab(pInfoPerApur.ideEstab);
+
+  Gerador.wGrupo('/infoPerApur');
 end;
 
 procedure TEvtBenPrRP.GerarDmDev;
@@ -292,24 +386,27 @@ begin
   begin
     Gerador.wGrupo('dmDev');
 
-    Gerador.wCampo(tcInt, '', 'tpBenef',   2,   2, 1, dmDev[i].tpBenef);
-    Gerador.wCampo(tcStr, '', 'nrBenefic', 1, 200, 1, dmDev[i].nrBenefic);
-    Gerador.wCampo(tcStr, '', 'ideDmDev',  1,  30, 1, dmDev[i].ideDmDev);
+    Gerador.wCampo(tcStr, '', 'ideDmDev',    1, 30, 1, dmDev[i].ideDmDev);
+    Gerador.wCampo(tcStr, '', 'nrBeneficio', 1, 20, 1, dmDev[i].nrBeneficio);
 
-    GerarItens(dmDev[i].itens);
+    if (dmDev[i].infoPerApurInst()) then
+      GerarInfoPerApur(dmDev[i].infoPerApur);
+
+    if (dmDev[i].infoPerAntInst()) then
+      GerarInfoPerAnt(dmDev[i].infoPerAnt);
 
     Gerador.wGrupo('/dmDev');
   end;
 
-  if dmDev.Count > 99 then
-    Gerador.wAlerta('', 'dmDev', 'Lista de Demostrativos', ERR_MSG_MAIOR_MAXIMO + '99');
+  if dmDev.Count > 999 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Demostrativos', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 function TEvtBenPrRP.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtBenPrRP');
@@ -337,14 +434,17 @@ begin
 end;
 
 function TEvtBenPrRP.LerArqIni(const AIniString: String): Boolean;
+{
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
   I, J: Integer;
+}
 begin
   Result := True;
-
+{ Falta Adaptar }
+{
   INIRec := TMemIniFile.Create('');
   try
     LerIniArquivoOuString(AIniString, INIRec);
@@ -418,12 +518,15 @@ begin
   finally
     INIRec.Free;
   end;
+}
 end;
 
 { TS1207CollectionItem }
+
 constructor TS1207CollectionItem.Create(AOwner: TComponent);
 begin
   inherited Create;
+
   FTipoEvento := teS1207;
   FEvtBenPrRP := TEvtBenPrRP.Create(AOwner);
 end;
@@ -436,6 +539,7 @@ begin
 end;
 
 { TS1207Collection }
+
 function TS1207Collection.Add: TS1207CollectionItem;
 begin
   Result := Self.New;
@@ -454,6 +558,117 @@ end;
 function TS1207Collection.New: TS1207CollectionItem;
 begin
   Result := TS1207CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
+{ TIdePeriodoCollectionItem }
+
+constructor TIdePeriodoCollectionItem.Create;
+begin
+  inherited Create;
+  FIdeEstab := TIdeEstabCollection.Create;
+end;
+
+destructor TIdePeriodoCollectionItem.Destroy;
+begin
+  FIdeEstab.Free;
+
+  inherited;
+end;
+
+{ TIdePeriodoCollection }
+
+function TIdePeriodoCollection.Add: TIdePeriodoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TIdePeriodoCollection.GetItem(Index: integer): TIdePeriodoCollectionItem;
+begin
+  Result := TIdePeriodoCollectionItem(inherited Items[Index]);
+end;
+
+procedure TIdePeriodoCollection.SetItem(Index: integer;
+  Value: TIdePeriodoCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TIdePeriodoCollection.New: TIdePeriodoCollectionItem;
+begin
+  Result := TIdePeriodoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TInfoPerAnt }
+
+constructor TInfoPerAnt.Create;
+begin
+  inherited;
+
+  FIdePeriodo := TIdePeriodoCollection.Create;
+end;
+
+destructor TInfoPerAnt.Destroy;
+begin
+  FreeAndNil(FIdePeriodo);
+
+  inherited;
+end;
+
+{ TInfoPerApur }
+
+constructor TInfoPerApur.Create;
+begin
+  inherited;
+
+  FIdeEstab := TIdeEstabCollection.Create;
+end;
+
+destructor TInfoPerApur.Destroy;
+begin
+  FIdeEstab.Free;
+
+  inherited;
+end;
+
+{ TIdeEstabCollectionItem }
+
+constructor TIdeEstabCollectionItem.Create;
+begin
+  inherited Create;
+
+  FItensRemun := TRubricaCollection.Create;
+end;
+
+destructor TIdeEstabCollectionItem.Destroy;
+begin
+  FItensRemun.Free;
+
+  inherited;
+end;
+
+{ TIdeEstabCollection }
+
+function TIdeEstabCollection.Add: TIdeEstabCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TIdeEstabCollection.GetItem(Index: integer): TIdeEstabCollectionItem;
+begin
+  Result := TIdeEstabCollectionItem(inherited Items[Index]);
+end;
+
+procedure TIdeEstabCollection.SetItem(Index: integer;
+  Value: TIdeEstabCollectionItem);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TIdeEstabCollection.New: TIdeEstabCollectionItem;
+begin
+  Result := TIdeEstabCollectionItem.Create;
   Self.Add(Result);
 end;
 

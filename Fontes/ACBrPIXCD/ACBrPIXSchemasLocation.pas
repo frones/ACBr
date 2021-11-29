@@ -68,7 +68,6 @@ type
     property id: Integer read fid write fid;
     property txId: String read ftxId write SetTxId;
     property location: String read flocation;
-    property tipoCob: TACBrPIXTipoCobranca read ftipoCob write ftipoCob;
     property criacao: TDateTime read fcriacao;
 
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
@@ -78,13 +77,15 @@ type
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXLocationBase);
+
+    property tipoCob: TACBrPIXTipoCobranca read ftipoCob write ftipoCob;
   end;
 
   { TACBrPIXLocationCobSolicitada }
 
   TACBrPIXLocationCobSolicitada = class(TACBrPIXLocationBase)
   public
-    property location;
+    property id;
   end;
 
   { TACBrPIXLocationCobRevisada }
@@ -101,7 +102,6 @@ type
   public
     property id;
     property location;
-    property tipoCob;
     property criacao;
   end;
 
@@ -112,7 +112,6 @@ type
     property id;
     property txId;
     property location;
-    property tipoCob;
     property criacao;
   end;
 

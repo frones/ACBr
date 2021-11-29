@@ -54,27 +54,59 @@ uses
 
 type
 
-  { TACBrPIXDevedor }
+  { TACBrPIXDevedorBase }
 
-  TACBrPIXDevedor = class(TACBrPIXSchema)
+  TACBrPIXDevedorBase = class(TACBrPIXSchema)
   private
     fcnpj: String;
     fcpf: String;
     fnome: String;
+    fcep: String;
+    fcidade: String;
+    femail: String;
+    flogradouro: String;
+    fuf: String;
     procedure SetCnpj(AValue: String);
     procedure SetCpf(AValue: String);
+    procedure SetCEP(AValue: String);
+    procedure SetCidade(AValue: String);
+    procedure SetEmail(AValue: String);
+    procedure SetLogradouro(AValue: String);
+    procedure SetUF(AValue: String);
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
-  public
-    constructor Create(const ObjectName: String); override;
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    procedure Assign(Source: TACBrPIXDevedor);
 
     property cpf: String read fcpf write SetCpf;
     property cnpj: String read fcnpj write SetCnpj;
     property nome: String read fnome write fnome;
+    property email: String read femail write SetEmail;
+    property logradouro: String read flogradouro write SetLogradouro;
+    property cidade: String read fcidade write SetCidade;
+    property uf: String read fuf write SetUF;
+    property cep: String read fcep write SetCEP;
+  public
+    constructor Create(const ObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrPIXDevedorBase);
+  end;
+
+
+  TACBrPIXDevedor = class(TACBrPIXDevedorBase)
+  public
+    property cpf;
+    property cnpj;
+    property nome;
+  end;
+
+  TACBrPIXDadosDevedor = class(TACBrPIXDevedor)
+  public
+    property email;
+    property logradouro;
+    property cidade;
+    property uf;
+    property cep;
   end;
 
 implementation
@@ -82,34 +114,51 @@ implementation
 uses
   ACBrValidador, ACBrUtil;
 
-{ TACBrPIXDevedor }
+{ TACBrPIXDevedorBase }
 
-constructor TACBrPIXDevedor.Create(const ObjectName: String);
+constructor TACBrPIXDevedorBase.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
   Clear;
 end;
 
-procedure TACBrPIXDevedor.Clear;
+procedure TACBrPIXDevedorBase.Clear;
 begin
   fcpf := '';
   fcnpj := '';
   fnome := '';
+  femail := '';
+  fcep := '';
+  fcidade := '';
+  flogradouro := '';
+  fuf := '';
 end;
 
-function TACBrPIXDevedor.IsEmpty: Boolean;
+function TACBrPIXDevedorBase.IsEmpty: Boolean;
 begin
-  Result := (fcpf = '') and (fcnpj = '') and (fnome = '')
+  Result := (fcpf = '') and
+            (fcnpj = '') and
+            (fnome = '') and
+            (femail = '') and
+            (fcep = '') and
+            (fcidade = '') and
+            (flogradouro = '') and
+            (fuf = '');
 end;
 
-procedure TACBrPIXDevedor.Assign(Source: TACBrPIXDevedor);
+procedure TACBrPIXDevedorBase.Assign(Source: TACBrPIXDevedorBase);
 begin
   fcpf := Source.cpf;
   fcnpj := Source.cnpj;
   fnome := Source.nome;
+  femail := Source.email;
+  fcep := Source.cep;
+  fcidade := Source.cidade;
+  flogradouro := Source.logradouro;
+  fuf := Source.uf;
 end;
 
-procedure TACBrPIXDevedor.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedorBase.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    if (cnpj <> '') then
@@ -118,6 +167,16 @@ begin
      AJSon.S['cpf'] := cpf;
    if (nome <> '') then
      AJSon.S['nome'] := nome;
+   if (femail <> '') then
+     AJSon.S['email'] := femail;
+   if (flogradouro <> '') then
+     AJSon.S['logradouro'] := flogradouro;
+   if (fcidade <> '') then
+     AJSon.S['cidade'] := fcidade;
+   if (fcep <> '') then
+     AJSon.S['cep'] := fcep;
+   if (fuf <> '') then
+     AJSon.S['uf'] := fuf;
   {$Else}
    if (cnpj <> '') then
      AJSon['cnpj'].AsString := cnpj
@@ -125,24 +184,44 @@ begin
      AJSon['cpf'].AsString := cpf;
    if (nome <> '') then
      AJSon['nome'].AsString := nome;
+   if (femail <> '') then
+     AJSon['email'].AsString := femail;
+   if (flogradouro <> '') then
+     AJSon['logradouro'].AsString := flogradouro;
+   if (fcidade <> '') then
+     AJSon['cidade'].AsString := fcidade;
+   if (fcep <> '') then
+     AJSon['cep'].AsString := fcep;
+   if (fuf <> '') then
+     AJSon['uf'].AsString := fuf;
   {$EndIf}
 end;
 
-procedure TACBrPIXDevedor.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedorBase.DoReadFromJSon(AJSon: TJsonObject);
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    cnpj := AJSon.S['cnpj'];
    cpf  := AJSon.S['cpf'];
    nome := AJSon.S['nome'];
+   femail := AJSon.S['email'];
+   flogradouro := AJSon.S['logradouro'];
+   fcidade := AJSon.S['cidade'];
+   fcep := AJSon.S['cep'];
+   fuf := AJSon.S['uf'];
   {$Else}
    cnpj := AJSon['cnpj'].AsString;
    cpf  := AJSon['cpf'].AsString;
    nome := AJSon['nome'].AsString;
+   femail := AJSon['email'].AsString;
+   flogradouro := AJSon['logradouro'].AsString;
+   fcidade := AJSon['cidade'].AsString;
+   fcep := AJSon['cep'].AsString;
+   fuf := AJSon['uf'].AsString;
   {$EndIf}
 end;
 
-procedure TACBrPIXDevedor.SetCnpj(AValue: String);
+procedure TACBrPIXDevedorBase.SetCnpj(AValue: String);
 var
   s, e: String;
 begin
@@ -161,7 +240,7 @@ begin
   fcnpj := s;
 end;
 
-procedure TACBrPIXDevedor.SetCpf(AValue: String);
+procedure TACBrPIXDevedorBase.SetCpf(AValue: String);
 var
   s, e: String;
 begin
@@ -178,6 +257,70 @@ begin
   end;
 
   fcpf := s;
+end;
+
+procedure TACBrPIXDevedorBase.SetCEP(AValue: String);
+var
+  s: String;
+begin
+  if fcep = AValue then
+    Exit;
+
+  s := OnlyNumber(AValue);
+  if (s <> '') then
+    s := PadLeft(s, 8, '0') ;
+
+  fcep := s;
+end;
+
+procedure TACBrPIXDevedorBase.SetCidade(AValue: String);
+begin
+  if fcidade = AValue then
+    Exit;
+  fcidade := copy(AValue, 1, 200);
+end;
+
+procedure TACBrPIXDevedorBase.SetEmail(AValue: String);
+var
+  s, e: String;
+begin
+  if femail = AValue then
+    Exit;
+
+  s := Trim(AValue);
+  if (s <> '') then
+  begin
+    e := ValidarEmail(s);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
+
+  femail := s;
+end;
+
+procedure TACBrPIXDevedorBase.SetLogradouro(AValue: String);
+begin
+  if flogradouro = AValue then
+    Exit;
+  flogradouro := copy(AValue, 1, 200);
+end;
+
+procedure TACBrPIXDevedorBase.SetUF(AValue: String);
+var
+  s, e: String;
+begin
+  if fuf = AValue then
+    Exit;
+
+  s := UpperCase(Trim(AValue));
+  if (s <> '') then
+  begin
+    e := ValidarUF(s);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
+
+  fuf := s;
 end;
 
 end.

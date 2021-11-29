@@ -39,7 +39,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrPIXSchemasCobranca;
+unit ACBrPIXSchemasCob;
 
 interface
 

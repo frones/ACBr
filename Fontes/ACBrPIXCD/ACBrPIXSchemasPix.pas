@@ -70,6 +70,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
     procedure Assign(Source: TACBrPIXValor);
 
@@ -191,6 +192,12 @@ uses
   ACBrUtil;
 
 { TACBrPIXValor }
+
+constructor TACBrPIXValor.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
 
 procedure TACBrPIXValor.Clear;
 begin

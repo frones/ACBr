@@ -51,7 +51,7 @@ uses
    Jsons,
   {$EndIf}
   ACBrPIXBase,
-  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobranca;
+  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCob;
 
 type
   { TACBrPIXConsultados }

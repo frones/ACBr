@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 29/11/2021
+-- Fiorilli.Provider --
+[*] O provedor requer que o numero do lote seja numerico e que não tenha zeros
+    a esquerda.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Correção de URLs, Troca de provedor.
    Por: João Antônio/Marcelo J Silva/Alexandre Felippeto Henzen/

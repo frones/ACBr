@@ -39,8 +39,8 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceFiorilli200 = class(TACBrNFSeXWebserviceSoap11)
@@ -69,6 +69,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
   end;
 
 implementation
@@ -126,6 +127,16 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+procedure TACBrNFSeProviderFiorilli200.PrepararEmitir(
+  Response: TNFSeEmiteResponse);
+begin
+  // O provedor Fiorilli existe que o numero do lote seja numerico e que não
+  // não tenha zeros a esquerda.
+  Response.Lote := IntToStr(StrToIntDef(Trim(Response.Lote), 0));
+
+  inherited PrepararEmitir(Response);
 end;
 
 { TACBrNFSeXWebserviceFiorilli200 }

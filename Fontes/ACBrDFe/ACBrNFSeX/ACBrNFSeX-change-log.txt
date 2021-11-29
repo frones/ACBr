@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/11/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Correção na leitura do valor do ISS quando o ISS é retido.
+   Por: Italo Giurizzato Junior
 -- Fiorilli.Provider --
 [*] O provedor requer que o numero do lote seja numerico e que não tenha zeros
     a esquerda.

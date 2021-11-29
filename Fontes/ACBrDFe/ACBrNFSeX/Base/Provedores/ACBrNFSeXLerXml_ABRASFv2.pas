@@ -690,12 +690,21 @@ begin
       MunicipioIncidencia := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
       NumeroProcesso      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
 
-      Valores.IssRetido := StrToSituacaoTributaria(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
+      with Valores do
+      begin
+        IssRetido := StrToSituacaoTributaria(Ok, ProcessarConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
 
-      if Valores.IssRetido = stRetencao then
-        Valores.ValorIssRetido := Valores.ValorInss
-      else
-        Valores.ValorIssRetido := 0;
+        if IssRetido = stRetencao then
+          ValorIssRetido := ValorIss
+        else
+          ValorIssRetido := 0;
+
+        if ValorLiquidoNfse = 0 then
+          ValorLiquidoNfse := ValorServicos - ValorPis - ValorCofins - ValorInss -
+                              ValorIr - ValorCsll - OutrasRetencoes -
+                              ValorIssRetido - DescontoIncondicionado -
+                              DescontoCondicionado;
+      end;
     end;
   end;
 end;
@@ -774,11 +783,6 @@ begin
 
       DescontoCondicionado   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
       DescontoIncondicionado := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);
-
-      if ValorLiquidoNfse = 0 then
-        ValorLiquidoNfse := ValorServicos - ValorPis - ValorCofins - ValorInss -
-          ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
-          DescontoIncondicionado - DescontoCondicionado;
     end;
   end;
 end;

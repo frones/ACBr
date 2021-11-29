@@ -8,8 +8,12 @@ unit ACBr_PIXCD;
 interface
 
 uses
-  ACBrPIXBase, ACBrPIXUtil, ACBrPIXQRCodeEstatico, ACBrPIXSchemasCobranca, 
-  ACBrPIXSchemasProblema, LazarusPackageIntf;
+  ACBrPIXBase, ACBrPIXUtil, ACBrPIXQRCodeEstatico, ACBrPIXSchemasCob, 
+  ACBrPIXSchemasProblema, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao, 
+  ACBrPIXSchemasPaginacao, ACBrPIXSchemasParametrosConsultaPix, 
+  ACBrPIXSchemasPixConsultados, ACBrPIXSchemasParametrosConsultaCob, 
+  ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation, 
+  ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, LazarusPackageIntf;
 
 implementation
 

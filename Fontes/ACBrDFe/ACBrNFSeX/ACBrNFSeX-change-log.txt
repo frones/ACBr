@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 29/11/2021
+-- ACBrNFSeXServicos --
+[*] Correção de URLs, Troca de provedor.
+   Por: João Antônio/Marcelo J Silva/Alexandre Felippeto Henzen/
+        Sandro Felipe Adad
+[+] Incluida a cidade Irece/BA.
+   Por: Patrick Knopf
 -- Fisco.Provider/Fisco.GravarXml/Fisco.LerXml --
 [+] Implementado o provedor Fisco.
    Por: Italo Giurizzato Junior

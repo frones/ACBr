@@ -457,7 +457,7 @@ begin
   Gerador.wGrupo('beneficiario');
 
   Gerador.wCampo(tcStr, '', 'cpfBenef',   11, 11, 1, pBeneficiario.cpfBenef);
-  Gerador.wCampo(tcStr, '', 'matricula',   0, 30, 1, pBeneficiario.matricula);
+  Gerador.wCampo(tcStr, '', 'matricula',   0, 30, 0, pBeneficiario.matricula);
   Gerador.wCampo(tcStr, '', 'cnpjOrigem', 14, 14, 1, pBeneficiario.cnpjOrigem);
 
   Gerador.wGrupo('/beneficiario');
@@ -546,7 +546,7 @@ begin
     
   Gerador.wCampo(tcStr, '', 'nrBeneficio',     1, 20, 1, pInfoBenInicio.nrBeneficio);
   Gerador.wCampo(tcDat, '', 'dtIniBeneficio', 10, 10, 1, pInfoBenInicio.dtIniBeneficio);
-  Gerador.wCampo(tcDat, '', 'dtPublic',        0, 10, 1, pInfoBenInicio.dtPublic);
+  Gerador.wCampo(tcDat, '', 'dtPublic',        0, 10, 0, pInfoBenInicio.dtPublic);
 
   GerarDadosBeneficio(pInfoBenInicio.dadosBeneficio);
   

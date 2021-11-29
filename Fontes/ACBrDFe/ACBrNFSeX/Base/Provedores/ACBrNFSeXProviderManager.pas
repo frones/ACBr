@@ -97,6 +97,7 @@ uses
   eReceita.Provider,
   fintelISS.Provider,
   Fiorilli.Provider,
+  Fisco.Provider,
   Futurize.Provider,
   Giss.Provider,
   GovDigital.Provider,
@@ -270,6 +271,7 @@ begin
         end;
 
       proFiorilli:   Result := TACBrNFSeProviderFiorilli200.Create(ACBrNFSe);
+      proFisco:      Result := TACBrNFSeProviderFisco203.Create(ACBrNFSe);
       proFISSLex:    Result := TACBrNFSeProviderFISSLex.Create(ACBrNFSe);
       proFuturize:   Result := TACBrNFSeProviderFuturize202.Create(ACBrNFSe);
       proGeisWeb:    Result := TACBrNFSeProviderGeisWeb.Create(ACBrNFSe);

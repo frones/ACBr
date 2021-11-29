@@ -119,15 +119,15 @@ type
                    proCenti, proCIGA, proCitta, proConam, proCoplan, proDataSmart,
                    proDBSeller, proDeISS, proDesenvolve, proDigifred, proDSF,
                    proDSFSJC, proeGoverneISS, proEL, proEloTech, proEquiplano,
-                   proeReceita, proFGMaiss, profintelISS, proFiorilli, proFISSLex,
-                   proFuturize, proGeisWeb, progeNFe, proGiap, proGinfes, proGiss,
-                   proGovBR, proGovDigital, proGoverna, proiiBrasil, proInfisc,
-                   proIPM, proISSCuritiba, proISSDigital, proISSDSF, proISSe,
-                   proISSFortaleza, proISSGoiania, proISSIntel, proISSJoinville,
-                   proISSLencois, proISSNatal, proISSNet, proISSPortoVelho,
-                   proISSRecife, proISSRio, proISSSalvador, proISSSaoPaulo,
-                   proISSSJP, proISSVitoria, proLexsom, proLink3, proMegaSoft,
-                   proMetropolisWeb, proMitra, proModernizacaoPublica,
+                   proeReceita, proFGMaiss, profintelISS, proFiorilli, proFisco,
+                   proFISSLex, proFuturize, proGeisWeb, progeNFe, proGiap,
+                   proGinfes, proGiss, proGovBR, proGovDigital, proGoverna,
+                   proiiBrasil, proInfisc, proIPM, proISSCuritiba, proISSDigital,
+                   proISSDSF, proISSe, proISSFortaleza, proISSGoiania, proISSIntel,
+                   proISSJoinville, proISSLencois, proISSNatal, proISSNet,
+                   proISSPortoVelho, proISSRecife, proISSRio, proISSSalvador,
+                   proISSSaoPaulo, proISSSJP, proISSVitoria, proLexsom, proLink3,
+                   proMegaSoft, proMetropolisWeb, proMitra, proModernizacaoPublica,
                    proNEAInformatica, proNFSeBrasil, proNotaInteligente,
                    proProdata, proPronim, proPublica, proRLZ, proSaatri,
                    proSafeWeb, proSH3, proSiam, proSiapNet, proSiapSistemas,
@@ -606,7 +606,7 @@ begin
          'Siat', 'ISSFortaleza', 'Futurize', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF', 'Tributus',
          'ADPM', 'FGMaiss', 'Sudoeste', 'Simple',
-         'Sintese', 'Citta'],
+         'Sintese', 'Citta', 'Fisco'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proGinfes, proISSDSF,
          proAbaco, proBetha, proEquiplano, proISSIntel, proGovBR, proISSRecife,
          proSimplISS, proThema, proISSRio, proPublica,
@@ -629,7 +629,7 @@ begin
          proISSFortaleza, proFuturize, proAEG, proGeisWeb,
          proSiapSistemas, proDSF, proTributus,
          proADPM, proFGMaiss, proSudoeste, proSimple,
-         proSintese, proCitta]);
+         proSintese, proCitta, proFisco]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
@@ -655,7 +655,7 @@ begin
          'Siat', 'ISSFortaleza', 'Futurize', 'AEG', 'GeisWeb',
          'SiapSistemas', 'DSF', 'Tributus',
          'ADPM', 'FGMaiss', 'Sudoeste', 'Simple',
-         'Sintese', 'Citta'],
+         'Sintese', 'Citta', 'Fisco'],
         [proNenhum, proTiplan, proISSNet, proWebISS, proGinfes, proISSDSF,
          proAbaco, proBetha, proEquiplano, proISSIntel, proGovBR, proISSRecife,
          proSimplISS, proThema, proISSRio, proPublica,
@@ -678,7 +678,7 @@ begin
          proISSFortaleza, proFuturize, proAEG, proGeisWeb,
          proSiapSistemas, proDSF, proTributus,
          proADPM, proFGMaiss, proSudoeste, proSimple,
-         proSintese, proCitta]);
+         proSintese, proCitta, proFisco]);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;

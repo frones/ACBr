@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/11/2021
+-- Fisco.Provider/Fisco.GravarXml/Fisco.LerXml --
+[+] Implementado o provedor Fisco.
+   Por: Italo Giurizzato Junior
+
 26/11/2021
 -- NFSeBrasil.Provider/NFSeBrasil.GravarXml/NFSeBrasil.LerXml --
 [*] Melhorias e correções visando a geração e a leitura do XML.

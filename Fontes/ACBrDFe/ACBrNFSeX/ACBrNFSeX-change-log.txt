@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/11/2021
+-- ACBrNFSeXWebServicesResponse/ISSSaoPaulo.Provider --
+[*] Ajustes no tratamento do retorno do Emitir.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Correção nas URLs de link da nfse do provedor Ginfes.
    Por: Lucio Bittes

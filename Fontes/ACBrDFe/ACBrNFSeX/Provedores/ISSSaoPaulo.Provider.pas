@@ -294,20 +294,50 @@ procedure TACBrNFSeProviderISSSaoPaulo.ProcessarMensagemErros(
   AListTag, AMessageTag: string);
 var
   I: Integer;
+  ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
+  Mensagem: string;
 begin
   ANodeArray := RootNode.Childrens.FindAllAnyNs(AMessageTag);
 
-  if not Assigned(ANodeArray) then Exit;
-
-  for I := Low(ANodeArray) to High(ANodeArray) do
+  if Assigned(ANodeArray) then
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
-    AErro.Correcao := '';
+    for I := Low(ANodeArray) to High(ANodeArray) do
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+      AErro.Correcao := '';
+    end;
   end;
+
+  ANodeArray := RootNode.Childrens.FindAllAnyNs('Alerta');
+
+  if Assigned(ANodeArray) then
+  begin
+    for I := Low(ANodeArray) to High(ANodeArray) do
+    begin
+      Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+
+      if Mensagem <> '' then
+      begin
+        AAlerta := Response.Erros.New;
+        AAlerta.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+        AAlerta.Descricao := Mensagem;
+
+        ANode := ANodeArray[I].Childrens.FindAnyNs('ChaveRPS');
+
+        if ANode <> nil then
+          AAlerta.Correcao := 'Numero/Série Rps: ' +
+            ProcessarConteudoXml(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr) + '/' +
+            ProcessarConteudoXml(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
+      end;
+    end;
+  end
+
+
 end;
 
 procedure TACBrNFSeProviderISSSaoPaulo.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -498,7 +528,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
-  AuxNode: TACBrXmlNode;
+  AuxNode, AuxNodeChave: TACBrXmlNode;
   xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
@@ -515,11 +545,11 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
@@ -534,7 +564,7 @@ begin
 
           if AuxNode <> nil then
           begin
-              Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+            Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
             { Verificar se mais alguma dessas informações são necessárias
             with InformacoesLote do
@@ -561,7 +591,7 @@ begin
           end;
         end;
       end;
-      {
+
       AuxNode := ANode.Childrens.FindAnyNs('ChaveNFeRPS');
 
       if AuxNode <> nil then
@@ -572,9 +602,8 @@ begin
         begin
           with Response do
           begin
-            InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            SerieRPS := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
-            NumeroRPS := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroRPS'), tcStr);
+            SerieRps := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
+            NumeroRps := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroRPS'), tcStr);
           end;
         end;
 
@@ -584,13 +613,11 @@ begin
         begin
           with Response do
           begin
-            InscricaoPrestador := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            Numero := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
-            CodigoVerificacao := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            NumeroNota := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
+            CodVerificacao := ProcessarConteudoXml(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
           end;
         end;
       end;
-      }
     except
       on E:Exception do
       begin
@@ -665,11 +692,11 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
@@ -786,11 +813,11 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
@@ -923,11 +950,11 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
@@ -1055,11 +1082,11 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
@@ -1205,11 +1232,11 @@ begin
 
       Document.LoadFromXml(Response.XmlRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response);
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 

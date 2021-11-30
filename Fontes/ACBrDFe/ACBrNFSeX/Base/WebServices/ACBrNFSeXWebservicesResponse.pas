@@ -160,6 +160,8 @@ type
     FidNota: string;
     FLink: String;
     FProtocolo: String;
+    FNumeroRps: string;
+    FSerieRps: string;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
@@ -184,6 +186,8 @@ type
     property idNota: string read FidNota write FidNota;
     property Link: String read FLink write FLink;
     property Protocolo: String read FProtocolo write FProtocolo;
+    property NumeroRps: string read FNumeroRps write FNumeroRps;
+    property SerieRps: string read FSerieRps write FSerieRps;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
@@ -402,6 +406,8 @@ begin
   idNota := '';
   Link := '';
   Protocolo := '';
+  NumeroRps := '';
+  SerieRps := '';
 
   if Assigned(FErros) then
   begin

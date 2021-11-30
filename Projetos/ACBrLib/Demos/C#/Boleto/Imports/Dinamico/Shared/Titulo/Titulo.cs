@@ -74,9 +74,9 @@ namespace ACBrLib.Boleto
 
         public string EspecieMod { get; set; }
 
-        public List<string> Mensagem { get; } = new List<string>();
+        public List<string> Mensagem { get; } = new List<string>(2);
 
-        public List<string> Detalhamento { get; } = new List<string>();
+        public List<string> Detalhamento { get; } = new List<string>(3);
 
         public string Instrucao1 { get; set; }
 
@@ -133,6 +133,7 @@ namespace ACBrLib.Boleto
             var sessao = Index > 0 ? $"Titulo{Index}" : "Titulo";
 
             iniFile.WriteToIni(this, sessao);
+            iniFile.WriteToIni(OcorrenciaOriginal, sessao);
             iniFile.WriteToIni(Sacado, sessao);
             if (!string.IsNullOrEmpty(Sacado.Avalista.CNPJCPF))
                 iniFile.WriteToIni(Sacado.Avalista, sessao);

@@ -216,7 +216,6 @@ type
     btnConsultarNFSeServicoTomadoPorIntermediario: TButton;
     btnConsultarNFSeServicoTomadoPorTomador: TButton;
     btnConsultarNFSeGenerico: TButton;
-    btnConsNFSeURL: TButton;
     Label30: TLabel;
     edtSenhaWeb: TEdit;
     Label33: TLabel;
@@ -291,7 +290,6 @@ type
       Sender: TObject);
     procedure btnConsultarNFSeServicoTomadoPorTomadorClick(Sender: TObject);
     procedure btnConsultarNFSeGenericoClick(Sender: TObject);
-    procedure btnConsNFSeURLClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -927,46 +925,6 @@ end;
 procedure TfrmACBrNFSe.btnCNPJClick(Sender: TObject);
 begin
   ShowMessage(ACBrNFSeX1.SSL.CertCNPJ);
-end;
-
-procedure TfrmACBrNFSe.btnConsNFSeURLClick(Sender: TObject);
-var
-  xTitulo, NumIniNFSe, CodTrib: String;
-  InfConsultaNFSe: TInfConsultaNFSe;
-begin
-  xTitulo := 'Consultar NFSe URL Retornado';
-
-  NumIniNFSe := '';
-  if not(InputQuery(xTitulo, 'Numero NFSe:', NumIniNFSe)) then
-    exit;
-
-  CodTrib := '';
-  if not(InputQuery(xTitulo, 'Código de Tributação do Municipio:', CodTrib)) then
-    exit;
-
-  InfConsultaNFSe := TInfConsultaNFSe.Create;
-
-  try
-    with InfConsultaNFSe do
-    begin
-      // Valores aceito para o Tipo de Consulta:
-      // tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado,
-      // tcServicoTomado, tcPorNumeroURLRetornado
-      tpConsulta := tcPorNumeroURLRetornado;
-
-      // Necessário para a consulta por numero e por faixa
-      NumeroIniNFSe := NumIniNFSe;
-      NumeroFinNFSe := NumIniNFSe;
-
-      CadEconomico := CodTrib;
-    end;
-
-    ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
-  finally
-    InfConsultaNFSe.Free;
-  end;
-
-  ChecarResposta(tmConsultarNFSeURL);
 end;
 
 procedure TfrmACBrNFSe.btnConsultarLoteClick(Sender: TObject);
@@ -2733,8 +2691,7 @@ begin
       tmConsultarNFSe,
       tmConsultarNFSePorFaixa,
       tmConsultarNFSeServicoPrestado,
-      tmConsultarNFSeServicoTomado,
-      tmConsultarNFSeURL:
+      tmConsultarNFSeServicoTomado:
         begin
           with ConsultaNFSe do
           begin

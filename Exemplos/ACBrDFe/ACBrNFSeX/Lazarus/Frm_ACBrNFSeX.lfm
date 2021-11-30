@@ -12,7 +12,7 @@ object frmACBrNFSe: TfrmACBrNFSe
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 612
@@ -99,10 +99,10 @@ object frmACBrNFSe: TfrmACBrNFSe
           Height = 478
           Top = 0
           Width = 287
-          ActivePage = TabSheet3
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
-          TabIndex = 0
+          TabIndex = 3
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -1894,15 +1894,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           OnClick = btnConsultarNFSeGenericoClick
           TabOrder = 6
         end
-        object btnConsNFSeURL: TButton
-          Left = 186
-          Height = 25
-          Top = 72
-          Width = 177
-          Caption = 'Consultar NFSe URL'
-          OnClick = btnConsNFSeURLClick
-          TabOrder = 7
-        end
       end
       object tsConsServPrest: TTabSheet
         Caption = 'Consultas Serviços Prestados'
@@ -3584,8 +3575,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 336
-    top = 168
+    Left = 336
+    Top = 168
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -3595,8 +3586,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    left = 336
-    top = 272
+    Left = 336
+    Top = 272
   end
   object ACBrNFSeX1: TACBrNFSeX
     MAIL = ACBrMail1
@@ -3608,13 +3599,15 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
+    Configuracoes.Geral.Provedor = proNenhum
+    Configuracoes.Geral.Versao = ve100
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 334
-    top = 225
+    Left = 334
+    Top = 225
   end
   object ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -3638,7 +3631,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True
     Producao = snSim
-    left = 470
-    top = 225
+    Left = 470
+    Top = 225
   end
 end

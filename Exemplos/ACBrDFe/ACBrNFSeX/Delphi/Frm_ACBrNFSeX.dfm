@@ -1846,15 +1846,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           TabOrder = 6
           OnClick = btnConsultarNFSeGenericoClick
         end
-        object btnConsNFSeURL: TButton
-          Left = 186
-          Top = 72
-          Width = 177
-          Height = 25
-          Caption = 'Consultar NFSe URL'
-          TabOrder = 7
-          OnClick = btnConsNFSeURLClick
-        end
       end
       object tsConsServPrest: TTabSheet
         Caption = 'Consultas Servi'#231'os Prestados'
@@ -2100,6 +2091,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
+    Configuracoes.Geral.Provedor = proNenhum
+    Configuracoes.Geral.Versao = ve100
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.Arquivos.TabServicosExt = True

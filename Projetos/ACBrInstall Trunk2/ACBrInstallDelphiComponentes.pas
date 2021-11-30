@@ -59,6 +59,7 @@ type
     RemoverStringCastWarnings: Boolean;
     DeveSobrescreverDllsExistentes: Boolean;
   public
+    procedure DesligarDefines(const ArquivoACBrInc: TFileName);
     procedure RedefinirValoresOpcoesParaPadrao;
     procedure CarregarDeArquivoIni(const ArquivoIni: string);
     procedure SalvarEmArquivoIni(const ArquivoIni: string);
@@ -127,7 +128,6 @@ type
     procedure InstalarPacotes(const PastaACBr: string; listaPacotes: TPacotes);
     function PathArquivoLog(const NomeVersao: string): String;
 
-    procedure DesligarDefines;
     procedure FazInstalacaoInicial(ListaPacotes: TPacotes; PlataformaDestino: TPlataformaDestino);
     procedure InstalarOutrosRequisitos;
     procedure FazInstalacaoDLLs(const APathBin: string);
@@ -767,7 +767,7 @@ function TACBrInstallComponentes.Instalar(ListaPacotes: TPacotes; ListaVersoesIn
 var
   I: Integer;
 begin
-  DesligarDefines;
+  OpcoesCompilacao.DesligarDefines(OpcoesInstall.DiretorioRaizACBr + 'Fontes\ACBrComum\ACBr.inc');
   FJaCopiouDLLs := False;
   FJaFezLimpezaArquivoACBrAntigos := False;
 
@@ -1017,19 +1017,6 @@ begin
   CopiarArquivosParaPastaLibrary('*.inc');
 end;
 
-procedure TACBrInstallComponentes.DesligarDefines;
-var
-  ArquivoACBrInc: TFileName;
-begin
-  ArquivoACBrInc := OpcoesInstall.DiretorioRaizACBr + 'Fontes\ACBrComum\ACBr.inc';
-  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_OPENSSL', not OpcoesCompilacao.DeveInstalarOpenSSL);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_CAPICOM', not OpcoesCompilacao.DeveInstalarCapicom);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'USE_DELAYED', OpcoesCompilacao.UsarCargaTardiaDLL);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'REMOVE_CAST_WARN', OpcoesCompilacao.RemoverStringCastWarnings);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_XMLSEC', not OpcoesCompilacao.DeveInstalarXMLSec);
-
-end;
-
 procedure TACBrInstallComponentes.RemoverArquivosAntigosDoDisco;
 const
   SMascaraArquivoQueSeraoRemovidos = 'ACBr*.bpl ACBr*.dcp ACBr*.dcu DCLACBr*.bpl  DCLACBr*.dcp DCLACBr*.dcu '+
@@ -1236,13 +1223,22 @@ begin
 
 end;
 
+procedure TACBrCompilerOpcoes.DesligarDefines(const ArquivoACBrInc: TFileName);
+begin
+  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_OPENSSL', not DeveInstalarOpenSSL);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_CAPICOM', not DeveInstalarCapicom);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'USE_DELAYED', UsarCargaTardiaDLL);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'REMOVE_CAST_WARN', RemoverStringCastWarnings);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_XMLSEC', not DeveInstalarXMLSec);
+end;
+
 procedure TACBrCompilerOpcoes.RedefinirValoresOpcoesParaPadrao;
 begin
   DeveInstalarCapicom            := False;
   DeveInstalarOpenSSL            := True;
   DeveInstalarXMLSec             := False;
   UsarCargaTardiaDLL             := True;
-  RemoverStringCastWarnings      := True;
+  RemoverStringCastWarnings      := False; //Efeito colateral em delphis antigos quando ativado
   DeveSobrescreverDllsExistentes := False;
 end;
 
@@ -1273,7 +1269,7 @@ begin
   UsarCpp                   := False;
   UsarUsarArquivoConfig     := True;
   sDestinoDLLs              := tdSystem;
-  DiretorioRaizACBr         := 'C:\ACBr\';
+  DiretorioRaizACBr         := ExtractFilePath(ParamStr(0));
   DeveCopiarOutrasDLLs      := True;
 end;
 

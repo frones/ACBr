@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/11/2021
+-- ACBrNFSeXServicos --
+[*] Correção nas URLs de link da nfse do provedor Ginfes.
+   Por: Lucio Bittes
+-- ACBrNFSeXServicos --
+[*] A cidade Barra do Garcas/MT trocou de provedor.
+   Por: Haroldo
+
 29/11/2021
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Correção na leitura do valor do ISS quando o ISS é retido.

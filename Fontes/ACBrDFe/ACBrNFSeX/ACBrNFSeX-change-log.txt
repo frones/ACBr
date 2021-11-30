@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 30/11/2021
+-- Diversos --
+[*] Remoção de um serviço que não esta disponível na grande maioria dos
+    provedores.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebServicesResponse/ISSSaoPaulo.Provider --
 [*] Ajustes no tratamento do retorno do Emitir.
    Por: Italo Giurizzato Junior

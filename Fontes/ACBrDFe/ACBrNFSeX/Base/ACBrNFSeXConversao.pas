@@ -50,7 +50,7 @@ type
                      stNFSeEnvioWebService, stNFSeImprimir);
 
   TLayOutNFSe = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-                 LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseConsultaNfseURL,
+                 LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
                  LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
                  LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse,
                  LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
@@ -191,7 +191,7 @@ type
   TLocalParametros = (ppDentroBody, ppDentroCabecalho, ppDentroDados);
 
   TMetodo = (tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
-             tmConsultarNFSePorRps, tmConsultarNFSe, tmConsultarNFSeURL,
+             tmConsultarNFSePorRps, tmConsultarNFSe,
              tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
              tmConsultarNFSeServicoTomado, tmCancelarNFSe,
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
@@ -209,7 +209,7 @@ type
                  tpPJforaPais);
 
   TtpConsulta = (tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado,
-                 tcServicoTomado, tcPorNumeroURLRetornado);
+                 tcServicoTomado);
 
   TtpPeriodo = (tpEmissao, tpCompetencia);
 
@@ -225,8 +225,6 @@ type
 
   TConsultarNFSeRpsRequisitos = (rconNumero, rconSerie, rconTipo,
                                  rconCodVerificacao);
-
-  TtpRetorno = (trXML, trURL);
 
   TtpXML = (txmlRPS, txmlNFSe);
 
@@ -18346,13 +18344,13 @@ function LayOutToServico(const t: TLayOutNFSe): string;
 begin
   Result := EnumeradoToStr(t,
     ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
-     'NfseConsultaSitLoteRps', 'NfseConsultaNfse', 'NfseConsultaNfseURL',
+     'NfseConsultaSitLoteRps', 'NfseConsultaNfse',
      'NfseConsultaNfsePorFaixa', 'NfseConsultaNfseServicoPrestado',
      'NfseConsultaNfseServicoTomado', 'NfseCancelaNfse', 'NfseGerar',
      'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse', 'NfseAbrirSessao',
      'NfseFecharSessao'],
     [LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseConsultaNfseURL,
+     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
      LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
      LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse, LayNfseGerar,
      LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse, LayNfseAbrirSessao,
@@ -18363,13 +18361,13 @@ function ServicoToLayOut(out ok: Boolean; const s: string): TLayOutNFSe;
 begin
   Result := StrToEnumerado(ok, s,
   ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
-   'NfseConsultaSitLoteRps', 'NfseConsultaNfse', 'NfseConsultaNfseURL',
+   'NfseConsultaSitLoteRps', 'NfseConsultaNfse',
    'NfseConsultaNfsePorFaixa', 'NfseConsultaNfseServicoPrestado',
    'NfseConsultaNfseServicoTomado', 'NfseCancelaNfse', 'NfseGerar',
    'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse', 'NfseAbrirSessao',
    'NfseFecharSessao'],
   [LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-   LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseConsultaNfseURL,
+   LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
    LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
    LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse, LayNfseGerar,
    LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse, LayNfseAbrirSessao,
@@ -18387,7 +18385,6 @@ begin
     LayNfseConsultaNfseRps,
     LayNfseConsultaSitLoteRps,
     LayNfseConsultaNfse,
-    LayNfseConsultaNfseURL,
     LayNfseConsultaNfsePorFaixa,
     LayNfseConsultaNfseServicoPrestado,
     LayNfseConsultaNfseServicoTomado:   Result := schConsNFSe;
@@ -18406,12 +18403,12 @@ begin
   Result := EnumeradoToStr(t,
     ['Enviar Lote', 'Consultar Lote', 'Consultar NFS-e por RPS',
      'Consultar Situação do Lote', 'Consultar NFS-e',
-     'Consultar URL Visualização NFS-e', 'Consultar NFS-e Por Faixa',
+     'Consultar NFS-e Por Faixa',
      'Consultar NFS-e Serviço Prestado', 'Consultar NFS-e Serviço Tomado',
      'Cancelar NFS-e', 'Gerar', 'Enviar Lote - Síncrono', 'Substituir NFS-e',
      'Abrir Sessão', 'Fechar Sessão'],
     [LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseConsultaNfseURL,
+     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
      LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
      LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse, LayNfseGerar,
      LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse, LayNfseAbrirSessao,
@@ -18888,19 +18885,17 @@ end;
 function tpConsultaToStr(const t: TtpConsulta): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6'],
+                           ['1', '2', '3', '4', '5'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
-                            tcServicoPrestado, tcServicoTomado,
-                            tcPorNumeroURLRetornado]);
+                            tcServicoPrestado, tcServicoTomado]);
 end;
 
 function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5', '6'],
+                           ['1', '2', '3', '4', '5'],
                            [tcPorNumero, tcPorFaixa, tcPorPeriodo,
-                            tcServicoPrestado, tcServicoTomado,
-                            tcPorNumeroURLRetornado]);
+                            tcServicoPrestado, tcServicoTomado]);
 end;
 
 function tpPeriodoToStr(const t: TtpPeriodo): string;
@@ -18921,13 +18916,13 @@ function MetodoToStr(const t: TMetodo): string;
 begin
   Result := EnumeradoToStr(t,
                        ['Recepcionar', 'ConsultarSituacao', 'ConsultarLote',
-                        'ConsultarNFSePorRps', 'ConsultarNFSe', 'ConsultarNFSeURL',
+                        'ConsultarNFSePorRps', 'ConsultarNFSe',
                         'ConsultarNFSePorFaixa', 'ConsultarNFSeServicoPrestado',
                         'ConsultarNFSeServicoTomado', 'CancelarNFSe',
                         'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
-                        tmConsultarNFSePorRps, tmConsultarNFSe, tmConsultarNFSeURL,
+                        tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
                         tmConsultarNFSeServicoTomado, tmCancelarNFSe,
                         tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,

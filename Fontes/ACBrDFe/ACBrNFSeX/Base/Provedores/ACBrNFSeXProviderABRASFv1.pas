@@ -932,7 +932,7 @@ var
   aParams: TNFSeParamsResponse;
   XmlConsulta, RazaoInter, NameSpace, Prefixo, PrefixoTS, TagEnvio: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado, tcPorNumeroURLRetornado] then
+  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado] then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod001;

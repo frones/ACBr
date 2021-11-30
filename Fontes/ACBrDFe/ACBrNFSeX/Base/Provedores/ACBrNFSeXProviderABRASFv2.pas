@@ -1004,18 +1004,9 @@ end;
 
 procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   aParams: TNFSeParamsResponse;
   XmlConsulta, xNumFinal, NameSpace, Prefixo, PrefixoTS: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod001;
-    AErro.Descricao := Desc001;
-    Exit;
-  end;
-
   Prefixo := '';
   PrefixoTS := '';
 
@@ -1232,18 +1223,9 @@ end;
 procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeServicoPrestado(
   Response: TNFSeConsultaNFSeResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   aParams: TNFSeParamsResponse;
   XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod001;
-    AErro.Descricao := Desc001;
-    Exit;
-  end;
-
   Prefixo := '';
   PrefixoTS := '';
 
@@ -1487,18 +1469,9 @@ end;
 procedure TACBrNFSeProviderABRASFv2.PrepararConsultaNFSeServicoTomado(
   Response: TNFSeConsultaNFSeResponse);
 var
-  AErro: TNFSeEventoCollectionItem;
   aParams: TNFSeParamsResponse;
   XmlConsulta, NameSpace, Prefixo, PrefixoTS: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorNumeroURLRetornado] then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod001;
-    AErro.Descricao := desc001;
-    Exit;
-  end;
-
   Prefixo := '';
   PrefixoTS := '';
 

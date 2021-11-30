@@ -265,7 +265,7 @@ var
   Emitente: TEmitenteConfNFSe;
   XmlConsulta, NameSpace, Prefixo: string;
 begin
-  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado, tcPorNumeroURLRetornado] then
+  if Response.InfConsultaNFSe.tpConsulta in [tcPorFaixa, tcServicoTomado] then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod001;

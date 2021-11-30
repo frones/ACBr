@@ -317,7 +317,6 @@ begin
         tmConsultarNFSeServicoTomado: Result := ConsultarNFSeServicoTomado;
 
         // Métodos que por padrão não existem na versão 1 e 2 do layout da ABRASF
-        tmConsultarNFSeURL: Result := ConsultarNFSeURL;
         tmAbrirSessao: Result := AbrirSessao;
         tmFecharSessao: Result := FecharSessao;
         tmTeste: Result := TesteEnvio;
@@ -348,7 +347,6 @@ begin
         tmConsultarNFSeServicoTomado: Result := ConsultarNFSeServicoTomado;
 
         // Métodos que por padrão não existem na versão 1 e 2 do layout da ABRASF
-        tmConsultarNFSeURL: Result := ConsultarNFSeURL;
         tmAbrirSessao: Result := AbrirSessao;
         tmFecharSessao: Result := FecharSessao;
         tmTeste: Result := TesteEnvio;
@@ -725,7 +723,6 @@ begin
     ConsultarLote := aNome;
     ConsultarNFSeRps := aNome;
     ConsultarNFSe := aNome;
-    ConsultarNFSeURL := aNome;
     ConsultarNFSePorFaixa := aNome;
     ConsultarNFSeServicoPrestado := aNome;
     ConsultarNFSeServicoTomado := aNome;
@@ -855,7 +852,6 @@ begin
     tmConsultarSituacao: Schema := ConfigSchemas.ConsultarSituacao;
     tmConsultarLote: Schema := ConfigSchemas.ConsultarLote;
     tmConsultarNFSePorRps: Schema := ConfigSchemas.ConsultarNFSeRps;
-    tmConsultarNFSeURL: Schema := ConfigSchemas.ConsultarNFSeURL;
 
     tmConsultarNFSe: Schema := ConfigSchemas.ConsultarNFSe;
     tmConsultarNFSePorFaixa: Schema := ConfigSchemas.ConsultarNFSePorFaixa;
@@ -1276,10 +1272,6 @@ begin
       AService.Prefixo := Prefixo;
 
       case ConsultaNFSeResponse.Metodo of
-        tmConsultarNFSe:
-          ConsultaNFSeResponse.XmlRetorno := AService.ConsultarNFSe(ConfigMsgDados.DadosCabecalho,
-                                                                    ConsultaNFSeResponse.XmlEnvio);
-
         tmConsultarNFSePorFaixa:
           ConsultaNFSeResponse.XmlRetorno := AService.ConsultarNFSePorFaixa(ConfigMsgDados.DadosCabecalho,
                                                                             ConsultaNFSeResponse.XmlEnvio);
@@ -1293,9 +1285,8 @@ begin
                                                                                  ConsultaNFSeResponse.XmlEnvio);
 
       else
-        // tmConsultarNFSeURL
-        ConsultaNFSeResponse.XmlRetorno := AService.ConsultarNFSeUrl(ConfigMsgDados.DadosCabecalho,
-                                                                     ConsultaNFSeResponse.XmlEnvio);
+        ConsultaNFSeResponse.XmlRetorno := AService.ConsultarNFSe(ConfigMsgDados.DadosCabecalho,
+                                                                  ConsultaNFSeResponse.XmlEnvio);
       end;
 
       ConsultaNFSeResponse.Sucesso := True;

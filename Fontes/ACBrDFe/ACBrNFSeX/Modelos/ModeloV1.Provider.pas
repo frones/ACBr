@@ -275,7 +275,6 @@ begin
     ConsultarLote := 'nfse.xsd';
     ConsultarNFSeRps := 'nfse.xsd';
     ConsultarNFSe := 'nfse.xsd';
-    ConsultarNFSeURL := 'nfse.xsd';
     ConsultarNFSePorFaixa := 'nfse.xsd';
     ConsultarNFSeServicoPrestado := 'nfse.xsd';
     ConsultarNFSeServicoTomado := 'nfse.xsd';

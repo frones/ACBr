@@ -228,9 +228,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel20: TRLLabel
         Left = 601
         Top = 96
-        Width = 149
+        Width = 147
         Height = 15
-        Caption = 'N'#250'mero NFSe substitu'#231#227'o:'
+        Caption = 'N'#250'mero NFSe substitu'#237'da:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13

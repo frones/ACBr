@@ -71,6 +71,8 @@ procedure TNFSeW_Abaco.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsSemFormatacao;
+  DivAliq100 := True;
   NrOcorrCodPaisTomador := -1;
 end;
 

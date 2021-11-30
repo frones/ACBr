@@ -117,7 +117,6 @@ type
     function ConsultarSituacao(ACabecalho, AMSG: String): string; virtual;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; virtual;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; virtual;
-    function ConsultarNFSeUrl(ACabecalho, AMSG: String): string; virtual;
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; virtual;
     function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; virtual;
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; virtual;
@@ -334,12 +333,6 @@ begin
       begin
         FPArqEnv := 'con-nfse';
         FPArqResp := 'lista-nfse-con';
-      end;
-
-    tmConsultarNFSeURL:
-      begin
-        FPArqEnv := 'con-url-nfse';
-        FPArqResp := 'lista-nfse-url';
       end;
 
     tmConsultarNFSePorFaixa:
@@ -784,12 +777,6 @@ begin
 end;
 
 function TACBrNFSeXWebservice.ConsultarNFSe(ACabecalho, AMSG: String): string;
-begin
-  Result := '';
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
-end;
-
-function TACBrNFSeXWebservice.ConsultarNFSeUrl(ACabecalho, AMSG: String): string;
 begin
   Result := '';
   raise EACBrDFeException.Create(ERR_NAO_IMP);

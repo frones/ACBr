@@ -55,7 +55,6 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeUrl(ACabecalho, AMSG: String): string; override;
 
   end;
 
@@ -117,8 +116,6 @@ begin
     ConsultarNFSe.xmlns := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_envio.xsd';
 
     CancelarNFSe.xmlns := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd';
-
-    ConsultarNFSeURL.xmlns := 'http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_url_visualizacao_nfse_envio.xsd';
   end;
 
   with ConfigAssinar do
@@ -134,7 +131,6 @@ begin
     ConsultarLote := 'servico_consultar_lote_rps_envio.xsd';
     ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio.xsd';
     ConsultarNFSe := 'servico_consultar_nfse_envio.xsd';
-    ConsultarNFSeURL := 'servico_consultar_url_visualizacao_nfse_envio.xsd';
     CancelarNFSe := 'servico_cancelar_nfse_envio.xsd';
 //    Validar := False;
   end;
@@ -332,23 +328,6 @@ begin
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/CancelarNfse',
                      Request,
                      ['CancelarNfseResult', 'CancelarNfseResposta'], ['']);
-end;
-
-function TACBrNFSeXWebserviceISSNet.ConsultarNFSeUrl(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfd:ConsultarUrlVisualizacaoNfse>';
-  Request := Request + '<nfd:xml>' + XmlToStr(AMSG) + '</nfd:xml>';
-  Request := Request + '</nfd:ConsultarUrlVisualizacaoNfse>';
-
-  Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarUrlVisualizacaoNfse',
-                     Request,
-                     ['ConsultarUrlVisualizacaoNfseResult', 'ConsultarUrlVisualizacaoNfseResposta'],
-                     ['xmlns:nfd="http://www.issnetonline.com.br/webservice/nfd"']);
 end;
 
 end.

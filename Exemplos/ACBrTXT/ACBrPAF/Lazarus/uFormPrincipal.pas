@@ -996,6 +996,7 @@ begin
   end;
 
   //P2
+  ACBrPAF.PAF_P.RegistroP1.CNPJ:= ACBrPAF.PAF_U.RegistroU1.CNPJ;
   for I := 1 to 5 do
   begin
     NovoRegistroP2 := ACBrPAF.PAF_P.RegistroP2.New;

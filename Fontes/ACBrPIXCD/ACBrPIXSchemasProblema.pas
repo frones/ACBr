@@ -182,15 +182,14 @@ end;
 
 procedure TACBrPIXViolacao.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   razao := AJSon.S['razao'];
-   propriedade := AJSon.S['propriedade'];
-   valor := AJSon.S['valor'];
+   frazao := AJSon.S['razao'];
+   fpropriedade := AJSon.S['propriedade'];
+   fvalor := AJSon.S['valor'];
   {$Else}
-   razao := AJSon['razao'].AsString;
-   propriedade := AJSon['propriedade'].AsString;
-   valor := AJSon['valor'].AsString;
+   frazao := AJSon['razao'].AsString;
+   fpropriedade := AJSon['propriedade'].AsString;
+   fvalor := AJSon['valor'].AsString;
   {$EndIf}
 end;
 
@@ -297,7 +296,6 @@ end;
 
 procedure TACBrPIXProblema.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    ftype_uri := AJSon.S['type'];
    ftitle := AJSon.S['title'];

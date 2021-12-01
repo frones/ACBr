@@ -57,9 +57,9 @@ const
 
 type
 
-  { TACBrPIXCalendarioBase }
+  { TACBrPIXCalendarioCobBase }
 
-  TACBrPIXCalendarioBase = class(TACBrPIXSchema)
+  TACBrPIXCalendarioCobBase = class(TACBrPIXSchema)
   private
     fapresentacao: TDateTime;
     fcriacao: TDateTime;
@@ -75,12 +75,12 @@ type
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
-    procedure Assign(Source: TACBrPIXCalendarioBase);
+    procedure Assign(Source: TACBrPIXCalendarioCobBase);
   end;
 
   { TACBrPIXCalendarioCobSolicitada }
 
-  TACBrPIXCalendarioCobSolicitada = class(TACBrPIXCalendarioBase)
+  TACBrPIXCalendarioCobSolicitada = class(TACBrPIXCalendarioCobBase)
   public
     procedure Clear; override;
     property expiracao;
@@ -88,7 +88,7 @@ type
 
   { TACBrPIXCalendarioCobGerada }
 
-  TACBrPIXCalendarioCobGerada = class(TACBrPIXCalendarioBase)
+  TACBrPIXCalendarioCobGerada = class(TACBrPIXCalendarioCobBase)
   public
     property criacao;
     property expiracao;
@@ -99,73 +99,72 @@ implementation
 uses
   ACBrUtil;
 
-{ TACBrPIXCalendarioBase }
+{ TACBrPIXCalendarioCobBase }
 
-constructor TACBrPIXCalendarioBase.Create(const ObjectName: String);
+constructor TACBrPIXCalendarioCobBase.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
   Clear;
 end;
 
-procedure TACBrPIXCalendarioBase.Clear;
+procedure TACBrPIXCalendarioCobBase.Clear;
 begin
   fcriacao := 0;
   fapresentacao := 0;
   fexpiracao := 0;
 end;
 
-function TACBrPIXCalendarioBase.IsEmpty: Boolean;
+function TACBrPIXCalendarioCobBase.IsEmpty: Boolean;
 begin
   Result := (fcriacao = 0) and (fapresentacao = 0) and (fexpiracao = 0);
 end;
 
-procedure TACBrPIXCalendarioBase.Assign(Source: TACBrPIXCalendarioBase);
+procedure TACBrPIXCalendarioCobBase.Assign(Source: TACBrPIXCalendarioCobBase);
 begin
   fcriacao := Source.criacao;
   fapresentacao := Source.apresentacao;
   fexpiracao := Source.expiracao;
 end;
 
-procedure TACBrPIXCalendarioBase.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioCobBase.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (criacao <> 0) then
-     AJSon.S['criacao'] := DateTimeToIso8601(criacao);
-   if (apresentacao <> 0) then
-     AJSon.S['apresentacao'] := DateTimeToIso8601(apresentacao);
-   if (expiracao > 0) then
-     AJSon.I['expiracao'] := expiracao;
+   if (fcriacao <> 0) then
+     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
+   if (fapresentacao <> 0) then
+     AJSon.S['apresentacao'] := DateTimeToIso8601(fapresentacao);
+   if (fexpiracao > 0) then
+     AJSon.I['expiracao'] := fexpiracao;
   {$Else}
-   if (criacao <> 0) then
-     AJSon['criacao'].AsString := DateTimeToIso8601(criacao);
-   if (apresentacao <> 0) then
-     AJSon['apresentacao'].AsString := DateTimeToIso8601(apresentacao);
-   if (expiracao > 0) then
-     AJSon['expiracao'].AsInteger := expiracao;
+   if (fcriacao <> 0) then
+     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao);
+   if (fapresentacao <> 0) then
+     AJSon['apresentacao'].AsString := DateTimeToIso8601(fapresentacao);
+   if (fexpiracao > 0) then
+     AJSon['expiracao'].AsInteger := fexpiracao;
   {$EndIf}
 end;
 
-procedure TACBrPIXCalendarioBase.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioCobBase.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    s := AJSon.S['criacao'];
    if (s <> '') then
-     criacao := Iso8601ToDateTime(s);
+     fcriacao := Iso8601ToDateTime(s);
    s := AJSon.S['apresentacao'];
    if (s <> '') then
-     apresentacao := Iso8601ToDateTime(s);
-   expiracao := AJSon.I['expiracao'];
+     fapresentacao := Iso8601ToDateTime(s);
+   fexpiracao := AJSon.I['expiracao'];
   {$Else}
    s := AJSon['criacao'].AsString;
    if (s <> '') then
-     criacao := Iso8601ToDateTime(s);
+     fcriacao := Iso8601ToDateTime(s);
    s := AJSon['apresentacao'].AsString;
    if (s <> '') then
-     apresentacao := Iso8601ToDateTime(s);
-   expiracao := AJSon['expiracao'].AsInteger;
+     fapresentacao := Iso8601ToDateTime(s);
+   fexpiracao := AJSon['expiracao'].AsInteger;
   {$EndIf}
 end;
 

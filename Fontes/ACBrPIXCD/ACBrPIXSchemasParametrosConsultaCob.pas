@@ -169,7 +169,6 @@ procedure TACBrPIXParametrosConsultaCob.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    s := AJSon.S['inicio'];
    if (s <> '') then

@@ -177,7 +177,6 @@ procedure TACBrPIXHorario.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    s := AJSon.S['solicitacao'];
    if (s <> '') then
@@ -277,24 +276,23 @@ end;
 
 procedure TACBrPIXDevolucao.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   descricao := AJSon.S['descricao'];
-   id := AJSon.S['id'];
-   motivo := AJSon.S['motivo'];
-   natureza := StringToPIXNaturezaDevolucao( AJSon.S['natureza'] );
-   rtrId := AJSon.S['rtrId'];
-   status := StringToPIXStatusDevolucao( AJSon.S['status'] );
-   valor := StringToFloat( AJSon.S['valor']);
+   fdescricao := AJSon.S['descricao'];
+   fid := AJSon.S['id'];
+   fmotivo := AJSon.S['motivo'];
+   fnatureza := StringToPIXNaturezaDevolucao( AJSon.S['natureza'] );
+   frtrId := AJSon.S['rtrId'];
+   fstatus := StringToPIXStatusDevolucao( AJSon.S['status'] );
+   fvalor := StringToFloat( AJSon.S['valor']);
    fhorario.ReadFromJSon(AJSon);
   {$Else}
-   descricao := AJSon['descricao'].AsString;
-   id := AJSon['id'].AsString;
-   motivo := AJSon['motivo'].AsString;
-   natureza := StringToPIXNaturezaDevolucao(AJSon['natureza'].AsString);
-   rtrId := AJSon['rtrId'].AsString;
-   status := StringToPIXStatusDevolucao(AJSon['status'].AsString);
-   valor := StringToFloat(AJSon['valor'].AsString);
+   fdescricao := AJSon['descricao'].AsString;
+   fid := AJSon['id'].AsString;
+   fmotivo := AJSon['motivo'].AsString;
+   fnatureza := StringToPIXNaturezaDevolucao(AJSon['natureza'].AsString);
+   frtrId := AJSon['rtrId'].AsString;
+   fstatus := StringToPIXStatusDevolucao(AJSon['status'].AsString);
+   fvalor := StringToFloat(AJSon['valor'].AsString);
    fhorario.ReadFromJSon(AJSon);
   {$EndIf}
 end;

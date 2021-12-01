@@ -212,19 +212,18 @@ end;
 procedure TACBrPIXValor.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['valor'] := FormatarValorPIX(valor);
+   AJSon.S['valor'] := FormatarValorPIX(fvalor);
   {$Else}
-   AJSon['valor'].AsString := FormatarValorPIX(valor);
+   AJSon['valor'].AsString := FormatarValorPIX(fvalor);
   {$EndIf}
 end;
 
 procedure TACBrPIXValor.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   valor := StringToFloatDef(AJSon.S['valor'], 0);
+   fvalor := StringToFloatDef(AJSon.S['valor'], 0);
   {$Else}
-   valor := StringToFloatDef(AJSon['valor'].AsString, 0);
+   fvalor := StringToFloatDef(AJSon['valor'].AsString, 0);
   {$EndIf}
 end;
 
@@ -264,37 +263,36 @@ end;
 procedure TACBrPIXSaqueTroco.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (valor >= 0) then
-     AJSon.S['valor'] := FormatarValorPIX(valor);
-   AJSon.I['modalidadeAlteracao'] := IfThen(modalidadeAlteracao, 1, 0);
+   if (fvalor >= 0) then
+     AJSon.S['valor'] := FormatarValorPIX(fvalor);
+   AJSon.I['modalidadeAlteracao'] := IfThen(fmodalidadeAlteracao, 1, 0);
    if (fmodalidadeAgente <> maNENHUM) then
-     AJSon.S['modalidadeAgente'] := PIXModalidadeAgenteToString(modalidadeAgente);
-   if (prestadorDoServicoDeSaque >= 0) then
-     AJSon.S[fprestadorStr] := IntToStrZero(prestadorDoServicoDeSaque, 8);
+     AJSon.S['modalidadeAgente'] := PIXModalidadeAgenteToString(fmodalidadeAgente);
+   if (fprestadorDoServicoDeSaque >= 0) then
+     AJSon.S[fprestadorStr] := IntToStrZero(fprestadorDoServicoDeSaque, 8);
   {$Else}
-   if (valor >= 0) then
-     AJSon['valor'].AsString := FormatarValorPIX(valor);
-   AJSon['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
+   if (fvalor >= 0) then
+     AJSon['valor'].AsString := FormatarValorPIX(fvalor);
+   AJSon['modalidadeAlteracao'].AsInteger := IfThen(fmodalidadeAlteracao, 1, 0);
    if (fmodalidadeAgente <> maNENHUM) then
-     AJSon['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(modalidadeAgente);
-   if (prestadorDoServicoDeSaque >= 0) then
-     AJSon[fprestadorStr].AsString := IntToStrZero(prestadorDoServicoDeSaque, 8);
+     AJSon['modalidadeAgente'].AsString := PIXModalidadeAgenteToString(fmodalidadeAgente);
+   if (fprestadorDoServicoDeSaque >= 0) then
+     AJSon[fprestadorStr].AsString := IntToStrZero(fprestadorDoServicoDeSaque, 8);
   {$EndIf}
 end;
 
 procedure TACBrPIXSaqueTroco.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   valor := StringToFloatDef( AJSon.S['valor'], 0 );
-   modalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
-   modalidadeAgente := StringToPIXModalidadeAgente( AJSon.S['modalidadeAgente'] );
-   prestadorDoServicoDeSaque := StrToIntDef(AJSon.S[fprestadorStr], -1);
+   fvalor := StringToFloatDef( AJSon.S['valor'], 0 );
+   fmodalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
+   fmodalidadeAgente := StringToPIXModalidadeAgente( AJSon.S['modalidadeAgente'] );
+   fprestadorDoServicoDeSaque := StrToIntDef(AJSon.S[fprestadorStr], -1);
   {$Else}
-   valor := StringToFloatDef( AJSon['valor'].AsString, 0 );
-   modalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
-   modalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
-   prestadorDoServicoDeSaque := StrToIntDef(AJSon[fprestadorStr].AsString, -1);
+   fvalor := StringToFloatDef( AJSon['valor'].AsString, 0 );
+   fmodalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
+   fmodalidadeAgente := StringToPIXModalidadeAgente( AJSon['modalidadeAgente'].AsString );
+   fprestadorDoServicoDeSaque := StrToIntDef(AJSon[fprestadorStr].AsString, -1);
   {$EndIf}
 end;
 
@@ -384,7 +382,6 @@ end;
 
 procedure TACBrPIXComponentesValor.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   foriginal.ReadFromJSon(AJSon);
   fsaque.ReadFromJSon(AJSon);
   ftroco.ReadFromJSon(AJSon);
@@ -513,7 +510,6 @@ procedure TACBrPIX.DoReadFromJSon(AJSon: TJsonObject);
 var
   s: String;
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fendToEndId := AJSon.S['endToEndId'];
    ftxid := AJSon.S['txid'];

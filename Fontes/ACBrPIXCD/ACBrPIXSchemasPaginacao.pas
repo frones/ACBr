@@ -128,7 +128,6 @@ end;
 
 procedure TACBrPIXPaginacao.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fitensPorPagina := AJSon.I['itensPorPagina'];
    fpaginaAtual := AJSon.I['paginaAtual'];

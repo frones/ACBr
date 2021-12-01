@@ -374,6 +374,7 @@ end;
 
 procedure TACBrPIXSchema.ReadFromJSon(AJSon: TJsonObject);
 begin
+  Clear;
   DoReadFromJSon(GetJSONContext(AJSon));
 end;
 

@@ -120,7 +120,6 @@ end;
 
 procedure TACBrPIXConsultados.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   fparametros.ReadFromJSon(AJSon);
   fpix.ReadFromJSon(AJSon);
 end;

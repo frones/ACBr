@@ -241,7 +241,7 @@ type
   private
     fcalendario: TACBrPIXCalendarioCobGerada;
     fdevedor: TACBrPIXDevedor;
-    floc: TACBrPIXLocation;
+    floc: TACBrPIXLocationCompleta;
     flocation: String;
     frevisao: Integer;
     fstatus: TACBrPIXStatusCobranca;
@@ -263,7 +263,7 @@ type
     property txId: String read ftxId write SetTxId;
     property revisao: Integer read frevisao write SetRevisao;
     property devedor: TACBrPIXDevedor read fdevedor;
-    property loc: TACBrPIXLocation read floc;
+    property loc: TACBrPIXLocationCompleta read floc;
     property location: String read flocation;
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
     property valor: TACBrPIXCobValor read fvalor;
@@ -354,13 +354,12 @@ end;
 
 procedure TACBrPIXInfoAdicional.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   nome := AJSon.S['nome'];
-   valor := AJSon.S['valor'];
+   fnome := AJSon.S['nome'];
+   fvalor := AJSon.S['valor'];
   {$Else}
-   nome := AJSon['nome'].AsString;
-   valor := AJSon['valor'].AsString;
+   fnome := AJSon['nome'].AsString;
+   fvalor := AJSon['valor'].AsString;
   {$EndIf}
 end;
 
@@ -458,13 +457,12 @@ end;
 
 procedure TACBrPIXRetirada.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   saque.ReadFromJSon(AJSon);
-   troco.ReadFromJSon(AJSon);
+   fsaque.ReadFromJSon(AJSon);
+   ftroco.ReadFromJSon(AJSon);
   {$Else}
-   saque.ReadFromJSon(AJSon);
-   troco.ReadFromJSon(AJSon);
+   fsaque.ReadFromJSon(AJSon);
+   ftroco.ReadFromJSon(AJSon);
   {$EndIf}
 end;
 
@@ -512,20 +510,19 @@ begin
    AJSon['original'].AsString := FormatarValorPIX(original);
    AJSon['modalidadeAlteracao'].AsInteger := IfThen(modalidadeAlteracao, 1, 0);
   {$EndIf}
-  retirada.WriteToJSon(AJSon);
+  fretirada.WriteToJSon(AJSon);
 end;
 
 procedure TACBrPIXCobValor.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   original := StringToFloatDef( AJSon.S['original'], 0 );
-   modalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
+   foriginal := StringToFloatDef( AJSon.S['original'], 0 );
+   fmodalidadeAlteracao := (AJSon.I['modalidadeAlteracao'] = 1);
   {$Else}
-   original := StringToFloatDef( AJSon['original'].AsString, 0 );
-   modalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
+   foriginal := StringToFloatDef( AJSon['original'].AsString, 0 );
+   fmodalidadeAlteracao := (AJSon['modalidadeAlteracao'].AsInteger = 1);
   {$EndIf}
-  retirada.ReadFromJSon(AJSon);
+  fretirada.ReadFromJSon(AJSon);
 end;
 
 { TACBrPIXCobBase }
@@ -583,7 +580,6 @@ end;
 
 procedure TACBrPIXCobBase.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fchave := AJSon.S['chave'];
    fsolicitacaoPagador := AJSon.S['solicitacaoPagador'];
@@ -682,7 +678,6 @@ end;
 
 procedure TACBrPIXCobSolicitada.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   inherited DoReadFromJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fcalendario.ReadFromJSon(AJSon);
@@ -746,7 +741,7 @@ begin
   inherited Create(ObjectName);
   fcalendario := TACBrPIXCalendarioCobGerada.Create('calendario');
   fdevedor := TACBrPIXDevedor.Create('devedor');
-  floc := TACBrPIXLocation.Create('loc');
+  floc := TACBrPIXLocationCompleta.Create('loc');
   fvalor := TACBrPIXCobValor.Create('valor');
   Clear;
 end;
@@ -776,14 +771,14 @@ end;
 function TACBrPIXCobGerada.IsEmpty: Boolean;
 begin
   Result := inherited IsEmpty and
-            fcalendario.IsEmpty and
-            fdevedor.IsEmpty and
-            floc.IsEmpty and
-            fvalor.IsEmpty and
             (flocation = '') and
             (frevisao = 0) and
             (fstatus = stcNENHUM) and
-            (ftxId = '');
+            (ftxId = '') and
+            fcalendario.IsEmpty and
+            fdevedor.IsEmpty and
+            floc.IsEmpty and
+            fvalor.IsEmpty;
 end;
 
 procedure TACBrPIXCobGerada.Assign(Source: TACBrPIXCobGerada);
@@ -943,7 +938,6 @@ end;
 
 procedure TACBrPIXCobRevisada.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   inherited DoReadFromJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fcalendario.ReadFromJSon(AJSon);

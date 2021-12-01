@@ -54,9 +54,9 @@ uses
 
 type
 
-  { TACBrPIXDevedorBase }
+  { TACBrPIXDevedorRecebedorBase }
 
-  TACBrPIXDevedorBase = class(TACBrPIXSchema)
+  TACBrPIXDevedorRecebedorBase = class(TACBrPIXSchema)
   private
     fcnpj: String;
     fcpf: String;
@@ -65,6 +65,7 @@ type
     fcidade: String;
     femail: String;
     flogradouro: String;
+    fnomeFantasia: String;
     fuf: String;
     procedure SetCnpj(AValue: String);
     procedure SetCpf(AValue: String);
@@ -72,6 +73,8 @@ type
     procedure SetCidade(AValue: String);
     procedure SetEmail(AValue: String);
     procedure SetLogradouro(AValue: String);
+    procedure SetNome(AValue: String);
+    procedure SetNomeFantasia(AValue: String);
     procedure SetUF(AValue: String);
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
@@ -79,7 +82,8 @@ type
 
     property cpf: String read fcpf write SetCpf;
     property cnpj: String read fcnpj write SetCnpj;
-    property nome: String read fnome write fnome;
+    property nome: String read fnome write SetNome;
+    property nomeFantasia: String read fnomeFantasia write SetNomeFantasia;
     property email: String read femail write SetEmail;
     property logradouro: String read flogradouro write SetLogradouro;
     property cidade: String read fcidade write SetCidade;
@@ -89,11 +93,11 @@ type
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
-    procedure Assign(Source: TACBrPIXDevedorBase);
+    procedure Assign(Source: TACBrPIXDevedorRecebedorBase);
   end;
 
 
-  TACBrPIXDevedor = class(TACBrPIXDevedorBase)
+  TACBrPIXDevedor = class(TACBrPIXDevedorRecebedorBase)
   public
     property cpf;
     property cnpj;
@@ -109,24 +113,34 @@ type
     property cep;
   end;
 
+  TACBrPIXDadosRecebedor = class(TACBrPIXDevedor)
+  public
+    property nomeFantasia;
+    property logradouro;
+    property cidade;
+    property uf;
+    property cep;
+  end;
+
 implementation
 
 uses
   ACBrValidador, ACBrUtil;
 
-{ TACBrPIXDevedorBase }
+{ TACBrPIXDevedorRecebedorBase }
 
-constructor TACBrPIXDevedorBase.Create(const ObjectName: String);
+constructor TACBrPIXDevedorRecebedorBase.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
   Clear;
 end;
 
-procedure TACBrPIXDevedorBase.Clear;
+procedure TACBrPIXDevedorRecebedorBase.Clear;
 begin
   fcpf := '';
   fcnpj := '';
   fnome := '';
+  fnomeFantasia := '';
   femail := '';
   fcep := '';
   fcidade := '';
@@ -134,11 +148,12 @@ begin
   fuf := '';
 end;
 
-function TACBrPIXDevedorBase.IsEmpty: Boolean;
+function TACBrPIXDevedorRecebedorBase.IsEmpty: Boolean;
 begin
   Result := (fcpf = '') and
             (fcnpj = '') and
             (fnome = '') and
+            (fnomeFantasia = '') and
             (femail = '') and
             (fcep = '') and
             (fcidade = '') and
@@ -146,11 +161,12 @@ begin
             (fuf = '');
 end;
 
-procedure TACBrPIXDevedorBase.Assign(Source: TACBrPIXDevedorBase);
+procedure TACBrPIXDevedorRecebedorBase.Assign(Source: TACBrPIXDevedorRecebedorBase);
 begin
   fcpf := Source.cpf;
   fcnpj := Source.cnpj;
   fnome := Source.nome;
+  fnomeFantasia := Source.nomeFantasia;
   femail := Source.email;
   fcep := Source.cep;
   fcidade := Source.cidade;
@@ -158,15 +174,17 @@ begin
   fuf := Source.uf;
 end;
 
-procedure TACBrPIXDevedorBase.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedorRecebedorBase.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (cnpj <> '') then
-     AJSon.S['cnpj'] := cnpj
-   else if (cpf <> '') then
-     AJSon.S['cpf'] := cpf;
-   if (nome <> '') then
-     AJSon.S['nome'] := nome;
+   if (fcnpj <> '') then
+     AJSon.S['cnpj'] := fcnpj
+   else if (fcpf <> '') then
+     AJSon.S['cpf'] := fcpf;
+   if (fnome <> '') then
+     AJSon.S['nome'] := fnome;
+   if (fnomeFantasia <> '') then
+     AJSon.S['nomeFantasia'] := fnomeFantasia;
    if (femail <> '') then
      AJSon.S['email'] := femail;
    if (flogradouro <> '') then
@@ -178,12 +196,14 @@ begin
    if (fuf <> '') then
      AJSon.S['uf'] := fuf;
   {$Else}
-   if (cnpj <> '') then
-     AJSon['cnpj'].AsString := cnpj
-   else if (cpf <> '') then
-     AJSon['cpf'].AsString := cpf;
-   if (nome <> '') then
-     AJSon['nome'].AsString := nome;
+   if (fcnpj <> '') then
+     AJSon['cnpj'].AsString := fcnpj
+   else if (fcpf <> '') then
+     AJSon['cpf'].AsString := fcpf;
+   if (fnome <> '') then
+     AJSon['nome'].AsString := fnome;
+   if (fnomeFantasia <> '') then
+     AJSon['nomeFantasia'].AsString := fnomeFantasia;
    if (femail <> '') then
      AJSon['email'].AsString := femail;
    if (flogradouro <> '') then
@@ -197,22 +217,23 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXDevedorBase.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedorRecebedorBase.DoReadFromJSon(AJSon: TJsonObject);
 begin
-  Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   cnpj := AJSon.S['cnpj'];
-   cpf  := AJSon.S['cpf'];
-   nome := AJSon.S['nome'];
+   fcnpj := AJSon.S['cnpj'];
+   fcpf  := AJSon.S['cpf'];
+   fnome := AJSon.S['nome'];
+   fnomeFantasia := AJSon.S['nomeFantasia'];
    femail := AJSon.S['email'];
    flogradouro := AJSon.S['logradouro'];
    fcidade := AJSon.S['cidade'];
    fcep := AJSon.S['cep'];
    fuf := AJSon.S['uf'];
   {$Else}
-   cnpj := AJSon['cnpj'].AsString;
-   cpf  := AJSon['cpf'].AsString;
-   nome := AJSon['nome'].AsString;
+   fcnpj := AJSon['cnpj'].AsString;
+   fcpf  := AJSon['cpf'].AsString;
+   fnome := AJSon['nome'].AsString;
+   fnomeFantasia := AJSon['nomeFantasia'].AsString;
    femail := AJSon['email'].AsString;
    flogradouro := AJSon['logradouro'].AsString;
    fcidade := AJSon['cidade'].AsString;
@@ -221,7 +242,7 @@ begin
   {$EndIf}
 end;
 
-procedure TACBrPIXDevedorBase.SetCnpj(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetCnpj(AValue: String);
 var
   s, e: String;
 begin
@@ -240,7 +261,7 @@ begin
   fcnpj := s;
 end;
 
-procedure TACBrPIXDevedorBase.SetCpf(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetCpf(AValue: String);
 var
   s, e: String;
 begin
@@ -259,7 +280,7 @@ begin
   fcpf := s;
 end;
 
-procedure TACBrPIXDevedorBase.SetCEP(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetCEP(AValue: String);
 var
   s: String;
 begin
@@ -273,14 +294,14 @@ begin
   fcep := s;
 end;
 
-procedure TACBrPIXDevedorBase.SetCidade(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetCidade(AValue: String);
 begin
   if fcidade = AValue then
     Exit;
   fcidade := copy(AValue, 1, 200);
 end;
 
-procedure TACBrPIXDevedorBase.SetEmail(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetEmail(AValue: String);
 var
   s, e: String;
 begin
@@ -298,14 +319,28 @@ begin
   femail := s;
 end;
 
-procedure TACBrPIXDevedorBase.SetLogradouro(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetLogradouro(AValue: String);
 begin
   if flogradouro = AValue then
     Exit;
   flogradouro := copy(AValue, 1, 200);
 end;
 
-procedure TACBrPIXDevedorBase.SetUF(AValue: String);
+procedure TACBrPIXDevedorRecebedorBase.SetNome(AValue: String);
+begin
+  if fnome = AValue then
+    Exit;
+  fnome := copy(AValue, 1, 200);
+end;
+
+procedure TACBrPIXDevedorRecebedorBase.SetNomeFantasia(AValue: String);
+begin
+  if fnomeFantasia = AValue then
+    Exit;
+  fnomeFantasia := copy(AValue, 1, 200);
+end;
+
+procedure TACBrPIXDevedorRecebedorBase.SetUF(AValue: String);
 var
   s, e: String;
 begin

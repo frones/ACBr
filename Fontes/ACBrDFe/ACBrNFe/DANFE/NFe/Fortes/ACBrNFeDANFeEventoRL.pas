@@ -96,8 +96,13 @@ begin
     if (ANFe <> nil) then
       DANFeReport.fpNFe := ANFe;
 
-    if ADANFe.MostraPreview then
+    if ADANFe.MostraPreview then 
+    begin
+      if Assigned(DANFeReport) then
+        SelectedFilter := DANFeReport.RLPDFFilter1;
+      DANFeReport.RLEvento.Title := OnlyNumber(DANFeReport.fpNFe.InfNFe.Id);
       DANFeReport.RLEvento.PreviewModal
+    end
     else
       DANFeReport.RLEvento.Print;
   finally

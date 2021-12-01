@@ -13,7 +13,8 @@ uses
   ACBrPIXSchemasPaginacao, ACBrPIXSchemasParametrosConsultaPix, 
   ACBrPIXSchemasPixConsultados, ACBrPIXSchemasParametrosConsultaCob, 
   ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation, 
-  ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, LazarusPackageIntf;
+  ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, 
+  ACBrPIXSchemasCobsVConsultadas, LazarusPackageIntf;
 
 implementation
 

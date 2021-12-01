@@ -8,7 +8,7 @@ uses
   Classes, SysUtils,
   ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasCobV, ACBrPIXQRCodeEstatico,
   ACBrPIXSchemasProblema, ACBrPIXSchemasPixConsultados,
-  ACBrPIXSchemasCobsConsultadas,
+  ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
   {$ifdef FPC}
    fpcunit, testutils, testregistry
   {$else}
@@ -187,6 +187,20 @@ type
   published
     procedure AtribuirELerValoresCobrancaComVencimento1;
     procedure AtribuirLerReatribuirECompararCobrancaComVencimento1;
+  end;
+
+  { TTestCobsVConsultadas }
+
+  TTestCobsVConsultadas = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixCobsVConsultadas: TACBrPIXCobsVConsultadas;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
   end;
 
 implementation
@@ -1590,6 +1604,153 @@ begin
 end;
 
 
+{ TTestCobsVConsultadas }
+
+procedure TTestCobsVConsultadas.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixCobsVConsultadas := TACBrPIXCobsVConsultadas.Create('');
+  fJSON := ACBrStr(
+    '{'+
+  	  '"parametros": {'+
+  		  '"inicio": "2020-04-01T00:00:00Z",'+
+  		  '"fim": "2020-04-01T23:59:59Z",'+
+  		  '"paginacao": {'+
+  			  '"paginaAtual": 0,'+
+  			  '"itensPorPagina": 100,'+
+  			  '"quantidadeDePaginas": 1,'+
+  			  '"quantidadeTotalDeItens": 1'+
+  		  '}'+
+  	  '},'+
+  	  '"cobs": ['+
+  		  '{'+
+  			  '"calendario": {'+
+  				  '"criacao": "2020-09-09T20:15:00.358Z",'+
+  				  '"dataDeVencimento": "2020-12-31",'+
+  				  '"validadeAposVencimento": 30'+
+  			  '},'+
+  			  '"txid": "7978c0c97ea847e78e8849634473c1f1",'+
+  			  '"revisao": 0,'+
+  			  '"loc": {'+
+  				  '"id": 789,'+
+  				  '"location": "pix.example.com/qr/c2/cobv/9d36b84fc70b478fb95c12729b90ca25",'+
+  				  '"tipoCob": "cobv"'+
+  			  '},'+
+  			  '"status": "ATIVA",'+
+  			  '"devedor": {'+
+  				  '"logradouro": "Alameda Souza, Numero 80, Bairro Braz",'+
+  				  '"cidade": "Recife",'+
+  				  '"uf": "PE",'+
+  				  '"cep": "70011750",'+
+  				  '"cpf": "12345678909",'+
+  				  '"nome": "Francisco da Silva"'+
+  			  '},'+
+  			  '"recebedor": {'+
+  				  '"logradouro": "Rua 15 Numero 1200, Bairro São Luiz",'+
+  				  '"cidade": "São Paulo",'+
+  				  '"uf": "SP",'+
+  				  '"cep": "70800100",'+
+  				  '"cnpj": "56989000019533",'+
+  				  '"nome": "Empresa de Logística SA"'+
+  			  '},'+
+  			  '"valor": {'+
+  				  '"original": "123.45"'+
+  			  '},'+
+  			  '"chave": "5f84a4c5-c5cb-4599-9f13-7eb4d419dacc",'+
+  			  '"solicitacaoPagador": "Cobrança dos serviços prestados."'+
+  		  '}'+
+  	  ']'+
+    '}' );
+end;
+
+procedure TTestCobsVConsultadas.TearDown;
+begin
+  inherited TearDown;
+end;
+
+procedure TTestCobsVConsultadas.AtribuirELerValores;
+begin
+  fACBrPixCobsVConsultadas.AsJSON := fJSON;
+
+  CheckEquals(fACBrPixCobsVConsultadas.parametros.inicio, EncodeDateTime(2020,04,01,00,00,00,0));
+  CheckEquals(fACBrPixCobsVConsultadas.parametros.fim, EncodeDateTime(2020,04,01,23,59,59,0));
+  CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.paginaAtual, 0);
+  CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.itensPorPagina, 100);
+  CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.quantidadeDePaginas, 1);
+  CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.quantidadeTotalDeItens, 1);
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].calendario.criacao, EncodeDateTime(2020,09,09,20,15,00,358));
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].calendario.dataDeVencimento, EncodeDate(2020,12,31));
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].calendario.validadeAposVencimento, 30);
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].txId, '7978c0c97ea847e78e8849634473c1f1');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].revisao, 0);
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].loc.id, 789);
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].loc.location, 'pix.example.com/qr/c2/cobv/9d36b84fc70b478fb95c12729b90ca25');
+  CheckTrue(fACBrPixCobsVConsultadas.cobs[0].loc.tipoCob = tcoCobV);
+  CheckTrue(fACBrPixCobsVConsultadas.cobs[0].status = stcATIVA);
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.logradouro, 'Alameda Souza, Numero 80, Bairro Braz');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.cidade, 'Recife');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.uf, 'PE');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.cep, '70011750');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.cpf, '12345678909');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.nome, 'Francisco da Silva');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.logradouro, ACBrStr('Rua 15 Numero 1200, Bairro São Luiz'));
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.cidade, ACBrStr('São Paulo'));
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.uf, 'SP');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.cep, '70800100');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.cnpj, '56989000019533');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.nome, ACBrStr('Empresa de Logística SA'));
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].valor.original, 123.45);
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].chave, '5f84a4c5-c5cb-4599-9f13-7eb4d419dacc');
+  CheckEquals(fACBrPixCobsVConsultadas.cobs[0].solicitacaoPagador, ACBrStr('Cobrança dos serviços prestados.'));
+end;
+
+procedure TTestCobsVConsultadas.AtribuirLerReatribuirEComparar;
+var
+  cg: TACBrPIXCobsVConsultadas;
+  s: String;
+begin
+  fACBrPixCobsVConsultadas.AsJSON := fJSON;
+  s := fACBrPixCobsVConsultadas.AsJSON;
+  cg := TACBrPIXCobsVConsultadas.Create('');
+  try
+    cg.AsJSON := s;
+
+    CheckEquals(fACBrPixCobsVConsultadas.parametros.inicio, cg.parametros.inicio);
+    CheckEquals(fACBrPixCobsVConsultadas.parametros.fim, cg.parametros.fim);
+    CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.paginaAtual, cg.parametros.paginacao.paginaAtual);
+    CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.itensPorPagina, cg.parametros.paginacao.itensPorPagina);
+    CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.quantidadeDePaginas, cg.parametros.paginacao.quantidadeDePaginas);
+    CheckEquals(fACBrPixCobsVConsultadas.parametros.paginacao.quantidadeTotalDeItens, cg.parametros.paginacao.quantidadeTotalDeItens);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].calendario.criacao, cg.cobs[0].calendario.criacao);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].calendario.dataDeVencimento, cg.cobs[0].calendario.dataDeVencimento);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].calendario.validadeAposVencimento, cg.cobs[0].calendario.validadeAposVencimento);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].txId, cg.cobs[0].txId);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].revisao, cg.cobs[0].revisao);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].loc.id, cg.cobs[0].loc.id);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].loc.location, cg.cobs[0].loc.location);
+    CheckTrue(fACBrPixCobsVConsultadas.cobs[0].loc.tipoCob = cg.cobs[0].loc.tipoCob);
+    CheckTrue(fACBrPixCobsVConsultadas.cobs[0].status = cg.cobs[0].status);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.logradouro, cg.cobs[0].devedor.logradouro);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.cidade, cg.cobs[0].devedor.cidade);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.uf, cg.cobs[0].devedor.uf);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.cep, cg.cobs[0].devedor.cep);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.cpf, cg.cobs[0].devedor.cpf);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].devedor.nome, cg.cobs[0].devedor.nome);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.logradouro, cg.cobs[0].recebedor.logradouro);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.cidade, cg.cobs[0].recebedor.cidade);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.uf, cg.cobs[0].recebedor.uf);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.cep, cg.cobs[0].recebedor.cep);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.cnpj, cg.cobs[0].recebedor.cnpj);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].recebedor.nome, cg.cobs[0].recebedor.nome);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].valor.original, cg.cobs[0].valor.original);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].chave, cg.cobs[0].chave);
+    CheckEquals(fACBrPixCobsVConsultadas.cobs[0].solicitacaoPagador, cg.cobs[0].solicitacaoPagador);
+  finally
+    cg.Free;
+  end;
+end;
+
+
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
   {$IfDef DUNITX}
@@ -1613,6 +1774,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobRevisada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVSolicitada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVGerada);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestCobsVConsultadas);
 
 end.
 

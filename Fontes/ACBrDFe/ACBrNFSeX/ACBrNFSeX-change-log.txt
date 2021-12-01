@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 01/12/2021
+-- ACBrNFSeXConversao/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Alteração nas funções de conversão do RegimeEspecialTributacao visando as
+    diferenças do provedor Tecnos.
+   Por: Maurício Sareto
 -- ACBrNFSeXServicos --
 [*] Correção na URL de Homologação de Ipatinga/MG.
    Por: Italo Giurizzato Junior

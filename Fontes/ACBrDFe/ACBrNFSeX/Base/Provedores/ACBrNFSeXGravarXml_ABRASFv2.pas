@@ -414,7 +414,7 @@ begin
   Result.AppendChild(GerarConstrucaoCivil);
 
   Result.AppendChild(AddNode(tcStr, '#6', 'RegimeEspecialTributacao', 1, 2, NrOcorrRegimeEspecialTributacao,
-   RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN));
+   RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao, Provedor), DSC_REGISSQN));
 
   Result.AppendChild(AddNode(tcStr, '#7', 'NaturezaOperacao', 1, 3, NrOcorrNaturezaOperacao,
                    NaturezaOperacaoToStr(NFSe.NaturezaOperacao), DSC_INDNATOP));

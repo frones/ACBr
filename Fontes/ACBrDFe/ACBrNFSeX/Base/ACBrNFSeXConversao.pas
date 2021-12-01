@@ -237,18 +237,18 @@ function StrToStatusNFSe(out ok: boolean; const s: string): TStatusNFSe;
 
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao): string;
 function StrToNaturezaOperacao(out ok: boolean; const s: string): TnfseNaturezaOperacao;
-function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao; AProvedor: TnfseProvedor = proNenhum): string;
+function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao; aProvedor: TnfseProvedor = proNenhum): string;
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string;
 function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS;
 function ExigibilidadeISSDescricao(const t: TnfseExigibilidadeISS): string;
 
-function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string;
-function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
-function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string;
+function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao; const aProvedor: TnfseProvedor = proNenhum): string;
+function StrToRegimeEspecialTributacao(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseRegimeEspecialTributacao;
+function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao; const aProvedor: TnfseProvedor = proNenhum): string;
 
-function SimNaoToStr(const t: TnfseSimNao; const provedor: TnfseProvedor = proNenhum): string;
-function StrToSimNao(out ok: boolean; const s: string; const provedor: TnfseProvedor = proNenhum): TnfseSimNao;
+function SimNaoToStr(const t: TnfseSimNao; const aProvedor: TnfseProvedor = proNenhum): string;
+function StrToSimNao(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseSimNao;
 
 function TipoRPSToStr(const t:TTipoRPS): string;
 function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
@@ -268,13 +268,13 @@ function CodIBGEToCidade(const ACodigo: Integer): string;
 function CodIBGEToCodTOM(const ACodigo: Integer): string;
 function CodTOMToCodIBGE(const ACodigo: string): string;
 
-function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria; const provedor: TnfseProvedor = proNenhum): string;
-function StrToSituacaoTributaria(out ok: boolean; const s: string; const provedor: TnfseProvedor = proNenhum): TnfseSituacaoTributaria;
-function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria; const provedor: TnfseProvedor = proNenhum): string;
+function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria; const aProvedor: TnfseProvedor = proNenhum): string;
+function StrToSituacaoTributaria(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseSituacaoTributaria;
+function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria; const aProvedor: TnfseProvedor = proNenhum): string;
 
-function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao; const provedor: TnfseProvedor = proNenhum): string;
-function StrToResponsavelRetencao(out ok: boolean; const s: string; const provedor: TnfseProvedor = proNenhum): TnfseResponsavelRetencao;
-function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao; const provedor: TnfseProvedor = proNenhum): String;
+function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao; const aProvedor: TnfseProvedor = proNenhum): string;
+function StrToResponsavelRetencao(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseResponsavelRetencao;
+function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao; const aProvedor: TnfseProvedor = proNenhum): String;
 
 function TipoEmissaoToStr(const t: TTipoEmissao): string;
 function StrToTipoEmissao(out ok: boolean; const s: string): TTipoEmissao;
@@ -293,7 +293,7 @@ function ObterDescricaoServico(const cCodigo: string): string;
 function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: string;
                      ASerie:Integer; ANumero, ACodigo: Integer;
                      AModelo: Integer=56): string;
-function RetirarPrefixos(const AXML: string; AProvedor: TnfseProvedor): string;
+function RetirarPrefixos(const AXML: string; aProvedor: TnfseProvedor): string;
 function VersaoXML(const AXML: string): string;
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: string;
                                ANumero: Int64; AModelo: Integer = 56): string;
@@ -336,7 +336,7 @@ function TributacaoToStr(const t: TTributacao): string;
 function StrToTributacao(out ok: boolean; const s: string): TTributacao;
 function TributacaoDescricao(const t: TTributacao): String;
 
-function RemoverAtributos(const AXML: string; AProvedor: TnfseProvedor): string;
+function RemoverAtributos(const AXML: string; aProvedor: TnfseProvedor): string;
 
 function UnidadeToStr(const t: TUnidade): string;
 function StrToUnidade(out ok: boolean; const s: string): TUnidade;
@@ -470,9 +470,18 @@ begin
                            exiSuspensaProcessoAdministrativo,exiISSFixo]);
 end;
 
-function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string;
+function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao;
+  const aProvedor: TnfseProvedor): string;
 begin
-  Result := EnumeradoToStr(t,
+  case aProvedor of
+    proTecnos: Result := EnumeradoToStr(t,
+                           ['0', '1', '2', '3', '4', '5', '6'],
+                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
+                           retSociedadeProfissionais, retCooperativa,
+                           retMicroempresarioIndividual, retMicroempresarioEmpresaPP
+                           ]);
+  else
+    Result := EnumeradoToStr(t,
                            ['', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                             '10', '11', '12', '13', '14'],
                            [retNenhum, retMicroempresaMunicipal, retEstimativa,
@@ -481,11 +490,21 @@ begin
                            retLucroReal, retLucroPresumido, retSimplesNacional,
                            retImune, retEmpresaIndividualRELI, retEmpresaPP,
                            retMicroEmpresario, retOutros]);
+  end;
 end;
 
-function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
+function StrToRegimeEspecialTributacao(out ok: boolean; const s: string;
+  const aProvedor: TnfseProvedor): TnfseRegimeEspecialTributacao;
 begin
-  Result := StrToEnumerado(ok, s,
+  case aProvedor of
+    proTecnos: Result := StrToEnumerado(ok, s,
+                           ['0', '1', '2', '3', '4', '5', '6'],
+                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
+                           retSociedadeProfissionais, retCooperativa,
+                           retMicroempresarioIndividual, retMicroempresarioEmpresaPP
+                           ]);
+  else
+    Result := StrToEnumerado(ok, s,
                           ['', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                            '10', '11', '12', '13', '14'],
                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
@@ -494,11 +513,50 @@ begin
                            retLucroReal, retLucroPresumido, retSimplesNacional,
                            retImune, retEmpresaIndividualRELI, retEmpresaPP,
                            retMicroEmpresario, retOutros]);
+  end;
 end;
 
-function SimNaoToStr(const t: TnfseSimNao; const provedor: TnfseProvedor): string;
+function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao;
+  const aProvedor: TnfseProvedor): string;
 begin
-  case provedor of
+  case aProvedor of
+    proTecnos:
+      case t of
+        retNenhum                    : Result := '0 - Nenhum';
+        retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
+        retEstimativa                : Result := '2 - Estimativa';
+        retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
+        retCooperativa               : Result := '4 - Cooperativa';
+        retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
+        retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+      else
+        Result := '';
+      end;
+  else
+    case t of
+      retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
+      retEstimativa                : Result := '2 - Estimativa';
+      retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
+      retCooperativa               : Result := '4 - Cooperativa';
+      retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
+      retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+      retLucroReal                 : Result := '7 - Lucro Real';
+      retLucroPresumido            : Result := '8 - Lucro Presumido';
+      retSimplesNacional           : Result := '9 - Simples Nacional';
+      retImune                     : Result := '10 - Imune';
+      retEmpresaIndividualRELI     : Result := '11 - Empresa Individual de Resp. Limitada (EIRELI)';
+      retEmpresaPP                 : Result := '12 - Empresa de Pequeno Porte (EPP)';
+      retMicroEmpresario           : Result := '13 - Microempresário';
+      retOutros                    : Result := '14 - Outros/Sem Vinculo';
+    else
+      Result := '';
+    end;
+  end;
+end;
+
+function SimNaoToStr(const t: TnfseSimNao; const aProvedor: TnfseProvedor): string;
+begin
+  case aProvedor of
     proInfisc: Result := EnumeradoToStr(t,
                            ['N', 'S'],
                            [snNao, snSim]);
@@ -510,9 +568,9 @@ begin
 end;
 
 function StrToSimNao(out ok: boolean; const s: string;
-  const provedor: TnfseProvedor): TnfseSimNao;
+  const aProvedor: TnfseProvedor): TnfseSimNao;
 begin
-  case provedor of
+  case aProvedor of
     proInfisc: Result := StrToEnumerado(ok, s,
                            ['N', 'S'],
                            [snNao, snSim]);
@@ -18100,9 +18158,9 @@ begin
 end;
 
 function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria;
-  const provedor: TnfseProvedor): string;
+  const aProvedor: TnfseProvedor): string;
 begin
-  case provedor of
+  case aProvedor of
     proCenti: Result := EnumeradoToStr(t,
                              ['0', '1', '2'],
                              [stRetencao, stNormal, stSubstituicao]);
@@ -18114,9 +18172,9 @@ begin
 end;
 
 function StrToSituacaoTributaria(out ok: boolean; const s: string;
-  const provedor: TnfseProvedor): TnfseSituacaoTributaria;
+  const aProvedor: TnfseProvedor): TnfseSituacaoTributaria;
 begin
-  case provedor of
+  case aProvedor of
     proCenti: Result := StrToEnumerado(ok, s,
                              ['0', '1', '2'],
                              [stNormal, stRetencao, stSubstituicao]);
@@ -18128,9 +18186,9 @@ begin
 end;
 
 function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria;
-  const provedor: TnfseProvedor): string;
+  const aProvedor: TnfseProvedor): string;
 begin
-  case provedor of
+  case aProvedor of
     proCenti:
       case t of
         stNormal       : Result := '0 - Não' ;
@@ -18151,9 +18209,9 @@ begin
 end;
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao;
-  const provedor : TnfseProvedor): string;
+  const aProvedor : TnfseProvedor): string;
 begin
-  case provedor of
+  case aProvedor of
     proTecnos: Result := EnumeradoToStr(t,
                              ['1', '2', '3'],
                              [rtNenhum, rtTomador, rtIntermediario]);
@@ -18165,9 +18223,9 @@ begin
 end;
 
 function StrToResponsavelRetencao(out ok: boolean; const s: string;
-  const provedor : TnfseProvedor): TnfseResponsavelRetencao;
+  const aProvedor : TnfseProvedor): TnfseResponsavelRetencao;
 begin
-  case provedor of
+  case aProvedor of
     proTecnos: Result := StrToEnumerado(ok, s,
                              ['1', '2', '3'],
                              [rtNenhum, rtTomador, rtIntermediario]);
@@ -18179,9 +18237,9 @@ begin
 end;
 
 function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao;
-  const provedor : TnfseProvedor): String;
+  const aProvedor : TnfseProvedor): String;
 begin
-  case provedor of
+  case aProvedor of
     proTecnos:
       case t of
         rtNenhum        : Result := '1 - Nenhum';
@@ -18274,7 +18332,7 @@ begin
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vSerie + vNumero + vCodigo;
 end;
 
-function RetirarPrefixos(const AXML: string; AProvedor: TnfseProvedor): string;
+function RetirarPrefixos(const AXML: string; aProvedor: TnfseProvedor): string;
 var
   XML: string;
 
@@ -18305,7 +18363,7 @@ begin
   XML := StrReplace(XML, 's:');
   XML := StrReplace(XML, 'tipos:');
 
-  if AProvedor in [proNFSeBrasil, proSigCorp, proMegaSoft] then
+  if aProvedor in [proNFSeBrasil, proSigCorp, proMegaSoft] then
   begin
     XML := stringReplace(XML, '<![CDATA[', '', [rfReplaceAll]);
     XML := stringReplace(XML, ']]>', '', [rfReplaceAll]);
@@ -18462,7 +18520,7 @@ begin
                                ve200, ve201, ve202, ve203, ve204]);
 end;
 
-function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao; AProvedor: TnfseProvedor = proNenhum): string;
+function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao; aProvedor: TnfseProvedor = proNenhum): string;
 begin
   case t of
     no1 : Result := '1 - Tributação no município';
@@ -18479,12 +18537,12 @@ begin
     no61 : Result := '6.1 - Tributacao No Municipio Com Retenção de ISS';
     no62 : Result := '6.2 - Tributacao No Municipio Sem Retenção de ISS';
 
-    no63 : if AProvedor = proThema then
+    no63 : if aProvedor = proThema then
              Result := '6.3 - Tributação fora do municipio sem retenção de ISS'
            else
              Result := '6.3 - Tributação fora do municipio com retenção de ISS';
 
-    no64 : if AProvedor = proThema then
+    no64 : if aProvedor = proThema then
              Result := '6.4 - Tributacao fora do municipio com retenção de ISS'
            else
              Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
@@ -18511,7 +18569,7 @@ begin
     no301 : Result := '301 - Operação imune, isenta ou não tributada';
     no501 : Result := '501 - ISS devido no município (Simples Nacional)';
 
-    no511 : if AProvedor = proPublica then
+    no511 : if aProvedor = proPublica then
               Result := '511 - ISS devido para outro município (Simples Nacional)'
             else
               Result := '511 - Prestação de serviço no município - iss mensal sem retenção na fonte';
@@ -18567,29 +18625,6 @@ begin
   case t of
     teNormalNFSe     : Result := 'N - Normal';
     teContigenciaNFSe: Result := 'C - Contingência';
-  end;
-end;
-
-function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string;
-begin
-  case t of
-    retNenhum                    : Result := '0 - Nenhum';
-    retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
-    retEstimativa                : Result := '2 - Estimativa';
-    retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
-    retCooperativa               : Result := '4 - Cooperativa';
-    retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
-    retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
-    retLucroReal                 : Result := '7 - Lucro Real';
-    retLucroPresumido            : Result := '8 - Lucro Presumido';
-    retSimplesNacional           : Result := '9 - Simples Nacional';
-    retImune                     : Result := '10 - Imune';
-    retEmpresaIndividualRELI     : Result := '11 - Empresa Individual de Resp. Limitada (EIRELI)';
-    retEmpresaPP                 : Result := '12 - Empresa de Pequeno Porte (EPP)';
-    retMicroEmpresario           : Result := '13 - Microempresário';
-    retOutros                    : Result := '14 - Outros/Sem Vinculo';
-  else
-    Result := '';
   end;
 end;
 
@@ -18781,7 +18816,7 @@ begin
                             ttTributavelFixo, ttTributavelSN, ttMEI]);
 end;
 
-function RemoverAtributos(const AXML: string; AProvedor: TnfseProvedor): string;
+function RemoverAtributos(const AXML: string; aProvedor: TnfseProvedor): string;
 var
   XML: string;
 begin

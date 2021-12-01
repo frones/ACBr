@@ -647,7 +647,7 @@ procedure TACBrNFSeProviderEL.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
   Params: TNFSeParamsResponse);
 var
   Emitente: TEmitenteConfNFSe;
-  xTipoDoc: string;
+  xTipoDoc, Arquivo: string;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
@@ -658,6 +658,32 @@ begin
     else
       xTipoDoc := '1';
 
+    Arquivo := '<LoteRps>' +
+                 '<Id>' +
+                    Response.Lote +
+                 '</Id>' +
+                 '<NumeroLote>' +
+                    Response.Lote +
+                 '</NumeroLote>' +
+                 '<QuantidadeRps>' +
+                    IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                 '</QuantidadeRps>' +
+                 '<IdentificacaoPrestador>' +
+                   '<CpfCnpj>' +
+                     OnlyNumber(Emitente.CNPJ) +
+                   '</CpfCnpj>' +
+                   '<IndicacaoCpfCnpj>' +
+                     xTipoDoc +
+                   '</IndicacaoCpfCnpj>' +
+                   '<InscricaoMunicipal>' +
+                     OnlyNumber(Emitente.InscMun) +
+                   '</InscricaoMunicipal>' +
+                 '</IdentificacaoPrestador>' +
+                 '<ListaRps>' +
+                   Xml +
+                 '</ListaRps>' +
+               '</LoteRps>';
+
     Response.XmlEnvio := '<el:EnviarLoteRpsEnvio>' +
                            '<identificacaoPrestador>' +
                               OnlyNumber(Emitente.CNPJ) +
@@ -666,31 +692,7 @@ begin
                               FPHash +
                            '</hashIdentificador>' +
                            '<arquivo>' +
-                             '<LoteRps>' +
-                               '<Id>' +
-                                  Response.Lote +
-                               '</Id>' +
-                               '<NumeroLote>' +
-                                  Response.Lote +
-                               '</NumeroLote>' +
-                               '<QuantidadeRps>' +
-                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                               '</QuantidadeRps>' +
-                               '<IdentificacaoPrestador>' +
-                                 '<CpfCnpj>' +
-                                   OnlyNumber(Emitente.CNPJ) +
-                                 '</CpfCnpj>' +
-                                 '<IndicacaoCpfCnpj>' +
-                                   xTipoDoc +
-                                 '</IndicacaoCpfCnpj>' +
-                                 '<InscricaoMunicipal>' +
-                                   OnlyNumber(Emitente.InscMun) +
-                                 '</InscricaoMunicipal>' +
-                               '</IdentificacaoPrestador>' +
-                               '<ListaRps>' +
-                                 Xml +
-                               '</ListaRps>' +
-                             '</LoteRps>' +
+                              IncluirCDATA(Arquivo) +
                            '</arquivo>' +
                          '</el:EnviarLoteRpsEnvio>';
   end;

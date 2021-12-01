@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/12/2021
+-- EL.Provider --
+[*] O conteudo do grupo <arquivo> tem que estar no formato string e não XML.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao/ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Alteração nas funções de conversão do RegimeEspecialTributacao visando as
     diferenças do provedor Tecnos.

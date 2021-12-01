@@ -39,7 +39,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrPIXSchemasCobsConsultadas;
+unit ACBrPIXSchemasCobsVConsultadas;
 
 interface
 
@@ -51,15 +51,16 @@ uses
    Jsons,
   {$EndIf}
   ACBrPIXBase,
-  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCob;
+  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobV;
+
 
 type
 
-  { TACBrPIXCobsConsultadas }
+  { TACBrPIXCobsVConsultadas }
 
-  TACBrPIXCobsConsultadas = class(TACBrPIXSchema)
+  TACBrPIXCobsVConsultadas = class(TACBrPIXSchema)
   private
-    fcobs: TACBrPIXCobCompletaArray;
+    fcobs: TACBrPIXCobVCompletaArray;
     fparametros: TACBrPIXParametrosConsultaCob;
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
@@ -69,57 +70,57 @@ type
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     destructor Destroy; override;
-    procedure Assign(Source: TACBrPIXCobsConsultadas);
+    procedure Assign(Source: TACBrPIXCobsVConsultadas);
 
     property parametros: TACBrPIXParametrosConsultaCob read fparametros;
-    property cobs: TACBrPIXCobCompletaArray read fcobs;
+    property cobs: TACBrPIXCobVCompletaArray read fcobs;
   end;
 
 implementation
 
-{ TACBrPIXCobsConsultadas }
+{ TACBrPIXCobsVConsultadas }
 
-constructor TACBrPIXCobsConsultadas.Create(const ObjectName: String);
+constructor TACBrPIXCobsVConsultadas.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
-  fcobs := TACBrPIXCobCompletaArray.Create('cobs');
+  fcobs := TACBrPIXCobVCompletaArray.Create('cobs');
   fparametros := TACBrPIXParametrosConsultaCob.Create('parametros');
 end;
 
-destructor TACBrPIXCobsConsultadas.Destroy;
+destructor TACBrPIXCobsVConsultadas.Destroy;
 begin
   fcobs.Free;
   fparametros.Free;
   inherited Destroy;
 end;
 
-procedure TACBrPIXCobsConsultadas.Clear;
+procedure TACBrPIXCobsVConsultadas.Clear;
 begin
-  fparametros.Clear;
   fcobs.Clear;
+  fparametros.Clear;
 end;
 
-procedure TACBrPIXCobsConsultadas.Assign(Source: TACBrPIXCobsConsultadas);
+function TACBrPIXCobsVConsultadas.IsEmpty: Boolean;
 begin
-  fparametros.Assign(Source.parametros);
-  fcobs.Assign(Source.cobs);
+  Result := fcobs.IsEmpty and fparametros.IsEmpty;
 end;
 
-procedure TACBrPIXCobsConsultadas.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobsVConsultadas.Assign(Source: TACBrPIXCobsVConsultadas);
+begin
+  fcobs.Assign(Source.cobs);
+  fparametros.Assign(Source.parametros);
+end;
+
+procedure TACBrPIXCobsVConsultadas.DoWriteToJSon(AJSon: TJsonObject);
 begin
   fparametros.WriteToJSon(AJSon);
   fcobs.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobsConsultadas.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobsVConsultadas.DoReadFromJSon(AJSon: TJsonObject);
 begin
   fparametros.ReadFromJSon(AJSon);
   fcobs.ReadFromJSon(AJSon);
-end;
-
-function TACBrPIXCobsConsultadas.IsEmpty: Boolean;
-begin
-  Result := fparametros.IsEmpty and fcobs.IsEmpty;
 end;
 
 end.

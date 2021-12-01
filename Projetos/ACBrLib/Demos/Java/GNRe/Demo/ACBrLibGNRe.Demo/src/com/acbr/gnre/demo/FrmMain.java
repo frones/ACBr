@@ -56,24 +56,24 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         chkExibirErroSchema = new javax.swing.JCheckBox();
         lblFormatoAlerta = new javax.swing.JLabel();
-        txtFormatAlerta = new javax.swing.JTextField();
+        txtFormatoAlerta = new javax.swing.JTextField();
         lblVersDocFiscal = new javax.swing.JLabel();
-        cmbFormaEmissao = new javax.swing.JComboBox<>();
+        cmbFormaEmissao = new javax.swing.JComboBox<String>();
         lblFormaEmissao1 = new javax.swing.JLabel();
-        cmbVersDocFiscal = new javax.swing.JComboBox<>();
-        chkRetAcentXMLsEnv = new javax.swing.JCheckBox();
-        chkSalArqEnvEResp = new javax.swing.JCheckBox();
-        txtPastaLogs = new javax.swing.JTextField();
+        cmbVersaoDF = new javax.swing.JComboBox<String>();
+        ckbRetirarAcentos = new javax.swing.JCheckBox();
+        ckbSalvar = new javax.swing.JCheckBox();
+        txtLogs = new javax.swing.JTextField();
         btnPastaLogs = new javax.swing.JButton();
         lblVersDocFiscal1 = new javax.swing.JLabel();
         lblVersDocFiscal2 = new javax.swing.JLabel();
-        txtPastaSchema = new javax.swing.JTextField();
+        txtSchemaPath = new javax.swing.JTextField();
         btnPastaSchemas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        cmbUfDestino = new javax.swing.JComboBox<>();
+        cmbUfDestino = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cmbSSlType = new javax.swing.JComboBox<>();
+        cmbSSlType = new javax.swing.JComboBox<String>();
         nudTimeOut = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -88,8 +88,8 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtProxySenha = new javax.swing.JPasswordField();
-        chkVisualizarmsg = new javax.swing.JCheckBox();
-        chkSalvarEnvelopeSOAP = new javax.swing.JCheckBox();
+        ckbVisualizar = new javax.swing.JCheckBox();
+        ckbSalvarSOAP = new javax.swing.JCheckBox();
         jPanel14 = new javax.swing.JPanel();
         nudIntervalos = new javax.swing.JSpinner();
         lblIntervalo = new javax.swing.JLabel();
@@ -100,11 +100,11 @@ public class FrmMain extends javax.swing.JFrame {
         nudAguardar = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        cmbCrypt = new javax.swing.JComboBox<>();
+        cmbCrypt = new javax.swing.JComboBox<String>();
         jLabel13 = new javax.swing.JLabel();
-        cmbHttp = new javax.swing.JComboBox<>();
+        cmbHttp = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
-        cmbXmlSign = new javax.swing.JComboBox<>();
+        cmbXmlSign = new javax.swing.JComboBox<String>();
         jPanel9 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtCertPath = new javax.swing.JTextField();
@@ -157,8 +157,8 @@ public class FrmMain extends javax.swing.JFrame {
         btnCarregarININFe = new javax.swing.JButton();
         btnCarregarXMLNFe = new javax.swing.JButton();
         btnLimparLista = new javax.swing.JButton();
-        btnImprimirDANFe = new javax.swing.JButton();
-        btnImprimirPDFDANFe = new javax.swing.JButton();
+        btnImprimirGNRe = new javax.swing.JButton();
+        btnImprimirPDFGNRe = new javax.swing.JButton();
         btnEnviarEmail = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         btnConfigUF = new javax.swing.JButton();
@@ -198,12 +198,21 @@ public class FrmMain extends javax.swing.JFrame {
         lblVersDocFiscal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblVersDocFiscal.setText("Versão Documento Fiscal");
 
+        cmbFormaEmissao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "teNormal", "teContingencia", "teSVCAN", "teDPEC", "teFSDA", "teSCAN", "teSVCRS", "teSVCSP", "teOffLine" }));
+
         lblFormaEmissao1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblFormaEmissao1.setText("Forma de Emissão");
 
-        chkRetAcentXMLsEnv.setText("Retirar Acentos dos XMLs enviados");
+        cmbVersaoDF.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ve100", "ve200" }));
+        cmbVersaoDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbVersaoDFActionPerformed(evt);
+            }
+        });
 
-        chkSalArqEnvEResp.setText("Salvar Arquivos de Envio e Resposta");
+        ckbRetirarAcentos.setText("Retirar Acentos dos XMLs enviados");
+
+        ckbSalvar.setText("Salvar Arquivos de Envio e Resposta");
 
         btnPastaLogs.setText("...");
         btnPastaLogs.addActionListener(new java.awt.event.ActionListener() {
@@ -232,24 +241,24 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtFormatAlerta)
+                    .addComponent(txtFormatoAlerta)
                     .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(chkSalArqEnvEResp)
+                        .addComponent(ckbSalvar)
                         .addComponent(lblFormatoAlerta)
                         .addComponent(chkExibirErroSchema)
                         .addComponent(lblVersDocFiscal)
                         .addComponent(cmbFormaEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblFormaEmissao1)
-                        .addComponent(cmbVersDocFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(chkRetAcentXMLsEnv)
+                        .addComponent(cmbVersaoDF, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ckbRetirarAcentos)
                         .addGroup(jPanel13Layout.createSequentialGroup()
-                            .addComponent(txtPastaLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnPastaLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(lblVersDocFiscal1)
                         .addComponent(lblVersDocFiscal2)
                         .addGroup(jPanel13Layout.createSequentialGroup()
-                            .addComponent(txtPastaSchema, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSchemaPath, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnPastaSchemas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -262,7 +271,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFormatoAlerta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFormatAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFormatoAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFormaEmissao1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -270,29 +279,29 @@ public class FrmMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblVersDocFiscal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbVersDocFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbVersaoDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(chkRetAcentXMLsEnv)
+                .addComponent(ckbRetirarAcentos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(chkSalArqEnvEResp)
+                .addComponent(ckbSalvar)
                 .addGap(11, 11, 11)
                 .addComponent(lblVersDocFiscal1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPastaLogs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLogs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPastaLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblVersDocFiscal2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPastaSchema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSchemaPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPastaSchemas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Geral", jPanel13);
 
-        cmbUfDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        cmbUfDestino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("UF Destino");
@@ -300,9 +309,9 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("SSL Type");
 
-        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LT_all", "LT_SSLv2", "LT_SSLv3", "LT_TLSv1", "LT_TLSv1_1", "LT_TLSv1_2", "LT_SSHv2" }));
+        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LT_all", "LT_SSLv2", "LT_SSLv3", "LT_TLSv1", "LT_TLSv1_1", "LT_TLSv1_2", "LT_SSHv2" }));
 
-        nudTimeOut.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudTimeOut.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("TimeOut");
@@ -344,7 +353,7 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Servidor");
 
-        nudProxyPorta.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudProxyPorta.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Porta");
@@ -362,23 +371,23 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtProxyServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(13, 13, 13))
-                            .addComponent(nudProxyPorta)))
                     .addComponent(txtProxyUsuario)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtProxySenha))
+                    .addComponent(txtProxySenha)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtProxyServidor))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(nudProxyPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -404,13 +413,13 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        chkVisualizarmsg.setText("Visualizar Mensagem");
+        ckbVisualizar.setText("Visualizar Mensagem");
 
-        chkSalvarEnvelopeSOAP.setText("Salvar envelope SOAP");
+        ckbSalvarSOAP.setText("Salvar envelope SOAP");
 
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Retorno de Envio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        nudIntervalos.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudIntervalos.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         lblIntervalo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblIntervalo.setText("Intervalo");
@@ -420,52 +429,50 @@ public class FrmMain extends javax.swing.JFrame {
         lblTentativas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTentativas.setText("Tentativas");
 
-        nudTentativas.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudTentativas.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         lblAguardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblAguardar.setText("Aguardar");
 
-        nudAguardar.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudAguardar.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(chkAjustarAut)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAguardar)
-                            .addComponent(nudAguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59)
+                            .addComponent(nudAguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAguardar))
+                        .addGap(23, 23, 23)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTentativas)
-                            .addComponent(nudTentativas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(chkAjustarAut))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nudTentativas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)))
+                .addGap(1, 1, 1)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIntervalo)
-                    .addComponent(nudIntervalos, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(nudIntervalos, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIntervalo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(chkAjustarAut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(lblIntervalo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nudIntervalos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(lblAguardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nudAguardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(lblTentativas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nudTentativas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAguardar)
+                    .addComponent(lblTentativas)
+                    .addComponent(lblIntervalo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nudAguardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudTentativas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nudIntervalos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -493,16 +500,17 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                                 .addGap(23, 23, 23))
                             .addComponent(nudTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chkVisualizarmsg)
-                            .addComponent(chkSalvarEnvelopeSOAP))
+                            .addComponent(ckbVisualizar)
+                            .addComponent(ckbSalvarSOAP))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,9 +528,9 @@ public class FrmMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chkVisualizarmsg)
+                .addComponent(ckbVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chkSalvarEnvelopeSOAP)
+                .addComponent(ckbSalvarSOAP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -535,17 +543,17 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel12.setText("CryptLib");
 
-        cmbCrypt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cryNone", "cryOpenSSL", "cryCapicom", "cryWinCrypt" }));
+        cmbCrypt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "cryNone", "cryOpenSSL", "cryCapicom", "cryWinCrypt" }));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("HttpLib");
 
-        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "httpNone", "httpWinINet", "httpWinHttp", "httpOpenSSL", "httpIndy" }));
+        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "httpNone", "httpWinINet", "httpWinHttp", "httpOpenSSL", "httpIndy" }));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("XmlSignLib");
 
-        cmbXmlSign.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "xsNone", "xsXmlSec", "xsMsXml", "xsMsXmlCapicom", "xsLibXml2" }));
+        cmbXmlSign.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "xsNone", "xsXmlSec", "xsMsXml", "xsMsXmlCapicom", "xsLibXml2" }));
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Certificados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -626,6 +634,11 @@ public class FrmMain extends javax.swing.JFrame {
         );
 
         btnObterCertificados.setText("Obter Certificados");
+        btnObterCertificados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObterCertificadosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -752,7 +765,7 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel21.setText("Porta");
 
-        nudPorta.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+        nudPorta.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5000), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Usuário");
@@ -921,17 +934,17 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
-        btnImprimirDANFe.setText("Imprimir DANFe");
-        btnImprimirDANFe.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimirGNRe.setText("Imprimir GNRe");
+        btnImprimirGNRe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirDANFeActionPerformed(evt);
+                btnImprimirGNReActionPerformed(evt);
             }
         });
 
-        btnImprimirPDFDANFe.setText("Imprimir PDF DANFe");
-        btnImprimirPDFDANFe.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimirPDFGNRe.setText("Imprimir PDF GNRe");
+        btnImprimirPDFGNRe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirPDFDANFeActionPerformed(evt);
+                btnImprimirPDFGNReActionPerformed(evt);
             }
         });
 
@@ -952,14 +965,14 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCarregarININFe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGerarXML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimirDANFe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnImprimirGNRe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnCarregarXMLNFe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimirPDFDANFe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnImprimirPDFGNRe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimparLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -974,8 +987,8 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(btnCarregarXMLNFe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImprimirDANFe)
-                    .addComponent(btnImprimirPDFDANFe))
+                    .addComponent(btnImprimirGNRe)
+                    .addComponent(btnImprimirPDFGNRe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEnviarEmail)
@@ -999,7 +1012,7 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnConfigUF)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1024,10 +1037,10 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnSalvar))
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane3))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1037,15 +1050,15 @@ public class FrmMain extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(40, 40, 40))
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar)
                             .addComponent(btnCarregarConfig))
-                        .addContainerGap(23, Short.MAX_VALUE))))
+                        .addGap(0, 12, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Envio");
@@ -1072,18 +1085,72 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowActivated
 
-    private void btnCarregarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarConfigActionPerformed
-        try{
-         JFileChooser chooser = new JFileChooser();
-         OpenFileFilter filter = new OpenFileFilter("ini", "Arquivo .ini (*.ini)");
-         chooser.addChoosableFileFilter(filter);
-         chooser.setFileFilter(filter);
-         
-         if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-        }catch (Exception ex){
-         Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+    public boolean validacaoEmail(){
+        
+        if (txtHost.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe Host SMTP","Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtUsuario.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe Usuário","Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        } else if (txtSenha.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe Senha", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtNome.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe o Nome do Proprietario do e-mail", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtEmail.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe o e-mail do Proprietario", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (nudPorta.getValue().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe porta de conexão", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (ckbSSL.isSelected() == false && ckbTLS.isSelected() == false){
+            JOptionPane.showMessageDialog(null, "Informe o Certificado SSL", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informe o Certificado TLS", "Validação E-mail", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean validacao(){
+        
+        if(txtSchemaPath.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe o Path com Schemas", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (txtCertPath.getText().equals("") && txtDadosPFX.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe o Certificado", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+        
+        } else if (txtCertPassword.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe a Senha", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+            
+        } else if (cmbCrypt.getSelectedItem().equals("cryNone")){
+            JOptionPane.showMessageDialog(null, "Informe Criptografia", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+        
+        } else if (cmbHttp.getSelectedItem().equals("httpNone")){
+            JOptionPane.showMessageDialog(null, "Informe Criptografia", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
+        
+        } else if (cmbXmlSign.getSelectedItem().equals("xsNone")){
+            JOptionPane.showMessageDialog(null, "Informe assinatura do XML", "Validação", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         
+        return true;
+    }
+    
+    private void btnCarregarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarConfigActionPerformed
+        loadConfig();
     }//GEN-LAST:event_btnCarregarConfigActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -1183,25 +1250,34 @@ public class FrmMain extends javax.swing.JFrame {
             
     }//GEN-LAST:event_btnCarregarININFeActionPerformed
 
-    private void btnImprimirDANFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirDANFeActionPerformed
+    private void btnImprimirGNReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirGNReActionPerformed
         try{
-            acbrGNRe.LimparListaGuiaRetorno();
-            String arquivoXml = null;
             JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo XML (*.xml)");
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml GNRe (*.xml)");
             chooser.addChoosableFileFilter(filter);
-                if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-                acbrGNRe.CarregarGuiaRetorno(arquivoXml);
-                acbrGNRe.imprimir(arquivoXml, arquivoXml);
-        }catch (Exception ex){
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrGNRe.LimparListaGuiaRetorno();
+            acbrGNRe.CarregarGuiaRetorno(chooser.getSelectedFile().getAbsolutePath());
+            acbrGNRe.imprimir("USB", "True");
+            rtbRespostas.append("Impresso com sucesso");
+            
+        } catch (Exception ex){
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnImprimirDANFeActionPerformed
+    }//GEN-LAST:event_btnImprimirGNReActionPerformed
 
     private void btnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarEmailActionPerformed
+        
+        if (!validacaoEmail()){
+            JOptionPane.showMessageDialog(null, "Erro verifique as configurações do certificado", "Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try{
             JFileChooser chooser = new JFileChooser();
-            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml NFe (*.xml)");
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml GNRe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
             
@@ -1215,6 +1291,12 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviarEmailActionPerformed
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+
+        if (!validacao()){
+            JOptionPane.showMessageDialog(null, "Erro verifique as configurações do certificado", "Erro", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         try {
            String ret = acbrGNRe.enviar(1);
            rtbRespostas.append(ret);
@@ -1237,9 +1319,23 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCarregarXMLNFeActionPerformed
 
-    private void btnImprimirPDFDANFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirPDFDANFeActionPerformed
-        
-    }//GEN-LAST:event_btnImprimirPDFDANFeActionPerformed
+    private void btnImprimirPDFGNReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirPDFGNReActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml GNRe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            
+            if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+            acbrGNRe.LimparListaGuiaRetorno();
+            acbrGNRe.CarregarGuiaRetorno(chooser.getSelectedFile().getAbsolutePath());
+            acbrGNRe.imprimirPDF();
+            rtbRespostas.append("PDF Gerado com sucesso");
+            
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirPDFGNReActionPerformed
 
     private void btnLimparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparListaActionPerformed
         try {
@@ -1258,7 +1354,7 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);
             
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)return;
-            txtPastaLogs.setText(chooser.getCurrentDirectory().getPath());
+            txtLogs.setText(chooser.getCurrentDirectory().getPath());
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1273,35 +1369,67 @@ public class FrmMain extends javax.swing.JFrame {
             chooser.setAcceptAllFileFilterUsed(false);
 
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)return;
-            txtPastaSchema.setText(chooser.getCurrentDirectory().getPath());
+            txtSchemaPath.setText(chooser.getCurrentDirectory().getPath());
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPastaSchemasActionPerformed
 
+    private void btnObterCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObterCertificadosActionPerformed
+        
+        try {
+            String ret = acbrGNRe.obterCertificados();
+            rtbRespostas.append(ret);
+        }catch (Exception ex){
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnObterCertificadosActionPerformed
+
+    private void cmbVersaoDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbVersaoDFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbVersaoDFActionPerformed
+
     private void loadConfig() {
         try {
             acbrGNRe.configLer();
+            
+            //Certificado
             cmbCrypt.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.DFe, "SSLCryptLib")));            
             cmbHttp.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.DFe, "SSLHttpLib")));    
             cmbXmlSign.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.DFe, "SSLXmlSignLib")));
             txtCertPath.setText(acbrGNRe.configLerValor(ACBrSessao.DFe, "ArquivoPFX"));
+            txtDadosPFX.setText(acbrGNRe.configLerValor(ACBrSessao.DFe, "DadosPFX"));
             txtCertPassword.setText(acbrGNRe.configLerValor(ACBrSessao.DFe, "Senha"));
             txtCertNumero.setText(acbrGNRe.configLerValor(ACBrSessao.DFe, "NumeroSerie"));
-            cmbUfDestino.setSelectedItem(acbrGNRe.configLerValor(ACBrSessao.DFe, "UF"));
             
-            String ambiente = acbrGNRe.configLerValor(ACBrSessao.CTe, "Ambiente");            
+            //WebService
+            cmbUfDestino.setSelectedItem(acbrGNRe.configLerValor(ACBrSessao.DFe, "UF"));
+            cmbSSlType.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SSLType"))); 
+            String ambiente = acbrGNRe.configLerValor(ACBrSessao.GNRe, "Ambiente");            
             rdbHomologacao.setSelected("1".equals(ambiente));
             rdbProducao.setSelected("0".equals(ambiente));
-                        
-            cmbSSlType.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.CTe, "SSLType"))); 
-            nudTimeOut.setValue(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.CTe, "Timeout")));
+            
+            nudTimeOut.setValue(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.GNRe, "Timeout")));
             txtProxyServidor.setText(acbrGNRe.configLerValor(ACBrSessao.Proxy, "Servidor"));
-            String Value = acbrGNRe.configLerValor(ACBrSessao.Proxy, "Porta");
+            String Value = acbrGNRe.configLerValor(ACBrSessao.Proxy, "Porta");        
             if(Value.matches("-?\\d+"))
-                nudProxyPorta.setValue(Integer.parseInt(Value));
+              nudProxyPorta.setValue(Integer.parseInt(Value));
             txtProxyUsuario.setText(acbrGNRe.configLerValor(ACBrSessao.Proxy, "Usuario"));
             txtProxySenha.setText(acbrGNRe.configLerValor(ACBrSessao.Proxy, "Senha"));
+            ckbVisualizar.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "Visualizar").equals("1"));
+            ckbSalvarSOAP.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SalvarWS").equals("1"));
+            
+            //Geral
+            cmbFormaEmissao.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.GNRe, "FormaEmissao")));
+            cmbVersaoDF.setSelectedIndex(Integer.parseInt(acbrGNRe.configLerValor(ACBrSessao.GNRe, "VersaoDF")));
+            txtSchemaPath.setText(acbrGNRe.configLerValor(ACBrSessao.GNRe, "PathSchemas"));
+            txtLogs.setText(acbrGNRe.configLerValor(ACBrSessao.GNRe, "PathSalvar"));
+            txtFormatoAlerta.setText(acbrGNRe.configLerValor(ACBrSessao.GNRe, "FormatoAlerta"));
+            ckbRetirarAcentos.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "RetirarAcentos").equals("1"));
+            chkExibirErroSchema.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "ExibirErroSchema").equals("1"));
+            ckbSalvar.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SalvarGer").equals("1"));
+            
+            //E-mail
             txtNome.setText(acbrGNRe.configLerValor(ACBrSessao.Email, "Nome"));
             txtEmail.setText(acbrGNRe.configLerValor(ACBrSessao.Email, "Conta"));
             txtUsuario.setText(acbrGNRe.configLerValor(ACBrSessao.Email, "Usuario"));
@@ -1312,6 +1440,15 @@ public class FrmMain extends javax.swing.JFrame {
                 nudPorta.setValue(Integer.parseInt(Value));          
             ckbSSL.setSelected(acbrGNRe.configLerValor(ACBrSessao.Email, "SSL").equals("1"));            
             ckbTLS.setSelected(acbrGNRe.configLerValor(ACBrSessao.Email, "TLS").equals("1"));
+            
+            //Arquivos
+            txtArqGNRe.setText(acbrGNRe.configLerValor(ACBrSessao.GNRe, "PathGNRe"));
+            ckbSalvarArqs.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SalvarArq").equals("1"));
+            ckbPastaMensal.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SepararPorMes").equals("1"));
+            ckbAdicionaLiteral.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "AdicionarLiteral").equals("1"));
+            ckbEmissaoPathGNRe.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "EmissaoPathGNRE").equals("1"));
+            ckbSepararPorCNPJ.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SepararPorCNPJ").equals("1"));
+            ckbSepararPorModelo.setSelected(acbrGNRe.configLerValor(ACBrSessao.GNRe, "SepararPorModelo").equals("1"));
 
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1320,24 +1457,24 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void saveConfig() {
         try {
-            //Config Geral
-            acbrGNRe.configGravarValor(GNRe, "ExibirErroSchema", chkExibirErroSchema.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "FormatoAlerta", txtFormatAlerta.getText());
-            acbrGNRe.configGravarValor(GNRe, "FormaEmissao", cmbFormaEmissao.getSelectedIndex());
-            acbrGNRe.configGravarValor(GNRe, "VersaoDF", cmbVersDocFiscal.getSelectedIndex());
-            acbrGNRe.configGravarValor(GNRe, "RetirarAcentos", chkRetAcentXMLsEnv.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "SalvarWS", chkSalArqEnvEResp.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "PathSalvar", txtPastaLogs.getText());
-            acbrGNRe.configGravarValor(GNRe, "PathSchemas", txtPastaSchema.getText());
             
-            //Config WebService
+            //Certificado
+            acbrGNRe.configGravarValor(DFe, "SSLCryptLib", cmbCrypt.getSelectedIndex());
+            acbrGNRe.configGravarValor(DFe, "SSLHttpLib", cmbHttp.getSelectedIndex());
+            acbrGNRe.configGravarValor(DFe, "SSLXmlSignLib", cmbXmlSign.getSelectedIndex());
+            acbrGNRe.configGravarValor(DFe, "ArquivoPFX", txtCertPath.getText());
+            acbrGNRe.configGravarValor(DFe, "DadosPFX", txtDadosPFX.getText());
+            acbrGNRe.configGravarValor(DFe, "Senha",new String (txtCertPassword.getPassword()));
+            acbrGNRe.configGravarValor(DFe, "NumeroSerie", txtCertNumero.getText());
+            
+            //WebService
             acbrGNRe.configGravarValor(DFe, "UF", cmbUfDestino.getSelectedIndex());
             acbrGNRe.configGravarValor(GNRe, "SSLType", cmbSSlType.getSelectedIndex());
             acbrGNRe.configGravarValor(GNRe, "Timeout", nudTimeOut.getValue().toString());
             acbrGNRe.configGravarValor(GNRe, "Ambiente", rdbHomologacao.isSelected() ? "1":"0");
-            acbrGNRe.configGravarValor(GNRe, "Visualizar", chkVisualizarmsg.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "SalvarWS", chkSalvarEnvelopeSOAP.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "AjustaAguardaConsultaRet", chkAjustarAut.isSelected());
+            acbrGNRe.configGravarValor(GNRe, "Visualizar", ckbVisualizar.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "SalvarWS", ckbSalvarSOAP.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "AjustaAguardaConsultaRet", chkAjustarAut.isSelected()? "1":"0");
             acbrGNRe.configGravarValor(GNRe, "AguardarConsultaRet", nudAguardar.getValue());
             acbrGNRe.configGravarValor(GNRe, "Tentativas", nudTentativas.getValue());
             acbrGNRe.configGravarValor(GNRe, "IntervaloTentativas", nudIntervalos.getValue());
@@ -1346,35 +1483,36 @@ public class FrmMain extends javax.swing.JFrame {
             acbrGNRe.configGravarValor(Proxy, "Usuario", txtProxyUsuario.getText());
             acbrGNRe.configGravarValor(Proxy, "Senha", txtProxySenha.getPassword());
             
-            //Config Certificado
-            acbrGNRe.configGravarValor(DFe, "SSLCryptLib", cmbCrypt.getSelectedIndex());
-            acbrGNRe.configGravarValor(DFe, "SSLHttpLib", cmbHttp.getSelectedIndex());
-            acbrGNRe.configGravarValor(DFe, "SSLXmlSignLib", cmbXmlSign.getSelectedIndex());
-            acbrGNRe.configGravarValor(DFe, "ArquivoPFX", txtCertPath.getText());
-            acbrGNRe.configGravarValor(DFe, "DadosPFX", txtDadosPFX.getText());
-            acbrGNRe.configGravarValor(DFe, "Senha", txtCertPassword.getPassword());
-            acbrGNRe.configGravarValor(DFe, "NumeroSerie", txtCertNumero.getText());
+            //Geral
+            acbrGNRe.configGravarValor(GNRe, "ExibirErroSchema", chkExibirErroSchema.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "FormatoAlerta", txtFormatoAlerta.getText());
+            acbrGNRe.configGravarValor(GNRe, "FormaEmissao", cmbFormaEmissao.getSelectedIndex());
+            acbrGNRe.configGravarValor(GNRe, "VersaoDF", cmbVersaoDF.getSelectedIndex());
+            acbrGNRe.configGravarValor(GNRe, "RetirarAcentos", ckbRetirarAcentos.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "SalvarGer", ckbSalvar.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "PathSalvar", txtLogs.getText());
+            acbrGNRe.configGravarValor(GNRe, "PathSchemas", txtSchemaPath.getText());
             
-            //Confi Arquivos
-            acbrGNRe.configGravarValor(GNRe, "SalvarGer", chkSalArqEnvEResp.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "SepararPorMes", ckbPastaMensal.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "AdicionarLiteral", ckbAdicionaLiteral.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "EmissaoPathGNRe", ckbEmissaoPathGNRe.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "SepararPorCNPJ", ckbSepararPorCNPJ.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "SepararPorModelo", ckbSepararPorModelo.isSelected());
-            acbrGNRe.configGravarValor(GNRe, "PathGNRe", txtArqGNRe.getText());
-            
-            //Config Email
+            //E-mail
             acbrGNRe.configGravarValor(ACBrSessao.Email, "Nome", txtNome.getText());
             acbrGNRe.configGravarValor(ACBrSessao.Email, "Conta", txtEmail.getText());
             acbrGNRe.configGravarValor(ACBrSessao.Email, "Usuario", txtUsuario.getText());
             acbrGNRe.configGravarValor(ACBrSessao.Email, "Senha", new String(txtSenha.getPassword()));
             acbrGNRe.configGravarValor(ACBrSessao.Email, "Servidor", txtHost.getText());         
             acbrGNRe.configGravarValor(ACBrSessao.Email, "Porta", nudPorta.getValue().toString());     
-            acbrGNRe.configGravarValor(ACBrSessao.Email, "SSL", ckbSSL.isSelected());
-            acbrGNRe.configGravarValor(ACBrSessao.Email, "TLS",ckbTLS.isSelected());
-                        
-             acbrGNRe.configGravar();            
+            acbrGNRe.configGravarValor(ACBrSessao.Email, "SSL", ckbSSL.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(ACBrSessao.Email, "TLS",ckbTLS.isSelected()? "1":"0");
+            
+            //Arquivos
+            acbrGNRe.configGravarValor(GNRe, "SalvarArq", ckbSalvarArqs.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "SepararPorMes", ckbPastaMensal.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "AdicionarLiteral", ckbAdicionaLiteral.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "EmissaoPathGNRe", ckbEmissaoPathGNRe.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "SepararPorCNPJ", ckbSepararPorCNPJ.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "SepararPorModelo", ckbSepararPorModelo.isSelected()? "1":"0");
+            acbrGNRe.configGravarValor(GNRe, "PathGNRe", txtArqGNRe.getText());
+            
+            acbrGNRe.configGravar();
             
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1390,8 +1528,8 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnEnviarEmail;
     private javax.swing.JButton btnGerarXML;
-    private javax.swing.JButton btnImprimirDANFe;
-    private javax.swing.JButton btnImprimirPDFDANFe;
+    private javax.swing.JButton btnImprimirGNRe;
+    private javax.swing.JButton btnImprimirPDFGNRe;
     private javax.swing.JButton btnLimparLista;
     private javax.swing.JButton btnObterCertificados;
     private javax.swing.JButton btnPastaLogs;
@@ -1401,24 +1539,24 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnSelectCert1;
     private javax.swing.JCheckBox chkAjustarAut;
     private javax.swing.JCheckBox chkExibirErroSchema;
-    private javax.swing.JCheckBox chkRetAcentXMLsEnv;
-    private javax.swing.JCheckBox chkSalArqEnvEResp;
-    private javax.swing.JCheckBox chkSalvarEnvelopeSOAP;
-    private javax.swing.JCheckBox chkVisualizarmsg;
     private javax.swing.JCheckBox ckbAdicionaLiteral;
     private javax.swing.JCheckBox ckbEmissaoPathGNRe;
     private javax.swing.JCheckBox ckbPastaMensal;
+    private javax.swing.JCheckBox ckbRetirarAcentos;
     private javax.swing.JCheckBox ckbSSL;
+    private javax.swing.JCheckBox ckbSalvar;
     private javax.swing.JCheckBox ckbSalvarArqs;
+    private javax.swing.JCheckBox ckbSalvarSOAP;
     private javax.swing.JCheckBox ckbSepararPorCNPJ;
     private javax.swing.JCheckBox ckbSepararPorModelo;
     private javax.swing.JCheckBox ckbTLS;
+    private javax.swing.JCheckBox ckbVisualizar;
     private javax.swing.JComboBox<String> cmbCrypt;
     private javax.swing.JComboBox<String> cmbFormaEmissao;
     private javax.swing.JComboBox<String> cmbHttp;
     private javax.swing.JComboBox<String> cmbSSlType;
     private javax.swing.JComboBox<String> cmbUfDestino;
-    private javax.swing.JComboBox<String> cmbVersDocFiscal;
+    private javax.swing.JComboBox<String> cmbVersaoDF;
     private javax.swing.JComboBox<String> cmbXmlSign;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1484,15 +1622,15 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtCertPath;
     private javax.swing.JTextField txtDadosPFX;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtFormatAlerta;
+    private javax.swing.JTextField txtFormatoAlerta;
     private javax.swing.JTextField txtHost;
+    private javax.swing.JTextField txtLogs;
     private javax.swing.JTextArea txtMensagem;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtPastaLogs;
-    private javax.swing.JTextField txtPastaSchema;
     private javax.swing.JPasswordField txtProxySenha;
     private javax.swing.JTextField txtProxyServidor;
     private javax.swing.JTextField txtProxyUsuario;
+    private javax.swing.JTextField txtSchemaPath;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

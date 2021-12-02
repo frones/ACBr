@@ -367,7 +367,7 @@ begin
         JsonDadosPagador := TJSONObject.Create;
 
         try
-          JsonDadosPagador.Add('cpf_cnpj_pagador').Value.AsString := ACBrUtil.PadLeft(OnlyNumber(Sacado.CNPJCPF), 11, '0');
+          JsonDadosPagador.Add('cpf_cnpj_pagador').Value.AsString := OnlyNumber(Sacado.CNPJCPF);
           JsonDadosPagador.Add('nome_pagador').Value.AsString := Copy(Sacado.NomeSacado, 1, 30);
           JsonDadosPagador.Add('logradouro_pagador').Value.AsString := Trim(Copy(Sacado.Logradouro + ' ' + Sacado.Numero, 1, 40));
           JsonDadosPagador.Add('bairro_pagador').Value.AsString := Copy(Sacado.Bairro, 1, 15);

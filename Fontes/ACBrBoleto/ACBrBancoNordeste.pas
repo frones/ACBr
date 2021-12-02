@@ -220,12 +220,19 @@ begin
          aEspecie := EspecieDoc;
 
       {Pegando campo Intruções}
-      if (DataProtesto > 0) and (DataProtesto > Vencimento) then
+
+      {if (DataProtesto > 0) and (DataProtesto > Vencimento) then
           Protesto := '06' + IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
       else if Ocorrencia = '31' then
          Protesto := '9999'
       else
-         Protesto := PadLeft(trim(Instrucao1),2,'0') + PadLeft(trim(Instrucao2),2,'0');
+         Protesto := PadLeft(trim(Instrucao1),2,'0') + PadLeft(trim(Instrucao2),2,'0');}
+
+      //TK-2106
+      Protesto := '0000';
+      if naoEstaVazio(Trim(Instrucao1)) or naoEstaVazio(trim(Instrucao2)) then
+        Protesto := PadLeft(trim(Instrucao1),2,'0') + PadLeft(trim(Instrucao2),2,'0');
+
 
       {Pegando Tipo de Sacado}
       case Sacado.Pessoa of

@@ -216,7 +216,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'NaturezaOperacao', 1, 1, 1,
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'RegimeEspecialTributacao', 1, 1, 0,
+  Result.AppendChild(AddNode(tcInt, '#1', 'RegimeEspecialTributacao', 1, 1, 1,
              RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
 
   xmlNode := GerarEnderecoPrestador;

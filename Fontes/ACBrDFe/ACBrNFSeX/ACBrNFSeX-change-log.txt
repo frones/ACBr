@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/12/2021
+-- EL.Provider/EL.GravarXml --
+[*] Mais ajustes na geração e envio do Rps para o WebService.
+   Por: Thiago Ribeiro da Silva
+
 01/12/2021
 -- EL.Provider --
 [*] O conteudo do grupo <arquivo> tem que estar no formato string e não XML.

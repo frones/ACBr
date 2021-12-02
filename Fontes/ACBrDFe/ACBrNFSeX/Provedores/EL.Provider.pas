@@ -648,6 +648,7 @@ procedure TACBrNFSeProviderEL.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
 var
   Emitente: TEmitenteConfNFSe;
   xTipoDoc, Arquivo: string;
+  lote : string;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
@@ -658,9 +659,15 @@ begin
     else
       xTipoDoc := '1';
 
-    Arquivo := '<LoteRps>' +
+    if Length(Response.Lote) < 13 then
+      lote := PadLeft(Response.Lote, 13, '0')
+    else
+      lote := Response.Lote;
+
+
+    Arquivo := '<LoteRps xmlns="http://www.el.com.br/nfse/xsd/el-nfse.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.el.com.br/nfse/xsd/el-nfse.xsd el-nfse.xsd ">' +
                  '<Id>' +
-                    Response.Lote +
+                      lote+
                  '</Id>' +
                  '<NumeroLote>' +
                     Response.Lote +

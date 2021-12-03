@@ -6,6 +6,7 @@
 { Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
 { Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda                   }
 {                               Leandro do Couto                               }
+{                               Fernando Henrique                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }

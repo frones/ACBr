@@ -4973,7 +4973,7 @@ function TACBrBoleto.EnviarBoleto: boolean;
 var
   RemessaWS: TBoletoWS;
 begin
-  if not ((Banco.TipoCobranca in [cobBancoDoBrasilAPI]) and (Configuracoes.WebService.Operacao in [tpConsulta])) then
+  if not ((Banco.TipoCobranca in [cobBancoDoBrasilAPI, cobSicred]) and (Configuracoes.WebService.Operacao in [tpConsulta])) then
     if ListadeBoletos.Count < 1 then
       raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 

@@ -208,16 +208,12 @@ end;
 
 function TBoletoW_Sicredi_API.GerarTokenAutenticacao: string;
 var
-  Data: string;
-  Json: TJSONObject;
-  JsonStreamEnvio:TStringStream;
+  Data  : string;
+  Json  : TJSONObject;
   Stream: TMemoryStream;
 begin
-
   Json := TJsonObject.Create;
-  JsonStreamEnvio  := TStringStream.Create;
   try
-
       if( not Assigned( FDFeSSL ) ) then
         FDFeSSL := TDFeSSL( Boleto.Configuracoes.WebService);
 
@@ -251,14 +247,12 @@ begin
                                                               +'Parametro: '
                                                               +Json.Values['parametro'].asString ] ));
         end;
-
   finally
     Stream.Free;
     FDFeSSL.SSLHttpClass.HeaderReq.Clear;
     FDFeSSL.SSLHttpClass.HeaderResp.Clear;
     FDFeSSL.SSLHttpClass.Clear;
   end;
-
 end;
 
 procedure TBoletoW_Sicredi_API.DefinirKeyUser;

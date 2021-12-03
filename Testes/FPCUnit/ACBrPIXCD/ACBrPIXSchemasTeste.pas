@@ -203,6 +203,26 @@ type
     procedure AtribuirLerReatribuirEComparar;
   end;
 
+  { TTestCobVRevisada }
+
+  TTestCobVRevisada = class(TTestCase)
+  private
+    fACBrPixCobVRevisada: TACBrPIXCobVRevisada;
+    fJSON1: String;
+    fJSON2: String;
+    fJSON3: String;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValoresRevisaoCobrancaComVencimento1;
+    procedure AtribuirLerReatribuirECompararRevisaoCobrancaComVencimento1;
+    procedure AtribuirELerValoresRevisaoCobranca2;
+    procedure AtribuirLerReatribuirECompararRevisaoCobranca2;
+    procedure AtribuirELerValoresRevisaoCobranca3;
+    procedure AtribuirLerReatribuirECompararRevisaoCobranca3;
+  end;
+
 implementation
 
 uses
@@ -1750,6 +1770,139 @@ begin
   end;
 end;
 
+{ TTestCobVRevisada }
+
+procedure TTestCobVRevisada.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixCobVRevisada := TACBrPIXCobVRevisada.Create('');
+  fJSON1 := ACBrStr(
+  '{'+
+    '"loc": {'+
+      '"id": 789'+
+    '},'+
+    '"devedor": {'+
+      '"logradouro": "Alameda Souza, Numero 80, Bairro Braz",'+
+      '"cidade": "Recife",'+
+      '"uf": "PE",'+
+      '"cep": "70011750",'+
+      '"cpf": "12345678909",'+
+      '"nome": "Francisco da Silva"'+
+    '},'+
+    '"valor": {'+
+      '"original": "123.45"'+
+    '},'+
+    '"solicitacaoPagador": "Cobrança dos serviços prestados."'+
+  '}');
+
+  fJSON2 := ACBrStr(
+  '{'+
+    '"valor": {'+
+      '"original": "567.89"'+
+    '},'+
+    '"solicitacaoPagador": "Informar cartão fidelidade"'+
+  '}' );
+
+  fJSON3 :=
+  '{'+
+    '"status": "REMOVIDA_PELO_USUARIO_RECEBEDOR"'+
+  '}';
+end;
+
+procedure TTestCobVRevisada.TearDown;
+begin
+  fACBrPixCobVRevisada.Free;
+  inherited TearDown;
+end;
+
+procedure TTestCobVRevisada.AtribuirELerValoresRevisaoCobrancaComVencimento1;
+begin
+  fACBrPixCobVRevisada.AsJSON := fJSON1;
+
+  CheckEquals(fACBrPixCobVRevisada.loc.id, 789);
+  CheckEquals(fACBrPixCobVRevisada.devedor.logradouro, 'Alameda Souza, Numero 80, Bairro Braz');
+  CheckEquals(fACBrPixCobVRevisada.devedor.cidade, 'Recife');
+  CheckEquals(fACBrPixCobVRevisada.devedor.uf, 'PE');
+  CheckEquals(fACBrPixCobVRevisada.devedor.cep, '70011750');
+  CheckEquals(fACBrPixCobVRevisada.devedor.cpf, '12345678909');
+  CheckEquals(fACBrPixCobVRevisada.devedor.nome, 'Francisco da Silva');
+  CheckEquals(fACBrPixCobVRevisada.valor.original,123.45);
+  CheckEquals(fACBrPixCobVRevisada.solicitacaoPagador, ACBrStr('Cobrança dos serviços prestados.'));
+end;
+
+procedure TTestCobVRevisada.AtribuirLerReatribuirECompararRevisaoCobrancaComVencimento1;
+var
+  cr: TACBrPIXCobVRevisada;
+  s: String;
+begin
+  fACBrPixCobVRevisada.AsJSON := fJSON1;
+  s := fACBrPixCobVRevisada.AsJSON;
+  cr := TACBrPIXCobVRevisada.Create('');
+  try
+    cr.AsJSON := s;
+
+    CheckEquals(fACBrPixCobVRevisada.loc.id, cr.loc.id);
+    CheckEquals(fACBrPixCobVRevisada.devedor.logradouro, cr.devedor.logradouro);
+    CheckEquals(fACBrPixCobVRevisada.devedor.cidade, cr.devedor.cidade);
+    CheckEquals(fACBrPixCobVRevisada.devedor.uf, cr.devedor.uf);
+    CheckEquals(fACBrPixCobVRevisada.devedor.cep, cr.devedor.cep);
+    CheckEquals(fACBrPixCobVRevisada.devedor.cpf, cr.devedor.cpf);
+    CheckEquals(fACBrPixCobVRevisada.devedor.nome, cr.devedor.nome);
+    CheckEquals(fACBrPixCobVRevisada.valor.original, cr.valor.original);
+    CheckEquals(fACBrPixCobVRevisada.solicitacaoPagador, cr.solicitacaoPagador);
+  finally
+    cr.Free;
+  end;
+end;
+
+procedure TTestCobVRevisada.AtribuirELerValoresRevisaoCobranca2;
+begin
+  fACBrPixCobVRevisada.AsJSON := fJSON2;
+
+  CheckEquals(fACBrPixCobVRevisada.valor.original, 567.89);
+  CheckEquals(fACBrPixCobVRevisada.solicitacaoPagador, ACBrStr('Informar cartão fidelidade'));
+end;
+
+procedure TTestCobVRevisada.AtribuirLerReatribuirECompararRevisaoCobranca2;
+var
+  cr: TACBrPIXCobVRevisada;
+  s: String;
+begin
+  fACBrPixCobVRevisada.AsJSON := fJSON2;
+  s := fACBrPixCobVRevisada.AsJSON;
+  cr := TACBrPIXCobVRevisada.Create('');
+  try
+    cr.AsJSON := s;
+    CheckEquals(fACBrPixCobVRevisada.valor.original, cr.valor.original);
+    CheckEquals(fACBrPixCobVRevisada.solicitacaoPagador, cr.solicitacaoPagador);
+  finally
+    cr.Free;
+  end;
+end;
+
+procedure TTestCobVRevisada.AtribuirELerValoresRevisaoCobranca3;
+begin
+  fACBrPixCobVRevisada.AsJSON := fJSON3;
+
+  CheckTrue(fACBrPixCobVRevisada.status = stcREMOVIDA_PELO_USUARIO_RECEBEDOR);
+end;
+
+procedure TTestCobVRevisada.AtribuirLerReatribuirECompararRevisaoCobranca3;
+var
+  cr: TACBrPIXCobVRevisada;
+  s: String;
+begin
+  fACBrPixCobVRevisada.AsJSON := fJSON3;
+  s := fACBrPixCobVRevisada.AsJSON;
+  cr := TACBrPIXCobVRevisada.Create('');
+  try
+    cr.AsJSON := s;
+    CheckTrue(fACBrPixCobVRevisada.status = cr.status);
+  finally
+    cr.Free;
+  end;
+end;
+
 
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
@@ -1775,6 +1928,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVSolicitada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVGerada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobsVConsultadas);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestCobVRevisada);
 
 end.
 

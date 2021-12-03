@@ -322,9 +322,10 @@ begin
 
   if VersaoDF >= veS01_00_00 then
   Begin
+     if InfoRubrica.dadosRubrica.codIncCPRP <> cicpNenhum then
         Gerador.wCampo(tcStr, '', 'codIncCPRP', 2, 2, 0, eSCodIncCPRPToStr(InfoRubrica.dadosRubrica.codIncCPRP));
-        if InfoRubrica.dadosRubrica.tetoRemun <> snfNada then
-                Gerador.wCampo(tcStr, '', 'tetoRemun', 0, 2, 0, eSSimNaoFacultativoToStr(InfoRubrica.dadosRubrica.tetoRemun));
+     if InfoRubrica.dadosRubrica.tetoRemun <> snfNada then
+        Gerador.wCampo(tcStr, '', 'tetoRemun', 0, 2, 0, eSSimNaoFacultativoToStr(InfoRubrica.dadosRubrica.tetoRemun));
   End;
 
   Gerador.wCampo(tcStr, '', 'observacao', 0, 255, 0, InfoRubrica.dadosRubrica.observacao);

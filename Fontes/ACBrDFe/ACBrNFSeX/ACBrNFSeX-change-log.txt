@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/12/2021
+-- ACBrNFSeXServicos --
+[*] Correção na URL de Produção de Linhares/ES.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2/Coplan.GravarXml --
 [*] Ajustes na leitura e gravação do XML no que se refere a tag <ResponsavelRetencao>.
    Por: Italo Giurizzato Junior

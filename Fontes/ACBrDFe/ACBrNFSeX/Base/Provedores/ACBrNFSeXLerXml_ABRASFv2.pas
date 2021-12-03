@@ -655,7 +655,7 @@ procedure TNFSeR_ABRASFv2.LerServico(const ANode: TACBrXmlNode);
 var
   AuxNode, AuxNode2: TACBrXmlNode;
   Ok: Boolean;
-  CodigoItemServico: string;
+  CodigoItemServico, Responsavel: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -678,6 +678,13 @@ begin
 
     with NFSe.Servico do
     begin
+      Responsavel := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ResponsavelRetencao'), tcStr);
+
+      if Responsavel = '' then
+        ResponsavelRetencao := rtNenhum
+      else
+        ResponsavelRetencao := StrToResponsavelRetencao(Ok, Responsavel);
+
       ItemListaServico          := NormatizaItemListaServico(CodigoItemServico);
       xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
       CodigoCnae                := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnae'), tcStr);

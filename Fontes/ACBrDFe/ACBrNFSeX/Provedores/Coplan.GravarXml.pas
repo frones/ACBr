@@ -47,7 +47,8 @@ type
   TNFSeW_Coplan201 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
-
+  public
+    function GerarXml: Boolean; override;
   end;
 
 implementation
@@ -77,6 +78,16 @@ begin
   NrOcorrValorISS := 1;
   NrOcorrDescCond := 1;
   NrOcorrDescIncond := 1;
+end;
+
+function TNFSeW_Coplan201.GerarXml: Boolean;
+begin
+  if NFSe.Servico.Valores.IssRetido <> stNormal then
+    NrOcorrRespRetencao := -1
+  else
+    NrOcorrRespRetencao := 0;
+
+  Result := inherited GerarXml;
 end;
 
 end.

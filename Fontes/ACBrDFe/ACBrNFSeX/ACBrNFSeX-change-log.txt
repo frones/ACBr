@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/12/2021
+-- ACBrNFSeXLerXml_ABRASFv2/Coplan.GravarXml --
+[*] Ajustes na leitura e gravação do XML no que se refere a tag <ResponsavelRetencao>.
+   Por: Italo Giurizzato Junior
+
 02/12/2021
 -- EL.Provider/EL.GravarXml --
 [*] Mais ajustes na geração e envio do Rps para o WebService.

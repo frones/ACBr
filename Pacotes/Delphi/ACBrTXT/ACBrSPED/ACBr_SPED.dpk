@@ -47,6 +47,8 @@ contains
   ACBrECDBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBlocos.pas',
   ACBrECDBloco_K in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_K.pas',
   ACBrECDBloco_K_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_K_Class.pas',
+  ACBrECDBloco_C in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_C.pas',
+  ACBrECDBloco_C_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_C_Class.pas',
   ACBrSpedContabil in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrSpedContabil.pas',
   ACBrEFDBloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0.pas',
   ACBrEFDBloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0_Class.pas',

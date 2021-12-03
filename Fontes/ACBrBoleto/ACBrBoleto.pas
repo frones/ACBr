@@ -6,7 +6,7 @@
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Juliana Tamizou, André Ferreira de Moraes,      }
-{ José M S Junior                                                              }
+{ José M S Junior, Victor Hugo Gonzales - Panda                                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -5070,7 +5070,7 @@ var
   wTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
   wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
   wVersaoLote, wVersaoArquivo: Integer;
-  wLocalPagto, MemFormatada, MemDetalhamento: String;
+  wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento: String;
   Sessao, sFim: String;
   I, N: Integer;
 begin
@@ -5206,6 +5206,10 @@ begin
 
           MemDetalhamento := IniBoletos.ReadString(Sessao,'Detalhamento','') ;
           MemDetalhamento := StringReplace( MemDetalhamento,'|',sLineBreak, [rfReplaceAll] );
+
+          MemInformativo := IniBoletos.ReadString(Sessao,'Informativo','') ;
+          MemInformativo := StringReplace( MemInformativo,'|',sLineBreak, [rfReplaceAll] );
+
           with Titulo do
           begin
             Aceite        := TACBrAceiteTitulo(IniBoletos.ReadInteger(Sessao,'Aceite',1));
@@ -5257,6 +5261,7 @@ begin
             Sacado.Email        := IniBoletos.ReadString(Sessao,'Sacado.Email',Sacado.Email);
             EspecieMod          := IniBoletos.ReadString(Sessao,'EspecieMod',EspecieMod);
             Mensagem.Text       := MemFormatada;
+            Informativo.Text    := MemInformativo;
             Detalhamento.Text   := MemDetalhamento;
             Instrucao1          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao1',Instrucao1),2);
             Instrucao2          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao2',Instrucao2),2);

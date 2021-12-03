@@ -225,6 +225,22 @@ type
     property valor: TACBrPIXCobVValor read fvalor;
   end;
 
+  { TACBrPIXCobVRevisada }
+
+  TACBrPIXCobVRevisada = class(TACBrPIXCobVSolicitada)
+  private
+    fstatus: TACBrPIXStatusCobranca;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    procedure Clear; reintroduce;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrPIXCobVRevisada);
+
+    property status: TACBrPIXStatusCobranca read fstatus write fstatus;
+  end;
+
   { TACBrPIXCobVGerada }
 
   TACBrPIXCobVGerada = class(TACBrPIXCobBaseCopiaCola)
@@ -719,6 +735,48 @@ begin
   fdevedor.ReadFromJSon(AJSon);
   floc.ReadFromJSon(AJSon);
   fvalor.ReadFromJSon(AJSon);
+end;
+
+{ TACBrPIXCobVRevisada }
+
+procedure TACBrPIXCobVRevisada.Clear;
+begin
+  fstatus := stcNENHUM;
+  inherited Clear;
+end;
+
+function TACBrPIXCobVRevisada.IsEmpty: Boolean;
+begin
+  Result := inherited IsEmpty and
+            (fstatus = stcNENHUM);
+end;
+
+procedure TACBrPIXCobVRevisada.Assign(Source: TACBrPIXCobVRevisada);
+begin
+  inherited Assign(Source);
+  fstatus := Source.status;
+end;
+
+procedure TACBrPIXCobVRevisada.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  inherited DoWriteToJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (fstatus <> stcNENHUM) then
+     AJSon.S['status'] :=  PIXStatusCobrancaToString(fstatus);
+  {$Else}
+   if (fstatus <> stcNENHUM) then
+     AJSon['status'].AsString :=  PIXStatusCobrancaToString(fstatus);
+  {$EndIf}
+end;
+
+procedure TACBrPIXCobVRevisada.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  inherited DoReadFromJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fstatus := StringToPIXStatusCobranca(AJSon.S['status']);
+  {$Else}
+   fstatus := StringToPIXStatusCobranca(AJSon['status'].AsString);
+  {$EndIf}
 end;
 
 { TACBrPIXCobVGerada }

@@ -195,28 +195,18 @@ type
 
   { TACBrPIXCobRevisada }
 
-  TACBrPIXCobRevisada = class(TACBrPIXCobBase)
+  TACBrPIXCobRevisada = class(TACBrPIXCobSolicitada)
   private
-    fcalendario: TACBrPIXCalendarioCobSolicitada;
-    fdevedor: TACBrPIXDevedor;
-    floc: TACBrPIXLocationCobRevisada;
     fstatus: TACBrPIXStatusCobranca;
-    fvalor: TACBrPIXCobValor;
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
-    destructor Destroy; override;
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXCobRevisada);
 
-    property calendario: TACBrPIXCalendarioCobSolicitada read fcalendario;
-    property devedor: TACBrPIXDevedor read fdevedor;
-    property loc: TACBrPIXLocationCobRevisada read floc;
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
-    property valor: TACBrPIXCobValor read fvalor;
   end;
 
   { TACBrPIXCobBaseCopiaCola }
@@ -692,6 +682,48 @@ begin
   {$EndIf}
 end;
 
+{ TACBrPIXCobRevisada }
+
+procedure TACBrPIXCobRevisada.Clear;
+begin
+  inherited Clear;
+  fstatus := stcNENHUM;
+end;
+
+function TACBrPIXCobRevisada.IsEmpty: Boolean;
+begin
+  Result := inherited IsEmpty and
+            (fstatus = stcNENHUM);
+end;
+
+procedure TACBrPIXCobRevisada.Assign(Source: TACBrPIXCobRevisada);
+begin
+  inherited Assign(Source);
+  fstatus := Source.status;
+end;
+
+procedure TACBrPIXCobRevisada.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  inherited DoWriteToJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (fstatus <> stcNENHUM) then
+     AJSon.S['status'] := PIXStatusCobrancaToString(fstatus);
+  {$Else}
+   if (fstatus <> stcNENHUM) then
+     AJSon['status'].AsString := PIXStatusCobrancaToString(fstatus);
+  {$EndIf}
+end;
+
+procedure TACBrPIXCobRevisada.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  inherited DoReadFromJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fstatus := StringToPIXStatusCobranca(AJSon.S['status']);
+  {$Else}
+   fstatus := StringToPIXStatusCobranca(AJSon['status'].AsString);
+  {$EndIf}
+ end;
+
 { TACBrPIXCobBaseCopiaCola }
 
 procedure TACBrPIXCobBaseCopiaCola.Clear;
@@ -866,93 +898,6 @@ begin
     Exit;
   frevisao := max(AValue,0);
 end;
-
-{ TACBrPIXCobRevisada }
-
-constructor TACBrPIXCobRevisada.Create(const ObjectName: String);
-begin
-  inherited Create(ObjectName);
-  fcalendario := TACBrPIXCalendarioCobSolicitada.Create('calendario');
-  fdevedor := TACBrPIXDevedor.Create('devedor');
-  floc := TACBrPIXLocationCobRevisada.Create('loc');
-  fvalor := TACBrPIXCobValor.Create('valor');
-  Clear;
-end;
-
-destructor TACBrPIXCobRevisada.Destroy;
-begin
-  fcalendario.Free;
-  fdevedor.Free;
-  floc.Free;
-  fvalor.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrPIXCobRevisada.Clear;
-begin
-  inherited Clear;
-  fcalendario.Clear;
-  fdevedor.Clear;
-  floc.Clear;
-  fvalor.Clear;
-  fstatus := stcNENHUM;
-end;
-
-function TACBrPIXCobRevisada.IsEmpty: Boolean;
-begin
-  Result := inherited IsEmpty and
-            fcalendario.IsEmpty and
-            fdevedor.IsEmpty and
-            floc.IsEmpty and
-            fvalor.IsEmpty and
-            (fstatus = stcNENHUM);
-end;
-
-procedure TACBrPIXCobRevisada.Assign(Source: TACBrPIXCobRevisada);
-begin
-  inherited Assign(Source);
-  fcalendario.Assign(Source.calendario);
-  fdevedor.Assign(Source.devedor);
-  floc.Assign(Source.loc);
-  fvalor.Assign(Source.valor);
-  fstatus := Source.status;
-end;
-
-procedure TACBrPIXCobRevisada.DoWriteToJSon(AJSon: TJsonObject);
-begin
-  inherited DoWriteToJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcalendario.WriteToJSon(AJSon);
-   fdevedor.WriteToJSon(AJSon);
-   floc.WriteToJSon(AJSon);
-   AJSon.S['status'] := PIXStatusCobrancaToString(fstatus);
-   fvalor.WriteToJSon(AJSon);
-  {$Else}
-   fcalendario.WriteToJSon(AJSon);
-   fdevedor.WriteToJSon(AJSon);
-   floc.WriteToJSon(AJSon);
-   AJSon['status'].AsString := PIXStatusCobrancaToString(fstatus);
-   fvalor.WriteToJSon(AJSon);
-  {$EndIf}
-end;
-
-procedure TACBrPIXCobRevisada.DoReadFromJSon(AJSon: TJsonObject);
-begin
-  inherited DoReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcalendario.ReadFromJSon(AJSon);
-   fdevedor.ReadFromJSon(AJSon);
-   floc.ReadFromJSon(AJSon);
-   fstatus := StringToPIXStatusCobranca(AJSon.S['status']);
-   fvalor.ReadFromJSon(AJSon);
-  {$Else}
-   fcalendario.ReadFromJSon(AJSon);
-   fdevedor.ReadFromJSon(AJSon);
-   floc.ReadFromJSon(AJSon);
-   fstatus := StringToPIXStatusCobranca(AJSon['status'].AsString);
-   fvalor.ReadFromJSon(AJSon);
-  {$EndIf}
- end;
 
 { TACBrPIXCobCompleta }
 

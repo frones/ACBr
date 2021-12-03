@@ -88,14 +88,6 @@ type
     property id;
   end;
 
-  { TACBrPIXLocationCobRevisada }
-
-  TACBrPIXLocationCobRevisada = class(TACBrPIXLocationBase)
-  public
-    property id;
-    property location;
-  end;
-
   { TACBrPIXLocation }
 
   TACBrPIXLocation = class(TACBrPIXLocationBase)

@@ -225,6 +225,23 @@ type
     property valor: TACBrPIXCobVValor read fvalor;
   end;
 
+  { TACBrPIXCobVSolicitadaLote }
+
+  TACBrPIXCobVSolicitadaLote = class(TACBrPIXCobVSolicitada)
+  private
+    ftxId: String;
+    procedure SetTxId(AValue: String);
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    procedure Clear; reintroduce;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrPIXCobVSolicitadaLote);
+
+    property txId: String read ftxId write SetTxId;
+  end;
+
   { TACBrPIXCobVRevisada }
 
   TACBrPIXCobVRevisada = class(TACBrPIXCobVSolicitada)
@@ -308,6 +325,21 @@ type
     Procedure Insert(Index: Integer; ACobV: TACBrPIXCobVCompleta);
     function New: TACBrPIXCobVCompleta;
     property Items[Index: Integer]: TACBrPIXCobVCompleta read GetItem write SetItem; default;
+  end;
+
+  { TACBrPIXCobVSolicitadaLoteArray }
+
+  TACBrPIXCobVSolicitadaLoteArray = class(TACBrPIXSchemaArray)
+  private
+    function GetItem(Index: Integer): TACBrPIXCobVSolicitadaLote;
+    procedure SetItem(Index: Integer; Value: TACBrPIXCobVSolicitadaLote);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
+  public
+    Function Add(ACobV: TACBrPIXCobVSolicitadaLote): Integer;
+    Procedure Insert(Index: Integer; ACobV: TACBrPIXCobVSolicitadaLote);
+    function New: TACBrPIXCobVSolicitadaLote;
+    property Items[Index: Integer]: TACBrPIXCobVSolicitadaLote read GetItem write SetItem; default;
   end;
 
 implementation
@@ -737,6 +769,64 @@ begin
   fvalor.ReadFromJSon(AJSon);
 end;
 
+{ TACBrPIXCobVSolicitadaLote }
+
+procedure TACBrPIXCobVSolicitadaLote.Clear;
+begin
+  inherited Clear;
+  ftxId := '';
+end;
+
+function TACBrPIXCobVSolicitadaLote.IsEmpty: Boolean;
+begin
+  Result := inherited IsEmpty and
+            (ftxId = '');
+end;
+
+procedure TACBrPIXCobVSolicitadaLote.Assign(Source: TACBrPIXCobVSolicitadaLote);
+begin
+   inherited Assign(Source);
+   ftxId := Source.txId;
+end;
+
+procedure TACBrPIXCobVSolicitadaLote.SetTxId(AValue: String);
+var
+  s, e: String;
+begin
+  if ftxid = AValue then
+    Exit;
+
+  s := Trim(AValue);
+  if (s <> '') then
+  begin
+    e := ValidarTxId(s, 35, 26);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
+
+  fTxId := s;
+end;
+
+procedure TACBrPIXCobVSolicitadaLote.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.S['txid'] := ftxId;
+  {$Else}
+   AJSon['txid'].AsString := ftxId;
+  {$EndIf}
+  inherited DoWriteToJSon(AJSon);
+end;
+
+procedure TACBrPIXCobVSolicitadaLote.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   txId := AJSon.S['txid'];
+  {$Else}
+   txId := AJSon['txid'].AsString;
+  {$EndIf}
+  inherited DoReadFromJSon(AJSon);
+end;
+
 { TACBrPIXCobVRevisada }
 
 procedure TACBrPIXCobVRevisada.Clear;
@@ -997,6 +1087,39 @@ end;
 function TACBrPIXCobVCompletaArray.New: TACBrPIXCobVCompleta;
 begin
   Result := TACBrPIXCobVCompleta.Create('');
+  Self.Add(Result);
+end;
+
+{ TACBrPIXCobVSolicitadaLoteArray }
+
+function TACBrPIXCobVSolicitadaLoteArray.GetItem(Index: Integer): TACBrPIXCobVSolicitadaLote;
+begin
+  Result := TACBrPIXCobVSolicitadaLote(inherited Items[Index]);
+end;
+
+procedure TACBrPIXCobVSolicitadaLoteArray.SetItem(Index: Integer; Value: TACBrPIXCobVSolicitadaLote);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TACBrPIXCobVSolicitadaLoteArray.NewSchema: TACBrPIXSchema;
+begin
+  Result := New;
+end;
+
+function TACBrPIXCobVSolicitadaLoteArray.Add(ACobV: TACBrPIXCobVSolicitadaLote): Integer;
+begin
+  Result := inherited Add(ACobV);
+end;
+
+procedure TACBrPIXCobVSolicitadaLoteArray.Insert(Index: Integer; ACobV: TACBrPIXCobVSolicitadaLote);
+begin
+  inherited Insert(Index, ACobV);
+end;
+
+function TACBrPIXCobVSolicitadaLoteArray.New: TACBrPIXCobVSolicitadaLote;
+begin
+  Result := TACBrPIXCobVSolicitadaLote.Create('');
   Self.Add(Result);
 end;
 

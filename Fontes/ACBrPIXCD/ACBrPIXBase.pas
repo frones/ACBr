@@ -87,6 +87,11 @@ type
                               stdDEVOLVIDO,
                               stdNAO_REALIZADO );
 
+  TACBrPIXStatusLoteCobranca = ( stlNENHUM,
+                                 stlEM_PROCESSAMENTO,
+                                 stlCRIADA,
+                                 stlNEGADA );
+
   TACBrPIXNaturezaDevolucao = ( ndNENHUMA, ndORIGINAL, ndRETIRADA ) ;
 
   TACBrPIXModalidadeAgente = ( maNENHUM,
@@ -159,6 +164,9 @@ type
 
   function PIXTipoCobrancaToString(ACob: TACBrPIXTipoCobranca): String;
   function StringToPIXTipoCobranca(const AString: String): TACBrPIXTipoCobranca;
+
+  function PIXStatusLoteCobrancaToString(AStatus: TACBrPIXStatusLoteCobranca): String;
+  function StringToPIXStatusLoteCobranca(const AString: String): TACBrPIXStatusLoteCobranca;
 
 implementation
 
@@ -278,6 +286,29 @@ begin
     Result := tcoCob
   else
     Result := tcoNenhuma;
+end;
+
+function PIXStatusLoteCobrancaToString(AStatus: TACBrPIXStatusLoteCobranca): String;
+begin
+  case AStatus of
+    stlEM_PROCESSAMENTO: Result := 'EM_PROCESSAMENTO';
+    stlCRIADA: Result := 'CRIADA';
+    stlNEGADA: Result := 'NEGADA';
+  else
+    Result := '';
+  end;
+end;
+
+function StringToPIXStatusLoteCobranca(const AString: String): TACBrPIXStatusLoteCobranca;
+begin
+  if (AString = 'EM_PROCESSAMENTO') then
+    Result := stlEM_PROCESSAMENTO
+  else if (AString = 'CRIADA') then
+    Result := stlCRIADA
+  else if (AString = 'NEGADA') then
+    Result := stlNEGADA
+  else
+    Result := stlNENHUM;
 end;
 
 { TACBrPIXSchema }

@@ -56,7 +56,9 @@ Used RFC: RFC-2045
 {$M+}
 
 {$IFDEF FPC}
-  {$DEFINE HAS_BOM}
+  {$if (FPC_FULLVERSION>=30200)}
+     {$DEFINE HAS_BOM}
+  {$IfEnd}
 {$ENDIF}
 
 {$IFDEF UNICODE}

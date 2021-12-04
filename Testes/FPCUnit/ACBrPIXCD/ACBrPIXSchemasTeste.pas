@@ -9,6 +9,7 @@ uses
   ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasCobV, ACBrPIXQRCodeEstatico,
   ACBrPIXSchemasProblema, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
+  ACBrPIXSchemasLoteCobV,
   {$ifdef FPC}
    fpcunit, testutils, testregistry
   {$else}
@@ -221,6 +222,20 @@ type
     procedure AtribuirLerReatribuirECompararRevisaoCobranca2;
     procedure AtribuirELerValoresRevisaoCobranca3;
     procedure AtribuirLerReatribuirECompararRevisaoCobranca3;
+  end;
+
+  { TTestLoteCobVBody }
+
+  TTestLoteCobVBody = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixLoteCobVBody: TACBrPIXLoteCobVBody;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
   end;
 
 implementation
@@ -1903,6 +1918,147 @@ begin
   end;
 end;
 
+{ TTestLoteCobVBody }
+
+procedure TTestLoteCobVBody.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixLoteCobVBody := TACBrPIXLoteCobVBody.Create('');
+  fJSON := ACBrStr(
+  '{'+
+    '"descricao": "Cobranças dos alunos do turno vespertino",'+
+    '"cobsv": ['+
+      '{'+
+        '"calendario": {'+
+          '"dataDeVencimento": "2020-12-31",'+
+          '"validadeAposVencimento": 30'+
+        '},'+
+        '"txid": "fb2761260e554ad593c7226beb5cb650",'+
+        '"loc": {'+
+          '"id": 789'+
+        '},'+
+        '"devedor": {'+
+          '"logradouro": "Alameda Souza, Numero 80, Bairro Braz",'+
+          '"cidade": "Recife",'+
+          '"uf": "PE",'+
+          '"cep": "70011750",'+
+          '"cpf": "08577095428",'+
+          '"nome": "João Souza"'+
+        '},'+
+        '"valor": {'+
+          '"original": "100.00"'+
+        '},'+
+        '"chave": "7c084cd4-54af-4172-a516-a7d1a12b75cc",'+
+        '"solicitacaoPagador": "Informar matrícula"'+
+      '},'+
+      '{'+
+        '"calendario": {'+
+          '"dataDeVencimento": "2020-12-31",'+
+          '"validadeAposVencimento": 30'+
+        '},'+
+        '"txid": "7978c0c97ea847e78e8849634473c1f1",'+
+        '"loc": {'+
+          '"id": 57221'+
+        '},'+
+        '"devedor": {'+
+          '"logradouro": "Rua 15, Numero 1, Bairro Campo Grande",'+
+          '"cidade": "Recife",'+
+          '"uf": "PE",'+
+          '"cep": "70055751",'+
+          '"cpf": "15311295449",'+
+          '"nome": "Manoel Silva"'+
+        '},'+
+        '"valor": {'+
+          '"original": "100.00"'+
+        '},'+
+        '"chave": "7c084cd4-54af-4172-a516-a7d1a12b75cc",'+
+        '"solicitacaoPagador": "Informar matrícula"'+
+      '}'+
+    ']'+
+  '}' );
+end;
+
+procedure TTestLoteCobVBody.TearDown;
+begin
+  fACBrPixLoteCobVBody.Free;
+  inherited TearDown;
+end;
+
+procedure TTestLoteCobVBody.AtribuirELerValores;
+begin
+  fACBrPixLoteCobVBody.AsJSON := fJSON;
+
+  CheckEquals(fACBrPixLoteCobVBody.descricao, ACBrStr('Cobranças dos alunos do turno vespertino'));
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].calendario.dataDeVencimento, EncodeDate(2020,12,31));
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].calendario.validadeAposVencimento, 30);
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].txId, 'fb2761260e554ad593c7226beb5cb650');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].loc.id, 789);
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.logradouro, 'Alameda Souza, Numero 80, Bairro Braz');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.cidade, 'Recife');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.uf, 'PE');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.cep, '70011750');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.cpf, '08577095428');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.nome, ACBrStr('João Souza'));
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].valor.original, 100);
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].chave, '7c084cd4-54af-4172-a516-a7d1a12b75cc');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[0].solicitacaoPagador, ACBrStr('Informar matrícula'));
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].calendario.dataDeVencimento, EncodeDate(2020,12,31));
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].calendario.validadeAposVencimento, 30);
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].txId, '7978c0c97ea847e78e8849634473c1f1');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].loc.id, 57221);
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.logradouro, 'Rua 15, Numero 1, Bairro Campo Grande');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.cidade, 'Recife');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.uf, 'PE');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.cep, '70055751');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.cpf, '15311295449');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.nome, 'Manoel Silva');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].valor.original, 100);
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].chave, '7c084cd4-54af-4172-a516-a7d1a12b75cc');
+  CheckEquals(fACBrPixLoteCobVBody.cobsv[1].solicitacaoPagador, ACBrStr('Informar matrícula'));
+end;
+
+procedure TTestLoteCobVBody.AtribuirLerReatribuirEComparar;
+var
+  lc: TACBrPIXLoteCobVBody;
+  s: String;
+begin
+  fACBrPixLoteCobVBody.AsJSON := fJSON;
+  s := fACBrPixLoteCobVBody.AsJSON;
+  lc := TACBrPIXLoteCobVBody.Create('');
+  try
+    lc.AsJSON := s;
+
+    CheckEquals(fACBrPixLoteCobVBody.descricao, lc.descricao);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].calendario.dataDeVencimento, lc.cobsv[0].calendario.dataDeVencimento);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].calendario.validadeAposVencimento, lc.cobsv[0].calendario.validadeAposVencimento);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].txId, lc.cobsv[0].txId);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].loc.id, lc.cobsv[0].loc.id);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.logradouro, lc.cobsv[0].devedor.logradouro);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.cidade, lc.cobsv[0].devedor.cidade);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.uf, lc.cobsv[0].devedor.uf);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.cep, lc.cobsv[0].devedor.cep);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.cpf, lc.cobsv[0].devedor.cpf);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].devedor.nome, lc.cobsv[0].devedor.nome);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].valor.original, lc.cobsv[0].valor.original);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].chave, lc.cobsv[0].chave);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[0].solicitacaoPagador, lc.cobsv[0].solicitacaoPagador);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].calendario.dataDeVencimento, lc.cobsv[1].calendario.dataDeVencimento);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].calendario.validadeAposVencimento, lc.cobsv[1].calendario.validadeAposVencimento);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].txId, lc.cobsv[1].txId);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].loc.id, lc.cobsv[1].loc.id);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.logradouro, lc.cobsv[1].devedor.logradouro);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.cidade, lc.cobsv[1].devedor.cidade);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.uf, lc.cobsv[1].devedor.uf);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.cep, lc.cobsv[1].devedor.cep);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.cpf, lc.cobsv[1].devedor.cpf);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].devedor.nome, lc.cobsv[1].devedor.nome);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].valor.original, lc.cobsv[1].valor.original);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].chave, lc.cobsv[1].chave);
+    CheckEquals(fACBrPixLoteCobVBody.cobsv[1].solicitacaoPagador, lc.cobsv[1].solicitacaoPagador);
+  finally
+    lc.Free;
+  end;
+end;
 
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
@@ -1929,6 +2085,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVGerada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobsVConsultadas);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVRevisada);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestLoteCobVBody);
 
 end.
 

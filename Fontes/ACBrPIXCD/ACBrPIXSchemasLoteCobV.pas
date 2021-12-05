@@ -70,7 +70,7 @@ type
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
-    procedure Clear; reintroduce;
+    procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXLoteCobV);
 
@@ -79,7 +79,6 @@ type
     property problema: TACBrPIXProblema read fproblema;
     property criacao: TDateTime read fcriacao write fcriacao;
   end;
-
 
   { TACBrPIXLoteCobVArray }
 
@@ -96,7 +95,6 @@ type
     property Items[Index: Integer]: TACBrPIXLoteCobV read GetItem write SetItem; default;
   end;
 
-
   { TACBrPIXLoteCobVConsultado }
 
   TACBrPIXLoteCobVConsultado = class(TACBrPIXSchema)
@@ -111,7 +109,7 @@ type
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
-    procedure Clear; reintroduce;
+    procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXLoteCobVConsultado);
 
@@ -119,6 +117,21 @@ type
     property descricao: String read fdescricao write fdescricao;
     property criacao: TDateTime read fcriacao write fcriacao;
     property cobsv: TACBrPIXLoteCobVArray read fcobsv;
+  end;
+
+  { TACBrPIXLoteCobVConsultadoArray }
+
+  TACBrPIXLoteCobVConsultadoArray = class(TACBrPIXSchemaArray)
+  private
+    function GetItem(Index: Integer): TACBrPIXLoteCobVConsultado;
+    procedure SetItem(Index: Integer; Value: TACBrPIXLoteCobVConsultado);
+  protected
+    function NewSchema: TACBrPIXSchema; override;
+  public
+    Function Add(ALoteCobV: TACBrPIXLoteCobVConsultado): Integer;
+    Procedure Insert(Index: Integer; ALoteCobV: TACBrPIXLoteCobVConsultado);
+    function New: TACBrPIXLoteCobVConsultado;
+    property Items[Index: Integer]: TACBrPIXLoteCobVConsultado read GetItem write SetItem; default;
   end;
 
   { TACBrPIXCobVSolicitadaLote }
@@ -147,8 +160,8 @@ type
   protected
     function NewSchema: TACBrPIXSchema; override;
   public
-    Function Add(ACobV: TACBrPIXCobVSolicitadaLote): Integer;
-    Procedure Insert(Index: Integer; ACobV: TACBrPIXCobVSolicitadaLote);
+    Function Add(ALoteCobV: TACBrPIXCobVSolicitadaLote): Integer;
+    Procedure Insert(Index: Integer; ALoteCobV: TACBrPIXCobVSolicitadaLote);
     function New: TACBrPIXCobVSolicitadaLote;
     property Items[Index: Integer]: TACBrPIXCobVSolicitadaLote read GetItem write SetItem; default;
   end;
@@ -291,7 +304,7 @@ procedure TACBrPIXLoteCobV.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    if (ftxId <> '') then
-     AJSon.S['txId'] := ftxId;
+     AJSon.S['txid'] := ftxId;
    if (fstatus <> stlNENHUM) then
      AJSon.S['status'] := PIXStatusLoteCobrancaToString(fstatus);
    fproblema.WriteToJSon(AJSon);
@@ -299,7 +312,7 @@ begin
      AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
   {$Else}
    if (ftxId <> '') then
-     AJSon['txId'].AsString := ftxId;
+     AJSon['txid'].AsString := ftxId;
    if (fstatus <> stlNENHUM) then
      AJSon['status'].AsString := PIXStatusLoteCobrancaToString(fstatus);
    fproblema.WriteToJSon(AJSon);
@@ -313,12 +326,12 @@ var
   s: String;
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ftxId := AJSon.S['txId'];
+   ftxId := AJSon.S['txid'];
    fstatus := StringToPIXStatusLoteCobranca(AJSon.S['status']);
    fproblema.ReadFromJSon(AJSon);
    s := AJSon.S['criacao'];
   {$Else}
-   ftxId := AJSon['txId'].AsString;
+   ftxId := AJSon['txid'].AsString;
    fstatus := StringToPIXStatusLoteCobranca(AJSon['status'].AsString);
    fproblema.ReadFromJSon(AJSon);
    s := AJSon['criacao'].AsString;
@@ -436,6 +449,39 @@ begin
   fcobsv.ReadFromJSon(AJSon);
 end;
 
+{ TACBrPIXLoteCobVConsultadoArray }
+
+function TACBrPIXLoteCobVConsultadoArray.GetItem(Index: Integer): TACBrPIXLoteCobVConsultado;
+begin
+  Result := TACBrPIXLoteCobVConsultado(inherited Items[Index]);
+end;
+
+procedure TACBrPIXLoteCobVConsultadoArray.SetItem(Index: Integer; Value: TACBrPIXLoteCobVConsultado);
+begin
+  inherited Items[Index] := Value;
+end;
+
+function TACBrPIXLoteCobVConsultadoArray.NewSchema: TACBrPIXSchema;
+begin
+  Result := New;
+end;
+
+function TACBrPIXLoteCobVConsultadoArray.Add(ALoteCobV: TACBrPIXLoteCobVConsultado): Integer;
+begin
+  Result := inherited Add(ALoteCobV);
+end;
+
+procedure TACBrPIXLoteCobVConsultadoArray.Insert(Index: Integer; ALoteCobV: TACBrPIXLoteCobVConsultado);
+begin
+  inherited Insert(Index, ALoteCobV);
+end;
+
+function TACBrPIXLoteCobVConsultadoArray.New: TACBrPIXLoteCobVConsultado;
+begin
+  Result := TACBrPIXLoteCobVConsultado.Create('');
+  Self.Add(Result);
+end;
+
 { TACBrPIXCobVSolicitadaLote }
 
 procedure TACBrPIXCobVSolicitadaLote.Clear;
@@ -511,14 +557,14 @@ begin
   Result := New;
 end;
 
-function TACBrPIXCobVSolicitadaLoteArray.Add(ACobV: TACBrPIXCobVSolicitadaLote): Integer;
+function TACBrPIXCobVSolicitadaLoteArray.Add(ALoteCobV: TACBrPIXCobVSolicitadaLote): Integer;
 begin
-  Result := inherited Add(ACobV);
+  Result := inherited Add(ALoteCobV);
 end;
 
-procedure TACBrPIXCobVSolicitadaLoteArray.Insert(Index: Integer; ACobV: TACBrPIXCobVSolicitadaLote);
+procedure TACBrPIXCobVSolicitadaLoteArray.Insert(Index: Integer; ALoteCobV: TACBrPIXCobVSolicitadaLote);
 begin
-  inherited Insert(Index, ACobV);
+  inherited Insert(Index, ALoteCobV);
 end;
 
 function TACBrPIXCobVSolicitadaLoteArray.New: TACBrPIXCobVSolicitadaLote;

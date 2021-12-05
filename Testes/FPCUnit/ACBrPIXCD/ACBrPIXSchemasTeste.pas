@@ -9,7 +9,7 @@ uses
   ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasCobV, ACBrPIXQRCodeEstatico,
   ACBrPIXSchemasProblema, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
-  ACBrPIXSchemasLoteCobV,
+  ACBrPIXSchemasLoteCobV, ACBrPIXSchemasLotesCobVConsultadas,
   {$ifdef FPC}
    fpcunit, testutils, testregistry
   {$else}
@@ -244,6 +244,34 @@ type
   private
     fJSON: String;
     fACBrPixLoteCobVBodyRevisado: TACBrPIXLoteCobVBodyRevisado;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
+  end;
+
+  { TTestLoteCobVConsultado }
+
+  TTestLoteCobVConsultado = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixLoteCobVConsultado: TACBrPIXLoteCobVConsultado;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
+  end;
+
+  { TTestLotesCobVConsultados }
+
+  TTestLotesCobVConsultados = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPIXLotesCobVConsultados: TACBrPIXLotesCobVConsultados;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -2145,6 +2173,242 @@ begin
   end;
 end;
 
+{ TTestLoteCobVConsultado }
+
+procedure TTestLoteCobVConsultado.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixLoteCobVConsultado := TACBrPIXLoteCobVConsultado.Create('');
+  fJSON := ACBrStr(
+  '{'+
+    '"descricao": "Cobranças dos alunos do turno vespertino",'+
+    '"criacao": "2020-11-01T20:15:00.358Z",'+
+    '"cobsv": ['+
+      '{'+
+        '"criacao": "2020-11-01T20:15:00.358Z",'+
+        '"txid": "fb2761260e554ad593c7226beb5cb650",'+
+        '"status": "CRIADA"'+
+      '},'+
+      '{'+
+        '"txid": "7978c0c97ea847e78e8849634473c1f1",'+
+        '"status": "NEGADA",'+
+        '"problema": {'+
+          '"type": "https://pix.bcb.gov.br/api/v2/error/CobVOperacaoInvalida",'+
+          '"title": "Cobrança inválida.",'+
+          '"status": 400,'+
+          '"detail": "A requisição que busca alterar ou criar uma cobrança com vencimento não respeita o _schema_ ou está semanticamente errada.",'+
+          '"violacoes": ['+
+            '{'+
+              '"razao": "O objeto cobv.devedor não respeita o _schema_.",'+
+              '"propriedade": "cobv.devedor"'+
+            '}'+
+          ']'+
+        '}'+
+      '}'+
+    ']'+
+  '}' );
+end;
+
+procedure TTestLoteCobVConsultado.TearDown;
+begin
+  fACBrPixLoteCobVConsultado.Free;
+  inherited TearDown;
+end;
+
+procedure TTestLoteCobVConsultado.AtribuirELerValores;
+begin
+  fACBrPixLoteCobVConsultado.AsJSON := fJSON;
+
+  CheckEquals(fACBrPixLoteCobVConsultado.descricao, ACBrStr('Cobranças dos alunos do turno vespertino'));
+  CheckEquals(fACBrPixLoteCobVConsultado.criacao, EncodeDateTime(2020,11,01,20,15,00,358));
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[0].criacao, EncodeDateTime(2020,11,01,20,15,00,358));
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[0].txId, 'fb2761260e554ad593c7226beb5cb650');
+  CheckTrue(fACBrPixLoteCobVConsultado.cobsv[0].status = stlCRIADA);
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].txId, '7978c0c97ea847e78e8849634473c1f1');
+  CheckTrue(fACBrPixLoteCobVConsultado.cobsv[1].status = stlNEGADA);
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.type_uri, 'https://pix.bcb.gov.br/api/v2/error/CobVOperacaoInvalida');
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.title, ACBrStr('Cobrança inválida.'));
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.status, 400);
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.detail, ACBrStr('A requisição que busca alterar ou criar uma cobrança com vencimento não respeita o _schema_ ou está semanticamente errada.'));
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.violacoes[0].razao, ACBrStr('O objeto cobv.devedor não respeita o _schema_.'));
+  CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.violacoes[0].propriedade, 'cobv.devedor');
+end;
+
+procedure TTestLoteCobVConsultado.AtribuirLerReatribuirEComparar;
+var
+  lc: TACBrPIXLoteCobVConsultado;
+  s: String;
+begin
+  fACBrPixLoteCobVConsultado.AsJSON := fJSON;
+  s := fACBrPixLoteCobVConsultado.AsJSON;
+  lc := TACBrPIXLoteCobVConsultado.Create('');
+  try
+    lc.AsJSON := s;
+
+    CheckEquals(fACBrPixLoteCobVConsultado.descricao, lc.descricao);
+    CheckEquals(fACBrPixLoteCobVConsultado.criacao, lc.criacao);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[0].criacao, lc.cobsv[0].criacao);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[0].txId, lc.cobsv[0].txId);
+    CheckTrue(fACBrPixLoteCobVConsultado.cobsv[0].status = lc.cobsv[0].status);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].txId, lc.cobsv[1].txId);
+    CheckTrue(fACBrPixLoteCobVConsultado.cobsv[1].status = lc.cobsv[1].status);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.type_uri, lc.cobsv[1].problema.type_uri);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.title, lc.cobsv[1].problema.title);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.status, lc.cobsv[1].problema.status);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.detail, lc.cobsv[1].problema.detail);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.violacoes[0].razao, lc.cobsv[1].problema.violacoes[0].razao);
+    CheckEquals(fACBrPixLoteCobVConsultado.cobsv[1].problema.violacoes[0].propriedade, lc.cobsv[1].problema.violacoes[0].propriedade);
+  finally
+    lc.Free;
+  end;
+end;
+
+{ TTestLotesCobVConsultados }
+
+procedure TTestLotesCobVConsultados.SetUp;
+begin
+  inherited SetUp;
+  fACBrPIXLotesCobVConsultados := TACBrPIXLotesCobVConsultados.Create('');
+  fJSON := ACBrStr(
+  '{'+
+  	'"parametros": {'+
+  		'"inicio": "2020-01-01T00:00:00Z",'+
+  		'"fim": "2020-12-01T23:59:59Z",'+
+  		'"paginacao": {'+
+  			'"paginaAtual": 0,'+
+  			'"itensPorPagina": 100,'+
+  			'"quantidadeDePaginas": 1,'+
+  			'"quantidadeTotalDeItens": 2'+
+  		'}'+
+  	'},'+
+  	'"lotes": ['+
+  		'{'+
+  			'"descricao": "Cobranças dos alunos do turno vespertino",'+
+  			'"criacao": "2020-11-01T20:15:00.358Z",'+
+  			'"cobsv": ['+
+  				'{'+
+  					'"criacao": "2020-11-01T20:15:00.358Z",'+
+  					'"txid": "fb2761260e554ad593c7226beb5cb650",'+
+  					'"status": "CRIADA"'+
+  				'},'+
+  				'{'+
+  					'"txid": "7978c0c97ea847e78e8849634473c1f1",'+
+  					'"status": "NEGADA",'+
+  					'"problema": {'+
+  						'"type": "https://pix.bcb.gov.br/api/v2/error/CobVOperacaoInvalida",'+
+  						'"title": "Cobrança inválida.",'+
+  						'"status": 400,'+
+  						'"detail": "A requisição que busca alterar ou criar uma cobrança com vencimento não respeita o _schema_ ou está semanticamente errada.",'+
+  						'"violacoes": ['+
+  							'{'+
+  								'"razao": "O objeto cobv.devedor não respeita o _schema_.",'+
+  								'"propriedade": "cobv.devedor"'+
+  							'}'+
+  						']'+
+  					'}'+
+  				'}'+
+  			']'+
+  		'},'+
+  		'{'+
+  			'"descricao": "Cobranças dos assinantes anuais",'+
+  			'"criacao": "2020-11-17T20:00:00.358Z",'+
+  			'"cobsv": ['+
+  				'{'+
+  					'"criacao": "2020-11-17T20:00:00.358Z",'+
+  					'"txid": "06601eaa3822423fbe897f613b983e01",'+
+  					'"status": "CRIADA"'+
+  				'},'+
+  				'{'+
+  					'"criacao": "2020-11-17T20:00:00.358Z",'+
+  					'"txid": "4e07059760d54cf493de6e7f1fbfad9a",'+
+  					'"status": "CRIADA"'+
+  				'}'+
+  			']'+
+  		'}'+
+  	']'+
+  '}' );
+end;
+
+procedure TTestLotesCobVConsultados.TearDown;
+begin
+  fACBrPIXLotesCobVConsultados.Free;
+  inherited TearDown;
+end;
+
+procedure TTestLotesCobVConsultados.AtribuirELerValores;
+begin
+  fACBrPIXLotesCobVConsultados.AsJSON := fJSON;
+
+  CheckEquals(fACBrPIXLotesCobVConsultados.parametros.inicio, EncodeDateTime(2020,01,01,0,0,0,0));
+  CheckEquals(fACBrPIXLotesCobVConsultados.parametros.fim, EncodeDateTime(2020,12,01,23,59,59,0));
+  CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.paginaAtual, 0);
+  CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.itensPorPagina, 100);
+  CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.quantidadeDePaginas, 1);
+  CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.quantidadeTotalDeItens, 2);
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].criacao, EncodeDateTime(2020,11,01,20,15,00,358));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].descricao, ACBrStr('Cobranças dos alunos do turno vespertino'));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[0].criacao, EncodeDateTime(2020,11,01,20,15,00,358));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[0].txId, 'fb2761260e554ad593c7226beb5cb650');
+  CheckTrue(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[0].status = stlCRIADA);
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].txId, '7978c0c97ea847e78e8849634473c1f1');
+  CheckTrue(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].status = stlNEGADA);
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.type_uri, 'https://pix.bcb.gov.br/api/v2/error/CobVOperacaoInvalida');
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.title, ACBrStr('Cobrança inválida.'));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.detail, ACBrStr('A requisição que busca alterar ou criar uma cobrança com vencimento não respeita o _schema_ ou está semanticamente errada.'));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.violacoes[0].razao, ACBrStr('O objeto cobv.devedor não respeita o _schema_.'));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.violacoes[0].propriedade, 'cobv.devedor');
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].criacao, EncodeDateTime(2020,11,17,20,00,00,358));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].descricao, ACBrStr('Cobranças dos assinantes anuais'));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[0].criacao, EncodeDateTime(2020,11,17,20,00,00,358));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[0].txId, '06601eaa3822423fbe897f613b983e01');
+  CheckTrue(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[0].status = stlCRIADA);
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[1].criacao, EncodeDateTime(2020,11,17,20,00,00,358));
+  CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[1].txId, '4e07059760d54cf493de6e7f1fbfad9a');
+  CheckTrue(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[1].status = stlCRIADA);
+end;
+
+procedure TTestLotesCobVConsultados.AtribuirLerReatribuirEComparar;
+var
+  lc: TACBrPIXLotesCobVConsultados;
+  s: String;
+begin
+  fACBrPIXLotesCobVConsultados.AsJSON := fJSON;
+  s := fACBrPIXLotesCobVConsultados.AsJSON;
+  lc := TACBrPIXLotesCobVConsultados.Create('');
+  try
+    lc.AsJSON := s;
+
+    CheckEquals(fACBrPIXLotesCobVConsultados.parametros.inicio, lc.parametros.inicio);
+    CheckEquals(fACBrPIXLotesCobVConsultados.parametros.fim, lc.parametros.fim);
+    CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.paginaAtual, lc.parametros.paginacao.paginaAtual);
+    CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.itensPorPagina, lc.parametros.paginacao.itensPorPagina);
+    CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.quantidadeDePaginas, lc.parametros.paginacao.quantidadeDePaginas);
+    CheckEquals(fACBrPIXLotesCobVConsultados.parametros.paginacao.quantidadeTotalDeItens, lc.parametros.paginacao.quantidadeTotalDeItens);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].criacao, lc.lotes[0].criacao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].descricao, lc.lotes[0].descricao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[0].criacao, lc.lotes[0].cobsv[0].criacao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[0].txId, lc.lotes[0].cobsv[0].txId);
+    CheckTrue(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[0].status = lc.lotes[0].cobsv[0].status);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].txId, lc.lotes[0].cobsv[1].txId);
+    CheckTrue(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].status = lc.lotes[0].cobsv[1].status);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.type_uri, lc.lotes[0].cobsv[1].problema.type_uri);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.title, lc.lotes[0].cobsv[1].problema.title);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.detail, lc.lotes[0].cobsv[1].problema.detail);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.violacoes[0].razao, lc.lotes[0].cobsv[1].problema.violacoes[0].razao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[0].cobsv[1].problema.violacoes[0].propriedade, lc.lotes[0].cobsv[1].problema.violacoes[0].propriedade);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].criacao, lc.lotes[1].criacao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].descricao, lc.lotes[1].descricao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[0].criacao, lc.lotes[1].cobsv[0].criacao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[0].txId, lc.lotes[1].cobsv[0].txId);
+    CheckTrue(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[0].status = lc.lotes[1].cobsv[0].status);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[1].criacao, lc.lotes[1].cobsv[1].criacao);
+    CheckEquals(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[1].txId, lc.lotes[1].cobsv[1].txId);
+    CheckTrue(fACBrPIXLotesCobVConsultados.lotes[1].cobsv[1].status = lc.lotes[1].cobsv[1].status);
+  finally
+    lc.Free;
+  end;
+end;
+
 
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
@@ -2158,21 +2422,23 @@ end;
 initialization
 
   _RegisterTest('ACBrPIXCD.QRCode', TTestQRCodeEstatico);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataExemplo1);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX2);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaImediataComSaquePIX3);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobrancaGerada);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestProblema);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestPixConsultados);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobsConsultadas);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobRevisada);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobVSolicitada);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobVGerada);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobsVConsultadas);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestCobVRevisada);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestLoteCobVBody);
-  _RegisterTest('ACBrPIXCD.Schemas', TTestLoteCobVBodyRevisado);
+  _RegisterTest('ACBrPIXCD.Schemas.Cob', TTestCobrancaImediataExemplo1);
+  _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX);
+  _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX2);
+  _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX3);
+  _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaGerada);
+  _RegisterTest('ACBrPIXCD.Schemas.Problema', TTestProblema);
+  _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestPixConsultados);
+  _RegisterTest('ACBrPIXCD.Schemas.Cob', TTestCobsConsultadas);
+  _RegisterTest('ACBrPIXCD.Schemas.Cob', TTestCobRevisada);
+  _RegisterTest('ACBrPIXCD.Schemas.CobV', TTestCobVSolicitada);
+  _RegisterTest('ACBrPIXCD.Schemas.CobV', TTestCobVGerada);
+  _RegisterTest('ACBrPIXCD.Schemas.CobV', TTestCobsVConsultadas);
+  _RegisterTest('ACBrPIXCD.Schemas.CobV', TTestCobVRevisada);
+  _RegisterTest('ACBrPIXCD.Schemas.Lote', TTestLoteCobVBody);
+  _RegisterTest('ACBrPIXCD.Schemas.Lote', TTestLoteCobVBodyRevisado);
+  _RegisterTest('ACBrPIXCD.Schemas.Lote', TTestLoteCobVConsultado);
+  _RegisterTest('ACBrPIXCD.Schemas.Lote', TTestLotesCobVConsultados);
 
 end.
 

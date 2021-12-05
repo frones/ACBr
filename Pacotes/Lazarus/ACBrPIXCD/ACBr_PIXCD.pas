@@ -14,7 +14,9 @@ uses
   ACBrPIXSchemasPixConsultados, ACBrPIXSchemasParametrosConsultaCob, 
   ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation, 
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, 
-  ACBrPIXSchemasCobsVConsultadas, LazarusPackageIntf;
+  ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
+  ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
+  LazarusPackageIntf;
 
 implementation
 

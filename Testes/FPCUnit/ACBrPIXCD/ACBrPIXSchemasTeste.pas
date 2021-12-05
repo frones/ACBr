@@ -238,6 +238,20 @@ type
     procedure AtribuirLerReatribuirEComparar;
   end;
 
+  { TTestLoteCobVBodyRevisado }
+
+  TTestLoteCobVBodyRevisado = class(TTestCase)
+  private
+    fJSON: String;
+    fACBrPixLoteCobVBodyRevisado: TACBrPIXLoteCobVBodyRevisado;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirELerValores;
+    procedure AtribuirLerReatribuirEComparar;
+  end;
+
 implementation
 
 uses
@@ -2060,6 +2074,78 @@ begin
   end;
 end;
 
+{ TTestLoteCobVBodyRevisado }
+
+procedure TTestLoteCobVBodyRevisado.SetUp;
+begin
+  inherited SetUp;
+  fACBrPixLoteCobVBodyRevisado := TACBrPIXLoteCobVBodyRevisado.Create('');
+  fJSON := ACBrStr(
+  '{'+
+    '"cobsv": ['+
+      '{'+
+        '"calendario": {'+
+          '"dataDeVencimento": "2020-01-10"'+
+        '},'+
+        '"txid": "fb2761260e554ad593c7226beb5cb650",'+
+        '"valor": {'+
+          '"original": "110.00"'+
+        '}'+
+      '},'+
+      '{'+
+        '"calendario": {'+
+          '"dataDeVencimento": "2020-01-10"'+
+        '},'+
+        '"txid": "7978c0c97ea847e78e8849634473c1f1",'+
+        '"valor": {'+
+          '"original": "110.00"'+
+        '}'+
+      '}'+
+    ']'+
+  '}' );
+end;
+
+procedure TTestLoteCobVBodyRevisado.TearDown;
+begin
+  fACBrPixLoteCobVBodyRevisado.Free;
+  inherited TearDown;
+end;
+
+procedure TTestLoteCobVBodyRevisado.AtribuirELerValores;
+begin
+  fACBrPixLoteCobVBodyRevisado.AsJSON := fJSON;
+
+  CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[0].calendario.dataDeVencimento, EncodeDate(2020,01,10));
+  CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[0].txId, 'fb2761260e554ad593c7226beb5cb650');
+  CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[0].valor.original, 110);
+  CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[1].calendario.dataDeVencimento, EncodeDate(2020,01,10));
+  CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[1].txId, '7978c0c97ea847e78e8849634473c1f1');
+  CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[1].valor.original, 110);
+end;
+
+procedure TTestLoteCobVBodyRevisado.AtribuirLerReatribuirEComparar;
+var
+  lc: TACBrPIXLoteCobVBodyRevisado;
+  s: String;
+begin
+  fACBrPixLoteCobVBodyRevisado.AsJSON := fJSON;
+  s := fACBrPixLoteCobVBodyRevisado.AsJSON;
+  lc := TACBrPIXLoteCobVBodyRevisado.Create('');
+  try
+    lc.AsJSON := s;
+
+    CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[0].calendario.dataDeVencimento, lc.cobsv[0].calendario.dataDeVencimento);
+    CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[0].txId, lc.cobsv[0].txId);
+    CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[0].valor.original, lc.cobsv[0].valor.original);
+    CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[1].calendario.dataDeVencimento, lc.cobsv[1].calendario.dataDeVencimento);
+    CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[1].txId, lc.cobsv[1].txId);
+    CheckEquals(fACBrPixLoteCobVBodyRevisado.cobsv[1].valor.original, lc.cobsv[1].valor.original);
+  finally
+    lc.Free;
+  end;
+end;
+
+
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
   {$IfDef DUNITX}
@@ -2086,6 +2172,7 @@ initialization
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobsVConsultadas);
   _RegisterTest('ACBrPIXCD.Schemas', TTestCobVRevisada);
   _RegisterTest('ACBrPIXCD.Schemas', TTestLoteCobVBody);
+  _RegisterTest('ACBrPIXCD.Schemas', TTestLoteCobVBodyRevisado);
 
 end.
 

@@ -26,6 +26,12 @@ namespace ACBrLib.Core.Config
             set => SetProperty(value);
         }
 
+        public string DadosPFX
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         public string Senha
         {
             get => GetProperty<string>();

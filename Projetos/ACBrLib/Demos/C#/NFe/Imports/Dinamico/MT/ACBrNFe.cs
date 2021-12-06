@@ -20,7 +20,6 @@ namespace ACBrLib.NFe
             CheckResult(ret);
 
             Config = new ACBrNFeConfig(this);
-            
         }
 
         #endregion Constructors

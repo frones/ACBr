@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Windows.Forms;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
@@ -136,6 +137,7 @@ namespace ACBrLib.NFe.Demo
                 ACBrNFe.Config.DFe.ArquivoPFX = txtCertPath.Text;
                 ACBrNFe.Config.DFe.Senha = txtCertPassword.Text;
                 ACBrNFe.Config.DFe.NumeroSerie = txtCertNumero.Text;
+                ACBrNFe.Config.DFe.DadosPFX = txtDadosPFX.Text;
 
                 //Config Arquivos
                 ACBrNFe.Config.SalvarGer = ckbSalvarArqs.Checked;
@@ -234,6 +236,7 @@ namespace ACBrLib.NFe.Demo
             txtCertPath.Text = ACBrNFe.Config.DFe.ArquivoPFX;
             txtCertPassword.Text = ACBrNFe.Config.DFe.Senha;
             txtCertNumero.Text = ACBrNFe.Config.DFe.NumeroSerie;
+            txtDadosPFX.Text = ACBrNFe.Config.DFe.DadosPFX;
 
             //Config Arquivos
             ckbSalvarArqs.Checked = ACBrNFe.Config.SalvarGer;
@@ -349,12 +352,6 @@ namespace ACBrLib.NFe.Demo
 
         private void btnDadosPFX_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtDadosPFX.Text))
-            {
-                var cert = new X509Certificate2(Convert.FromBase64String(txtDadosPFX.Text), txtCertPassword.Text);
-                MessageBox.Show(cert.SerialNumber);
-            }
-
             var file = Helpers.OpenFile("Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*");
             if (!File.Exists(file)) return;
 

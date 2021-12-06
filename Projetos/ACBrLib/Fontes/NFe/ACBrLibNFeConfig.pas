@@ -260,8 +260,6 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; override;
-
     property NFe: TConfiguracoesNFe read FNFeConfig;
     property DANFe: TDANFeReportConfig read FDANFeConfig;
     property Integrador: TIntegradorConfig read FIntegradorConfig;
@@ -811,40 +809,13 @@ end;
 procedure TLibNFeConfig.Travar;
 begin
   if Assigned(Owner) then
-  begin
-    with TACBrLibNFe(Owner) do
-      NFeDM.Travar;
-  end;
+    TACBrLibNFe(Owner).NFeDM.Travar;
 end;
 
 procedure TLibNFeConfig.Destravar;
 begin
   if Assigned(Owner) then
-  begin
-    with TACBrLibNFe(Owner) do
-      NFeDM.Destravar;
-  end;
-end;
-
-function TLibNFeConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring;
-begin
-  Result := '';
-
-  if (ASessao = CSessaoDFe) and (AChave = CChaveDadosPFX) then
-  begin
-    TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
-                                                          + ASessao + ',' + AChave + ',' +
-                                                          IfThen(PrecisaCriptografar(ASessao, AChave),
-                                                          StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
-    case Tipo of
-      tfGravar: Result := StringToB64Crypt(DecodeBase64(AValor), ChaveCrypt);
-      tfLer: Result := EncodeBase64(B64CryptToString(AValor, ChaveCrypt));
-    end;
-
-    TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor - Feito Result: ' + Result, logParanoico);
-  end
-  else
-    Result := inherited AjustarValor(Tipo, ASessao, AChave, AValor);
+    TACBrLibNFe(Owner).NFeDM.Destravar;
 end;
 
 end.

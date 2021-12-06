@@ -1019,8 +1019,7 @@ begin
 
   TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar(' + ASessao + ',' + AChave + ')', logParanoico);
 
-  Result := ((AChave = CChaveSenha) or (AChave = CChaveDadosPFX)) and
-            ((ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) or (ASessao = CSessaoDFe));
+  Result := (AChave = CChaveSenha) and ((ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) or (ASessao = CSessaoDFe));
 
   TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar - Feito Result: ' + BoolToStr(Result, True), logParanoico);
 end;
@@ -1034,6 +1033,7 @@ begin
   TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
                                                           + ASessao + ',' + AChave + ',' + IfThen(Criptografar,
                                                           StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
+
   Result := AValor;
   if Criptografar then
   begin

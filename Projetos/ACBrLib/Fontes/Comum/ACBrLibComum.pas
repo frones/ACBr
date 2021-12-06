@@ -516,8 +516,7 @@ begin
   end;
 end;
 
-function TACBrLib.ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-  var esTamanho: longint): longint;
+function TACBrLib.ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
 var
   Sessao, Chave, Valor: Ansistring;
 begin

@@ -251,6 +251,7 @@ function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
 function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
 function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
 function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String;
+function StringDecimalToFloat(const AValue: String; const DecimalDigits: SmallInt = 2): Double;
 Function StringToFloat(NumString : String): Double;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
@@ -1807,7 +1808,7 @@ begin
     NumString := StringReplace(NumString, DS, '', []);
 
   Result := StrToFloat(NumString);
-end ;
+end;
 
 {-----------------------------------------------------------------------------
   Converte um Double para string, SEM o separator decimal, considerando as
@@ -1820,6 +1821,25 @@ var
 begin
   Pow    := intpower(10, abs(DecimalDigits) );
   Result := IntToStr( Trunc( SimpleRoundTo( AValue * Pow ,0) ) ) ;
+end;
+
+{-----------------------------------------------------------------------------
+  Converte um String, SEM separador decimal, para Double, considerando a
+  parte final da String como as decimais. Ex: 10000 = "100,00"; 123 = "1,23"
+ ---------------------------------------------------------------------------- }
+function StringDecimalToFloat(const AValue: String; const DecimalDigits: SmallInt): Double;
+var
+  iTam: Integer;
+  sValue: String;
+begin
+  sValue := AValue;
+  iTam   := LengthNativeString(sValue);
+  if (iTam < DecimalDigits) then
+    sValue := StringOfChar('0', (DecimalDigits - iTam)) + sValue;
+
+  sValue := ReverseString(sValue);
+  Insert({$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator, sValue, DecimalDigits+1);
+  Result := StrToFloat(ReverseString(sValue));
 end;
 
 {-----------------------------------------------------------------------------

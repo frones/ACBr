@@ -60,7 +60,7 @@ type
   TDetFormato   = (tdetInteger,tdetMascara);
                   // tcEsp = String: somente numeros;
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
-                   tcDe6, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
+                   tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr);
   TpcnFormatoGravacao = (fgXML, fgTXT);
   TpcnTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada);

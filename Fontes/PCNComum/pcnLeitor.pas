@@ -69,6 +69,8 @@ type
     FArquivo: String;
     FGrupo: String;
     FNivel: TStringList;
+    FGroup: TStringList;
+    FFloatIsIntString: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -79,9 +81,12 @@ type
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStringStream): boolean; overload;
     function PosLast(const SubStr, S: String ): Integer;
+    procedure GroupStore;
+    procedure GroupRestore(ARemoveLast: Boolean = True);
   published
     property Arquivo: String read FArquivo write FArquivo;
     property Grupo: String read FGrupo write FGrupo;
+    property FloatIsIntString: Boolean read FFloatIsIntString write FFloatIsIntString;
   end;
 
 implementation
@@ -96,7 +101,10 @@ var
   i: integer;
 begin
   inherited Create;
+  FFloatIsIntString := False;
+
   FNivel := TStringList.Create;
+  FGroup := TStringList.Create;
   for i := 1 to 11 do
     FNivel.add('');
 end;
@@ -104,6 +112,7 @@ end;
 destructor TLeitor.Destroy;
 begin
   FNivel.Free;
+  FGroup.Free;
   inherited;
 end;
 
@@ -186,7 +195,7 @@ end;
 function TLeitor.rCampo(const Tipo: TpcnTipoCampo; TAG: string; const TAGparada: string = ''): variant;
 var
   ConteudoTag: string;
-  inicio, fim, inicioTAGparada: integer;
+  inicio, fim, inicioTAGparada, iDecimais: integer;
 begin
   Tag := UpperCase(Trim(TAG));
   inicio := pos('<' + Tag + '>', UpperCase(FGrupo));
@@ -285,12 +294,25 @@ begin
           result := 0;
       end;
 
-    tcDe2, tcDe3, tcDe4, tcDe6, tcDe8, tcDe10:
+    tcDe2, tcDe3, tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10:
       begin
-        if length(ConteudoTag) > 0 then
-          result := StringToFloatDef(ConteudoTag, 0)
+        if (FloatIsIntString) then
+        begin
+          iDecimais := 2;
+          case Tipo of
+            tcDe2:  iDecimais := 2;
+            tcDe3:  iDecimais := 3;
+            tcDe4:  iDecimais := 4;
+            tcDe5:  iDecimais := 5;
+            tcDe6:  iDecimais := 6;
+            tcDe7:  iDecimais := 7;
+            tcDe8:  iDecimais := 8;
+            tcDe10: iDecimais := 10;
+          end;
+          Result := StringDecimalToFloat(ConteudoTag, iDecimais);
+        end
         else
-          result := 0;
+          Result := StringToFloatDef(ConteudoTag, 0);
       end;
 
     tcEsp:
@@ -381,6 +403,23 @@ begin
     Result := P;
     P := RetornarPosEx(SubStr, S, P + 1);
   end;
+end;
+
+procedure TLeitor.GroupStore;
+begin
+  FGroup.Add(FGrupo);
+end;
+
+procedure TLeitor.GroupRestore(ARemoveLast: Boolean = True);
+begin
+  if (FGroup.Count > 0) then
+  begin
+    FGrupo := FGroup[Pred(FGroup.Count)];
+    if (ARemoveLast) then
+      FGroup.Delete(Pred(FGroup.Count));
+  end
+  else
+    FGrupo := FArquivo;
 end;
 
 end.

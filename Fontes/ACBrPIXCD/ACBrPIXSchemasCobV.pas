@@ -126,6 +126,7 @@ type
     fvalorPerc: Currency;
     procedure SetData(AValue: TDateTime);
   protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
@@ -486,6 +487,12 @@ begin
   if fdata = AValue then
     Exit;
   fdata := DateOf(AValue);
+end;
+
+procedure TACBrPIXDescontoDataFixa.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXDescontoDataFixa) then
+    Assign(TACBrPIXDescontoDataFixa(ASource));
 end;
 
 procedure TACBrPIXDescontoDataFixa.DoWriteToJSon(AJSon: TJsonObject);

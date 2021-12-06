@@ -65,6 +65,7 @@ type
     ftxId: String;
     procedure SetTxId(AValue: String);
   protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
@@ -104,6 +105,7 @@ type
     fdescricao: String;
     fid: Int64;
   protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
@@ -141,6 +143,7 @@ type
     ftxId: String;
     procedure SetTxId(AValue: String);
   protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
@@ -193,6 +196,7 @@ type
     ftxId: String;
     procedure SetTxId(AValue: String);
   protected
+    procedure AssignSchema(ASource: TACBrPIXSchema); override;
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
@@ -298,6 +302,12 @@ begin
   end;
 
   fTxId := s;
+end;
+
+procedure TACBrPIXLoteCobV.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXLoteCobV) then
+    Assign(TACBrPIXLoteCobV(ASource));
 end;
 
 procedure TACBrPIXLoteCobV.DoWriteToJSon(AJSon: TJsonObject);
@@ -411,6 +421,12 @@ begin
   fid := Source.id;
 end;
 
+procedure TACBrPIXLoteCobVConsultado.AssignSchema(ASource: TACBrPIXSchema);
+begin
+   if (ASource is TACBrPIXLoteCobVConsultado) then
+     Assign(TACBrPIXLoteCobVConsultado(ASource));
+end;
+
 procedure TACBrPIXLoteCobVConsultado.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
@@ -518,6 +534,12 @@ begin
   end;
 
   fTxId := s;
+end;
+
+procedure TACBrPIXCobVSolicitadaLote.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXCobVSolicitadaLote) then
+    Assign(TACBrPIXCobVSolicitadaLote(ASource));
 end;
 
 procedure TACBrPIXCobVSolicitadaLote.DoWriteToJSon(AJSon: TJsonObject);
@@ -663,6 +685,12 @@ begin
   end;
 
   fTxId := s;
+end;
+
+procedure TACBrPIXCobVRevisadaLote.AssignSchema(ASource: TACBrPIXSchema);
+begin
+  if (ASource is TACBrPIXCobVRevisadaLote) then
+    Assign(TACBrPIXCobVRevisadaLote(ASource));
 end;
 
 procedure TACBrPIXCobVRevisadaLote.DoWriteToJSon(AJSon: TJsonObject);

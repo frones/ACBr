@@ -80,19 +80,37 @@ type
     property liquidacao: TDateTime read fliquidacao write fliquidacao;
   end;
 
-  { TACBrPIXDevolucao }
+  { TACBrPIXDevolucaoSolicitada }
 
-  TACBrPIXDevolucao = class(TACBrPIXSchema)
+  TACBrPIXDevolucaoSolicitada = class(TACBrPIXSchema)
   private
     fdescricao: String;
+    fnatureza: TACBrPIXNaturezaDevolucao;
+    fvalor: Currency;
+    procedure SetDescricao(AValue: String);
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrPIXDevolucaoSolicitada);
+
+    property valor: Currency read fvalor write fvalor;
+    property natureza: TACBrPIXNaturezaDevolucao read fnatureza write fnatureza;
+    property descricao: String read fdescricao write SetDescricao;
+  end;
+
+  { TACBrPIXDevolucao }
+
+  TACBrPIXDevolucao = class(TACBrPIXDevolucaoSolicitada)
+  private
     fhorario: TACBrPIXHorario;
     fid: String;
     fmotivo: String;
-    fnatureza: TACBrPIXNaturezaDevolucao;
     frtrId: String;
     fstatus: TACBrPIXStatusDevolucao;
-    fvalor: Currency;
-    procedure SetDescricao(AValue: String);
     procedure Setid(AValue: String);
     procedure Setmotivo(AValue: String);
   protected
@@ -102,15 +120,12 @@ type
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
-    procedure Clear; override;
+    procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXDevolucao);
 
     property id: String read fid write Setid;
     property rtrId: String read frtrId write frtrId;
-    property valor: Currency read fvalor write fvalor;
-    property natureza: TACBrPIXNaturezaDevolucao read fnatureza write fnatureza;
-    property descricao: String read fdescricao write SetDescricao;
     property horario: TACBrPIXHorario read fhorario;
     property status: TACBrPIXStatusDevolucao read fstatus write fstatus;
     property motivo: String read fmotivo write Setmotivo;
@@ -153,7 +168,8 @@ end;
 
 function TACBrPIXHorario.IsEmpty: Boolean;
 begin
-  Result := (fsolicitacao = 0) and (fliquidacao = 0);
+  Result := (fsolicitacao = 0) and
+            (fliquidacao = 0);
 end;
 
 procedure TACBrPIXHorario.Assign(Source: TACBrPIXHorario);
@@ -165,11 +181,15 @@ end;
 procedure TACBrPIXHorario.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['solicitacao'] := DateTimeToIso8601( fsolicitacao );
-   AJSon.S['liquidacao'] := DateTimeToIso8601( fliquidacao );
+   if (fsolicitacao <> 0) then
+     AJSon.S['solicitacao'] := DateTimeToIso8601( fsolicitacao );
+   if (fliquidacao <> 0) then
+     AJSon.S['liquidacao'] := DateTimeToIso8601( fliquidacao );
   {$Else}
-   AJSon['solicitacao'].AsString := DateTimeToIso8601( fsolicitacao );
-   AJSon['liquidacao'].AsString := DateTimeToIso8601( fliquidacao );
+   if (fsolicitacao <> 0) then
+     AJSon['solicitacao'].AsString := DateTimeToIso8601( fsolicitacao );
+   if (fliquidacao <> 0) then
+     AJSon['liquidacao'].AsString := DateTimeToIso8601( fliquidacao );
   {$EndIf}
 end;
 
@@ -194,6 +214,75 @@ begin
   {$EndIf}
 end;
 
+{ TACBrPIXDevolucaoSolicitada }
+
+constructor TACBrPIXDevolucaoSolicitada.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TACBrPIXDevolucaoSolicitada.Clear;
+begin
+  fdescricao := '';
+  fnatureza := ndNENHUMA;
+  fvalor := 0;
+end;
+
+function TACBrPIXDevolucaoSolicitada.IsEmpty: Boolean;
+begin
+  Result := (fdescricao = '') and
+            (fnatureza = ndNENHUMA) and
+            (fvalor = 0);
+end;
+
+procedure TACBrPIXDevolucaoSolicitada.Assign(Source: TACBrPIXDevolucaoSolicitada
+  );
+begin
+  fdescricao := Source.descricao;
+  fnatureza := Source.natureza;
+  fvalor := Source.valor;
+end;
+
+procedure TACBrPIXDevolucaoSolicitada.SetDescricao(AValue: String);
+begin
+   if fdescricao = AValue then
+     Exit;
+   fdescricao := copy(AValue, 1, 140);
+end;
+
+procedure TACBrPIXDevolucaoSolicitada.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (fdescricao <> '') then
+     AJSon.S['descricao'] := fdescricao;
+   if (fnatureza <> ndNENHUMA) then
+     AJSon.S['natureza'] := PIXNaturezaDevolucaoToString(fnatureza);
+   if (fvalor <> 0) then
+     AJSon.S['valor'] := FormatarValorPIX(fvalor);
+  {$Else}
+   if (fdescricao <> '') then
+     AJSon['descricao'].AsString := fdescricao;
+   if (fnatureza <> ndNENHUMA) then
+     AJSon['natureza'].AsString := PIXNaturezaDevolucaoToString(fnatureza);
+   if (fvalor <> 0) then
+     AJSon['valor'].AsString := FormatarValorPIX(fvalor);
+  {$EndIf}
+end;
+
+procedure TACBrPIXDevolucaoSolicitada.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fdescricao := AJSon.S['descricao'];
+   fnatureza := StringToPIXNaturezaDevolucao( AJSon.S['natureza'] );
+   fvalor := StringToFloat( AJSon.S['valor']);
+  {$Else}
+   fdescricao := AJSon['descricao'].AsString;
+   fnatureza := StringToPIXNaturezaDevolucao(AJSon['natureza'].AsString);
+   fvalor := StringToFloat(AJSon['valor'].AsString);
+  {$EndIf}
+end;
+
 { TACBrPIXDevolucao }
 
 constructor TACBrPIXDevolucao.Create(const ObjectName: String);
@@ -211,25 +300,21 @@ end;
 
 procedure TACBrPIXDevolucao.Clear;
 begin
-  fdescricao := '';
+  inherited Clear;
   fid := '';
   fmotivo := '';
-  fnatureza := ndNENHUMA;
   frtrId := '';
   fstatus := stdNENHUM;
-  fvalor := 0;
   fhorario.Clear;
 end;
 
 function TACBrPIXDevolucao.IsEmpty: Boolean;
 begin
-  Result := (fdescricao = '') and
+  Result := inherited IsEmpty and
             (fid = '') and
             (fmotivo = '') and
-            (fnatureza = ndNENHUMA) and
             (frtrId = '') and
             (fstatus = stdNENHUM) and
-            (fvalor = 0) and
             fhorario.IsEmpty;
 end;
 
@@ -241,67 +326,54 @@ end;
 
 procedure TACBrPIXDevolucao.Assign(Source: TACBrPIXDevolucao);
 begin
-  fdescricao := Source.descricao;
+  inherited Assign(Source);
   fid := Source.id;
   fmotivo := Source.motivo;
-  fnatureza := Source.natureza;
   frtrId := Source.rtrId;
   fstatus := Source.status;
-  fvalor := Source.valor;
   fhorario.Assign(Source.horario);
 end;
 
 procedure TACBrPIXDevolucao.DoWriteToJSon(AJSon: TJsonObject);
 begin
+  inherited DoWriteToJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['descricao'] := fdescricao;
-   AJSon.S['id'] := fid;
-   AJSon.S['motivo'] := fmotivo;
-   AJSon.S['natureza'] := PIXNaturezaDevolucaoToString(fnatureza);
-   AJSon.S['rtrId'] := frtrId;
-   AJSon.S['status'] := PIXStatusDevolucaoToString(fstatus);
-   AJSon.S['valor'] := FormatarValorPIX(fvalor);
-   fhorario.WriteToJSon(AJSon);
+   if (fid <> '') then
+     AJSon.S['id'] := fid;
+   if (fmotivo <> '') then
+     AJSon.S['motivo'] := fmotivo;
+   if (frtrId <> '') then
+     AJSon.S['rtrId'] := frtrId;
+   if (fstatus <> stdNENHUM) then
+     AJSon.S['status'] := PIXStatusDevolucaoToString(fstatus);
   {$Else}
-   AJSon['descricao'].AsString := fdescricao;
-   AJSon['id'].AsString := fid;
-   AJSon['motivo'].AsString := fmotivo;
-   AJSon['natureza'].AsString := PIXNaturezaDevolucaoToString(fnatureza);
-   AJSon['rtrId'].AsString := frtrId;
-   AJSon['status'].AsString := PIXStatusDevolucaoToString(fstatus);
-   AJSon['valor'].AsString := FormatarValorPIX(fvalor);
-   fhorario.WriteToJSon(AJSon);
+   if (fid <> '') then
+     AJSon['id'].AsString := fid;
+   if (fmotivo <> '') then
+     AJSon['motivo'].AsString := fmotivo;
+   if (frtrId <> '') then
+     AJSon['rtrId'].AsString := frtrId;
+   if (fstatus <> stdNENHUM) then
+     AJSon['status'].AsString := PIXStatusDevolucaoToString(fstatus);
   {$EndIf}
+  fhorario.WriteToJSon(AJSon);
 end;
 
 procedure TACBrPIXDevolucao.DoReadFromJSon(AJSon: TJsonObject);
 begin
+  inherited DoReadFromJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fdescricao := AJSon.S['descricao'];
    fid := AJSon.S['id'];
    fmotivo := AJSon.S['motivo'];
-   fnatureza := StringToPIXNaturezaDevolucao( AJSon.S['natureza'] );
    frtrId := AJSon.S['rtrId'];
    fstatus := StringToPIXStatusDevolucao( AJSon.S['status'] );
-   fvalor := StringToFloat( AJSon.S['valor']);
-   fhorario.ReadFromJSon(AJSon);
   {$Else}
-   fdescricao := AJSon['descricao'].AsString;
    fid := AJSon['id'].AsString;
    fmotivo := AJSon['motivo'].AsString;
-   fnatureza := StringToPIXNaturezaDevolucao(AJSon['natureza'].AsString);
    frtrId := AJSon['rtrId'].AsString;
    fstatus := StringToPIXStatusDevolucao(AJSon['status'].AsString);
-   fvalor := StringToFloat(AJSon['valor'].AsString);
-   fhorario.ReadFromJSon(AJSon);
   {$EndIf}
-end;
-
-procedure TACBrPIXDevolucao.SetDescricao(AValue: String);
-begin
-  if fdescricao = AValue then
-    Exit;
-  fdescricao := copy(AValue, 1, 140);
+  fhorario.ReadFromJSon(AJSon);
 end;
 
 procedure TACBrPIXDevolucao.Setid(AValue: String);

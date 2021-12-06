@@ -1238,7 +1238,7 @@ begin
   DeveInstalarOpenSSL            := True;
   DeveInstalarXMLSec             := False;
   UsarCargaTardiaDLL             := True;
-  RemoverStringCastWarnings      := False; //Efeito colateral em delphis antigos quando ativado
+  RemoverStringCastWarnings      := True;
   DeveSobrescreverDllsExistentes := False;
 end;
 

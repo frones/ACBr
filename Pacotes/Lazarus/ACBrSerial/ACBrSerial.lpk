@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="87">
+    <Files Count="88">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -378,6 +378,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALCapital.pas"/>
         <UnitName Value="ACBrBALCapital"/>
       </Item87>
+      <Item88>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALLenkeLK2500.pas"/>
+        <UnitName Value="ACBrBALLenkeLK2500"/>
+      </Item88>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

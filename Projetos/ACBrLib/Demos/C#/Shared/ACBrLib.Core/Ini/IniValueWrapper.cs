@@ -34,9 +34,9 @@ namespace ACBrLib.Core
 
             switch (value)
             {
-                case decimal dValue: return string.Format(NumberFormatInfo, "{0:n2}", dValue); ;
-                case double dbValue: return string.Format(NumberFormatInfo, "{0:n2}", dbValue);
-                case float fValue: return string.Format(NumberFormatInfo, "{0:n2}", fValue); ;
+                case decimal dValue: return dValue.ToString(NumberFormatInfo);
+                case double dbValue: return dbValue.ToString(NumberFormatInfo);
+                case float fValue: return fValue.ToString(NumberFormatInfo); ;
                 case DateTime dtValue: return dtValue.TimeOfDay.TotalSeconds == 0 ? $"{dtValue:dd/MM/yyyy}" : $"{dtValue:dd/MM/yyyy HH:mm:ss}"; ;
                 case TimeSpan tmValue: return $"{tmValue:HH:mm:ss}";
                 case bool boValue: return boValue ? "1" : "0";

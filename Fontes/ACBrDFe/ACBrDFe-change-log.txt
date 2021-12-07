@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2021
+-- ACBrXmlBase/ACBrXmlDocument --
+[*] Melhoria na leitura de valores decimais.
+  Por: Italo Giurizzato Junior
+
 11/11/2021
 -- ACBrXmlBase --
 [*] Melhoria na leitura de data de competencia.

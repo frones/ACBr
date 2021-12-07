@@ -47,8 +47,8 @@ type
                         taSomenteParaNaoAssinada);
 
   TACBrTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
-                    tcDe6, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
-                    tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
+                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
+                    tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
 
 const
   LineBreak = #13#10;
@@ -230,6 +230,7 @@ end;
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 var
   ConteudoTag: string;
+  iDecimais: Integer;
 begin
   if not Assigned(ANode) or (ANode = nil) then
     ConteudoTag := ''
@@ -281,7 +282,9 @@ begin
     tcHor:
       begin
         if length(ConteudoTag) > 0 then
-          result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
+          result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)),
+                               StrToInt(copy(ConteudoTag, 4, 2)),
+                               StrToInt(copy(ConteudoTag, 7, 2)), 0)
         else
           result := 0;
       end;
@@ -289,7 +292,9 @@ begin
     tcDatCFe:
       begin
         if length(ConteudoTag) > 0 then
-          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)), StrToInt(copy(ConteudoTag, 5, 2)), StrToInt(copy(ConteudoTag, 7, 2)))
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)),
+                               StrToInt(copy(ConteudoTag, 5, 2)),
+                               StrToInt(copy(ConteudoTag, 7, 2)))
         else
           result := 0;
       end;
@@ -297,7 +302,9 @@ begin
     tcHorCFe:
       begin
         if length(ConteudoTag) > 0 then
-          result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 3, 2)), StrToInt(copy(ConteudoTag, 5, 2)), 0)
+          result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)),
+                               StrToInt(copy(ConteudoTag, 3, 2)),
+                               StrToInt(copy(ConteudoTag, 5, 2)), 0)
         else
           result := 0;
       end;
@@ -305,24 +312,43 @@ begin
     tcDatHorCFe:
       begin
         if length(ConteudoTag) > 0 then
-          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2))) +
-                    EncodeTime(StrToInt(copy(ConteudoTag, 9, 2)), StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 13, 2)), 0)
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)),
+                               StrToInt(copy(ConteudoTag, 05, 2)),
+                               StrToInt(copy(ConteudoTag, 07, 2))) +
+                    EncodeTime(StrToInt(copy(ConteudoTag, 9, 2)),
+                               StrToInt(copy(ConteudoTag, 11, 2)),
+                               StrToInt(copy(ConteudoTag, 13, 2)), 0)
         else
           result := 0;
       end;
 
-    tcDe2, tcDe3, tcDe4, tcDe6, tcDe8, tcDe10:
+    tcDe2, tcDe3, tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10:
       begin
-        if length(ConteudoTag) > 0 then
-          result := StringToFloatDef(ConteudoTag, 0)
+        if (ANode.FloatIsIntString) then
+        begin
+          case Tipo of
+            tcDe2:  iDecimais := 2;
+            tcDe3:  iDecimais := 3;
+            tcDe4:  iDecimais := 4;
+            tcDe5:  iDecimais := 5;
+            tcDe6:  iDecimais := 6;
+            tcDe7:  iDecimais := 7;
+            tcDe8:  iDecimais := 8;
+            tcDe10: iDecimais := 10;
+          else
+            iDecimais := 2;
+          end;
+
+          Result := StringDecimalToFloat(ConteudoTag, iDecimais);
+        end
         else
-          result := 0;
+          Result := StringToFloatDef(ConteudoTag, 0);
       end;
 
     tcInt:
       begin
         if length(ConteudoTag) > 0 then
-          result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)), 0)
+          result := StrToIntDef(OnlyNumber(ConteudoTag), 0)
         else
           result := 0;
       end;
@@ -348,7 +374,8 @@ begin
       end
 
   else
-    raise Exception.Create('Node <' + ANode.Name + '> com conteúdo inválido. '+ ConteudoTag);
+    raise Exception.Create('Node <' + ANode.Name + '> com conteúdo inválido. ' +
+                           ConteudoTag);
   end;
 end;
 

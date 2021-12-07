@@ -1102,6 +1102,22 @@ begin
         FieldByName('FonteCargaTributaria').AsString := FonteCargaTributaria;
       end;
     end;
+
+    with ANFSe.ValoresNfse do
+    begin
+      if ValorIss > 0 then
+      begin
+        FieldByName('ValorServicos').AsFloat          := BaseCalculo;
+        FieldByName('ValorIss').AsFloat               := ValorIss;
+        FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
+        FieldByName('Aliquota').AsFloat               := Aliquota;
+
+        if ValorLiquidoNfse = 0 then
+          ValorLiquidoNfse:= BaseCalculo;
+
+        FieldByName('ValorLiquidoNfse').AsFloat       := ValorLiquidoNfse;
+      end;
+    end;
     Post;
   end;
 end;

@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 07/12/2021
+-- ACBrNFSeXServicos --
+[*] Incluida a URL de homologação da cidade Governador Valadares/MG.
+   Por: Douglas Santos Miiler
+[*] A cidade Cachoeirinha/RS trocou de provedor.
+   Por: Italo Giurizzato Junior
 -- SimplISS.Provider/SimplISS.GravarXml --
 [*] Possível correção para o problema de assinatura inválida.
    Por: Italo Giurizzato Junior

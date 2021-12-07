@@ -84,3 +84,25 @@ Itau   //Campos para homologacao de acordo com dados fornecidos pelo banco
 
     ACBrBoleto1.Cedente.CodigoCedente:= ......
     ACBrBoleto1.Cedente.Modalidade:= '19';     
+
+
+-------------------------------------------------------------------------------------------
+	
+Sicredi   //Configuração do componente ( Não há modo de homologação.. é tudo em produção )
+
+- Solicitar para o gerente da conta liberar o produto COBRANÇA ONLINE
+- Entrar na conta, no meu COBRANÇA e ir na opção CÓDIGO DE ACESSO->GERAR. Será gerado um token.
+
+    ACBrBoleto1.Cedente.CedenteWS.ClientID:= ( token gerado conforme explicado acima )
+	
+	Somente essa opção é necessária, pois a cada requisição o ACBR envia esse token pro banco e
+	recebe outro token para a operação solicitada.
+    
+	-- Demais configurações como de costume nos outros bancos
+	-- Recomendado utilizar arquivo pfx com openSSL
+	//	
+	ACBrBoleto.WebServices.SSCryptLib          := cryOpenSSL
+	ACBrBoleto.WebServices.SSLHTTPLib          := httpOpenSSL
+	ACBrBoleto.WebServices.SSLType             := LT_TLSv1_2
+	ACBrBoleto.WebServices.TimeOut             := 30000
+	ACBrBoleto.WebServices.UseCertificateHTTP  := False

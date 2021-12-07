@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/12/2021
+-- SimplISS.Provider/SimplISS.GravarXml --
+[*] Possível correção para o problema de assinatura inválida.
+   Por: Italo Giurizzato Junior
+
 03/12/2021
 -- ACBrNFSeXServicos --
 [*] Correção na URL de Produção de Linhares/ES.

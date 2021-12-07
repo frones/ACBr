@@ -126,7 +126,8 @@ begin
   NrOcorrDescIncond := 1;
   NrOcorrDescCond := 1;
   NrOcorrCodigoPaisServico := 1;
-  NrOcorrValorISS := -1;
+
+  GerarIDRps := True;
 end;
 
 end.

@@ -92,6 +92,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function PrepararRpsParaLote(const aXml: string): string; override;
   end;
 
 implementation
@@ -380,6 +381,7 @@ begin
   end;
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+  ConfigMsgDados.GerarNSLoteRps := True;
 end;
 
 function TACBrNFSeProviderSimplISS203.CriarGeradorXml(
@@ -412,6 +414,12 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderSimplISS203.PrepararRpsParaLote(
+  const aXml: string): string;
+begin
+  Result := aXml;
 end;
 
 { TACBrNFSeXWebserviceSimplISS203 }

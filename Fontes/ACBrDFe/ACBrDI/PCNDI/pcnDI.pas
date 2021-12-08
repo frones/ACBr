@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
 { eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{ Direitos Autorais Reservados (c) 2021 Giovane Preis                          }
 {                                       Daniel Simoes de Almeida               }
-{                                       André Ferreira de Moraes               }
+{                                                                              }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }

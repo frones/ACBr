@@ -409,6 +409,8 @@ begin
   FCodigoTexto2    := 0;
   FCodigoTexto3    := 0;
   FCodigoInfoNutr  := 0;
+  FImpValidade     := 1;
+  FImpEmbalagem    := 1;
 end;
 
 destructor TACBrCargaBalItem.Destroy;

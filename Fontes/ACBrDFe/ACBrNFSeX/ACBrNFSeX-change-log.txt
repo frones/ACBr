@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 08/12/2021
+-- IPM.GravarXml --
+[*] Incluido a geração da tag <data_fato_gerador>.
+   Por: Sandro Felipe Adad
+-- IPM.Provider --
+[*] Possível correção para o problema de violação de acesso ao consultar o lote.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Ajustes nas URLs do provedor Agili e remoção das URLs de homologação dos
     provedores que não tem o ambiente de homologação.

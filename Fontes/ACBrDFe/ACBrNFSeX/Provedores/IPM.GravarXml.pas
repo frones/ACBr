@@ -431,6 +431,10 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 1, 1, 'C', ''));
   end;
 
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'data_fato_gerador', 1, 10, 1,
+                FormatDateTimeBr(NFSe.Competencia, 'dd/mm/yyyy'), DSC_DEMI));
+
   Result.AppendChild(AddNode(tcDe2, '#1', 'valor_total', 1, 15, 1,
                              NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO));
 

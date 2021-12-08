@@ -54,12 +54,15 @@ type
   TACBrNFeDANFCeFortesA4 = class(TACBrNFeDANFCEClass)
   private
     FpNFe: TNFe;
-    procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFortesA4Filtro = fiNenhum);
+    procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFortesA4Filtro = fiNenhum;
+      const AStream: TStream = nil);
   public
     procedure ImprimirDANFE(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
-    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
+    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil); override;
+    procedure ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe = nil); override;
+    procedure ImprimirDANFEResumidoPDF(AStream: TStream; ANFe: TNFe = nil); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -410,9 +413,6 @@ procedure TfrmACBrDANFCeFortesFrA4.RLBand10BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   PrintIt := StringReplace(Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl), ';', #13, [rfReplaceAll] ) <> '';
-
-//  self.memDadosAdc.Lines.Clear;
-//  self.memDadosAdc.Lines.Add(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand11BeforePrint(Sender: TObject;
@@ -690,10 +690,6 @@ begin
   Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vNF, 'R$ ,0.00;R$ -,0.00');
 end;
 
-
-
-
-
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel45BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
@@ -818,6 +814,113 @@ begin
   RecordAction := raUseIt ;
 end;
 
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+
+  Function ManterValorTributosLinha : String;
+  Var
+    sFederal, sEstadual , sMunicipal : String;
+    dTemp : Double;
+  begin
+    With self.FACBrNFeDANFCeFortesA4 do
+    begin
+      dTemp := ( vTribFed + vTribEst + vTribMun );
+      if ( dTemp > 0 ) then
+      begin
+        Result      := 'Tributos aproxidamente R$:';
+
+        sFederal    := ' Federal e ' ;
+        sEstadual   := ' Estadual';
+        sMunicipal  := ' municipal';
+
+        if ( vTribEst > 0 ) and ( vTribMun > 0 ) then
+        begin
+          sFederal    := ' Federal, ' ;
+          sEstadual   := ' Estadual e ' ;
+        end;
+
+        if vTribFed > 0 then
+          Result := Result + ' ' + FormatFloatBr( vTribFed,',0.00') + sFederal ;
+        if vTribEst > 0 then
+          Result := Result + ' ' + FormatFloatBr( vTribEst,',0.00') + sEstadual;
+        if vTribMun > 0 then
+          Result := Result + ' ' + FormatFloatBr( vTribMun,',0.00') + sMunicipal;
+      end
+      else
+        Result := '';
+
+    end;
+  end;
+begin
+  if (FACBrNFeDANFCeFortesA4.ImprimeTributos = trbNenhum) then
+    Text := ''
+  else if (FACBrNFeDANFCeFortesA4.ImprimeTributos = trbNormal) then
+    Text := ManterValorTributosLinha
+  else
+    Text := ACBrStr('Você pagou aproximadamente : ');
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel51BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  With Self.FACBrNFeDANFCeFortesA4 do
+  begin
+    if  ( vTribFed > 0 ) and
+        ( vTribEst > 0 ) and
+        ( vTribMun > 0 ) then
+          Text :=  ACBrStr('pelos produtos/serviços :')
+    else
+    if  ( vTribFed > 0 ) and
+        ( vTribEst = 0 ) and
+        ( vTribMun > 0 ) then
+          Text :=  ACBrStr('pelos serviços :')
+    else
+    if  ( vTribFed > 0 ) and
+        ( vTribEst > 0 ) and
+        ( vTribMun = 0 ) then
+          Text :=  ACBrStr('pelos produtos :')
+  end;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel52BeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+  AText := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vFrete, 'R$ ,0.00;R$ -,0.00');
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RlPelosProdutosBeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+Var
+  dPelosProdutos : Double;
+begin
+  With self.FACBrNFeDANFCeFortesA4 do
+  begin
+    With FpNFe.Total.ICMSTot do
+      dPelosProdutos := (vProd - vDesc + vOutro + vFrete); // Valor Total
+
+    dPelosProdutos := dPelosProdutos - ( vTribFed + vTribEst + vTribMun) ;
+  end;
+  Text  := FormatFloatBr( dPelosProdutos, 'R$ ,0.00' );
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel50BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+Var
+  sTemp : String;
+begin
+  sTemp := '';
+  with FACBrNFeDANFCeFortesA4 do
+  begin
+    if ( FpNFe.Total.ICMSTot.vTotTrib > 0 ) then
+      sTemp := ACBrStr('Informação dos Tributos Totais (Lei Federal 12.741/2012 ) ')+
+                FormatFloatBr( FpNFe.Total.ICMSTot.vTotTrib, 'R$ ,0.00');
+    if Trim(FonteTributos) <> '' then
+      sTemp := sTemp + 'Fonte : ' + FonteTributos+'  '+ ChaveTributos+' ';
+  end;
+  Text := sTemp;
+
+end;
+
 { TACBrNFeDANFCeFortesA4 }
 
 constructor TACBrNFeDANFCeFortesA4.Create(AOwner: TComponent);
@@ -831,8 +934,8 @@ begin
   inherited;
 end;
 
-procedure TACBrNFeDANFCeFortesA4.Imprimir(const DanfeResumido: Boolean;
-  const AFiltro: TACBrNFeDANFCeFortesA4Filtro);
+procedure TACBrNFeDANFCeFortesA4.Imprimir(const DanfeResumido: Boolean; const AFiltro: TACBrNFeDANFCeFortesA4Filtro;
+  const  AStream: TStream);
 var
   frACBrNFeDANFCeFortesFr: TfrmACBrDANFCeFortesFrA4;
   RLLayout: TRLReport;
@@ -887,10 +990,18 @@ begin
             RLLayout.JobTitle := OnlyNumber(FpNFe.infNFe.ID) + IfThen(Cancelada, '-cancelado', '')+'-nfe.xml';
 
           RLFiltro.ShowProgress := FACBrNFeDANFCeFortesA4.MostraStatus;
-          RLFiltro.FileName := PathWithDelim(FACBrNFeDANFCeFortesA4.PathPDF) +
-                               ChangeFileExt( RLLayout.JobTitle, '.pdf');
-          RLFiltro.FilterPages( RLLayout.Pages );
-          FACBrNFeDANFCeFortesA4.FPArquivoPDF := RLFiltro.FileName;
+
+          if Assigned(AStream) then
+          begin
+            RLPDFFilter1.FilterPages(RLLayout.Pages, AStream);
+          end
+          else
+          begin
+            RLFiltro.FileName := PathWithDelim(FACBrNFeDANFCeFortesA4.PathPDF) +
+                                 ChangeFileExt( RLLayout.JobTitle, '.pdf');
+            RLFiltro.FilterPages( RLLayout.Pages );
+            FACBrNFeDANFCeFortesA4.FPArquivoPDF := RLFiltro.FileName;
+          end;
         end;
       end;
     end;
@@ -958,115 +1069,33 @@ begin
   Imprimir(True, fiPDF);
 end;
 
-
-procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
-  var Text: string; var PrintIt: Boolean);
-
-  Function ManterValorTributosLinha : String;
-  Var
-    sFederal, sEstadual , sMunicipal : String;
-    dTemp : Double;
-  begin
-    With self.FACBrNFeDANFCeFortesA4 do
-    begin
-      dTemp := ( vTribFed + vTribEst + vTribMun );
-      if ( dTemp > 0 ) then
-      begin
-        Result      := 'Tributos aproxidamente R$:';
-
-        sFederal    := ' Federal e ' ;
-        sEstadual   := ' Estadual';
-        sMunicipal  := ' municipal';
-
-        if ( vTribEst > 0 ) and ( vTribMun > 0 ) then
-        begin
-          sFederal    := ' Federal, ' ;
-          sEstadual   := ' Estadual e ' ;
-        end;
-
-        if vTribFed > 0 then
-          Result := Result + ' ' + FormatFloatBr( vTribFed,',0.00') + sFederal ;
-        if vTribEst > 0 then
-          Result := Result + ' ' + FormatFloatBr( vTribEst,',0.00') + sEstadual;
-        if vTribMun > 0 then
-          Result := Result + ' ' + FormatFloatBr( vTribMun,',0.00') + sMunicipal;
-      end
-      else
-        Result := '';
-
-    end;
-  end;
+procedure TACBrNFeDANFCeFortesA4.ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe = nil);
 begin
-  if (FACBrNFeDANFCeFortesA4.ImprimeTributos = trbNenhum) then
-    Text := ''
-  else if (FACBrNFeDANFCeFortesA4.ImprimeTributos = trbNormal) then
-    Text := ManterValorTributosLinha
+  if ANFe = nil then
+   begin
+     if not Assigned(ACBrNFe) then
+        raise Exception.Create('Componente ACBrNFe não atribuí­do');
+
+     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+   end
   else
-    Text := ACBrStr('Você pagou aproximadamente : ');
+    FpNFe := ANFe;
+  Imprimir(False, fiPDF, AStream);
 end;
 
-
-procedure TfrmACBrDANFCeFortesFrA4.RLLabel51BeforePrint(Sender: TObject;
-  var Text: string; var PrintIt: Boolean);
+procedure TACBrNFeDANFCeFortesA4.ImprimirDANFEResumidoPDF(AStream: TStream; ANFe: TNFe = nil);
 begin
-  With Self.FACBrNFeDANFCeFortesA4 do
-  begin
-    if  ( vTribFed > 0 ) and
-        ( vTribEst > 0 ) and
-        ( vTribMun > 0 ) then
-          Text :=  ACBrStr('pelos produtos/serviços :')
-    else
-    if  ( vTribFed > 0 ) and
-        ( vTribEst = 0 ) and
-        ( vTribMun > 0 ) then
-          Text :=  ACBrStr('pelos serviços :')
-    else
-    if  ( vTribFed > 0 ) and
-        ( vTribEst > 0 ) and
-        ( vTribMun = 0 ) then
-          Text :=  ACBrStr('pelos produtos :')
-  end;
-end;
+  if ANFe = nil then
+   begin
+     if not Assigned(ACBrNFe) then
+        raise Exception.Create('Componente ACBrNFe não atribuí­do');
 
+     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+   end
+  else
+    FpNFe := ANFe;
 
-procedure TfrmACBrDANFCeFortesFrA4.RLLabel52BeforePrint(Sender: TObject;
-  var AText: string; var PrintIt: Boolean);
-begin
-  AText := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vFrete, 'R$ ,0.00;R$ -,0.00');
-end;
-
-procedure TfrmACBrDANFCeFortesFrA4.RlPelosProdutosBeforePrint(Sender: TObject;
-  var Text: string; var PrintIt: Boolean);
-Var
-  dPelosProdutos : Double;
-begin
-  With self.FACBrNFeDANFCeFortesA4 do
-  begin
-    With FpNFe.Total.ICMSTot do
-      dPelosProdutos := (vProd - vDesc + vOutro + vFrete); // Valor Total
-
-    dPelosProdutos := dPelosProdutos - ( vTribFed + vTribEst + vTribMun) ;
-  end;
-  Text  := FormatFloatBr( dPelosProdutos, 'R$ ,0.00' );
-end;
-
-
-procedure TfrmACBrDANFCeFortesFrA4.RLLabel50BeforePrint(Sender: TObject;
-  var Text: string; var PrintIt: Boolean);
-Var
-  sTemp : String;
-begin
-  sTemp := '';
-  with FACBrNFeDANFCeFortesA4 do
-  begin
-    if ( FpNFe.Total.ICMSTot.vTotTrib > 0 ) then
-      sTemp := ACBrStr('Informação dos Tributos Totais (Lei Federal 12.741/2012 ) ')+
-                FormatFloatBr( FpNFe.Total.ICMSTot.vTotTrib, 'R$ ,0.00');
-    if Trim(FonteTributos) <> '' then
-      sTemp := sTemp + 'Fonte : ' + FonteTributos+'  '+ ChaveTributos+' ';
-  end;
-  Text := sTemp;
-
+  Imprimir(True, fiPDF, AStream);
 end;
 
 end.

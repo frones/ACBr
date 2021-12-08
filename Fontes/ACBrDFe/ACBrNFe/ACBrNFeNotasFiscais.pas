@@ -90,8 +90,8 @@ type
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
     procedure Imprimir;
-    procedure ImprimirPDF;
-    function StreamPDF(AStream: TStream): Boolean;
+    procedure ImprimirPDF; overload;
+    function ImprimirPDF(AStream: TStream): Boolean; overload;
 
     procedure Assinar;
     procedure Validar;
@@ -161,9 +161,10 @@ type
     procedure Imprimir;
     procedure ImprimirCancelado;
     procedure ImprimirResumido;
-    procedure ImprimirPDF;
-    function StreamPDF(AStream: TStream): Boolean;
-    procedure ImprimirResumidoPDF;
+    procedure ImprimirPDF; overload;
+    procedure ImprimirPDF(AStream: TStream); overload;
+    procedure ImprimirResumidoPDF; overload;
+    procedure ImprimirResumidoPDF(AStream: TStream); overload;
     function Add: NotaFiscal;
     function Insert(Index: integer): NotaFiscal;
 
@@ -260,7 +261,7 @@ begin
   end;
 end;
 
-function NotaFiscal.StreamPDF(AStream: TStream): Boolean;
+function NotaFiscal.ImprimirPDF(AStream: TStream): Boolean;
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
@@ -269,7 +270,7 @@ begin
     else
     begin
       AStream.Size := 0;
-      DANFE.StreamDANFEPDF(NFe, AStream);
+      DANFE.ImprimirDANFEPDF(AStream, NFe);
       Result := True;
     end;
   end;
@@ -3819,7 +3820,6 @@ begin
     FXMLAssinado := '';
 end;
 
-
 { TNotasFiscais }
 
 constructor TNotasFiscais.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -3891,21 +3891,25 @@ end;
 procedure TNotasFiscais.ImprimirPDF;
 begin
   VerificarDANFE;
-  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEPDF(nil);
+  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEPDF;
 end;
 
-function TNotasFiscais.StreamPDF(AStream: TStream): Boolean;
+procedure TNotasFiscais.ImprimirPDF(AStream: TStream);
 begin
   VerificarDANFE;
-  AStream.Size := 0;
-  TACBrNFe(FACBrNFe).DANFE.StreamDANFEPDF(nil, AStream);
-  Result := True;
+  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEPDF(AStream);
 end;
 
 procedure TNotasFiscais.ImprimirResumidoPDF;
 begin
   VerificarDANFE;
-  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEResumidoPDF(nil);
+  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEResumidoPDF;
+end;
+
+procedure TNotasFiscais.ImprimirResumidoPDF(AStream: TStream);
+begin
+  VerificarDANFE;
+  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFEResumidoPDF(AStream);
 end;
 
 function TNotasFiscais.Insert(Index: integer): NotaFiscal;

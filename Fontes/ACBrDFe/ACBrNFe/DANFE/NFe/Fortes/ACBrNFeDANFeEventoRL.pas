@@ -64,7 +64,11 @@ type
   public
     { Public declarations }
     class procedure Imprimir(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; ANFe: TNFe = nil);
-    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; const AFile: String; ANFe: TNFe = nil);
+    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; const AFile: String;
+                              ANFe: TNFe = nil); overload;
+    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; AStream: TStream;
+                              ANFe: TNFe = nil); overload;
+
   end;
 
 implementation
@@ -78,7 +82,8 @@ uses
   {$R *.lfm}
 {$EndIf}
 
-class procedure TfrlDANFeEventoRL.Imprimir(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; ANFe: TNFe = nil);
+class procedure TfrlDANFeEventoRL.Imprimir(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem;
+                                           ANFe: TNFe = nil);
 var
   DANFeReport: TfrlDANFeEventoRL;
 begin
@@ -110,7 +115,8 @@ begin
   end;
 end;
 
-class procedure TfrlDANFeEventoRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; const AFile: String; ANFe: TNFe = nil);
+class procedure TfrlDANFeEventoRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem;
+                                            const AFile: String; ANFe: TNFe = nil);
 var
   DANFeReport: TfrlDANFeEventoRL;
 begin
@@ -145,6 +151,49 @@ begin
 
     DANFeReport.RLEvento.Prepare;
     DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLEvento.Pages);
+  finally
+    DANFeReport.Free;
+  end;
+end;
+
+class procedure TfrlDANFeEventoRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem;
+                                            AStream: TStream; ANFe: TNFe = nil);
+var
+  DANFeReport: TfrlDANFeEventoRL;
+begin
+  DANFeReport := Create(nil);
+  try;
+    DANFeReport.fpDANFe := ADANFe;
+    DANFeReport.fpEventoNFe := FEventoNFe;
+
+    if ADANFe.AlterarEscalaPadrao then
+    begin
+      DANFeReport.Scaled := False;
+      DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
+    end;
+
+    TDFeReportFortes.AjustarReport(DANFeReport.RLEvento, DANFeReport.fpDANFe);
+    DANFeReport.RLPDFFilter1.ShowProgress := DANFeReport.fpDANFe.MostraStatus;
+
+    if (ANFe <> nil) then
+    begin
+      DANFeReport.fpNFe := ANFe;
+
+      with DANFeReport.RLPDFFilter1.DocumentInfo do
+      begin
+        Title := ACBrStr('Evento - Nota fiscal nº ') +
+          FormatFloat('000,000,000', DANFeReport.fpNFe.Ide.nNF);
+        KeyWords := ACBrStr(
+          'Número:' + FormatFloat('000,000,000', DANFeReport.fpNFe.Ide.nNF) +
+          '; Data de emissão: ' + FormatDateBr(DANFeReport.fpNFe.Ide.dEmi) +
+          '; Destinatário: ' + DANFeReport.fpNFe.Dest.xNome +
+          '; CNPJ: ' + DANFeReport.fpNFe.Dest.CNPJCPF +
+          '; Valor total: ' + FormatFloatBr(DANFeReport.fpNFe.Total.ICMSTot.vNF));
+      end;
+    end;
+
+    DANFeReport.RLEvento.Prepare;
+    DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLEvento.Pages, AStream);
   finally
     DANFeReport.Free;
   end;

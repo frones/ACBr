@@ -66,13 +66,16 @@ type
 
     procedure ImprimirInterno(const Cancelado: Boolean;
       const DanfeResumido : Boolean = False;
-      const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum);
+      const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum;
+      const AStream: TStream = nil);
   protected
     FpNFe: TNFe;
 
     procedure AtribuirNFe(NFE: TNFe = Nil);
-    procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum);
-    procedure ImprimirCancelado(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum);
+    procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum;
+                       const AStream: TStream = nil);
+    procedure ImprimirCancelado(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum;
+                                const AStream: TStream = nil);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -80,10 +83,13 @@ type
     procedure ImprimirDANFE(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
-    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
+    procedure ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe = nil); override;
+    procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil); override;
+    procedure ImprimirDANFEResumidoPDF(AStream: TStream; ANFe: TNFe = nil); override;
     procedure ImprimirDANFECancelado(NFE : TNFe = nil);override;
     procedure ImprimirEVENTO(NFE : TNFe = nil);override;
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
+    procedure ImprimirEVENTOPDF(AStream: TStream; NFE: TNFe = nil); override;
   published
     property TamanhoLogoHeight: Integer read FTamanhoLogoHeight write FTamanhoLogoHeight default 50;
     property TamanhoLogoWidth: Integer read FTamanhoLogoWidth write FTamanhoLogoWidth default 77;
@@ -605,7 +611,6 @@ begin
   Eof := (RecNo > ACBrNFeDANFCeFortes.FpNFe.pag.Count) ;
   RecordAction := raUseIt ;
 end;
-
 
 function TACBrNFeDANFCeFortesFr.CompoemEnderecoCFe: String;
 var
@@ -1301,6 +1306,12 @@ begin
   ImprimirCancelado(True, fiPDF);
 end;
 
+procedure TACBrNFeDANFCeFortes.ImprimirEVENTOPDF(AStream: TStream; NFE: TNFe = nil);
+begin
+  AtribuirNFe(NFE);
+  ImprimirCancelado(True, fiPDF, AStream);
+end;
+
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumido(NFE: TNFe);
 begin
   AtribuirNFe(NFE);
@@ -1313,26 +1324,38 @@ begin
   Imprimir(False, fiPDF);
 end;
 
+procedure TACBrNFeDANFCeFortes.ImprimirDANFEPDF(AStream: TStream; ANFE: TNFe);
+begin
+  AtribuirNFe(ANFE);
+  Imprimir(False, fiPDF, AStream);
+end;
+
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumidoPDF(NFE: TNFe);
 begin
   AtribuirNFe(NFE);
   Imprimir(True, fiPDF);
 end;
 
-procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean;
-  const AFiltro: TACBrNFeDANFCeFiltro);
+procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumidoPDF(AStream: TStream; ANFe: TNFe = nil);
 begin
-  ImprimirInterno(False, DanfeResumido, AFiltro);
+  AtribuirNFe(ANFe);
+  Imprimir(True, fiPDF, AStream);
 end;
 
-procedure TACBrNFeDANFCeFortes.ImprimirCancelado(const DanfeResumido: Boolean;
-  const AFiltro: TACBrNFeDANFCeFiltro);
+procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean; const AFiltro: TACBrNFeDANFCeFiltro;
+  const AStream: TStream);
 begin
-  ImprimirInterno(True, DanfeResumido, AFiltro);
+  ImprimirInterno(False, DanfeResumido, AFiltro, AStream);
 end;
 
-procedure TACBrNFeDANFCeFortes.ImprimirInterno(const Cancelado: Boolean;
-  const DanfeResumido: Boolean; const AFiltro: TACBrNFeDANFCeFiltro);
+procedure TACBrNFeDANFCeFortes.ImprimirCancelado(const DanfeResumido: Boolean; const AFiltro: TACBrNFeDANFCeFiltro;
+  const  AStream: TStream);
+begin
+  ImprimirInterno(True, DanfeResumido, AFiltro, AStream);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirInterno(const Cancelado: Boolean;  const DanfeResumido: Boolean;
+  const AFiltro: TACBrNFeDANFCeFiltro; const  AStream: TStream);
 var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
@@ -1407,10 +1430,17 @@ begin
           end ;
 
           RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostraStatus;
-          RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) +
-                               ChangeFileExt( RLLayout.JobTitle, '.pdf');
-          RLFiltro.FilterPages( RLLayout.Pages );
-          ACBrNFeDANFCeFortes.FPArquivoPDF := RLFiltro.FileName;
+
+          if Assigned(AStream) then
+          begin
+            RLPDFFilter1.FilterPages(RLLayout.Pages, AStream);
+          end
+          else
+          begin
+            RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) + ChangeFileExt( RLLayout.JobTitle, '.pdf');
+            RLFiltro.FilterPages( RLLayout.Pages );
+            ACBrNFeDANFCeFortes.FPArquivoPDF := RLFiltro.FileName;
+          end;
         end;
       end;
     end;
@@ -1431,8 +1461,6 @@ begin
   else
     FpNFe := NFE;
 end;
-
-
 
 {$ifdef FPC}
 initialization

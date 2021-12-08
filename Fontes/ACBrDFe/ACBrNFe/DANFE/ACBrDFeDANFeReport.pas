@@ -85,13 +85,16 @@ type
     procedure ImprimirDANFE(ANFe: TNFe = nil); virtual;
     procedure ImprimirDANFECancelado(ANFe: TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(ANFe: TNFe = nil); virtual;
-    procedure ImprimirDANFEPDF(ANFe: TNFe = nil); virtual;
-    procedure StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil); virtual;
-    procedure ImprimirDANFEResumidoPDF(ANFe: TNFe = nil); virtual;
+    procedure ImprimirDANFEPDF(ANFe: TNFe = nil); overload; virtual;
+    procedure ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe = nil); overload; virtual;
+    procedure ImprimirDANFEResumidoPDF(ANFe: TNFe = nil); overload; virtual;
+    procedure ImprimirDANFEResumidoPDF(AStream: TStream; ANFe: TNFe = nil); overload; virtual;
     procedure ImprimirEVENTO(ANFe: TNFe = nil); virtual;
-    procedure ImprimirEVENTOPDF(ANFe: TNFe = nil); virtual;
+    procedure ImprimirEVENTOPDF(ANFe: TNFe = nil); overload; virtual;
+    procedure ImprimirEVENTOPDF(AStream: TStream; ANFe: TNFe = nil); overload; virtual;
     procedure ImprimirINUTILIZACAO(ANFe: TNFe = nil); virtual;
-    procedure ImprimirINUTILIZACAOPDF(ANFe: TNFe = nil); virtual;
+    procedure ImprimirINUTILIZACAOPDF(ANFe: TNFe = nil); overload; virtual;
+    procedure ImprimirINUTILIZACAOPDF(AStream: TStream; ANFe: TNFe = nil); overload; virtual;
 
     function SeparadorDetalhamentos: String; virtual;
     function ManterCodigo(const scEAN, scProd: String): String; virtual;
@@ -273,12 +276,17 @@ begin
   ErroAbstract('ImprimirDANFEPDF');
 end;
 
-procedure TACBrDFeDANFeReport.StreamDANFEPDF(ANFe: TNFe = nil; AStream: TStream = nil);
+procedure TACBrDFeDANFeReport.ImprimirDANFEPDF(AStream: TStream; ANFe: TNFe = nil);
 begin
-  ErroAbstract('StreamDANFEPDF');
+  ErroAbstract('ImprimirDANFEPDF');
 end;
 
 procedure TACBrDFeDANFeReport.ImprimirDANFEResumidoPDF(ANFe: TNFe);
+begin
+  ErroAbstract('ImprimirDANFEResumidoPDF');
+end;
+
+procedure TACBrDFeDANFeReport.ImprimirDANFEResumidoPDF(AStream: TStream; ANFe: TNFe);
 begin
   ErroAbstract('ImprimirDANFEResumidoPDF');
 end;
@@ -293,12 +301,22 @@ begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;
 
+procedure TACBrDFeDANFeReport.ImprimirEVENTOPDF(AStream: TStream; ANFe: TNFe);
+begin
+  ErroAbstract('ImprimirEVENTOPDF');
+end;
+
 procedure TACBrDFeDANFeReport.ImprimirINUTILIZACAO(ANFe: TNFe);
 begin
   ErroAbstract('ImprimirINUTILIZACAO');
 end;
 
 procedure TACBrDFeDANFeReport.ImprimirINUTILIZACAOPDF(ANFe: TNFe);
+begin
+  ErroAbstract('ImprimirINUTILIZACAOPDF');
+end;
+
+procedure TACBrDFeDANFeReport.ImprimirINUTILIZACAOPDF(AStream: TStream; ANFe: TNFe);
 begin
   ErroAbstract('ImprimirINUTILIZACAOPDF');
 end;
@@ -526,7 +544,5 @@ begin
 
   Result := FormatFloatBr(dValor);
 end;
-
-
 
 end.

@@ -62,7 +62,9 @@ type
     fpDANFe: TACBrNFeDANFeRL;
   public
     class procedure Imprimir(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; ANFe: TNFe = nil);
-    class procedure SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; const AFile: String = ''; ANFe: TNFe = nil);
+    class procedure SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; const AFile: String = ''; ANFe: TNFe = nil); overload;
+    class procedure SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; AStream: TStream; ANFe: TNFe = nil); overload;
+
   end;
 
 implementation
@@ -143,6 +145,54 @@ begin
 
     DANFeReport.RLNFeInut.Prepare;
     DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFeInut.Pages);
+  finally
+     DANFeReport.Free;
+  end;
+end;
+
+class procedure TfrmNFeDAInutRL.SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; AStream: TStream; ANFe: TNFe = nil);
+var
+   i :integer;
+   DANFeReport: TfrmNFeDAInutRL;
+begin
+  DANFeReport := Create(nil);
+  try
+    DANFeReport.fpDANFe := aDANFe;
+    DANFeReport.fpInutNFe := AInutNFe;
+    if ADANFe.AlterarEscalaPadrao then
+    begin
+      DANFeReport.Scaled := False;
+      DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
+    end;
+    TDFeReportFortes.AjustarReport(DANFeReport.RLNFeInut, DANFeReport.fpDANFe);
+    DANFeReport.RLPDFFilter1.ShowProgress := DANFeReport.fpDANFe.MostraStatus;
+
+    if ANFe <> nil then
+    begin
+      DANFeReport.fpNFe := ANFe;
+
+      with DANFeReport.RLPDFFilter1.DocumentInfo do
+      begin
+        Title := ACBrStr('Inutilização - Nota fiscal nº ' +
+          FormatFloat('000,000,000', DANFeReport.fpNFe.Ide.nNF));
+        KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', DANFeReport.fpNFe.Ide.nNF) +
+          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', DANFeReport.fpNFe.Ide.dEmi) +
+          '; Destinatário: ' + DANFeReport.fpNFe.Dest.xNome +
+          '; CNPJ: ' + DANFeReport.fpNFe.Dest.CNPJCPF);
+      end;
+    end;
+
+    for i := 0 to DANFeReport.ComponentCount -1 do
+    begin
+      if (DANFeReport.Components[i] is TRLDraw) and (TRLDraw(DANFeReport.Components[i]).DrawKind = dkRectangle) then
+      begin
+       TRLDraw(DANFeReport.Components[i]).DrawKind := dkRectangle;
+       TRLDraw(DANFeReport.Components[i]).Pen.Width := 1;
+      end;
+    end;
+
+    DANFeReport.RLNFeInut.Prepare;
+    DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFeInut.Pages, AStream);
   finally
      DANFeReport.Free;
   end;

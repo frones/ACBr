@@ -860,7 +860,7 @@ begin
   if not Assigned(DANFE) then
     GerarException('Componente DANFE não associado.')
   else
-    DANFE.ImprimirEVENTO(nil);
+    DANFE.ImprimirEVENTO;
 end;
 
 procedure TACBrNFe.ImprimirEventoPDF;
@@ -868,7 +868,7 @@ begin
   if not Assigned(DANFE) then
     GerarException('Componente DANFE não associado.')
   else
-    DANFE.ImprimirEVENTOPDF(nil);
+    DANFE.ImprimirEVENTOPDF;
 end;
 
 procedure TACBrNFe.ImprimirInutilizacao;
@@ -876,7 +876,7 @@ begin
   if not Assigned(DANFE) then
     GerarException('Componente DANFE não associado.')
   else
-    DANFE.ImprimirINUTILIZACAO(nil);
+    DANFE.ImprimirINUTILIZACAO;
 end;
 
 procedure TACBrNFe.ImprimirInutilizacaoPDF;
@@ -884,7 +884,7 @@ begin
   if not Assigned(DANFE) then
     GerarException('Componente DANFE não associado.')
   else
-    DANFE.ImprimirINUTILIZACAOPDF(nil);
+    DANFE.ImprimirINUTILIZACAOPDF;
 end;
 
 function TACBrNFe.AdministrarCSC(const ARaizCNPJ: String; AIndOP: TpcnIndOperacao;

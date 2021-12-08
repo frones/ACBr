@@ -60,21 +60,21 @@ type
   private
     procedure AdicionaInformacaoPDF;
     procedure AjustarEscala;
+
   protected
     fpNFe: TNFe;
     fpDANFe: TACBrNFeDANFeRL;
     fpCorDestaqueProdutos: TColor;
-
     fpLinhasUtilizadas: Integer;
     fpAuxDiferencaPDF: Integer;
-
     fpQuantItens: Integer;
     fpItemAtual: Integer;
 
   public
     class procedure Imprimir(ADANFe: TACBrNFeDANFeRL; ANotas: array of TNFe);
-    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; const AFile: String);
-    class procedure StreamPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream);
+    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; const AFile: String); overload;
+    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream); overload;
+
   end;
 
 implementation
@@ -90,14 +90,10 @@ uses
 
 procedure TfrlDANFeRL.AdicionaInformacaoPDF;
 begin
-  RLPDFFilter1.DocumentInfo.Title := ACBrStr('DANFE - Nota fiscal nº ') +
-    FormatFloat('000,000,000', fpNFe.Ide.nNF);
-  RLPDFFilter1.DocumentInfo.KeyWords := ACBrStr(
-    'Número:' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
-    '; Data de emissão: ' + FormatDateBr(fpNFe.Ide.dEmi) +
-    '; Destinatário: ' + fpNFe.Dest.xNome +
-    '; CNPJ: ' + fpNFe.Dest.CNPJCPF +
-    '; Valor total: ' + FormatFloatBr(fpNFe.Total.ICMSTot.vNF));
+  RLPDFFilter1.DocumentInfo.Title := ACBrStr('DANFE - Nota fiscal nº ') + FormatFloat('000,000,000', fpNFe.Ide.nNF);
+  RLPDFFilter1.DocumentInfo.KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
+    '; Data de emissão: ' + FormatDateBr(fpNFe.Ide.dEmi) + '; Destinatário: ' + fpNFe.Dest.xNome +
+    '; CNPJ: ' + fpNFe.Dest.CNPJCPF + '; Valor total: ' + FormatFloatBr(fpNFe.Total.ICMSTot.vNF));
 end;
 
 class procedure TfrlDANFeRL.Imprimir(ADANFe: TACBrNFeDANFeRL; ANotas: array of TNFe);
@@ -176,7 +172,7 @@ begin
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFe, DANFeReport.fpDANFe);
     TDFeReportFortes.AjustarFiltroPDF(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe, AFile);
 
-    DANFeReport.AdicionaInformacaoPDF();
+    DANFeReport.AdicionaInformacaoPDF;
 
     DANFeReport.fpAuxDiferencaPDF := 10;
     DANFeReport.RLNFe.Prepare;
@@ -186,7 +182,7 @@ begin
   end;
 end;
 
-class procedure TfrlDANFeRL.StreamPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream);
+class procedure TfrlDANFeRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AStream: TStream);
 var
   DANFeReport: TfrlDANFeRL;
 begin
@@ -197,13 +193,12 @@ begin
     DANFeReport.AjustarEscala;
 
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFe, DANFeReport.fpDANFe);
-    TDFeReportFortes.AjustarFiltroStream(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe);
+    DANFeReport.RLPDFFilter1.ShowProgress := DANFeReport.fpDANFe.MostraStatus;
 
     DANFeReport.AdicionaInformacaoPDF;
 
     DANFeReport.fpAuxDiferencaPDF := 10;
     DANFeReport.RLNFe.Prepare;
-    AStream.Size := 0;
     DANFeReport.RLPDFFilter1.FilterPages(DANFeReport.RLNFe.Pages, AStream);
   finally
     FreeAndNil(DANFeReport);

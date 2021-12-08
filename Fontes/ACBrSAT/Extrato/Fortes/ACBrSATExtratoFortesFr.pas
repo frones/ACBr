@@ -364,7 +364,8 @@ implementation
 
 uses  math, RLTypes,
      ACBrDelphiZXingQRCode, ACBrValidador, ACBrDFeUtil, ACBrUtil,
-     ACBrDFeReport, ACBrDFeReportFortes;
+     ACBrDFeReport, ACBrDFeReportFortes,
+     RLUtils;
 
 {$ifdef FPC}
   {$R *.lfm}

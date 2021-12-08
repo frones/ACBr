@@ -45,7 +45,7 @@ uses Classes, SysUtils,
      {$EndIf}
      ACBrNFeDANFEClass, ACBrBase,
      pcnNFe, pcnConversao, ACBrDFeUtil,
-     RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
+     RLConsts, RLUtils, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
      RLFilters, RLPrinters, RLTypes, Controls;
 
 const

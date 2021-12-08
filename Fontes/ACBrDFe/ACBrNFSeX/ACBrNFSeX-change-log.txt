@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/12/2021
+-- ACBrNFSeXServicos --
+[*] Ajustes nas URLs do provedor Agili e remoção das URLs de homologação dos
+    provedores que não tem o ambiente de homologação.
+   Por: Italo Giurizzato Junior
+
 07/12/2021
 -- ACBrNFSeXServicos --
 [*] Incluida a URL de homologação da cidade Governador Valadares/MG.

@@ -45,6 +45,9 @@ Símbolo : Significado
 
 08/12/2021
 -- IPM.GravarXml --
+[*] Ajustes na geração da tag <data_fato_gerador> para torna-la opcional.
+   Por: Italo Giurizzato Junior
+-- IPM.GravarXml --
 [*] Incluido a geração da tag <data_fato_gerador>.
    Por: Sandro Felipe Adad
 -- IPM.Provider --

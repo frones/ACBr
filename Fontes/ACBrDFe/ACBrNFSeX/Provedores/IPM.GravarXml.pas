@@ -179,11 +179,11 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'serie_recibo_provisorio', 1, 2, 1,
                                     NFSe.IdentificacaoRps.Serie, DSC_SERIERPS));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'data_emissao_recibo_provisorio', 1, 10, 1,
-                FormatDateTimeBr(NFSe.DataEmissaoRps, 'dd/mm/yyyy'), DSC_DEMI));
+    Result.AppendChild(AddNode(tcDatVcto, '#1', 'data_emissao_recibo_provisorio', 1, 10, 1,
+                                                NFSe.DataEmissaoRps, DSC_DEMI));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'hora_emissao_recibo_provisorio', 1, 10, 1,
-                  FormatDateTimeBr(NFSe.DataEmissaoRps, 'hh:mm:ss'), DSC_HEMI));
+    Result.AppendChild(AddNode(tcHor, '#1', 'hora_emissao_recibo_provisorio', 1, 10, 1,
+                                                NFSe.DataEmissaoRps, DSC_HEMI));
   end;
 end;
 
@@ -431,9 +431,8 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 1, 1, 'C', ''));
   end;
 
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'data_fato_gerador', 1, 10, 1,
-                FormatDateTimeBr(NFSe.Competencia, 'dd/mm/yyyy'), DSC_DEMI));
+  Result.AppendChild(AddNode(tcDatVcto, '#1', 'data_fato_gerador', 1, 10, 0,
+                                                   NFSe.Competencia, DSC_DEMI));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'valor_total', 1, 15, 1,
                              NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO));

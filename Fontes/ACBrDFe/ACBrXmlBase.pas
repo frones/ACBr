@@ -231,11 +231,18 @@ function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCa
 var
   ConteudoTag: string;
   iDecimais: Integer;
+  aFloatIsIntString: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then
-    ConteudoTag := ''
+  begin
+    ConteudoTag := '';
+    aFloatIsIntString := False;
+  end
   else
+  begin
     ConteudoTag := Trim(ANode.Content);
+    aFloatIsIntString := ANode.FloatIsIntString;
+  end;
 
   case Tipo of
     tcStr,
@@ -324,7 +331,7 @@ begin
 
     tcDe2, tcDe3, tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10:
       begin
-        if (ANode.FloatIsIntString) then
+        if aFloatIsIntString then
         begin
           case Tipo of
             tcDe2:  iDecimais := 2;

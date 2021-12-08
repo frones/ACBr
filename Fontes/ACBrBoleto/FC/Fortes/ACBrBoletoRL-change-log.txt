@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2021
+--ACBrBoletoFCFortesFr--
+[+] Adição de novo layout lprestaservicos
+https://www.projetoacbr.com.br/forum/topic/64867-novo-layout-lprestaservicos/
+
 30/08/2021
 --ACBrBoletoFCFortesFr--
 [*] Alteração da descrição dos Campos "Sacado Avalista" para "Beneficiário Final"

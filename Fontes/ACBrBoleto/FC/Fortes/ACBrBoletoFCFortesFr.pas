@@ -973,6 +973,158 @@ type
     RLDraw222: TRLDraw;
     RLDraw223: TRLDraw;
     txtSwHouse80mm: TRLAngleLabel;
+    LayoutServicos: TRLReport;
+    RLBandServicosTopo: TRLBand;
+    RLDraw258: TRLDraw;
+    RLDraw259: TRLDraw;
+    RLDraw271: TRLDraw;
+    RLDraw266: TRLDraw;
+    RLDraw263: TRLDraw;
+    RLDraw233: TRLDraw;
+    txtNomeCedenteTopServicos: TRLLabel;
+    RLDraw236: TRLDraw;
+    imgLogoEmpresaServicos: TRLImage;
+    txtEnderecoSacadoTopServicos: TRLLabel;
+    RLDraw237: TRLDraw;
+    txtEnderecoCedenteTopServicos: TRLLabel;
+    RLDraw238: TRLDraw;
+    txtNomeSacadoTopServicos: TRLLabel;
+    RLLabel344: TRLLabel;
+    imgBancoTopServicos: TRLImage;
+    txtNumeroBancoTopServicos: TRLLabel;
+    RLDraw239: TRLDraw;
+    RLLabel428: TRLLabel;
+    RLLabel285: TRLLabel;
+    RLLabel436: TRLLabel;
+    txtLocalPagamentoTopServicos: TRLMemo;
+    RLLabel414: TRLLabel;
+    txtDataVencimentoTopServicos: TRLLabel;
+    RLLabel435: TRLLabel;
+    txtNossoNumeroTopServicos: TRLLabel;
+    RLLabel417: TRLLabel;
+    txtValorDocumentoTopServicos: TRLLabel;
+    RLLabel419: TRLLabel;
+    txtDescontoTopServicos: TRLLabel;
+    RLLabel422: TRLLabel;
+    txtMultaTopServicos: TRLLabel;
+    RLLabel420: TRLLabel;
+    txtValorCobradoTopServicos: TRLLabel;
+    txtDataDocumentoTopServicos: TRLLabel;
+    RLLabel415: TRLLabel;
+    RLLabel405: TRLLabel;
+    txtNumeroDocumentoTopServicos: TRLLabel;
+    txtEspecieDocTopServicos: TRLLabel;
+    RLLabel407: TRLLabel;
+    RLLabel411: TRLLabel;
+    txtCarteiraTopServicos: TRLLabel;
+    txtCodigoCedenteTopServicos: TRLLabel;
+    RLLabel426: TRLLabel;
+    RLDraw256: TRLDraw;
+    RLDraw269: TRLDraw;
+    RLDraw240: TRLDraw;
+    RLDraw241: TRLDraw;
+    RLDraw242: TRLDraw;
+    RLDraw260: TRLDraw;
+    RLDraw261: TRLDraw;
+    RLLabel437: TRLLabel;
+    txtDetalhamentoServicos: TRLMemo;
+    RLLabel439: TRLLabel;
+    RLDraw257: TRLDraw;
+    RLLabel47: TRLLabel;
+    txtDataDocumentoTopServicos2: TRLLabel;
+    RLLabel266: TRLLabel;
+    txtNumeroDocumentoTopServicos2: TRLLabel;
+    RLLabel335: TRLLabel;
+    txtLinhaDigitavelTopServicos: TRLLabel;
+    RLDraw262: TRLDraw;
+    RLDraw265: TRLDraw;
+    RLDraw267: TRLDraw;
+    RLDraw268: TRLDraw;
+    RLLabel306: TRLLabel;
+    txtDataProcessamentoTopServicos: TRLLabel;
+    RLLabel320: TRLLabel;
+    RLBandTituloServicos: TRLBand;
+    imgBancoServicos: TRLImage;
+    RLDraw243: TRLDraw;
+    RLDraw244: TRLDraw;
+    RLDraw245: TRLDraw;
+    RLDraw246: TRLDraw;
+    RLDraw247: TRLDraw;
+    RLDraw248: TRLDraw;
+    RLDraw249: TRLDraw;
+    RLDraw250: TRLDraw;
+    RLDraw251: TRLDraw;
+    RLDraw252: TRLDraw;
+    RLDraw253: TRLDraw;
+    RLDraw254: TRLDraw;
+    RLDraw255: TRLDraw;
+    txtLinhaDigitavelServicos: TRLLabel;
+    RLDraw264: TRLDraw;
+    txtNumeroBancoServicos: TRLLabel;
+    txtCodigoCedenteServicos: TRLLabel;
+    RLLabel349: TRLLabel;
+    txtDataDocumentoServicos: TRLLabel;
+    RLLabel351: TRLLabel;
+    txtNumeroDocumentoServicos: TRLLabel;
+    RLLabel353: TRLLabel;
+    txtEspecieDocServicos: TRLLabel;
+    RLLabel355: TRLLabel;
+    txtAceiteServicos: TRLLabel;
+    RLLabel357: TRLLabel;
+    txtDataProcessamentoServicos: TRLLabel;
+    RLLabel359: TRLLabel;
+    txtNossoNumeroServicos: TRLLabel;
+    RLLabel361: TRLLabel;
+    txtUsoBancoServicos: TRLLabel;
+    RLLabel363: TRLLabel;
+    txtCarteiraServicos: TRLLabel;
+    RLLabel365: TRLLabel;
+    txtEspecieServicos: TRLLabel;
+    RLLabel367: TRLLabel;
+    txtQuantidadeServicos: TRLLabel;
+    RLLabel369: TRLLabel;
+    txtValorServicos: TRLLabel;
+    RLLabel371: TRLLabel;
+    txtValorDocumentoServicos: TRLLabel;
+    RLLabel373: TRLLabel;
+    txtInstrucoesServicos: TRLMemo;
+    RLLabel374: TRLLabel;
+    txtValorDescontoServicos: TRLLabel;
+    RLLabel376: TRLLabel;
+    txtValorMoraMultaServicos: TRLLabel;
+    RLLabel378: TRLLabel;
+    txtValorCobradoServicos: TRLLabel;
+    RLLabel380: TRLLabel;
+    txtNomeSacadoServicos: TRLLabel;
+    RLLabel382: TRLLabel;
+    txtCPFCNPJSacadoServicos: TRLLabel;
+    txtEnderecoSacadoServicos: TRLLabel;
+    RLLabel385: TRLLabel;
+    txtCidadeSacadoServicos: TRLLabel;
+    txtCodigoBaixaServicos: TRLLabel;
+    RLLabel388: TRLLabel;
+    txtReferenciaServicos: TRLLabel;
+    RLLabel391: TRLLabel;
+    RLLabel392: TRLLabel;
+    RLLabel393: TRLLabel;
+    RLLabel394: TRLLabel;
+    RLDraw270: TRLDraw;
+    RLDraw272: TRLDraw;
+    RLDraw273: TRLDraw;
+    RLDraw274: TRLDraw;
+    RLLabel397: TRLLabel;
+    txtLocalPagamentoServicos: TRLMemo;
+    RLLabel398: TRLLabel;
+    txtNomeCedenteServicos: TRLLabel;
+    RLLabel400: TRLLabel;
+    txtDataVencimentoServicos: TRLLabel;
+    RLLabel402: TRLLabel;
+    RLDraw275: TRLDraw;
+    imgCodigoBarraServicos: TRLBarcode;
+    RLLabel403: TRLLabel;
+    txtOutrosAcrescimosServicos: TRLLabel;
+    txtSwHouseTopServicos: TRLAngleLabel;
+    txtSwHouseServicos: TRLAngleLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -1013,6 +1165,14 @@ type
       CopyNo: Integer; var Eof: Boolean;
       var RecordAction: TRLRecordAction);
     procedure ValidarCIP;
+    procedure LayoutServicosBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure LayoutServicosDataCount(Sender: TObject; var DataCount: Integer);
+    procedure LayoutServicosDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure RLBandServicosTopoBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure RLBandTituloServicosBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
   private
      MensagemPadrao: TStringList;
      Detalhamento  : TStringList;
@@ -1068,6 +1228,7 @@ begin
            lReciboTopo  : RLLayout := BoletoReciboTopo;
            lFaturaDetal : RLLayout := LayoutFaturaDetal;
            lTermica80mm : RLLayout := LayoutTermica;
+           lPrestaServicos : RLLayout := LayoutServicos;
         else
            RLLayout:= LayoutBoleto;
         end;
@@ -1285,6 +1446,32 @@ begin
     Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
 
   RecordAction := raUseIt ;
+end;
+
+procedure TACBrBoletoFCFortesFr.LayoutServicosBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+   fIndice := 0;
+   txtSwHouseServicos.Caption := BoletoFC.SoftwareHouse ;
+end;
+
+procedure TACBrBoletoFCFortesFr.LayoutServicosDataCount(Sender: TObject;
+  var DataCount: Integer);
+begin
+  DataCount := fBoletoFC.ACBrBoleto.ListadeBoletos.Count ;
+end;
+
+procedure TACBrBoletoFCFortesFr.LayoutServicosDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+begin
+   fIndice := RecNo - 1 ;
+
+   if (fBoletoFC.IndiceImprimirIndividual >= 0) then
+     Eof := (RecNo > 1)
+   else
+     Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+
+   RecordAction := raUseIt ;
 end;
 
 procedure TACBrBoletoFCFortesFr.LayoutTermicaBeforePrint(Sender: TObject;
@@ -2012,6 +2199,152 @@ begin
         verso;
 
    end;
+end;
+
+procedure TACBrBoletoFCFortesFr.RLBandServicosTopoBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  NossoNum, CodCedente, EnderecoCed, TipoDoc: string;
+  CodBarras, LinhaDigitavel: string;
+begin
+  with fBoletoFC.ACBrBoleto do
+  begin
+    CodBarras       := Banco.MontarCodigoBarras(Titulo);
+    LinhaDigitavel  := Banco.MontarLinhaDigitavel(CodBarras, Titulo);
+
+    NossoNum        := Banco.MontarCampoNossoNumero(Titulo);
+    CodCedente      := Banco.MontarCampoCodigoCedente(titulo);
+
+    case Cedente.TipoInscricao of
+      pFisica: TipoDoc    := 'CPF: ';
+      pJuridica: TipoDoc  := 'CNPJ: ';
+    else
+      TipoDoc             := 'DOC.: ';
+    end;
+
+    MensagemPadrao.Clear;
+    MensagemPadrao.Text    := Titulo.Mensagem.Text;
+    ACBrBoletoFC.ACBrBoleto.AdicionarMensagensPadroes(Titulo, MensagemPadrao);
+    fBoletoFC.CarregaLogo(imgBancoTopServicos.Picture, Banco.Numero);
+
+    //imgLogoEmpresaServicos.Picture.LoadFromFile(ExtractFilePath(Application.ExeName) + 'logo.jpg');
+    imgLogoEmpresaServicos.Picture.LoadFromFile(Titulo.ArquivoLogoEmp);
+
+    //Titulo.CarregaLogoEmp( imgVersoBancoTopDet2.Picture );
+
+    //Titulo.CarregaLogoEmp( imgLogoEmpresaServicos.Picture );
+
+    txtNumeroBancoTopServicos.Caption       := IntToStrZero(Banco.Numero, 3) + '-' + IfThen(Banco.Digito >= 10, 'X', IntToStrZero(Banco.Digito, 1));
+    txtLocalPagamentoTopServicos.Lines.Text := Titulo.LocalPagamento;
+    txtDataVencimentoTopServicos.Caption    := IfThen(Titulo.Vencimento > 0, FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));
+    txtNomeCedenteTopServicos.Caption       := Cedente.Nome + ' - ' + TipoDoc + Cedente.CNPJCPF;
+    with Titulo.ACBrBoleto.Cedente do
+    begin
+       EnderecoCed := Logradouro+' '+NumeroRes+' '+Complemento+'  '+
+                      'CEP: '+CEP+',  '+Bairro+', '+Cidade+' '+ UF;
+
+       if(length(EnderecoCed) > 73) then
+           txtEnderecoCedenteTopServicos.Font.Size := 8
+       else
+           txtEnderecoCedenteTopServicos.Font.Size := 9;
+
+       txtEnderecoCedenteTopServicos.Caption  := EnderecoCed;
+    end;
+    txtCodigoCedenteTopServicos.Caption   := CodCedente;
+    txtDataDocumentoTopServicos.Caption   := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
+    txtNumeroDocumentoTopServicos.Caption := Titulo.NumeroDocumento;
+    txtEspecieDocTopServicos.Caption      := Titulo.EspecieDoc;
+    txtNossoNumeroTopServicos.Caption     := NossoNum;
+    txtCarteiraTopServicos.Caption        := Titulo.Carteira;
+    txtValorDocumentoTopServicos.Caption  := IfThen(Titulo.ValorDocumento > 0, FormatFloat('###,###,##0.00', Titulo.ValorDocumento));
+    txtValorCobradoServicos.Caption       := '';
+    txtMultaTopServicos.Caption           := '';
+    txtDescontoTopServicos.Caption        := IfThen(Titulo.ValorDesconto > 0, FormatFloat('###,###,##0.00', Titulo.ValorDesconto));
+    txtValorCobradoTopServicos.Caption    := '';
+
+    txtNomeSacadoTopServicos.Caption      := Titulo.Sacado.NomeSacado + '  ' +
+                                          IfThen(Titulo.Sacado.Pessoa = pJuridica, 'CNPJ: ', 'CPF: ')+ FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
+
+    txtEnderecoSacadoTopServicos.Caption  := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento +
+                                          '  CEP: '+Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
+
+    txtDataDocumentoTopServicos2.Caption    := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
+    txtNumeroDocumentoTopServicos2.Caption  := Titulo.NumeroDocumento;
+    txtDataProcessamentoTopServicos.Caption := IfThen(Titulo.DataProcessamento = 0,FormatDateTime('dd/mm/yyyy', Now),FormatDateTime('dd/mm/yyyy', Titulo.DataProcessamento));
+    txtLinhaDigitavelTopServicos.Caption    := LinhaDigitavel;
+    txtDetalhamentoServicos.Lines.Text      := '';
+    txtDetalhamentoServicos.Lines.Text      := Titulo.Detalhamento.Text;
+
+  end;
+
+end;
+
+procedure TACBrBoletoFCFortesFr.RLBandTituloServicosBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  NossoNum, CodCedente, TipoDoc: string;
+  CodBarras, LinhaDigitavel: string;
+begin
+  with fBoletoFC.ACBrBoleto do
+  begin
+    CodBarras       := Banco.MontarCodigoBarras(Titulo);
+    LinhaDigitavel  := Banco.MontarLinhaDigitavel(CodBarras, Titulo);
+
+    NossoNum        := Banco.MontarCampoNossoNumero(Titulo);
+    CodCedente      := Banco.MontarCampoCodigoCedente(titulo);
+
+    case Cedente.TipoInscricao of
+      pFisica: TipoDoc    := 'CPF: ';
+      pJuridica: TipoDoc  := 'CNPJ: ';
+    else
+      TipoDoc             := 'DOC.: ';
+    end;
+
+    MensagemPadrao.Clear;
+    MensagemPadrao.Text       := Titulo.Mensagem.Text;
+    ACBrBoletoFC.ACBrBoleto.AdicionarMensagensPadroes(Titulo, MensagemPadrao);
+
+    fBoletoFC.CarregaLogo(imgBancoServicos.Picture, Banco.Numero);
+    txtNumeroBancoServicos.Caption               := IntToStrZero(Banco.Numero, 3) + '-' + IfThen(Banco.Digito >= 10, 'X', IntToStrZero(Banco.Digito, 1));
+    txtLocalPagamentoServicos.Lines.Text         := Titulo.LocalPagamento;
+    txtDataVencimentoServicos.Caption            := IfThen(Titulo.Vencimento > 0, FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));
+    txtNomeCedenteServicos.Caption               := Cedente.Nome + ' - ' + TipoDoc + Cedente.CNPJCPF;
+    txtEnderecoSacadoServicos.Caption            := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento;
+    txtCodigoCedenteServicos.Caption             := CodCedente;
+    txtDataDocumentoServicos.Caption             := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
+    txtNumeroDocumentoServicos.Caption           := Titulo.NumeroDocumento;
+    txtEspecieDocServicos.Caption                := Titulo.EspecieDoc;
+    txtAceiteServicos.Caption                    := ifThen(Titulo.Aceite = atSim, 'S', 'N');
+    txtDataProcessamentoServicos.Caption         := IfThen(Titulo.DataProcessamento = 0,FormatDateTime('dd/mm/yyyy', Now),FormatDateTime('dd/mm/yyyy', Titulo.DataProcessamento));
+    txtNossoNumeroServicos.Caption               := NossoNum;
+    txtUsoBancoServicos.Caption                  := Titulo.UsoBanco;
+    txtCarteiraServicos.Caption                  := Titulo.Carteira;
+    txtEspecieServicos.Caption                   := IfThen(trim(Titulo.EspecieMod) = '', 'R$', Titulo.EspecieMod);
+    txtValorDocumentoServicos.Caption            := IfThen(Titulo.ValorDocumento > 0, FormatFloat('###,###,##0.00', Titulo.ValorDocumento));
+    txtNomeSacadoServicos.Caption                := Titulo.Sacado.NomeSacado;
+    txtEnderecoSacadoServicos.Caption            := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento;
+    txtCidadeSacadoServicos.Caption              := 'CEP: '+ Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
+    txtCpfCnpjSacadoServicos.Caption             := FormatarCNPJouCPF(Titulo.Sacado.CNPJCPF);
+    txtInstrucoesServicos.Lines.Text             := MensagemPadrao.Text;
+
+    //txtOrientacoesBanco.Lines.Text        := Banco.OrientacoesBanco.Text;
+    //txtSacadorAvalistaDet.Caption           := Titulo.Sacado.Avalista;
+
+    //rlBarraOrientbanco.Visible            := txtOrientacoesBanco.Lines.Count > 0;
+
+    txtQuantidadeServicos.Caption := '';
+    txtValorServicos.Caption      := '';
+
+    with Titulo.ACBrBoleto.Cedente do
+    begin
+      txtEndCedenteDet.Caption              := Logradouro + ' ' + NumeroRes + ' ' + Complemento + ' ' +
+                                                'CEP: ' + CEP +', '+ Bairro + ', ' + Cidade + ' ' + UF;
+    end;
+    imgCodigoBarraServicos.AutoSize              := False;
+    imgCodigoBarraServicos.Width                 := 432;
+    imgCodigoBarraServicos.Caption               := CodBarras;
+    txtLinhaDigitavelServicos.Caption            := LinhaDigitavel;
+  end;
 end;
 
 procedure TACBrBoletoFCFortesFr.rlbndComprovanteEntrega2BeforePrint(

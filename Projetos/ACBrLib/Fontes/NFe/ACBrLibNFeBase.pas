@@ -126,10 +126,14 @@ type
       const cProtocolo, bMostrarPreview, cMarcaDagua,
       bViaConsumidor, bSimplificado: PChar): longint;
     function ImprimirPDF: longint;
+    function SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
     function ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
     function ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
+    function SalvarEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
     function ImprimirInutilizacao(const eArquivoXml: PChar): longint;
     function ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
+    function SalvarInutilizacaoPDF(const eArquivoXml, sResposta: PChar; var esTamanho: longint): longint;
+
   end;
 
 implementation
@@ -1813,6 +1817,40 @@ begin
   end;
 end;
 
+function TACBrLibNFe.SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+Var
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    GravarLog('NFe_SalvarPDF', logNormal);
+
+    NFeDM.Travar;
+
+    AStream := TMemoryStream.Create;
+
+    try
+      NFeDM.ConfigurarImpressao('', True);
+
+      NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF(AStream);
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      NFeDM.FinalizarImpressao;
+      AStream.Free;
+      NFeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function TACBrLibNFe.ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
 var
   EhArquivo: boolean;
@@ -1930,6 +1968,68 @@ begin
   end;
 end;
 
+function TACBrLibNFe.SalvarEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PChar; var esTamanho: longint): longint;
+var
+  EhArquivo: boolean;
+  AArquivoXmlNFe: string;
+  AArquivoXmlEvento: string;
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    AArquivoXmlNFe := ConverterAnsiParaUTF8(eArquivoXmlNFe);
+    AArquivoXmlEvento := ConverterAnsiParaUTF8(eArquivoXmlEvento);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('NFe_SalvarEventoPDF(' + AArquivoXmlNFe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
+    else
+      GravarLog('NFe_SalvarEventoPDF', logNormal);
+
+    NFeDM.Travar;
+    AStream := TMemoryStream.Create;
+
+    try
+      EhArquivo := StringEhArquivo(AArquivoXmlNFe);
+
+      if EhArquivo then
+        VerificarArquivoExiste(AArquivoXmlNFe);
+
+      if EhArquivo then
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe)
+      else
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(AArquivoXmlNFe);
+
+      EhArquivo := StringEhArquivo(AArquivoXmlEvento);
+
+      if EhArquivo then
+        VerificarArquivoExiste(AArquivoXmlEvento);
+
+      if EhArquivo then
+        NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento)
+      else
+        NFeDM.ACBrNFe1.EventoNFe.LerXMLFromString(AArquivoXmlEvento);
+
+      NFeDM.ConfigurarImpressao('', True);
+      NFeDM.ACBrNFe1.DANFE.ImprimirEventoPDF(AStream);
+
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      NFeDM.FinalizarImpressao;
+      AStream.Free;
+      NFeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function TACBrLibNFe.ImprimirInutilizacao(const eArquivoXml: PChar): longint;
 var
   EhArquivo: boolean;
@@ -2010,6 +2110,56 @@ begin
     finally
       NFeDM.FinalizarImpressao;
       Resposta.Free;
+      NFeDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function TACBrLibNFe.SalvarInutilizacaoPDF(const eArquivoXml, sResposta: PChar; var esTamanho: longint): longint;
+var
+  EhArquivo: boolean;
+  AArquivoXml: string;
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    AArquivoXml := ConverterAnsiParaUTF8(eArquivoXml);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('NFe_SalvarInutilizacaoPDF(' + AArquivoXml + ' )', logCompleto, True)
+    else
+      GravarLog('NFe_SalvarInutilizacaoPDF', logNormal);
+
+    EhArquivo := StringEhArquivo(AArquivoXml);
+
+    if EhArquivo then
+      VerificarArquivoExiste(AArquivoXml);
+
+    NFeDM.Travar;
+    AStream := TMemoryStream.Create;
+
+    try
+      if EhArquivo then
+        NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml)
+      else
+        NFeDM.ACBrNFe1.InutNFe.LerXMLFromString(AArquivoXml);
+
+      NFeDM.ConfigurarImpressao('', True);
+      NFeDM.ACBrNFe1.DANFE.ImprimirINUTILIZACAOPDF(AStream);
+
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      NFeDM.FinalizarImpressao;
+      AStream.Free;
       NFeDM.Destravar;
     end;
   except

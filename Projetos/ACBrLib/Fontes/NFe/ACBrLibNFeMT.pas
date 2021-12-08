@@ -153,14 +153,20 @@ function NFE_Imprimir(const libHandle: PLibHandle; const cImpressora: PChar; nNu
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirPDF(const libHandle: PLibHandle): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirEvento(const libHandle: PLibHandle; const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirEventoPDF(const libHandle: PLibHandle; const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_SalvarEventoPDF(const libHandle: PLibHandle; const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirInutilizacao(const libHandle: PLibHandle; const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirInutilizacaoPDF(const libHandle: PLibHandle; const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_SalvarInutilizacaoPDF(const libHandle: PLibHandle; const eArquivoXml, sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -753,6 +759,21 @@ begin
   end;
 end;
 
+function NFE_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNFe(libHandle^.Lib).SalvarPDF(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function NFE_ImprimirEvento(const libHandle: PLibHandle; const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -783,6 +804,21 @@ begin
   end;
 end;
 
+function NFE_SalvarEventoPDF(const libHandle: PLibHandle; const eArquivoXmlNFe, eArquivoXmlEvento, sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNFe(libHandle^.Lib).SalvarEventoPDF(eArquivoXmlNFe, eArquivoXmlEvento, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
 function NFE_ImprimirInutilizacao(const libHandle: PLibHandle; const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -807,6 +843,21 @@ begin
   except
     on E: EACBrLibException do
      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function NFE_SalvarInutilizacaoPDF(const libHandle: PLibHandle; const eArquivoXml, sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibNFe(libHandle^.Lib).SalvarInutilizacaoPDF(eArquivoXml, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
 
     on E: Exception do
       Result := ErrExecutandoMetodo;

@@ -78,10 +78,13 @@ exports
   NFE_EnviarEmailEvento,
   NFE_Imprimir,
   NFE_ImprimirPDF,
+  NFE_SalvarPDF,
   NFE_ImprimirEvento,
   NFE_ImprimirEventoPDF,
+  NFE_SalvarEventoPDF,
   NFE_ImprimirInutilizacao,
   NFE_ImprimirInutilizacaoPDF,
+  NFE_SalvarInutilizacaoPDF,
 
   // Arquivos
   NFE_CarregarXML,

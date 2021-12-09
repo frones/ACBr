@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/12/2021
+-- ACBrNFSeXServicos --
+[*] Ajustes nas URLs do provedor Actcon.
+   Por: Fernando - DNA Sistemas
+
 08/12/2021
 -- IPM.GravarXml --
 [*] Ajustes na geração da tag <data_fato_gerador> para torna-la opcional.

@@ -38,34 +38,24 @@ interface
 
 uses
   Classes, SysUtils, syncobjs,
-  ACBrLibComum, ACBrLibConfig,
+  ACBrLibComum, ACBrLibConfig, ACBrLibDataModule,
   ACBrCTe, ACBrCTeDACTeRLClass, ACBrMail;
 
 type
 
   { TLibCTeDM }
 
-  TLibCTeDM = class(TDataModule)
+  TLibCTeDM = class(TLibDataModule)
     ACBrCTe1: TACBrCTe;
     ACBrMail1: TACBrMail;
-
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
-    FLock: TCriticalSection;
-    fpLib: TACBrLib;
     DACTe: TACBrCTeDACTeRL;
 
   public
-    procedure AplicarConfiguracoes;
+    procedure AplicarConfiguracoes; override;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = '');
     procedure FinalizarImpressao;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
-
-    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
@@ -78,17 +68,6 @@ uses
 {$R *.lfm}
 
 { TLibCTeDM }
-
-procedure TLibCTeDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-end;
-
-procedure TLibCTeDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
-
 procedure TLibCTeDM.AplicarConfiguracoes;
 var
   LibConfig: TLibCTeConfig;
@@ -98,6 +77,7 @@ begin
   ACBrCTe1.Configuracoes.Assign(LibConfig.CTe);
 
 {$IFDEF Demo}
+  GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
   ACBrCTe1.Configuracoes.WebServices.Ambiente := taHomologacao;
 {$ENDIF}
 
@@ -121,12 +101,6 @@ begin
     Username := Lib.Config.Email.Usuario;
     UseThread := Lib.Config.Email.SegundoPlano;
   end;
-end;
-
-procedure TLibCTeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
-begin
-  if Assigned(Lib) then
-    Lib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibCTeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
@@ -187,18 +161,6 @@ begin
   if Assigned(DACTe) then FreeAndNil(DACTe);
 
   GravarLog('FinalizarImpressao - Feito', logNormal);
-end;
-
-procedure TLibCTeDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibCTeDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 end.

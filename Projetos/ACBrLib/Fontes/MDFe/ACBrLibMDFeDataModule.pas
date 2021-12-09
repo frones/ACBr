@@ -81,6 +81,7 @@ begin
   ACBrMDFe1.Configuracoes.Assign(LibConfig.MDFe);
 
 {$IFDEF Demo}
+  GravarLog('Modo DEMO - Forçando ambiente para Homologação', logNormal);
   ACBrMDFe1.Configuracoes.WebServices.Ambiente := taHomologacao;
 {$ENDIF}
 

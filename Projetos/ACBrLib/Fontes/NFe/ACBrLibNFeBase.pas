@@ -93,7 +93,7 @@ type
     function StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
     function Consultar(const eChaveOuNFe: PChar; AExtrairEventos: boolean;
       const sResposta: PChar; var esTamanho: longint): longint;
-    function Inutilizar(const ACNPJ, AJustificativa: PChar;
+    function Inutilizar(const ACNPJCPF, AJustificativa: PChar;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
       const sResposta: PChar; var esTamanho: longint): longint;
     function Enviar(ALote: integer; AImprimir, ASincrono, AZipado: boolean;
@@ -870,26 +870,26 @@ begin
   end;
 end;
 
-function TACBrLibNFe.Inutilizar(const ACNPJ, AJustificativa: PChar; Ano, Modelo, Serie, NumeroInicial,
+function TACBrLibNFe.Inutilizar(const ACNPJCPF, AJustificativa: PChar; Ano, Modelo, Serie, NumeroInicial,
                                        NumeroFinal: integer; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TInutilizarNFeResposta;
-  Resposta, CNPJ, Justificativa: string;
+  Resposta, CNPJCPF, Justificativa: string;
 begin
   try
     Justificativa := ConverterAnsiParaUTF8(AJustificativa);
-    CNPJ := ConverterAnsiParaUTF8(ACNPJ);
+    CNPJCPF := ConverterAnsiParaUTF8(ACNPJCPF);
 
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFE_InutilizarNFe(' + CNPJ + ',' + Justificativa + ',' + IntToStr(Ano) + ',' + IntToStr(modelo) + ','
+      GravarLog('NFE_InutilizarNFe(' + CNPJCPF + ',' + Justificativa + ',' + IntToStr(Ano) + ',' + IntToStr(modelo) + ','
              + IntToStr(Serie) + ',' + IntToStr(NumeroInicial) + ',' + IntToStr(NumeroFinal) + ' )', logCompleto, True)
     else
       GravarLog('NFE_InutilizarNFe', logNormal);
 
-    CNPJ := OnlyNumber(CNPJ);
+    CNPJCPF := OnlyNumber(CNPJCPF);
 
-    if not ValidarCNPJ(CNPJ) then
-      raise EACBrNFeException.Create('CNPJ: ' + CNPJ + ', inválido.');
+    if not ValidarCNPJouCPF(CNPJCPF) then
+      raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [CNPJCPF]));
 
     NFeDM.Travar;
     Resp := TInutilizarNFeResposta.Create(Config.TipoResposta, Config.CodResposta);
@@ -899,7 +899,7 @@ begin
       begin
         with WebServices do
         begin
-          Inutilizacao.CNPJ := CNPJ;
+          Inutilizacao.CNPJ := CNPJCPF;
           Inutilizacao.Justificativa := Justificativa;
           Inutilizacao.Modelo := Modelo;
           Inutilizacao.Serie := Serie;
@@ -1356,7 +1356,7 @@ begin
     NFeDM.Travar;
 
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with NFeDM do
@@ -1416,7 +1416,7 @@ begin
     NFeDM.Travar;
 
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with NFeDM do
@@ -1475,7 +1475,7 @@ begin
     NFeDM.Travar;
 
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       if not ValidarChave(AchNFe) then

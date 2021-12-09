@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2021
+--- ACBrLiNFeBase ---
+[*] Ajustado os métodos da ACBrLibNFe para que possam ser usados CPF e CNPJ.
+	Por: Rafael Dias, Jose Junior
+
 08/12/2021
 --- ACBrLiNFeBase ---
 [+] Adicionado os métodos NFE_SalvarPDF, NFE_SalvarEventoPDF e NFE_SalvarInutilizacaoPDF. Esses métodos tem os mesmo parâmetros dos métodos de impressão PDF adicionando 2 novos apenas para receber o PDF em Base64.

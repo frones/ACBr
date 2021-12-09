@@ -65,6 +65,7 @@ begin
 
   FormatoAliq := tcDe2;
   NrOcorrAliquota := 1;
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
 end;
 
 end.

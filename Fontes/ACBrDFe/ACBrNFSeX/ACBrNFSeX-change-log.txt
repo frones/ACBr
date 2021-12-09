@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/12/2021
+-- eReceita.GravarXml --
+[*] Ajustado o formato do Item da Lista de Serviços.
+   Por: Douglas GV
 -- ACBrNFSeXServicos --
 [*] Ajustes nas URLs do provedor Actcon.
    Por: Fernando - DNA Sistemas

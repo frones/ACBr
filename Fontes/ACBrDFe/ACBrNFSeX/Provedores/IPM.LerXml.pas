@@ -92,8 +92,8 @@ begin
     with NFSe.Servico do
     begin
       Valores.ValorIssRetido := 0;
-      Valores.BaseCalculo    := 0;
-      Valores.ValorIss       := 0;
+      Valores.BaseCalculo := 0;
+      Valores.ValorIss := 0;
 
       ANodes := AuxNode.Childrens.FindAllAnyNs('lista');
 
@@ -102,15 +102,12 @@ begin
 
       for i := 0 to Length(ANodes) - 1 do
       begin
-        aValor := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('tributa_municipio_prestador'), tcStr);
-
-        NFSe.NaturezaOperacao := StrToNaturezaOperacao(Ok, aValor);
-
-        CodigoMunicipio           := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('codigo_local_prestacao_servico'), tcStr);
+        CodigoTributacaoMunicipio := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('tributa_municipio_prestador'), tcStr);
+        CodigoMunicipio := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('codigo_local_prestacao_servico'), tcStr);
         CodigoTributacaoMunicipio := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('situacao_tributaria'), tcStr);
 
         aValor := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('situacao_tributaria'), tcStr);
-        Valores.IssRetido := StrToSituacaoTributaria(Ok, aValor);
+        NFSe.NaturezaOperacao := StrToNaturezaOperacao(Ok, aValor);
 
         ItemServico.New;
         with ItemServico[i] do
@@ -121,19 +118,19 @@ begin
           aValor := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('unidade_codigo'), tcStr);
           TipoUnidade := StrToUnidade(Ok, aValor);
 
-          Quantidade    := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('unidade_quantidade'), tcDe3);
+          Quantidade := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('unidade_quantidade'), tcDe3);
           ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('unidade_valor_unitario'), tcDe2);
-          Descricao     := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('descritivo'), tcStr);
-          Aliquota      := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('aliquota_item_lista_servico'), tcDe2);
-          ValorTotal    := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
+          Descricao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('descritivo'), tcStr);
+          Aliquota := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('aliquota_item_lista_servico'), tcDe2);
+          ValorTotal := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
           ValorDeducoes := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_deducao'), tcDe2);
-          BaseCalculo   := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
-          ValorISS      := BaseCalculo * Aliquota / 100;
+          BaseCalculo := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
+          ValorISS := BaseCalculo * Aliquota / 100;
 
           Valores.ValorIssRetido := Valores.ValorIssRetido +
               ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
-          Valores.BaseCalculo    := Valores.BaseCalculo + BaseCalculo;
-          Valores.ValorIss       := Valores.ValorIss + ValorISS;
+          Valores.BaseCalculo := Valores.BaseCalculo + BaseCalculo;
+          Valores.ValorIss := Valores.ValorIss + ValorISS;
         end;
       end;
     end;

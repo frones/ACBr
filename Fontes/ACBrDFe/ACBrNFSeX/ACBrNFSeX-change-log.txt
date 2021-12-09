@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/12/2021
+-- IPM.LerXml --
+[*] Possível correção na leitura do XML referente ao grupo <lista>
+   Por: Italo Giurizzato Junior
 -- eReceita.GravarXml --
 [*] Ajustado o formato do Item da Lista de Serviços.
    Por: Douglas GV

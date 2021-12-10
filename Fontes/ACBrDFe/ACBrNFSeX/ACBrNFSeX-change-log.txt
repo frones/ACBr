@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/12/2021
+-- Diversos --
+[*] Acrescentados os campos abaixo na classe de ItemServico utilizado por alguns
+    provedores como por exemplo o provedor IPM.
+
+    property TribMunPrestador: TnfseSimNao read FTribMunPrestador write FTribMunPrestador;
+    property CodMunPrestacao: string read FCodMunPrestacao write FCodMunPrestacao;
+    property SituacaoTributaria: Integer read FSituacaoTributaria write FSituacaoTributaria;
+ 
+    Vide o programa exemplo de como alimentar corretamente esses campos.
+   Por: Italo Giurizzato Junior
+
 09/12/2021
 -- IPM.LerXml --
 [*] Possível correção na leitura do XML referente ao grupo <lista>

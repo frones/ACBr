@@ -560,6 +560,10 @@ begin
     proInfisc: Result := EnumeradoToStr(t,
                            ['N', 'S'],
                            [snNao, snSim]);
+
+    proIPM: Result := EnumeradoToStr(t,
+                           ['0', '1'],
+                           [snNao, snSim]);
   else
     Result := EnumeradoToStr(t,
                              ['1', '2'],
@@ -573,6 +577,10 @@ begin
   case aProvedor of
     proInfisc: Result := StrToEnumerado(ok, s,
                            ['N', 'S'],
+                           [snNao, snSim]);
+
+    proIPM: Result := StrToEnumerado(ok, s,
+                           ['0', '1'],
                            [snNao, snSim]);
   else
     Result := StrToEnumerado(ok, s,

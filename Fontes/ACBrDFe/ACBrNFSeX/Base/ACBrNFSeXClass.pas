@@ -226,6 +226,9 @@ type
     FValorIRRF: Double;
 
     FTributavel: TnfseSimNao;
+    FTribMunPrestador: TnfseSimNao;
+    FCodMunPrestacao: string;
+    FSituacaoTributaria: Integer;
   public
     constructor Create;
 
@@ -280,7 +283,13 @@ type
     property AliqRetIRRF: Double read FAliqRetIRRF write FAliqRetIRRF;
     property ValorIRRF: Double read FValorIRRF write FValorIRRF;
 
+    // Provedor EloTech
     property Tributavel: TnfseSimNao read FTributavel write FTributavel;
+
+    // Provedor IPM
+    property TribMunPrestador: TnfseSimNao read FTribMunPrestador write FTribMunPrestador;
+    property CodMunPrestacao: string read FCodMunPrestacao write FCodMunPrestacao;
+    property SituacaoTributaria: Integer read FSituacaoTributaria write FSituacaoTributaria;
   end;
 
   TItemServicoCollection = class(TACBrObjectList)

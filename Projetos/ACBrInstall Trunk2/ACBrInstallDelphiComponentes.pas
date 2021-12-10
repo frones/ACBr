@@ -119,6 +119,7 @@ type
     procedure AddLibrarySearchPath;
     procedure DeixarSomenteLib;
 
+    procedure ApagarOutrosArquivosDaPastaLibrary(const PastarLibrary: string);
     procedure CopiarOutrosArquivosParaPastaLibrary;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
     procedure CompilaPacotePorNomeArquivo(const NomePacote: string);
@@ -208,6 +209,21 @@ begin
     (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCC64.OnBeforeExecute := BeforeExecute;
   if clDccOSX32 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
     (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCOSX32.OnBeforeExecute := BeforeExecute;
+  if clDccOSX64 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCOSX64.OnBeforeExecute := BeforeExecute;
+  if clDcciOSSimulator in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCiOSSimulator.OnBeforeExecute := BeforeExecute;
+  if clDcciOS32 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCiOS32.OnBeforeExecute := BeforeExecute;
+  if clDcciOS64 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCiOS64.OnBeforeExecute := BeforeExecute;
+  if clDccArm32 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCArm32.OnBeforeExecute := BeforeExecute;
+  if clDccArm64 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCArm64.OnBeforeExecute := BeforeExecute;
+  if clDccLinux64 in FUmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (FUmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCLinux64.OnBeforeExecute := BeforeExecute;
+
   // -- Evento para saidas de mensagens.
   FUmaPlataformaDestino.InstalacaoAtual.OutputCallback := OutputCallLine;
 end;
@@ -412,6 +428,7 @@ begin
     // *************************************************************************
     InformaSituacao('Criando diretórios de bibliotecas para ' + sPlatform + '...');
     ForceDirectories(sDirLibrary);
+    ApagarOutrosArquivosDaPastaLibrary(sDirLibrary);
     InformaSituacao('...OK');
     InformaProgresso;
 
@@ -990,6 +1007,28 @@ begin
     InformaSituacao(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
     Exit;
   end;
+end;
+
+procedure TACBrInstallComponentes.ApagarOutrosArquivosDaPastaLibrary(const PastarLibrary: string);
+  procedure ApagarArquivosDaPastaLibrary(const Mascara : string);
+  var
+    ListArquivos: TStringDynArray;
+    Arquivo : string;
+    i: integer;
+  begin
+    ListArquivos := TDirectory.GetFiles(IncludeTrailingPathDelimiter(PastarLibrary), Mascara, TSearchOption.soAllDirectories);
+    for i := Low(ListArquivos) to High(ListArquivos) do
+    begin
+      Arquivo := ExtractFileName(ListArquivos[i]);
+      DeleteFile(PWideChar(ListArquivos[i]));
+    end;
+  end;
+begin
+  ApagarArquivosDaPastaLibrary('*.dcr');
+  ApagarArquivosDaPastaLibrary('*.res');
+  ApagarArquivosDaPastaLibrary('*.dfm');
+  ApagarArquivosDaPastaLibrary('*.ini');
+  ApagarArquivosDaPastaLibrary('*.inc');
 end;
 
 procedure TACBrInstallComponentes.CopiarOutrosArquivosParaPastaLibrary;

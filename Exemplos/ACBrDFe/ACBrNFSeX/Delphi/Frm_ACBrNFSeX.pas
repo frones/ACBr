@@ -704,8 +704,16 @@ begin
         AliqRetIRRF := 0;
         ValorIRRF := 0;
 
-        //EloTech
+        // Provedor EloTech
         Tributavel := snNao;
+
+        // Provedor IPM
+        { define se o tributo é no municipio do prestador ou não }
+        TribMunPrestador := snNao;
+        { codigo do municipio que ocorreu a prestação de serviço }
+        CodMunPrestacao :=  edtCodCidade.Text;
+        { codigo da situação tributária: 0 até 15 }
+        SituacaoTributaria := 0;
       end;
 
       Prestador.IdentificacaoPrestador.CNPJ := edtEmitCNPJ.Text; //'88888888888888';

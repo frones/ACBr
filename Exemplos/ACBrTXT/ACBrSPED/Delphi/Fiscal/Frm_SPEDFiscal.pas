@@ -42,7 +42,7 @@ uses
 {$ENDIF}
   SysUtils, Variants, Classes, Graphics, Controls, Forms, ACBrEFDBlocos,
   StrUtils, Dialogs, StdCtrls, ACBrSpedFiscal, ExtCtrls, ComCtrls,
-  DateTimePicker, ACBrUtil, ACBrTXTClass, DateUtils, ACBrBase;
+  ACBrUtil, ACBrTXTClass, DateUtils, ACBrBase;
 
 type
 
@@ -105,7 +105,7 @@ type
     procedure btnCancelaGeracaoClick(Sender: TObject);
   private
     procedure LoadToMemo;
-    function AnoToVersao: TACBrCodVer; 
+    function AnoToVersao: TACBrVersaoLeiauteSPEDFiscal;
     { Private declarations }
   public
     { Public declarations }
@@ -133,7 +133,7 @@ begin
   memoError.Lines.Add(MsnError);
 end;
 
-function TFrmSPEDFiscal.AnoToVersao: TACBrCodVer;
+function TFrmSPEDFiscal.AnoToVersao: TACBrVersaoLeiauteSPEDFiscal;
 var
   xVer: string;
 begin
@@ -159,8 +159,14 @@ begin
     xVer := '011'
   else if (DtRef.DateTime >= StrToDate('01/01/2018')) and (DtRef.DateTime <= StrToDate('31/12/2018')) then
     xVer := '012'
-  else if (DtRef.DateTime >= StrToDate('01/01/2019')) then
-    xVer := '013';
+  else if (DtRef.DateTime >= StrToDate('01/01/2019')) and (DtRef.DateTime <= StrToDate('31/12/2019')) then
+    xVer := '013'
+  else if (DtRef.DateTime >= StrToDate('01/01/2020')) and (DtRef.DateTime <= StrToDate('31/12/2020')) then
+    xVer := '014'
+  else if (DtRef.DateTime >= StrToDate('01/01/2021')) and (DtRef.DateTime <= StrToDate('31/12/2021')) then
+    xVer := '015'
+  else if (DtRef.DateTime >= StrToDate('01/01/2022')) then
+    xVer := '016';
   Result := StrToCodVer(xVer);
 end;
 

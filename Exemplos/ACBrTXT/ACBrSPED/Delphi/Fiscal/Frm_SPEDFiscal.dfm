@@ -10,12 +10,11 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
+  PixelsPerInch = 96
   DesignSize = (
     747
     595)
-  PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
     Left = 8
@@ -141,7 +140,6 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 341
     end
     object Label6: TLabel
       Left = 526
@@ -216,8 +214,8 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
       Top = 28
       Width = 90
       Height = 21
-      Date = 43489.498320694450000000
-      Time = 43489.498320694450000000
+      Date = 43489.000000000000000000
+      Time = 0.498320694452559100
       TabOrder = 3
     end
     object cbEstado: TComboBox
@@ -286,7 +284,6 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 450
     end
     object btnB_0: TButton
       Left = 16
@@ -437,6 +434,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   object ACBrSPEDFiscal1: TACBrSPEDFiscal
     Path = '.\'
     Delimitador = '|'
+    ReplaceDelimitador = False
     TrimString = True
     CurMascara = '#0.00'
     OnError = ACBrSPEDFiscal1Error

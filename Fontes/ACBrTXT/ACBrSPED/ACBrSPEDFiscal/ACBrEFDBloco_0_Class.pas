@@ -863,21 +863,32 @@ end;
 procedure TBloco_0.WriteRegistro0220(Reg0200: TRegistro0200) ;
 var
   intFor: integer;
+  UmReg0220: TRegistro0220;
 begin
   if Assigned( Reg0200.Registro0220 ) then
   begin
-     for intFor := 0 to Reg0200.Registro0220.Count - 1 do
-     begin
-        with Reg0200.Registro0220.Items[intFor] do
-        begin
-          Add( LFill('0220') +
-               LFill( UNID_CONV ) +
-               DFill( FAT_CONV, 6 ) ) ;
-        end;
-        Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
-     end;
-     /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistro0220Count := FRegistro0220Count + Reg0200.Registro0220.Count;
+    for intFor := 0 to Reg0200.Registro0220.Count - 1 do
+    begin
+      UmReg0220 := Reg0200.Registro0220.Items[intFor];
+      if Registro0000.COD_VER <= vlVersao114 then
+      begin
+        Add( LFill('0220') +
+             LFill( UmReg0220.UNID_CONV ) +
+             DFill( UmReg0220.FAT_CONV, 6 )
+          ) ;
+      end
+      else
+      begin
+        Add( LFill('0220') +
+             LFill( UmReg0220.UNID_CONV ) +
+             DFill( UmReg0220.FAT_CONV, 6 ) +
+             LFill( UmReg0220.COD_BARRA )
+            ) ;
+      end;
+      Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistro0220Count := FRegistro0220Count + Reg0200.Registro0220.Count;
   end;
 end;
 

@@ -73,7 +73,7 @@ type
 
   TRegistro0000 = class
   private
-    fCOD_VER: TACBrCodVer;        /// Código da versão do leiaute: 100, 101, 102
+    fCOD_VER: TACBrVersaoLeiauteSPEDFiscal;        /// Código da versão do leiaute: 100, 101, 102
     fCOD_FIN: TACBrCodFin;        /// Código da finalidade do arquivo: 0 - Remessa do arquivo original / 1 - Remessa do arquivo substituto.
     fDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
     fDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
@@ -88,7 +88,7 @@ type
     fIND_PERFIL: TACBrPerfil;     /// Perfil de apresentação do arquivo fiscal: A - Perfil A / B - Perfil B / C - Perfil C
     fIND_ATIV: TACBrIndAtiv;      /// Indicador de tipo de atividade: 0 - Industrial ou equiparado a industrial; 1 - Outros.
   public
-    property COD_VER: TACBrCodVer read FCOD_VER write FCOD_VER;
+    property COD_VER: TACBrVersaoLeiauteSPEDFiscal read FCOD_VER write FCOD_VER;
     property COD_FIN: TACBrCodFin read FCOD_FIN write FCOD_FIN;
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
@@ -464,9 +464,11 @@ type
   private
     fUNID_CONV: String;  /// Unidade comercial a ser convertida na unidade de estoque, referida em 0200:
     fFAT_CONV: Double;   /// Fator de conversão:
+    FCOD_BARRA: string;  ///   Representação alfanumérica do código de barra da unidade comercial do produto, se houver
   public
     property UNID_CONV: String read FUNID_CONV write FUNID_CONV;
     property FAT_CONV: Double read FFAT_CONV write FFAT_CONV;
+    property COD_BARRA: string read FCOD_BARRA write FCOD_BARRA;
   end;
 
   /// Registro 0220 - Lista

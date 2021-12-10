@@ -3243,120 +3243,166 @@ var
   strCOD_GRUPO_TENSAO: String;
   vFin_DOCe: string;
   intIND_DEST: Integer;
+  UmRegC500: TRegistroC500;
 begin
   if Assigned( RegC001.RegistroC500 ) then
   begin
-     for intFor := 0 to RegC001.RegistroC500.Count - 1 do
-     begin
-        with RegC001.RegistroC500.Items[intFor] do
-        begin
-           // COD_MOD
-           Check(MatchText(COD_MOD, ['06', '28', '29']), 'Registro C500 : O código do modelo "%s" não está na lista de valores válidos "%s" !',
-                                                         [COD_MOD, '[06, 28, 29]']);
-           // COD_CONS
-           Check(funChecaCOD_CONS(COD_MOD, COD_CONS), 'Registro C500 : Se o modelo for 06 (energia elétrica) ou 28 (gás canalizado), ' +
-                                                      'os valores válidos são "%s". Se o modelo for 29 (água canalizada), o valor deve ' +
-                                                      'constar da Tabela 4.4.2 do Ato COTEPE/ICMS nº 09, de 18 de abril de 2008. !',
-                                                      ['[01, 02, 03, 04, 05, 06, 07, 08]']);
+    for intFor := 0 to RegC001.RegistroC500.Count - 1 do
+    begin
+      UmRegC500 := RegC001.RegistroC500.Items[intFor];
+      // COD_MOD
+      Check(MatchText(UmRegC500.COD_MOD, ['06', '28', '29']), 'Registro C500 : O código do modelo "%s" não está na lista de valores válidos "%s" !',
+                                                   [UmRegC500.COD_MOD, '[06, 28, 29]']);
+      // COD_CONS
+      Check(funChecaCOD_CONS(UmRegC500.COD_MOD, UmRegC500.COD_CONS), 'Registro C500 : Se o modelo for 06 (energia elétrica) ou 28 (gás canalizado), ' +
+                                                'os valores válidos são "%s". Se o modelo for 29 (água canalizada), o valor deve ' +
+                                                'constar da Tabela 4.4.2 do Ato COTEPE/ICMS nº 09, de 18 de abril de 2008. !',
+                                                ['[01, 02, 03, 04, 05, 06, 07, 08]']);
 
-           strCOD_SIT := CodSitToStr(COD_SIT);
+      strCOD_SIT := CodSitToStr(UmRegC500.COD_SIT);
 
-           strCOD_GRUPO_TENSAO := GrupoTensaoToStr(COD_GRUPO_TENSAO);
+      strCOD_GRUPO_TENSAO := GrupoTensaoToStr(UmRegC500.COD_GRUPO_TENSAO);
 
-           intTP_LIGACAO := TipoLigacaoToInt(TP_LIGACAO);
+      intTP_LIGACAO := TipoLigacaoToInt(UmRegC500.TP_LIGACAO);
 
-           if COD_MOD = '66' then
-           begin
-             vFin_DOCe := FinalidadeEmissaoDocEletToStr(FIN_DOCe);
-           end
-           else
-           begin
-             vFin_DOCe := '';
-           end;
+      if UmRegC500.COD_MOD = '66' then
+      begin
+       vFin_DOCe := FinalidadeEmissaoDocEletToStr(UmRegC500.FIN_DOCe);
+      end
+      else
+      begin
+       vFin_DOCe := '';
+      end;
 
-           intIND_DEST := IndicadorDestinatarioAcessanteToInt(IND_DEST);
+      intIND_DEST := IndicadorDestinatarioAcessanteToInt(UmRegC500.IND_DEST);
 
-           if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
-           begin
-             // A partir de 01/01/2020
-             Add( LFill('C500') +
-                  LFill( Integer(IND_OPER), 0 ) +
-                  LFill( Integer(IND_EMIT), 0 ) +
-                  LFill( COD_PART ) +
-                  LFill( COD_MOD,2 ) +
-                  LFill( strCOD_SIT ) +
-                  LFill( SER ) +
-                  LFill( SUB ) +
-                  LFill( COD_CONS ) +
-                  LFill( NUM_DOC, 9 ) +
-                  LFill( DT_DOC ) +
-                  LFill( DT_E_S ) +
-                  LFill( VL_DOC,0,2 ) +
-                  LFill( VL_DESC,0,2 ) +
-                  LFill( VL_FORN,0,2 ) +
-                  LFill( VL_SERV_NT,0,2 ) +
-                  LFill( VL_TERC,0,2 ) +
-                  LFill( VL_DA,0,2 ) +
-                  LFill( VL_BC_ICMS,0,2 ) +
-                  LFill( VL_ICMS,0,2 ) +
-                  LFill( VL_BC_ICMS_ST,0,2 ) +
-                  LFill( VL_ICMS_ST,0,2 ) +
-                  LFill( COD_INF ) +
-                  LFill( VL_PIS,0,2, True ) +
-                  LFill( VL_COFINS,0,2, True ) +
-                  LFill( intTP_LIGACAO, 0, True ) +
-                  LFill( strCOD_GRUPO_TENSAO ) +
-                  LFill( CHV_DOCe ) +
-                  LFill( vFin_DOCe ) +
-                  LFill( CHV_DOCe_REF ) +
-                  LFill( intIND_DEST, 0, True  ) +
-                  LFill( COD_MUN_DEST ) +
-                  LFill( COD_CTA )
-                  ) ;
-           end
-           else
-           begin
-             // Até 31/12/2019
-             Add( LFill('C500') +
-                  LFill( Integer(IND_OPER), 0 ) +
-                  LFill( Integer(IND_EMIT), 0 ) +
-                  LFill( COD_PART ) +
-                  LFill( COD_MOD,2 ) +
-                  LFill( strCOD_SIT ) +
-                  LFill( SER ) +
-                  LFill( SUB ) +
-                  LFill( COD_CONS ) +
-                  LFill( NUM_DOC, 9 ) +
-                  LFill( DT_DOC ) +
-                  LFill( DT_E_S ) +
-                  LFill( VL_DOC,0,2 ) +
-                  LFill( VL_DESC,0,2 ) +
-                  LFill( VL_FORN,0,2 ) +
-                  LFill( VL_SERV_NT,0,2 ) +
-                  LFill( VL_TERC,0,2 ) +
-                  LFill( VL_DA,0,2 ) +
-                  LFill( VL_BC_ICMS,0,2 ) +
-                  LFill( VL_ICMS,0,2 ) +
-                  LFill( VL_BC_ICMS_ST,0,2 ) +
-                  LFill( VL_ICMS_ST,0,2 ) +
-                  LFill( COD_INF ) +
-                  LFill( VL_PIS,0,2, True ) +
-                  LFill( VL_COFINS,0,2, True ) +
-                  LFill( intTP_LIGACAO, 0, True ) +
-                  LFill( strCOD_GRUPO_TENSAO ) ) ;
-           end;
-        end;
-        /// Registro FILHOS do FILHO
-        WriteRegistroC510( RegC001.RegistroC500.Items[intFor] ) ;
-        WriteRegistroC590( RegC001.RegistroC500.Items[intFor] ) ;
-        WriteRegistroC595( RegC001.RegistroC500.Items[intFor] ) ;
+      if FBloco_0.Registro0000.COD_VER >= vlVersao115 then
+      begin
+        // A partir de 01/01/2022
+        Add( LFill('C500') +
+            LFill( Integer(UmRegC500.IND_OPER), 0 ) +
+            LFill( Integer(UmRegC500.IND_EMIT), 0 ) +
+            LFill( UmRegC500.COD_PART ) +
+            LFill( UmRegC500.COD_MOD, 2 ) +
+            LFill( strCOD_SIT ) +
+            LFill( UmRegC500.SER ) +
+            LFill( UmRegC500.SUB ) +
+            LFill( UmRegC500.COD_CONS ) +
+            LFill( UmRegC500.NUM_DOC, 9 ) +
+            LFill( UmRegC500.DT_DOC ) +
+            LFill( UmRegC500.DT_E_S ) +
+            LFill( UmRegC500.VL_DOC,0,2 ) +
+            LFill( UmRegC500.VL_DESC,0,2 ) +
+            LFill( UmRegC500.VL_FORN,0,2 ) +
+            LFill( UmRegC500.VL_SERV_NT,0,2 ) +
+            LFill( UmRegC500.VL_TERC,0,2 ) +
+            LFill( UmRegC500.VL_DA,0,2 ) +
+            LFill( UmRegC500.VL_BC_ICMS,0,2 ) +
+            LFill( UmRegC500.VL_ICMS,0,2 ) +
+            LFill( UmRegC500.VL_BC_ICMS_ST,0,2 ) +
+            LFill( UmRegC500.VL_ICMS_ST,0,2 ) +
+            LFill( UmRegC500.COD_INF ) +
+            LFill( UmRegC500.VL_PIS,0,2, True ) +
+            LFill( UmRegC500.VL_COFINS,0,2, True ) +
+            LFill( intTP_LIGACAO, 0, True ) +
+            LFill( strCOD_GRUPO_TENSAO ) +
+            LFill( UmRegC500.CHV_DOCe ) +
+            LFill( vFin_DOCe ) +
+            LFill( UmRegC500.CHV_DOCe_REF ) +
+            LFill( intIND_DEST, 0, True  ) +
+            LFill( UmRegC500.COD_MUN_DEST ) +
+            LFill( UmRegC500.COD_CTA ) +
+            LFill( UmRegC500.COD_MOD_DOC_REF ) +
+            LFill( UmRegC500.HASH_DOC_REF ) +
+            LFill( UmRegC500.SER_DOC_REF ) +
+            LFill( UmRegC500.NUM_DOC_REF ) +
+            LFill( UmRegC500.MES_DOC_REF ) +
+            VLFill( UmRegC500.OUTRAS_DED, 0) +
+            VLFill( UmRegC500.ENER_INJET, 0)
+           ) ;
+      end
+      else if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
+      begin
+        // A partir de 01/01/2020
+        Add( LFill('C500') +
+             LFill( Integer(UmRegC500.IND_OPER), 0 ) +
+             LFill( Integer(UmRegC500.IND_EMIT), 0 ) +
+             LFill( UmRegC500.COD_PART ) +
+             LFill( UmRegC500.COD_MOD,2 ) +
+             LFill( strCOD_SIT ) +
+             LFill( UmRegC500.SER ) +
+             LFill( UmRegC500.SUB ) +
+             LFill( UmRegC500.COD_CONS ) +
+             LFill( UmRegC500.NUM_DOC, 9 ) +
+             LFill( UmRegC500.DT_DOC ) +
+             LFill( UmRegC500.DT_E_S ) +
+             LFill( UmRegC500.VL_DOC,0,2 ) +
+             LFill( UmRegC500.VL_DESC,0,2 ) +
+             LFill( UmRegC500.VL_FORN,0,2 ) +
+             LFill( UmRegC500.VL_SERV_NT,0,2 ) +
+             LFill( UmRegC500.VL_TERC,0,2 ) +
+             LFill( UmRegC500.VL_DA,0,2 ) +
+             LFill( UmRegC500.VL_BC_ICMS,0,2 ) +
+             LFill( UmRegC500.VL_ICMS,0,2 ) +
+             LFill( UmRegC500.VL_BC_ICMS_ST,0,2 ) +
+             LFill( UmRegC500.VL_ICMS_ST,0,2 ) +
+             LFill( UmRegC500.COD_INF ) +
+             LFill( UmRegC500.VL_PIS,0,2, True ) +
+             LFill( UmRegC500.VL_COFINS,0,2, True ) +
+             LFill( intTP_LIGACAO, 0, True ) +
+             LFill( strCOD_GRUPO_TENSAO ) +
+             LFill( UmRegC500.CHV_DOCe ) +
+             LFill( vFin_DOCe ) +
+             LFill( UmRegC500.CHV_DOCe_REF ) +
+             LFill( intIND_DEST, 0, True  ) +
+             LFill( UmRegC500.COD_MUN_DEST ) +
+             LFill( UmRegC500.COD_CTA )
+            ) ;
+      end
+      else
+      begin
+        // Até 31/12/2019
+        Add( LFill('C500') +
+             LFill( Integer(UmRegC500.IND_OPER), 0 ) +
+             LFill( Integer(UmRegC500.IND_EMIT), 0 ) +
+             LFill( UmRegC500.COD_PART ) +
+             LFill( UmRegC500.COD_MOD,2 ) +
+             LFill( strCOD_SIT ) +
+             LFill( UmRegC500.SER ) +
+             LFill( UmRegC500.SUB ) +
+             LFill( UmRegC500.COD_CONS ) +
+             LFill( UmRegC500.NUM_DOC, 9 ) +
+             LFill( UmRegC500.DT_DOC ) +
+             LFill( UmRegC500.DT_E_S ) +
+             LFill( UmRegC500.VL_DOC,0,2 ) +
+             LFill( UmRegC500.VL_DESC,0,2 ) +
+             LFill( UmRegC500.VL_FORN,0,2 ) +
+             LFill( UmRegC500.VL_SERV_NT,0,2 ) +
+             LFill( UmRegC500.VL_TERC,0,2 ) +
+             LFill( UmRegC500.VL_DA,0,2 ) +
+             LFill( UmRegC500.VL_BC_ICMS,0,2 ) +
+             LFill( UmRegC500.VL_ICMS,0,2 ) +
+             LFill( UmRegC500.VL_BC_ICMS_ST,0,2 ) +
+             LFill( UmRegC500.VL_ICMS_ST,0,2 ) +
+             LFill( UmRegC500.COD_INF ) +
+             LFill( UmRegC500.VL_PIS,0,2, True ) +
+             LFill( UmRegC500.VL_COFINS,0,2, True ) +
+             LFill( intTP_LIGACAO, 0, True ) +
+             LFill( strCOD_GRUPO_TENSAO )
+           ) ;
+      end;
 
-        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
-     end;
-     /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistroC500Count := FRegistroC500Count + RegC001.RegistroC500.Count;
+      /// Registro FILHOS do FILHO
+      WriteRegistroC510(UmRegC500);
+      WriteRegistroC590(UmRegC500);
+      WriteRegistroC595(UmRegC500);
 
-     RegC001.RegistroC500.Clear;
+      RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistroC500Count := FRegistroC500Count + RegC001.RegistroC500.Count;
+
+    RegC001.RegistroC500.Clear;
   end;
 end;
 

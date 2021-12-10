@@ -67,6 +67,7 @@ type
   TRegistro1500List = class;
   TRegistro1510List = class;
   TRegistro1600List = class;
+  TRegistro1601List = class;
   TRegistro1700List = class;
   TRegistro1710List = class;
   TRegistro1800List = class;
@@ -98,6 +99,7 @@ type
     FRegistro1400: TRegistro1400List;
     FRegistro1500: TRegistro1500List;
     FRegistro1600: TRegistro1600List;
+    FRegistro1601: TRegistro1601List;
     FRegistro1700: TRegistro1700List;
     FRegistro1800: TRegistro1800List;
     FRegistro1900: TRegistro1900List;
@@ -119,6 +121,7 @@ type
     property Registro1400: TRegistro1400List read FRegistro1400 write FRegistro1400;
     property Registro1500: TRegistro1500List read FRegistro1500 write FRegistro1500;
     property Registro1600: TRegistro1600List read FRegistro1600 write FRegistro1600;
+    property Registro1601: TRegistro1601List read FRegistro1601 write FRegistro1601;
     property Registro1700: TRegistro1700List read FRegistro1700 write FRegistro1700;
     property Registro1800: TRegistro1800List read FRegistro1800 write FRegistro1800;
     property Registro1900: TRegistro1900List read FRegistro1900 write FRegistro1900;
@@ -137,7 +140,7 @@ type
     fIND_USINA : String;// Reg. 1390 – Usinas de açúcar e/álcool – O estabelecimento é produtor de açúcar e/ou álcool carburante:
     fIND_VA    : String;// Reg. 1400 – Existem informações a serem prestadas neste registro e o registro é obrigatório em sua Unidade da Federação:
     fIND_EE    : String;// Reg. 1500 - A empresa é distribuidora de energia e ocorreu fornecimento de energia elétrica para consumidores de outra UF:
-    fIND_CART  : String;// Reg. 1600 - Realizou vendas com Cartão de Crédito ou de débito:
+    fIND_CART  : String;// Reg. 1600 ou 1601 - Realizou vendas com Cartão de Crédito ou de débito / instrumentos eletrônicos de pagamento
     fIND_FORM  : String;// Reg. 1700 - É obrigatório em sua unidade da federação o controle de utilização de documentos  fiscais em papel:
     fIND_AER   : String;// Reg. 1800 – A empresa prestou serviços de transporte aéreo de cargas e de passageiros:
     fIND_GIAF1 : String;// Reg. 1960 – Possui informações GIAF1:
@@ -914,6 +917,36 @@ type
   public
     function New(AOwner: TRegistro1001): TRegistro1600;
     property Items[Index: Integer]: TRegistro1600 read GetItem write SetItem;
+  end;
+
+    /// Registro 1601 - OPERAÇÕES COM INSTRUMENTOS DE PAGAMENTOS ELETRÔNICOS
+
+  TRegistro1601 = class
+  private
+    FCOD_PART_IP: String;   /// Código do participante (campo 02 do Registro 0150): identificação da instituição que efetuou o pagamento
+    FCOD_PART_IT: String;   /// Código do participante (campo 02 do Registro 0150): identificação do intermediador da transação
+
+    FTOT_VS: currency;      /// Valor total bruto das vendas e/ou prestações de serviços no campo de incidência do ICMS, incluindo operações com imunidade do imposto.
+    FTOT_ISS: currency;     /// Valor total bruto das prestações de serviços no campo de incidência do ISS
+    FTOT_OUTROS: currency;  /// Valor total de operações deduzido dos valores dos campos TOT_VS e TOT_ISS.
+  public
+    property COD_PART_IP: String read FCOD_PART_IP write FCOD_PART_IP;
+    property COD_PART_IT: String read FCOD_PART_IT write FCOD_PART_IT;
+
+    property TOT_VS: currency read FTOT_VS write FTOT_VS;
+    property TOT_ISS: currency read FTOT_ISS write FTOT_ISS;
+    property TOT_OUTROS: currency read FTOT_OUTROS write FTOT_OUTROS;
+  end;
+
+  /// Registro 1601 - Lista
+
+  TRegistro1601List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro1601;
+    procedure SetItem(Index: Integer; const Value: TRegistro1601);
+  public
+    function New(AOwner: TRegistro1001): TRegistro1601;
+    property Items[Index: Integer]: TRegistro1601 read GetItem write SetItem;
   end;
 
   /// Registro 1700 - DOCUMENTOS FISCAIS UTILIZADOS
@@ -1746,6 +1779,24 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistro1601List }
+
+function TRegistro1601List.GetItem(Index: Integer): TRegistro1601;
+begin
+  Result := TRegistro1601(Inherited Items[Index]);
+end;
+
+function TRegistro1601List.New(AOwner: TRegistro1001): TRegistro1601;
+begin
+  Result := TRegistro1601.Create();
+  Add(Result);
+end;
+
+procedure TRegistro1601List.SetItem(Index: Integer; const Value: TRegistro1601);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistro1350 }
 
 constructor TRegistro1350.Create();
@@ -1851,6 +1902,7 @@ begin
    FRegistro1400 := TRegistro1400List.Create;
    FRegistro1500 := TRegistro1500List.Create;
    FRegistro1600 := TRegistro1600List.Create;
+   FRegistro1601 := TRegistro1601List.Create;
    FRegistro1700 := TRegistro1700List.Create;
    FRegistro1800 := TRegistro1800List.Create;
    FRegistro1900 := TRegistro1900List.Create;
@@ -1873,6 +1925,7 @@ begin
   FRegistro1400.Free;
   FRegistro1500.Free;
   FRegistro1600.Free;
+  FRegistro1601.Free;
   FRegistro1700.Free;
   FRegistro1800.Free;
   FRegistro1900.Free;

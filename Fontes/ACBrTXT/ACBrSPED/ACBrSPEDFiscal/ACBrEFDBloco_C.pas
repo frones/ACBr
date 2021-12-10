@@ -2304,6 +2304,13 @@ type
     FIND_DEST: TACBrIndicadorDestinatarioAcessante; /// Indicador do Destinatário/Acessante:
     FCOD_MUN_DEST: string;               /// Código do município do destinatário conforme a tabela do IBGE.
     fCOD_CTA: string;                    /// Código da conta analítica contábil debitada/creditada
+    FCOD_MOD_DOC_REF: string;            /// Código do modelo do documento fiscal referenciado, conforme a Tabela 4.1.1
+    FHASH_DOC_REF: string;               /// Código de autenticação digital do registro (Convênio 115/2003).
+    FSER_DOC_REF: string;                /// Série do documento fiscal referenciado.
+    FNUM_DOC_REF: string;                /// Número do documento fiscal referenciado.
+    FMES_DOC_REF: string;                /// Mês e ano da emissão do documento fiscal referenciado.
+    FOUTRAS_DED: Variant;                 /// Energia injetada
+    FENER_INJET: Variant;                 /// Outras deduções
 
     FRegistroC510: TRegistroC510List;  /// BLOCO C - Lista de RegistroC510 (FILHO)
     FRegistroC590: TRegistroC590List;  /// BLOCO C - Lista de RegistroC590 (FILHO)
@@ -2345,6 +2352,13 @@ type
     property IND_DEST: TACBrIndicadorDestinatarioAcessante read FIND_DEST write FIND_DEST;
     property COD_MUN_DEST: string read FCOD_MUN_DEST write FCOD_MUN_DEST;
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
+    property COD_MOD_DOC_REF: string read FCOD_MOD_DOC_REF write FCOD_MOD_DOC_REF;
+    property HASH_DOC_REF: string read FHASH_DOC_REF write FHASH_DOC_REF;
+    property SER_DOC_REF: string read FSER_DOC_REF write FSER_DOC_REF;
+    property NUM_DOC_REF: string read FNUM_DOC_REF write FNUM_DOC_REF;
+    property MES_DOC_REF: string read FMES_DOC_REF write FMES_DOC_REF;
+    property ENER_INJET: Variant read FENER_INJET write FENER_INJET;
+    property OUTRAS_DED: Variant read FOUTRAS_DED write FOUTRAS_DED;
 
     /// Registros FILHOS
     property RegistroC510: TRegistroC510List read FRegistroC510 write FRegistroC510;

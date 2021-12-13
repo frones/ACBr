@@ -1,33 +1,33 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -224,13 +224,13 @@ end;
  cbBancos.Items.Add('107-D - Banco BBM S.A.');
  cbBancos.Items.Add('031-D - Banco Beg S.A.');
  cbBancos.Items.Add('739-D - Banco BGN S.A.');
- cbBancos.Items.Add('096-D - Banco BM&F de Servi√ßos de Liquida√ß√£o e Cust√≥dia S.A');
+ cbBancos.Items.Add('096-D - Banco BM&F de ServiÁos de LiquidaÁ„o e CustÛdia S.A');
  cbBancos.Items.Add('318-D - Banco BMG S.A.');
  cbBancos.Items.Add('752-D - Banco BNP Paribas Brasil S.A.');
- cbBancos.Items.Add('248-D - Banco Boavista Interatl√¢ntico S.A.');
+ cbBancos.Items.Add('248-D - Banco Boavista Interatl‚ntico S.A.');
  cbBancos.Items.Add('218-D - Banco Bonsucesso S.A.');
  cbBancos.Items.Add('036-D - Banco Bradesco BBI S.A.');
- cbBancos.Items.Add('204-D - Banco Bradesco Cart√µes S.A.');
+ cbBancos.Items.Add('204-D - Banco Bradesco Cartıes S.A.');
  cbBancos.Items.Add('394-D - Banco Bradesco Financiamentos S.A.');
  cbBancos.Items.Add('225-D - Banco Brascan S.A.');
  cbBancos.Items.Add('208-D - Banco BTG Pactual S.A.');
@@ -244,14 +244,14 @@ end;
  cbBancos.Items.Add('222-D - Banco Credit Agricole Brasil S.A.');
  cbBancos.Items.Add('505-D - Banco Credit Suisse (Brasil) S.A.');
  cbBancos.Items.Add('229-D - Banco Cruzeiro do Sul S.A.');
- cbBancos.Items.Add('003-D - Banco da Amaz√¥nia S.A.');
+ cbBancos.Items.Add('003-D - Banco da AmazÙnia S.A.');
  cbBancos.Items.Add('083-3 - Banco da China Brasil S.A.');
  cbBancos.Items.Add('707-D - Banco Daycoval S.A.');
  cbBancos.Items.Add('024-D - Banco de Pernambuco S.A. - BANDEPE');
  cbBancos.Items.Add('456-D - Banco de Tokyo-Mitsubishi UFJ Brasil S.A.');
  cbBancos.Items.Add('214-D - Banco Dibens S.A.');
  cbBancos.Items.Add('047-D - Banco do Estado de Sergipe S.A.');
- cbBancos.Items.Add('037-D - Banco do Estado do Par√° S.A.');
+ cbBancos.Items.Add('037-D - Banco do Estado do Par· S.A.');
  cbBancos.Items.Add('041-D - Banco do Estado do Rio Grande do Sul S.A.');
  cbBancos.Items.Add('004-D - Banco do Nordeste do Brasil S.A.');
  cbBancos.Items.Add('265-D - Banco Fator S.A.');
@@ -259,14 +259,14 @@ end;
  cbBancos.Items.Add('626-D - Banco Ficsa S.A.');
  cbBancos.Items.Add('233-D - Banco GE Capital S.A.');
  cbBancos.Items.Add('612-D - Banco Guanabara S.A.');
- cbBancos.Items.Add('063-D - Banco Ibi S.A. Banco M√∫ltiplo');
+ cbBancos.Items.Add('063-D - Banco Ibi S.A. Banco M˙ltiplo');
  cbBancos.Items.Add('604-D - Banco Industrial do Brasil S.A.');
  cbBancos.Items.Add('320-D - Banco Industrial e Comercial S.A.');
  cbBancos.Items.Add('653-D - Banco Indusval S.A.');
  cbBancos.Items.Add('630-D - Banco Intercap S.A.');
  cbBancos.Items.Add('249-D - Banco Investcred Unibanco S.A.');
- cbBancos.Items.Add('184-D - Banco Ita√∫ BBA S.A.');
- cbBancos.Items.Add('479-D - Banco Ita√∫Bank S.A');
+ cbBancos.Items.Add('184-D - Banco Ita˙ BBA S.A.');
+ cbBancos.Items.Add('479-D - Banco Ita˙Bank S.A');
  cbBancos.Items.Add('376-D - Banco J. P. Morgan S.A.');
  cbBancos.Items.Add('074-D - Banco J. Safra S.A.');
  cbBancos.Items.Add('217-D - Banco John Deere S.A.');
@@ -286,34 +286,34 @@ end;
  cbBancos.Items.Add('422-D - Banco Safra S.A.');
  cbBancos.Items.Add('250-D - Banco Schahin S.A.');
  cbBancos.Items.Add('749-D - Banco Simples S.A.');
- cbBancos.Items.Add('366-D - Banco Soci√©t√© G√©n√©rale Brasil S.A.');
+ cbBancos.Items.Add('366-D - Banco SociÈtÈ GÈnÈrale Brasil S.A.');
  cbBancos.Items.Add('637-D - Banco Sofisa S.A.');
  cbBancos.Items.Add('012-D - Banco Standard de Investimentos S.A.');
  cbBancos.Items.Add('464-D - Banco Sumitomo Mitsui Brasileiro S.A.');
- cbBancos.Items.Add('082-5 - Banco Top√°zio S.A.');
- cbBancos.Items.Add('634-D - Banco Tri√¢ngulo S.A.');
+ cbBancos.Items.Add('082-5 - Banco Top·zio S.A.');
+ cbBancos.Items.Add('634-D - Banco Tri‚ngulo S.A.');
  cbBancos.Items.Add('655-D - Banco Votorantim S.A.');
  cbBancos.Items.Add('610-D - Banco VR S.A.');
  cbBancos.Items.Add('370-D - Banco WestLB do Brasil S.A.');
- cbBancos.Items.Add('021-D - BANESTES S.A. Banco do Estado do Esp√≠rito Santo');
+ cbBancos.Items.Add('021-D - BANESTES S.A. Banco do Estado do EspÌrito Santo');
  cbBancos.Items.Add('719-D - Banif-Banco Internacional do Funchal (Brasil)S.A.');
  cbBancos.Items.Add('073-D - BB Banco Popular do Brasil S.A.');
  cbBancos.Items.Add('078-D - BES Investimento do Brasil S.A.-Banco de Investimento');
- cbBancos.Items.Add('069-D - BPN Brasil Banco M√∫ltiplo S.A.');
- cbBancos.Items.Add('070-D - BRB - Banco de Bras√≠lia S.A.');
+ cbBancos.Items.Add('069-D - BPN Brasil Banco M˙ltiplo S.A.');
+ cbBancos.Items.Add('070-D - BRB - Banco de BrasÌlia S.A.');
  cbBancos.Items.Add('477-D - Citibank N.A.');
- cbBancos.Items.Add('081-7 - Conc√≥rdia Banco S.A.');
- cbBancos.Items.Add('487-D - Deutsche Bank S.A. - Banco Alem√£o');
- cbBancos.Items.Add('751-D - Dresdner Bank Brasil S.A. - Banco M√∫ltiplo');
- cbBancos.Items.Add('064-D - Goldman Sachs do Brasil Banco M√∫ltiplo S.A.');
- cbBancos.Items.Add('062-D - Hipercard Banco M√∫ltiplo S.A.');
- cbBancos.Items.Add('399-D - HSBC Bank Brasil S.A. - Banco M√∫ltiplo');
+ cbBancos.Items.Add('081-7 - ConcÛrdia Banco S.A.');
+ cbBancos.Items.Add('487-D - Deutsche Bank S.A. - Banco Alem„o');
+ cbBancos.Items.Add('751-D - Dresdner Bank Brasil S.A. - Banco M˙ltiplo');
+ cbBancos.Items.Add('064-D - Goldman Sachs do Brasil Banco M˙ltiplo S.A.');
+ cbBancos.Items.Add('062-D - Hipercard Banco M˙ltiplo S.A.');
+ cbBancos.Items.Add('399-D - HSBC Bank Brasil S.A. - Banco M˙ltiplo');
  cbBancos.Items.Add('492-D - ING Bank N.V.');
- cbBancos.Items.Add('652-D - Ita√∫ Unibanco Holding S.A.');
- cbBancos.Items.Add('341-D - Ita√∫ Unibanco S.A.');
+ cbBancos.Items.Add('652-D - Ita˙ Unibanco Holding S.A.');
+ cbBancos.Items.Add('341-D - Ita˙ Unibanco S.A.');
  cbBancos.Items.Add('488-D - JPMorgan Chase Bank');
- cbBancos.Items.Add('409-D - UNIBANCO - Uni√£o de Bancos Brasileiros S.A.');
- cbBancos.Items.Add('230-D - Unicard Banco M√∫ltiplo S.A.');
+ cbBancos.Items.Add('409-D - UNIBANCO - Uni„o de Bancos Brasileiros S.A.');
+ cbBancos.Items.Add('230-D - Unicard Banco M˙ltiplo S.A.');
 *)
 function BancoToStr(const t: TBanco): String;
 begin
@@ -635,469 +635,469 @@ begin
   else if ADesc = 'AE' then
     Result := 'DATA DE PAGAMENTO ALTERADA'
   else if ADesc = 'AG' then
-    Result := 'N√öMERO DO LOTE INV√ÅLIDO'
+    Result := 'N⁄MERO DO LOTE INV¡LIDO'
   else if ADesc = 'AH' then
-    Result := 'N√öMERO SEQUENCIAL DO REGISTRO NO LOTE INV√ÅLIDO'
+    Result := 'N⁄MERO SEQUENCIAL DO REGISTRO NO LOTE INV¡LIDO'
   else if ADesc = 'AI' then
-    Result := 'PRODUTO DEMONSTRATIVO DE PAGAMENTO N√ÉO CONTRATADO'
+    Result := 'PRODUTO DEMONSTRATIVO DE PAGAMENTO N√O CONTRATADO'
   else if ADesc = 'AJ' then
-    Result := 'TIPO DE MOVIMENTO INV√ÅLIDO'
+    Result := 'TIPO DE MOVIMENTO INV¡LIDO'
   else if ADesc = 'AL' then
-    Result := 'C√ìDIGO DO BANCO FAVORECIDO INV√ÅLIDO'
+    Result := 'C”DIGO DO BANCO FAVORECIDO INV¡LIDO'
   else if ADesc = 'AM' then
-    Result := 'AG√äNCIA DO FAVORECIDO INV√ÅLIDA'
+    Result := 'AG NCIA DO FAVORECIDO INV¡LIDA'
   else if ADesc = 'AN' then
-    Result := 'CONTA CORRENTE DO FAVORECIDO INV√ÅLIDA / CONTA INVESTIMENTO EXTINTA EM 30/04/2011'
+    Result := 'CONTA CORRENTE DO FAVORECIDO INV¡LIDA / CONTA INVESTIMENTO EXTINTA EM 30/04/2011'
   else if ADesc = 'AO' then
-    Result := 'NOME DO FAVORECIDO INV√ÅLIDO'
+    Result := 'NOME DO FAVORECIDO INV¡LIDO'
   else if ADesc = 'AP' then
-    Result := 'DATA DE PAGAMENTO / DATA DE VALIDADE / HORA DE LAN√áAMENTO / ARRECADA√á√ÉO / APURA√á√ÉO INV√ÅLIDA'
+    Result := 'DATA DE PAGAMENTO / DATA DE VALIDADE / HORA DE LAN«AMENTO / ARRECADA«√O / APURA«√O INV¡LIDA'
   else if ADesc = 'AQ' then
     Result := 'QUANTIDADE DE REGISTROS MAIOR QUE 999999'
   else if ADesc = 'AR' then
-    Result := 'VALOR ARRECADADO / LAN√áAMENTO INV√ÅLIDO'
+    Result := 'VALOR ARRECADADO / LAN«AMENTO INV¡LIDO'
   else if ADesc = 'BC' then
-    Result := 'NOSSO N√öMERO INV√ÅLIDO'
+    Result := 'NOSSO N⁄MERO INV¡LIDO'
   else if ADesc = 'BD' then
     Result := 'PAGAMENTO AGENDADO'
   else if ADesc = 'BDCI' then
-    Result := 'PAGAMENTO ACATADO, POR√âM O CPF/CNPJ √â INV√ÅLIDO.'
+    Result := 'PAGAMENTO ACATADO, POR…M O CPF/CNPJ … INV¡LIDO.'
   else if ADesc = 'BDCD' then
-    Result := 'PAGAMENTO ACATADO, POR√âM O CPF/CNPJ INFORMADO N√ÉO √â O MESMO QUE EST√Å CADASTRADO PARA A AG√äNCIA CONTA CREDITADA'
+    Result := 'PAGAMENTO ACATADO, POR…M O CPF/CNPJ INFORMADO N√O … O MESMO QUE EST¡ CADASTRADO PARA A AG NCIA CONTA CREDITADA'
   else if ADesc = 'BDCN' then
-    Result := 'PAGAMENTO ACATADO, POR√âM A AG√äNCIA/CONTA INFORMADA (AINDA) N√ÉO EXISTE'
+    Result := 'PAGAMENTO ACATADO, POR…M A AG NCIA/CONTA INFORMADA (AINDA) N√O EXISTE'
   else if ADesc = 'BE' then
     Result := 'PAGAMENTO AGENDADO COM FORMA ALTEARADA PARA OP'
   else if ADesc = 'BI' then
-    Result := 'CNPJ/CPF DO BENEFICI√ÅRIO INV√ÅLIDO NO SEGMENTO J-52 ou B INV√ÅLIDO'
+    Result := 'CNPJ/CPF DO BENEFICI¡RIO INV¡LIDO NO SEGMENTO J-52 ou B INV¡LIDO'
   else if ADesc = 'BL' then
-    Result := 'VALOR DA PARCELA INV√ÅLIDO'
+    Result := 'VALOR DA PARCELA INV¡LIDO'
   else if ADesc = 'CD' then
     Result := 'CNPJ / CPF INFORMADO DIVERGENTE DO CADASTRADO'
   else if ADesc = 'CE' then
     Result := 'PAGAMENTO CANCELADO'
   else if ADesc = 'CF' then
-    Result := 'VALOR DO DOCUMENTO INV√ÅLIDO'
+    Result := 'VALOR DO DOCUMENTO INV¡LIDO'
   else if ADesc = 'CG' then
-    Result := 'VALOR DO ABATIMENTO INV√ÅLIDO'
+    Result := 'VALOR DO ABATIMENTO INV¡LIDO'
   else if ADesc = 'CH' then
-    Result := 'VALOR DO DESCONTO INV√ÅLIDO'
+    Result := 'VALOR DO DESCONTO INV¡LIDO'
   else if ADesc = 'CI' then
-    Result := 'CNPJ / CPF / IDENTIFICADOR / INSCRI√á√ÉO ESTADUAL / INSCRI√á√ÉO NO CAD / ICMS INV√ÅLIDO'
+    Result := 'CNPJ / CPF / IDENTIFICADOR / INSCRI«√O ESTADUAL / INSCRI«√O NO CAD / ICMS INV¡LIDO'
   else if ADesc = 'CJ' then
-    Result := 'VALOR DA MULTA INV√ÅLIDO'
+    Result := 'VALOR DA MULTA INV¡LIDO'
   else if ADesc = 'CK' then
-    Result := 'TIPO DE INSCRI√á√ÉO INV√ÅLIDA'
+    Result := 'TIPO DE INSCRI«√O INV¡LIDA'
   else if ADesc = 'CL' then
-    Result := 'VALOR DO INSS INV√ÅLIDO'
+    Result := 'VALOR DO INSS INV¡LIDO'
   else if ADesc = 'CM' then
-    Result := 'VALOR DO COFINS INV√ÅLIDO'
+    Result := 'VALOR DO COFINS INV¡LIDO'
   else if ADesc = 'CN' then
-    Result := 'CONTA N√ÉO CADASTRADA'
+    Result := 'CONTA N√O CADASTRADA'
   else if ADesc = 'CO' then
-    Result := 'VALOR DE OUTRAS ENTIDADES INV√ÅLIDO'
+    Result := 'VALOR DE OUTRAS ENTIDADES INV¡LIDO'
   else if ADesc = 'CP' then
-    Result := 'CONFIRMA√á√ÉO DE OP CUMPRIDA'
+    Result := 'CONFIRMA«√O DE OP CUMPRIDA'
   else if ADesc = 'CQ' then
     Result := 'SOMA DAS FATURAS DIFERE DO PAGAMENTO'
   else if ADesc = 'CR' then
-    Result := 'VALOR DO CSLL INV√ÅLIDO'
+    Result := 'VALOR DO CSLL INV¡LIDO'
   else if ADesc = 'CS' then
-    Result := 'DATA DE VENCIMENTO DA FATURA INV√ÅLIDA'
+    Result := 'DATA DE VENCIMENTO DA FATURA INV¡LIDA'
   else if ADesc = 'DA' then
-    Result := 'N√öMERO DE DEPEND. SAL√ÅRIO FAMILIA INVALIDO'
+    Result := 'N⁄MERO DE DEPEND. SAL¡RIO FAMILIA INVALIDO'
   else if ADesc = 'DB' then
-    Result := 'N√öMERO DE HORAS SEMANAIS INV√ÅLIDO'
+    Result := 'N⁄MERO DE HORAS SEMANAIS INV¡LIDO'
   else if ADesc = 'DC' then
-    Result := 'SAL√ÅRIO DE CONTRIBUI√á√ÉO INSS INV√ÅLIDO'
+    Result := 'SAL¡RIO DE CONTRIBUI«√O INSS INV¡LIDO'
   else if ADesc = 'DD' then
-    Result := 'SAL√ÅRIO DE CONTRIBUI√á√ÉO FGTS INV√ÅLIDO'
+    Result := 'SAL¡RIO DE CONTRIBUI«√O FGTS INV¡LIDO'
   else if ADesc = 'DE' then
-    Result := 'VALOR TOTAL DOS PROVENTOS INV√ÅLIDO'
+    Result := 'VALOR TOTAL DOS PROVENTOS INV¡LIDO'
   else if ADesc = 'DF' then
-    Result := 'VALOR TOTAL DOS DESCONTOS INV√ÅLIDO'
+    Result := 'VALOR TOTAL DOS DESCONTOS INV¡LIDO'
   else if ADesc = 'DG' then
-    Result := 'VALOR L√çQUIDO N√ÉO NUM√âRICO'
+    Result := 'VALOR LÕQUIDO N√O NUM…RICO'
   else if ADesc = 'DH' then
     Result := 'VALOR LIQ. INFORMADO DIFERE DO CALCULADO'
   else if ADesc = 'DI' then
-    Result := 'VALOR DO SAL√ÅRIO-BASE INV√ÅLIDO'
+    Result := 'VALOR DO SAL¡RIO-BASE INV¡LIDO'
   else if ADesc = 'DJ' then
-    Result := 'BASE DE C√ÅLCULO IRRF INV√ÅLIDA'
+    Result := 'BASE DE C¡LCULO IRRF INV¡LIDA'
   else if ADesc = 'DK' then
-    Result := 'BASE DE C√ÅLCULO FGTS INV√ÅLIDA'
+    Result := 'BASE DE C¡LCULO FGTS INV¡LIDA'
   else if ADesc = 'DL' then
-    Result := 'FORMA DE PAGAMENTO INCOMPAT√çVEL COM HOLERITE'
+    Result := 'FORMA DE PAGAMENTO INCOMPATÕVEL COM HOLERITE'
   else if ADesc = 'DM' then
-    Result := 'E-MAIL DO FAVORECIDO INV√ÅLIDO'
+    Result := 'E-MAIL DO FAVORECIDO INV¡LIDO'
   else if ADesc = 'DV' then
     Result := 'DOC / TED DEVOLVIDO PELO BANCO FAVORECIDO'
   else if ADesc = 'D0' then
-    Result := 'FINALIDADE DO HOLERITE INV√ÅLIDA'
+    Result := 'FINALIDADE DO HOLERITE INV¡LIDA'
   else if ADesc = 'D1' then
-    Result := 'M√äS DE COMPETENCIA DO HOLERITE INV√ÅLIDA'
+    Result := 'M S DE COMPETENCIA DO HOLERITE INV¡LIDA'
   else if ADesc = 'D2' then
-    Result := 'DIA DA COMPETENCIA DO HOLETITE INV√ÅLIDA'
+    Result := 'DIA DA COMPETENCIA DO HOLETITE INV¡LIDA'
   else if ADesc = 'D3' then
-    Result := 'CENTRO DE CUSTO INV√ÅLIDO'
+    Result := 'CENTRO DE CUSTO INV¡LIDO'
   else if ADesc = 'D4' then
-    Result := 'CAMPO NUM√âRICO DA FUNCIONAL INV√ÅLIDO'
+    Result := 'CAMPO NUM…RICO DA FUNCIONAL INV¡LIDO'
   else if ADesc = 'D5' then
-    Result := 'DATA IN√çCIO DE F√âRIAS N√ÉO NUM√âRICA'
+    Result := 'DATA INÕCIO DE F…RIAS N√O NUM…RICA'
   else if ADesc = 'D6' then
-    Result := 'DATA IN√çCIO DE F√âRIAS INCONSISTENTE'
+    Result := 'DATA INÕCIO DE F…RIAS INCONSISTENTE'
   else if ADesc = 'D7' then
-    Result := 'DATA FIM DE F√âRIAS N√ÉO NUM√âRICO'
+    Result := 'DATA FIM DE F…RIAS N√O NUM…RICO'
   else if ADesc = 'D8' then
-    Result := 'DATA FIM DE F√âRIAS INCONSISTENTE'
+    Result := 'DATA FIM DE F…RIAS INCONSISTENTE'
   else if ADesc = 'D9' then
-    Result := 'N√öMERO DE DEPENDENTES IR INV√ÅLIDO'
+    Result := 'N⁄MERO DE DEPENDENTES IR INV¡LIDO'
   else if ADesc = 'EM' then
-    Result := 'CONFIRMA√á√ÉO DE OP EMITIDA'
+    Result := 'CONFIRMA«√O DE OP EMITIDA'
   else if ADesc = 'EX' then
-    Result := 'DEVOLU√á√ÉO DE OP N√ÉO SACADA PELO FAVORECIDO'
+    Result := 'DEVOLU«√O DE OP N√O SACADA PELO FAVORECIDO'
   else if ADesc = 'E0' then
-    Result := 'TIPO DE MOVIMENTO HOLERITE INV√ÅLIDO'
+    Result := 'TIPO DE MOVIMENTO HOLERITE INV¡LIDO'
   else if ADesc = 'E1' then
-    Result := 'VALOR 01 DO HOLERITE / INFORME INV√ÅLIDO'
+    Result := 'VALOR 01 DO HOLERITE / INFORME INV¡LIDO'
   else if ADesc = 'E2' then
-    Result := 'VALOR 02 DO HOLERITE / INFORME INV√ÅLIDO'
+    Result := 'VALOR 02 DO HOLERITE / INFORME INV¡LIDO'
   else if ADesc = 'E3' then
-    Result := 'VALOR 03 DO HOLERITE / INFORME INV√ÅLIDO'
+    Result := 'VALOR 03 DO HOLERITE / INFORME INV¡LIDO'
   else if ADesc = 'E4' then
-    Result := 'VALOR 04 DO HOLERITE / INFORME INV√ÅLIDO'
+    Result := 'VALOR 04 DO HOLERITE / INFORME INV¡LIDO'
   else if ADesc = 'FC' then
-    Result := 'PAGAMENTO EFETUADO ATRAV√âS DE FINANCIAMENTO COMPROR'
+    Result := 'PAGAMENTO EFETUADO ATRAV…S DE FINANCIAMENTO COMPROR'
   else if ADesc = 'FD' then
-    Result := 'PAGAMENTO EFETUADO ATRAV√âS DE FINANCIAMENTO DESCOMPROR'
+    Result := 'PAGAMENTO EFETUADO ATRAV…S DE FINANCIAMENTO DESCOMPROR'
   else if ADesc = 'HA' then
     Result := 'ERRO NO HEADER DE ARQUIVO'
   else if ADesc = 'HM' then
     Result := 'ERRO NO HEADER DE LOTE'
   else if ADesc = 'IB' then
-    Result := 'VALOR E/OU DATA DO DOCUMENTO INV√ÅLIDO'
+    Result := 'VALOR E/OU DATA DO DOCUMENTO INV¡LIDO'
   else if ADesc = 'IC' then
-    Result := 'VALOR DO ABATIMENTO INV√ÅLIDO'
+    Result := 'VALOR DO ABATIMENTO INV¡LIDO'
   else if ADesc = 'ID' then
-    Result := 'VALOR DO DESCONTO INV√ÅLIDO'
+    Result := 'VALOR DO DESCONTO INV¡LIDO'
   else if ADesc = 'IE' then
-    Result := 'VALOR DA MORA INV√ÅLIDO'
+    Result := 'VALOR DA MORA INV¡LIDO'
   else if ADesc = 'IF' then
-    Result := 'VALOR DA MULTA INV√ÅLIDO'
+    Result := 'VALOR DA MULTA INV¡LIDO'
   else if ADesc = 'IG' then
-    Result := 'VALOR DA DEDU√á√ÉO INV√ÅLIDO'
+    Result := 'VALOR DA DEDU«√O INV¡LIDO'
   else if ADesc = 'IH' then
-    Result := 'VALOR DO ACR√âSCIMO INV√ÅLIDO'
+    Result := 'VALOR DO ACR…SCIMO INV¡LIDO'
   else if ADesc = 'II' then
-    Result := 'DATA DE VENCIMENTO INV√ÅLIDA'
+    Result := 'DATA DE VENCIMENTO INV¡LIDA'
   else if ADesc = 'IJ' then
-    Result := 'COMPET√äNCIA / PER√çODO REFER√äNCIA / PARCELA INV√ÅLIDA'
+    Result := 'COMPET NCIA / PERÕODO REFER NCIA / PARCELA INV¡LIDA'
   else if ADesc = 'IK' then
-    Result := 'TRIBUTO N√ÉO LIQUID√ÅVEL VIA SISPAG OU N√ÉO CONVENIADO COM ITA√ö'
+    Result := 'TRIBUTO N√O LIQUID¡VEL VIA SISPAG OU N√O CONVENIADO COM ITA⁄'
   else if ADesc = 'IL' then
-    Result := 'C√ìDIGO DE PAGAMENTO / EMPRESA /RECEITA INV√ÅLIDO'
+    Result := 'C”DIGO DE PAGAMENTO / EMPRESA /RECEITA INV¡LIDO'
   else if ADesc = 'IM' then
-    Result := 'TIPO X FORMA N√ÉO COMPAT√çVEL'
+    Result := 'TIPO X FORMA N√O COMPATÕVEL'
   else if ADesc = 'IN' then
-    Result := 'BANCO/AGENCIA N√ÉO CADASTRADOS'
+    Result := 'BANCO/AGENCIA N√O CADASTRADOS'
   else if ADesc = 'IO' then
-    Result := 'DAC / VALOR / COMPET√äNCIA / IDENTIFICADOR DO LACRE INV√ÅLIDO'
+    Result := 'DAC / VALOR / COMPET NCIA / IDENTIFICADOR DO LACRE INV¡LIDO'
   else if ADesc = 'IP' then
-    Result := 'DAC DO C√ìDIGO DE BARRAS INV√ÅLIDO'
+    Result := 'DAC DO C”DIGO DE BARRAS INV¡LIDO'
   else if ADesc = 'IQ' then
-    Result := 'D√çVIDA ATIVA OU N√öMERO DE ETIQUETA INV√ÅLIDO'
+    Result := 'DÕVIDA ATIVA OU N⁄MERO DE ETIQUETA INV¡LIDO'
   else if ADesc = 'IR' then
     Result := 'PAGAMENTO ALTERADO'
   else if ADesc = 'IS' then
-    Result := 'CONCESSION√ÅRIA N√ÉO CONVENIADA COM ITA√ö'
+    Result := 'CONCESSION¡RIA N√O CONVENIADA COM ITA⁄'
   else if ADesc = 'IT' then
-    Result := 'VALOR DO TRIBUTO INV√ÅLIDO'
+    Result := 'VALOR DO TRIBUTO INV¡LIDO'
   else if ADesc = 'IU' then
-    Result := 'VALOR DA RECEITA BRUTA ACUMULADA INV√ÅLIDO'
+    Result := 'VALOR DA RECEITA BRUTA ACUMULADA INV¡LIDO'
   else if ADesc = 'IV' then
-    Result := 'N√öMERO DO DOCUMENTO ORIGEM / REFER√äNCIA INV√ÅLIDO'
+    Result := 'N⁄MERO DO DOCUMENTO ORIGEM / REFER NCIA INV¡LIDO'
   else if ADesc = 'IX' then
-    Result := 'C√ìDIGO DO PRODUTO INV√ÅLIDO'
+    Result := 'C”DIGO DO PRODUTO INV¡LIDO'
   else if ADesc = 'LA' then
     Result := 'DATA DE PAGAMENTO DE UM LOTE ALTERADA'
   else if ADesc = 'LC' then
     Result := 'LOTE DE PAGAMENTOS CANCELADO'
   else if ADesc = 'NA' then
-    Result := 'PAGAMENTO CANCELADO POR FALTA DE AUTORIZA√á√ÉO'
+    Result := 'PAGAMENTO CANCELADO POR FALTA DE AUTORIZA«√O'
   else if ADesc = 'NB' then
-    Result := 'IDENTIFICA√á√ÉO DO TRIBUTO INV√ÅLIDA'
+    Result := 'IDENTIFICA«√O DO TRIBUTO INV¡LIDA'
   else if ADesc = 'NC' then
-    Result := 'EXERC√çCIO (ANO BASE) INV√ÅLIDO'
+    Result := 'EXERCÕCIO (ANO BASE) INV¡LIDO'
   else if ADesc = 'ND' then
-    Result := 'C√ìDIGO RENAVAM N√ÉO ENCONTRADO/INV√ÅLIDO'
+    Result := 'C”DIGO RENAVAM N√O ENCONTRADO/INV¡LIDO'
   else if ADesc = 'NE' then
-    Result := 'UF INV√ÅLIDA'
+    Result := 'UF INV¡LIDA'
   else if ADesc = 'NF' then
-    Result := 'C√ìDIGO DO MUNIC√çPIO INV√ÅLIDO'
+    Result := 'C”DIGO DO MUNICÕPIO INV¡LIDO'
   else if ADesc = 'NG' then
-    Result := 'PLACA INV√ÅLIDA'
+    Result := 'PLACA INV¡LIDA'
   else if ADesc = 'NH' then
-    Result := 'OP√á√ÉO/PARCELA DE PAGAMENTO INV√ÅLIDA'
+    Result := 'OP«√O/PARCELA DE PAGAMENTO INV¡LIDA'
   else if ADesc = 'NI' then
-    Result := 'TRIBUTO J√Å FOI PAGO OU EST√Å VENCIDO'
+    Result := 'TRIBUTO J¡ FOI PAGO OU EST¡ VENCIDO'
   else if ADesc = 'NR' then
-    Result := 'OPERA√á√ÉO N√ÉO REALIZADA'
+    Result := 'OPERA«√O N√O REALIZADA'
   else if ADesc = 'PD' then
-    Result := 'AQUISI√á√ÉO CONFIRMADA (EQUIVALE A OCORR√äNCIA 02 NO LAYOUT DE RISCO SACADO)'
+    Result := 'AQUISI«√O CONFIRMADA (EQUIVALE A OCORR NCIA 02 NO LAYOUT DE RISCO SACADO)'
   else if ADesc = 'RJ' then
     Result := 'REGISTRO REJEITADO'
   else if ADesc = 'RS' then
-    Result := 'PAGAMENTO DISPON√çVEL PARA ANTECIPA√á√ÉO NO RISCO SACADO ‚Äì MODALIDADE RISCO SACADO P√ìS AUTORIZADO'
+    Result := 'PAGAMENTO DISPONÕVEL PARA ANTECIPA«√O NO RISCO SACADO ñ MODALIDADE RISCO SACADO P”S AUTORIZADO'
   else if ADesc = 'SS' then
-    Result := 'PAGAMENTO CANCELADO POR INSUFICI√äNCIA DE SALDO/LIMITE DI√ÅRIO DE PAGTO'
+    Result := 'PAGAMENTO CANCELADO POR INSUFICI NCIA DE SALDO/LIMITE DI¡RIO DE PAGTO'
   else if ADesc = 'TA' then
-    Result := 'LOTE N√ÉO ACEITO - TOTAIS DO LOTE COM DIFEREN√áA'
+    Result := 'LOTE N√O ACEITO - TOTAIS DO LOTE COM DIFEREN«A'
   else if ADesc = 'TI' then
-    Result := 'TITULARIDADE INV√ÅLIDA'
+    Result := 'TITULARIDADE INV¡LIDA'
   else if ADesc = 'X1' then
-    Result := 'FORMA INCOMPAT√çVEL COM LAYOUT 010'
+    Result := 'FORMA INCOMPATÕVEL COM LAYOUT 010'
   else if ADesc = 'X2' then
-    Result := 'N√öMERO DA NOTA FISCAL INV√ÅLIDO'
+    Result := 'N⁄MERO DA NOTA FISCAL INV¡LIDO'
   else if ADesc = 'X3' then
-    Result := 'IDENTIFICADOR DE NF/CNPJ INV√ÅLIDO'
+    Result := 'IDENTIFICADOR DE NF/CNPJ INV¡LIDO'
   else if ADesc = 'X4' then
-    Result := 'FORMA 32 INV√ÅLIDA'
+    Result := 'FORMA 32 INV¡LIDA'
   else
-    Result := 'RETORNO N√ÉO IDENTIFICADO'
+    Result := 'RETORNO N√O IDENTIFICADO'
 end;
 
 function DescricaoRetornoSantander(const ADesc: string): string;
 begin
   if ADesc = '00' then
-    Result := 'Cr√©dito ou D√©bito Efetivado'
+    Result := 'CrÈdito ou DÈbito Efetivado'
   else if ADesc = '01' then
-    Result := 'Insufici√™ncia de Fundos - D√©bito N√£o Efetuado'
+    Result := 'InsuficiÍncia de Fundos - DÈbito N„o Efetuado'
   else if ADesc = '02' then
-    Result := 'Cr√©dito ou D√©bito Cancelado pelo Pagador/Credor'
+    Result := 'CrÈdito ou DÈbito Cancelado pelo Pagador/Credor'
   else if ADesc = '03' then
-    Result := 'D√©bito Autorizado pela Ag√™ncia - Efetuado'
+    Result := 'DÈbito Autorizado pela AgÍncia - Efetuado'
   else if ADesc = 'AA' then
-    Result := 'Controle Inv√°lido'
+    Result := 'Controle Inv·lido'
   else if ADesc = 'AB' then
-    Result := 'Tipo de Opera√ß√£o Inv√°lido'
+    Result := 'Tipo de OperaÁ„o Inv·lido'
   else if ADesc = 'AC' then
-    Result := 'Tipo de Servi√ßo Inv√°lido'
+    Result := 'Tipo de ServiÁo Inv·lido'
   else if ADesc = 'AD' then
-    Result := 'Forma de Lan√ßamento Inv√°lida'
+    Result := 'Forma de LanÁamento Inv·lida'
   else if ADesc = 'AE' then
-    Result := 'Tipo/N√∫mero de Inscri√ß√£o Inv√°lido (gerado na cr√≠tica ou para informar rejei√ß√£o)'
+    Result := 'Tipo/N˙mero de InscriÁ„o Inv·lido (gerado na crÌtica ou para informar rejeiÁ„o)'
   else if ADesc = 'AF' then
-    Result := 'C√≥digo de Conv√™nio Inv√°lido'
+    Result := 'CÛdigo de ConvÍnio Inv·lido'
   else if ADesc = 'AG' then
-    Result := 'Ag√™ncia/Conta Corrente/DV Inv√°lido'
+    Result := 'AgÍncia/Conta Corrente/DV Inv·lido'
   else if ADesc = 'AH' then
-    Result := 'N√∫mero Seq√ºencial do Registro no Lote Inv√°lido'
+    Result := 'N˙mero Seq¸encial do Registro no Lote Inv·lido'
   else if ADesc = 'AI' then
-    Result := 'C√≥digo de Segmento de Detalhe Inv√°lido'
+    Result := 'CÛdigo de Segmento de Detalhe Inv·lido'
   else if ADesc = 'AJ' then
-    Result := 'Tipo de Movimento Inv√°lido'
+    Result := 'Tipo de Movimento Inv·lido'
   else if ADesc = 'AK' then
-    Result := 'C√≥digo da C√¢mara de Compensa√ß√£o do Banco do Favorecido/Deposit√°rio Inv√°lido'
+    Result := 'CÛdigo da C‚mara de CompensaÁ„o do Banco do Favorecido/Deposit·rio Inv·lido'
   else if ADesc = 'AL' then
-    Result := 'C√≥digo do Banco do Favorecido, Institui√ß√£o de Pagamento ou Deposit√°rio Inv√°lido'
+    Result := 'CÛdigo do Banco do Favorecido, InstituiÁ„o de Pagamento ou Deposit·rio Inv·lido'
   else if ADesc = 'AM' then
-    Result := 'Ag√™ncia Mantenedora da Conta Corrente do Favorecido Inv√°lida'
+    Result := 'AgÍncia Mantenedora da Conta Corrente do Favorecido Inv·lida'
   else if ADesc = 'AN' then
-    Result := 'Conta Corrente/DV /Conta de Pagamento do Favorecido Inv√°lido'
+    Result := 'Conta Corrente/DV /Conta de Pagamento do Favorecido Inv·lido'
   else if ADesc = 'AO' then
-    Result := 'Nome do Favorecido n√£o Informado'
+    Result := 'Nome do Favorecido n„o Informado'
   else if ADesc = 'AP' then
-    Result := 'Data Lan√ßamento Inv√°lida/Vencimento Inv√°lido/Data de Pagamento n√£o permitda.'
+    Result := 'Data LanÁamento Inv·lida/Vencimento Inv·lido/Data de Pagamento n„o permitda.'
   else if ADesc = 'AQ' then
-    Result := 'Tipo/Quantidade da Moeda Inv√°lido'
+    Result := 'Tipo/Quantidade da Moeda Inv·lido'
   else if ADesc = 'AR' then
-    Result := 'Valor do Lan√ßamento Inv√°lido/Divergente'
+    Result := 'Valor do LanÁamento Inv·lido/Divergente'
   else if ADesc = 'AS' then
-    Result := 'Aviso ao Favorecido - Identifica√ß√£o Inv√°lida'
+    Result := 'Aviso ao Favorecido - IdentificaÁ„o Inv·lida'
   else if ADesc = 'AT' then
-    Result := 'Tipo/N√∫mero de Inscri√ß√£o do Favorecido/Contribuinte Inv√°lido'
+    Result := 'Tipo/N˙mero de InscriÁ„o do Favorecido/Contribuinte Inv·lido'
   else if ADesc = 'AU' then
-    Result := 'Logradouro do Favorecido n√£o Informado'
+    Result := 'Logradouro do Favorecido n„o Informado'
   else if ADesc = 'AV' then
-    Result := 'N√∫mero do Local do Favorecido n√£o Informado'
+    Result := 'N˙mero do Local do Favorecido n„o Informado'
   else if ADesc = 'AW' then
-    Result := 'Cidade do Favorecido n√£o Informada'
+    Result := 'Cidade do Favorecido n„o Informada'
   else if ADesc = 'AX' then
-    Result := 'CEP/Complemento do Favorecido Inv√°lido'
+    Result := 'CEP/Complemento do Favorecido Inv·lido'
   else if ADesc = 'AY' then
-    Result := 'Sigla do Estado do Favorecido Inv√°lido'
+    Result := 'Sigla do Estado do Favorecido Inv·lido'
   else if ADesc = 'AZ' then
-    Result := 'C√≥digo/Nome do Banco Deposit√°rio Inv√°lido'
+    Result := 'CÛdigo/Nome do Banco Deposit·rio Inv·lido'
   else if ADesc = 'BA' then
-    Result := 'C√≥digo/Nome da Ag√™ncia Deposit√°rio n√£o Informado'
+    Result := 'CÛdigo/Nome da AgÍncia Deposit·rio n„o Informado'
   else if ADesc = 'BB' then
-    Result := 'N√∫mero do Documento Inv√°lido(Seu N√∫mero)'
+    Result := 'N˙mero do Documento Inv·lido(Seu N˙mero)'
   else if ADesc = 'BC' then
-    Result := 'Nosso N√∫mero Invalido'
+    Result := 'Nosso N˙mero Invalido'
   else if ADesc = 'BD' then
-    Result := 'Inclus√£o Efetuada com Sucesso'
+    Result := 'Inclus„o Efetuada com Sucesso'
   else if ADesc = 'BE' then
-    Result := 'Altera√ß√£o Efetuada com Sucesso'
+    Result := 'AlteraÁ„o Efetuada com Sucesso'
   else if ADesc = 'BF' then
-    Result := 'Exclus√£o Efetuada com Sucesso'
+    Result := 'Exclus„o Efetuada com Sucesso'
   else if ADesc = 'BG' then
-    Result := 'Ag√™ncia/Conta Impedida Legalmente'
+    Result := 'AgÍncia/Conta Impedida Legalmente'
   else if ADesc = 'B1' then
-    Result := 'Bloqueado Pendente de Autoriza√ß√£o'
+    Result := 'Bloqueado Pendente de AutorizaÁ„o'
   else if ADesc = 'B3' then
     Result := 'Bloqueado pelo cliente'
   else if ADesc = 'B4' then
-    Result := 'Bloqueado pela captura de titulo da cobran√ßa'
+    Result := 'Bloqueado pela captura de titulo da cobranÁa'
   else if ADesc = 'B8' then
-    Result := 'Bloqueado pela Valida√ß√£o de Tributos'
+    Result := 'Bloqueado pela ValidaÁ„o de Tributos'
   else if ADesc = 'CA' then
-    Result := 'C√≥digo de barras - C√≥digo do Banco Inv√°lido'
+    Result := 'CÛdigo de barras - CÛdigo do Banco Inv·lido'
   else if ADesc = 'CB' then
-    Result := 'C√≥digo de barras - C√≥digo da Moeda Inv√°lido'
+    Result := 'CÛdigo de barras - CÛdigo da Moeda Inv·lido'
   else if ADesc = 'CC' then
-    Result := 'C√≥digo de barras - D√≠gito Verificador Geral Inv√°lido'
+    Result := 'CÛdigo de barras - DÌgito Verificador Geral Inv·lido'
   else if ADesc = 'CD' then
-    Result := 'C√≥digo de barras - Valor do T√≠tulo Inv√°lido'
+    Result := 'CÛdigo de barras - Valor do TÌtulo Inv·lido'
   else if ADesc = 'CE' then
-    Result := 'C√≥digo de barras - Campo Livre Inv√°lido'
+    Result := 'CÛdigo de barras - Campo Livre Inv·lido'
   else if ADesc = 'CF' then
-    Result := 'Valor do Documento/Principal/menor que o minimo Inv√°lido'
+    Result := 'Valor do Documento/Principal/menor que o minimo Inv·lido'
   else if ADesc = 'CH' then
-    Result := 'Valor do Desconto Inv√°lido'
+    Result := 'Valor do Desconto Inv·lido'
   else if ADesc = 'CI' then
-    Result := 'Valor de Mora Inv√°lido'
+    Result := 'Valor de Mora Inv·lido'
   else if ADesc = 'CJ' then
-    Result := 'Valor da Multa Inv√°lido'
+    Result := 'Valor da Multa Inv·lido'
   else if ADesc = 'CK' then
-    Result := 'Valor do IR Inv√°lido'
+    Result := 'Valor do IR Inv·lido'
   else if ADesc = 'CL' then
-    Result := 'Valor do ISS Inv√°lido'
+    Result := 'Valor do ISS Inv·lido'
   else if ADesc = 'CG' then
-    Result := 'Valor do Abatimento inv√°lido'
+    Result := 'Valor do Abatimento inv·lido'
   else if ADesc = 'CM' then
-    Result := 'Valor do IOF Inv√°lido'
+    Result := 'Valor do IOF Inv·lido'
   else if ADesc = 'CN' then
-    Result := 'Valor de Outras Dedu√ß√µes Inv√°lido'
+    Result := 'Valor de Outras DeduÁıes Inv·lido'
   else if ADesc = 'CO' then
-    Result := 'Valor de Outros Acr√©scimos Inv√°lido'
+    Result := 'Valor de Outros AcrÈscimos Inv·lido'
   else if ADesc = 'HA' then
-    Result := 'Lote N√£o Aceito'
+    Result := 'Lote N„o Aceito'
   else if ADesc = 'HB' then
-    Result := 'Inscri√ß√£o da Empresa Inv√°lida para o Contrato'
+    Result := 'InscriÁ„o da Empresa Inv·lida para o Contrato'
   else if ADesc = 'HC' then
-    Result := 'Conv√™nio com a Empresa Inexistente/Inv√°lido para o Contrato'
+    Result := 'ConvÍnio com a Empresa Inexistente/Inv·lido para o Contrato'
   else if ADesc = 'HD' then
-    Result := 'Ag√™ncia/Conta Corrente da Empresa Inexistente/Inv√°lida para o Contrato'
+    Result := 'AgÍncia/Conta Corrente da Empresa Inexistente/Inv·lida para o Contrato'
   else if ADesc = 'HE' then
-    Result := 'Tipo de Servi√ßo Inv√°lido para o Contrato'
+    Result := 'Tipo de ServiÁo Inv·lido para o Contrato'
   else if ADesc = 'HF' then
     Result := 'Conta Corrente da Empresa com Saldo Insuficiente'
   else if ADesc = 'HG' then
-    Result := 'Lote de Servi√ßo fora de Seq√º√™ncia'
+    Result := 'Lote de ServiÁo fora de Seq¸Íncia'
   else if ADesc = 'HH' then
-    Result := 'Lote de Servi√ßo Inv√°lido'
+    Result := 'Lote de ServiÁo Inv·lido'
   else if ADesc = 'HI' then
-    Result := 'Arquivo n√£o aceito'
+    Result := 'Arquivo n„o aceito'
   else if ADesc = 'HJ' then
-    Result := 'Tipo de Registro Inv√°lido'
+    Result := 'Tipo de Registro Inv·lido'
   else if ADesc = 'HL' then
-    Result := 'Vers√£o de Layout Inv√°lida'
+    Result := 'Vers„o de Layout Inv·lida'
   else if ADesc = 'HU' then
-    Result := 'Hora de Envio Inv√°lida'
+    Result := 'Hora de Envio Inv·lida'
   else if ADesc = 'IA' then
-    Result := 'Pagamento exclusivo em Cart√≥rio.'
+    Result := 'Pagamento exclusivo em CartÛrio.'
   else if ADesc = 'IJ' then
-    Result := 'Compet√™ncia ou Per√≠odo de Referencia ou Numero da Parcela invalido'
+    Result := 'CompetÍncia ou PerÌodo de Referencia ou Numero da Parcela invalido'
   else if ADesc = 'IL' then
-    Result := 'Codigo Pagamento / Receita n√£o num√©rico ou com zeros'
+    Result := 'Codigo Pagamento / Receita n„o numÈrico ou com zeros'
   else if ADesc = 'IM' then
-    Result := 'Munic√≠pio Invalido'
+    Result := 'MunicÌpio Invalido'
   else if ADesc = 'IN' then
-    Result := 'Numero Declara√ß√£o Invalido'
+    Result := 'Numero DeclaraÁ„o Invalido'
   else if ADesc = 'IO' then
     Result := 'Numero Etiqueta invalido'
   else if ADesc = 'IP' then
-    Result := 'Numero Notifica√ß√£o invalido'
+    Result := 'Numero NotificaÁ„o invalido'
   else if ADesc = 'IQ' then
-    Result := 'Inscri√ß√£o Estadual invalida'
+    Result := 'InscriÁ„o Estadual invalida'
   else if ADesc = 'IR' then
     Result := 'Divida Ativa Invalida'
   else if ADesc = 'IS' then
-    Result := 'Valor Honor√°rios ou Outros Acr√©scimos invalido'
+    Result := 'Valor Honor·rios ou Outros AcrÈscimos invalido'
   else if ADesc = 'IT' then
-    Result := 'Per√≠odo Apura√ß√£o invalido'
+    Result := 'PerÌodo ApuraÁ„o invalido'
   else if ADesc = 'IU' then
     Result := 'Valor ou Percentual da Receita invalido'
   else if ADesc = 'IV' then
     Result := 'Numero Referencia invalida'
   else if ADesc = 'SC' then
-    Result := 'Valida√ß√£o parcial'
+    Result := 'ValidaÁ„o parcial'
   else if ADesc = 'TA' then
-    Result := 'Lote n√£o Aceito - Totais do Lote com Diferen√ßa'
+    Result := 'Lote n„o Aceito - Totais do Lote com DiferenÁa'
   else if ADesc = 'XB' then
-    Result := 'N√∫mero de Inscri√ß√£o do Contribuinte Inv√°lido'
+    Result := 'N˙mero de InscriÁ„o do Contribuinte Inv·lido'
   else if ADesc = 'XC' then
-    Result := 'C√≥digo do Pagamento ou Compet√™ncia ou N√∫mero de Inscri√ß√£o Inv√°lido'
+    Result := 'CÛdigo do Pagamento ou CompetÍncia ou N˙mero de InscriÁ„o Inv·lido'
   else if ADesc = 'XF' then
-    Result := 'C√≥digo do Pagamento ou Compet√™ncia n√£o Num√©rico ou igual √° zeros'
+    Result := 'CÛdigo do Pagamento ou CompetÍncia n„o NumÈrico ou igual · zeros'
   else if ADesc = 'YA' then
-    Result := 'T√≠tulo n√£o Encontrado'
+    Result := 'TÌtulo n„o Encontrado'
   else if ADesc = 'YB' then
-    Result := 'Identifica√ß√£o Registro Opcional Inv√°lido'
+    Result := 'IdentificaÁ„o Registro Opcional Inv·lido'
   else if ADesc = 'YC' then
-    Result := 'C√≥digo Padr√£o Inv√°lido'
+    Result := 'CÛdigo Padr„o Inv·lido'
   else if ADesc = 'YD' then
-    Result := 'C√≥digo de Ocorr√™ncia Inv√°lido'
+    Result := 'CÛdigo de OcorrÍncia Inv·lido'
   else if ADesc = 'YE' then
-    Result := 'Complemento de Ocorr√™ncia Inv√°lido'
+    Result := 'Complemento de OcorrÍncia Inv·lido'
   else if ADesc = 'YF' then
-    Result := 'Alega√ß√£o j√° Informada'
+    Result := 'AlegaÁ„o j· Informada'
   else if ADesc = 'ZA' then
     Result := 'Transferencia Devolvida'
   else if ADesc = 'ZB' then
-    Result := 'Transferencia mesma titularidade n√£o permitida'
+    Result := 'Transferencia mesma titularidade n„o permitida'
   else if ADesc = 'ZC' then
-    Result := 'C√≥digo pagamento Tributo inv√°lido'
+    Result := 'CÛdigo pagamento Tributo inv·lido'
   else if ADesc = 'ZD' then
-    Result := 'Compet√™ncia Inv√°lida'
+    Result := 'CompetÍncia Inv·lida'
   else if ADesc = 'ZE' then
-    Result := 'T√≠tulo Bloqueado na base'
+    Result := 'TÌtulo Bloqueado na base'
   else if ADesc = 'ZF' then
-    Result := 'Sistema em Conting√™ncia ‚Äì Titulo com valor maior que refer√™ncia'
+    Result := 'Sistema em ContingÍncia ñ Titulo com valor maior que referÍncia'
   else if ADesc = 'ZG' then
-    Result := 'Sistema em Conting√™ncia ‚Äì T√≠tulo vencido'
+    Result := 'Sistema em ContingÍncia ñ TÌtulo vencido'
   else if ADesc = 'ZH' then
-    Result := 'Sistema em conting√™ncia - T√≠tulo indexado'
+    Result := 'Sistema em contingÍncia - TÌtulo indexado'
   else if ADesc = 'ZI' then
-    Result := 'Benefici√°rio divergente'
+    Result := 'Benefici·rio divergente'
   else if ADesc = 'ZJ' then
     Result := 'Limite de pagamentos parciais excedido'
   else if ADesc = 'ZK' then
-    Result := 'T√≠tulo j√° liquidado'
+    Result := 'TÌtulo j· liquidado'
   else if ADesc = 'ZT' then
-    Result := 'Valor outras entidades inv√°lido'
+    Result := 'Valor outras entidades inv·lido'
   else if ADesc = 'ZU' then
-    Result := 'Sistema Origem Inv√°lido'
+    Result := 'Sistema Origem Inv·lido'
   else if ADesc = 'ZW' then
-    Result := 'Banco Destino n√£o recebe DOC'
+    Result := 'Banco Destino n„o recebe DOC'
   else if ADesc = 'ZX' then
     Result := 'Banco Destino inoperante para DOC'
   else if ADesc = 'ZY' then
-    Result := 'C√≥digo do Hist√≥rico de Credito Invalido'
+    Result := 'CÛdigo do HistÛrico de Credito Invalido'
   else if ADesc = 'ZV' then
-    Result := 'Autoriza√ß√£o iniciada no Internet Banking'
+    Result := 'AutorizaÁ„o iniciada no Internet Banking'
   else if ADesc = 'Z0' then
     Result := 'Conta com bloqueio'
   else if ADesc = 'Z1' then
-    Result := 'Conta fechada. √â necess√°rio ativar a conta'
+    Result := 'Conta fechada. … necess·rio ativar a conta'
   else if ADesc = 'Z2' then
     Result := 'Conta com movimento controlado'
   else if ADesc = 'Z3' then
     Result := 'Conta cancelada'
   else if ADesc = 'Z4' then
-    Result := 'Registro inconsistente (T√≠tulo)'
+    Result := 'Registro inconsistente (TÌtulo)'
   else
-    Result := 'RETORNO N√ÉO IDENTIFICADO';
+    Result := 'RETORNO N√O IDENTIFICADO';
 end;
 
 end.

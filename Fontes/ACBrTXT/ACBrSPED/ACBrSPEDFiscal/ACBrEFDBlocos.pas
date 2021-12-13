@@ -79,8 +79,8 @@ type
                                   vlVersao114,  // Código 015 - Versão 114 Ato COTEPE 01/01/2021
                                   vlVersao115   // Código 016 - Versão 115 Ato COTEPE 01/01/2022
                                  );
-  TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDFiscal deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf};
-  TACBrCodVer = TACBrVersaoLeiauteSPEDFiscal deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf};
+  TACBrVersaoLeiaute = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
+  TACBrCodVer = TACBrVersaoLeiauteSPEDFiscal {$IfDef DELPHI2009_UP} deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Esse tipo é obsoleto: Use o tipo TACBrVersaoLeiauteSPEDFiscal'{$EndIf}{$EndIf};
 
   /// Código da finalidade do arquivo - TRegistro0000
   TACBrCodFin           = (raOriginal,     // 0 - Remessa do arquivo original

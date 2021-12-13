@@ -1338,7 +1338,7 @@ begin
 
     MDFeDM.Travar;
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with MDFeDM do
@@ -1393,7 +1393,7 @@ begin
 
     MDFeDM.Travar;
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with MDFeDM do
@@ -1449,7 +1449,7 @@ begin
 
     MDFeDM.Travar;
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       if not ValidarChave(AchMDFe) then

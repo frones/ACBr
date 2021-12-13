@@ -1289,7 +1289,7 @@ begin
     CTeDM.Travar;
 
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with CTeDM do
@@ -1352,7 +1352,7 @@ begin
     CTeDM.Travar;
 
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       with CTeDM do
@@ -1415,7 +1415,7 @@ begin
     CTeDM.Travar;
 
     try
-      if not ValidarCNPJ(ACNPJCPF) then
+      if not ValidarCNPJouCPF(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       if not ValidarChave(AchCTe) then

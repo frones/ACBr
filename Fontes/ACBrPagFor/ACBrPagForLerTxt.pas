@@ -1,33 +1,33 @@
-{******************************************************************************}
+ï»¿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
+{ mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
+{  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
+{ sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
+{ qualquer versÃ£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
+{ ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
+{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
+{ com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{ Daniel SimÃµes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÃ­ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -58,6 +58,7 @@ type
     procedure LerSegmentoH(mSegmentoHList: TSegmentoHList; I:Integer);
     procedure LerSegmentoJ(I: Integer);
     procedure LerSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List; I:Integer);
+    procedure LerSegmentoJ99(mSegmentoJ99List: TSegmentoJ99List; I:Integer);
     procedure LerSegmentoN1(I: Integer);
     procedure LerSegmentoN2(I: Integer);
     procedure LerSegmentoN3(I: Integer);
@@ -146,7 +147,7 @@ begin
   except
     on E: Exception do
     begin
-      raise Exception.Create('Não Foi Possível ler os registros no arquivo.' + #13 + E.Message);
+      raise Exception.Create('NÃ£o Foi PossÃ­vel ler os registros no arquivo.' + #13 + E.Message);
     end;
   end;
 end;
@@ -163,7 +164,7 @@ begin
   FPagFor.Registro0.Empresa.Convenio         := Trim(Copy(FArquivoTXT.Strings[0], 33, 20));
 
   case FPagFor.Geral.Banco of
-    pagBancoDoBrasil, pagItau, pagSicred:
+    pagBancoDoBrasil, pagItau, pagSicred, pagBancoCECRED, pagSantander:
       begin
         FPagFor.Registro0.Empresa.ContaCorrente.Agencia.Codigo := StrToInt(Copy(FArquivoTXT.Strings[0], 53, 5));
         FPagFor.Registro0.Empresa.ContaCorrente.Agencia.DV     := Copy(FArquivoTXT.Strings[0], 58, 1);
@@ -195,8 +196,8 @@ begin
   FPagFor.Lote.Last.Registro1.Servico.Operacao         := StrToTpOperacao(mOk, Copy(FArquivoTXT.Strings[i], 9, 1));
   FPagFor.Lote.Last.Registro1.Servico.TipoServico      := StrToTpServico(mOk, Copy(FArquivoTXT.Strings[i], 10, 2));
 
-  //Quando é bloqueto Eletrônico o campo do CNPJ da empresa possui 15 caracteres
-  //e para os demais serviços possui 14
+  //Quando Ã© bloqueto EletrÃ´nico o campo do CNPJ da empresa possui 15 caracteres
+  //e para os demais serviÃ§os possui 14
   if FPagFor.Lote.Last.Registro1.Servico.TipoServico = tsBloquetoEletronico then
     ajusteBloqueto := 1;
 
@@ -206,7 +207,7 @@ begin
   FPagFor.Lote.Last.Registro1.Empresa.Convenio         := Trim(Copy(FArquivoTXT.Strings[i], 33 + ajusteBloqueto, 20));
 
   case FPagFor.Geral.Banco of
-    pagBancoDoBrasil, pagItau, pagSicred:
+    pagBancoDoBrasil, pagItau, pagSicred, pagBancoCECRED, pagSantander:
       begin
         FPagFor.Lote.Last.Registro1.Empresa.ContaCorrente.Agencia.Codigo := StrToInt(Copy(FArquivoTXT.Strings[i], 53 + ajusteBloqueto, 5));
         FPagFor.Lote.Last.Registro1.Empresa.ContaCorrente.Agencia.DV     := Copy(FArquivoTXT.Strings[i], 58 + ajusteBloqueto, 1);
@@ -236,7 +237,7 @@ begin
     pagItau:
       begin
         if (FPagFor.Lote.Last.Registro1.Servico.FormaLancamento = flPagamentoConcessionarias) then
-        begin // Contas de Concessionárias e Tributos com código de barras
+        begin // Contas de ConcessionÃ¡rias e Tributos com cÃ³digo de barras
           FPagFor.Lote.Last.Registro5.Valor     := StrToInt(Copy(FArquivoTXT.Strings[i], 24, 18)) / 100;
           FPagFor.Lote.Last.Registro5.QtdeMoeda := StrToInt(Copy(FArquivoTXT.Strings[i], 42, 15)) / 100000000;
         end
@@ -249,8 +250,8 @@ begin
         end
         else
         begin
-          // Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente
-          // Liquidação de títulos (bloquetos) em cobrança no Itaú e em outros Bancos
+          // Pagamentos atravÃ©s de cheque, OP, DOC, TED e crÃ©dito em conta corrente
+          // LiquidaÃ§Ã£o de tÃ­tulos (bloquetos) em cobranÃ§a no ItaÃº e em outros Bancos
           FPagFor.Lote.Last.Registro5.Valor := StrToInt(Copy(FArquivoTXT.Strings[i], 24, 18)) / 100;
         end;
       end;
@@ -564,8 +565,8 @@ begin
   FPagFor.Lote.Last.SegmentoG.Last.DataEmissao      := StringToDateTime(Copy(FArquivoTXT.Strings[i], 182, 2) + '/' + Copy(FArquivoTXT.Strings[i], 184, 2) + '/' + Copy(FArquivoTXT.Strings[i], 186, 4));
   FPagFor.Lote.Last.SegmentoG.Last.JurosMora        := StrToFloat(Copy(FArquivoTXT.Strings[i], 190, 13) + ',' + Copy(FArquivoTXT.Strings[i], 203, 2));
 
-  //Em algumas situações o banco manda tudo como 999... ou 555...
-  //Multa não pode ultrapassar 10%
+  //Em algumas situaÃ§Ãµes o banco manda tudo como 999... ou 555...
+  //Multa nÃ£o pode ultrapassar 10%
   if FPagFor.Lote.Last.SegmentoG.Last.JurosMora > (FPagFor.Lote.Last.SegmentoG.Last.ValorTitulo * 0.1) then
     FPagFor.Lote.Last.SegmentoG.Last.JurosMora := 0;
 
@@ -629,47 +630,52 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3J') then
     Exit;
 
-  FPagFor.Lote.Last.SegmentoJ.New;
-  FPagFor.Lote.Last.SegmentoJ.Last.CodMovimento   := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 15, 3));
-  FPagFor.Lote.Last.SegmentoJ.Last.CodigoBarras   := Copy(FArquivoTXT.Strings[i], 18, 44);
-  FPagFor.Lote.Last.SegmentoJ.Last.NomeCedente    := Copy(FArquivoTXT.Strings[i], 62, 30);
-  FPagFor.Lote.Last.SegmentoJ.Last.DataVencimento := StringToDateTime(Copy(FArquivoTXT.Strings[i], 92, 2)+'/'+Copy(FArquivoTXT.Strings[i], 94, 2)+'/'+Copy(FArquivoTXT.Strings[i], 96, 4));
+  if ((Copy(FArquivoTXT.Strings[i], 18, 2) <> '52') and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '99')) then
+  begin
+    FPagFor.Lote.Last.SegmentoJ.New;
+    FPagFor.Lote.Last.SegmentoJ.Last.CodMovimento   := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 15, 3));
+    FPagFor.Lote.Last.SegmentoJ.Last.CodigoBarras   := Copy(FArquivoTXT.Strings[i], 18, 44);
+    FPagFor.Lote.Last.SegmentoJ.Last.NomeCedente    := Copy(FArquivoTXT.Strings[i], 62, 30);
+    FPagFor.Lote.Last.SegmentoJ.Last.DataVencimento := StringToDateTime(Copy(FArquivoTXT.Strings[i], 92, 2)+'/'+Copy(FArquivoTXT.Strings[i], 94, 2)+'/'+Copy(FArquivoTXT.Strings[i], 96, 4));
 
-  case FPagFor.Geral.Banco of
-    pagItau, pagSantander, pagSicred:
-      begin
-        FPagFor.Lote.Last.SegmentoJ.Last.ValorTitulo      := StrToInt(Copy(FArquivoTXT.Strings[i], 100, 15)) / 100;
-        FPagFor.Lote.Last.SegmentoJ.Last.Desconto         := StrToInt(Copy(FArquivoTXT.Strings[i], 115, 15)) / 100;
-        FPagFor.Lote.Last.SegmentoJ.Last.Acrescimo        := StrToInt(Copy(FArquivoTXT.Strings[i], 130, 15)) / 100;
-        FPagFor.Lote.Last.SegmentoJ.Last.DataPagamento    := StringToDateTime(Copy(FArquivoTXT.Strings[i], 145, 2)+'/'+Copy(FArquivoTXT.Strings[i], 147, 2)+'/'+Copy(FArquivoTXT.Strings[i], 149, 4));
-        FPagFor.Lote.Last.SegmentoJ.Last.ValorPagamento   := StrToInt(Copy(FArquivoTXT.Strings[i], 153, 15)) / 100;
-        FPagFor.Lote.Last.SegmentoJ.Last.QtdeMoeda        := StrToInt(Copy(FArquivoTXT.Strings[i], 168, 15)) / 100000;
-        FPagFor.Lote.Last.SegmentoJ.Last.ReferenciaSacado := Copy(FArquivoTXT.Strings[i], 183, 20);
-
-        if (FPagFor.Geral.Banco <> pagSicred) then
-          FPagFor.Lote.Last.SegmentoJ.Last.NossoNumero := Copy(FArquivoTXT.Strings[i], 216, 15)
-        else
-          FPagFor.Lote.Last.SegmentoJ.Last.NossoNumero := Copy(FArquivoTXT.Strings[i], 203, 20);
-
-        FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia := Trim(Copy(FArquivoTXT.Strings[i], 231, 10));
-
-        if (FPagFor.Geral.Banco = pagItau) then
-          FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia := DescricaoRetornoItau(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia);
-
-        if POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
+    case FPagFor.Geral.Banco of
+      pagItau, pagSantander, pagSicred, pagBancoCECRED:
         begin
-          FPagFor.Registro0.Aviso.New;
-          FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia;
-          FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia;
-          FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
-          FPagFor.Registro0.Aviso.Last.SegmentoFilho   := '';
-          FPagFor.Registro0.Aviso.Last.SeuNumero       := FPagFor.Lote.Last.SegmentoJ.Last.ReferenciaSacado;
+          FPagFor.Lote.Last.SegmentoJ.Last.ValorTitulo      := StrToInt(Copy(FArquivoTXT.Strings[i], 100, 15)) / 100;
+          FPagFor.Lote.Last.SegmentoJ.Last.Desconto         := StrToInt(Copy(FArquivoTXT.Strings[i], 115, 15)) / 100;
+          FPagFor.Lote.Last.SegmentoJ.Last.Acrescimo        := StrToInt(Copy(FArquivoTXT.Strings[i], 130, 15)) / 100;
+          FPagFor.Lote.Last.SegmentoJ.Last.DataPagamento    := StringToDateTime(Copy(FArquivoTXT.Strings[i], 145, 2)+'/'+Copy(FArquivoTXT.Strings[i], 147, 2)+'/'+Copy(FArquivoTXT.Strings[i], 149, 4));
+          FPagFor.Lote.Last.SegmentoJ.Last.ValorPagamento   := StrToInt(Copy(FArquivoTXT.Strings[i], 153, 15)) / 100;
+          FPagFor.Lote.Last.SegmentoJ.Last.QtdeMoeda        := StrToInt(Copy(FArquivoTXT.Strings[i], 168, 15)) / 100000;
+          FPagFor.Lote.Last.SegmentoJ.Last.ReferenciaSacado := Copy(FArquivoTXT.Strings[i], 183, 20);
+
+          case FPagFor.Geral.Banco of
+            pagSicred, pagBancoCECRED: FPagFor.Lote.Last.SegmentoJ.Last.NossoNumero := Copy(FArquivoTXT.Strings[i], 203, 20);
+          else
+            FPagFor.Lote.Last.SegmentoJ.Last.NossoNumero := Copy(FArquivoTXT.Strings[i], 216, 15)
+          end;
+
+          FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia := Trim(Copy(FArquivoTXT.Strings[i], 231, 10));
+
+          if (FPagFor.Geral.Banco = pagItau) then
+            FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia := DescricaoRetornoItau(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia);
+
+          if POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
+          begin
+            FPagFor.Registro0.Aviso.New;
+            FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia;
+            FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia;
+            FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
+            FPagFor.Registro0.Aviso.Last.SegmentoFilho   := '';
+            FPagFor.Registro0.Aviso.Last.SeuNumero       := FPagFor.Lote.Last.SegmentoJ.Last.ReferenciaSacado;
+          end;
         end;
-      end;
+    end;
   end;
 
   {opcionais segmento J}
   LerSegmentoJ52(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoJ52, i);
+  LerSegmentoJ99(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoJ99, i);
   LerSegmentoB(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoB, i);
   LerSegmentoC(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoC, i);
   LerSegmentoZ(FPagFor.Lote.Last.SegmentoJ.Last.SegmentoZ, i);
@@ -728,6 +734,24 @@ begin
   mSegmentoJ52List.Last.SacadorAvalista.Inscricao.Tipo   := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 132, 1));
   mSegmentoJ52List.Last.SacadorAvalista.Inscricao.Numero := Copy(FArquivoTXT.Strings[i], 133, 15);
   mSegmentoJ52List.Last.SacadorAvalista.Nome             := Copy(FArquivoTXT.Strings[i], 148, 40);
+end;
+
+procedure TPagForR.LerSegmentoJ99(mSegmentoJ99List: TSegmentoJ99List; I:Integer);
+var
+  mOk : Boolean;
+begin
+  if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1) + Copy(FArquivoTXT.Strings[i], 18, 2)) <> '3J99') then
+    Exit;
+
+  mSegmentoJ99List.New;
+  mSegmentoJ99List.Last.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 16, 2));
+  mSegmentoJ99List.Last.CodAutenticacao := StrToIntDef(Copy(FArquivoTXT.Strings[i], 20, 10 ), 0);
+  mSegmentoJ99List.Last.NunDocumento := Copy(FArquivoTXT.Strings[i], 30, 25);
+
+  mSegmentoJ99List.Last.DataHoraPagamento := StringToDateTime(Copy(FArquivoTXT.Strings[i], 55, 2) + '/' + Copy(FArquivoTXT.Strings[i], 57, 2) + '/' + Copy(FArquivoTXT.Strings[i], 59, 4) + ' ' +
+                                                              Copy(FArquivoTXT.Strings[i], 63, 2) + ':' + Copy(FArquivoTXT.Strings[i], 65, 2) + ':' + Copy(FArquivoTXT.Strings[i], 67, 2));
+
+  mSegmentoJ99List.Last.ProtocoloPagamento := Copy(FArquivoTXT.Strings[i], 69, 70);
 end;
 
 procedure TPagForR.LerSegmentoN1(I: Integer);
@@ -1288,13 +1312,13 @@ begin
 
     LerLote;
 
-    LerRegistro9(FArquivoTXT.Count-1); {ultima linha é em branco}
+    LerRegistro9(FArquivoTXT.Count-1); {ultima linha Ã© em branco}
 
     Result := True;
   except
     on E: Exception do
     begin
-      raise Exception.Create('Não Foi Possível incluir Registros no Arquivo' + #13 + E.Message);
+      raise Exception.Create('NÃ£o Foi PossÃ­vel incluir Registros no Arquivo' + #13 + E.Message);
     end;
   end;
 end;

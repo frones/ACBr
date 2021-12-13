@@ -1,33 +1,33 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -408,8 +408,8 @@ type
     property Totais: TTotais read FTotais write FTotais;
   end;
 
-  // Estrutura do Registro 1 utilizado para os ServiÁos
-  // uma para cada lote de serviÁos - Identifica o Inicio do Lote
+  // Estrutura do Registro 1 utilizado para os Servi√ßos
+  // uma para cada lote de servi√ßos - Identifica o Inicio do Lote
 
   TRegistro1 = class(TObject)
   private
@@ -433,8 +433,8 @@ type
     property DataCredito: TDateTime read FDataCredito write FDataCredito;
   end;
 
-  // Estrutura do Registro 5 utilizado para os ServiÁos
-  // uma para cada lote de serviÁos - Identifica o Fim do Lote
+  // Estrutura do Registro 5 utilizado para os Servi√ßos
+  // uma para cada lote de servi√ßos - Identifica o Fim do Lote
 
   TRegistro5 = class(TObject)
   private
@@ -713,14 +713,14 @@ type
   end;
 
 
-  // Lote: Pagamento AtravÈs de CrÈdito em Conta, Cheque, OP, DOC, TED ou
-  //       Pagamento com AutenticaÁ„o
-  // ServiÁo: 20 = Pagamento
+  // Lote: Pagamento Atrav√©s de Cr√©dito em Conta, Cheque, OP, DOC, TED ou
+  //       Pagamento com Autentica√ß√£o
+  // Servi√ßo: 20 = Pagamento
 
-  // Lote: DÈbito em Conta Corrente
-  // ServiÁo: xx = DÈbito em Conta Corrente
+  // Lote: D√©bito em Conta Corrente
+  // Servi√ßo: xx = D√©bito em Conta Corrente
 
-  // Segmentos ObrigatÛrios de Remessa: A
+  // Segmentos Obrigat√≥rios de Remessa: A
   // Segmentos Opcionais de Remessa: B, C
 
   // Estrutura do Segmento A (Obrigatorio)
@@ -944,10 +944,38 @@ type
     property Items[Index: Integer]: TSegmentoJ52 read GetItem write SetItem; default;
   end;
 
-  // Lote: Pagamento de Titulos de CobranÁa
-  // ServiÁo: 20 = Pagamentos
+  TSegmentoJ99 = class(TObject)
+  private
+    FCodMovimento: TInstrucaoMovimento;
+    FCodAutenticacao: Integer;
+    FNunDocumento: string;
+    FDataHoraPagamento: TDateTime;
+    FProtocoloPagamento: string;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
 
-  // Segmentos ObrigatÛrios de Remessa: J
+    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
+    property CodAutenticacao: Integer read FCodAutenticacao write FCodAutenticacao;
+    property NunDocumento: string read FNunDocumento write FNunDocumento;
+    property DataHoraPagamento: TDateTime read FDataHoraPagamento write FDataHoraPagamento;
+    property ProtocoloPagamento: string read FProtocoloPagamento write FProtocoloPagamento;
+  end;
+
+  TSegmentoJ99List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TSegmentoJ99;
+    procedure SetItem(Index: Integer; Value: TSegmentoJ99);
+  public
+    function New: TSegmentoJ99;
+    function Last: TSegmentoJ99;
+    property Items[Index: Integer]: TSegmentoJ99 read GetItem write SetItem; default;
+  end;
+
+  // Lote: Pagamento de Titulos de Cobran√ßa
+  // Servi√ßo: 20 = Pagamentos
+
+  // Segmentos Obrigat√≥rios de Remessa: J
   // Segmentos Opcionais de Remessa:
 
   // Estrutura do Segmento J (Obrigatorio)
@@ -968,12 +996,14 @@ type
     FCodigoMoeda     : Integer;
     FCodOcorrencia : String;
     FSegmentoJ52: TSegmentoJ52List;
+    FSegmentoJ99: TSegmentoJ99List;
     FSegmentoB: TSegmentoBList;
     FSegmentoC: TSegmentoCList;
     FSegmentoZ: TSegmentoZList;
     FDescOcorrencia: String;
     FNossoNumero: String;
     procedure SetSegmentoJ52(const Value: TSegmentoJ52List);
+    procedure SetSegmentoJ99(const Value: TSegmentoJ99List);
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoC(const Value: TSegmentoCList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
@@ -999,6 +1029,7 @@ type
     property NossoNumero: String read FNossoNumero write FNossoNumero;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
     property SegmentoJ52: TSegmentoJ52List read FSegmentoJ52 write SetSegmentoJ52;
+    property SegmentoJ99: TSegmentoJ99List read FSegmentoJ99 write SetSegmentoJ99;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
@@ -1016,7 +1047,7 @@ type
   end;
 
   // Estrutura do Segmento W* (Opcional)
-  // * = obrigatÛrio para FGTS convenio 0181 e 0182
+  // * = obrigat√≥rio para FGTS convenio 0181 e 0182
 
   TSegmentoW = class(TObject)
   private
@@ -1060,10 +1091,10 @@ type
     property Items[Index: Integer]: TSegmentoW read GetItem write SetItem; default;
   end;
 
-  // Lote: Pagamento de Tributos sem cÛdigo de barras
-  // ServiÁo: 22 = Pagamento de Contas, Tributos e Impostos
+  // Lote: Pagamento de Tributos sem c√≥digo de barras
+  // Servi√ßo: 22 = Pagamento de Contas, Tributos e Impostos
 
-  // Segmentos ObrigatÛrios de Remessa: N
+  // Segmentos Obrigat√≥rios de Remessa: N
   // Segmentos Opcionais de Remessa: B, W e Z
 
   // Estrutura do Segmento N (Obrigatorio)
@@ -1409,12 +1440,12 @@ type
     property Items[Index: Integer]: TSegmentoN9 read GetItem write SetItem; default;
   end;
 
-  // Lote: Pagamento de Tributos com cÛdigo de barras
-  // ServiÁo: 22 = Pagamento de Contas, Tributos e Impostos
+  // Lote: Pagamento de Tributos com c√≥digo de barras
+  // Servi√ßo: 22 = Pagamento de Contas, Tributos e Impostos
 
-  // Segmentos ObrigatÛrios de Remessa: O
+  // Segmentos Obrigat√≥rios de Remessa: O
   // Segmentos Opcionais de Remessa: W*, Z e B
-  // * = obrigatÛrio para FGTS convenio 0181 e 0182
+  // * = obrigat√≥rio para FGTS convenio 0181 e 0182
 
   // Estrutura do Segmento O (Obrigatorio)
 
@@ -1468,10 +1499,10 @@ type
     property Items[Index: Integer]: TSegmentoO read GetItem write SetItem; default;
   end;
 
-  // Lote: Titulos em CobranÁa
-  // ServiÁo: 01 = CobranÁa
+  // Lote: Titulos em Cobran√ßa
+  // Servi√ßo: 01 = Cobran√ßa
 
-  // Segmentos ObrigatÛrios de Remessa: P e Q
+  // Segmentos Obrigat√≥rios de Remessa: P e Q
   // Segmentos Opcionais de Remessa: R, S e Y
 
   // Estrutura do Segmento P (Obrigatorio)
@@ -1770,13 +1801,13 @@ type
   end;
 
 const
-  PAGAMENTO_LIBERADO_BANCO = '00 BD BDCI BDCD BDCN'; // Os cÛdigos de aprovaÁ„o de pagamento (pagamento efetuado)
-  PAGAMENTO_LIBERADO_AVISO = '00 BD';                // Os cÛdigos que n‡o vai gerar aviso
+  PAGAMENTO_LIBERADO_BANCO = '00 BD BDCI BDCD BDCN'; // Os c√≥digos de aprova√ß√£o de pagamento (pagamento efetuado)
+  PAGAMENTO_LIBERADO_AVISO = '00 BD';                // Os c√≥digos que n√†o vai gerar aviso
 // OBS: estes dados foram pegos do manual do ITAU.
 // BD   - Pagamento Agendado.
-// BDCI - Pagamento acatado, porÈm o CPF/CNPJ È inv·lido.
-// BDCD - Pagamento acatado, porÈm o CPF/CNPJ informado n„o È o mesmo que est· cadastrado para a agÍncia conta creditada.
-// BDCN - Pagamento acatado, porÈm a agÍncia/conta informada (ainda) n„o existe.
+// BDCI - Pagamento acatado, por√©m o CPF/CNPJ √© inv√°lido.
+// BDCD - Pagamento acatado, por√©m o CPF/CNPJ informado n√£o √© o mesmo que est√° cadastrado para a ag√™ncia conta creditada.
+// BDCN - Pagamento acatado, por√©m a ag√™ncia/conta informada (ainda) n√£o existe.
 
 implementation
 
@@ -2203,6 +2234,7 @@ constructor TSegmentoJ.Create;
 begin
   inherited Create;
   FSegmentoJ52 := TSegmentoJ52List.Create;
+  FSegmentoJ99 := TSegmentoJ99List.Create;
   FSegmentoB := TSegmentoBList.Create;
   FSegmentoC := TSegmentoCList.Create;
   FSegmentoZ := TSegmentoZList.Create;
@@ -2211,6 +2243,7 @@ end;
 destructor TSegmentoJ.Destroy;
 begin
   FSegmentoJ52.Free;
+  FSegmentoJ99.Free;
   FSegmentoB.Free;
   FSegmentoC.Free;
   FSegmentoZ.Free;
@@ -2252,6 +2285,11 @@ end;
 procedure TSegmentoJ.SetSegmentoJ52(const Value: TSegmentoJ52List);
 begin
   FSegmentoJ52 := Value;
+end;
+
+procedure TSegmentoJ.SetSegmentoJ99(const Value: TSegmentoJ99List);
+begin
+  FSegmentoJ99 := Value;
 end;
 
 procedure TSegmentoJ.SetSegmentoZ(const Value: TSegmentoZList);
@@ -3395,6 +3433,41 @@ begin
   FDesconto3.Free;
   FMulta.Free;
 
+  inherited;
+end;
+
+{ TSegmentoJ99List }
+
+function TSegmentoJ99List.GetItem(Index: Integer): TSegmentoJ99;
+begin
+  Result := TSegmentoJ99(inherited GetItem(Index));
+end;
+
+function TSegmentoJ99List.Last: TSegmentoJ99;
+begin
+  Result := TSegmentoJ99(inherited Last);
+end;
+
+function TSegmentoJ99List.New: TSegmentoJ99;
+begin
+  Result := TSegmentoJ99.Create;
+  Add(Result);
+end;
+
+procedure TSegmentoJ99List.SetItem(Index: Integer; Value: TSegmentoJ99);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TSegmentoJ99 }
+
+constructor TSegmentoJ99.Create;
+begin
+  inherited Create;
+end;
+
+destructor TSegmentoJ99.Destroy;
+begin
   inherited;
 end;
 

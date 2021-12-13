@@ -113,7 +113,7 @@ begin
     NomeArqRetorno := LibConfig.BoletoDiretorioConfig.NomeArqRetorno;
     NumeroArquivo := LibConfig.BoletoDiretorioConfig.NumeroArquivo;
     RemoveAcentosArqRemessa := LibConfig.BoletoDiretorioConfig.RemoveAcentosArqRemessa;
-
+    PrefixArqRemessa := LibConfig.BoletoDiretorioConfig.PrefixArqRemessa;
   end;
 
   with ACBrBoleto1.Banco do
@@ -182,11 +182,9 @@ begin
     WebService.SSLHttpLib := LibConfig.BoletoDFeConfigWS.Geral.SSLHttpLib;
     WebService.SSLType := LibConfig.BoletoDFeConfigWS.WebServices.SSLType;
     WebService.TimeOut := LibConfig.BoletoDFeConfigWS.WebServices.TimeOut;
-
   end;
 
   AplicarConfigMail;
-
 end;
 
 procedure TLibBoletoDM.ConfigurarImpressao(NomeImpressora: String = '');
@@ -277,7 +275,6 @@ begin
     Username := Lib.Config.Email.Usuario;
     UseThread := Lib.Config.Email.SegundoPlano;
   end;
-
 end;
 
 { TLibBoletoDM }

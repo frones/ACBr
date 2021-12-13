@@ -58,6 +58,7 @@ type
     FNomeArqRetorno: String;
     FNumeroArquivo: Integer;
     FRemoveAcentosArqRemessa: Boolean;
+    FPrefixArqRemessa: String;
 
   public
     constructor Create;
@@ -77,6 +78,7 @@ type
     property NomeArqRetorno: String read FNomeArqRetorno write FNomeArqRetorno;
     property NumeroArquivo: Integer read FNumeroArquivo write FNumeroArquivo;
     property RemoveAcentosArqRemessa: Boolean read FRemoveAcentosArqRemessa write FRemoveAcentosArqRemessa;
+    property PrefixArqRemessa: String read FPrefixArqRemessa write FPrefixArqRemessa;
 
   end;
 
@@ -683,6 +685,7 @@ begin
   FNomeArqRetorno := '';
   FNumeroArquivo := 0;
   FRemoveAcentosArqRemessa := False;
+  FPrefixArqRemessa:= '';
 
 end;
 
@@ -704,6 +707,7 @@ begin
   NomeArqRetorno := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRetorno, NomeArqRetorno);
   NumeroArquivo := AIni.ReadInteger(CSessaoBoletoDiretorioConfig, CChaveNumeroArquivo, NumeroArquivo);
   RemoveAcentosArqRemessa := AIni.ReadBool(CSessaoBoletoDiretorioConfig, CChaveRemoveAcentosArqRemessa, RemoveAcentosArqRemessa);
+  PrefixArqRemessa := AIni.ReadString(CSessaoBoletoDiretorioConfig, CChavePrefixArqRemessa, PrefixArqRemessa);
 
 end;
 
@@ -725,6 +729,7 @@ begin
   AIni.WriteString(CSessaoBoletoDiretorioConfig, CChaveNomeArqRetorno, NomeArqRetorno);
   AIni.WriteInteger(CSessaoBoletoDiretorioConfig, CChaveNumeroArquivo, NumeroArquivo);
   AIni.WriteBool(CSessaoBoletoDiretorioConfig, CChaveRemoveAcentosArqRemessa, RemoveAcentosArqRemessa);
+  AIni.WriteString(CSessaoBoletoDiretorioConfig, CChavePrefixArqRemessa, PrefixArqRemessa);
 
 end;
 

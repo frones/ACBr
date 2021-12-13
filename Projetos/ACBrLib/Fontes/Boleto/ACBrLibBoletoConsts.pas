@@ -54,6 +54,7 @@ const
   CChaveNomeArqRetorno = 'NomeArqRetorno';
   CChaveNumeroArquivo = 'NumeroArquivo';
   CChaveRemoveAcentosArqRemessa = 'RemoveAcentosArqRemessa';
+  CChavePrefixArqRemessa = 'PrefixArqRemessa';
 
   CSessaoBoletoBancoConfig = 'BoletoBancoConfig';
   CChaveDigitoBanco = 'Digito';

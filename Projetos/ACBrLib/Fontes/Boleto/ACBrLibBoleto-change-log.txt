@@ -42,55 +42,62 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2021
+--- ACBrLibBoletoDataModule, ACBrLibBoletoConfig ACBrLibBoletoConsts --
+[+] Adicionado novo parametro: PrefixArqRemessa
+    Por: José M S Junior
+
 03/10/2021
 --- ACBrLibBoletoBase, ACBrLibBoletoConsts, ACBrLibBoletoRespostas
 [-] Corrigido erro no retono do metodo ObterRetorno.
 [*] Melhorias nas respostas do envio de Boleto Web.
+    Por: José M S Junior
 
 06/07/2021
 --- ACBrLibBoletoDataModule, ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST, ACBrLibBoletoConsts,
     ACBrLibBoletoConfig, ACBrLibBoletoRespostas, ACBrLibBoletoStaticImport --
 [*] Adicionado as parametrizações e o método EnviarBoleto para integração da ACBrLibBoleto via API ou WebService
+    Por: José M S Junior
 
 20/06/2021
 --- ACBrLibBoletoDataModule, ACBrLibBoletoBase --
 [*] Atualização da propriedade LayoutBol, lendo a partir do arquivo .ini de Dados Cedente
-    (Por: José M S Junior)
+    Por: José M S Junior
 
 30/04/2020
 --- ACBrLibBoletoRespostas, ACBrLibBoletoConsts --
 [+] Adicionar funcionalidades de Resposta para BoletoWeb na lib.
-    (Por: José M S Junior)
+    Por: José M S Junior
 
 29/03/2020
 --- ACBrLibBoletoRespostas --
 [*] Ajuste na nomenclatura de chaves para classe Respostas de Processamento de Retorno.
-    (Por: José M S Junior)
+    Por: José M S Junior
 
 26/02/2020
 --- ACBrLibBoletoBase, ACBrLibBoletoRespostas --
 [+] Criado Classe Resposta com a estrutura dos Títulos para obter Retornos. E adicionado o método ObterRetorno
-    (Por: José M S Junior)
+    Por: José M S Junior
 
 --- ACBrLibBoletoBase--
 [+] Adicionado o Método GerarPDFBoleto que permite gerar Boletos individuais passando indice da lista.
-    (Por: José M S Junior)
+    Por: José M S Junior
 
 28/12/2020
 --- ACBrLibBoletoBase --
 [+] Adicionado o metodo Boleto_EnviarEmailBoleto
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 22/11/2020
 --- ACBrLibBoletoBase --
 [-] Correção do metodo Boleto_SetDiretorioArquivo
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 30/09/2020
 --- ACBrLibBoletoBase --
 [-] Ajuste na passagem do parametro de Indice para os metodos:
 RetornarLinhaDigitavel, RetornarCodigoBarras, RetornarNossoNumero
-    (Por: José M S Junior)
+    Por: José M S Junior
 
 07/09/2020
 --- ACBrLibBoletoMT, ACBrLibBoletoST ---
@@ -104,22 +111,22 @@ RetornarLinhaDigitavel, RetornarCodigoBarras, RetornarNossoNumero
 09/06/2020
 --- ACBrLibBoletoClass, ACBrLibBoletoConfig --
 [-] Ajuste de declaração de USES
-    (Por: José M S Junior)	
+    Por: José M S Junior	
 
 19/05/2020
 --- ACBrLibBoletoDataModule --
 [-] Corrigido erro ao configurar o cedente como pessoa fisica.
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 27/02/2020
 --- ACBrLibBoletoConfig --
 [-] Removido a propriedade TamanhoMaximoNossoNumero, pois a mesma causava erro na geração dos boletos.
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 23/02/2020
 --- ACBrLibBoleto --
 [+] Adicionado o metodo Boleto_ImprimirBoleto. 
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 20/02/2020
 --- ACBrLibBoletoConfig --
@@ -129,12 +136,12 @@ RetornarLinhaDigitavel, RetornarCodigoBarras, RetornarNossoNumero
 17/02/2020
 --- ACBrLibBoletoConfig --
 [+] Adicionado propriedade para remover acentuação do arquivo de remessa.
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 03/01/2020
 --- ACBrLibBoleto --
 [+] Adicionado o metodo Boleto_ImportarConfig.
-    (Por: Rafael Dias)
+    Por: Rafael Dias
 
 15/04/2018
 --- ACBrLibBoleto --

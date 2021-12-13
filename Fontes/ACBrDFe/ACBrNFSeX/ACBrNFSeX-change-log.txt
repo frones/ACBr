@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 13/12/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção na leitura do XML da NFS-e do provedor Tecnos.
+   Por: Italo Giurizzato Junior
+[*] Possível correção na geração do Lote de Rps do provedor Tecnos.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] O Params AssinarRps estava sendo atribuido ao parâmetro Rps sendo que o 
     correto é RpsGerarNfse.

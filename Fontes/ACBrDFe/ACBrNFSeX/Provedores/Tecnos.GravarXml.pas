@@ -55,6 +55,7 @@ type
     function GerarValores: TACBrXmlNode; override;
 
     procedure Configuracao; override;
+    procedure DefinirIDDeclaracao; override;
 
   end;
 
@@ -123,6 +124,13 @@ begin
   NrOcorrRespRetencao := 1;
   
   GerarTagServicos := False;
+end;
+
+procedure TNFSeW_Tecnos201.DefinirIDDeclaracao;
+begin
+  NFSe.InfID.ID := '1' + // Tipo de operação, no caso envio
+                   OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj) +
+                   Poem_Zeros(OnlyNumber(NFSe.IdentificacaoRps.Numero), 16);
 end;
 
 function TNFSeW_Tecnos201.DefinirNameSpaceDeclaracao: string;

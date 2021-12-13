@@ -296,10 +296,7 @@ begin
   else
     Versao := '';
 
-  if ConfigGeral.Identificador <> '' then
-    IdAttr := ' ' + ConfigGeral.Identificador + '="Lote_' + Response.Lote + '"'
-  else
-    IdAttr := '';
+  IdAttr := DefinirIDLote(Response.Lote);
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 

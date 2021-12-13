@@ -65,6 +65,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function DefinirIDLote(const ID: string): string; override;
+
     procedure AssinarConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure AssinarConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
   end;
@@ -72,6 +74,7 @@ type
 implementation
 
 uses
+  DateUtils,
   ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Tecnos.GravarXml, Tecnos.LerXml;
 
@@ -202,6 +205,18 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderTecnos201.DefinirIDLote(const ID: string): string;
+var
+  Cnpj: string;
+begin
+  Cnpj := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ;
+
+  Result := ' ' + ConfigGeral.Identificador + '="1' + // Tipo de operação, no caso envio
+            IntToStr(YearOf(Date)) + // ano do lote enviado no formato AAAA
+            OnlyNumber(Cnpj) +
+            Poem_Zeros(OnlyNumber(ID), 16) + '"';
 end;
 
 { TACBrNFSeXWebserviceTecnos201 }

@@ -325,6 +325,9 @@ begin
 
       InscricaoMunicipal := ProcessarConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
     end;
+
+    if NFSe.Prestador.RazaoSocial = '' then
+      NFSe.Prestador.RazaoSocial := ProcessarConteudo(ANode.Childrens.FindAnyNs('RazaoSocial'), tcStr);
   end;
 end;
 

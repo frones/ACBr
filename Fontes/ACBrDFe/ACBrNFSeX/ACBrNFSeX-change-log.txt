@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/12/2021
+-- IPM.Provider --
+[*] O Params AssinarRps estava sendo atribuido ao parâmetro Rps sendo que o 
+    correto é RpsGerarNfse.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Ajustes nas URLs da cidade de Cachoeirinha/RS.
+   Por: Tiago Rizzon
+
 10/12/2021
 -- Diversos --
 [*] Acrescentados os campos abaixo na classe de ItemServico utilizado por alguns

@@ -130,7 +130,7 @@ begin
     ConsultaNFSe := False;
   end;
 
-  ConfigAssinar.Rps := (ConfigGeral.Params2 = 'AssinarRps');
+  ConfigAssinar.RpsGerarNFSe := (ConfigGeral.Params2 = 'AssinarRps');
 
   SetXmlNameSpace('');
 

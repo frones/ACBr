@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 14/12/2021
+-- ACBrNFSeXServicos --
+[+] Inclusão de novas cidades: Silvania/GO, Arogoiania/GO e São Miguel do Araguaia/GO.
+   Por: Lucio Bittes
+-- ACBrNFSeXServicos --
+[*] A cidade Luiz Eduardo Magalhães/BA trocou de provedor, agora é Saatri.
+   Por: Anderson de Jesus
 -- Tecnos.GravarXml --
 [*] Ajustes para que o XML do Rps seja gerado corretamente para o provedor.
    Por: Italo Giurizzato Junior

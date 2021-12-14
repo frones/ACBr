@@ -3000,7 +3000,7 @@ begin
         AFileName := APath + LastFile;
         if (SortType = fstDateTime) then
         begin
-          {$IfDef FMX}
+          {$IfDef DELPHIXE_UP}
             AFileDateTime := SearchRec.TimeStamp;
           {$Else}
             AFileDateTime := FileDateToDateTime(SearchRec.Time);

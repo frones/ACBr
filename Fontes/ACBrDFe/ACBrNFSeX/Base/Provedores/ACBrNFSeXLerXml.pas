@@ -111,8 +111,7 @@ end;
 
 function TNFSeRClass.TipodeXMLLeitura(const aArquivo: string): TtpXML;
 begin
-  if (Pos('CompNfse', Arquivo) > 0) or (Pos('ComplNfse', Arquivo) > 0) or
-     (Pos('tcCompNfse', Arquivo) > 0) then
+  if (Pos('Nfse', Arquivo) > 0) then
     Result := txmlNFSe
   else
     Result := txmlRPS;

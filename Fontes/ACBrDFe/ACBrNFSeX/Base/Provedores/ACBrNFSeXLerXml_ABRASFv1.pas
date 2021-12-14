@@ -750,6 +750,9 @@ begin
   else
     AuxNode2 := AuxNode1.Childrens.FindAnyNs('Nfse');
 
+  if AuxNode2 = nil then
+    AuxNode2 := ANode;
+
   LerInfNfse(AuxNode2);
 
   LerNfseCancelamento(AuxNode1);

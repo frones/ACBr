@@ -49,8 +49,6 @@ type
 
   TNFSeW_Tecnos201 = class(TNFSeW_ABRASFv2)
   protected
-    function DefinirNameSpaceDeclaracao: string; override;
-
     function GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode; override;
     function GerarValores: TACBrXmlNode; override;
 
@@ -131,11 +129,6 @@ begin
   NFSe.InfID.ID := '1' + // Tipo de operação, no caso envio
                    OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj) +
                    Poem_Zeros(OnlyNumber(NFSe.IdentificacaoRps.Numero), 16);
-end;
-
-function TNFSeW_Tecnos201.DefinirNameSpaceDeclaracao: string;
-begin
-  Result := 'http://www.abrasf.org.br/nfse.xsd';
 end;
 
 function TNFSeW_Tecnos201.GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;

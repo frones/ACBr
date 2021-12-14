@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/12/2021
+-- Tecnos.GravarXml --
+[*] Ajustes para que o XML do Rps seja gerado corretamente para o provedor.
+   Por: Italo Giurizzato Junior
 -- Tecnos.Provider --
 [*] Possível correção para a leitura das listas de mensagens de retorno.
    Por: Italo Giurizzato Junior

@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/12/2021
+-- ACBrNFSeXLerXml/ACBrNFSeXLerXml_ABRASFv1 --
+[*] Possível correção na leitura do XML da NFS-e versão 1 da ABRASF quando
+    não contem a tag <CompNfse>.
+   Por: Italo Giurizzato Junior/Pandaaa
+
 13/12/2021
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Possível correção na leitura do XML da NFS-e do provedor Tecnos.

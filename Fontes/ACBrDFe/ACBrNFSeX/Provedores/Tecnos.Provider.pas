@@ -69,6 +69,11 @@ type
 
     procedure AssinarConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure AssinarConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+
+    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
+                                     const Response: TNFSeWebserviceResponse;
+                                     AListTag: string = 'ListaMensagemRetorno';
+                                     AMessageTag: string = 'MensagemRetorno'); override;
   end;
 
 implementation
@@ -217,6 +222,96 @@ begin
             IntToStr(YearOf(Date)) + // ano do lote enviado no formato AAAA
             OnlyNumber(Cnpj) +
             Poem_Zeros(OnlyNumber(ID), 16) + '"';
+end;
+
+procedure TACBrNFSeProviderTecnos201.ProcessarMensagemErros(
+  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
+  AListTag, AMessageTag: string);
+var
+  I: Integer;
+  ANode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
+  Codigo, Mensagem: string;
+begin
+  ANode := RootNode.Childrens.FindAnyNs(AListTag);
+
+  if (ANode = nil) then
+    ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetornoLote');
+
+  if (ANode = nil) then
+    ANode := RootNode.Childrens.FindAnyNs('MensagemRetorno');
+
+  if Assigned(ANode) then
+  begin
+    ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
+
+    if Assigned(ANodeArray) then
+    begin
+      for I := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+        Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+
+        if (Codigo <> 'A0000') and (Mensagem <> '') then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Codigo;
+          AErro.Descricao := Mensagem;
+          AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+        end;
+      end;
+    end
+    else
+    begin
+      Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+
+      if (Codigo <> 'A0000') and (Mensagem <> '') then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Codigo;
+        AErro.Descricao := Mensagem;
+        AErro.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+      end;
+    end;
+  end;
+
+  ANode := RootNode.Childrens.FindAnyNs('ListaMensagemAlertaRetorno');
+
+  if Assigned(ANode) then
+  begin
+    ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
+
+    if Assigned(ANodeArray) then
+    begin
+      for I := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+
+        if Mensagem <> '' then
+        begin
+          AAlerta := Response.Erros.New;
+          AAlerta.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+          AAlerta.Descricao := Mensagem;
+          AAlerta.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+        end;
+      end;
+    end
+    else
+    begin
+      Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+
+      if Mensagem <> '' then
+      begin
+        AAlerta := Response.Erros.New;
+        AAlerta.Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+        AAlerta.Descricao := Mensagem;
+        AAlerta.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+      end;
+    end;
+  end;
 end;
 
 { TACBrNFSeXWebserviceTecnos201 }

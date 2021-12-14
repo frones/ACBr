@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/12/2021
+-- Tecnos.Provider --
+[*] Possível correção para a leitura das listas de mensagens de retorno.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml/ACBrNFSeXLerXml_ABRASFv1 --
 [*] Possível correção na leitura do XML da NFS-e versão 1 da ABRASF quando
     não contem a tag <CompNfse>.

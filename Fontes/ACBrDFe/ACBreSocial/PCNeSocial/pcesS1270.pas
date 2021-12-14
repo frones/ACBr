@@ -264,7 +264,11 @@ begin
     GerarCabecalho('evtContratAvNP');
     Gerador.wGrupo('evtContratAvNP Id="' + Self.Id + '"');
 
-    gerarIdeEvento3(self.IdeEvento);
+    if VersaoDF <= ve02_05_00 then
+      gerarIdeEvento3(self.IdeEvento, True, True, False)
+    else
+      GerarIdeEvento3(self.IdeEvento, True, False, True);
+
     gerarIdeEmpregador(self.IdeEmpregador);
     GerarRemunAvNP(remunAvNp);
 

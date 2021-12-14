@@ -412,7 +412,7 @@ begin
     GerarCabecalho('evtBenPrRP');
     Gerador.wGrupo('evtBenPrRP Id="' + Self.Id + '"');
 
-    GerarIdeEvento3(Self.IdeEvento);
+    GerarIdeEvento3(Self.IdeEvento, True, True, False);
     GerarIdeEmpregador(Self.ideEmpregador);
     GerarIdeBenef;
     GerarDmDev;

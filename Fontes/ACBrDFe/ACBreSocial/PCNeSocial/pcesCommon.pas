@@ -590,6 +590,77 @@ type
 
   TIdeTransmissor = class(TIdeEmpregador);
 
+  (*
+  +---------------------------------------------------------------------------------------------------------------+
+  |                                          Classes de Geração do IdeEvento                                      |
+  +----------+--------+---------- +-------+-----------------------------------------------------------------------+
+  |  Classe  |IndRetif|IndApuracao|IndGuia|                              Eventos                                  |
+  +----------+--------+-----------+-------+-----------------------------------------------------------------------+
+  |          |        |           |       |2190, 2200, 2205, 2206, 2210, 2220, 2221, 2230, 2231, 2240, 2245, 2250,|
+  |IdeEvento2|    X   |           |   X   |2260, 2298, 2299, 2300, 2306, 2399, 2400, 2405, 2410, 2416, 2418, 2420 |
+  +----------+--------+-----------+-------+-----------------------------------------------------------------------+
+  |IdeEvento3|    X   |     X     |   X   |1200, 1202, 1207, 1210, 1250, 1260, 1270, 1280, 1300                   |
+  +----------+--------+-----------+-------+-----------------------------------------------------------------------+
+  |IdeEvento4|        |     X     |   X   |1295, 1298, 1299                                                       |
+  +----------+--------+-----------+-------+-----------------------------------------------------------------------+
+  
+  +--------------------------------------------------------+
+  |       Valores padrão nas procedures de geração         |
+  +---------------+------------+---------------+-----------+
+  |   procedure   |GeraIndRetif|GeraIndApuracao|GeraIndGuia|
+  +---------------+------------+---------------+-----------+
+  |GerarIdeEvento2|    True    |               |   False   |
+  +---------------+------------+---------------+-----------+
+  |GerarIdeEvento3|    True    |      True     |    True   |
+  +---------------+------------+---------------+-----------+
+  |GerarIdeEvento4|    True    |               |    True   |
+  +---------------+------------+---------------+-----------+
+  //O campo indRetif é gerado se: (GeraIndRetif = True).
+  //O campo indApuracao é gerado se: (GeraIndApuracao = True).
+  //O campo indGuia é gerado se: (GeraIndGuia = True) e (Leiaute >= S1.0) e (indGuia <> '').
+  
+  +-----------------------------------------------------------------------------------------------------------+
+  |                                  Campos informados na geração dos eventos                                 |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |       Eventos         |    Classe   |Leiaute|   procedure   |indRetif|nrRecibo|indApuracao|perApur|indGuia|
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |                       |             |  2.5  |GerarIdeEvento |        |        |           |       |       |
+  |         2190          | TIdeEvento2 +-------+---------------+--------+--------+-----------+-------+-------|
+  |                       |             | S1.0  |GerarIdeEvento2|    X   |    X   |           |       |       |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |2200, 2205, 2206, 2210,|             |       |               |        |        |           |       |       |
+  |2220, 2221, 2230, 2231,|             |  2.5  |GerarIdeEvento2|    X   |    X   |           |       |       |
+  |2240, 2245, 2250, 2260,|             |       |               |        |        |           |       |       |
+  |2298, 2300, 2306, 2400,| TIdeEvento2 +-------+---------------+--------+--------+-----------+-------+-------+
+  |2405, 2410, 2416, 2418,|             |       |               |        |        |           |       |       |
+  |2420                   |             | S1.0  |GerarIdeEvento2|    X   |    X   |           |       |       |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |                       |             |  2.5  |GerarIdeEvento2|    X   |    X   |           |       |       |
+  |      2299, 2399       | TIdeEvento2 +-------+---------------+--------+--------+-----------+-------+-------|
+  |                       |             | S1.0  |GerarIdeEvento2|    X   |    X   |           |       |   X   |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |                       |             |  2.5  |GerarIdeEvento3|    X   |    X   |     X     |   X   |       |
+  |      1200, 1280       | TIdeEvento3 +-------+---------------+--------+--------+-----------+-------+-------|
+  |                       |             | S1.0  |GerarIdeEvento3|    X   |    X   |     X     |   X   |   X   |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |                       |             |  2.5  |GerarIdeEvento3|    X   |    X   |     X     |   X   |       |
+  |      1202, 1207       | TIdeEvento3 +-------+---------------+--------+--------+-----------+-------+-------|
+  |                       |             | S1.0  |GerarIdeEvento3|    X   |    X   |     X     |   X   |       |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |                       |             |  2.5  |GerarIdeEvento3|    X   |    X   |     X     |   X   |       |
+  |    1210, 1260, 1270   | TIdeEvento3 +-------+---------------+--------+--------+-----------+-------+-------|
+  |                       |             | S1.0  |GerarIdeEvento3|    X   |    X   |           |   X   |   X   |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |      1250, 1300       | TIdeEvento3 |  2.5  |GerarIdeEvento3|    X   |    X   |     X     |   X   |       |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |         1295          | TIdeEvento4 |  2.5  |GerarIdeEvento4|        |        |     X     |   X   |       |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  |                       |             |  2.5  |GerarIdeEvento4|        |        |     X     |   X   |       |
+  |      1298, 1299       | TIdeEvento4 +-------+---------------+--------+--------+-----------+-------+-------|
+  |                       |             | S1.0  |GerarIdeEvento4|        |        |     X     |   X   |   X   |
+  +-----------------------+-------------+-------+---------------+--------+--------+-----------+-------+-------+
+  *)
+
   TIdeEvento = class(TObject)
   private
     FProcEmi: TpProcEmi;
@@ -603,19 +674,14 @@ type
   private
     FIndRetif: tpIndRetificacao;
     FNrRecibo: string;
+    FindGuia: string;
   public
     property indRetif: tpIndRetificacao read FIndRetif write FIndRetif;
     property NrRecibo: string read FNrRecibo write FNrRecibo;
-  end;
-
-  TIdeEventoGuia = class(TIdeEvento2) { Classe Criada para atender a Tag indGuia do S-2299 }
-   private
-    FindGuia: string;
-   public
     property indGuia: string read FindGuia write FindGuia;
   end;
 
-  TIdeEvento3 = class(TIdeEventoGuia)
+  TIdeEvento3 = class(TIdeEvento2)
   private
     FIndApuracao: tpIndApuracao;
     FPerApur: string;
@@ -628,12 +694,8 @@ type
   private
     FIndApuracao: tpIndApuracao;
     FPerApur: string;
-    FProcEmi: TpProcEmi;
-    FVerProc: string;
     FindGuia: string;
   public
-    property ProcEmi: TpProcEmi read FProcEmi write FProcEmi;
-    property VerProc: string read FVerProc write FVerProc;
     property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;
     property perApur: string read FPerApur write FPerApur;
     property indGuia: string read FindGuia write FindGuia;

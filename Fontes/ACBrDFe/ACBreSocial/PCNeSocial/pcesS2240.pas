@@ -528,7 +528,7 @@ begin
 //    Gerador.wCampo(tcStr, '', 'periculosidade', 1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].periculosidade));
 //    Gerador.wCampo(tcStr, '', 'aposentEsp',     1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].aposentEsp));
 
-    if objFatRisco.Items[i].epcEpiInst() then
+    if (objFatRisco.Items[i].epcEpiInst()) and (objFatRisco.Items[i].codAgNoc <> '09.01.001') then
       GerarEpcEpi(objFatRisco.Items[i].epcEpi);
 
     Gerador.wGrupo('/agNoc');
@@ -826,6 +826,8 @@ end;
 constructor TAgNocCollectionItem.Create;
 begin
   inherited Create;
+  
+  FEpcEpi := TEpcEpi.Create;
 end;
 
 destructor TAgNocCollectionItem.Destroy;

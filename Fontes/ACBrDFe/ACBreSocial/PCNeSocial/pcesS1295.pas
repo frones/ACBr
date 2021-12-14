@@ -84,7 +84,7 @@ type
 
   TEvtTotConting = class(TESocialEvento)
   private
-    FIdeEvento: TIdeEvento3;
+    FIdeEvento: TIdeEvento4;
     FIdeEmpregador: TIdeEmpregador;
     FIdeRespInf : TIdeRespInf;
 
@@ -96,7 +96,7 @@ type
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
 
-    property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
+    property IdeEvento: TIdeEvento4 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeRespInf: TIdeRespInf read FIdeRespInf write FIdeRespInf;
   end;
@@ -150,7 +150,7 @@ constructor TEvtTotConting.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
-  FIdeEvento     := TIdeEvento3.Create;
+  FIdeEvento     := TIdeEvento4.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeRespInf    := TIdeRespInf.Create;
 end;
@@ -174,7 +174,7 @@ begin
     GerarCabecalho('evtTotConting');
     Gerador.wGrupo('evtTotConting Id="' + Self.Id + '"');
 
-    GerarIdeEvento3(self.IdeEvento, False);
+    GerarIdeEvento4(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarIdeRespInf(Self.IdeRespInf);
 

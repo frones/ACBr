@@ -1097,18 +1097,9 @@ begin
     Gerador.wGrupo('evtPgtos Id="' + Self.Id + '"');
 
     if VersaoDF <= ve02_05_00 then
-      GerarIdeEvento3(Self.ideEvento)
+      GerarIdeEvento3(Self.ideEvento, True, True, False)
     else
-    begin
-      Gerador.wGrupo('ideEvento');
-
-      GerarIdeEvento2(Self.ideEvento, false);
-      Gerador.wCampo(tcStr, '', 'perApur',     7, 7, 1, Self.ideEvento.perApur);
-
-      GerarIdeEvento(Self.ideEvento, false);
-
-      Gerador.wGrupo('/ideEvento');
-    end;
+      GerarIdeEvento3(Self.ideEvento, True, False, True);
 
     GerarIdeEmpregador(Self.ideEmpregador);
     GerarIdeBenef(Self.ideBenef);

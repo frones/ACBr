@@ -484,13 +484,17 @@ function TEvtComProd.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtComProd');
     Gerador.wGrupo('evtComProd Id="' + Self.Id + '"');
 
-    GerarIdeEvento3(self.IdeEvento);
+    if VersaoDF <= ve02_05_00 then
+      GerarIdeEvento3(self.IdeEvento, True, True, False)
+    else
+      GerarIdeEvento3(self.IdeEvento, True, False, True);
+
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarInfoComProd;
 

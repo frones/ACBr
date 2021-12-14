@@ -104,7 +104,7 @@ type
 
   TEvtDeslig = class(TeSocialEvento)
   private
-    FIdeEvento: TIdeEventoGuia;
+    FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoDeslig: TInfoDeslig;
@@ -129,7 +129,7 @@ type
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
 
-    property IdeEvento: TIdeEventoGuia read FIdeEvento write FIdeEvento;
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
     property InfoDeslig: TInfoDeslig read FInfoDeslig write FInfoDeslig;
@@ -747,7 +747,7 @@ constructor TEvtDeslig.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
-  FIdeEvento     := TIdeEventoGuia.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVInculo    := TIdeVinculo.Create;
   FInfoDeslig    := TInfoDeslig.Create;
@@ -961,7 +961,7 @@ begin
     GerarCabecalho('evtDeslig');
     Gerador.wGrupo('evtDeslig Id="' + Self.Id + '"');
 
-    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEvento2(self.IdeEvento, True, True, True);
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarIdeVinculo(self.IdeVinculo, False);
     GerarInfoDeslig(Self.InfoDeslig);

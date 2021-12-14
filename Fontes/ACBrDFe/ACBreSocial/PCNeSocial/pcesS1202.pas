@@ -725,7 +725,7 @@ begin
     GerarCabecalho('evtRmnRPPS');
     Gerador.wGrupo('evtRmnRPPS Id="' + Self.Id + '"');
 
-    GerarIdeEvento3(Self.IdeEvento);
+    GerarIdeEvento3(Self.IdeEvento, True, True, False);
     GerarIdeEmpregador(Self.ideEmpregador);
     GerarIdeTrabalhador;
     GerarDmDev;

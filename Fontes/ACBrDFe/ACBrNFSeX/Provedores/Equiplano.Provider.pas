@@ -89,8 +89,8 @@ type
 
     procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
                                      const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+                                     AListTag: string = 'listaErros';
+                                     AMessageTag: string = 'erro'); override;
 
   end;
 
@@ -319,7 +319,7 @@ begin
 
       if AuxNode <> nil then
       begin
-        ProcessarMensagemErros(AuxNode, Response, 'listaErros', 'erro');
+        ProcessarMensagemErros(AuxNode, Response);
 
         Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -415,9 +415,7 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
-      begin
-        ProcessarMensagemErros(AuxNode, Response, 'listaErros', 'erro');
-      end;
+        ProcessarMensagemErros(AuxNode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -517,9 +515,7 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
-      begin
-        ProcessarMensagemErros(AuxNode, Response, 'listaErros', 'erro');
-      end;
+        ProcessarMensagemErros(AuxNode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -643,9 +639,7 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
-      begin
-        ProcessarMensagemErros(AuxNode, Response, 'listaErros', 'erro');
-      end;
+        ProcessarMensagemErros(AuxNode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -741,9 +735,7 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
-      begin
-        ProcessarMensagemErros(AuxNode, Response, 'listaErros', 'erro');
-      end;
+        ProcessarMensagemErros(AuxNode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -871,9 +863,7 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
-      begin
-        ProcessarMensagemErros(AuxNode, Response, 'listaErros', 'erro');
-      end;
+        ProcessarMensagemErros(AuxNode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 

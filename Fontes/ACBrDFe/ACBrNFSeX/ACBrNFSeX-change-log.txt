@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/12/2021
+-- Equiplano.Provider --
+[*] Possível correção para a leitura das listas de mensagens de retorno.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Inclusão de novas cidades: Silvania/GO, Arogoiania/GO e São Miguel do Araguaia/GO.
    Por: Lucio Bittes

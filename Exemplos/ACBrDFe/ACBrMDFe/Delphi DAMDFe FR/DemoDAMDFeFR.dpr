@@ -35,6 +35,7 @@ program DemoDAMDFeFR;
 
 uses
   Forms,
+  MidasLib,
   ufrmPrincipal in 'ufrmPrincipal.pas' {frmPrincipal};
 
 {$R *.res}

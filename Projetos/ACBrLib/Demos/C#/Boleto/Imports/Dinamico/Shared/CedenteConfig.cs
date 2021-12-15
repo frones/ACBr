@@ -240,6 +240,24 @@ namespace ACBrLib.Boleto
             set => SetProperty(value);
         }
 
+        /// <summary>
+        /// Define quem ira emitir o boleto.
+        /// </summary>
+        public IdentDistribuicao IdentDistribuicao
+        {
+            get => GetProperty<IdentDistribuicao>();
+            set => SetProperty(value);
+        }
+
+        /// <summary>
+        /// Dados adicionais do cedente.
+        /// </summary>
+        public string Operacao
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

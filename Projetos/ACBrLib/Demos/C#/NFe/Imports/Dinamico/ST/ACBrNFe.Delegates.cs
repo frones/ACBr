@@ -141,16 +141,25 @@ namespace ACBrLib.NFe
         public delegate int NFE_ImprimirPDF();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_SalvarPDF(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_SalvarEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirInutilizacao(string eArquivoXml);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirInutilizacaoPDF(string eArquivoXml);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_SalvarInutilizacaoPDF(string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {
@@ -198,10 +207,13 @@ namespace ACBrLib.NFe
             AddMethod<NFE_EnviarEmailEvento>("NFE_EnviarEmailEvento");
             AddMethod<NFE_Imprimir>("NFE_Imprimir");
             AddMethod<NFE_ImprimirPDF>("NFE_ImprimirPDF");
+            AddMethod<NFE_SalvarPDF>("NFE_SalvarPDF");
             AddMethod<NFE_ImprimirEvento>("NFE_ImprimirEvento");
             AddMethod<NFE_ImprimirEventoPDF>("NFE_ImprimirEventoPDF");
+            AddMethod<NFE_SalvarEventoPDF>("NFE_SalvarEventoPDF");
             AddMethod<NFE_ImprimirInutilizacao>("NFE_ImprimirInutilizacao");
             AddMethod<NFE_ImprimirInutilizacaoPDF>("NFE_ImprimirInutilizacaoPDF");
+            AddMethod<NFE_SalvarInutilizacaoPDF>("NFE_SalvarInutilizacaoPDF");
         }
     }
 }

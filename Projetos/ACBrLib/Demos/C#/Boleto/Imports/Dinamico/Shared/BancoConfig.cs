@@ -101,6 +101,24 @@ namespace ACBrLib.Boleto
             set => SetProperty(value);
         }
 
+        /// <summary>
+        /// A Quantidade de casa decimais do campo juros/mora
+        /// </summary>
+        public int CasasDecimaisMoraJuros
+        {
+            get => GetProperty<int>();
+            set => SetProperty(value);
+        }
+
+        /// <summary>
+        /// Código usado por alguns bancos para impressão no boleto.
+        /// </summary>
+        public string CIP
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
         #endregion Properties
     }
 }

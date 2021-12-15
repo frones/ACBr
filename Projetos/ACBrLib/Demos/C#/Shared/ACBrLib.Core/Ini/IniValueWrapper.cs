@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using ACBrLib.Core.Extensions;
 
@@ -17,7 +18,7 @@ namespace ACBrLib.Core
 
         static IniValueWrapper()
         {
-            NumberFormatInfo = new NumberFormatInfo() { NumberGroupSeparator = "", NumberDecimalSeparator = "," };
+            NumberFormatInfo = new NumberFormatInfo() { NumberGroupSeparator = ".", NumberDecimalSeparator = "," };
         }
 
         #endregion Constructor
@@ -48,6 +49,9 @@ namespace ACBrLib.Core
 
                 case string[] aString:
                     return string.Join("|", value);
+
+                case Stream aStream:
+                    return Convert.ToBase64String(aStream.ReadAllBytes());
 
                 default:
                     return value.ToString();
@@ -103,6 +107,16 @@ namespace ACBrLib.Core
             }
 
             if (type == typeof(string[])) return value.Split('|');
+
+            if (type == typeof(Stream))
+            {
+                var ret = new MemoryStream();
+                var pdfBytes = Convert.FromBase64String(value);
+                ret.WriteAsync(pdfBytes, 0, pdfBytes.Length).GetAwaiter().GetResult();
+                ret.FlushAsync().GetAwaiter().GetResult();
+
+                ret.Position = 0;
+            }
 
             if (type.IsSubclassOf(typeof(Enum)))
             {

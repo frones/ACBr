@@ -142,16 +142,25 @@ namespace ACBrLib.NFe
         public delegate int NFE_ImprimirPDF(IntPtr handle);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_SalvarPDF(IntPtr handle, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirEvento(IntPtr handle, string eArquivoXmlNFe, string eArquivoXmlEvento);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirEventoPDF(IntPtr handle, string eArquivoXmlNFe, string eArquivoXmlEvento);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_SalvarEventoPDF(IntPtr handle, string eArquivoXmlNFe, string eArquivoXmlEvento, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirInutilizacao(IntPtr handle, string eArquivoXml);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int NFE_ImprimirInutilizacaoPDF(IntPtr handle, string eArquivoXml);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int NFE_SalvarInutilizacaoPDF(IntPtr handle, string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
         protected override void InitializeMethods()
         {
@@ -199,10 +208,13 @@ namespace ACBrLib.NFe
             AddMethod<NFE_EnviarEmailEvento>("NFE_EnviarEmailEvento");
             AddMethod<NFE_Imprimir>("NFE_Imprimir");
             AddMethod<NFE_ImprimirPDF>("NFE_ImprimirPDF");
+            AddMethod<NFE_SalvarPDF>("NFE_SalvarPDF");
             AddMethod<NFE_ImprimirEvento>("NFE_ImprimirEvento");
             AddMethod<NFE_ImprimirEventoPDF>("NFE_ImprimirEventoPDF");
+            AddMethod<NFE_SalvarEventoPDF>("NFE_SalvarEventoPDF");
             AddMethod<NFE_ImprimirInutilizacao>("NFE_ImprimirInutilizacao");
             AddMethod<NFE_ImprimirInutilizacaoPDF>("NFE_ImprimirInutilizacaoPDF");
+            AddMethod<NFE_SalvarInutilizacaoPDF>("NFE_SalvarInutilizacaoPDF");
         }
     }
 }

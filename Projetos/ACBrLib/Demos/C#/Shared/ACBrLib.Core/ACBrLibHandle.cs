@@ -109,6 +109,15 @@ namespace ACBrLib.Core
 
         #region Methods
 
+        protected async void Base64ToStream(string base64, Stream aStream)
+        {
+            var pdfBytes = Convert.FromBase64String(base64);
+            await aStream.WriteAsync(pdfBytes, 0, pdfBytes.Length);
+            await aStream.FlushAsync();
+
+            aStream.Position = 0;
+        }
+
         /// <inheritdoc />
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         protected override bool ReleaseHandle()

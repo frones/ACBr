@@ -36,6 +36,13 @@
         cobUniprimeNortePR = 31,
         cobBancoPine = 32,
         cobBancoPineBradesco = 33,
-        cobUnicredSC = 34
+        cobUnicredSC = 34,
+        cobBancoAlfa = 35,
+        cobBancoDoBrasilAPI = 36,
+        cobBancoDoBrasilWS = 37,
+        cobBancoCresol = 38,
+        cobMoneyPlus = 39,
+        cobBancoC6 = 40,
+        cobBancoRendimento = 41
     }
 }

@@ -52,6 +52,15 @@ namespace ACBrLib.Boleto
         }
 
         /// <summary>
+        /// Define o prefixo do nome do arquivo de remessa a ser gerado pelo componente boleto.
+        /// </summary>
+        public string PrefixArqRemessa
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        /// <summary>
         /// Define o nome do arquivo de remessa a ser gerado pelo componente boleto.
         /// </summary>
         public string NomeArqRemessa

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2021
+--- ACBrLibBoletoDataModule, ACBrLibBoletoConfig ACBrLibBoletoConsts --
+[+] Adicionado novos parametros as configurações de Banco e Cedente.
+    Por: Rafael Dias
+
 13/12/2021
 --- ACBrLibBoletoDataModule, ACBrLibBoletoConfig ACBrLibBoletoConsts --
 [+] Adicionado novo parametro: PrefixArqRemessa

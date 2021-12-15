@@ -215,6 +215,8 @@ begin
   FormatSettings.LongTimeFormat := 'hh:nn:ss';
   FormatSettings.DateSeparator := '/';
   FormatSettings.TimeSeparator := ':';
+  FormatSettings.DecimalSeparator := ',';
+  FormatSettings.ThousandSeparator := '.';
 
 {$IFDEF Demo}
   if not Assigned(FPDemo) then

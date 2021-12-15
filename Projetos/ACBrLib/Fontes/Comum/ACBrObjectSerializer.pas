@@ -395,9 +395,9 @@ begin
         tkBool:
           AIni.WriteBool(ASessao, Propertie.Name, AValue.AsBoolean);
         tkEnumeration:
-          AIni.WriteInt64(ASessao, Propertie.Name, AValue.AsOrdinal);
+          AIni.WriteInteger(ASessao, Propertie.Name, AValue.AsOrdinal);
         tkInteger:
-          AIni.WriteInt64(ASessao, Propertie.Name, AValue.AsInteger);
+          AIni.WriteInteger(ASessao, Propertie.Name, AValue.AsInteger);
         tkInt64:
           AIni.WriteInt64(ASessao, Propertie.Name, AValue.AsInt64);
         tkWString,

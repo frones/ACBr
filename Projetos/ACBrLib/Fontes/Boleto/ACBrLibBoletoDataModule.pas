@@ -38,34 +38,26 @@ interface
 
 uses
   Classes, SysUtils, SyncObjs, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrLibComum,
-  ACBrLibConfig, ACBrMail, ACBrBoletoConversao;
+  ACBrLibConfig, ACBrMail, ACBrBoletoConversao, ACBrLibDataModule;
 
 type
 
   { TLibBoletoDM }
 
-  TLibBoletoDM = class(TDataModule)
+  TLibBoletoDM = class(TLibDataModule)
     ACBrBoleto1: TACBrBoleto;
     ACBrMail1: TACBrMail;
 
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
-    FLock: TCriticalSection;
-    fpLib: TACBrLib;
     BoletoFortes: TACBrBoletoFCFortes;
     FLayoutImpressao: Integer;
 
   public
-    procedure AplicarConfiguracoes;
+    procedure AplicarConfiguracoes; override;
     procedure ConfigurarImpressao(NomeImpressora: String = '');
     procedure FinalizarImpressao;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
     procedure AplicarConfigMail;
 
-    property Lib: TACBrLib read fpLib write fpLib;
     property LayoutImpressao: Integer read FLayoutImpressao write FLayoutImpressao;
 
   end;
@@ -81,18 +73,6 @@ uses
 {$R *.lfm}
 
 { TLibBoletoDM }
-
-procedure TLibBoletoDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-  FLayoutImpressao:= -1;
-end;
-
-procedure TLibBoletoDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
-
 procedure TLibBoletoDM.AplicarConfiguracoes;
 var
   LibConfig: TLibBoletoConfig;
@@ -118,14 +98,17 @@ begin
 
   with ACBrBoleto1.Banco do
   begin
+    Numero := LibConfig.BoletoBancoConfig.Numero;
+    Digito := LibConfig.BoletoBancoConfig.Digito;
+    TipoCobranca := LibConfig.BoletoBancoConfig.TipoCobranca;
+    OrientacoesBanco.Text := LibConfig.BoletoBancoConfig.OrientacaoBanco;
+    LocalPagamento := LibConfig.BoletoBancoConfig.LocalPagamento;
+    NumeroCorrespondente := LibConfig.BoletoBancoConfig.NumeroCorrespondente;
     LayoutVersaoArquivo := LibConfig.BoletoBancoConfig.LayoutVersaoArquivo;
     LayoutVersaoLote := LibConfig.BoletoBancoConfig.LayoutVersaoLote;
-    Digito := LibConfig.BoletoBancoConfig.Digito;
-    LocalPagamento := LibConfig.BoletoBancoConfig.LocalPagamento;
-    Numero := LibConfig.BoletoBancoConfig.Numero;
-    NumeroCorrespondente := LibConfig.BoletoBancoConfig.NumeroCorrespondente;
-    OrientacoesBanco.Text := LibConfig.BoletoBancoConfig.OrientacaoBanco;
-    TipoCobranca := LibConfig.BoletoBancoConfig.TipoCobranca;
+    CasasDecimaisMoraJuros := LibConfig.BoletoBancoConfig.CasasDecimaisMoraJuros;
+    //DensidadeGravacao := LibConfig.BoletoBancoConfig.DensidadeGravacao;
+    CIP := LibConfig.BoletoBancoConfig.CIP;
   end;
 
   with ACBrBoleto1.Cedente do
@@ -154,6 +137,8 @@ begin
     Telefone := LibConfig.BoletoCedenteConfig.Telefone;
     UF := LibConfig.BoletoCedenteConfig.UF;
     DigitoVerificadorAgenciaConta := LibConfig.BoletoCedenteConfig.DigitoVerificadorAgenciaConta;
+    IdentDistribuicao := LibConfig.BoletoCedenteConfig.IdentDistribuicao;
+    Operacao := LibConfig.BoletoCedenteConfig.Operacao;
   end;
 
   with ACBrBoleto1.Cedente.CedenteWS do
@@ -232,25 +217,6 @@ begin
   if Assigned(BoletoFortes) then FreeAndNil(BoletoFortes);
 
   GravarLog('FinalizarImpressao - Feito', logNormal);
-end;
-
-procedure TLibBoletoDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
-  Traduzir: Boolean);
-begin
-  if Assigned(Lib) then
-    Lib.GravarLog(AMsg, NivelLog, Traduzir);
-end;
-
-procedure TLibBoletoDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibBoletoDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 procedure TLibBoletoDM.AplicarConfigMail;

@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 15/12/2021
+-- DeIss.GravarXml --
+[*] Alterado valores padrões de algumas propriedades de Configuração.
+   Por: Italo Giurizzato Junior
+-- IPM.GravarXml/ACBrNFSeXClass --
+[*] Alterado o tipo do campo EnderecoInformado de Booleam para string e 
+    incluido a geração da tag <endereco_informado>.
+   Por: Italo Giurizzato Junior
 -- SystemPro.Provider --
 [*] Não estava assinado o Rps ao enviar pelo método SubstituirNfse.
    Por: Italo Giurizzato Junior

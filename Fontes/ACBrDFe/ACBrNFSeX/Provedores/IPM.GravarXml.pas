@@ -341,6 +341,9 @@ function TNFSeW_IPM.GerarTomador: TACBrXmlNode;
 begin
   Result := CreateElement('tomador');
 
+  Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 0,
+                            Trim(NFSe.Tomador.Endereco.EnderecoInformado), ''));
+
   if Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro) <> '' then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'E', ''));
@@ -415,17 +418,6 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'fone_fax', 1, 9, 0,
                                                                        '', ''));
-{
-  if( NFSe.Status <> srCancelado )then
-  begin
-    if (NFSe.Tomador.Endereco.EnderecoInformado) then
-      Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 1,
-                                                                       'S', ''))
-    else
-      Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 1,
-                                                                      'N', ''));
-  end;
-}
 end;
 
 function TNFSeW_IPM.GerarValoresServico: TACBrXmlNode;

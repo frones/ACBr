@@ -64,9 +64,17 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
-  NrOcorrValTotTrib := 0;
+
+  NrOcorrValTotTrib := 1;
   NrOcorrDescCond := 1;
   NrOcorrDescIncond := 1;
+  NrOcorrValorDeducoes := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrOutrasRet := 1;
+  NrOcorrValorIss := StrToIntDef(FAOwner.ConfigGeral.Params1, 1);
 end;
 
 end.

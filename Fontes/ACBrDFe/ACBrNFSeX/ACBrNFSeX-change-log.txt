@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/12/2021
+-- ACBrNFSeXServicos --
+[+] Inclusão de novas cidades: Colniza/MT.
+   Por: Dieison Paulo Reckziegel
+[*] Alteração nas URLs da cidade: Marechal Candido Rondon/PR
+   Por: Guilherme Bernardi
+
 14/12/2021
 -- Equiplano.Provider --
 [*] Possível correção para a leitura das listas de mensagens de retorno.

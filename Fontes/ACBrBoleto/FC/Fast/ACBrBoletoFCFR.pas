@@ -79,6 +79,7 @@ type
       ProgressType: TfrxProgressType; Progress: Integer);
   public
     { Public declarations }
+
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Imprimir; override;
@@ -259,6 +260,7 @@ begin
   FcdsTitulo.FieldDefs.Add('TextoLivre', ftMemo, 2000);
   FcdsTitulo.FieldDefs.Add('Asbace', ftString, 40);
   FcdsTitulo.FieldDefs.Add('EMV', ftString, 500);
+  FcdsTitulo.FieldDefs.Add('ArquivoLogoEmp', ftString,300);
     // Sacado
   FcdsTitulo.FieldDefs.Add('Sacado_NomeSacado', ftString, 100);
   FcdsTitulo.FieldDefs.Add('Sacado_CNPJCPF', ftString, 18);
@@ -522,6 +524,7 @@ var
   Field_TextoLivre: TField;
   Field_Asbace: TField;
   Field_EMV: TField;
+  Field_ArquivoLogoEmp: TField;
 
   // Sacado
   Field_Sacado_NomeSacado: TField;
@@ -592,6 +595,8 @@ var
         if ACBrBoleto.Banco.Numero = 21 then
           Field_Asbace.AsString := TACBrBancoBanestes(Banco).CalcularCampoASBACE(ListadeBoletos[Indice]);
         Field_EMV.AsString := ListadeBoletos[Indice].QrCode.emv;
+        Field_ArquivoLogoEmp.AsString := ListadeBoletos[Indice].ArquivoLogoEmp;
+
         // Sacado
         Field_Sacado_NomeSacado.AsString := ListadeBoletos[Indice].Sacado.NomeSacado;
         Field_Sacado_CNPJCPF.AsString := ListadeBoletos[Indice].Sacado.CNPJCPF;
@@ -689,6 +694,7 @@ begin
       Field_TextoLivre := FieldByName('TextoLivre');
       Field_Asbace := FieldByName('Asbace');
       Field_EMV := FieldByName('EMV');
+      Field_ArquivoLogoEmp := FieldByName('ArquivoLogoEmp');
 
       // Sacado
       Field_Sacado_NomeSacado := FieldByName('Sacado_NomeSacado');

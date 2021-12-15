@@ -269,7 +269,9 @@ begin
          toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '10'; {Desistência do Protesto e Baixar Título}
          toRemessaDispensarJuros                 : Ocorrencia := '11'; {Instrução para Dispensar Juros}
          toRemessaAlterarDadosPagador            : Ocorrencia := '12'; {Alteração de Pagador}
-         toRemessaOutrasOcorrencias              : Ocorrencia := '31'; {Alteração de Outros Dados}
+         toRemessaOutrasOcorrencias,
+           toRemessaAlterarOutrosDados           : Ocorrencia := '31'; {Alteração de Outros Dados}
+
          toRemessaBaixaporPagtoDiretoCedente     : Ocorrencia := '34'; {Baixa - Pagamento Direto ao Beneficiário}
       else
          Ocorrencia := '01';                                          {Remessa}
@@ -822,7 +824,8 @@ begin
         toRemessaAlterarPrazoLimiteRecebimento : ATipoOcorrencia := '19';
         toRemessaDispensarPrazoLimiteRecebimento:ATipoOcorrencia := '20';
         toRemessaAlterarDadosPagador           : ATipoOcorrencia := '23';
-        toRemessaOutrasOcorrencias             : ATipoOcorrencia := '31';
+        toRemessaOutrasOcorrencias,
+          toRemessaAlterarOutrosDados          : ATipoOcorrencia := '31';
       else
        ATipoOcorrencia := '01';
       end;

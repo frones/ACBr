@@ -80,6 +80,7 @@ begin
     LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
   end;
 
   with ConfigWebServices do

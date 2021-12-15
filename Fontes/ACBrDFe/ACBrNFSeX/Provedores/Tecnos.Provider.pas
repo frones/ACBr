@@ -376,7 +376,7 @@ begin
   Request := Request + '</mConsultaLoteRPS>';
 
   Result := Executar('http://tempuri.org/mConsultaLoteRPS', Request,
-                     ['mConsultaLoteRPSResult'],
+                     ['mConsultaLoteRPSResult', 'ConsultarLoteRpsResposta'],
                      []);
 end;
 

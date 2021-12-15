@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/12/2021
+-- Tecnos.Provider --
+[*] Ajustes na lista de tags usadas ao tratar o retorno do consultar lote.
+   Por: Italo Giurizzato Junior
 -- DeIss.GravarXml --
 [*] Alterado valores padrões de algumas propriedades de Configuração.
    Por: Italo Giurizzato Junior

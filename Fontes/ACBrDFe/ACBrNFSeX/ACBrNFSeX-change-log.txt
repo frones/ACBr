@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/12/2021
+-- Tecnos.Provider --
+[*] Prossível correção para a assinatura inválida no pedido de cancelamento.
+   Por: Italo Giurizzato Junior
 -- BHISS.Provider --
 [*] Não estava lendo o código de verificação ao tratar o retorno do emitir.
    Por: Paulo C. L. Vicente

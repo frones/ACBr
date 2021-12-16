@@ -66,6 +66,11 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     function DefinirIDLote(const ID: string): string; override;
+    function DefinirIDCancelamento(const CNPJ: string; const InscMunic: string;
+                                   const NumNfse: string): string; override;
+
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
 
     procedure AssinarConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure AssinarConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
@@ -177,6 +182,7 @@ begin
     GerarNFSe := 'GeracaoNFSe.xsd';
     RecepcionarSincrono := 'EnviarLoteRpsSincronoEnvio.xsd';
     SubstituirNFSe := 'SubstituicaoNFSe.xsd';
+//    Validar := False;
   end;
 end;
 
@@ -212,6 +218,13 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderTecnos201.DefinirIDCancelamento(const CNPJ: string;
+  const InscMunic: string; const NumNfse: string): string;
+begin
+  Result := ' ' + ConfigGeral.Identificador + '="' + CNPJ +
+            Poem_Zeros(OnlyNumber(NumNfse), 9) + '"';
+end;
+
 function TACBrNFSeProviderTecnos201.DefinirIDLote(const ID: string): string;
 var
   Cnpj: string;
@@ -222,6 +235,44 @@ begin
             IntToStr(YearOf(Date)) + // ano do lote enviado no formato AAAA
             OnlyNumber(Cnpj) +
             Poem_Zeros(OnlyNumber(ID), 16) + '"';
+end;
+
+procedure TACBrNFSeProviderTecnos201.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  InfoCanc: TInfCancelamento;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  InfoCanc := Response.InfCancelamento;
+
+  with Params do
+  begin
+    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+                           '<' + Prefixo2 + 'Pedido>' +
+                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr {+ NameSpace2} + '>' +
+                               '<' + Prefixo2 + 'IdentificacaoNfse>' +
+                                 '<' + Prefixo2 + 'Numero>' +
+                                    InfoCanc.NumeroNFSe +
+                                 '</' + Prefixo2 + 'Numero>' +
+                                 Serie +
+                                 '<' + Prefixo2 + 'CpfCnpj>' +
+                                   GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                                 '</' + Prefixo2 + 'CpfCnpj>' +
+                                 GetInscMunic(Emitente.InscMun, Prefixo2) +
+                                 '<' + Prefixo2 + 'CodigoMunicipio>' +
+                                    IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                                 '</' + Prefixo2 + 'CodigoMunicipio>' +
+                                 CodVerif +
+                               '</' + Prefixo2 + 'IdentificacaoNfse>' +
+                               '<' + Prefixo2 + 'CodigoCancelamento>' +
+                                  InfoCanc.CodCancelamento +
+                               '</' + Prefixo2 + 'CodigoCancelamento>' +
+                               Motivo +
+                             '</' + Prefixo2 + 'InfPedidoCancelamento>' +
+                           '</' + Prefixo2 + 'Pedido>' +
+                         '</' + Prefixo + 'CancelarNfseEnvio>';
+  end;
 end;
 
 procedure TACBrNFSeProviderTecnos201.ProcessarMensagemErros(

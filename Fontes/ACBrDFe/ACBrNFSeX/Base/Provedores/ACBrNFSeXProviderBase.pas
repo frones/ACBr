@@ -91,6 +91,8 @@ type
     function GetInscMunic(const InscMunic: string; const Prefixo: string = ''): string;
     function GetCabecalho(const Xmlns: string = ''): string;
     function DefinirIDLote(const ID: string): string; virtual;
+    function DefinirIDCancelamento(const CNPJ: string; const InscMunic: string;
+                                   const NumNfse: string): string; virtual;
 
     //metodos para geração e tratamento dos dados do metodo emitir
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); virtual; abstract;
@@ -196,6 +198,16 @@ begin
   FConfigSchemas := TConfigSchemas.Create;
 
   Configuracao;
+end;
+
+function TACBrNFSeXProvider.DefinirIDCancelamento(const CNPJ: string;
+  const InscMunic: string; const NumNfse: string): string;
+begin
+  if ConfigGeral.Identificador <> '' then
+    Result := ' ' + ConfigGeral.Identificador + '="Canc_' + CNPJ + InscMunic +
+              NumNfse + '"'
+  else
+    Result := '';
 end;
 
 function TACBrNFSeXProvider.DefinirIDLote(const ID: string): string;

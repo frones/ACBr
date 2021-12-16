@@ -42,5 +42,6 @@
         BoletoBancoFCFortesConfig,
         GNRe,
         Guia,
+        Sedex,
     }
 }

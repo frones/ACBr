@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/12/2021
+-- BHISS.Provider --
+[*] Não estava lendo o código de verificação ao tratar o retorno do emitir.
+   Por: Paulo C. L. Vicente
 -- Equiplano.Provider --
 [*] Possível correção para o problema da leitura do numero do protocolo.
    Por: Italo Giurizzato Junior

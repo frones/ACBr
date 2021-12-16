@@ -2898,6 +2898,8 @@ begin
             memoLog.Lines.Add('Situação: ' + Situacao);
             memoLog.Lines.Add('Link    : ' + Link);
             memoLog.Lines.Add('Sucesso : ' + BoolToStr(Sucesso, True));
+            memoLog.Lines.Add('Numero da NFSe Substituida  : ' + NumNotaSubstituida);
+            memoLog.Lines.Add('Numero da NFSe Substituidora: ' + NumNotaSubstituidora);
             memoLog.Lines.Add(' ');
             memoLog.Lines.Add('Retorno do Pedido de Cancelamento:');
             memoLog.Lines.Add('Situação : ' + RetCancelamento.Situacao);

@@ -318,16 +318,9 @@ begin
       AuxNode := ANode.Childrens.FindAnyNs('mensagemRetorno');
 
       if AuxNode <> nil then
-      begin
         ProcessarMensagemErros(AuxNode, Response);
 
-        Response.Sucesso := (Response.Erros.Count = 0);
-
-        with Response do
-        begin
-          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('protocolo'), tcStr);
-        end;
-      end;
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       AuxNode := ANode.Childrens.FindAnyNs('protocolo');
 
@@ -530,7 +523,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
+//      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
 
       AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
@@ -878,13 +871,10 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      if ANode <> nil then
+      with Response.RetCancelamento do
       begin
-        with Response.RetCancelamento do
-        begin
-          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('sucesso'), tcStr);
-          DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
-        end;
+        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('sucesso'), tcStr);
+        DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
       end;
     except
       on E:Exception do

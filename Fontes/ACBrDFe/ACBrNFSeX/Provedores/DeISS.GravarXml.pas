@@ -73,6 +73,7 @@ begin
   NrOcorrValorCofins := 1;
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
+  NrOcorrValorInss := 1;
   NrOcorrOutrasRet := 1;
   NrOcorrValorIss := StrToIntDef(FAOwner.ConfigGeral.Params1, 1);
 end;

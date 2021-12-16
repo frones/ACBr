@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 16/12/2021
+-- Equiplano.Provider --
+[*] Melhoria no código de alguns Tratamentos de Retornos.
+   Por: Italo Giurizzato Junior
+-- DeIss.GravarXml --
+[*] Alterado valores padrões de algumas propriedades de Configuração.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção para a leitura correta de tags que retornam um Link.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajustes para utilizar a leitura de atributos no tratamento do pedido de
     cancelamento.

@@ -458,6 +458,8 @@ begin
     if NFSe.Link = '' then
       NFSe.Link := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('LinkNota'), tcStr);
 
+    NFSe.Link := StringReplace(NFSe.Link, '&amp;', '&', [rfReplaceAll]);
+
     LerValoresNfse(AuxNode);
 
     NFSe.ValorCredito := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);

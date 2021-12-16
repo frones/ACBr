@@ -5,13 +5,13 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "ACBrLibNFe Demo"
-   ClientHeight    =   8690
-   ClientLeft      =   50
+   ClientHeight    =   8685
+   ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   12150
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8.5
+      Size            =   8.25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -20,14 +20,14 @@ Begin VB.Form FrmMain
    EndProperty
    LinkTopic       =   "FrmMain"
    MaxButton       =   0   'False
-   ScaleHeight     =   8690
+   ScaleHeight     =   8685
    ScaleWidth      =   12150
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton btnCarregarConfiguracoes 
       Caption         =   "Carregar Configurações"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   8.5
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -35,7 +35,7 @@ Begin VB.Form FrmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   480
-      Left            =   240
+      Left            =   120
       TabIndex        =   4
       Top             =   8040
       Width           =   2535
@@ -46,8 +46,8 @@ Begin VB.Form FrmMain
       TabIndex        =   3
       Top             =   120
       Width           =   6255
-      _ExtentX        =   11042
-      _ExtentY        =   6809
+      _ExtentX        =   11033
+      _ExtentY        =   6800
       _Version        =   393216
       Style           =   1
       Tabs            =   5
@@ -94,19 +94,12 @@ Begin VB.Form FrmMain
       TabPicture(2)   =   "FrmMain.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "btnCancelarNFe"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "btnCarregarEvento"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "btnImprimirEvento"
-      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "btnEnviarEmailEvento"
-      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "btnEnviarEvento"
-      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).Control(5)=   "btnLimparListaEvento"
-      Tab(2).Control(5).Enabled=   0   'False
       Tab(2).Control(6)=   "btnImprimirEventoPDF"
-      Tab(2).Control(6).Enabled=   0   'False
       Tab(2).ControlCount=   7
       TabCaption(3)   =   "Inutilização"
       TabPicture(3)   =   "FrmMain.frx":0054
@@ -272,7 +265,7 @@ Begin VB.Form FrmMain
          Left            =   3840
          TabIndex        =   16
          Top             =   960
-         Width           =   1575
+         Width           =   1830
       End
       Begin VB.CommandButton btnEnviarAssincrono 
          Caption         =   "Enviar Assincrono"
@@ -280,7 +273,7 @@ Begin VB.Form FrmMain
          Left            =   3840
          TabIndex        =   15
          Top             =   480
-         Width           =   1575
+         Width           =   1815
       End
       Begin VB.CommandButton btnValidarRegraNegocio 
          Caption         =   "Val. Regra de Neg."
@@ -392,7 +385,7 @@ Begin VB.Form FrmMain
       Caption         =   "Salvar Configurações"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   8.5
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -400,7 +393,7 @@ Begin VB.Form FrmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   480
-      Left            =   2880
+      Left            =   3240
       TabIndex        =   0
       Top             =   8040
       Width           =   2295
@@ -411,15 +404,15 @@ Begin VB.Form FrmMain
       TabIndex        =   35
       Top             =   120
       Width           =   5415
-      _ExtentX        =   9560
-      _ExtentY        =   13794
+      _ExtentX        =   9551
+      _ExtentY        =   13785
       _Version        =   393216
       Style           =   1
       TabHeight       =   520
       WordWrap        =   0   'False
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
-         Size            =   8.5
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -446,36 +439,31 @@ Begin VB.Form FrmMain
       TabPicture(2)   =   "FrmMain.frx":00C4
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "Label13"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Label22"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "Frame2"
-      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "txtAssuntoEmail"
-      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "txtMensagemEmail"
-      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       Begin VB.CommandButton btnLogomarca 
          Caption         =   "..."
          Height          =   260
          Left            =   -70320
-         TabIndex        =   149
+         TabIndex        =   141
          Top             =   960
-         Width           =   390
+         Width           =   645
       End
       Begin VB.TextBox txtLogomarca 
          Height          =   285
          Left            =   -74640
-         TabIndex        =   148
+         TabIndex        =   140
          Top             =   960
-         Width           =   4275
+         Width           =   4530
       End
       Begin VB.Frame frmDANFe 
          Caption         =   "DANFe"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -484,14 +472,14 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   735
          Left            =   -74640
-         TabIndex        =   144
+         TabIndex        =   136
          Top             =   1320
-         Width           =   4695
+         Width           =   4950
          Begin VB.OptionButton rdbRetrato 
             Caption         =   "Retrato"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -500,7 +488,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   255
             Left            =   240
-            TabIndex        =   146
+            TabIndex        =   138
             Top             =   360
             Width           =   1095
          End
@@ -508,7 +496,7 @@ Begin VB.Form FrmMain
             Caption         =   "Paisagem"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -517,7 +505,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   3000
-            TabIndex        =   145
+            TabIndex        =   137
             Top             =   360
             Value           =   -1  'True
             Width           =   1455
@@ -527,7 +515,7 @@ Begin VB.Form FrmMain
          Caption         =   "Pos Printer"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -536,14 +524,14 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   3495
          Left            =   -74640
-         TabIndex        =   143
+         TabIndex        =   135
          Top             =   3000
          Width           =   4695
          Begin VB.CheckBox chkIgnorarTags 
             Caption         =   "Ignorar Tags"
             Height          =   255
             Left            =   2640
-            TabIndex        =   172
+            TabIndex        =   164
             Top             =   3000
             Width           =   1455
          End
@@ -551,7 +539,7 @@ Begin VB.Form FrmMain
             Caption         =   "Cortar Papel"
             Height          =   255
             Left            =   480
-            TabIndex        =   171
+            TabIndex        =   163
             Top             =   3000
             Width           =   1455
          End
@@ -559,7 +547,7 @@ Begin VB.Form FrmMain
             Caption         =   "Traduzir Tags"
             Height          =   255
             Left            =   2640
-            TabIndex        =   170
+            TabIndex        =   162
             Top             =   2520
             Width           =   1455
          End
@@ -567,7 +555,7 @@ Begin VB.Form FrmMain
             Caption         =   "Controle Porta"
             Height          =   255
             Left            =   480
-            TabIndex        =   169
+            TabIndex        =   161
             Top             =   2520
             Width           =   1455
          End
@@ -575,134 +563,150 @@ Begin VB.Form FrmMain
             Alignment       =   1  'Right Justify
             Height          =   285
             Left            =   3360
-            TabIndex        =   167
+            TabIndex        =   159
             Text            =   "0"
             Top             =   2040
-            Width           =   975
+            Width           =   840
          End
          Begin VB.TextBox txtBuffer 
             Alignment       =   1  'Right Justify
             Height          =   285
             Left            =   2040
-            TabIndex        =   164
+            TabIndex        =   156
             Text            =   "0"
             Top             =   2040
-            Width           =   975
+            Width           =   720
          End
          Begin VB.TextBox txtEspacos 
             Alignment       =   1  'Right Justify
             Height          =   285
             Left            =   1080
-            TabIndex        =   161
+            TabIndex        =   153
             Text            =   "0"
             Top             =   2040
-            Width           =   615
+            Width           =   480
          End
          Begin VB.TextBox txtColunas 
             Alignment       =   1  'Right Justify
             Height          =   285
             Left            =   120
-            TabIndex        =   157
+            TabIndex        =   149
             Text            =   "0"
             Top             =   2040
-            Width           =   615
+            Width           =   480
          End
          Begin VB.ComboBox cmbPortas 
             Height          =   315
             ItemData        =   "FrmMain.frx":00E0
             Left            =   120
-            List            =   "FrmMain.frx":00F3
+            List            =   "FrmMain.frx":00E2
             Style           =   2  'Dropdown List
-            TabIndex        =   153
+            TabIndex        =   145
             Top             =   1320
             Width           =   4455
          End
          Begin VB.ComboBox cmbPaginaCodigo 
             Height          =   315
-            ItemData        =   "FrmMain.frx":012D
+            ItemData        =   "FrmMain.frx":00E4
             Left            =   2400
-            List            =   "FrmMain.frx":0140
+            List            =   "FrmMain.frx":00FD
             Style           =   2  'Dropdown List
-            TabIndex        =   152
+            TabIndex        =   144
             Top             =   600
             Width           =   2175
          End
          Begin VB.ComboBox cmbModelo 
             Height          =   315
-            ItemData        =   "FrmMain.frx":017A
+            ItemData        =   "FrmMain.frx":0133
             Left            =   120
-            List            =   "FrmMain.frx":018D
+            List            =   "FrmMain.frx":015B
             Style           =   2  'Dropdown List
-            TabIndex        =   151
+            TabIndex        =   143
             Top             =   600
             Width           =   2175
          End
          Begin MSComCtl2.UpDown nudColunas 
             Height          =   285
-            Left            =   720
-            TabIndex        =   158
+            Left            =   600
+            TabIndex        =   150
             Top             =   2040
             Width           =   255
-            _ExtentX        =   459
-            _ExtentY        =   512
+            _ExtentX        =   450
+            _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            OrigLeft        =   4560
-            OrigTop         =   720
-            OrigRight       =   4815
-            OrigBottom      =   1005
+            BuddyControl    =   "txtColunas"
+            BuddyDispid     =   196656
+            OrigLeft        =   720
+            OrigTop         =   2040
+            OrigRight       =   975
+            OrigBottom      =   2325
             Max             =   99999
+            SyncBuddy       =   -1  'True
+            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin MSComCtl2.UpDown nudEspacos 
             Height          =   285
-            Left            =   1680
-            TabIndex        =   162
+            Left            =   1560
+            TabIndex        =   154
             Top             =   2040
             Width           =   255
-            _ExtentX        =   459
-            _ExtentY        =   512
+            _ExtentX        =   450
+            _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            OrigLeft        =   4560
-            OrigTop         =   720
-            OrigRight       =   4815
-            OrigBottom      =   1005
+            BuddyControl    =   "txtEspacos"
+            BuddyDispid     =   196655
+            OrigLeft        =   1680
+            OrigTop         =   2040
+            OrigRight       =   1935
+            OrigBottom      =   2325
             Max             =   99999
+            SyncBuddy       =   -1  'True
+            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin MSComCtl2.UpDown nudBuffer 
             Height          =   285
-            Left            =   3000
-            TabIndex        =   165
+            Left            =   2761
+            TabIndex        =   157
             Top             =   2040
             Width           =   255
-            _ExtentX        =   459
-            _ExtentY        =   512
+            _ExtentX        =   450
+            _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            OrigLeft        =   4560
-            OrigTop         =   720
-            OrigRight       =   4815
-            OrigBottom      =   1005
+            BuddyControl    =   "txtBuffer"
+            BuddyDispid     =   196654
+            OrigLeft        =   3000
+            OrigTop         =   2040
+            OrigRight       =   3255
+            OrigBottom      =   2325
             Max             =   99999
+            SyncBuddy       =   -1  'True
+            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin MSComCtl2.UpDown nudLinhasPular 
             Height          =   285
-            Left            =   4320
-            TabIndex        =   168
+            Left            =   4200
+            TabIndex        =   160
             Top             =   2040
             Width           =   255
-            _ExtentX        =   459
-            _ExtentY        =   512
+            _ExtentX        =   450
+            _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            OrigLeft        =   4560
-            OrigTop         =   720
-            OrigRight       =   4815
-            OrigBottom      =   1005
+            BuddyControl    =   "txtLinhasPular"
+            BuddyDispid     =   196653
+            OrigLeft        =   4320
+            OrigTop         =   2040
+            OrigRight       =   4575
+            OrigBottom      =   2325
             Max             =   99999
+            SyncBuddy       =   -1  'True
+            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin VB.Label lblLinhasPular 
@@ -711,7 +715,7 @@ Begin VB.Form FrmMain
             Caption         =   "Linhas Pular"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -720,7 +724,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   3360
-            TabIndex        =   166
+            TabIndex        =   158
             Top             =   1800
             Width           =   1020
          End
@@ -730,7 +734,7 @@ Begin VB.Form FrmMain
             Caption         =   "Buffer"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -739,7 +743,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   2040
-            TabIndex        =   163
+            TabIndex        =   155
             Top             =   1800
             Width           =   510
          End
@@ -749,7 +753,7 @@ Begin VB.Form FrmMain
             Caption         =   "Espaços"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -758,7 +762,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   1080
-            TabIndex        =   160
+            TabIndex        =   152
             Top             =   1800
             Width           =   675
          End
@@ -768,7 +772,7 @@ Begin VB.Form FrmMain
             Caption         =   "Colunas"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -777,7 +781,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   159
+            TabIndex        =   151
             Top             =   1800
             Width           =   660
          End
@@ -787,7 +791,7 @@ Begin VB.Form FrmMain
             Caption         =   "Porta"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -796,7 +800,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   156
+            TabIndex        =   148
             Top             =   1080
             Width           =   465
          End
@@ -806,7 +810,7 @@ Begin VB.Form FrmMain
             Caption         =   "Pag. Código"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -815,7 +819,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   2400
-            TabIndex        =   155
+            TabIndex        =   147
             Top             =   360
             Width           =   975
          End
@@ -825,7 +829,7 @@ Begin VB.Form FrmMain
             Caption         =   "Modelo"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -834,7 +838,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   154
+            TabIndex        =   146
             Top             =   360
             Width           =   615
          End
@@ -843,7 +847,7 @@ Begin VB.Form FrmMain
          Caption         =   "DANFCe"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -852,14 +856,14 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   735
          Left            =   -74640
-         TabIndex        =   140
+         TabIndex        =   132
          Top             =   2160
          Width           =   4695
          Begin VB.OptionButton rdbEscPos 
             Caption         =   "EscPos"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -868,7 +872,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   1440
-            TabIndex        =   150
+            TabIndex        =   142
             Top             =   360
             Value           =   -1  'True
             Width           =   1455
@@ -877,7 +881,7 @@ Begin VB.Form FrmMain
             Caption         =   "Fortes"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -886,7 +890,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   255
             Left            =   240
-            TabIndex        =   142
+            TabIndex        =   134
             Top             =   360
             Width           =   1095
          End
@@ -894,7 +898,7 @@ Begin VB.Form FrmMain
             Caption         =   "Fortes A4"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -903,7 +907,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   3000
-            TabIndex        =   141
+            TabIndex        =   133
             Top             =   360
             Width           =   1455
          End
@@ -914,7 +918,7 @@ Begin VB.Form FrmMain
          Left            =   -74400
          MultiLine       =   -1  'True
          ScrollBars      =   3  'Both
-         TabIndex        =   119
+         TabIndex        =   111
          Top             =   5760
          Width           =   4155
       End
@@ -922,7 +926,7 @@ Begin VB.Form FrmMain
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   -74400
-         TabIndex        =   117
+         TabIndex        =   109
          Top             =   5040
          Width           =   4155
       End
@@ -930,7 +934,7 @@ Begin VB.Form FrmMain
          Caption         =   "Configurações"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -939,27 +943,27 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   3855
          Left            =   -74400
-         TabIndex        =   103
+         TabIndex        =   96
          Top             =   600
          Width           =   4215
-         Begin VB.TextBox txtnudPorta 
+         Begin VB.TextBox txtPortaEmail 
             Height          =   285
             Left            =   120
-            TabIndex        =   178
+            TabIndex        =   170
             Top             =   2280
-            Width           =   735
+            Width           =   450
          End
          Begin VB.TextBox txtSenha 
             Height          =   285
             Left            =   120
-            TabIndex        =   177
+            TabIndex        =   169
             Top             =   3480
             Width           =   3855
          End
          Begin VB.TextBox txtUsuario 
             Height          =   285
             Left            =   120
-            TabIndex        =   176
+            TabIndex        =   168
             Top             =   2880
             Width           =   3855
          End
@@ -967,7 +971,7 @@ Begin VB.Form FrmMain
             Height          =   285
             IMEMode         =   3  'DISABLE
             Left            =   120
-            TabIndex        =   108
+            TabIndex        =   101
             Top             =   480
             Width           =   3915
          End
@@ -975,7 +979,7 @@ Begin VB.Form FrmMain
             Height          =   285
             IMEMode         =   3  'DISABLE
             Left            =   120
-            TabIndex        =   107
+            TabIndex        =   100
             Top             =   1080
             Width           =   3915
          End
@@ -983,15 +987,15 @@ Begin VB.Form FrmMain
             Height          =   285
             IMEMode         =   3  'DISABLE
             Left            =   120
-            TabIndex        =   106
+            TabIndex        =   99
             Top             =   1680
             Width           =   3915
          End
-         Begin VB.CheckBox ckbSSL 
+         Begin VB.CheckBox chkSSL 
             Caption         =   "SSL"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1000,15 +1004,15 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   1440
-            TabIndex        =   105
+            TabIndex        =   98
             Top             =   2160
             Width           =   1335
          End
-         Begin VB.CheckBox ckbTLS 
+         Begin VB.CheckBox chkTLS 
             Caption         =   "TLS"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1017,26 +1021,29 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   1440
-            TabIndex        =   104
+            TabIndex        =   97
             Top             =   2400
-            Width           =   1335
+            Width           =   1590
          End
-         Begin MSComCtl2.UpDown nudPorta 
+         Begin MSComCtl2.UpDown nudEmailPorta 
             Height          =   285
-            Index           =   2
-            Left            =   841
-            TabIndex        =   109
+            Left            =   571
+            TabIndex        =   178
             Top             =   2280
             Width           =   255
-            _ExtentX        =   459
-            _ExtentY        =   512
+            _ExtentX        =   450
+            _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            OrigLeft        =   3960
-            OrigTop         =   720
-            OrigRight       =   4215
-            OrigBottom      =   975
+            BuddyControl    =   "txtPortaEmail"
+            BuddyDispid     =   196674
+            OrigLeft        =   840
+            OrigTop         =   2280
+            OrigRight       =   1095
+            OrigBottom      =   2565
             Max             =   99999
+            SyncBuddy       =   -1  'True
+            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin VB.Label Label12 
@@ -1045,7 +1052,7 @@ Begin VB.Form FrmMain
             Caption         =   "Nome"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1054,7 +1061,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   115
+            TabIndex        =   107
             Top             =   240
             Width           =   480
          End
@@ -1064,7 +1071,7 @@ Begin VB.Form FrmMain
             Caption         =   "Email"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1073,7 +1080,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   114
+            TabIndex        =   106
             Top             =   840
             Width           =   450
          End
@@ -1083,7 +1090,7 @@ Begin VB.Form FrmMain
             Caption         =   "Host SMTP"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1092,7 +1099,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   113
+            TabIndex        =   105
             Top             =   1440
             Width           =   900
          End
@@ -1102,7 +1109,7 @@ Begin VB.Form FrmMain
             Caption         =   "Usuário"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1111,7 +1118,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   112
+            TabIndex        =   104
             Top             =   2640
             Width           =   645
          End
@@ -1121,7 +1128,7 @@ Begin VB.Form FrmMain
             Caption         =   "Senha"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1130,7 +1137,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   111
+            TabIndex        =   103
             Top             =   3240
             Width           =   525
          End
@@ -1140,7 +1147,7 @@ Begin VB.Form FrmMain
             Caption         =   "Porta"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1149,7 +1156,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   120
-            TabIndex        =   110
+            TabIndex        =   102
             Top             =   2040
             Width           =   465
          End
@@ -1160,15 +1167,15 @@ Begin VB.Form FrmMain
          TabIndex        =   36
          Top             =   360
          Width           =   5175
-         _ExtentX        =   9137
-         _ExtentY        =   12947
+         _ExtentX        =   9128
+         _ExtentY        =   12938
          _Version        =   393216
          Style           =   1
          Tabs            =   4
          TabsPerRow      =   4
          TabHeight       =   520
          TabCaption(0)   =   "Geral"
-         TabPicture(0)   =   "FrmMain.frx":01C7
+         TabPicture(0)   =   "FrmMain.frx":01FD
          Tab(0).ControlEnabled=   -1  'True
          Tab(0).Control(0)=   "lblFormatoAlerta"
          Tab(0).Control(0).Enabled=   0   'False
@@ -1194,11 +1201,11 @@ Begin VB.Form FrmMain
          Tab(0).Control(10).Enabled=   0   'False
          Tab(0).Control(11)=   "cmbFormaEmissao"
          Tab(0).Control(11).Enabled=   0   'False
-         Tab(0).Control(12)=   "cmbVersaoDocFiscal"
+         Tab(0).Control(12)=   "cmbVersaoDF"
          Tab(0).Control(12).Enabled=   0   'False
-         Tab(0).Control(13)=   "chkRetirarAcentosXMLEnv"
+         Tab(0).Control(13)=   "chkRetirarAcentos"
          Tab(0).Control(13).Enabled=   0   'False
-         Tab(0).Control(14)=   "chkSalvarArqEnvResp"
+         Tab(0).Control(14)=   "chkSalvar"
          Tab(0).Control(14).Enabled=   0   'False
          Tab(0).Control(15)=   "btnSelectLog"
          Tab(0).Control(15).Enabled=   0   'False
@@ -1216,7 +1223,7 @@ Begin VB.Form FrmMain
          Tab(0).Control(21).Enabled=   0   'False
          Tab(0).ControlCount=   22
          TabCaption(1)   =   "WebServices"
-         TabPicture(1)   =   "FrmMain.frx":01E3
+         TabPicture(1)   =   "FrmMain.frx":0219
          Tab(1).ControlEnabled=   0   'False
          Tab(1).Control(0)=   "lblTimeOut(1)"
          Tab(1).Control(0).Enabled=   0   'False
@@ -1226,7 +1233,7 @@ Begin VB.Form FrmMain
          Tab(1).Control(2).Enabled=   0   'False
          Tab(1).Control(3)=   "nudTimeOut"
          Tab(1).Control(3).Enabled=   0   'False
-         Tab(1).Control(4)=   "chkSalvarEnvelopeSOAP"
+         Tab(1).Control(4)=   "chkSalvarSOAP"
          Tab(1).Control(4).Enabled=   0   'False
          Tab(1).Control(5)=   "chkVisualizarMensagem"
          Tab(1).Control(5).Enabled=   0   'False
@@ -1234,61 +1241,78 @@ Begin VB.Form FrmMain
          Tab(1).Control(6).Enabled=   0   'False
          Tab(1).Control(7)=   "frmProxy"
          Tab(1).Control(7).Enabled=   0   'False
-         Tab(1).Control(8)=   "txtTimeOut"
+         Tab(1).Control(8)=   "cmbSSlType"
          Tab(1).Control(8).Enabled=   0   'False
-         Tab(1).Control(9)=   "cmbSSlType"
+         Tab(1).Control(9)=   "cmbUFDestino"
          Tab(1).Control(9).Enabled=   0   'False
-         Tab(1).Control(10)=   "cmbUFDestino"
+         Tab(1).Control(10)=   "frmAmbiente"
          Tab(1).Control(10).Enabled=   0   'False
-         Tab(1).Control(11)=   "frmAmbiente"
+         Tab(1).Control(11)=   "txtTimeOut"
          Tab(1).Control(11).Enabled=   0   'False
          Tab(1).ControlCount=   12
          TabCaption(2)   =   "Certificados"
-         TabPicture(2)   =   "FrmMain.frx":01FF
+         TabPicture(2)   =   "FrmMain.frx":0235
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "btnObterCertificados"
-         Tab(2).Control(1)=   "frmCertificados"
-         Tab(2).Control(2)=   "cmbXmlSign"
-         Tab(2).Control(3)=   "cmbHttp"
-         Tab(2).Control(4)=   "cmbCrypt"
-         Tab(2).Control(5)=   "lblXMLSignLib"
-         Tab(2).Control(6)=   "lblHttpLib"
-         Tab(2).Control(7)=   "lblCryptLib"
+         Tab(2).Control(0)=   "lblCryptLib"
+         Tab(2).Control(0).Enabled=   0   'False
+         Tab(2).Control(1)=   "lblHttpLib"
+         Tab(2).Control(1).Enabled=   0   'False
+         Tab(2).Control(2)=   "lblXMLSignLib"
+         Tab(2).Control(2).Enabled=   0   'False
+         Tab(2).Control(3)=   "cmbCrypt"
+         Tab(2).Control(3).Enabled=   0   'False
+         Tab(2).Control(4)=   "cmbHttp"
+         Tab(2).Control(4).Enabled=   0   'False
+         Tab(2).Control(5)=   "cmbXmlSign"
+         Tab(2).Control(5).Enabled=   0   'False
+         Tab(2).Control(6)=   "frmCertificados"
+         Tab(2).Control(6).Enabled=   0   'False
+         Tab(2).Control(7)=   "btnObterCertificados"
+         Tab(2).Control(7).Enabled=   0   'False
          Tab(2).ControlCount=   8
          TabCaption(3)   =   "Arquivos"
-         TabPicture(3)   =   "FrmMain.frx":021B
+         TabPicture(3)   =   "FrmMain.frx":0251
          Tab(3).ControlEnabled=   0   'False
-         Tab(3).Control(0)=   "txtArqEvento"
-         Tab(3).Control(1)=   "btnArqEvento"
-         Tab(3).Control(2)=   "btnArqInu"
-         Tab(3).Control(3)=   "txtArqInu"
-         Tab(3).Control(4)=   "btnArqNFe"
-         Tab(3).Control(5)=   "txtArqNFe"
-         Tab(3).Control(6)=   "chkSepararPorModelo"
-         Tab(3).Control(7)=   "chkSepararPorCNPJ"
-         Tab(3).Control(8)=   "chkSalvaPathEvento"
-         Tab(3).Control(9)=   "chkEmissaoPathNFe"
-         Tab(3).Control(10)=   "chkAdicionaLiteral"
-         Tab(3).Control(11)=   "chkPastaMensal"
-         Tab(3).Control(12)=   "chkSalvarArqs"
-         Tab(3).Control(13)=   "lblPastaArqEvento"
-         Tab(3).Control(14)=   "lblPastaArqInutilizacao"
-         Tab(3).Control(15)=   "lblPastaArqNFe"
+         Tab(3).Control(0)=   "lblPastaArqNFe"
+         Tab(3).Control(1)=   "lblPastaArqInutilizacao"
+         Tab(3).Control(2)=   "lblPastaArqEvento"
+         Tab(3).Control(3)=   "chkSalvarArqs"
+         Tab(3).Control(4)=   "chkPastaMensal"
+         Tab(3).Control(5)=   "chkAdicionaLiteral"
+         Tab(3).Control(6)=   "chkEmissaoPathNFe"
+         Tab(3).Control(7)=   "chkSalvaPathEvento"
+         Tab(3).Control(8)=   "chkSepararPorCNPJ"
+         Tab(3).Control(9)=   "chkSepararPorModelo"
+         Tab(3).Control(10)=   "txtArqNFe"
+         Tab(3).Control(11)=   "btnArqNFe"
+         Tab(3).Control(12)=   "txtArqInu"
+         Tab(3).Control(13)=   "btnArqInu"
+         Tab(3).Control(14)=   "btnArqEvento"
+         Tab(3).Control(15)=   "txtArqEvento"
          Tab(3).ControlCount=   16
+         Begin VB.TextBox txtTimeOut 
+            Alignment       =   1  'Right Justify
+            Height          =   285
+            Left            =   -71280
+            TabIndex        =   171
+            Text            =   "0"
+            Top             =   720
+            Width           =   825
+         End
          Begin VB.ComboBox cmbModeloDocumento 
             Height          =   315
-            ItemData        =   "FrmMain.frx":0237
+            ItemData        =   "FrmMain.frx":026D
             Left            =   120
-            List            =   "FrmMain.frx":023E
+            List            =   "FrmMain.frx":0277
             Style           =   2  'Dropdown List
-            TabIndex        =   173
+            TabIndex        =   165
             Top             =   3000
             Width           =   2295
          End
          Begin VB.TextBox txtArqEvento 
             Height          =   285
             Left            =   -74880
-            TabIndex        =   139
+            TabIndex        =   131
             Top             =   4440
             Width           =   3555
          End
@@ -1296,7 +1320,7 @@ Begin VB.Form FrmMain
             Caption         =   "..."
             Height          =   260
             Left            =   -71280
-            TabIndex        =   138
+            TabIndex        =   130
             Top             =   4440
             Width           =   390
          End
@@ -1304,14 +1328,14 @@ Begin VB.Form FrmMain
             Caption         =   "..."
             Height          =   260
             Left            =   -71280
-            TabIndex        =   137
+            TabIndex        =   129
             Top             =   3840
             Width           =   390
          End
          Begin VB.TextBox txtArqInu 
             Height          =   285
             Left            =   -74880
-            TabIndex        =   136
+            TabIndex        =   128
             Top             =   3840
             Width           =   3555
          End
@@ -1319,14 +1343,14 @@ Begin VB.Form FrmMain
             Caption         =   "..."
             Height          =   260
             Left            =   -71280
-            TabIndex        =   133
+            TabIndex        =   125
             Top             =   3240
             Width           =   390
          End
          Begin VB.TextBox txtArqNFe 
             Height          =   285
             Left            =   -74880
-            TabIndex        =   132
+            TabIndex        =   124
             Top             =   3240
             Width           =   3555
          End
@@ -1334,7 +1358,7 @@ Begin VB.Form FrmMain
             Caption         =   "Separar Arqs pelo Modelo do Documento"
             Height          =   195
             Left            =   -74880
-            TabIndex        =   130
+            TabIndex        =   122
             Top             =   2520
             Width           =   3495
          End
@@ -1342,7 +1366,7 @@ Begin VB.Form FrmMain
             Caption         =   "Separar Arqs pelo CNPJ do Certificado"
             Height          =   195
             Left            =   -74880
-            TabIndex        =   129
+            TabIndex        =   121
             Top             =   2160
             Width           =   3615
          End
@@ -1350,7 +1374,7 @@ Begin VB.Form FrmMain
             Caption         =   "Salvar Arquivos de Eventos"
             Height          =   195
             Left            =   -74880
-            TabIndex        =   128
+            TabIndex        =   120
             Top             =   1800
             Width           =   3855
          End
@@ -1358,7 +1382,7 @@ Begin VB.Form FrmMain
             Caption         =   "Salvar Documento pelo campo Data de Emissão"
             Height          =   195
             Left            =   -74880
-            TabIndex        =   127
+            TabIndex        =   119
             Top             =   1440
             Width           =   4455
          End
@@ -1366,7 +1390,7 @@ Begin VB.Form FrmMain
             Caption         =   "Adicionar Literal no nome das pastas"
             Height          =   195
             Left            =   -74880
-            TabIndex        =   126
+            TabIndex        =   118
             Top             =   1080
             Width           =   3615
          End
@@ -1374,7 +1398,7 @@ Begin VB.Form FrmMain
             Caption         =   "Criar Pastas Mensalmente"
             Height          =   255
             Left            =   -74880
-            TabIndex        =   125
+            TabIndex        =   117
             Top             =   720
             Width           =   3855
          End
@@ -1382,7 +1406,7 @@ Begin VB.Form FrmMain
             Caption         =   "Salvar Arquivos em Pastas Separadas"
             Height          =   195
             Left            =   -74880
-            TabIndex        =   124
+            TabIndex        =   116
             Top             =   420
             Width           =   4335
          End
@@ -1390,28 +1414,28 @@ Begin VB.Form FrmMain
             Caption         =   "Obter Certificados"
             Height          =   375
             Left            =   -74640
-            TabIndex        =   120
+            TabIndex        =   112
             Top             =   5160
             Width           =   1575
          End
          Begin VB.TextBox txtCSC 
             Height          =   285
             Left            =   120
-            TabIndex        =   87
+            TabIndex        =   81
             Top             =   6840
             Width           =   4695
          End
          Begin VB.TextBox txtIdCSC 
             Height          =   285
             Left            =   120
-            TabIndex        =   86
+            TabIndex        =   80
             Top             =   6240
             Width           =   4695
          End
          Begin VB.TextBox txtSchemaPath 
             Height          =   285
             Left            =   120
-            TabIndex        =   85
+            TabIndex        =   79
             Top             =   5640
             Width           =   4215
          End
@@ -1419,14 +1443,14 @@ Begin VB.Form FrmMain
             Caption         =   "..."
             Height          =   260
             Left            =   4440
-            TabIndex        =   84
+            TabIndex        =   78
             Top             =   5640
             Width           =   390
          End
          Begin VB.TextBox txtLogs 
             Height          =   285
             Left            =   120
-            TabIndex        =   83
+            TabIndex        =   77
             Top             =   5040
             Width           =   4215
          End
@@ -1434,46 +1458,50 @@ Begin VB.Form FrmMain
             Caption         =   "..."
             Height          =   260
             Left            =   4440
-            TabIndex        =   82
+            TabIndex        =   76
             Top             =   5040
             Width           =   390
          End
-         Begin VB.CheckBox chkSalvarArqEnvResp 
+         Begin VB.CheckBox chkSalvar 
             Caption         =   "Salvar Arquivos de Envio e Resposta"
             Height          =   255
             Left            =   120
-            TabIndex        =   81
+            TabIndex        =   75
             Top             =   4440
             Width           =   3375
          End
-         Begin VB.CheckBox chkRetirarAcentosXMLEnv 
+         Begin VB.CheckBox chkRetirarAcentos 
             Caption         =   "Retirar Acentos dos XMLs enviados"
             Height          =   255
             Left            =   120
-            TabIndex        =   80
+            TabIndex        =   74
             Top             =   4080
             Width           =   3375
          End
-         Begin VB.ComboBox cmbVersaoDocFiscal 
+         Begin VB.ComboBox cmbVersaoDF 
             Height          =   315
+            ItemData        =   "FrmMain.frx":028A
             Left            =   120
+            List            =   "FrmMain.frx":029A
             Style           =   2  'Dropdown List
-            TabIndex        =   79
+            TabIndex        =   73
             Top             =   3600
             Width           =   2295
          End
          Begin VB.ComboBox cmbFormaEmissao 
             Height          =   315
+            ItemData        =   "FrmMain.frx":02BA
             Left            =   120
+            List            =   "FrmMain.frx":02D9
             Style           =   2  'Dropdown List
-            TabIndex        =   78
+            TabIndex        =   72
             Top             =   2400
             Width           =   2295
          End
          Begin VB.TextBox txtFormatoAlerta 
             Height          =   285
             Left            =   120
-            TabIndex        =   77
+            TabIndex        =   71
             Top             =   1680
             Width           =   4695
          End
@@ -1481,7 +1509,7 @@ Begin VB.Form FrmMain
             Caption         =   "Atualizar XML"
             Height          =   255
             Left            =   120
-            TabIndex        =   76
+            TabIndex        =   70
             Top             =   600
             Width           =   3375
          End
@@ -1489,7 +1517,7 @@ Begin VB.Form FrmMain
             Caption         =   "Exibir Erro Schema"
             Height          =   255
             Left            =   120
-            TabIndex        =   75
+            TabIndex        =   69
             Top             =   960
             Width           =   3375
          End
@@ -1497,7 +1525,7 @@ Begin VB.Form FrmMain
             Caption         =   "Ambiente"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1506,14 +1534,14 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   735
             Left            =   -74760
-            TabIndex        =   72
+            TabIndex        =   66
             Top             =   1200
             Width           =   4695
             Begin VB.OptionButton rdbHomologacao 
                Caption         =   "Homologação"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1522,16 +1550,15 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   3000
-               TabIndex        =   74
+               TabIndex        =   68
                Top             =   360
-               Value           =   -1  'True
                Width           =   1455
             End
             Begin VB.OptionButton rdbProducao 
                Caption         =   "Produção"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1540,45 +1567,37 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   255
                Left            =   240
-               TabIndex        =   73
+               TabIndex        =   67
+               ToolTipText     =   "taProducao"
                Top             =   360
                Width           =   1095
             End
          End
          Begin VB.ComboBox cmbUFDestino 
             Height          =   315
-            ItemData        =   "FrmMain.frx":0245
+            ItemData        =   "FrmMain.frx":0335
             Left            =   -74760
-            List            =   "FrmMain.frx":029A
+            List            =   "FrmMain.frx":038A
             Style           =   2  'Dropdown List
-            TabIndex        =   71
+            TabIndex        =   65
             Top             =   720
-            Width           =   975
+            Width           =   1095
          End
          Begin VB.ComboBox cmbSSlType 
             Height          =   315
-            ItemData        =   "FrmMain.frx":030A
+            ItemData        =   "FrmMain.frx":03FA
             Left            =   -73440
-            List            =   "FrmMain.frx":0323
+            List            =   "FrmMain.frx":0413
             Style           =   2  'Dropdown List
-            TabIndex        =   70
+            TabIndex        =   64
             Top             =   720
             Width           =   1695
-         End
-         Begin VB.TextBox txtTimeOut 
-            Alignment       =   1  'Right Justify
-            Height          =   285
-            Left            =   -71400
-            TabIndex        =   69
-            Text            =   "5000"
-            Top             =   720
-            Width           =   990
          End
          Begin VB.Frame frmProxy 
             Caption         =   "Proxy"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1587,56 +1606,58 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   2415
             Left            =   -74760
-            TabIndex        =   61
+            TabIndex        =   58
             Top             =   4560
             Width           =   4695
+            Begin VB.TextBox txtProxyPorta 
+               Alignment       =   1  'Right Justify
+               Height          =   285
+               Left            =   2880
+               TabIndex        =   172
+               Text            =   "0"
+               Top             =   480
+               Width           =   345
+            End
             Begin VB.TextBox txtProxySenha 
                Height          =   285
                Left            =   120
-               TabIndex        =   175
+               TabIndex        =   167
                Top             =   1680
                Width           =   3855
             End
             Begin VB.TextBox txtProxyUsuario 
                Height          =   285
                Left            =   120
-               TabIndex        =   174
+               TabIndex        =   166
                Top             =   1080
                Width           =   3855
             End
             Begin VB.TextBox txtProxyServidor 
                Height          =   285
                Left            =   120
-               TabIndex        =   63
+               TabIndex        =   59
                Top             =   480
                Width           =   2655
             End
-            Begin VB.TextBox txtPortaProxy 
-               Alignment       =   1  'Right Justify
+            Begin MSComCtl2.UpDown nudProxyPorta 
                Height          =   285
-               Index           =   1
-               Left            =   2880
-               TabIndex        =   62
-               Text            =   "5000"
-               Top             =   480
-               Width           =   945
-            End
-            Begin MSComCtl2.UpDown nudPorta 
-               Height          =   285
-               Index           =   1
-               Left            =   3825
-               TabIndex        =   64
+               Left            =   3226
+               TabIndex        =   177
                Top             =   480
                Width           =   255
-               _ExtentX        =   459
-               _ExtentY        =   512
+               _ExtentX        =   450
+               _ExtentY        =   503
                _Version        =   393216
                Value           =   5000
-               OrigLeft        =   3825
-               OrigTop         =   480
-               OrigRight       =   4080
-               OrigBottom      =   765
+               BuddyControl    =   "txtProxyPorta"
+               BuddyDispid     =   196723
+               OrigLeft        =   3960
+               OrigTop         =   720
+               OrigRight       =   4215
+               OrigBottom      =   975
                Max             =   99999
+               SyncBuddy       =   -1  'True
+               BuddyProperty   =   0
                Enabled         =   -1  'True
             End
             Begin VB.Label lblServidor 
@@ -1645,7 +1666,7 @@ Begin VB.Form FrmMain
                Caption         =   "Servidor"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1654,7 +1675,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   120
-               TabIndex        =   68
+               TabIndex        =   63
                Top             =   240
                Width           =   720
             End
@@ -1664,7 +1685,7 @@ Begin VB.Form FrmMain
                Caption         =   "Porta"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1673,7 +1694,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   2880
-               TabIndex        =   67
+               TabIndex        =   62
                Top             =   240
                Width           =   465
             End
@@ -1683,7 +1704,7 @@ Begin VB.Form FrmMain
                Caption         =   "Usuário"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1692,7 +1713,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   120
-               TabIndex        =   66
+               TabIndex        =   61
                Top             =   840
                Width           =   720
             End
@@ -1702,7 +1723,7 @@ Begin VB.Form FrmMain
                Caption         =   "Senha"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1712,7 +1733,7 @@ Begin VB.Form FrmMain
                Height          =   195
                Index           =   0
                Left            =   120
-               TabIndex        =   65
+               TabIndex        =   60
                Top             =   1440
                Width           =   525
             End
@@ -1721,7 +1742,7 @@ Begin VB.Form FrmMain
             Caption         =   "Retorno de Envio"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1748,7 +1769,7 @@ Begin VB.Form FrmMain
                TabIndex        =   53
                Text            =   "0"
                Top             =   960
-               Width           =   990
+               Width           =   720
             End
             Begin VB.TextBox txtTentativas 
                Alignment       =   1  'Right Justify
@@ -1757,66 +1778,78 @@ Begin VB.Form FrmMain
                TabIndex        =   52
                Text            =   "0"
                Top             =   960
-               Width           =   990
+               Width           =   840
             End
-            Begin VB.TextBox txtIntervalos 
+            Begin VB.TextBox txtIntervalo 
                Alignment       =   1  'Right Justify
                Height          =   285
                Left            =   3360
                TabIndex        =   51
                Text            =   "0"
                Top             =   960
-               Width           =   990
+               Width           =   705
             End
             Begin MSComCtl2.UpDown nudAguardar 
                Height          =   285
-               Left            =   1080
-               TabIndex        =   55
+               Left            =   840
+               TabIndex        =   174
                Top             =   960
                Width           =   255
-               _ExtentX        =   459
-               _ExtentY        =   512
+               _ExtentX        =   450
+               _ExtentY        =   503
                _Version        =   393216
                Value           =   5000
-               OrigLeft        =   1080
-               OrigTop         =   960
-               OrigRight       =   1335
-               OrigBottom      =   1245
+               BuddyControl    =   "txtAguardar"
+               BuddyDispid     =   196733
+               OrigLeft        =   3960
+               OrigTop         =   720
+               OrigRight       =   4215
+               OrigBottom      =   975
                Max             =   99999
+               SyncBuddy       =   -1  'True
+               BuddyProperty   =   0
                Enabled         =   -1  'True
             End
             Begin MSComCtl2.UpDown nudTentativas 
                Height          =   285
-               Left            =   2760
-               TabIndex        =   56
+               Left            =   2640
+               TabIndex        =   175
                Top             =   960
                Width           =   255
-               _ExtentX        =   459
-               _ExtentY        =   512
+               _ExtentX        =   450
+               _ExtentY        =   503
                _Version        =   393216
                Value           =   5000
-               OrigLeft        =   2760
-               OrigTop         =   960
-               OrigRight       =   3015
-               OrigBottom      =   1245
+               BuddyControl    =   "txtTentativas"
+               BuddyDispid     =   196734
+               OrigLeft        =   3960
+               OrigTop         =   720
+               OrigRight       =   4215
+               OrigBottom      =   975
                Max             =   99999
+               SyncBuddy       =   -1  'True
+               BuddyProperty   =   0
                Enabled         =   -1  'True
             End
-            Begin MSComCtl2.UpDown nudIntervalos 
+            Begin MSComCtl2.UpDown nudIntervalo 
                Height          =   285
-               Left            =   4320
-               TabIndex        =   57
+               Left            =   4080
+               TabIndex        =   176
                Top             =   960
                Width           =   255
-               _ExtentX        =   459
-               _ExtentY        =   512
+               _ExtentX        =   450
+               _ExtentY        =   503
                _Version        =   393216
                Value           =   5000
-               OrigLeft        =   4320
-               OrigTop         =   960
-               OrigRight       =   4575
-               OrigBottom      =   1245
+               BuddyControl    =   "txtIntervalo"
+               BuddyDispid     =   196735
+               OrigLeft        =   3960
+               OrigTop         =   720
+               OrigRight       =   4215
+               OrigBottom      =   975
                Max             =   99999
+               SyncBuddy       =   -1  'True
+               BuddyProperty   =   0
                Enabled         =   -1  'True
             End
             Begin VB.Label lblAguardar 
@@ -1825,7 +1858,7 @@ Begin VB.Form FrmMain
                Caption         =   "Aguardar"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1834,7 +1867,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   120
-               TabIndex        =   60
+               TabIndex        =   57
                Top             =   720
                Width           =   795
             End
@@ -1844,7 +1877,7 @@ Begin VB.Form FrmMain
                Caption         =   "Tentativas"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1853,7 +1886,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   1800
-               TabIndex        =   59
+               TabIndex        =   56
                Top             =   720
                Width           =   915
             End
@@ -1863,7 +1896,7 @@ Begin VB.Form FrmMain
                Caption         =   "Intervalo"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1872,7 +1905,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   3360
-               TabIndex        =   58
+               TabIndex        =   55
                Top             =   720
                Width           =   795
             End
@@ -1885,7 +1918,7 @@ Begin VB.Form FrmMain
             Top             =   2040
             Width           =   2775
          End
-         Begin VB.CheckBox chkSalvarEnvelopeSOAP 
+         Begin VB.CheckBox chkSalvarSOAP 
             Caption         =   "Salvar envelope SOAP"
             Height          =   255
             Left            =   -74760
@@ -1897,7 +1930,7 @@ Begin VB.Form FrmMain
             Caption         =   "Certificados"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1912,7 +1945,7 @@ Begin VB.Form FrmMain
             Begin VB.TextBox txtDadosPFX 
                Height          =   285
                Left            =   120
-               TabIndex        =   122
+               TabIndex        =   114
                Top             =   1080
                Width           =   3555
             End
@@ -1920,7 +1953,7 @@ Begin VB.Form FrmMain
                Caption         =   "..."
                Height          =   260
                Left            =   3720
-               TabIndex        =   121
+               TabIndex        =   113
                Top             =   1080
                Width           =   390
             End
@@ -1961,7 +1994,7 @@ Begin VB.Form FrmMain
                Caption         =   "Dados PFX"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1970,7 +2003,7 @@ Begin VB.Form FrmMain
                EndProperty
                Height          =   195
                Left            =   120
-               TabIndex        =   123
+               TabIndex        =   115
                Top             =   840
                Width           =   870
             End
@@ -1980,7 +2013,7 @@ Begin VB.Form FrmMain
                Caption         =   "Caminho"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -1999,7 +2032,7 @@ Begin VB.Form FrmMain
                Caption         =   "Senha"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -2019,7 +2052,7 @@ Begin VB.Form FrmMain
                Caption         =   "Número de Série"
                BeginProperty Font 
                   Name            =   "Tahoma"
-                  Size            =   8.5
+                  Size            =   8.25
                   Charset         =   0
                   Weight          =   700
                   Underline       =   0   'False
@@ -2035,9 +2068,9 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cmbXmlSign 
             Height          =   315
-            ItemData        =   "FrmMain.frx":036F
+            ItemData        =   "FrmMain.frx":045F
             Left            =   -74640
-            List            =   "FrmMain.frx":0382
+            List            =   "FrmMain.frx":0472
             Style           =   2  'Dropdown List
             TabIndex        =   39
             Top             =   1920
@@ -2045,9 +2078,9 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cmbHttp 
             Height          =   315
-            ItemData        =   "FrmMain.frx":03BC
+            ItemData        =   "FrmMain.frx":04AC
             Left            =   -74640
-            List            =   "FrmMain.frx":03CC
+            List            =   "FrmMain.frx":04BC
             Style           =   2  'Dropdown List
             TabIndex        =   38
             Top             =   1320
@@ -2055,9 +2088,9 @@ Begin VB.Form FrmMain
          End
          Begin VB.ComboBox cmbCrypt 
             Height          =   315
-            ItemData        =   "FrmMain.frx":0401
+            ItemData        =   "FrmMain.frx":04F1
             Left            =   -74640
-            List            =   "FrmMain.frx":0411
+            List            =   "FrmMain.frx":0501
             Style           =   2  'Dropdown List
             TabIndex        =   37
             Top             =   720
@@ -2066,18 +2099,22 @@ Begin VB.Form FrmMain
          Begin MSComCtl2.UpDown nudTimeOut 
             Height          =   285
             Left            =   -70440
-            TabIndex        =   88
+            TabIndex        =   173
             Top             =   720
             Width           =   255
-            _ExtentX        =   459
-            _ExtentY        =   512
+            _ExtentX        =   450
+            _ExtentY        =   503
             _Version        =   393216
             Value           =   5000
-            OrigLeft        =   4560
+            BuddyControl    =   "txtTimeOut"
+            BuddyDispid     =   196688
+            OrigLeft        =   3960
             OrigTop         =   720
-            OrigRight       =   4815
-            OrigBottom      =   1005
+            OrigRight       =   4215
+            OrigBottom      =   975
             Max             =   99999
+            SyncBuddy       =   -1  'True
+            BuddyProperty   =   0
             Enabled         =   -1  'True
          End
          Begin VB.Label lblPastaArqEvento 
@@ -2086,7 +2123,7 @@ Begin VB.Form FrmMain
             Caption         =   "Pasta Arquivos Evento"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2095,7 +2132,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74880
-            TabIndex        =   135
+            TabIndex        =   127
             Top             =   4200
             Width           =   1905
          End
@@ -2105,7 +2142,7 @@ Begin VB.Form FrmMain
             Caption         =   "Pasta Arquivos Inutilização"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2114,7 +2151,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74880
-            TabIndex        =   134
+            TabIndex        =   126
             Top             =   3600
             Width           =   2310
          End
@@ -2124,7 +2161,7 @@ Begin VB.Form FrmMain
             Caption         =   "Pasta Arquivos NFe"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2133,7 +2170,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74880
-            TabIndex        =   131
+            TabIndex        =   123
             Top             =   3000
             Width           =   1620
          End
@@ -2141,126 +2178,7 @@ Begin VB.Form FrmMain
             Caption         =   "Token/CSC (Somente para NFC-e)"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   102
-            Top             =   6600
-            Width           =   4575
-         End
-         Begin VB.Label lblIdCSC 
-            Caption         =   "IdToken/IdCSC (Somente para NFC-e)"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   101
-            Top             =   6000
-            Width           =   4575
-         End
-         Begin VB.Label lblPastaSchemas 
-            Caption         =   "Pasta dos Schemas"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   100
-            Top             =   5400
-            Width           =   4575
-         End
-         Begin VB.Label lblPastaLogs 
-            Caption         =   "Pasta dos Logs"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   99
-            Top             =   4800
-            Width           =   4575
-         End
-         Begin VB.Label lblVersaoDocFiscal 
-            Caption         =   "Versão Documento Fiscal"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   98
-            Top             =   3360
-            Width           =   4575
-         End
-         Begin VB.Label lblModeloDocFiscal 
-            Caption         =   "Modelo Documento Fiscal"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   97
-            Top             =   2760
-            Width           =   4575
-         End
-         Begin VB.Label lblFormaEmissao 
-            Caption         =   "Forma de Emissão"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   96
-            Top             =   2160
-            Width           =   4575
-         End
-         Begin VB.Label lblFormatoAlerta 
-            Caption         =   "Formato Alerta"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2270,6 +2188,125 @@ Begin VB.Form FrmMain
             Height          =   255
             Left            =   120
             TabIndex        =   95
+            Top             =   6600
+            Width           =   4575
+         End
+         Begin VB.Label lblIdCSC 
+            Caption         =   "IdToken/IdCSC (Somente para NFC-e)"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   94
+            Top             =   6000
+            Width           =   4575
+         End
+         Begin VB.Label lblPastaSchemas 
+            Caption         =   "Pasta dos Schemas"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   93
+            Top             =   5400
+            Width           =   4575
+         End
+         Begin VB.Label lblPastaLogs 
+            Caption         =   "Pasta dos Logs"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   92
+            Top             =   4800
+            Width           =   4575
+         End
+         Begin VB.Label lblVersaoDocFiscal 
+            Caption         =   "Versão Documento Fiscal"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   91
+            Top             =   3360
+            Width           =   4575
+         End
+         Begin VB.Label lblModeloDocFiscal 
+            Caption         =   "Modelo Documento Fiscal"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   90
+            Top             =   2760
+            Width           =   4575
+         End
+         Begin VB.Label lblFormaEmissao 
+            Caption         =   "Forma de Emissão"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   89
+            Top             =   2160
+            Width           =   4575
+         End
+         Begin VB.Label lblFormatoAlerta 
+            Caption         =   "Formato Alerta"
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   120
+            TabIndex        =   88
             Top             =   1440
             Width           =   4575
          End
@@ -2279,7 +2316,7 @@ Begin VB.Form FrmMain
             Caption         =   "UF Destino"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2288,7 +2325,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74760
-            TabIndex        =   94
+            TabIndex        =   87
             Top             =   480
             Width           =   900
          End
@@ -2298,7 +2335,7 @@ Begin VB.Form FrmMain
             Caption         =   "SSL Type"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2307,7 +2344,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -73080
-            TabIndex        =   93
+            TabIndex        =   86
             Top             =   480
             Width           =   765
          End
@@ -2317,7 +2354,7 @@ Begin VB.Form FrmMain
             Caption         =   "TimeOut"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2327,7 +2364,7 @@ Begin VB.Form FrmMain
             Height          =   195
             Index           =   1
             Left            =   -71280
-            TabIndex        =   92
+            TabIndex        =   85
             Top             =   480
             Width           =   765
          End
@@ -2337,7 +2374,7 @@ Begin VB.Form FrmMain
             Caption         =   "XmlSignLib"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2346,7 +2383,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74640
-            TabIndex        =   91
+            TabIndex        =   84
             Top             =   1680
             Width           =   915
          End
@@ -2356,7 +2393,7 @@ Begin VB.Form FrmMain
             Caption         =   "HttpLib"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2365,7 +2402,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74640
-            TabIndex        =   90
+            TabIndex        =   83
             Top             =   1080
             Width           =   615
          End
@@ -2375,7 +2412,7 @@ Begin VB.Form FrmMain
             Caption         =   "CryptLib"
             BeginProperty Font 
                Name            =   "Tahoma"
-               Size            =   8.5
+               Size            =   8.25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2384,7 +2421,7 @@ Begin VB.Form FrmMain
             EndProperty
             Height          =   195
             Left            =   -74640
-            TabIndex        =   89
+            TabIndex        =   82
             Top             =   480
             Width           =   705
          End
@@ -2395,7 +2432,7 @@ Begin VB.Form FrmMain
          Caption         =   "Logomarca"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2404,7 +2441,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -74640
-         TabIndex        =   147
+         TabIndex        =   139
          Top             =   720
          Width           =   945
       End
@@ -2414,7 +2451,7 @@ Begin VB.Form FrmMain
          Caption         =   "Mensagem"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2423,7 +2460,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -74400
-         TabIndex        =   118
+         TabIndex        =   110
          Top             =   5520
          Width           =   930
       End
@@ -2433,7 +2470,7 @@ Begin VB.Form FrmMain
          Caption         =   "Assunto"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.5
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2442,7 +2479,7 @@ Begin VB.Form FrmMain
          EndProperty
          Height          =   195
          Left            =   -74400
-         TabIndex        =   116
+         TabIndex        =   108
          Top             =   4800
          Width           =   690
       End
@@ -2454,6 +2491,50 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim nfe As ACBrNFe
+
+Private Sub Form_Load()
+    cmbModeloDocumento.ListIndex = 0
+    cmbUFDestino.Text = "SP"
+    cmbSSlType.ListIndex = 0
+    cmbCrypt.ListIndex = 0
+    cmbHttp.ListIndex = 0
+    cmbXmlSign.ListIndex = 0
+    
+    cmbPortas.AddItem "COM1"
+    cmbPortas.AddItem "COM2"
+    cmbPortas.AddItem "LPT1"
+    cmbPortas.AddItem "LPT2"
+    cmbPortas.AddItem "\\localhost\Epson"
+    cmbPortas.AddItem "C:\temp\ecf.txt"
+    
+    cmbPortas.ListIndex = cmbPortas.ListCount - 1
+    
+    cmbPortas.AddItem "TCP:192.168.0.31:9100"
+    cmbPortas.AddItem "RAW:Elgin I9"
+    
+    nudColunas.Value = 0
+    nudEspacos.Value = 0
+    nudBuffer.Value = 0
+    nudLinhasPular.Value = 0
+    
+    Dim LogPath As String
+    Dim IniPath As String
+    
+    LogPath = App.Path & "\Logs\"
+    IniPath = App.Path & "\ACBrLib.ini"
+    
+    If Not DirExists(LogPath) Then
+        MkDir LogPath
+    End If
+    
+    Set nfe = CreateNFe(IniPath)
+    
+    nfe.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", NivelLog.logParanoico
+    nfe.ConfigGravarValor SESSAO_PRINCIPAL, "LogPath", LogPath
+    nfe.ConfigGravar
+    
+    LoadConfig
+End Sub
 
 Public Function validacao() As Boolean
 
@@ -2808,7 +2889,7 @@ Private Sub btnDadosPFX_Click()
             
     If Err Then Exit Sub
     
-    txtCertPath.Text = CommonDialog1.FileName
+    txtDadosPFX.Text = CommonDialog1.FileName
 End Sub
 
 Private Sub btnDFePorChave_Click()
@@ -3331,6 +3412,15 @@ Private Sub btnLogomarca_Click()
     txtLogomarca.Text = CommonDialog1.FileName
 End Sub
 
+Private Sub btnObterCertificados_Click()
+    
+    On Error GoTo Erro:
+    nfe.ObterCertificados
+Erro:
+    MsgBox Err.Description
+    
+End Sub
+
 Private Sub btnSelecionarCertificado_Click()
     On Error Resume Next
     CommonDialog1.DialogTitle = "Selecione o certificado"
@@ -3424,33 +3514,6 @@ Private Sub cmdSalvar_Click()
     SalvarConfig
 End Sub
 
-Private Sub Form_Load()
-    cmbModeloDocumento.ListIndex = 0
-    cmbUFDestino.Text = "SP"
-    cmbSSlType.ListIndex = 0
-    cmbCrypt.ListIndex = 0
-    cmbHttp.ListIndex = 0
-    cmbXmlSign.ListIndex = 0
-    
-    Dim LogPath As String
-    Dim IniPath As String
-    
-    LogPath = App.Path & "\Logs\"
-    IniPath = App.Path & "\ACBrLib.ini"
-    
-    If Not DirExists(LogPath) Then
-        MkDir LogPath
-    End If
-    
-    Set nfe = CreateNFe(IniPath)
-    
-    nfe.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", NivelLog.logParanoico
-    nfe.ConfigGravarValor SESSAO_PRINCIPAL, "LogPath", LogPath
-    nfe.ConfigGravar
-    
-    LoadConfig
-End Sub
-
 Private Sub SetResposta(ByRef resposta As String)
     If rtbRespostas.Text <> vbNullString Then
       rtbRespostas.Text = rtbRespostas.Text + vbCrLf + resposta
@@ -3464,74 +3527,182 @@ Private Sub LoadConfig()
     Dim bufferLen As Long
     
     nfe.ConfigLer
+    
+    'Geral
+    chkAtualizarXML.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "AtualizarXMLCancelado"))
+    chkExibirErroSchema.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "ExibirErroSchema"))
+    txtFormatoAlerta.Text = nfe.ConfigLerValor(SESSAO_NFE, "FormatoAlerta")
+    cmbFormaEmissao.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_NFE, "FormaEmissao"))
     cmbModeloDocumento.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_NFE, "ModeloDF"))
+    cmbVersaoDF.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_NFE, "VersaoDF"))
+    chkRetirarAcentos.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "RetirarAcentos"))
+    chkSalvar.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SalvarWS"))
+    txtLogs.Text = nfe.ConfigLerValor(SESSAO_NFE, "PathSalvar")
+    txtSchemaPath.Text = nfe.ConfigLerValor(SESSAO_NFE, "PathSchemas")
     txtIdCSC.Text = nfe.ConfigLerValor(SESSAO_NFE, "IdCSC")
     txtCSC.Text = nfe.ConfigLerValor(SESSAO_NFE, "CSC")
+    
+    'WebSevice
+    cmbUFDestino.Text = nfe.ConfigLerValor(SESSAO_DFE, "UF")
+    cmbSSlType.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SSLType"))
+    nudTimeOut.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "Timeout"))
+    
+    Dim ambiente As String
+    ambiente = nfe.ConfigLerValor(SESSAO_NFE, "Ambiente")
+    rdbHomologacao.Value = CBool(ambiente)
+    rdbProducao.Value = Not CBool(ambiente)
+    
+    chkVisualizarMensagem.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "Visualizar"))
+    chkSalvarSOAP.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SalvarWS"))
+    chkAjustAut.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "AjustaAguardaConsultaRet"))
+    nudAguardar.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "AguardarConsultaRet"))
+    nudTentativas.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "Tentativas"))
+    nudIntervalo.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "IntervaloTentativas"))
+    txtProxyServidor.Text = nfe.ConfigLerValor(SESSAO_PROXY, "Servidor")
+    nudProxyPorta.Value = CLng(nfe.ConfigLerValor(SESSAO_PROXY, "Porta"))
+    txtProxyUsuario.Text = nfe.ConfigLerValor(SESSAO_PROXY, "Usuario")
+    txtProxySenha.Text = nfe.ConfigLerValor(SESSAO_PROXY, "Senha")
+    
+    'Certificado
     cmbCrypt.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_DFE, "SSLCryptLib"))
     cmbHttp.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_DFE, "SSLHttpLib"))
     cmbXmlSign.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_DFE, "SSLXmlSignLib"))
     txtCertPath.Text = nfe.ConfigLerValor(SESSAO_DFE, "ArquivoPFX")
     txtCertPassword.Text = nfe.ConfigLerValor(SESSAO_DFE, "Senha")
     txtCertNumero.Text = nfe.ConfigLerValor(SESSAO_DFE, "NumeroSerie")
-    txtSchemaPath.Text = nfe.ConfigLerValor(SESSAO_NFE, "PathSchemas")
-    cmbUFDestino.Text = nfe.ConfigLerValor(SESSAO_DFE, "UF")
+    txtDadosPFX.Text = nfe.ConfigLerValor(SESSAO_DFE, "DadosPFX")
     
-    Dim ambiente As String
-    ambiente = nfe.ConfigLerValor(SESSAO_NFE, "Ambiente")
+    'Arquivos
+    chkSalvarArqs.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SalvarGer"))
+    chkPastaMensal.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SepararPorMes"))
+    chkAdicionaLiteral.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "AdicionarLiteral"))
+    chkEmissaoPathNFe.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "EmissaoPathNFe"))
+    chkSalvaPathEvento.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SalvarArq"))
+    chkSepararPorCNPJ.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SepararPorCNPJ"))
+    chkSepararPorModelo.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SepararPorModelo"))
+    txtArqNFe.Text = nfe.ConfigLerValor(SESSAO_NFE, "PathNFe")
+    txtArqInu.Text = nfe.ConfigLerValor(SESSAO_NFE, "PathInu")
+    txtArqEvento.Text = nfe.ConfigLerValor(SESSAO_NFE, "PathEvento")
     
-    rdbHomologacao.Value = CBool(ambiente)
-    rdbProducao.Value = Not CBool(ambiente)
+    'Doc Auxiliar
+    txtLogomarca.Text = nfe.ConfigLerValor(SESSAO_DANFE, "PathLogo")
     
-    cmbSSlType.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_NFE, "SSLType"))
-    nudTimeOut.Value = CLng(nfe.ConfigLerValor(SESSAO_NFE, "Timeout"))
-    txtProxyServidor.Text = nfe.ConfigLerValor(SESSAO_PROXY, "Servidor")
+    Dim tipoImpressao As String
+    tipoImpressao = nfe.ConfigLerValor(SESSAO_DANFE, "TipoDANFE")
+    rdbRetrato.Value = CBool(tipoImpressao)
+    rdbPaisagem.Value = Not CBool(tipoImpressao)
     
-    Dim porta As String
-    porta = nfe.ConfigLerValor(SESSAO_PROXY, "Porta")
+    Dim relNFCe As String
+    relNFCe = nfe.ConfigLerValor(SESSAO_DANFENFCe, "TipoRelatorioBobina")
+    rdbFortes.Value = CBool(relNFCe)
+    rdbEscPos.Value = Not CBool(relNFCe)
+    rdbFortesA4.Value = Not CBool(relNFCe)
     
-    If IsNumeric(porta) Then
-      txtnudPorta.Text = CLng(porta)
-    End If
+    cmbModelo.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "Modelo"))
+    cmbPortas.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "Porta"))
+    nudColunas.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "ColunasFonteNormal"))
+    nudEspacos.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "EspacoEntreLinhas"))
+    nudBuffer.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "LinhasBuffer"))
+    nudLinhasPular = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "LinhasEntreCupons"))
+    chkControlePorta.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "ControlePorta"))
+    chkCortarPapel.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "CortaPapel"))
+    chkTraduzirTags.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "TraduzirTags"))
+    chkIgnorarTags.Value = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "IgnorarTags"))
+    cmbPaginaCodigo.ListIndex = CLng(nfe.ConfigLerValor(SESSAO_POSPRINTER, "PaginaDeCodigo"))
     
-    txtProxyUsuario.Text = nfe.ConfigLerValor(SESSAO_PROXY, "Usuario")
-    txtProxySenha.Text = nfe.ConfigLerValor(SESSAO_PROXY, "Senha")
+    'Email
     txtNome.Text = nfe.ConfigLerValor(SESSAO_EMAIL, "Nome")
     txtEmail.Text = nfe.ConfigLerValor(SESSAO_EMAIL, "Conta")
     txtUsuario.Text = nfe.ConfigLerValor(SESSAO_EMAIL, "Usuario")
     txtSenha.Text = nfe.ConfigLerValor(SESSAO_EMAIL, "Senha")
     txtHost.Text = nfe.ConfigLerValor(SESSAO_EMAIL, "Servidor")
-    txtnudPorta.Text = CLng(nfe.ConfigLerValor(SESSAO_EMAIL, "Porta"))
-    ckbSSL.Value = CLng(nfe.ConfigLerValor(SESSAO_EMAIL, "SSL"))
-    ckbTLS.Value = CLng(nfe.ConfigLerValor(SESSAO_EMAIL, "TLS"))
+    nudEmailPorta.Value = CLng(nfe.ConfigLerValor(SESSAO_EMAIL, "Porta"))
+    chkSSL.Value = CLng(nfe.ConfigLerValor(SESSAO_EMAIL, "SSL"))
+    chkTLS.Value = CLng(nfe.ConfigLerValor(SESSAO_EMAIL, "TLS"))
     
 End Sub
 
 Private Sub SalvarConfig()
+    
+    'Geral
+    nfe.ConfigGravarValor SESSAO_NFE, "AtualizarXMLCancelado", CStr(chkAtualizarXML.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "ExibirErroSchema", CStr(chkExibirErroSchema.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "FormatoAlerta", txtFormatoAlerta.Text
+    nfe.ConfigGravarValor SESSAO_NFE, "FormaEmissao", CStr(cmbFormaEmissao.ListIndex)
     nfe.ConfigGravarValor SESSAO_NFE, "ModeloDF", CStr(cmbModeloDocumento.ListIndex)
+    nfe.ConfigGravarValor SESSAO_NFE, "VersaoDF", CStr(cmbVersaoDF.ListIndex)
+    nfe.ConfigGravarValor SESSAO_NFE, "RetirarAcentos", CStr(chkRetirarAcentos.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "SalvarWS", CStr(chkSalvar.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "PathSalvar", txtLogs.Text
+    nfe.ConfigGravarValor SESSAO_NFE, "PathSchemas", txtSchemaPath.Text
     nfe.ConfigGravarValor SESSAO_NFE, "IdCSC", txtIdCSC.Text
     nfe.ConfigGravarValor SESSAO_NFE, "CSC", txtCSC.Text
+    
+    'WebService
+    nfe.ConfigGravarValor SESSAO_DFE, "UF", CStr(cmbUFDestino.ListIndex)
+    nfe.ConfigGravarValor SESSAO_NFE, "SSLType", CStr(cmbSSlType.ListIndex)
+    nfe.ConfigGravarValor SESSAO_NFE, "Timeout", CStr(nudTimeOut.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "Ambiente", CStr(rdbProducao.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "Ambiente", CStr(rdbHomologacao.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "Visualizar", CStr(chkVisualizarMensagem)
+    nfe.ConfigGravarValor SESSAO_NFE, "SalvarWS", CStr(chkSalvarSOAP.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "AjustaAguardaConsultaRet", CStr(chkAjustAut.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "AguardarConsultaRet", CStr(nudAguardar.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "Tentativas", CStr(nudTentativas.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "IntervaloTentativas", CStr(nudIntervalo.Value)
+    nfe.ConfigGravarValor SESSAO_PROXY, "Servidor", txtProxyServidor.Text
+    nfe.ConfigGravarValor SESSAO_PROXY, "Porta", CStr(nudProxyPorta.Value)
+    nfe.ConfigGravarValor SESSAO_PROXY, "Usuario", txtProxyUsuario.Text
+    nfe.ConfigGravarValor SESSAO_PROXY, "Senha", txtProxySenha.Text
+    
+    'Certificado
     nfe.ConfigGravarValor SESSAO_DFE, "SSLCryptLib", CStr(cmbCrypt.ListIndex)
     nfe.ConfigGravarValor SESSAO_DFE, "SSLHttpLib", CStr(cmbHttp.ListIndex)
     nfe.ConfigGravarValor SESSAO_DFE, "SSLXmlSignLib", CStr(cmbXmlSign.ListIndex)
     nfe.ConfigGravarValor SESSAO_DFE, "ArquivoPFX", txtCertPath.Text
     nfe.ConfigGravarValor SESSAO_DFE, "Senha", txtCertPassword.Text
     nfe.ConfigGravarValor SESSAO_DFE, "NumeroSerie", txtCertNumero.Text
-    nfe.ConfigGravarValor SESSAO_NFE, "PathSchemas", txtSchemaPath.Text
-    nfe.ConfigGravarValor SESSAO_DFE, "UF", cmbUFDestino.Text
-    nfe.ConfigGravarValor SESSAO_NFE, "Ambiente", CStr(rdbHomologacao.Value)
-    nfe.ConfigGravarValor SESSAO_NFE, "SSLType", CStr(cmbSSlType.ListIndex)
-    nfe.ConfigGravarValor SESSAO_NFE, "Timeout", CStr(nudTimeOut.Value)
-    nfe.ConfigGravarValor SESSAO_PROXY, "Servidor", txtProxyServidor.Text
-    nfe.ConfigGravarValor SESSAO_PROXY, "Porta", CStr(txtnudPorta.Text)
-    nfe.ConfigGravarValor SESSAO_PROXY, "Usuario", txtProxyUsuario.Text
-    nfe.ConfigGravarValor SESSAO_PROXY, "Senha", txtProxySenha.Text
+    nfe.ConfigGravarValor SESSAO_DFE, "DadosPFX", txtDadosPFX.Text
+    
+    'Arquivos
+    nfe.ConfigGravarValor SESSAO_NFE, "SalvarGer", CStr(chkSalvarArqs.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "SepararPorMes", CStr(chkPastaMensal.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "AdicionarLiteral", CStr(chkAdicionaLiteral.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "EmissaoPathNFe", CStr(chkEmissaoPathNFe.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "SalvarArq", CStr(chkSalvaPathEvento.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "SepararPorCNPJ", CStr(chkSepararPorCNPJ.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "SepararPorModelo", CStr(chkSepararPorModelo.Value)
+    nfe.ConfigGravarValor SESSAO_NFE, "PathNFe", txtArqNFe.Text
+    nfe.ConfigGravarValor SESSAO_NFE, "PathInu", txtArqInu.Text
+    nfe.ConfigGravarValor SESSAO_NFE, "PathEvento", txtArqEvento.Text
+    
+    'Doc Auxiliar
+    nfe.ConfigGravarValor SESSAO_DANFE, "PathLogo", txtLogomarca.Text
+    nfe.ConfigGravarValor SESSAO_DANFENFCe, "TipoRelatorioBobina", CStr(rdbFortes.Value)
+    nfe.ConfigGravarValor SESSAO_DANFENFCe, "TipoRelatorioBobina", CStr(rdbFortesA4.Value)
+    nfe.ConfigGravarValor SESSAO_DANFENFCe, "TipoRelatorioBobina", CStr(rdbEscPos.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "Modelo", CStr(cmbModelo.ListIndex)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "Porta", CStr(cmbPortas.ListIndex)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "ColunasFonteNormal", CStr(nudColunas.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "EspacoEntreLinhas", CStr(nudEspacos.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "LinhasBuffer", CStr(nudBuffer.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "LinhasEntreCupons", CStr(nudLinhasPular.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "ControlePorta", CStr(chkControlePorta.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "CortaPapel", CStr(chkCortarPapel.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "TraduzirTags", CStr(chkTraduzirTags.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "IgnorarTags", CStr(chkIgnorarTags.Value)
+    nfe.ConfigGravarValor SESSAO_POSPRINTER, "PaginaDeCodigo", CStr(cmbPaginaCodigo.ListIndex)
+    
+    'Email
     nfe.ConfigGravarValor SESSAO_EMAIL, "Nome", txtNome.Text
     nfe.ConfigGravarValor SESSAO_EMAIL, "Conta", txtEmail.Text
     nfe.ConfigGravarValor SESSAO_EMAIL, "Usuario", txtUsuario.Text
     nfe.ConfigGravarValor SESSAO_EMAIL, "Senha", txtSenha.Text
     nfe.ConfigGravarValor SESSAO_EMAIL, "Servidor", txtHost.Text
-    nfe.ConfigGravarValor SESSAO_EMAIL, "Porta", CStr(txtnudPorta.Text)
-    nfe.ConfigGravarValor SESSAO_EMAIL, "SSL", CStr(ckbSSL.Value)
-    nfe.ConfigGravarValor SESSAO_EMAIL, "TLS", CStr(ckbTLS.Value)
+    nfe.ConfigGravarValor SESSAO_EMAIL, "Porta", CStr(nudEmailPorta.Value)
+    nfe.ConfigGravarValor SESSAO_EMAIL, "SSL", CStr(chkSSL.Value)
+    nfe.ConfigGravarValor SESSAO_EMAIL, "TLS", CStr(chkTLS.Value)
+    
     nfe.ConfigGravar
+
 End Sub

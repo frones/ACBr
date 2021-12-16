@@ -2172,12 +2172,13 @@ var
   ANode, AuxNode: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
 
-  procedure LocalizarNFSeRetorno(const RootNode: TACBrXmlNode);
+  function LocalizarNFSeRetorno(const RootNode: TACBrXmlNode): string;
   var
     ANode, AuxNode: TACBrXmlNode;
     NumNFSe: String;
     ANota: NotaFiscal;
   begin
+    Result := '';
     ANode := RootNode.Childrens.FindAnyNs('CompNfse');
 
     if not Assigned(ANode) then
@@ -2207,6 +2208,7 @@ var
       end;
 
       SalvarXmlNfse(ANota);
+      Result := NumNFSe;
     end;
   end;
 
@@ -2252,7 +2254,7 @@ begin
       end
       else
       begin
-        LocalizarNFSeRetorno(AuxNode);
+        Response.NumNotaSubstituida := LocalizarNFSeRetorno(AuxNode);
         {
         ANode := ANode.Childrens.FindAnyNs('CompNfse');
         if not Assigned(ANode) then
@@ -2297,7 +2299,7 @@ begin
       end
       else
       begin
-        LocalizarNFSeRetorno(AuxNode);
+        Response.NumNotaSubstituidora := LocalizarNFSeRetorno(AuxNode);
         {
         ANode := ANode.Childrens.FindAnyNs('CompNfse');
         if not Assigned(ANode) then

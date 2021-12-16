@@ -287,6 +287,8 @@ type
     FTipo: string;
     FCodVerificacao: string;
     FPedCanc: string;
+    FNumNotaSubstituida: string;
+    FNumNotaSubstituidora: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -298,6 +300,8 @@ type
     property Tipo: string read FTipo write FTipo;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property PedCanc: string read FPedCanc write FPedCanc;
+    property NumNotaSubstituida: string read FNumNotaSubstituida write FNumNotaSubstituida;
+    property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
   end;
 
   TNFSeAbreSessaoResponse = class(TNFSeWebserviceResponse)

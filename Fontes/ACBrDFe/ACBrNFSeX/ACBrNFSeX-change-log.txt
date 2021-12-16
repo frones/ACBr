@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 16/12/2021
+-- ACBrNFSeXWebservicesResponse/ACBrNFSeXProviderABRASFv2 --
+[+] Criado os campos NumNotaSubstituida e NumNotaSubstituidora, 
+    para serem usados no retorno do serviço SubstituirNfse.
+   Por: Italo Giurizzato Junior
 -- Equiplano.Provider --
 [*] Melhoria no código de alguns Tratamentos de Retornos.
    Por: Italo Giurizzato Junior

@@ -424,23 +424,34 @@ end;
 { TMetodoImprimir }
 
 { Params: 0 - PrintName = Nome da Impressora
+          1 - Preview = Boolean Mostrar em tela
 }
 procedure TMetodoImprimir.Executar;
 var
   AName: String;
+  APreview: Boolean;
+  AState: Boolean;
 begin
+
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
     AName := fpCmd.Params(0);
+    APreview := StrToBoolDef( fpCmd.Params(1), False );
 
     if NaoEstaVazio(AName) then
       ACBrBoleto.ACBrBoletoFC.PrinterName := AName;
+
+    AState := ACBrBoleto.ACBrBoletoFC.MostrarPreview;
+
+    if APreview then
+      ACBrBoleto.ACBrBoletoFC.MostrarPreview := APreview;
 
     try
       DoAntesDeImprimir(ACBrBoleto.ACBrBoletoFC.MostrarPreview);
       ACBrBoleto.Imprimir;
     finally
       DoDepoisDeImprimir;
+      ACBrBoleto.ACBrBoletoFC.MostrarPreview := AState;
     end;
 
   end;
@@ -838,22 +849,31 @@ end;
 
 { Params: 0 - Indice do Título a ser impresso
           1 - PrintName = Nome da Impressora
+          2 - Preview = Boolean Mostrar em tela
 }
 procedure TMetodoImprimirBoleto.Executar;
 var
   AIndice: Integer;
   AName: String;
+  APreview: Boolean;
+  AState: Boolean;
 begin
   with TACBrObjetoBoleto(fpObjetoDono) do
   begin
     AIndice := StrToIntDef(fpCmd.Params(0),0);
     AName := fpCmd.Params(1);
+    APreview := StrToBoolDef(fpCmd.Params(2),False);
 
     if NaoEstaVazio(AName) then
       ACBrBoleto.ACBrBoletoFC.PrinterName := AName;
 
+    AState := ACBrBoleto.ACBrBoletoFC.MostrarPreview;
+
+    if APreview then
+      ACBrBoleto.ACBrBoletoFC.MostrarPreview := APreview;
+
     try
-      DoAntesDeImprimir(ACBrBoleto.ACBrBoletoFC.MostrarPreview);
+      DoAntesDeImprimir( ACBrBoleto.ACBrBoletoFC.MostrarPreview );
       try
         ACBrBoleto.ListadeBoletos[AIndice].Imprimir();
       Except
@@ -861,6 +881,7 @@ begin
       end;
     finally
       DoDepoisDeImprimir;
+      ACBrBoleto.ACBrBoletoFC.MostrarPreview := AState;
     end;
 
   end;

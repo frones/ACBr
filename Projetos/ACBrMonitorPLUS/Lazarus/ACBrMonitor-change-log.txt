@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2021
+--- DoACBrBoletoUnit ---
+[*] Adicionado parametros de Impressora e preview no método de impressão nos métodos de Impressão.
+
 25/11/2021
 --- ACBrMonior1 ---
 [*] Ajuste em tela na leitura dos dados TipoPessoa no ACBrBoleto 

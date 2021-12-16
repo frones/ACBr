@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 16/12/2021
+-- Diversos --
+[*] Ajustes para utilizar a leitura de atributos no tratamento do pedido de
+    cancelamento.
+   Por: Italo Giurizzato Junior
 -- SigISS.GravarXml --
 [*] Alterado o numero de ocorrências da tag <Aliquota_simples> para zero.
    Por: Thiago Ribeiro da Silva

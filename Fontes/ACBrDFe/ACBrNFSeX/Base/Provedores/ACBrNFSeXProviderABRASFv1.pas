@@ -1371,7 +1371,8 @@ begin
 
       ANode := ANode.Childrens.FindAnyNs('Pedido');
       ANode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
-//      Ret.Pedido.InfID.ID := ANode.Attributes.Items[IdAttr].Content;
+
+      Ret.Pedido.InfID.ID := ProcessarConteudoXml(ANode.Attributes.Items[IdAttr]);
       Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');

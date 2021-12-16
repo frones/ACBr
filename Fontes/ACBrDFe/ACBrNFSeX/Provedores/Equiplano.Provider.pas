@@ -328,6 +328,17 @@ begin
           Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('protocolo'), tcStr);
         end;
       end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('protocolo');
+
+      if AuxNode <> nil then
+      begin
+        with Response do
+        begin
+          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dtRecebimento'), tcDatHor);
+          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
+        end;
+      end;
     except
       on E:Exception do
       begin

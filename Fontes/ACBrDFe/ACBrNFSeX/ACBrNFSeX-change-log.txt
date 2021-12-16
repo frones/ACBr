@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/12/2021
+-- Equiplano.Provider --
+[*] Possível correção para o problema da leitura do numero do protocolo.
+   Por: Italo Giurizzato Junior
+
 15/12/2021
 -- Tecnos.Provider --
 [*] Ajustes na lista de tags usadas ao tratar o retorno do consultar lote.

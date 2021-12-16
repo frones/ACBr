@@ -86,7 +86,8 @@ implementation
 uses
   {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
   StrUtils,
-  ACBrUtil;
+  ACBrUtil,
+  ACBrValidador;
 
 { TACBrBancoSicredi }
 
@@ -652,15 +653,12 @@ begin
 
     if Copy(rCNPJCPF,1,10) <> '0000000000' then
     begin
-
-      if Copy(rCNPJCPF,1,3)= '000' then 
+      if ValidarCNPJ(rCNPJCPF) <> '' then
       begin
         rCNPJCPF := Copy(rCNPJCPF,4,11);
         Cedente.TipoInscricao := pFisica;
       end;
-
       Cedente.CNPJCPF := rCNPJCPF;
-
     end;
 
     Cedente.CodigoCedente:= rCodCedente;
@@ -669,7 +667,6 @@ begin
     Cedente.Conta        := rConta;
     Cedente.ContaDigito  := rDigitoConta;
 
-    Cedente.TipoInscricao:= pJuridica;
     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
   end;
 

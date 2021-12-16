@@ -1302,6 +1302,7 @@ const
   CKeyBOLETOLerCedenteRetorno =             'LerCedenteRetorno';
   CKeyBOLETOMostraPreviewRelRetorno =       'MostraPreviewRelRetorno';
   CKeyBOLETORemoveAcentos =                 'RemoveAcentos';
+  CKeyBoletoPrefixArqRemessa =              'PrefixArqRemessa';
   CKeyBOLETOLogoEmpresa =                   'LogoEmpresa';
   CKeyBOLETOEmailAssuntoBoleto =            'EmailAssuntoBoleto';
   CKeyBOLETOEmailMensagemBoleto =           'EmailMensagemBoleto';

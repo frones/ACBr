@@ -637,6 +637,7 @@ type
     LerCedenteRetorno          : Boolean;
     CodTransmissao             : String ;
     RemoveAcentos              : Boolean;
+    PrefixArqRemessa           : String;
   end;
 
   TBoletoRelatorio = record
@@ -1436,6 +1437,7 @@ begin
       Ini.WriteBool(   CSecBOLETO, CKeyBOLETOLerCedenteRetorno, LerCedenteRetorno      );
       ini.WriteString( CSecBOLETO, CKeyBOLETOCodTransmissao,CodTransmissao);
       Ini.WriteBool(   CSecBOLETO, CKeyBOLETORemoveAcentos, RemoveAcentos      );
+      ini.WriteString( CSecBOLETO, CKeyBoletoPrefixArqRemessa, PrefixArqRemessa );
     end;
 
     with BOLETO.Relatorio do
@@ -2172,6 +2174,7 @@ begin
       LerCedenteRetorno      :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETOLerCedenteRetorno,  LerCedenteRetorno      );
       CodTransmissao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodTransmissao,     ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCodTransmissao,'') );
       RemoveAcentos          :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETORemoveAcentos,      RemoveAcentos      );
+      PrefixArqRemessa       :=  Ini.ReadString( CSecBOLETO, CKeyBoletoPrefixArqRemessa,   PrefixArqRemessa );
     end;
 
     with BOLETO.Relatorio do
@@ -2873,6 +2876,7 @@ begin
     LerCedenteRetorno      :=  False;
     CodTransmissao         :=  '';
     RemoveAcentos          :=  False;
+    PrefixArqRemessa       := '';
   end;
 
   with BOLETO.Relatorio do

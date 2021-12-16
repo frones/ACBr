@@ -557,6 +557,7 @@ type
     edTCArqPrecos: TEdit;
     edtClientID: TEdit;
     edtClientSecret: TEdit;
+    edtPrefixRemessa: TEdit;
     edtKeyUser: TEdit;
     edTCNaoEncontrado: TEdit;
     edtCNPJContador: TEdit;
@@ -767,6 +768,7 @@ type
     Label109: TLabel;
     Label114: TLabel;
     Label118: TLabel;
+    lblPrefixRemessa: TLabel;
     Label255: TLabel;
     Label256: TLabel;
     Label257: TLabel;
@@ -3034,6 +3036,8 @@ begin
 
 
   AddLinesLog(AMsg);
+  if NaoEstaVazio(AMsg) then
+    MessageDlg('Rastrear', AMsg, mtInformation, [mbOK], 0);
 
 end;
 
@@ -3081,8 +3085,11 @@ begin
               'MsgErro: '+retMsgErro;
 
       end;
+
     finally
       AddLinesLog(AMsg);
+      if NaoEstaVazio(AMsg) then
+        MessageDlg('Consultar', AMsg, mtInformation, [mbOK], 0);
     end;
 
   end;
@@ -3092,12 +3099,16 @@ end;
 procedure TFrmACBrMonitor.btAtivarsatClick(Sender: TObject);
 var
   ACNPJ: String;
+  AResult: String;
 begin
   ACNPJ := OnlyNumber(edtEmitCNPJ.Text);
   if ACNPJ = '' then
     raise Exception.Create('CNPJ inválido. Configure a aba "Dados Emitente"');
 
-  ACBrSAT1.AtivarSAT(1, ACNPJ, StrToInt(edtCodUF.Text) );
+  AResult:= ACBrSAT1.AtivarSAT(1, ACNPJ, StrToInt(edtCodUF.Text) );
+  if NaoEstaVazio(AResult) then
+    MessageDlg('Ativar SAT', AResult, mtInformation, [mbOK], 0);
+
 end;
 
 procedure TFrmACBrMonitor.btCertInfoClick(Sender: TObject);
@@ -3124,31 +3135,43 @@ begin
 end;
 
 procedure TFrmACBrMonitor.btConsultarStatusOPSATClick(Sender: TObject);
+var
+  SL: TStringList;
 begin
   ACBrSAT1.ConsultarStatusOperacional;
+  SL := TStringList.Create;
+  try
+    with ACBrSAT1.Status do
+    begin
+      SL.Add('NSERIE.........: '+NSERIE);
+      SL.Add('LAN_MAC........: '+LAN_MAC);
+      SL.Add('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
+      SL.Add('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
+      SL.Add('MT_TOTAL.......: '+MT_TOTAL);
+      SL.Add('MT_USADA.......: '+MT_USADA);
+      SL.Add('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
+      SL.Add('VER_SB.........: '+VER_SB);
+      SL.Add('VER_LAYOUT.....: '+VER_LAYOUT);
+      SL.Add('ULTIMO_CFe.....: '+ULTIMO_CFe);
+      SL.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
+      SL.Add('LISTA_FINAL....: '+LISTA_FINAL);
+      SL.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
+      SL.Add('DH_ULTIMA......: '+DateTimeToStr(DH_ULTIMA));
+      SL.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
+      SL.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
+      SL.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
 
-  with ACBrSAT1.Status do
-  begin
-    AddLinesLog('NSERIE.........: '+NSERIE);
-    AddLinesLog('LAN_MAC........: '+LAN_MAC);
-    AddLinesLog('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
-    AddLinesLog('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
-    AddLinesLog('MT_TOTAL.......: '+MT_TOTAL);
-    AddLinesLog('MT_USADA.......: '+MT_USADA);
-    AddLinesLog('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
-    AddLinesLog('VER_SB.........: '+VER_SB);
-    AddLinesLog('VER_LAYOUT.....: '+VER_LAYOUT);
-    AddLinesLog('ULTIMO_CFe.....: '+ULTIMO_CFe);
-    AddLinesLog('LISTA_INICIAL..: '+LISTA_INICIAL);
-    AddLinesLog('LISTA_FINAL....: '+LISTA_FINAL);
-    AddLinesLog('DH_CFe.........: '+DateTimeToStr(DH_CFe));
-    AddLinesLog('DH_ULTIMA......: '+DateTimeToStr(DH_ULTIMA));
-    AddLinesLog('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
-    AddLinesLog('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
-    AddLinesLog('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
+      AddLinesLog(SL.Text);
+
+      MessageDlg('Consultar Status Operacional', SL.Text, mtInformation, [mbOK], 0);
+    end;
+
+    LeDadosRedeSAT;
+
+  finally
+    SL.Free;
   end;
 
-  LeDadosRedeSAT;
 end;
 
 procedure TFrmACBrMonitor.btnBalancaClick(Sender: TObject);
@@ -4065,15 +4088,28 @@ begin
 end;
 
 procedure TFrmACBrMonitor.btSATAssociaClick(Sender: TObject);
+var
+  Result: String;
 begin
-  ACBrSAT1.AssociarAssinatura( edtSwHCNPJ.Text + edtEmitCNPJ.Text, edtSwHAssinatura.Text );
+  Result := ACBrSAT1.AssociarAssinatura( edtSwHCNPJ.Text + edtEmitCNPJ.Text, edtSwHAssinatura.Text );
+  if NaoEstaVazio(Result) then
+    MessageDlg('Associar Assinatura', Result, mtInformation, [mbOK], 0);
+
 end;
 
 procedure TFrmACBrMonitor.btSATConfigRedeClick(Sender: TObject);
+var
+  Result : String;
 begin
   ConfiguraRedeSAT;
 
-  AddLinesLog(ACBrSAT1.ConfigurarInterfaceDeRede(ACBrSAT1.Rede.AsXMLString));
+  Result := ACBrSAT1.ConfigurarInterfaceDeRede(ACBrSAT1.Rede.AsXMLString);
+  if NaoEstaVazio(Result) then
+  begin
+    AddLinesLog(Result);
+    MessageDlg('Configurar Interface de Rede', Result, mtInformation, [mbOK], 0);
+  end;
+
 end;
 
 procedure TFrmACBrMonitor.btStatusServicoClick(Sender: TObject);
@@ -5439,6 +5475,7 @@ begin
       cbxCNAB.ItemIndex                := StrToInt(IfThen(CNAB = 0, '1', '0'));
       chkLerCedenteRetorno.Checked     := LerCedenteRetorno;
       chkRemoveAcentos.Checked         := RemoveAcentos;
+      edtPrefixRemessa.Text            := PrefixArqRemessa;
     end;
 
     with Layout do
@@ -6323,6 +6360,7 @@ begin
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
     LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
     RemoveAcentosArqRemessa:= chkRemoveAcentos.Checked;
+    PrefixArqRemessa:= edtPrefixRemessa.Text;
 
     MAIL := ACBrMail1;
 
@@ -7254,6 +7292,7 @@ begin
        LerCedenteRetorno        := chkLerCedenteRetorno.Checked;
        CodTransmissao           := edtCodTransmissao.Text;
        RemoveAcentos            := chkRemoveAcentos.Checked;
+       PrefixArqRemessa         := edtPrefixRemessa.Text;
      end;
 
      with Email do
@@ -10363,6 +10402,7 @@ begin
     begin
       ACBrBAL1.Desativar;
       AddLinesLog('BAL -> Balança não responde!');
+      MessageDlg('Balança', 'BAL -> Balança não responde!', mtInformation, [mbOK], 0);
     end;
   end
   else
@@ -10373,12 +10413,22 @@ end;
 
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.bBALTestarClick(Sender: TObject);
+var
+  AResult: String;
 begin
   ACBrBAL1.LePeso;
   if ACBrBAL1.UltimaResposta <> '' then
-    AddLinesLog(Format('BAL -> Peso Lido: %f', [ACBrBAL1.UltimoPesoLido]))
+  begin
+    AResult:= Format('BAL -> Peso Lido: %f', [ACBrBAL1.UltimoPesoLido]);
+    AddLinesLog(AResult);
+    MessageDlg('Balança', AResult, mtInformation, [mbOK], 0);
+  end
   else
-    AddLinesLog('BAL -> Timeout');
+  begin
+    AResult:= 'BAL -> Timeout';
+    AddLinesLog(AResult);
+    MessageDlg('Balança', AResult, mtInformation, [mbOK], 0);
+  end;
 end;
 
 procedure TFrmACBrMonitor.cbETQModeloChange(Sender: TObject);
@@ -10422,6 +10472,8 @@ end;
 
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.bTCAtivarClick(Sender: TObject);
+var
+  AMsg: String;
 begin
   if not TCPServerTC.Ativo then
     TCPServerTC.Port := edTCPort.Text;
@@ -10435,8 +10487,10 @@ begin
 
   AvaliaEstadoTsTC;
 
-  AddLinesLog('Servidor de Terminal de Consulta: ' + IfThen(
-    TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO'));
+  AMsg:= 'Servidor de Terminal de Consulta: ' + IfThen(TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO');
+  AddLinesLog(AMsg);
+  MessageDlg('Terminal de Consulta', AMsg, mtInformation, [mbOK], 0);
+
 end;
 
 procedure TFrmACBrMonitor.tsSatShow(Sender: TObject);

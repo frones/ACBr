@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2021
+-- ACBrXmlBase --
+[+] Implementado a leitura de atributos em um XML.
+  Por: Italo Giurizzato Junior
+
 08/12/2021
 -- ACBrXmlBase --
 [*] Possível correção para o AV que ocorria ao ler uma tag numérica ausente no XML.

@@ -72,7 +72,8 @@ function TratarXmlRetorno(const aXML: string): string;
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 function RemoverPrefixosDesnecessarios(const aXML: string): string;
 
-function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
+function ProcessarConteudoXml(const AAtt: TACBrXmlAttribute): string; overload;
+function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
 
 function LerDatas(const DataStr: string): TDateTime;
 //procedure ApplyNamespacePrefix(const ANode: TACBrXmlNode; nsPrefix: string; excludeElements: array of string);
@@ -225,6 +226,14 @@ function RemoverPrefixosDesnecessarios(const aXML: string): string;
 begin
   Result := RemoverPrefixos(aXML, ['ns1:', 'ns2:', 'ns3:', 'ns4:', 'ns5:', 'tc:',
               'ii:', 'p1:']);
+end;
+
+function ProcessarConteudoXml(const AAtt: TACBrXmlAttribute): string; overload;
+begin
+  if not Assigned(AAtt) or (AAtt = nil) then
+    Result := ''
+  else
+    Result := Trim(AAtt.Content);
 end;
 
 function ProcessarConteudoXml(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;

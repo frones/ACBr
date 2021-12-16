@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/12/2021
+-- SigISS.GravarXml --
+[*] Alterado o numero de ocorrências da tag <Aliquota_simples> para zero.
+   Por: Thiago Ribeiro da Silva
 -- Tecnos.Provider --
 [*] Prossível correção para a assinatura inválida no pedido de cancelamento.
    Por: Italo Giurizzato Junior

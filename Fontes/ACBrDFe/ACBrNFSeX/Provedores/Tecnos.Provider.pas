@@ -182,7 +182,6 @@ begin
     GerarNFSe := 'GeracaoNFSe.xsd';
     RecepcionarSincrono := 'EnviarLoteRpsSincronoEnvio.xsd';
     SubstituirNFSe := 'SubstituicaoNFSe.xsd';
-//    Validar := False;
   end;
 end;
 
@@ -250,7 +249,7 @@ begin
   begin
     Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo2 + 'Pedido>' +
-                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr {+ NameSpace2} + '>' +
+                             '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + '>' +
                                '<' + Prefixo2 + 'IdentificacaoNfse>' +
                                  '<' + Prefixo2 + 'Numero>' +
                                     InfoCanc.NumeroNFSe +
@@ -316,7 +315,7 @@ begin
     end
     else
     begin
-      Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
       Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
       if (Codigo <> 'A0000') and (Mensagem <> '') then

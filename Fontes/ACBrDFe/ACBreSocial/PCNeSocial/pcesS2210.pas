@@ -57,7 +57,7 @@ uses
   {$IfEnd}
   ACBrBase,
   pcnConversao, pcnGerador, ACBrUtil, pcnConsts,
-  pcesCommon, pcesConversaoeSocial, pcesGerador;
+  pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
   TS2210CollectionItem = class;
@@ -112,6 +112,7 @@ type
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
+    function LerXML : Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
@@ -119,7 +120,7 @@ type
     property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
     property Cat: TCat read FCat write FCat;
   end;
-          
+
   TCat = class(TObject)
   private
     FdtAcid: TDateTime;
@@ -768,6 +769,144 @@ begin
     XML := FXML;
   finally
     INIRec.Free;
+  end;
+end;
+
+
+function TEvtCAT.LerXML: Boolean;
+var
+  Leitor: TLeitor;
+  ok: boolean;
+  i: integer;
+begin
+  Result := False;
+  try
+    Leitor := TLeitor.Create;
+    Leitor.Arquivo := XML;
+
+    if Leitor.rExtrai(1, 'evtCAT') <> '' then
+    begin
+      if Leitor.rExtrai(2, 'ideEvento') <> '' then
+        with Self.ideEvento do
+        begin
+          indRetif := eSStrToIndRetificacao(ok, leitor.rCampo(tcStr, 'indRetif'));
+          nrRecibo := Leitor.rCampo(tcStr,'nrRecibo');
+          procEmi  := eSStrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
+          verProc  := Leitor.rCampo(tcStr, 'verProc');
+        end;
+
+      if Leitor.rExtrai(2, 'ideEmpregador') <> '' then
+        with Self.ideEmpregador do
+        begin
+          tpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
+          nrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+        end;
+
+      if Leitor.rExtrai(2, 'ideVinculo') <> '' then
+        with Self.ideVinculo do
+        begin
+          cpfTrab   := Leitor.rCampo(tcStr, 'cpfTrab');
+          matricula := Leitor.rCampo(tcStr, 'matricula');
+          codCateg  := Leitor.rCampo(tcInt, 'codCateg');
+        end;
+
+      if Leitor.rExtrai(2, 'cat') <> '' then
+      begin
+        with Self.cat do
+        begin
+          dtAcid           := Leitor.rCampo(tcDat, 'dtAcid');
+          tpAcid           := Leitor.rCampo(tcStr, 'tpAcid');
+          hrAcid           := Leitor.rCampo(tcStr, 'hrAcid');
+          hrsTrabAntesAcid := Leitor.rCampo(tcStr, 'hrsTrabAntesAcid');
+          tpCat            := eSStrToTpCat(ok, Leitor.rCampo(tcStr, 'tpCat'));
+          indCatObito      := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'indCatObito'));
+          dtObito          := Leitor.rCampo(tcDat, 'dtObito');
+          indComunPolicia  := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'indComunPolicia'));
+          CodSitGeradora   := Leitor.rCampo(tcInt, 'codSitGeradora');
+          iniciatCAT       := eSStrToIniciatCAT(ok, Leitor.rCampo(tcStr, 'iniciatCAT'));
+          obsCAT           := Leitor.rCampo(tcStr, 'obsCAT');
+
+          if Leitor.rExtrai(3, 'localAcidente') <> '' then
+          begin
+            with localAcidente do
+            begin
+              tpLocal     := eSStrToTpLocal(ok, Leitor.rCampo(tcInt, 'tpLocal'));
+              dscLocal    := Leitor.rCampo(tcStr, 'dscLocal');
+              tpLograd    := Leitor.rCampo(tcStr, 'tpLograd');
+              dscLograd   := Leitor.rCampo(tcStr, 'dscLograd');
+              nrLograd    := Leitor.rCampo(tcStr, 'nrLograd');
+              complemento := Leitor.rCampo(tcStr, 'complemento');
+              bairro      := Leitor.rCampo(tcStr, 'bairro');
+              cep         := Leitor.rCampo(tcStr, 'cep');
+              codMunic    := Leitor.rCampo(tcInt, 'codMunic');
+              uf          := Leitor.rCampo(tcStr, 'uf');
+              pais        := Leitor.rCampo(tcStr, 'pais');
+              codPostal   := Leitor.rCampo(tcStr, 'codPostal');
+
+              if Leitor.rExtrai(4, 'ideLocalAcid') <> '' then
+                with ideLocalAcid do
+                begin
+                  tpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
+                  nrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+                end;
+            end;
+          end;
+
+          i := 0;
+          while Leitor.rExtrai(3, 'parteAtingida', '', i + 1) <> '' do
+          begin
+            with parteAtingida.New do
+            begin
+              codParteAting := Leitor.rCampo(tcInt, 'codParteAting');
+              lateralidade  := eSStrToLateralidade(ok, Leitor.rCampo(tcStr, 'lateralidade'));
+            end;
+
+            Inc(i);
+          end;
+
+          i := 0;
+          while Leitor.rExtrai(3, 'agenteCausador', '', i + 1) <> '' do
+          begin
+            with agenteCausador.New do
+              codAgntCausador := Leitor.rCampo(tcInt, 'codAgntCausador');
+
+            Inc(i);
+          end;
+
+          if Leitor.rExtrai(3, 'atestado') <> '' then
+            with atestado do
+            begin
+              dtAtendimento := Leitor.rCampo(tcDat, 'dtAtendimento');
+              hrAtendimento := Leitor.rCampo(tcStr, 'hrAtendimento');
+              indInternacao := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'indInternacao'));
+              durTrat       := Leitor.rCampo(tcInt, 'durTrat');
+              indAfast      := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'indAfast'));
+              dscLesao      := Leitor.rCampo(tcInt, 'dscLesao');
+              dscCompLesao  := Leitor.rCampo(tcStr, 'dscCompLesao');
+              diagProvavel  := Leitor.rCampo(tcStr, 'diagProvavel');
+              codCID        := Leitor.rCampo(tcStr, 'codCID');
+              observacao    := Leitor.rCampo(tcStr, 'observacao');
+
+              if Leitor.rExtrai(4, 'emitente') <> '' then
+                with emitente do
+                begin
+                  nmEmit := Leitor.rCampo(tcStr, 'nmEmit');
+                  ideOC  := eSStrToIdeOC(ok, Leitor.rCampo(tcStr, 'ideOC'));
+                  nrOC   := Leitor.rCampo(tcStr, 'nrOC');
+                  ufOC   := Leitor.rCampo(tcStr, 'ufOC');
+                end;
+          end;
+
+          if Leitor.rExtrai(3, 'catOrigem') <> '' then
+            with catOrigem do
+              nrRecCatOrig := Leitor.rCampo(tcStr, 'nrRecCatOrig');
+        end;
+      end;
+
+      Result := True;
+    end;
+  finally
+    Leitor.Free;
   end;
 end;
 

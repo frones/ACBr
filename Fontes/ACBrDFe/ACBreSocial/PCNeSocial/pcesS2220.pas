@@ -57,7 +57,7 @@ uses
   {$IfEnd}
   ACBrBase,
   pcnConversao, pcnGerador, ACBrUtil, pcnConsts,
-  pcesCommon, pcesConversaoeSocial, pcesGerador;
+  pcesCommon, pcesConversaoeSocial, pcesGerador, pcnLeitor;
 
 type
   TS2220CollectionItem = class;
@@ -108,6 +108,7 @@ type
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
+    function LerXML : Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
@@ -163,7 +164,7 @@ type
     FObsProc: string;
     FOrdExame: tpOrdExame;
     FIndResult: tpIndResult;
-  public      
+  public
     property DtExm: TDateTime read FDtExm write FDtExm;
     property ProcRealizado: string read FProcRealizado write FProcRealizado;
     property obsProc: string read FObsProc write FObsProc;
@@ -518,6 +519,99 @@ begin
   FAso.Free;
   FRespMonit.Free;
   inherited;
+end;
+
+function TevtMonit.LerXML: Boolean;
+var
+  Leitor: TLeitor;
+  ok: Boolean;
+  i: integer;
+begin
+  Result := False;
+  try
+    Leitor := TLeitor.Create;
+    Leitor.Arquivo := XML;
+
+    if Leitor.rExtrai(1, 'evtMonit') <> '' then
+    begin
+      if Leitor.rExtrai(2, 'ideEvento') <> '' then
+        with Self.ideEvento do
+        begin
+          indRetif := eSStrToIndRetificacao(ok, leitor.rCampo(tcStr, 'indRetif'));
+          nrRecibo := Leitor.rCampo(tcStr,'nrRecibo');
+          procEmi  := eSStrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
+          verProc  := Leitor.rCampo(tcStr, 'verProc');
+        end;
+
+      if Leitor.rExtrai(2, 'ideEmpregador') <> '' then
+        with Self.ideEmpregador do
+        begin
+          tpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
+          nrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+        end;
+
+      if Leitor.rExtrai(2, 'ideVinculo') <> '' then
+        with Self.ideVinculo do
+        begin
+          cpfTrab   := Leitor.rCampo(tcStr, 'cpfTrab');
+          matricula := Leitor.rCampo(tcStr, 'matricula');
+          codCateg  := Leitor.rCampo(tcInt, 'codCateg');
+        end;
+
+      if Leitor.rExtrai(2, 'exMedOcup') <> '' then
+      begin
+        with Self.exMedOcup do
+        begin
+          tpExameOcup := eSStrToTpExameOcup(ok, Leitor.rCampo(tcStr, 'tpExameOcup'));
+
+          if Leitor.rExtrai(3, 'aso') <> '' then
+          begin
+            with aso do
+            begin
+              dtAso  := Leitor.rCampo(tcDat, 'dtAso');
+              resAso := eSStrToResAso(ok, Leitor.rCampo(tcStr, 'resAso'));
+
+              i := 0;
+              while Leitor.rExtrai(4, 'exame', '', i + 1) <> '' do
+              begin
+                with exame.New do
+                begin
+                  dtExm         := Leitor.rCampo(tcDat, 'dtExm');
+                  procRealizado := Leitor.rCampo(tcStr, 'procRealizado');
+                  obsProc       := Leitor.rCampo(tcStr, 'obsProc');
+                  ordExame      := eSStrToOrdExame(ok, Leitor.rCampo(tcStr, 'ordExame'));
+                  indResult     := eSStrToIndResult(ok, Leitor.rCampo(tcStr, 'indResult'));
+                end;
+
+                Inc(i);
+              end;
+
+              if Leitor.rExtrai(4, 'medico') <> '' then
+                with medico do
+                begin
+                  nmMed := Leitor.rCampo(tcStr, 'nmMed');
+                  nrCRM := Leitor.rCampo(tcStr, 'nrCRM');
+                  ufCRM := Leitor.rCampo(tcStr, 'ufCRM');
+                end;
+            end;
+          end;
+
+          if Leitor.rExtrai(3, 'respMonit') <> '' then
+            with respMonit do
+            begin
+              cpfResp := Leitor.rCampo(tcStr, 'cpfResp');
+              nmResp  := Leitor.rCampo(tcStr, 'nmResp');
+              nrCRM   := Leitor.rCampo(tcStr, 'nrCRM');
+              ufCRM   := Leitor.rCampo(tcStr, 'ufCRM');
+            end;
+        end;
+      end;
+
+      Result := True;
+    end;
+  finally
+    Leitor.Free;
+  end;
 end;
 
 end.

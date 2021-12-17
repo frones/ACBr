@@ -52,10 +52,10 @@ interface
 uses
   SysUtils, Classes, synautil,
   ACBrUtil, pcesConversaoeSocial,
-  pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2231, 
-  pcesS2240, pcesS2221, pcesS2205, pcesS2206, pcesS2210, 
-  pcesS2250, pcesS2260, pcesS2298, pcesS2299, pcesS2300, 
-  pcesS2306, pcesS2399, pcesS2400, pcesS3000, pcesS2245, 
+  pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2231,
+  pcesS2240, pcesS2221, pcesS2205, pcesS2206, pcesS2210,
+  pcesS2250, pcesS2260, pcesS2298, pcesS2299, pcesS2300,
+  pcesS2306, pcesS2399, pcesS2400, pcesS3000, pcesS2245,
   pcesS2405, pcesS2410, pcesS2416, pcesS2418, pcesS2420;
 
 type
@@ -544,7 +544,7 @@ begin
 
   for I := 0 to Self.S2420.Count - 1 do
     Self.S2420.Items[i].EvtCdBenTerm.Validar(schevtCdBenTerm);
-    
+
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.Validar(schevtExclusao);
 end;
@@ -700,7 +700,7 @@ begin
       XML := Self.S2231.Items[i].EvtCessao.XML;
     end;
   end;
-  
+
   for I := 0 to Self.S2240.Count - 1 do
   begin
     PathName := Path + OnlyNumber(Self.S2240.Items[i].EvtExpRisco.Id) + '-' +
@@ -1092,12 +1092,33 @@ begin
     teS2200: Self.S2200.New.EvtAdmissao.XML := AXMLString;
     teS2205: Self.S2205.New.EvtAltCadastral.XML := AXMLString;
     teS2206: Self.S2206.New.EvtAltContratual.XML := AXMLString;
-    teS2210: Self.S2210.New.EvtCAT.XML := AXMLString;
-    teS2220: Self.S2220.New.evtMonit.XML := AXMLString;
-    teS2221: Self.S2221.New.evtToxic.XML := AXMLString;
+    teS2210:
+    begin
+      with Self.S2210.New do
+      begin
+        EvtCAT.XML := AXMLString;
+        EvtCAT.LerXML;
+      end;
+    end;
+    teS2220:
+    begin
+      with Self.S2220.New do
+      begin
+        EvtMonit.XML := AXMLString;
+        EvtMonit.LerXML;
+      end;
+    end;
+    teS2221: Self.S2221.New.EvtToxic.XML := AXMLString;
     teS2230: Self.S2230.New.EvtAfastTemp.XML := AXMLString;
     teS2231: Self.S2231.New.EvtCessao.XML := AXMLString;
-    teS2240: Self.S2240.New.EvtExpRisco.XML := AXMLString;
+    teS2240:
+    begin
+      with Self.S2240.New do
+      begin
+        EvtExpRisco.XML := AXMLString;
+        EvtExpRisco.LerXML;
+      end;
+    end;
     teS2245: Self.S2245.New.EvtTreiCap.XML := AXMLString;
     teS2250: Self.S2250.New.EvtAvPrevio.XML := AXMLString;
     teS2260: Self.S2260.New.EvtConvInterm.XML := AXMLString;

@@ -267,8 +267,8 @@ type
                              cicpContribuicaoDescontadadoSeguradoeBeneficiarioDecimo,
                              cicpSuspensaodeIncidenciaemDecorrenciadeDecisaoJudicial,
                              cicpNenhum);
-  
-  tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaojudicial);
+
+  tpCodIncFGTS            = (cdfNaoeBasedeCalculo, cdfBasedeCalculoFGTS, cdfBasedeCalculoFGTS13Sal, cdfBasedeCalculoFGTSRescisorio, cdfIncidenciadecisaoJudicialFGTSMensal, cdfIncidenciadecisaoJudicialFGTS13Sal, cdfIncidenciadecisaoJudicial);
 
   tpCodIncSIND            = (cisNaoebasedecalculo, cisBasedecalculo, cisValorlaboraldescontada, cisIncidenciasuspensajudicial);
 
@@ -1910,19 +1910,19 @@ end;
 function eSCodIncIRRFToStr(const t:tpCodIncIRRF ): string;
 begin
   result := EnumeradoToStr2(t,[    '00',   '01',   '09',   '11',   '12',   '13',   '14',   '15',   '31',   '32',   '33',
-                                   '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',  
+                                   '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',
                                    '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',
                                    '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',
-                                   '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013', 
+                                   '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013',
                                  '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041', '9042',
-                                 '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063', 
+                                 '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063',
                                  '9064', '9065', '9066', '9067', '9082', '9083'  ] );
 end;
 
 function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
 begin
   result := tpCodIncIRRF( StrToEnumerado2(ok , s,[    '00',   '01',   '09',   '11',   '12',   '13',   '14',   '15',   '31',   '32',   '33',
-                                                      '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52', 
+                                                      '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',
                                                       '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',   
                                                       '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',   
                                                       '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013',
@@ -1933,7 +1933,7 @@ end;
 
 function eSCodIncFGTSToStr(const t:tpCodIncFGTS ): string;
 begin
-  result := EnumeradoToStr2(t,[ '00', '11', '12', '21', '91' ] );
+  result := EnumeradoToStr2(t,[ '00', '11', '12', '21', '91', '92', '93' ] );
 end;
 
 function eSStrToCodIncFGTS(var ok: boolean; const s: string): tpCodIncFGTS;

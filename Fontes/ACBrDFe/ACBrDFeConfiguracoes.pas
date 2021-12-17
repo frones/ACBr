@@ -880,19 +880,20 @@ end;
 
 function TWebServicesConf.LerParamsIniServicos: AnsiString;
 var
-  SL: TStringList;
+  ArqIni: String;
+  FS: TFileStream;
 begin
   Result := '';
+  ArqIni := Trim(fpConfiguracoes.Arquivos.IniServicos);
 
-  if (fpConfiguracoes.Arquivos.IniServicos <> '') and
-    FileExists(fpConfiguracoes.Arquivos.IniServicos) then
+  if (ArqIni <> '') and FileExists(ArqIni) then
   begin
-    SL := TStringList.Create;
+    FS := TFileStream.Create(ArqIni, fmOpenRead or fmShareDenyNone);  // Thread Safe
     try
-      SL.LoadFromFile(fpConfiguracoes.Arquivos.IniServicos);
-      Result := SL.Text;
+      FS.Position := 0;
+      Result := ReadStrFromStream(FS, FS.Size);
     finally
-      SL.Free;
+      FS.Free;
     end;
   end;
 end;

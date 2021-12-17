@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2021
+-- ACBrDFeConfiguracoes --
+[*] Ajuste em "TWebServicesConf.LerParamsIniServicos", para ficar mais amigável
+    em ambientes Multi-Thread
+    (por: DSA)
+
 16/12/2021
 -- ACBrXmlBase --
 [+] Implementado a leitura de atributos em um XML.

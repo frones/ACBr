@@ -432,7 +432,7 @@ type
 
   tpUndSalFixo            = (sfPorHora, sfPorDia, sfPorSemana, sfPorQuinzena, sfPorMes, sfPorTarefa, sfNaoaplicavel);
 
-  tpTpContr               = (PrazoIndeterminado, PrazoDeterminado, PrazoDeterminadoVincOcDeUmFato);
+  tpTpContr               = (PrazoIndeterminado, PrazoDeterminado, PrazoDeterminadoVincOcDeUmFato, PrazoNaoAplicavel);
 
   tpTpJornada             = (tjJornadaComHorarioDiarioFolgaFixos,                      { Item válido até a versão 2.5 }
                              tjJornada12x36,

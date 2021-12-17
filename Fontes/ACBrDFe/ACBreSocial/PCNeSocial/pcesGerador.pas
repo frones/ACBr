@@ -496,9 +496,12 @@ begin
     Gerador.wCampo(tcStr, '', 'codCarreira', 0, 30,  0, pInfoContrato.codCarreira);
     Gerador.wCampo(tcDat, '', 'dtIngrCarr',  0, 10,  0, pInfoContrato.dtIngrCarr);
   end;
-  
-  GerarRemuneracao(pInfoContrato.Remuneracao);
-  GerarDuracao(pInfoContrato.Duracao, pTipo);
+
+  if (pInfoContrato.Remuneracao.vrSalFx > 0) or 
+     (pInfoContrato.Remuneracao.undSalFixo = sfNaoaplicavel) then
+    GerarRemuneracao(pInfoContrato.Remuneracao);
+  if pInfoContrato.Duracao.tpContr <> PrazoNaoAplicavel then
+    GerarDuracao(pInfoContrato.Duracao, pTipo);
   GerarLocalTrabalho(pInfoContrato.LocalTrabalho);
 
   //Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]

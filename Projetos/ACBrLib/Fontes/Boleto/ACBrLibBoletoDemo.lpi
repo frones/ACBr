@@ -497,22 +497,16 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
-      </Item3>
-      <Item4>
-        <PackageName Value="ACBr_Boleto"/>
-      </Item4>
-      <Item5>
         <PackageName Value="LCL"/>
-      </Item5>
+      </Item3>
     </RequiredPackages>
     <Units Count="13">
       <Unit0>

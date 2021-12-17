@@ -105,7 +105,10 @@ begin
     begin
       if Assigned(DANFeReport) then
         SelectedFilter := DANFeReport.RLPDFFilter1;
-      DANFeReport.RLEvento.Title := OnlyNumber(DANFeReport.fpNFe.InfNFe.Id);
+      if Assigned(DANFeReport.fpNFe) then
+      begin
+        DANFeReport.RLEvento.Title := OnlyNumber(DANFeReport.fpNFe.InfNFe.Id);
+      end;
       DANFeReport.RLEvento.PreviewModal
     end
     else

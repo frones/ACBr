@@ -235,8 +235,7 @@ begin
     a partir de 21/11/2021 }
 
   if (VersaoDF >= veS01_00_00) and
-     (Self.infoFech.transDCTFWeb = snfSim) and
-     (Self.ideEvento.indApuracao = iapuMensal) then
+     (Self.infoFech.transDCTFWeb = snfSim) then
     Gerador.wCampo(tcStr, '', 'transDCTFWeb', 1, 1, 1, eSSimNaoFacultativoToStr(self.infoFech.transDCTFWeb));
 
   Gerador.wGrupo('/infoFech');

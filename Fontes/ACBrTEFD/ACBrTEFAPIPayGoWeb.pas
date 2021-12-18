@@ -498,9 +498,6 @@ var
   Resp: TACBrTEFResp;
   PGWebStatus: LongWord;
 begin
- if (Rede = '') or (NSU = '') then
-    Exit;
-
   i := fpACBrTEFAPI.RespostasTEF.AcharTransacao(Rede, NSU, CodigoFinalizacao);
   if (i >= 0) then
     Resp := fpACBrTEFAPI.RespostasTEF[i]

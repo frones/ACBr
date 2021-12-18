@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/21
+-- ACBrTEFAPIPayGoWeb --
+[-] Ajuste em "TACBrTEFAPIClassPayGoWeb.FinalizarTransacao", para processar
+    transações onde o NSU não está presente.
+    (por: DSA)
+
 15/10/20
 -- ACBrTEFPayGoComum --
 [-] Correção para mensagem indevida no TEF PayGoWeb, "Favor anotar no verso do Cheque"

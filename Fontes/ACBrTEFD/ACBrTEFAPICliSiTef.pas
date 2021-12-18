@@ -348,7 +348,7 @@ var
   Mensagem, TituloMenu: String ;
   Resposta: String;
   SL: TStringList ;
-  Interromper, Digitado, Voltar, Validado: Boolean ;
+  Interromper, Digitado, Voltar, Validado, EhCarteiraDigital: Boolean ;
 
   DefinicaoCampo: TACBrTEFAPIDefinicaoCampo;
   TefAPI: TACBrTEFAPI;
@@ -365,6 +365,7 @@ begin
   Interromper := False;
   fCancelamento := False ;
   fReimpressao := False;
+  EhCarteiraDigital := False;
   Continua := 0;
   Resposta := '';
   Buffer := '';
@@ -429,6 +430,8 @@ begin
                 RespCliSiTef.GravaInformacao(TipoCampo, 'True'); //Cartão Digitado;
               56,57,58:
                 fReimpressao := True;
+              107:
+                EhCarteiraDigital := True;
               110:
                 fCancelamento:= True;
             end;
@@ -450,6 +453,11 @@ begin
           begin
             Mensagem := AjustarMensagemTela(Mensagem);
             TefAPI.QuandoExibirMensagem(Mensagem, telaTodas, EsperaMensagem);
+            if EhCarteiraDigital then
+            begin
+              Interromper := False;
+              TefAPI.QuandoEsperarOperacao(opapiLeituraQRCode, Interromper);
+            end;
           end;
 
           4:  // Texto que deverá ser utilizado como título na apresentação do menu ( vide comando 21)
@@ -633,7 +641,7 @@ begin
       else if (not Digitado) or Interromper then
         Continua := -1 ;  // Cancela operacao
 
-      if (Voltar and (fUltimoRetornoAPI = 10000)) or (not Digitado) or Interromper then
+      if Interromper or (not Digitado) or (Voltar and (fUltimoRetornoAPI = 10000)) then
         TefAPI.QuandoExibirMensagem('', telaTodas, -1);
 
       StrPCopy(Buffer, Resposta);

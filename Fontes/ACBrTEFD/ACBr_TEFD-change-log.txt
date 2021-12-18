@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/18/21
+-- ACBrTEFDCliSiTef, ACBrTEFAPICliSiTef --
+[-] Ajuste para permitir interromper a leitura do QRCode exibido no PinPad,
+    pela interface da aplicação
+    https://www.projetoacbr.com.br/forum/topic/65237-interromper-qrcode-no-pin-pad/
+
 17/12/21
 -- ACBrTEFAPIPayGoWeb --
 [-] Ajuste em "TACBrTEFAPIClassPayGoWeb.FinalizarTransacao", para processar

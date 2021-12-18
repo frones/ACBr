@@ -693,7 +693,7 @@ begin
     else
       Atualizou := Venda.Pagamentos.CancelarPagamento( RespostaTEF.Rede,
                                                        RespostaTEF.NSU,
-                                                       RespostaTEF.ValorTotal)
+                                                       RespostaTEF.ValorTotal);
   end
 
   else if (RespostaTEF.Header = CHEADER_CANCELAMENTO) then
@@ -1366,6 +1366,19 @@ begin
   finally
     StatusVenda := stsEmPagamento;
   end;
+
+  // -- Exemplo de como capturar os Erros retornados pela API do TEF PayGoWeb -- //
+  (*
+  if not OK then
+  begin
+    if (ACBrTEFAPI1.TEF is TACBrTEFAPIClassPayGoWeb) then
+    begin
+      CodErro := ACBrTEFAPI1.UltimaRespostaTEF.LeInformacao(PWINFO_RET).AsInteger;
+      MsgErro := ACBrTEFAPI1.UltimaRespostaTEF.LeInformacao(PWINFO_RESULTMSG).AsBinary;
+      ShowMessage('Erro: '+IntToStr(CodErro)+' - '+Trim(MsgErro));
+    end;
+  end;
+  *)
 
   if Ok then
   begin

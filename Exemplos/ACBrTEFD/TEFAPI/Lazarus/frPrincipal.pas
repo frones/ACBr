@@ -549,7 +549,7 @@ begin
   QRCode := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.Encoding  := qrUTF8BOM;
     QRCode.QuietZone := 2;
     QRCode.Data      := widestring(DadosQRCode);
 

@@ -419,9 +419,9 @@ var
 begin
   if (Mensagem = '') then
   begin
-    if Terminal = tmCliente then
+    if (Terminal in [tmCliente, tmTodas]) then
       MensagemTEF('',' ') ;
-    if Terminal = tmOperador then
+    if (Terminal in [tmOperador, tmTodas]) then
       MensagemTEF(' ','') ;
   end
 
@@ -439,9 +439,9 @@ begin
 
   else
   begin
-    if Terminal = tmCliente then
+    if (Terminal in [tmCliente, tmTodas]) then
       MensagemTEF('',Mensagem) ;
-    if Terminal = tmOperador then
+    if (Terminal in [tmOperador, tmTodas]) then
       MensagemTEF(Mensagem,'') ;
   end;
 end;
@@ -758,7 +758,7 @@ begin
   QRCode := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.Encoding  := qrUTF8BOM;
     QRCode.QuietZone := 2;
     QRCode.Data      := widestring(Dados);
 
@@ -1109,9 +1109,14 @@ begin
   IniciarOperacao;
   StatusVenda := stsOperacaoTEF;
   try
+    // Exemplo de como modificar a Operação Administrativa, padrão //
+    //if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
+    //  ACBrTEFD1.TEFPayGoWeb.OperacaoADM := PWOPER_SALESUMMARY;
     ACBrTEFD1.ADM;
   finally
     StatusVenda := stsFinalizada;
+    //if (ACBrTEFD1.GPAtual = gpPayGoWeb) then
+    //  ACBrTEFD1.TEFPayGoWeb.OperacaoADM := PWOPER_ADMIN
   end;
 end;
 

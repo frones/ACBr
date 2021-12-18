@@ -549,9 +549,9 @@ begin
   if (Mensagem = '') then
   begin
     if (Terminal in [telaCliente, telaTodas]) then
-      MensagemTEF('',' ') ;
+      MensagemTEF('',' ');
     if (Terminal in [telaOperador, telaTodas]) then
-      MensagemTEF(' ','') ;
+      MensagemTEF(' ','');
   end
   else if (MilissegundosExibicao >= 0) then
   begin
@@ -567,9 +567,9 @@ begin
   else
   begin
     if (Terminal in [telaCliente, telaTodas]) then
-      MensagemTEF('',Mensagem) ;
+      MensagemTEF('',Mensagem);
     if (Terminal in [telaOperador, telaTodas]) then
-      MensagemTEF(Mensagem,'') ;
+      MensagemTEF(Mensagem,'');
   end;
 end;
 
@@ -605,7 +605,7 @@ begin
   QRCode := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.Encoding  := qrUTF8BOM;
     QRCode.QuietZone := 2;
     QRCode.Data      := widestring(DadosQRCode);
 
@@ -1664,7 +1664,7 @@ begin
   if (ATEFResp.ImagemComprovante1aVia.Count > 0) then
     if ImprimirViaCliente then
       ImprimirRelatorio( ATEFResp.ImagemComprovante1aVia.Text );
-  end;
+end;
 
 procedure TFormPrincipal.ImprimirRelatorio(ATexto: String);
 begin

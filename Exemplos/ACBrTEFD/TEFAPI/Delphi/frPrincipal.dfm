@@ -44,7 +44,7 @@ object FormPrincipal: TFormPrincipal
       Top = 0
       Width = 775
       Height = 375
-      ActivePage = tsConfiguracao
+      ActivePage = tsOperacao
       Align = alTop
       Constraints.MinHeight = 375
       Images = ImageList1
@@ -173,7 +173,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btTestarTEF: TBitBtn
               Left = 110
-              Top = 239
+              Top = 238
               Width = 117
               Height = 36
               Anchors = [akLeft, akBottom]
@@ -225,7 +225,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btSalvarParametros: TBitBtn
               Left = 14
-              Top = 284
+              Top = 283
               Width = 136
               Height = 28
               Anchors = [akLeft, akBottom]
@@ -235,7 +235,7 @@ object FormPrincipal: TFormPrincipal
             end
             object btLerParametros: TBitBtn
               Left = 161
-              Top = 284
+              Top = 283
               Width = 136
               Height = 28
               Anchors = [akLeft, akBottom]
@@ -913,7 +913,7 @@ object FormPrincipal: TFormPrincipal
               Left = 673
               Top = 4
               Width = 85
-              Height = 29
+              Height = 42
               Align = alRight
               Caption = '000000'
               Color = clBtnFace

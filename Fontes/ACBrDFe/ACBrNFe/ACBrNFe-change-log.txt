@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2021
+-- ACBrNFeXmlReader --
+[*] Ajustes por conta da alteração do nome da função
+    ProcessarConteudoXml para ObterConteudoTag.
+   Por: Italo Giurizzato Junior
+
 07/11/2021
 -- pcnInutNFe, pcnRetInutNFe --
 [*] Inutilização de NFe para emitente CPF no MT.

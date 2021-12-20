@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2021
+-- ACBrXmlBase --
+[*] Alteração do nome da função de ProcessarConteudoXml para ObterConteudoTag.
+   Por: Italo Giurizzato Junior
+-- ACBrXmlReader --
+[*] Alteração do nome da função de ProcessarCNPJCPF e ProcessarConteudo para 
+    ObterCNPJCPF e ObterConteudo respectivamente.
+   Por: Italo Giurizzato Junior
+
 17/12/2021
 -- ACBrDFeConfiguracoes --
 [*] Ajuste em "TWebServicesConf.LerParamsIniServicos", para ficar mais amigável

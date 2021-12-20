@@ -56,8 +56,8 @@ type
     function LerXml: Boolean; virtual; abstract;
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStream): boolean; overload;
-    function ProcessarCNPJCPF(const ANode: TACBrXmlNode): string;
-    function ProcessarConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
+    function ObterCNPJCPF(const ANode: TACBrXmlNode): string;
+    function ObterConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 
     property Document: TACBrXmlDocument read FDocument;
     property Arquivo: String read FArquivo write FArquivo;
@@ -103,16 +103,16 @@ begin
   Result := True;
 end;
 
-function TACBrXmlReader.ProcessarCNPJCPF(const ANode: TACBrXmlNode): string;
+function TACBrXmlReader.ObterCNPJCPF(const ANode: TACBrXmlNode): string;
 begin
-  Result := ProcessarConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
+  Result := ObterConteudo(ANode.Childrens.Find('CNPJ'), tcStr);
   if Trim(Result) = '' then
-    Result := ProcessarConteudo(ANode.Childrens.Find('CPF'), tcStr);
+    Result := ObterConteudo(ANode.Childrens.Find('CPF'), tcStr);
 end;
 
-function TACBrXmlReader.ProcessarConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
+function TACBrXmlReader.ObterConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
 begin
-  Result := ProcessarConteudoXml(ANode, Tipo);
+  Result := ObterConteudoTag(ANode, Tipo);
 end;
 
 end.

@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2021
+-- ACBrNF3eXmlReader --
+[*] Ajustes por conta da alteração do nome da função
+    ProcessarConteudoXml para ObterConteudoTag.
+   Por: Italo Giurizzato Junior
+
 10/06/2021
 -- Diversos --
 [*] Alterações para deixar o componente em conformidade com a NT 2021/002.

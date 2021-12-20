@@ -1,10 +1,6 @@
 object LibBoletoDM: TLibBoletoDM
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 148
-  HorizontalOffset = 330
-  VerticalOffset = 249
   Width = 193
   object ACBrBoleto1: TACBrBoleto
     MAIL = ACBrMail1

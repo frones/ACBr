@@ -95,7 +95,7 @@ function TACBrBancoSafraBradesco.CalcularDigitoVerificador(const ACBrTitulo: TAC
 begin
   Modulo.CalculoPadrao;
   Modulo.MultiplicadorFinal := 7;
-  Modulo.Documento := ACBrTitulo.Carteira + FormatDateTime('YY', Date) + ACBrTitulo.NossoNumero;
+  Modulo.Documento := ACBrTitulo.Carteira + FormatDateTime('YY', ACBrTitulo.DataDocumento) + ACBrTitulo.NossoNumero;
   Modulo.Calcular;
 
   if Modulo.ModuloFinal = 1 then
@@ -117,7 +117,7 @@ begin
       IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
       PadLeft(OnlyNumber(Cedente.Agencia), 4, '0') +
       ACBrTitulo.Carteira +
-      FormatDateTime('YY', Date) +
+      FormatDateTime('YY', ACBrTitulo.DataDocumento) +
       ACBrTitulo.NossoNumero +
       PadLeft(RightStr(Cedente.Conta, 7), 7, '0') + '0';
 
@@ -129,7 +129,7 @@ end;
 
 function TACBrBancoSafraBradesco.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result:= ACBrTitulo.Carteira + '/' + FormatDateTime('YY', Date) + ' ' +
+  Result:= ACBrTitulo.Carteira + '/' + FormatDateTime('YY', ACBrTitulo.DataDocumento) + ' ' +
            ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
 end;
 

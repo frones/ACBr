@@ -19,7 +19,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="139"/>
+      <BuildNr Value="144"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibBoleto - Biblioteca para geração de Arquivos de Remessa e Retorno, e impressão de Boletos" InternalName="ACBrLibBoleto" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>
@@ -554,7 +554,7 @@
         <IsPartOfProject Value="True"/>
         <ComponentName Value="LibBoletoDM"/>
         <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\Comum\ACBrLibComum.pas"/>

@@ -149,9 +149,9 @@ begin
   if not Assigned(ANodeArray) and (ANodeArray <> nil) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
-    AErro.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+    AErro.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
 
    Exit;
   end;
@@ -159,20 +159,20 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
 
     if AErro.Codigo = '' then
-      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ErroID'), tcStr);
+      AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroID'), tcStr);
 
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
     if AErro.Descricao = '' then
-      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ErroMensagem'), tcStr);
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroMensagem'), tcStr);
 
-    AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
 
     if AErro.Correcao = '' then
-      AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ErroSolucao'), tcStr);
+      AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ErroSolucao'), tcStr);
   end;
 end;
 

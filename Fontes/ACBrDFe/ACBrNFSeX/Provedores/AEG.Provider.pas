@@ -292,8 +292,8 @@ begin
     for I := Low(ANodeArray) to High(ANodeArray) do
     begin
       AErro := Response.Erros.New;
-      AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ResultadoCodigo'), tcStr);
-      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ResultadoErro'), tcStr);
+      AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ResultadoCodigo'), tcStr);
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ResultadoErro'), tcStr);
       AErro.Correcao := '';
     end;
   end;

@@ -229,8 +229,8 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('cdMensagem'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('dsMensagem'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('cdMensagem'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('dsMensagem'), tcStr);
     AErro.Correcao := '';
   end;
 end;
@@ -328,8 +328,8 @@ begin
       begin
         with Response do
         begin
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dtRecebimento'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtRecebimento'), tcDatHor);
+          Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
         end;
       end;
     except
@@ -425,8 +425,8 @@ begin
 
       with Response do
       begin
-        Lote := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
-        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('stLote'), tcStr);
+        Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('nrLoteRps'), tcStr);
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('stLote'), tcStr);
       end;
     except
       on E:Exception do
@@ -523,7 +523,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-//      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
+//      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('nrProtocolo'), tcStr);
 
       AuxNode := ANode.Childrens.FindAnyNs('listaNfse');
 
@@ -653,8 +653,8 @@ begin
       begin
         with Response do
         begin
-          CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
+          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
         end;
       end;
     except
@@ -873,8 +873,8 @@ begin
 
       with Response.RetCancelamento do
       begin
-        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('sucesso'), tcStr);
-        DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sucesso'), tcStr);
+        DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
       end;
     except
       on E:Exception do

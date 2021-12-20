@@ -395,11 +395,14 @@ type
 
   TIdentificacaoPrestador = class(TObject)
   private
-    FCnpj: string;
+    FCpfCnpj: string;
     FInscricaoMunicipal: string;
     FInscricaoEstadual: string;
+    function GetCnpj: string;
+    procedure SetCnpj(const Value: string);
   public
-    property Cnpj: string read FCnpj write FCnpj;
+    property Cnpj: string read GetCnpj write SetCnpj;
+    property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
     property InscricaoEstadual: string read FInscricaoEstadual write FInscricaoEstadual;
   end;
@@ -1040,7 +1043,7 @@ begin
 
   with FIdentificacaoPrestador do
   begin
-    Cnpj := '';
+    CpfCnpj := '';
     InscricaoMunicipal := '';
     InscricaoEstadual := '';
   end;
@@ -1434,6 +1437,18 @@ end;
 constructor TQuartoCollectionItem.Create;
 begin
   inherited Create;
+end;
+
+{ TIdentificacaoPrestador }
+
+function TIdentificacaoPrestador.GetCnpj: string;
+begin
+  Result := FCpfCnpj;
+end;
+
+procedure TIdentificacaoPrestador.SetCnpj(const Value: string);
+begin
+  FCpfCnpj := Value;
 end;
 
 end.

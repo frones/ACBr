@@ -49,6 +49,7 @@ type
   TNFSeW_IPM = class(TNFSeWClass)
   private
     FpGerarID: Boolean;
+    FpNrOcorrTagsTomador: Integer;
   protected
     procedure Configuracao; override;
 
@@ -143,6 +144,7 @@ begin
   inherited Configuracao;
 
   FpGerarID := False;
+  FpNrOcorrTagsTomador := 0;
 end;
 
 function TNFSeW_IPM.GerarCondicaoPagamento: TACBrXmlNode;
@@ -221,25 +223,7 @@ begin
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_local_prestacao_servico', 1, 9, 1,
       CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.ItemServico[I].CodMunPrestacao, 0)), ''));
-    {
-    if EstaVazio(NFSe.Servico.CodigoTributacaoMunicipio) then
-    begin
-      if (NFSe.Prestador.Endereco.CodigoMunicipio <> IntToStr(NFSe.Servico.MunicipioIncidencia)) then
-        // Não Tributa no Municipio do prestador
-        Result[i].AppendChild(AddNode(tcStr, '#', 'tributa_municipio_prestador', 1, 1, 1,
-                                                                       '0', ''))
-      else
-        // Tributa no Municipio do Prestador
-        Result[i].AppendChild(AddNode(tcStr, '#', 'tributa_municipio_prestador', 1, 1, 1,
-                                                                      '1', ''));
-    end
-    else
-      Result[i].AppendChild(AddNode(tcStr, '#', 'tributa_municipio_prestador', 1, 1, 1,
-                                   NFSe.Servico.CodigoTributacaoMunicipio, ''));
 
-    Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_local_prestacao_servico', 1, 9, 1,
-            CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0)), ''));
-    }
     Result[i].AppendChild(AddNode(tcStr, '#', 'unidade_codigo', 1, 9, 0,
                    UnidadeToStr(NFSe.Servico.ItemServico[I].TipoUnidade), ''));
 
@@ -265,10 +249,7 @@ begin
 
     Result[i].AppendChild(AddNode(tcInt, '#', 'situacao_tributaria', 1, 4, 1,
                            NFSe.Servico.ItemServico[I].SituacaoTributaria, ''));
-    {
-    Result[i].AppendChild(AddNode(tcStr, '#', 'situacao_tributaria', 1, 4, 1,
-                            NaturezaOperacaoToStr( NFSe.NaturezaOperacao), ''));
-    }
+
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_tributavel', 1, 15, 1,
                                    NFSe.Servico.ItemServico[I].ValorTotal, ''));
 
@@ -331,7 +312,7 @@ begin
   Result := CreateElement('prestador');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cpfcnpj', 11, 14, 1,
-             OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), DSC_CNPJ));
+          OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), DSC_CNPJ));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 0,
   CodIBGEToCodTOM(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0)), ''));
@@ -364,59 +345,59 @@ begin
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'J', ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'cpfcnpj', 1, 14, 0,
+    Result.AppendChild(AddNode(tcStr, '#1', 'cpfcnpj', 1, 14, FpNrOcorrTagsTomador,
                 OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), DSC_CNPJ));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'ie', 0, 16, 0,
+    Result.AppendChild(AddNode(tcStr, '#1', 'ie', 0, 16, FpNrOcorrTagsTomador,
         OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), DSC_IE));
   end;
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'nome_razao_social', 1, 100, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'nome_razao_social', 1, 100, FpNrOcorrTagsTomador,
                                           NFSe.Tomador.RazaoSocial, DSC_XNOME));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'sobrenome_nome_fantasia', 1, 100, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'sobrenome_nome_fantasia', 1, 100, FpNrOcorrTagsTomador,
                                                 NFSe.Tomador.NomeFantasia, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'logradouro', 1, 70, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'logradouro', 1, 70, FpNrOcorrTagsTomador,
                                      NFSe.Tomador.Endereco.Endereco, DSC_XLGR));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'email', 1, 100, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'email', 1, 100, FpNrOcorrTagsTomador,
                                                NFSe.Tomador.Contato.Email, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'numero_residencia', 1, 8, 0,
                                         NFSe.Tomador.Endereco.Numero, DSC_NRO));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 50, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 50, FpNrOcorrTagsTomador,
                                   NFSe.Tomador.Endereco.Complemento, DSC_XCPL));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'ponto_referencia', 1, 100, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'ponto_referencia', 1, 100, FpNrOcorrTagsTomador,
                                                                        '', ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'bairro', 1, 30, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'bairro', 1, 30, FpNrOcorrTagsTomador,
                                     NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 9, FpNrOcorrTagsTomador,
     CodIBGEToCodTOM(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 8, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 8, FpNrOcorrTagsTomador,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'ddd_fone_comercial', 1, 3, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'ddd_fone_comercial', 1, 3, FpNrOcorrTagsTomador,
                                             NFSe.Tomador.Contato.DDD, DSC_DDD));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'fone_comercial', 1, 9, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'fone_comercial', 1, 9, FpNrOcorrTagsTomador,
                                             NFSe.Tomador.Contato.Telefone, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'ddd_fone_residencial', 1, 3, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'ddd_fone_residencial', 1, 3, FpNrOcorrTagsTomador,
                                                                        '', ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'fone_residencial', 1, 9, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'fone_residencial', 1, 9, FpNrOcorrTagsTomador,
                                                                        '', ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'ddd_fax', 1, 3, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'ddd_fax', 1, 3, FpNrOcorrTagsTomador,
                                                                        '', ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'fone_fax', 1, 9, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'fone_fax', 1, 9, FpNrOcorrTagsTomador,
                                                                        '', ''));
 end;
 
@@ -470,6 +451,7 @@ begin
   inherited Configuracao;
 
   FpGerarID := True;
+  FpNrOcorrTagsTomador := 1;
 end;
 
 end.

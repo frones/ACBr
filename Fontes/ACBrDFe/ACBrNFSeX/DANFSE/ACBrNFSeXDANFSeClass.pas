@@ -299,7 +299,7 @@ begin
 
       Result := TACBrNFSeX(ACBrNFSe).Configuracoes.Arquivos.GetPath(
                 Result, DescricaoModelo,
-                OnlyNumber(ANFSe.Prestador.IdentificacaoPrestador.CNPJ),
+                OnlyNumber(ANFSe.Prestador.IdentificacaoPrestador.CpfCnpj),
                 OnlyNumber(ANFSe.Prestador.IdentificacaoPrestador.InscricaoEstadual),
                 dhEmissao);
     end;

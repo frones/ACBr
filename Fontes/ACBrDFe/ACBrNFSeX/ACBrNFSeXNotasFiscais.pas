@@ -326,7 +326,7 @@ begin
 
       with Prestador do
       begin
-        IdentificacaoPrestador.Cnpj := INIRec.ReadString(sSecao, 'CNPJ', '');
+        IdentificacaoPrestador.CpfCnpj := INIRec.ReadString(sSecao, 'CNPJ', '');
         IdentificacaoPrestador.InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
 
         // Para o provedor ISSDigital deve-se informar também:
@@ -681,7 +681,7 @@ begin
       Data := Now;
 
     Result := PathWithDelim(Configuracoes.Arquivos.GetPathRPS(Data,
-      FNFSe.Prestador.IdentificacaoPrestador.Cnpj,
+      FNFSe.Prestador.IdentificacaoPrestador.CpfCnpj,
       FNFSe.Prestador.IdentificacaoPrestador.InscricaoEstadual));
   end;
 end;

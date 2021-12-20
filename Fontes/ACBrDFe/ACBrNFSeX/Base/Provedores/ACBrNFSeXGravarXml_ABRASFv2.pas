@@ -673,7 +673,7 @@ function TNFSeW_ABRASFv2.GerarPrestador: TACBrXmlNode;
 begin
   Result := CreateElement('Prestador');
 
-  Result.AppendChild(GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.Cnpj));
+  Result.AppendChild(GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj));
 
   Result.AppendChild(AddNode(tcStr, '#48', 'RazaoSocial', 1, 115, NrOcorrRazaoSocialPrest,
                            NFSe.Prestador.RazaoSocial, DSC_XNOME));

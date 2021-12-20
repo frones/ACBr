@@ -465,7 +465,7 @@ begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
   Result := CreateElement('Prestador');
 
-  Result.AppendChild(GerarCNPJ(NFSe.Prestador.IdentificacaoPrestador.Cnpj));
+  Result.AppendChild(GerarCNPJ(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj));
 
   Result.AppendChild(AddNode(tcStr, '#35', 'InscricaoMunicipal', 1, 15, 0,
              NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, DSC_IM));

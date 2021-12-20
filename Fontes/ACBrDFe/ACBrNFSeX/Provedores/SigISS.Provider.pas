@@ -184,9 +184,9 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('id'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
-    AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('id'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
+    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
 
     if AErro.Descricao = '' then
       AErro.Descricao := ANodeArray[I].AsString;
@@ -252,11 +252,11 @@ begin
       begin
         with Response do
         begin
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
           Sucesso := not (Situacao = 'N');
-          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
-          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+          Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('autenticidade'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
+          Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
         end;
       end;
     except
@@ -342,7 +342,7 @@ begin
       begin
         with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
         end;
       end;
 
@@ -465,10 +465,10 @@ begin
       begin
         with Response do
         begin
-          xSucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
+          xSucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
           Sucesso := not (xSucesso = 'N');
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
-          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
+          Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
         end;
       end;
     except

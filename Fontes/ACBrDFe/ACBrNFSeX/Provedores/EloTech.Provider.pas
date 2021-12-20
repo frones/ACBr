@@ -229,7 +229,7 @@ begin
       end;
 
       Ret :=  Response.RetCancelamento;
-      Ret.DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
@@ -238,28 +238,28 @@ begin
 
       ANode := ANode.Childrens.FindAnyNs('Pedido').Childrens.FindAnyNs('InfPedidoCancelamento');
 
-      Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
+      Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
       with  Ret.Pedido.IdentificacaoNfse do
       begin
-        Numero := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+        Numero := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
 
         AuxNode := ANode.Childrens.FindAnyNs('CpfCnpj');
 
         if AuxNode <> nil then
         begin
-          Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+          Cnpj := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
           if Cnpj = '' then
-            Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+            Cnpj := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
         end
         else
-          Cnpj := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
+          Cnpj := ObterConteudoTag(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
-        InscricaoMunicipal := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
-        CodigoMunicipio := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+        InscricaoMunicipal := ObterConteudoTag(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+        CodigoMunicipio := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       end;
     except
       on E:Exception do

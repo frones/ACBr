@@ -347,7 +347,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'ChaveDigital', 32, 32, 1,
                                                               ChaveAcesso, ''));
 
-  xmlNode := GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.Cnpj);
+  xmlNode := GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj);
   Result.AppendChild(xmlNode);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 15, 0,

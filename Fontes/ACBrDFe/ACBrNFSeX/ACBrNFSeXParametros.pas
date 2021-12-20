@@ -82,6 +82,8 @@ type
     FParams1: string;
     // uso diverso
     FParams2: string;
+    // uso diverso
+    FParams3: string;
 
     // Provedor lido do arquivo ACBrNFSeXServicos
     FProvedor: TnfseProvedor;
@@ -95,6 +97,7 @@ type
   public
     procedure LoadParams1(AINI: TCustomIniFile; ASession: string);
     procedure LoadParams2(AINI: TCustomIniFile; ASession: string);
+    procedure LoadParams3(AINI: TCustomIniFile; ASession: string);
 
     property Identificador: string read FIdentificador write FIdentificador;
     property QuebradeLinha: string read FQuebradeLinha write FQuebradeLinha;
@@ -116,6 +119,7 @@ type
     // Parametros lidos no arquivo .Res ou .ini
     property Params1: string read FParams1;
     property Params2: string read FParams2;
+    property Params3: string read FParams3;
 
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
     property Versao: TVersaoNFSe read FVersao write FVersao;
@@ -598,6 +602,11 @@ end;
 procedure TConfigGeral.LoadParams2(AINI: TCustomIniFile; ASession: string);
 begin
   FParams2 := AINI.ReadString(ASession, 'Params2', '');
+end;
+
+procedure TConfigGeral.LoadParams3(AINI: TCustomIniFile; ASession: string);
+begin
+  FParams3 := AINI.ReadString(ASession, 'Params3', '');
 end;
 
 end.

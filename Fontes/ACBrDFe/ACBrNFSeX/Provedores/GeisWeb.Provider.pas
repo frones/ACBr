@@ -187,8 +187,8 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Erro'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Erro'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr);
     AErro.Correcao := '';
   end;
 end;
@@ -266,7 +266,7 @@ begin
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         if AuxNode <> nil then
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -370,7 +370,7 @@ begin
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         if AuxNode <> nil then
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -524,7 +524,7 @@ begin
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         if AuxNode <> nil then
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -613,7 +613,7 @@ begin
 
       ANode := Document.Root;
 
-      Response.Lote := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
+      Response.Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
       if not Assigned(ANode) then
@@ -630,7 +630,7 @@ begin
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         if AuxNode <> nil then
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 

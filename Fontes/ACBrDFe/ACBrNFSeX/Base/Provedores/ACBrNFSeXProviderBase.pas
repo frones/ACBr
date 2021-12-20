@@ -628,6 +628,7 @@ begin
       ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
       ConfigGeral.LoadParams1(IniParams, Sessao);
       ConfigGeral.LoadParams2(IniParams, Sessao);
+      ConfigGeral.LoadParams3(IniParams, Sessao);
 
       // Depois verifica as URls definidas para o provedor
       if ConfigWebServices.Producao.Recepcionar = '' then
@@ -656,49 +657,12 @@ begin
         ConfigGeral.LoadParams2(IniParams, Sessao);
       end;
 
-      {
-      Sessao := Configuracoes.Geral.xProvedor;
-      ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
-      ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
-      ConfigGeral.LoadParams1(IniParams, Sessao);
-      ConfigGeral.LoadParams2(IniParams, Sessao);
-
-      if ConfigWebServices.Producao.Recepcionar = '' then
-      begin
-        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-        ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
-      end;
-
-      if ConfigWebServices.Homologacao.Recepcionar = '' then
-      begin
-        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-        ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
-      end;
-
-      if ConfigWebServices.Homologacao.Recepcionar = '' then
+      // Se Params3 estiver vazio usar o que foi definido para o provedor
+      if ConfigGeral.Params3 = '' then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
-        ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
+        ConfigGeral.LoadParams3(IniParams, Sessao);
       end;
-
-      if ConfigWebServices.Homologacao.Recepcionar = '' then
-      begin
-        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-        ConfigWebServices.HomologacaoIgualProducao(IniParams, Sessao);
-      end;
-
-      if ConfigGeral.Params1 = '' then
-      begin
-        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-        ConfigGeral.LoadParams1(IniParams, Sessao);
-      end;
-
-      if ConfigGeral.Params2 = '' then
-      begin
-        Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
-        ConfigGeral.LoadParams2(IniParams, Sessao);
-      end;
-      }
     end;
   finally
     IniParams.Free;

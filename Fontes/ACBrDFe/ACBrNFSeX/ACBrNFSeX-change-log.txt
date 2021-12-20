@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/12/2021
+-- Diversos --
+[+] Criado o parâmetro Params3.
+[*] Ajustes em diversas units por conta do campo CpfCnpj criado na classe
+    IdentificacaoPrestador.
+[*] Ajustes em diversas units por conta da alteração do nome da função
+    ProcessarConteudoXml para ObterConteudoTag.
+   Por: Italo Giurizzato Junior
+
 16/12/2021
 -- ACBrNFSeXWebservicesResponse/ACBrNFSeXProviderABRASFv2 --
 [+] Criado os campos NumNotaSubstituida e NumNotaSubstituidora, 

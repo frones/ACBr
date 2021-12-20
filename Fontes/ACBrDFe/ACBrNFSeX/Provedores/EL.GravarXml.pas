@@ -353,7 +353,7 @@ begin
   Result := CreateElement('IdentificacaoPrestador');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'CpfCnpj', 11, 14, 1,
-                   OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), ''));
+                OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IndicacaoCpfCnpj', 1, 1, 1,
                                                                       '2', ''));

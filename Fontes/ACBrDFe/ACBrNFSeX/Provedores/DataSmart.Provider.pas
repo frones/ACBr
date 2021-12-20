@@ -186,16 +186,16 @@ begin
 
           with Response do
           begin
-            NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-            CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-            Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
           end;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
           AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
           AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -278,7 +278,7 @@ begin
         begin
           AuxNode2 := AuxNode2.Childrens.FindAnyNs('Confirmacao');
 
-          Response.Data := ProcessarConteudoXml(AuxNode2.Childrens.FindAnyNs('DataHora'), tcDatHor);
+          Response.Data := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('DataHora'), tcDatHor);
           Response.DescSituacao := 'Nota Cancelada';
         end;
 
@@ -287,16 +287,16 @@ begin
 
         with Response do
         begin
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-          CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
         end;
 
         AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
         AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-        NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+        NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -381,7 +381,7 @@ begin
           AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
           AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
           AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-          NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
@@ -479,30 +479,30 @@ begin
         end;
 
         Ret :=  Response.RetCancelamento;
-        Ret.DataHora := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Ret.DataHora := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 
         AuxNode := AuxNode.Childrens.FindAnyNs('Pedido');
         AuxNode := AuxNode.Childrens.FindAnyNs('InfPedidoCancelamento');
 
-        Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
+        Ret.Pedido.CodigoCancelamento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
         AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         with  Ret.Pedido.IdentificacaoNfse do
         begin
-          Numero := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+          Numero := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
-          InscricaoMunicipal := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
-          CodigoMunicipio := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+          InscricaoMunicipal := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+          CodigoMunicipio := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
 
           AuxNode := AuxNode.Childrens.FindAnyNs('CpfCnpj');
 
           if AuxNode <> nil then
           begin
-            Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+            Cnpj := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
             if Cnpj = '' then
-              Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+              Cnpj := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
           end;
         end;
       end;

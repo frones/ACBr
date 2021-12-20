@@ -79,24 +79,24 @@ begin
       NFSe.Servico.ItemServico.New;
       with NFSe.Servico.ItemServico[i] do
       begin
-        ItemListaServico := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nrServicoItem'), tcStr) +
-                            ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('nrServicoSubItem'), tcStr);
+        ItemListaServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServicoItem'), tcStr) +
+                            ObterConteudo(ANodes[i].Childrens.FindAnyNs('nrServicoSubItem'), tcStr);
 
-        ValorUnitario := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlServico'), tcDe2);
-        Aliquota := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlAliquota'), tcDe2);
+        ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlServico'), tcDe2);
+        Aliquota := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlAliquota'), tcDe2);
 
         AuxNodeDed := ANodes[i].Childrens.FindAnyNs('deducao');
 
         if AuxNodeDed <> nil then
         begin
-          ValorDeducoes := ProcessarConteudo(AuxNodeDed.Childrens.FindAnyNs('vlDeducao'), tcDe2);
+          ValorDeducoes := ObterConteudo(AuxNodeDed.Childrens.FindAnyNs('vlDeducao'), tcDe2);
 
-          xJustDeducao := ProcessarConteudo(AuxNodeDed.Childrens.FindAnyNs('dsJustificativaDeducao'), tcStr);
+          xJustDeducao := ObterConteudo(AuxNodeDed.Childrens.FindAnyNs('dsJustificativaDeducao'), tcStr);
         end;
 
-        BaseCalculo := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlBaseCalculo'), tcDe2);
-        ValorISS := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('vlIssServico'), tcDe2);
-        Descricao := ProcessarConteudo(ANodes[i].Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
+        BaseCalculo := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlBaseCalculo'), tcDe2);
+        ValorISS := ObterConteudo(ANodes[i].Childrens.FindAnyNs('vlIssServico'), tcDe2);
+        Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
       end;
     end;
   end;
@@ -112,17 +112,17 @@ begin
   begin
     with NFSe.Servico.Valores do
     begin
-      ValorCofins := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlCofins'), tcDe2);
-      ValorCsll   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlCsll'), tcDe2);
-      ValorInss   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlInss'), tcDe2);
-      ValorIr     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlIrrf'), tcDe2);
-      ValorPis    := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlPis'), tcDe2);
-      ValorIssRetido := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlIss'), tcDe2);
-      AliquotaCofins := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaCofins'), tcDe2);
-      AliquotaCsll := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaCsll'), tcDe2);
-      AliquotaInss := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaInss'), tcDe2);
-      AliquotaIr  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaIrrf'), tcDe2);
-      AliquotaPis := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaPis'), tcDe2);
+      ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlCofins'), tcDe2);
+      ValorCsll   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlCsll'), tcDe2);
+      ValorInss   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlInss'), tcDe2);
+      ValorIr     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlIrrf'), tcDe2);
+      ValorPis    := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlPis'), tcDe2);
+      ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlIss'), tcDe2);
+      AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaCofins'), tcDe2);
+      AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaCsll'), tcDe2);
+      AliquotaInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaInss'), tcDe2);
+      AliquotaIr  := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaIrrf'), tcDe2);
+      AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaPis'), tcDe2);
     end;
   end;
 end;
@@ -175,18 +175,18 @@ begin
 
   if AuxNode <> nil then
   begin
-    NFSe.Numero            := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
-    NFSe.CodigoVerificacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
-    NFSe.DataEmissao       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
+    NFSe.Numero            := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
+    NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
+    NFSe.DataEmissao       := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
 
-    NFSe.IdentificacaoRps.Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
+    NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
 
     AuxNode := AuxNode.Childrens.FindAnyNs('cancelamento');
 
     if AuxNode <> nil then
     begin
-      NFSe.NfseCancelamento.DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
-      NFSe.MotivoCancelamento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
+      NFSe.NfseCancelamento.DataHora := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
+      NFSe.MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
       NFSe.SituacaoNfse := snCancelado;
     end;
   end;
@@ -195,64 +195,64 @@ begin
 
   if AuxNode = nil then
   begin
-    NFSe.Numero                  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrNfs'), tcStr);
-    NFSe.CodigoVerificacao       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
-    NFSe.DataEmissao             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
-    NFSe.IdentificacaoRps.Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
+    NFSe.Numero                  := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrNfs'), tcStr);
+    NFSe.CodigoVerificacao       := ObterConteudo(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
+    NFSe.DataEmissao             := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
+    NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
 
     with NFSe.Prestador.IdentificacaoPrestador do
     begin
-      Cnpj               := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
-      InscricaoMunicipal := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoMunicipal'), tcStr);
+      CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
+      InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoMunicipal'), tcStr);
     end;
 
     with NFSe.Prestador do
     begin
-      RazaoSocial  := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmPrestador'), tcStr);
-      NomeFantasia := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmPrestador'), tcStr);
+      RazaoSocial  := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPrestador'), tcStr);
+      NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPrestador'), tcStr);
     end;
 
     with NFSe.Prestador.Endereco do
     begin
-      Endereco   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
-      Numero     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
-      Bairro     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
-      xMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmCidade'), tcStr);
-      UF         := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
-      CEP        := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrCEP'), tcStr);
-      xPais      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
+      Endereco   := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
+      Numero     := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
+      Bairro     := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
+      xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmCidade'), tcStr);
+      UF         := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
+      CEP        := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCEP'), tcStr);
+      xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
     end;
 
     with NFSe.Servico do
     begin
-      Discriminacao := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
+      Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDiscriminacaoServico'), tcStr);
     end;
 
     with NFSe.Servico.Valores do
     begin
-      ValorServicos := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlServico'), tcDe2);
-      Aliquota      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquota'), tcDe2);
-      ValorIss      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlImposto'), tcDe2);
-      BaseCalculo   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlBaseCalculo'), tcDe2);
+      ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlServico'), tcDe2);
+      Aliquota      := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquota'), tcDe2);
+      ValorIss      := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlImposto'), tcDe2);
+      BaseCalculo   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlBaseCalculo'), tcDe2);
 
-      aValor := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('isIssRetido'), tcStr);
+      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('isIssRetido'), tcStr);
 
       if aValor = 'Sim' then
-        ValorISSRetido := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlImposto'), tcDe2);
+        ValorISSRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlImposto'), tcDe2);
 
-      ValorPis      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlPis'), tcDe2);
-      ValorCofins   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlCofins'), tcDe2);
-      ValorIr       := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaIrpj'), tcDe2);
-      ValorCsll     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlCsll'), tcDe2);
-      ValorInss     := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('vlInss'), tcDe2);
+      ValorPis      := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlPis'), tcDe2);
+      ValorCofins   := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlCofins'), tcDe2);
+      ValorIr       := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlAliquotaIrpj'), tcDe2);
+      ValorCsll     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlCsll'), tcDe2);
+      ValorInss     := ObterConteudo(AuxNode.Childrens.FindAnyNs('vlInss'), tcDe2);
     end;
 
     AuxNode := AuxNode.Childrens.FindAnyNs('cancelamento');
 
     if AuxNode <> nil then
     begin
-      NFSe.NfseCancelamento.DataHora := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
-      NFSe.MotivoCancelamento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
+      NFSe.NfseCancelamento.DataHora := ObterConteudo(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
+      NFSe.MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsCancelamento'), tcStr);
       NFSe.SituacaoNfse := snCancelado;
     end;
   end;
@@ -263,25 +263,25 @@ begin
   begin
     with NFSe.Tomador do
     begin
-      RazaoSocial := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmTomador'), tcStr);
+      RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmTomador'), tcStr);
     end;
 
     with NFSe.Tomador.IdentificacaoTomador do
     begin
-      CpfCnpj := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
+      CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
     end;
 
     with NFSe.Tomador.Endereco do
     begin
-      Endereco := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
-      Numero   := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
+      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
+      Numero   := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
 
-      Bairro          := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
-      CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('cdIbge'), tcStr);
-      xMunicipio      := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmCidade'), tcStr);
-      UF              := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
-      CEP             := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
-      xPais           := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
+      Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
+      CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cdIbge'), tcStr);
+      xMunicipio      := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmCidade'), tcStr);
+      UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
+      CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
+      xPais           := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
     end;
   end;
 end;
@@ -297,18 +297,18 @@ begin
   begin
     with IdentificacaoRps do
     begin
-      Numero := ProcessarConteudo(ANode.Childrens.FindAnyNs('nrRps'), tcStr);
-      Serie := ProcessarConteudo(ANode.Childrens.FindAnyNs('nrEmissorRps'), tcStr);
+      Numero := ObterConteudo(ANode.Childrens.FindAnyNs('nrRps'), tcStr);
+      Serie := ObterConteudo(ANode.Childrens.FindAnyNs('nrEmissorRps'), tcStr);
     end;
 
-    DataEmissao := ProcessarConteudo(ANode.Childrens.FindAnyNs('dtEmissaoRps'), tcDatHor);
-    NaturezaOperacao := ProcessarConteudo(ANode.Childrens.FindAnyNs('tpTributacao'), tcStr);
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('dtEmissaoRps'), tcDatHor);
+    NaturezaOperacao := ObterConteudo(ANode.Childrens.FindAnyNs('tpTributacao'), tcStr);
 
     with Servico.Valores do
     begin
-      IssRetido := StrToSituacaoTributaria(Ok, ProcessarConteudo(ANode.Childrens.FindAnyNs('isIssRetido'), tcStr));
-      ValorServicos := ProcessarConteudo(ANode.Childrens.FindAnyNs('vlTotalRps'), tcDe2);
-      ValorLiquidoNfse := ProcessarConteudo(ANode.Childrens.FindAnyNs('vlLiquidoRps'), tcDe2);
+      IssRetido := StrToSituacaoTributaria(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('isIssRetido'), tcStr));
+      ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('vlTotalRps'), tcDe2);
+      ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('vlLiquidoRps'), tcDe2);
     end;
 
     AuxNode := ANode.Childrens.FindAnyNs('tomador');
@@ -317,29 +317,29 @@ begin
     begin
       with Tomador do
       begin
-        RazaoSocial := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmTomador'), tcStr);
+        RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmTomador'), tcStr);
 
         with Contato do
         begin
-          Email := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsEmail'), tcStr);
-          Telefone := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrTelefone'), tcStr);
+          Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEmail'), tcStr);
+          Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrTelefone'), tcStr);
         end;
 
         with IdentificacaoTomador do
         begin
-          InscricaoEstadual := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoEstadual'), tcStr);
+          InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrInscricaoEstadual'), tcStr);
         end;
 
         with Endereco do
         begin
-          Endereco := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
-          Numero := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
-          Complemento := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsComplemento'), tcStr);
-          Bairro := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
-          CodigoMunicipio := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbge'), tcStr);
-          UF := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
-          xPais := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
-          CEP := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
+          Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsEndereco'), tcStr);
+          Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrEndereco'), tcStr);
+          Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsComplemento'), tcStr);
+          Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmBairro'), tcStr);
+          CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCidadeIbge'), tcStr);
+          UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmUf'), tcStr);
+          xPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('nmPais'), tcStr);
+          CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrCep'), tcStr);
         end;
 
         AuxNodeDoc := AuxNode.Childrens.FindAnyNs('documento');
@@ -348,8 +348,8 @@ begin
         begin
           with IdentificacaoTomador do
           begin
-            CpfCnpj := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
-            DocTomadorEstrangeiro := ProcessarConteudo(AuxNode.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
+            CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
+            DocTomadorEstrangeiro := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
           end;
         end;
       end;

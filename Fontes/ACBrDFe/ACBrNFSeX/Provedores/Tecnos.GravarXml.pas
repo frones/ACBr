@@ -127,7 +127,7 @@ end;
 procedure TNFSeW_Tecnos201.DefinirIDDeclaracao;
 begin
   NFSe.InfID.ID := '1' + // Tipo de operação, no caso envio
-                   OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj) +
+                   OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj) +
                    Poem_Zeros(OnlyNumber(NFSe.IdentificacaoRps.Numero), 16);
 end;
 

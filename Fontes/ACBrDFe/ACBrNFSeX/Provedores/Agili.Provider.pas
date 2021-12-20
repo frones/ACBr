@@ -176,9 +176,9 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
-    AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
   end;
 end;
 
@@ -284,8 +284,8 @@ begin
       begin
         with Response do
         begin
-          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+          Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+          Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
       end;
 
@@ -301,7 +301,7 @@ begin
           Exit;
         end;
 
-        NumRps := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+        NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
@@ -407,7 +407,7 @@ begin
       begin
         with Response do
         begin
-          Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
+          Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
 
           AuxNode := ANode.Childrens.FindAnyNs('ListaNfse');
 
@@ -861,8 +861,8 @@ begin
       begin
         with Response do
         begin
-          Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('ProtocoloRequerimentoCancelamento'), tcStr);
+          Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+          Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('ProtocoloRequerimentoCancelamento'), tcStr);
         end;
       end;
     except
@@ -932,7 +932,7 @@ begin
           if AuxNode <> nil then
           begin
             with Response.RetCancelamento do
-             DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+             DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
           end;
 
           AuxNode := AuxNode.Childrens.FindAnyNs('NfseSubstituidora');

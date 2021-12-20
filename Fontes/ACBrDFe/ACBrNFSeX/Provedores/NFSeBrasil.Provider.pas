@@ -451,8 +451,8 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root;
-      Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('status'), tcStr);
-      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('status'), tcStr);
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
     except
       on E:Exception do
       begin
@@ -511,7 +511,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('status'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('status'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('notas');
       if not Assigned(ANode) then
@@ -546,7 +546,7 @@ begin
             NotaNode := DocumentoNota.Root;
             AuxNode := DocumentoNota.Root.Childrens.FindAnyNs('Nfse');
             AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-            NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
             if Assigned(ANota) then
@@ -630,9 +630,9 @@ begin
         Exit;
       end;
 
-      Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('status'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('status'), tcStr);
 
-      Response.Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('notas');
       if not Assigned(ANode) then
@@ -667,7 +667,7 @@ begin
             NotaNode := DocumentoNota.Root;
             AuxNode := DocumentoNota.Root.Childrens.FindAnyNs('Nfse');
             AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-            NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
             if Assigned(ANota) then
@@ -733,7 +733,7 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    Mensagem := ProcessarConteudoXml(ANodeArray[i].Childrens.FindAnyNs(AMessageTag), tcStr);
+    Mensagem := ObterConteudoTag(ANodeArray[i].Childrens.FindAnyNs(AMessageTag), tcStr);
     if Mensagem = '' then
       Continue;
 
@@ -747,7 +747,7 @@ begin
 
   for I := Low(ANodeArrayAlerta) to High(ANodeArrayAlerta) do
   begin
-    Mensagem := ProcessarConteudoXml(ANodeArrayAlerta[i].Childrens.FindAnyNs('aviso'), tcStr);
+    Mensagem := ObterConteudoTag(ANodeArrayAlerta[i].Childrens.FindAnyNs('aviso'), tcStr);
     if Mensagem = '' then
       Continue;
 

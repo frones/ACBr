@@ -92,7 +92,7 @@ begin
      OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal), ''));
 
   Result.AppendChild(AddNode(tcStr, '#2', 'cnpj', 1, 14, 1,
-                   OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), ''));
+                   OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), ''));
 
   if FpVersao = 103 then
     Result.AppendChild(AddNode(tcStr, '#2', 'cpf', 1, 14, 1,

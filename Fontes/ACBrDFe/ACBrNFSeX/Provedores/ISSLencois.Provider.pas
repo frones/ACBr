@@ -172,9 +172,9 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
-    AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('AvisoTecnico'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('AvisoTecnico'), tcStr);
 
     if AErro.Descricao = '' then
       AErro.Descricao := ANodeArray[I].AsString;
@@ -223,10 +223,10 @@ begin
 
       with Response do
       begin
-        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('validacao'), tcStr);
+        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('validacao'), tcStr);
       end;
 
-      Xml := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('xml'), tcStr);
+      Xml := ObterConteudoTag(ANode.Childrens.FindAnyNs('xml'), tcStr);
       {
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps();
 
@@ -355,9 +355,9 @@ begin
       begin
         with Response do
         begin
-          Sucesso := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
-          Link := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
+          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Resultado'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Nota'), tcStr);
+          Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('LinkImpressao'), tcStr);
         end;
       end;
      }

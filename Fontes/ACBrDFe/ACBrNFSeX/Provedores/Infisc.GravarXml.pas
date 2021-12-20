@@ -369,7 +369,7 @@ begin
     Result := CreateElement('prest');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'CNPJ', 1, 14, 1,
-                               NFSe.Prestador.IdentificacaoPrestador.Cnpj, ''));
+                            NFSe.Prestador.IdentificacaoPrestador.CpfCnpj, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xNome', 1, 100, 1,
                                                NFSe.Prestador.RazaoSocial, ''));
@@ -508,7 +508,7 @@ end;
 
 begin
   cUF := IntToStr(UFtoCUF(NFSe.Prestador.Endereco.UF));
-  CNPJ := Poem_Zeros(OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.Cnpj), 14);
+  CNPJ := Poem_Zeros(OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), 14);
   Modelo :=  NFSe.ModeloNFSe;
   aSerie := Poem_Zeros(UpperCase(NFSE.SeriePrestacao), 3);
   Numero := Poem_Zeros(NFSe.Numero, 9);

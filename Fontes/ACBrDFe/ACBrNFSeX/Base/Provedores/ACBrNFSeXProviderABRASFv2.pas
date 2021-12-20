@@ -411,8 +411,8 @@ begin
 
       with Response do
       begin
-        Data := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
-        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
       end;
 
       if Response.ModoEnvio in [meLoteSincrono, meUnitario] then
@@ -637,10 +637,10 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
 
       if Response.Situacao = '' then
-        Response.Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('SituacaoLoteRps'), tcStr);
+        Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('SituacaoLoteRps'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('ListaNfse');
 
@@ -862,7 +862,7 @@ begin
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('Confirmacao');
 
-        Response.Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Response.Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
         Response.DescSituacao := 'Nota Cancelada';
       end;
 
@@ -871,13 +871,13 @@ begin
       if AuxNode <> nil then
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
-        NumNFSe := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+        NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
         with Response do
         begin
           NumeroNota := NumNFSe;
-          CodVerificacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
         end;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
@@ -891,7 +891,7 @@ begin
           if AuxNode <> nil then
           begin
             AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
-            NumRps := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
           end;
@@ -1959,7 +1959,7 @@ begin
       end;
 
       Ret :=  Response.RetCancelamento;
-      Ret.DataHora := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
@@ -1969,29 +1969,29 @@ begin
       ANode := ANode.Childrens.FindAnyNs('Pedido');
       ANode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
 
-      Ret.Pedido.InfID.ID := ProcessarConteudoXml(ANode.Attributes.Items[IdAttr]);
-      Ret.Pedido.CodigoCancelamento := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
+      Ret.Pedido.InfID.ID := ObterConteudoTag(ANode.Attributes.Items[IdAttr]);
+      Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
       ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
       with Ret.Pedido.IdentificacaoNfse do
       begin
-        Numero := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+        Numero := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
 
         AuxNode := ANode.Childrens.FindAnyNs('CpfCnpj');
 
         if AuxNode <> nil then
         begin
-          Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+          Cnpj := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
           if Cnpj = '' then
-            Cnpj := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
+            Cnpj := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Cpf'), tcStr);
         end
         else
-          Cnpj := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
+          Cnpj := ObterConteudoTag(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
 
-        InscricaoMunicipal := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
-        CodigoMunicipio := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+        InscricaoMunicipal := ObterConteudoTag(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+        CodigoMunicipio := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       end;
     except
       on E:Exception do
@@ -2371,27 +2371,27 @@ begin
     begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
-        Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+        Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
         if Mensagem <> '' then
         begin
           AErro := Response.Erros.New;
-          AErro.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+          AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
           AErro.Descricao := Mensagem;
-          AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+          AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
         end;
       end;
     end
     else
     begin
-      Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+      Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
       if Mensagem <> '' then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+        AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
         AErro.Descricao := Mensagem;
-        AErro.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+        AErro.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
   end;
@@ -2406,27 +2406,27 @@ begin
     begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
-        Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+        Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
         if Mensagem <> '' then
         begin
           AAlerta := Response.Erros.New;
-          AAlerta.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+          AAlerta.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
           AAlerta.Descricao := Mensagem;
-          AAlerta.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+          AAlerta.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
         end;
       end;
     end
     else
     begin
-      Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+      Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
       if Mensagem <> '' then
       begin
         AAlerta := Response.Erros.New;
-        AAlerta.Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+        AAlerta.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
         AAlerta.Descricao := Mensagem;
-        AAlerta.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+        AAlerta.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
   end;

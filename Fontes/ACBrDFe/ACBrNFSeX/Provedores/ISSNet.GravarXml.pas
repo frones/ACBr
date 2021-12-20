@@ -70,6 +70,8 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacao;
+  DivAliq100 := True;
+
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
   NrOcorrValorInss := 1;
@@ -85,7 +87,7 @@ function TNFSeW_ISSNet.GerarPrestador: TACBrXmlNode;
 begin
   Result := CreateElement('Prestador');
 
-  Result.AppendChild(GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.Cnpj));
+  Result.AppendChild(GerarCPFCNPJ(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj));
 
   Result.AppendChild(AddNode(tcStr, '#35', 'InscricaoMunicipal', 1, 15, 0,
              NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, DSC_IM));

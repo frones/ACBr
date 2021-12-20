@@ -321,7 +321,7 @@ begin
   else
     NumDoc := ANFSe.Numero;
 
-  xCNPJ := ANFSe.Prestador.IdentificacaoPrestador.Cnpj;
+  xCNPJ := ANFSe.Prestador.IdentificacaoPrestador.CpfCnpj;
 
   if Configuracoes.Arquivos.NomeLongoNFSe then
     Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,

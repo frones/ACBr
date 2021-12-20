@@ -524,7 +524,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '';
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('mensagens'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mensagens'), tcStr);
 
     if AErro.Descricao = '' then
       AErro.Descricao := ANodeArray[I].AsString;
@@ -583,7 +583,7 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      FPHash := ProcessarConteudoXml(Document.Root.Childrens.FindAnyNs('return'), tcStr);
+      FPHash := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('return'), tcStr);
     except
       on E:Exception do
       begin
@@ -738,9 +738,9 @@ begin
 
         with Response do
         begin
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataRecebimento'), tcDatHor);
-          Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
-          Protocolo := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numeroProtocolo'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataRecebimento'), tcDatHor);
+          Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
+          Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroProtocolo'), tcStr);
         end;
       end;
     except
@@ -816,8 +816,8 @@ begin
       begin
         with Response do
         begin
-          Lote := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacaoLoteRps'), tcStr);
+          Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numeroLote'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacaoLoteRps'), tcStr);
         end;
       end;
     except
@@ -893,10 +893,10 @@ begin
       begin
         with Response do
         begin
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
-          idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
+          idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
     except
@@ -973,10 +973,10 @@ begin
         with Response do
         begin
           // Verificar o que é retornado
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
-          idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
+          idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
     except
@@ -1055,10 +1055,10 @@ begin
         with Response do
         begin
           // Verificar o que é retornado
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
-          idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
+          idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
     except
@@ -1135,10 +1135,10 @@ begin
         with Response do
         begin
           // Verificar o que é retornado
-          Data := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
-          idNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
-          NumeroNota := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
-          Situacao := ProcessarConteudoXml(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dataProcessamento'), tcDatHor);
+          idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('idNota'), tcStr);
+          NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
         end;
       end;
     except

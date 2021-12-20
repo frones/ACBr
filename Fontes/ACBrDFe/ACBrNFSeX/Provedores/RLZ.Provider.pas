@@ -383,13 +383,13 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+    Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
 
     if Codigo <> '1' then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := Codigo;
-      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('mensagem'), tcStr);
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mensagem'), tcStr);
       AErro.Correcao := '';
     end;
   end;
@@ -501,12 +501,12 @@ begin
 
       with Response do
       begin
-        NumeroNota := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero'), tcStr);
+        NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numero'), tcStr);
         NumNfse := NumeroNota;
-        Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('guia'), tcStr);
-        CodVerificacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
-        Link := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('url'), tcStr);
-        Situacao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('situacao'), tcStr);
+        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('guia'), tcStr);
+        CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
+        Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('url'), tcStr);
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('situacao'), tcStr);
       end;
 
       if Response.NumeroNota = '' then
@@ -617,7 +617,7 @@ begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[I];
-        NumRps := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('numero'), tcStr);
+        NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('numero'), tcStr);
 
         if NumRps <> '' then
         begin

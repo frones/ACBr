@@ -175,13 +175,13 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    xId := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Id'), tcStr);
+    xId := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Id'), tcStr);
 
     if xId <> 'OK' then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := xId;
-      AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
       AErro.Correcao := '';
     end;
   end;
@@ -458,7 +458,7 @@ begin
       begin
         with Response do
         begin
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
+          Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
         end;
       end;
     except
@@ -552,7 +552,7 @@ begin
       begin
         with Response do
         begin
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
+          Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
         end;
       end;
     except
@@ -837,7 +837,7 @@ begin
       begin
         with Response do
         begin
-          Protocolo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
+          Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('PrtCSerRps'), tcStr);
         end;
       end;
     except

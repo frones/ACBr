@@ -301,29 +301,29 @@ begin
     begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
-        Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-        Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+        Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+        Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
         if (Codigo <> 'A0000') and (Mensagem <> '') then
         begin
           AErro := Response.Erros.New;
           AErro.Codigo := Codigo;
           AErro.Descricao := Mensagem;
-          AErro.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+          AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
         end;
       end;
     end
     else
     begin
-      Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
-      Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+      Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+      Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
       if (Codigo <> 'A0000') and (Mensagem <> '') then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Codigo;
         AErro.Descricao := Mensagem;
-        AErro.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+        AErro.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
   end;
@@ -338,27 +338,27 @@ begin
     begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
-        Mensagem := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+        Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
         if Mensagem <> '' then
         begin
           AAlerta := Response.Erros.New;
-          AAlerta.Codigo := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+          AAlerta.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
           AAlerta.Descricao := Mensagem;
-          AAlerta.Correcao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+          AAlerta.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
         end;
       end;
     end
     else
     begin
-      Mensagem := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
+      Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
       if Mensagem <> '' then
       begin
         AAlerta := Response.Erros.New;
-        AAlerta.Codigo := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+        AAlerta.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
         AAlerta.Descricao := Mensagem;
-        AAlerta.Correcao := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
+        AAlerta.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
   end;

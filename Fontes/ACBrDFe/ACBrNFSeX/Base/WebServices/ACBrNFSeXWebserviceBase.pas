@@ -532,16 +532,16 @@ begin
 
   if (ANode <> nil) then
   begin
-    aMsg := ProcessarConteudoXml(ANode.Childrens.FindAnyNs(FPFaultCodeNode), tcStr) +
+    aMsg := ObterConteudoTag(ANode.Childrens.FindAnyNs(FPFaultCodeNode), tcStr) +
        ' - ' +
-       ProcessarConteudoXml(ANode.Childrens.FindAnyNs(FPFaultMsgNode), tcStr);
+       ObterConteudoTag(ANode.Childrens.FindAnyNs(FPFaultMsgNode), tcStr);
 
     if aMsg = ' - ' then
-      aMsg := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Code'), tcStr) +
+      aMsg := ObterConteudoTag(ANode.Childrens.FindAnyNs('Code'), tcStr) +
        ' - ' +
-       ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Reason'), tcStr) +
+       ObterConteudoTag(ANode.Childrens.FindAnyNs('Reason'), tcStr) +
        ' - ' +
-       ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Detail'), tcStr);
+       ObterConteudoTag(ANode.Childrens.FindAnyNs('Detail'), tcStr);
 
     raise EACBrDFeException.Create(aMsg);
   end;
@@ -627,6 +627,7 @@ var
   Tentar, Tratado, TemCertificadoConfigurado: Boolean;
   HTTPResultCode, InternalErrorCode: Integer;
   aRetorno: TACBrXmlDocument;
+  CharSet: string;
 begin
   FPEnvio := PrepararEnvio(Message, SoapAction, SoapHeader, namespace);
 
@@ -682,7 +683,13 @@ begin
             HttpClient.Execute;
 
             HttpClient.DataResp.Position := 0;
-            FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size);
+
+            CharSet := HttpClient.HeaderResp.GetHeaderValue('Content-Type');
+
+            if Pos('utf-8', CharSet) > 0 then
+              FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size)
+            else
+              FPRetorno := UTF8ToNativeString(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
 
             // Alsuns provedores retorna uma string apenas com a mensagem de erro
             if Pos('Body', FPRetorno) = 0 then

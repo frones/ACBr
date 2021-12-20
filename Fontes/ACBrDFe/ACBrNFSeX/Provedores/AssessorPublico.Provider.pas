@@ -169,7 +169,7 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := '';
-    AErro.Descricao := ProcessarConteudoXml(ANodeArray[I].Childrens.FindAnyNs('ERRO'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ERRO'), tcStr);
     AErro.Correcao := '';
   end;
 end;
@@ -241,7 +241,7 @@ begin
         ProcessarMensagemErros(ANode, Response, 'NFSE', 'INCONSISTENCIA');
       end
       else
-        Response.Protocolo := Trim(ProcessarConteudoXml(ANode.Childrens.FindAnyNs('Mensagem'), tcStr));
+        Response.Protocolo := Trim(ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr));
 
       Response.Sucesso := (Response.Erros.Count = 0);
     except
@@ -342,7 +342,7 @@ begin
       begin
         ANode := ANodeArray[i];
 
-        NumNFSe := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('COD'), tcStr);
+        NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('COD'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
@@ -467,7 +467,7 @@ begin
       begin
         ANode := ANodeArray[i];
 
-        NumNFSe := ProcessarConteudoXml(ANode.Childrens.FindAnyNs('COD'), tcStr);
+        NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('COD'), tcStr);
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 

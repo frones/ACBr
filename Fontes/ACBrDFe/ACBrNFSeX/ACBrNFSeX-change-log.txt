@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/12/2021
+-- ACBrNFSeXServicos --
+[+] Inclusão da URL de produção da cidade Bauru/SP.
+   Por: Innovae Brasil Engenharia
 -- Diversos --
 [+] Implementado o enumerador filsSemFormatacaoSemZeroEsquerda para ser 
     utilizado na formatação do ItemListaServico

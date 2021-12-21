@@ -1,19 +1,21 @@
 object LibBoletoDM: TLibBoletoDM
   OldCreateOrder = False
-  Height = 148
-  Width = 193
+  Left = 346
+  Top = 174
+  Height = 215
+  Width = 262
   object ACBrBoleto1: TACBrBoleto
     MAIL = ACBrMail1
     Banco.TamanhoMaximoNossoNum = 10
     Banco.TipoCobranca = cobNenhum
-    Banco.LayoutVersaoArquivo = 0
-    Banco.LayoutVersaoLote = 0
+    Banco.LayoutVersaoArquivo = clBlack
+    Banco.LayoutVersaoLote = clBlack
     Banco.CasasDecimaisMoraJuros = 2
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     DirArqRemessa = 'C:\Temp\'
     DirArqRetorno = 'C:\Temp\'
-    NumeroArquivo = 0
+    NumeroArquivo = clBlack
     LeCedenteRetorno = True
     Configuracoes.Arquivos.LogRegistro = False
     Configuracoes.WebService.SSLHttpLib = httpOpenSSL
@@ -22,8 +24,8 @@ object LibBoletoDM: TLibBoletoDM
     Configuracoes.WebService.Ambiente = taHomologacao
     Configuracoes.WebService.Operacao = tpInclui
     Configuracoes.WebService.VersaoDF = '1.2'
-    Left = 39
-    Top = 36
+    Left = 59
+    Top = 54
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -33,7 +35,7 @@ object LibBoletoDM: TLibBoletoDM
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = UTF_8
-    Left = 120
-    Top = 36
+    Left = 180
+    Top = 54
   end
 end

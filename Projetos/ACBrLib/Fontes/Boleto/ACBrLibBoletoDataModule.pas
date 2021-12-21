@@ -43,7 +43,6 @@ uses
 type
 
   { TLibBoletoDM }
-
   TLibBoletoDM = class(TLibDataModule)
     ACBrBoleto1: TACBrBoleto;
     ACBrMail1: TACBrMail;

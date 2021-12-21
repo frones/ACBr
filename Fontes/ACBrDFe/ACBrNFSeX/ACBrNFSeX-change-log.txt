@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 21/12/2021
+-- Diversos --
+[+] Implementado o enumerador filsSemFormatacaoSemZeroEsquerda para ser 
+    utilizado na formatação do ItemListaServico
+   Por: Italo Giurizzato Junior
 -- SilTecnologia.Provider --
 [*] Trocado o XmlToStr por IncluirCDATA com o objetivo de enviar XML com o
     caractere "&" em seu conteúdo.

@@ -391,7 +391,7 @@ begin
   end
   else
   begin
-    if NFSe.Tomador.IdentificacaoTomador.Tipo in [tpPFNaoIdentificaca, tpPF] then
+    if NFSe.Tomador.IdentificacaoTomador.Tipo in [tpPFNaoIdentificada, tpPF] then
       Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'F', ''))
     else
       Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'J', ''));

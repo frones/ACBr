@@ -69,7 +69,7 @@ procedure TNFSeW_ISSNet.Configuracao;
 begin
   inherited Configuracao;
 
-  FormatoItemListaServico := filsSemFormatacao;
+  FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
   DivAliq100 := True;
 
   NrOcorrValorPis := 1;

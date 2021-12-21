@@ -209,6 +209,14 @@ begin
         Result := Copy(item, 2, 4)
       else
         Result := item;
+
+    filsSemFormatacaoSemZeroEsquerda:
+      begin
+        Result := OnlyNumber(item);
+
+        if Copy(Result, 1, 1) = '0' then
+          Result := Copy(Result, 2, 4);
+      end
   else
     Result := item;
   end;

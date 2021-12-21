@@ -200,12 +200,13 @@ type
   TFormatoIDLote = (fidInt, fidStr, fidCNPJIMLote);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
-                              filsComFormatacaoSemZeroEsquerda);
+                              filsComFormatacaoSemZeroEsquerda,
+                              filsSemFormatacaoSemZeroEsquerda);
 
   TSituacaoTrib = (tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta, tsImune,
                    tsNaoTributada);
 
-  TTipoPessoa = (tpPFNaoIdentificaca, tpPF, tpPJdoMunicipio, tpPJforaMunicipio,
+  TTipoPessoa = (tpPFNaoIdentificada, tpPF, tpPJdoMunicipio, tpPJforaMunicipio,
                  tpPJforaPais);
 
   TtpConsulta = (tcPorNumero, tcPorFaixa, tcPorPeriodo, tcServicoPrestado,
@@ -18913,7 +18914,7 @@ function TipoPessoaToStr(const t: TTipoPessoa): string;
 begin
   Result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5'],
-                           [tpPFNaoIdentificaca, tpPF, tpPJdoMunicipio,
+                           [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
                             tpPJforaMunicipio, tpPJforaPais]);
 end;
 
@@ -18921,7 +18922,7 @@ function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa;
 begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5'],
-                           [tpPFNaoIdentificaca, tpPF, tpPJdoMunicipio,
+                           [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
                             tpPJforaMunicipio, tpPJforaPais]);
 end;
 

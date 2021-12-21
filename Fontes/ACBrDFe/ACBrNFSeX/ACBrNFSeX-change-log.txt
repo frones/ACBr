@@ -47,7 +47,7 @@ Símbolo : Significado
 -- SilTecnologia.Provider --
 [*] Trocado o XmlToStr por IncluirCDATA com o objetivo de enviar XML com o
     caractere "&" em seu conteúdo.
-   Por: Fabiano Hoffmann
+   Por: Mufalo
 -- Diversos --
 [+] Implementado o grupo <genericos> no provedor IPM.
    Por: Fabiano Hoffmann

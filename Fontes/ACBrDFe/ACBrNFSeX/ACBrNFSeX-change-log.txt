@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/12/2021
+-- SilTecnologia.Provider --
+[*] Trocado o XmlToStr por IncluirCDATA com o objetivo de enviar XML com o
+    caractere "&" em seu conteúdo.
+   Por: Fabiano Hoffmann
+-- Diversos --
+[+] Implementado o grupo <genericos> no provedor IPM.
+   Por: Fabiano Hoffmann
+
 20/12/2021
 -- Diversos --
 [+] Criado o parâmetro Params3.

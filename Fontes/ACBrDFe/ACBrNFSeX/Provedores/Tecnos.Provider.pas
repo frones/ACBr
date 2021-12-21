@@ -374,7 +374,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mRecepcaoLoteRPS xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mRecepcaoLoteRPS>';
 
   Result := Executar('http://tempuri.org/mRecepcaoLoteRPS', Request,
@@ -390,7 +390,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mEnvioLoteRPSSincrono xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mEnvioLoteRPSSincrono>';
 
   Result := Executar('http://tempuri.org/mEnvioLoteRPSSincrono', Request,
@@ -406,7 +406,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mGerarNfse xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mGerarNfse>';
 
   Result := Executar('http://tempuri.org/mGerarNfse', Request,
@@ -422,7 +422,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mConsultaLoteRPS xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mConsultaLoteRPS>';
 
   Result := Executar('http://tempuri.org/mConsultaLoteRPS', Request,
@@ -438,7 +438,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mConsultaNFSePorFaixa xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mConsultaNFSePorFaixa>';
 
   Result := Executar('http://tempuri.org/mConsultaNFSePorFaixa', Request,
@@ -454,7 +454,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mConsultaNFSePorRPS xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mConsultaNFSePorRPS>';
 
   Result := Executar('http://tempuri.org/mConsultaNFSePorRPS', Request,
@@ -470,7 +470,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mConsultaNFSeServicosPrestados xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mConsultaNFSeServicosPrestados>';
 
   Result := Executar('http://tempuri.org/mConsultaNFSeServicosPrestados', Request,
@@ -486,7 +486,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mConsultaNFSeServicosTomadosIntermediados xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mConsultaNFSeServicosTomadosIntermediados>';
 
   Result := Executar('http://tempuri.org/mConsultaNFSeServicosTomadosIntermediados', Request,
@@ -501,7 +501,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<mCancelamentoNFSe xmlns="http://tempuri.org/">';
-  Request := Request + '<remessa>' + XmlToStr(AMSG) + '</remessa>';
+  Request := Request + '<remessa>' + IncluirCDATA(AMSG) + '</remessa>';
   Request := Request + '</mCancelamentoNFSe>';
 
   Result := Executar('http://tempuri.org/mCancelamentoNFSe', Request,

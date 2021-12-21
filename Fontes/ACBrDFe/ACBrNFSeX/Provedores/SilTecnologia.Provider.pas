@@ -321,7 +321,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:recepcionarLoteRps>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:recepcionarLoteRps>';
 
   Result := Executar('', Request,
@@ -337,7 +337,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:recepcionarLoteRpsSincrono>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:recepcionarLoteRpsSincrono>';
 
   Result := Executar('', Request,
@@ -353,7 +353,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:gerarNfse>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:gerarNfse>';
 
   Result := Executar('', Request,
@@ -369,7 +369,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarLoteRps>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:consultarLoteRps>';
 
   Result := Executar('', Request,
@@ -385,7 +385,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfsePorFaixa>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:consultarNfsePorFaixa>';
 
   Result := Executar('', Request,
@@ -401,7 +401,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfsePorRps>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:consultarNfsePorRps>';
 
   Result := Executar('', Request,
@@ -417,7 +417,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfseServicoPrestado>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:consultarNfseServicoPrestado>';
 
   Result := Executar('', Request,
@@ -433,7 +433,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:consultarNfseServicoTomado>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:consultarNfseServicoTomado>';
 
   Result := Executar('', Request,
@@ -449,7 +449,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:cancelarNfse>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:cancelarNfse>';
 
   Result := Executar('', Request,
@@ -465,7 +465,7 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<nfse:substituirNfse>';
-  Request := Request + '<xml>' + XmlToStr(AMSG) + '</xml>';
+  Request := Request + '<xml>' + IncluirCDATA(AMSG) + '</xml>';
   Request := Request + '</nfse:substituirNfse>';
 
   Result := Executar('', Request,

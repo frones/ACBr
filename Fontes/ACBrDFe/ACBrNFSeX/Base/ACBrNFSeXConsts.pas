@@ -76,6 +76,8 @@ const
   DSC_QTDDIAR = 'Quantidade de Diarias';
   DSC_VDIAR = 'Valor da Diaria';
   DSC_INSCMUN = 'Inscrição Municipal';
+  DSC_GENERICOSTITULO = 'Título do campo livre';
+  DESC_GENERICOSDESCRICAO = 'Conteúdo do campo livre.';
 
   // Códigos e Descrições das mensagens
   Cod001 = 'X001';

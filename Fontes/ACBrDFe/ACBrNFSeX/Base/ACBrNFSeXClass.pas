@@ -766,6 +766,25 @@ type
     property Items[Index: Integer]: TQuartoCollectionItem read GetItem write SetItem; default;
   end;
 
+  TGenericosCollectionItem = class(TObject)
+  private
+    FTitulo: string;
+    FDescricao: string;
+  public
+    property Titulo: string read FTitulo write FTitulo;
+    property Descricao: string read FDescricao write FDescricao;
+  end;
+
+  TGenericosCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TGenericosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TGenericosCollectionItem);
+  public
+    function Add: TGenericosCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TGenericosCollectionItem;
+    property Items[Index: Integer]: TGenericosCollectionItem read GetItem write SetItem; default;
+  end;
+
   TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -855,12 +874,15 @@ type
     Fid_sis_legado: Integer;
     FSituacaoTrib: TSituacaoTrib;
     FrefNF: string;
+    FGenericos: TGenericosCollection;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
     procedure SetDespesa(const Value: TDespesaCollection);
     procedure SetAssinaComChaveParams(
       const Value: TAssinaComChaveParamsCollection);
+    procedure SetGenericos(const Value: TGenericosCollection);
+    procedure SetQuartos(const Value: TQuartoCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -889,7 +911,7 @@ type
     // Provedor IssDsf
     property SeriePrestacao: string read FSeriePrestacao write FSeriePrestacao;
     property Servico: TDadosServico read FServico write FServico;
-    property Quartos: TQuartoCollection read FQuartos write FQuartos;
+    property Quartos: TQuartoCollection read FQuartos write SetQuartos;
     property Prestador: TDadosPrestador read FPrestador write FPrestador;
     property Tomador: TDadosTomador read FTomador write FTomador;
     property IntermediarioServico: TIdentificacaoIntermediarioServico read FIntermediarioServico write FIntermediarioServico;
@@ -957,6 +979,8 @@ type
     // Código da nota no sistema legado do contribuinte.
     property id_sis_legado: Integer read Fid_sis_legado write Fid_sis_legado;
     property SituacaoTrib: TSituacaoTrib read FSituacaoTrib write FSituacaoTrib;
+    // Provedor IPM
+    property Genericos: TGenericosCollection read FGenericos write SetGenericos;
   end;
 
   TSubstituicaoNfse = class(TObject)
@@ -1136,6 +1160,7 @@ begin
   Femail := TemailCollection.Create;
   FDespesa := TDespesaCollection.Create;
   FAssinaComChaveParams := TAssinaComChaveParamsCollection.Create;
+  FGenericos := TGenericosCollection.Create;
 
   Clear;
 end;
@@ -1162,6 +1187,7 @@ begin
   FDespesa.Free;
   FAssinaComChaveParams.Free;
   FTransportadora.Free;
+  FGenericos.Free;
 
   inherited Destroy;
 end;
@@ -1171,9 +1197,19 @@ begin
   FInformacoesComplementares := Value;
 end;
 
+procedure TNFSe.SetQuartos(const Value: TQuartoCollection);
+begin
+  FQuartos := Value;
+end;
+
 procedure TNFSe.Setemail(const Value: TemailCollection);
 begin
   Femail := Value;
+end;
+
+procedure TNFSe.SetGenericos(const Value: TGenericosCollection);
+begin
+  FGenericos := Value;
 end;
 
 procedure TNFSe.SetDespesa(const Value: TDespesaCollection);
@@ -1449,6 +1485,30 @@ end;
 procedure TIdentificacaoPrestador.SetCnpj(const Value: string);
 begin
   FCpfCnpj := Value;
+end;
+
+{ TGenericosCollection }
+
+function TGenericosCollection.Add: TGenericosCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TGenericosCollection.GetItem(Index: Integer): TGenericosCollectionItem;
+begin
+  Result := TGenericosCollectionItem(inherited Items[Index]);
+end;
+
+function TGenericosCollection.New: TGenericosCollectionItem;
+begin
+  Result := TGenericosCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TGenericosCollection.SetItem(Index: Integer;
+  Value: TGenericosCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

@@ -62,6 +62,8 @@ type
     function GerarCondicaoPagamento: TACBrXmlNode;
     function GerarParcelas: TACBrXmlNode;
     function GerarParcela: TACBrXmlNodeArray;
+    function GerarGenericos: TACBrXmlNode;
+    function GerarLinha: TACBrXmlNodeArray;
   public
     function GerarXml: Boolean; override;
 
@@ -130,6 +132,9 @@ begin
   xmlNode := GerarItens;
   NFSeNode.AppendChild(xmlNode);
 
+  xmlNode := GerarGenericos;
+  NFSeNode.AppendChild(xmlNode);
+
   if (NFSe.Status = srNormal) and (VersaoNFSe = ve101 ) then
   begin
     xmlNode := GerarCondicaoPagamento;
@@ -164,6 +169,29 @@ begin
   begin
     xmlNode := GerarParcelas;
     Result.AppendChild(xmlNode);
+  end;
+end;
+
+function TNFSeW_IPM.GerarGenericos: TACBrXmlNode;
+var
+  nodeArray: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  Result := nil;
+
+  if NFSe.Genericos.Count > 0 then
+  begin
+    Result := CreateElement('genericos');
+
+    nodeArray := GerarLinha;
+
+    if nodeArray <> nil then
+    begin
+      for i := 0 to Length(nodeArray) - 1 do
+      begin
+        Result.AppendChild(nodeArray[i]);
+      end;
+    end;
   end;
 end;
 
@@ -205,6 +233,29 @@ begin
       Result.AppendChild(nodeArray[i]);
     end;
   end;
+end;
+
+function TNFSeW_IPM.GerarLinha: TACBrXmlNodeArray;
+var
+  i: integer;
+begin
+  Result := nil;
+  SetLength(Result, NFSe.Genericos.Count);
+
+  for i := 0 to NFSe.Genericos.Count - 1 do
+  begin
+    Result[i] := CreateElement('linha');
+
+    Result[i].AppendChild(AddNode(tcStr, '#', 'titulo', 1, 50, 0,
+                                NFSe.Genericos[I].Titulo, DSC_GENERICOSTITULO));
+
+    Result[i].AppendChild(AddNode(tcStr, '#', 'descricao', 1, 200, 0,
+                         NFSe.Genericos[I].Descricao, DESC_GENERICOSDESCRICAO));
+
+  end;
+
+  if NFSe.Genericos.Count > 10 then
+    wAlerta('#', 'linha', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 function TNFSeW_IPM.GerarLista: TACBrXmlNodeArray;

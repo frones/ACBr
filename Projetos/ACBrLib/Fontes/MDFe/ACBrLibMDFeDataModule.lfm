@@ -1,12 +1,11 @@
-object LibMDFeDM: TLibMDFeDM
-  OldCreateOrder = False
+inherited LibMDFeDM: TLibMDFeDM
   Left = 346
   Top = 174
   Height = 88
-  HorizontalOffset = 238
-  VerticalOffset = 116
+  HorizontalOffset = 244
+  VerticalOffset = 124
   Width = 186
-  object ACBrMDFe1: TACBrMDFe
+  object ACBrMDFe1: TACBrMDFe[0]
     MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
@@ -21,7 +20,7 @@ object LibMDFeDM: TLibMDFeDM
     Left = 32
     Top = 24
   end
-  object ACBrMail1: TACBrMail
+  object ACBrMail1: TACBrMail[1]
     Host = '127.0.0.1'
     Port = '25'
     SetSSL = False

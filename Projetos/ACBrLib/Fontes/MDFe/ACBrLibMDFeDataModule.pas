@@ -48,7 +48,6 @@ type
   TLibMDFeDM = class(TLibDataModule)
     ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
-
   private
     fpLib: TACBrLib;
     DAMDFe: TACBrMDFeDAMDFeRL;

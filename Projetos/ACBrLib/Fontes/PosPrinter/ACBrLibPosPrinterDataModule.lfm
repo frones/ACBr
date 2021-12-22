@@ -2,11 +2,10 @@ object LibPosPrinterDM: TLibPosPrinterDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
-  Height = 314
-  HorizontalOffset = 0
-  VerticalOffset = 513
-  Width = 418
-  PPI = 96
+  Height = 132
+  HorizontalOffset = 205
+  VerticalOffset = 438
+  Width = 178
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
@@ -16,7 +15,7 @@ object LibPosPrinterDM: TLibPosPrinterDM
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    left = 128
-    top = 120
+    Left = 72
+    Top = 40
   end
 end

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/12/2021
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[-] Correção na leitura do CPF/CNPJ do Prestador de Serviço.
+   Por: Italo Giurizzato Junior
 -- SigISS.GravarXml --
 [*] Para a tag <retencao_iss> devemos usar agora o campo ValorIssRetido em
     de ValorIss.

@@ -55,6 +55,7 @@ type
 
     procedure LerPrestadorServico(const ANode: TACBrXmlNode);
     procedure LerEnderecoPrestadorServico(const ANode: TACBrXmlNode; aTag: string);
+    procedure LerContatoPrestadorServico(const ANode: TACBrXmlNode);
     procedure LerContatoPrestador(const ANode: TACBrXmlNode);
 
     procedure LerOrgaoGerador(const ANode: TACBrXmlNode);
@@ -160,6 +161,24 @@ begin
     begin
       Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('Telefone'), tcStr);
       Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('Email'), tcStr);
+    end;
+  end;
+end;
+
+procedure TNFSeR_ABRASFv2.LerContatoPrestadorServico(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('ContatoPrestadorServico');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.Prestador.Contato do
+    begin
+      Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('Telefone'), tcStr);
+      Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('Email'), tcStr);
     end;
   end;
 end;
@@ -286,15 +305,12 @@ begin
       begin
         AuxNodeCpfCnpj := AuxNode.Childrens.FindAnyNs('CpfCnpj');
 
-        with NFSe.Tomador.IdentificacaoTomador do
+        if AuxNodeCpfCnpj <> nil then
         begin
-          if AuxNodeCpfCnpj <> nil then
-          begin
-            CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cpf'), tcStr);
+          CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cpf'), tcStr);
 
-            if CpfCnpj = '' then
-              CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
-          end;
+          if CpfCnpj = '' then
+            CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
         end;
       end;
 
@@ -311,15 +327,12 @@ begin
       begin
         AuxNodeCpfCnpj := ANode.Childrens.FindAnyNs('CpfCnpj');
 
-        with NFSe.Tomador.IdentificacaoTomador do
+        if AuxNodeCpfCnpj <> nil then
         begin
-          if AuxNodeCpfCnpj <> nil then
-          begin
-            CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cpf'), tcStr);
+          CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cpf'), tcStr);
 
-            if CpfCnpj = '' then
-              CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
-          end;
+          if CpfCnpj = '' then
+            CpfCnpj := ObterConteudo(AuxNodeCpfCnpj.Childrens.FindAnyNs('Cnpj'), tcStr);
         end;
       end;
 

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2021
+--- ACBrLibComum ---
+[*] Melhoria em "LIB_Inicializar", e para evitar A.V. em "LiberarLib" caso a Lib
+    não consiga ser criada
+
+--- ACBrLibDataModule ---
+[-] Adicionado .LFM, para permitir que Lazarus faça a herança visual de formulárip
+    (por: DSA)
+
 26/03/2020
 --- ACBrLibRespostas--
 [*] Ajuste na geração de Respostas tipo data e hora

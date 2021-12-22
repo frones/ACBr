@@ -51,7 +51,6 @@ type
     ACBrMail1: TACBrMail;
     ACBrNFe1: TACBrNFe;
     ACBrPosPrinter1: TACBrPosPrinter;
-
   private
     DANFCeFortes: TACBrNFeDANFCeFortes;
     DANFCeA4: TACBrNFeDANFCeFortesA4;

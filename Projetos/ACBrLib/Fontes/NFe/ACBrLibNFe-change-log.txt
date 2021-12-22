@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2021
+--- ACBrLibNFeDataModule ---
+[-] Correção para herença visual em Lazarus de "TLibDataModule"
+    (por: DSA)
+
 09/12/2021
 --- ACBrLiNFeBase ---
 [*] Ajustado os métodos da ACBrLibNFe para que possam ser usados CPF e CNPJ.

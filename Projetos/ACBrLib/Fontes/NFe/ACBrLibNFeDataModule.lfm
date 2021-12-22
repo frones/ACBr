@@ -1,10 +1,11 @@
-object LibNFeDM: TLibNFeDM
-  OldCreateOrder = False
+inherited LibNFeDM: TLibNFeDM
   Left = 346
   Top = 174
   Height = 215
+  HorizontalOffset = 498
+  VerticalOffset = 233
   Width = 262
-  object ACBrNFe1: TACBrNFe
+  object ACBrNFe1: TACBrNFe[0]
     MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
@@ -20,13 +21,13 @@ object LibNFeDM: TLibNFeDM
     Left = 48
     Top = 48
   end
-  object ACBrIntegrador1: TACBrIntegrador
+  object ACBrIntegrador1: TACBrIntegrador[1]
     PastaInput = 'C:\Integrador\Input\'
     PastaOutput = 'C:\Integrador\Output\'
     Left = 48
     Top = 112
   end
-  object ACBrMail1: TACBrMail
+  object ACBrMail1: TACBrMail[2]
     Host = '127.0.0.1'
     Port = '25'
     SetSSL = False
@@ -37,7 +38,7 @@ object LibNFeDM: TLibNFeDM
     Left = 152
     Top = 112
   end
-  object ACBrPosPrinter1: TACBrPosPrinter
+  object ACBrPosPrinter1: TACBrPosPrinter[3]
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0

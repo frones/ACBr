@@ -105,7 +105,6 @@ begin
   Create(ArqConfig, ChaveCrypt);
   FBoletoDM := TLibBoletoDM.Create(nil);
   FBoletoDM.Lib := Self;
-
 end;
 
 destructor TACBrLibBoleto.Destroy;

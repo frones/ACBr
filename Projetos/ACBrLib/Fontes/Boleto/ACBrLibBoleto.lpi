@@ -239,7 +239,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\Testes\Boleto\bin\ACBrBoleto32"/>
+            <Filename Value="..\..\Testes\Boleto\bin\ACBrBoleto64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -252,7 +252,8 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <TargetCPU Value="i386"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -265,7 +266,8 @@
           </Linking>
           <Other>
             <CustomOptions Value="-dDEBUG
--dNOGUI"/>
+-dNOGUI
+-dMT"/>
           </Other>
         </CompilerOptions>
       </Item7>
@@ -603,6 +605,9 @@
       <Unit13>
         <Filename Value="..\Comum\ACBrLibDataModule.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="LibDataModule"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit13>
     </Units>
   </ProjectOptions>

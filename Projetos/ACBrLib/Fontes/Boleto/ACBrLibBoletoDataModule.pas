@@ -43,10 +43,10 @@ uses
 type
 
   { TLibBoletoDM }
+
   TLibBoletoDM = class(TLibDataModule)
     ACBrBoleto1: TACBrBoleto;
     ACBrMail1: TACBrMail;
-
   private
     BoletoFortes: TACBrBoletoFCFortes;
     FLayoutImpressao: Integer;
@@ -72,6 +72,7 @@ uses
 {$R *.lfm}
 
 { TLibBoletoDM }
+
 procedure TLibBoletoDM.AplicarConfiguracoes;
 var
   LibConfig: TLibBoletoConfig;

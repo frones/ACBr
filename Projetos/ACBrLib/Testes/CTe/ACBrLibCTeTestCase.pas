@@ -92,11 +92,11 @@ uses
 
 procedure TTestACBrCTeLib.Test_CTe_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   try
-     AssertEquals(ErrOk, CTE_Finalizar(Handle));
+     //AssertEquals(ErrOk, CTE_Finalizar(Handle));
      AssertEquals(ErrDiretorioNaoExiste, CTe_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
   except
     on E: Exception do
@@ -107,7 +107,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inicializar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CTE_Finalizar(Handle));
@@ -115,7 +115,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inicializar_Ja_Inicializado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -124,7 +124,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Finalizar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CTe_Finalizar(Handle));
@@ -132,7 +132,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Finalizar_Ja_Finalizado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   try
@@ -148,7 +148,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ConfigLerValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -164,7 +164,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ConfigGravarValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -183,7 +183,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_StatusServico;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -201,7 +201,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_LimparLista;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   // Iniciando a Limpeza da Lista de CT-e
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -211,7 +211,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_CarregarXML;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   // Iniciando o Carregamento do XML do CT-e
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -225,7 +225,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Imprimir;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
      // Iniciando a Impressão do DACTE
      AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -235,7 +235,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirPDF;
 var
-  Handle: Longint;
+  Handle: THandle;
 begin
      // Iniciando a geração do PDF do DACTE
      AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -245,7 +245,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_CarregarINI;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
 
@@ -261,7 +261,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Assinar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   // Iniciando a Assinatura
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -271,7 +271,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Validar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   // Iniciando a Validação
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -281,7 +281,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ValidarRegrasdeNegocios;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -303,7 +303,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_VerificarAssinatura;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -325,7 +325,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Enviar;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -354,7 +354,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Consultar;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -385,7 +385,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Cancelar;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -415,7 +415,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inutilizar;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -435,7 +435,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirInutilizacao;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   // Iniciando a Impressão da Inutilização
    AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -449,7 +449,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirInutilizacaoPDF;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   // Iniciando a Geração do PDF da Inutilização
   AssertEquals(ErrOk, CTe_Inicializar(Handle, '',''));
@@ -468,7 +468,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_EnviarEmailEvento;
 var
-  Handle:longint;
+  Handle:THandle;
   Path, ArqCTe, ArqEvento: String;
 begin
 
@@ -496,7 +496,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirEvento;
 var
-  Handle: longint;
+  Handle: THandle;
   Path, ArqCTe, ArqEvento: String;
 begin
   // Iniciando a Impressão do Evento
@@ -515,7 +515,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirEventoPDF;
 var
-  Handle: longint;
+  Handle: THandle;
   Path, ArqCTe, ArqEvento: String;
 begin
   // Iniciando a geração do PDF do Evento
@@ -534,7 +534,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_DistribuicaoDFePorUltNSU;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin
@@ -563,7 +563,7 @@ end;
 
 procedure TTestACBrCTeLib.Test_CTe_DistribuicaoDFePorNSU;
 var
-  Handle: longint;
+  Handle: THandle;
   Resposta: PChar;
   Tamanho: Longint;
 begin

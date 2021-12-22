@@ -3,7 +3,7 @@ program ACBrLibDISTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibDISTestCase, ACBrLibDISStaticImport;
+  Interfaces, Forms, GuiTestRunner, ACBrLibDISTestCase;
 
 {$R *.res}
 

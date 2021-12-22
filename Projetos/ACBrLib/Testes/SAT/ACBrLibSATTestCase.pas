@@ -78,14 +78,14 @@ uses
 
 procedure TTestACBrSATLib.Test_SAT_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrDiretorioNaoExiste, SAT_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
 procedure TTestACBrSATLib.Test_SAT_Inicializar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, SAT_Finalizar(Handle));
@@ -93,7 +93,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Inicializar_Ja_Inicializado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, SAT_Inicializar(Handle,'',''));
@@ -102,7 +102,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Finalizar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, SAT_Finalizar(Handle));
@@ -110,7 +110,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Finalizar_Ja_Finalizado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
     Handle := 0;
     AssertEquals(ErrOk, SAT_Inicializar(Handle, '',''));
@@ -127,7 +127,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Obtendo_LenBuffer;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -140,7 +140,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -155,7 +155,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -171,7 +171,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -186,7 +186,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_Versao;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -206,7 +206,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ConfigLerValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -222,7 +222,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ConfigGravarValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -241,7 +241,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_CriarCFe;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -274,7 +274,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_EnviarCFe;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -306,7 +306,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_CriarEnviarCFe;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -339,7 +339,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoFortes;
 var
-  Handle: longint;
+  Handle: THandle;
   NomeImpressoraPDF: String;
   I: Integer;
 begin
@@ -372,7 +372,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoEscPOS;
 var
-  Handle: longint;
+  Handle: THandle;
   //SaidaImpressao: String;
 begin
   //SaidaImpressao := ApplicationPath+'posprinter.txt';
@@ -397,7 +397,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Sem_NomeArquivo;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin
@@ -437,7 +437,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Com_NomeArquivo;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin
@@ -474,7 +474,7 @@ end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Com_PathPDF;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr, PDFFile: String;
 begin

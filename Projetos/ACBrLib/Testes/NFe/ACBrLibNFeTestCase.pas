@@ -68,11 +68,11 @@ uses
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   try
-    NFE_Finalizar(Handle);
+    //NFE_Finalizar(Handle);
     AssertEquals(ErrDiretorioNaoExiste, NFE_Inicializar(Handle,'C:\NAOEXISTE\ACBrLib.ini',''));
   except
   on E: Exception do
@@ -83,7 +83,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Finalizar(Handle));
@@ -91,7 +91,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Ja_Inicializado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
@@ -100,7 +100,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Finalizar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Finalizar(Handle));
@@ -108,7 +108,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Finalizar_Ja_Finalizado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   try
@@ -124,7 +124,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Obtendo_LenBuffer;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -137,7 +137,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -152,7 +152,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -168,7 +168,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -183,7 +183,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Versao;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -203,7 +203,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_ConfigLerValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin

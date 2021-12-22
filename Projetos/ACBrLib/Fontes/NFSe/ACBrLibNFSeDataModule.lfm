@@ -1,10 +1,9 @@
-object LibNFSeDM: TLibNFSeDM
-  OldCreateOrder = False
+inherited LibNFSeDM: TLibNFSeDM
   Height = 209
-  HorizontalOffset = 732
-  VerticalOffset = 324
+  HorizontalOffset = 735
+  VerticalOffset = 326
   Width = 296
-  object ACBrNFSeX1: TACBrNFSeX
+  object ACBrNFSeX1: TACBrNFSeX[0]
     MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
@@ -12,6 +11,8 @@ object LibNFSeDM: TLibNFSeDM
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
+    Configuracoes.Geral.Provedor = proNenhum
+    Configuracoes.Geral.Versao = ve100
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -20,7 +21,7 @@ object LibNFSeDM: TLibNFSeDM
     Left = 40
     Top = 86
   end
-  object ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL
+  object ACBrNFSeXDANFSeRL1: TACBrNFSeXDANFSeRL[1]
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 8
     MargemSuperior = 8
@@ -46,7 +47,7 @@ object LibNFSeDM: TLibNFSeDM
     Left = 152
     Top = 86
   end
-  object ACBrMail1: TACBrMail
+  object ACBrMail1: TACBrMail[2]
     Host = '127.0.0.1'
     Port = '25'
     SetSSL = False

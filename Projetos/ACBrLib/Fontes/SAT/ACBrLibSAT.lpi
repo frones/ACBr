@@ -262,7 +262,9 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG -dNOGUI"/>
+            <CustomOptions Value="-dDEBUG 
+-dNOGUI
+-dMT"/>
           </Other>
         </CompilerOptions>
       </Item7>

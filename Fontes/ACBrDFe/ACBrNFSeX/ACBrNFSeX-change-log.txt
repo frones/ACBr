@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 22/12/2021
+-- SimplISS.GravarXml --
+[*] Na versão 1 do layout o código do ItemListaServico tem que estar formatado
+    mas em o zero a esquerda.
+   Por: MDO Gomes
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [-] Correção na leitura do CPF/CNPJ do Prestador de Serviço.
    Por: Italo Giurizzato Junior

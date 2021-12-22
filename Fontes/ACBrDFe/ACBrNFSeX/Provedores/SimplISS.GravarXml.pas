@@ -75,6 +75,8 @@ procedure TNFSeW_SimplISS.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
+
   NrOcorrOutrasInformacoes := 0;
   NrOcorrInscEstTomador := 0;
 
@@ -113,6 +115,7 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+
   NrOcorrValorDeducoes := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

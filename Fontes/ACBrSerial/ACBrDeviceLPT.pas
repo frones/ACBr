@@ -154,7 +154,11 @@ begin
   {$IfDef FPC}
   fsUsarStream := True;
   {$Else}
-  fsUsarStream := False;
+   {$IfDef FMX}
+   fsUsarStream := True;
+   {$Else}
+   fsUsarStream := False;
+   {$EndIf}
   {$EndIf}
 end;
 

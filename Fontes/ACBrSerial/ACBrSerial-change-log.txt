@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- ACBrDeviceLPT --
+[-] Correção para envio de Dados em Linux, Delphi FMX, por Stream
+    (por: DSA)
+
 -- ACBrWinUSBDevice --
 [-] Correções para funcionamento da SetupApi.dll em Win64
     (por: DSA)

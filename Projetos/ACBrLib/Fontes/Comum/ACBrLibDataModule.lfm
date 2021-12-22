@@ -1,0 +1,9 @@
+object LibDataModule: TLibDataModule
+  OldCreateOrder = False
+  Left = 498
+  Top = 264
+  Height = 215
+  HorizontalOffset = 507
+  VerticalOffset = 239
+  Width = 262
+end

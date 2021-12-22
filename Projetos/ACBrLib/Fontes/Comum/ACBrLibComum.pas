@@ -583,6 +583,7 @@ begin
     ChaveCrypt := Ansistring(eChaveCrypt);
 
     New(libHandle);
+    libHandle^.Lib := Nil;
     libHandle^.Lib := pLibClass.Create(eArqConfig, eChaveCrypt);
     libHandle^.Lib.Inicializar;
     libHandle^.Lib.GravarLog('LIB_Inicializar( ' + IfThen(libHandle^.Lib.Config.EhMemory, CLibMemory, ArqConfig) + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
@@ -786,8 +787,11 @@ procedure LiberarLib(libHandle: PLibHandle);
 begin
   if Assigned(libHandle) then
   begin
-    libHandle^.Lib.Destroy;
-    libHandle^.Lib := nil;
+    if Assigned(libHandle^.Lib) then
+    begin
+      libHandle^.Lib.Destroy;
+      libHandle^.Lib := nil;
+    end;
     Dispose(libHandle);
   end;
 end;

@@ -40,7 +40,7 @@ uses
 
 type
 
-  { TLibNFeDM }
+  { TLibDataModule }
 
   TLibDataModule = class(TDataModule)
   private
@@ -62,6 +62,8 @@ type
   end;
 
 implementation
+
+{$R *.lfm}
 
 { TLibDataModule }
 

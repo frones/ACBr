@@ -62,7 +62,8 @@ procedure TNFSeW_GovDigital200.Configuracao;
 begin
   inherited Configuracao;
 
-  DivAliq100  := True;
+  // Comentado a linha abaixo para atender a cidade Ouro Preto
+//  DivAliq100  := True;
 end;
 
 end.

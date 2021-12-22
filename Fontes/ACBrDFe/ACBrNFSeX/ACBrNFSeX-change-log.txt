@@ -43,6 +43,24 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/12/2021
+-- SigISS.GravarXml --
+[*] Para a tag <retencao_iss> devemos usar agora o campo ValorIssRetido em
+    de ValorIss.
+   Por: Italo Giurizzato Junior
+-- GovDigital.GravarXml --
+[*] Comentado a linha que gera a aliquota com 4 casas para antender a cidade
+    Ouro Preto.
+   Por: Italo Giurizzato Junior
+-- Tecnos.Provider --
+[*] Alteração para apresentar o "erro" A0000 que na verdade não é um erro
+    e sim uma mensagem que acusa que o processamento ocorreu com sucesso.
+   Por: Italo Giurizzato Junior
+-- IPM.GravarXml --
+[*] A tag <hora_emissao_recibo_provisorio> estava ficando vazia quando o
+    horario fosse 00:00:00.
+   Por: Eliandro May
+
 21/12/2021
 -- ACBrNFSeXServicos --
 [+] Inclusão da URL de produção da cidade Bauru/SP.

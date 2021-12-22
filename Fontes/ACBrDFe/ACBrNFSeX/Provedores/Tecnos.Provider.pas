@@ -304,7 +304,8 @@ begin
         Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
         Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-        if (Codigo <> 'A0000') and (Mensagem <> '') then
+//        if (Codigo <> 'A0000') and (Mensagem <> '') then
+        if Mensagem <> '' then
         begin
           AErro := Response.Erros.New;
           AErro.Codigo := Codigo;
@@ -318,7 +319,8 @@ begin
       Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
       Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
-      if (Codigo <> 'A0000') and (Mensagem <> '') then
+//      if (Codigo <> 'A0000') and (Mensagem <> '') then
+      if Mensagem <> '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Codigo;

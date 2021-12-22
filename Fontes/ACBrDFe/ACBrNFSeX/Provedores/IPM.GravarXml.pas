@@ -212,8 +212,8 @@ begin
     Result.AppendChild(AddNode(tcDatVcto, '#1', 'data_emissao_recibo_provisorio', 1, 10, 1,
                                                 NFSe.DataEmissaoRps, DSC_DEMI));
 
-    Result.AppendChild(AddNode(tcHor, '#1', 'hora_emissao_recibo_provisorio', 1, 10, 1,
-                                                NFSe.DataEmissaoRps, DSC_HEMI));
+    Result.AppendChild(AddNode(tcStr, '#1', 'hora_emissao_recibo_provisorio', 1, 8, 1,
+                  FormatDateTimeBr(NFSe.DataEmissaoRps, 'hh:mm:ss'), DSC_HEMI));
   end;
 end;
 

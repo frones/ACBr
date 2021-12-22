@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2011
+--- ACBrLibDISDataModule ---
+[-] Correção para herença visual em Lazarus de "TLibDataModule"
+    (por: DSA)
+
 17/10/2019
 --- ACBrLibDISConfig, ACBrLibDISDataModule ---
 [+] Adicionado as configurações serial.

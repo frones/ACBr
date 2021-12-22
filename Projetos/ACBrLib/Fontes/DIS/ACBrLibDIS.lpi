@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="12"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
-        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
       <Title Value="ACBrLibDIS"/>
       <ResourceType Value="res"/>
     </General>
@@ -18,6 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
+      <BuildNr Value="1"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrDIS - Biblioteca para Display" InternalName="ACBrLibDIS" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="DIS" ProductVersion="0.1.0.0"/>
     </VersionInfo>
@@ -234,7 +235,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrDIS32"/>
+            <Filename Value="..\..\Testes\DIS\bin\ACBrDIS32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -517,13 +518,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrLibDISTest.exe"/>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrLibDISTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrLibDISTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrLibDISTest.exe"/>
           </local>
         </Mode0>
       </Modes>

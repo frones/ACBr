@@ -1,10 +1,9 @@
-object LibDISDM: TLibDISDM
-  OldCreateOrder = False
+inherited LibDISDM: TLibDISDM
   Height = 150
-  HorizontalOffset = 257
-  VerticalOffset = 127
+  HorizontalOffset = 266
+  VerticalOffset = 150
   Width = 150
-  object ACBrDIS1: TACBrDIS
+  object ACBrDIS1: TACBrDIS[0]
     Porta = 'COM1'
     Left = 41
     Top = 25

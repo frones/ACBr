@@ -1,14 +1,11 @@
-object LibCTeDM: TLibCTeDM
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
-  OldCreateOrder = False
+inherited LibCTeDM: TLibCTeDM
   Left = 346
   Top = 174
   Height = 89
-  HorizontalOffset = 199
-  VerticalOffset = 121
-  Width = 153
-  object ACBrCTe1: TACBrCTe
+  HorizontalOffset = 250
+  VerticalOffset = 151
+  Width = 176
+  object ACBrCTe1: TACBrCTe[0]
     MAIL = ACBrMail1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
@@ -23,7 +20,7 @@ object LibCTeDM: TLibCTeDM
     Left = 24
     Top = 24
   end
-  object ACBrMail1: TACBrMail
+  object ACBrMail1: TACBrMail[1]
     Host = '127.0.0.1'
     Port = '25'
     SetSSL = False

@@ -95,11 +95,11 @@ uses
 
 procedure TACBrLibBoletoTest.Test_Boleto_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   try
-    Boleto_Finalizar(Handle);
+  //  Boleto_Finalizar(Handle);
     AssertEquals(ErrDiretorioNaoExiste, Boleto_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
   except
     on E: Exception do
@@ -110,7 +110,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Inicializar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, Boleto_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, Boleto_Finalizar(Handle));
@@ -118,7 +118,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Inicializar_Ja_Inicializado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, Boleto_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, Boleto_Inicializar(Handle, '',''));
@@ -127,7 +127,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Finalizar;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, Boleto_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, Boleto_Finalizar(Handle))
@@ -135,7 +135,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Finalizar_Ja_Finalizado;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   try
@@ -151,7 +151,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Nome_Obtendo_LenBuffer;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -164,7 +164,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -179,7 +179,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -195,7 +195,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: longint;
+  Handle: THandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -210,7 +210,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Versao;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -230,7 +230,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ConfigLerValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -246,7 +246,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ConfigGravarValor;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -265,7 +265,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ConfigurarDados;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -296,7 +296,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_IncluirTitulos;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -327,7 +327,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_TotalTitulosLista;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -352,7 +352,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_LimparLista;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
   AssertEquals(ErrOk, Boleto_Inicializar(Handle,'',''));
   AssertEquals('Erro ao limpar Lista de Titulos', ErrOK, Boleto_LimparLista(Handle));
@@ -361,7 +361,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_Imprimir;
 var
-  Handle: longint;
+  Handle: THandle;
   NomeImpressoraPDF: String;
   I: Integer;
   Bufflen: Integer;
@@ -392,7 +392,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_GerarPDF;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -411,7 +411,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_GerarHTML;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -430,7 +430,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_GerarRemessa;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -449,7 +449,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_LerRetorno;
 var
-  Handle: longint;
+  Handle: THandle;
 begin
 
   AssertEquals(ErrOk, Boleto_Inicializar(Handle, '',''));
@@ -466,7 +466,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_SetDiretorioArquivo;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -482,7 +482,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ListaBancos;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -505,7 +505,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ListaCaractTitulo;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -527,7 +527,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ListaOcorrencias;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -549,7 +549,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ListaOcorrenciasEX;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -571,7 +571,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_TamNossoNumero;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -591,7 +591,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_CodigosMoraAceitos;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -608,7 +608,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_SelecionaBanco;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -625,7 +625,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_MontarNossoNumero;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -647,7 +647,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_RetornaLinhaDigitavel;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -669,7 +669,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_RetornaCodigoBarras;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -691,7 +691,7 @@ end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_EnviarEmail;
 var
-  Handle: longint;
+  Handle: THandle;
   Bufflen: Integer;
   AStr: String;
 begin

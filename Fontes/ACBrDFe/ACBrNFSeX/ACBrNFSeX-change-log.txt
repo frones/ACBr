@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/12/2021
+-- IPM.Provider --
+[*] Para algumas cidades o pedido de cancelamento deve ser assinado.
+   Por: Tiago Rizzon
+
 22/12/2021
 -- SimplISS.GravarXml --
 [*] Na versão 1 do layout o código do ItemListaServico tem que estar formatado

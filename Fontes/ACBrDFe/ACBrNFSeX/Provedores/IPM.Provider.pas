@@ -52,6 +52,7 @@ type
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
@@ -73,6 +74,9 @@ type
 
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
 
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
@@ -138,6 +142,12 @@ begin
   with ConfigMsgDados do
   begin
     with XmlRps do
+    begin
+      InfElemento := 'nfse';
+      DocElemento := 'nfse';
+    end;
+
+    with CancelarNFSe do
     begin
       InfElemento := 'nfse';
       DocElemento := 'nfse';
@@ -509,6 +519,20 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderIPM.PrepararConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+begin
+  // Tomar como base o PrepararConsultaNFSe
+
+end;
+
+procedure TACBrNFSeProviderIPM.TratarRetornoConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+begin
+  // Tomar como base o TratarRetornoConsultaNFSe
+
+end;
+
 procedure TACBrNFSeProviderIPM.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
@@ -701,7 +725,7 @@ procedure TACBrNFSeProviderIPM.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  xSerie: string;
+  xSerie, IdAttr: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -764,7 +788,12 @@ begin
   end
   else
   begin
-    Response.XmlEnvio := '<nfse>' +
+    if ConfigGeral.Params3 = 'AssinarCancelar' then
+      IdAttr := ' Id="nota"'
+    else
+      IdAttr := '';
+
+    Response.XmlEnvio := '<nfse' + IdAttr + '>' +
                            '<nf>' +
                              '<numero>' +
                                Response.InfCancelamento.NumeroNFSe +
@@ -921,6 +950,14 @@ begin
 end;
 
 function TACBrNFSeXWebserviceIPM.ConsultarNFSe(ACabecalho,
+  AMSG: String): string;
+begin
+  FPMsgOrig := AMSG;
+
+  Result := Executar('', AMSG, [''], []);
+end;
+
+function TACBrNFSeXWebserviceIPM.ConsultarNFSePorRps(ACabecalho,
   AMSG: String): string;
 begin
   FPMsgOrig := AMSG;

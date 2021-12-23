@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/12/2021
+-- VersaTecnologia.Provider/VersaTecnologia.GravarXml --
+[*] Ajustes para a correta emissão e cancelamento da NFS-e.
+   Por: Jeanny Paiva Lopes
 -- IPM.Provider --
 [*] Para algumas cidades o pedido de cancelamento deve ser assinado.
    Por: Tiago Rizzon

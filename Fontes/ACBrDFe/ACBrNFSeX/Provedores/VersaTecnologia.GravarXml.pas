@@ -79,6 +79,8 @@ procedure TNFSeW_VersaTecnologia200.Configuracao;
 begin
   inherited Configuracao;
 
+  DivAliq100 := True;
+
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;
   NrOcorrValorInss := 1;

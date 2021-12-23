@@ -468,12 +468,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Width = 209
                 Height = 15
                 Caption = 'Salvar Arquivos de Envio e Resposta'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'MS Sans Serif'
-                Font.Style = []
-                ParentFont = False
                 TabOrder = 1
               end
               object cbFormaEmissao: TComboBox
@@ -599,12 +593,6 @@ object frmACBrNFe: TfrmACBrNFe
                 Width = 153
                 Height = 17
                 Caption = 'Visualizar Mensagem'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'MS Sans Serif'
-                Font.Style = []
-                ParentFont = False
                 TabOrder = 0
               end
               object cbUF: TComboBox
@@ -1072,72 +1060,16 @@ object frmACBrNFe: TfrmACBrNFe
               Height = 13
               Caption = 'Pasta Arquivos NFe'
             end
-            object Label39: TLabel
-              Left = 6
-              Top = 154
-              Width = 143
-              Height = 13
-              Caption = 'Pasta Arquivos Cancelamento'
-            end
-            object sbPathCan: TSpeedButton
-              Left = 247
-              Top = 169
-              Width = 23
-              Height = 24
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337}
-              NumGlyphs = 2
-              OnClick = sbPathCanClick
-            end
-            object Label46: TLabel
-              Left = 6
-              Top = 192
-              Width = 198
-              Height = 13
-              Caption = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
-            end
-            object sbPathCCe: TSpeedButton
-              Left = 247
-              Top = 207
-              Width = 23
-              Height = 24
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337}
-              NumGlyphs = 2
-              OnClick = sbPathCCeClick
-            end
             object Label40: TLabel
               Left = 6
-              Top = 230
+              Top = 202
               Width = 129
               Height = 13
               Caption = 'Pasta Arquivos Inutiliza'#231#227'o'
             end
             object sbPathInu: TSpeedButton
               Left = 247
-              Top = 245
+              Top = 217
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -1156,44 +1088,16 @@ object frmACBrNFe: TfrmACBrNFe
               NumGlyphs = 2
               OnClick = sbPathInuClick
             end
-            object Label41: TLabel
-              Left = 6
-              Top = 268
-              Width = 101
-              Height = 13
-              Caption = 'Pasta Arquivos DPEC'
-            end
-            object sbPathDPEC: TSpeedButton
-              Left = 247
-              Top = 283
-              Width = 23
-              Height = 24
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337}
-              NumGlyphs = 2
-              OnClick = sbPathDPECClick
-            end
             object Label47: TLabel
               Left = 6
-              Top = 306
+              Top = 159
               Width = 109
               Height = 13
               Caption = 'Pasta Arquivos Evento'
             end
             object sbPathEvento: TSpeedButton
               Left = 247
-              Top = 321
+              Top = 174
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -1212,12 +1116,40 @@ object frmACBrNFe: TfrmACBrNFe
               NumGlyphs = 2
               OnClick = sbPathEventoClick
             end
+            object Label39: TLabel
+              Left = 6
+              Top = 245
+              Width = 94
+              Height = 13
+              Caption = 'Pasta Arquivos PDF'
+            end
+            object sbPathPDF: TSpeedButton
+              Left = 247
+              Top = 260
+              Width = 23
+              Height = 24
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337}
+              NumGlyphs = 2
+              OnClick = sbPathPDFClick
+            end
             object cbxSalvarArqs: TCheckBox
               Left = 6
               Top = 0
               Width = 210
               Height = 17
-              Caption = 'Salvar Arquivos em Pastas Separadas'
+              Caption = 'Salvar Arquivos'
               TabOrder = 0
             end
             object cbxPastaMensal: TCheckBox
@@ -1260,13 +1192,6 @@ object frmACBrNFe: TfrmACBrNFe
               Caption = 'Separar Arqs pelo CNPJ do Certificado'
               TabOrder = 5
             end
-            object edtPathCCe: TEdit
-              Left = 6
-              Top = 208
-              Width = 235
-              Height = 21
-              TabOrder = 6
-            end
             object edtPathNFe: TEdit
               Left = 6
               Top = 132
@@ -1274,33 +1199,19 @@ object frmACBrNFe: TfrmACBrNFe
               Height = 21
               TabOrder = 7
             end
-            object edtPathCan: TEdit
-              Left = 6
-              Top = 170
-              Width = 235
-              Height = 21
-              TabOrder = 8
-            end
             object edtPathInu: TEdit
               Left = 6
-              Top = 246
+              Top = 218
               Width = 235
               Height = 21
               TabOrder = 9
             end
-            object edtPathDPEC: TEdit
-              Left = 6
-              Top = 284
-              Width = 235
-              Height = 21
-              TabOrder = 10
-            end
             object edtPathEvento: TEdit
               Left = 6
-              Top = 322
+              Top = 175
               Width = 235
               Height = 21
-              TabOrder = 11
+              TabOrder = 8
             end
             object cbxSepararPorModelo: TCheckBox
               Left = 6
@@ -1308,7 +1219,14 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 251
               Height = 17
               Caption = 'Separar Arqs pelo Modelo do Documento'
-              TabOrder = 12
+              TabOrder = 6
+            end
+            object edtPathPDF: TEdit
+              Left = 6
+              Top = 261
+              Width = 235
+              Height = 21
+              TabOrder = 10
             end
           end
         end
@@ -2088,10 +2006,6 @@ object frmACBrNFe: TfrmACBrNFe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFe1StatusChange
     OnGerarLog = ACBrNFe1GerarLog
-    Configuracoes.Geral.SSLLib = libNone
-    Configuracoes.Geral.SSLCryptLib = cryNone
-    Configuracoes.Geral.SSLHttpLib = httpNone
-    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200

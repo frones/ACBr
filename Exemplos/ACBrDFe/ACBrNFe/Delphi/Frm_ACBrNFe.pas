@@ -159,14 +159,8 @@ type
     TabSheet13: TTabSheet;
     sbPathNFe: TSpeedButton;
     Label35: TLabel;
-    Label39: TLabel;
-    sbPathCan: TSpeedButton;
-    Label46: TLabel;
-    sbPathCCe: TSpeedButton;
     Label40: TLabel;
     sbPathInu: TSpeedButton;
-    Label41: TLabel;
-    sbPathDPEC: TSpeedButton;
     Label47: TLabel;
     sbPathEvento: TSpeedButton;
     cbxSalvarArqs: TCheckBox;
@@ -175,11 +169,8 @@ type
     cbxEmissaoPathNFe: TCheckBox;
     cbxSalvaPathEvento: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
-    edtPathCCe: TEdit;
     edtPathNFe: TEdit;
-    edtPathCan: TEdit;
     edtPathInu: TEdit;
-    edtPathDPEC: TEdit;
     edtPathEvento: TEdit;
     cbxSepararPorModelo: TCheckBox;
     TabSheet2: TTabSheet;
@@ -283,14 +274,14 @@ type
     btnDistrDFePorNSU: TButton;
     btnDistrDFePorChave: TButton;
     btnManifDestDesconnhecimento: TButton;
+    Label39: TLabel;
+    sbPathPDF: TSpeedButton;
+    edtPathPDF: TEdit;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
-    procedure sbPathCanClick(Sender: TObject);
-    procedure sbPathCCeClick(Sender: TObject);
     procedure sbPathInuClick(Sender: TObject);
-    procedure sbPathDPECClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnNumSerieClick(Sender: TObject);
@@ -350,6 +341,7 @@ type
     procedure btnDistrDFePorNSUClick(Sender: TObject);
     procedure btnDistrDFePorChaveClick(Sender: TObject);
     procedure btnManifDestDesconnhecimentoClick(Sender: TObject);
+    procedure sbPathPDFClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -3806,11 +3798,9 @@ begin
     Ini.WriteBool(  'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
     Ini.WriteBool(  'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
     Ini.WriteString('Arquivos', 'PathNFe',          edtPathNFe.Text);
-    Ini.WriteString('Arquivos', 'PathCan',          edtPathCan.Text);
     Ini.WriteString('Arquivos', 'PathInu',          edtPathInu.Text);
-    Ini.WriteString('Arquivos', 'PathDPEC',         edtPathDPEC.Text);
-    Ini.WriteString('Arquivos', 'PathCCe',          edtPathCCe.Text);
     Ini.WriteString('Arquivos', 'PathEvento',       edtPathEvento.Text);
+    Ini.WriteString('Arquivos', 'PathPDF',          edtPathPDF.Text);
 
     Ini.WriteString('Emitente', 'CNPJ',        edtEmitCNPJ.Text);
     Ini.WriteString('Emitente', 'IE',          edtEmitIE.Text);
@@ -3930,11 +3920,9 @@ begin
     cbxSepararPorCNPJ.Checked   := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',   false);
     cbxSepararPorModelo.Checked := Ini.ReadBool(  'Arquivos', 'SepararPorModelo', false);
     edtPathNFe.Text             := Ini.ReadString('Arquivos', 'PathNFe',          '');
-    edtPathCan.Text             := Ini.ReadString('Arquivos', 'PathCan',          '');
     edtPathInu.Text             := Ini.ReadString('Arquivos', 'PathInu',          '');
-    edtPathDPEC.Text            := Ini.ReadString('Arquivos', 'PathDPEC',         '');
-    edtPathCCe.Text             := Ini.ReadString('Arquivos', 'PathCCe',          '');
     edtPathEvento.Text          := Ini.ReadString('Arquivos', 'PathEvento',       '');
+    edtPathPDF.Text             := Ini.ReadString('Arquivos', 'PathPDF',          '');
 
     edtEmitCNPJ.Text       := Ini.ReadString('Emitente', 'CNPJ',        '');
     edtEmitIE.Text         := Ini.ReadString('Emitente', 'IE',          '');
@@ -3988,7 +3976,6 @@ end;
 procedure TfrmACBrNFe.ConfigurarComponente;
 var
   Ok: Boolean;
-  PathMensal: string;
 begin
   ACBrNFe1.Configuracoes.Certificados.URLPFX      := edtURLPFX.Text;
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
@@ -4078,15 +4065,14 @@ begin
     PathNFe          := edtPathNFe.Text;
     PathInu          := edtPathInu.Text;
     PathEvento       := edtPathEvento.Text;
-    PathMensal       := GetPathNFe(0);
-    PathSalvar       := PathMensal;
+    PathSalvar       := edtPathLogs.Text;
   end;
 
   if ACBrNFe1.DANFE <> nil then
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo      := edtLogoMarca.Text;
-    ACBrNFe1.DANFE.PathPDF   := PathMensal;
+    ACBrNFe1.DANFE.PathPDF   := edtPathPDF.Text;
 
     ACBrNFe1.DANFE.MargemDireita  := 7;
     ACBrNFe1.DANFE.MargemEsquerda := 7;
@@ -4149,21 +4135,6 @@ begin
   ACBrPosPrinter1.Ativar;
 end;
 
-procedure TfrmACBrNFe.sbPathCanClick(Sender: TObject);
-begin
-  PathClick(edtPathCan);
-end;
-
-procedure TfrmACBrNFe.sbPathCCeClick(Sender: TObject);
-begin
-  PathClick(edtPathCCe);
-end;
-
-procedure TfrmACBrNFe.sbPathDPECClick(Sender: TObject);
-begin
-  PathClick(edtPathDPEC);
-end;
-
 procedure TfrmACBrNFe.sbPathEventoClick(Sender: TObject);
 begin
   PathClick(edtPathEvento);
@@ -4177,6 +4148,11 @@ end;
 procedure TfrmACBrNFe.sbPathNFeClick(Sender: TObject);
 begin
   PathClick(edtPathNFe);
+end;
+
+procedure TfrmACBrNFe.sbPathPDFClick(Sender: TObject);
+begin
+  PathClick(edtPathPDF);
 end;
 
 procedure TfrmACBrNFe.sbtnCaminhoCertClick(Sender: TObject);

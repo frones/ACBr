@@ -103,7 +103,7 @@ procedure TACBrBancoUnicredES.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo;
 var
   sDigitoNossoNumero, sAgencia : String;
   sTipoSacado, sConta, sProtesto    : String;
-  sCarteira, sLinha, sNossoNumero, sTipoMulta : String;
+  sCarteira, sLinha, sNossoNumero, sTipoMulta,sValorMulta : String;
 begin
 
   with ACBrTitulo do
@@ -118,12 +118,24 @@ begin
 
     {Pegando campo Intruções}
     sProtesto:= DefineCodigoProtesto(ACBrTitulo); //InstrucoesProtesto(ACBrTitulo);
+    {Verifica o Tipo da Multa}
+    if MultaValorFixo then
+      CodigoMulta := cmValorFixo;
 
+    sTipoMulta := IfThen( PercentualMulta > 0, CodMultaToStr(CodigoMulta), '3');
+
+    {Calculo de Multa}
+    if PercentualMulta > 0 then
+    begin
+      case StrToIntDef(sTipoMulta,3) of
+        1: sValorMulta := FloatToStr(TruncTo((ValorDocumento*( 1 + PercentualMulta/100)-ValorDocumento),2)*100);
+        2: sValorMulta := IntToStrZero(Round(PercentualMulta * 100), 10);
+        else
+          sValorMulta  := PadRight('', 10, '0');
+      end;
+    end;
     with ACBrBoleto do
     begin
-
-       sTipoMulta := IfThen( PercentualMulta > 0, CodMultaToStr(CodigoMulta), '3');
-
        sLinha:= '1'                                                           +{ 001 a 001  	Identificação do Registro }
                 sAgencia                                                      +{ 002 a 006  	Agência do BENEFICIÁRIO na UNICRED }
                 Cedente.AgenciaDigito                                         +{ 007 a 007  	Dígito da Agência  	001 }
@@ -138,7 +150,7 @@ begin
                 Space(25)                                                     +{ 068 a 092	  Branco	025	Branco}
                 '0'                                                           +{ 093 a 093	  Filler	001	Zeros}
                 sTipoMulta                                                    +{ 094 a 094	  Código da Multa	001}
-                IntToStrZero(Round(PercentualMulta * 100), 10)                +{ 095 a 104	  Valor/Percentual da Multa	010 }
+                PadLeft(sValorMulta, 10, '0')                                 +{ 095 a 104	  Valor/Percentual da Multa	010 }
                 CodJurosToStr(CodigoMoraJuros,ValorMoraJuros)                 +{ 105 a 105	  Tipo de Valor Mora	001}
                 'N'                                                           +{ 106 a 106	  Filler	001 }
                 Space(2)                                                      +{ 107 a 108	  Branco	002	Branco }
@@ -420,7 +432,7 @@ begin
     if PercentualMulta > 0 then
     begin
       case StrToIntDef(ACodMulta,3) of
-        1: AValorMulta := IntToStrZero(Round(ValorDocumento*(PercentualMulta/100)*100), 15);
+        1: AValorMulta := PadLeft(FloatToStr(TruncTo((ValorDocumento*( 1 + PercentualMulta/100)-ValorDocumento),2)*100), 15, '0');
         2: AValorMulta := IntToStrZero(Round(PercentualMulta * 100), 15);
         else
           AValorMulta  := PadRight('', 15, '0');

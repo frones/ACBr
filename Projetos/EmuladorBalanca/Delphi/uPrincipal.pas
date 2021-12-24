@@ -100,7 +100,7 @@ const
 implementation
 
 uses
-  IniFiles;
+  IniFiles, ACBrConsts;
 
 {$R *.dfm}
 

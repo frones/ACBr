@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/12/2021
+-- ACBrNFSeXServicos --
+[+] Inclusão de novas cidades.
+   Por: MDO Gomes
+
 23/12/2021
 -- VersaTecnologia.Provider/VersaTecnologia.GravarXml --
 [*] Ajustes para a correta emissão e cancelamento da NFS-e.

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/12/2021
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Possível correção para a impressão da data de Competencia.
+   Por: Alex Fermiano
 -- Equiplano.Provider --
 [*] Possível correção para a montagem do XML da NFS-e.
    Por: Italo Giurizzato Junior

@@ -349,7 +349,7 @@ begin
     rllSistema.Caption := '';
 
   //Exibe canhoto
-  rlbCanhoto.Visible:= fpDANFSe.ImprimeCanhoto;
+  rlbCanhoto.Visible := fpDANFSe.ImprimeCanhoto;
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -359,17 +359,17 @@ begin
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
 
   rlmPrefeitura.Lines.Clear;
-  rlmPrefeitura.Lines.Add(StringReplace( fpDANFSe.Prefeitura, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase] ) );
+  rlmPrefeitura.Lines.Add(StringReplace(fpDANFSe.Prefeitura, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
 
   With fpNFSe do
   begin
-    rllNumNF0.Caption         := FormatFloat('00000000000'        , StrToFloatDef(Numero, 0));
-    rllEmissao.Caption        := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
+    rllNumNF0.Caption := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
+    rllEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
     rllCodVerificacao.Caption := CodigoVerificacao;
 
-    rllCompetencia.Caption := FormatDateTime('mm/yyyy', Competencia);
+    rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
 
-    rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
+    rllNumeroRPS.Caption := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
 	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio

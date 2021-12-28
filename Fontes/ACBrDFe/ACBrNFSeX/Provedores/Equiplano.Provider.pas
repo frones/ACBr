@@ -68,6 +68,8 @@ type
 
     function PrepararRpsParaLote(const aXml: string): string; override;
 
+    function GerarXmlNota(const aXmlRps, aXmlRetorno: string): string;
+
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
@@ -290,6 +292,22 @@ begin
                            '</lote>' +
                          '</es:enviarLoteRpsEnvio>';
   end;
+end;
+
+function TACBrNFSeProviderEquiplano.GerarXmlNota(const aXmlRps,
+  aXmlRetorno: string): string;
+var
+  aRPS, aNFSE: string;
+begin
+  aRPS  := SeparaDados(aXmlRps, 'rps', False);
+  aNFSE := aXmlRetorno;
+
+  Result := '<compNfse xmlns="http://www.equiplano.com.br/esnfs">' +
+              '<nfse>' +
+                aNFSE +
+                aRPS +
+              '</nfse>' +
+            '</compNfse>';
 end;
 
 procedure TACBrNFSeProviderEquiplano.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -623,6 +641,9 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
+  ANota: NotaFiscal;
+  aXmlNota: string;
+  i: Integer;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -653,8 +674,26 @@ begin
       begin
         with Response do
         begin
-          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
           NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrNfse'), tcStr);
+          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cdAutenticacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtEmissaoNfs'), tcDatHor);
+          NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
+        end;
+
+        i := TACBrNFSeX(FAOwner).NotasFiscais.Count;
+
+        if i > 0 then
+        begin
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[i-1];
+
+          if ANota.NFSe.IdentificacaoRps.Numero = Response.NumeroRps  then
+          begin
+            aXmlNota := GerarXmlNota(ANota.XMLAssinado, Response.XmlRetorno);
+
+            ANota.XML := aXmlNota;
+
+            SalvarXmlNfse(ANota);
+          end;
         end;
       end;
     except

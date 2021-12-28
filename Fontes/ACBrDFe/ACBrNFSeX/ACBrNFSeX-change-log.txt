@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 28/12/2021
+-- Equiplano.Provider --
+[*] Possível correção para a montagem do XML da NFS-e.
+   Por: Italo Giurizzato Junior
+-- IPM.Provider/IPM.GravarXml --
+[*] Removido a condição de versão para gerar o grupo Forma de Pagamento.
+[+] Implementado o seriço de ConsultarNfsePorRps.
+   Por: Italo Giurizzato Junior
 -- SilTecnologia.Provider/SilTecnologia.GravarXml --
 [*] Ajustes para a correta emissão e consulta da NFS-e.
    Por: Innovae Brasil Engenharia

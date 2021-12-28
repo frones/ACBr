@@ -59,7 +59,7 @@ type
     function GerarTomador: TACBrXmlNode;
     function GerarItens: TACBrXmlNode;
     function GerarLista: TACBrXmlNodeArray;
-    function GerarCondicaoPagamento: TACBrXmlNode;
+    function GerarFormaPagamento: TACBrXmlNode;
     function GerarParcelas: TACBrXmlNode;
     function GerarParcela: TACBrXmlNodeArray;
     function GerarGenericos: TACBrXmlNode;
@@ -135,9 +135,12 @@ begin
   xmlNode := GerarGenericos;
   NFSeNode.AppendChild(xmlNode);
 
-  if (NFSe.Status = srNormal) and (VersaoNFSe = ve101 ) then
+  // Removido a condição da versão para gerar o grupo Forma de Pagamento para
+  // a cidade de Panambi/RS
+//  if (NFSe.Status = srNormal) and (VersaoNFSe = ve101 ) then
+  if (NFSe.Status = srNormal) then
   begin
-    xmlNode := GerarCondicaoPagamento;
+    xmlNode := GerarFormaPagamento;
     NFSeNode.AppendChild(xmlNode);
   end;
 
@@ -152,7 +155,7 @@ begin
   FpNrOcorrTagsTomador := 0;
 end;
 
-function TNFSeW_IPM.GerarCondicaoPagamento: TACBrXmlNode;
+function TNFSeW_IPM.GerarFormaPagamento: TACBrXmlNode;
 var
   codFp: String;
   xmlNode: TACBrXmlNode;

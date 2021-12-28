@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/12/2021
+-- SilTecnologia.Provider/SilTecnologia.GravarXml --
+[*] Ajustes para a correta emissão e consulta da NFS-e.
+   Por: Innovae Brasil Engenharia
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível correção para o campo ValorLiquidoNfse.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXParamentros/ACBrNFSeXProviderBase --
+[*] Remoção do Parâmetro Params3.
+   Por: Italo Giurizzato Junior
+
 27/12/2021
 -- ACBrNFSeXServicos --
 [+] Inclusão de novas cidades.

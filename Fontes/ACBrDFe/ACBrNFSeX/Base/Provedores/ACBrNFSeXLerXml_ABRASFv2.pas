@@ -681,6 +681,7 @@ var
   AuxNode, AuxNode2: TACBrXmlNode;
   Ok: Boolean;
   CodigoItemServico, Responsavel: string;
+  ValorLiq: Double;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -731,11 +732,12 @@ begin
         else
           ValorIssRetido := 0;
 
-        if ValorLiquidoNfse = 0 then
-          ValorLiquidoNfse := ValorServicos - ValorPis - ValorCofins - ValorInss -
-                              ValorIr - ValorCsll - OutrasRetencoes -
-                              ValorIssRetido - DescontoIncondicionado -
-                              DescontoCondicionado;
+        ValorLiq := ValorServicos - ValorPis - ValorCofins - ValorInss -
+                    ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
+                    DescontoIncondicionado - DescontoCondicionado;
+
+        if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
+          ValorLiquidoNfse := ValorLiq;
       end;
     end;
   end;

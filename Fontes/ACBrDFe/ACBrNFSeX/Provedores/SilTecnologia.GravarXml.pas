@@ -72,13 +72,12 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
   NrOcorrCodigoPaisServico := -1;
-  GerarEnderecoExterior := True;
 
-  GerarIDDeclaracao := False;
-  GerarIDRps := True;
+  GerarEnderecoExterior := True;
 end;
 
 end.

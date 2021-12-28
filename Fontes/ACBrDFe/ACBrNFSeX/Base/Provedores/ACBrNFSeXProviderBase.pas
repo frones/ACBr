@@ -628,7 +628,6 @@ begin
       ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
       ConfigGeral.LoadParams1(IniParams, Sessao);
       ConfigGeral.LoadParams2(IniParams, Sessao);
-      ConfigGeral.LoadParams3(IniParams, Sessao);
 
       // Depois verifica as URls definidas para o provedor
       if ConfigWebServices.Producao.Recepcionar = '' then
@@ -655,13 +654,6 @@ begin
       begin
         Sessao := Configuracoes.Geral.xProvedor;
         ConfigGeral.LoadParams2(IniParams, Sessao);
-      end;
-
-      // Se Params3 estiver vazio usar o que foi definido para o provedor
-      if ConfigGeral.Params3 = '' then
-      begin
-        Sessao := Configuracoes.Geral.xProvedor;
-        ConfigGeral.LoadParams3(IniParams, Sessao);
       end;
     end;
   finally

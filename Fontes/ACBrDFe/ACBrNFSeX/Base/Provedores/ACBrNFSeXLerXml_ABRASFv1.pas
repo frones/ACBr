@@ -657,7 +657,7 @@ procedure TNFSeR_ABRASFv1.LerValores(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   Ok: Boolean;
-  Valor: Currency;
+  ValorLiq: Double;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -667,27 +667,29 @@ begin
   begin
     with NFSe.Servico.Valores do
     begin
-      ValorServicos   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
-      ValorDeducoes   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorDeducoes'), tcDe2);
-      ValorPis        := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
-      ValorCofins     := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
-      ValorInss       := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
-      ValorIr         := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
-      ValorCsll       := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
-      IssRetido       := StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
-      ValorIss        := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
+      ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
+      ValorDeducoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorDeducoes'), tcDe2);
+      ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+      ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+      ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
+      ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
+      ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+      IssRetido := StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
+      ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
-      BaseCalculo     := ObterConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
-      Aliquota        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
-      Valor           := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorLiquidoNfse'), tcDe2);
-
-      if Valor <> 0 then
-        ValorLiquidoNfse := Valor;
-
+      BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
+      Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
+      ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorLiquidoNfse'), tcDe2);
       ValorIssRetido := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIssRetido'), tcDe2);
-
-      DescontoCondicionado   := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
+      DescontoCondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
       DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);
+
+      ValorLiq := ValorServicos - ValorPis - ValorCofins - ValorInss -
+                  ValorIr - ValorCsll - OutrasRetencoes - ValorIssRetido -
+                  DescontoIncondicionado - DescontoCondicionado;
+
+      if (ValorLiquidoNfse = 0) or (ValorLiquidoNfse <> ValorLiq) then
+        ValorLiquidoNfse := ValorLiq;
     end;
   end;
 end;

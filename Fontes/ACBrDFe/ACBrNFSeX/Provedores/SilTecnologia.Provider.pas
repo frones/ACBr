@@ -239,6 +239,8 @@ procedure TACBrNFSeProviderSilTecnologia203.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := True;
+
   with ConfigAssinar do
   begin
     LoteRps := True;

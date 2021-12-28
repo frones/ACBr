@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/12/2021
+-- ACBrNFSeXServicos --
+[*] Ajustes para a cidade de Palmeira das Missões.
+   Por: Simons
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Possível correção para a impressão da data de Competencia.
    Por: Alex Fermiano

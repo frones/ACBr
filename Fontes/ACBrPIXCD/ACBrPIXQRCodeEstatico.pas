@@ -174,9 +174,9 @@ begin
   else
     vs := '';
 
-  Result := FormatarQRCodeId(0, '01') +                            // Payload Format Indicator
+  Result := FormatarQRCodeId(0, '01') +                             // Payload Format Indicator
             FormatarQRCodeId(26, GerarMerchantAccountInformation) + // Merchant Account Information
-            FormatarQRCodeId(52, IntToStrZero(fmcc, 4)) +          // Merchant Category Code
+            FormatarQRCodeId(52, IntToStrZero(fmcc, 4)) +           // Merchant Category Code
             FormatarQRCodeId(53, IntToStr(cBRCurrency)) +
             FormatarQRCodeId(54, vs) +
             FormatarQRCodeId(58, cBRCountryCode) +
@@ -271,7 +271,7 @@ end;
 
 procedure TACBrPIXQRCodeEstatico.SetCEPRecebedor(AValue: String);
 begin
-  if fCEPRecebedor = AValue then
+  if (fCEPRecebedor = AValue) then
     Exit;
 
   fCEPRecebedor := OnlyNumber(AValue);
@@ -306,7 +306,7 @@ begin
   if (fTxId = AValue) then
     Exit;
 
-  if (AValue = cMPMValueNotInformed) then
+  if (AValue = cMPMValueNotInformed) or (Trim(AValue) = '') then
   begin
     fTxId := '';
     Exit;

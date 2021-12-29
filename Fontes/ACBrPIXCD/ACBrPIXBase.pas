@@ -119,7 +119,7 @@ type
     procedure DoReadFromJSon(AJSon: TJsonObject); virtual;
 
   public
-    constructor Create(const ObjectName: String); virtual;
+    constructor Create(const ObjectName: String = ''); virtual;
     procedure Clear; virtual;
     function IsEmpty: Boolean; virtual;
     procedure WriteToJSon(AJSon: TJsonObject);

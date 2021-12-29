@@ -30,99 +30,35 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-(*
-
-  Documentação:
-  https://github.com/bacen/pix-api
-
-*)
-
 {$I ACBr.inc}
 
-unit ACBrPIXSchemasPixConsultados;
+unit ACBrPIXCDReg;
 
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase,
-  ACBrPIXSchemasParametrosConsultaPix, ACBrPIXSchemasPix;
+  Classes, SysUtils, ACBrPIXCD
+  {$IFDEF FPC}, LResources {$ENDIF} ;
 
-type
-
-  { TACBrPIXConsultados }
-
-  TACBrPIXConsultados = class(TACBrPIXSchema)
-  private
-    fparametros: TACBrPIXParametrosConsultaPix;
-    fpix: TACBrPIXArray;
-  protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
-  public
-    constructor Create(const ObjectName: String = ''); override;
-    procedure Clear; override;
-    function IsEmpty: Boolean; override;
-    destructor Destroy; override;
-    procedure Assign(Source: TACBrPIXConsultados);
-
-    property parametros: TACBrPIXParametrosConsultaPix read fparametros;
-    property pix: TACBrPIXArray read fpix;
-  end;
+procedure Register;
 
 implementation
 
-{ TACBrPIXConsultados }
+{$IFNDEF FPC}
+   {$R ACBrPIXCD.dcr}
+{$ENDIF}
 
-constructor TACBrPIXConsultados.Create(const ObjectName: String);
+procedure Register;
 begin
-  inherited Create(ObjectName);
-  fparametros := TACBrPIXParametrosConsultaPix.Create('parametros');
-  fpix := TACBrPIXArray.Create('pix');
-  Clear;
+  RegisterComponents('ACBrPIXCD', [TACBrPixCD, TACBrPSP]);
 end;
 
-destructor TACBrPIXConsultados.Destroy;
-begin
-  fparametros.Free;
-  fpix.Free;
-  inherited Destroy;
-end;
-
-procedure TACBrPIXConsultados.Clear;
-begin
-  fparametros.Clear;
-  fpix.Clear;
-end;
-
-function TACBrPIXConsultados.IsEmpty: Boolean;
-begin
-  Result := fparametros.IsEmpty and
-            fpix.IsEmpty;
-end;
-
-procedure TACBrPIXConsultados.Assign(Source: TACBrPIXConsultados);
-begin
-  fparametros.Assign(Source.parametros);
-  fpix.Assign(Source.pix);
-end;
-
-procedure TACBrPIXConsultados.DoWriteToJSon(AJSon: TJsonObject);
-begin
-  fparametros.WriteToJSon(AJSon);
-  fpix.WriteToJSon(AJSon);
-end;
-
-procedure TACBrPIXConsultados.DoReadFromJSon(AJSon: TJsonObject);
-begin
-  fparametros.ReadFromJSon(AJSon);
-  fpix.ReadFromJSon(AJSon);
-end;
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
+initialization
+   {$I ACBrPIXCD.lrs}
+{$ENDIF}
+{$ENDIF}
 
 end.
 

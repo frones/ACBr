@@ -112,7 +112,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;

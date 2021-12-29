@@ -139,7 +139,7 @@ end;
 
 procedure TForm1.btnConectarClick(Sender: TObject);
 begin
-   // se houver conecção aberta, Fecha a conecção
+   // se houver conexão aberta, Fecha a conexão
    if acbrBal1.Ativo then
       ACBrBAL1.Desativar;
 

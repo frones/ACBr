@@ -716,7 +716,7 @@ begin
         SituacaoTributaria := 0;
       end;
 
-      Prestador.IdentificacaoPrestador.CNPJ := edtEmitCNPJ.Text; //'88888888888888';
+      Prestador.IdentificacaoPrestador.CpfCnpj := edtEmitCNPJ.Text; //'88888888888888';
       Prestador.IdentificacaoPrestador.InscricaoMunicipal := edtEmitIM.Text;
 
       Prestador.RazaoSocial  := edtEmitRazao.Text;

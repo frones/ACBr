@@ -3274,7 +3274,10 @@ begin
        vFin_DOCe := '';
       end;
 
-      intIND_DEST := IndicadorDestinatarioAcessanteToInt(UmRegC500.IND_DEST);
+      if UmRegC500.IND_OPER = tpEntradaAquisicao then
+        intIND_DEST := 0
+      else
+        intIND_DEST := IndicadorDestinatarioAcessanteToInt(UmRegC500.IND_DEST);
 
       if FBloco_0.Registro0000.COD_VER >= vlVersao115 then
       begin

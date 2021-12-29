@@ -1092,7 +1092,7 @@ var
 begin
   with TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente do
     Auth := 'Basic ' + string(EncodeBase64(AnsiString(WSUser + ':' +
-      ParseText(WSSenha, False))));
+      ParseText(AnsiString(WSSenha), False))));
 
   aHeaderReq.AddHeader('Authorization', Auth);
 end;

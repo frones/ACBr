@@ -593,7 +593,9 @@ begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
     Result := '<nfse:Usuario>' + Emitente.WSUser + '</nfse:Usuario>' +
-              '<nfse:Senha>' + LowerCase(AsciiToHex(MD5(Emitente.WSSenha))) + '</nfse:Senha>';
+              '<nfse:Senha>' +
+                LowerCase(AsciiToHex(MD5(AnsiString(Emitente.WSSenha)))) +
+              '</nfse:Senha>';
   end;
 end;
 

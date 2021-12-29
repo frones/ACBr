@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/12/2021
+-- Diversos --
+[*] Remoção de Warning.
+   Por: Italo Giurizzato Junior
 -- Actcon.GravarXml --
 [*] Possível correção para as cidades Sete Lagoas e Ipatinga.
    Por: Italo Giurizzato Junior

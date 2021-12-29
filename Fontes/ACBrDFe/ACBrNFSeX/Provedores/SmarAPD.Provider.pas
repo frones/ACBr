@@ -544,7 +544,9 @@ begin
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin
     Result := '<cpfUsuario>' + Emitente.WSUser + '</cpfUsuario>' +
-              '<hashSenha>' + EncodeBase64(SHA1(Emitente.WSSenha)) + '</hashSenha>';
+              '<hashSenha>' +
+                string(EncodeBase64(SHA1(AnsiString(Emitente.WSSenha)))) +
+              '</hashSenha>';
   end;
 end;
 

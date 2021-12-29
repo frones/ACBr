@@ -162,7 +162,7 @@ begin
                    sInter;
 
     with TACBrNFSeX(FAOwner) do
-      NFSe.Assinatura := SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
+      NFSe.Assinatura := string(SSL.CalcHash(AnsiString(sAssinatura), dgstSHA1, outBase64, True));
   end;
 end;
 

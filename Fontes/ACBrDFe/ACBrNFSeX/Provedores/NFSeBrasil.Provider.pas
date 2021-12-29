@@ -540,11 +540,12 @@ begin
         begin
           DocumentoNota := TACBrXmlDocument.Create;
           try
-            NumRps := ParseText(TratarXmlRetorno(AuxNode.Content), True, True);
+            NumRps := ParseText(AnsiString(TratarXmlRetorno(AuxNode.Content)), True, True);
             NumRps := StringReplace(NumRps, 'R$', '', [rfReplaceAll]);
             DocumentoNota.LoadFromXml(ConverteXMLtoUTF8(NumRps));
+
             NotaNode := DocumentoNota.Root;
-            AuxNode := DocumentoNota.Root.Childrens.FindAnyNs('Nfse');
+            AuxNode := NotaNode.Childrens.FindAnyNs('Nfse');
             AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
@@ -661,11 +662,12 @@ begin
         begin
           DocumentoNota := TACBrXmlDocument.Create;
           try
-            NumRps := ParseText(TratarXmlRetorno(AuxNode.Content), True, True);
+            NumRps := ParseText(AnsiString(TratarXmlRetorno(AuxNode.Content)), True, True);
             NumRps := StringReplace(NumRps, 'R$', '', [rfReplaceAll]);
             DocumentoNota.LoadFromXml(ConverteXMLtoUTF8(NumRps));
+
             NotaNode := DocumentoNota.Root;
-            AuxNode := DocumentoNota.Root.Childrens.FindAnyNs('Nfse');
+            AuxNode := NotaNode.Childrens.FindAnyNs('Nfse');
             AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
             NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);

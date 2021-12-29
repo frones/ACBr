@@ -687,7 +687,7 @@ begin
             CharSet := HttpClient.HeaderResp.GetHeaderValue('Content-Type');
 
             if Pos('utf-8', CharSet) > 0 then
-              FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size)
+              FPRetorno := string(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size))
             else
               FPRetorno := UTF8ToNativeString(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
 
@@ -698,7 +698,7 @@ begin
             if Pos('ISO-8859-1', FPRetorno) > 0 then
             begin
               FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-              FPRetorno := TranslateString(FPRetorno, 0, 28591);
+              FPRetorno := string(TranslateString(AnsiString(FPRetorno), 0, 28591));
             end;
 
             if Pos('<?xml version="1.0" ?>', FPRetorno) > 0 then

@@ -684,12 +684,12 @@ begin
 
             HttpClient.DataResp.Position := 0;
 
-            CharSet := HttpClient.HeaderResp.GetHeaderValue('Content-Type');
+            CharSet := LowerCase(HttpClient.HeaderResp.GetHeaderValue('Content-Type'));
 
-            if Pos('utf-8', CharSet) > 0 then
-              FPRetorno := string(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size))
+            if (Pos('application/xml', CharSet) > 0) and (Pos('utf-8', CharSet) > 0) then
+              FPRetorno := UTF8ToNativeString(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size))
             else
-              FPRetorno := UTF8ToNativeString(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
+              FPRetorno := string(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
 
             // Alsuns provedores retorna uma string apenas com a mensagem de erro
             if Pos('Body', FPRetorno) = 0 then

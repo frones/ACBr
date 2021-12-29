@@ -51,6 +51,15 @@ echo "* Arquivo   ACBrTEFD.lrs   gerado      *"
 echo "****************************************"
 echo.
 
+:PIXCD
+%1\tools\lazres.exe ACBrPIXCD.lrs TACBrPixCD.png
+move ACBrPIXCD.lrs ..\ACBrPIXCD
+echo.
+echo "****************************************"
+echo "* Arquivo   ACBrPIXCD.lrs   gerado     *"
+echo "****************************************"
+echo.
+
 :TCP
 %1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.png TACBrCEP.png TACBrIBGE.png TACBrNFPws.png TACBrCNIEE.png TACBrSuframa.png TACBrDownload.png TACBrIBPTax.png TACBrConsultaCNPJ.png TACBrMail.png TACBrConsultaCPF.png TACBrSpedTabelas.png TACBrSedex.png TACBrNCMs.png
 move ACBrTCP.lrs ..\ACBrTCP

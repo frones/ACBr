@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/12/2021
+-- Actcon.GravarXml --
+[*] Possível correção para as cidades Sete Lagoas e Ipatinga.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Ajustes nas URLs das cidades Visconde do Rio Branco/MG e São Geraldo/MG.
+   Por: Jeanny Paiva Lopes
+-- SH3.Provider --
+[*] Ajuste na lista de tags para a leitura dos retornos.
+   Por: Jeanny Paiva Lopes
+
 28/12/2021
 -- ACBrNFSeXServicos --
 [*] Ajustes para a cidade de Palmeira das Missões.

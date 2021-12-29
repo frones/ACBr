@@ -86,6 +86,7 @@ end;
 procedure TNFSeW_Actcon201.Configuracao;
 begin
   inherited Configuracao;
+
 end;
 
 { TNFSeW_Actcon202 }
@@ -94,8 +95,15 @@ procedure TNFSeW_Actcon202.Configuracao;
 begin
   inherited Configuracao;
 
-  FormatoEmissao := tcDatHor;
+  if FAOwner.ConfigGeral.Params1 = 'Date' then
+    FormatoEmissao := tcDat
+  else
+    FormatoEmissao := tcDatHor;
+
   FormatoCompetencia := tcDat;
+
+  DivAliq100 := True;
+
   TagTomador := 'Tomador';
 end;
 

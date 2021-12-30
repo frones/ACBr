@@ -205,7 +205,6 @@ begin
     ConsultarNFSeRps := True;
     ConsultarNFSe := True;
     CancelarNFSe := True;
-//    RpsGerarNFSe := True;
     LoteGerarNFSe := True;
   end;
 

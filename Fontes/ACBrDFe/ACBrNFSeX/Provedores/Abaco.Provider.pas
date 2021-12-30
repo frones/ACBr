@@ -268,7 +268,11 @@ procedure TACBrNFSeProviderAbaco204.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ModoEnvio := meLoteAssincrono;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meLoteAssincrono;
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
+  end;
 
   with ConfigAssinar do
   begin

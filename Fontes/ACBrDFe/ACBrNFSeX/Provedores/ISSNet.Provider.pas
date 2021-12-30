@@ -132,7 +132,6 @@ begin
     ConsultarNFSeRps := 'servico_consultar_nfse_rps_envio.xsd';
     ConsultarNFSe := 'servico_consultar_nfse_envio.xsd';
     CancelarNFSe := 'servico_cancelar_nfse_envio.xsd';
-//    Validar := False;
   end;
 
   FpNameSpaceCanc := ' xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"' +

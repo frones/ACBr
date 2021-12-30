@@ -289,6 +289,9 @@ begin
     if fpDANFSe.OutrasInformacaoesImp <> '' then
       rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
 
+  if fpNFSe.InformacoesComplementares <> '' then
+    rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
+
   if ( (pos('http://', LowerCase( fpNFSe.OutrasInformacoes) ) > 0) or (pos('http://', LowerCase( fpNFSe.Link) ) > 0) or (pos('https://', LowerCase( fpNFSe.Link) ) > 0) ) then
   begin
     rlmDadosAdicionais.Width := 643;

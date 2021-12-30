@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/12/2021
+-- ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
+[*] Leitura e impressão da tag InformacoesComplementares.
+   Por: Italo Giurizzato Junior
+-- Abaco.Provider --
+[*] Na consulta exige a tag NumeroNfseFinal.
+   Por: Italo Giurizzato Junior
+
 29/12/2021
 -- ACBrNFSeXWebserviceBase --
 [*] Possível correção para tratar o retorno de mensagens com acentuação.

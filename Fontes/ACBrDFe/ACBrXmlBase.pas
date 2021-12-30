@@ -163,6 +163,7 @@ begin
   Result := FaststringReplace(Result, ''#$A'', '', [rfReplaceAll]);
   Result := FaststringReplace(Result, ''#$A#$A'', '', [rfReplaceAll]);
   Result := FaststringReplace(Result, '<br >', ';', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '<br>', ';', [rfReplaceAll]);
   Result := FaststringReplace(Result, #9, '', [rfReplaceAll]);
 end;
 

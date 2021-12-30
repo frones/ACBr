@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2021
+-- ACBrXmlBase --
+[*] Alteração na função StrToXml para trocar o <br> por ;
+   Por: Italo Giurizzato Junior
+
 20/12/2021
 -- ACBrXmlBase --
 [*] Alteração do nome da função de ProcessarConteudoXml para ObterConteudoTag.

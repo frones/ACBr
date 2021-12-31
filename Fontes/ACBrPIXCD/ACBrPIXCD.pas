@@ -119,7 +119,6 @@ resourcestring
   sErroPSPTipoChave = 'Chave Pix inválida';
   sErroHttp = 'Erro HTTP: %d, Metodo: %s, URL: %s';
 
-
 type
 
   TACBrPixCD = class;
@@ -185,6 +184,9 @@ type
 
   { TACBrPSP - O Componente Base, para os PSPs, deve ser conectado em TACBrPixCD}
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSP = class(TACBrComponent)
   private
     fChavePIX: String;
@@ -217,10 +219,6 @@ type
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    procedure Autenticar; virtual;
-    procedure VerificarValidadeToken; virtual;
-    procedure RenovarToken; virtual;
-
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; virtual;
     procedure ConfigurarHTTP; virtual;
     procedure ConfigurarProxy; virtual;
@@ -235,6 +233,7 @@ type
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
 
+    procedure LimparHTTP; virtual;
     function TransmitirHttp(const Method, URL: String;
       out ResultCode: Integer; out RespostaHttp: String): Boolean; virtual;
 
@@ -248,6 +247,9 @@ type
     destructor Destroy; override;
     procedure Clear;
 
+    procedure Autenticar; virtual;
+    procedure VerificarValidadeToken; virtual;
+    procedure RenovarToken; virtual;
     procedure VerificarAutenticacao; virtual;
     property Autenticado: Boolean read fpAutenticado;
     property ValidadeToken: TDateTime read fpValidadeToken;
@@ -268,7 +270,7 @@ type
 
   { TACBrPixRecebedor }
 
-  TACBrPixRecebedor = class
+  TACBrPixRecebedor = class(TComponent)
   private
     fCEP: String;
     fCidade: String;
@@ -280,9 +282,9 @@ type
     procedure SetCodCategoriaComerciante(AValue: Integer);
     procedure SetNome(AValue: String);
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     procedure Clear;
-    procedure Assign(Source: TACBrPixRecebedor);
+    procedure Assign(Source: TACBrPixRecebedor); reintroduce;
   published
     property Nome: String read fNome write SetNome;
     property Cidade: String read fCidade write SetCidade;
@@ -293,16 +295,16 @@ type
 
   { TACBrHttpProxy }
 
-  TACBrHttpProxy = class
+  TACBrHttpProxy = class(TComponent)
   private
     fHost: String;
     fPass: String;
     fPort: String;
     fUser: String;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     procedure Clear;
-    procedure Assign(Source: TACBrHttpProxy);
+    procedure Assign(Source: TACBrHttpProxy); reintroduce;
   published
     property Host: String read fHost write fHost;
     property Port: String read fPort write fPort;
@@ -312,6 +314,9 @@ type
 
   { TACBrPixCD - O Componente em si...}
 
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPixCD = class(TACBrComponent)
   private
     fAmbiente: TACBrPixCDAmbiente;
@@ -408,7 +413,10 @@ begin
   i := Low(ChttpContentEncodingCompress);
   Result := False;
   while (not Result) and (i <= High(ChttpContentEncodingCompress)) do
+  begin
     Result := (pos(ChttpContentEncodingCompress[i], ce) > 0);
+    Inc(i);
+  end;
 end;
 
 function DecompressStream(AStream: TStream): String;
@@ -433,6 +441,7 @@ begin
   fPSP := AOwner;
   fHTTP := fPSP.Http;
   fpEndPoint := '';
+  fProblema := TACBrPIXProblema.Create;
 end;
 
 destructor TACBrPixEndPoint.Destroy;
@@ -507,7 +516,9 @@ var
   RespostaHttp, s, e: String;
   ResultCode: Integer;
 begin
-  Clear;
+  PixConsultados.Clear;
+  Problema.Clear;
+  fPSP.LimparHTTP;
 
   with fPSP.QueryParams do
   begin
@@ -614,7 +625,14 @@ end;
 procedure TACBrPSP.SetACBrPixCD(AValue: TACBrPixCD);
 var
   va: TACBrPixCD;
+  //s: String;
 begin
+  //DEBUG
+  //s := 'Nil';
+  //if AValue <> Nil then
+  //  s := IfEmptyThen(AValue.Name, AValue.ClassName);
+  //WriteLog('c:\temp\debug.log', 'TACBrPSP.SetACBrPixCD( '+s+' )');
+
   if (AValue = fPixCD) then
     Exit;
 
@@ -637,8 +655,13 @@ end;
 
 procedure TACBrPSP.Notification(AComponent: TComponent; Operation: TOperation);
 begin
+  //DEBUG
+  //WriteLog('c:\temp\debug.log', 'TACBrPSP.Notification('+
+  //  IfEmptyThen(AComponent.Name, AComponent.ClassName)+', '+
+  //  GetEnumName(TypeInfo(TOperation), integer(Operation) ) +' )' );
+
   inherited Notification(AComponent, Operation) ;
-  if (Operation = opRemove) and (fPixCD <> Nil) and (AComponent = fPixCD) then
+  if (Operation = opRemove) and (fPixCD <> Nil) and (AComponent is TACBrPixCD) then
     fPixCD := Nil
 end;
 
@@ -696,9 +719,15 @@ begin
   fTipoChave := TipoChave;
 end;
 
+function TACBrPSP.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
+begin
+  Result := '';
+  raise EACBrPixException.Create(
+    ACBrStr(Format(sErroMetodoNaoImplementado,['ObterURLAmbiente',ClassName])));
+end;
+
 procedure TACBrPSP.ConfigurarHTTP;
 begin
-  Clear;
   ConfigurarProxy;
   ConfigurarTimeOut;
 end;
@@ -741,7 +770,7 @@ begin
   for i := Low(ChttpContentEncodingCompress) to High(ChttpContentEncodingCompress) do
     ae := ae + ', '+ChttpContentEncodingCompress[i];
   Delete(ae,1,1);
-
+  
   fHttpSend.Headers.Add(ChhtpHeaderAcceptEncoding + ae);
 end;
 
@@ -803,11 +832,19 @@ begin
   Result := Trim(EndPoint);
 end;
 
+procedure TACBrPSP.LimparHTTP;
+begin
+  fHttpSend.Clear;
+  fPathParams.Clear;
+  fQueryParams.Clear;
+end;
+
 function TACBrPSP.TransmitirHttp(const Method, URL: String; out
   ResultCode: Integer; out RespostaHttp: String): Boolean;
 
   function GetHttpBody: String;
   begin
+    fHttpSend.Document.Position := 0;
     Result := ReadStrFromStream(fHttpSend.Document, fHttpSend.Document.Size);
   end;
 
@@ -834,7 +871,7 @@ begin
     end;
   end;
 
-  fPixCD.RegistrarLog(AMethod+' '+AURL);
+  fPixCD.RegistrarLog('TransmitirHttp( '+AMethod+', '+AURL+' )');
   if (fPixCD.NivelLog > 1) then
   begin
     if (HttpBody = '') then
@@ -878,12 +915,6 @@ begin
   Autenticar;
 end;
 
-function TACBrPSP.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
-begin
-  raise EACBrPixException.Create(
-    ACBrStr(Format(sErroMetodoNaoImplementado,['ObterURLAmbiente',ClassName])));
-end;
-
 procedure TACBrPSP.VerificarAutenticacao;
 begin
   if not Autenticado then
@@ -894,9 +925,9 @@ end;
 
 { TACBrPixRecebedor }
 
-constructor TACBrPixRecebedor.Create;
+constructor TACBrPixRecebedor.Create(AOwner: TComponent);
 begin
-  inherited Create;
+  inherited Create(AOwner);
   Clear;
 end;
 
@@ -953,9 +984,9 @@ end;
 
 { TACBrHttpProxy }
 
-constructor TACBrHttpProxy.Create;
+constructor TACBrHttpProxy.Create(AOwner: TComponent);
 begin
-  inherited Create;
+  inherited Create(AOwner);
   Clear;
 end;
 
@@ -980,8 +1011,19 @@ end;
 constructor TACBrPixCD.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  fRecebedor := TACBrPixRecebedor.Create;
-  fProxy := TACBrHttpProxy.Create;
+
+  fRecebedor := TACBrPixRecebedor.Create(Self);
+  fRecebedor.Name := 'Recebedor' ;
+  {$IFDEF COMPILER6_UP}
+  fRecebedor.SetSubComponent(True);
+  {$ENDIF}
+
+  fProxy := TACBrHttpProxy.Create(Self);
+  fProxy.Name := 'Proxy' ;
+  {$IFDEF COMPILER6_UP}
+  fProxy.SetSubComponent(True);
+  {$ENDIF}
+
   fTimeOut := ChttpTimeOutDef;
   fArqLOG := '';
   fNivelLog := 1;
@@ -1029,7 +1071,14 @@ end;
 procedure TACBrPixCD.SetACBrPSP(AValue: TACBrPSP);
 var
   va: TACBrPSP ;
+  //s: String;
 begin
+  //DEBUG
+  //s := 'Nil';
+  //if AValue <> Nil then
+  //  s := IfEmptyThen(AValue.Name, AValue.ClassName);
+  //WriteLog('c:\temp\debug.log', 'TACBrPixCD.SetACBrPSP( '+s+' )');
+
   if (AValue = fPSP) then
     Exit;
 
@@ -1075,8 +1124,14 @@ end;
 
 procedure TACBrPixCD.Notification(AComponent: TComponent; Operation: TOperation);
 begin
+  //DEBUG
+  //WriteLog('c:\temp\debug.log', 'TACBrPixCD.Notification('+
+  //  IfEmptyThen(AComponent.Name, AComponent.ClassName)+', '+
+  //  GetEnumName(TypeInfo(TOperation), integer(Operation) ) +' )');
+
   inherited Notification(AComponent, Operation);
-  if (Operation = opRemove) and (fPSP <> nil) and (AComponent = fPSP) then
+
+  if (Operation = opRemove) and (fPSP <> nil) and (AComponent is TACBrPSP) then
   begin
     RegistrarLog('Removendo PSP: '+fPSP.ClassName+', Nome: '+fPSP.Name);
     fPSP := nil ;

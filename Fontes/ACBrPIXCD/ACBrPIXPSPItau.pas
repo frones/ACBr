@@ -73,6 +73,7 @@ type
 implementation
 
 uses
+  synautil,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
   {$Else}
@@ -92,25 +93,29 @@ end;
 
 procedure TACBrPSPItau.Autenticar;
 var
-  AURL, RespostaHttp: String;
-  sl: TStringList;
-  ResultCode: Integer;
+  AURL, RespostaHttp, Body: String;
+  ResultCode, sec: Integer;
   js: TJsonObject;
+  qp: TACBrQueryParams;
 begin
+  LimparHTTP;
+
   if (ACBrPixCD.Ambiente = ambProducao) then
     AURL := cURLItauAuthProducao
   else
     AURL := cURLItauAuthTeste;
 
-  sl := TStringList.Create;
+  qp := TACBrQueryParams.Create;
   try
-    sl.Add('grant_type:client_credentials');
-    sl.Add('client_id:'+ClientID);
-    sl.Add('client_secret:'+ClientSecret);
-    sl.SaveToStream(Http.Document);
-    Http.Headers.Add(ChttpHeaderContentType+' '+CContentTypeApplicationWwwFormUrlEncoded);
+    qp.Values['grant_type'] := 'client_credentials';
+    qp.Values['client_id'] := ClientID;
+    qp.Values['client_secret'] := ClientSecret;
+    Body := qp.AsURL;
+    Delete(Body, 1, 1);
+    WriteStrToStream(Http.Document, Body);
+    Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;
   finally
-    sl.Free;
+    qp.Free;
   end;
 
   TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
@@ -121,7 +126,7 @@ begin
     js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
     try
       fpToken := js.S['access_token'];
-      fpValidadeToken := IncMilliSecond(Now, js.I['expires_in']);
+      sec := js.I['expires_in'];
       fpRefereshToken := js.S['refresh_token'];
     finally
       js.Free;
@@ -131,13 +136,14 @@ begin
     try
       js.Parse(RespostaHttp);
       fpToken := js['access_token'].AsString;
-      fpValidadeToken := IncMilliSecond(Now, js['expires_in'].AsInteger);
+      sec := js['expires_in'].AsInteger;
       fpRefereshToken := js['refresh_token'].AsString;
     finally
       js.Free;
     end;
    {$EndIf}
 
+   fpValidadeToken := IncSecond(Now, sec);
    fpAutenticado := True;
   end
   else

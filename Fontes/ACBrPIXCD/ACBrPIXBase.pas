@@ -389,8 +389,6 @@ begin
 end;
 
 procedure TACBrPIXSchema.WriteToJSon(AJSon: TJsonObject);
-var
-  js: TJsonObject;
 begin
   if IsEmpty then
     Exit;

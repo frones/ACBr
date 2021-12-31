@@ -41,8 +41,11 @@ uses
   ACBrPIXCD;
 
 const
-  cURLItauTeste = 'https://api.itau.com.br/sandbox/pix_recebimentos/v1/';
-  cURLItauProducao = 'https://secure.api.itau/pix_recebimentos/v1/';
+  cURLItauSandbox = 'https://api.itau.com.br/sandbox';
+  cURLItauProducao = 'https://secure.api.itau';
+  cURLItauAPIPix = '/pix_recebimentos/v2/';
+  cURLItauAuthTeste = cURLItauSandbox+'/api/oauth/token';
+  cURLItauAuthProducao = 'https://sts.itau.com.br/as/token.oauth2';
 
 type
 
@@ -53,6 +56,9 @@ type
     fSandboxStatusCode: String;
     fxCorrelationID: String;
   protected
+    procedure Autenticar; override;
+    function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
+    procedure ConfigurarAutenticacao(const Method, EndPoint: String); override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -66,6 +72,14 @@ type
 
 implementation
 
+uses
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   JsonDataObjects_ACBr
+  {$Else}
+   Jsons
+  {$EndIf},
+  DateUtils;
+
 { TACBrPSPItau }
 
 constructor TACBrPSPItau.Create(AOwner: TComponent);
@@ -74,9 +88,76 @@ begin
 
   fSandboxStatusCode := '';
   fxCorrelationID := '';
+end;
 
-  fpURLProducao := cURLItauProducao;
-  fpURLTeste := cURLItauTeste;
+procedure TACBrPSPItau.Autenticar;
+var
+  AURL, RespostaHttp: String;
+  sl: TStringList;
+  ResultCode: Integer;
+  js: TJsonObject;
+begin
+  if (ACBrPixCD.Ambiente = ambProducao) then
+    AURL := cURLItauAuthProducao
+  else
+    AURL := cURLItauAuthTeste;
+
+  sl := TStringList.Create;
+  try
+    sl.Add('grant_type:client_credentials');
+    sl.Add('client_id:'+ClientID);
+    sl.Add('client_secret:'+ClientSecret);
+    sl.SaveToStream(Http.Document);
+    Http.Headers.Add(ChttpHeaderContentType+' '+CContentTypeApplicationWwwFormUrlEncoded);
+  finally
+    sl.Free;
+  end;
+
+  TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
+
+  if (ResultCode = HTTP_OK) then
+  begin
+   {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+    try
+      fpToken := js.S['access_token'];
+      fpValidadeToken := IncMilliSecond(Now, js.I['expires_in']);
+      fpRefereshToken := js.S['refresh_token'];
+    finally
+      js.Free;
+    end;
+   {$Else}
+    js := TJsonObject.Create;
+    try
+      js.Parse(RespostaHttp);
+      fpToken := js['access_token'].AsString;
+      fpValidadeToken := IncMilliSecond(Now, js['expires_in'].AsInteger);
+      fpRefereshToken := js['refresh_token'].AsString;
+    finally
+      js.Free;
+    end;
+   {$EndIf}
+
+   fpAutenticado := True;
+  end
+  else
+    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
+      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
+end;
+
+function TACBrPSPItau.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
+begin
+  if (Ambiente = ambProducao) then
+    Result := cURLItauProducao
+  else
+    Result := cURLItauSandbox;
+
+  Result := Result + cURLItauAPIPix;
+end;
+
+procedure TACBrPSPItau.ConfigurarAutenticacao(const Method, EndPoint: String);
+begin
+  inherited;
 end;
 
 procedure TACBrPSPItau.ConfigurarQueryParameters(const Method, EndPoint: String);

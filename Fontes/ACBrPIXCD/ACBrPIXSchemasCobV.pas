@@ -160,9 +160,6 @@ type
   TACBrPIXDesconto = class(TACBrPIXModalidadeValor)
   private
     fdescontoDataFixa: TACBrPIXDescontosDataFixa;
-    fMaxModalidade: Integer;
-    fmodalidade: Integer;
-    fvalorPerc: Currency;
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;

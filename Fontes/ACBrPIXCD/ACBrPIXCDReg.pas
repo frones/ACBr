@@ -37,7 +37,7 @@ unit ACBrPIXCDReg;
 interface
 
 uses
-  Classes, SysUtils, ACBrPIXCD
+  Classes, SysUtils, ACBrPIXCD, ACBrPIXPSPItau
   {$IFDEF FPC}, LResources {$ENDIF} ;
 
 procedure Register;
@@ -50,7 +50,7 @@ implementation
 
 procedure Register;
 begin
-  RegisterComponents('ACBrPIXCD', [TACBrPixCD, TACBrPSP]);
+  RegisterComponents('ACBrPIXCD', [TACBrPixCD, TACBrPSPItau]);
 end;
 
 {$IFDEF FPC}

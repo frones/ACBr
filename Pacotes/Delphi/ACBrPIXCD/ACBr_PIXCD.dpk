@@ -1,0 +1,61 @@
+package ACBr_PIXCD;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  ACBr_Diversos;
+
+contains
+  ACBrPIXBase in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXBase.pas',
+  ACBrPIXUtil in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXUtil.pas',
+  ACBrPIXCD in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXCD.pas',
+  ACBrPIXPSPItau in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPItau.pas',
+  ACBrPIXQRCodeEstatico in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXQRCodeEstatico.pas',
+  ACBrPIXSchemasProblema in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasProblema.pas',
+  ACBrPIXSchemasCalendario in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCalendario.pas',
+  ACBrPIXSchemasDevedor in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasDevedor.pas',
+  ACBrPIXSchemasLocation in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLocation.pas',
+  ACBrPIXSchemasPaginacao in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPaginacao.pas',
+  ACBrPIXSchemasDevolucao in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasDevolucao.pas',
+  ACBrPIXSchemasPix in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPix.pas',
+  ACBrPIXSchemasParametrosConsultaPix in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaPix.pas',
+  ACBrPIXSchemasPixConsultados in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPixConsultados.pas',
+  ACBrPIXSchemasCob in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCob.pas',
+  ACBrPIXSchemasParametrosConsultaCob in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaCob.pas',
+  ACBrPIXSchemasCobsConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsConsultadas.pas',
+  ACBrPIXSchemasCobV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobV.pas',
+  ACBrPIXSchemasCobsVConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsVConsultadas.pas',
+  ACBrPIXSchemasLoteCobV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLoteCobV.pas',
+  ACBrPIXSchemasParametrosConsultaLote in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaLote.pas',
+  ACBrPIXSchemasLotesCobVConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLotesCobVConsultadas.pas';
+
+end.

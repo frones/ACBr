@@ -16,87 +16,100 @@
     <Description Value="ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="20">
+    <Files Count="23">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXBase.pas"/>
-        <UnitName Value="ACBrPIXBase"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXCDReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPIXCDReg"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXUtil.pas"/>
-        <UnitName Value="ACBrPIXUtil"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXBase.pas"/>
+        <UnitName Value="ACBrPIXBase"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXQRCodeEstatico.pas"/>
-        <UnitName Value="ACBrPIXQRCodeEstatico"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXUtil.pas"/>
+        <UnitName Value="ACBrPIXUtil"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCob.pas"/>
-        <UnitName Value="ACBrPIXSchemasCob"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXCD.pas"/>
+        <UnitName Value="ACBrPIXCD"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasProblema.pas"/>
-        <UnitName Value="ACBrPIXSchemasProblema"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPItau.pas"/>
+        <UnitName Value="ACBrPIXPSPItau"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPix.pas"/>
-        <UnitName Value="ACBrPIXSchemasPix"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXQRCodeEstatico.pas"/>
+        <UnitName Value="ACBrPIXQRCodeEstatico"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasDevolucao.pas"/>
-        <UnitName Value="ACBrPIXSchemasDevolucao"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasProblema.pas"/>
+        <UnitName Value="ACBrPIXSchemasProblema"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPaginacao.pas"/>
-        <UnitName Value="ACBrPIXSchemasPaginacao"/>
-      </Item8>
-      <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaPix.pas"/>
-        <UnitName Value="ACBrPIXSchemasParametrosConsultaPix"/>
-      </Item9>
-      <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPixConsultados.pas"/>
-        <UnitName Value="ACBrPIXSchemasPixConsultados"/>
-      </Item10>
-      <Item11>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaCob.pas"/>
-        <UnitName Value="ACBrPIXSchemasParametrosConsultaCob"/>
-      </Item11>
-      <Item12>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCalendario.pas"/>
         <UnitName Value="ACBrPIXSchemasCalendario"/>
-      </Item12>
-      <Item13>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasDevedor.pas"/>
         <UnitName Value="ACBrPIXSchemasDevedor"/>
-      </Item13>
-      <Item14>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLocation.pas"/>
         <UnitName Value="ACBrPIXSchemasLocation"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPaginacao.pas"/>
+        <UnitName Value="ACBrPIXSchemasPaginacao"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasDevolucao.pas"/>
+        <UnitName Value="ACBrPIXSchemasDevolucao"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPix.pas"/>
+        <UnitName Value="ACBrPIXSchemasPix"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaPix.pas"/>
+        <UnitName Value="ACBrPIXSchemasParametrosConsultaPix"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsConsultadas.pas"/>
-        <UnitName Value="ACBrPIXSchemasCobsConsultadas"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasPixConsultados.pas"/>
+        <UnitName Value="ACBrPIXSchemasPixConsultados"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobV.pas"/>
-        <UnitName Value="ACBrPIXSchemasCobV"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCob.pas"/>
+        <UnitName Value="ACBrPIXSchemasCob"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsVConsultadas.pas"/>
-        <UnitName Value="ACBrPIXSchemasCobsVConsultadas"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaCob.pas"/>
+        <UnitName Value="ACBrPIXSchemasParametrosConsultaCob"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLoteCobV.pas"/>
-        <UnitName Value="ACBrPIXSchemasLoteCobV"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsConsultadas.pas"/>
+        <UnitName Value="ACBrPIXSchemasCobsConsultadas"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaLote.pas"/>
-        <UnitName Value="ACBrPIXSchemasParametrosConsultaLote"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobV.pas"/>
+        <UnitName Value="ACBrPIXSchemasCobV"/>
       </Item19>
       <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsVConsultadas.pas"/>
+        <UnitName Value="ACBrPIXSchemasCobsVConsultadas"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLoteCobV.pas"/>
+        <UnitName Value="ACBrPIXSchemasLoteCobV"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaLote.pas"/>
+        <UnitName Value="ACBrPIXSchemasParametrosConsultaLote"/>
+      </Item22>
+      <Item23>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLotesCobVConsultadas.pas"/>
         <UnitName Value="ACBrPIXSchemasLotesCobVConsultadas"/>
-      </Item20>
+      </Item23>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

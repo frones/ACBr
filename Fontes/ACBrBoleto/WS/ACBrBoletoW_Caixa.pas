@@ -248,7 +248,7 @@ begin
     Gerador.wCampo(tcStr, '#4', 'OPERACAO       ', 01, 50, 1, TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ), DSC_TIPO_SERVICO);
     Gerador.wCampo(tcStr, '#5', 'SISTEMA_ORIGEM ', 01, 05, 1, C_SISTEMA_ORIGEM, DSC_SISTEMA_ORIGEM);
     Gerador.wCampo(tcStr, '#6', 'UNIDADE        ', 01, 04, 1, Cedente.Agencia, DSC_AGENCIA);
-    Gerador.wCampo(tcStr, '#7', 'DATA_HORA      ', 14, 14, 1, FormatDateTime('YYYYMMDDHHMMSS', Now), DSC_DATA_HORA);
+    Gerador.wCampo(tcStr, '#7', 'DATA_HORA      ', 14, 14, 1, FormatDateTime('YYYYMMDDHHNNSS', Now), DSC_DATA_HORA);
     Gerador.wGrupo('/sib:HEADER');
   end;
 

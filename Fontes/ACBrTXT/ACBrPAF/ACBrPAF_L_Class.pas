@@ -99,7 +99,7 @@ begin
   Reg1 :=
     TRegistroL2(ARegistro1).CNPJ +
     Format('%-8s', [TRegistroL2(ARegistro1).ID_LINHA]) +
-    FormatDateTime('yyyymmddhhmmss', TRegistroL2(ARegistro1).DT_VIA) +
+    FormatDateTime('yyyymmddhhnnss', TRegistroL2(ARegistro1).DT_VIA) +
     Format('%-20s', [TRegistroL2(ARegistro1).NUM_FAB]) +
     Format('%6.6d', [TRegistroL2(ARegistro1).GNF]) +
     Format('%6.6d', [TRegistroL2(ARegistro1).GRG]) +
@@ -108,7 +108,7 @@ begin
   Reg2 :=
     TRegistroL2(ARegistro2).CNPJ +
     Format('%-8s', [TRegistroL2(ARegistro2).ID_LINHA]) +
-    FormatDateTime('yyyymmddhhmmss', TRegistroL2(ARegistro2).DT_VIA) +
+    FormatDateTime('yyyymmddhhnnss', TRegistroL2(ARegistro2).DT_VIA) +
     Format('%-20s', [TRegistroL2(ARegistro2).NUM_FAB]) +
     Format('%6.6d', [TRegistroL2(ARegistro2).GNF]) +
     Format('%6.6d', [TRegistroL2(ARegistro2).GRG]) +
@@ -142,14 +142,14 @@ begin
              LFill(COO, 6) +
              LFill(GNF, 6) +
              LFill(GRG, 6) +
-             LFill(DT_EMI, 'yyyymmddhhmmss') +
+             LFill(DT_EMI, 'yyyymmddhhnnss') +
              LFill(COD_MOD, 2) +
              LFill(COD_CAT, 2) +
              RFill(ID_LINHA, 8) +
              RFill(COD_ORIG, 20) +
              RFill(COD_DEST, 20) +
              LFill(COD_TSER, 2) +
-             LFill(DT_VIA, 'yyyymmddhhmmss') +
+             LFill(DT_VIA, 'yyyymmddhhnnss') +
              LFill(TIP_VIA, 2) +
              LFill(POLTRONA, 7) +
              RFill(PLATAFORMA,15) +

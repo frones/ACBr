@@ -814,7 +814,7 @@ begin
   vCNPJ   := PadLeft(OnlyNumber(FEnvRecepcaoLeitura.infLeitura.CNPJOper), 14, '0');
   vtpTra  := Poem_Zeros(tpTransmToStr(FEnvRecepcaoLeitura.tpTransm), 1);
   vcEQP   := Poem_Zeros(FEnvRecepcaoLeitura.infLeitura.cEQP, 15);
-  vdhPass := FormatDateTime('YYYYMMDDHHMMSS', FEnvRecepcaoLeitura.infLeitura.dhPass);
+  vdhPass := FormatDateTime('YYYYMMDDHHNNSS', FEnvRecepcaoLeitura.infLeitura.dhPass);
 
   Result := vUF + vData + vCNPJ + vtpTra + vcEQP + vdhPass;
 end;
@@ -940,7 +940,7 @@ begin
     vCNPJ   := PadLeft(OnlyNumber(CNPJOper), 14, '0');
     vtpTra  := Poem_Zeros(tpTransmToStr(tpTransm), 1);
     vcEQP   := Poem_Zeros(cEQP, 15);
-    vdhPass := FormatDateTime('YYYYMMDDHHMMSS', infLeitura.dhPass);
+    vdhPass := FormatDateTime('YYYYMMDDHHNNSS', infLeitura.dhPass);
   end;
 
   Result := vUF + vData + vCNPJ + vtpTra + vcEQP + vdhPass;

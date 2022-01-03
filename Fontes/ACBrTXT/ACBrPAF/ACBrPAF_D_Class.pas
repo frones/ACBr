@@ -264,11 +264,11 @@ var
 begin
   Reg1 :=
     Format('%-13s', [TRegistroD4(ARegistro1).NUM_DAV]) +
-    FormatDateTime('yyyymmddhhmmss', TRegistroD4(ARegistro1).DT_ALT);
+    FormatDateTime('yyyymmddhhnnss', TRegistroD4(ARegistro1).DT_ALT);
 
   Reg2 :=
     Format('%-13s', [TRegistroD4(ARegistro2).NUM_DAV]) +
-    FormatDateTime('yyyymmddhhmmss', TRegistroD4(ARegistro2).DT_ALT);
+    FormatDateTime('yyyymmddhhnnss', TRegistroD4(ARegistro2).DT_ALT);
 
   Result := AnsiCompareText(Reg1, Reg2);
 end;
@@ -287,7 +287,7 @@ begin
       begin
         Add( LFill('D4') +
              RFill(NUM_DAV, 13) +
-             LFill(DT_ALT, 'yyyymmddhhmmss') +
+             LFill(DT_ALT, 'yyyymmddhhnnss') +
              RFill(COD_ITEM, 14) +
              RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
              LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +

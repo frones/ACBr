@@ -192,7 +192,7 @@ function TACBrSATExtratoClass.CalcularConteudoQRCode(const ID: String;
   const assinaturaQRCODE: String): String;
 begin
   Result := ID + '|' +
-            FormatDateTime('yyyymmddhhmmss',dEmi_hEmi) + '|' +
+            FormatDateTime('yyyymmddhhnnss',dEmi_hEmi) + '|' +
             FloatToString(Valor,'.','0.00') + '|' +
             Trim(CNPJCPF) + '|' +
             assinaturaQRCODE;

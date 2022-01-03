@@ -1881,7 +1881,7 @@ begin
      Ini.WriteString('ECF','RFDID', fsECF_RFDID+' ' ) ;
      Ini.WriteString('ECF', 'VersaoAtoCotepe', fsAtoCotepe ) ;
      if fsCONT_DataHoraCadastro = 0 then
-        Ini.WriteString('ECF', 'DataHoraSwBasico', 'YYYYMMDDhhmmss' )
+        Ini.WriteString('ECF', 'DataHoraSwBasico', 'YYYYMMDDhhnnss' )
      else
         Ini.WriteString('ECF', 'DataHoraSwBasico', DTtoS(fsECF_DataHoraSwBasico) ) ;
 
@@ -1891,7 +1891,7 @@ begin
      Ini.WriteString('CONTRIBUINTE', 'Endereco', fsCONT_Endereco+' ' ) ;
      Ini.WriteInteger('CONTRIBUINTE', 'NumUsuario', fsCONT_NumUsuario ) ;
      if fsCONT_DataHoraCadastro = 0 then
-        Ini.WriteString('CONTRIBUINTE', 'DataHoraCadastro', 'YYYYMMDDhhmmss' )
+        Ini.WriteString('CONTRIBUINTE', 'DataHoraCadastro', 'YYYYMMDDhhnnss' )
      else
         Ini.WriteString('CONTRIBUINTE', 'DataHoraCadastro', DTtoS(fsCONT_DataHoraCadastro) ) ;
      Ini.WriteInteger('CONTRIBUINTE', 'CROCadastro', fsCONT_CROCadastro ) ;

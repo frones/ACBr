@@ -100,10 +100,10 @@ var
   Reg1, Reg2: String;
 begin
   Reg1 :=
-    FormatDateTime('yyyymmddhhmmss', TRegistroS2(ARegistro1).DT_ABER);
+    FormatDateTime('yyyymmddhhnnss', TRegistroS2(ARegistro1).DT_ABER);
 
   Reg2 :=
-    FormatDateTime('yyyymmddhhmmss', TRegistroS2(ARegistro2).DT_ABER);
+    FormatDateTime('yyyymmddhhnnss', TRegistroS2(ARegistro2).DT_ABER);
 
   Result := AnsiCompareText(Reg1, Reg2);
 end;
@@ -124,7 +124,7 @@ begin
         begin
           Add( LFill('S2') +
                LFill(CNPJ, 14) +
-               LFill(DT_ABER, 'yyyymmddhhmmss') +
+               LFill(DT_ABER, 'yyyymmddhhnnss') +
                //RFill(SITU, 1) +
                RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
                LFill(VL_TOT, 13, 2) +
@@ -136,7 +136,7 @@ begin
         begin
           Add( LFill('S2') +
                LFill(CNPJ, 14) +
-               LFill(DT_ABER, 'yyyymmddhhmmss') +
+               LFill(DT_ABER, 'yyyymmddhhnnss') +
                RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
                LFill(VL_TOT, 13, 2) +
                RFill(COO_CM, 9)
@@ -163,7 +163,7 @@ begin
       begin
         Add( LFill('S3') +
              LFill(RegS2.CNPJ, 14) +
-             LFill(RegS2.DT_ABER, 'yyyymmddhhmmss') +
+             LFill(RegS2.DT_ABER, 'yyyymmddhhnnss') +
              RFill(NUM_MESA, 13, ifThen(RegistroValido, ' ', '?')) +
              RFill(COD_ITEM, 14) +
              RFill(DESC_ITEM, 100) +

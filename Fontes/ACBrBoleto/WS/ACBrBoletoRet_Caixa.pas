@@ -108,7 +108,7 @@ begin
           Sistema_Origem  := Leitor.rCampo(tcStr, 'SISTEMA_ORIGEM');
           Agencia         := Leitor.rCampo(tcInt, 'UNIDADE');
           Id_Origem       := Leitor.rCampo(tcStr, 'IDENTIFICADOR_ORIGEM');
-          Data_Hora       := Leitor.rCampo(tcDatHorCFe, 'DATA_HORA'); // yyyyMMddHHmmss
+          Data_Hora       := Leitor.rCampo(tcDatHorCFe, 'DATA_HORA');
           Id_Processo     := Leitor.rCampo(tcStr, 'ID_PROCESSO');
         end;
       end;

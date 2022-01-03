@@ -111,13 +111,13 @@ begin
     TRegistroF2(ARegistro1).CNPJ_EMP +
     Format('%-20s', [TRegistroF2(ARegistro1).COD_LOCAL]) +
     Format('%-8s', [TRegistroF2(ARegistro1).ID_LINHA]) +
-    FormatDateTime('yyyymmddhhmmss', TRegistroF2(ARegistro1).DT_PART);
+    FormatDateTime('yyyymmddhhnnss', TRegistroF2(ARegistro1).DT_PART);
 
   Reg2 :=
     TRegistroF2(ARegistro2).CNPJ_EMP +
     Format('%-20s', [TRegistroF2(ARegistro2).COD_LOCAL]) +
     Format('%-8s', [TRegistroF2(ARegistro2).ID_LINHA]) +
-    FormatDateTime('yyyymmddhhmmss', TRegistroF2(ARegistro2).DT_PART);
+    FormatDateTime('yyyymmddhhnnss', TRegistroF2(ARegistro2).DT_PART);
 
   Result := AnsiCompareText(Reg1, Reg2);
 end;
@@ -149,7 +149,7 @@ begin
            LFill(COD_LOCAL, 20) +
            LFill(ID_LINHA, 8) +
            RFill(DESC_LINHA, 80, ifThen(RegistroValido, ' ', '?')) +
-           LFill(DT_PART, 'yyyymmddhhmmss') +
+           LFill(DT_PART, 'yyyymmddhhnnss') +
            LFill(COD_VIAGEM, 2));
       end;
     end;

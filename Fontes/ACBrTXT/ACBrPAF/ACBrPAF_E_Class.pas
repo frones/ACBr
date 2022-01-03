@@ -131,7 +131,7 @@ begin
             RFill(TIPO_ECF, 7) +
             RFill(MARCA_ECF, 20) +
             RFill(MODELO_ECF, 20,  ifThen(RegistroValido, ' ', '?')) +
-            LFill(DT_EST, 'yyyymmddhhmmss'));
+            LFill(DT_EST, 'yyyymmddhhnnss'));
       end;
    end;
 end;
@@ -201,7 +201,7 @@ begin
          RFill(FRegistroE3.TIPO_ECF, 7) +
          RFill(FRegistroE3.MARCA_ECF, 20) +
          RFill(FRegistroE3.MODELO_ECF, 20, ifThen(FRegistroE3.RegistroValido, ' ', '?')) +
-         LFill(FRegistroE3.DT_EST, 'yyyymmddhhmmss') );
+         LFill(FRegistroE3.DT_EST, 'yyyymmddhhnnss') );
   end;
 end;
 

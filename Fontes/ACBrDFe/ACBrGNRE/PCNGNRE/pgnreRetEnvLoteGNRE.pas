@@ -102,7 +102,7 @@ begin
       if Leitor.rExtrai(2, 'ns1:recibo') <> '' then
       begin
       //       Grupo recibo - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
-        Fnumero            := Leitor.rCampo(tcInt, 'ns1:numero');
+        Fnumero            := Leitor.rCampo(tcStr, 'ns1:numero');
         FdataHoraRecibo    := Leitor.rCampo(tcDatHor, 'ns1:dataHoraRecibo');
         FtempoEstimadoProc := Leitor.rCampo(tcInt, 'ns1:tempoEstimadoProc');
       end;

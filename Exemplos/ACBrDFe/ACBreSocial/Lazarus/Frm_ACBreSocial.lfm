@@ -1,7 +1,7 @@
 object frmACBreSocial: TfrmACBreSocial
-  Left = 247
+  Left = 338
   Height = 651
-  Top = 116
+  Top = 105
   Width = 1115
   Caption = 'ACBreSocial - Programa Exemplo'
   ClientHeight = 651
@@ -1078,16 +1078,15 @@ object frmACBreSocial: TfrmACBreSocial
     TabOrder = 1
     object pgcBotoes: TPageControl
       Left = 1
-      Height = 272
+      Height = 352
       Top = 1
       Width = 816
       ActivePage = tbsEventosTabela
-      Align = alTop
       TabIndex = 0
       TabOrder = 0
       object tbsEventosTabela: TTabSheet
         Caption = 'Eventos de Tabela'
-        ClientHeight = 246
+        ClientHeight = 326
         ClientWidth = 808
         ImageIndex = 4
         object cbS1000: TCheckBox
@@ -1189,203 +1188,203 @@ object frmACBreSocial: TfrmACBreSocial
       end
       object tbsEventosPeriodicos: TTabSheet
         Caption = 'Eventos Periódicos'
-        ClientHeight = 0
-        ClientWidth = 0
+        ClientHeight = 326
+        ClientWidth = 808
         ImageIndex = 5
         object cbS1200: TCheckBox
           Left = 12
-          Height = 17
+          Height = 19
           Top = 12
-          Width = 209
+          Width = 199
           Caption = 'S-1200 Remuneração do Trabalhador'
           TabOrder = 0
         end
         object cbS1202: TCheckBox
           Left = 12
-          Height = 17
+          Height = 19
           Top = 35
-          Width = 245
+          Width = 236
           Caption = 'S-1202 Remuneração de trabalhadores RPPS'
           TabOrder = 1
         end
         object cbS1207: TCheckBox
           Left = 12
-          Height = 17
+          Height = 19
           Top = 58
-          Width = 265
+          Width = 218
           Caption = 'S-1207 Benefícios  Previdenciários - RPPS'
           TabOrder = 2
         end
         object cbS1210: TCheckBox
           Left = 12
-          Height = 17
+          Height = 19
           Top = 81
-          Width = 273
+          Width = 256
           Caption = 'S-1210 Pagamentos de Rendimentos do Trabalho'
           TabOrder = 3
         end
         object cbS1250: TCheckBox
           Left = 12
-          Height = 16
+          Height = 19
           Top = 106
-          Width = 332
+          Width = 193
           Caption = 'S-1250 Aquisição de Produção Rural'
           TabOrder = 4
         end
         object cbS1260: TCheckBox
           Left = 12
-          Height = 17
+          Height = 19
           Top = 127
-          Width = 332
+          Width = 290
           Caption = 'S-1260 Comercialização da Produção Rural Pessoa Física'
           TabOrder = 5
         end
         object cbS1270: TCheckBox
           Left = 350
-          Height = 17
+          Height = 19
           Top = 12
-          Width = 332
+          Width = 318
           Caption = 'S-1270 Contratação de Trabalhadores Avulsos Não Portuários'
           TabOrder = 6
         end
         object cbS1280: TCheckBox
           Left = 350
-          Height = 18
+          Height = 19
           Top = 35
-          Width = 321
+          Width = 313
           Caption = 'S-1280 Informações Complementares aos Eventos Periódicos'
           TabOrder = 7
         end
         object cbS1295: TCheckBox
           Left = 351
-          Height = 17
+          Height = 19
           Top = 59
-          Width = 381
+          Width = 343
           Caption = 'S-1295 Solicitação de Totalização para Pagamento em Contingência'
           TabOrder = 8
         end
         object cbS1298: TCheckBox
           Left = 350
-          Height = 17
+          Height = 19
           Top = 82
-          Width = 289
+          Width = 225
           Caption = 'S-1298 Reabertura dos Eventos Periódicos'
           TabOrder = 9
         end
         object cbS1299: TCheckBox
           Left = 350
-          Height = 17
+          Height = 19
           Top = 105
-          Width = 289
+          Width = 229
           Caption = 'S-1299 Fechamento dos Eventos Periódicos'
           TabOrder = 10
         end
         object cbS1300: TCheckBox
           Left = 350
-          Height = 15
+          Height = 19
           Top = 128
-          Width = 289
+          Width = 198
           Caption = 'S-1300 Contribuição Sindical Patronal'
           TabOrder = 11
         end
       end
       object tbsEventosNaoPeriodicos: TTabSheet
         Caption = 'Eventos Não Periódicos'
-        ClientHeight = 0
-        ClientWidth = 0
+        ClientHeight = 326
+        ClientWidth = 808
         ImageIndex = 6
         object cbS2190: TCheckBox
           Left = 12
-          Height = 17
+          Height = 19
           Top = 12
-          Width = 321
+          Width = 277
           Caption = 'S-2190 Admissão de Trabalhador - Registro Preliminar'
           TabOrder = 0
         end
         object cbS2200: TCheckBox
           Left = 12
-          Height = 17
-          Top = 35
-          Width = 153
+          Height = 19
+          Top = 34
+          Width = 139
           Caption = 'S-2200 Evento Admissão'
           TabOrder = 1
         end
         object cbS2205: TCheckBox
           Left = 12
-          Height = 17
-          Top = 58
-          Width = 289
+          Height = 19
+          Top = 56
+          Width = 281
           Caption = 'S-2205 Alteração de Dados Cadastrais do Trabalhador'
           TabOrder = 2
         end
         object cbS2206: TCheckBox
           Left = 12
-          Height = 17
-          Top = 81
-          Width = 236
+          Height = 19
+          Top = 78
+          Width = 224
           Caption = 'S-2206 Alteração do Contrato de Trabalho'
           TabOrder = 3
         end
         object cbS2210: TCheckBox
           Left = 12
-          Height = 17
-          Top = 104
-          Width = 265
+          Height = 19
+          Top = 100
+          Width = 240
           Caption = 'S-2210 Comunicação de Acidente de Trabalho'
           TabOrder = 4
         end
         object cbS2220: TCheckBox
           Left = 12
-          Height = 17
-          Top = 127
-          Width = 265
+          Height = 19
+          Top = 122
+          Width = 253
           Caption = 'S-2220 Monitoramento da Saúde do Trabalhador'
           TabOrder = 5
         end
         object cbS2221: TCheckBox
           Left = 12
-          Height = 17
-          Top = 150
-          Width = 404
+          Height = 19
+          Top = 144
+          Width = 273
           Caption = 'S-2221 Exame Toxicológico do Motorista Profissional '
           TabOrder = 6
         end
         object cbS2230: TCheckBox
           Left = 12
-          Height = 17
-          Top = 173
-          Width = 177
+          Height = 19
+          Top = 166
+          Width = 176
           Caption = 'S-2230 Afastamento Temporário'
           TabOrder = 7
         end
         object cbS2240: TCheckBox
           Left = 12
-          Height = 17
-          Top = 196
-          Width = 332
+          Height = 19
+          Top = 210
+          Width = 311
           Caption = 'S-2240 Condições Ambientais do Trabalho - Fatores de Risco'
           TabOrder = 8
         end
         object cbS2245: TCheckBox
           Left = 12
-          Height = 17
-          Top = 219
-          Width = 404
+          Height = 19
+          Top = 232
+          Width = 396
           Caption = 'S-2245 Treinamentos, Capacitações, Exercícios Simulados '#13#10'e Outras Anotações'
           TabOrder = 9
         end
         object cbS2250: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 12
-          Width = 120
+          Left = 12
+          Height = 19
+          Top = 254
+          Width = 116
           Caption = 'S-2250 Aviso Prévio'
           TabOrder = 10
         end
         object cbAviso: TComboBox
-          Left = 548
+          Left = 138
           Height = 21
-          Top = 12
+          Top = 254
           Width = 145
           ItemHeight = 13
           ItemIndex = 0
@@ -1398,83 +1397,130 @@ object frmACBreSocial: TfrmACBreSocial
           Text = 'Aviso'
         end
         object cbs2260: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 39
-          Width = 332
+          Left = 420
+          Height = 19
+          Top = 12
+          Width = 249
           Caption = 'S-2260 Convocação para Trabalho Intermitente'
           TabOrder = 12
         end
         object cbS2298: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 58
-          Width = 153
+          Left = 420
+          Height = 19
+          Top = 34
+          Width = 121
           Caption = 'S-2298 Reintegração'
           TabOrder = 13
         end
         object cbS2299: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 81
-          Width = 135
+          Left = 420
+          Height = 19
+          Top = 56
+          Width = 121
           Caption = 'S-2299 Desligamento'
           TabOrder = 14
         end
         object cbS2300: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 104
-          Width = 233
+          Left = 420
+          Height = 19
+          Top = 78
+          Width = 209
           Caption = 'S-2300 Trabalhador Sem Vínculo - Início'
           TabOrder = 15
         end
         object cbS2306: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 127
-          Width = 311
+          Left = 420
+          Height = 19
+          Top = 122
+          Width = 284
           Caption = 'S-2306 Trabalhador Sem Vínculo - Alteração Contratual'
           TabOrder = 16
         end
         object cbS2399: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 150
-          Width = 248
+          Left = 420
+          Height = 19
+          Top = 144
+          Width = 222
           Caption = 'S-2399 Trabalhador Sem Vínculo - Término'
           TabOrder = 17
         end
         object cbS2400: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 173
-          Width = 321
+          Left = 420
+          Height = 19
+          Top = 166
+          Width = 277
           Caption = 'S-2400 Cadastro de Benefícios Previdênciários - RPPS'
           TabOrder = 18
         end
         object cbS3000: TCheckBox
-          Left = 422
-          Height = 17
-          Top = 196
-          Width = 175
+          Left = 420
+          Height = 19
+          Top = 100
+          Width = 156
           Caption = 'S-3000 Exclusão de Eventos'
           TabOrder = 19
+        end
+        object cbS2231: TCheckBox
+          Left = 12
+          Height = 19
+          Top = 188
+          Width = 54
+          Caption = 'S-2231'
+          TabOrder = 20
+        end
+        object cbS2416: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 232
+          Width = 54
+          Caption = 'S-2416'
+          TabOrder = 21
+        end
+        object cbS2418: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 254
+          Width = 54
+          Caption = 'S-2418'
+          TabOrder = 22
+        end
+        object cbS2405: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 188
+          Width = 54
+          Caption = 'S-2405'
+          TabOrder = 23
+        end
+        object cbS2410: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 210
+          Width = 54
+          Caption = 'S-2410'
+          TabOrder = 24
+        end
+        object cbS2420: TCheckBox
+          Left = 420
+          Height = 19
+          Top = 277
+          Width = 54
+          Caption = 'S-2420'
+          TabOrder = 25
         end
       end
     end
     object pgRespostas: TPageControl
       Left = 1
-      Height = 377
-      Top = 273
+      Height = 298
+      Top = 352
       Width = 816
       ActivePage = tsFormaEnvio
-      Align = alClient
       TabIndex = 0
       TabOrder = 1
       object tsFormaEnvio: TTabSheet
         Caption = 'Forma de Envio'
-        ClientHeight = 351
+        ClientHeight = 272
         ClientWidth = 808
         ImageIndex = 7
         object rdgGrupo: TRadioGroup
@@ -1811,8 +1857,8 @@ object frmACBreSocial: TfrmACBreSocial
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 419
-    top = 471
+    Left = 416
+    Top = 520
   end
   object ACBreSocial1: TACBreSocial
     OnStatusChange = ACBreSocial1StatusChange
@@ -1826,14 +1872,14 @@ object frmACBreSocial: TfrmACBreSocial
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 326
-    top = 470
+    Left = 328
+    Top = 520
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'Documento XML (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 520
-    top = 470
+    Left = 504
+    Top = 520
   end
 end

@@ -237,8 +237,10 @@ begin
       begin
         if ( self.InfoExclusao.IdeFolhaPagto.perApur = '' ) then
            GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True)
+        else if VersaoDF <= ve02_05_00 then
+           GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto)
         else
-           GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
+           GerarIdeFolhaPagto2(self.InfoExclusao.IdeFolhaPagto)
       end;
     
 

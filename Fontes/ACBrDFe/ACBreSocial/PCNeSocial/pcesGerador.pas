@@ -1418,7 +1418,7 @@ begin
 
     Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 14, 14, 1, pInfoCeletista.cnpjSindCategProf);
 
-    if VersaoDF <= ve02_05_00 then    
+    if (pInfoCeletista.FGTS.DtOpcFGTS > 0) then
       GerarFGTS(pInfoCeletista.FGTS);
 
     GerarTrabTemporario(pInfoCeletista.TrabTemporario);

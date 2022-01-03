@@ -60,6 +60,7 @@ type
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
     procedure ConfigurarAutenticacao(const Method, EndPoint: String); override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
+    procedure ConfigurarHeaders(const Method, AURL: String); override;
   public
     constructor Create(AOwner: TComponent); override;
   published
@@ -163,19 +164,26 @@ end;
 
 procedure TACBrPSPItau.ConfigurarAutenticacao(const Method, EndPoint: String);
 begin
-  inherited;
+  inherited ConfigurarAutenticacao(Method, EndPoint);
 end;
 
 procedure TACBrPSPItau.ConfigurarQueryParameters(const Method, EndPoint: String);
 begin
+  inherited ConfigurarQueryParameters(Method, EndPoint);
+
   with QueryParams do
   begin
-    if (fxCorrelationID <> '') then
-      Values['x-correlationID'] := fxCorrelationID;
-
     if (fSandboxStatusCode <> '') then
       Values['status_code'] := fSandboxStatusCode;
   end;
+end;
+
+procedure TACBrPSPItau.ConfigurarHeaders(const Method, AURL: String);
+begin
+  inherited ConfigurarHeaders(Method, AURL);
+
+  if (fxCorrelationID <> '') then
+    Http.Headers.Add('x-correlationID: ' + fxCorrelationID);
 end;
 
 end.

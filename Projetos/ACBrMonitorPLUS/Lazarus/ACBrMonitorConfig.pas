@@ -613,6 +613,7 @@ type
     DigitoAgenciaConta         : String ;
     CodCedente                 : String ;
     LocalPagamento             : String ;
+    CodigoOperacao             : String;
   end;
 
   TBoletoLayout = record
@@ -1411,6 +1412,7 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETODigitoAgenciaConta, DigitoAgenciaConta );
       ini.WriteString( CSecBOLETO, CKeyBOLETOCodCedente,    CodCedente    );
       ini.WriteString( CSecBOLETO, CKeyBOLETOLocalPagamento,LocalPagamento );
+      ini.WriteString( CSecBOLETO, CKeyBOLETOCodigoOperacao,CodigoOperacao );
     end;
 
     with BOLETO.Layout do
@@ -2147,6 +2149,7 @@ begin
       DigitoAgenciaConta     :=  ini.ReadString( CSecBOLETO, CKeyBOLETODigitoAgenciaConta, DigitoAgenciaConta   );
       CodCedente             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodCedente,       CodCedente             );
       LocalPagamento         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOLocalPagamento,   LocalPagamento         );
+      CodigoOperacao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodigoOperacao,   CodigoOperacao         );
     end;
 
     with BOLETO.Layout do
@@ -2850,6 +2853,7 @@ begin
     DigitoAgenciaConta     :=  '';
     CodCedente             :=  '';
     LocalPagamento         :=  '';
+    CodigoOperacao         :=  '';
   end;
 
   with BOLETO.Layout do

@@ -1278,6 +1278,7 @@ const
   CKeyBOLETOCodTransmissao =                'CodTransmissao';
   CKeyBOLETOModalidade =                    'Modalidade';
   CKeyBOLETOConvenio =                      'Convenio';
+  CKeyBOLETOCodigoOperacao =                'CodigoOperacao';
   CKeyBOLETOBanco =                         'Banco';
   CKeyBOLETOConta =                         'Conta';
   CKeyBOLETODigitoConta =                   'DigitoConta';

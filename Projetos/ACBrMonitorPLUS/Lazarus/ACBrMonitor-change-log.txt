@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2021
+--- ACBrMonior1, ACBrMonitorConfig, ACBrMonitorConsts ---
+[+] Adicionado a propriedades Cedente CodigoOperacao do componente boleto
+
 16/12/2021
 --- ACBrMonior1, ACBrMonitorConfig, ACBrMonitorConsts ---
 [*] Adicionado Novas propriedades do boleto em tela e realizados ajustes de mensagens em tela

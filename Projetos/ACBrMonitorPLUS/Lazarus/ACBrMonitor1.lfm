@@ -22156,6 +22156,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Dígito Ag/Conta'
                 ParentColor = False
               end
+              object edtOperacaoCedente: TEdit
+                Left = 245
+                Height = 25
+                Top = 96
+                Width = 138
+                TabOrder = 12
+              end
+              object Label254: TLabel
+                Left = 245
+                Height = 17
+                Top = 79
+                Width = 89
+                Caption = 'Cod. Operação'
+                ParentColor = False
+              end
             end
             object tsLayoutBoleto: TTabSheet
               HelpType = htKeyword

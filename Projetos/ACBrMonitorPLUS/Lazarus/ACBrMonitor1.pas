@@ -487,6 +487,7 @@ type
     edEmailUsuario: TEdit;
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
+    edtOperacaoCedente: TEdit;
     edLCBPreExcluir: TEdit;
     edLogArq: TEdit;
     edLogComp: TEdit;
@@ -768,6 +769,7 @@ type
     Label109: TLabel;
     Label114: TLabel;
     Label118: TLabel;
+    Label254: TLabel;
     lblPrefixRemessa: TLabel;
     Label255: TLabel;
     Label256: TLabel;
@@ -5465,6 +5467,7 @@ begin
       edtBOLDigitoAgConta.Text         := DigitoAgenciaConta;
       edtCodCliente.Text               := CodCedente;
       edtBOLLocalPagamento.Text        := LocalPagamento;
+      edtOperacaoCedente.Text          := CodigoOperacao;
     end;
 
     with RemessaRetorno do
@@ -6343,6 +6346,7 @@ begin
     Cedente.ContaDigito := edtBOLDigitoConta.Text;
     Cedente.DigitoVerificadorAgenciaConta := edtBOLDigitoAgConta.Text;
     Cedente.Modalidade := edtModalidade.Text;
+    Cedente.Operacao := edtOperacaoCedente.Text;
 
     case cbxBOLEmissao.ItemIndex of
       0: Cedente.ResponEmissao := tbCliEmite;
@@ -7268,6 +7272,7 @@ begin
        Pessoa                   := cbxBOLF_J.ItemIndex;
        Modalidade               := edtModalidade.Text;
        Convenio                 := edtConvenio.Text;
+       CodigoOperacao           := edtOperacaoCedente.Text;
      end;
 
      with Layout do

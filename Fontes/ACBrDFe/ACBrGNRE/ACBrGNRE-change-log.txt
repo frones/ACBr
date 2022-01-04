@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2022
+-- pgnreGNREW --
+[*] Corrigido o tipo de campo da tag <mes>.
+  Por: Italo Giurizzato Junior
+
 25/11/2021
 -- pgnreRetConsResLoteGNRE --
 [*] Ajuste na leitura do Tipo do Documento Origem, visando contemplar as diferenças de

@@ -367,8 +367,7 @@ procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min,
 
 var
   NumeroDecimais: smallint;
-  valorInt, TamMin, TamMax: Integer;
-  valorInt64 : Int64;
+  TamMin, TamMax: Integer;
   valorDbl: Double;
   Alerta, ConteudoProcessado, ATag: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
@@ -491,8 +490,8 @@ begin
     tcEsp:
       begin
         // Tipo String - somente numeros
-        ConteudoProcessado  := trim(valor);
-        EstaVazio           := (valor = '');
+        ConteudoProcessado := Trim(VarToStrDef(valor, ''));
+        EstaVazio := (ConteudoProcessado = '');
         if not ValidarNumeros(ConteudoProcessado) then
           walerta(ID, Tag, Descricao, ERR_MSG_INVALIDO);
       end;
@@ -500,16 +499,12 @@ begin
     tcInt, tcInt64:
       begin
         // Tipo Inteiro
-        try
-          if Tipo = tcInt then
-            ConteudoProcessado := IntToStr(Integer(valor))
-          else
-            ConteudoProcessado := IntToStr(Int64(valor));
-        except
+        if VarIsNumeric(valor) then
+          ConteudoProcessado := VarToStrDef(valor, '0')
+        else
           ConteudoProcessado := '0';
-        end;
 
-        EstaVazio := (valor = 0) and (ocorrencias = 0);
+        EstaVazio := (ConteudoProcessado = '0') and (ocorrencias = 0);
 
         if Length(ConteudoProcessado) < TamMin then
           ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');

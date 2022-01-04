@@ -82,7 +82,7 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamBPe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(ALote: Int64; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
@@ -93,7 +93,7 @@ type
     function CstatProcessado(AValue: Integer): Boolean;
     function CstatCancelada(AValue: Integer): Boolean;
 
-    function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
+    function Cancelamento(const AJustificativa: String; ALote: Int64 = 0): Boolean;
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function EnviarEvento(idLote: Int64): Boolean;
 
@@ -423,7 +423,7 @@ begin
   end;
 end;
 
-function TACBrBPe.Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
+function TACBrBPe.Cancelamento(const AJustificativa: String; ALote: Int64 = 0): Boolean;
 var
   i: Integer;
 begin
@@ -485,7 +485,7 @@ begin
   Result := True;
 end;
 
-function TACBrBPe.Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;
+function TACBrBPe.Enviar(ALote: Int64; Imprimir: Boolean = True): Boolean;
 begin
   Result := Enviar(IntToStr(ALote), Imprimir);
 end;

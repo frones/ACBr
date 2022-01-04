@@ -474,7 +474,7 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean; overload;
+    function Envia(ALote: Int64; ASincrono:  Boolean = False): Boolean; overload;
     function Envia(const ALote: String; ASincrono:  Boolean = False): Boolean; overload;
     function ConsultaMDFeNaoEnc(const ACNPJCPF: String): Boolean;
 
@@ -2876,7 +2876,7 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean;
+function TWebServices.Envia(ALote: Int64; ASincrono:  Boolean = False): Boolean;
 begin
   Result := Envia(IntToStr(ALote), ASincrono);
 end;

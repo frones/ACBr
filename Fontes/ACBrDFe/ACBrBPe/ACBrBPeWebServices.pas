@@ -329,7 +329,7 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: Integer): Boolean; overload;
+    function Envia(ALote: Int64): Boolean; overload;
     function Envia(const ALote: String): Boolean; overload;
 
     property ACBrBPe: TACBrDFe read FACBrBPe write FACBrBPe;
@@ -2032,7 +2032,7 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: Integer): Boolean;
+function TWebServices.Envia(ALote: Int64): Boolean;
 begin
   Result := Envia(IntToStr(ALote));
 end;

@@ -89,11 +89,11 @@ type
     function CstatProcessado(AValue: integer): Boolean;
     function CstatCancelada(AValue: integer): Boolean;
 
-    function Enviar(ALote: integer; Imprimir: Boolean = True;
+    function Enviar(ALote: Int64; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
     function Enviar(const ALote: String; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
-    function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
+    function Cancelamento(const AJustificativa: String; ALote: Int64 = 0): Boolean;
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function EnviarEvento(idLote: Int64): Boolean;
 
@@ -531,7 +531,7 @@ begin
   end;
 end;
 
-function TACBrNF3e.Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
+function TACBrNF3e.Cancelamento(const AJustificativa: String; ALote: Int64 = 0): Boolean;
 var
   i: integer;
 begin
@@ -595,7 +595,7 @@ begin
   Result := True;
 end;
 
-function TACBrNF3e.Enviar(ALote: integer; Imprimir: Boolean = True;
+function TACBrNF3e.Enviar(ALote: Int64; Imprimir: Boolean = True;
   Sincrono: Boolean = False): Boolean;
 begin
   Result := Enviar(IntToStr(ALote), Imprimir, Sincrono);

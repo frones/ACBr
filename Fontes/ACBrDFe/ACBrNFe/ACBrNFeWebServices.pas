@@ -592,7 +592,7 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: integer; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
+    function Envia(ALote: Int64; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
     function Envia(const ALote: String; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
@@ -3942,7 +3942,7 @@ begin
 end;
 
 
-function TWebServices.Envia(ALote: integer; const ASincrono: Boolean;
+function TWebServices.Envia(ALote: Int64; const ASincrono: Boolean;
   AZipado: Boolean): Boolean;
 begin
   Result := Envia(IntToStr(ALote), ASincrono, AZipado );

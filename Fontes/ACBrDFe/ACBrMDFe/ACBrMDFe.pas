@@ -86,7 +86,7 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
-    function Enviar(ALote: integer; Imprimir: Boolean = True;
+    function Enviar(ALote: Int64; Imprimir: Boolean = True;
       ASincrono:  Boolean = False): Boolean; overload;
     function Enviar(const ALote: String; Imprimir: Boolean = True;
       ASincrono:  Boolean = False): Boolean; overload;
@@ -100,7 +100,7 @@ type
 
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function ConsultarMDFeNaoEnc(const ACNPJCPF: String): Boolean;
-    function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
+    function Cancelamento(const AJustificativa: String; ALote: Int64 = 0): Boolean;
     function EnviarEvento(idLote: Int64): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutMDFe; var Versao: Double;
@@ -539,7 +539,7 @@ begin
   end;
 end;
 
-function TACBrMDFe.Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
+function TACBrMDFe.Cancelamento(const AJustificativa: String; ALote: Int64 = 0): Boolean;
 var
   i: integer;
 begin
@@ -607,7 +607,7 @@ begin
   Result := WebServices.ConsultaMDFeNaoEnc(ACNPJCPF);
 end;
 
-function TACBrMDFe.Enviar(ALote: Integer; Imprimir:Boolean = True;
+function TACBrMDFe.Enviar(ALote: Int64; Imprimir:Boolean = True;
       ASincrono:  Boolean = False): Boolean;
 begin
   Result := Enviar(IntToStr(ALote), Imprimir, ASincrono);

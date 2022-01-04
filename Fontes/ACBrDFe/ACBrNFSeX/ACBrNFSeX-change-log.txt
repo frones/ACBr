@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 04/01/2022
+-- ACBrNFSeXServicos --
+[*] Ajustes nas URLs do provedor Bauhaus.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Diversos ajustes em diversos provedores.
    Por: Italo Giurizzato Junior

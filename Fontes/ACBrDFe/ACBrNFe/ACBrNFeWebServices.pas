@@ -441,7 +441,7 @@ type
 
   TNFeEnvEvento = class(TNFeWebService)
   private
-    FidLote: integer;
+    FidLote: Int64;
     FEvento: TEventoNFe;
     FcStat: integer;
     FxMotivo: String;
@@ -466,7 +466,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property idLote: integer read FidLote write FidLote;
+    property idLote: Int64 read FidLote write FidLote;
     property cStat: integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;

@@ -376,7 +376,7 @@ type
 
   TNF3eEnvEvento = class(TNF3eWebService)
   private
-    FidLote: integer;
+    FidLote: Int64;
     FEvento: TEventoNF3e;
     FcStat: integer;
     FxMotivo: String;
@@ -399,7 +399,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property idLote: integer read FidLote write FidLote;
+    property idLote: Int64 read FidLote write FidLote;
     property cStat: integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;

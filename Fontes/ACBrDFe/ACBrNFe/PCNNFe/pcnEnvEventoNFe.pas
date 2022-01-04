@@ -96,7 +96,7 @@ type
   TEventoNFe = class(TObject)
   private
     FGerador: TGerador;
-    FidLote: Integer;
+    FidLote: Int64;
     FEvento: TInfEventoCollection;
     FVersao: String;
 
@@ -113,7 +113,7 @@ type
     function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
 
     property Gerador: TGerador            read FGerador write FGerador;
-    property idLote: Integer              read FidLote  write FidLote;
+    property idLote: Int64                read FidLote  write FidLote;
     property Evento: TInfEventoCollection read FEvento  write SetEvento;
     property Versao: String               read FVersao  write FVersao;
   end;
@@ -168,7 +168,7 @@ var
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
-  Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
+  Gerador.wCampo(tcInt64, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);
 
   for i := 0 to Evento.Count - 1 do
   begin
@@ -565,7 +565,7 @@ begin
   INIRec := TMemIniFile.Create('');
   try
     LerIniArquivoOuString(AIniString, INIRec);
-    idLote := INIRec.ReadInteger( 'EVENTO','idLote' ,INIRec.ReadInteger( 'CCE','idLote',0));
+    idLote := INIRec.ReadInt64( 'EVENTO','idLote' ,INIRec.ReadInteger( 'CCE','idLote',0));
 
     I := 1 ;
     while true do

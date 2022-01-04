@@ -72,7 +72,7 @@ type
 
   TRetEventoBPe = class(TObject)
   private
-    FidLote: Integer;
+    FidLote: Int64;
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
@@ -88,7 +88,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-    property idLote: Integer                    read FidLote    write FidLote;
+    property idLote: Int64                      read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
     property versao: String                     read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
@@ -235,7 +235,7 @@ begin
        (Leitor.rExtrai(1, 'retEventoBPe') <> '') then
     begin
       Fversao   := Leitor.rAtributo('versao');
-      FidLote   := Leitor.rCampo(tcInt, 'idLote');
+      FidLote   := Leitor.rCampo(tcInt64, 'idLote');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       FcOrgao   := Leitor.rCampo(tcInt, 'cOrgao');

@@ -121,7 +121,7 @@ type
 
     function Consultar( const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
-    function EnviarEvento(idLote: Integer): Boolean;
+    function EnviarEvento(idLote: Int64): Boolean;
     function Inutilizar(const ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
     function DistribuicaoDFePorUltNSU(AcUFAutor: integer;
@@ -823,7 +823,7 @@ begin
   Result := True;
 end;
 
-function TACBrCTe.EnviarEvento(idLote: Integer): Boolean;
+function TACBrCTe.EnviarEvento(idLote: Int64): Boolean;
 var
   i, j: Integer;
   chCTe: String;

@@ -95,7 +95,7 @@ type
 
     function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
-    function EnviarEvento(idLote: Integer): Boolean;
+    function EnviarEvento(idLote: Int64): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutBPe; var Versao: Double;
       var URL: String); reintroduce; overload;
@@ -518,7 +518,7 @@ begin
   end;
 end;
 
-function TACBrBPe.EnviarEvento(idLote: Integer): Boolean;
+function TACBrBPe.EnviarEvento(idLote: Int64): Boolean;
 var
   i, j: Integer;
   chBPe: String;

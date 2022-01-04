@@ -98,7 +98,7 @@ type
   private
     FGerador: TGerador;
     FOpcoes: TGeradorOpcoes;
-    FidLote: Integer;
+    FidLote: Int64;
     FEvento: TInfEventoCollection;
     FVersao: String;
     FXML: String;
@@ -117,7 +117,7 @@ type
 
     property Gerador: TGerador            read FGerador  write FGerador;
     property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
-    property idLote: Integer              read FidLote   write FidLote;
+    property idLote: Int64                read FidLote   write FidLote;
     property Evento: TInfEventoCollection read FEvento   write SetEvento;
     property Versao: String               read FVersao   write FVersao;
     property XML: String                  read FXML      write FXML;
@@ -604,7 +604,7 @@ begin
   try
     LerIniArquivoOuString(AIniString, INIRec);
 
-    idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);
+    idLote := INIRec.ReadInt64('EVENTO', 'idLote', 0);
 
     I := 1;
     while true do

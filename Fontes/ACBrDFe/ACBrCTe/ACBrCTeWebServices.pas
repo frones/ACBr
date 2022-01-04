@@ -431,7 +431,7 @@ type
 
   TCTeEnvEvento = class(TCTeWebService)
   private
-    FidLote: Integer;
+    FidLote: Int64;
     FEvento: TEventoCTe;
     FcStat: Integer;
     FxMotivo: String;
@@ -457,7 +457,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property idLote: Integer read FidLote write FidLote;
+    property idLote: Int64 read FidLote write FidLote;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;

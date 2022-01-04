@@ -95,7 +95,7 @@ type
       Sincrono: Boolean = False): Boolean; overload;
     function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
-    function EnviarEvento(idLote: integer): Boolean;
+    function EnviarEvento(idLote: Int64): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
       var URL: String; var Servico: String; var SoapAction: String); reintroduce; overload;
@@ -632,7 +632,7 @@ begin
 
 end;
 
-function TACBrNF3e.EnviarEvento(idLote: integer): Boolean;
+function TACBrNF3e.EnviarEvento(idLote: Int64): Boolean;
 var
   i, j: integer;
   chNF3e: String;

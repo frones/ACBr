@@ -74,7 +74,7 @@ type
   TRetEventoMDFe = class(TObject)
   private
     FLeitor: TLeitor;
-    FidLote: Integer;
+    FidLote: Int64;
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
@@ -92,7 +92,7 @@ type
     function LerXml: boolean;
 
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
-    property idLote: Integer                    read FidLote    write FidLote;
+    property idLote: Int64                      read FidLote    write FidLote;
     property versao: String                     read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
     property verAplic: String                   read FverAplic  write FverAplic;

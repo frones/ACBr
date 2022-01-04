@@ -115,8 +115,8 @@ type
       Sincrono: Boolean = False; Zipado: Boolean = False): Boolean; overload;
     function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
-    function EnviarCartaCorrecao(idLote: integer): Boolean;
-    function EnviarEvento(idLote: integer): Boolean;
+    function EnviarCartaCorrecao(idLote: Int64): Boolean;
+    function EnviarEvento(idLote: Int64): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
       var URL: String; var Servico: String; var SoapAction: String); reintroduce; overload;
@@ -737,7 +737,7 @@ begin
   end;
 end;
 
-function TACBrNFe.EnviarCartaCorrecao(idLote: integer): Boolean;
+function TACBrNFe.EnviarCartaCorrecao(idLote: Int64): Boolean;
 var
   i: integer;
 begin
@@ -770,7 +770,7 @@ begin
   Result := EnviarEvento(idLote);
 end;
 
-function TACBrNFe.EnviarEvento(idLote: integer): Boolean;
+function TACBrNFe.EnviarEvento(idLote: Int64): Boolean;
 var
   i, j: integer;
   chNfe: String;

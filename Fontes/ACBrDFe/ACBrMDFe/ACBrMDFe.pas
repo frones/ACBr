@@ -101,7 +101,7 @@ type
     function Consultar(const AChave: String = ''; AExtrairEventos: Boolean = False): Boolean;
     function ConsultarMDFeNaoEnc(const ACNPJCPF: String): Boolean;
     function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
-    function EnviarEvento(idLote: integer): Boolean;
+    function EnviarEvento(idLote: Int64): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutMDFe; var Versao: Double;
       var URL: String); reintroduce; overload;
@@ -643,7 +643,7 @@ begin
   end;
 end;
 
-function TACBrMDFe.EnviarEvento(idLote: Integer): Boolean;
+function TACBrMDFe.EnviarEvento(idLote: Int64): Boolean;
 var
   i, j: integer;
   chMDFe: String;

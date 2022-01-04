@@ -505,10 +505,10 @@ begin
           else
             ConteudoProcessado := IntToStr(StrToInt64(VarToStr(valor)));
         except
-          ConteudoProcessado := '';
+          ConteudoProcessado := '0';
         end;
 
-        EstaVazio := (ConteudoProcessado = '') and (ocorrencias = 0);
+        EstaVazio := (ConteudoProcessado = '0') and (ocorrencias = 0);
 
         if Length(ConteudoProcessado) < TamMin then
           ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');

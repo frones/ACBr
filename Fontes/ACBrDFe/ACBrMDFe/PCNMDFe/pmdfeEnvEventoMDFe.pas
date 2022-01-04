@@ -485,7 +485,7 @@ begin
   try
     LerIniArquivoOuString(AIniString, INIRec);
 
-    idLote := INIRec.ReadInt64('EVENTO', 'idLote', 0);
+    idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);
 
     I := 1;
     while true do

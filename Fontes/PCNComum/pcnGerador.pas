@@ -499,12 +499,16 @@ begin
     tcInt, tcInt64:
       begin
         // Tipo Inteiro
-        if VarIsNumeric(valor) then
-          ConteudoProcessado := VarToStrDef(valor, '0')
-        else
-          ConteudoProcessado := '0';
+        try
+          if tipo = tcInt then
+            ConteudoProcessado := IntToStr(StrToInt(VarToStr(valor)))
+          else
+            ConteudoProcessado := IntToStr(StrToInt64(VarToStr(valor)));
+        except
+          ConteudoProcessado := '';
+        end;
 
-        EstaVazio := (ConteudoProcessado = '0') and (ocorrencias = 0);
+        EstaVazio := (ConteudoProcessado = '') and (ocorrencias = 0);
 
         if Length(ConteudoProcessado) < TamMin then
           ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');

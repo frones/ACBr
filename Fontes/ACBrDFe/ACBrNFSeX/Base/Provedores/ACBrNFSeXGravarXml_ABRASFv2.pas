@@ -106,7 +106,6 @@ type
     FNrOcorrDiscriminacao_2: Integer;
     FNrOcorrExigibilidadeISS: Integer;
     FNrOcorrNumProcesso: Integer;
-    FGerarTagSenhaFraseSecreta: Boolean;
     FNrOcorrProducao: Integer;
     FNrOcorrAtualizaTomador: Integer;
     FNrOcorrTomadorExterior: Integer;
@@ -124,6 +123,8 @@ type
     FNrOcorrCodigoPaisServico: Integer;
     FNrOcorrCodigoPaisTomador: Integer;
     FNrOcorrInscMunTomador: Integer;
+    FNrOcorrSenha: Integer;
+    FNrOcorrFraseSecreta: Integer;
 
     FTagTomador: String;
     FTagIntermediario: String;
@@ -235,6 +236,8 @@ type
     property NrOcorrNIFTomador: Integer   read FNrOcorrNIFTomador   write FNrOcorrNIFTomador;
     property NrOcorrID: Integer           read FNrOcorrID           write FNrOcorrID;
     property NrOcorrToken: Integer        read FNrOcorrToken        write FNrOcorrToken;
+    property NrOcorrSenha: Integer        read FNrOcorrSenha        write FNrOcorrSenha;
+    property NrOcorrFraseSecreta: Integer read FNrOcorrFraseSecreta write FNrOcorrFraseSecreta;
 
     property NrOcorrCodigoPaisServico: Integer read FNrOcorrCodigoPaisServico write FNrOcorrCodigoPaisServico;
     property NrOcorrCodigoPaisTomador: Integer read FNrOcorrCodigoPaisTomador write FNrOcorrCodigoPaisTomador;
@@ -243,8 +246,7 @@ type
     property GerarTagServicos: Boolean  read FGerarTagServicos  write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
 
-    property GerarTagSenhaFraseSecreta: Boolean read FGerarTagSenhaFraseSecreta write FGerarTagSenhaFraseSecreta;
-    property GerarEnderecoExterior: Boolean     read FGerarEnderecoExterior     write FGerarEnderecoExterior;
+    property GerarEnderecoExterior: Boolean read FGerarEnderecoExterior write FGerarEnderecoExterior;
 
     property TagTomador: String read FTagTomador write FTagTomador;
     property TagIntermediario: String read FTagIntermediario write FTagIntermediario;
@@ -338,10 +340,11 @@ begin
   FNrOcorrNIFTomador := -1;
   FNrOcorrID := -1;
   FNrOcorrToken := -1;
+  FNrOcorrSenha := -1;
+  FNrOcorrFraseSecreta := -1;
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
-  FGerarTagSenhaFraseSecreta := False;
   FGerarEnderecoExterior := False;
 
   // Propriedades de Formatação de informações
@@ -684,14 +687,11 @@ begin
   Result.AppendChild(AddNode(tcStr, '#35', 'Token', 1, 255, NrOcorrToken,
                                              ChaveAutoriz, DSC_CHAVESEGURANCA));
 
-  if GerarTagSenhaFraseSecreta then
-  begin
-    Result.AppendChild(AddNode(tcStr, '#36', 'Senha', 1, 255, 1,
+  Result.AppendChild(AddNode(tcStr, '#36', 'Senha', 1, 255, NrOcorrSenha,
                                                              Senha, DSC_SENHA));
 
-    Result.AppendChild(AddNode(tcStr, '#37', 'FraseSecreta', 1, 255, 1,
+  Result.AppendChild(AddNode(tcStr, '#37', 'FraseSecreta', 1, 255, NrOcorrFraseSecreta,
                                                FraseSecreta, DSC_FRASESECRETA));
-  end;
 end;
 
 function TNFSeW_ABRASFv2.GerarQuarto: TACBrXmlNodeArray;

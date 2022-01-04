@@ -126,7 +126,7 @@ procedure TACBrNFSeProviderDSF200.ValidarSchema(Response: TNFSeWebserviceRespons
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
                           ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', []);
 end;
 

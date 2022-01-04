@@ -102,7 +102,6 @@ begin
   GerarIDRps := False;
 
   GerarIDDeclaracao := True;
-  GerarTagSenhaFraseSecreta := False;
   GerarEnderecoExterior := False;
 
   TagTomador := 'Tomador';
@@ -183,6 +182,8 @@ begin
   NrOcorrNIFTomador := -1;
   NrOcorrID := -1;
   NrOcorrToken := -1;
+  NrOcorrSenha := -1;
+  NrOcorrFraseSecreta := -1;
 end;
 
 end.

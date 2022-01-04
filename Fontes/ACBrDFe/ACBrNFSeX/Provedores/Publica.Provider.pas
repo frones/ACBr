@@ -336,7 +336,7 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.GerarNFSe.xmlns + '"';
 
-  Response.XmlEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
                           ListaRps +
                        '</' + Prefixo + 'GerarNfseEnvio' + '>';
 end;
@@ -361,7 +361,7 @@ begin
   Document := TACBrXmlDocument.Create;
   try
     try
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
       ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetornoLote');
@@ -461,7 +461,7 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
-  Response.XmlEnvio := '<ConsultarNfseFaixaEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<ConsultarNfseFaixaEnvio' + NameSpace + '>' +
                          '<Prestador' + IdAttr + '>' +
 //                           '<CpfCnpj>' + GetCpfCnpj(Emitente.CNPJ) + '</CpfCnpj>' +
                            '<Cnpj>' + Emitente.CNPJ + '</Cnpj>' +

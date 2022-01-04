@@ -217,11 +217,11 @@ var
 begin
   inherited PrepararEmitir(Response);
 
-  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+  aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
    '<EnviarLoteRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</EnviarLoteRpsEnvio>', False);
 
-  Response.XmlEnvio := '<ns3:EnviarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+  Response.ArquivoEnvio := '<ns3:EnviarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:EnviarLoteRpsEnvio>';
 end;
@@ -233,11 +233,11 @@ var
 begin
   inherited PrepararConsultaSituacao(Response);
 
-  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+  aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
    '<ConsultarSituacaoLoteRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</ConsultarSituacaoLoteRpsEnvio>', False);
 
-  Response.XmlEnvio := '<ns3:ConsultarSituacaoLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+  Response.ArquivoEnvio := '<ns3:ConsultarSituacaoLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarSituacaoLoteRpsEnvio>';
 end;
@@ -249,11 +249,11 @@ var
 begin
   inherited PrepararConsultaLoteRps(Response);
 
-  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+  aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
    '<ConsultarLoteRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</ConsultarLoteRpsEnvio>', False);
 
-  Response.XmlEnvio := '<ns3:ConsultarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+  Response.ArquivoEnvio := '<ns3:ConsultarLoteRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarLoteRpsEnvio>';
 end;
@@ -265,11 +265,11 @@ var
 begin
   inherited PrepararConsultaNFSeporRps(Response);
 
-  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+  aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
    '<ConsultarNfsePorRpsEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</ConsultarNfsePorRpsEnvio>', False);
 
-  Response.XmlEnvio := '<ns3:ConsultarNfsePorRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+  Response.ArquivoEnvio := '<ns3:ConsultarNfsePorRpsEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarNfsePorRpsEnvio>';
 end;
@@ -281,11 +281,11 @@ var
 begin
   inherited PrepararConsultaNFSe(Response);
 
-  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+  aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
    '<ConsultarNfseEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</ConsultarNfseEnvio>', False);
 
-  Response.XmlEnvio := '<ns3:ConsultarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+  Response.ArquivoEnvio := '<ns3:ConsultarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
                          aXml +
                        '</ns3:ConsultarNfseEnvio>';
 end;
@@ -297,11 +297,11 @@ var
 begin
   inherited PrepararCancelaNFSe(Response);
 
-  aXml := RetornarConteudoEntre(Response.XmlEnvio,
+  aXml := RetornarConteudoEntre(Response.ArquivoEnvio,
    '<CancelarNfseEnvio xmlns="http://www.betha.com.br/e-nota-contribuinte-ws">',
    '</CancelarNfseEnvio>', False);
 
-  Response.XmlEnvio := aXml;
+  Response.ArquivoEnvio := aXml;
 end;
 
 procedure TACBrNFSeProviderBetha.AssinarCancelaNFSe(
@@ -309,8 +309,8 @@ procedure TACBrNFSeProviderBetha.AssinarCancelaNFSe(
 begin
   inherited AssinarCancelaNFSe(Response);
 
-  Response.XmlEnvio := '<ns3:CancelarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
-                         Response.XmlEnvio +
+  Response.ArquivoEnvio := '<ns3:CancelarNfseEnvio xmlns:ns3="http://www.betha.com.br/e-nota-contribuinte-ws">' +
+                         Response.ArquivoEnvio +
                        '</ns3:CancelarNfseEnvio>';
 end;
 

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/01/2022
+-- Diversos --
+[*] Diversos ajustes em diversos provedores.
+   Por: Italo Giurizzato Junior
+
 30/12/2021
 -- ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
 [*] Leitura e impressão da tag InformacoesComplementares.

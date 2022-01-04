@@ -183,7 +183,7 @@ end;
 procedure TACBrNFSeProviderSimple.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 begin
-  Response.XmlEnvio := '<tNota>' +
+  Response.ArquivoEnvio := '<tNota>' +
                           Params.Xml +
                        '</tNota>';
 end;
@@ -199,7 +199,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -207,7 +207,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'Nota');
 
@@ -281,7 +281,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<iRPS>' + Response.NumRPS + '</iRPS>' +
+  Response.ArquivoEnvio := '<iRPS>' + Response.NumRPS + '</iRPS>' +
                        '<sCPFCNPJ>' + OnlyNumber(Emitente.CNPJ) + '</sCPFCNPJ>' +
                        '<dDataRecibo>' + '</dDataRecibo>';end;
 
@@ -300,7 +300,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -308,7 +308,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'Nota');
 
@@ -378,7 +378,7 @@ begin
 
       Response.Metodo := tmConsultarNFSe;
 
-      Response.XmlEnvio := '<iNota>' + Response.InfConsultaNFSe.NumeroIniNFSe + '</iNota>' +
+      Response.ArquivoEnvio := '<iNota>' + Response.InfConsultaNFSe.NumeroIniNFSe + '</iNota>' +
                            '<sCPFCNPJ>' + OnlyNumber(Emitente.CNPJ) + '</sCPFCNPJ>';
     end;
   end;
@@ -404,7 +404,7 @@ begin
 
       try
         try
-          if Response.XmlRetorno = '' then
+          if Response.ArquivoRetorno = '' then
           begin
             AErro := Response.Erros.New;
             AErro.Codigo := Cod201;
@@ -412,7 +412,7 @@ begin
             Exit
           end;
 
-          Document.LoadFromXml(Response.XmlRetorno);
+          Document.LoadFromXml(Response.ArquivoRetorno);
 
           ProcessarMensagemErros(Document.Root, Response, 'Nota');
 
@@ -487,7 +487,7 @@ begin
 
   Response.Metodo := tmConsultarNFSePorFaixa;
 
-  Response.XmlEnvio := '<dDataInicial>' +
+  Response.ArquivoEnvio := '<dDataInicial>' +
                          FormatDateTime('YYYY-MM-DD', Response.InfConsultaNFSe.DataInicial) +
                        '</dDataInicial>' +
                        '<dDataFinal>' +
@@ -511,7 +511,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -519,7 +519,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'Nota');
 
@@ -598,7 +598,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<tCancelamentoNota>' +
+  Response.ArquivoEnvio := '<tCancelamentoNota>' +
                          '<CancelamentoNota>' +
                            '<sRetornoCanc>' + '</sRetornoCanc>' +
                            '<sContribuinteCanc>' +
@@ -632,7 +632,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -640,7 +640,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'CancelamentoNota');
 

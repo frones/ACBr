@@ -517,7 +517,7 @@ begin
     end;
   end;
 
-  Response.XmlEnvio := '<' + TagEnvio + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + TagEnvio + NameSpace + '>' +
                           xCabecalho +
                           ListaRps +
                        '</' + TagEnvio + '>';
@@ -535,7 +535,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -543,7 +543,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -653,7 +653,7 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarSituacao.xmlns + '"';
 
-  Response.XmlEnvio := '<PedidoInformacoesLote' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<PedidoInformacoesLote' + NameSpace + '>' +
                          '<Cabecalho xmlns="" Versao="1">' +
                            '<CPFCNPJRemetente>' +
                              '<CNPJ>' +
@@ -682,7 +682,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -690,7 +690,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -773,7 +773,7 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarLote.xmlns + '"';
 
-  Response.XmlEnvio := '<PedidoConsultaLote' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<PedidoConsultaLote' + NameSpace + '>' +
                          '<Cabecalho xmlns="" Versao="1">' +
                            '<CPFCNPJRemetente>' +
                              '<CNPJ>' +
@@ -803,7 +803,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -811,7 +811,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -904,7 +904,7 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSeRps.xmlns + '"';
 
-  Response.XmlEnvio := '<PedidoConsultaNFe' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<PedidoConsultaNFe' + NameSpace + '>' +
                          '<Cabecalho xmlns="" Versao="1">' +
                            '<CPFCNPJRemetente>' +
                              '<CNPJ>' +
@@ -940,7 +940,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -948,7 +948,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -1035,7 +1035,7 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
-  Response.XmlEnvio := '<PedidoConsultaNFe' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<PedidoConsultaNFe' + NameSpace + '>' +
                          '<Cabecalho xmlns="" Versao="1">' +
                            '<CPFCNPJRemetente>' +
                              '<CNPJ>' +
@@ -1072,7 +1072,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1080,7 +1080,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -1185,7 +1185,7 @@ begin
   sAssinatura := string(TACBrNFSeX(FAOwner).SSL.CalcHash(AnsiString(sAssinatura),
                                                     dgstSHA1, outBase64, True));
 
-  Response.XmlEnvio := '<PedidoCancelamentoNFe' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<PedidoCancelamentoNFe' + NameSpace + '>' +
                          '<Cabecalho xmlns="" Versao="1">' +
                            '<CPFCNPJRemetente>' +
                              '<CNPJ>' +
@@ -1222,7 +1222,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1230,7 +1230,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 

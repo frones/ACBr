@@ -465,7 +465,7 @@ begin
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
-  Response.XmlEnvio := ListaRps;
+  Response.ArquivoEnvio := ListaRps;
 end;
 
 procedure TACBrNFSeProviderRLZ.TratarRetornoEmitir(
@@ -481,7 +481,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -489,7 +489,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -561,7 +561,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<notas>' +
+  Response.ArquivoEnvio := '<notas>' +
                          '<ano>' + Ano + '</ano>' +
                          '<mes>' + Mes + '</mes>' +
                          '<cpfcnpj>' +
@@ -589,7 +589,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -597,7 +597,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('notas');
 

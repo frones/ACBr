@@ -214,7 +214,7 @@ end;
 procedure TACBrNFSeProviderSigISS.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 begin
-  Response.XmlEnvio := Params.Xml;
+  Response.ArquivoEnvio := Params.Xml;
 end;
 
 procedure TACBrNFSeProviderSigISS.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -228,7 +228,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -236,9 +236,9 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -290,7 +290,7 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  Response.XmlEnvio := '<ConsultarNotaPrestador xmlns="urn:sigiss_ws">' +
+  Response.ArquivoEnvio := '<ConsultarNotaPrestador xmlns="urn:sigiss_ws">' +
                          '<DadosPrestador>' +
                            '<ccm>' + Trim(Emitente.InscMun) + '</ccm>' +
                            '<cnpj>' + Trim(Emitente.Cnpj) + '</cnpj>' +
@@ -317,7 +317,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -325,9 +325,9 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -411,7 +411,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<CancelarNota xmlns="urn:sigiss_ws">' +
+  Response.ArquivoEnvio := '<CancelarNota xmlns="urn:sigiss_ws">' +
                          '<DadosCancelaNota>' +
                            '<ccm>' + Trim(Emitente.InscMun) + '</ccm>' +
                            '<cnpj>' + Trim(Emitente.Cnpj) + '</cnpj>' +
@@ -441,7 +441,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -449,9 +449,9 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -577,7 +577,7 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  Response.XmlEnvio := '<ConsultarNfseServicoPrestado xmlns="http://iss.londrina.pr.gov.br/ws/v1_03">' +
+  Response.ArquivoEnvio := '<ConsultarNfseServicoPrestado xmlns="http://iss.londrina.pr.gov.br/ws/v1_03">' +
                          '<ConsultarNfseServicoPrestadoEnvio>' +
                            '<ccm>' + Trim(Emitente.InscMun) + '</ccm>' +
                            '<cnpj>' + Trim(Emitente.Cnpj) + '</cnpj>' +
@@ -614,7 +614,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<CancelarNota xmlns="http://iss.londrina.pr.gov.br/ws/v1_03"">' +
+  Response.ArquivoEnvio := '<CancelarNota xmlns="http://iss.londrina.pr.gov.br/ws/v1_03"">' +
                          '<DescricaoCancelaNota>' +
                            '<ccm>' + Trim(Emitente.InscMun) + '</ccm>' +
                            '<cnpj>' + Trim(Emitente.Cnpj) + '</cnpj>' +

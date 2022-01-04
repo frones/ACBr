@@ -527,7 +527,7 @@ begin
     ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
     ' http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd"';
 
-  Response.XmlEnvio := '<' + Prefixo + 'ReqEnvioLoteRPS' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'ReqEnvioLoteRPS' + NameSpace + '>' +
                           xCabecalho +
                           '<Lote' + IdAttr + '>' + ListaRps + '</Lote>' +
                        '</' + Prefixo + 'ReqEnvioLoteRPS>';
@@ -544,7 +544,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -552,7 +552,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoEnvioLoteRPS');
 
@@ -696,7 +696,7 @@ begin
     ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
     ' http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd"';
 
-  Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaLote' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'ReqConsultaLote' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
                              CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
@@ -726,7 +726,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -734,7 +734,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaLote');
 
@@ -892,7 +892,7 @@ begin
     ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
     ' http://localhost:8080/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd"';
 
-  Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaNFSeRPS' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'ReqConsultaNFSeRPS' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
                              CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
@@ -931,7 +931,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -939,7 +939,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaNFSeRPS');
 
@@ -1098,7 +1098,7 @@ begin
     ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
     ' http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd"';
 
-  Response.XmlEnvio := '<' + Prefixo + 'ReqConsultaNotas' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'ReqConsultaNotas' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
                              CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
@@ -1138,7 +1138,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1146,7 +1146,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaNotas');
 
@@ -1306,7 +1306,7 @@ begin
             outras NFS-e deste lote.
   }
 
-  Response.XmlEnvio := '<' + Prefixo + 'ReqCancelamentoNFSe' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'ReqCancelamentoNFSe' + NameSpace + '>' +
                          '<Cabecalho>' +
                            '<CodCidade>' +
                              CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
@@ -1350,7 +1350,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1358,7 +1358,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoCancelamentoNFSe');
 

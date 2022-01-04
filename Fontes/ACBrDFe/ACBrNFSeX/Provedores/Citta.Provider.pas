@@ -129,7 +129,7 @@ var
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  Xml := Response.XmlEnvio;
+  Xml := Response.ArquivoEnvio;
 
   Xml := StringReplace(Xml,
               ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
@@ -203,10 +203,10 @@ begin
               'SubstituirNfseEnvio', 'nfse:SubstituirNfseEnvio', [rfReplaceAll]);
       end;
   else
-    Response.XmlEnvio := Xml;
+    Response.ArquivoEnvio := Xml;
   end;
 
-  Response.XmlEnvio := Xml;
+  Response.ArquivoEnvio := Xml;
 end;
 
 { TACBrNFSeXWebserviceCitta203 }

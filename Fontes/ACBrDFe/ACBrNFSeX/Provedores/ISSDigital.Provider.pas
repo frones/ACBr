@@ -125,7 +125,7 @@ var
   xXml, Senha: string;
   i: Integer;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   Senha := '<Senha>' +
               TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSSenha +
@@ -143,10 +143,10 @@ begin
         i := Pos('</Prestador>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Senha + Copy(xXml, i, length(xXml));
-        Response.XmlEnvio := xXml;
+        Response.ArquivoEnvio := xXml;
       end;
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
   inherited ValidarSchema(Response, aMetodo);

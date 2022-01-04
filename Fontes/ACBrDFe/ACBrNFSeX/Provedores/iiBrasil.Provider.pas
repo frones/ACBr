@@ -140,7 +140,7 @@ var
   xXml, Integridade: string;
   i: Integer;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   // Precisa verificar o que deve ser utilizado para gerar o valor da Integridade
   // para o provedor iiBrasil
@@ -153,7 +153,7 @@ begin
         i := Pos('</GerarNfseEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</GerarNfseEnvio>';
-        Response.XmlEnvio := xXml;
+        Response.ArquivoEnvio := xXml;
       end;
 
     tmConsultarNFSePorRps:
@@ -161,7 +161,7 @@ begin
         i := Pos('</ConsultarNfseRpsEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</ConsultarNfseRpsEnvio>';
-        Response.XmlEnvio := xXml;
+        Response.ArquivoEnvio := xXml;
       end;
 
     tmCancelarNFSe:
@@ -169,7 +169,7 @@ begin
         i := Pos('</CancelarNfseEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</CancelarNfseEnvio>';
-        Response.XmlEnvio := xXml;
+        Response.ArquivoEnvio := xXml;
       end;
 
     tmSubstituirNFSe:
@@ -177,10 +177,10 @@ begin
         i := Pos('</SubstituirNfseEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</SubstituirNfseEnvio>';
-        Response.XmlEnvio := xXml;
+        Response.ArquivoEnvio := xXml;
       end;
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
   inherited ValidarSchema(Response, aMetodo);

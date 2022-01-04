@@ -181,7 +181,7 @@ begin
   begin
     NameSpace := StringReplace(NameSpace, '_v03.xsd', '', [rfReplaceAll]);
 
-    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
                                OnlyNumber(Emitente.CNPJ) +

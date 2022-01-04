@@ -408,7 +408,7 @@ begin
 
       AService := CriarServiceClient(tmAbrirSessao);
       AService.Prefixo := Result.Lote;
-      Result.XmlRetorno := AService.AbrirSessao(ConfigMsgDados.DadosCabecalho, Result.XmlEnvio);
+      Result.ArquivoRetorno := AService.AbrirSessao(ConfigMsgDados.DadosCabecalho, Result.ArquivoEnvio);
 
       Result.Sucesso := True;
       Result.EnvelopeEnvio := AService.Envio;
@@ -460,7 +460,7 @@ begin
 
       AService := CriarServiceClient(tmFecharSessao);
       AService.Prefixo := Result.Lote;
-      Result.XmlRetorno := AService.FecharSessao(ConfigMsgDados.DadosCabecalho, Result.XmlEnvio);
+      Result.ArquivoRetorno := AService.FecharSessao(ConfigMsgDados.DadosCabecalho, Result.ArquivoEnvio);
 
       Result.Sucesso := True;
       Result.EnvelopeEnvio := AService.Envio;
@@ -549,7 +549,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<el:autenticarContribuinte>' +
+  Response.ArquivoEnvio := '<el:autenticarContribuinte>' +
                          '<identificacaoPrestador>' +
                             OnlyNumber(Emitente.CNPJ) +
                          '</identificacaoPrestador>' +
@@ -569,7 +569,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -577,7 +577,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'return', 'mensagens');
 
@@ -600,7 +600,7 @@ end;
 procedure TACBrNFSeProviderEL.PrepararFecharSessao(
   Response: TNFSeFechaSessaoResponse);
 begin
-  Response.XmlEnvio := '<el:finalizarSessao>' +
+  Response.ArquivoEnvio := '<el:finalizarSessao>' +
                          '<hashIdentificador>' +
                             FPHash +
                          '</hashIdentificador>' +
@@ -617,7 +617,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -625,7 +625,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'return', 'mensagens');
 
@@ -691,7 +691,7 @@ begin
                  '</ListaRps>' +
                '</LoteRps>';
 
-    Response.XmlEnvio := '<el:EnviarLoteRpsEnvio>' +
+    Response.ArquivoEnvio := '<el:EnviarLoteRpsEnvio>' +
                            '<identificacaoPrestador>' +
                               OnlyNumber(Emitente.CNPJ) +
                            '</identificacaoPrestador>' +
@@ -716,7 +716,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -724,7 +724,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -772,7 +772,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<el:ConsultarSituacaoLoteRpsEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarSituacaoLoteRpsEnvio>' +
                          '<identificacaoPrestador>' +
                             OnlyNumber(Emitente.CNPJ) +
                          '</identificacaoPrestador>' +
@@ -794,7 +794,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -802,7 +802,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -849,7 +849,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<el:ConsultarLoteRpsEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarLoteRpsEnvio>' +
                          '<identificacaoPrestador>' +
                             OnlyNumber(Emitente.CNPJ) +
                          '</identificacaoPrestador>' +
@@ -871,7 +871,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -879,7 +879,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -928,7 +928,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<el:ConsultarNfseRpsEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarNfseRpsEnvio>' +
                          '<identificacaoRps>' +
                             Response.NumRPS +
                          '</identificacaoRps>' +
@@ -950,7 +950,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -958,7 +958,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -1010,7 +1010,7 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  Response.XmlEnvio := '<el:ConsultarNfseEnvio>' +
+  Response.ArquivoEnvio := '<el:ConsultarNfseEnvio>' +
                          '<identificacaoPrestador>' +
                             OnlyNumber(Emitente.CNPJ) +
                          '</identificacaoPrestador>' +
@@ -1032,7 +1032,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1040,7 +1040,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -1090,7 +1090,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<el:CancelarNfseEnvio>' +
+  Response.ArquivoEnvio := '<el:CancelarNfseEnvio>' +
                          '<identificacaoPrestador>' +
                             OnlyNumber(Emitente.CNPJ) +
                          '</identificacaoPrestador>' +
@@ -1112,7 +1112,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1120,7 +1120,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 

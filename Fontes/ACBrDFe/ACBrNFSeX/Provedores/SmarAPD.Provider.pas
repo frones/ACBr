@@ -279,7 +279,7 @@ end;
 procedure TACBrNFSeProviderSmarAPD.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 begin
-  Response.XmlEnvio := '<tbnfd>' + Params.Xml + '</tbnfd>';
+  Response.ArquivoEnvio := '<tbnfd>' + Params.Xml + '</tbnfd>';
 end;
 
 procedure TACBrNFSeProviderSmarAPD.TratarRetornoEmitir(
@@ -295,7 +295,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -303,7 +303,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'return');
 
@@ -361,7 +361,7 @@ begin
     Exit;
   end;
 
-  Response.XmlEnvio := '<recibo>' +
+  Response.ArquivoEnvio := '<recibo>' +
                          '<codrecibo>' + Response.Protocolo + '</codrecibo>' +
                        '</recibo>';
 end;
@@ -381,7 +381,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -389,7 +389,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'return');
 
@@ -471,7 +471,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<nfd>' +
+  Response.ArquivoEnvio := '<nfd>' +
                          '<inscricaomunicipalemissor>' +
                            OnlyNumber(Emitente.InscMun) +
                          '</inscricaomunicipalemissor>' +
@@ -498,7 +498,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -506,7 +506,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'return');
 

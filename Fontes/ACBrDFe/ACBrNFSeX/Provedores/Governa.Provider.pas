@@ -185,7 +185,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<tcLoteRps>' +
+    Response.ArquivoEnvio := '<tcLoteRps>' +
                             '<tsCodCadBic>' +
                               OnlyNumber(Emitente.InscMun) +
                             '</tsCodCadBic>' +
@@ -211,7 +211,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -219,7 +219,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -316,7 +316,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<tcConsultaRPS>' +
+  Response.ArquivoEnvio := '<tcConsultaRPS>' +
                           '<tsCodCadBic>' +
                             OnlyNumber(Emitente.InscMun) +
                           '</tsCodCadBic>' +
@@ -348,7 +348,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -356,7 +356,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -452,7 +452,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<tcLoteCancelamento>' +
+  Response.ArquivoEnvio := '<tcLoteCancelamento>' +
                           '<tsCodCadBic>' +
                             OnlyNumber(Emitente.InscMun) +
                           '</tsCodCadBic>' +
@@ -489,7 +489,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -497,7 +497,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 

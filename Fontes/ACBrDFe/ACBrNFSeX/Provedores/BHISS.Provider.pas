@@ -299,7 +299,7 @@ begin
     end;
   end;
 
-  Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' +
                                 NameSpace + '>' +
                          '<Prestador>' +
                            '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
@@ -414,7 +414,7 @@ begin
 
   ListaRps := ChangeLineBreak(ListaRps, '');
 
-  Response.XmlEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
                          '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
                            '<NumeroLote>' + Response.Lote + '</NumeroLote>' +
                            '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
@@ -448,7 +448,7 @@ begin
   Document := TACBrXmlDocument.Create;
   try
     try
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
       ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetornoLote');

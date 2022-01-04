@@ -166,10 +166,15 @@ type
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
 
-    FXmlEnvio: String;
-    FXmlRetorno: String;
     FEnvelopeEnvio: String;
     FEnvelopeRetorno: String;
+    FArquivoEnvio: String;
+    FArquivoRetorno: String;
+
+    function GetXmlEnvio: String;
+    procedure SetXmlEnvio(const Value: String);
+    function GetXmlRetorno: String;
+    procedure SetXmlRetorno(const Value: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -192,10 +197,13 @@ type
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
 
-    property XmlEnvio: String read FXmlEnvio write FXmlEnvio;
-    property XmlRetorno: String read FXmlRetorno write FXmlRetorno;
+    property XmlEnvio: String read GetXmlEnvio write SetXmlEnvio;
+    property XmlRetorno: String read GetXmlRetorno write SetXmlRetorno;
+
     property EnvelopeEnvio: String read FEnvelopeEnvio write FEnvelopeEnvio;
     property EnvelopeRetorno: String read FEnvelopeRetorno write FEnvelopeRetorno;
+    property ArquivoEnvio: String read FArquivoEnvio write FArquivoEnvio;
+    property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
   end;
 
   TNFSeEmiteResponse = class(TNFSeWebserviceResponse)
@@ -429,6 +437,8 @@ begin
   XmlRetorno := '';
   EnvelopeEnvio := '';
   EnvelopeRetorno := '';
+  ArquivoEnvio := '';
+  ArquivoRetorno := '';
 end;
 
 constructor TNFSeWebserviceResponse.Create;
@@ -446,6 +456,26 @@ begin
   FErros.Free;
 
   inherited;
+end;
+
+function TNFSeWebserviceResponse.GetXmlEnvio: String;
+begin
+  Result := ArquivoEnvio;
+end;
+
+function TNFSeWebserviceResponse.GetXmlRetorno: String;
+begin
+  Result := ArquivoRetorno;
+end;
+
+procedure TNFSeWebserviceResponse.SetXmlEnvio(const Value: String);
+begin
+  ArquivoEnvio := Value;
+end;
+
+procedure TNFSeWebserviceResponse.SetXmlRetorno(const Value: String);
+begin
+  ArquivoRetorno := Value;
 end;
 
 { TNFSeConsultaNFSeResponse }

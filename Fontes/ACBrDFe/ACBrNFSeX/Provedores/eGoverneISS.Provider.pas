@@ -194,7 +194,7 @@ begin
     begin
       Xml := StringReplace(Xml, 'eis:NotaFiscal', 'eis1:NotaFiscalLoteDTO', [rfReplaceAll]);
 
-      Response.XmlEnvio := '<eis:Notas>' +
+      Response.ArquivoEnvio := '<eis:Notas>' +
                              '<eis1:ChaveAutenticacao>' +
                                 Emitente.WSChaveAcesso +
                              '</eis1:ChaveAutenticacao>' +
@@ -207,7 +207,7 @@ begin
                            '</eis:Notas>';
     end
     else
-      Response.XmlEnvio := Xml;
+      Response.ArquivoEnvio := Xml;
   end;
 end;
 
@@ -220,7 +220,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := '201';
@@ -228,7 +228,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       if Response.ModoEnvio = meLoteAssincrono then
         ProcessarMensagemErros(Document.Root, Response, '', 'EmitirEmLoteResult')
@@ -265,7 +265,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<eis:ChaveAutenticacao>' +
+  Response.ArquivoEnvio := '<eis:ChaveAutenticacao>' +
                           Emitente.WSChaveAcesso +
                        '</eis:ChaveAutenticacao>' +
                        '<eis:CodigoLote>' +
@@ -283,7 +283,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -291,7 +291,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'ConsultarLoteResult');
 
@@ -329,7 +329,7 @@ begin
   // Se Transacao for True o Ambiente é de Homologação
   Transacao := (TACBrNFSeX(FAOwner).Configuracoes.WebServices.AmbienteCodigo = 2);
 
-  Response.XmlEnvio := '<eis:ChaveAutenticacao>' +
+  Response.ArquivoEnvio := '<eis:ChaveAutenticacao>' +
                           Emitente.WSChaveAcesso +
                        '</eis:ChaveAutenticacao>' +
                        '<eis:Homologacao>' +
@@ -351,7 +351,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -359,7 +359,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'CancelarResult');
 

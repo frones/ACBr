@@ -278,7 +278,7 @@ end;
 procedure TACBrNFSeProviderIPM.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
   Params: TNFSeParamsResponse);
 begin
-  Response.XmlEnvio := Params.Xml;
+  Response.ArquivoEnvio := Params.Xml;
 end;
 
 procedure TACBrNFSeProviderIPM.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -297,7 +297,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -305,11 +305,11 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      NotaCompleta := (Pos('<nfse>', Response.XmlRetorno) > 0);
+      NotaCompleta := (Pos('<nfse>', Response.ArquivoRetorno) > 0);
 
-      AcessoNegado := (Pos('Acesso Negado', Response.XmlRetorno) > 0);
+      AcessoNegado := (Pos('Acesso Negado', Response.ArquivoRetorno) > 0);
 
       if AcessoNegado then
       begin
@@ -319,7 +319,7 @@ begin
         Exit;
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -411,7 +411,7 @@ begin
     Exit;
   end;
 
-  Response.XmlEnvio := '<nfse>' +
+  Response.ArquivoEnvio := '<nfse>' +
                          '<pesquisa>' +
                            '<codigo_autenticidade>' +
                              Response.Protocolo +
@@ -434,7 +434,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -442,11 +442,11 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      NotaCompleta := (Pos('<nfse>', Response.XmlRetorno) > 0);
+      NotaCompleta := (Pos('<nfse>', Response.ArquivoRetorno) > 0);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -540,7 +540,7 @@ begin
     Exit;
   end;
 
-  Response.XmlEnvio := '<consulta_rps>' +
+  Response.ArquivoEnvio := '<consulta_rps>' +
                          '<cidade>' +
                            CodIBGEToCodTOM(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
                          '</cidade>' +
@@ -567,7 +567,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -575,11 +575,11 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      NotaCompleta := (Pos('<nfse>', Response.XmlRetorno) > 0);
+      NotaCompleta := (Pos('<nfse>', Response.ArquivoRetorno) > 0);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -680,7 +680,7 @@ begin
   else
     TagSerie := 'serie';
 
-  Response.XmlEnvio := '<nfse>' +
+  Response.ArquivoEnvio := '<nfse>' +
                          '<pesquisa>' +
                            '<numero>' +
                              OnlyNumber(Response.InfConsultaNFSe.NumeroIniNFSe) +
@@ -711,7 +711,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -719,11 +719,11 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      NotaCompleta := (Pos('<nfse>', Response.XmlRetorno) > 0);
+      NotaCompleta := (Pos('<nfse>', Response.ArquivoRetorno) > 0);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -874,7 +874,7 @@ begin
 
   if ConfigGeral.Params1 = 'SolicitarCancelamento' then
   begin
-    Response.XmlEnvio := '<solicitacao_cancelamento>' +
+    Response.ArquivoEnvio := '<solicitacao_cancelamento>' +
                            '<prestador>' +
                              '<cpfcnpj>' +
                                OnlyNumber(Emitente.CNPJ) +
@@ -905,7 +905,7 @@ begin
     else
       IdAttr := '';
 
-    Response.XmlEnvio := '<nfse' + IdAttr + '>' +
+    Response.ArquivoEnvio := '<nfse' + IdAttr + '>' +
                            '<nf>' +
                              '<numero>' +
                                Response.InfCancelamento.NumeroNFSe +
@@ -946,7 +946,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -954,11 +954,11 @@ begin
         Exit
       end;
 
-      Response.XmlRetorno := AjustarRetorno(Response.XmlRetorno);
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
 
-      NotaCompleta := (Pos('<nfse>', Response.XmlRetorno) > 0);
+      NotaCompleta := (Pos('<nfse>', Response.ArquivoRetorno) > 0);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 

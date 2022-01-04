@@ -161,7 +161,7 @@ var
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   xNameSpace1 := 'xmlns="' + ConfigWebServices.Producao.XMLNameSpace + '"';
 
@@ -264,10 +264,10 @@ begin
         xXml := '<SubstituirNfseEnvio ' + xNameSpace2 + '>' + xXml + '</SubstituirNfseEnvio>';
       end;
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
-  Response.XmlEnvio := xXml;
+  Response.ArquivoEnvio := xXml;
 end;
 
 { TACBrNFSeXWebserviceVersaTecnologia200 }
@@ -519,7 +519,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo2 + 'Pedido>' +
                              '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + '>' +
                                '<' + Prefixo2 + 'IdentificacaoNfse>' +

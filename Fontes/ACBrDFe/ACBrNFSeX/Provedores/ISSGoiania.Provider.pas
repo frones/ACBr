@@ -130,7 +130,7 @@ var
   xAux, xXml, xXmlEnvio: string;
   i: Integer;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   if aMetodo = tmGerar then
   begin
@@ -146,7 +146,7 @@ begin
   else
     xXmlEnvio := xXml;
 
-  Response.XmlEnvio := xXmlEnvio;
+  Response.ArquivoEnvio := xXmlEnvio;
 
   inherited ValidarSchema(Response, aMetodo);
 end;

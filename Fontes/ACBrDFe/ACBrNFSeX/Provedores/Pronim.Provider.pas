@@ -164,7 +164,7 @@ procedure TACBrNFSeProviderPronim.ValidarSchema(
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
     ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 end;
 
@@ -335,7 +335,7 @@ procedure TACBrNFSeProviderPronim202.ValidarSchema(
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
               ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
 end;
 

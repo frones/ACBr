@@ -65,8 +65,8 @@ begin
   NrOcorrValorISS := 1;
   NrOcorrAliquota := 1;
   NrOcorrProducao := 1;
-
-  GerarTagSenhaFraseSecreta := True;
+  NrOcorrSenha := 1;
+  NrOcorrFraseSecreta := 1;
 end;
 
 end.

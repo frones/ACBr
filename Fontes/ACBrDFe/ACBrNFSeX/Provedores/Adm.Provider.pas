@@ -333,7 +333,7 @@ begin
               '<RequestId>' + WSUser + '</RequestId>';
   end;
 
-  aXml := Response.XmlEnvio;
+  aXml := Response.ArquivoEnvio;
 
   case aMetodo of
     tmRecepcionar,
@@ -350,7 +350,7 @@ begin
           aXml := Copy(aXml, 1, i-1) + '<Resposta>1</Resposta>' +
                     Copy(aXml, i, Length(aXml));
 
-        Response.XmlEnvio := aXml;
+        Response.ArquivoEnvio := aXml;
       end;
 
     tmConsultarLote,
@@ -364,7 +364,7 @@ begin
         if i > 0 then
           aXml := Copy(aXml, 1, i-1) + xDados + Copy(aXml, i, Length(aXml));
 
-        Response.XmlEnvio := aXml;
+        Response.ArquivoEnvio := aXml;
       end;
 
     tmCancelarNFSe:
@@ -374,7 +374,7 @@ begin
         if i > 0 then
           aXml := Copy(aXml, 1, i-1) + xDados + Copy(aXml, i, Length(aXml));
 
-        Response.XmlEnvio := aXml;
+        Response.ArquivoEnvio := aXml;
       end;
 
     {
@@ -382,7 +382,7 @@ begin
     tmSubstituirNFSe: ;
     }
   else
-    Response.XmlEnvio := aXml;
+    Response.ArquivoEnvio := aXml;
   end;
 end;
 

@@ -339,7 +339,7 @@ begin
                      '</' + Prefixo2 + 'CpfCnpj>' +
                      GetInscMunic(Emitente.InscMun, Prefixo2);
 
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' +
                                   Response.Lote +
@@ -359,7 +359,7 @@ begin
                            '</' + Prefixo + TagEnvio + '>';
     end
     else
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                               Xml +
                            '</' + Prefixo + TagEnvio + '>';
   end;

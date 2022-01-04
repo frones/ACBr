@@ -133,7 +133,7 @@ var
   xXml: string;
   i, j: Integer;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   // Remove as tags Serie e Tipo ao realizar a consulta da NFS-e por Rps.
   case aMetodo of
@@ -143,10 +143,10 @@ begin
         j := Pos('</IdentificacaoRps>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Copy(xXml, j, length(xXml));
-        Response.XmlEnvio := xXml;
+        Response.ArquivoEnvio := xXml;
       end;
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
   inherited ValidarSchema(Response, aMetodo);

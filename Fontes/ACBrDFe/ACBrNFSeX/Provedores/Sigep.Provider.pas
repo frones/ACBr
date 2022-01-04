@@ -134,7 +134,7 @@ var
   xXml, credenciais: string;
   i, j: Integer;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   with TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente do
   begin
@@ -211,10 +211,10 @@ begin
         xXml := Copy(xXml, 1, i -1) + Copy(xXml, j, length(xXml));
       end;
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
-  Response.XmlEnvio := xXml;
+  Response.ArquivoEnvio := xXml;
 
   inherited ValidarSchema(Response, aMetodo);
 end;

@@ -261,7 +261,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<es:enviarLoteRpsEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<es:enviarLoteRpsEnvio' + NameSpace + '>' +
                            '<lote>' +
                              '<nrLote>' +
                                 Response.Lote +
@@ -321,7 +321,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -329,7 +329,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -395,7 +395,7 @@ begin
                    Response.Lote +
                  '</nrLoteRps>';
 
-  Response.XmlEnvio := '<es:esConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<es:esConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
                               OnlyNumber(Emitente.InscMun) +
@@ -422,7 +422,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -430,7 +430,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -491,7 +491,7 @@ begin
                    Response.Lote +
                  '</nrLoteRps>';
 
-  Response.XmlEnvio := '<es:esConsultarLoteRpsEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<es:esConsultarLoteRpsEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
                               OnlyNumber(Emitente.InscMun) +
@@ -522,7 +522,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -530,7 +530,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -612,7 +612,7 @@ begin
 
   NameSpace := ' xmlns:es="' + ConfigMsgDados.ConsultarNFSeRps.xmlns + '"';
 
-  Response.XmlEnvio := '<es:esConsultarNfsePorRpsEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<es:esConsultarNfsePorRpsEnvio' + NameSpace + '>' +
                          '<rps>' +
                            '<nrRps>' +
                               Response.NumRPS +
@@ -649,7 +649,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -657,7 +657,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -688,7 +688,7 @@ begin
 
           if ANota.NFSe.IdentificacaoRps.Numero = Response.NumeroRps  then
           begin
-            aXmlNota := GerarXmlNota(ANota.XMLAssinado, Response.XmlRetorno);
+            aXmlNota := GerarXmlNota(ANota.XMLAssinado, Response.ArquivoRetorno);
 
             ANota.XML := aXmlNota;
 
@@ -730,7 +730,7 @@ begin
 
   NameSpace := ' xmlns:es="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
-  Response.XmlEnvio := '<es:esConsultarNfseEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<es:esConsultarNfseEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
                               OnlyNumber(Emitente.InscMun) +
@@ -763,7 +763,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -771,7 +771,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -859,7 +859,7 @@ begin
 
   NameSpace := ' xmlns:es="' + ConfigMsgDados.ConsultarNFSe.xmlns + '"';
 
-  Response.XmlEnvio := '<es:esCancelarNfseEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<es:esCancelarNfseEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
                               OnlyNumber(Emitente.InscMun) +
@@ -891,7 +891,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -899,7 +899,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 

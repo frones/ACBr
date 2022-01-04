@@ -184,7 +184,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -192,7 +192,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -293,7 +293,7 @@ begin
                    '</' + Prefixo2 + 'CpfCnpj>' +
                    GetInscMunic(Emitente.InscMun, Prefixo2);
 
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              Requerente +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' +
@@ -310,7 +310,7 @@ begin
                            '</' + Prefixo + TagEnvio + '>';
     end
     else
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                               Xml +
                            '</' + Prefixo + TagEnvio + '>';
   end;
@@ -328,7 +328,7 @@ begin
   begin
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            Requerente +
                            '<' + Prefixo + 'NumeroLote>' +
                              Response.Lote +
@@ -349,7 +349,7 @@ begin
   begin
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'IdentificacaoRps>' +
                              '<' + Prefixo2 + 'Numero>' +
                                Response.NumRPS +
@@ -378,7 +378,7 @@ begin
   begin
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' + NameSpace + '>' +
                            Requerente +
                            Xml +
                            '<' + Prefixo + 'Pagina>' +
@@ -400,7 +400,7 @@ begin
   begin
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseServicoPrestadoEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseServicoPrestadoEnvio' + NameSpace + '>' +
                            Requerente +
                            Xml +
                            '<' + Prefixo + 'Pagina>' +
@@ -422,7 +422,7 @@ begin
   begin
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseServicoTomadoEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseServicoTomadoEnvio' + NameSpace + '>' +
                            Requerente +
                            Xml +
                            '<' + Prefixo + 'Pagina>' +
@@ -450,7 +450,7 @@ begin
                         Trim(InfoCanc.CodVerificacao) +
                      '</ChaveAcesso>';
 
-    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            Requerente +
                            '<' + Prefixo2 + 'Pedido>' +
                              '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + NameSpace2 + '>' +
@@ -492,7 +492,7 @@ begin
     Response.PedCanc := RetornarConteudoEntre(Response.PedCanc,
                                                  '<Pedido>', '</Pedido>', True);
 
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            Requerente +
                            '<' + Prefixo + 'SubstituicaoNfse' + IdAttr + '>' +
                              Response.PedCanc +

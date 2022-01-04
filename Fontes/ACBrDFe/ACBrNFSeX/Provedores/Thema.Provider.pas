@@ -357,7 +357,7 @@ begin
   else
     IdAttr := '';
 
-  Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+  Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                          '<' + Prefixo + 'LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
                            '<' + PrefixoTS + 'NumeroLote>' + Response.Lote + '</' + PrefixoTS + 'NumeroLote>' +
                            '<' + PrefixoTS + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + PrefixoTS + 'Cnpj>' +
@@ -390,7 +390,7 @@ begin
   Document := TACBrXmlDocument.Create;
   try
     try
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
       ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetornoLote');

@@ -218,7 +218,7 @@ var
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   case aMetodo of
     tmConsultarSituacao:
@@ -250,10 +250,10 @@ begin
       end;
 
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
-  Response.XmlEnvio := xXml;
+  Response.ArquivoEnvio := xXml;
 end;
 
 end.

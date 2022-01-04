@@ -359,7 +359,7 @@ begin
                      '</' + Prefixo2 + 'CpfCnpj>' +
                      GetInscMunic(Emitente.InscMun, Prefixo2);
 
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' +
                                   Response.Lote +
@@ -375,7 +375,7 @@ begin
                            '</' + Prefixo + TagEnvio + '>';
     end
     else
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                               Xml +
                            '</' + Prefixo + TagEnvio + '>';
   end;
@@ -395,7 +395,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -403,7 +403,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -600,7 +600,7 @@ begin
                       Response.Lote +
                     '</' + Prefixo + 'NumeroLote>';
 
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            Prestador +
                            NumeroLote +
                          '</' + Prefixo + TagEnvio + '>';
@@ -621,7 +621,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -631,7 +631,7 @@ begin
 
       Response.Situacao := '3'; // Processado com Falhas
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -798,7 +798,7 @@ begin
                   GetInscMunic(Emitente.InscMun, Prefixo2) +
                 '</' + Prefixo + 'Prestador>';
 
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'IdentificacaoRps>' +
                              '<' + Prefixo2 + 'Numero>' +
                                Response.NumRPS +
@@ -827,7 +827,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -835,7 +835,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -1093,7 +1093,7 @@ begin
                   GetInscMunic(Emitente.InscMun, Prefixo2) +
                 '</' + Prefixo + 'Prestador>';
 
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' + NameSpace + '>' +
                            Prestador +
                            Xml +
                            '<' + Prefixo + 'Pagina>' +
@@ -1121,7 +1121,7 @@ begin
     Prefixo := ConfigMsgDados.Prefixo + ':';
 
   try
-    Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
+    Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSePorFaixa.DocElemento,
       ConfigMsgDados.ConsultarNFSePorFaixa.InfElemento, '', '', '', IdAttr);
   except
@@ -1150,7 +1150,7 @@ begin
     try
       TACBrNFSeX(FAOwner).NotasFiscais.Clear;
 
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1158,7 +1158,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -1337,7 +1337,7 @@ begin
                   GetInscMunic(Emitente.InscMun, Prefixo2) +
                 '</' + Prefixo + 'Prestador>';
 
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseServicoPrestadoEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseServicoPrestadoEnvio' + NameSpace + '>' +
                            Prestador +
                            Xml +
                            '<' + Prefixo + 'Pagina>' +
@@ -1366,7 +1366,7 @@ begin
     Prefixo := ConfigMsgDados.Prefixo + ':';
 
   try
-    Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
+    Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSeServicoPrestado.DocElemento,
       ConfigMsgDados.ConsultarNFSeServicoPrestado.InfElemento, '', '', '', IdAttr);
   except
@@ -1396,7 +1396,7 @@ begin
     try
       TACBrNFSeX(FAOwner).NotasFiscais.Clear;
 
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1404,7 +1404,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -1594,7 +1594,7 @@ begin
                    GetInscMunic(Emitente.InscMun, PrefixoTS) +
                  '</' + Prefixo + 'Consulente>';
 
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarNfseServicoTomadoEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseServicoTomadoEnvio' + NameSpace + '>' +
                            Consulente +
                            Xml +
                            '<' + Prefixo + 'Pagina>' +
@@ -1623,7 +1623,7 @@ begin
     Prefixo := ConfigMsgDados.Prefixo + ':';
 
   try
-    Response.XmlEnvio := FAOwner.SSL.Assinar(Response.XmlEnvio,
+    Response.ArquivoEnvio := FAOwner.SSL.Assinar(Response.ArquivoEnvio,
       Prefixo + ConfigMsgDados.ConsultarNFSeServicoTomado.DocElemento,
       ConfigMsgDados.ConsultarNFSeServicoTomado.InfElemento, '', '', '', IdAttr);
   except
@@ -1653,7 +1653,7 @@ begin
     try
       TACBrNFSeX(FAOwner).NotasFiscais.Clear;
 
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1661,7 +1661,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -1874,7 +1874,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo2 + 'Pedido>' +
                              '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + NameSpace2 + '>' +
                                '<' + Prefixo2 + 'IdentificacaoNfse>' +
@@ -1913,7 +1913,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1921,7 +1921,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -2157,7 +2157,7 @@ procedure TACBrNFSeProviderABRASFv2.GerarMsgDadosSubstituiNFSe(
 begin
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'SubstituicaoNfse' + IdAttr + '>' +
                              Response.PedCanc +
                              Xml +
@@ -2217,7 +2217,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -2225,7 +2225,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 

@@ -189,7 +189,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<NFSE>' +
+    Response.ArquivoEnvio := '<NFSE>' +
                            '<IDENTIFICACAO>' +
                              '<MESCOMP>' +
                                 FormatDateTime('MM', Now) +
@@ -220,7 +220,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -228,9 +228,9 @@ begin
         Exit
       end;
 
-      Inconsistencia := (Pos('<INCONSISTENCIA>', Response.XmlRetorno) > 0);
+      Inconsistencia := (Pos('<INCONSISTENCIA>', Response.ArquivoRetorno) > 0);
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -273,7 +273,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<NFSE>' +
+  Response.ArquivoEnvio := '<NFSE>' +
                          '<IDENTIFICACAO>' +
                            '<INSCRICAO>' +
                               Emitente.InscMun +
@@ -300,7 +300,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -308,7 +308,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -395,7 +395,7 @@ begin
 
   Response.Metodo := tmConsultarNFSe;
 
-  Response.XmlEnvio := '<NFSE>' +
+  Response.ArquivoEnvio := '<NFSE>' +
                          '<IDENTIFICACAO>' +
                            '<INSCRICAO>' +
                               Emitente.InscMun +
@@ -425,7 +425,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -433,7 +433,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -526,7 +526,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<NFSE>' +
+  Response.ArquivoEnvio := '<NFSE>' +
                          '<IDENTIFICACAO>' +
                            '<INSCRICAO>' +
                               Emitente.InscMun +
@@ -555,7 +555,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -563,7 +563,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root.Childrens.FindAnyNs('NFSE');
 

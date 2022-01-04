@@ -328,7 +328,7 @@ begin
   with Params do
   begin
     if Response.ModoEnvio in [meLoteAssincrono] then
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' + Response.Lote + '</' + Prefixo2 + 'NumeroLote>' +
                                '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
@@ -342,7 +342,7 @@ begin
                              '</' + Prefixo + 'LoteRps>' +
                            '</' + Prefixo + TagEnvio + '>'
     else
-      Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                               Xml +
                            '</' + Prefixo + TagEnvio + '>';
   end;
@@ -357,7 +357,7 @@ begin
   Document := TACBrXmlDocument.Create;
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -365,7 +365,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -465,7 +465,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
                                OnlyNumber(Emitente.CNPJ) +
@@ -488,7 +488,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -496,7 +496,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -595,7 +595,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + 'ConsultarLoteRpsEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarLoteRpsEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
                                OnlyNumber(Emitente.CNPJ) +
@@ -621,7 +621,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -631,7 +631,7 @@ begin
 
       Response.Situacao := '3'; // Processado com Falhas
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -793,7 +793,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'IdentificacaoRps>' +
                              '<' + Prefixo2 + 'Numero>' +
                                Response.NumRPS +
@@ -829,7 +829,7 @@ begin
     try
       TACBrNFSeX(FAOwner).NotasFiscais.Clear;
 
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -837,7 +837,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -1053,7 +1053,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
                                OnlyNumber(Emitente.CNPJ) +
@@ -1081,7 +1081,7 @@ begin
     try
       TACBrNFSeX(FAOwner).NotasFiscais.Clear;
 
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1089,7 +1089,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 
@@ -1279,7 +1279,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Pedido>' +
                              '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + '>' +
                                '<' + Prefixo2 + 'IdentificacaoNfse>' +
@@ -1316,7 +1316,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -1324,7 +1324,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response);
 

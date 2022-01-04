@@ -190,7 +190,7 @@ end;
 procedure TACBrNFSeProviderISSLencois.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 begin
-  Response.XmlEnvio := Params.Xml;
+  Response.ArquivoEnvio := Params.Xml;
 end;
 
 procedure TACBrNFSeProviderISSLencois.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -205,7 +205,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -213,7 +213,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
@@ -293,7 +293,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<Nota xmlns="NotaFiscal-Cancelamento.xsd">' +
+  Response.ArquivoEnvio := '<Nota xmlns="NotaFiscal-Cancelamento.xsd">' +
                          '<Versao>1.1</Versao>' +
                          '<InscricaoMunicipal>' +
                            Trim(Emitente.InscMun) +
@@ -332,7 +332,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -340,7 +340,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 

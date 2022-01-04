@@ -97,7 +97,7 @@ var
   i: Integer;
   Emitente: TEmitenteConfNFSe;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
   i := Pos('<InscricaoMunicipal>', xXml) -1;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
@@ -106,7 +106,7 @@ begin
           '<RazaoSocial>' + Emitente.RazSocial + '</RazaoSocial>' +
           Copy(xXml, i +1, length(xXml));
 
-  Response.XmlEnvio := xXml;
+  Response.ArquivoEnvio := xXml;
 
   inherited AssinarConsultaLoteRps(Response);
 end;
@@ -118,7 +118,7 @@ var
   i: Integer;
   Emitente: TEmitenteConfNFSe;
 begin
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
   i := Pos('<InscricaoMunicipal>', xXml) -1;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
@@ -127,7 +127,7 @@ begin
           '<RazaoSocial>' + Emitente.RazSocial + '</RazaoSocial>' +
           Copy(xXml, i +1, length(xXml));
 
-  Response.XmlEnvio := xXml;
+  Response.ArquivoEnvio := xXml;
 
   inherited AssinarConsultaNFSeporRps(Response);
 end;
@@ -247,7 +247,7 @@ begin
 
   with Params do
   begin
-    Response.XmlEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
+    Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +
                            '<' + Prefixo2 + 'Pedido>' +
                              '<' + Prefixo2 + 'InfPedidoCancelamento' + IdAttr + '>' +
                                '<' + Prefixo2 + 'IdentificacaoNfse>' +

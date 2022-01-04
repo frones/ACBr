@@ -166,7 +166,7 @@ var
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  xXml := Response.XmlEnvio;
+  xXml := Response.ArquivoEnvio;
 
   if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
     FpNameSpace := 'xmlns:nfem="http://nfemws.joinville.sc.gov.br"'
@@ -210,10 +210,10 @@ begin
         xXml := '<nfem:CancelarNfseEnvio>' + xXml + '</nfem:CancelarNfseEnvio>';
       end;
   else
-    Response.XmlEnvio := xXml;
+    Response.ArquivoEnvio := xXml;
   end;
 
-  Response.XmlEnvio := xXml;
+  Response.ArquivoEnvio := xXml;
 end;
 
 { TACBrNFSeXWebserviceISSJoinville204 }

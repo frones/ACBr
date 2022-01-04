@@ -205,7 +205,7 @@ end;
 procedure TACBrNFSeProviderGiap.GerarMsgDadosEmitir(
   Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 begin
-  Response.XmlEnvio := '<nfe>' + Params.Xml + '</nfe>';
+  Response.ArquivoEnvio := '<nfe>' + Params.Xml + '</nfe>';
 end;
 
 procedure TACBrNFSeProviderGiap.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -222,7 +222,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -230,7 +230,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
 
@@ -313,7 +313,7 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
-  Response.XmlEnvio := '<consulta>' +
+  Response.ArquivoEnvio := '<consulta>' +
                           '<inscricaoMunicipal>' +
                             OnlyNumber(Emitente.InscMun) +
                           '</inscricaoMunicipal>' +
@@ -341,7 +341,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -349,7 +349,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
 
@@ -396,7 +396,7 @@ begin
     Exit;
   end;
 
-  Response.XmlEnvio := '<nfe>' +
+  Response.ArquivoEnvio := '<nfe>' +
                          '<cancelaNota>' +
                            '<codigoMotivo>' +
                               Response.InfCancelamento.CodCancelamento +
@@ -423,7 +423,7 @@ begin
 
   try
     try
-      if Response.XmlRetorno = '' then
+      if Response.ArquivoRetorno = '' then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;
@@ -431,7 +431,7 @@ begin
         Exit
       end;
 
-      Document.LoadFromXml(Response.XmlRetorno);
+      Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
 

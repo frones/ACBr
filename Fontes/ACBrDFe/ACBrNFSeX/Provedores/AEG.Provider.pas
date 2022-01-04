@@ -315,7 +315,7 @@ begin
                  '</Seguranca>';
   end;
 
-  aXml := Response.XmlEnvio;
+  aXml := Response.ArquivoEnvio;
 
   case aMetodo of
     tmRecepcionar:
@@ -438,10 +438,10 @@ begin
                  '</MetodoInfo>' +
               '</SubstituirNfseEnvio>';
   else
-    Response.XmlEnvio := aXml;
+    Response.ArquivoEnvio := aXml;
   end;
 
-  Response.XmlEnvio := aXml;
+  Response.ArquivoEnvio := aXml;
 end;
 
 end.

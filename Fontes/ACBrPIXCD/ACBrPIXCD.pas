@@ -140,13 +140,11 @@ type
     fProblema: TACBrPIXProblema;
   protected
     fpEndPoint: String;
-    procedure AtribuirErroHTTPProblema;
   public
     constructor Create(AOwner: TACBrPSP);
     destructor Destroy; override;
     procedure Clear;
 
-    procedure AtribuirJSONProblema(RespostaHttp: String);
     property Problema: TACBrPIXProblema read fProblema;
     property EndPoint: String read fpEndPoint;
   end;
@@ -248,6 +246,9 @@ type
     procedure LimparHTTP; virtual;
     function TransmitirHttp(const Method, URL: String;
       out ResultCode: Integer; out RespostaHttp: String): Boolean; virtual;
+    procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: String;
+      Problema: TACBrPIXProblema); virtual;
+    procedure AtribuirErroHTTPProblema(Problema: TACBrPIXProblema); virtual;
 
     property ClientID: String read GetClientID write SetClientID;
     property ClientSecret: String read GetClientSecret write SetClientSecret;
@@ -467,38 +468,6 @@ begin
   fProblema.Clear;
 end;
 
-procedure TACBrPixEndPoint.AtribuirJSONProblema(RespostaHttp: String);
-begin
-  fProblema.Clear;
-  if (Trim(RespostaHttp) = '') then
-    AtribuirErroHTTPProblema
-  else
-  begin
-    try
-      fProblema.AsJSON := RespostaHttp;
-    except
-    end;
-
-    if (fProblema.detail = '') then
-      AtribuirErroHTTPProblema;
-  end;
-end;
-
-procedure TACBrPixEndPoint.AtribuirErroHTTPProblema;
-begin
-  if (fProblema.status = 0) then
-    fProblema.status := fHTTP.ResultCode;
-
-  if (fProblema.detail = '') then
-  begin
-    fHTTP.Document.Position := 0;
-    fProblema.detail := ReadStrFromStream(fHTTP.Document, fHTTP.Document.Size);
-  end;
-
-  if (fProblema.title = '') then
-    fProblema.title := fHTTP.MimeType;
-end;
-
 { TACBrPixEndPointPix }
 
 constructor TACBrPixEndPointPix.Create(AOwner: TACBrPSP);
@@ -550,7 +519,7 @@ begin
   if Result then
     fPix.AsJSON := RespostaHttp
   else
-    AtribuirJSONProblema(RespostaHttp);
+    fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
 
 function TACBrPixEndPointPix.ConsultarPixRecebidos(Inicio: TDateTime;
@@ -601,7 +570,7 @@ begin
   if Result then
     fPixConsultados.AsJSON := RespostaHttp
   else
-    AtribuirJSONProblema(RespostaHttp);
+    fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
 
 function TACBrPixEndPointPix.SolicitarDevolucaoPix(const e2eid,
@@ -633,7 +602,7 @@ begin
   if Result then
     fDevolucao.AsJSON := RespostaHttp
   else
-    AtribuirJSONProblema(RespostaHttp);
+    fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
 
 function TACBrPixEndPointPix.ConsultarDevolucaoPix(const e2eid,
@@ -659,7 +628,7 @@ begin
   if Result then
     fDevolucao.AsJSON := RespostaHttp
   else
-    AtribuirJSONProblema(RespostaHttp);
+    fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
 
 { TACBrQueryParams }
@@ -678,7 +647,8 @@ begin
     AName := Names[i];
     if (AName <> '') then
     begin
-      Result := Result + IfThen(Result = '','?','&');
+      if (Result <> '') then
+        Result := Result + '&';
       AValue := Values[AName];
       Result := Result + EncodeURLElement(AName)+'='+EncodeURLElement(AValue);
     end;
@@ -909,7 +879,7 @@ end;
 
 function TACBrPSP.CalcularURLEndPoint(const Method, EndPoint: String): String;
 var
-  AEndPointPath: String;
+  AEndPointPath, p: String;
   i: Integer;
 begin
   AEndPointPath := CalcularEndPointPath(Method, EndPoint);
@@ -925,7 +895,9 @@ begin
       Result := Result + '/' + URLSemDelimitador(EncodeURLElement(fPathParams[i]));
   end;
 
-  Result := Result + fQueryParams.AsURL;
+  p := fQueryParams.AsURL;
+  if (p <> '') then
+    Result := Result + '?' + p;
 end;
 
 function TACBrPSP.CalcularEndPointPath(const Method, EndPoint: String): String;
@@ -999,6 +971,39 @@ begin
 
   if Assigned(fQuandoReceberRespostaHttp) then
     fQuandoReceberRespostaHttp(AURL, AMethod, RespostaHttp);
+end;
+
+procedure TACBrPSP.TratarRetornoComErro(ResultCode: Integer;
+  const RespostaHttp: String; Problema: TACBrPIXProblema);
+begin
+  Problema.Clear;
+  if (Trim(RespostaHttp) = '') then
+    AtribuirErroHTTPProblema(Problema)
+  else
+  begin
+    try
+      Problema.AsJSON := RespostaHttp;
+    except
+    end;
+
+    if (Problema.detail = '') then
+      AtribuirErroHTTPProblema(Problema);
+  end;
+end;
+
+procedure TACBrPSP.AtribuirErroHTTPProblema(Problema: TACBrPIXProblema);
+begin
+  if (Problema.status = 0) then
+    Problema.status := HTTP.ResultCode;
+
+  if (Problema.title = '') then
+    Problema.title := HTTP.ResultString;
+
+  if (Problema.detail = '') then
+  begin
+    Http.Document.Position := 0;
+    Problema.detail := ReadStrFromStream(HTTP.Document, HTTP.Document.Size);
+  end;
 end;
 
 procedure TACBrPSP.Autenticar;

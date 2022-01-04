@@ -39,6 +39,7 @@ contains
   ACBrPIXUtil in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXUtil.pas',
   ACBrPIXCD in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXCD.pas',
   ACBrPIXPSPItau in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPItau.pas',
+  ACBrPIXPSPBancoDoBrasil in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBancoDoBrasil.pas',
   ACBrPIXQRCodeEstatico in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXQRCodeEstatico.pas',
   ACBrPIXSchemasProblema in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasProblema.pas',
   ACBrPIXSchemasCalendario in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCalendario.pas',

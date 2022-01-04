@@ -17,7 +17,7 @@ uses
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, 
   ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
-  LazarusPackageIntf;
+  ACBrPIXPSPBancoDoBrasil, LazarusPackageIntf;
 
 implementation
 

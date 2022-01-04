@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
 using ACBrLib.Core.NFe;

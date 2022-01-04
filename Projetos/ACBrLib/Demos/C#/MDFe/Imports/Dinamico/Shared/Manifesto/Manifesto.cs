@@ -177,14 +177,14 @@ namespace ACBrLib.MDFe
                     iniData.WriteToIni(cte, $"infCTe{i + 1:000}{j + 1:000}");
 
                     for (var k = 0; k < cte.Peri.Count; k++)
-                        iniData.WriteToIni(cte.Peri[j], $"peri{i + 1:000}{j + 1:000}{k + 1:000}");
+                        iniData.WriteToIni(cte.Peri[k], $"peri{i + 1:000}{j + 1:000}{k + 1:000}");
 
                     for (var k = 0; k < cte.InfEntregaParcial.Count; k++)
-                        iniData.WriteToIni(cte.InfEntregaParcial[j], $"infEntregaParcial{i + 1:000}{j + 1:000}{k + 1:000}");
+                        iniData.WriteToIni(cte.InfEntregaParcial[k], $"infEntregaParcial{i + 1:000}{j + 1:000}{k + 1:000}");
 
                     for (var k = 0; k < cte.InfUnidTransp.Count; k++)
                     {
-                        var unidade = cte.InfUnidTransp[j];
+                        var unidade = cte.InfUnidTransp[k];
                         iniData.WriteToIni(unidade, $"infUnidTransp{i + 1:000}{j + 1:000}{k + 1:000}");
 
                         for (var l = 0; l < unidade.lacUnidTransp.Count; l++)
@@ -205,14 +205,14 @@ namespace ACBrLib.MDFe
                     iniData.WriteToIni(nfe, $"infNFe{i + 1:000}{j + 1:000}");
 
                     for (var k = 0; k < nfe.Peri.Count; k++)
-                        iniData.WriteToIni(nfe.Peri[j], $"peri{i + 1:000}{j + 1:000}{k + 1:000}");
+                        iniData.WriteToIni(nfe.Peri[k], $"peri{i + 1:000}{j + 1:000}{k + 1:000}");
 
                     for (var k = 0; k < nfe.InfEntregaParcial.Count; k++)
-                        iniData.WriteToIni(nfe.InfEntregaParcial[j], $"infEntregaParcial{i + 1:000}{j + 1:000}{k + 1:000}");
+                        iniData.WriteToIni(nfe.InfEntregaParcial[k], $"infEntregaParcial{i + 1:000}{j + 1:000}{k + 1:000}");
 
                     for (var k = 0; k < nfe.InfUnidTransp.Count; k++)
                     {
-                        var unidade = nfe.InfUnidTransp[j];
+                        var unidade = nfe.InfUnidTransp[k];
                         iniData.WriteToIni(unidade, $"infUnidTransp{i + 1:000}{j + 1:000}{k + 1:000}");
 
                         for (var l = 0; l < unidade.lacUnidTransp.Count; l++)
@@ -233,14 +233,14 @@ namespace ACBrLib.MDFe
                     iniData.WriteToIni(mdfe, $"infMDFeTransp{i + 1:000}{j + 1:000}");
 
                     for (var k = 0; k < mdfe.Peri.Count; k++)
-                        iniData.WriteToIni(mdfe.Peri[j], $"peri{i + 1:000}{j + 1:000}{k + 1:000}");
+                        iniData.WriteToIni(mdfe.Peri[k], $"peri{i + 1:000}{j + 1:000}{k + 1:000}");
 
                     for (var k = 0; k < mdfe.InfEntregaParcial.Count; k++)
-                        iniData.WriteToIni(mdfe.InfEntregaParcial[j], $"infEntregaParcial{i + 1:000}{j + 1:000}{k + 1:000}");
+                        iniData.WriteToIni(mdfe.InfEntregaParcial[k], $"infEntregaParcial{i + 1:000}{j + 1:000}{k + 1:000}");
 
                     for (var k = 0; k < mdfe.InfUnidTransp.Count; k++)
                     {
-                        var unidade = mdfe.InfUnidTransp[j];
+                        var unidade = mdfe.InfUnidTransp[k];
                         iniData.WriteToIni(unidade, $"infUnidTransp{i + 1:000}{j + 1:000}{k + 1:000}");
 
                         for (var l = 0; l < unidade.lacUnidTransp.Count; l++)

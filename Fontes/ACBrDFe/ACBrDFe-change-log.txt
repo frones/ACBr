@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2022
+-- ACBrXmlBase/ACBrXmlWrite --
+[*] Ajustes para suportar valores Int64.
+   Por: Italo Giurizzato Junior
+
 30/12/2021
 -- ACBrXmlBase --
 [*] Alteração na função StrToXml para trocar o <br> por ;

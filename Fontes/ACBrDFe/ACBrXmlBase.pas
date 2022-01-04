@@ -46,8 +46,8 @@ type
   TACBrTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
                         taSomenteParaNaoAssinada);
 
-  TACBrTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
-                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
+  TACBrTipoCampo = (tcStr, tcInt, tcInt64, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3,
+                    tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
                     tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
 
 const
@@ -366,6 +366,14 @@ begin
       begin
         if length(ConteudoTag) > 0 then
           result := StrToIntDef(OnlyNumber(ConteudoTag), 0)
+        else
+          result := 0;
+      end;
+
+    tcInt64:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := StrToInt64Def(OnlyNumber(ConteudoTag), 0)
         else
           result := 0;
       end;

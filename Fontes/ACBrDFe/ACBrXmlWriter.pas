@@ -260,7 +260,7 @@ function TACBrXmlWriter.AddNode(const Tipo: TACBrTipoCampo; ID, TAG: string;
 
 var
   NumeroDecimais: smallint;
-  valorInt, TamMin, TamMax: integer;
+  TamMin, TamMax: integer;
   valorDbl: double;
   Alerta, ConteudoProcessado: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: word;
@@ -342,7 +342,7 @@ begin
       EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
     end;
 
-    tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
+    tcDe2, tcDe3, tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10:
     begin
       // adicionar um para que o máximo e mínimo não considerem a virgula
       if not FOpcoes.SuprimirDecimais then
@@ -356,7 +356,10 @@ begin
         tcDe2: NumeroDecimais := 2;
         tcDe3: NumeroDecimais := 3;
         tcDe4: NumeroDecimais := 4;
+        tcDe5: NumeroDecimais := 5;
         tcDe6: NumeroDecimais := 6;
+        tcDe7: NumeroDecimais := 7;
+        tcDe8: NumeroDecimais := 8;
         tcDe10: NumeroDecimais := 10;
       end;
 
@@ -389,24 +392,26 @@ begin
     tcEsp:
     begin
       // Tipo String - somente numeros
-      ConteudoProcessado := Trim(string(valor));
-      EstaVazio := (valor = '');
+      ConteudoProcessado := Trim(VarToStrDef(valor, ''));
+      EstaVazio := (ConteudoProcessado = '');
+
       if not StrIsNumber(ConteudoProcessado) then
         walerta(ID, Tag, Descricao, ERR_MSG_INVALIDO);
     end;
 
-    tcInt:
+    tcInt, tcInt64:
     begin
       // Tipo Inteiro
       try
-        valorInt := valor;
-        ConteudoProcessado := IntToStr(valorInt);
+        if tipo = tcInt then
+          ConteudoProcessado := IntToStr(StrToInt(VarToStr(valor)))
+        else
+          ConteudoProcessado := IntToStr(StrToInt64(VarToStr(valor)));
       except
-        valorInt := 0;
         ConteudoProcessado := '0';
       end;
 
-      EstaVazio := (valorInt = 0) and (ocorrencias = 0);
+      EstaVazio := (ConteudoProcessado = '0') and (ocorrencias = 0);
 
       if Length(ConteudoProcessado) < TamMin then
         ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');

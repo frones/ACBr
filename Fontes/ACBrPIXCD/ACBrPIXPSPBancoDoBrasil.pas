@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -229,7 +229,7 @@ begin
      js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
      try
        Problema.title := js.S['error'];
-       Problema.status := js.S['statusCode'];
+       Problema.status := js.I['statusCode'];
        Problema.detail := js.S['message'];
      finally
        js.Free;

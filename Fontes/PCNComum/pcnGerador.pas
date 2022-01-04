@@ -368,6 +368,7 @@ procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min,
 var
   NumeroDecimais: smallint;
   valorInt, TamMin, TamMax: Integer;
+  valorInt64 : Int64;
   valorDbl: Double;
   Alerta, ConteudoProcessado, ATag: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
@@ -496,18 +497,19 @@ begin
           walerta(ID, Tag, Descricao, ERR_MSG_INVALIDO);
       end;
 
-    tcInt:
+    tcInt, tcInt64:
       begin
         // Tipo Inteiro
         try
-          valorInt := valor;
-          ConteudoProcessado := IntToStr(valorInt);
+          if Tipo = tcInt then
+            ConteudoProcessado := IntToStr(Integer(valor))
+          else
+            ConteudoProcessado := IntToStr(Int64(valor));
         except
-          valorInt := 0;
           ConteudoProcessado := '0';
         end;
 
-        EstaVazio := (valorInt = 0) and (ocorrencias = 0);
+        EstaVazio := (valor = 0) and (ocorrencias = 0);
 
         if Length(ConteudoProcessado) < TamMin then
           ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');

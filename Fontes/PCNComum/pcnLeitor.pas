@@ -318,14 +318,17 @@ begin
     tcEsp:
       result := ConteudoTag;
 
-    tcInt:
+    tcInt,tcInt64:
       begin
         if length(ConteudoTag) > 0 then
-          result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)), 0)
-        else
+        begin
+          if Tipo = tcInt then
+            result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)), 0)
+          else
+            result := StrToInt64Def(Trim(OnlyNumber(ConteudoTag)), 0);
+        end else
           result := 0;
       end;
-
   else
     raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. ' + ConteudoTag);
   end;

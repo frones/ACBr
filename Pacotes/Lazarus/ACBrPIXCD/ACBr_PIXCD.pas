@@ -9,15 +9,15 @@ interface
 
 uses
   ACBrPIXCDReg, ACBrPIXBase, ACBrPIXUtil, ACBrPIXCD, ACBrPIXPSPItau, 
-  ACBrPIXQRCodeEstatico, ACBrPIXSchemasProblema, ACBrPIXSchemasCalendario, 
-  ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation, ACBrPIXSchemasPaginacao, 
-  ACBrPIXSchemasDevolucao, ACBrPIXSchemasPix, 
-  ACBrPIXSchemasParametrosConsultaPix, ACBrPIXSchemasPixConsultados, 
-  ACBrPIXSchemasCob, ACBrPIXSchemasParametrosConsultaCob, 
-  ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobV, 
-  ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
+  ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXQRCodeEstatico, 
+  ACBrPIXSchemasProblema, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, 
+  ACBrPIXSchemasLocation, ACBrPIXSchemasPaginacao, ACBrPIXSchemasDevolucao, 
+  ACBrPIXSchemasPix, ACBrPIXSchemasParametrosConsultaPix, 
+  ACBrPIXSchemasPixConsultados, ACBrPIXSchemasCob, 
+  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobsConsultadas, 
+  ACBrPIXSchemasCobV, ACBrPIXSchemasCobsVConsultadas, ACBrPIXSchemasLoteCobV, 
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLotesCobVConsultadas, 
-  ACBrPIXPSPBancoDoBrasil, LazarusPackageIntf;
+  LazarusPackageIntf;
 
 implementation
 

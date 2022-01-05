@@ -129,7 +129,7 @@ type
 
   EACBrPixHttpException = class(EACBrPixException);
 
-  TACBrPixCDAmbiente = (ambTeste, ambProducao);
+  TACBrPixCDAmbiente = (ambTeste, ambProducao, ambPreProducao);
 
   { TACBrPixEndPoint - Classe com comandos básicos, para EndPoints}
 
@@ -794,7 +794,7 @@ end;
 function TACBrPSP.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
   Result := '';
-  raise EACBrPixException.Create(
+  raise EACBrPixHttpException.Create(
     ACBrStr(Format(sErroMetodoNaoImplementado,['ObterURLAmbiente',ClassName])));
 end;
 

@@ -30,6 +30,13 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+(*
+
+  Documentação
+  https://developers.bb.com.br/
+
+*)
+
 {$I ACBr.inc}
 
 unit ACBrPIXPSPBancoDoBrasil;

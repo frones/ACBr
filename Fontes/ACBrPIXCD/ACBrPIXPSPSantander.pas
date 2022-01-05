@@ -33,13 +33,13 @@
 (*
 
   Documentação
-  https://developer.itau.com.br/
+  https://developer.santander.com.br/
 
 *)
 
 {$I ACBr.inc}
 
-unit ACBrPIXPSPItau;
+unit ACBrPIXPSPSantander;
 
 interface
 
@@ -48,39 +48,45 @@ uses
   ACBrPIXCD;
 
 const
-  cURLItauSandbox = 'https://api.itau.com.br/sandbox';
-  cURLItauProducao = 'https://secure.api.itau';
-  cURLItauAPIPix = '/pix_recebimentos/v2';
-  cURLItauAuthTeste = cURLItauSandbox+'/api/oauth/token';
-  cURLItauAuthProducao = 'https://sts.itau.com.br/as/token.oauth2';
+  cURLSantanderApiPIX = '/api/v1';
+  cURLSantanderSandbox = 'https://pix.santander.com.br'+cURLSantanderApiPIX+'/sandbox';
+  cURLSantanderPreProducao = 'https://trust-pix-h.santander.com.br'+cURLSantanderApiPIX;
+  cURLSantanderProducao = 'https://trust-pix.santander.com.br'+cURLSantanderApiPIX;
+
+  cURLSantanderAuthTeste = 'https://pix.santander.com.br/sandbox/oauth/token';
+  cURLSantanderAuthPreProducao = 'https://trust-pix-h.santander.com.br/oauth/token';
+  cURLSantanderAuthProducao = 'https://trust-pix.santander.com.br/oauth/token';
+
+resourcestring
+  sErroClienteIdDiferente = 'Cliente_Id diferente do Informado';
 
 type
 
-  { TACBrPSPItau }
+  { TACBrPSPSantander }
 
-  TACBrPSPItau = class(TACBrPSP)
+  TACBrPSPSantander = class(TACBrPSP)
   private
-    fSandboxStatusCode: String;
-    fxCorrelationID: String;
+    fRefreshURL: String;
+    function GetConsumerKey: String;
+    function GetConsumerSecret: String;
+    procedure SetConsumerKey(AValue: String);
+    procedure SetConsumerSecret(AValue: String);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
-    procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
-    procedure ConfigurarHeaders(const Method, AURL: String); override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
+    procedure RenovarToken; override;
   published
-    property ClientID;
-    property ClientSecret;
-
-    property xCorrelationID: String read fxCorrelationID write fxCorrelationID;
-    property SandboxStatusCode: String read fSandboxStatusCode write fSandboxStatusCode;
+    property ConsumerKey: String read GetConsumerKey write SetConsumerKey;
+    property ConsumerSecret: String read GetConsumerSecret write SetConsumerSecret;
   end;
 
 implementation
 
 uses
   synautil,
+  ACBrUtil,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
   {$Else}
@@ -88,33 +94,34 @@ uses
   {$EndIf},
   DateUtils;
 
-{ TACBrPSPItau }
+{ TACBrPSPSantander }
 
-constructor TACBrPSPItau.Create(AOwner: TComponent);
+constructor TACBrPSPSantander.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-
-  fSandboxStatusCode := '';
-  fxCorrelationID := '';
+  fRefreshURL := '';
 end;
 
-procedure TACBrPSPItau.Autenticar;
+procedure TACBrPSPSantander.Autenticar;
 var
-  AURL, RespostaHttp, Body: String;
+  AURL, RespostaHttp, Body, client_id: String;
   ResultCode, sec: Integer;
   js: TJsonObject;
   qp: TACBrQueryParams;
 begin
   LimparHTTP;
 
-  if (ACBrPixCD.Ambiente = ambProducao) then
-    AURL := cURLItauAuthProducao
+  case ACBrPixCD.Ambiente of
+    ambProducao: AURL := cURLSantanderAuthProducao;
+    ambPreProducao: AURL := cURLSantanderAuthPreProducao;
   else
-    AURL := cURLItauAuthTeste;
+    AURL := cURLSantanderAuthTeste;
+  end;
+
+  AURL := AURL + '?grant_type=client_credentials';
 
   qp := TACBrQueryParams.Create;
   try
-    qp.Values['grant_type'] := 'client_credentials';
     qp.Values['client_id'] := ClientID;
     qp.Values['client_secret'] := ClientSecret;
     Body := qp.AsURL;
@@ -131,9 +138,12 @@ begin
    {$IfDef USE_JSONDATAOBJECTS_UNIT}
     js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
     try
+      client_id := Trim(js.S['client_id']);
+      if (client_id <> ClientID) then
+        raise EACBrPixHttpException.Create(ACBrStr(sErroClienteIdDiferente));
       fpToken := js.S['access_token'];
       sec := js.I['expires_in'];
-      fpRefereshToken := js.S['refresh_token'];
+      fRefreshURL := js.S['refresh_token'];
     finally
       js.Free;
     end;
@@ -141,9 +151,12 @@ begin
     js := TJsonObject.Create;
     try
       js.Parse(RespostaHttp);
+      client_id := Trim(js['client_id'].AsString);
+      if (client_id <> ClientID) then
+        raise EACBrPixHttpException.Create(ACBrStr(sErroClienteIdDiferente));
       fpToken := js['access_token'].AsString;
       sec := js['expires_in'].AsInteger;
-      fpRefereshToken := js['refresh_token'].AsString;
+      fRefreshURL := js['refresh_token'].AsString;
     finally
       js.Free;
     end;
@@ -157,33 +170,40 @@ begin
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-function TACBrPSPItau.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
+procedure TACBrPSPSantander.RenovarToken;
 begin
-  if (Ambiente = ambProducao) then
-    Result := cURLItauProducao
+  // TODO: ??
+  inherited RenovarToken;
+end;
+
+function TACBrPSPSantander.GetConsumerKey: String;
+begin
+  Result := ClientID;
+end;
+
+function TACBrPSPSantander.GetConsumerSecret: String;
+begin
+  Result := ClientSecret;
+end;
+
+procedure TACBrPSPSantander.SetConsumerKey(AValue: String);
+begin
+  ClientID := AValue;
+end;
+
+procedure TACBrPSPSantander.SetConsumerSecret(AValue: String);
+begin
+  ClientSecret := AValue;
+end;
+
+function TACBrPSPSantander.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
+begin
+  case ACBrPixCD.Ambiente of
+    ambProducao: Result := cURLSantanderProducao;
+    ambPreProducao: Result := cURLSantanderPreProducao;
   else
-    Result := cURLItauSandbox;
-
-  Result := Result + cURLItauAPIPix;
-end;
-
-procedure TACBrPSPItau.ConfigurarQueryParameters(const Method, EndPoint: String);
-begin
-  inherited ConfigurarQueryParameters(Method, EndPoint);
-
-  with QueryParams do
-  begin
-    if (fSandboxStatusCode <> '') then
-      Values['status_code'] := fSandboxStatusCode;
+    Result := cURLSantanderSandbox;
   end;
-end;
-
-procedure TACBrPSPItau.ConfigurarHeaders(const Method, AURL: String);
-begin
-  inherited ConfigurarHeaders(Method, AURL);
-
-  if (fxCorrelationID <> '') then
-    Http.Headers.Add('x-correlationID: ' + fxCorrelationID);
 end;
 
 end.

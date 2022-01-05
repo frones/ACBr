@@ -2924,7 +2924,11 @@ begin
     if DACTEClassOwner.PosCanhoto = prCabecalho then
       FieldByName('PrintCanhoto').AsString := '0'
     else
-      FieldByName('PrintCanhoto').AsString := '1';
+	if DACTEClassOwner.PosCanhoto = prRodape then
+      FieldByName('PrintCanhoto').AsString := '1'
+	else
+	if DACTEClassOwner.PosCanhoto = prEsquerda then
+	  FieldByName('PrintCanhoto').AsString := '2';
 {$IFDEF PL_103}
     FieldByName('Versao').AsString := '1.03';
 {$ENDIF}

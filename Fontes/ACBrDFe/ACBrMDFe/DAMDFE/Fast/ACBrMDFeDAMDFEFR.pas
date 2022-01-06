@@ -277,6 +277,7 @@ begin
     Add('vCarga', ftCurrency);
 
     // Outros
+    Add('qDescPeso', ftString, 20);
     Add('URL', ftString, 1000);
 
     CreateDataSet;
@@ -1233,8 +1234,14 @@ begin
       FieldByName('qNFe').AsInteger    := qNFe;
       FieldByName('qNF').AsInteger     := qNF;
       FieldByName('qMDFe').AsInteger   := qMDFe;
+
+      if cUnid = uTON then
+        FieldByName('qDescPeso').AsString:= 'PESO TOTAL (Ton)'
+      else
+        FieldByName('qDescPeso').AsString := 'PESO TOTAL (Kg)';
+
       if cUnid = uTon then
-        FieldByName('qCarga').AsCurrency := qCarga * 1000
+        FieldByName('qCarga').AsCurrency := qCarga
       else
         FieldByName('qCarga').AsCurrency := qCarga;
 	    FieldByName('vCarga').AsCurrency := vCarga;

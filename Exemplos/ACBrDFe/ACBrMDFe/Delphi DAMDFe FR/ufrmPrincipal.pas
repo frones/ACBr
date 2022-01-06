@@ -56,7 +56,7 @@ uses
   ACBrDFeReport,
   ACBrMDFeDAMDFeClass,
   ACBrMDFeDAMDFEFR,
-  ACBrMDFe;
+  ACBrMDFe, frxExportBaseDialog, frxExportPDF, frxPDFViewer;
 
 type
   TfrmPrincipal = class(TForm)
@@ -107,6 +107,7 @@ type
     cbExibeCampoDePagamento: TComboBox;
     ACBrMDFe1: TACBrMDFe;
     ACBrMDFeDAMDFEFR1: TACBrMDFeDAMDFEFR;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -145,7 +146,7 @@ begin
   if lstbxFR3.ItemIndex = - 1 then
     raise Exception.Create('Selecione um arquivo fr3 ');
 
-  if Pos('danf', LowerCase(lstbxFR3.Items[ lstbxFR3.ItemIndex ])) > 0 then
+  if Pos('damdf', LowerCase(lstbxFR3.Items[ lstbxFR3.ItemIndex ])) > 0 then
   begin
     if ACBrMDFe1.Manifestos.Count = 0 then
       raise Exception.Create('Não foi carregado nenhum xml para impressão');

@@ -253,7 +253,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure DBGrid2TitleClick(Column: TColumn);
     procedure dmdsDestinosStateChange(Sender: TObject);
-    procedure Enviar_ACBrMailMailProcess(const aStatus: TMailStatus);
+    procedure Enviar_ACBrMailMailProcess(const AMail: TACBrMail; const aStatus: TMailStatus);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -1104,7 +1104,7 @@ begin
   end;
 end;
 
-procedure TForm1.Enviar_ACBrMailMailProcess(const aStatus: TMailStatus);
+procedure TForm1.Enviar_ACBrMailMailProcess(const AMail: TACBrMail; const aStatus: TMailStatus);
 begin
   ProgressBar1.Position := Integer(aStatus);
   case aStatus of

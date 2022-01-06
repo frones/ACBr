@@ -129,7 +129,7 @@ begin
         begin
           if IndexOf(Items[x]) > -1 then
           begin
-            DBGrid1.DataSource.Dataset.Bookmark := TBookmarkStr(Items[x]);
+            DBGrid1.DataSource.Dataset.Bookmark := Items[x];
             InserirDestino;
           end;
         end;

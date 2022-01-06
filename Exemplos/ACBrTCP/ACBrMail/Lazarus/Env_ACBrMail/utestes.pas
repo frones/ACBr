@@ -47,7 +47,7 @@ type
     Label2: TLabel;
     Panel1: TPanel;
     Timer1: TTimer;
-    procedure ACBrMailTesteMailProcess(const aStatus: TMailStatus);
+    procedure ACBrMailTesteMailProcess(const AMail: TACBrMail; const aStatus: TMailStatus);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -75,7 +75,7 @@ begin
   MensagemErro := '';
 end;
 
-procedure TForm2.ACBrMailTesteMailProcess(const aStatus: TMailStatus);
+procedure TForm2.ACBrMailTesteMailProcess(const AMail: TACBrMail; const aStatus: TMailStatus);
 begin
   case aStatus of
     pmsStartProcess:

@@ -224,11 +224,13 @@ begin
   FInicializado := False;
 
   FBloco_0 := TBloco_0.Create;
+  FBloco_C := TBloco_C.Create;
   FBloco_I := TBloco_I.Create;
   FBloco_J := TBloco_J.Create;
   FBloco_K := TBloco_K.Create;
   FBloco_9 := TBloco_9.Create;
 
+  FBloco_C.Bloco_0 := FBloco_0;
   FBloco_I.Bloco_0 := FBloco_0;
   FBloco_J.Bloco_0 := FBloco_0;
   FBloco_K.Bloco_0 := FBloco_0;
@@ -248,6 +250,7 @@ begin
   FACBrTXT.Free;
 
   FBloco_0.Free;
+  FBloco_C.Free;
   FBloco_I.Free;
   FBloco_J.Free;
   FBloco_K.Free;
@@ -258,6 +261,7 @@ end;
 procedure TACBrSPEDContabil.LimpaRegistros;
 begin
   FBloco_0.LimpaRegistros;
+  FBloco_C.LimpaRegistros;
   FBloco_I.LimpaRegistros;
   FBloco_J.LimpaRegistros;
   FBloco_K.LimpaRegistros;
@@ -274,6 +278,7 @@ begin
   FDelimitador := Value;
 
   FBloco_0.Delimitador := Value;
+  FBloco_C.Delimitador := Value;
   FBloco_I.Delimitador := Value;
   FBloco_J.Delimitador := Value;
   FBloco_K.Delimitador := Value;
@@ -290,6 +295,7 @@ begin
   FCurMascara := Value;
   //
   FBloco_0.CurMascara := Value;
+  FBloco_C.CurMascara := Value;
   FBloco_I.CurMascara := Value;
   FBloco_J.CurMascara := Value;
   FBloco_K.CurMascara := Value;
@@ -306,6 +312,7 @@ begin
   FTrimString := Value;
   //
   FBloco_0.TrimString := Value;
+  FBloco_C.TrimString := Value;
   FBloco_I.TrimString := Value;
   FBloco_J.TrimString := Value;
   FBloco_K.TrimString := Value;
@@ -322,6 +329,7 @@ begin
   FDT_INI := Value;
   //
   FBloco_0.DT_INI := Value;
+  FBloco_C.DT_INI := Value;
   FBloco_I.DT_INI := Value;
   FBloco_J.DT_INI := Value;
   FBloco_K.DT_INI := Value;
@@ -343,6 +351,7 @@ begin
   FDT_FIN := Value;
   //
   FBloco_0.DT_FIN := Value;
+  FBloco_C.DT_FIN := Value;
   FBloco_I.DT_FIN := Value;
   FBloco_J.DT_FIN := Value;
   FBloco_K.DT_FIN := Value;
@@ -369,6 +378,7 @@ begin
   FOnError := Value;
 
   FBloco_0.OnError := Value;
+  FBloco_C.OnError := Value;
   FBloco_I.OnError := Value;
   FBloco_J.OnError := Value;
   FBloco_K.OnError := Value;
@@ -380,6 +390,7 @@ begin
   FReplaceDelimitador := Value;
 
   FBloco_0.ReplaceDelimitador := Value;
+  FBloco_C.ReplaceDelimitador := Value;
   FBloco_I.ReplaceDelimitador := Value;
   FBloco_J.ReplaceDelimitador := Value;
   FBloco_K.ReplaceDelimitador := Value;
@@ -1210,6 +1221,7 @@ end;
 procedure TACBrSPEDContabil.WriteRegistro9999;
 begin
    Bloco_9.Registro9999.QTD_LIN := Bloco_9.Registro9999.QTD_LIN + Bloco_0.Registro0990.QTD_LIN_0 +
+                                                                  Bloco_C.RegistroC990.QTD_LIN_C +
                                                                   Bloco_I.RegistroI990.QTD_LIN_I +
                                                                   Bloco_J.RegistroJ990.QTD_LIN_J +
                                                                   Bloco_K.RegistroK990.QTD_LIN_K +
@@ -1249,6 +1261,7 @@ begin
   FACBrTXT.Reset;    // Apaga o Arquivo e limpa memória
 
   InicializaBloco( Bloco_0 ) ;
+  InicializaBloco( Bloco_C ) ;
   InicializaBloco( Bloco_I ) ;
   InicializaBloco( Bloco_J ) ;
   InicializaBloco( Bloco_K ) ;
@@ -1256,6 +1269,7 @@ begin
 
   /// Preparação para totalizações de registros.
   Bloco_0.Registro0990.QTD_LIN_0 := 0;
+  Bloco_C.RegistroC990.QTD_LIN_C := 0;
   Bloco_I.RegistroI990.QTD_LIN_I := 0;
   Bloco_J.RegistroJ990.QTD_LIN_J := 0;
   Bloco_K.RegistroK990.QTD_LIN_K := 0;

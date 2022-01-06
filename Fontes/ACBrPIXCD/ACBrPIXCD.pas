@@ -1288,7 +1288,7 @@ begin
   if (fCidade = AValue) then
     Exit;
 
-  fCidade := copy(Trim(AValue),1,15);
+  fCidade := copy(TiraAcentos(Trim(AValue)),1,15);
 end;
 
 procedure TACBrPixRecebedor.SetNome(AValue: String);
@@ -1296,7 +1296,7 @@ begin
   if (fNome = AValue) then
     Exit;
 
-  fNome := copy(Trim(AValue),1,25);
+  fNome := copy(TiraAcentos(Trim(AValue)),1,25);
 end;
 
 procedure TACBrPixRecebedor.SetCodCategoriaComerciante(AValue: Integer);

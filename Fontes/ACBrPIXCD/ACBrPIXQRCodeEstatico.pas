@@ -282,7 +282,7 @@ begin
   if (finfoAdicional = AValue) then
     Exit;
 
-  finfoAdicional := Trim(AValue);
+  finfoAdicional := TiraAcentos(Trim(AValue));
 end;
 
 procedure TACBrPIXQRCodeEstatico.SetPss(AValue: Integer);

@@ -50,12 +50,15 @@ type
     edtCidade: TEdit;
     edtBBChavePIX: TEdit;
     fleQREValor: TFloatSpinEdit;
+    imgErrNome: TImage;
+    imgErrPSP: TImage;
     imgQRE: TImage;
     imgBBErroChavePIX: TImage;
     imgItauErroChavePIX: TImage;
     imgSantanderErroChavePIX: TImage;
     Label34: TLabel;
     Label35: TLabel;
+    mQRE: TMemo;
     Panel1: TPanel;
     pQREMemo: TPanel;
     pQREGerado: TPanel;
@@ -139,12 +142,15 @@ type
     procedure btLerParametrosClick(Sender: TObject);
     procedure btQREColarClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
+    procedure cbxPSPAtualChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
     procedure edtCEPChange(Sender: TObject);
     procedure edtCEPExit(Sender: TObject);
     procedure edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
     procedure edtItauChavePIXChange(Sender: TObject);
+    procedure edtNomeChange(Sender: TObject);
     procedure edtSantanderChavePIXChange(Sender: TObject);
+    procedure pgPrincipalChange(Sender: TObject);
     procedure QuandoMudarDadosQRCode(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure imgInfoMCCClick(Sender: TObject);
@@ -156,7 +162,9 @@ type
     function GetNomeArquivoConfiguracao: String;
     procedure AdicionarLinhaLog(AMensagem: String);
     procedure TratarException(Sender : TObject; E : Exception);
+
     procedure LigarAlertasdeErrosDeConfiguracao;
+    procedure VerificarConfiguracaoPIXCD;
 
     procedure ConfigurarACBrPIXCD;
     procedure ConfigurarACBrPSPs;
@@ -180,7 +188,7 @@ var
 implementation
 
 uses
-  TypInfo, IniFiles, Clipbrd,
+  TypInfo, IniFiles,
   synacode,
   ACBrDelphiZXingQRCode,
   ACBrUtil, ACBrValidador, ACBrPIXUtil;
@@ -212,7 +220,9 @@ begin
   Application.OnException := @TratarException;
 
   ImageList1.GetBitmap(5, imgInfoMCC.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imgErrNome.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgErrCEP.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imgErrPSP.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgBBErroChavePIX.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgItauErroChavePIX.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgSantanderErroChavePIX.Picture.Bitmap);
@@ -305,6 +315,7 @@ end;
 
 procedure TForm1.btQREGerarClick(Sender: TObject);
 begin
+  VerificarConfiguracaoPIXCD;
   PintarQRCodeEstatico;
 end;
 
@@ -315,12 +326,17 @@ end;
 
 procedure TForm1.btQREColarClick(Sender: TObject);
 begin
-  Clipboard.AsText := pQREMemo.Caption;
+  mQRE.CopyToClipboard;
 end;
 
 procedure TForm1.btSalvarParametrosClick(Sender: TObject);
 begin
   GravarConfiguracao;
+end;
+
+procedure TForm1.cbxPSPAtualChange(Sender: TObject);
+begin
+  imgErrPSP.Visible := (cbxPSPAtual.ItemIndex < 1);
 end;
 
 procedure TForm1.edtCEPExit(Sender: TObject);
@@ -347,10 +363,26 @@ begin
   imgItauErroChavePIX.Visible := (edtItauChavePIX.Text <> '') and (cbxItauTipoChave.ItemIndex = 0);
 end;
 
+procedure TForm1.edtNomeChange(Sender: TObject);
+begin
+  imgErrNome.Visible := (Length(Trim(edtNome.Text)) < 5);
+end;
+
 procedure TForm1.edtSantanderChavePIXChange(Sender: TObject);
 begin
   cbxSantanderTipoChave.ItemIndex := Integer(DetectarTipoChave(edtSantanderChavePIX.Text));
   imgSantanderErroChavePIX.Visible := (edtSantanderChavePIX.Text <> '') and (cbxSantanderTipoChave.ItemIndex = 0);
+end;
+
+procedure TForm1.pgPrincipalChange(Sender: TObject);
+begin
+  if (pgPrincipal.ActivePageIndex = 0) and btSalvarParametros.Enabled then
+  begin
+    GravarConfiguracao;
+    AplicarConfiguracao;
+  end;
+
+  btSalvarParametros.Enabled := (pgPrincipal.ActivePageIndex = 1);
 end;
 
 procedure TForm1.QuandoMudarDadosQRCode(Sender: TObject);
@@ -376,10 +408,23 @@ end;
 
 procedure TForm1.LigarAlertasdeErrosDeConfiguracao;
 begin
+  edtNomeChange(Nil);
   edtCEPChange(Nil);
+  cbxPSPAtualChange(Nil);
   edtBBChavePIXChange(Nil);
   edtItauChavePIXChange(Nil);
   edtSantanderChavePIXChange(Nil);
+end;
+
+procedure TForm1.VerificarConfiguracaoPIXCD;
+begin
+  if imgErrNome.Visible or imgErrCEP.Visible or imgErrPSP.Visible then
+  begin
+    pgPrincipal.ActivePageIndex := 1;
+    pgConfPixPSP.ActivePageIndex := 0;
+    MessageDlg('Favor configurar os campos sinalizados', mtWarning, [mbOK], 0);
+    Abort;
+  end;
 end;
 
 procedure TForm1.LerConfiguracao;
@@ -468,6 +513,7 @@ begin
   finally
      Ini.Free ;
   end ;
+
 end;
 
 procedure TForm1.AplicarConfiguracao;
@@ -479,6 +525,7 @@ end;
 
 procedure TForm1.ConfigurarACBrPIXCD;
 begin
+  AdicionarLinhaLog('  - ConfigurarACBrPIXCD');
   ACBrPixCD1.Recebedor.Nome := edtNome.Text;
   ACBrPixCD1.Recebedor.CEP := edtCEP.Text;
   ACBrPixCD1.Recebedor.Cidade := edtCidade.Text;
@@ -507,6 +554,7 @@ end;
 
 procedure TForm1.ConfigurarACBrPSPs;
 begin
+  AdicionarLinhaLog('  - ConfigurarACBrPSPs');
   ACBrPSPBancoDoBrasil1.ChavePIX := edtBBChavePIX.Text;
   ACBrPSPBancoDoBrasil1.ClientID := edtBBClientID.Text;
   ACBrPSPBancoDoBrasil1.ClientSecret := edtBBClientSecret.Text;
@@ -524,14 +572,14 @@ end;
 
 procedure TForm1.LimparQRCodeEstatico;
 begin
-  pQREMemo.Caption := '';
+  mQRE.Text := '';
   imgQRE.Picture.Clear;
 end;
 
 procedure TForm1.PintarQRCodeEstatico;
 begin
-  pQREMemo.Caption := ACBrPixCD1.GerarQRCodeEstatico(fleQREValor.Value, edtQREInfoAdicional.Text, edtQRETxId.Text);
-  PintarQRCode(pQREMemo.Caption, imgQRE.Picture.Bitmap);
+  mQRE.Text := ACBrPixCD1.GerarQRCodeEstatico(fleQREValor.Value, edtQREInfoAdicional.Text, edtQRETxId.Text);
+  PintarQRCode(mQRE.Text, imgQRE.Picture.Bitmap);
 end;
 
 procedure TForm1.PintarQRCode(const Dados: String; ABMP: TBitmap);

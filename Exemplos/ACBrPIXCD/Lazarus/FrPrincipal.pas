@@ -1,13 +1,47 @@
-unit FrPrincipal;
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
 
-{$mode objfpc}{$H+}
+//{$I ACBr.inc}
+
+unit FrPrincipal;
 
 interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
-  ExtCtrls, Buttons, Spin, ACBrPIXCD, ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil,
-  ACBrPIXPSPSantander, ACBrPIXBase, ACBrCEP, ACBrBase;
+  ExtCtrls, Buttons, Spin, DateTimePicker,
+  ACBrCEP,
+  ACBrPIXCD, ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander,
+  ACBrPIXBase, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao;
 
 const
   CURL_ACBR = 'https://projetoacbr.com.br/tef/';
@@ -23,9 +57,13 @@ type
     ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil;
     ACBrPSPItau1: TACBrPSPItau;
     ACBrPSPSantander1: TACBrPSPSantander;
-    btQREGerar: TBitBtn;
+    btGetPixe2eidCosultar: TBitBtn;
+    btGetPixConsultar: TBitBtn;
+    btQREAnalisar1: TBitBtn;
     btQREColar: TBitBtn;
     btLerParametros: TBitBtn;
+    btQREAnalisar: TBitBtn;
+    btQREGerar: TBitBtn;
     btSalvarParametros: TBitBtn;
     cbxAmbiente: TComboBox;
     cbxItauTipoChave: TComboBox;
@@ -33,10 +71,16 @@ type
     cbxNivelLog: TComboBox;
     cbxPSPAtual: TComboBox;
     cbxBBTipoChave: TComboBox;
+    dtGetPixInicio: TDateTimePicker;
+    dtGetPixFim: TDateTimePicker;
     edtArqLog: TEdit;
+    edtGetPixTxId: TEdit;
+    edtGetPixCPFCNPJ: TEdit;
+    lGetPixE2eid: TLabel;
     edtItauChavePIX: TEdit;
     edtBBClientID: TEdit;
     edtQREInfoAdicional: TEdit;
+    edtGetPixE2eid: TEdit;
     edtQRETxId: TEdit;
     edtSantanderChavePIX: TEdit;
     edtItauClientID: TEdit;
@@ -58,8 +102,20 @@ type
     imgSantanderErroChavePIX: TImage;
     Label34: TLabel;
     Label35: TLabel;
+    lE2eid: TLabel;
+    lInicio: TLabel;
+    lFim: TLabel;
+    lCPFCPNJ: TLabel;
+    lPagina: TLabel;
+    lPagina1: TLabel;
+    mGetPixE2eid: TMemo;
+    mGetPix: TMemo;
     mQRE: TMemo;
+    pgTestesPix: TPageControl;
     Panel1: TPanel;
+    Panel2: TPanel;
+    pGetPixE2eid: TPanel;
+    pGetPixE2eid1: TPanel;
     pQREMemo: TPanel;
     pQREGerado: TPanel;
     pQREDados: TPanel;
@@ -121,7 +177,11 @@ type
     sbVerSenhaProxy: TSpeedButton;
     seProxyPorta: TSpinEdit;
     seTimeout: TSpinEdit;
+    seGetPixPagina: TSpinEdit;
+    seGetPixItensPagina: TSpinEdit;
     Splitter1: TSplitter;
+    tsGetPixe2eid: TTabSheet;
+    tsGetPix: TTabSheet;
     tsEndPointPix: TTabSheet;
     tsEndPointCob: TTabSheet;
     tsEndPointCobV: TTabSheet;
@@ -138,6 +198,10 @@ type
     Valor: TLabel;
     procedure ACBrPixCD1QuandoGravarLog(const ALogLine: String;
       var Tratado: Boolean);
+    procedure btGetPixConsultarClick(Sender: TObject);
+    procedure btGetPixe2eidCosultarClick(Sender: TObject);
+    procedure btQREAnalisar1Click(Sender: TObject);
+    procedure btQREAnalisarClick(Sender: TObject);
     procedure btQREGerarClick(Sender: TObject);
     procedure btLerParametrosClick(Sender: TObject);
     procedure btQREColarClick(Sender: TObject);
@@ -147,9 +211,11 @@ type
     procedure edtCEPChange(Sender: TObject);
     procedure edtCEPExit(Sender: TObject);
     procedure edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
+    procedure edtGetPixCPFCNPJChange(Sender: TObject);
     procedure edtItauChavePIXChange(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
     procedure edtSantanderChavePIXChange(Sender: TObject);
+    procedure mQREChange(Sender: TObject);
     procedure pgPrincipalChange(Sender: TObject);
     procedure QuandoMudarDadosQRCode(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -172,7 +238,9 @@ type
     procedure LimparQRCodeEstatico;
     procedure PintarQRCodeEstatico;
     procedure PintarQRCode(const Dados: String; ABMP: TBitmap);
+    procedure PropPixParaLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
 
+    function FormatarJSON(const AJSON: String): String;
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
 
@@ -188,10 +256,14 @@ var
 implementation
 
 uses
-  TypInfo, IniFiles,
+  {$IfDef FPC}
+   fpjson, jsonparser, jsonscanner,
+  {$EndIf}
+  TypInfo, IniFiles, DateUtils,
   synacode,
   ACBrDelphiZXingQRCode,
-  ACBrUtil, ACBrValidador, ACBrPIXUtil;
+  ACBrUtil, ACBrValidador,
+  ACBrPIXUtil, ACBrPIXQRCodeEstatico;
 
 {$R *.lfm}
 
@@ -231,6 +303,10 @@ begin
   pgConfPixPSP.ActivePageIndex := 0;
   pgPSPs.ActivePageIndex := 0;
   pgTestes.ActivePageIndex := 0;
+  pgTestesPix.ActivePageIndex := 0;
+
+  dtGetPixInicio.DateTime := EncodeDateTime(2020,04,01,0,0,0,0);
+  dtGetPixFim.DateTime := EncodeDateTime(2020,04,02,10,0,0,0);
 
   LerConfiguracao;
 end;
@@ -313,6 +389,79 @@ begin
   Tratado := False;
 end;
 
+procedure TForm1.btGetPixConsultarClick(Sender: TObject);
+var
+  Ok: Boolean;
+  i: Integer;
+begin
+  mGetPix.Lines.Clear;
+  Ok := ACBrPixCD1.PSP.epPix.ConsultarPixRecebidos( dtGetPixInicio.DateTime,
+                                                    dtGetPixFim.DateTime,
+                                                    edtGetPixTxId.Text,
+                                                    OnlyNumber(edtGetPixCPFCNPJ.Text),
+                                                    seGetPixPagina.Value,
+                                                    seGetPixItensPagina.Value);
+  if Ok then
+  begin
+    mGetPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.PixConsultados.AsJSON);
+    mGetPix.Lines.Add('');
+    mGetPix.Lines.Add('Encontrado: '+IntToStr(ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count)+', documentos PIX');
+    for i := 0 to ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count-1 do
+    begin
+      mGetPix.Lines.Add('');
+      PropPixParaLinhas( '  Pix['+IntToStr(i)+']',
+                         ACBrPixCD1.PSP.epPix.PixConsultados.pix[i],
+                         mGetPix.Lines);
+    end;
+  end
+  else
+    mGetPix.Text := ACBrPixCD1.PSP.epPix.Problema.AsJSON;
+end;
+
+procedure TForm1.btGetPixe2eidCosultarClick(Sender: TObject);
+begin
+  mGetPixE2eid.Lines.Clear;
+  if ACBrPixCD1.PSP.epPix.ConsultarPix(edtGetPixE2eid.Text) then
+  BEGIN
+    mGetPixE2eid.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Pix.AsJSON);
+    PropPixParaLinhas('Pix', ACBrPixCD1.PSP.epPix.Pix, mGetPixE2eid.Lines);
+  end
+  else
+    mGetPixE2eid.Text := ACBrPixCD1.PSP.epPix.Problema.AsJSON;
+end;
+
+procedure TForm1.btQREAnalisar1Click(Sender: TObject);
+begin
+  mLog.Lines.Clear;
+end;
+
+procedure TForm1.btQREAnalisarClick(Sender: TObject);
+var
+  qre: TACBrPIXQRCodeEstatico;
+begin
+  qre := TACBrPIXQRCodeEstatico.Create;
+  try
+    AdicionarLinhaLog('----- Analise do QRCode Estático -----');
+    AdicionarLinhaLog('QrCode: '+qre.QRCode);
+
+    qre.IgnorarErrosQRCode := True;
+    qre.QRCode := mQRE.Text;
+    AdicionarLinhaLog('');
+    AdicionarLinhaLog('NomeRecebedor: '+qre.NomeRecebedor);
+    AdicionarLinhaLog('CidadeRecebedor: '+qre.CidadeRecebedor);
+    AdicionarLinhaLog('CEPRecebedor: '+qre.CEPRecebedor);
+    AdicionarLinhaLog('ChavePix: '+qre.ChavePix);
+    AdicionarLinhaLog('TipoChavePix: '+GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(qre.TipoChavePix)));
+    AdicionarLinhaLog('Valor: '+FormatFloat('0.00', qre.Valor));
+    AdicionarLinhaLog('infoAdicional: '+qre.infoAdicional);
+    AdicionarLinhaLog('TxId: '+qre.TxId);
+    AdicionarLinhaLog('pss: '+IntToStr(qre.pss));
+    AdicionarLinhaLog('mcc: '+IntToStr(qre.mcc));
+  finally
+    qre.Free;
+  end;
+end;
+
 procedure TForm1.btQREGerarClick(Sender: TObject);
 begin
   VerificarConfiguracaoPIXCD;
@@ -351,6 +500,20 @@ begin
     Key := #0;
 end;
 
+procedure TForm1.edtGetPixCPFCNPJChange(Sender: TObject);
+var
+  AStr, Mascara: String;
+begin
+  AStr := OnlyNumber(edtGetPixCPFCNPJ.Text);
+  if (Length(AStr) > 11) then
+    Mascara := '**.***.***/****-**'
+  else
+    Mascara := '***.***.***-**';
+
+  edtGetPixCPFCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(AStr, Mascara);
+  edtGetPixCPFCNPJ.SelStart := Length(edtGetPixCPFCNPJ.Text);
+end;
+
 procedure TForm1.edtBBChavePIXChange(Sender: TObject);
 begin
   cbxBBTipoChave.ItemIndex := Integer(DetectarTipoChave(edtBBChavePIX.Text));
@@ -372,6 +535,11 @@ procedure TForm1.edtSantanderChavePIXChange(Sender: TObject);
 begin
   cbxSantanderTipoChave.ItemIndex := Integer(DetectarTipoChave(edtSantanderChavePIX.Text));
   imgSantanderErroChavePIX.Visible := (edtSantanderChavePIX.Text <> '') and (cbxSantanderTipoChave.ItemIndex = 0);
+end;
+
+procedure TForm1.mQREChange(Sender: TObject);
+begin
+  btQREAnalisar.Enabled := (Trim(mQRE.Text) <> '');
 end;
 
 procedure TForm1.pgPrincipalChange(Sender: TObject);
@@ -414,6 +582,7 @@ begin
   edtBBChavePIXChange(Nil);
   edtItauChavePIXChange(Nil);
   edtSantanderChavePIXChange(Nil);
+  mQREChange(Nil);
 end;
 
 procedure TForm1.VerificarConfiguracaoPIXCD;
@@ -616,6 +785,58 @@ begin
   end;
 end;
 
+procedure TForm1.PropPixParaLinhas(const NomePix: String;
+  APix: TACBrPIX; SL: TStrings);
+var
+  i: Integer;
+  NomeDev: String;
+begin
+  SL.Add(NomePix+'.endToEndId: '+APix.endToEndId);
+  SL.Add(NomePix+'.TxId: '+APix.txid);
+  SL.Add(NomePix+'.valor: '+FormatFloatBr(APix.valor));
+  SL.Add(NomePix+'.componentesValor.original.valor: '+FormatFloatBr(APix.componentesValor.original.valor));
+  SL.Add(NomePix+'.componentesValor.saque.valor: '+FormatFloatBr(APix.componentesValor.saque.valor));
+  SL.Add(NomePix+'.componentesValor.troco.valor: '+FormatFloatBr(APix.componentesValor.troco.valor));
+  SL.Add(NomePix+'.componentesValor.juros.valor: '+FormatFloatBr(APix.componentesValor.juros.valor));
+  SL.Add(NomePix+'.componentesValor.multa.valor: '+FormatFloatBr(APix.componentesValor.multa.valor));
+  SL.Add(NomePix+'.componentesValor.abatimento.valor: '+FormatFloatBr(APix.componentesValor.abatimento.valor));
+  SL.Add(NomePix+'.componentesValor.desconto.valor: '+FormatFloatBr(APix.componentesValor.desconto.valor));
+  SL.Add(NomePix+'.chave: '+APix.chave);
+  SL.Add(NomePix+'.horario: '+FormatDateTimeBr(APix.horario));
+  SL.Add(NomePix+'.infoPagador: '+APix.infoPagador);
+  SL.Add(NomePix+'.devolucoes: '+IntToStr(APix.devolucoes.Count) );
+
+  for i := 0 to APix.devolucoes.Count-1 do
+  begin
+    NomeDev := NomePix+'devolucoes['+IntToStr(i)+']';
+    SL.Add(NomeDev+'.valor: '+FormatFloatBr(APix.devolucoes[i].valor));
+    SL.Add(NomeDev+'.natureza: '+PIXNaturezaDevolucaoToString(APix.devolucoes[i].natureza));
+    SL.Add(NomeDev+'.descricao: '+APix.devolucoes[i].descricao);
+    SL.Add(NomeDev+'.id: '+APix.devolucoes[i].id);
+    SL.Add(NomeDev+'.rtrId: '+APix.devolucoes[i].rtrId);
+    SL.Add(NomeDev+'.horario.solicitacao: '+FormatDateTimeBr(APix.devolucoes[i].horario.solicitacao));
+    SL.Add(NomeDev+'.horario.liquidacao: '+FormatDateTimeBr(APix.devolucoes[i].horario.liquidacao));
+    SL.Add(NomeDev+'.status: '+ PIXStatusDevolucaoToString(APix.devolucoes[i].status));
+    SL.Add(NomeDev+'.motivo: '+APix.devolucoes[i].motivo);
+  end;
+end;
+
+function TForm1.FormatarJSON(const AJSON: String): String;
+{$IfDef FPC}
+var
+  jpar: TJSONParser;
+{$EndIf}
+begin
+  Result := AJSON;
+  {$IfDef FPC}
+   jpar :=TJSONParser.Create(AJSON, [joUTF8]);
+   try
+     Result := jpar.Parse.FormatJSON([], 2);
+   finally
+     jpar.Free;
+   end;
+  {$EndIf}
+end;
 
 end.
 

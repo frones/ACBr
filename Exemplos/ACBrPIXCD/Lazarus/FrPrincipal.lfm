@@ -28,28 +28,258 @@ object Form1: TForm1
         Left = 0
         Height = 534
         Top = 0
-        Width = 699
-        ActivePage = tsQRCodeEstatico
+        Width = 630
+        ActivePage = tsEndPoints
         Align = alClient
         Images = ImageList1
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 0
         object tsEndPoints: TTabSheet
           Caption = 'End Points'
           ClientHeight = 506
-          ClientWidth = 691
+          ClientWidth = 622
           ImageIndex = 4
           object pgTesteEndPoints: TPageControl
             Left = 0
             Height = 506
             Top = 0
-            Width = 691
+            Width = 622
             ActivePage = tsEndPointPix
             Align = alClient
             TabIndex = 0
             TabOrder = 0
             object tsEndPointPix: TTabSheet
               Caption = '/pix'
+              ClientHeight = 478
+              ClientWidth = 614
+              object pgTestesPix: TPageControl
+                Left = 0
+                Height = 478
+                Top = 0
+                Width = 614
+                ActivePage = tsGetPix
+                Align = alClient
+                TabIndex = 1
+                TabOrder = 0
+                object tsGetPixe2eid: TTabSheet
+                  Caption = 'GET /pix/{e2eid}'
+                  ClientHeight = 450
+                  ClientWidth = 606
+                  object pGetPixE2eid: TPanel
+                    Left = 0
+                    Height = 112
+                    Top = 0
+                    Width = 606
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 112
+                    ClientWidth = 606
+                    TabOrder = 0
+                    object lGetPixE2eid: TLabel
+                      Left = 16
+                      Height = 15
+                      Top = 16
+                      Width = 28
+                      Caption = 'E2eid'
+                    end
+                    object edtGetPixE2eid: TEdit
+                      Left = 16
+                      Height = 23
+                      Top = 36
+                      Width = 574
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object btGetPixe2eidCosultar: TBitBtn
+                      Left = 493
+                      Height = 26
+                      Top = 72
+                      Width = 97
+                      Anchors = [akTop, akRight]
+                      AutoSize = True
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 4
+                      OnClick = btGetPixe2eidCosultarClick
+                      TabOrder = 1
+                    end
+                  end
+                  object mGetPixE2eid: TMemo
+                    Left = 0
+                    Height = 338
+                    Top = 112
+                    Width = 606
+                    Align = alClient
+                    ScrollBars = ssAutoBoth
+                    TabOrder = 1
+                  end
+                end
+                object tsGetPix: TTabSheet
+                  Caption = 'GET /pix'
+                  ClientHeight = 450
+                  ClientWidth = 606
+                  object pGetPixE2eid1: TPanel
+                    Left = 0
+                    Height = 160
+                    Top = 0
+                    Width = 606
+                    Align = alTop
+                    BevelOuter = bvNone
+                    ClientHeight = 160
+                    ClientWidth = 606
+                    TabOrder = 0
+                    object lE2eid: TLabel
+                      Left = 8
+                      Height = 15
+                      Top = 56
+                      Width = 170
+                      Caption = 'Identificador da Transação (TxId)'
+                    end
+                    object edtGetPixTxId: TEdit
+                      Left = 8
+                      Height = 23
+                      Top = 75
+                      Width = 321
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 2
+                    end
+                    object btGetPixConsultar: TBitBtn
+                      Left = 493
+                      Height = 26
+                      Top = 120
+                      Width = 97
+                      Anchors = [akTop, akRight]
+                      AutoSize = True
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 4
+                      OnClick = btGetPixConsultarClick
+                      TabOrder = 6
+                    end
+                    object lInicio: TLabel
+                      Left = 8
+                      Height = 15
+                      Top = 8
+                      Width = 29
+                      Caption = 'Início'
+                    end
+                    object dtGetPixInicio: TDateTimePicker
+                      Left = 8
+                      Height = 23
+                      Top = 24
+                      Width = 137
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      TabOrder = 0
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDateTime
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 44568
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lFim: TLabel
+                      Left = 168
+                      Height = 15
+                      Top = 8
+                      Width = 20
+                      Caption = 'Fim'
+                    end
+                    object dtGetPixFim: TDateTimePicker
+                      Left = 168
+                      Height = 23
+                      Top = 24
+                      Width = 137
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      TabOrder = 1
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDateTime
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 44568
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                    object lCPFCPNJ: TLabel
+                      Left = 352
+                      Height = 15
+                      Top = 56
+                      Width = 59
+                      Anchors = [akTop, akRight]
+                      Caption = 'CPF / CNPJ'
+                    end
+                    object edtGetPixCPFCNPJ: TEdit
+                      Left = 352
+                      Height = 23
+                      Top = 75
+                      Width = 145
+                      Anchors = [akTop, akRight]
+                      OnChange = edtGetPixCPFCNPJChange
+                      OnKeyPress = edOnlyNumbersKeyPress
+                      TabOrder = 3
+                    end
+                    object seGetPixPagina: TSpinEdit
+                      Left = 521
+                      Height = 23
+                      Top = 75
+                      Width = 66
+                      Anchors = [akTop, akRight]
+                      MaxValue = 9999
+                      TabOrder = 5
+                      Value = 1
+                    end
+                    object lPagina: TLabel
+                      Left = 521
+                      Height = 15
+                      Top = 56
+                      Width = 36
+                      Anchors = [akTop, akRight]
+                      Caption = 'Página'
+                    end
+                    object lPagina1: TLabel
+                      Left = 521
+                      Height = 15
+                      Top = 8
+                      Width = 69
+                      Anchors = [akTop, akRight]
+                      Caption = 'Itens por Pág'
+                    end
+                    object seGetPixItensPagina: TSpinEdit
+                      Left = 521
+                      Height = 23
+                      Top = 27
+                      Width = 66
+                      Anchors = [akTop, akRight]
+                      MaxValue = 100
+                      TabOrder = 4
+                      Value = 10
+                    end
+                  end
+                  object mGetPix: TMemo
+                    Left = 0
+                    Height = 290
+                    Top = 160
+                    Width = 606
+                    Align = alClient
+                    ScrollBars = ssAutoBoth
+                    TabOrder = 1
+                  end
+                end
+              end
             end
             object tsEndPointCob: TTabSheet
               Caption = '/cob'
@@ -62,22 +292,22 @@ object Form1: TForm1
         object tsQRCodeEstatico: TTabSheet
           Caption = 'QRCode Estático'
           ClientHeight = 506
-          ClientWidth = 691
+          ClientWidth = 622
           ImageIndex = 1
           object pQREDados: TPanel
             Left = 0
             Height = 200
             Top = 0
-            Width = 691
+            Width = 622
             Align = alTop
             BevelOuter = bvNone
             ClientHeight = 200
-            ClientWidth = 691
+            ClientWidth = 622
             TabOrder = 0
             object Valor: TLabel
               Left = 16
               Height = 15
-              Top = 16
+              Top = 15
               Width = 26
               Caption = 'Valor'
             end
@@ -94,7 +324,7 @@ object Form1: TForm1
             object Label34: TLabel
               Left = 16
               Height = 15
-              Top = 64
+              Top = 68
               Width = 114
               Caption = 'Informação Adicional'
             end
@@ -102,7 +332,7 @@ object Form1: TForm1
               Left = 16
               Height = 23
               Top = 88
-              Width = 659
+              Width = 590
               Anchors = [akTop, akLeft, akRight]
               OnChange = QuandoMudarDadosQRCode
               TabOrder = 1
@@ -118,33 +348,20 @@ object Form1: TForm1
               Left = 16
               Height = 23
               Top = 148
-              Width = 659
+              Width = 590
               Anchors = [akTop, akLeft, akRight]
               OnChange = QuandoMudarDadosQRCode
               TabOrder = 2
-            end
-            object btQREGerar: TBitBtn
-              Left = 554
-              Height = 26
-              Top = 31
-              Width = 121
-              Anchors = [akTop, akRight]
-              AutoSize = True
-              Caption = 'Gerar QRCode'
-              Images = ImageList1
-              ImageIndex = 1
-              OnClick = btQREGerarClick
-              TabOrder = 3
             end
           end
           object pQREGerado: TPanel
             Left = 0
             Height = 306
             Top = 200
-            Width = 691
+            Width = 622
             Align = alClient
             ClientHeight = 306
-            ClientWidth = 691
+            ClientWidth = 622
             TabOrder = 1
             object imgQRE: TImage
               Left = 1
@@ -160,38 +377,49 @@ object Form1: TForm1
               Left = 299
               Height = 272
               Top = 1
-              Width = 391
+              Width = 322
               Align = alClient
               BevelOuter = bvNone
               ClientHeight = 272
-              ClientWidth = 391
+              ClientWidth = 322
               TabOrder = 0
               Wordwrap = True
               object mQRE: TMemo
                 Left = 0
                 Height = 138
                 Top = 134
-                Width = 391
+                Width = 322
                 Align = alBottom
                 Alignment = taCenter
-                ReadOnly = True
+                OnChange = mQREChange
                 ScrollBars = ssAutoBoth
                 TabOrder = 0
-                TabStop = False
                 WantReturns = False
+              end
+              object btQREGerar: TBitBtn
+                Left = 78
+                Height = 49
+                Top = 40
+                Width = 161
+                Anchors = [akBottom]
+                Caption = 'Gerar QRCode'
+                Images = ImageList1
+                ImageIndex = 1
+                OnClick = btQREGerarClick
+                TabOrder = 1
               end
             end
             object Panel1: TPanel
               Left = 1
               Height = 32
               Top = 273
-              Width = 689
+              Width = 620
               Align = alBottom
               ClientHeight = 32
-              ClientWidth = 689
+              ClientWidth = 620
               TabOrder = 1
               object btQREColar: TBitBtn
-                Left = 584
+                Left = 428
                 Height = 26
                 Top = 3
                 Width = 81
@@ -203,42 +431,77 @@ object Form1: TForm1
                 OnClick = btQREColarClick
                 TabOrder = 0
               end
+              object btQREAnalisar: TBitBtn
+                Left = 514
+                Height = 26
+                Top = 3
+                Width = 88
+                Anchors = [akTop]
+                AutoSize = True
+                Caption = 'Analisar'
+                Images = ImageList1
+                ImageIndex = 5
+                OnClick = btQREAnalisarClick
+                TabOrder = 1
+              end
             end
           end
         end
       end
       object pLogs: TPanel
-        Left = 704
+        Left = 635
         Height = 534
         Top = 0
-        Width = 294
+        Width = 363
         Align = alRight
         ClientHeight = 534
-        ClientWidth = 294
+        ClientWidth = 363
         TabOrder = 1
         object mLog: TMemo
           Left = 4
-          Height = 511
+          Height = 479
           Top = 19
-          Width = 286
+          Width = 355
           Align = alClient
           BorderSpacing.Around = 3
           ReadOnly = True
           ScrollBars = ssAutoBoth
           TabOrder = 0
-          WordWrap = False
         end
         object Label2: TLabel
           Left = 1
           Height = 15
           Top = 1
-          Width = 292
+          Width = 361
           Align = alTop
           Caption = 'Log das Operações'
         end
+        object Panel2: TPanel
+          Left = 1
+          Height = 32
+          Top = 501
+          Width = 361
+          Align = alBottom
+          ClientHeight = 32
+          ClientWidth = 361
+          TabOrder = 1
+          object btQREAnalisar1: TBitBtn
+            Left = 259
+            Height = 26
+            Top = 1
+            Width = 83
+            Anchors = [akTop]
+            AutoSize = True
+            Caption = 'Limpar'
+            Images = ImageList1
+            ImageIndex = 18
+            OnClick = btQREAnalisar1Click
+            TabOrder = 0
+          end
+        end
       end
       object Splitter1: TSplitter
-        Left = 699
+        Left = 630
         Height = 534
         Top = 0
         Width = 5
@@ -549,6 +812,7 @@ object Form1: TForm1
                   'Baixo'
                   'Normal'
                   'Alto'
+                  'Muito Alto'
                 )
                 Style = csDropDownList
                 TabOrder = 1

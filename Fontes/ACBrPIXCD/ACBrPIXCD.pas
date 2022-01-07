@@ -270,12 +270,13 @@ type
     procedure ConfigurarPathParameters(const Method, EndPoint: String); virtual;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); virtual;
 
+    procedure LimparHTTP; virtual;
+    procedure PreparaHTTP; virtual;
     function AcessarEndPoint(const Method, EndPoind: String;
       out ResultCode: Integer; out RespostaHttp: String): Boolean; virtual;
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
 
-    procedure LimparHTTP; virtual;
     function TransmitirHttp(const Method, URL: String;
       out ResultCode: Integer; out RespostaHttp: String): Boolean; virtual;
     procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: String;
@@ -538,14 +539,17 @@ end;
 
 function TACBrPixEndPointPix.ConsultarPix(const e2eid: String): Boolean;
 var
-  RespostaHttp: String;
+  RespostaHttp, e: String;
   ResultCode: Integer;
 begin
   if (Trim(e2eid) = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['e2eid']);
+  e := ValidarEndToEndId(e2eid);
+  if (e <> '') then
+    raise EACBrPixException.Create(ACBrStr(e));
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   fPSP.PathParams.Add(e2eid);
   fPSP.AcessarEndPoint(ChttpMethodGET, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
@@ -564,7 +568,7 @@ var
   ResultCode: Integer;
 begin
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
 
   with fPSP.QueryParams do
   begin
@@ -624,7 +628,7 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['DevolucaoSolicitada']);
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   fPSP.PathParams.Add(e2eid);
   fPSP.PathParams.Add('devolucao');
   fPSP.PathParams.Add(idDevolucao);
@@ -652,7 +656,7 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['idDevolucao']);
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   fPSP.PathParams.Add(e2eid);
   fPSP.PathParams.Add('devolucao');
   fPSP.PathParams.Add(idDevolucao);
@@ -712,7 +716,7 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobSolicitada']);
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPOST, EndPoint, ResultCode, RespostaHttp);
@@ -737,7 +741,7 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobSolicitada']);
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   fPSP.PathParams.Add(TxId);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
@@ -763,7 +767,7 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobRevisada']);
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   fPSP.PathParams.Add(TxId);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
@@ -786,7 +790,7 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['txid']);
 
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
   fPSP.PathParams.Add(TxId);
   if (Revisao <> 0) then
     fPSP.QueryParams.Values['revisao'] := IntToStr(Revisao);
@@ -808,7 +812,7 @@ var
   ResultCode: Integer;
 begin
   Clear;
-  fPSP.LimparHTTP;
+  fPSP.PreparaHTTP;
 
   with fPSP.QueryParams do
   begin
@@ -1089,9 +1093,6 @@ function TACBrPSP.AcessarEndPoint(const Method, EndPoind: String; out
 var
   AURL: String;
 begin
-  VerificarPIXCDAtribuido;
-  VerificarAutenticacao;
-
   ConfigurarAutenticacao(Method, EndPoind);
   AURL := CalcularURLEndPoint(Method, EndPoind);
 
@@ -1134,6 +1135,13 @@ begin
   fQueryParams.Clear;
 end;
 
+procedure TACBrPSP.PreparaHTTP;
+begin
+  VerificarPIXCDAtribuido;
+  VerificarAutenticacao;
+  LimparHTTP;
+end;
+
 function TACBrPSP.TransmitirHttp(const Method, URL: String; out
   ResultCode: Integer; out RespostaHttp: String): Boolean;
 
@@ -1166,13 +1174,15 @@ begin
     end;
   end;
 
-  fPixCD.RegistrarLog('TransmitirHttp( '+AMethod+', '+AURL+' )');
+  fPixCD.RegistrarLog(sLineBreak+'---'+sLineBreak+'TransmitirHttp( '+AMethod+', '+AURL+' )'+sLineBreak+'---');
+  if (fPixCD.NivelLog > 2) then
+    fPixCD.RegistrarLog('Request Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+
   if (fPixCD.NivelLog > 1) then
   begin
     if (HttpBody = '') then
       HttpBody := GetHttpBody;
 
-    fPixCD.RegistrarLog('Request Headers:'+ sLineBreak + fHttpSend.Headers.Text);
     fPixCD.RegistrarLog('Request Body:'+ sLineBreak + HttpBody);
   end;
 
@@ -1184,11 +1194,11 @@ begin
     RespostaHttp := ReadStrFromStream(fHttpSend.Document, fHttpSend.Document.Size);
 
   fPixCD.RegistrarLog('Result Code: '+IntToStr(ResultCode)+' - '+fHttpSend.ResultString);
-  if (fPixCD.NivelLog > 1) then
-  begin
+  if (fPixCD.NivelLog > 2) then
     fPixCD.RegistrarLog('Response Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+
+  if (fPixCD.NivelLog > 1) then
     fPixCD.RegistrarLog('Response Body:'+ sLineBreak + RespostaHttp);
-  end;
 
   if Assigned(fQuandoReceberRespostaHttp) then
     fQuandoReceberRespostaHttp(AURL, AMethod, RespostaHttp);

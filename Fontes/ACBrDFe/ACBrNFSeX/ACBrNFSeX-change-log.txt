@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/01/2022
+-- ACBrNFSeXServicos --
+[*] Ajustes nas URLs da cidade de Cruzeiro/SP.
+   Por: Ze Marcio
 -- Diversos --
 [*] Correção no tipo dos novos campos para o provedor Elotech (Servico.Valores),
     Retidoxxxx.

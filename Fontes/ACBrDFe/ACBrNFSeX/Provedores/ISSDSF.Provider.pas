@@ -289,6 +289,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
 begin
   //erros
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
@@ -317,13 +318,13 @@ begin
   ANodeArray := ANode.Childrens.FindAllAnyNs('Alerta');
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Alertas.New;
-    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
-    AErro.Correcao := '';
+    AAlerta := Response.Alertas.New;
+    AAlerta.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+    AAlerta.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Descricao'), tcStr);
+    AAlerta.Correcao := '';
 
-    if AErro.Descricao = '' then
-      AErro.Descricao := ANodeArray[I].AsString;
+    if AAlerta.Descricao = '' then
+      AAlerta.Descricao := ANodeArray[I].AsString;
   end;
 end;
 

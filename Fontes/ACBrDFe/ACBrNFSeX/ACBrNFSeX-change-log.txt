@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/01/2022
+-- ISSDSF.Provider --
+[*] Ajustes na leitura correta dos alertas.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Ajustes nas URLs Inclusão de nova cidade.
    Por: Danny/Ze Marcio

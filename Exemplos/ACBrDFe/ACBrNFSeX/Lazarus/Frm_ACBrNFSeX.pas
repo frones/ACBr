@@ -544,6 +544,18 @@ begin
       Servico.Valores.ValorIr := 0.00;
       Servico.Valores.ValorCsll := 0.00;
 
+      // Provedor Elotech
+      Servico.Valores.AliquotaPis := 0;
+      Servico.Valores.RetidoPis := snNao;
+      Servico.Valores.AliquotaCofins := 0;
+      Servico.Valores.RetidoCofins := snNao;
+      Servico.Valores.AliquotaInss := 0;
+      Servico.Valores.RetidoInss := snNao;
+      Servico.Valores.AliquotaIr := 0;
+      Servico.Valores.RetidoIr := snNao;
+      Servico.Valores.AliquotaCsll := 0;
+      Servico.Valores.RetidoCsll := snNao;
+
       // TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
       // stRetencao = snSim
       // stNormal   = snNao

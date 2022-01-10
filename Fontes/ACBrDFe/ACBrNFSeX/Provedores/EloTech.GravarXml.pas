@@ -74,6 +74,17 @@ begin
   NrOcorrCodTribMun_1 := -1;
   NrOcorrCodigoMunic_1 := -1;
 
+  NrOcorrAliquotaPis := 0;
+  NrOcorrRetidoPis := 0;
+  NrOcorrAliquotaCofins := 0;
+  NrOcorrRetidoCofins := 0;
+  NrOcorrAliquotaInss := 0;
+  NrOcorrRetidoInss := 0;
+  NrOcorrAliquotaIr := 0;
+  NrOcorrRetidoIr := 0;
+  NrOcorrAliquotaCsll := 0;
+  NrOcorrRetidoCsll := 0;
+
   GerarIDDeclaracao := False;
 end;
 

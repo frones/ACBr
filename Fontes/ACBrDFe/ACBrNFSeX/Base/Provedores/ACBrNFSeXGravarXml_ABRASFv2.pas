@@ -128,6 +128,16 @@ type
 
     FTagTomador: String;
     FTagIntermediario: String;
+    FNrOcorrAliquotaPis: Integer;
+    FNrOcorrRetidoPis: Integer;
+    FNrOcorrAliquotaCofins: Integer;
+    FNrOcorrRetidoCofins: Integer;
+    FNrOcorrAliquotaInss: Integer;
+    FNrOcorrRetidoInss: Integer;
+    FNrOcorrAliquotaIr: Integer;
+    FNrOcorrRetidoIr: Integer;
+    FNrOcorrAliquotaCsll: Integer;
+    FNrOcorrRetidoCsll: Integer;
 
   protected
     procedure Configuracao; override;
@@ -241,7 +251,16 @@ type
 
     property NrOcorrCodigoPaisServico: Integer read FNrOcorrCodigoPaisServico write FNrOcorrCodigoPaisServico;
     property NrOcorrCodigoPaisTomador: Integer read FNrOcorrCodigoPaisTomador write FNrOcorrCodigoPaisTomador;
-
+    property NrOcorrAliquotaPis: Integer read FNrOcorrAliquotaPis write FNrOcorrAliquotaPis;
+    property NrOcorrRetidoPis: Integer read FNrOcorrRetidoPis write FNrOcorrRetidoPis;
+    property NrOcorrAliquotaCofins: Integer read FNrOcorrAliquotaCofins write FNrOcorrAliquotaCofins;
+    property NrOcorrRetidoCofins: Integer read FNrOcorrRetidoCofins write FNrOcorrRetidoCofins;
+    property NrOcorrAliquotaInss: Integer read FNrOcorrAliquotaInss write FNrOcorrAliquotaInss;
+    property NrOcorrRetidoInss: Integer read FNrOcorrRetidoInss write FNrOcorrRetidoInss;
+    property NrOcorrAliquotaIr: Integer read FNrOcorrAliquotaIr write FNrOcorrAliquotaIr;
+    property NrOcorrRetidoIr: Integer read FNrOcorrRetidoIr write FNrOcorrRetidoIr;
+    property NrOcorrAliquotaCsll: Integer read FNrOcorrAliquotaCsll write FNrOcorrAliquotaCsll;
+    property NrOcorrRetidoCsll: Integer read FNrOcorrRetidoCsll write FNrOcorrRetidoCsll;
 
     property GerarTagServicos: Boolean  read FGerarTagServicos  write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
@@ -342,6 +361,16 @@ begin
   FNrOcorrToken := -1;
   FNrOcorrSenha := -1;
   FNrOcorrFraseSecreta := -1;
+  FNrOcorrAliquotaPis := -1;
+  FNrOcorrRetidoPis := -1;
+  FNrOcorrAliquotaCofins := -1;
+  FNrOcorrRetidoCofins := -1;
+  FNrOcorrAliquotaInss := -1;
+  FNrOcorrRetidoInss := -1;
+  FNrOcorrAliquotaIr := -1;
+  FNrOcorrRetidoIr := -1;
+  FNrOcorrAliquotaCsll := -1;
+  FNrOcorrRetidoCsll := -1;
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
@@ -631,17 +660,47 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#14', 'ValorDeducoes', 1, 15, NrOcorrValorDeducoes,
                             NFSe.Servico.Valores.ValorDeducoes, DSC_VDEDUCISS));
 
+  Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaPis', 1, 15, NrOcorrAliquotaPis,
+                                  NFSe.Servico.Valores.AliquotaPis, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoPis', 1, 15, NrOcorrRetidoPis,
+                                     NFSe.Servico.Valores.RetidoPis, DSC_VPIS));
+
   Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis', 1, 15, NrOcorrValorPis,
                                       NFSe.Servico.Valores.ValorPis, DSC_VPIS));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaCofins', 1, 15, NrOcorrAliquotaCofins,
+                               NFSe.Servico.Valores.AliquotaCofins, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoCofins', 1, 15, NrOcorrRetidoCofins,
+                                  NFSe.Servico.Valores.RetidoCofins, DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins', 1, 15, NrOcorrValorCofins,
                                 NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS));
 
+  Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaInss', 1, 15, NrOcorrAliquotaInss,
+                                 NFSe.Servico.Valores.AliquotaInss, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoInss', 1, 15, NrOcorrRetidoInss,
+                                    NFSe.Servico.Valores.RetidoInss, DSC_VPIS));
+
   Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss', 1, 15, NrOcorrValorInss,
                                     NFSe.Servico.Valores.ValorInss, DSC_VINSS));
 
+  Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaIr', 1, 15, NrOcorrAliquotaIr,
+                                   NFSe.Servico.Valores.AliquotaIr, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoIr', 1, 15, NrOcorrRetidoIr,
+                                      NFSe.Servico.Valores.RetidoIr, DSC_VPIS));
+
   Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr', 1, 15, NrOcorrValorIr,
                                         NFSe.Servico.Valores.ValorIr, DSC_VIR));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaCsll', 1, 15, NrOcorrAliquotaCsll,
+                                 NFSe.Servico.Valores.AliquotaCsll, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoCsll', 1, 15, NrOcorrRetidoCsll,
+                                    NFSe.Servico.Valores.RetidoCsll, DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll', 1, 15, NrOcorrValorCsll,
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));

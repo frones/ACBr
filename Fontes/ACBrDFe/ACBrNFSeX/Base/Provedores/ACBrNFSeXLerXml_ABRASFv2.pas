@@ -800,11 +800,27 @@ begin
     begin
       ValorServicos   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
       ValorDeducoes   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorDeducoes'), tcDe2);
-      ValorPis        := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
-      ValorCofins     := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
-      ValorInss       := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
-      ValorIr         := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
-      ValorCsll       := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+
+      AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaPis'), tcDe2);
+      RetidoPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoPis'), tcDe2);
+      ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+
+      AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCofins'), tcDe2);
+      RetidoCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCofins'), tcDe2);
+      ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+
+      AliquotaInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaInss'), tcDe2);
+      RetidoInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoInss'), tcDe2);
+      ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
+
+      AliquotaIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaIr'), tcDe2);
+      RetidoIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoIr'), tcDe2);
+      ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
+
+      AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCsll'), tcDe2);
+      RetidoCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCsll'), tcDe2);
+      ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+
       ValorIss        := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
 

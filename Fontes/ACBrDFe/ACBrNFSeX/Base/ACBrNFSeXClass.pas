@@ -128,6 +128,11 @@ type
     FValorTotalRecebido: Double;
     FValorTotalTributos: Double;
     FIrrfIndenizacao: Double;
+    FRetidoPis: Double;
+    FRetidoCofins: Double;
+    FRetidoInss: Double;
+    FRetidoIr: Double;
+    FRetidoCsll: Double;
   public
     property ValorServicos: Double read FValorServicos write FValorServicos;
     property ValorDeducoes: Double read FValorDeducoes write FValorDeducoes;
@@ -170,6 +175,12 @@ type
     property ValorTotalTributos: Double read FValorTotalTributos write FValorTotalTributos;
     //Provedor Tecnos
     property IrrfIndenizacao: Double read FIrrfIndenizacao write FIrrfIndenizacao;
+    //Provedor Elotech
+    property RetidoPis: Double read FRetidoPis write FRetidoPis;
+    property RetidoCofins: Double read FRetidoCofins write FRetidoCofins;
+    property RetidoInss: Double read FRetidoInss write FRetidoInss;
+    property RetidoIr: Double read FRetidoIr write FRetidoIr;
+    property RetidoCsll: Double read FRetidoCsll write FRetidoCsll;
   end;
 
   TItemServicoCollectionItem = class(TObject)

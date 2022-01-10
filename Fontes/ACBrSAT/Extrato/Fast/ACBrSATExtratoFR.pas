@@ -97,7 +97,7 @@ type
     procedure SetExportStream(const Value: TMemoryStream);
   protected
     procedure Imprimir;
-    procedure ImprimirExtratoPDF(AStream : TMemoryStream = nil);
+    procedure ImprimirExtratoPDF(AStream : TStream = nil);
     procedure ImprimirExtratoHTML;
 
   public
@@ -370,14 +370,11 @@ begin
   FPArquivoPDF := frxHTMLExport.FileName;
 end;
 
-procedure TACBrSATExtratoFR.ImprimirExtratoPDF(AStream : TMemoryStream = nil);
+procedure TACBrSATExtratoFR.ImprimirExtratoPDF(AStream : TStream = nil);
 begin
-  if AStream <> nil then
-  begin
+  if (AStream <> nil) then
     frxPDFExport.Stream := AStream;
-    AStream.Position    := 0;
-    AStream.Clear;
-  end;
+
   frxPDFExport.ShowDialog        := false;
   frxPDFExport.ShowProgress      := MostraStatus;
   frxPDFExport.Author            := Sistema;

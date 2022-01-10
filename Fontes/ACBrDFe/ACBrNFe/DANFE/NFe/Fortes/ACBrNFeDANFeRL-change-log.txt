@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2022
+-- ACBrDANFCeFortesFrA4 --
+[*] Ajuste de Campos em tela, para impressão no Linux;
+  Por: José M S Junior
+
 19/05/2021
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [*] Conversão do layout .dfm atualizado para o .lfm do Lazarus.

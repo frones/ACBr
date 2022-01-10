@@ -535,27 +535,27 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel16BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.qCom, ',0.00##') + ' ' +
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.qCom, ',0.00') + ' ' +
           self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.uCom;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel17BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vUnCom, 'R$ ,0.00##');
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vUnCom, 'R$ ,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel18BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vDesc, ',0.00##');
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vDesc, ',0.00');
   PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel19BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vOutro, ',0.00##');
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vOutro, ',0.00');
   PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
@@ -568,7 +568,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel20BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vProd, 'R$ ,0.00##');
+  Text := FormatFloatBr( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vProd, 'R$ ,0.00');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel22BeforePrint(Sender: TObject;

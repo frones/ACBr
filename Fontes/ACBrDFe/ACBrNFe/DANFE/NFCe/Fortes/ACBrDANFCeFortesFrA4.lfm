@@ -276,7 +276,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       OnDataRecord = subItensDataRecord
       object RLBand4: TRLBand
         Left = 1
-        Height = 17
+        Height = 16
         Top = 0
         Width = 716
         GreenBarPrint = True
@@ -288,7 +288,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = '1234567890123'
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
@@ -296,12 +296,12 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         end
         object RLMemo1: TRLMemo
           Left = 112
-          Height = 15
+          Height = 14
           Top = 0
           Width = 202
           Behavior = [beSiteExpander]
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           ParentFont = False
           BeforePrint = RLMemo1BeforePrint
@@ -315,7 +315,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Quantidade'
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
@@ -330,7 +330,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Vlr.Unitário'
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
@@ -345,7 +345,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Desconto'
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
@@ -360,7 +360,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Acréscimo'
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False
@@ -375,7 +375,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           AutoSize = False
           Caption = 'Valor Total:'
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Layout = tlCenter
           ParentFont = False

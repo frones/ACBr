@@ -128,11 +128,11 @@ type
     FValorTotalRecebido: Double;
     FValorTotalTributos: Double;
     FIrrfIndenizacao: Double;
-    FRetidoPis: Double;
-    FRetidoCofins: Double;
-    FRetidoInss: Double;
-    FRetidoIr: Double;
-    FRetidoCsll: Double;
+    FRetidoPis: TnfseSimNao;
+    FRetidoCofins: TnfseSimNao;
+    FRetidoInss: TnfseSimNao;
+    FRetidoIr: TnfseSimNao;
+    FRetidoCsll: TnfseSimNao;
   public
     property ValorServicos: Double read FValorServicos write FValorServicos;
     property ValorDeducoes: Double read FValorDeducoes write FValorDeducoes;
@@ -176,11 +176,11 @@ type
     //Provedor Tecnos
     property IrrfIndenizacao: Double read FIrrfIndenizacao write FIrrfIndenizacao;
     //Provedor Elotech
-    property RetidoPis: Double read FRetidoPis write FRetidoPis;
-    property RetidoCofins: Double read FRetidoCofins write FRetidoCofins;
-    property RetidoInss: Double read FRetidoInss write FRetidoInss;
-    property RetidoIr: Double read FRetidoIr write FRetidoIr;
-    property RetidoCsll: Double read FRetidoCsll write FRetidoCsll;
+    property RetidoPis: TnfseSimNao read FRetidoPis write FRetidoPis;
+    property RetidoCofins: TnfseSimNao read FRetidoCofins write FRetidoCofins;
+    property RetidoInss: TnfseSimNao read FRetidoInss write FRetidoInss;
+    property RetidoIr: TnfseSimNao read FRetidoIr write FRetidoIr;
+    property RetidoCsll: TnfseSimNao read FRetidoCsll write FRetidoCsll;
   end;
 
   TItemServicoCollectionItem = class(TObject)

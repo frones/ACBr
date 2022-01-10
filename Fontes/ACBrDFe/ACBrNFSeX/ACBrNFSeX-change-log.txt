@@ -45,6 +45,10 @@ Símbolo : Significado
 
 10/01/2022
 -- Diversos --
+[*] Correção no tipo dos novos campos para o provedor Elotech (Servico.Valores),
+    Retidoxxxx.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Incluido novos campos para o provedor Elotech (Servico.Valores).
    Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --

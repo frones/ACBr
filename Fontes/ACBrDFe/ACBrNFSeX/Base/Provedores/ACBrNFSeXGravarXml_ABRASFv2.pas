@@ -664,7 +664,7 @@ begin
                                   NFSe.Servico.Valores.AliquotaPis, DSC_VALIQ));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoPis', 1, 15, NrOcorrRetidoPis,
-                                     NFSe.Servico.Valores.RetidoPis, DSC_VPIS));
+                        SimNaoToStr(NFSe.Servico.Valores.RetidoPis), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis', 1, 15, NrOcorrValorPis,
                                       NFSe.Servico.Valores.ValorPis, DSC_VPIS));
@@ -673,7 +673,7 @@ begin
                                NFSe.Servico.Valores.AliquotaCofins, DSC_VALIQ));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoCofins', 1, 15, NrOcorrRetidoCofins,
-                                  NFSe.Servico.Valores.RetidoCofins, DSC_VPIS));
+                     SimNaoToStr(NFSe.Servico.Valores.RetidoCofins), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins', 1, 15, NrOcorrValorCofins,
                                 NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS));
@@ -682,7 +682,7 @@ begin
                                  NFSe.Servico.Valores.AliquotaInss, DSC_VALIQ));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoInss', 1, 15, NrOcorrRetidoInss,
-                                    NFSe.Servico.Valores.RetidoInss, DSC_VPIS));
+                       SimNaoToStr(NFSe.Servico.Valores.RetidoInss), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss', 1, 15, NrOcorrValorInss,
                                     NFSe.Servico.Valores.ValorInss, DSC_VINSS));
@@ -691,7 +691,7 @@ begin
                                    NFSe.Servico.Valores.AliquotaIr, DSC_VALIQ));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoIr', 1, 15, NrOcorrRetidoIr,
-                                      NFSe.Servico.Valores.RetidoIr, DSC_VPIS));
+                         SimNaoToStr(NFSe.Servico.Valores.RetidoIr), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr', 1, 15, NrOcorrValorIr,
                                         NFSe.Servico.Valores.ValorIr, DSC_VIR));
@@ -700,7 +700,7 @@ begin
                                  NFSe.Servico.Valores.AliquotaCsll, DSC_VALIQ));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoCsll', 1, 15, NrOcorrRetidoCsll,
-                                    NFSe.Servico.Valores.RetidoCsll, DSC_VPIS));
+                       SimNaoToStr(NFSe.Servico.Valores.RetidoCsll), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll', 1, 15, NrOcorrValorCsll,
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));

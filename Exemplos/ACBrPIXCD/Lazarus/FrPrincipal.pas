@@ -57,8 +57,14 @@ type
     ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil;
     ACBrPSPItau1: TACBrPSPItau;
     ACBrPSPSantander1: TACBrPSPSantander;
-    btGetPixe2eidCosultar: TBitBtn;
-    btGetPixConsultar: TBitBtn;
+    btLimparConsultarPix: TBitBtn;
+    btLimparConsultarPixRecebidos: TBitBtn;
+    btLimparConsultarDevolucaoPix: TBitBtn;
+    btLimparSolicitarDevolucaoPix: TBitBtn;
+    btSolicitarDevolucaoPix: TBitBtn;
+    btConsultarPix: TBitBtn;
+    btConsultarPixRecebidos: TBitBtn;
+    btConsultarDevolucaoPix: TBitBtn;
     btQREAnalisar1: TBitBtn;
     btQREColar: TBitBtn;
     btLerParametros: TBitBtn;
@@ -66,21 +72,33 @@ type
     btQREGerar: TBitBtn;
     btSalvarParametros: TBitBtn;
     cbxAmbiente: TComboBox;
+    cbxSolicitarDevolucaoPix_Natureza: TComboBox;
     cbxItauTipoChave: TComboBox;
     cbxSantanderTipoChave: TComboBox;
     cbxNivelLog: TComboBox;
     cbxPSPAtual: TComboBox;
     cbxBBTipoChave: TComboBox;
-    dtGetPixInicio: TDateTimePicker;
-    dtGetPixFim: TDateTimePicker;
+    dtConsultarPixRecebidosInicio: TDateTimePicker;
+    dtConsultarPixRecebidosFim: TDateTimePicker;
     edtArqLog: TEdit;
-    edtGetPixTxId: TEdit;
-    edtGetPixCPFCNPJ: TEdit;
-    lGetPixE2eid: TLabel;
+    edtConsultarDevolucaoPix_e2eid: TEdit;
+    edtConsultarDevolucaoPix_e2eid1: TEdit;
+    edtSolicitarDevolucaoPix_Descricao: TEdit;
+    edtConsultarDevolucaoPix_id: TEdit;
+    edtConsultarDevolucaoPix_id1: TEdit;
+    edtConsultarPixRecebidosTxId: TEdit;
+    edtConsultarPixRecebidosCPFCNPJ: TEdit;
+    feSolicitarDevolucaoPix_Valor: TFloatSpinEdit;
+    Label1: TLabel;
+    Label37: TLabel;
+    lConsultarDevolucaoPixE2eid2: TLabel;
+    lConsultarDevolucaoPixE2eid3: TLabel;
+    lConsultarDevolucaoPixIdentificadorDevolucao1: TLabel;
+    lConsultarPixE2eid: TLabel;
     edtItauChavePIX: TEdit;
     edtBBClientID: TEdit;
     edtQREInfoAdicional: TEdit;
-    edtGetPixE2eid: TEdit;
+    edtConsultarPixE2eid: TEdit;
     edtQRETxId: TEdit;
     edtSantanderChavePIX: TEdit;
     edtItauClientID: TEdit;
@@ -103,19 +121,29 @@ type
     Label34: TLabel;
     Label35: TLabel;
     lE2eid: TLabel;
+    lConsultarDevolucaoPixE2eid1: TLabel;
+    lConsultarDevolucaoPixIdentificadorDevolucao: TLabel;
     lInicio: TLabel;
     lFim: TLabel;
     lCPFCPNJ: TLabel;
     lPagina: TLabel;
     lPagina1: TLabel;
-    mGetPixE2eid: TMemo;
-    mGetPix: TMemo;
+    mSolicitarDevolucaoPix: TMemo;
+    mConsultarPix: TMemo;
+    mConsultarPixRecebidos: TMemo;
+    mConsultarDevolucaoPix: TMemo;
     mQRE: TMemo;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    pConsultarDevolucaoPix: TPanel;
+    pSolicitarDevolucaoPix: TPanel;
     pgTestesPix: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
-    pGetPixE2eid: TPanel;
-    pGetPixE2eid1: TPanel;
+    pConsultarPix: TPanel;
+    pConsultarPixRecebidos: TPanel;
     pQREMemo: TPanel;
     pQREGerado: TPanel;
     pQREDados: TPanel;
@@ -177,11 +205,13 @@ type
     sbVerSenhaProxy: TSpeedButton;
     seProxyPorta: TSpinEdit;
     seTimeout: TSpinEdit;
-    seGetPixPagina: TSpinEdit;
-    seGetPixItensPagina: TSpinEdit;
+    seConsultarPixRecebidosPagina: TSpinEdit;
+    seConsultarPixRecebidosItensPagina: TSpinEdit;
     Splitter1: TSplitter;
-    tsGetPixe2eid: TTabSheet;
-    tsGetPix: TTabSheet;
+    tsSolicitarDevolucaoPix: TTabSheet;
+    tsConsultarDevolucaoPix: TTabSheet;
+    tsConsultarPix: TTabSheet;
+    tsConsultarPixRecebidos: TTabSheet;
     tsEndPointPix: TTabSheet;
     tsEndPointCob: TTabSheet;
     tsEndPointCobV: TTabSheet;
@@ -198,8 +228,13 @@ type
     Valor: TLabel;
     procedure ACBrPixCD1QuandoGravarLog(const ALogLine: String;
       var Tratado: Boolean);
-    procedure btGetPixConsultarClick(Sender: TObject);
-    procedure btGetPixe2eidCosultarClick(Sender: TObject);
+    procedure btConsultarPixRecebidosClick(Sender: TObject);
+    procedure btConsultarPixClick(Sender: TObject);
+    procedure btConsultarDevolucaoPixClick(Sender: TObject);
+    procedure btLimparConsultarDevolucaoPixClick(Sender: TObject);
+    procedure btLimparConsultarPixClick(Sender: TObject);
+    procedure btLimparConsultarPixRecebidosClick(Sender: TObject);
+    procedure btLimparSolicitarDevolucaoPixClick(Sender: TObject);
     procedure btQREAnalisar1Click(Sender: TObject);
     procedure btQREAnalisarClick(Sender: TObject);
     procedure btQREGerarClick(Sender: TObject);
@@ -211,7 +246,7 @@ type
     procedure edtCEPChange(Sender: TObject);
     procedure edtCEPExit(Sender: TObject);
     procedure edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
-    procedure edtGetPixCPFCNPJChange(Sender: TObject);
+    procedure edtConsultarPixRecebidosCPFCNPJChange(Sender: TObject);
     procedure edtItauChavePIXChange(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
     procedure edtSantanderChavePIXChange(Sender: TObject);
@@ -238,7 +273,9 @@ type
     procedure LimparQRCodeEstatico;
     procedure PintarQRCodeEstatico;
     procedure PintarQRCode(const Dados: String; ABMP: TBitmap);
-    procedure PropPixParaLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
+    procedure MostrarPixEmLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
+    procedure MostrarDevolucaoEmLinhas(const NomeDev: String;
+      ADev: TACBrPIXDevolucao; SL: TStrings);
 
     function FormatarJSON(const AJSON: String): String;
   public
@@ -257,7 +294,7 @@ implementation
 
 uses
   {$IfDef FPC}
-   fpjson, jsonparser, jsonscanner,
+   fpjson, jsonparser, jsonscanner, Jsons,
   {$EndIf}
   TypInfo, IniFiles, DateUtils,
   synacode,
@@ -274,6 +311,7 @@ var
   i: Integer;
   j: TACBrPixCDAmbiente;
   k: TACBrPIXTipoChave;
+  l: TACBrPIXNaturezaDevolucao;
 begin
   cbxPSPAtual.Items.Clear;
   For i := 0 to pgPSPs.PageCount-1 do
@@ -288,6 +326,10 @@ begin
      cbxBBTipoChave.Items.Add( GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(k) ));
   cbxItauTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbxSantanderTipoChave.Items.Assign(cbxBBTipoChave.Items);
+
+  cbxSolicitarDevolucaoPix_Natureza.Items.Clear;
+  For l := Low(TACBrPIXNaturezaDevolucao) to High(TACBrPIXNaturezaDevolucao) do
+     cbxSolicitarDevolucaoPix_Natureza.Items.Add( GetEnumName(TypeInfo(TACBrPIXNaturezaDevolucao), integer(l) ));
 
   Application.OnException := @TratarException;
 
@@ -305,8 +347,8 @@ begin
   pgTestes.ActivePageIndex := 0;
   pgTestesPix.ActivePageIndex := 0;
 
-  dtGetPixInicio.DateTime := EncodeDateTime(2020,04,01,0,0,0,0);
-  dtGetPixFim.DateTime := EncodeDateTime(2020,04,02,10,0,0,0);
+  dtConsultarPixRecebidosInicio.DateTime := EncodeDateTime(2020,04,01,0,0,0,0);
+  dtConsultarPixRecebidosFim.DateTime := EncodeDateTime(2020,04,02,10,0,0,0);
 
   LerConfiguracao;
 end;
@@ -389,45 +431,88 @@ begin
   Tratado := False;
 end;
 
-procedure TForm1.btGetPixConsultarClick(Sender: TObject);
+procedure TForm1.btConsultarPixRecebidosClick(Sender: TObject);
 var
   Ok: Boolean;
   i: Integer;
 begin
-  mGetPix.Lines.Clear;
-  Ok := ACBrPixCD1.PSP.epPix.ConsultarPixRecebidos( dtGetPixInicio.DateTime,
-                                                    dtGetPixFim.DateTime,
-                                                    edtGetPixTxId.Text,
-                                                    OnlyNumber(edtGetPixCPFCNPJ.Text),
-                                                    seGetPixPagina.Value,
-                                                    seGetPixItensPagina.Value);
+  mConsultarPixRecebidos.Lines.Clear;
+  Ok := ACBrPixCD1.PSP.epPix.ConsultarPixRecebidos( dtConsultarPixRecebidosInicio.DateTime,
+                                                    dtConsultarPixRecebidosFim.DateTime,
+                                                    edtConsultarPixRecebidosTxId.Text,
+                                                    OnlyNumber(edtConsultarPixRecebidosCPFCNPJ.Text),
+                                                    seConsultarPixRecebidosPagina.Value,
+                                                    seConsultarPixRecebidosItensPagina.Value);
   if Ok then
   begin
-    mGetPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.PixConsultados.AsJSON);
-    mGetPix.Lines.Add('');
-    mGetPix.Lines.Add('Encontrado: '+IntToStr(ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count)+', documentos PIX');
+    mConsultarPixRecebidos.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.PixConsultados.AsJSON);
+    mConsultarPixRecebidos.Lines.Add('');
+    mConsultarPixRecebidos.Lines.Add('Encontrado: '+IntToStr(ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count)+', documentos PIX');
     for i := 0 to ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count-1 do
     begin
-      mGetPix.Lines.Add('');
-      PropPixParaLinhas( '  Pix['+IntToStr(i)+']',
-                         ACBrPixCD1.PSP.epPix.PixConsultados.pix[i],
-                         mGetPix.Lines);
+      mConsultarPixRecebidos.Lines.Add('');
+      MostrarPixEmLinhas( '  Pix['+IntToStr(i)+']',
+                          ACBrPixCD1.PSP.epPix.PixConsultados.pix[i],
+                          mConsultarPixRecebidos.Lines );
     end;
   end
   else
-    mGetPix.Text := ACBrPixCD1.PSP.epPix.Problema.AsJSON;
+    mConsultarPixRecebidos.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
 end;
 
-procedure TForm1.btGetPixe2eidCosultarClick(Sender: TObject);
+procedure TForm1.btConsultarPixClick(Sender: TObject);
 begin
-  mGetPixE2eid.Lines.Clear;
-  if ACBrPixCD1.PSP.epPix.ConsultarPix(edtGetPixE2eid.Text) then
-  BEGIN
-    mGetPixE2eid.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Pix.AsJSON);
-    PropPixParaLinhas('Pix', ACBrPixCD1.PSP.epPix.Pix, mGetPixE2eid.Lines);
+  mConsultarPix.Lines.Clear;
+  if ACBrPixCD1.PSP.epPix.ConsultarPix(edtConsultarPixE2eid.Text) then
+  begin
+    mConsultarPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Pix.AsJSON);
+    MostrarPixEmLinhas( '  Pix',
+                        ACBrPixCD1.PSP.epPix.Pix,
+                        mConsultarPix.Lines );
   end
   else
-    mGetPixE2eid.Text := ACBrPixCD1.PSP.epPix.Problema.AsJSON;
+    mConsultarPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+end;
+
+procedure TForm1.btConsultarDevolucaoPixClick(Sender: TObject);
+begin
+  mConsultarDevolucaoPix.Lines.Clear;
+
+  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.Clear;
+  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.valor := feSolicitarDevolucaoPix_Valor.Value;
+  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.natureza := TACBrPIXNaturezaDevolucao(cbxSolicitarDevolucaoPix_Natureza.ItemIndex);
+  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.descricao := edtSolicitarDevolucaoPix_Descricao.Text;
+
+  if ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix( edtConsultarDevolucaoPix_e2eid.Text,
+                                                 edtConsultarDevolucaoPix_id.Text) then
+  begin
+    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
+    MostrarDevolucaoEmLinhas( '  Devolucao',
+                              ACBrPixCD1.PSP.epPix.Devolucao,
+                              mSolicitarDevolucaoPix.Lines );
+  end
+  else
+    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+end;
+
+procedure TForm1.btLimparConsultarDevolucaoPixClick(Sender: TObject);
+begin
+  mConsultarDevolucaoPix.Lines.Clear;
+end;
+
+procedure TForm1.btLimparConsultarPixClick(Sender: TObject);
+begin
+  mConsultarPix.Lines.Clear;
+end;
+
+procedure TForm1.btLimparConsultarPixRecebidosClick(Sender: TObject);
+begin
+  mConsultarPixRecebidos.Lines.Clear;
+end;
+
+procedure TForm1.btLimparSolicitarDevolucaoPixClick(Sender: TObject);
+begin
+  mSolicitarDevolucaoPix.Lines.Clear;
 end;
 
 procedure TForm1.btQREAnalisar1Click(Sender: TObject);
@@ -500,18 +585,18 @@ begin
     Key := #0;
 end;
 
-procedure TForm1.edtGetPixCPFCNPJChange(Sender: TObject);
+procedure TForm1.edtConsultarPixRecebidosCPFCNPJChange(Sender: TObject);
 var
   AStr, Mascara: String;
 begin
-  AStr := OnlyNumber(edtGetPixCPFCNPJ.Text);
+  AStr := OnlyNumber(edtConsultarPixRecebidosCPFCNPJ.Text);
   if (Length(AStr) > 11) then
     Mascara := '**.***.***/****-**'
   else
     Mascara := '***.***.***-**';
 
-  edtGetPixCPFCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(AStr, Mascara);
-  edtGetPixCPFCNPJ.SelStart := Length(edtGetPixCPFCNPJ.Text);
+  edtConsultarPixRecebidosCPFCNPJ.Text := ACBrValidador.FormatarMascaraDinamica(AStr, Mascara);
+  edtConsultarPixRecebidosCPFCNPJ.SelStart := Length(edtConsultarPixRecebidosCPFCNPJ.Text);
 end;
 
 procedure TForm1.edtBBChavePIXChange(Sender: TObject);
@@ -785,11 +870,10 @@ begin
   end;
 end;
 
-procedure TForm1.PropPixParaLinhas(const NomePix: String;
+procedure TForm1.MostrarPixEmLinhas(const NomePix: String;
   APix: TACBrPIX; SL: TStrings);
 var
   i: Integer;
-  NomeDev: String;
 begin
   SL.Add(NomePix+'.endToEndId: '+APix.endToEndId);
   SL.Add(NomePix+'.TxId: '+APix.txid);
@@ -807,29 +891,41 @@ begin
   SL.Add(NomePix+'.devolucoes: '+IntToStr(APix.devolucoes.Count) );
 
   for i := 0 to APix.devolucoes.Count-1 do
-  begin
-    NomeDev := NomePix+'devolucoes['+IntToStr(i)+']';
-    SL.Add(NomeDev+'.valor: '+FormatFloatBr(APix.devolucoes[i].valor));
-    SL.Add(NomeDev+'.natureza: '+PIXNaturezaDevolucaoToString(APix.devolucoes[i].natureza));
-    SL.Add(NomeDev+'.descricao: '+APix.devolucoes[i].descricao);
-    SL.Add(NomeDev+'.id: '+APix.devolucoes[i].id);
-    SL.Add(NomeDev+'.rtrId: '+APix.devolucoes[i].rtrId);
-    SL.Add(NomeDev+'.horario.solicitacao: '+FormatDateTimeBr(APix.devolucoes[i].horario.solicitacao));
-    SL.Add(NomeDev+'.horario.liquidacao: '+FormatDateTimeBr(APix.devolucoes[i].horario.liquidacao));
-    SL.Add(NomeDev+'.status: '+ PIXStatusDevolucaoToString(APix.devolucoes[i].status));
-    SL.Add(NomeDev+'.motivo: '+APix.devolucoes[i].motivo);
-  end;
+    MostrarDevolucaoEmLinhas( NomePix+'.devolucoes['+IntToStr(i)+']',
+                              APix.devolucoes[i],
+                              SL );
+end;
+
+procedure TForm1.MostrarDevolucaoEmLinhas(const NomeDev: String;
+  ADev: TACBrPIXDevolucao; SL: TStrings);
+begin
+  SL.Add(NomeDev+'.valor: '+FormatFloatBr(ADev.valor));
+  SL.Add(NomeDev+'.natureza: '+PIXNaturezaDevolucaoToString(ADev.natureza));
+  SL.Add(NomeDev+'.descricao: '+ADev.descricao);
+  SL.Add(NomeDev+'.id: '+ADev.id);
+  SL.Add(NomeDev+'.rtrId: '+ADev.rtrId);
+  SL.Add(NomeDev+'.horario.solicitacao: '+FormatDateTimeBr(ADev.horario.solicitacao));
+  SL.Add(NomeDev+'.horario.liquidacao: '+FormatDateTimeBr(ADev.horario.liquidacao));
+  SL.Add(NomeDev+'.status: '+ PIXStatusDevolucaoToString(ADev.status));
+  SL.Add(NomeDev+'.motivo: '+ADev.motivo);
 end;
 
 function TForm1.FormatarJSON(const AJSON: String): String;
 {$IfDef FPC}
 var
   jpar: TJSONParser;
+  j: TJsonObject;
 {$EndIf}
 begin
   Result := AJSON;
   {$IfDef FPC}
-   jpar :=TJSONParser.Create(AJSON, [joUTF8]);
+   j := TJSONObject.Create();
+   try
+     Result := j.Decode(Result);
+   finally
+     j.Free;
+   end;
+   jpar :=TJSONParser.Create(Result, [joUTF8]);
    try
      Result := jpar.Parse.FormatJSON([], 2);
    finally

@@ -82,10 +82,10 @@ type
     dtConsultarPixRecebidosFim: TDateTimePicker;
     edtArqLog: TEdit;
     edtConsultarDevolucaoPix_e2eid: TEdit;
-    edtConsultarDevolucaoPix_e2eid1: TEdit;
+    edtSolicitarDevolucaoPix_e2eid: TEdit;
     edtSolicitarDevolucaoPix_Descricao: TEdit;
     edtConsultarDevolucaoPix_id: TEdit;
-    edtConsultarDevolucaoPix_id1: TEdit;
+    edtSolicitarDevolucaoPix_id: TEdit;
     edtConsultarPixRecebidosTxId: TEdit;
     edtConsultarPixRecebidosCPFCNPJ: TEdit;
     feSolicitarDevolucaoPix_Valor: TFloatSpinEdit;
@@ -241,6 +241,7 @@ type
     procedure btLerParametrosClick(Sender: TObject);
     procedure btQREColarClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
+    procedure btSolicitarDevolucaoPixClick(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
     procedure edtCEPChange(Sender: TObject);
@@ -308,10 +309,9 @@ uses
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
-  i: Integer;
+  i, l: Integer;
   j: TACBrPixCDAmbiente;
   k: TACBrPIXTipoChave;
-  l: TACBrPIXNaturezaDevolucao;
 begin
   cbxPSPAtual.Items.Clear;
   For i := 0 to pgPSPs.PageCount-1 do
@@ -328,8 +328,8 @@ begin
   cbxSantanderTipoChave.Items.Assign(cbxBBTipoChave.Items);
 
   cbxSolicitarDevolucaoPix_Natureza.Items.Clear;
-  For l := Low(TACBrPIXNaturezaDevolucao) to High(TACBrPIXNaturezaDevolucao) do
-     cbxSolicitarDevolucaoPix_Natureza.Items.Add( GetEnumName(TypeInfo(TACBrPIXNaturezaDevolucao), integer(l) ));
+  For l := 1 to Integer(High(TACBrPIXNaturezaDevolucao)) do
+     cbxSolicitarDevolucaoPix_Natureza.Items.Add( GetEnumName(TypeInfo(TACBrPIXNaturezaDevolucao), l ));
 
   Application.OnException := @TratarException;
 
@@ -477,22 +477,16 @@ end;
 procedure TForm1.btConsultarDevolucaoPixClick(Sender: TObject);
 begin
   mConsultarDevolucaoPix.Lines.Clear;
-
-  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.Clear;
-  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.valor := feSolicitarDevolucaoPix_Valor.Value;
-  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.natureza := TACBrPIXNaturezaDevolucao(cbxSolicitarDevolucaoPix_Natureza.ItemIndex);
-  ACBrPixCD1.PSP.epPix.DevolucaoSolicitada.descricao := edtSolicitarDevolucaoPix_Descricao.Text;
-
-  if ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix( edtConsultarDevolucaoPix_e2eid.Text,
+  if ACBrPixCD1.PSP.epPix.ConsultarDevolucaoPix( edtConsultarDevolucaoPix_e2eid.Text,
                                                  edtConsultarDevolucaoPix_id.Text) then
   begin
-    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
+    mConsultarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
     MostrarDevolucaoEmLinhas( '  Devolucao',
                               ACBrPixCD1.PSP.epPix.Devolucao,
-                              mSolicitarDevolucaoPix.Lines );
+                              mConsultarDevolucaoPix.Lines );
   end
   else
-    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+    mConsultarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
 end;
 
 procedure TForm1.btLimparConsultarDevolucaoPixClick(Sender: TObject);
@@ -566,6 +560,30 @@ end;
 procedure TForm1.btSalvarParametrosClick(Sender: TObject);
 begin
   GravarConfiguracao;
+end;
+
+procedure TForm1.btSolicitarDevolucaoPixClick(Sender: TObject);
+begin
+  mSolicitarDevolucaoPix.Lines.Clear;
+
+  with ACBrPixCD1.PSP.epPix.DevolucaoSolicitada do
+  begin
+    Clear;
+    valor := feSolicitarDevolucaoPix_Valor.Value;
+    natureza := TACBrPIXNaturezaDevolucao(cbxSolicitarDevolucaoPix_Natureza.ItemIndex);
+    descricao := edtSolicitarDevolucaoPix_Descricao.Text;
+  end;
+
+  if ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix( edtSolicitarDevolucaoPix_e2eid.Text,
+                                                 edtSolicitarDevolucaoPix_id.Text ) then
+  begin
+    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
+    MostrarDevolucaoEmLinhas( '  Devolucao',
+                              ACBrPixCD1.PSP.epPix.Devolucao,
+                              mSolicitarDevolucaoPix.Lines );
+  end
+  else
+    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
 end;
 
 procedure TForm1.cbxPSPAtualChange(Sender: TObject);
@@ -919,18 +937,22 @@ var
 begin
   Result := AJSON;
   {$IfDef FPC}
-   j := TJSONObject.Create();
-   try
-     Result := j.Decode(Result);
-   finally
-     j.Free;
-   end;
-   jpar :=TJSONParser.Create(Result, [joUTF8]);
-   try
-     Result := jpar.Parse.FormatJSON([], 2);
-   finally
-     jpar.Free;
-   end;
+  try
+    j := TJSONObject.Create();
+    try
+      Result := j.Decode(Result);
+    finally
+      j.Free;
+    end;
+    jpar :=TJSONParser.Create(Result, [joUTF8]);
+    try
+      Result := jpar.Parse.FormatJSON([], 2);
+    finally
+      jpar.Free;
+    end;
+  except
+    Result := AJSON;
+  end;
   {$EndIf}
 end;
 

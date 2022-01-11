@@ -65,8 +65,8 @@ type
     { Public declarations }
     Constructor Create(AOwner: TComponent); override;
 
-    procedure Imprimir; override; overload;
-    procedure Imprimir(AStream: TStream); override; overload;
+    procedure Imprimir; overload; override;
+    procedure Imprimir(AStream: TStream); overload; override;
 
   end;
 

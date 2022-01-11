@@ -37,8 +37,8 @@ unit ACBrLibBoletoDataModule;
 interface
 
 uses
-  Classes, SysUtils, SyncObjs, ACBrBoleto, ACBrBoletoFCFortesFr, ACBrLibComum,
-  ACBrLibConfig, ACBrMail, ACBrBoletoConversao, ACBrLibDataModule;
+  Classes, SysUtils, SyncObjs, ACBrBoleto, ACBrBoletoFCFortesFr,
+  ACBrLibDataModule, ACBrLibComum, ACBrLibConfig, ACBrMail, ACBrBoletoConversao;
 
 type
 
@@ -60,9 +60,6 @@ type
     property LayoutImpressao: Integer read FLayoutImpressao write FLayoutImpressao;
 
   end;
-
-var
-  LibBoletoDM: TLibBoletoDM;
 
 implementation
 

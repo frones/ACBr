@@ -47,10 +47,10 @@ type
   private
     FBoletoDM: TLibBoletoDM;
 
-    function ListaBancos(): AnsiString;
-    function ListaCaractTitulo() : AnsiString;
-    function ListaOcorrencias(): AnsiString;
-    function ListaOcorrenciasEX(): AnsiString;
+    function ListaBancos: AnsiString;
+    function ListaCaractTitulo : AnsiString;
+    function ListaOcorrencias: AnsiString;
+    function ListaOcorrenciasEX: AnsiString;
 
   protected
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
@@ -70,7 +70,9 @@ type
     function Imprimir(eNomeImpressora: PChar): longint;
     function ImprimirBoleto(eIndice: longint; eNomeImpressora: PChar): longint;
     function GerarPDF: longint;
+    function SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
     function GerarPDFBoleto(eIndice: longint): longint;
+    function SalvarPDFBoleto(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function GerarHTML: longint;
     function GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
     function LerRetorno(eDir, eNomeArq: PChar): longint;
@@ -339,8 +341,7 @@ begin
     BoletoDM.Travar;
     try
       BoletoDM.ConfigurarImpressao(NomeImpressora);
-      BoletoDM.ACBrBoleto1.ACBrBoletoFC.IndiceImprimirIndividual := eIndice;
-      BoletoDM.ACBrBoleto1.Imprimir;
+      BoletoDM.ACBrBoleto1.Imprimir(eIndice);
       Result := SetRetorno(ErrOK);
     finally
       BoletoDM.FinalizarImpressao;
@@ -378,6 +379,39 @@ begin
   end;
 end;
 
+function TACBrLibBoleto.SalvarPDF(const sResposta: PChar; var esTamanho: longint): longint;
+Var
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+    GravarLog('Boleto_SalvarPDF', logNormal);
+
+    AStream := TMemoryStream.Create;
+
+    BoletoDM.Travar;
+    try
+      BoletoDM.ConfigurarImpressao;
+      BoletoDM.ACBrBoleto1.GerarPDF(AStream);
+
+      Resposta := StreamToBase64(AStream);
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+    finally
+      BoletoDM.FinalizarImpressao;
+      AStream.Free;
+      BoletoDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function TACBrLibBoleto.GerarPDFBoleto(eIndice: longint): longint;
 begin
   try
@@ -389,11 +423,45 @@ begin
       BoletoDM.Travar;
       try
         BoletoDM.ConfigurarImpressao;
-        BoletoDM.ACBrBoleto1.ACBrBoletoFC.IndiceImprimirIndividual := eIndice;
-        BoletoDM.ACBrBoleto1.GerarPDF;
+        BoletoDM.ACBrBoleto1.GerarPDF(eIndice);
         Result := SetRetorno(ErrOK);
       finally
         BoletoDM.FinalizarImpressao;
+        BoletoDM.Destravar;
+      end;
+    except
+      on E: EACBrLibException do
+        Result := SetRetorno(E.Erro, E.Message);
+
+      on E: Exception do
+        Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+    end;
+end;
+
+function TACBrLibBoleto.SalvarPDFBoleto(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
+Var
+  AStream: TMemoryStream;
+  Resposta: Ansistring;
+begin
+  try
+      if Config.Log.Nivel > logNormal then
+        GravarLog('Boleto_SalvarPDFBoleto(' + IntToStr(eIndice) + ' )', logCompleto, True)
+      else
+        GravarLog('Boleto_SalvarPDFBoleto', logNormal);
+
+      AStream := TMemoryStream.Create;
+
+      BoletoDM.Travar;
+      try
+        BoletoDM.ConfigurarImpressao;
+        BoletoDM.ACBrBoleto1.GerarPDF(eIndice, AStream);
+
+        Resposta := StreamToBase64(AStream);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        BoletoDM.FinalizarImpressao;
+        AStream.Free;
         BoletoDM.Destravar;
       end;
     except
@@ -973,7 +1041,7 @@ begin
   end;
 end;
 
-function TACBrLibBoleto.ListaBancos(): AnsiString;
+function TACBrLibBoleto.ListaBancos: AnsiString;
 var
    SBanco : String;
    I: Integer;
@@ -990,7 +1058,7 @@ begin
       Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.ListaCaractTitulo(): AnsiString;
+function TACBrLibBoleto.ListaCaractTitulo: AnsiString;
 var
    ICaractTitulo : TACBrCaracTitulo;
    SCaractTitulo : String;
@@ -1007,7 +1075,7 @@ begin
       Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.ListaOcorrencias(): AnsiString;
+function TACBrLibBoleto.ListaOcorrencias: AnsiString;
 var
    ITipoOcorrencia : TACBrTipoOcorrencia;
    SOcorrencia     : String;
@@ -1022,7 +1090,7 @@ begin
     Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function TACBrLibBoleto.ListaOcorrenciasEX(): AnsiString;
+function TACBrLibBoleto.ListaOcorrenciasEX: AnsiString;
 var
    ITipoOcorrencia : TACBrTipoOcorrencia;
    SOcorrencia     : String;

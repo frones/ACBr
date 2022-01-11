@@ -69,7 +69,9 @@ exports
   Boleto_Imprimir,
   Boleto_ImprimirBoleto,
   Boleto_GerarPDF,
+  Boleto_SalvarPDF,
   Boleto_GerarPDFBoleto,
+  Boleto_SalvarPDFBoleto,
   Boleto_GerarHTML,
   Boleto_GerarRemessa,
   Boleto_LerRetorno,
@@ -98,6 +100,5 @@ begin
 
   MainThreadID := GetCurrentThreadId();
   Application.Initialize;
-
 end.
 

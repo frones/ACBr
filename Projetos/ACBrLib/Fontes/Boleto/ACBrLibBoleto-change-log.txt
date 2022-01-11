@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2021
+--- ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST --
+[*] Adicionado novos metodos para retornar o pdf em Base64 Boleto_SalvarPDF e Boleto_SalvarPDFBoleto.
+    Por: Rafael Dias
+
 21/12/2021
 --- ACBrLibBoletoDataModule ---
 [-] Correção para herença visual em Lazarus de "TLibDataModule"

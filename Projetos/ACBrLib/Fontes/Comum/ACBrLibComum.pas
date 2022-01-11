@@ -230,6 +230,11 @@ destructor TACBrLib.Destroy;
 begin
   GravarLog('LIB_Finalizar', logSimples);
 
+{$IFDEF Demo}
+  if Assigned(FPDemo) then
+    FPDemo.Free;
+{$ENDIF}
+
   fpFileVerInfo.Free;
   Finalizar;
   inherited Destroy;
@@ -410,8 +415,7 @@ Var
 begin
   try
     GravarLog('LIB_UltimoRetorno', logNormal);
-    Ret := IfThen(Config.CodResposta = codAnsi, ACBrUTF8ToAnsi(Retorno.Mensagem), Retorno.Mensagem);
-    MoverStringParaPChar(Ret, sMensagem, esTamanho);
+    MoverStringParaPChar(Retorno.Mensagem, sMensagem, esTamanho);
     Result := Retorno.Codigo;
     if (Config.Log.Nivel >= logCompleto) then
       GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + string(sMensagem), logCompleto, True);

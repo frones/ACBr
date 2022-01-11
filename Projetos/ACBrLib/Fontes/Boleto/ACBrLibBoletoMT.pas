@@ -79,7 +79,12 @@ function Boleto_Imprimir(const libHandle: PLibHandle; eNomeImpressora: PChar): l
 function Boleto_ImprimirBoleto(const libHandle: PLibHandle; eIndice: longint; eNomeImpressora: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_GerarPDF(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function Boleto_GerarPDFBoleto(const libHandle: PLibHandle; eIndice: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_GerarPDFBoleto(const libHandle: PLibHandle;
+  eIndice: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: longint; const sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_GerarHTML(const libHandle: PLibHandle): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_GerarRemessa(const libHandle: PLibHandle; eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -299,6 +304,22 @@ begin
   end;
 end;
 
+function Boleto_SalvarPDF(const libHandle: PLibHandle; const sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBoleto(libHandle^.Lib).SalvarPDF(sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+
 function Boleto_GerarPDFBoleto(const libHandle: PLibHandle; eIndice: longint
   ): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -312,6 +333,21 @@ begin
     on E: Exception do
       Result := ErrExecutandoMetodo;
 
+  end;
+end;
+
+function Boleto_SalvarPDFBoleto(const libHandle: PLibHandle; eIndice: longint; const sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBoleto(libHandle^.Lib).SalvarPDFBoleto(eIndice, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
   end;
 end;
 

@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrRtti, ACBrLibHelpers;
+  ACBrRtti, ACBrLibHelpers, DateUtils;
 
 { TACBrObjectSerializer }
 
@@ -253,7 +253,7 @@ begin
             if AValue.IsType<TDate>() then
             begin
               if (FValue > 0) then
-                ParentNode.AppendChild(xDoc.CreateTextNode(DateToStr(FValue)));
+                ParentNode.AppendChild(xDoc.CreateTextNode(DateToISO8601(FValue)));
             end
             else if AValue.IsType<TTime>() then
             begin
@@ -263,7 +263,7 @@ begin
             else if AValue.IsType<TDateTime>() then
             begin
               if (FValue > 0) then
-                ParentNode.AppendChild(xDoc.CreateTextNode(DateTimeToStr(FValue)));
+                ParentNode.AppendChild(xDoc.CreateTextNode(DateToISO8601(FValue)));
             end
             else
               ParentNode.AppendChild(xDoc.CreateTextNode(FloatToStr(FValue)));
@@ -378,7 +378,7 @@ begin
         tkDynArray:
           begin
             //Aparentemente ainda não funciona direito apesar de ter colocado um TObject da erro ao fazer cast.
-            for i := 0 to AValue.GetArrayLength - 1 do
+            for i := 0 to Pred(AValue.GetArrayLength) do
             begin
               ARValue := AValue.GetArrayElement(i);
               ClassObject := ARValue.AsObject;
@@ -548,7 +548,7 @@ begin
             if AValue.IsType<TDate>() then
             begin
               if (FValue > 0) then
-                JSONRoot.Add(Propertie.Name, DateToStr(FValue))
+                JSONRoot.Add(Propertie.Name, DateToISO8601(FValue))
               else
                 JSONRoot.Add(Propertie.Name, '');
             end
@@ -562,7 +562,7 @@ begin
             else if AValue.IsType<TDateTime>() then
             begin
               if (FValue > 0) then
-                JSONRoot.Add(Propertie.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', FValue))
+                JSONRoot.Add(Propertie.Name, DateToISO8601(FValue))
               else
                 JSONRoot.Add(Propertie.Name, '');
             end

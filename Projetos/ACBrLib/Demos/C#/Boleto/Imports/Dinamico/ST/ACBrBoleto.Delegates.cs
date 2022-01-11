@@ -64,6 +64,15 @@ namespace ACBrLib.Boleto
         public delegate int Boleto_GerarPDF();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_SalvarPDF(StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_GerarPDFBoleto(int eIndice);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_SalvarPDFBoleto(int eIndice, StringBuilder buffer, ref int bufferSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_GerarHTML();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -137,6 +146,9 @@ namespace ACBrLib.Boleto
             AddMethod<Boleto_Imprimir>("Boleto_Imprimir");
             AddMethod<Boleto_ImprimirBoleto>("Boleto_ImprimirBoleto");
             AddMethod<Boleto_GerarPDF>("Boleto_GerarPDF");
+            AddMethod<Boleto_SalvarPDF>("Boleto_SalvarPDF");
+            AddMethod<Boleto_GerarPDFBoleto>("Boleto_GerarPDFBoleto");
+            AddMethod<Boleto_SalvarPDFBoleto>("Boleto_SalvarPDFBoleto");
             AddMethod<Boleto_GerarHTML>("Boleto_GerarHTML");
             AddMethod<Boleto_GerarRemessa>("Boleto_GerarRemessa");
             AddMethod<Boleto_ObterRetorno>("Boleto_ObterRetorno");

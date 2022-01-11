@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.IO;
+using System.Net.Security;
+using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.Boleto;
 
@@ -201,7 +204,7 @@ namespace ACBrLib.Boleto
             CheckResult(ret);
         }
 
-        public void ImprimirBoleto(int indice, string eNomeImpressora = "")
+        public void Imprimir(int indice, string eNomeImpressora = "")
         {
             var method = GetMethod<Boleto_ImprimirBoleto>();
             var ret = ExecuteMethod(() => method(libHandle, indice, ToUTF8(eNomeImpressora)));
@@ -213,6 +216,45 @@ namespace ACBrLib.Boleto
             var method = GetMethod<Boleto_GerarPDF>();
             var ret = ExecuteMethod(() => method(libHandle));
             CheckResult(ret);
+        }
+
+        public void GerarPDF(Stream aStream)
+        {
+            if (aStream == null) throw new ArgumentNullException(nameof(aStream));
+
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_SalvarPDF>();
+            var ret = ExecuteMethod(() => method(libHandle, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var pdf = ProcessResult(buffer, bufferLen);
+            Base64ToStream(pdf, aStream);
+        }
+
+        public void GerarPDF(int indice)
+        {
+            var method = GetMethod<Boleto_GerarPDFBoleto>();
+            var ret = ExecuteMethod(() => method(libHandle, indice));
+            CheckResult(ret);
+        }
+
+        public void GerarPDF(int indice, Stream aStream)
+        {
+            if (aStream == null) throw new ArgumentNullException(nameof(aStream));
+
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_SalvarPDFBoleto>();
+            var ret = ExecuteMethod(() => method(libHandle, indice, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var pdf = ProcessResult(buffer, bufferLen);
+            Base64ToStream(pdf, aStream);
         }
 
         public void GerarHTML()

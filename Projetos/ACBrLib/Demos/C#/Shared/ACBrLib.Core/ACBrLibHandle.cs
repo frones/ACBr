@@ -95,6 +95,8 @@ namespace ACBrLib.Core
 
         #endregion Properties
 
+        #region Methods
+
         public abstract void ConfigGravar(string eArqConfig = "");
 
         public abstract void ConfigLer(string eArqConfig = "");
@@ -106,8 +108,6 @@ namespace ACBrLib.Core
         public abstract void ImportarConfig(string eArqConfig);
 
         public abstract string ExportarConfig();
-
-        #region Methods
 
         protected async void Base64ToStream(string base64, Stream aStream)
         {
@@ -178,10 +178,7 @@ namespace ACBrLib.Core
         /// </summary>
         /// <param name="functionName">Nome da função para exportar</param>
         /// <typeparam name="T">Delegate da função</typeparam>
-        protected virtual void AddMethod<T>(string functionName) where T : class
-        {
-            methodList.Add(typeof(T), functionName);
-        }
+        protected virtual void AddMethod<T>(string functionName) where T : class => methodList.Add(typeof(T), functionName);
 
         /// <summary>
         ///     Retorna o delegate para uso.
@@ -228,19 +225,6 @@ namespace ACBrLib.Core
             }
         }
 
-        [HandleProcessCorruptedStateExceptions]
-        protected virtual void ExecuteMethod(Action method)
-        {
-            try
-            {
-                method();
-            }
-            catch (Exception exception)
-            {
-                throw ProcessException(exception);
-            }
-        }
-
         /// <summary>
         ///     Cria e dispara uma <see cref="ApplicationException" /> com a mensagem informada.
         /// </summary>
@@ -248,10 +232,7 @@ namespace ACBrLib.Core
         /// <returns>
         ///     <see cref="ApplicationException" />
         /// </returns>
-        protected virtual ApplicationException CreateException(string errorMessage)
-        {
-            return new ApplicationException(errorMessage);
-        }
+        protected virtual ApplicationException CreateException(string errorMessage) => new ApplicationException(errorMessage);
 
         /// <summary>
         ///     Tatar uma <see cref="Exception" /> e dispara uma <see cref="ApplicationException" /> com a mensagem da mesma.
@@ -260,28 +241,21 @@ namespace ACBrLib.Core
         /// <returns>
         ///     <see cref="ApplicationException" />
         /// </returns>
-        protected virtual ApplicationException ProcessException(Exception exception)
-        {
-            return new ApplicationException(exception.Message, exception);
-        }
+        protected virtual ApplicationException ProcessException(Exception exception) => new ApplicationException(exception.Message, exception);
 
-        protected static string ToUTF8(string value)
-        {
-            return string.IsNullOrEmpty(value) ? value : Encoding.Default.GetString(Encoding.UTF8.GetBytes(value));
-        }
+        protected static string ToUTF8(string value) => string.IsNullOrEmpty(value) ? value : Encoding.Default.GetString(Encoding.UTF8.GetBytes(value));
 
         protected static string FromUTF8(StringBuilder value)
         {
             if (value == null) return null;
-            return value.Length == 0
+            var ret = value.ToString();
+
+            return ret.Length == 0
                 ? string.Empty
-                : Encoding.UTF8.GetString(Encoding.Default.GetBytes(value.ToString()));
+                : Encoding.UTF8.GetString(Encoding.Default.GetBytes(ret));
         }
 
-        protected string ProcessResult(StringBuilder buffer, int bufferLen)
-        {
-            return bufferLen > BUFFER_LEN ? GetUltimoRetorno(bufferLen) : FromUTF8(buffer);
-        }
+        protected string ProcessResult(StringBuilder buffer, int bufferLen) => bufferLen > BUFFER_LEN ? GetUltimoRetorno(bufferLen) : FromUTF8(buffer);
 
         protected virtual void CheckResult(int ret)
         {

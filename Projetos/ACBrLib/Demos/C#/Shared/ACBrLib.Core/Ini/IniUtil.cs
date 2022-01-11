@@ -40,7 +40,7 @@ namespace ACBrLib.Core
             {
                 if (property.HasAttribute<IniIgnoreAttribute>()) continue;
                 if (!(property.CanRead && property.CanWrite)) continue;
-                if (!IniValueWrapper.IsPrimitive(property.PropertyType)) continue;
+                if (!IniValueWrapper.CanWrapUnwrap(property.PropertyType)) continue;
 
                 var value = property.GetValue(obj, null);
                 if (value == null) continue;
@@ -95,7 +95,7 @@ namespace ACBrLib.Core
             {
                 if (property.HasAttribute<IniIgnoreAttribute>()) continue;
                 if (!(property.CanRead && property.CanWrite)) continue;
-                if (!IniValueWrapper.IsPrimitive(property.PropertyType)) continue;
+                if (!IniValueWrapper.CanWrapUnwrap(property.PropertyType)) continue;
 
                 var keyName = property.HasAttribute<IniKeyAttribute>() ? property.GetAttribute<IniKeyAttribute>().Value : property.Name;
 

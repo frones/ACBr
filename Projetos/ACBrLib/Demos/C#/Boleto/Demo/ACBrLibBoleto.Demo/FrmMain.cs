@@ -304,9 +304,7 @@ namespace ACBrLibBoleto.Demo
 
         private void BtnImprimirBoleto_Click(object sender, EventArgs e)
         {
-            var indice = 0;
-
-            boleto.ImprimirBoleto(indice);
+            boleto.Imprimir(0);
             rtbRespostas.AppendLine("Boletos impressos.");
         }
 

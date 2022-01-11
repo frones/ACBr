@@ -1,4 +1,5 @@
-﻿using ACBrLib.Core.DFe;
+﻿using System.IO;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.Core.Config
 {

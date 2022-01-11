@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using ACBrLib.Core.Extensions;
 
 namespace ACBrLib.Core
@@ -23,32 +24,58 @@ namespace ACBrLib.Core
 
         #endregion Constructor
 
+        #region Methods
+
         public static string Wrap<T>(object value)
         {
             return Wrap(typeof(T), value);
         }
 
+        public static T UnWrap<T>(string value, T defaultValue = default)
+        {
+            return (T)UnWrap(typeof(T), value, defaultValue);
+        }
+
         public static string Wrap(Type type, object value)
         {
-            if (!IsPrimitive(type)) throw new ArgumentException("Apenas tipos primitivos podem ser convertidos.");
+            if (!CanWrapUnwrap(type)) throw new ArgumentException("Apenas tipos primitivos podem ser convertidos.");
             if (value == null) return null;
 
             switch (value)
             {
                 case decimal dValue: return dValue.ToString(NumberFormatInfo);
+
                 case double dbValue: return dbValue.ToString(NumberFormatInfo);
-                case float fValue: return fValue.ToString(NumberFormatInfo); ;
-                case DateTime dtValue: return dtValue.TimeOfDay.TotalSeconds == 0 ? $"{dtValue:dd/MM/yyyy}" : $"{dtValue:dd/MM/yyyy HH:mm:ss}"; ;
+
+                case float fValue: return fValue.ToString(NumberFormatInfo);
+
+                case DateTime dtValue: return dtValue.TimeOfDay.TotalSeconds == 0 ? $"{dtValue:dd/MM/yyyy}" : $"{dtValue:dd/MM/yyyy HH:mm:ss}";
+
                 case TimeSpan tmValue: return $"{tmValue:HH:mm:ss}";
+
                 case bool boValue: return boValue ? "1" : "0";
-                case Enum _:
-                    var member = value.GetType().GetMember(value.ToString()).FirstOrDefault();
-                    var enumAttribute = member?.GetCustomAttributes(false).OfType<EnumValueAttribute>().FirstOrDefault();
-                    var enumValue = enumAttribute?.Value;
-                    return enumValue ?? Convert.ToInt32(value).ToString();
+
+                case Enum eValue when Attribute.IsDefined(type, typeof(FlagsAttribute)):
+                    var member = type.GetMember(eValue.ToString()).First();
+                    if (!Attribute.IsDefined(member, typeof(EnumValueAttribute)))
+                        return Convert.ToInt32(eValue).ToString();
+
+                    var values = eValue.GetFlagValues();
+                    var ret = values.Aggregate("[", (current, enValue) =>
+                    {
+                        if (current.Length > 1) current += ",";
+                        return current + enValue.GetEnumValueOrInt();
+                    });
+
+                    ret += "]";
+                    return ret;
+
+                case Enum eValue when !Attribute.IsDefined(type, typeof(FlagsAttribute)):
+                    var eMember = type.GetMember(eValue.ToString()).First();
+                    return Attribute.IsDefined(eMember, typeof(EnumValueAttribute)) ? eValue.GetEnumValueOrInt() : $"[{Enum.Format(type, eValue, "F")}]";
 
                 case string[] aString:
-                    return string.Join("|", value);
+                    return string.Join("|", aString);
 
                 case Stream aStream:
                     return Convert.ToBase64String(aStream.ReadAllBytes());
@@ -58,14 +85,9 @@ namespace ACBrLib.Core
             }
         }
 
-        public static T UnWrap<T>(string value, T defaultValue = default)
-        {
-            return (T)UnWrap(typeof(T), value, defaultValue);
-        }
-
         public static object UnWrap(Type type, string value, object defaultValue)
         {
-            if (!IsPrimitive(type)) throw new ArgumentException("Apenas tipos primitivos podem ser convertidos.");
+            if (!CanWrapUnwrap(type)) throw new ArgumentException("Apenas tipos primitivos podem ser convertidos.");
             if (string.IsNullOrEmpty(value)) return defaultValue;
 
             if (type == typeof(decimal) || type == typeof(decimal?))
@@ -118,20 +140,35 @@ namespace ACBrLib.Core
                 ret.Position = 0;
             }
 
-            if (type.IsSubclassOf(typeof(Enum)))
-            {
-                var enumType = type.IsGenericType ? type.GetGenericArguments()[0] : type;
-                object enumValue = enumType.GetMembers().Where(x => x.HasAttribute<EnumValueAttribute>())
-                    .SingleOrDefault(x => x.GetAttribute<EnumValueAttribute>().Value == value)?.Name;
+            if (!type.IsSubclassOf(typeof(Enum))) return value;
 
-                return enumValue == null ? Enum.ToObject(enumType, Convert.ToInt32(value)) :
-                                           Enum.Parse(enumType, enumValue.ToString());
+            var enumType = type.IsGenericType ? type.GetGenericArguments()[0] : type;
+            var member = enumType.GetMembers(BindingFlags.Public | BindingFlags.Static).FirstOrDefault();
+
+            if (!Attribute.IsDefined(member, typeof(EnumValueAttribute)))
+                return Attribute.IsDefined(type, typeof(FlagsAttribute)) ? Enum.Parse(enumType, value.Trim('[', ']'), true) :
+                                                                           Enum.ToObject(enumType, Convert.ToInt32(value));
+
+            if (Attribute.IsDefined(type, typeof(FlagsAttribute)))
+            {
+                var valores = value.Trim('[', ']').Split(',');
+                var enums = enumType.GetMembers().Where(x => valores.Contains(x.GetAttribute<EnumValueAttribute>().Value))
+                    .Select(x => (Enum)Enum.Parse(enumType, x.Name.ToString()));
+                var enumNames = "";
+                foreach (var eValue in enums)
+                {
+                    if (enumNames.Length > 0) enumNames += ",";
+                    enumNames += eValue.ToString();
+                }
+
+                return Enum.Parse(enumType, enumNames, true);
             }
 
-            return value;
+            var eName = enumType.GetMembers(BindingFlags.Public | BindingFlags.Static).Single(x => x.GetAttribute<EnumValueAttribute>().Value == value).Name;
+            return Enum.Parse(enumType, eName);
         }
 
-        internal static bool IsPrimitive(Type type)
+        public static bool CanWrapUnwrap(Type type)
         {
             return type == typeof(string)
                    || type == typeof(char)
@@ -152,8 +189,11 @@ namespace ACBrLib.Core
                    || type == typeof(DateTime)
                    || type == typeof(DateTimeOffset)
                    || type == typeof(TimeSpan)
+                   || type == typeof(Stream)
                    || type.IsEnum
-                   || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsPrimitive(type.GetGenericArguments()[0]);
+                   || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && CanWrapUnwrap(type.GetGenericArguments()[0]);
         }
+
+        #endregion Methods
     }
 }

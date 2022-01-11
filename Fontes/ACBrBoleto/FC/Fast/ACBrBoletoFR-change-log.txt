@@ -50,6 +50,8 @@ Símbolo : Significado
 [-] TK-2255 Correção da impressão do QrCode do EMV do PIX
 [*] TK-2247 Alterado a visibilidade das propriedades do relatório e exportadores para publico, afim de manipulação direta pelo programador;
 Report , HTMLExport, JPEGExport, PDFExport
+[+] TK-2256 Adicionado Suporte a Stream 
+
 Por : Pandaaa
 
 21/10/2021

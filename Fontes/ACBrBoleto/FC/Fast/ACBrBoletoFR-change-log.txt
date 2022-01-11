@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2022
+[-] TK-2255 Correção da impressão do QrCode do EMV do PIX
+[*] TK-2247 Alterado a visibilidade das propriedades do relatório e exportadores para publico, afim de manipulação direta pelo programador;
+Report , HTMLExport, JPEGExport, PDFExport
+Por : Pandaaa
+
 21/10/2021
 --ACBrBoletoFR--
 [*] Remoção da classe TdmACBrBoletoFCFR e do .dfm associado, com criação dos

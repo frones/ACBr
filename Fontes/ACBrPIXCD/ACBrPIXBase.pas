@@ -71,6 +71,7 @@ const
 
 type
   TACBrPIXTipoChave = ( tchNenhuma,
+                        tchEmail,
                         tchCPF,
                         tchCNPJ,
                         tchCelular,

@@ -81,26 +81,33 @@ begin
   l := Length(s);
   Result := tchNenhuma;
 
-  if (l = 11) then
+  if StrIsNumber(s) then
   begin
-    e := ACBrValidador.ValidarCPF(s);
-    if (e = '') then
-      Result := tchCPF;
-  end
-  else if (l = 14) then
-  begin
-    if copy(s,1,3) = '+55' then  // Fone BR
+    if (l = 11) then
     begin
-      if StrIsNumber(copy(s,4,l)) then
-        Result := tchCelular;
+      e := ACBrValidador.ValidarCPF(s);
+      if (e = '') then
+        Result := tchCPF;
     end
-    else
+
+    else if (l = 14) then
     begin
       e := ACBrValidador.ValidarCNPJ(s);
       if (e = '') then
         Result := tchCNPJ;
-    end;
+    end
   end
+
+  else if (copy(s,1,3) = '+55') and (l=14) and StrIsNumber(copy(s,4,l)) then
+    Result := tchCelular
+
+  else if (pos('@', s) > 0) then
+  begin
+    e := ACBrValidador.ValidarEmail(s);
+    if (e = '') then
+      Result := tchEmail;
+  end
+
   else if (l = 36) then
   begin
     if (copy(s,09,1) = '-') and

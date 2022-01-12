@@ -44,6 +44,7 @@ interface
 uses
   Classes, SysUtils
   {$IfNDef NOGUI}
+   ,ACBrDelphiZXingQRCode
    {$IfDef FPC}
     ,LCLType, InterfaceBase
    {$Else}
@@ -89,6 +90,8 @@ procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
 procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean;
   out AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
   LuminosityThreshold: Byte = C_LUMINOSITY_THRESHOLD);
+procedure PintarQRCode(const QRCodeData: String; ABitMap: TBitmap;
+  const AEncoding: TQRCodeEncoding);
 {$EndIf}
 
 implementation
@@ -486,88 +489,143 @@ begin
 end;
 
 {$IfNDef NOGUI}
-{$IfNDef FPC}
-procedure RedGreenBlue(rgb: TColorRef; out Red, Green, Blue: Byte);
-begin
-  Red := rgb and $000000ff;
-  Green := (rgb shr 8) and $000000ff;
-  Blue := (rgb shr 16) and $000000ff;
-end;
-{$EndIf}
-
-procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean; out
-  AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
-  LuminosityThreshold: Byte);
-var
-  MS: TMemoryStream;
-  Row, Col: Integer;
-  cRed, cGreen, cBlue: Byte;
-  Luminosity: Int64;
-  ByteStr: String;
-  Bit: Boolean;
-  {$IfDef FMX}
-   BitMapData: TBitmapData;
-   APixel: TAlphaColor;
-  {$Else}
-   APixel: TColor;
-  {$EndIf}
-begin
-  AWidth := 0; AHeight := 0; ARasterStr := '';
-
-  if (ABmpSrc.PixelFormat = {$IfDef FMX}TPixelFormat.RGB{$Else}pf1bit{$EndIf}) then  // Já é Mono ?
+ {$IfNDef FPC}
+  procedure RedGreenBlue(rgb: TColorRef; out Red, Green, Blue: Byte);
   begin
-    MS := TMemoryStream.Create;
-    try
-      ABmpSrc.SaveToStream(MS);
-      BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr);
-    finally
-      MS.Free;
-    end;
-
-    Exit;
+    Red := rgb and $000000ff;
+    Green := (rgb shr 8) and $000000ff;
+    Blue := (rgb shr 16) and $000000ff;
   end;
+ {$EndIf}
 
-  AWidth := ABmpSrc.Width;
-  AHeight := ABmpSrc.Height;
-  for Row := 0 to AHeight - 1 do
-  begin
-    ByteStr := '';
+ procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean; out
+   AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
+   LuminosityThreshold: Byte);
+ var
+   MS: TMemoryStream;
+   Row, Col: Integer;
+   cRed, cGreen, cBlue: Byte;
+   Luminosity: Int64;
+   ByteStr: String;
+   Bit: Boolean;
+   {$IfDef FMX}
+    BitMapData: TBitmapData;
+    APixel: TAlphaColor;
+   {$Else}
+    APixel: TColor;
+   {$EndIf}
+ begin
+   AWidth := 0; AHeight := 0; ARasterStr := '';
 
-    {$IfDef FMX}
-    if ABmpSrc.Map(TMapAccess.Read, BitMapData) then
-    try
-    {$EndIf}
-      for Col := 0 to AWidth - 1 do
-      begin
-        {$IfDef FMX}
-        APixel := BitMapData.GetPixel(Col, Row);
-        {$Else}
-        APixel := ABmpSrc.Canvas.Pixels[Col, Row];
-        {$EndIf}
-        cRed := 0; cGreen := 0; cBlue := 0;
-        RedGreenBlue(APixel, cRed, cGreen, cBlue);
-        Luminosity := Trunc( ( cRed * 0.3 ) + ( cGreen  * 0.59 ) + ( cBlue * 0.11 ) );
-        Bit := ( Luminosity > LuminosityThreshold );
-        if InvertImg then
-          Bit := not Bit;
+   if (ABmpSrc.PixelFormat = {$IfDef FMX}TPixelFormat.RGB{$Else}pf1bit{$EndIf}) then  // Já é Mono ?
+   begin
+     MS := TMemoryStream.Create;
+     try
+       ABmpSrc.SaveToStream(MS);
+       BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr);
+     finally
+       MS.Free;
+     end;
 
-        ByteStr := ByteStr + ifthen(Bit,'1','0');
-        if (Length(ByteStr) = 8) then
-        begin
-          ARasterStr := ARasterStr + AnsiChr(BinToInt(ByteStr));
-          ByteStr := '';
-        end;
-      end;
-    {$IfDef FMX}
-    finally
-      ABmpSrc.Unmap(BitMapData);
-    end;
-    {$EndIf}
+     Exit;
+   end;
 
-    if (Length(ByteStr) > 0) then
-      ARasterStr := ARasterStr + AnsiChr(BinToInt(PadRight(ByteStr, 8, '0')));
-  end;
-end;
+   AWidth := ABmpSrc.Width;
+   AHeight := ABmpSrc.Height;
+   for Row := 0 to AHeight - 1 do
+   begin
+     ByteStr := '';
+
+     {$IfDef FMX}
+     if ABmpSrc.Map(TMapAccess.Read, BitMapData) then
+     try
+     {$EndIf}
+       for Col := 0 to AWidth - 1 do
+       begin
+         {$IfDef FMX}
+         APixel := BitMapData.GetPixel(Col, Row);
+         {$Else}
+         APixel := ABmpSrc.Canvas.Pixels[Col, Row];
+         {$EndIf}
+         cRed := 0; cGreen := 0; cBlue := 0;
+         RedGreenBlue(APixel, cRed, cGreen, cBlue);
+         Luminosity := Trunc( ( cRed * 0.3 ) + ( cGreen  * 0.59 ) + ( cBlue * 0.11 ) );
+         Bit := ( Luminosity > LuminosityThreshold );
+         if InvertImg then
+           Bit := not Bit;
+
+         ByteStr := ByteStr + ifthen(Bit,'1','0');
+         if (Length(ByteStr) = 8) then
+         begin
+           ARasterStr := ARasterStr + AnsiChr(BinToInt(ByteStr));
+           ByteStr := '';
+         end;
+       end;
+     {$IfDef FMX}
+     finally
+       ABmpSrc.Unmap(BitMapData);
+     end;
+     {$EndIf}
+
+     if (Length(ByteStr) > 0) then
+       ARasterStr := ARasterStr + AnsiChr(BinToInt(PadRight(ByteStr, 8, '0')));
+   end;
+ end;
+
+ procedure PintarQRCode(const QRCodeData: String; ABitMap: TBitmap;
+   const AEncoding: TQRCodeEncoding);
+ var
+   QRCode: TDelphiZXingQRCode;
+   QRCodeBitmap: TBitmap;
+   Row, Column: Integer;
+   {$IfDef FMX}
+    BitMapData: TBitmapData;
+   {$EndIf}
+ begin
+   QRCode       := TDelphiZXingQRCode.Create;
+   QRCodeBitmap := TBitmap.Create;
+   try
+     QRCode.Encoding  := AEncoding;
+     QRCode.QuietZone := 1;
+     QRCode.Data      := widestring(QRCodeData);
+
+     //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
+     QRCodeBitmap.Width  := QRCode.Columns;
+     QRCodeBitmap.Height := QRCode.Rows;
+
+     {$IfDef FMX}
+     if QRCodeBitmap.Map(TMapAccess.Read, BitMapData) then
+     try
+     {$EndIf}
+       for Row := 0 to QRCode.Rows - 1 do
+       begin
+         for Column := 0 to QRCode.Columns - 1 do
+         begin
+           {$IfDef FMX}
+             if (QRCode.IsBlack[Row, Column]) then
+               BitMapData.SetPixel(Column, Row, claBlack)
+             else
+               BitMapData.SetPixel(Column, Row, claWhite);
+           {$Else}
+             if (QRCode.IsBlack[Row, Column]) then
+               QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+             else
+               QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+           {$EndIf}
+         end;
+       end;
+     {$IfDef FMX}
+     finally
+       QRCodeBitmap.Unmap(BitMapData);
+     end;
+     {$EndIf}
+
+     ABitMap.Assign(QRCodeBitmap);
+   finally
+     QRCode.Free;
+     QRCodeBitmap.Free;
+   end;
+ end;
 {$EndIf}
 
 end.

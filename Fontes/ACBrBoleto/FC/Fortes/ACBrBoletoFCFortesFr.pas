@@ -1196,7 +1196,9 @@ var
 
 implementation
 
-Uses ACBrUtil, strutils, ACBrDFeReport, ACBrDelphiZXingQRCode ;
+Uses
+  strutils,
+  ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode;
 
 {$ifdef FPC}
   {$R *.lfm}

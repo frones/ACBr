@@ -719,8 +719,10 @@ type
 implementation
 
 uses
-  DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe,
-  ACBrDFeReport, ACBrDFeReportFortes, ACBrDelphiZXingQRCode;
+  DateUtils,
+  ACBrUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrCTe, pcteConversaoCTe,
+  ACBrDFeUtil, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
   {$R *.dfm}

@@ -40,9 +40,10 @@ uses
   Classes, SysUtils, ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass, pcnCFe,
   pcnCFeCanc, pcnConversao, DB, DBClient, frxClass, frxExportPDF, frxDBSet, frxBarcode,
   frxExportHTML;
+
 type
  TTipoImpressao = (tiNormal,tiResumido,tiCancelado);
-type
+
   EACBrSATExtratoFR = class(Exception);
 
   { TACBrSATExtratoFR }
@@ -115,7 +116,9 @@ type
 implementation
 
 uses
-  ACBrDFeReport, ACBrValidador, StrUtils, ACBrDelphiZXingQRCode, ACBrUtil, ACBrDFeUtil, ACBrSAT;
+  StrUtils,
+  ACBrDFeUtil, ACBrSAT,
+  ACBrValidador, ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode;
 
 { TACBrSATExtratoFR }
 

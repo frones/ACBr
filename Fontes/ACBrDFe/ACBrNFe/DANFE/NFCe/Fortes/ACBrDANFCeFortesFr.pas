@@ -34,19 +34,20 @@ unit ACBrDANFCeFortesFr;
 
 interface
 
-uses Classes, SysUtils,
-     {$IFDEF FPC}
-       LResources,
-     {$ENDIF}
-     {$IfDef FMX}
-       FMX.Forms, FMX.Graphics,
-     {$Else}
-       Forms, Graphics,
-     {$EndIf}
-     ACBrNFeDANFEClass, ACBrBase,
-     pcnNFe, pcnConversao, ACBrDFeUtil,
-     RLConsts, RLUtils, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
-     RLFilters, RLPrinters, RLTypes, Controls;
+uses
+  Classes, SysUtils,
+  {$IFDEF FPC}
+   LResources,
+  {$ENDIF}
+  {$IfDef FMX}
+   FMX.Forms, FMX.Graphics,
+  {$Else}
+   Forms, Graphics,
+  {$EndIf}
+  ACBrNFeDANFEClass, ACBrBase,
+  pcnNFe, pcnConversao, ACBrDFeUtil,
+  RLConsts, RLUtils, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
+  RLFilters, RLPrinters, RLTypes, Controls;
 
 const
   CACBrNFeDANFCeFortes_Versao = '0.1.0' ;
@@ -322,8 +323,8 @@ implementation
 
 uses
   StrUtils, math,
-  ACBrDelphiZXingQRCode, ACBrNFe,
-  ACBrValidador, ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrDFeReport, ACBrUtil;
+  ACBrNFe, ACBrDFeDANFeReport, ACBrDFeReportFortes,
+  ACBrValidador, ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode;
 
 {$ifdef FPC}
   {$R *.lfm}

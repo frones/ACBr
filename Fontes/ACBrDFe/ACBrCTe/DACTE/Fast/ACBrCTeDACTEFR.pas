@@ -203,7 +203,8 @@ var
 implementation
 
 uses
-  pcteConversaoCTe, ACBrDFeUtil, ACBrDFeReport, ACBrDelphiZXingQRCode, ACBrValidador;
+  pcteConversaoCTe,
+  ACBrDFeUtil, ACBrImage, ACBrDelphiZXingQRCode, ACBrValidador;
 
 function CollateBr(Str: string): string;
 var

@@ -163,7 +163,10 @@ type
 
 implementation
 
-uses ACBrMDFe, ACBrUtil, ACBrDFeReport, ACBrDelphiZXingQRCode, StrUtils, pmdfeConversaoMDFe, ACBrValidador;
+uses
+  StrUtils,
+  ACBrMDFe, pmdfeConversaoMDFe,
+  ACBrUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
 
 function CollateBr(Str: string): string;
 var

@@ -42,7 +42,6 @@ uses
   SysUtils, Classes, Forms, DB, DBClient, Graphics,
   pcnEnvEventoNFe, pcnRetInutNFe, pcnNFe, pcnConversao,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
-  ACBrUtil, ACBrDelphiZXingQrCode,
   frxClass, frxExportPDF, frxDBSet, frxBarcode;
 
 type
@@ -184,7 +183,8 @@ implementation
 
 uses
   StrUtils, Math, DateUtils,
-  ACBrNFe, ACBrNFeDANFEFR, ACBrDFeUtil, ACBrValidador,
+  ACBrNFe, ACBrNFeDANFEFR, ACBrDFeUtil,
+  ACBrUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
   pcnConversaoNFe;
 
 { TACBrNFeFRClass }

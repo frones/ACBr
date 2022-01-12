@@ -42,15 +42,16 @@ unit ACBrSATExtratoFortesFr;
 
 interface
 
-uses Classes, SysUtils,
-     {$IFDEF FPC}
-       LResources,
-     {$ENDIF}
-     Forms, Graphics,
-     ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
-     pcnCFe, pcnCFeCanc, pcnConversao,
-     RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
-     RLFilters, RLPrinters, Controls, StrUtils;
+uses
+  Classes, SysUtils,
+  {$IFDEF FPC}
+   LResources,
+  {$ENDIF}
+  Forms, Graphics,
+  ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
+  pcnCFe, pcnCFeCanc, pcnConversao,
+  RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
+  RLFilters, RLPrinters, Controls, StrUtils;
 
 type
 
@@ -362,10 +363,11 @@ type
 
 implementation
 
-uses  math, RLTypes,
-     ACBrDelphiZXingQRCode, ACBrValidador, ACBrDFeUtil, ACBrUtil,
-     ACBrDFeReport, ACBrDFeReportFortes,
-     RLUtils;
+uses
+  math, RLTypes,
+  ACBrDFeUtil, ACBrDFeReport, ACBrDFeReportFortes,
+  ACBrValidador, ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode,
+  RLUtils;
 
 {$ifdef FPC}
   {$R *.lfm}

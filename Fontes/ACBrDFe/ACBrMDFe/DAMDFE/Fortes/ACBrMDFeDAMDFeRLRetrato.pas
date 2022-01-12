@@ -192,8 +192,8 @@ implementation
 uses
   StrUtils, DateUtils,
   pmdfeMDFe,
-  ACBrUtil, ACBrDFeUtil, ACBrValidador, ACBrDFeReport, ACBrDFeReportFortes,
-  ACBrDelphiZXingQRCode;
+  ACBrUtil, ACBrDFeUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrDFeReportFortes;
 
 {$ifdef FPC}
  {$R *.lfm}

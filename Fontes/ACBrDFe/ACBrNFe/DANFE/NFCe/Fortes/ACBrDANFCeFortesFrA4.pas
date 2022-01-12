@@ -44,7 +44,7 @@ uses
   Variants, Graphics, Controls, Forms, Dialogs,
   ACBrBase, ACBrNFeDANFEClass, pcnNFe, ACBrNFe,
   RLReport, RLHTMLFilter, RLFilters, RLPDFFilter,
-  ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador;
+  ACBrUtil, pcnConversao, ACBrDFeUtil;
 
 type
   TACBrNFeDANFCeFortesA4Filtro = (fiNenhum, fiPDF, fiHTML ) ;
@@ -305,8 +305,11 @@ implementation
   {$R *.dfm}
 {$ENDIF}
 
-uses RLPrinters, StrUtils,
-     ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrDFeREport, ACBrDelphiZXingQRCode;
+uses
+  StrUtils,
+  RLPrinters,
+  ACBrDFeDANFeReport, ACBrDFeReportFortes,
+  ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
 
 function TfrmACBrDANFCeFortesFrA4.CompoemEnderecoCFe: String;
 var

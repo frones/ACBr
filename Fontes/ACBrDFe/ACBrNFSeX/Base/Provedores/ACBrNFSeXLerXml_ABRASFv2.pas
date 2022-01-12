@@ -437,6 +437,9 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
 
+  if AuxNode = nil then
+    AuxNode := ANode;
+
   if AuxNode <> nil then
   begin
     LerRps(AuxNode);
@@ -648,6 +651,9 @@ begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('Rps');
+
+  if AuxNode = nil then
+    AuxNode := ANode;
 
   if AuxNode <> nil then
   begin

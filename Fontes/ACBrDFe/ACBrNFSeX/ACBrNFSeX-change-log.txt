@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/01/2022
+-- ISSGoiania.GravarXml --
+[*] Ajuste para não gerar a tag <Aliquota>.
+   Por: Haroldo
+-- ISSGoiania.Provider --
+[*] Sobrecarga do método TratarRetornoConsultaNFSeporRps pelo fato
+    do provedor retornar o XML da NFS-e com layout fora do padrão.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes para ler corretamente o XML da NFS-e do provedor ISSGoiania.
+   Por: Italo Giurizzato Junior
+
 10/01/2022
 -- ACBrNFSeXServicos --
 [*] Ajustes nas URLs da cidade de Cruzeiro/SP.

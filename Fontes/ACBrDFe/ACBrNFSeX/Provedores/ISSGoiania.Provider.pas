@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXConsts,
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
@@ -59,6 +59,8 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+
+    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
   end;
 
 implementation
@@ -121,6 +123,111 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderISSGoiania200.TratarRetornoConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  Document: TACBrXmlDocument;
+  ANode, AuxNode: TACBrXmlNode;
+  AErro: TNFSeEventoCollectionItem;
+  ANota: NotaFiscal;
+  NumNFSe, NumRps: String;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ProcessarMensagemErros(Document.Root, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := Document.Root.Childrens.FindAnyNs('CompNfse');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+      if AuxNode <> nil then
+      begin
+        AuxNode := AuxNode.Childrens.FindAnyNs('Confirmacao');
+
+        Response.Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Response.DescSituacao := 'Nota Cancelada';
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+
+      if AuxNode <> nil then
+      begin
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+        with Response do
+        begin
+          NumeroNota := NumNFSe;
+          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+        end;
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+        if ANota = nil then
+        begin
+          AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+          if AuxNode <> nil then
+          begin
+            AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+            NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          end;
+        end;
+
+        if Assigned(ANota) then
+          ANota.XML := ANode.OuterXml
+        else
+        begin
+          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+        end;
+
+        SalvarXmlNfse(ANota);
+      end
+      else
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 

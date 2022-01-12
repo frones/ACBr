@@ -2219,10 +2219,11 @@ end;
 
 procedure StringCrc16Test.Computar;
 begin
-  CheckEquals(47933,StringCrc16('123456789'));
-  CheckEquals(14809,StringCrc16('987654321'));
-  CheckEquals(28843,StringCrc16('Projeto ACBr'));
-  CheckEquals(59551,StringCrc16('ACBr Projeto'));
+  //O cast para Cardinal é por conta do Delphi 7 (usando DUnit)
+  CheckEquals(Cardinal(47933),StringCrc16('123456789'));
+  CheckEquals(Cardinal(14809),StringCrc16('987654321'));
+  CheckEquals(Cardinal(28843),StringCrc16('Projeto ACBr'));
+  CheckEquals(Cardinal(59551),StringCrc16('ACBr Projeto'));
 end;
 
 { SomaAscIITest }

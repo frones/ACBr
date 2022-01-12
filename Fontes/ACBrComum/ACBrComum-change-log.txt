@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2022
+-- ACBrUtil --
+[*] Ajuste em "Iso8601ToDateTime", para considerar os Milisegundos, caso eles
+    estejam na String de entrada
+    (por: DSA)
+
 17/11/2021
 -- ACBrUtil --
 [-] Ajuste em StringToDateTime, para funcionar corretamente no Delphi Alexandria,

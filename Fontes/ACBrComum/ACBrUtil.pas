@@ -996,8 +996,8 @@ end ;
  ---------------------------------------------------------------------------- }
 function IntToLEStr(AInteger: Integer; BytesStr: Integer): AnsiString;
 var
-   AHexStr: String;
-   LenHex, P, DecVal: Integer;
+  AHexStr: String;
+  LenHex, P, DecVal: Integer;
 begin
   LenHex  := BytesStr * 2 ;
   AHexStr := IntToHex(AInteger,LenHex);
@@ -2073,7 +2073,7 @@ end ;
 
 function Iso8601ToDateTime(const AISODate: string): TDateTime;
 var
-  y, m, d, h, n, s: word;
+  y, m, d, h, n, s, z: word;
 begin
   y := StrToInt(Copy(AISODate, 1, 4));
   m := StrToInt(Copy(AISODate, 6, 2));
@@ -2081,8 +2081,9 @@ begin
   h := StrToInt(Copy(AISODate, 12, 2));
   n := StrToInt(Copy(AISODate, 15, 2));
   s := StrToInt(Copy(AISODate, 18, 2));
+  z := StrToIntDef(Copy(AISODate, 21, 3), 0);
 
-  Result := EncodeDateTime(y,m,d, h,n,s,0);
+  Result := EncodeDateTime(y,m,d, h,n,s,z);
 end;
 
 function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;

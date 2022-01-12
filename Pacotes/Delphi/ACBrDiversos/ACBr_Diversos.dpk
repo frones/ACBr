@@ -44,7 +44,6 @@ contains
   ACBrBarCode in '..\..\..\Fontes\ACBrDiversos\ACBrBarCode.pas',
   ACBrEnterTab in '..\..\..\Fontes\ACBrDiversos\ACBrEnterTab.pas',
   AJBarcode in '..\..\..\Fontes\Terceiros\AJBarcode\AJBarcode.pas',
-  ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas',
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
   JsonDataObjects_ACBr in '..\..\..\Fontes\Terceiros\JsonDataObjects\Source\JsonDataObjects_ACBr.pas',
   {$EndIf}

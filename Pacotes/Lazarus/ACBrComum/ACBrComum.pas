@@ -9,7 +9,8 @@ interface
 
 uses
   ACBrBase, ACBrConsts, ACBrUtil, ACBrReg, ACBrAAC, ACBrPAFClass, 
-  ACBrCompress, ACBrImage, StrUtilsEx, LazarusPackageIntf;
+  ACBrCompress, ACBrImage, StrUtilsEx, ACBrDelphiZXingQRCode, 
+  LazarusPackageIntf;
 
 implementation
 

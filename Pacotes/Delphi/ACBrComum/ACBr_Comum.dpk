@@ -42,7 +42,9 @@ contains
   ACBrCompress in '..\..\..\Fontes\ACBrComum\ACBrCompress.pas',
   ACBrImage in '..\..\..\Fontes\ACBrComum\ACBrImage.pas',
   ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas',
-  StrUtilsEx in '..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas';
+  StrUtilsEx in '..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas',
+  ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas';
+
 
 //  {$IfNDef USE_ZLibExGZ}
 //   ACBrZLibExGZ,

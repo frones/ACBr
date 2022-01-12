@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBrDiversos"/>
     <Type Value="RunAndDesignTime"/>
@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDiversos;..\..\..\Fontes\Terceiros\AJBarcode;..\..\..\Fontes\Terceiros\TGif;..\..\..\Fontes\Terceiros\DelphiZXingQRCode;..\..\..\Fontes\Terceiros\json4delphi\src"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDiversos;..\..\..\Fontes\Terceiros\AJBarcode;..\..\..\Fontes\Terceiros\TGif;..\..\..\Fontes\Terceiros\json4delphi\src"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDiversos\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -22,7 +22,7 @@
     <Description Value="ACBr - Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="9"/>
-    <Files Count="18">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrBarCode.pas"/>
         <UnitName Value="ACBrBarCode"/>
@@ -69,34 +69,31 @@
         <UnitName Value="AJBarcode"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas"/>
-        <UnitName Value="ACBrDelphiZXingQRCode"/>
-      </Item12>
-      <Item13>
         <Filename Value="..\..\..\Fontes\Terceiros\TGif\Gif1.pas"/>
         <UnitName Value="Gif1"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\Fontes\Terceiros\TGif\Gif3.pas"/>
         <UnitName Value="Gif3"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\LCalculadora.pas"/>
         <UnitName Value="LCalculadora"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrInStore.pas"/>
         <UnitName Value="ACBrInStore"/>
-      </Item16>
-      <Item17>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCargaBal.pas"/>
         <UnitName Value="ACBrCargaBal"/>
-      </Item17>
-      <Item18>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas"/>
         <UnitName Value="Jsons"/>
-      </Item18>
+      </Item17>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrComum"/>
@@ -107,7 +104,6 @@
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
   </Package>
 </CONFIG>

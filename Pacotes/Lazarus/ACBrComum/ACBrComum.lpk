@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBrComum"/>
     <Type Value="RunAndDesignTime"/>
@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="..\..\..\Fontes\ACBrComum"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils;..\..\..\Fontes\Terceiros\FastStringReplace"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils;..\..\..\Fontes\Terceiros\FastStringReplace;..\..\..\Fontes\Terceiros\DelphiZXingQRCode"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrComum\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -25,7 +25,7 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="11">
+    <Files Count="12">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>
@@ -60,19 +60,24 @@
         <UnitName Value="ACBrCompress"/>
       </Item8>
       <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrImage.pas"/>
+        <UnitName Value="ACBrImage"/>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\Fontes\Terceiros\GZIPUtils\GZIPUtils.pas"/>
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="GZIPUtils"/>
-      </Item9>
-      <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrImage.pas"/>
-        <UnitName Value="ACBrImage"/>
       </Item10>
       <Item11>
         <Filename Value="..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas"/>
         <UnitName Value="StrUtilsEx"/>
       </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas"/>
+        <UnitName Value="ACBrDelphiZXingQRCode"/>
+      </Item12>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="laz_synapse"/>

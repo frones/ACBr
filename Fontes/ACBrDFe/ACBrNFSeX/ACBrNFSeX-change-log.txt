@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/01/2022
+-- Ginfes.Provider --
+[*] Corrigido a tag na lista de tags de retorno.
+   Por: Italo Giurizzato Junior
 -- ISSGoiania.GravarXml --
 [*] Ajuste para não gerar a tag <Aliquota>.
    Por: Haroldo

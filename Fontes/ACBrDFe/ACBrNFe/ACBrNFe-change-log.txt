@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/01/2021
+-- ACBrNFeWebServices --
+[-] Ajustes para evitar a rejeição
+    "XML da área de dados com codificação diferente de UTF-8",
+    Quando enviando com a compactação ligada
+    (por: DSA)
+
 20/12/2021
 -- ACBrNFeXmlReader --
 [*] Ajustes por conta da alteração do nome da função

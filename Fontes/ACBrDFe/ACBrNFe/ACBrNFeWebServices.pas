@@ -621,7 +621,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrNFe,
+  ACBrUtil, ACBrCompress, ACBrNFe, ACBrConsts,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciDFe,
   pcnConsCad, pcnLeitor, ACBrIntegrador;
@@ -1119,7 +1119,7 @@ begin
     vNotas + '</enviNFe>';
 
   if FZipado then
-    FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
+    FPDadosMsg := EncodeBase64(GZipCompress(CUTF8DeclaracaoXML+FPDadosMsg));
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then

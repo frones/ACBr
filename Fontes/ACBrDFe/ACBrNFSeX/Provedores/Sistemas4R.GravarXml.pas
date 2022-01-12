@@ -66,6 +66,7 @@ begin
   FormatoEmissao     := tcDatHor;
   FormatoCompetencia := tcDatHor;
   GerarIDDeclaracao  := False;
+  GerarIDRps := True;
 end;
 
 end.

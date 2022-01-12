@@ -106,7 +106,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode;
+  ACBrUtil, ACBrImage, ACBrBancoBanestes, ACBrDelphiZXingQRCode;
 
 { TdmACBrBoletoFCFR }
 

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/01/2022
+-- ACBrNFSeXServicos --
+[*] Correção na URL da cidade de Sorriso/MT
+   Por: Leandro Ledo
 -- Sistemas4R.GravarXml --
 [*] Ajuste necessário para que o Rps seja processado com sucesso.
    Por: Danny

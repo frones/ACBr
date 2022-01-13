@@ -355,7 +355,7 @@ function ConvertPEMToOpenSSH(APubKey: PEVP_PKEY): String;
     Result := IntToBEStr(Trunc(l/2), 4) + HexToAsciiDef(s, ' ');
   end;
 Var
-  s, m, e: AnsiString;
+  s, m, e: String;
 begin
   ExtractModulusAndExponentFromKey(APubKey, m, e);
 

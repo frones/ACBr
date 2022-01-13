@@ -37,7 +37,7 @@ unit ACBrOpenSSLUtils;
 interface
 
 uses
-  Classes, SysUtils, ctypes, StrUtils,
+  Classes, SysUtils, StrUtils,
   OpenSSLExt,
   ACBrConsts, ACBrBase;
 
@@ -230,7 +230,7 @@ end;
 
 function OpenSSLFullVersion: String;
 var
-  n: clong;
+  n: LongInt;
   s: String;
   ps, pe: Integer;
 begin

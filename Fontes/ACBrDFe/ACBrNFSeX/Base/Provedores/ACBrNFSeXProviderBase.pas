@@ -956,6 +956,8 @@ begin
     Exit;
   end;
 
+  AService := nil;
+
   try
     try
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
@@ -1044,6 +1046,8 @@ begin
     Exit;
   end;
 
+  AService := nil;
+
   try
     try
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
@@ -1107,6 +1111,8 @@ begin
     Exit;
   end;
 
+  AService := nil;
+
   try
     try
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
@@ -1168,6 +1174,8 @@ begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;
   end;
+
+  AService := nil;
 
   try
     try
@@ -1232,6 +1240,8 @@ begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;
   end;
+
+  AService := nil;
 
   try
     try
@@ -1319,6 +1329,8 @@ begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;
   end;
+
+  AService := nil;
 
   try
     try
@@ -1419,6 +1431,8 @@ begin
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
     Exit;
   end;
+
+  AService := nil;
 
   try
     try

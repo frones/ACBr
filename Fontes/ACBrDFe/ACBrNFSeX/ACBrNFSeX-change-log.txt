@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/01/2022
+-- ACBrNFSeXProviderBase --
+[*] Em vários métodos a variável AService não estava sendo inicializada.
+   Por: Italo Giurizzato Junior
+
 12/01/2022
 -- ACBrNFSeXServicos --
 [*] Correção na URL da cidade de Sorriso/MT

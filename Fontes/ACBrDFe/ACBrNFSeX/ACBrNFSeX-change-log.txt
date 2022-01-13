@@ -44,6 +44,20 @@ Símbolo : Significado
 
 
 13/01/2022
+-- ACBrNFSeXConversao --
+[*] Remoção de tipos e funções que não são mais utilizadas pelo
+    componente.
+   Por: Italo Giurizzato Junior
+-- ISSGoiania.Provider --
+[*] Sobrecarga do método TratarRetornoEmitir pelo fato
+    do provedor retornar o XML da NFS-e com layout fora do padrão.
+   Por: Italo Giurizzato Junior
+-- ISSDigital.GravarXml --
+[*] Ajuste para gerar o ItemListaServico sem formatação.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Correção na URL da cidade de Tatui/SP
+   Por: Danny
 -- ACBrNFSeXProviderBase --
 [*] Em vários métodos a variável AService não estava sendo inicializada.
    Por: Italo Giurizzato Junior

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBrOpenSSL"/>
     <Type Value="RunAndDesignTime"/>
@@ -22,7 +22,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="1"/>
-    <Files Count="3">
+    <Files Count="4">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas"/>
         <UnitName Value="ACBrEAD"/>
@@ -32,11 +32,16 @@
         <UnitName Value="OpenSSLExt"/>
       </Item2>
       <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLUtils.pas"/>
+        <UnitName Value="ACBrOpenSSLUtils"/>
+      </Item3>
+      <Item4>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrOpenSSLReg"/>
-      </Item3>
+      </Item4>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrComum"/>

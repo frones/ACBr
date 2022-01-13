@@ -8,7 +8,7 @@ unit ACBrOpenSSL;
 interface
 
 uses
-  ACBrEAD, OpenSSLExt, ACBrOpenSSLReg, LazarusPackageIntf;
+  ACBrEAD, OpenSSLExt, ACBrOpenSSLUtils, ACBrOpenSSLReg, LazarusPackageIntf;
 
 implementation
 

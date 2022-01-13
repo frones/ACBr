@@ -35,30 +35,27 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Mask, {$IFDEF demo_forte} uDMForte, {$ELSE}uDMFast, {$ENDIF}ACBrBase, ACBrBoleto, ACBrUtil,
-  ACBrBoletoConversao, ACBrBoletoRetorno;
+  Dialogs, StdCtrls, ExtCtrls, Mask,
+  {$IFDEF demo_forte} uDMForte,{$ELSE}uDMFast,{$ENDIF}
+  ACBrBase, ACBrBoleto, ACBrUtil,
+  ACBrBoletoConversao, ACBrBoletoRetorno, Vcl.ComCtrls;
 
 type
   TfrmDemo = class(TForm)
-    GroupBox1: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
-    GroupBox5: TGroupBox;
-    Panel1: TPanel;
-    Button1: TButton;
-    Button2: TButton;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    grpFichaBancaria: TGroupBox;
     Button3: TButton;
-    Button4: TButton;
+    btnBoletoIndividual: TButton;
     Button5: TButton;
-    Button6: TButton;
-    Button7: TButton;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
+    grpCNAB: TGroupBox;
+    grpWebServicesApi: TGroupBox;
+    btnGerarRemessa: TButton;
+    btnLerRetorno: TButton;
+    btnWSConsulta: TButton;
+    btnWSRegistrar: TButton;
+    GroupBox2: TGroupBox;
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
@@ -67,27 +64,6 @@ type
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
-    Label15: TLabel;
-    Label16: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
-    Label19: TLabel;
-    Label20: TLabel;
-    Label21: TLabel;
-    Label22: TLabel;
-    Label23: TLabel;
-    Label24: TLabel;
-    Label25: TLabel;
-    Label26: TLabel;
-    Label27: TLabel;
-    Label28: TLabel;
-    Label29: TLabel;
-    edtLocalPag: TEdit;
-    edtEspecieDoc: TEdit;
-    edtEspecieMod: TEdit;
-    cbxAceite: TComboBox;
-    edtCarteira: TEdit;
-    edtNossoNro: TEdit;
     edtMoraJuros: TEdit;
     edtValorDesconto: TEdit;
     edtValorAbatimento: TEdit;
@@ -96,53 +72,195 @@ type
     edtDataDesconto: TMaskEdit;
     edtDataAbatimento: TMaskEdit;
     edtDataProtesto: TMaskEdit;
+    GroupBox4: TGroupBox;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
     edtNumeroDoc: TEdit;
     edtValorDoc: TEdit;
     edtDataDoc: TMaskEdit;
     edtVencimento: TMaskEdit;
+    GroupBox3: TGroupBox;
+    Label15: TLabel;
+    Label16: TLabel;
     memMensagem: TMemo;
     edtInstrucoes1: TEdit;
     edtInstrucoes2: TEdit;
     Panel2: TPanel;
-    edtNome: TEdit;
-    edtCPFCNPJ: TEdit;
-    edtEmail: TEdit;
-    edtEndereco: TEdit;
-    edtNumero: TEdit;
-    edtComplemento: TEdit;
-    edtBairro: TEdit;
-    edtCidade: TEdit;
-    edtCEP: TEdit;
-    Label30: TLabel;
-    edtUF: TEdit;
-    Label31: TLabel;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    edtLocalPag: TEdit;
+    edtEspecieDoc: TEdit;
+    edtEspecieMod: TEdit;
+    cbxAceite: TComboBox;
+    edtCarteira: TEdit;
+    Label6: TLabel;
+    edtNossoNro: TEdit;
+    cbxBanco: TComboBox;
+    Label32: TLabel;
+    GroupBox10: TGroupBox;
+    cbxCNAB: TComboBox;
+    edtCNABLVLote: TEdit;
+    edtCNABLVArquivo: TEdit;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
+    GroupBox11: TGroupBox;
+    edtCIP: TEdit;
+    Label36: TLabel;
+    GroupBox12: TGroupBox;
+    Label38: TLabel;
+    edtAgencia: TEdit;
+    edtAgenciaDV: TEdit;
+    Label39: TLabel;
+    edtConta: TEdit;
+    Label40: TLabel;
+    edtContaDV: TEdit;
+    Label41: TLabel;
+    edtAgenciaContaDV: TEdit;
+    Label42: TLabel;
+    edtConvenio: TEdit;
+    Label43: TLabel;
+    edtModalidade: TEdit;
+    Label44: TLabel;
+    edtOperacao: TEdit;
+    Label47: TLabel;
+    Label45: TLabel;
+    edtCodigoTransmissao: TEdit;
+    Label46: TLabel;
+    edtDensidadeGravacao: TEdit;
+    Label37: TLabel;
+    edtPrefixRemessa: TEdit;
+    ckbEmHomologacao: TCheckBox;
+    ckbImprimirMensagemPadrao: TCheckBox;
+    ckbLerCedenteArquivoRetorno: TCheckBox;
+    ckbLerNossoNumeroCompleto: TCheckBox;
+    ckbRemoverAcentuacaoRemessa: TCheckBox;
+    GroupBox13: TGroupBox;
+    btnConfigLer: TButton;
+    btnConfigGravar: TButton;
+    edtCodigoCedente: TEdit;
+    Label48: TLabel;
+    Label49: TLabel;
+    cbxTipoDistribuicao: TComboBox;
+    Label51: TLabel;
+    cbxResponsavelEmissao: TComboBox;
+    Label52: TLabel;
+    cbxTipoCarteira: TComboBox;
+    GroupBox14: TGroupBox;
     cbxLayOut: TComboBox;
+    Label31: TLabel;
     cbxImprimirVersoFatura: TCheckBox;
-    btnLerRetorno: TButton;
-    Button8: TButton;
-    btnRegistro: TButton;
-    Button9: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    PageControl2: TPageControl;
+    TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
+    edtCidade: TEdit;
+    Label28: TLabel;
+    edtEndereco: TEdit;
+    Label24: TLabel;
+    edtNome: TEdit;
+    Label21: TLabel;
+    edtCPFCNPJ: TEdit;
+    Label22: TLabel;
+    edtNumero: TEdit;
+    Label25: TLabel;
+    edtCEP: TEdit;
+    Label29: TLabel;
+    edtUF: TEdit;
+    Label30: TLabel;
+    edtComplemento: TEdit;
+    Label26: TLabel;
+    edtEmail: TEdit;
+    Label23: TLabel;
+    edtBairro: TEdit;
+    Label27: TLabel;
+    Label53: TLabel;
+    edtBenifRazao: TEdit;
+    Label54: TLabel;
+    edtBenifCNPJ: TEdit;
+    Label55: TLabel;
+    edtBenifEndereco: TEdit;
+    Label56: TLabel;
+    edtBenifNum: TEdit;
+    Label57: TLabel;
+    edtBenifComplemento: TEdit;
+    Label58: TLabel;
+    edtBenifBairro: TEdit;
+    Label59: TLabel;
+    edtBenifCidade: TEdit;
+    Label60: TLabel;
+    edtBenifCEP: TEdit;
+    Label61: TLabel;
+    edtBenifUF: TEdit;
+    Label62: TLabel;
+    edtBenifFantasia: TEdit;
+    edtBenifTelefone: TEdit;
+    Label63: TLabel;
+    cbxTipoDocumento: TComboBox;
+    Label64: TLabel;
+    GroupBox6: TGroupBox;
+    btnImpressaoHTML: TButton;
+    btnImpressaoPDF: TButton;
+    btnImpressaoSpooler: TButton;
+    btnEnviarEmail: TButton;
+    btnImpressaoStream: TButton;
+    edtPathRemessa: TEdit;
+    Label65: TLabel;
+    edtPathRetorno: TEdit;
+    Label66: TLabel;
+    flpndlgRetorno: TFileOpenDialog;
+    btnRetorno: TButton;
+    edtClientID: TEdit;
+    Label67: TLabel;
+    edtClientSecret: TEdit;
+    Label68: TLabel;
+    edtKeyUser: TEdit;
+    Label69: TLabel;
+    chkIndicadorPix: TCheckBox;
+    cbxCaracteristicaTitulo: TComboBox;
+    Label50: TLabel;
+    cbxSSLLib: TComboBox;
+    Label70: TLabel;
+    procedure btnImpressaoHTMLClick(Sender: TObject);
+    procedure btnImpressaoPDFClick(Sender: TObject);
+    procedure btnBoletoIndividualClick(Sender: TObject);
     procedure Button5Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
-    procedure Button7Click(Sender: TObject);
+    procedure btnGerarRemessaClick(Sender: TObject);
+    procedure btnImpressaoSpoolerClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure cbxLayOutChange(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnLerRetornoClick(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
-    procedure btnRegistroClick(Sender: TObject);
-    procedure Button9Click(Sender: TObject);
+    procedure btnEnviarEmailClick(Sender: TObject);
+    procedure btnWSRegistrarClick(Sender: TObject);
+    procedure btnConfigLerClick(Sender: TObject);
+    procedure btnConfigGravarClick(Sender: TObject);
+    procedure btnImpressaoStreamClick(Sender: TObject);
+    procedure btnRetornoClick(Sender: TObject);
+    procedure btnWSConsultaClick(Sender: TObject);
   private
-{$IFDEF demo_forte}
-    dm: TdmForte;
-{$ELSE}
-    dm: TdmFast;
-{$ENDIF}
+    {$IFDEF demo_forte}
+        dm: TdmForte;
+    {$ELSE}
+        dm: TdmFast;
+    {$ENDIF}
     { Private declarations }
+    procedure CarregarBancos;
+    procedure CarregarTipoDistribuicao;
+    procedure CarregarCaracteristicaTitulo;
+    procedure CarregarResponsavelEmissao;
+    procedure CarregarTipoCarteira;
+    procedure CarregarTipoDocumento;
+    procedure CarregarSSLLib;
+    procedure GravarIniComponente;
+    procedure LerIniComponente;
+    procedure AplicarConfiguracoesAoComponente;
+    procedure AplicarConfiguracoesComponenteATela;
   public
     { Public declarations }
   end;
@@ -152,130 +270,275 @@ var
 
 implementation
 
-Uses TypInfo, DateUtils;
+Uses TypInfo, DateUtils, pcnConversao, ACBrDFeSSL;
 
 {$R *.dfm}
 
-procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
+procedure TfrmDemo.GravarIniComponente;
+var
+  xPath, xArquivo : String;
 begin
-  dm.ACBrBoleto.LerRetorno();
+  xPath    := ExtractFilePath(ParamStr(0));
+  xArquivo := ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
+  dm.ACBrBoleto.GravarConfiguracao(xPath,xArquivo);
 end;
 
-procedure TfrmDemo.Button1Click(Sender: TObject);
+procedure TfrmDemo.LerIniComponente;
+var xArquivo : String;
+begin
+  xArquivo := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
+  if (FileExists(xArquivo)) then
+    dm.ACBrBoleto.LerConfiguracao(xArquivo);
+end;
+
+procedure TfrmDemo.AplicarConfiguracoesAoComponente;
+var Beneficiario   : TACBrCedente;
+    Banco          : TACBrBanco;
+    Boleto         : TACBrBoleto;
+    WebService     : TACBrWebService;
+    BeneficiarioWS : TACBrCedenteWS;
+begin
+  Boleto := dm.ACBrBoleto;
+  WebService := Boleto.Configuracoes.WebService;
+
+  Boleto.ListadeBoletos.Clear;
+
+  Boleto.PrefixArqRemessa                  := edtPrefixRemessa.Text;
+  Boleto.LayoutRemessa                     := TACBrLayoutRemessa(cbxCNAB.itemindex);
+  Boleto.Homologacao                       := ckbEmHomologacao.Checked;
+
+  Boleto.ImprimirMensagemPadrao            := ckbImprimirMensagemPadrao.Checked;
+  Boleto.LeCedenteRetorno                  := ckbLerCedenteArquivoRetorno.Checked;
+  Boleto.LerNossoNumeroCompleto            := ckbLerNossoNumeroCompleto.Checked;
+  Boleto.RemoveAcentosArqRemessa           := ckbRemoverAcentuacaoRemessa.Checked;
+
+
+  Beneficiario   := Boleto.Cedente;
+  BeneficiarioWS := Beneficiario.CedenteWS;
+
+  Beneficiario.Agencia                       := edtAgencia.Text;
+  Beneficiario.AgenciaDigito                 := edtAgenciaDV.Text;
+  Beneficiario.Conta                         := edtConta.Text;
+  Beneficiario.ContaDigito                   := edtContaDV.Text;
+  Beneficiario.DigitoVerificadorAgenciaConta := edtAgenciaContaDV.Text;
+  Beneficiario.Convenio                      := edtConvenio.Text;
+  Beneficiario.Modalidade                    := edtModalidade.Text;
+  Beneficiario.Operacao                      := edtOperacao.Text;
+  Beneficiario.CodigoTransmissao             := edtCodigoTransmissao.Text;
+  Beneficiario.CodigoCedente                 := edtCodigoCedente.Text;
+
+  if Length(OnlyNumber(edtBenifCNPJ.Text)) = 14 then
+    Beneficiario.TipoInscricao               := pJuridica
+  else
+    Beneficiario.TipoInscricao               := pFisica;
+
+  Beneficiario.TipoDocumento                 := TACBrTipoDocumento(cbxTipoDocumento.ItemIndex);
+
+  Beneficiario.IdentDistribuicao             := TACBrIdentDistribuicao(cbxTipoDistribuicao.itemIndex);
+  Beneficiario.ResponEmissao                 := TACBrResponEmissao(cbxResponsavelEmissao.ItemIndex);
+  Beneficiario.CaracTitulo                   := TACBrCaracTitulo(cbxCaracteristicaTitulo.itemIndex);
+  Beneficiario.TipoCarteira                  := TACBrTipoCarteira(cbxTipoCarteira.itemIndex);
+
+  Beneficiario.CNPJCPF                       := edtBenifCNPJ.Text;
+  Beneficiario.Nome                          := edtBenifRazao.Text;
+  Beneficiario.FantasiaCedente               := edtBenifFantasia.Text;
+  Beneficiario.Logradouro                    := edtBenifEndereco.Text;
+  Beneficiario.NumeroRes                     := edtBenifNum.Text;
+  Beneficiario.Complemento                   := edtBenifComplemento.Text;
+  Beneficiario.Bairro                        := edtBenifBairro.Text;
+  Beneficiario.Cidade                        := edtBenifCidade.Text;
+  Beneficiario.UF                            := edtBenifUF.Text;
+  Beneficiario.CEP                           := edtBenifCEP.Text;
+  Beneficiario.Telefone                      := edtBenifTelefone.Text;
+
+
+  Banco := Boleto.Banco;
+  Banco.TipoCobranca        := TACBrTipoCobranca(cbxBanco.ItemIndex);
+  Banco.LayoutVersaoArquivo := StrToIntDef(edtCNABLVArquivo.Text,0);
+  Banco.LayoutVersaoLote    := StrToIntDef(edtCNABLVLote.Text,0);
+  Banco.CIP                 := edtCIP.Text;
+  Banco.DensidadeGravacao   := edtDensidadeGravacao.Text;
+  if Banco.LocalPagamento <> edtLocalPag.Text then
+    Banco.LocalPagamento      := edtLocalPag.Text;
+
+  BeneficiarioWS.ClientID     := edtClientID.Text;
+  BeneficiarioWS.ClientSecret := edtClientSecret.Text;
+  BeneficiarioWS.KeyUser      := edtKeyUser.Text;
+  WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+end;
+
+procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
+var Beneficiario : TACBrCedente;
+    Banco : TACBrBanco;
+    Boleto : TACBrBoleto;
+begin
+  Boleto := dm.ACBrBoleto;
+  Boleto.ListadeBoletos.Clear;
+
+  edtPrefixRemessa.Text               := Boleto.PrefixArqRemessa;
+  cbxCNAB.itemindex                   := Ord(Boleto.LayoutRemessa);
+  ckbEmHomologacao.Checked            := Boleto.Homologacao;
+  ckbImprimirMensagemPadrao.Checked   := Boleto.ImprimirMensagemPadrao;
+  ckbLerCedenteArquivoRetorno.Checked := Boleto.LeCedenteRetorno;
+  ckbLerNossoNumeroCompleto.Checked   := Boleto.LerNossoNumeroCompleto;
+  ckbRemoverAcentuacaoRemessa.Checked := Boleto.RemoveAcentosArqRemessa;
+
+  Beneficiario := Boleto.Cedente;
+  edtAgencia.Text           := Beneficiario.Agencia;
+  edtAgenciaDV.Text         := Beneficiario.AgenciaDigito;
+  edtConta.Text             := Beneficiario.Conta;
+  edtContaDV.Text           := Beneficiario.ContaDigito;
+  edtAgenciaContaDV.Text    := Beneficiario.DigitoVerificadorAgenciaConta;
+  edtConvenio.Text          := Beneficiario.Convenio;
+  edtModalidade.Text        := Beneficiario.Modalidade;
+  edtOperacao.Text          := Beneficiario.Operacao;
+  edtCodigoTransmissao.Text := Beneficiario.CodigoTransmissao;
+  edtCodigoCedente.Text     := Beneficiario.CodigoCedente;
+
+  cbxTipoDistribuicao.ItemIndex     := Ord(Beneficiario.IdentDistribuicao);
+  cbxCaracteristicaTitulo.ItemIndex := Ord(Beneficiario.CaracTitulo);
+  cbxResponsavelEmissao.ItemIndex   := Ord(Beneficiario.ResponEmissao);
+  cbxTipoCarteira.ItemIndex         := Ord(Beneficiario.TipoCarteira);
+  cbxTipoDocumento.ItemIndex        := Integer(TACBrTipoDocumento(Beneficiario.TipoDocumento)) -1;
+
+  cbxSSLLib.ItemIndex               := Ord(Boleto.Configuracoes.WebService.SSLHttpLib);
+
+  Banco := Boleto.Banco;
+  cbxBanco.ItemIndex        := Ord(Banco.TipoCobranca);
+  edtCNABLVArquivo.Text     := IntToStr(Banco.LayoutVersaoArquivo);
+  edtCNABLVLote.Text        := IntToStr(Banco.LayoutVersaoLote);
+  edtCIP.Text               := Banco.CIP;
+  edtDensidadeGravacao.Text := Banco.DensidadeGravacao;
+
+
+
+end;
+
+procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
+var Boleto  : TACBrBoleto;
+    Retorno : TListadeBoletos;
+    I       : Integer;
+    RetText : TStringList;
+begin
+  Boleto := dm.ACBrBoleto;
+
+  Boleto.DirArqRetorno  := ExtractFilePath(edtPathRetorno.Text);
+  Boleto.NomeArqRetorno := ExtractFileName(edtPathRetorno.Text);
+
+  Boleto.ListadeBoletos.Clear;
+  Boleto.LerRetorno();
+
+  Retorno := Boleto.ListadeBoletos;
+  RetText := TStringList.Create;
+  try
+    for I := 0 to Pred(Retorno.Count) do
+    begin
+      RetText.Add( 'Nosso Número :: '    + Retorno[i].NossoNumero);
+      RetText.Add( 'Valor Documento :: ' + CurrToStr(Retorno[i].ValorDocumento));
+      RetText.Add( 'Valor Pago :: '      + CurrToStr(Retorno[i].ValorPago));
+      RetText.Add( 'Data Ocorrencia :: ' + DateToStr(Retorno[i].DataOcorrencia));
+      //[...] demais propriedades do titulo a gosto
+    end;
+    RetText.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoProcessado.txt' );
+    ShowMessage('Retorno processado em: '+ PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoProcessado.txt' );
+  finally
+    RetText.Free;
+  end;
+end;
+
+procedure TfrmDemo.btnImpressaoHTMLClick(Sender: TObject);
 begin
   dm.ACBrBoleto.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName) + 'teste.html';
   dm.ACBrBoleto.GerarHTML;
 end;
 
-procedure TfrmDemo.Button2Click(Sender: TObject);
-//var
-  //i: Integer; 
+procedure TfrmDemo.btnImpressaoPDFClick(Sender: TObject);
 begin
   dm.ACBrBoleto.GerarPDF;
-
-  //Método para geração PDF de forma individual
-   {for i:= 0 to ACBrBoleto1.ListadeBoletos.Count -1 do
-   begin
-     ACBrBoleto1.ListadeBoletos[i].GerarPDF();
-
-   end;}
 end;
 
-procedure TfrmDemo.Button4Click(Sender: TObject);
+procedure TfrmDemo.btnBoletoIndividualClick(Sender: TObject);
 var
   Titulo : TACBrTitulo;
   VQtdeCarcA, VQtdeCarcB, VQtdeCarcC :Integer;
   VLinha, logo : string;
   i: Integer;
 begin
-
-  dm.ACBrBoleto.Cedente.FantasiaCedente := 'Nome Fantasia';
-
-  dm.ACBrBoleto.Cedente.Nome := 'Nome do cedente';
-  dm.ACBrBoleto.Cedente.Logradouro := 'Logradouro do cedente';
-  dm.ACBrBoleto.Cedente.Bairro := 'Bairro do cedente';
-  dm.ACBrBoleto.Cedente.Cidade := 'Cidade do cedente';
-  dm.ACBrBoleto.Cedente.CEP := 'CEP do cedente';
-  dm.ACBrBoleto.Cedente.Telefone := '(xx) 99999-9999';
-
   Titulo := dm.ACBrBoleto.CriarTituloNaLista;
 
-  with Titulo do
+  Titulo.Vencimento        := StrToDate(edtVencimento.Text);
+  Titulo.DataDocumento     := StrToDate(edtDataDoc.Text);
+  Titulo.NumeroDocumento   := edtNumeroDoc.Text;
+  Titulo.EspecieDoc        := edtEspecieDoc.Text;
+
+  if cbxAceite.ItemIndex = 0 then
+     Titulo.Aceite := atSim
+  else
+     Titulo.Aceite := atNao;
+
+  Titulo.DataProcessamento := Now;
+  Titulo.Carteira          := edtCarteira.Text;
+  Titulo.NossoNumero       := edtNossoNro.Text;
+  Titulo.ValorDocumento    := StrToCurr(edtValorDoc.Text);
+  Titulo.Sacado.NomeSacado := edtNome.Text;
+  Titulo.Sacado.CNPJCPF    := OnlyNumber(edtCPFCNPJ.Text);
+  Titulo.Sacado.Logradouro := edtEndereco.Text;
+  Titulo.Sacado.Numero     := edtNumero.Text;
+  Titulo.Sacado.Bairro     := edtBairro.Text;
+  Titulo.Sacado.Cidade     := edtCidade.Text;
+  Titulo.Sacado.UF         := edtUF.Text;
+  Titulo.Sacado.CEP        := OnlyNumber(edtCEP.Text);
+  Titulo.ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
+  Titulo.LocalPagamento    := edtLocalPag.Text;
+  Titulo.ValorMoraJuros    := StrToCurrDef(edtMoraJuros.Text,0);
+  Titulo.ValorDesconto     := StrToCurrDef(edtValorDesconto.Text,0);
+  Titulo.ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
+  Titulo.DataMoraJuros     := StrToDateDef(edtDataMora.Text, 0);
+  Titulo.DataDesconto      := StrToDateDef(edtDataDesconto.Text, 0);
+  Titulo.DataAbatimento    := StrToDateDef(edtDataAbatimento.Text, 0);
+  Titulo.DataProtesto      := StrToDateDef(edtDataProtesto.Text, 0);
+  Titulo.PercentualMulta   := StrToCurrDef(edtMulta.Text,0);
+  Titulo.CodigoMoraJuros   := cjIsento;
+  //Mensagem.Text     := memMensagem.Text;
+  Titulo.OcorrenciaOriginal.Tipo := toRemessaBaixar;
+  Titulo.Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
+  Titulo.Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
+
+  Titulo.QtdePagamentoParcial   := 1;
+  Titulo.TipoPagamento          := tpNao_Aceita_Valor_Divergente;
+  Titulo.PercentualMinPagamento := 0;
+  Titulo.PercentualMaxPagamento := 0;
+  Titulo.ValorMinPagamento      := 0;
+  Titulo.ValorMaxPagamento      := 0;
+  //QrCode.emv := '00020101021226870014br.gov.bcb.pix2565qrcodepix-h.bb.com.br/pix/v2/22657e83-ecac-4631-a767-65e16fc56bff5204000053039865802BR5925EMPRORT AMBIENTAL        6008BRASILIA62070503***6304BD3D';
+
+ // dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
+
+  if cbxLayOut.ItemIndex = 6 then
   begin
-    Vencimento        := StrToDate(edtVencimento.Text);
-    DataDocumento     := StrToDate(edtDataDoc.Text);
-    NumeroDocumento   := edtNumeroDoc.Text;
-    EspecieDoc        := edtEspecieDoc.Text;
-    if cbxAceite.ItemIndex = 0 then
-       Aceite := atSim
-    else
-       Aceite := atNao;
-    DataProcessamento := Now;
-    Carteira          := edtCarteira.Text;
-    NossoNumero       := edtNossoNro.Text;
-    ValorDocumento    := StrToCurr(edtValorDoc.Text);
-    Sacado.NomeSacado := edtNome.Text;
-    Sacado.CNPJCPF    := OnlyNumber(edtCPFCNPJ.Text);
-    Sacado.Logradouro := edtEndereco.Text;
-    Sacado.Numero     := edtNumero.Text;
-    Sacado.Bairro     := edtBairro.Text;
-    Sacado.Cidade     := edtCidade.Text;
-    Sacado.UF         := edtUF.Text;
-    Sacado.CEP        := OnlyNumber(edtCEP.Text);
-    ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
-    LocalPagamento    := edtLocalPag.Text;
-    ValorMoraJuros    := StrToCurrDef(edtMoraJuros.Text,0);
-    ValorDesconto     := StrToCurrDef(edtValorDesconto.Text,0);
-    ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
-    DataMoraJuros     := StrToDateDef(edtDataMora.Text, 0);
-    DataDesconto      := StrToDateDef(edtDataDesconto.Text, 0);
-    DataAbatimento    := StrToDateDef(edtDataAbatimento.Text, 0);
-    DataProtesto      := StrToDateDef(edtDataProtesto.Text, 0);
-    PercentualMulta   := StrToCurrDef(edtMulta.Text,0);
-    CodigoMoraJuros   := cjIsento;
-    //Mensagem.Text     := memMensagem.Text;
-    OcorrenciaOriginal.Tipo := toRemessaBaixar;
-    Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
-    Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
-
-    QtdePagamentoParcial:= 1;
-    TipoPagamento:= tpNao_Aceita_Valor_Divergente;
-    PercentualMinPagamento:= 0;
-    PercentualMaxPagamento:= 0;
-    ValorMinPagamento:= 0;
-    ValorMaxPagamento:= 0;
-    //QrCode.emv := '00020101021226870014br.gov.bcb.pix2565qrcodepix-h.bb.com.br/pix/v2/22657e83-ecac-4631-a767-65e16fc56bff5204000053039865802BR5925EMPRORT AMBIENTAL        6008BRASILIA62070503***6304BD3D';
-
-   // dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
-
-    if cbxLayOut.ItemIndex = 6 then
+    for i:=0 to 3 do
     begin
-      for i:=0 to 3 do
-      begin
-        VLinha := '.';
+      VLinha := '.';
 
-        VQtdeCarcA := length('Descrição Produto/Serviço ' + IntToStr(I));
-        VQtdeCarcB := Length('Valor:');
-        VQtdeCarcC := 85 - (VQtdeCarcA + VQtdeCarcB);
+      VQtdeCarcA := length('Descrição Produto/Serviço ' + IntToStr(I));
+      VQtdeCarcB := Length('Valor:');
+      VQtdeCarcC := 85 - (VQtdeCarcA + VQtdeCarcB);
 
-        VLinha := PadLeft(VLinha,VQtdeCarcC,'.');
+      VLinha := PadLeft(VLinha,VQtdeCarcC,'.');
 
-        Detalhamento.Add('Descrição Produto/Serviço ' + IntToStr(I) + ' '+ VLinha + ' Valor:   '+  PadRight(FormatCurr('R$ ###,##0.00', StrToCurr(edtValorDoc.Text) * 0.25),18,' ') );
-      end;
-      Detalhamento.Add('');
-      Detalhamento.Add('');
-      Detalhamento.Add('');
-      Detalhamento.Add('');
-      Detalhamento.Add('Desconto ........................................................................... Valor: R$ 0,00' );
+      Titulo.Detalhamento.Add('Descrição Produto/Serviço ' + IntToStr(I) + ' '+ VLinha + ' Valor:   '+  PadRight(FormatCurr('R$ ###,##0.00', StrToCurr(edtValorDoc.Text) * 0.25),18,' ') );
     end;
-
-    logo:= ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
-
-    ArquivoLogoEmp := logo;  // logo da empresa
-    //ShowMessage(logo);
-
-    Verso := ((cbxImprimirVersoFatura.Checked) and ( cbxImprimirVersoFatura.Enabled = true ));
+    Titulo.Detalhamento.Add('');
+    Titulo.Detalhamento.Add('');
+    Titulo.Detalhamento.Add('');
+    Titulo.Detalhamento.Add('');
+    Titulo.Detalhamento.Add('Desconto ........................................................................... Valor: R$ 0,00' );
   end;
+
+  logo:= ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
+
+  Titulo.ArquivoLogoEmp := logo;  // logo da empresa
+  Titulo.Verso := ((cbxImprimirVersoFatura.Checked) and ( cbxImprimirVersoFatura.Enabled = true ));
 
 end;
 
@@ -283,63 +546,35 @@ procedure TfrmDemo.Button5Click(Sender: TObject);
 var
   Titulo: TACBrTitulo;
   I: Integer;
-  NrTitulos: Integer;
-  NrTitulosStr: String;
-  Convertido: Boolean;
+  NrTitulos: String;
+  Valor : Currency;
 begin
-  NrTitulos    := 10;
-  NrTitulosStr := '10';
-  Convertido   := true;
-  dm.ACBrBoleto.Cedente.FantasiaCedente := 'Nome Fantasia do Cliente';
-  repeat
-    InputQuery('ACBrBoleto','Número de Boletos a incluir',NrTitulosStr);
-    try
-     NrTitulos := StrToInt(NrTitulosStr);
-    except
-     Convertido:= false;
-    end;
-  until  Convertido;
 
-  for I := 1 to NrTitulos do
+  NrTitulos := '10';
+  InputQuery('Geração Lote','Quantidade a Gerar :',NrTitulos);
+
+  for I := 0 to StrToIntDef(NrTitulos,0) do
   begin
-    Titulo:= dm.ACBrBoleto.CriarTituloNaLista;
-
-    with Titulo do
-    begin
-      LocalPagamento    := 'Pagar preferêncialmente nas agências do Bradesco'; //MEnsagem exigida pelo bradesco
-      Vencimento        := IncMonth(EncodeDate(2010,05,10),I);
-      DataDocumento     := EncodeDate(2010,04,10);
-      NumeroDocumento   := PadRight(IntToStr(I),8,'0');
-      EspecieDoc        := 'DM';
-      Aceite            := atSim;
-      DataProcessamento := Now;
-      NossoNumero       := IntToStrZero(I,8);
-      Carteira          := '09';
-      ValorDocumento    := 100.35 * (I+0.5);
-      Sacado.NomeSacado := 'Jose Luiz Pedroso';
-      Sacado.CNPJCPF    := '12345678901';
-      Sacado.Logradouro := 'Rua da Consolacao';
-      Sacado.Numero     := '100';
-      Sacado.Bairro     := 'Vila Esperanca';
-      Sacado.Cidade     := 'Tatui';
-      Sacado.UF         := 'SP';
-      Sacado.CEP        := '18270000';
-      ValorAbatimento   := 10;
-      DataAbatimento    := Vencimento-5;
-      Instrucao1        := '00';
-      Instrucao2        := '00';
-      NossoNumero       := edtNossoNro.Text;
-      //dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
-    end;
+    Valor := StrToFloatDef(edtValorDoc.Text,1);
+    Valor := Valor + Random;
+    edtValorDoc.Text  := CurrToStr(Valor);
+    edtNossoNro.Text  := IntToStr(StrToIntDef(edtNossoNro.Text,0)+1);
+    edtNumeroDoc.Text := IntToStr(StrToIntDef(edtNumeroDoc.Text,0)+1);
+    btnBoletoIndividual.Click;
   end;
 end;
 
-procedure TfrmDemo.Button6Click(Sender: TObject);
+procedure TfrmDemo.btnGerarRemessaClick(Sender: TObject);
+var NumRemessa : string;
 begin
-  dm.ACBrBoleto.GerarRemessa(1);
+  dm.ACBrBoleto.DirArqRemessa := edtPathRemessa.Text;
+  NumRemessa := '1';
+  InputQuery('Num. Remessa','Informe o Numero da Remessa :',NumRemessa);
+
+  dm.ACBrBoleto.GerarRemessa(StrToInt64Def(NumRemessa,0));
 end;
 
-procedure TfrmDemo.Button7Click(Sender: TObject);
+procedure TfrmDemo.btnImpressaoSpoolerClick(Sender: TObject);
 //var
 //  i: Integer; 
 begin
@@ -356,7 +591,13 @@ end;
 procedure TfrmDemo.FormCreate(Sender: TObject);
 var
   I: TACBrBolLayOut;
+  CurrentStyle : LONG;
 begin
+  CurrentStyle := GetWindowLong(edtCNABLVLote.Handle, GWL_STYLE);
+  CurrentStyle := CurrentStyle or ES_NUMBER;
+  SetWindowLong(edtCNABLVLote.Handle, GWL_STYLE, CurrentStyle);
+  SetWindowLong(edtCNABLVArquivo.Handle, GWL_STYLE, CurrentStyle);
+
    edtDataDoc.Text    := DateToStr(Now);
    edtVencimento.Text := DateToStr(IncMonth(StrToDate(edtDataDoc.Text),1));
    edtDataMora.Text   := DateToStr(StrToDate(edtVencimento.Text)+1);
@@ -365,15 +606,85 @@ begin
   For I := Low(TACBrBolLayOut) to High(TACBrBolLayOut) do
     cbxLayOut.Items.Add(GetEnumName(TypeInfo(TACBrBolLayOut), Integer(I)));
   cbxLayOut.ItemIndex := 0;
+  {$IFDEF demo_forte}
+    dm := dmForte;
+  {$ELSE}
+    dm := dmFast;
+  {$ENDIF}
+  CarregarBancos;
+  CarregarTipoDistribuicao;
+  CarregarCaracteristicaTitulo;
+  CarregarResponsavelEmissao;
+  CarregarTipoCarteira;
+  CarregarTipoDocumento;
+  CarregarSSLLib;
+  btnConfigLer.Click;
+  AplicarConfiguracoesComponenteATela;
+  edtPathRemessa.Text := ParamStr(0)+'Remessa';
+  edtPathRetorno.Text := ParamStr(0)+'Retorno';
 end;
 
-procedure TfrmDemo.FormShow(Sender: TObject);
+procedure TfrmDemo.carregarBancos;
+var
+  Banco: TACBrTipoCobranca;
 begin
-{$IFDEF demo_forte}
-  dm := dmForte;
-{$ELSE}
-  dm := dmFast;
-{$ENDIF}
+  cbxBanco.Items.clear;
+	for Banco := Low(TACBrTipoCobranca) to High(TACBrTipoCobranca) do
+    cbxBanco.Items.Add( GetEnumName(TypeInfo(TACBrTipoCobranca), integer(Banco) ) );
+end;
+
+procedure TfrmDemo.CarregarCaracteristicaTitulo;
+var
+  Caracteristica: TACBrCaracTitulo;
+begin
+  cbxCaracteristicaTitulo.Items.clear;
+	for Caracteristica := Low(TACBrCaracTitulo) to High(TACBrCaracTitulo) do
+    cbxCaracteristicaTitulo.Items.Add( GetEnumName(TypeInfo(TACBrCaracTitulo), integer(Caracteristica) ) );
+end;
+
+procedure TfrmDemo.CarregarResponsavelEmissao;
+var
+  ResponsavelEmissao: TACBrResponEmissao;
+begin
+  cbxResponsavelEmissao.Items.clear;
+	for ResponsavelEmissao := Low(TACBrResponEmissao) to High(TACBrResponEmissao) do
+    cbxResponsavelEmissao.Items.Add( GetEnumName(TypeInfo(TACBrResponEmissao), integer(ResponsavelEmissao) ) );
+end;
+
+procedure TfrmDemo.CarregarSSLLib;
+var
+  SSLLib: TSSLHttpLib;
+begin
+  cbxSSLLib.Items.clear;
+	for SSLLib := Low(TSSLHttpLib) to High(TSSLHttpLib) do
+    cbxSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(SSLLib) ) );
+end;
+
+procedure TfrmDemo.CarregarTipoCarteira;
+var
+  TipoCarteira: TACBrTipoCarteira;
+begin
+  cbxTipoCarteira.Items.clear;
+	for TipoCarteira := Low(TACBrTipoCarteira) to High(TACBrTipoCarteira) do
+    cbxTipoCarteira.Items.Add( GetEnumName(TypeInfo(TACBrTipoCarteira), integer(TipoCarteira) ) );
+end;
+
+procedure TfrmDemo.CarregarTipoDistribuicao;
+var
+  Distribuicao: TACBrIdentDistribuicao;
+begin
+  cbxTipoDistribuicao.Items.clear;
+	for Distribuicao := Low(TACBrIdentDistribuicao) to High(TACBrIdentDistribuicao) do
+    cbxTipoDistribuicao.Items.Add( GetEnumName(TypeInfo(TACBrIdentDistribuicao), integer(Distribuicao) ) );
+end;
+
+procedure TfrmDemo.CarregarTipoDocumento;
+var
+  TipoDocumento: TACBrTipoDocumento;
+begin
+  cbxTipoDocumento.Items.clear;
+	cbxTipoDocumento.Items.Add('Tradicional');
+  cbxTipoDocumento.Items.Add('Escritural');
 end;
 
 procedure TfrmDemo.Button3Click(Sender: TObject);
@@ -390,7 +701,7 @@ begin
    cbxImprimirVersoFatura.Checked := false;
 end;
 
-procedure TfrmDemo.Button8Click(Sender: TObject);
+procedure TfrmDemo.btnEnviarEmailClick(Sender: TObject);
 var
   SL: TStringList;
   //i: Integer;
@@ -415,23 +726,28 @@ begin
 end;
 
 
-procedure TfrmDemo.Button9Click(Sender: TObject);
+procedure TfrmDemo.btnWSConsultaClick(Sender: TObject);
 var
-  //Filtros : TACBrBoletoWSFiltroConsulta;
+  FiltrosAPI : TACBrBoletoWSFiltroConsulta;
+  Boleto : TACBrBoleto;
   SLRetorno : TStringList;
   Retorno : TListaRetEnvio;
   I: Integer;
 begin
-  dm.ACBrBoleto.Configuracoes.WebService.Filtro.Clear;
-  dm.ACBrBoleto.Configuracoes.WebService.Filtro.indicadorSituacao        := isbBaixado;
-  dm.ACBrBoleto.Configuracoes.WebService.Filtro.dataMovimento.DataInicio := IncDay(Date,-1);
-  dm.ACBrBoleto.Configuracoes.WebService.Filtro.dataMovimento.DataFinal  := Date;
-  //Filtros.indiceContinuidade       := 300;
+  //Exemplo utilizando como Banco do Brasil API
+  Boleto     := dm.ACBrBoleto;
+  FiltrosAPI := Boleto.Configuracoes.WebService.Filtro;
 
-  dm.ACBrBoleto.Configuracoes.WebService.Operacao := tpConsulta;
-  //dm.ACBrBoleto.Configuracoes.WebService.Filtro   := Filtros;
-  dm.ACBrBoleto.EnviarBoleto;
-  Retorno := dm.ACBrBoleto.ListaRetornoWeb;
+  FiltrosAPI.Clear;
+  FiltrosAPI.indicadorSituacao        := isbBaixado;
+  FiltrosAPI.dataMovimento.DataInicio := IncDay(Date,-1);
+  FiltrosAPI.dataMovimento.DataFinal  := Date;
+  //FiltrosAPI.indiceContinuidade       := 300;
+
+  Boleto.Configuracoes.WebService.Operacao := tpConsulta;
+
+  Boleto.EnviarBoleto;
+  Retorno := Boleto.ListaRetornoWeb;
   if Retorno.Count > 0 then
   begin
     SLRetorno := TStringList.Create;
@@ -447,24 +763,23 @@ begin
       SLRetorno.Add(' ');
       for I := 0 to Pred(Retorno.Count) do
       begin
-        SLRetorno.Add('[Boletos Index = ' + FormatFloat('000',I)+']');
-        SLRetorno.Add('numeroBoletoBB = ' + Retorno[I].DadosRet.TituloRet.NossoNumero);
-        SLRetorno.Add('dataRegistro = ' + DateToStr(Retorno[I].DadosRet.TituloRet.DataRegistro));
-        SLRetorno.Add('dataVencimento = ' + DateToStr(Retorno[I].DadosRet.TituloRet.Vencimento));
-        SLRetorno.Add('valorOriginal = ' + DateToStr(Retorno[I].DadosRet.TituloRet.ValorDocumento));
-        SLRetorno.Add('carteiraConvenio = ' + Retorno[I].DadosRet.TituloRet.Carteira);
-        SLRetorno.Add('variacaoCarteiraConvenio = ' + intToStr(Retorno[I].DadosRet.TituloRet.Modalidade));
+        SLRetorno.Add('[Boletos Index = '             + FormatFloat('000',I)+']');
+        SLRetorno.Add('numeroBoletoBB = '             + Retorno[I].DadosRet.TituloRet.NossoNumero);
+        SLRetorno.Add('dataRegistro = '               + DateToStr(Retorno[I].DadosRet.TituloRet.DataRegistro));
+        SLRetorno.Add('dataVencimento = '             + DateToStr(Retorno[I].DadosRet.TituloRet.Vencimento));
+        SLRetorno.Add('valorOriginal = '              + DateToStr(Retorno[I].DadosRet.TituloRet.ValorDocumento));
+        SLRetorno.Add('carteiraConvenio = '           + Retorno[I].DadosRet.TituloRet.Carteira);
+        SLRetorno.Add('variacaoCarteiraConvenio = '   + intToStr(Retorno[I].DadosRet.TituloRet.Modalidade));
         SLRetorno.Add('codigoEstadoTituloCobranca = ' + Retorno[I].DadosRet.TituloRet.codigoEstadoTituloCobranca);
-        SLRetorno.Add('estadoTituloCobranca = ' + Retorno[I].DadosRet.TituloRet.estadoTituloCobranca);
-        SLRetorno.Add('contrato = ' + Retorno[I].DadosRet.TituloRet.Contrato);
-        SLRetorno.Add('dataMovimento = ' + DateToStr(Retorno[I].DadosRet.TituloRet.dataMovimento));
-        SLRetorno.Add('dataCredito = ' + DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
-        SLRetorno.Add('valorAtual = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
-        SLRetorno.Add('valorPago = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
+        SLRetorno.Add('estadoTituloCobranca = '       + Retorno[I].DadosRet.TituloRet.estadoTituloCobranca);
+        SLRetorno.Add('contrato = '                   + Retorno[I].DadosRet.TituloRet.Contrato);
+        SLRetorno.Add('dataMovimento = '              + DateToStr(Retorno[I].DadosRet.TituloRet.dataMovimento));
+        SLRetorno.Add('dataCredito = '                + DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
+        SLRetorno.Add('valorAtual = '                 + CurrToStr(Retorno[I].DadosRet.TituloRet.valorAtual));
+        SLRetorno.Add('valorPago = '                  + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
         SLRetorno.Add('  ---  ');
       end;
       SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
-
     finally
       SLRetorno.Free;
     end;
@@ -479,109 +794,139 @@ Até o momento disponível para Caixa Economica, Banco do Brasil e Itau
 No Object Inspector verifique as propriedades: CedenteWS e Configuracoes/WebService
 Verifique no arquivo "configWebService.txt" quais as configurações necessárias para cada Banco
 }
-procedure TfrmDemo.btnRegistroClick(Sender: TObject);
+procedure TfrmDemo.btnWSRegistrarClick(Sender: TObject);
 var
   SLRemessa: TStringList;
   i, j: Integer;
+  Boleto : TACBrBoleto;
 begin
-  with dm.ACBrBoleto do
+  Boleto := dm.ACBrBoleto;
+
+  //Função de Envio
+  Boleto.Configuracoes.WebService.Operacao := tpInclui;
+  Boleto.EnviarBoleto; // <<< retorna como false se o httpresult code for diferente de 200,201,202
+  //Verifica Lista com os retornos
+
+  if Boleto.ListaRetornoWeb.Count > 0 then
   begin
-    //Função de Envio
-    Configuracoes.WebService.Operacao := tpInclui;
-    EnviarBoleto; // <<< retorna como false se o httpresult code for diferente de 200,201,202
-    //Verifica Lista com os retornos
+    SLRemessa := TStringList.Create;
+    try
+      for i:= 0 to Pred(Boleto.ListaRetornoWeb.Count) do
+      begin
+        //Ler todos os campos da classe Retorno
+        SLRemessa.Add('Cod_Retorno='+ Boleto.ListaRetornoWeb[i].CodRetorno + sLineBreak +
+                      'Msg_Retorno='+ Boleto.ListaRetornoWeb[i].MsgRetorno + sLineBreak +
+                      'Ori_Retorno='+ Boleto.ListaRetornoWeb[i].OriRetorno + sLineBreak +
+                      'HTTP_Result='+ IntToStr(Boleto.ListaRetornoWeb[i].HTTPResultCode) + sLineBreak +
+                      'JSON='+ Boleto.ListaRetornoWeb[i].JSON);
+         for j:= 0 to Pred(Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) do
+         begin
+           SLRemessa.Add('[Rejeicao'   +IntToStr(j)+']' + sLineBreak +
+                         'Campo='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Campo + sLineBreak +
+                         'Codigo='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Codigo + sLineBreak +
+                         'Versao='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Versao + sLineBreak +
+                         'Mensagem='   + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Mensagem + sLineBreak +
+                         'Ocorrencia=' + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Ocorrencia + sLineBreak +
+                         'Valor='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Valor + sLineBreak );
+         end;
 
-    if ListaRetornoWeb.Count > 0 then
-    begin
-      SLRemessa := TStringList.Create;
-      try
-        for i:= 0 to Pred(ListaRetornoWeb.Count) do
+         SLRemessa.Add('HEADER'          + sLineBreak +
+                     'Versao='           + Boleto.ListaRetornoWeb[i].Header.Versao + sLineBreak +
+                     'Autenticacao='     + Boleto.ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
+                     'Usuario_Servico='  + Boleto.ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +
+                     'Usuario='          + Boleto.ListaRetornoWeb[i].Header.Usuario + sLineBreak +
+                     'Operacao='         + TipoOperacaoToStr(Boleto.ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
+                     'Indice='           + IntToStr(Boleto.ListaRetornoWeb[i].Header.Indice) + sLineBreak +
+                     'Sistema_Origem='   + Boleto.ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
+                     'Agencia='          + IntToStr(Boleto.ListaRetornoWeb[i].Header.Agencia) + sLineBreak +
+                     'ID_Origem='        + Boleto.ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
+                     'Data_Hora='        +FormatDateTime('dd/mm/yyyy hh:nn:ss',Boleto.ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
+                     'ID_Processo='      + Boleto.ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
+                     'DADOS'             + sLineBreak +
+                     'Excessao='         +Boleto.ListaRetornoWeb[i].DadosRet.Excecao + sLineBreak +
+                     'CONTROLE_NEGOCIAL' + sLineBreak +
+                     'Origem_Retorno='   + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno + sLineBreak +
+                     'NSU='              + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU + sLineBreak +
+                     'Cod_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno + sLineBreak +
+                     'Msg_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno + sLineBreak +
+                     'COMPROVANTE'       + sLineBreak +
+                     'Data='             +  FormatDateTime('dd/mm/yyyy', Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Data) + sLineBreak +
+                     'Hora='             +  Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Hora + sLineBreak +
+                     'ID_BOLETO'         + sLineBreak +
+                     'Codigo_Barras='    + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras + sLineBreak +
+                     'Linha_Digitavel='  + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig + sLineBreak +
+                     'Nosso_Numero='     + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum + sLineBreak +
+                     'URL='              + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.URL + sLineBreak +
+                     'CONSULTA_BOLETO'   + sLineBreak +
+                     'Numero_Documento=' + Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento + sLineBreak +
+                     'Data_Vencimento='  + FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
+                     'Valor='            + CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
+                      );
+        if NaoEstaVazio(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
         begin
-          //Ler todos os campos da classe Retorno
+         SLRemessa.Add('TITULO_RETORNO'            + sLineBreak  +
+          'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+          'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
+          'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+          'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
+          'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
+          'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
+          'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
+          'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
+          'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+          'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
+          'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
+          'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
+          'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
+          'valor_outra_deducao='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
+          'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
+          'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
+          'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+          'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
 
-           SLRemessa.Add('Cod_Retorno='+ ListaRetornoWeb[i].CodRetorno + sLineBreak +
-                         'Msg_Retorno='+ ListaRetornoWeb[i].MsgRetorno + sLineBreak +
-                         'Ori_Retorno='+ ListaRetornoWeb[i].OriRetorno + sLineBreak +
-                         'HTTP_Result='+ IntToStr(ListaRetornoWeb[i].HTTPResultCode) + sLineBreak +
-                         'JSON='+ ListaRetornoWeb[i].JSON);
-           for j:= 0 to ListaRetornoWeb[i].ListaRejeicao.Count -1 do
-           begin
-             SLRemessa.Add('[Rejeicao'+IntToStr(j)+']' + sLineBreak +
-                           'Campo=' + ListaRetornoWeb[i].ListaRejeicao[j].Campo + sLineBreak +
-                           'Codigo=' + ListaRetornoWeb[i].ListaRejeicao[j].Codigo + sLineBreak +
-                           'Versao=' + ListaRetornoWeb[i].ListaRejeicao[j].Versao + sLineBreak +
-                           'Mensagem=' + ListaRetornoWeb[i].ListaRejeicao[j].Mensagem + sLineBreak +
-                           'Ocorrencia=' + ListaRetornoWeb[i].ListaRejeicao[j].Ocorrencia + sLineBreak +
-                           'Valor='+ ListaRetornoWeb[i].ListaRejeicao[j].Valor + sLineBreak );
-           end;
-
-           SLRemessa.Add('HEADER' + sLineBreak +
-                       'Versao='+ ListaRetornoWeb[i].Header.Versao + sLineBreak +
-                       'Autenticacao=' + ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
-                       'Usuario_Servico=' + ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +
-                       'Usuario=' + ListaRetornoWeb[i].Header.Usuario + sLineBreak +
-                       'Operacao='  + TipoOperacaoToStr(ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
-                       'Indice=' + IntToStr(ListaRetornoWeb[i].Header.Indice) + sLineBreak +
-                       'Sistema_Origem=' + ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
-                       'Agencia=' + IntToStr(ListaRetornoWeb[i].Header.Agencia) + sLineBreak +
-                       'ID_Origem=' + ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
-                       'Data_Hora=' +FormatDateTime('dd/mm/yyyy hh:nn:ss',ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
-                       'ID_Processo=' + ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
-                       'DADOS' + sLineBreak +
-                       'Excessao=' +ListaRetornoWeb[i].DadosRet.Excecao + sLineBreak +
-                       'CONTROLE_NEGOCIAL' + sLineBreak +
-                       'Origem_Retorno=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno + sLineBreak +
-                       'NSU=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU + sLineBreak +
-                       'Cod_Retorno=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno + sLineBreak +
-                       'Msg_Retorno=' + ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno + sLineBreak +
-                       'COMPROVANTE' + sLineBreak +
-                       'Data=' +  FormatDateTime('dd/mm/yyyy', ListaRetornoWeb[i].DadosRet.Comprovante.Data) + sLineBreak +
-                       'Hora=' +  ListaRetornoWeb[i].DadosRet.Comprovante.Hora + sLineBreak +
-                       'ID_BOLETO' + sLineBreak +
-                       'Codigo_Barras=' + ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras + sLineBreak +
-                       'Linha_Digitavel=' + ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig + sLineBreak +
-                       'Nosso_Numero=' + ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum + sLineBreak +
-                       'URL=' + ListaRetornoWeb[i].DadosRet.IDBoleto.URL + sLineBreak +
-                       'CONSULTA_BOLETO' + sLineBreak +
-                       'Numero_Documento=' + ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento + sLineBreak +
-                       'Data_Vencimento=' + FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
-                       'Valor=' + CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
-                        );
-          if NaoEstaVazio(ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
-          begin
-           SLRemessa.Add('TITULO_RETORNO' + sLineBreak  +
-            'vencimento_titulo='+FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
-            'tipo_carteira_titulo='+ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
-            'nosso_numero='+ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
-            'seu_numero='+ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
-            'especie='+ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
-            'codigo_barras='+ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
-            'numero_linha_digitavel='+ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
-            'local_pagamento='+ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
-            'data_processamento='+FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
-            'data_emissao='+FormatDateTime('dd/mm/yyyy',ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
-            'uso_banco='+ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
-            'valor_titulo='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
-            'valor_desconto='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
-            'valor_outra_deducao='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
-            'valor_juro_multa='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
-            'valor_outro_acrescimo='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
-            'valor_total_cobrado='+CurrToStr(ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
-            'texto_informacao_cliente_beneficiario=' +ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
-
-          end;
         end;
-
-        SLRemessa.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );
-      finally
-        SLRemessa.Free;
       end;
-      ShowMessage('Retorno Envio gerado em: '+ PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );
-
+      SLRemessa.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );
+    finally
+      SLRemessa.Free;
     end;
+    ShowMessage('Retorno Envio gerado em: '+ PathWithDelim(ExtractFilePath(Application.ExeName))+'RetornoRegistro.txt' );
 
   end;
 
+end;
+
+procedure TfrmDemo.btnConfigLerClick(Sender: TObject);
+begin
+  LerIniComponente;
+  AplicarConfiguracoesComponenteATela;
+end;
+
+procedure TfrmDemo.btnConfigGravarClick(Sender: TObject);
+begin
+  AplicarConfiguracoesAoComponente;
+  GravarIniComponente;
+end;
+
+procedure TfrmDemo.btnImpressaoStreamClick(Sender: TObject);
+var MeuStream : TStream;
+    xPath : string;
+begin
+  xPath := ExtractFilePath(Application.ExeName) + 'testeStream.pdf';
+  InputQuery('Salvando Boleto em Stream','Caminho + Arquivo + Extenção a salvar o Stream',xPath);
+  MeuStream := TFileStream.Create(xPath,fmCreate or fmOpenWrite);
+  try
+    dm.ACBrBoletoReport.Imprimir(MeuStream);
+  finally
+    MeuStream.Free;
+  end;
+
+end;
+
+procedure TfrmDemo.btnRetornoClick(Sender: TObject);
+begin
+  if flpndlgRetorno.Execute then
+    edtPathRetorno.Text := flpndlgRetorno.FileName;
 end;
 
 end.

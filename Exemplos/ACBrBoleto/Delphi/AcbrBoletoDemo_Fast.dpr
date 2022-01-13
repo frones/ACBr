@@ -1,6 +1,4 @@
 program AcbrBoletoDemo_Fast;
-
-{$I Report.inc}
 uses
   Forms,
   uDemo in 'uDemo.pas' {frmDemo},

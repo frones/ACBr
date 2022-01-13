@@ -1,11 +1,15 @@
 object dmFast: TdmFast
-  OldCreateOrder = False
   Height = 150
   Width = 215
+  PixelsPerInch = 96
   object ACBrBoleto: TACBrBoleto
     Banco.Numero = 341
     Banco.TamanhoMaximoNossoNum = 8
     Banco.TipoCobranca = cobItau
+    Banco.LayoutVersaoArquivo = 40
+    Banco.LayoutVersaoLote = 30
+    Banco.CasasDecimaisMoraJuros = 2
+    Banco.DensidadeGravacao = '0'
     Cedente.Nome = 'TodaObra Materias p/ Construcao'
     Cedente.CodigoCedente = '4266443'
     Cedente.Agencia = '0284'
@@ -17,14 +21,22 @@ object dmFast: TdmFast
     DirArqRemessa = 'c:\temp'
     NumeroArquivo = 0
     ACBrBoletoFC = ACBrBoletoReport
-    Left = 32
-    Top = 30
+    Configuracoes.Arquivos.LogRegistro = False
+    Configuracoes.WebService.SSLHttpLib = httpOpenSSL
+    Configuracoes.WebService.StoreName = 'My'
+    Configuracoes.WebService.Ambiente = taHomologacao
+    Configuracoes.WebService.Operacao = tpInclui
+    Configuracoes.WebService.VersaoDF = '1.2'
+    Left = 40
+    Top = 38
   end
   object ACBrBoletoReport: TACBrBoletoFCFR
-    ACBrBoleto = ACBrBoleto
     DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
     FastReportFile = 'report\Boleto.fr3'
-    Left = 112
+    ModoThread = False
+    IncorporarBackgroundPdf = False
+    IncorporarFontesPdf = False
+    Left = 136
     Top = 32
   end
 end

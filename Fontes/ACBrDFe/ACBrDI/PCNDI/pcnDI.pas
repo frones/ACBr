@@ -80,6 +80,8 @@ type
     FcanalSelecaoParametrizada: Integer;
     FcaracterizacaoOperacaoCodigoTipo: Integer;
     FcaracterizacaoOperacaoDescricaoTipo: String;
+    FcaracterizacaoOperacaoNome: string;
+    FcaracterizacaoOperacaoNumero: string;
     FcargaDataChegada: TDateTime;
     FcargaNumeroAgente: String;
     FcargaPaisProcedenciaCodigo: Integer;
@@ -170,6 +172,8 @@ type
     property canalSelecaoParametrizada: Integer                                read FcanalSelecaoParametrizada            write FcanalSelecaoParametrizada;
     property caracterizacaoOperacaoCodigoTipo: Integer                         read FcaracterizacaoOperacaoCodigoTipo     write FcaracterizacaoOperacaoCodigoTipo;
     property caracterizacaoOperacaoDescricaoTipo: String                       read FcaracterizacaoOperacaoDescricaoTipo  write FcaracterizacaoOperacaoDescricaoTipo;
+    property caracterizacaoOperacaoNome: String                                read FcaracterizacaoOperacaoNome           write FcaracterizacaoOperacaoNome;
+    property caracterizacaoOperacaoNumero: String                              read FcaracterizacaoOperacaoNumero         write FcaracterizacaoOperacaoNumero;
     property cargaDataChegada: TDateTime                                       read FcargaDataChegada                     write FcargaDataChegada;
     property cargaNumeroAgente: String                                         read FcargaNumeroAgente                    write FcargaNumeroAgente;
     property cargaPaisProcedenciaCodigo: Integer                               read FcargaPaisProcedenciaCodigo           write FcargaPaisProcedenciaCodigo;
@@ -310,6 +314,12 @@ type
     Fdeducao: TdeducaoCollection;
     FdestaqueNcm: TdestaqueNcm;
     FdocumentoVinculado: TdocumentoVinculadoCollection;
+    FfabricanteCidade: String;
+    FfabricanteComplemento: String;
+    FfabricanteEstado: String;
+    FfabricanteLogradouro: String;
+    FfabricanteNome: String;
+    FfabricanteNumero: Integer;
     FfornecedorCidade: String;
     FfornecedorComplemento: String;
     FfornecedorEstado: String;
@@ -436,6 +446,12 @@ type
     property deducao: TdeducaoCollection                            read Fdeducao;
     property destaqueNcm: TdestaqueNcm                              read FdestaqueNcm;
     property documentoVinculado: TdocumentoVinculadoCollection      read FdocumentoVinculado;
+    property fabricanteCidade: String                               read FfabricanteCidade                             write FfabricanteCidade;
+    property fabricanteComplemento: String                          read FfabricanteComplemento                        write FfabricanteComplemento;
+    property fabricanteEstado: String                               read FfabricanteEstado                             write FfabricanteEstado;
+    property fabricanteLogradouro: String                           read FfabricanteLogradouro                         write FfabricanteLogradouro;
+    property fabricanteNome: String                                 read FfabricanteNome                               write FfabricanteNome;
+    property fabricanteNumero: Integer                              read FfabricanteNumero                             write FfabricanteNumero;
     property fornecedorCidade: String                               read FfornecedorCidade                             write FfornecedorCidade;
     property fornecedorComplemento: String                          read FfornecedorComplemento                        write FfornecedorComplemento;
     property fornecedorEstado: String                               read FfornecedorEstado                             write FfornecedorEstado;

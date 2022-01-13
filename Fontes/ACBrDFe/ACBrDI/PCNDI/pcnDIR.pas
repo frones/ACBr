@@ -183,6 +183,12 @@ begin
     end;
     Leitor.GroupRestore(False);
 
+    oAdicao.fabricanteCidade                             := Leitor.rCampo(tcStr, 'fabricanteCidade');
+    oAdicao.fabricanteComplemento                        := Leitor.rCampo(tcStr, 'fabricanteComplemento');
+    oAdicao.fabricanteEstado                             := Leitor.rCampo(tcStr, 'fabricanteEstado');
+    oAdicao.fabricanteLogradouro                         := Leitor.rCampo(tcStr, 'fabricanteLogradouro');
+    oAdicao.fabricanteNome                               := Leitor.rCampo(tcStr, 'fabricanteNome');
+    oAdicao.fabricanteNumero                             := Leitor.rCampo(tcInt, 'fabricanteNumero');
     oAdicao.fornecedorCidade                             := Leitor.rCampo(tcStr, 'fornecedorCidade');
     oAdicao.fornecedorComplemento                        := Leitor.rCampo(tcStr, 'fornecedorComplemento');
     oAdicao.fornecedorEstado                             := Leitor.rCampo(tcStr, 'fornecedorEstado');
@@ -298,6 +304,8 @@ begin
   DI.canalSelecaoParametrizada           := Leitor.rCampo(tcInt, 'canalSelecaoParametrizada');
   DI.caracterizacaoOperacaoCodigoTipo    := Leitor.rCampo(tcInt, 'caracterizacaoOperacaoCodigoTipo');
   DI.caracterizacaoOperacaoDescricaoTipo := Leitor.rCampo(tcStr, 'caracterizacaoOperacaoDescricaoTipo');
+  DI.caracterizacaoOperacaoNome          := Leitor.rCampo(tcInt, 'caracterizacaoOperacaoNome');
+  DI.caracterizacaoOperacaoNumero        := Leitor.rCampo(tcStr, 'caracterizacaoOperacaoNumero');
   DI.cargaDataChegada                    := Leitor.rCampo(tcDatCFe, 'cargaDataChegada');
   DI.cargaNumeroAgente                   := Leitor.rCampo(tcStr, 'cargaNumeroAgente');
   DI.cargaPaisProcedenciaCodigo          := Leitor.rCampo(tcInt, 'cargaPaisProcedenciaCodigo');

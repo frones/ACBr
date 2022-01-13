@@ -65,10 +65,12 @@ const
 type
   TACBrOpenSSLDgst = ( dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1,
                        dgstSHA256, dgstSHA512);
-  TACBrOpenSSLStrType = (outHexa, outBase64, outBinary);
+  TACBrOpenSSLStrType = (sttHexa, sttBase64, sttBinary);
   TACBrOpenSSLKeyBits = (bit512, bit1024, bit2048);
+  TACBrOpenSSLCredential = (crePubKey, crePrivKey, crePFX, creCertX09);
 
   TACBrOpenSSLOnProgress = procedure(const PosByte, TotalSize: int64) of object;
+  TACBrOpenSSLOnNeedCredentials = procedure(const CredentialNeeded: TACBrOpenSSLCredential) of object;
 
   EACBrOpenSSLException = class(Exception);
 
@@ -76,14 +78,15 @@ type
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
-  { TACBrOpenSSL }
+  { TACBrOpenSSLUtils }
 
-  TACBrOpenSSL = class(TACBrComponent)
+  TACBrOpenSSLUtils = class(TACBrComponent)
   private
     fVersion: String;
     fOldLib: Boolean;
     fBufferSize: Integer;
     fOnProgress: TACBrOpenSSLOnProgress;
+    fOnNeedCredentials: TACBrOpenSSLOnNeedCredentials;
 
     fEVP_PrivateKey: pEVP_PKEY;
     fEVP_PublicKey: pEVP_PKEY;
@@ -93,10 +96,14 @@ type
     procedure SetBufferSize(AValue: Integer);
 
   private
+    fPassword: AnsiString;
     procedure FreeKeys;
     Procedure FreePrivateKey;
     Procedure FreePublicKey;
     procedure FreeCert;
+    function GetPrivateKeyAsStr: AnsiString;
+    function GetPublicKeyAsOpenSSH: AnsiString;
+    function GetPublicKeyAsStr: AnsiString;
 
     function IsOldLib: Boolean;
     procedure CheckFileExists(const AFile: String);
@@ -109,38 +116,52 @@ type
     destructor Destroy; override;
 
     function CalcHashFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
-      OutputType: TACBrOpenSSLStrType = outHexa; Sign: Boolean = False): AnsiString;
+      OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
     function CalcHashFromString(const AStr: AnsiString; ADigest: TACBrOpenSSLDgst;
-      OutputType: TACBrOpenSSLStrType = outHexa; Sign: Boolean = False): AnsiString;
+      OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
     function CalcHashFromFile(const AFile: String; ADigest: TACBrOpenSSLDgst;
-      OutputType: TACBrOpenSSLStrType = outHexa; Sign: Boolean = False): AnsiString;
+      OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
 
     function MD5FromFile(const AFile: String): String;
     function MD5FromString(const AString: AnsiString): String;
 
     function VerifyHashFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
-      const AHash: AnsiString; HashType: TACBrOpenSSLStrType = outHexa;
+      const AHash: AnsiString; HashType: TACBrOpenSSLStrType = sttHexa;
       Signed: Boolean = False): Boolean;
     function VerifyHashFromString(const AStr: AnsiString; ADigest: TACBrOpenSSLDgst;
-      const AHash: AnsiString; HashType: TACBrOpenSSLStrType = outHexa;
+      const AHash: AnsiString; HashType: TACBrOpenSSLStrType = sttHexa;
       Signed: Boolean = False): Boolean;
     function VerifyHashFromFile(const AFile: String; ADigest: TACBrOpenSSLDgst;
-      const AHash: AnsiString; HashType: TACBrOpenSSLStrType = outHexa;
+      const AHash: AnsiString; HashType: TACBrOpenSSLStrType = sttHexa;
       Signed: Boolean = False): Boolean;
 
+    function CryptFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
+      OutputType: TACBrOpenSSLStrType = sttHexa): AnsiString;
+
   public
-    property BufferSize: Integer read fBufferSize write SetBufferSize default CBufferSize;
     property Version: String read GetVersion;
 
     procedure LoadPFXFromFile(const APFXFile: String; const Password: AnsiString = '');
     procedure LoadPFXFromStr(const APFXData: AnsiString; const Password: AnsiString = '');
 
     procedure LoadPrivateKeyFromFile(const APrivateKeyFile: String; const Password: AnsiString = '');
-    procedure LoadPrivateKeyFromStr(const APrivateKey: AnsiString; const Password: AnsiString = '');
+    procedure LoadPrivateKeyFromString(const APrivateKey: AnsiString; const Password: AnsiString = '');
     procedure LoadPublicKeyFromFile(const APublicKeyFile: String);
-    procedure LoadPublicKeyFromStr(const APublicKey: AnsiString);
+    procedure LoadPublicKeyFromString(const APublicKey: AnsiString);
 
+    function ExtractModulusAndExponentFromPublicKey(out Modulus: String; out Exponent: String): Boolean;
+    function GeneratePublicKeyFromPrivateKey: String;
+
+    property PrivateKeyAsStr: AnsiString read GetPrivateKeyAsStr;
+    property PublicKeyAsStr: AnsiString read GetPublicKeyAsStr;
+    property PublicKeyAsOpenSSH: AnsiString read GetPublicKeyAsOpenSSH;
+
+  published
+    property BufferSize: Integer read fBufferSize write SetBufferSize default CBufferSize;
     property OnProgress: TACBrOpenSSLOnProgress read fOnProgress write fOnProgress;
+    property OnNeedCredentials: TACBrOpenSSLOnNeedCredentials read fOnNeedCredentials
+      write fOnNeedCredentials;
+    //property Password: AnsiString read fPassword write fPassword;
   end;
 
 procedure InitOpenSSL;
@@ -151,13 +172,13 @@ function OpenSSLFullVersion: String;
 function BioToStr(ABio: pBIO): AnsiString;
 
 // Key functions
-procedure ExtractModulusAndExponentFromKey(AKey: PEVP_PKEY;
-  out Modulus: String; out Exponent: String);
+function ExtractModulusAndExponentFromKey(AKey: PEVP_PKEY;
+  out Modulus: String; out Exponent: String): Boolean;
 procedure SetModulusAndExponentToKey(AKey: PEVP_PKEY;
   const Modulus: String; const Exponent: String);
 
-function ConvertKeyToOpenSSH(APubKey: PEVP_PKEY): String;
-procedure SetOpenSSHToKey(APubKey: PEVP_PKEY; const AOpenSSHKey: String);
+function ConvertPEMToOpenSSH(APubKey: PEVP_PKEY): String;
+function ConvertOpenSSHToPEM(const AOpenSSHKey: String): String;
 
 function PublicKeyToString(APubKey: PEVP_PKEY): String;
 function PrivateKeyToString(APrivKey: PEVP_PKEY; const Password: AnsiString = ''): String;
@@ -169,9 +190,9 @@ function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata:
 // Internal auxiliary functions
 function OpenSSLDgstToStr(ADigest: TACBrOpenSSLDgst): String;
 function ConvertToStrType(ABinaryStr: AnsiString;
-  OutputType: TACBrOpenSSLStrType = outHexa): AnsiString;
+  OutputType: TACBrOpenSSLStrType = sttHexa): AnsiString;
 function ConvertFromStrType(ABinaryStr: AnsiString;
-  InputType: TACBrOpenSSLStrType = outHexa): AnsiString;
+  InputType: TACBrOpenSSLStrType = sttHexa): AnsiString;
 
 var
   OpenSSLLoaded: Boolean;
@@ -251,8 +272,8 @@ end;
 
 // Key functions
 
-procedure ExtractModulusAndExponentFromKey(AKey: PEVP_PKEY; out
-  Modulus: String; out Exponent: String);
+function ExtractModulusAndExponentFromKey(AKey: PEVP_PKEY; out Modulus: String;
+  out Exponent: String): Boolean;
 Var
   bio: pBIO;
   RsaKey: pRSA;
@@ -260,6 +281,7 @@ begin
   InitOpenSSL;
   Modulus := '';
   Exponent := '';
+  Result := False;
   bio := BioNew(BioSMem);
   RsaKey := EvpPkeyGet1RSA(AKey);
   try
@@ -270,6 +292,7 @@ begin
     BIOReset(bio);
     BN_print(bio, RsaKey^.d);
     Exponent := String(BioToStr(bio));
+    Result := True;
   finally
     if (RsaKey <> Nil) then
       RSA_free(RsaKey);
@@ -314,7 +337,7 @@ begin
 end;
 
 // https://www.netmeister.org/blog/ssh2pkcs8.html
-function ConvertKeyToOpenSSH(APubKey: PEVP_PKEY): String;
+function ConvertPEMToOpenSSH(APubKey: PEVP_PKEY): String;
   function EncodeHexaSSH(const HexaStr: String): AnsiString;
   var
     l: Integer;
@@ -343,7 +366,7 @@ begin
   Result := COpenSSHPrefix+' '+EncodeBase64(s);
 end;
 
-procedure SetOpenSSHToKey(APubKey: PEVP_PKEY; const AOpenSSHKey: String);
+function ConvertOpenSSHToPEM(const AOpenSSHKey: String): String;
   function ReadChunk(s: AnsiString; var p: Integer): AnsiString;
   var
     l: Integer;
@@ -355,7 +378,8 @@ procedure SetOpenSSHToKey(APubKey: PEVP_PKEY; const AOpenSSHKey: String);
 var
   s, m, e: AnsiString;
   ps, pe: Integer;
-  Bio: PBIO;
+  bio: PBIO;
+  key: PEVP_PKEY;
 begin
   ps := pos(' ', AOpenSSHKey);
   pe := PosEx(' ', AOpenSSHKey, ps+1);
@@ -369,7 +393,13 @@ begin
   e := AsciiToHex(ReadChunk(s, ps));
   m := AsciiToHex(ReadChunk(s, ps));
 
-  SetModulusAndExponentToKey(APubKey, m, e);
+  key := EvpPkeynew;
+  try
+    SetModulusAndExponentToKey(key, m, e);
+    Result := PublicKeyToString(key);
+  finally
+    EVP_PKEY_free(key);
+  end;
 end;
 
 function PublicKeyToString(APubKey: PEVP_PKEY): String;
@@ -469,8 +499,8 @@ function ConvertToStrType(ABinaryStr: AnsiString;
   OutputType: TACBrOpenSSLStrType): AnsiString;
 begin
   case OutputType of
-    outBase64: Result := Trim(EncodeBase64(ABinaryStr));
-    outHexa: Result := AsciiToHex(ABinaryStr);
+    sttBase64: Result := Trim(EncodeBase64(ABinaryStr));
+    sttHexa: Result := AsciiToHex(ABinaryStr);
   else
     Result := ABinaryStr;
   end;
@@ -480,16 +510,16 @@ function ConvertFromStrType(ABinaryStr: AnsiString;
   InputType: TACBrOpenSSLStrType): AnsiString;
 begin
   case InputType of
-    outBase64: Result := DecodeBase64(ABinaryStr);
-    outHexa: Result := HexToAscii(ABinaryStr);
+    sttBase64: Result := DecodeBase64(ABinaryStr);
+    sttHexa: Result := HexToAscii(ABinaryStr);
   else
     Result := ABinaryStr;
   end;
 end;
 
-{ TACBrOpenSSL }
+{ TACBrOpenSSLUtils }
 
-constructor TACBrOpenSSL.Create(AOwner: TComponent);
+constructor TACBrOpenSSLUtils.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
@@ -498,17 +528,20 @@ begin
   fBufferSize := CBufferSize;
 
   fOnProgress := Nil;
+  fOnNeedCredentials := Nil;
   fEVP_PrivateKey := Nil;
   fEVP_PublicKey := Nil;
   fCertX509 := Nil;
 end;
 
-destructor TACBrOpenSSL.Destroy;
+destructor TACBrOpenSSLUtils.Destroy;
 begin
+  FreeCert;
+  FreeKeys;
   inherited Destroy;
 end;
 
-function TACBrOpenSSL.CalcHashFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
+function TACBrOpenSSLUtils.CalcHashFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
   OutputType: TACBrOpenSSLStrType; Sign: Boolean): AnsiString;
 var
   s: AnsiString;
@@ -567,7 +600,7 @@ begin
   end;
 end;
 
-function TACBrOpenSSL.CalcHashFromString(const AStr: AnsiString;
+function TACBrOpenSSLUtils.CalcHashFromString(const AStr: AnsiString;
   ADigest: TACBrOpenSSLDgst; OutputType: TACBrOpenSSLStrType; Sign: Boolean
   ): AnsiString;
 Var
@@ -582,7 +615,7 @@ begin
   end ;
 end;
 
-function TACBrOpenSSL.CalcHashFromFile(const AFile: String;
+function TACBrOpenSSLUtils.CalcHashFromFile(const AFile: String;
   ADigest: TACBrOpenSSLDgst; OutputType: TACBrOpenSSLStrType; Sign: Boolean
   ): AnsiString;
 Var
@@ -597,17 +630,17 @@ begin
   end ;
 end;
 
-function TACBrOpenSSL.MD5FromFile(const AFile: String): String;
+function TACBrOpenSSLUtils.MD5FromFile(const AFile: String): String;
 begin
   Result := String(CalcHashFromFile(AFile, dgstMD5));
 end;
 
-function TACBrOpenSSL.MD5FromString(const AString: AnsiString): String;
+function TACBrOpenSSLUtils.MD5FromString(const AString: AnsiString): String;
 begin
   Result := String(CalcHashFromString(AString, dgstMD5));
 end;
 
-function TACBrOpenSSL.VerifyHashFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
+function TACBrOpenSSLUtils.VerifyHashFromStream(AStream: TStream; ADigest: TACBrOpenSSLDgst;
   const AHash: AnsiString; HashType: TACBrOpenSSLStrType; Signed: Boolean
   ): Boolean;
 Var
@@ -668,7 +701,7 @@ begin
   end;
 end;
 
-function TACBrOpenSSL.VerifyHashFromString(const AStr: AnsiString;
+function TACBrOpenSSLUtils.VerifyHashFromString(const AStr: AnsiString;
   ADigest: TACBrOpenSSLDgst; const AHash: AnsiString;
   HashType: TACBrOpenSSLStrType; Signed: Boolean): Boolean;
 Var
@@ -683,7 +716,7 @@ begin
   end ;
 end;
 
-function TACBrOpenSSL.VerifyHashFromFile(const AFile: String;
+function TACBrOpenSSLUtils.VerifyHashFromFile(const AFile: String;
   ADigest: TACBrOpenSSLDgst; const AHash: AnsiString;
   HashType: TACBrOpenSSLStrType; Signed: Boolean): Boolean;
 Var
@@ -698,7 +731,13 @@ begin
   end ;
 end;
 
-procedure TACBrOpenSSL.LoadPFXFromFile(const APFXFile: String;
+function TACBrOpenSSLUtils.CryptFromStream(AStream: TStream;
+  ADigest: TACBrOpenSSLDgst; OutputType: TACBrOpenSSLStrType): AnsiString;
+begin
+
+end;
+
+procedure TACBrOpenSSLUtils.LoadPFXFromFile(const APFXFile: String;
   const Password: AnsiString);
 Var
   fs: TFileStream ;
@@ -715,7 +754,7 @@ begin
   end ;
 end;
 
-procedure TACBrOpenSSL.LoadPFXFromStr(const APFXData: AnsiString;
+procedure TACBrOpenSSLUtils.LoadPFXFromStr(const APFXData: AnsiString;
   const Password: AnsiString);
 var
   ca, p12: Pointer;
@@ -742,7 +781,7 @@ begin
   end;
 end;
 
-procedure TACBrOpenSSL.LoadPrivateKeyFromFile(const APrivateKeyFile: String;
+procedure TACBrOpenSSLUtils.LoadPrivateKeyFromFile(const APrivateKeyFile: String;
   const Password: AnsiString);
 Var
   fs: TFileStream ;
@@ -753,13 +792,13 @@ begin
   try
     fs.Position := 0;
     s := ReadStrFromStream(fs, fs.Size);
-    LoadPrivateKeyFromStr(s, Password);
+    LoadPrivateKeyFromString(s, Password);
   finally
     fs.Free ;
   end ;
 end;
 
-procedure TACBrOpenSSL.LoadPrivateKeyFromStr(const APrivateKey: AnsiString;
+procedure TACBrOpenSSLUtils.LoadPrivateKeyFromString(const APrivateKey: AnsiString;
   const Password: AnsiString);
 var
   bio: pBIO;
@@ -780,7 +819,7 @@ begin
     raise EACBrOpenSSLException.CreateFmt(sErrLoadingKey, [CPrivate]);
 end;
 
-procedure TACBrOpenSSL.LoadPublicKeyFromFile(const APublicKeyFile: String);
+procedure TACBrOpenSSLUtils.LoadPublicKeyFromFile(const APublicKeyFile: String);
 Var
   fs: TFileStream ;
   s: AnsiString;
@@ -790,20 +829,20 @@ begin
   try
     fs.Position := 0;
     s := ReadStrFromStream(fs, fs.Size);
-    LoadPublicKeyFromStr(s);
+    LoadPublicKeyFromString(s);
   finally
     fs.Free ;
   end ;
 end;
 
-procedure TACBrOpenSSL.LoadPublicKeyFromStr(const APublicKey: AnsiString);
+procedure TACBrOpenSSLUtils.LoadPublicKeyFromString(const APublicKey: AnsiString);
 var
   bio: pBIO;
   buf: AnsiString;
   x: pEVP_PKEY;
 begin
   InitOpenSSL ;
-  FreePrivateKey;
+  FreePublicKey;
 
   buf := AnsiString(ChangeLineBreak(Trim(APublicKey), LF));  // Use Linux LineBreak
   bio := BIO_new_mem_buf(PAnsiChar(buf), Length(buf)+1) ;
@@ -818,7 +857,20 @@ begin
     raise EACBrOpenSSLException.CreateFmt(sErrLoadingKey, [CPublic]);
 end;
 
-function TACBrOpenSSL.GetEVPDigestByName(ADigest: TACBrOpenSSLDgst): PEVP_MD;
+function TACBrOpenSSLUtils.ExtractModulusAndExponentFromPublicKey(out
+  Modulus: String; out Exponent: String): Boolean;
+begin
+  CheckPublicKeyIsLoaded;
+  Result := ExtractModulusAndExponentFromKey(fEVP_PublicKey, Modulus, Exponent);
+end;
+
+function TACBrOpenSSLUtils.GeneratePublicKeyFromPrivateKey: String;
+begin
+  CheckPrivateKeyIsLoaded;
+  Result := PublicKeyToString(fEVP_PrivateKey);;
+end;
+
+function TACBrOpenSSLUtils.GetEVPDigestByName(ADigest: TACBrOpenSSLDgst): PEVP_MD;
 var
   s: AnsiString;
 begin
@@ -829,7 +881,7 @@ begin
       [GetEnumName(TypeInfo(TACBrOpenSSLDgst), Integer(ADigest))]);
 end;
 
-function TACBrOpenSSL.GetVersion: String;
+function TACBrOpenSSLUtils.GetVersion: String;
 begin
   InitOpenSSL;
   if (fVersion = '') then
@@ -840,13 +892,13 @@ begin
   Result := fVersion;
 end;
 
-function TACBrOpenSSL.IsOldLib: Boolean;
+function TACBrOpenSSLUtils.IsOldLib: Boolean;
 begin
   GetVersion;
   Result := fOldLib;
 end;
 
-procedure TACBrOpenSSL.CheckFileExists(const AFile: String);
+procedure TACBrOpenSSLUtils.CheckFileExists(const AFile: String);
 var
   s: String;
 begin
@@ -858,22 +910,28 @@ begin
     raise EACBrOpenSSLException.CreateFmt(sErrFileNotExists, [s]);
 end;
 
-procedure TACBrOpenSSL.CheckPublicKeyIsLoaded;
+procedure TACBrOpenSSLUtils.CheckPublicKeyIsLoaded;
 begin
   if (not Assigned(fEVP_PublicKey)) and Assigned(fEVP_PrivateKey) then
-    LoadPublicKeyFromStr(PublicKeyToString(fEVP_PrivateKey));
+    LoadPublicKeyFromString(PublicKeyToString(fEVP_PrivateKey));
+
+  if not Assigned(fEVP_PublicKey) and Assigned(fOnNeedCredentials) then
+    fOnNeedCredentials(crePubKey);
 
   if not Assigned(fEVP_PublicKey) then
     raise EACBrOpenSSLException.CreateFmt(sErrKeyNotLoaded, [CPublic]);
 end;
 
-procedure TACBrOpenSSL.CheckPrivateKeyIsLoaded;
+procedure TACBrOpenSSLUtils.CheckPrivateKeyIsLoaded;
 begin
+  if not Assigned(fEVP_PrivateKey) and Assigned(fOnNeedCredentials) then
+    fOnNeedCredentials(crePrivKey);
+
   if not Assigned(fEVP_PrivateKey) then
     raise EACBrOpenSSLException.CreateFmt(sErrKeyNotLoaded, [CPrivate]);
 end;
 
-procedure TACBrOpenSSL.SetBufferSize(AValue: Integer);
+procedure TACBrOpenSSLUtils.SetBufferSize(AValue: Integer);
 begin
   if fBufferSize = AValue then
     Exit;
@@ -881,13 +939,13 @@ begin
   fBufferSize := max(1024, AValue);
 end;
 
-procedure TACBrOpenSSL.FreeKeys;
+procedure TACBrOpenSSLUtils.FreeKeys;
 begin
   FreePrivateKey;
   FreePublicKey;
 end;
 
-procedure TACBrOpenSSL.FreePrivateKey;
+procedure TACBrOpenSSLUtils.FreePrivateKey;
 begin
   if (fEVP_PrivateKey <> Nil) then
   begin
@@ -896,7 +954,7 @@ begin
   end ;
 end;
 
-procedure TACBrOpenSSL.FreePublicKey;
+procedure TACBrOpenSSLUtils.FreePublicKey;
 begin
   if (fEVP_PublicKey <> Nil) then
   begin
@@ -905,13 +963,31 @@ begin
   end ;
 end;
 
-procedure TACBrOpenSSL.FreeCert;
+procedure TACBrOpenSSLUtils.FreeCert;
 begin
   if (fCertX509 <> Nil) then
   begin
     X509free(fCertX509);
     fCertX509 := Nil;
   end;
+end;
+
+function TACBrOpenSSLUtils.GetPrivateKeyAsStr: AnsiString;
+begin
+  CheckPrivateKeyIsLoaded;
+  Result := PrivateKeyToString(fEVP_PrivateKey);
+end;
+
+function TACBrOpenSSLUtils.GetPublicKeyAsStr: AnsiString;
+begin
+  CheckPublicKeyIsLoaded;
+  Result := PublicKeyToString(fEVP_PublicKey);
+end;
+
+function TACBrOpenSSLUtils.GetPublicKeyAsOpenSSH: AnsiString;
+begin
+  CheckPublicKeyIsLoaded;
+  Result := ConvertPEMToOpenSSH(fEVP_PublicKey);
 end;
 
 initialization

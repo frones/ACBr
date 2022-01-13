@@ -40,7 +40,8 @@ procedure Register;
 
 implementation
 
-Uses ACBrEAD;
+Uses
+  ACBrEAD, ACBrOpenSSLUtils;
 
 {$IFNDEF FPC}
    {$R ACBrOpenSSL.dcr}
@@ -48,7 +49,7 @@ Uses ACBrEAD;
 
 procedure Register;
 begin
-  RegisterComponents('ACBrDiversos', [ TACBrEAD ] );
+  RegisterComponents('ACBrDiversos', [ TACBrEAD, TACBrOpenSSLUtils ] );
 end;
 
 {$IFDEF FPC}

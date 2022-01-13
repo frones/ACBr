@@ -489,7 +489,7 @@ type
   EVP_CIPHER_GET_ASN1_PARAMETERS_FUNC = function(ctx: PEVP_CIPHER_CTX; asn1_type: PASN1_TYPE): cint; cdecl;
   EVP_CIPHER_CTRL_FUNC = function(ctx: PEVP_CIPHER_CTX; type_, arg: cint; ptr: Pointer): cint; cdecl;
 
-    EVP_CIPHER = record  // Updated with EVP.h from OpenSSL 1.0.0
+  EVP_CIPHER = record  // Updated with EVP.h from OpenSSL 1.0.0
     nid: cint;
     block_size: cint;
     key_len: cint;  //* Default value for variable length ciphers */

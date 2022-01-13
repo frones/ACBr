@@ -22,7 +22,7 @@ echo "****************************************"
 echo
 
 :OpenSSL
-$LAZRES ACBrOpenSSL.lrs TACBrEAD.png
+$LAZRES ACBrOpenSSL.lrs TACBrEAD.png TACBrOpenSSLUtils.png
 mv ACBrOpenSSL.lrs ../ACBrOpenSSL
 echo
 echo "****************************************"

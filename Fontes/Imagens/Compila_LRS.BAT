@@ -16,7 +16,7 @@ echo "****************************************"
 echo.
 
 :OpenSSL
-%1\tools\lazres.exe ACBrOpenSSL.lrs TACBrEAD.png
+%1\tools\lazres.exe ACBrOpenSSL.lrs TACBrEAD.png TACBrOpenSSLUtils.png
 move ACBrOpenSSL.lrs ..\ACBrOpenSSL
 echo.
 echo "****************************************"

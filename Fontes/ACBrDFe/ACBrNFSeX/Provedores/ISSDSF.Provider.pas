@@ -1397,12 +1397,14 @@ begin
         begin
           ANode := ANodeArray[i];
 
-          //Tenta localizar pelo número da nota
-          //ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(ANode.Childrens.FindAnyNs('NumeroNota').AsString);
-
-          //Se não achou tenta pelo número do RPS
-          //if not Assigned(ANota) then
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANode.Childrens.FindAnyNs('NumeroRPS').AsString);
+          try
+            //Tenta localizar pelo número da nota
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(ANode.Childrens.FindAnyNs('NumeroNota').AsString);
+          except
+            //Se não achou tenta pelo número do RPS
+            //if not Assigned(ANota) then
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(ANode.Childrens.FindAnyNs('NumeroRPS').AsString);
+          end;
 
           if Assigned(ANota) then
             ANota.XML := ANode.OuterXml

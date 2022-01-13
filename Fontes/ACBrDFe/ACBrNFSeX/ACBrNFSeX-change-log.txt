@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/01/2022
+-- ISSDSF.Provider --
+[*] Ajuste no TratarRetornoCancelar.
+   Por: Danny
 -- ACBrNFSeXConversao --
 [*] Remoção de tipos e funções que não são mais utilizadas pelo
     componente.

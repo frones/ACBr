@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/01/2022
+-- ACBrXmlBase --
+[+] Inclusão do tipo: TACBrTipoEmissao e das funções:TipoEmissaoToStr,
+    StrToTipoEmissao, TipoAmbienteToStr e StrToTipoAmbiente.
+   Por: Italo Giurizzato Junior
+
 04/01/2022
 -- ACBrXmlBase/ACBrXmlWrite --
 [*] Ajustes para suportar valores Int64.

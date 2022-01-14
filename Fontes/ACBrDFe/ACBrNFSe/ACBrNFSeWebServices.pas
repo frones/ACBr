@@ -6543,7 +6543,7 @@ begin
         case Configuracoes.Geral.Provedor of
           proGiap, proInfisc, proInfiscv11, proSafeWeb, proTiplanv2, proWebISSv2,
           proTcheInfov2,
-          proAEG: Result := True
+          proAEG, proEgoverneISS: Result := True
         else
           begin
             if NotasFiscais.Count > 0 then

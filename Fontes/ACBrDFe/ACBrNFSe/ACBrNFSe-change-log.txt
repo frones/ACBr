@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/01/2022
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/65672-provedor-egoverneiss-consulta-lote-ap%C3%B3s-cancelar/
+  Por: Andre Luis Guimaraes
+
 11/11/2021
 -- pnfsNFSeR --
 [*] Ajuste na leitura de XML do provedor ISSDSF.

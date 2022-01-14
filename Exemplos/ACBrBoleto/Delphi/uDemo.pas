@@ -297,9 +297,14 @@ var Beneficiario   : TACBrCedente;
     Boleto         : TACBrBoleto;
     WebService     : TACBrWebService;
     BeneficiarioWS : TACBrCedenteWS;
+    CobAnterior    : TACBrTipoCobranca;
 begin
   Boleto := dm.ACBrBoleto;
   WebService := Boleto.Configuracoes.WebService;
+
+  CobAnterior := Boleto.Banco.TipoCobranca;
+  if CobAnterior <> TACBrTipoCobranca(cbxBanco.ItemIndex) then
+    edtLocalPag.Text := '';
 
   Boleto.ListadeBoletos.Clear;
 
@@ -358,8 +363,12 @@ begin
   Banco.LayoutVersaoLote    := StrToIntDef(edtCNABLVLote.Text,0);
   Banco.CIP                 := edtCIP.Text;
   Banco.DensidadeGravacao   := edtDensidadeGravacao.Text;
-  if Banco.LocalPagamento <> edtLocalPag.Text then
+
+  if (Banco.LocalPagamento <> edtLocalPag.Text) and (edtLocalPag.Text <> '') then
     Banco.LocalPagamento      := edtLocalPag.Text;
+
+  if edtLocalPag.Text = '' then
+    edtLocalPag.Text := Banco.LocalPagamento;
 
   BeneficiarioWS.ClientID     := edtClientID.Text;
   BeneficiarioWS.ClientSecret := edtClientSecret.Text;
@@ -409,7 +418,7 @@ begin
   edtCNABLVLote.Text        := IntToStr(Banco.LayoutVersaoLote);
   edtCIP.Text               := Banco.CIP;
   edtDensidadeGravacao.Text := Banco.DensidadeGravacao;
-
+  edtLocalPag.Text          := Banco.LocalPagamento;
 
 
 end;

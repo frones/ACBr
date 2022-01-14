@@ -208,7 +208,14 @@ type
 
     procedure LoadUrlProducao(AINI: TCustomIniFile; ASession: string);
     procedure LoadUrlHomologacao(AINI: TCustomIniFile; ASession: string);
-    procedure HomologacaoIgualProducao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadLinkUrlProducao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadLinkUrlHomologacao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadXMLNameSpaceProducao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadXMLNameSpaceHomologacao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadNameSpaceProducao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadNameSpaceHomologacao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadSoapActionProducao(AINI: TCustomIniFile; ASession: string);
+    procedure LoadSoapActionHomologacao(AINI: TCustomIniFile; ASession: string);
 
     property VersaoDados: string read FVersaoDados write FVersaoDados;
     property VersaoAtrib: string read FVersaoAtrib write FVersaoAtrib;
@@ -447,6 +454,54 @@ begin
   inherited Destroy;
 end;
 
+procedure TConfigWebServices.LoadLinkUrlHomologacao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Homologacao.FLinkURL := AINI.ReadString(ASession, 'HomLinkURL', '');
+end;
+
+procedure TConfigWebServices.LoadLinkUrlProducao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Producao.FLinkURL := AINI.ReadString(ASession, 'ProLinkURL', '');
+end;
+
+procedure TConfigWebServices.LoadNameSpaceHomologacao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Homologacao.FNameSpace := AINI.ReadString(ASession, 'HomNameSpace', '');
+end;
+
+procedure TConfigWebServices.LoadNameSpaceProducao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Producao.FNameSpace := AINI.ReadString(ASession, 'ProNameSpace', '');
+end;
+
+procedure TConfigWebServices.LoadXMLNameSpaceHomologacao(
+  AINI: TCustomIniFile; ASession: string);
+begin
+  Homologacao.FXMLNameSpace := AINI.ReadString(ASession, 'HomXMLNameSpace', '');
+end;
+
+procedure TConfigWebServices.LoadXMLNameSpaceProducao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Producao.FXMLNameSpace := AINI.ReadString(ASession, 'ProXMLNameSpace', '');
+end;
+
+procedure TConfigWebServices.LoadSoapActionHomologacao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Homologacao.FSoapAction := AINI.ReadString(ASession, 'HomSoapAction', '');
+end;
+
+procedure TConfigWebServices.LoadSoapActionProducao(AINI: TCustomIniFile;
+  ASession: string);
+begin
+  Producao.FSoapAction := AINI.ReadString(ASession, 'ProSoapAction', '');
+end;
+
 procedure TConfigWebServices.LoadUrlHomologacao(AINI: TCustomIniFile;
   ASession: string);
 begin
@@ -467,14 +522,6 @@ begin
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'HomConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'HomConsultarNFSeServicoPrestado', FRecepcionar);
     FConsultarNFSeServicoTomado   := AINI.ReadString(ASession, 'HomConsultarNFSeServicoTomado'  , FRecepcionar);
-
-    FXMLNameSpace := AINI.ReadString(ASession, 'HomXMLNameSpace', '');
-
-    FNameSpace := AINI.ReadString(ASession, 'HomNameSpace', '');
-
-    FSoapAction := AINI.ReadString(ASession, 'HomSoapAction', '');
-
-    FLinkURL := AINI.ReadString(ASession, 'HomLinkURL', '');
   end;
 end;
 
@@ -497,52 +544,6 @@ begin
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'ProConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'ProConsultarNFSeServicoPrestado', FRecepcionar);
     FConsultarNFSeServicoTomado   := AINI.ReadString(ASession, 'ProConsultarNFSeServicoTomado'  , FRecepcionar);
-
-    FXMLNameSpace := AINI.ReadString(ASession, 'ProXMLNameSpace', '');
-
-    FNameSpace := AINI.ReadString(ASession, 'ProNameSpace', '');
-
-    FSoapAction := AINI.ReadString(ASession, 'ProSoapAction', '');
-
-    FLinkURL := AINI.ReadString(ASession, 'ProLinkURL', '');
-  end;
-end;
-
-procedure TConfigWebServices.HomologacaoIgualProducao(AINI: TCustomIniFile;
-  ASession: string);
-begin
-  with Homologacao do
-  begin
-    if FRecepcionar = '' then
-    begin
-      FRecepcionar         := Producao.Recepcionar;
-      FConsultarSituacao   := Producao.ConsultarSituacao;
-      FConsultarLote       := Producao.ConsultarLote;
-      FConsultarNFSeRps    := Producao.ConsultarNFSeRps;
-      FConsultarNFSe       := Producao.ConsultarNFSe;
-      FCancelarNFSe        := Producao.CancelarNFSe;
-      FGerarNFSe           := Producao.GerarNFSe;
-      FRecepcionarSincrono := Producao.RecepcionarSincrono;
-      FSubstituirNFSe      := Producao.SubstituirNFSe;
-      FAbrirSessao         := Producao.AbrirSessao;
-      FFecharSessao        := Producao.FecharSessao;
-
-      FConsultarNFSePorFaixa        := Producao.ConsultarNFSePorFaixa;
-      FConsultarNFSeServicoPrestado := Producao.ConsultarNFSeServicoPrestado;
-      FConsultarNFSeServicoTomado   := Producao.ConsultarNFSeServicoTomado;
-    end;
-
-    if FXMLNameSpace = '' then
-      FXMLNameSpace := Producao.XMLNameSpace;
-
-    if FNameSpace = '' then
-      FNameSpace := Producao.NameSpace;
-
-    if FSoapAction = '' then
-      FSoapAction := Producao.SoapAction;
-
-    if FLinkURL = '' then
-      FLinkURL := Producao.LinkURL;
   end;
 end;
 

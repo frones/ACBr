@@ -626,10 +626,19 @@ begin
       Sessao := IntToStr(Configuracoes.Geral.CodigoMunicipio);
       ConfigWebServices.LoadUrlProducao(IniParams, Sessao);
       ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
+      ConfigWebServices.LoadLinkUrlProducao(IniParams, Sessao);
+      ConfigWebServices.LoadLinkUrlHomologacao(IniParams, Sessao);
+      ConfigWebServices.LoadXMLNameSpaceProducao(IniParams, Sessao);
+      ConfigWebServices.LoadXMLNameSpaceHomologacao(IniParams, Sessao);
+      ConfigWebServices.LoadNameSpaceProducao(IniParams, Sessao);
+      ConfigWebServices.LoadNameSpaceHomologacao(IniParams, Sessao);
+      ConfigWebServices.LoadSoapActionProducao(IniParams, Sessao);
+      ConfigWebServices.LoadSoapActionHomologacao(IniParams, Sessao);
+
       ConfigGeral.LoadParams1(IniParams, Sessao);
       ConfigGeral.LoadParams2(IniParams, Sessao);
 
-      // Depois verifica as URls definidas para o provedor
+      // Depois verifica as URLs definidas para o provedor
       if ConfigWebServices.Producao.Recepcionar = '' then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
@@ -640,6 +649,54 @@ begin
       begin
         Sessao := Configuracoes.Geral.xProvedor;
         ConfigWebServices.LoadUrlHomologacao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Producao.LinkURL = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadlinkUrlProducao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.LinkURL = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadLinkUrlHomologacao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Producao.XMLNameSpace = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadXMLNameSpaceProducao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.XMLNameSpace = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadXMLNameSpaceHomologacao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Producao.NameSpace = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadNameSpaceProducao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.NameSpace = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadNameSpaceHomologacao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Producao.SoapAction = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadSoapActionProducao(IniParams, Sessao);
+      end;
+
+      if ConfigWebServices.Homologacao.SoapAction = '' then
+      begin
+        Sessao := Configuracoes.Geral.xProvedor;
+        ConfigWebServices.LoadSoapActionHomologacao(IniParams, Sessao);
       end;
 
       // Se Params1 estiver vazio usar o que foi definido para o provedor

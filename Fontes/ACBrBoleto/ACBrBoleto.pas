@@ -50,6 +50,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
+  CInstrucaoPagamentoRegistro = 'Pagavel em qualquer banco até o vencimento.';
   CCedente    = 'CEDENTE';
   CBanco      = 'BANCO';
   CConta      = 'CONTA';
@@ -414,7 +415,8 @@ type
     cobBancoCresol,
     cobMoneyPlus,
     cobBancoC6,
-    cobBancoRendimento
+    cobBancoRendimento,
+	cobBancoInter
     );
 
   TACBrTitulo = class;
@@ -1824,7 +1826,7 @@ Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
-     ACBrBancoBradescoMoneyPlus,ACBrBancoC6,ACBrBancoRendimento;
+     ACBrBancoBradescoMoneyPlus,ACBrBancoC6,ACBrBancoRendimento, ACBrBancoInter;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3349,11 +3351,12 @@ begin
     025: Result := cobBancoAlfa;
     633: Result := cobBancoRendimento;
     643: begin
-          if StrToInt(Carteira) = 9 then
+           if StrToInt(Carteira) = 9 then
              Result := cobBancoPineBradesco
            else
              Result := cobBancoPine;
          end;
+    077: Result := cobBancoInter;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));
@@ -4151,7 +4154,7 @@ begin
       exit;
 
    if fLocalPagamento = fBancoClass.LocalPagamento then   //Usando valor Default
-      fLocalPagamento := '';
+     fLocalPagamento := '';
 
    fBancoClass.Free;
 
@@ -4197,6 +4200,7 @@ begin
      cobMoneyPlus           : fBancoClass := TACBrBancoBradescoMoneyPlus.create(Self); {274}
      cobBancoC6             : fBancoClass := TACBrBancoC6.Create(Self);             {336}
      cobBancoRendimento     : fBancoClass := TACBrBancoRendimento.Create(Self);     {633}
+     cobBancoInter          : fBancoClass := TACBrBancoInter.Create(Self);          {077}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

@@ -218,8 +218,8 @@ function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao; c
 function StrToRegimeEspecialTributacao(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseRegimeEspecialTributacao;
 function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao; const aProvedor: TnfseProvedor = proNenhum): string;
 
-function SimNaoToStr(const t: TnfseSimNao; const aProvedor: TnfseProvedor = proNenhum): string;
-function StrToSimNao(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseSimNao;
+function SimNaoToStr(const t: TnfseSimNao): string;
+function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 
 function TipoRPSToStr(const t:TTipoRPS): string;
 function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
@@ -522,39 +522,18 @@ begin
   end;
 end;
 
-function SimNaoToStr(const t: TnfseSimNao; const aProvedor: TnfseProvedor): string;
+function SimNaoToStr(const t: TnfseSimNao): string;
 begin
-  case aProvedor of
-    proInfisc: Result := EnumeradoToStr(t,
-                           ['N', 'S'],
-                           [snNao, snSim]);
-
-    proIPM: Result := EnumeradoToStr(t,
-                           ['0', '1'],
-                           [snNao, snSim]);
-  else
-    Result := EnumeradoToStr(t,
-                             ['1', '2'],
-                             [snSim, snNao]);
-  end;
+  Result := EnumeradoToStr(t,
+                           ['1', '2'],
+                           [snSim, snNao]);
 end;
 
-function StrToSimNao(out ok: boolean; const s: string;
-  const aProvedor: TnfseProvedor): TnfseSimNao;
+function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 begin
-  case aProvedor of
-    proInfisc: Result := StrToEnumerado(ok, s,
-                           ['N', 'S'],
-                           [snNao, snSim]);
-
-    proIPM: Result := StrToEnumerado(ok, s,
-                           ['0', '1', 'N', 'S'],
-                           [snNao, snSim, snNao, snSim]);
-  else
-    Result := StrToEnumerado(ok, s,
-                             ['1', '2'],
-                             [snSim, snNao]);
-  end;
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [snSim, snNao]);
 end;
 
 function TipoRPSToStr(const t: TTipoRPS): string;

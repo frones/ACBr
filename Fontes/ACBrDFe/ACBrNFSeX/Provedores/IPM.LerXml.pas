@@ -47,8 +47,10 @@ type
   { TNFSeR_IPM }
 
   TNFSeR_IPM = class(TNFSeRClass)
-  protected
+  private
+   function _StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 
+  protected
     procedure LerRps(const ANode: TACBrXmlNode);
     procedure LerNota(const ANode: TACBrXmlNode);
     procedure LerPrestador(const ANode: TACBrXmlNode);
@@ -105,7 +107,7 @@ begin
         ItemServico.New;
         with ItemServico[i] do
         begin
-          TribMunPrestador := StrToSimNao(Ok, ObterConteudo(ANodes[i].Childrens.FindAnyNs('tributa_municipio_prestador'), tcStr));
+          TribMunPrestador := _StrToSimNao(Ok, ObterConteudo(ANodes[i].Childrens.FindAnyNs('tributa_municipio_prestador'), tcStr));
           CodMunPrestacao := CodTOMToCodIBGE(ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_local_prestacao_servico'), tcStr));
 
           aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('codigo_item_lista_servico'), tcStr);
@@ -351,6 +353,13 @@ end;
 function TNFSeR_IPM.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := LerXmlNfse(ANode);
+end;
+
+function TNFSeR_IPM._StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['0', '1', 'N', 'S'],
+                           [snNao, snSim, snNao, snSim]);
 end;
 
 end.

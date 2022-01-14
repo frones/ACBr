@@ -577,10 +577,10 @@ begin
   if GerarTagServicos then
   begin
     Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 1, NrOcorrIssRetido,
-       SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
+       SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido, Provedor), DSC_INDISSRET));
 
     Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, NrOcorrRespRetencao,
-     ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
+     ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao, Provedor), DSC_INDRESPRET));
 
     item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
 

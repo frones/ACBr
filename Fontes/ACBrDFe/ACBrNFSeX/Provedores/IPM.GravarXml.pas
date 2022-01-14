@@ -50,6 +50,8 @@ type
   private
     FpGerarID: Boolean;
     FpNrOcorrTagsTomador: Integer;
+
+   function _SimNaoToStr(const t: TnfseSimNao): string;
   protected
     procedure Configuracao; override;
 
@@ -145,6 +147,11 @@ begin
   end;
 
   Result := True;
+end;
+
+function TNFSeW_IPM._SimNaoToStr(const t: TnfseSimNao): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1'], [snNao, snSim]);
 end;
 
 procedure TNFSeW_IPM.Configuracao;
@@ -273,7 +280,7 @@ begin
     Result[i] := CreateElement('lista');
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'tributa_municipio_prestador', 1, 1, 1,
-        SimNaoToStr(NFSe.Servico.ItemServico[I].TribMunPrestador, proIPM), ''));
+               _SimNaoToStr(NFSe.Servico.ItemServico[I].TribMunPrestador), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_local_prestacao_servico', 1, 9, 1,
       CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.ItemServico[I].CodMunPrestacao, 0)), ''));

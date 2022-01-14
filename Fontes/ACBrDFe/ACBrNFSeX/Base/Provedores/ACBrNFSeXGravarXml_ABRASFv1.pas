@@ -264,7 +264,7 @@ begin
 
   if (NFSe.RegimeEspecialTributacao <> retNenhum) then
     Result.AppendChild(AddNode(tcStr, '#6', 'RegimeEspecialTributacao', 1, 1, NrOcorrRegimeEspecialTributacao,
-   RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN));
+   RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao, Provedor), DSC_REGISSQN));
 
   Result.AppendChild(AddNode(tcStr, '#7', 'OptanteSimplesNacional', 1, 1, NrOcorrOptanteSN,
                         SimNaoToStr(NFSe.OptanteSimplesNacional), DSC_INDOPSN));
@@ -276,7 +276,7 @@ begin
                                    StatusRPSToStr(NFSe.Status), DSC_INDSTATUS));
 
   Result.AppendChild(AddNode(tcStr, '#11', 'OutrasInformacoes', 1, 255, NrOcorrOutrasInformacoes,
-                                         NFSe.OutrasInformacoes, DSC_OUTRASINF));
+                                        NFSe.OutrasInformacoes, DSC_OUTRASINF));
 
   Result.AppendChild(GerarRPSSubstituido);
   Result.AppendChild(GerarServico);
@@ -400,7 +400,7 @@ begin
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));
 
   Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 1, 1,
-       SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
+       SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido, Provedor), DSC_INDISSRET));
 
   Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss', 1, 15, NrOcorrValorIss,
                                       NFSe.Servico.Valores.ValorIss, DSC_VISS));

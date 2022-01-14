@@ -53,6 +53,7 @@ type
     FPdTotISS: Double;
     FPVersao: TVersaoNFSe;
 
+    function _SimNaoToStr(const t: TnfseSimNao): string;
   protected
     procedure Configuracao; override;
 
@@ -132,6 +133,11 @@ begin
   NFSeNode.AppendChild(xmlNode);
 
   Result := True;
+end;
+
+function TNFSeW_Infisc._SimNaoToStr(const t: TnfseSimNao): string;
+begin
+  Result := EnumeradoToStr(t, ['N', 'S'], [snNao, snSim]);
 end;
 
 procedure TNFSeW_Infisc.Configuracao;
@@ -560,7 +566,7 @@ begin
   if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1,
-                                        SimNaoToStr(NFSe.Cancelada, proInfisc), ''));
+                                             _SimNaoToStr(NFSe.Cancelada), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'canhoto', 1, 1, 1,
                                                CanhotoToStr(NFSe.Canhoto), ''));

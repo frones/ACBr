@@ -48,6 +48,9 @@ type
   { TNFSeR_Infisc }
 
   TNFSeR_Infisc = class(TNFSeRClass)
+  private
+    function _StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
+
   protected
 
     // versão 1.0
@@ -318,12 +321,12 @@ begin
       ModeloNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcStr);
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('cancelada'), tcStr);
-      Cancelada := StrToSimNao(Ok, aValor, proInfisc);
+      Cancelada := _StrToSimNao(Ok, aValor);
 
       MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('motCanc'), tcStr);
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('ambienteEmi'), tcStr);
-      Producao := StrToSimNao(Ok, aValor, proInfisc);
+      Producao := StrToSimNao(Ok, aValor);
     end;
   end;
 end;
@@ -639,6 +642,12 @@ end;
 function TNFSeR_Infisc.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := LerXmlNfse(ANode);
+end;
+
+function TNFSeR_Infisc._StrToSimNao(out ok: boolean;
+  const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s, ['N', 'S'], [snNao, snSim]);
 end;
 
 end.

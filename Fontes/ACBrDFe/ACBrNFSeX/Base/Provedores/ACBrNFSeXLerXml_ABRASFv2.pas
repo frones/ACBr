@@ -721,7 +721,7 @@ begin
       if Responsavel = '' then
         ResponsavelRetencao := rtNenhum
       else
-        ResponsavelRetencao := StrToResponsavelRetencao(Ok, Responsavel);
+        ResponsavelRetencao := StrToResponsavelRetencao(Ok, Responsavel, Provedor);
 
       ItemListaServico          := NormatizaItemListaServico(CodigoItemServico);
       xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
@@ -737,7 +737,7 @@ begin
 
       with Valores do
       begin
-        IssRetido := StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
+        IssRetido := StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr), Provedor);
 
         if IssRetido = stRetencao then
           ValorIssRetido := ValorIss

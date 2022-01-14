@@ -4920,7 +4920,7 @@ end;
 procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
 begin
   {$IfDef DUNITX}
-   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
+   TDUnitX.RegisterTestFixture(ATestClass, ATesteName + ATestClass.ClassName);
   {$ELSE}
    RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
   {$EndIf}

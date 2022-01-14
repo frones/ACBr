@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/01/2022
+-- ACBrPagForGravarTxt/ACBrPagForLerTxt --
+[*] Ajustes para funcionar com o banco Bradesco
+   Por: Paulo Henrique Panico
+
 13/12/2021
 -- Diversos --
 [+] Inclusão dos Bancos: Ailos (085) e Safra (422).

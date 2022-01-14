@@ -317,7 +317,7 @@ begin
         FPagFor.Lote.Last.SegmentoA.Last.Aviso                  := StrToIntDef(Copy(FArquivoTXT.Strings[i], 230, 1),0);
         FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia          := Trim(Copy(FArquivoTXT.Strings[i], 231, 10));
 
-        if (FPagFor.Geral.Banco = PagItau) then
+        if (FPagFor.Geral.Banco in [PagItau, pagBradesco]) then
           FPagFor.Lote.Last.SegmentoA.Last.DescOcorrencia := DescricaoRetornoItau(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia);
 
         if (FPagFor.Geral.Banco = pagSantander) then
@@ -631,6 +631,9 @@ begin
      ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3B') and
      ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3C') and
      ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3Z') then
+    Exit;
+
+  if (FPagFor.Geral.Banco = pagBradesco) and (Copy(FArquivoTXT.Strings[i], 18, 2) = '52') then
     Exit;
 
   if ((Copy(FArquivoTXT.Strings[i], 18, 2) <> '52') and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '99')) and

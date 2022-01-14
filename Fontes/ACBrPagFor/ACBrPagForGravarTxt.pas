@@ -260,6 +260,12 @@ begin
         FveRegistro0 := '000';
       end;
 
+    pagBradesco:
+      begin
+        wregistro := wregistro + FormatFloat('000000', FPagFor.Registro0.Arquivo.Sequencia);
+        FveRegistro0 := '089';
+      end;
+
     pagBancoCECRED:
       begin
         wregistro := wregistro + FormatFloat('000000', FPagFor.Registro0.Arquivo.Sequencia);
@@ -271,6 +277,7 @@ begin
         wregistro := wregistro + FormatFloat('000000', FPagFor.Registro0.Arquivo.Sequencia);
         FveRegistro0 := '103';
       end;
+
   else
     begin
       wregistro := wregistro + '000000';
@@ -388,6 +395,8 @@ begin
         else
           FveRegistro1 := '030'
       end;
+    pagBradesco:
+      FveRegistro1 := '040';
   else
     FveRegistro1 := '000'
   end;
@@ -551,6 +560,18 @@ begin
           wregistro := wregistro + Space(10);
         end;
       end;
+    pagBradesco:
+      begin
+        wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
+        if (FPagFor.Lote.Items[I].Registro1.Servico.FormaLancamento in [flLiquidacaoTitulosProprioBanco,flLiquidacaoTitulosOutrosBancos] ) then
+        begin
+          wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.Valor * 100);
+          wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.QtdeMoeda * 100000); // 5 casas decimais
+          wregistro := wregistro + '000000';
+          wregistro := wregistro + Space(165);
+          wregistro := wregistro + Space(10);
+        end;
+      end;
   else
     begin
       wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
@@ -587,6 +608,8 @@ begin
 
   case FPagFor.Geral.Banco of
     pagSicred, pagBancoCECRED, pagBancoSafra:
+      wregistro := wregistro + '000000';
+    pagBradesco:
       wregistro := wregistro + '000000';
   else
     wregistro := wregistro + Space(6);
@@ -1202,8 +1225,21 @@ begin
             wregistro := wregistro + Space(15);
             wregistro := wregistro + Space(10);
           end;
-
         pagSicred, pagBancoCECRED, pagBancoSafra:
+          begin
+            wregistro := wregistro + FormatFloat('000000000000000', ValorTitulo * 100);
+            wregistro := wregistro + FormatFloat('000000000000000', Desconto * 100);
+            wregistro := wregistro + FormatFloat('000000000000000', Acrescimo * 100);
+            wregistro := wregistro + FormatDateTime('ddmmyyyy', DataPagamento);
+            wregistro := wregistro + FormatFloat('000000000000000', ValorPagamento * 100);
+            wregistro := wregistro + FormatFloat('000000000000000', QtdeMoeda * 100000);
+            wregistro := wregistro + PadRight(TiraAcentos(ReferenciaSacado), 20);
+            wregistro := wregistro + PadRight(TiraAcentos(NossoNumero), 20);
+            wregistro := wregistro + FormatFloat('00', CodigoMoeda);
+            wregistro := wregistro + Space(6);
+            wregistro := wregistro + Space(10);
+          end;
+        pagBradesco:
           begin
             wregistro := wregistro + FormatFloat('000000000000000', ValorTitulo * 100);
             wregistro := wregistro + FormatFloat('000000000000000', Desconto * 100);
@@ -1262,6 +1298,9 @@ begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
 
+      if (FPagFor.Geral.Banco = PagBradesco) then
+        Inc(FSequencialDeLote);
+
       wregistro := BancoToStr(FPagFor.Geral.Banco);
       wregistro := wregistro + FormatFloat('0000', FQtdeLotes);
       wregistro := wregistro + '3';
@@ -1273,7 +1312,12 @@ begin
           begin
             wregistro := wregistro + ' ';
             wregistro := wregistro + '01'; //Conforme orientado pelo sicredi o J-52 sempre sera 01 o codigo do movimento na remessa
-          end
+          end;
+        pagBradesco:
+          begin
+            wregistro := wregistro + ' ';
+            wregistro := wregistro + '00';
+          end;
       else
         begin
           wregistro := wregistro + TpMovimentoToStr(TipoMovimento);

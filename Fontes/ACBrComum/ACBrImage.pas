@@ -53,7 +53,7 @@ uses
     {$EndIf}
    {$EndIf}
    {$IfDef FMX}
-    ,FMX.Graphics, System.UITypes, FMX.Types
+    ,FMX.Graphics, System.UITypes, FMX.Types, System.UIConsts
    {$Else}
     ,Graphics
    {$EndIf}

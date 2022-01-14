@@ -1,3 +1,5 @@
+{$IFNDEF ACBr_INC}
+{$DEFINE ACBr_INC}
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
@@ -292,3 +294,13 @@
 {$Else}
  {$UnDef USE_ZLibExGZ} // ZLibExGZ não é compatível com FPC
 {$EndIf}
+
+// A partir da versão XE2 é preciso usar namespaces,se não definido "Unit scope names"
+{$IFNDEF FPC}        
+  {$IFDEF DELPHIXE2_UP}
+    {$DEFINE USE_NAMESPACES}
+  {$ENDIF}
+{$ENDIF}
+
+
+{$ENDIF ~ACBr_INC}

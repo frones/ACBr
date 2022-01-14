@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/01/2022
+-- ACBrNFSeXConversao --
+[*] Ajuste para identificar 0, 1, N e S no XML de retorno do provedor IPM no
+    que se refere a tag: tributa_municipio_prestador.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXParametros/ACBrNFSeXProviderBase --
 [*] Separado a leitura de alguns campos definidos no arquivo
     ACBrNFSeXServicos.

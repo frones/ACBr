@@ -548,8 +548,8 @@ begin
                            [snNao, snSim]);
 
     proIPM: Result := StrToEnumerado(ok, s,
-                           ['0', '1'],
-                           [snNao, snSim]);
+                           ['0', '1', 'N', 'S'],
+                           [snNao, snSim, snNao, snSim]);
   else
     Result := StrToEnumerado(ok, s,
                              ['1', '2'],

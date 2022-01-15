@@ -75,7 +75,7 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorInss := 1;
   NrOcorrOutrasRet := 1;
-  NrOcorrValorIss := StrToIntDef(FAOwner.ConfigGeral.Params1, 1);
+  NrOcorrValorIss := StrToIntDef(FpAOwner.ConfigGeral.Params1, 1);
 end;
 
 end.

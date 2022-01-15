@@ -153,7 +153,7 @@ begin
                        NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
 
     Result[i].AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, NrOcorrDiscriminacao_1,
-      StringReplace(NFSe.Servico.ItemServico[i].Descricao, ';', FAOwner.ConfigGeral.QuebradeLinha,
+      StringReplace(NFSe.Servico.ItemServico[i].Descricao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
                                        [rfReplaceAll, rfIgnoreCase]), DSC_DISCR,
                 (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
 

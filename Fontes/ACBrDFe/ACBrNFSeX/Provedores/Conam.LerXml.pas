@@ -252,7 +252,7 @@ begin
       Discriminacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('DiscrSrv'), tcStr);
       ItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodSrv'), tcStr);
 
-      if FAOwner.ConfigGeral.TabServicosExt then
+      if FpAOwner.ConfigGeral.TabServicosExt then
         xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
       else
         xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));

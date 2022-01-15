@@ -49,7 +49,6 @@ type
 
   TNFSeR_Infisc = class(TNFSeRClass)
   private
-    function _StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
 
   protected
 
@@ -89,6 +88,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrNFSeXProviderBase;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -321,12 +323,16 @@ begin
       ModeloNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcStr);
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('cancelada'), tcStr);
-      Cancelada := _StrToSimNao(Ok, aValor);
+      Cancelada := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, aValor);
 
       MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('motCanc'), tcStr);
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('ambienteEmi'), tcStr);
-      Producao := StrToSimNao(Ok, aValor);
+
+      if aValor = '1' then
+        Producao := snSim
+      else
+        Producao := snNao;
     end;
   end;
 end;
@@ -642,12 +648,6 @@ end;
 function TNFSeR_Infisc.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := LerXmlNfse(ANode);
-end;
-
-function TNFSeR_Infisc._StrToSimNao(out ok: boolean;
-  const s: string): TnfseSimNao;
-begin
-  Result := StrToEnumerado(ok, s, ['N', 'S'], [snNao, snSim]);
 end;
 
 end.

@@ -74,12 +74,12 @@ begin
   ListaDeAlertas.Clear;
 
   Opcoes.DecimalChar := ',';
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   FDocument.Clear();
 
   NFSeNode := CreateElement('tcRps');
-  NFSeNode.SetNamespace(FAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
+  NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
 
   FDocument.Root := NFSeNode;
 
@@ -102,7 +102,7 @@ begin
                                                    NFSe.CodigoVerificacao, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tsVrsImp', 1, 1, 1,
-                                              FAOwner.ConfigGeral.Params2, ''));
+                                              FpAOwner.ConfigGeral.Params2, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tsNumDocTmd', 11, 14, 1,
                                 NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));

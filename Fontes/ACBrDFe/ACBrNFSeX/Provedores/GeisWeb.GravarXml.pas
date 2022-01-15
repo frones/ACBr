@@ -89,13 +89,13 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
   FDocument.Clear();
 
-  NFSeNode := CreateElement('Rps', FAOwner.ConfigMsgDados.LoteRps.xmlns, '');
+  NFSeNode := CreateElement('Rps', FpAOwner.ConfigMsgDados.LoteRps.xmlns, '');
 
   FDocument.Root := NFSeNode;
 

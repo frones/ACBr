@@ -51,7 +51,6 @@ type
     FpGerarID: Boolean;
     FpNrOcorrTagsTomador: Integer;
 
-   function _SimNaoToStr(const t: TnfseSimNao): string;
   protected
     procedure Configuracao; override;
 
@@ -82,7 +81,7 @@ type
 implementation
 
 uses
-  ACBrNFSeX;
+  ACBrNFSeX, ACBrNFSeXProviderBase;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -99,7 +98,7 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
   Opcoes.DecimalChar := ',';
 
   FDocument.Clear();
@@ -109,7 +108,7 @@ begin
   NFSeNode := CreateElement('nfse');
 
   if FpGerarID then
-    NFSeNode.SetAttribute(FAOwner.ConfigGeral.Identificador, NFSe.InfID.ID);
+    NFSeNode.SetAttribute(FpAOwner.ConfigGeral.Identificador, NFSe.InfID.ID);
 
   FDocument.Root := NFSeNode;
 
@@ -147,11 +146,6 @@ begin
   end;
 
   Result := True;
-end;
-
-function TNFSeW_IPM._SimNaoToStr(const t: TnfseSimNao): string;
-begin
-  Result := EnumeradoToStr(t, ['0', '1'], [snNao, snSim]);
 end;
 
 procedure TNFSeW_IPM.Configuracao;
@@ -280,7 +274,7 @@ begin
     Result[i] := CreateElement('lista');
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'tributa_municipio_prestador', 1, 1, 1,
-               _SimNaoToStr(NFSe.Servico.ItemServico[I].TribMunPrestador), ''));
+      TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.ItemServico[I].TribMunPrestador), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_local_prestacao_servico', 1, 9, 1,
       CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.ItemServico[I].CodMunPrestacao, 0)), ''));

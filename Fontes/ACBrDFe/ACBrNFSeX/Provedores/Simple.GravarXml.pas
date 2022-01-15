@@ -157,7 +157,7 @@ begin
 
 //  Opcoes.SuprimirDecimais := True;
 //  Opcoes.DecimalChar := '.';
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 

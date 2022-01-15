@@ -67,7 +67,7 @@ implementation
 
 uses
   ACBrXMLBase,
-  ACBrNFSeXConversao,
+  ACBrNFSeXConversao, ACBrNFSeXProviderBase,
   ACBrUtil,
   ACBrConsts;
 
@@ -146,8 +146,8 @@ begin
     NFSe.DataEmissaoRps           := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRps'), tcDat);
     NFSe.NaturezaOperacao         := StrToNaturezaOperacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr));
     NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
-    NFSe.OptanteSimplesNacional   := StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
-    NFSe.IncentivadorCultural     := StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivadorCultural'), tcStr));
+    NFSe.OptanteSimplesNacional   := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
+    NFSe.IncentivadorCultural     := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivadorCultural'), tcStr));
 
     SCompet := Trim(AuxNode.Childrens.FindAnyNs('Competencia').Content);
     NFSe.Competencia              := EncodeDate(StrToInt(Copy(SCompet, 1, 4)),

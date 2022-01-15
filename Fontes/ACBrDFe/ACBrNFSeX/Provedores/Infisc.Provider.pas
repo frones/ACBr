@@ -81,6 +81,10 @@ type
                                      const Response: TNFSeWebserviceResponse;
                                      AListTag: string = '';
                                      AMessageTag: string = 'Erro'); override;
+
+  public
+    function SimNaoToStr(const t: TnfseSimNao): string; override;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
   end;
 
   TACBrNFSeProviderInfisc101 = class (TACBrNFSeProviderInfisc)
@@ -683,6 +687,17 @@ begin
 
     AErro.Correcao := '';
   end;
+end;
+
+function TACBrNFSeProviderInfisc.SimNaoToStr(const t: TnfseSimNao): string;
+begin
+  Result := EnumeradoToStr(t, ['N', 'S'], [snNao, snSim]);
+end;
+
+function TACBrNFSeProviderInfisc.StrToSimNao(out ok: boolean;
+  const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s, ['N', 'S'], [snNao, snSim]);
 end;
 
 { TACBrNFSeProviderInfisc101 }

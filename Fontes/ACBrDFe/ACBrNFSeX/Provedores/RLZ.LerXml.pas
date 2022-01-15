@@ -66,6 +66,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeXProviderBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     RLZ
@@ -221,7 +224,7 @@ begin
     // <apuracao>?</apuracao>
     // <valor>/valor>
     // <valorimposto>?</valorimposto>
-    OptanteSimplesNacional := StrToSimNao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('optantesimples'), tcStr));
+    OptanteSimplesNacional := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('optantesimples'), tcStr));
     // <situacao>?</situacao>
     // <deducao>?</deducao>
     // <basecalculo>?</basecalculo>

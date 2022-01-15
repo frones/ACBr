@@ -51,7 +51,7 @@ type
     FProvedor: TnfseProvedor;
 
   protected
-    FAOwner: IACBrNFSeXProvider;
+    FpAOwner: IACBrNFSeXProvider;
 
     function NormatizaItemListaServico(const Codigo: string): string;
     function ItemListaServicoDescricao(const Codigo: string): string;
@@ -72,7 +72,7 @@ implementation
 
 constructor TNFSeRClass.Create(AOwner: IACBrNFSeXProvider);
 begin
-  FAOwner := AOwner;
+  FpAOwner := AOwner;
 end;
 
 function TNFSeRClass.ItemListaServicoDescricao(const Codigo: string): string;
@@ -81,7 +81,7 @@ var
 begin
   xCodigo := OnlyNumber(Codigo);
 
-  if FAOwner.ConfigGeral.TabServicosExt then
+  if FpAOwner.ConfigGeral.TabServicosExt then
     Result := ObterDescricaoServico(xCodigo)
   else
     Result := CodItemServToDesc(xCodigo);

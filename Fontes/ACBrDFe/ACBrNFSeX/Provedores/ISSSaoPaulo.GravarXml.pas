@@ -143,7 +143,7 @@ begin
 
   Opcoes.SuprimirDecimais := True;
   Opcoes.DecimalChar := '.';
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -152,7 +152,7 @@ begin
   NFSe.InfID.ID := NFSe.IdentificacaoRps.Numero;
 
   NFSeNode := CreateElement('RPS');
-  NFSeNode.SetNamespace(FAOwner.ConfigMsgDados.LoteRps.xmlns, Self.PrefixoPadrao);
+  NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.LoteRps.xmlns, Self.PrefixoPadrao);
 
   FDocument.Root := NFSeNode;
 

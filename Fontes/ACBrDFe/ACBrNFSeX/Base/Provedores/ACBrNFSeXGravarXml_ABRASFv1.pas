@@ -152,6 +152,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeXProviderBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS dos provedores:
 //     que seguem a versão 1.xx do layout da ABRASF
@@ -227,14 +230,14 @@ begin
 
   ListaDeAlertas.Clear;
 
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   FDocument.Clear();
 
   NFSeNode := CreateElement('Rps');
 
-  if FAOwner.ConfigMsgDados.XmlRps.xmlns <> '' then
-    NFSeNode.SetNamespace(FAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
+  if FpAOwner.ConfigMsgDados.XmlRps.xmlns <> '' then
+    NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
 
   FDocument.Root := NFSeNode;
 
@@ -251,8 +254,8 @@ begin
 
   DefinirIDRps;
 
-  if (FAOwner.ConfigGeral.Identificador <> '') then
-    Result.SetAttribute(FAOwner.ConfigGeral.Identificador, NFSe.infID.ID);
+  if (FpAOwner.ConfigGeral.Identificador <> '') then
+    Result.SetAttribute(FpAOwner.ConfigGeral.Identificador, NFSe.infID.ID);
 
   Result.AppendChild(GerarIdentificacaoRPS);
 
@@ -267,10 +270,10 @@ begin
    RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao, Provedor), DSC_REGISSQN));
 
   Result.AppendChild(AddNode(tcStr, '#7', 'OptanteSimplesNacional', 1, 1, NrOcorrOptanteSN,
-                        SimNaoToStr(NFSe.OptanteSimplesNacional), DSC_INDOPSN));
+   TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.OptanteSimplesNacional), DSC_INDOPSN));
 
   Result.AppendChild(AddNode(tcStr, '#8', 'IncentivadorCultural', 1, 1, NrOcorrIncentCult,
-                       SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
+   TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'Status', 1, 1, NrOcorrStatus,
                                    StatusRPSToStr(NFSe.Status), DSC_INDSTATUS));
@@ -345,7 +348,7 @@ begin
                      NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
 
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
-    StringReplace(NFSe.Servico.Discriminacao, ';', FAOwner.ConfigGeral.QuebradeLinha,
+    StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
                                      [rfReplaceAll, rfIgnoreCase]), DSC_DISCR));
 {
   Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,

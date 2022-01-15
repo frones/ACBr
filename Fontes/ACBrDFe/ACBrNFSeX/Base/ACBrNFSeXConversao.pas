@@ -218,9 +218,6 @@ function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao; c
 function StrToRegimeEspecialTributacao(out ok: boolean; const s: string; const aProvedor: TnfseProvedor = proNenhum): TnfseRegimeEspecialTributacao;
 function nfseRegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao; const aProvedor: TnfseProvedor = proNenhum): string;
 
-function SimNaoToStr(const t: TnfseSimNao): string;
-function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
-
 function TipoRPSToStr(const t:TTipoRPS): string;
 function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
 
@@ -520,20 +517,6 @@ begin
       Result := '';
     end;
   end;
-end;
-
-function SimNaoToStr(const t: TnfseSimNao): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [snSim, snNao]);
-end;
-
-function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [snSim, snNao]);
 end;
 
 function TipoRPSToStr(const t: TTipoRPS): string;

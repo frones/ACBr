@@ -428,7 +428,7 @@ begin
       CodigoCnae := FpcodCNAE;
       ItemListaServico := FpCodLCServ;
 
-      if FAOwner.ConfigGeral.TabServicosExt then
+      if FpAOwner.ConfigGeral.TabServicosExt then
         xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
       else
         xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));

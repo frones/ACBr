@@ -90,6 +90,10 @@ type
                                      AMessageTag: string = 'Erro'); override;
 
     function AjustarRetorno(const Retorno: string): string;
+
+  public
+    function SimNaoToStr(const t: TnfseSimNao): string; override;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
   end;
 
   TACBrNFSeXWebserviceIPM101 = class(TACBrNFSeXWebserviceMulti2)
@@ -254,6 +258,19 @@ begin
       end;
     end;
   end;
+end;
+
+function TACBrNFSeProviderIPM.SimNaoToStr(const t: TnfseSimNao): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1'], [snNao, snSim]);
+end;
+
+function TACBrNFSeProviderIPM.StrToSimNao(out ok: boolean;
+  const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['0', '1', 'N', 'S'],
+                           [snNao, snSim, snNao, snSim]);
 end;
 
 function TACBrNFSeProviderIPM.AjustarRetorno(const Retorno: string): string;

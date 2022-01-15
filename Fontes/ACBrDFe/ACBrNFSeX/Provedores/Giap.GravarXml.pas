@@ -74,7 +74,7 @@ begin
   Configuracao;
 
   Opcoes.DecimalChar := '.';
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -253,7 +253,7 @@ begin
                                 OnlyNumber(NFSe.Servico.ItemListaServico), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricao', 1, 4000, 1,
-    StringReplace(NFSe.Servico.Discriminacao, ';', FAOwner.ConfigGeral.QuebradeLinha,
+    StringReplace(NFSe.Servico.Discriminacao, ';', FpAOwner.ConfigGeral.QuebradeLinha,
                                            [rfReplaceAll, rfIgnoreCase] ), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'valor', 1, 15, 1,

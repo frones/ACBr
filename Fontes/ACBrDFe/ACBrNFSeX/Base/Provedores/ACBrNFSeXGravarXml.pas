@@ -98,7 +98,7 @@ type
     procedure SetOpcoes(AValue: TACBrXmlWriterOptions);
 
   protected
-    FAOwner: IACBrNFSeXProvider;
+    FpAOwner: IACBrNFSeXProvider;
 
     function CreateOptions: TACBrXmlWriterOptions; override;
 
@@ -157,7 +157,7 @@ constructor TNFSeWClass.Create(AOwner: IACBrNFSeXProvider);
 begin
   inherited Create;
 
-  FAOwner := AOwner;
+  FpAOwner := AOwner;
 
   TXmlWriterOptions(Opcoes).AjustarTagNro := True;
   TXmlWriterOptions(Opcoes).NormatizarMunicipios := False;

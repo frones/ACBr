@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/01/2022
+-- Diversos --
+[*] Aplicado um Refactoring em funções de conversão que dependendo do provedor 
+    retornam valores diferentes.
+   Por: Italo Giurizzato Junior
+
 14/01/2022
 -- Diversos --
 [*] Melhorias no código do componente.

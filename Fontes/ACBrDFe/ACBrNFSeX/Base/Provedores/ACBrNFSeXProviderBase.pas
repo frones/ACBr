@@ -173,6 +173,9 @@ type
     property ConsultaNFSeResponse: TNFSeConsultaNFSeResponse read GetConsultaNFSeResponse;
     property CancelaNFSeResponse: TNFSeCancelaNFSeResponse read GetCancelaNFSeResponse;
     property SubstituiNFSeResponse: TNFSeSubstituiNFSeResponse read GetSubstituiNFSeResponse;
+
+    function SimNaoToStr(const t: TnfseSimNao): string; virtual;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; virtual;
   end;
 
 implementation
@@ -791,6 +794,21 @@ begin
     AbrirSessao.xmlns := aNameSpace;
     FecharSessao.xmlns := aNameSpace;
   end;
+end;
+
+function TACBrNFSeXProvider.SimNaoToStr(const t: TnfseSimNao): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2'],
+                           [snSim, snNao]);
+end;
+
+function TACBrNFSeXProvider.StrToSimNao(out ok: boolean;
+  const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [snSim, snNao]);
 end;
 
 function TACBrNFSeXProvider.GerarXml(const aNFSe: TNFSe; var aXml,

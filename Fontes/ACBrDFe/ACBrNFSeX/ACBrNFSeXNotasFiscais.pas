@@ -56,7 +56,7 @@ type
   NotaFiscal = class
   private
     FNFSe: TNFSe;
-    FAOwner: TACBrDFe;
+    FACBrNFSe: TACBrDFe;
 
     FXMLNFSe: String;
     FXMLAssinado: String;
@@ -173,7 +173,7 @@ implementation
 
 uses
   ACBrUtil, synautil, IniFiles, StrUtilsEx,
-  ACBrNFSeX, ACBrNFSeXInterface;
+  ACBrNFSeXProviderBase, ACBrNFSeX, ACBrNFSeXInterface;
 
 function CompRpsPorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -214,7 +214,7 @@ begin
   if not (AOwner is TACBrNFSeX) then
     raise EACBrNFSeException.Create('AOwner deve ser do tipo TACBrNFSeX');
 
-  FAOwner := AOwner;
+  FACBrNFSe := TACBrNFSeX(AOwner);
   FNFSe := TNFSe.Create;
 end;
 
@@ -227,7 +227,7 @@ end;
 
 procedure NotaFiscal.Imprimir;
 begin
-  with TACBrNFSeX(FAOwner) do
+  with TACBrNFSeX(FACBrNFSe) do
   begin
     DANFSE.Provedor := Configuracoes.Geral.Provedor;
 
@@ -245,7 +245,7 @@ end;
 
 procedure NotaFiscal.ImprimirPDF;
 begin
-  with TACBrNFSeX(FAOwner) do
+  with TACBrNFSeX(FACBrNFSe) do
   begin
     DANFSE.Provedor := Configuracoes.Geral.Provedor;
 
@@ -267,8 +267,11 @@ var
   sSecao, sFim: String;
   Ok: Boolean;
   i: Integer;
+  Provider: TACBrNFSeXProvider;
 begin
   INIRec := TMemIniFile.Create('');
+
+  Provider := TACBrNFSeXProvider(TACBrNFSeX(FACBrNFSe).Provider);
 
   try
     LerIniArquivoOuString(AIniString, INIRec);
@@ -288,7 +291,7 @@ begin
       // Provedor AssessorPublico
       Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);
 
-      Producao := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
+      Producao := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
       Status := StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
       OutrasInformacoes := INIRec.ReadString(sSecao, 'OutrasInformacoes', '');
 
@@ -321,8 +324,8 @@ begin
       sSecao := 'Prestador';
 
       RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, INIRec.ReadString(sSecao, 'Regime', '0'));
-      OptanteSimplesNacional := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'OptanteSN', '1'));
-      IncentivadorCultural := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'IncentivadorCultural', '1'));
+      OptanteSimplesNacional := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'OptanteSN', '1'));
+      IncentivadorCultural := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'IncentivadorCultural', '1'));
 
       with Prestador do
       begin
@@ -391,8 +394,8 @@ begin
           Email := INIRec.ReadString(sSecao, 'Email', '');
         end;
 
-        AtualizaTomador := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'AtualizaTomador', '1'));
-        TomadorExterior := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'TomadorExterior', '1'));
+        AtualizaTomador := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'AtualizaTomador', '1'));
+        TomadorExterior := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'TomadorExterior', '1'));
       end;
 
       sSecao := 'Intermediario';
@@ -488,7 +491,7 @@ begin
 
             ValorTotal := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTotal', ''), 0);
 
-            Tributavel := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Tributavel', '1'));
+            Tributavel := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Tributavel', '1'));
           end;
 
           Inc(i);
@@ -571,7 +574,7 @@ function NotaFiscal.LerXML(const AXML: String): Boolean;
 var
   FProvider: IACBrNFSeXProvider;
 begin
-  FProvider := TACBrNFSeX(FAOwner).Provider;
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
@@ -586,7 +589,7 @@ begin
     GerarXML;
 
   FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  Result := TACBrNFSeX(FAOwner).Gravar(FNomeArqRps, FXMLOriginal);
+  Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXMLOriginal);
 end;
 
 function NotaFiscal.GravarStream(AStream: TStream): Boolean;
@@ -607,7 +610,7 @@ var
   AnexosEmail:TStrings;
   StreamNFSe: TMemoryStream;
 begin
-  if not Assigned(TACBrNFSeX(FAOwner).MAIL) then
+  if not Assigned(TACBrNFSeX(FACBrNFSe).MAIL) then
     raise EACBrNFSeException.Create('Componente ACBrMail não associado');
 
   AnexosEmail := TStringList.Create;
@@ -618,7 +621,7 @@ begin
     if Assigned(Anexos) then
       AnexosEmail.Assign(Anexos);
 
-    with TACBrNFSeX(FAOwner) do
+    with TACBrNFSeX(FACBrNFSe) do
     begin
       GravarStream(StreamNFSe);
 
@@ -648,7 +651,7 @@ function NotaFiscal.GerarXML: String;
 var
   FProvider: IACBrNFSeXProvider;
 begin
-  FProvider := TACBrNFSeX(FAOwner).Provider;
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
@@ -661,7 +664,7 @@ function NotaFiscal.CalcularNomeArquivo: String;
 var
   xID: String;
 begin
-  xID := TACBrNFSeX(FAOwner).NumID[NFSe];
+  xID := TACBrNFSeX(FACBrNFSe).NumID[NFSe];
 
   if EstaVazio(xID) then
     raise EACBrNFSeException.Create('ID Inválido. Impossível Salvar XML');
@@ -673,7 +676,7 @@ function NotaFiscal.CalcularPathArquivo: String;
 var
   Data: TDateTime;
 begin
-  with TACBrNFSeX(FAOwner) do
+  with TACBrNFSeX(FACBrNFSe) do
   begin
     if Configuracoes.Arquivos.EmissaoPathNFSe then
       Data := FNFSe.DataEmissaoRps

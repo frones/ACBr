@@ -53,7 +53,6 @@ type
     FPdTotISS: Double;
     FPVersao: TVersaoNFSe;
 
-    function _SimNaoToStr(const t: TnfseSimNao): string;
   protected
     procedure Configuracao; override;
 
@@ -104,6 +103,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeXProviderBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Infisc
@@ -117,7 +119,7 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -133,11 +135,6 @@ begin
   NFSeNode.AppendChild(xmlNode);
 
   Result := True;
-end;
-
-function TNFSeW_Infisc._SimNaoToStr(const t: TnfseSimNao): string;
-begin
-  Result := EnumeradoToStr(t, ['N', 'S'], [snNao, snSim]);
 end;
 
 procedure TNFSeW_Infisc.Configuracao;
@@ -566,13 +563,15 @@ begin
   if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1,
-                                             _SimNaoToStr(NFSe.Cancelada), ''));
+                 TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Cancelada), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'canhoto', 1, 1, 1,
                                                CanhotoToStr(NFSe.Canhoto), ''));
 
-    Result.AppendChild(AddNode(tcStr, '#1', 'ambienteEmi', 1, 1, 1,
-                                               SimNaoToStr(NFSe.Producao), ''));
+    if NFSe.Producao = snSim then
+      Result.AppendChild(AddNode(tcStr, '#1', 'ambienteEmi', 1, 1, 1, '1', ''))
+    else
+      Result.AppendChild(AddNode(tcStr, '#1', 'ambienteEmi', 1, 1, 1, '2', ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'formaEmi', 1, 1, 1, '2', ''));
 
@@ -592,7 +591,7 @@ begin
   Result := CreateElement('infNFSe');
 
 //  if FPVersao = ve101 then
-    Result.SetAttribute('versao', FAOwner.ConfigWebServices.VersaoDados);
+    Result.SetAttribute('versao', FpAOwner.ConfigWebServices.VersaoDados);
 
   xmlNode := GerarID;
   Result.AppendChild(xmlNode);

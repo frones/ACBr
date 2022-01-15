@@ -80,6 +80,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeXProviderBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     EL
@@ -94,7 +97,7 @@ var
 begin
   Configuracao;
 
-  Opcoes.QuebraLinha := FAOwner.ConfigGeral.QuebradeLinha;
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
 
   ListaDeAlertas.Clear;
 
@@ -208,10 +211,10 @@ begin
                                               NFSe.Prestador.NomeFantasia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IncentivadorCultural', 1, 1, 1,
-                                   SimNaoToStr(NFSe.IncentivadorCultural), ''));
+      TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.IncentivadorCultural), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'OptanteSimplesNacional', 1, 1, 1,
-                                 SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
+    TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'NaturezaOperacao', 1, 1, 1,
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));

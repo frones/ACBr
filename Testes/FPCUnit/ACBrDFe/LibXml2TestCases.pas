@@ -1,11 +1,17 @@
-unit LibXml2TestCases;
+﻿unit LibXml2TestCases;
 
-{$mode objfpc}{$H+}
+{$I ACBr.inc}
+
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry,
+  Classes, SysUtils,
+  {$ifdef FPC}
+  fpcunit, testutils, testregistry,
+  {$else}
+  TestFramework,
+  {$endif}
   ACBrUtil, ACBrDFeSSL;
 
 type

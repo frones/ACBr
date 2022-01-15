@@ -139,6 +139,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="..\..\ACBrTests.Util.pas"/>
+        <DCCReference Include="..\..\ACBrTests.Runner.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrComum\acbrutiltest.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

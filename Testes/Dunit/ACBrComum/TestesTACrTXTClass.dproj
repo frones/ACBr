@@ -101,6 +101,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="..\..\ACBrTests.Util.pas"/>
+        <DCCReference Include="..\..\ACBrTests.Runner.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrTXTComum\acbrtxtclasstest.pas"/>
         <DCCReference Include="..\..\FPCUnit\ACBrTXTComum\acbrtxtclasstest2.pas"/>
         <BuildConfiguration Include="Release">

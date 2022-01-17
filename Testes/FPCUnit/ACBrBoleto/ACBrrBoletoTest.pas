@@ -808,7 +808,7 @@ implementation
 uses
   dateutils, ACBrUtil, forms;
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco UnicredES }
+  {$REGION - Implementação Classes Banco UnicredES }
 
 { MontarCampoNossoNumero_UnicredES_Test }
 
@@ -850,7 +850,7 @@ end;
 
 procedure MontarCampoNossoNumero_UnicredES_Test.MontarCampoNossoNumero_UnicredES_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 10';
+  MSG = 'Tamanho Máximo do Nosso Número é: 10';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobUnicredES;
@@ -865,7 +865,7 @@ end;
 
   {$ENDREGION}
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco Unicred }
+  {$REGION - Implementação Classes Banco Unicred }
 
 { GerarRetorno_Unicred_Test }
 
@@ -877,13 +877,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetUnicred400.ret', Retorno, c400, cobUnicredRS );
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetUnicred400.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetUnicred400Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -920,11 +920,11 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaUnicred400.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyy',now),'160120',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaUnicred400Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -979,7 +979,7 @@ end;
 
 procedure MontarCodigoBarras_Unicred_Test.MontarCodigoBarras_Unicred_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 10';
+  MSG = 'Tamanho Máximo do Nosso Número é: 10';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobUnicredRS;
@@ -1081,7 +1081,7 @@ end;
 
 procedure MontarCampoNossoNumero_Unicred_Test.MontarCampoNossoNumero_Unicred_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 10';
+  MSG = 'Tamanho Máximo do Nosso Número é: 10';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobUnicredRS;
@@ -1303,7 +1303,7 @@ end;
 
 procedure CalcularDigitoVerificador_Unicred_Test.CalcularDigitoVerificador_Unicred_NumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 10';
+  MSG = 'Tamanho Máximo do Nosso Número é: 10';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobUnicredRS;
@@ -1337,7 +1337,7 @@ end;
 
   {$ENDREGION}
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco Bradesco}
+  {$REGION - Implementação Classes Banco Bradesco}
 
 { MontarCodigoBarras_Bradesco_Test }
 
@@ -1380,7 +1380,7 @@ end;
 
 procedure MontarCodigoBarras_Bradesco_Test.MontarCodigoBarras_Bradesco_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 11';
+  MSG = 'Tamanho Máximo do Nosso Número é: 11';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBradesco;
@@ -1487,7 +1487,7 @@ end;
 
 procedure MontarCampoNossoNumero_Bradesco_Test.MontarCampoNossoNumero_Bradesco_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 11';
+  MSG = 'Tamanho Máximo do Nosso Número é: 11';
 begin
   try
     Boleto.banco.TipoCobranca := cobBradesco;
@@ -1707,7 +1707,7 @@ end;
 
 procedure CalcularDigitoVerificador_Bradesco_Test.CalcularDigitoVerificador_Bradesco_NumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 11';
+  MSG = 'Tamanho Máximo do Nosso Número é: 11';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBradesco;
@@ -1765,13 +1765,13 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaBradesco240.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido ('ddmmyyyyhhnnss')
+    //Altera a Data Atual gerada pela Data do Arquivo Válido ('ddmmyyyyhhnnss')
     lArqGerado.Strings[0]:= AlteraDataArquivo(lArqGerado.Strings[0], '02122019000000', 144);
 
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyyyy',now),'02122019',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaBradesco240Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -1797,11 +1797,11 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaBradesco400.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyy',now),'160120',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaBradesco400Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -1823,13 +1823,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetBradesco240.ret', Retorno, c240, cobBradesco );
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetBradesco240.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetBradesco240Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -1849,13 +1849,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetBradesco400.ret', Retorno, c400, cobBradesco);
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetBradesco400.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetBradesco400Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -1869,7 +1869,7 @@ end;
 
   {$ENDREGION}
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco Caixa Economica}
+  {$REGION - Implementação Classes Banco Caixa Economica}
 
 { CalcularDVCedente_Caixa_Test }
 
@@ -1964,7 +1964,7 @@ end;
 
 procedure MontarCodigoBarras_Caixa_Test.MontarCodigoBarras_Caixa_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 15';
+  MSG = 'Tamanho Máximo do Nosso Número é: 15';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -1982,7 +1982,7 @@ end;
 
 procedure MontarCodigoBarras_Caixa_Test.MontarCodigoBarras_Caixa_CarteiraInvalida;
 const
-  MSG = 'Carteira InvÃ¡lida.'+sLineBreak+'Utilize "RG" ou "SR"';
+  MSG = 'Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -2086,7 +2086,7 @@ end;
 
 procedure MontarCampoNossoNumero_Caixa_Test.MontarCampoNossoNumero_Caixa_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 15';
+  MSG = 'Tamanho Máximo do Nosso Número é: 15';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -2101,7 +2101,7 @@ end;
 
 procedure MontarCampoNossoNumero_Caixa_Test.MontarCampoNossoNumero_Caixa_CarteiraInvalido;
 const
-  MSG = 'Carteira InvÃ¡lida.'+sLineBreak+'Utilize "RG" ou "SR"';
+  MSG = 'Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -2315,7 +2315,7 @@ end;
 
 procedure CalcularDigitoVerificador_Caixa_Test.CalcularDigitoVerificador_Caixa_NumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 15';
+  MSG = 'Tamanho Máximo do Nosso Número é: 15';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -2331,7 +2331,7 @@ end;
 
 procedure CalcularDigitoVerificador_Caixa_Test.CalcularDigitoVerificador_Caixa_CarteiraNulo;
 const
-  MSG = 'Carteira InvÃ¡lida.'+sLineBreak+'Utilize "RG" ou "SR"';
+  MSG = 'Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -2346,7 +2346,7 @@ end;
 
 procedure CalcularDigitoVerificador_Caixa_Test.CalcularDigitoVerificador_Caixa_CarteiraInvalido;
 const
-  MSG = 'Carteira InvÃ¡lida.'+sLineBreak+'Utilize "RG" ou "SR"';
+  MSG = 'Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobCaixaEconomica;
@@ -2385,11 +2385,11 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaCaixa400.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyy',now),'021219',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaCaixa400Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -2415,13 +2415,13 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaCaixa240.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido ('ddmmyyyyhhnnss')
+    //Altera a Data Atual gerada pela Data do Arquivo Válido ('ddmmyyyyhhnnss')
     lArqGerado.Strings[0]:= AlteraDataArquivo(lArqGerado.Strings[0], '02122019000000', 144);
 
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyyyy',now),'02122019',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaCaixa240Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -2458,13 +2458,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetCaixa240.ret', Retorno, c240, cobCaixaEconomica );
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetCaixa240.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetCaixa240Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -2478,7 +2478,7 @@ end;
 
 {$ENDREGION}
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco do Brasil}
+  {$REGION - Implementação Classes Banco do Brasil}
 
   { GerarRemessa_BB_Test }
 
@@ -2492,7 +2492,7 @@ begin
   inherited;
 end;
 
-  {Cria Objeto Boleto PadrÃ£o ccom campos para GeraÃ§Ã£o de Remessa e Dados CabeÃ§alho para Retorno}
+  {Cria Objeto Boleto Padrão ccom campos para Geração de Remessa e Dados Cabeçalho para Retorno}
 procedure CriaBoletoPadrao(NomeArquivo: String; Diretorio: TTipoArquivo;
                                CNAB: TACBrLayoutRemessa; Banco: TACBrTipoCobranca);
 var
@@ -2518,9 +2518,9 @@ begin
     Boleto.Cedente.Convenio     := '2354187';
     Boleto.Cedente.Bairro       := 'Centro';
     Boleto.Cedente.CEP          := '18460000';
-    Boleto.Cedente.Cidade       := 'TatuÃ­';
+    Boleto.Cedente.Cidade       := 'Tatuí';
     Boleto.Cedente.CNPJCPF      := '18760540000139';
-    Boleto.Cedente.Logradouro   := 'Rua SÃ£o Pedro, 124';
+    Boleto.Cedente.Logradouro   := 'Rua São Pedro, 124';
     Boleto.Cedente.Nome         := 'Nome do Cedente Completo';
     Boleto.Cedente.NumeroRes    := '524';
     Boleto.Cedente.UF           := 'SP';
@@ -2532,7 +2532,7 @@ begin
     Boleto.Cedente.CaracTitulo  := tcSimples;
     Boleto.LeCedenteRetorno     := True;
 
-    //Para Retorno LÃª o arquivo modelo e Grava Resultado para comparar
+    //Para Retorno Lê o arquivo modelo e Grava Resultado para comparar
     if (Diretorio = Retorno) then
     begin
       Boleto.LerRetorno();
@@ -2546,7 +2546,7 @@ begin
         Titulo:= Boleto.CriarTituloNaLista;
         with Titulo do
         begin
-           LocalPagamento    := 'Pagar preferÃªncialmente nas agÃªncias do '+ Boleto.Banco.Nome;
+           LocalPagamento    := 'Pagar preferêncialmente nas agências do '+ Boleto.Banco.Nome;
            Vencimento        := IncMonth(EncodeDate(2017,07,10),I);
            DataDocumento     := EncodeDate(2017,07,10);
            if ( Banco = cobCaixaEconomica ) then
@@ -2561,7 +2561,7 @@ begin
            ValorDocumento    := 121.15 * (I+0.5);
            Sacado.NomeSacado := 'Jose da Silva ' + IntToStr(I) ;
            Sacado.CNPJCPF    := '1234567890' + IntToStr(I);
-           Sacado.Logradouro := 'Rua da EsperanÃ§a';
+           Sacado.Logradouro := 'Rua da Esperança';
            Sacado.Numero     := '100';
            Sacado.Bairro     := 'Centro';
            Sacado.Cidade     := 'Tatui';
@@ -2578,11 +2578,11 @@ begin
            PercentualMulta   := 5;
            Mensagem.Text     := 'Teste Mensagem 1'+ sLineBreak +'Teste Mensagem 2'+sLineBreak+'Teste Mensagem 1' ;
            OcorrenciaOriginal.Tipo  := toRemessaRegistrar;
-           Instrucao1        := 'teste de instruÃ§Ã£o 01';
+           Instrucao1        := 'teste de instrução 01';
            if Boleto.Banco.TipoCobranca = cobSantander then
              Instrucao2        := '2'
            else
-             Instrucao2        := 'teste de instruÃ§Ã£o 02';
+             Instrucao2        := 'teste de instrução 02';
            sacado.SacadoAvalista.NomeAvalista:= 'xxxxxxxx';
            sacado.SacadoAvalista.CNPJCPF:='99999999999';
            sacado.SacadoAvalista.Logradouro:='xxxxxxx xxxxxxxxx xxxxxxxxxx';
@@ -2609,7 +2609,7 @@ begin
     with Boleto do
     begin
       if (ListadeBoletos.Count < 1) then
-        raise Exception.Create(ACBrStr('Lista de Boletos estÃ¡ vazia'));
+        raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
       NomeArq := DirArqRetorno + NomeArquivo;
       SLRetorno := TStringList.Create;
@@ -2680,7 +2680,7 @@ begin
   end;
 end;
 
- {Carrega Arquivos Conforme Parametros do DiretÃ³rio e Nome do Arquivo}
+ {Carrega Arquivos Conforme Parametros do Diretório e Nome do Arquivo}
 function CarregarArquivos(NomeArquivo: String;
   Diretorio: TTipoArquivo):String;
 var
@@ -2693,7 +2693,7 @@ begin
    end;
 
    if not FilesExists( ExtractFilePath(Application.ExeName) + tpArq + NomeArquivo ) then
-      Raise Exception.Create( ACBrStr('Arquivo para ValidaÃ§Ã£o nÃ£o Encontrado em: ' +
+      Raise Exception.Create( ACBrStr('Arquivo para Validação não Encontrado em: ' +
                             ExtractFilePath(Application.ExeName) + tpArq + NomeArquivo   ) )
    else
      Result := ExtractFilePath(Application.ExeName) + tpArq + NomeArquivo;
@@ -2721,11 +2721,11 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaBB400.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyy',now),'291119',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaBB400Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -2751,13 +2751,13 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaBB240.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Strings[0]:= AlteraDataArquivo(lArqGerado.Strings[0], '29112019000000', 144);
 
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyyyy',now),'29112019',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaBB240Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -2779,13 +2779,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetBB400.ret', Retorno, c400, cobBancoDoBrasil );
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetBB400.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetBB400Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -2939,7 +2939,7 @@ end;
 
 procedure MontarCodigoBarras_BB_Test.MontarCodigoBarras_BancoBrasil_SemConvenio;
 const
-  MSG = 'Banco do Brasil requer que o ConvÃªnio do Cedente seja informado.';
+  MSG = 'Banco do Brasil requer que o Convênio do Cedente seja informado.';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -2961,7 +2961,7 @@ end;
 
 procedure MontarCodigoBarras_BB_Test.MontarCodigoBarras_BancoBrasil_SemCarteira;
 const
-  MSG = 'Banco do Brasil requer que a carteira seja informada antes do Nosso NÃºmero.';
+  MSG = 'Banco do Brasil requer que a carteira seja informada antes do Nosso Número.';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3042,7 +3042,7 @@ end;
 
 procedure MontarCampoNossoNumero_BB_Test.MontarCampoNossoNumero_BancoBrasil_SemConvenio;
 const
-  MSG = 'Banco do Brasil requer que o ConvÃªnio do Cedente seja informado.';
+  MSG = 'Banco do Brasil requer que o Convênio do Cedente seja informado.';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3060,7 +3060,7 @@ end;
 
 procedure MontarCampoNossoNumero_BB_Test.MontarCampoNossoNumero_BancoBrasil_SemCarteira;
 const
-  MSG = 'Banco do Brasil requer que a carteira seja informada antes do Nosso NÃºmero.';
+  MSG = 'Banco do Brasil requer que a carteira seja informada antes do Nosso Número.';
 begin
     try
       Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3095,7 +3095,7 @@ end;
 
 procedure MontarCampoNossoNumero_BB_Test.MontarCampoNossoNumero_BancoBrasil_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 5';
+  MSG = 'Tamanho Máximo do Nosso Número é: 5';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3407,7 +3407,7 @@ end;
 
 procedure CalcularDigitoVerificador_BB_Test.CalcularDigitoVerificador_BancoBrasil_NumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 10';
+  MSG = 'Tamanho Máximo do Nosso Número é: 10';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3546,7 +3546,7 @@ end;
 
 procedure CalcularTamMaximoNossoNumero_BB_Test.CalcularTamMaximoNossoNumero_BancoBrasil_CarteiraNulo;
 const
-  MSG = 'Banco do Brasil requer que a carteira seja informada antes do Nosso NÃºmero.';
+  MSG = 'Banco do Brasil requer que a carteira seja informada antes do Nosso Número.';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3564,7 +3564,7 @@ end;
 
 procedure CalcularTamMaximoNossoNumero_BB_Test.CalcularTamMaximoNossoNumero_BancoBrasil_ConvenioNulo;
 const
-  MSG = 'Banco do Brasil requer que o ConvÃªnio do Cedente seja informado.';
+  MSG = 'Banco do Brasil requer que o Convênio do Cedente seja informado.';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3582,7 +3582,7 @@ end;
 
 procedure CalcularTamMaximoNossoNumero_BB_Test.CalcularTamMaximoNossoNumero_BancoBrasil_NossoNumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 7';
+  MSG = 'Tamanho Máximo do Nosso Número é: 7';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobBancoDoBrasil;
@@ -3624,7 +3624,7 @@ end;
 
 {$ENDREGION}
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco Itau}
+  {$REGION - Implementação Classes Banco Itau}
 
 { MontarCodigoBarras_Itau_Test }
 
@@ -3667,7 +3667,7 @@ end;
 
 procedure MontarCodigoBarras_Itau_Test.MontarCodigoBarras_Itau_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 8';
+  MSG = 'Tamanho Máximo do Nosso Número é: 8';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobItau;
@@ -3774,7 +3774,7 @@ end;
 
 procedure MontarCampoNossoNumero_Itau_Test.MontarCampoNossoNumero_Itau_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 8';
+  MSG = 'Tamanho Máximo do Nosso Número é: 8';
 begin
   try
     Boleto.banco.TipoCobranca := cobItau;
@@ -3985,7 +3985,7 @@ end;
 
 procedure CalcularDigitoVerificador_Itau_Test.CalcularDigitoVerificador_Itau_NumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 8';
+  MSG = 'Tamanho Máximo do Nosso Número é: 8';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobItau;
@@ -4043,13 +4043,13 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaItau240.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido ('ddmmyyyyhhnnss')
+    //Altera a Data Atual gerada pela Data do Arquivo Válido ('ddmmyyyyhhnnss')
     lArqGerado.Strings[0]:= AlteraDataArquivo(lArqGerado.Strings[0], '02122019000000', 144);
 
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyyyy',now),'02122019',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaItau240Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -4075,11 +4075,11 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaItau400.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyy',now),'160120',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaItau400Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -4101,13 +4101,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetItau240.ret', Retorno, c240, cobItau );
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetItau240.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetItau240Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -4127,13 +4127,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetItau400.ret', Retorno, c400, cobItau);
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetItau400.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetItau400Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -4147,7 +4147,7 @@ end;
 
   {$ENDREGION}
 
-  {$REGION - ImplementaÃ§Ã£o Classes Banco Santander}
+  {$REGION - Implementação Classes Banco Santander}
 
 { MontarCodigoBarras_Santander_Test }
 
@@ -4190,7 +4190,7 @@ end;
 
 procedure MontarCodigoBarras_Santander_Test.MontarCodigoBarras_Santander_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 12';
+  MSG = 'Tamanho Máximo do Nosso Número é: 12';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobSantander;
@@ -4297,7 +4297,7 @@ end;
 
 procedure MontarCampoNossoNumero_Santander_Test.MontarCampoNossoNumero_Santander_NossoNumeroInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 12';
+  MSG = 'Tamanho Máximo do Nosso Número é: 12';
 begin
   try
     Boleto.banco.TipoCobranca := cobSantander;
@@ -4505,7 +4505,7 @@ end;
 
 procedure CalcularDigitoVerificador_Santander_Test.CalcularDigitoVerificador_Santander_NumInvalido;
 const
-  MSG = 'Tamanho MÃ¡ximo do Nosso NÃºmero Ã©: 12';
+  MSG = 'Tamanho Máximo do Nosso Número é: 12';
 begin
   try
     Boleto.Banco.TipoCobranca   := cobSantander;
@@ -4563,13 +4563,13 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaSantander240.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido ('ddmmyyyyhhnnss')
+    //Altera a Data Atual gerada pela Data do Arquivo Válido ('ddmmyyyyhhnnss')
     lArqGerado.Strings[0]:= AlteraDataArquivo(lArqGerado.Strings[0], '02122019', 144);
 
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyyyy',now),'02122019',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaSantander240Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -4595,11 +4595,11 @@ begin
     //Carrega Arquivo Gerado
     lArqGerado.LoadFromFile( CarregarArquivos('RemessaSantander400.rem', Remessa) );
 
-    //Altera a Data Atual gerada pela Data do Arquivo VÃ¡lido
+    //Altera a Data Atual gerada pela Data do Arquivo Válido
     lArqGerado.Text:= StringReplace(lArqGerado.Text,
                       FormatDateTime('ddmmyy',now),'160120',[rfReplaceAll]);
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     lArqValido.LoadFromFile( CarregarArquivos('RemessaSantander400Valido.rem', Remessa) );
 
     CheckEquals(lArqValido.Text, lArqGerado.Text);
@@ -4621,13 +4621,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetSantander240.ret', Retorno, c240, cobSantander );
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetSantander240.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetSantander240Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );
@@ -4647,13 +4647,13 @@ begin
     SLArqGerado := TStringList.Create;
     SLArqValido := TStringList.Create;
 
-    //Cria Componente boleto padrÃ£o apenas dados Banco e Cedente e LÃª o retorno
+    //Cria Componente boleto padrão apenas dados Banco e Cedente e Lê o retorno
     CriaBoletoPadrao( 'RetSantander400.ret', Retorno, c400, cobSantander);
 
     //Carrega Arquivo de Retorno Gerado para comparar dados
     SLArqGerado.LoadFromFile( CarregarArquivos('ResultRetSantander400.ret', Retorno) );
 
-    //Carrega Arquivo VÃ¡lido
+    //Carrega Arquivo Válido
     SLArqValido.LoadFromFile( CarregarArquivos('ResultRetSantander400Valido.ret', Retorno) );
 
     CheckEquals( SLArqValido.Text, SLArqGerado.Text );

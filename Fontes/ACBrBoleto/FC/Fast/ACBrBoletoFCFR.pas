@@ -68,6 +68,7 @@ type
     FfrxCedente: TfrxDBDataset;
     FcdsTitulo: TClientDataSet;
     FfrxTitulo: TfrxDBDataset;
+    FUsarConfiguracoesACBr : Boolean;
     function PrepareBoletos: Boolean;
     function PreparaRelatorio: Boolean;
     function GetACBrTitulo: TACBrTitulo;
@@ -381,21 +382,13 @@ begin
             FfrxPDFExport.ShowProgress := MostrarProgresso;
           end;
 
-          if EstaVazio(FfrxPDFExport.FileName) then
-            FfrxPDFExport.FileName := NomeArquivo;
-          if EstaVazio(FfrxPDFExport.Author) then
-            FfrxPDFExport.Author   := SoftwareHouse;
-          if EstaVazio(FfrxPDFExport.Creator) then
-            FfrxPDFExport.Creator  := SoftwareHouse;
-          if EstaVazio(FfrxPDFExport.Producer) then
-            FfrxPDFExport.Producer := SoftwareHouse;
-          if EstaVazio(FfrxPDFExport.Title) then
-            FfrxPDFExport.Title    := 'Boleto';
-          if EstaVazio(FfrxPDFExport.Subject) then
-            FfrxPDFExport.Subject  := FfrxPDFExport.Title;
-          if EstaVazio(FfrxPDFExport.Keywords) then
-            FfrxPDFExport.Keywords := FfrxPDFExport.Title;
-
+          FfrxPDFExport.FileName      := NomeArquivo;
+          FfrxPDFExport.Author        := SoftwareHouse;
+          FfrxPDFExport.Creator       := SoftwareHouse;
+          FfrxPDFExport.Producer      := SoftwareHouse;
+          FfrxPDFExport.Title         := 'Boleto';
+          FfrxPDFExport.Subject       := FfrxPDFExport.Title;
+          FfrxPDFExport.Keywords      := FfrxPDFExport.Title;
           FfrxPDFExport.Background    := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
           FfrxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
 
@@ -405,6 +398,7 @@ begin
             if NaoEstaVazio(FfrxPDFExport.UserPassword) then
               FfrxPDFExport.ProtectionFlags := [ePrint];
           end;
+
 
           if Filtro = fiNenhum then
           begin
@@ -417,6 +411,7 @@ begin
 
           if FfrxPDFExport.FileName <> NomeArquivo then
             NomeArquivo := FfrxPDFExport.FileName;
+
         end;
       fiHTML:
         begin

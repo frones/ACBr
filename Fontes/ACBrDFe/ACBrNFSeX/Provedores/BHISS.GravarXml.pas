@@ -63,7 +63,10 @@ begin
   inherited Configuracao;
 
   NrOcorrCodPaisTomador := -1;
+
   FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
+
+  DivAliq100 := True;
 end;
 
 end.

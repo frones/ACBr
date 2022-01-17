@@ -1,34 +1,46 @@
 program ACBrDFeTestCases;
+
 {
-
-  Delphi DUnit Test Project
+  Esse é um projeto de testes com a ajuda da ACBrTests.Runner.pas
   -------------------------
-  This project contains the DUnit test framework and the GUI/Console test runners.
-  Add "CONSOLE_TESTRUNNER" to the conditional defines entry in the project options
-  to use the console test runner.  Otherwise the GUI test runner will be used by
-  default.
+  Este projeto deve funcionar tanto em DUnit/DUnitX/TestInsight
+  Por padrão ele irá utilizar DUnit e Interface (GUI)
 
+  Para mudar o comportamento, adicione os seguintes "conditional defines" nas
+  opções do projeto (project->options):
+  * "NOGUI"       - Transforma os testes em uma aplicação CONSOLE
+  * "DUNITX"      - Passa a usar a DUnitX ao invés da Dunit
+  * "TESTINSIGHT" - Passa a usar o TestInsight
+  * "CI"          - Caso use integração continua (por exemplo com o Continua CI ou Jenkins)
+                  --/ Geralmente usado em conjunto com NOGUI
+  * "FMX"         - Para usar Firemonkey (FMX) ao invés de VCL. (Testado apenas com DUnitX)
+
+  ATENÇÃO: 1) OS defines PRECISAM estar nas opções do projeto. Não basta definir no arquivo de projeto.
+           2) Faça um Build sempre que fizer alterações de Defines.
+  Para mais informações veja o arquivo: ACBrTests.Runner.pas
 }
 
-{$IFDEF CONSOLE_TESTRUNNER}
+{$I ACBr.inc}
+
+{$IFDEF NOGUI}
 {$APPTYPE CONSOLE}
 {$ENDIF}
 
+{$IFDEF DUNITX}
+  {$STRONGLINKTYPES ON}
+{$ENDIF}
+
+{$R *.RES}
+
 uses
-  Forms,
-  TestFramework,
-  GUITestRunner,
-  TextTestRunner,
-  ACBrDFeUtilTest in '..\..\FPCUnit\ACBrDFe\ACBrDFeUtilTest.pas';
+  ACBrTests.Util in '..\..\ACBrTests.Util.pas',
+  ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
+  ACBrDFeUtilTest in '..\..\FPCUnit\ACBrDFe\ACBrDFeUtilTest.pas',
+  LibXml2TestCases in '..\..\FPCUnit\ACBrDFe\LibXml2TestCases.pas';
 
 {$R *.RES}
 
 begin
-  Application.Initialize;
-  if IsConsole then
-    with TextTestRunner.RunRegisteredTests do
-      Free
-  else
-    GUITestRunner.RunRegisteredTests;
+  ACBrRunTests
 end.
 

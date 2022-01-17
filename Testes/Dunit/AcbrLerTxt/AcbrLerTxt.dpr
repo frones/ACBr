@@ -34,6 +34,7 @@ uses
   pcnLayoutTXT in '..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnLayoutTXT.pas';
 
 {$R *.RES}
+
 begin
   Application.Initialize;
     ReportMemoryLeaksOnShutdown := True;

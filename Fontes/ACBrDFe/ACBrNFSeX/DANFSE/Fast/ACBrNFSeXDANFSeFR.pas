@@ -851,7 +851,7 @@ begin
         cdsItensServico.FieldByName('Quantidade').AsString := FloatToStr(Quantidade);
         cdsItensServico.FieldByName('ValorUnitario').AsString := FormatFloatBr(ValorUnitario, ',0.00');
         cdsItensServico.FieldByName('ValorTotal').AsString := FormatFloatBr(ValorTotal, ',0.00');
-        cdsItensServico.FieldByName('Tributavel').AsString := SimNaoToStr(Tributavel);
+        cdsItensServico.FieldByName('Tributavel').AsString := SimNao(Integer(Tributavel));
         cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr(Aliquota, '0.00');
         cdsItensServico.FieldByName('Unidade').AsString := Unidade;
         cdsItensServico.FieldByName('AliquotaISSST').AsString := FormatFloatBr(AliqISSST, '0.00');

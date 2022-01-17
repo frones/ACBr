@@ -47,7 +47,7 @@ interface
 uses
  SysUtils,
   {$ifdef FPC}
-  fpcunit, testutils, testregistry, LConvEncoding
+  fpcunit,{testutils,} testregistry
   {$else}
    {$IFDEF DUNITX}
     DUnitX.TestFramework, DUnitX.DUnitCompatibility
@@ -55,6 +55,17 @@ uses
     TestFramework
    {$ENDIF}
   {$endif};
+
+type
+  {$ifdef FPC}
+  TTestCase = fpcunit.TTestCase;
+  {$else}
+   {$IFDEF DUNITX}
+  TTestCase = DUnitX.DUnitCompatibility.TTestCase;
+   {$ELSE}
+  TTestCase = TestFramework.TTestCase;
+   {$ENDIF}
+  {$endif}
 
     { Registra uma classe de testes. Use para manter compatibilidade entre DUnitX/DUnit/FPCunit.
       @param ATesteName é um nome para o Teste. Pode ser passado vazio.

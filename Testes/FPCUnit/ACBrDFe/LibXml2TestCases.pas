@@ -7,12 +7,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$ifdef FPC}
-  fpcunit, testutils, testregistry,
-  {$else}
-  TestFramework,
-  {$endif}
-  ACBrUtil, ACBrDFeSSL;
+  ACBrUtil, ACBrDFeSSL, ACBrTests.Util;
 
 type
 
@@ -136,6 +131,6 @@ end;
 
 initialization
 
-  RegisterTest('ACBrDFe.xsLibXml2', LibXml2Test{$ifndef FPC}.suite{$endif});
+  _RegisterTest('ACBrDFe.xsLibXml2', LibXml2Test);
 end.
 

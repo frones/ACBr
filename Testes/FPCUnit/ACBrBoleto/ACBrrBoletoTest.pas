@@ -6,13 +6,9 @@ interface
 
 uses
   Classes, SysUtils, ACBrBoleto,
-  ACBrBancoCaixa, ACBrBancoUnicredRS, ACBrBancoUnicredES,
+  ACBrBancoCaixa, {ACBrBancoUnicredRS, ACBrBancoUnicredES,}
   typinfo, ACBrBoletoConversao,
-  {$ifdef FPC}
-  fpcunit, testregistry, LConvEncoding
-  {$else}
-    TestFramework
-  {$endif};
+  ACBrTests.Util;
 
 type
 
@@ -4673,51 +4669,51 @@ end;
 
 initialization
 
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCarteira_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_BB_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDVCedente_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Caixa_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Bradesco_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Unicred_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_UnicredES_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Itau_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Santander_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Santander_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Santander_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Santander_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Santander_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Santander_Test{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Santander_Test{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCarteira_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_BB_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDVCedente_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Caixa_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Bradesco_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Unicred_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_UnicredES_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Itau_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularDigitoVerificador_Santander_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', CalcularTamMaximoNossoNumero_Santander_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoCodigoCedente_Santander_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_Santander_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Santander_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Santander_Test);
+  _RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Santander_Test);
 
 
 end.

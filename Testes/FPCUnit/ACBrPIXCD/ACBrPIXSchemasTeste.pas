@@ -10,15 +10,7 @@ uses
   ACBrPIXSchemasProblema, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
   ACBrPIXSchemasLoteCobV, ACBrPIXSchemasLotesCobVConsultadas,
-  {$ifdef FPC}
-   fpcunit, testutils, testregistry
-  {$else}
-   {$IFDEF DUNITX}
-    DUnitX.TestFramework, DUnitX.DUnitCompatibility
-   {$ELSE}
-    TestFramework
-   {$ENDIF}
-  {$endif};
+  ACBrTests.Util;
 
 type
 
@@ -2409,15 +2401,6 @@ begin
   end;
 end;
 
-
-procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
-begin
-  {$IfDef DUNITX}
-   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
-  {$ELSE}
-   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
-  {$EndIf}
-end;
 
 initialization
 

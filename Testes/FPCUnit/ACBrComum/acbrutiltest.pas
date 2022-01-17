@@ -7,14 +7,9 @@ interface
 uses
   Classes, SysUtils,
   {$ifdef FPC}
-  fpcunit, testutils, testregistry, LConvEncoding
-  {$else}
-   {$IFDEF DUNITX}
-    DUnitX.TestFramework, DUnitX.DUnitCompatibility
-   {$ELSE}
-    TestFramework
-   {$ENDIF}
-  {$endif};
+  LConvEncoding,
+  {$endif}
+  ACBrTests.Util;
 
 type
 
@@ -4915,15 +4910,6 @@ const
   S = 'Projeto ACBr';
 begin
   CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S));
-end;
-
-procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
-begin
-  {$IfDef DUNITX}
-   TDUnitX.RegisterTestFixture(ATestClass, ATesteName + ATestClass.ClassName);
-  {$ELSE}
-   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
-  {$EndIf}
 end;
 
 initialization

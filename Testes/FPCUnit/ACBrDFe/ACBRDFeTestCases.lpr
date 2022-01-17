@@ -4,7 +4,7 @@ program ACBrDiversosTestCase;
 
 uses
   Interfaces, Forms, GuiTestRunner, fpcunittestrunner, ACBrDFeUtilTest,
-  LibXml2TestCases;
+  LibXml2TestCases, ACBrTests.Util;
 
 {$R *.res}
 

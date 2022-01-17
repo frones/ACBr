@@ -3,7 +3,7 @@ program ACBrTCPTestCases;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrSocketTest;
+  Interfaces, Forms, GuiTestRunner, ACBrSocketTest, ACBrTests.Util;
 
 {$R *.res}
 

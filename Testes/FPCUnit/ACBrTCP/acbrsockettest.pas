@@ -8,12 +8,7 @@ interface
 
 uses
   Classes,
-  {$ifdef FPC}
-  fpcunit, testutils, testregistry,
-  {$else}
-  TestFramework,
-  {$endif}
-  SysUtils;
+  SysUtils, ACBrTests.Util;
 
 type
 
@@ -53,5 +48,5 @@ end;
 
 initialization
 
-  RegisterTest('ACBrTCP.ACBrSocket', Funcoes{$ifndef FPC}.Suite{$endif});
+  _RegisterTest('ACBrTCP.ACBrSocket', Funcoes);
 end.

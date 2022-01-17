@@ -6,16 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$ifdef FPC}
-   fpcunit, testutils, testregistry,
-  {$else}
-   {$IFDEF DUNITX}
-    DUnitX.TestFramework, DUnitX.DUnitCompatibility,
-   {$ELSE}
-    TestFramework,
-   {$ENDIF}
-  {$endif}
-  ACBrValidador;
+  ACBrValidador, ACBrTests.Util;
 
 type
 
@@ -1353,15 +1344,6 @@ begin
    CheckEquals('', ValidarPlaca('A99A999'));
    CheckEquals('', ValidarPlaca('AAAAAAA'));
    CheckEquals('', ValidarPlaca('9999999'));
-end;
-
-procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
-begin
-  {$IfDef DUNITX}
-   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
-  {$ELSE}
-   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
-  {$EndIf}
 end;
 
 initialization

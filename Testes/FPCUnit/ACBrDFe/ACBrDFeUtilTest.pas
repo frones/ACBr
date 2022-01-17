@@ -6,11 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$ifdef FPC}
-  fpcunit, testutils, testregistry, LConvEncoding
-  {$else}
-    TestFramework
-  {$endif};
+  ACBrTests.Util;
 
 type
 
@@ -735,18 +731,18 @@ begin
 end;
 
 initialization
-  RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarNumeroDocumentoFiscalTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarChaveAcessoTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarNumeroDocumentoFiscalNFSeTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaUFCidadeTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaDIDSITest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaDIRETest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaRETest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaDrawbackTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaRECOPITest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', EncontrarURITest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.ACBrDFeUtil', XmlEstaAssinadoTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrDFe.URLServicos', URLServicosTest{$ifndef FPC}.suite{$endif});
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarNumeroDocumentoFiscalTest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarChaveAcessoTest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarNumeroDocumentoFiscalNFSeTest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaUFCidadeTest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaDIDSITest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaDIRETest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaRETest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaDrawbackTest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaRECOPITest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', EncontrarURITest);
+  _RegisterTest('ACBrDFe.ACBrDFeUtil', XmlEstaAssinadoTest);
+  _RegisterTest('ACBrDFe.URLServicos', URLServicosTest);
 
 end.
 

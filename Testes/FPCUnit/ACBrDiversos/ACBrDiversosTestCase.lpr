@@ -3,7 +3,7 @@ program ACBrDiversosTestCase;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrValidadorTest;
+  Interfaces, Forms, GuiTestRunner, ACBrValidadorTest, ACBrTests.Util;
 
 {$R *.res}
 

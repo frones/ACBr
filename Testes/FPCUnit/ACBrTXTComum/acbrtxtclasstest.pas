@@ -6,16 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  {$ifdef FPC}
-  fpcunit, testutils, testregistry, 
-  {$else}
-   {$IFDEF DUNITX}
-    DUnitX.TestFramework, DUnitX.DUnitCompatibility,
-   {$ELSE}
-    TestFramework,
-   {$ENDIF}
-  {$endif}
-  ACBrTXTClass;
+  ACBrTXTClass, ACBrTests.Util ;
 
 type
 
@@ -250,15 +241,6 @@ end;
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.TearDown;
 begin
   FreeAndNil(fACBrTXTClass);
-end;
-
-procedure _RegisterTest(ATesteName: String; ATestClass: TClass);
-begin
-  {$IfDef DUNITX}
-   TDUnitX.RegisterTestFixture( ATestClass, ATesteName );
-  {$ELSE}
-   RegisterTest(ATesteName, TTestCaseClass(ATestClass){$IfNDef FPC}.Suite{$EndIf} );
-  {$EndIf}
 end;
 
 initialization

@@ -5,7 +5,7 @@ program ACBrPIXCDTesteCases;
 uses
   Interfaces, Forms, sysutils,
   GuiTestRunner,
-  ACBrPIXSchemasTeste;
+  ACBrPIXSchemasTeste, ACBrTests.Util;
 
 {$R *.res}
 

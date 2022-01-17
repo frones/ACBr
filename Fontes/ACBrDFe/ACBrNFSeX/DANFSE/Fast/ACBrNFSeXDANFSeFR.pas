@@ -865,7 +865,7 @@ begin
         cdsItensServico.FieldByName('Quantidade').AsString := FloatToStr(Quantidade);
         cdsItensServico.FieldByName('ValorUnitario').AsString := FormatFloatBr(ValorUnitario, ',0.00');
         cdsItensServico.FieldByName('ValorTotal').AsString := FormatFloatBr(ValorTotal, ',0.00');
-        cdsItensServico.FieldByName('Tributavel').AsString := Provider.SimNaoDescricao(Integer(Tributavel));
+        cdsItensServico.FieldByName('Tributavel').AsString := Provider.SimNaoDescricao(Tributavel);
         cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr(Aliquota, '0.00');
         cdsItensServico.FieldByName('Unidade').AsString := Unidade;
         cdsItensServico.FieldByName('AliquotaISSST').AsString := FormatFloatBr(AliqISSST, '0.00');
@@ -904,7 +904,7 @@ begin
         else
           FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
 
-        FieldByName('IncentivadorCultural').AsString := Provider.SimNaoDescricao(Integer(IncentivadorCultural));
+        FieldByName('IncentivadorCultural').AsString := Provider.SimNaoDescricao(IncentivadorCultural);
 
         with Servico do
         begin
@@ -934,9 +934,9 @@ begin
             FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
         end
         else
-          FieldByName('OptanteSimplesNacional').AsString := Provider.SimNaoDescricao(Integer(OptanteSimplesNacional));
+          FieldByName('OptanteSimplesNacional').AsString := Provider.SimNaoDescricao(OptanteSimplesNacional);
 
-        FieldByName('IncentivadorCultural').AsString := Provider.SimNaoDescricao(Integer(IncentivadorCultural));
+        FieldByName('IncentivadorCultural').AsString := Provider.SimNaoDescricao(IncentivadorCultural);
 
         with Servico do
         begin

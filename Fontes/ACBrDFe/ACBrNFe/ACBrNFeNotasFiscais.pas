@@ -1575,7 +1575,7 @@ begin
 
     with FNFe do
     begin
-      infNFe.versao := StringToFloatDef( INIRec.ReadString('infNFe','versao', VersaoDFToStr(FConfiguracoes.Geral.VersaoDF)), 0);
+      infNFe.versao := StringToFloatDef(INIRec.ReadString('infNFe','versao', INIRec.ReadString('infNFe','Versao', VersaoDFToStr(FConfiguracoes.Geral.VersaoDF))), 0);
 
       //versao      := FloatToString(infNFe.versao,'.','#0.00'); // Não está sendo utilizado...
       sSecao      := IfThen( INIRec.SectionExists('Identificacao'), 'Identificacao', 'ide');

@@ -2585,8 +2585,6 @@ begin
 end;
 
 procedure TACBrTitulo.Imprimir;
-Var
-  AOldIndex: Integer;
 begin
   if not Assigned(ACBrBoleto.ACBrBoletoFC) then
     raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) );
@@ -2594,19 +2592,10 @@ begin
   if (fACBrBoleto.ListadeBoletos.Count <= 0)  then
     raise Exception.Create( ACBrStr('Nenhum Título encontrado na Lista de Boletos' ) ) ;
 
-  AOldIndex := ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual;
-
-  try
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
-    ACBrBoleto.Imprimir;
-  finally
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= AOldIndex;
-  end;
+  ACBrBoleto.Imprimir(fACBrBoleto.ListadeBoletos.IndexOf(Self));
 end;
 
 procedure TACBrTitulo.Imprimir(AStream: TStream);
-Var
-  AOldIndex: Integer;
 begin
   if not Assigned(ACBrBoleto.ACBrBoletoFC) then
     raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) );
@@ -2614,14 +2603,7 @@ begin
   if (fACBrBoleto.ListadeBoletos.Count <= 0)  then
     raise Exception.Create( ACBrStr('Nenhum Título encontrado na Lista de Boletos' ) ) ;
 
-  AOldIndex := ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual;
-
-  try
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual :=  fACBrBoleto.ListadeBoletos.IndexOf(Self);
-    ACBrBoleto.Imprimir(AStream);
-  finally
-    ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= AOldIndex;
-  end;
+  ACBrBoleto.Imprimir(fACBrBoleto.ListadeBoletos.IndexOf(Self), AStream);
 end;
 
 procedure TACBrTitulo.GerarPDF;
@@ -2663,9 +2645,7 @@ begin
     ACBrBoleto.EnviarEmail(sPara, sAssunto, sMensagem, EnviaPDF, sCC, Anexos);
   finally
     ACBrBoleto.ACBrBoletoFC.IndiceImprimirIndividual:= -1;
-
   end;
-
 end;
 
 function TACBrTitulo.CriarNFeNaLista: TACBrDadosNFe;
@@ -2763,8 +2743,7 @@ begin
   end;
 end;
 
-procedure TACBrBoleto.Notification ( AComponent: TComponent;
-   Operation: TOperation ) ;
+procedure TACBrBoleto.Notification(AComponent: TComponent; Operation: TOperation);
 begin
    inherited Notification ( AComponent, Operation ) ;
 

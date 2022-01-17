@@ -304,7 +304,7 @@ begin
   DI.canalSelecaoParametrizada           := Leitor.rCampo(tcInt, 'canalSelecaoParametrizada');
   DI.caracterizacaoOperacaoCodigoTipo    := Leitor.rCampo(tcInt, 'caracterizacaoOperacaoCodigoTipo');
   DI.caracterizacaoOperacaoDescricaoTipo := Leitor.rCampo(tcStr, 'caracterizacaoOperacaoDescricaoTipo');
-  DI.caracterizacaoOperacaoNome          := Leitor.rCampo(tcInt, 'caracterizacaoOperacaoNome');
+  DI.caracterizacaoOperacaoNome          := Leitor.rCampo(tcStr, 'caracterizacaoOperacaoNome');
   DI.caracterizacaoOperacaoNumero        := Leitor.rCampo(tcStr, 'caracterizacaoOperacaoNumero');
   DI.cargaDataChegada                    := Leitor.rCampo(tcDatCFe, 'cargaDataChegada');
   DI.cargaNumeroAgente                   := Leitor.rCampo(tcStr, 'cargaNumeroAgente');
@@ -395,9 +395,9 @@ begin
   Leitor.GroupRestore;
 
   DI.importadorCodigoTipo             := Leitor.rCampo(tcInt, 'importadorCodigoTipo');
-  DI.importadorCpfRepresentanteLegal  := Leitor.rCampo(tcDe2, 'importadorCpfRepresentanteLegal');
+  DI.importadorCpfRepresentanteLegal  := Leitor.rCampo(tcStr, 'importadorCpfRepresentanteLegal');
   DI.importadorEnderecoBairro         := Leitor.rCampo(tcStr, 'importadorEnderecoBairro');
-  DI.importadorEnderecoCep            := Leitor.rCampo(tcInt, 'importadorEnderecoCep');
+  DI.importadorEnderecoCep            := Leitor.rCampo(tcStr, 'importadorEnderecoCep');
   DI.importadorEnderecoComplemento    := Leitor.rCampo(tcStr, 'importadorEnderecoComplemento');
   DI.importadorEnderecoLogradouro     := Leitor.rCampo(tcStr, 'importadorEnderecoLogradouro');
   DI.importadorEnderecoMunicipio      := Leitor.rCampo(tcStr, 'importadorEnderecoMunicipio');

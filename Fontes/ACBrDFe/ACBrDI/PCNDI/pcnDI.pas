@@ -117,9 +117,9 @@ type
     FfreteTotalReais: Currency;
     Ficms: Ticms;
     FimportadorCodigoTipo: Integer;
-    FimportadorCpfRepresentanteLegal: Currency;
+    FimportadorCpfRepresentanteLegal: string;
     FimportadorEnderecoBairro: String;
-    FimportadorEnderecoCep: Integer;
+    FimportadorEnderecoCep: string;
     FimportadorEnderecoComplemento: String;
     FimportadorEnderecoLogradouro: String;
     FimportadorEnderecoMunicipio: String;
@@ -209,9 +209,9 @@ type
     property freteTotalReais: Currency                                         read FfreteTotalReais                      write FfreteTotalReais;
     property icms: Ticms                                                       read Ficms;
     property importadorCodigoTipo: Integer                                     read FimportadorCodigoTipo                 write FimportadorCodigoTipo;
-    property importadorCpfRepresentanteLegal: Currency                         read FimportadorCpfRepresentanteLegal      write FimportadorCpfRepresentanteLegal;
+    property importadorCpfRepresentanteLegal: String                           read FimportadorCpfRepresentanteLegal      write FimportadorCpfRepresentanteLegal;
     property importadorEnderecoBairro: String                                  read FimportadorEnderecoBairro             write FimportadorEnderecoBairro;
-    property importadorEnderecoCep: Integer                                    read FimportadorEnderecoCep                write FimportadorEnderecoCep;
+    property importadorEnderecoCep: string                                     read FimportadorEnderecoCep                write FimportadorEnderecoCep;
     property importadorEnderecoComplemento: String                             read FimportadorEnderecoComplemento        write FimportadorEnderecoComplemento;
     property importadorEnderecoLogradouro: String                              read FimportadorEnderecoLogradouro         write FimportadorEnderecoLogradouro;
     property importadorEnderecoMunicipio: String                               read FimportadorEnderecoMunicipio          write FimportadorEnderecoMunicipio;

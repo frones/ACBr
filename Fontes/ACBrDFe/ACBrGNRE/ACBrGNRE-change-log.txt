@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2022
+-- ACBrGNREGuiasRetorno --
+[*] Possível correção para a leitura dos valores da guia.
+  Por: Italo Giurizzato Junior
+
 04/01/2022
 -- pgnreGNREW --
 [*] Corrigido o tipo de campo da tag <mes>.

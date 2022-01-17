@@ -259,6 +259,7 @@ var
   i, j, k, Nivel, cProd: Integer;
   xInfo: string;
   Leitor: TLeitor;
+  ValorTotal: Double;
 begin
   Result := False;
   Leitor := TLeitor.Create;
@@ -275,7 +276,7 @@ begin
       GNRERetorno.SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
       GNRERetorno.UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
       GNRERetorno.tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');
-      GNRERetorno.ValorPrincipal        := Leitor.rCampo(tcDe2, 'valorGNRE');
+      ValorTotal                        := Leitor.rCampo(tcDe2, 'valorGNRE');
       GNRERetorno.DataLimitePagamento   := DateToStr(Leitor.rCampo(tcDat, 'dataLimitePagamento'));
       GNRERetorno.IdentificadorGuia     := Leitor.rCampo(tcInt, 'identificadorGuia');
       GNRERetorno.NumeroControle        := Leitor.rCampo(tcStr, 'nossoNumero');
@@ -369,6 +370,11 @@ begin
             }
             if Leitor.rAtributo('tipo=', 'valor') = '11' then
               GNRERetorno.ValorPrincICMS := Leitor.rCampo(tcDe2, 'valor');
+
+            if GNRERetorno.ValorPrincICMS <> 0 then
+              GNRERetorno.ValorPrincipal := GNRERetorno.ValorPrincICMS
+            else
+              GNRERetorno.ValorPrincipal := ValorTotal;
 
             if Leitor.rAtributo('tipo=', 'valor') = '12' then
             begin

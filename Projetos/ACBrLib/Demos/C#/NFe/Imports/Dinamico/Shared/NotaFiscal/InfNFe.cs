@@ -2,6 +2,8 @@
 {
     public sealed class InfNFe
     {
-        public string versao { get; set; }
+        public string ID { get; set; }
+
+        public string Versao { get; set; }
     }
 }

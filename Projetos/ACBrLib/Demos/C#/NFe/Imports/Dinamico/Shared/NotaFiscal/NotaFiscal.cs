@@ -36,7 +36,7 @@ namespace ACBrLib.NFe
             Cana = new CanaNFe();
             InfRespTec = new InfRespTec();
 
-            InfNFe.versao = "4.00";
+            InfNFe.Versao = "4.00";
         }
 
         internal NotaFiscal(ACBrIniFile ini) : this()

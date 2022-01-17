@@ -455,7 +455,7 @@ begin
     LerIntermediarioServico(AuxNode);
     LerConstrucaoCivil(AuxNode);
 
-    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr), Provedor);
+    NFSe.RegimeEspecialTributacao := TACBrNFSeXProvider(FpAOwner).StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
     NFSe.OptanteSimplesNacional   := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
     NFSe.IncentivadorCultural     := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivoFiscal'), tcStr));
 
@@ -724,7 +724,7 @@ begin
       if Responsavel = '' then
         ResponsavelRetencao := rtNenhum
       else
-        ResponsavelRetencao := StrToResponsavelRetencao(Ok, Responsavel, Provedor);
+        ResponsavelRetencao := TACBrNFSeXProvider(FpAOwner).StrToResponsavelRetencao(Ok, Responsavel);
 
       ItemListaServico          := NormatizaItemListaServico(CodigoItemServico);
       xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
@@ -740,7 +740,7 @@ begin
 
       with Valores do
       begin
-        IssRetido := StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr), Provedor);
+        IssRetido := TACBrNFSeXProvider(FpAOwner).StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IssRetido'), tcStr));
 
         if IssRetido = stRetencao then
           ValorIssRetido := ValorIss

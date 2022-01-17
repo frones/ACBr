@@ -51,9 +51,9 @@ uses
 
 type
 
-  { NotaFiscal }
+  { TNotaFiscal }
 
-  NotaFiscal = class
+  TNotaFiscal = class
   private
     FNFSe: TNFSe;
     FACBrNFSe: TACBrDFe;
@@ -124,8 +124,8 @@ type
     FXMLLoteAssinado: String;
     FAlertas: String;
 
-    function GetItem(Index: integer): NotaFiscal;
-    procedure SetItem(Index: integer; const Value: NotaFiscal);
+    function GetItem(Index: integer): TNotaFiscal;
+    procedure SetItem(Index: integer; const Value: TNotaFiscal);
 
     procedure VerificarDANFSE;
   public
@@ -135,13 +135,13 @@ type
     procedure Imprimir;
     procedure ImprimirPDF;
 
-    function New: NotaFiscal; reintroduce;
-    function Add(ANota: NotaFiscal): Integer; reintroduce;
-    Procedure Insert(Index: Integer; ANota: NotaFiscal); reintroduce;
-    function FindByRps(ANumRPS: string): NotaFiscal;
-    function FindByNFSe(ANumNFSe: string): NotaFiscal;
+    function New: TNotaFiscal; reintroduce;
+    function Add(ANota: TNotaFiscal): Integer; reintroduce;
+    Procedure Insert(Index: Integer; ANota: TNotaFiscal); reintroduce;
+    function FindByRps(ANumRPS: string): TNotaFiscal;
+    function FindByNFSe(ANumNFSe: string): TNotaFiscal;
 
-    property Items[Index: integer]: NotaFiscal read GetItem write SetItem; default;
+    property Items[Index: integer]: TNotaFiscal read GetItem write SetItem; default;
 
     function GetNamePath: String;
 
@@ -180,8 +180,8 @@ function CompRpsPorNumero(const Item1,
 var
   NumRps1, NumRps2: Integer;
 begin
-  NumRps1 := StrToIntDef(NotaFiscal(Item1).NFSe.IdentificacaoRps.Numero, 0);
-  NumRps2 := StrToIntDef(NotaFiscal(Item2).NFSe.IdentificacaoRps.Numero, 0);
+  NumRps1 := StrToIntDef(TNotaFiscal(Item1).NFSe.IdentificacaoRps.Numero, 0);
+  NumRps2 := StrToIntDef(TNotaFiscal(Item2).NFSe.IdentificacaoRps.Numero, 0);
 
   if NumRps1 < NumRps2 then
     Result := -1
@@ -196,8 +196,8 @@ function CompNFSePorNumero(const Item1,
 var
   NumNFSe1, NumNFSe2: Int64;
 begin
-  NumNFSe1 := StrToInt64Def(NotaFiscal(Item1).NFSe.Numero, 0);
-  NumNFSe2 := StrToInt64Def(NotaFiscal(Item2).NFSe.Numero, 0);
+  NumNFSe1 := StrToInt64Def(TNotaFiscal(Item1).NFSe.Numero, 0);
+  NumNFSe2 := StrToInt64Def(TNotaFiscal(Item2).NFSe.Numero, 0);
 
   if NumNFSe1 < NumNFSe2 then
     Result := -1
@@ -207,9 +207,9 @@ begin
     Result := 0;
 end;
 
-{ NotaFiscal }
+{ TNotaFiscal }
 
-constructor NotaFiscal.Create(AOwner: TACBrDFe);
+constructor TNotaFiscal.Create(AOwner: TACBrDFe);
 begin
   if not (AOwner is TACBrNFSeX) then
     raise EACBrNFSeException.Create('AOwner deve ser do tipo TACBrNFSeX');
@@ -218,14 +218,14 @@ begin
   FNFSe := TNFSe.Create;
 end;
 
-destructor NotaFiscal.Destroy;
+destructor TNotaFiscal.Destroy;
 begin
   FNFSe.Free;
 
   inherited Destroy;
 end;
 
-procedure NotaFiscal.Imprimir;
+procedure TNotaFiscal.Imprimir;
 begin
   with TACBrNFSeX(FACBrNFSe) do
   begin
@@ -243,7 +243,7 @@ begin
   end;
 end;
 
-procedure NotaFiscal.ImprimirPDF;
+procedure TNotaFiscal.ImprimirPDF;
 begin
   with TACBrNFSeX(FACBrNFSe) do
   begin
@@ -261,7 +261,7 @@ begin
   end;
 end;
 
-function NotaFiscal.LerArqIni(const AIniString: String): Boolean;
+function TNotaFiscal.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   sSecao, sFim: String;
@@ -323,7 +323,7 @@ begin
 
       sSecao := 'Prestador';
 
-      RegimeEspecialTributacao := StrToRegimeEspecialTributacao(Ok, INIRec.ReadString(sSecao, 'Regime', '0'));
+      RegimeEspecialTributacao := Provider.StrToRegimeEspecialTributacao(Ok, INIRec.ReadString(sSecao, 'Regime', '0'));
       OptanteSimplesNacional := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'OptanteSN', '1'));
       IncentivadorCultural := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'IncentivadorCultural', '1'));
 
@@ -428,7 +428,7 @@ begin
         ExigibilidadeISS := StrToExigibilidadeISS(Ok, INIRec.ReadString(sSecao, 'ExigibilidadeISS', '1'));
         MunicipioIncidencia := INIRec.ReadInteger(sSecao, 'MunicipioIncidencia', 0);
         UFPrestacao := INIRec.ReadString(sSecao, 'UFPrestacao', '');
-        ResponsavelRetencao := StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', '1'));
+        ResponsavelRetencao := Provider.StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', '1'));
 
         i := 1;
         while true do
@@ -514,7 +514,7 @@ begin
           ValorIr := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorIr', ''), 0);
           ValorCsll := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorCsll', ''), 0);
 
-          ISSRetido := StrToSituacaoTributaria(Ok, INIRec.ReadString(sSecao, 'ISSRetido', '0'));
+          ISSRetido := Provider.StrToSituacaoTributaria(Ok, INIRec.ReadString(sSecao, 'ISSRetido', '0'));
 
           OutrasRetencoes := StringToFloatDef(INIRec.ReadString(sSecao, 'OutrasRetencoes', ''), 0);
           DescontoIncondicionado := StringToFloatDef(INIRec.ReadString(sSecao, 'DescontoIncondicionado', ''), 0);
@@ -570,7 +570,7 @@ begin
   end;
 end;
 
-function NotaFiscal.LerXML(const AXML: String): Boolean;
+function TNotaFiscal.LerXML(const AXML: String): Boolean;
 var
   FProvider: IACBrNFSeXProvider;
 begin
@@ -583,7 +583,7 @@ begin
   FXMLOriginal := String(AXML);
 end;
 
-function NotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
+function TNotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -592,7 +592,7 @@ begin
   Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXMLOriginal);
 end;
 
-function NotaFiscal.GravarStream(AStream: TStream): Boolean;
+function TNotaFiscal.GravarStream(AStream: TStream): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -602,7 +602,7 @@ begin
   Result := True;
 end;
 
-procedure NotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+procedure TNotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
   ManterPDFSalvo: Boolean);
 var
@@ -647,7 +647,7 @@ begin
   end;
 end;
 
-function NotaFiscal.GerarXML: String;
+function TNotaFiscal.GerarXML: String;
 var
   FProvider: IACBrNFSeXProvider;
 begin
@@ -660,7 +660,7 @@ begin
   Result := XMLOriginal;
 end;
 
-function NotaFiscal.CalcularNomeArquivo: String;
+function TNotaFiscal.CalcularNomeArquivo: String;
 var
   xID: String;
 begin
@@ -672,7 +672,7 @@ begin
   Result := xID + '-rps.xml';
 end;
 
-function NotaFiscal.CalcularPathArquivo: String;
+function TNotaFiscal.CalcularPathArquivo: String;
 var
   Data: TDateTime;
 begin
@@ -689,7 +689,7 @@ begin
   end;
 end;
 
-function NotaFiscal.CalcularNomeArquivoCompleto(NomeArquivo: String;
+function TNotaFiscal.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
 begin
   if EstaVazio(NomeArquivo) then
@@ -703,17 +703,17 @@ begin
   Result := PathArquivo + NomeArquivo;
 end;
 
-function NotaFiscal.GetXMLAssinado: String;
+function TNotaFiscal.GetXMLAssinado: String;
 begin
   Result := FXMLAssinado;
 end;
 
-procedure NotaFiscal.SetXML(const Value: String);
+procedure TNotaFiscal.SetXML(const Value: String);
 begin
   LerXML(Value);
 end;
 
-procedure NotaFiscal.SetXMLOriginal(const Value: String);
+procedure TNotaFiscal.SetXMLOriginal(const Value: String);
 begin
   FXMLOriginal := Value;
 
@@ -736,13 +736,13 @@ begin
   FConfiguracoes := TACBrNFSeX(FACBrNFSe).Configuracoes;
 end;
 
-function TNotasFiscais.New: NotaFiscal;
+function TNotasFiscais.New: TNotaFiscal;
 begin
-  Result := NotaFiscal.Create(FACBrNFSe);
+  Result := TNotaFiscal.Create(FACBrNFSe);
   Add(Result);
 end;
 
-function TNotasFiscais.Add(ANota: NotaFiscal): Integer;
+function TNotasFiscais.Add(ANota: TNotaFiscal): Integer;
 begin
   Result := inherited Add(ANota);
 end;
@@ -755,9 +755,9 @@ begin
     Self.Items[i].GerarXML;
 end;
 
-function TNotasFiscais.GetItem(Index: integer): NotaFiscal;
+function TNotasFiscais.GetItem(Index: integer): TNotaFiscal;
 begin
-  Result := NotaFiscal(inherited Items[Index]);
+  Result := TNotaFiscal(inherited Items[Index]);
 end;
 
 function TNotasFiscais.GetNamePath: String;
@@ -783,14 +783,14 @@ begin
   TACBrNFSeX(FACBrNFSe).DANFSE.ImprimirDANFSEPDF;
 end;
 
-procedure TNotasFiscais.Insert(Index: Integer; ANota: NotaFiscal);
+procedure TNotasFiscais.Insert(Index: Integer; ANota: TNotaFiscal);
 begin
   inherited Insert(Index, ANota);
 end;
 
-function TNotasFiscais.FindByNFSe(ANumNFSe: string): NotaFiscal;
+function TNotasFiscais.FindByNFSe(ANumNFSe: string): TNotaFiscal;
 var
-  AItem: NotaFiscal;
+  AItem: TNotaFiscal;
   AItemIndex: Integer;
 begin
   Result := nil;
@@ -806,7 +806,7 @@ begin
   {$EndIf}
   end;
 
-  AItem := NotaFiscal.Create(FACBrNFSe);
+  AItem := TNotaFiscal.Create(FACBrNFSe);
   try
     AItem.NFSe.Numero := ANumNFSe;
     {$IfDef HAS_SYSTEM_GENERICS}
@@ -823,9 +823,9 @@ begin
   Result := Self.Items[AItemIndex];
 end;
 
-function TNotasFiscais.FindByRps(ANumRPS: string): NotaFiscal;
+function TNotasFiscais.FindByRps(ANumRPS: string): TNotaFiscal;
 var
-  AItem: NotaFiscal;
+  AItem: TNotaFiscal;
   AItemIndex: Integer;
 begin
   Result := nil;
@@ -841,7 +841,7 @@ begin
   {$EndIf}
   end;
 
-  AItem := NotaFiscal.Create(FACBrNFSe);
+  AItem := TNotaFiscal.Create(FACBrNFSe);
   try
     AItem.NFSe.IdentificacaoRps.Numero := ANumRPS;
     {$IfDef HAS_SYSTEM_GENERICS}
@@ -858,7 +858,7 @@ begin
   Result := Self.Items[AItemIndex];
 end;
 
-procedure TNotasFiscais.SetItem(Index: integer; const Value: NotaFiscal);
+procedure TNotasFiscais.SetItem(Index: integer; const Value: TNotaFiscal);
 begin
   inherited Items[Index] := Value;
 end;
@@ -914,7 +914,7 @@ var
   MS: TMemoryStream;
   P, N, TamTag, j: Integer;
   aXml, aXmlLote: string;
-  TagF: Array[1..13] of String;
+  TagF: Array[1..14] of String;
 
   function PrimeiraNFSe: Integer;
   begin
@@ -922,7 +922,7 @@ var
     TagF[02] := '<ComplNfse>';
     TagF[03] := '<NFS-e>';
     TagF[04] := '<Nfse>';
-    TagF[05] := '<nfse>'; // IPM
+    TagF[05] := '<nfse>';             // Provedor IPM
     TagF[06] := '<Nota>';
     TagF[07] := '<NFe>';
     TagF[08] := '<tbnfd>';
@@ -931,6 +931,7 @@ var
     TagF[11] := '<notasFiscais>';     // Provedor EL
     TagF[12] := '<notaFiscal>';       // Provedor GIAP
     TagF[13] := '<NOTA>';             // Provedor AssessorPublico
+    TagF[14] := '<NOTA_FISCAL>';      // Provedor ISSDSF
 
     j := 0;
 
@@ -947,7 +948,7 @@ var
     TagF[02] := '</ComplNfse>';
     TagF[03] := '</NFS-e>';
     TagF[04] := '</Nfse>';
-    TagF[05] := '</nfse>'; // IPM
+    TagF[05] := '</nfse>';             // Provedor IPM
     TagF[06] := '</Nota>';
     TagF[07] := '</NFe>';
     TagF[08] := '</tbnfd>';
@@ -956,6 +957,7 @@ var
     TagF[11] := '</notasFiscais>';     // Provedor EL
     TagF[12] := '</notaFiscal>';       // Provedor GIAP
     TagF[13] := '</NOTA>';             // Provedor AssessorPublico
+    TagF[14] := '</NOTA_FISCAL>';      // Provedor ISSDSF
 
     j := 0;
 

@@ -251,7 +251,8 @@ var
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrUtil, ACBrNFSeXClass,
+  StrUtils, DateUtils, ACBrUtil,
+  ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXProviderBase,
   ACBrValidador, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
@@ -292,7 +293,7 @@ begin
   if fpNFSe.InformacoesComplementares <> '' then
     rlmDadosAdicionais.Lines.Add(StringReplace(fpNFSe.InformacoesComplementares, FQuebradeLinha, #13#10, [rfReplaceAll,rfIgnoreCase]));
 
-  if ( (pos('http://', LowerCase( fpNFSe.OutrasInformacoes) ) > 0) or (pos('http://', LowerCase( fpNFSe.Link) ) > 0) or (pos('https://', LowerCase( fpNFSe.Link) ) > 0) ) then
+  if ((pos('http://', LowerCase(fpNFSe.OutrasInformacoes)) > 0) or (pos('http://', LowerCase(fpNFSe.Link)) > 0) or (pos('https://', LowerCase(fpNFSe.Link)) > 0)) then
   begin
     rlmDadosAdicionais.Width := 643;
 
@@ -304,12 +305,12 @@ begin
     rlImgQrCode.SetBounds(648, 3, 90, 90);
     rlImgQrCode.BringToFront;
 
-    if pos('http://', LowerCase( fpNFSe.Link) ) > 0 then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('http://', LowerCase( fpNFSe.Link)), Length(fpNFSe.Link) ))
-    else if pos('https://', LowerCase( fpNFSe.Link) ) > 0 then
-      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('https://', LowerCase( fpNFSe.Link)), Length(fpNFSe.Link) ))
+    if pos('http://', LowerCase(fpNFSe.Link)) > 0 then
+      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('http://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)))
+    else if pos('https://', LowerCase(fpNFSe.Link)) > 0 then
+      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('https://', LowerCase(fpNFSe.Link)), Length(fpNFSe.Link)))
     else
-      QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('http://', LowerCase( fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes) ));
+      QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('http://', LowerCase(fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes)));
 
     QRCode       := TDelphiZXingQRCode.Create;
     QRCodeBitmap := TBitmap.Create;
@@ -385,39 +386,42 @@ procedure TfrlXDANFSeRLRetrato.rlbItensServicoBeforePrint(Sender: TObject; var P
 begin
   with fpNFSe.Servico.ItemServico.Items[FNumItem] do
   begin
-    txtServicoQtde.Caption := FormatFloatBr( Quantidade );
+    txtServicoQtde.Caption := FormatFloatBr(Quantidade);
     rlmServicoDescricao.Lines.Clear;
-    rlmServicoDescricao.Lines.Add( StringReplace( Descricao, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
-    txtServicoUnitario.Caption := FormatFloatBr( ValorUnitario );
+    rlmServicoDescricao.Lines.Add(StringReplace(Descricao, FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
+    txtServicoUnitario.Caption := FormatFloatBr(ValorUnitario);
 
     if ValorTotal = 0.0 then
       ValorTotal := Quantidade * ValorUnitario;
 
-    txtServicoTotal.Caption    := FormatFloatBr( ValorTotal );
+    txtServicoTotal.Caption    := FormatFloatBr(ValorTotal);
   end;
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   MostrarObra, MostrarNaturezaOperacao: Boolean;
+  Provider: TACBrNFSeXProvider;
 begin
   inherited;
   RLLabel16.Visible := False;
   rllCodTributacaoMunicipio.Visible     := False;
   rlmDescCodTributacaoMunicipio.Visible := False;
 
+  Provider := TACBrNFSeXProvider(ACBrNFSe.Provider);
+
   With fpNFSe do
   begin
-    rllNatOperacao.Caption    := ACBrStr(NaturezaOperacaoDescricao( NaturezaOperacao, fpDANFSe.Provedor ));
+    rllNatOperacao.Caption    := ACBrStr(Provider.NaturezaOperacaoDescricao(NaturezaOperacao));
     MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
     RLLabel137.Visible        := MostrarNaturezaOperacao;
-    rllRegimeEspecial.Caption := ACBrStr(nfseRegimeEspecialTributacaoDescricao( RegimeEspecialTributacao ));
-    rllOpcaoSimples.Caption   := ACBrStr(SimNao( Integer ( OptanteSimplesNacional ) ));
-    rllIncentivador.Caption   := ACBrStr(SimNao( Integer ( IncentivadorCultural ) ));
+    rllRegimeEspecial.Caption := ACBrStr(Provider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));
+    rllOpcaoSimples.Caption   := ACBrStr(Provider.SimNaoDescricao(OptanteSimplesNacional));
+    rllIncentivador.Caption   := ACBrStr(Provider.SimNaoDescricao(IncentivadorCultural));
     rllCodObra.Caption        := ConstrucaoCivil.CodigoObra;
     rllCodART.Caption         := ConstrucaoCivil.Art;
 
-    MostrarObra                 := (rllCodObra.Caption<>'') or (rllCodART.Caption<>'');
+    MostrarObra                 := (rllCodObra.Caption <> '') or (rllCodART.Caption <> '');
     rlsLinhaH1.Visible          := MostrarObra;
     rllTituloConstCivil.Visible := MostrarObra;
     rllCodigoObra.Visible       := MostrarObra;
@@ -427,7 +431,7 @@ begin
 
     with Servico.Valores  do
     begin
-      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat(',0.00' , ValorServicos );
+      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat(',0.00' , ValorServicos);
       rlmCodServico.Lines.Clear;
 
       if Servico.xItemListaServico <> '' then
@@ -437,13 +441,13 @@ begin
         if fpDANFSe.Atividade <> '' then
           rlmCodServico.Lines.Append('Atividade: ' + fpDANFSe.Atividade);
 
-        rlmCodServico.Lines.Append( Servico.ItemListaServico + ' - '+ Servico.xItemListaServico);
+        rlmCodServico.Lines.Append(Servico.ItemListaServico + ' - '+ Servico.xItemListaServico);
 
         if (Servico.xCodigoTributacaoMunicipio <> '') then
         begin
           rllCodTributacaoMunicipio.Visible     := True;
           rlmDescCodTributacaoMunicipio.Visible := True;
-          rlmDescCodTributacaoMunicipio.Lines.Append( Servico.xCodigoTributacaoMunicipio );
+          rlmDescCodTributacaoMunicipio.Lines.Append(Servico.xCodigoTributacaoMunicipio);
         end
         else
           rlmCodServico.Height := Trunc(rlmCodServico.Height * 2.5);
@@ -458,28 +462,28 @@ begin
         end
       end;
 
-      rllValorPIS.Caption             := FormatFloat(',0.00', ValorPis );
-      rllValorCOFINS.Caption          := FormatFloat(',0.00', ValorCofins );
-      rllValorIR.Caption              := FormatFloat(',0.00', ValorIr );
-      rllValorINSS.Caption            := FormatFloat(',0.00', ValorInss );
-      rllValorCSLL.Caption            := FormatFloat(',0.00', ValorCsll );
-      rllValorServicos1.Caption       := FormatFloat(',0.00', ValorServicos );
-      rllDescIncondicionado1.Caption  := FormatFloat(',0.00', DescontoIncondicionado );
-      rllDescCondicionado.Caption     := FormatFloat(',0.00', DescontoCondicionado );
+      rllValorPIS.Caption             := FormatFloat(',0.00', ValorPis);
+      rllValorCOFINS.Caption          := FormatFloat(',0.00', ValorCofins);
+      rllValorIR.Caption              := FormatFloat(',0.00', ValorIr);
+      rllValorINSS.Caption            := FormatFloat(',0.00', ValorInss);
+      rllValorCSLL.Caption            := FormatFloat(',0.00', ValorCsll);
+      rllValorServicos1.Caption       := FormatFloat(',0.00', ValorServicos);
+      rllDescIncondicionado1.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
+      rllDescCondicionado.Caption     := FormatFloat(',0.00', DescontoCondicionado);
       rllRetencoesFederais.Caption    := FormatFloat(',0.00', ValorPis +
                                                               ValorCofins +
                                                               ValorInss +
                                                               ValorIr +
-                                                              ValorCsll );
-      rllOutrasRetencoes.Caption      := FormatFloat(',0.00', OutrasRetencoes );
-      rllValorIssRetido.Caption       := FormatFloat(',0.00', ValorIssRetido );
-      rllValorLiquido.Caption         := FormatFloat(',0.00', ValorLiquidoNfse );
-      rllValorServicos2.Caption       := FormatFloat(',0.00', ValorServicos );
-      rllValorDeducoes.Caption        := FormatFloat(',0.00', ValorDeducoes );
-      rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado );
-      rllBaseCalc.Caption             := FormatFloat(',0.00', BaseCalculo );
-      rllAliquota.Caption             := ManterAliquota ( Aliquota );
-      rllISSReter.Caption             := SituacaoTributariaDescricao( IssRetido );
+                                                              ValorCsll);
+      rllOutrasRetencoes.Caption      := FormatFloat(',0.00', OutrasRetencoes);
+      rllValorIssRetido.Caption       := FormatFloat(',0.00', ValorIssRetido);
+      rllValorLiquido.Caption         := FormatFloat(',0.00', ValorLiquidoNfse);
+      rllValorServicos2.Caption       := FormatFloat(',0.00', ValorServicos);
+      rllValorDeducoes.Caption        := FormatFloat(',0.00', ValorDeducoes);
+      rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
+      rllBaseCalc.Caption             := FormatFloat(',0.00', BaseCalculo);
+      rllAliquota.Caption             := ManterAliquota (Aliquota);
+      rllISSReter.Caption             := Provider.SituacaoTributariaDescricao(IssRetido);
       rllValorISS.Caption             := FormatFloat(',0.00',ValorIss);
     end;
   end;
@@ -491,8 +495,8 @@ begin
 
   rlmDescricao.Lines.Clear;
 //  rlmDescricao.Lines.Add(fpNFSe.Servico.Discriminacao);
-  rlmDescricao.Lines.Add( StringReplace( fpNFSe.Servico.Discriminacao,
-                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+  rlmDescricao.Lines.Add(StringReplace(fpNFSe.Servico.Discriminacao,
+                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -519,22 +523,22 @@ begin
 
       with Endereco do
       begin
-        rllPrestEndereco.Caption    := IfThen( Endereco <> '' , Trim( Endereco )+', '+
-                                                                Trim( Numero )+' - '+
-                                                                Trim( Bairro )+
+        rllPrestEndereco.Caption    := IfThen(Endereco <> '' , Trim(Endereco)+', '+
+                                                                Trim(Numero)+' - '+
+                                                                Trim(Bairro)+
                                                                 ' - CEP: '+
-                                                                FormatarCEP( CEP ) ,
-                                                                Trim(fpDANFSe.Prestador.Endereco) ) ;
+                                                                FormatarCEP(CEP) ,
+                                                                Trim(fpDANFSe.Prestador.Endereco)) ;
 
-        rllPrestComplemento.Caption := IfThen( Complemento <> '', Complemento , fpDANFSe.Prestador.Complemento);
-        rllPrestMunicipio.Caption   := IfThen( xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , fpDANFSe.Prestador.Municipio);
-        rllPrestUF.Caption          := IfThen( UF <> ''         , UF  , fpDANFSe.Prestador.UF);
+        rllPrestComplemento.Caption := IfThen(Complemento <> '', Complemento , fpDANFSe.Prestador.Complemento);
+        rllPrestMunicipio.Caption   := IfThen(xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , fpDANFSe.Prestador.Municipio);
+        rllPrestUF.Caption          := IfThen(UF <> ''         , UF  , fpDANFSe.Prestador.UF);
       end;
 
       with Contato do
       begin
-        rllPrestTelefone.Caption := IfThen( Telefone <> '' , FormatarFone( Telefone) , FormatarFone(fpDANFSe.Prestador.Fone) );
-        rllPrestEmail.Caption    := IfThen( Email <> '' , Email , fpDANFSe.Prestador.EMail);
+        rllPrestTelefone.Caption := IfThen(Telefone <> '' , FormatarFone(Telefone) , FormatarFone(fpDANFSe.Prestador.Fone));
+        rllPrestEmail.Caption    := IfThen(Email <> '' , Email , fpDANFSe.Prestador.EMail);
       end;
 
       rllPrestNomeEnt.Caption   := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
@@ -558,14 +562,14 @@ begin
 
       with IdentificacaoTomador do
       begin
-        if Length( CpfCnpj)<=11 then
-          rllTomaCNPJ.Caption := FormatarCPF( CpfCnpj )
+        if Length(CpfCnpj)<=11 then
+          rllTomaCNPJ.Caption := FormatarCPF(CpfCnpj)
         else
-          rllTomaCNPJ.Caption := FormatarCNPJ( CpfCnpj );
+          rllTomaCNPJ.Caption := FormatarCNPJ(CpfCnpj);
 
-        rllTomaInscMunicipal.Caption := IfThen( InscricaoMunicipal <> '' , InscricaoMunicipal , fpDANFSe.Tomador.InscricaoMunicipal);
+        rllTomaInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '' , InscricaoMunicipal , fpDANFSe.Tomador.InscricaoMunicipal);
 
-        rllTomaInscEstadual.Caption := IfThen( InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual );
+        rllTomaInscEstadual.Caption := IfThen(InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Tomador.InscricaoEstadual);
       end;
 
       with Endereco do
@@ -573,15 +577,15 @@ begin
         if Endereco <> '' then
         begin
           rllTomaEndereco.Caption :=  Trim(Endereco) + ', '  +
-                                      Trim(Numero )  + ' - ' +
-                                      Trim(Bairro )  + ' - CEP: ' +
+                                      Trim(Numero)  + ' - ' +
+                                      Trim(Bairro)  + ' - CEP: ' +
                                       FormatarCEP(CEP);
         end
         else
          rllTomaEndereco.Caption := Trim(fpDANFSe.Tomador.Endereco) + ' - CEP: ' +
                                     FormatarCEP(CEP);
 
-        rllTomaComplemento.Caption := IfThen( Complemento <> '' , Complemento , fpDANFSe.Tomador.Complemento);
+        rllTomaComplemento.Caption := IfThen(Complemento <> '' , Complemento , fpDANFSe.Tomador.Complemento);
 
         rllTomaMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
         rllTomaUF.Caption        := UF;
@@ -589,8 +593,8 @@ begin
 
       with Contato do
       begin
-        rllTomaTelefone.Caption := IfThen( Telefone <> '' , FormatarFone(Telefone) , FormatarFone(fpDANFSe.Tomador.Fone));
-        rllTomaEmail.Caption    := IfThen( Email    <> '' , Email , fpDANFSe.Tomador.Email);
+        rllTomaTelefone.Caption := IfThen(Telefone <> '' , FormatarFone(Telefone) , FormatarFone(fpDANFSe.Tomador.Fone));
+        rllTomaEmail.Caption    := IfThen(Email    <> '' , Email , fpDANFSe.Tomador.Email);
       end;
 
       rllMsgTeste.Visible := (fpDANFSe.Producao = snNao);
@@ -630,10 +634,10 @@ begin
   RecordAction := raUseIt;
 end;
 
-Function TfrlXDANFSeRLRetrato.ManterAliquota( dAliquota : Double ) : String;
+Function TfrlXDANFSeRLRetrato.ManterAliquota(dAliquota : Double) : String;
 begin
   // Agora a multiplicação por 100 é feita pela rotina que lê o XML.
-  Result := FormatFloat(',0.00', dAliquota );
+  Result := FormatFloat(',0.00', dAliquota);
 end;
 
 end.

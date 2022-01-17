@@ -220,7 +220,7 @@ begin
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'RegimeEspecialTributacao', 1, 1, 1,
-             RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
+    TACBrNFSeXProvider(FpAOwner).RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
 
   xmlNode := GerarEnderecoPrestador;
   Result.AppendChild(xmlNode);

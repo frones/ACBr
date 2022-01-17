@@ -62,14 +62,16 @@ type
   private
     { Private declarations }
     FMoreData: Boolean;
+
+    function GetACBrNFSe: TACBrNFSeX;
   protected
-    fpACBrNFSe: TACBrNFSeX;
     fpDANFSe: TACBrNFSeXDANFSeRL;
     fpNFSe: TNFSe;
     fpSemValorFiscal: Boolean;
     cdsItens: {$IFDEF BORLAND}TClientDataSet{$ELSE}TBufDataset{$ENDIF};
-	
-    procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);    
+
+    procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);
+    property ACBrNFSe: TACBrNFSeX read GetACBrNFSe;
   public
     { Public declarations }
     class procedure Imprimir(ADANFSe: TACBrNFSeXDANFSeRL; ANotas: array of TNFSe);
@@ -103,6 +105,11 @@ procedure TfrlXDANFSeRL.frlSemValorFiscalPrint(sender: TObject;
 begin
   if fpSemValorFiscal then
     Value := '';
+end;
+
+function TfrlXDANFSeRL.GetACBrNFSe: TACBrNFSeX;
+begin
+  Result := TACBrNFSeX(fpDANFSe.ACBrNFSe);
 end;
 
 procedure TfrlXDANFSeRL.RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);

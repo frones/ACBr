@@ -305,7 +305,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   I: Integer;
   NotaCompleta: Boolean;
   AcessoNegado: Boolean;
@@ -444,7 +444,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   NotaCompleta: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -577,7 +577,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   NotaCompleta: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
@@ -720,7 +720,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
 //  ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 //  I: Integer;
   NotaCompleta: Boolean;
 begin
@@ -955,7 +955,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   I: Integer;
   NotaCompleta: Boolean;
 begin

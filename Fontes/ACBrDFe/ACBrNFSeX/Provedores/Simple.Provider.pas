@@ -294,7 +294,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -393,7 +393,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   case Response.InfConsultaNFSe.tpConsulta of
     tcPorPeriodo,
@@ -505,7 +505,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 

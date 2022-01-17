@@ -63,6 +63,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeXProviderBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Equiplano
@@ -105,7 +108,7 @@ begin
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'isIssRetido', 1, 1, 1,
-                  SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), ''));
+    TACBrNFSeXProvider(FpAOwner).SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), ''));
 
   xmlNode := GerarTomador;
   NFSeNode.AppendChild(xmlNode);

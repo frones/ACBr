@@ -58,8 +58,6 @@ type
   public
     function GerarXml: Boolean; override;
 
-//    property Situacao: String         read FSituacao;
-//    property TipoRecolhimento: String read FTipoRecolhimento;
   end;
 
 implementation

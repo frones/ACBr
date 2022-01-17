@@ -398,7 +398,7 @@ end;
 procedure TACBrNFSeProviderRLZ.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Nota: NotaFiscal;
+  Nota: TNotaFiscal;
   IdAttr, ListaRps, xRps: string;
   I: Integer;
 begin
@@ -475,7 +475,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
   NumNfse: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -582,7 +582,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   I: Integer;
 begin
   Document := TACBrXmlDocument.Create;

@@ -64,7 +64,7 @@ type
   protected
     procedure Configuracao; override;
 
-    procedure AssinaturaAdicional(Nota: NotaFiscal);
+    procedure AssinaturaAdicional(Nota: TNotaFiscal);
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
@@ -104,7 +104,7 @@ uses
 
 { TACBrNFSeProviderISSSaoPaulo }
 
-procedure TACBrNFSeProviderISSSaoPaulo.AssinaturaAdicional(Nota: NotaFiscal);
+procedure TACBrNFSeProviderISSSaoPaulo.AssinaturaAdicional(Nota: TNotaFiscal);
 var
   sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
   sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
@@ -344,7 +344,7 @@ procedure TACBrNFSeProviderISSSaoPaulo.PrepararEmitir(Response: TNFSeEmiteRespon
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
+  Nota: TNotaFiscal;
   IdAttr, NameSpace, ListaRps, xRps,
   TagEnvio, xCabecalho, xDataI, xDataF, xTotServicos, xTotDeducoes: string;
   I: Integer;
@@ -796,7 +796,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
@@ -933,7 +933,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;
@@ -1065,7 +1065,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   xSucesso: string;
 begin
   Document := TACBrXmlDocument.Create;

@@ -79,6 +79,15 @@ type
                                      const Response: TNFSeWebserviceResponse;
                                      AListTag: string = 'ListaMensagemRetorno';
                                      AMessageTag: string = 'MensagemRetorno'); override;
+
+  public
+    function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
+    function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
+    function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string; override;
+
+    function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string; override;
+    function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao; override;
+    function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String; override;
   end;
 
 implementation
@@ -363,6 +372,72 @@ begin
         AAlerta.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
+  end;
+end;
+
+function TACBrNFSeProviderTecnos201.RegimeEspecialTributacaoToStr(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                       ['0', '1', '2', '3', '4', '5', '6'],
+                       [retNenhum, retMicroempresaMunicipal, retEstimativa,
+                       retSociedadeProfissionais, retCooperativa,
+                       retMicroempresarioIndividual, retMicroempresarioEmpresaPP
+                       ]);
+end;
+
+function TACBrNFSeProviderTecnos201.StrToRegimeEspecialTributacao(
+  out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                       ['0', '1', '2', '3', '4', '5', '6'],
+                       [retNenhum, retMicroempresaMunicipal, retEstimativa,
+                       retSociedadeProfissionais, retCooperativa,
+                       retMicroempresarioIndividual, retMicroempresarioEmpresaPP
+                       ]);
+end;
+
+function TACBrNFSeProviderTecnos201.RegimeEspecialTributacaoDescricao(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  case t of
+    retNenhum                    : Result := '0 - Nenhum';
+    retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
+    retEstimativa                : Result := '2 - Estimativa';
+    retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
+    retCooperativa               : Result := '4 - Cooperativa';
+    retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
+    retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderTecnos201.ResponsavelRetencaoToStr(
+  const t: TnfseResponsavelRetencao): string;
+begin
+  Result := EnumeradoToStr(t,
+                             ['1', '2', '3'],
+                             [rtNenhum, rtTomador, rtIntermediario]);
+end;
+
+function TACBrNFSeProviderTecnos201.StrToResponsavelRetencao(out ok: boolean;
+  const s: string): TnfseResponsavelRetencao;
+begin
+  Result := StrToEnumerado(ok, s,
+                             ['1', '2', '3'],
+                             [rtNenhum, rtTomador, rtIntermediario]);
+end;
+
+function TACBrNFSeProviderTecnos201.ResponsavelRetencaoDescricao(
+  const t: TnfseResponsavelRetencao): String;
+begin
+  case t of
+    rtNenhum        : Result := '1 - Nenhum';
+    rtTomador       : Result := '2 - Tomador';
+    rtIntermediario : Result := '3 - Intermediário';
+  else
+    Result := '';
   end;
 end;
 

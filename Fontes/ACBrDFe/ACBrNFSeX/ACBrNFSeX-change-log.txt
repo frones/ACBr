@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 17/01/2022
+-- Diversos --
+[*] Melhorias no código do componente.
+   Por: Italo Giurizzato Junior
+
+17/01/2022
 -- BHISS.GravarXml --
 [*] Alterado a configuração para gerar a aliquota dividida por 100.
    Por: Italo Giurizzato Junior

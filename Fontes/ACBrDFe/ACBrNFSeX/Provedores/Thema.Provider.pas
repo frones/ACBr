@@ -65,6 +65,9 @@ type
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
+
+  public
+    function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; override;
   end;
 
 implementation
@@ -231,11 +234,22 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderThema.NaturezaOperacaoDescricao(
+  const t: TnfseNaturezaOperacao): string;
+begin
+  case t of
+    no63 : Result := '6.3 - Tributação fora do municipio sem retenção de ISS';
+    no64 : Result := '6.4 - Tributacao fora do municipio com retenção de ISS';
+  else
+    Result := inherited NaturezaOperacaoDescricao(t);
+  end;
+end;
+
 procedure TACBrNFSeProviderThema.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  Nota: NotaFiscal;
+  Nota: TNotaFiscal;
   Versao, IdAttr, NameSpace, NameSpaceLote, ListaRps, xRps,
   TagEnvio, Prefixo, PrefixoTS: string;
   I: Integer;
@@ -377,7 +391,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   NumRps: String;
   I: Integer;
 begin

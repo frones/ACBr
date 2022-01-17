@@ -68,6 +68,9 @@ type
 
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+
+  public
+    function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; override;
   end;
 
 implementation
@@ -254,10 +257,20 @@ begin
   end;
 end;
 
+function TACBrNFSeProviderPublica.NaturezaOperacaoDescricao(
+  const t: TnfseNaturezaOperacao): string;
+begin
+  case t of
+    no511 : Result := '511 - ISS devido para outro município (Simples Nacional)';
+  else
+    Result := inherited NaturezaOperacaoDescricao(t);
+  end;
+end;
+
 procedure TACBrNFSeProviderPublica.PrepararEmitir(Response: TNFSeEmiteResponse);
 var
   AErro: TNFSeEventoCollectionItem;
-  Nota: NotaFiscal;
+  Nota: TNotaFiscal;
   IdAttr, NameSpace, xRps, ListaRps, Prefixo: string;
   I: Integer;
 begin
@@ -348,7 +361,7 @@ var
   AErro: TNFSeEventoCollectionItem;
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   NumRps: String;
   I: Integer;
 begin

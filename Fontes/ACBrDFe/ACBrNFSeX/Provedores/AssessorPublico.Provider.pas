@@ -294,7 +294,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -419,7 +419,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumNFSe: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 

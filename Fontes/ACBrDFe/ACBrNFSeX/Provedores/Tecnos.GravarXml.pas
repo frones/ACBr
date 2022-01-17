@@ -59,6 +59,9 @@ type
 
 implementation
 
+uses
+  ACBrNFSeXProviderBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Tecnos
@@ -145,10 +148,10 @@ begin
   Result.AppendChild(inherited GerarValores);
 
   Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 01, 1,
-       SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
+    TACBrNFSeXProvider(FpAOwner).SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
   Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, NrOcorrRespRetencao,
-   ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao, proTecnos), DSC_INDRESPRET));
+   TACBrNFSeXProvider(FpAOwner).ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
 
   Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, 1,
                                  NFSe.Servico.ItemListaServico, DSC_CLISTSERV));

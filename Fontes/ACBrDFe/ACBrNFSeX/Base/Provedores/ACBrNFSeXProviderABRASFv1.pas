@@ -129,7 +129,7 @@ function TACBrNFSeProviderABRASFv1.PreencherNotaResposta(Node,
   parentNode: TACBrXmlNode): Boolean;
 var
   NumRps: String;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
 begin
   Result := False; 
   
@@ -158,7 +158,7 @@ procedure TACBrNFSeProviderABRASFv1.PrepararEmitir(Response: TNFSeEmiteResponse)
 var
   AErro: TNFSeEventoCollectionItem;
   aParams: TNFSeParamsResponse;
-  Nota: NotaFiscal;
+  Nota: TNotaFiscal;
   Versao, IdAttr, NameSpace, NameSpaceLote, ListaRps, xRps,
   TagEnvio, Prefixo, PrefixoTS: string;
   I: Integer;
@@ -820,7 +820,7 @@ var
   Document: TACBrXmlDocument;
   ANode, AuxNode, AuxNodeCanc: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   NumNFSe: String;
 begin
   Document := TACBrXmlDocument.Create;
@@ -1071,7 +1071,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
-  ANota: NotaFiscal;
+  ANota: TNotaFiscal;
   NumNFSe: String;
   I: Integer;
 begin

@@ -1038,11 +1038,11 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.InfConsultaNFSe.NumeroLote) then
+  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod111;
-    AErro.Descricao := Desc111;
+    AErro.Codigo := Cod108;
+    AErro.Descricao := Desc108;
     Exit;
   end;
 

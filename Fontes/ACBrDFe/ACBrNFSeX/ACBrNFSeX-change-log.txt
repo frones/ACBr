@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/01/2022
+-- ISSDSF.Provider --
+[*] Ajustes no PrepararConsultaNFSe.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Correção na geração de tags exclusivas do provedor EloTech.
    Por: Italo Giurizzato Junior

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 18/01/2022
+-- ISSDSF.LerXml --
+[*] Revertido a alteração feita anteriormente, pois o XML retornado pelo WebService
+    segue um layout e o XML baixado do site segue outro.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluida a cidade de Terra Boa/PR provedor Elotech
    Por: gralak

@@ -25,20 +25,20 @@ object Form1: TForm1
       Left = 9
       Height = 94
       Top = 35
-      Width = 732
+      Width = 703
       Anchors = [akTop, akLeft, akRight]
       Font.Height = -11
       Font.Name = 'Courier'
       ParentFont = False
       ScrollBars = ssAutoVertical
-      TabOrder = 0
+      TabOrder = 8
       WordWrap = False
     end
     object btNovoParChaves: TBitBtn
-      Left = 750
+      Left = 720
       Height = 27
       Top = 1
-      Width = 149
+      Width = 179
       Anchors = [akTop, akRight]
       Caption = 'Novo Par de Chaves'
       Glyph.Data = {
@@ -78,10 +78,10 @@ object Form1: TForm1
         FD0FFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
       }
       OnClick = btNovoParChavesClick
-      TabOrder = 1
+      TabOrder = 0
     end
     object btLerPrivKey: TBitBtn
-      Left = 576
+      Left = 547
       Height = 27
       Top = 1
       Width = 78
@@ -124,15 +124,15 @@ object Form1: TForm1
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
       }
       OnClick = btLerPrivKeyClick
-      TabOrder = 2
+      TabOrder = 6
     end
     object edArqPrivKey: TEdit
       Left = 184
       Height = 21
       Top = 4
-      Width = 376
+      Width = 352
       Anchors = [akTop, akLeft, akRight]
-      TabOrder = 3
+      TabOrder = 5
       Text = 'priv_key.pem'
     end
     object Label1: TLabel
@@ -143,7 +143,7 @@ object Form1: TForm1
       Caption = 'Arquivo:'
     end
     object btGravarPrivKey: TBitBtn
-      Left = 663
+      Left = 634
       Height = 27
       Top = 1
       Width = 78
@@ -186,15 +186,15 @@ object Form1: TForm1
         00FF000000FF000000FF000000FF000000FF000000FF00000055
       }
       OnClick = btGravarPrivKeyClick
-      TabOrder = 4
+      TabOrder = 7
     end
     object btCalcModExp: TBitBtn
-      Left = 750
+      Left = 720
       Height = 27
-      Top = 27
-      Width = 149
+      Top = 82
+      Width = 179
       Anchors = [akTop, akRight]
-      Caption = 'Módulo / Expoente'
+      Caption = 'Mostrar Modulo/Expoente'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -232,13 +232,13 @@ object Form1: TForm1
         19FFB76D50FED9B4A6FFFF00FF00FF00FF00FF00FF00FF00FF00
       }
       OnClick = btCalcModExpClick
-      TabOrder = 5
+      TabOrder = 3
     end
     object btCalcPubKey: TBitBtn
-      Left = 750
+      Left = 720
       Height = 27
-      Top = 79
-      Width = 149
+      Top = 55
+      Width = 179
       Anchors = [akTop, akRight]
       Caption = 'Calcular Chav.Publica'
       Glyph.Data = {
@@ -278,13 +278,13 @@ object Form1: TForm1
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = btCalcPubKeyClick
-      TabOrder = 6
+      TabOrder = 2
     end
     object btCalcPubKey1: TBitBtn
-      Left = 750
+      Left = 720
       Height = 27
-      Top = 105
-      Width = 149
+      Top = 28
+      Width = 179
       Anchors = [akTop, akRight]
       Caption = 'Ler Chaves Arq.PFX'
       Glyph.Data = {
@@ -324,7 +324,7 @@ object Form1: TForm1
         FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
       }
       OnClick = btCalcPubKey1Click
-      TabOrder = 7
+      TabOrder = 1
     end
     object Label6: TLabel
       Left = 9
@@ -339,8 +339,54 @@ object Form1: TForm1
       Top = 4
       Width = 81
       Anchors = [akTop, akLeft, akRight]
-      TabOrder = 8
+      TabOrder = 4
       Text = '1234'
+    end
+    object btCalcModExp1: TBitBtn
+      Left = 720
+      Height = 27
+      Top = 109
+      Width = 179
+      Anchors = [akTop, akRight]
+      Caption = 'Definir Chave Mod/Exp'
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000064000000640000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000000000000000000000000000000000000000000000000000002A0000
+        0072000000730000007300000073000000730000007300000073000000730000
+        00730000003A0000000000000000000000000000000000000000052339DD1387
+        D8FF1289D9FF1289D9FF1289D9FF1289D9FF1289D9FF1289D9FF1289D9FF1289
+        D9FF083659F80000000C00000000000000000000000000000000063C5DEF0CAB
+        FBFF0BACFBFF0BACFBFF0BACFBFF0DAAFBFF0BACFBFF0BACFBFF0BACFBFF0BAC
+        FBFF095684FF000000170000000000000000000000000000000003415EEF07B2
+        FCFF07B3FDFF07B3FDFF07B3FDFF0F5992FF08B1FCFF07B3FDFF07B3FDFF07B3
+        FDFF055C85FF000000170000000000000000000000000000000000455FEF02BA
+        FEFF02BAFEFF02BAFEFF05B3F7FF041D2EFF06A2E2FF02BAFEFF02BAFEFF02BA
+        FEFF016387FF000000170000000000000000000000000000000000475FEF00BE
+        FFFF00BEFFFF00BEFFFF01BFFDFF007C96FF01B9F3FF00BEFFFF00BEFFFF00BE
+        FFFF006587FF0000001700000000000000000000000000000000004A5FEF00C5
+        FFFF00C4FFFF00C4FFFF00C4FFFF00C4FFFF00C4FFFF00C4FFFF00C4FFFF00C4
+        FFFF006A87FF0000001700000000000000000000000000000000003B44E300D7
+        F8FF00D9FAFF00D9FAFF00D9FAFF00D9FAFF00D9FAFF00DAFBFF02DCFDFF00D9
+        FAFF005B6AFB0000000F0000000000000085292522E70E0C0BD80000003C0000
+        008E0000008F0000008F0000008F0000008F0000008F3B3531FFB2AAA4FF0000
+        00CA00000051000000000000000001010193B4ABA2FF393533EF000000000000
+        000000000000000000000000000000000000000000003F3B37FBB4ABA3FF0000
+        00900000000000000000000000000404039CBAB0A8FF373331ED000000000000
+        000000000000000000000000000000000000000000001F1D1CD0C6BEB7FF3835
+        33EA0000003A0000000C00000040423E3CEFC5BDB6FF181615C3000000000000
+        000000000000000000000000000000000000000000000000005A7A7471FFCFCA
+        C6FF787472FF5D5A58FF7D7976FFD2CDC9FF6F6A68FE0000004E000000000000
+        0000000000000000000000000000000000000000000000000000020202775955
+        54F9B4B0AFFFC8C5C4FFB1AEADFF524F4EF70101016C00000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        001C000000630000007300000061000000190000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000
+      }
+      OnClick = btCalcModExp1Click
+      TabOrder = 9
     end
   end
   object gbPubKey: TGroupBox

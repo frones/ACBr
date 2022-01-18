@@ -44,6 +44,7 @@ type
 
   TForm1 = class(TForm)
     ACBrOpenSSLUtils1: TACBrOpenSSLUtils;
+    btCalcModExp1: TBitBtn;
      btCalcPubKey1: TBitBtn;
      btGerarPubKeyOpenSSH: TBitBtn;
      btLerPubKeyOpenSSH: TBitBtn;
@@ -84,6 +85,7 @@ type
        const CredentialNeeded: TACBrOpenSSLCredential);
      procedure ACBrOpenSSLUtils1Progress(const PosByte, TotalSize: int64);
      procedure btAssinarClick(Sender: TObject);
+     procedure btCalcModExp1Click(Sender: TObject);
      procedure btCalcPubKey1Click(Sender: TObject);
      procedure btCalcPubKeyClick(Sender : TObject) ;
      procedure btGerarPubKeyOpenSSHClick(Sender: TObject);
@@ -266,6 +268,32 @@ begin
    mResp.Lines.Add(UpperCase(cbxDgst.Text)+' = '+ Resultado );
    mResp.Lines.Add('Tempo Gasto: '+IntToStr(SecondsBetween(tStart, Now))+ ' segundos');
    mResp.Lines.Add('------------------------------');
+end;
+
+procedure TForm1.btCalcModExp1Click(Sender: TObject);
+var
+  Modu, Expo, Chave: String ;
+begin
+  Modu := '';
+  Expo := '10001';
+  if not InputQuery('Módulo','Cole aqui o Módulo', Modu) then
+     exit ;
+
+  if not InputQuery('Expoente','Cole aqui o Expoente', Expo) then
+     exit ;
+
+  mResp.Lines.Add('Calculando Chave Pública');
+  mResp.Lines.Add('Modulo: ' + Modu);
+  mResp.Lines.Add('Expoente: ' + Expo);
+
+  ACBrOpenSSLUtils1.LoadPublicKeyFromModulusAndExponent(Modu, Expo);
+
+  Chave := ChangeLineBreak( ACBrOpenSSLUtils1.PublicKeyAsStr, sLineBreak);
+  mResp.Lines.Add('Chave Pública Calculada:');
+  mResp.Lines.Add( Chave );
+  mResp.Lines.Add('------------------------------');
+
+  mPubKey.Lines.Text := Chave;
 end;
 
 procedure TForm1.btCalcPubKey1Click(Sender: TObject);

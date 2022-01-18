@@ -50,6 +50,7 @@ type
     function GetLocalPagamento: String; override;
   public
     constructor create(AOwner: TACBrBanco);
+
     function CalcularNomeArquivoRemessa: string; override;
     function MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string; override;
     function MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): string; override;
@@ -57,9 +58,9 @@ type
     procedure GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList); override;
     procedure GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroTrailler400(ARemessa: TStringList); override;
-
+    function GerarRegistroHeader240(NumeroRemessa: Integer) : String; override;
     procedure LerRetorno400(ARetorno: TStringList); override;
-
+    Procedure LerRetorno240(ARetorno:TStringList); override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
@@ -146,6 +147,11 @@ begin
 
 end;
 
+function TACBrBancoInter.GerarRegistroHeader240(NumeroRemessa: Integer): String;
+begin
+  raise Exception.Create( ACBrStr('Não permitido para o layout deste banco.') );
+end;
+
 procedure TACBrBancoInter.GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);
 var
   wLinha       : string;
@@ -177,7 +183,8 @@ end;
 
 procedure TACBrBancoInter.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList);
 var
-  ACodigoMoraJuros, ATipoCedente, ATipoSacado, ADataMoraJuros, ADataDesconto, wLinha, wCarteira, ValorMora: string;
+  ACodigoMoraJuros, ATipoCedente, ATipoSacado, ADataMoraJuros, ADataDesconto, wLinha,
+  wCarteira, ValorMora, EspecieDoc: string;
   MoraJurosInt: Integer;
   Boleto : TACBrBoleto;
 begin
@@ -209,6 +216,10 @@ begin
     ATipoSacado := '99';
   end;
 
+  EspecieDoc := ACBrTitulo.EspecieDoc;
+
+  if EspecieDoc = 'DM' then
+    EspecieDoc := '99';
 
   wCarteira := Trim(ACBrTitulo.Carteira);
 
@@ -229,7 +240,7 @@ begin
             IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 13)                                                                                     + // 127 a 139 Valor do título
             IntToStrZero(Round(ACBrTitulo.DataLimitePagto - ACBrTitulo.Vencimento), 2)                                                                   + // 140 a 141 Data limite de pagamento
             Space(6)                                                                                                                                     + // 142 a 147 Branco
-            PadLeft(ACBrTitulo.EspecieDoc, 2, ' ')                                                                                                        + // 148 a 149 Espécie do título
+            PadLeft(EspecieDoc, 2, ' ')                                                                                                       + // 148 a 149 Espécie do título
             'N'                                                                                                                                          + // 150 a 150 Identificação
             Space(6)                                                                                                                                     + // 151 a 156 Data da emissão do título
             Space(3)                                                                                                                                     + // 157 a 159 Branco
@@ -282,6 +293,11 @@ begin
 
   ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
 
+end;
+
+procedure TACBrBancoInter.LerRetorno240(ARetorno: TStringList);
+begin
+  raise Exception.Create( ACBrStr('Não permitido para o layout deste banco.') );
 end;
 
 procedure TACBrBancoInter.LerRetorno400(ARetorno: TStringList);

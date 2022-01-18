@@ -3110,6 +3110,11 @@ begin
 
    ChecarDadosObrigatorios;
 
+   if Banco.Numero = 77 then
+   begin
+     NumeroArquivo  := NumeroRemessa;
+     NomeArqRemessa := '';
+   end;
 
    if ( NomeArqRemessa = '' ) then
       NomeArq := Banco.CalcularNomeArquivoRemessa
@@ -3717,7 +3722,12 @@ begin
 
        { BOLETO }
        IniRetorno.WriteString(CBanco,'PrefixArqRemessa',PrefixArqRemessa);
-       IniRetorno.WriteInteger(CBanco,'CNAB',Integer(LayoutRemessa));
+
+       if LayoutRemessa = c240 then
+         IniRetorno.WriteInteger(CBanco,'CNAB',0)
+       else
+         IniRetorno.WriteInteger(CBanco,'CNAB',1);
+
        IniRetorno.WriteBool(CBanco,'Homologacao',Homologacao);
        IniRetorno.WriteBool(CBanco,'ImprimirMensagemPadrao',ImprimirMensagemPadrao);
        IniRetorno.WriteBool(CBanco,'LeCedenteRetorno',LeCedenteRetorno);

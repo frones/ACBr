@@ -300,6 +300,9 @@ procedure TACBrSpedFiscalImportar_BlocoE.RegE300;
 begin
   with ACBrSpedFiscal.Bloco_E.RegistroE300New do
   begin
+    UF := Valor;
+    DT_INI := ValorD;
+    DT_FIN := ValorD;
   end;
 end;
 
@@ -307,6 +310,27 @@ procedure TACBrSpedFiscalImportar_BlocoE.RegE310;
 begin
   with ACBrSpedFiscal.Bloco_E.RegistroE310New do
   begin
+    IND_MOV_DIFAL := StrToMovimentoDIFAL(Valor);
+    VL_SLD_CRED_ANT_DIF := ValorF;
+    VL_TOT_DEBITOS_DIFAL := ValorF;
+    VL_OUT_DEB_DIFAL := ValorF;
+    VL_TOT_CREDITOS_DIFAL := ValorF;
+    VL_OUT_CRED_DIFAL := ValorF;
+    VL_SLD_DEV_ANT_DIFAL := ValorF;
+    VL_DEDUCOES_DIFAL := ValorF;
+    DEB_ESP_DIFAL := ValorF;
+    VL_RECOL_DIFAL := ValorF;
+    VL_SLD_CRED_TRANSPORTAR_DIFAL := ValorF;
+    VL_SLD_CRED_ANT_FCP := ValorF;
+    VL_TOT_DEB_FCP := ValorF;
+    VL_OUT_DEB_FCP := ValorF;
+    VL_TOT_CRED_FCP := ValorF;
+    VL_OUT_CRED_FCP := ValorF;
+    VL_SLD_DEV_ANT_FCP := ValorF;
+    VL_DEDUCOES_FCP := ValorF;
+    VL_RECOL_FCP := ValorF;
+    VL_SLD_CRED_TRANSPORTAR_FCP := ValorF;
+    DEB_ESP_FCP := ValorF;
   end;
 end;
 
@@ -314,6 +338,9 @@ procedure TACBrSpedFiscalImportar_BlocoE.RegE311;
 begin
   with ACBrSpedFiscal.Bloco_E.RegistroE311New do
   begin
+    COD_AJ_APUR := Valor;
+    DESCR_COMPL_AJ := Valor;
+    VL_AJ_APUR := ValorF;
   end;
 end;
 
@@ -321,6 +348,11 @@ procedure TACBrSpedFiscalImportar_BlocoE.RegE312;
 begin
   with ACBrSpedFiscal.Bloco_E.RegistroE312New do
   begin
+    NUM_DA := Valor;
+    NUM_PROC := Valor;
+    IND_PROC := StrToOrigemProcesso(Valor);
+    PROC := Valor;
+    TXT_COMPL := Valor;
   end;
 end;
 
@@ -328,6 +360,15 @@ procedure TACBrSpedFiscalImportar_BlocoE.RegE313;
 begin
   with ACBrSpedFiscal.Bloco_E.RegistroE313New do
   begin
+    COD_PART := Valor;
+    COD_MOD := Valor;
+    SER := Valor;
+    SUB := Valor;
+    NUM_DOC := Valor;
+    CHV_DOCe := Valor;
+    DT_DOC := ValorD;
+    COD_ITEM := Valor;
+    VL_AJ_ITEM := ValorF;
   end;
 end;
 
@@ -335,6 +376,15 @@ procedure TACBrSpedFiscalImportar_BlocoE.RegE316;
 begin
   with ACBrSpedFiscal.Bloco_E.RegistroE316New do
   begin
+    COD_OR := Valor;
+    VL_OR := ValorF;
+    DT_VCTO := ValorD;
+    COD_REC := Valor;
+    NUM_PROC := Valor;
+    IND_PROC := StrToOrigemProcesso(Valor);
+    PROC := Valor;
+    TXT_COMPL := Valor;
+    MES_REF := Valor;
   end;
 end;
 

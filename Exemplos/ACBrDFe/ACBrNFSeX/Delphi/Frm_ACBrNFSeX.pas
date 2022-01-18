@@ -1296,7 +1296,7 @@ begin
             tpConsulta := tcPorNumero;
 
             NumeroIniNFSe := NumeroNFSe;
-            SerNFSe := SerNFSe;
+            SerieNFSe := SerNFSe;
             CadEconomico := edtEmitIM.Text;
           end;
 

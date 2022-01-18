@@ -226,6 +226,7 @@ type
     Label50: TLabel;
     cbxSSLLib: TComboBox;
     Label70: TLabel;
+    btnImpressaoPDFIndividual: TButton;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -385,6 +386,7 @@ begin
   Boleto.ListadeBoletos.Clear;
 
   edtPrefixRemessa.Text               := Boleto.PrefixArqRemessa;
+
   cbxCNAB.itemindex                   := Ord(Boleto.LayoutRemessa);
   ckbEmHomologacao.Checked            := Boleto.Homologacao;
   ckbImprimirMensagemPadrao.Checked   := Boleto.ImprimirMensagemPadrao;
@@ -629,8 +631,8 @@ begin
   CarregarSSLLib;
   btnConfigLer.Click;
   AplicarConfiguracoesComponenteATela;
-  edtPathRemessa.Text := ParamStr(0)+'Remessa';
-  edtPathRetorno.Text := ParamStr(0)+'Retorno';
+  edtPathRemessa.Text := ExtractFilePath(ParamStr(0))+'Remessa';
+  edtPathRetorno.Text := ExtractFilePath(ParamStr(0))+'Retorno';
 end;
 
 procedure TfrmDemo.carregarBancos;

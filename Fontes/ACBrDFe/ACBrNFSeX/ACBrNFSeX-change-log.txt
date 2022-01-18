@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/01/2022
+-- Ginfes.Provider --
+[*] Sobrescrito o TratarRetornoCancelaNFSe, no Ginfes o retorno é diferente.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.LerXml --
 [*] Revertido a alteração feita anteriormente, pois o XML retornado pelo WebService
     segue um layout e o XML baixado do site segue outro.

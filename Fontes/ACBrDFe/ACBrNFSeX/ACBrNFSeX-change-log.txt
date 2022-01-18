@@ -43,12 +43,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/01/2022
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Correção na geração de tags exclusivas do provedor EloTech.
+   Por: Italo Giurizzato Junior
+-- Coplan.GravarXml --
+[*] Se não tem retenção o Responsável por retenção não deve ser informado.
+   Por: Infopointerp
+
 17/01/2022
+-- ISSDSF.LerXml/ACBrNFSeXNotasFiscais --
+[*] Alterações visando a leitura correta do XML da NFS-e do provedor ISSDSF.
+   Por: Colmanetti
 -- Diversos --
 [*] Melhorias no código do componente.
    Por: Italo Giurizzato Junior
-
-17/01/2022
 -- BHISS.GravarXml --
 [*] Alterado a configuração para gerar a aliquota dividida por 100.
    Por: Italo Giurizzato Junior

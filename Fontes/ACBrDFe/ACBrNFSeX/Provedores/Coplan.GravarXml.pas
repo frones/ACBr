@@ -82,10 +82,12 @@ end;
 
 function TNFSeW_Coplan201.GerarXml: Boolean;
 begin
+  // stRetencao = snSim (tem retenção)
+  // stNormal   = snNao (não tem retenção)
   if NFSe.Servico.Valores.IssRetido <> stNormal then
-    NrOcorrRespRetencao := -1
+    NrOcorrRespRetencao := 0   // se tem a retenção a tag deve ser gerada
   else
-    NrOcorrRespRetencao := 0;
+    NrOcorrRespRetencao := -1; // se não tem a retenção a tag não deve ser gerada
 
   Result := inherited GerarXml;
 end;

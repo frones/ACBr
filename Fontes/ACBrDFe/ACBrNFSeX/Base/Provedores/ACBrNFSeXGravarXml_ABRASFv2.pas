@@ -509,7 +509,7 @@ begin
   Result.AppendChild(AddNode(tcInt, '#9', 'NumeroParcelas', 1, 3, NrOcorrNumParcelas,
                                         NFSe.NumeroParcelas, ''));
 
-  Result.AppendChild(AddNode(tcInt, '#9', 'Producao', 1, 1, NrOcorrProducao,
+  Result.AppendChild(AddNode(tcStr, '#9', 'Producao', 1, 1, NrOcorrProducao,
            TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Producao), DSC_TPAMB));
 
   Result.AppendChild(GerarValoresServico);
@@ -666,7 +666,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaPis', 1, 15, NrOcorrAliquotaPis,
                                   NFSe.Servico.Valores.AliquotaPis, DSC_VALIQ));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoPis', 1, 15, NrOcorrRetidoPis,
+  Result.AppendChild(AddNode(tcStr, '#15', 'RetidoPis', 1, 1, NrOcorrRetidoPis,
    TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.Valores.RetidoPis), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis', 1, 15, NrOcorrValorPis,
@@ -675,7 +675,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaCofins', 1, 15, NrOcorrAliquotaCofins,
                                NFSe.Servico.Valores.AliquotaCofins, DSC_VALIQ));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoCofins', 1, 15, NrOcorrRetidoCofins,
+  Result.AppendChild(AddNode(tcStr, '#15', 'RetidoCofins', 1, 1, NrOcorrRetidoCofins,
     TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.Valores.RetidoCofins), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins', 1, 15, NrOcorrValorCofins,
@@ -684,7 +684,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaInss', 1, 15, NrOcorrAliquotaInss,
                                  NFSe.Servico.Valores.AliquotaInss, DSC_VALIQ));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoInss', 1, 15, NrOcorrRetidoInss,
+  Result.AppendChild(AddNode(tcStr, '#15', 'RetidoInss', 1, 1, NrOcorrRetidoInss,
     TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.Valores.RetidoInss), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss', 1, 15, NrOcorrValorInss,
@@ -693,7 +693,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaIr', 1, 15, NrOcorrAliquotaIr,
                                    NFSe.Servico.Valores.AliquotaIr, DSC_VALIQ));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoIr', 1, 15, NrOcorrRetidoIr,
+  Result.AppendChild(AddNode(tcStr, '#15', 'RetidoIr', 1, 1, NrOcorrRetidoIr,
     TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.Valores.RetidoIr), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr', 1, 15, NrOcorrValorIr,
@@ -702,7 +702,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#15', 'AliquotaCsll', 1, 15, NrOcorrAliquotaCsll,
                                  NFSe.Servico.Valores.AliquotaCsll, DSC_VALIQ));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'RetidoCsll', 1, 15, NrOcorrRetidoCsll,
+  Result.AppendChild(AddNode(tcStr, '#15', 'RetidoCsll', 1, 1, NrOcorrRetidoCsll,
     TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.Valores.RetidoCsll), DSC_VPIS));
 
   Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll', 1, 15, NrOcorrValorCsll,

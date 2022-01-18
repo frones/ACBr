@@ -148,7 +148,7 @@ type
     procedure LoadPrivateKeyFromString(const APrivateKey: AnsiString; const Password: AnsiString = '');
     procedure LoadPublicKeyFromFile(const APublicKeyFile: String);
     procedure LoadPublicKeyFromString(const APublicKey: AnsiString);
-
+    procedure LoadPublicKeyFromModulusAndExponent(const Modulus, Exponent: String);
     function ExtractModulusAndExponentFromPublicKey(out Modulus: String; out Exponent: String): Boolean;
     function GeneratePublicKeyFromPrivateKey: String;
 
@@ -329,9 +329,17 @@ begin
     raise EACBrOpenSSLException.Create( Format(sErrParamIsInvalid, ['Modulus']) +
                                         sLineBreak + GetLastOpenSSLError);
 
-  rsa := EvpPkeyGet1RSA(AKey);   //TODO: Check for Memory leak
+  if (AKey <> Nil) then
+    rsa := EvpPkeyGet1RSA(AKey)
+  else
+  begin
+    AKey := EvpPkeyNew;
+    rsa := Nil;
+  end;
   if (rsa = Nil) then
     rsa := RSA_new;
+  if (rsa = nil) then
+    raise EACBrOpenSSLException.Create(sErrGeneratingRSAKey + sLineBreak + GetLastOpenSSLError);
   rsa^.e := bnMod;
   rsa^.d := bnExp;
   err := EvpPkeyAssign(AKey, EVP_PKEY_RSA, rsa);
@@ -884,6 +892,13 @@ begin
   if (fEVP_PublicKey = nil) then
     raise EACBrOpenSSLException.Create( Format(sErrLoadingKey, [CPublic]) +
                                         sLineBreak + GetLastOpenSSLError);
+end;
+
+procedure TACBrOpenSSLUtils.LoadPublicKeyFromModulusAndExponent(const Modulus,
+  Exponent: String);
+begin
+  FreePublicKey;
+  SetModulusAndExponentToKey(fEVP_PublicKey, Modulus, Exponent);
 end;
 
 function TACBrOpenSSLUtils.ExtractModulusAndExponentFromPublicKey(out

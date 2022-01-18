@@ -239,7 +239,7 @@ begin
     crePubKey:
     begin
       mResp.Lines.Add('  Lendo Chave Publica');
-      ACBrOpenSSLUtils1.LoadPublicKeyFromFile(mPubKey.Lines.Text);
+      ACBrOpenSSLUtils1.LoadPublicKeyFromString(mPubKey.Lines.Text);
     end;
   end;
 end;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/01/2022
+-- ACBrNFSeXServicos --
+[*] Incluida a cidade de Terra Boa/PR provedor Elotech
+   Por: gralak
 -- ISSDSF.Provider --
 [*] Ajustes no PrepararConsultaNFSe.
    Por: Italo Giurizzato Junior

@@ -233,7 +233,7 @@ begin
     crePrivKey:
     begin
       mResp.Lines.Add('  Lendo Chave Privada');
-      ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mPrivKey.Lines.Text);
+      ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mPrivKey.Lines.Text, edSenha.Text);
     end;
 
     crePubKey:

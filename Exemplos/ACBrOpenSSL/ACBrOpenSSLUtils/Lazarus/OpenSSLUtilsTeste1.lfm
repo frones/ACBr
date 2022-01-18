@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 563
+  Left = 484
   Height = 537
-  Top = 168
+  Top = 186
   Width = 912
   ActiveControl = mPrivKey
   Caption = 'OpenSSLUtils Teste'
@@ -340,6 +340,7 @@ object Form1: TForm1
       Width = 81
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 8
+      Text = '1234'
     end
   end
   object gbPubKey: TGroupBox

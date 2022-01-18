@@ -185,9 +185,10 @@ function PrivateKeyToString(APrivKey: PEVP_PKEY; const Password: AnsiString = ''
 
 procedure GenerateKeyPair(out APrivateKey: String; out APublicKey: String;
   const Password: AnsiString = ''; KeyBits: TACBrOpenSSLKeyBits = bit1024);
-function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
 
 // Internal auxiliary functions
+function GetLastOpenSSLError: String;
+function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
 function OpenSSLDgstToStr(ADigest: TACBrOpenSSLDgst): String;
 function ConvertToStrType(ABinaryStr: AnsiString;
   OutputType: TACBrOpenSSLStrType = sttHexa): AnsiString;
@@ -201,7 +202,7 @@ implementation
 
 uses
   Math, TypInfo,
-  synacode, synafpc, synautil,
+  synacode, synautil,
   ACBrUtil;
 
 procedure InitOpenSSL;
@@ -320,11 +321,13 @@ begin
   bnExp := BN_new();
   err := BN_hex2bn(bnExp, PAnsiChar(e));
   if (err < 1) then
-    raise EACBrOpenSSLException.CreateFmt(sErrParamIsInvalid, ['Exponent']) ;
+    raise EACBrOpenSSLException.Create( Format(sErrParamIsInvalid, ['Exponent']) +
+                                        sLineBreak + GetLastOpenSSLError);
   bnMod := BN_new();
   err := BN_hex2bn( bnMod, PAnsiChar(m) );
   if err < 1 then
-    raise EACBrOpenSSLException.CreateFmt(sErrParamIsInvalid, ['Modulus']) ;
+    raise EACBrOpenSSLException.Create( Format(sErrParamIsInvalid, ['Modulus']) +
+                                        sLineBreak + GetLastOpenSSLError);
 
   rsa := EvpPkeyGet1RSA(AKey);   //TODO: Check for Memory leak
   if (rsa = Nil) then
@@ -333,7 +336,7 @@ begin
   rsa^.d := bnExp;
   err := EvpPkeyAssign(AKey, EVP_PKEY_RSA, rsa);
   if (err < 1) then
-    raise EACBrOpenSSLException.Create(sErrSettingRSAKey);
+    raise EACBrOpenSSLException.Create(sErrSettingRSAKey + sLineBreak + GetLastOpenSSLError);
 end;
 
 // https://www.netmeister.org/blog/ssh2pkcs8.html
@@ -410,27 +413,36 @@ begin
   bio := BioNew(BioSMem);
   try
     if (PEM_write_bio_PUBKEY(bio, APubKey) = 1) then
-      Result := String(BioToStr(bio));
+      Result := String(BioToStr(bio))
+    else
+      raise EACBrOpenSSLException.Create(GetLastOpenSSLError);
   finally
     BioFreeAll(bio);
   end ;
 end;
 
-function PrivateKeyToString(APrivKey: PEVP_PKEY; const Password: AnsiString
-  ): String;
+function PrivateKeyToString(APrivKey: PEVP_PKEY; const Password: AnsiString): String;
 var
   bio: PBIO;
   rsa: pRSA;
+  ret: Integer;
 begin
   Result := '';
   bio := BioNew(BioSMem);
   try
     rsa := EvpPkeyGet1RSA(APrivKey);
-    if (PEM_write_bio_RSAPrivateKey( bio, rsa, nil,
-                                     PAnsiChar(Password),
-                                     Length(Password),
-                                     nil, nil) = 1) then
-      Result := String(BioToStr(bio));
+    if (Password <> '') then
+      ret := PEM_write_bio_RSAPrivateKey( bio, rsa,
+                                          EVP_des_ede3_cbc,
+                                          PAnsiChar(Password), Length(Password),
+                                          Nil, Nil)
+    else
+      ret := PEM_write_bio_RSAPrivateKey( bio, rsa, Nil, Nil, 0, Nil, Nil);
+
+    if (ret = 1) then
+      Result := String(BioToStr(bio))
+    else
+      raise EACBrOpenSSLException.Create(GetLastOpenSSLError);
   finally
     if (rsa <> Nil) then
       RSA_free(rsa);
@@ -455,7 +467,7 @@ begin
   end;
   rsa := RsaGenerateKey(bits, RSA_F4, nil, nil);
   if (rsa = nil) then
-    raise EACBrOpenSSLException.Create(sErrGeneratingRSAKey);
+    raise EACBrOpenSSLException.Create(sErrGeneratingRSAKey + sLineBreak + GetLastOpenSSLError);
 
   key := EvpPkeynew;
   try
@@ -467,17 +479,31 @@ begin
   end;
 end;
 
+// Internal auxiliary functions
+
+function GetLastOpenSSLError: String;
+var
+  e: LongInt;
+  s: AnsiString;
+begin
+  e := ErrGetError;
+  SetLength(s,1024);
+  ErrErrorString(e, s, 1024);
+  Result := Format('Error: %d - %s', [e,s]);
+end;
+
 function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
 var
   Password: AnsiString;
 begin
   Password := PAnsiChar(userdata);
+  if Length(Password) > (Size - 1) then
+    SetLength(Password, Size - 1);
   Result := Length(Password);
-  synafpc.StrLCopy(buf, PAnsiChar(Password+#0), Result+1);
+  Password := Password+#0;
+  Move(Password[1], buf^, Result+1);
+  //synafpc.StrLCopy(buf, PAnsiChar(Password+#0), Result+1);
 end;
-
-
-// Internal auxiliary functions
 
 function OpenSSLDgstToStr(ADigest: TACBrOpenSSLDgst): String;
 begin
@@ -772,7 +798,8 @@ begin
     try
       ca := nil;
       if (PKCS12parse(p12, Password, fEVP_PrivateKey, fCertX509, ca) <= 0) then
-        raise EACBrOpenSSLException.CreateFmt(sErrLoadingCertificate, [CPFX]);
+        raise EACBrOpenSSLException.Create( Format(sErrLoadingCertificate, [CPFX]) +
+                                            sLineBreak + GetLastOpenSSLError);
     finally
       PKCS12free(p12);
     end;
@@ -810,13 +837,14 @@ begin
   buf := AnsiString(ChangeLineBreak(Trim(APrivateKey), LF));  // Use Linux LineBreak
   bio := BIO_new_mem_buf(PAnsiChar(buf), Length(buf)+1) ;
   try
-    fEVP_PrivateKey := PEM_read_bio_PrivateKey(bio, nil, @PasswordCallback, PAnsiChar(Password))
+    fEVP_PrivateKey := PEM_read_bio_PrivateKey(bio, nil, @PasswordCallback, PAnsiChar(Password));
   finally
     BioFreeAll(bio);
   end ;
 
   if (fEVP_PrivateKey = nil) then
-    raise EACBrOpenSSLException.CreateFmt(sErrLoadingKey, [CPrivate]);
+    raise EACBrOpenSSLException.Create( Format(sErrLoadingKey, [CPrivate]) +
+                                        sLineBreak + GetLastOpenSSLError)
 end;
 
 procedure TACBrOpenSSLUtils.LoadPublicKeyFromFile(const APublicKeyFile: String);
@@ -854,7 +882,8 @@ begin
   end ;
 
   if (fEVP_PublicKey = nil) then
-    raise EACBrOpenSSLException.CreateFmt(sErrLoadingKey, [CPublic]);
+    raise EACBrOpenSSLException.Create( Format(sErrLoadingKey, [CPublic]) +
+                                        sLineBreak + GetLastOpenSSLError);
 end;
 
 function TACBrOpenSSLUtils.ExtractModulusAndExponentFromPublicKey(out

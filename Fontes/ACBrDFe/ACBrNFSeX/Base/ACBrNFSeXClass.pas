@@ -816,7 +816,7 @@ type
     FLogradouroLocalPrestacaoServico: TLogradouroLocalPrestacaoServico;
     FIncentivadorCultural: TnfseSimNao;
     FProducao: TnfseSimNao;
-    FStatus: TStatusRps;
+    FStatusRps: TStatusRps;
     FRpsSubstituido: TIdentificacaoRps;
     FSeriePrestacao: string;
     FServico: TDadosServico;
@@ -857,7 +857,6 @@ type
     FTipoEmissao: TTipoEmissao;
     FEmpreitadaGlobal: TEmpreitadaGlobal;
     FModeloNFSe: string;
-    FCancelada: TnfseSimNao;
     FTransportadora: TDadosTransportadora;
     FCanhoto: TnfseCanhoto;
 
@@ -916,7 +915,7 @@ type
     property LogradouLocalPrestacaoServico: TLogradouroLocalPrestacaoServico read FLogradouroLocalPrestacaoServico write FLogradouroLocalPrestacaoServico;
     property IncentivadorCultural: TnfseSimNao read FIncentivadorCultural write FIncentivadorCultural;
     property Producao: TnfseSimNao read FProducao write FProducao;
-    property Status: TStatusRps read FStatus write FStatus;
+    property StatusRps: TStatusRps read FStatusRps write FStatusRps;
     property RpsSubstituido: TIdentificacaoRps read FRpsSubstituido write FRpsSubstituido;
     property DataEmissaoRps: TDateTime read FDataEmissaoRps write FDataEmissaoRps;
     // Provedor IssDsf
@@ -955,7 +954,6 @@ type
     property TipoEmissao: TTipoEmissao read FTipoEmissao write FTipoEmissao;
     property EmpreitadaGlobal: TEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: string read FModeloNFSe write FModeloNFSe;
-    property Cancelada: TnfseSimNao read FCancelada write FCancelada;
     property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
     property Despesa: TDespesaCollection read FDespesa write SetDespesa;
@@ -1126,8 +1124,11 @@ begin
   FOptanteSimplesNacional := snNao;
   FOptanteMEISimei := snNao;
   FIncentivadorCultural := snNao;
-  FStatus := srNormal;
+  FStatusRps := srNormal;
   FRpsSubstituido.FTipo := trRPS;
+  FSituacaoNfse := snNormal;
+  FNfseCancelamento.DataHora := 0;
+  FNfseSubstituidora := '';
   // NFSe
   FNumero := '';
   FCodigoVerificacao := '';
@@ -1136,15 +1137,11 @@ begin
   FOutrasInformacoes := '';
   FInformacoesComplementares := '';
   FValorCredito := 0;
-  // RPS e NFSe
-  FNfseCancelamento.DataHora := 0;
-  FNfseSubstituidora := '';
 
   // Provedor Infisc Versão XML 1.1
   FTipoEmissao := teNormalNFSe;
   FEmpreitadaGlobal := EgOutros;
   FModeloNFSe := '55';
-  FCancelada := snNao;
   FCanhoto := tcNenhum;
 
   FLogradouroLocalPrestacaoServico := llpTomador;

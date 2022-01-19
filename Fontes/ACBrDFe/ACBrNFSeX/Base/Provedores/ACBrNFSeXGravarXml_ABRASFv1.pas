@@ -276,7 +276,7 @@ begin
    TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
 
   Result.AppendChild(AddNode(tcStr, '#9', 'Status', 1, 1, NrOcorrStatus,
-                                   StatusRPSToStr(NFSe.Status), DSC_INDSTATUS));
+                                   StatusRPSToStr(NFSe.StatusRps), DSC_INDSTATUS));
 
   Result.AppendChild(AddNode(tcStr, '#11', 'OutrasInformacoes', 1, 255, NrOcorrOutrasInformacoes,
                                         NFSe.OutrasInformacoes, DSC_OUTRASINF));

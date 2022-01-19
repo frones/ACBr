@@ -589,10 +589,10 @@ begin
     case NFSe.Situacao of
       -2:
         begin
-          NFSe.Cancelada := snSim;
+          NFSe.SituacaoNfse := snCancelado;
           NFSe.MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('MotivoCancelamento'), tcStr);
         end;
-      -8: NFSe.Cancelada := snNao;
+      -8: NFSe.SituacaoNfse := snNormal;
     end;
   end;
 end;

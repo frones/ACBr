@@ -563,7 +563,7 @@ begin
   if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1,
-                 TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Cancelada), ''));
+                                       StatusRPSToStr(NFSe.StatusRps), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'canhoto', 1, 1, 1,
                                                CanhotoToStr(NFSe.Canhoto), ''));

@@ -193,7 +193,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'sCodigoVerificador', 1, 2000, 1,
                                                                        '', ''));
 
-  Situacao := EnumeradoToStr(NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
+  Situacao := EnumeradoToStr(NFSe.StatusRps, ['N', 'C'], [srNormal, srCancelado]);
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'sSituacao', 1, 1, 1, Situacao, ''));
 

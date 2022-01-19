@@ -450,10 +450,10 @@ begin
     with NFSe do
     begin
       CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('Id'), tcStr);
-      Link              := CodigoVerificacao;
-      DataEmissao       := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+      Link := CodigoVerificacao;
+      DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
       OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('Observacao'), tcStr);
-      Status            := StrToStatusRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Status'), tcStr));
+      SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Status'), tcStr));
 
       Servico.Valores.IssRetido := TACBrNFSeXProvider(FpAOwner).StrToSituacaoTributaria(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('IssRetido'), tcStr));
     end;
@@ -476,9 +476,9 @@ begin
   with NFSe do
   begin
     CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('Id'), tcStr);
-    DataEmissao       := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('Observacao'), tcStr);
-    Status            := StrToStatusRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Status'), tcStr));
+    SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Status'), tcStr));
 
     Servico.Valores.IssRetido := TACBrNFSeXProvider(FpAOwner).StrToSituacaoTributaria(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('IssRetido'), tcStr));
   end;

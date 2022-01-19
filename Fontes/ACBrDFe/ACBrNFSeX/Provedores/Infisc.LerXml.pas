@@ -314,7 +314,7 @@ begin
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('anulada'), tcStr);
 
-      Status := StrToEnumerado(Ok, aValor, ['N','S'], [srNormal, srCancelado]);
+      SituacaoNfse := StrToEnumerado(Ok, aValor, ['N','S'], [snNormal, snCancelado]);
 
       Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMunFG'), tcStr);
 
@@ -323,7 +323,7 @@ begin
       ModeloNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('mod'), tcStr);
 
       aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('cancelada'), tcStr);
-      Cancelada := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, aValor);
+      SituacaoNfse := StrToStatusNFSe(Ok, aValor);
 
       MotivoCancelamento := ObterConteudo(AuxNode.Childrens.FindAnyNs('motCanc'), tcStr);
 

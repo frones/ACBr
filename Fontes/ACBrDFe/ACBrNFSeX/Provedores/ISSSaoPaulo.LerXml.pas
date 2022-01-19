@@ -332,9 +332,9 @@ begin
     aValor := ObterConteudo(ANode.Childrens.FindAnyNs('StatusRPS'), tcStr);
 
     if aValor = 'N' then
-      Status := srNormal
+      StatusRps := srNormal
     else
-      Status := srCancelado;
+      StatusRps := srCancelado;
 
     TipoTributacaoRPS := ObterConteudo(ANode.Childrens.FindAnyNs('TributacaoRPS'), tcStr);
 

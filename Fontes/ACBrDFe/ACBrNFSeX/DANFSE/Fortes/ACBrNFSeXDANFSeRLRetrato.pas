@@ -601,7 +601,8 @@ begin
       rllMsgTeste.Enabled := (fpDANFSe.Producao = snNao);
     end;
 
-    if (NfseCancelamento.DataHora <> 0) or fpDANFSe.Cancelada then
+    if (NfseCancelamento.DataHora <> 0) or (SituacaoNfse = snCancelado) or
+       fpDANFSe.Cancelada then
     begin
       rllMsgTeste.Caption := 'NFS-e CANCELADA';
       rllMsgTeste.Visible := True;

@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/01/2022
+-- Diversos --
+[*] Removido o campo Cancelada, para saber se a nota esta cancelada devemos
+    ler o valor do campo SituacaoNfse que pode conter os valores: snNormal ou
+    snCancelado, o campo Status agora é StatusRps.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Incluida a cidade: São Lourenço/MG - provedor WebISS
+   Por: Danio
+
 18/01/2022
 -- Ginfes.Provider --
 [*] Sobrescrito o TratarRetornoCancelaNFSe, no Ginfes o retorno é diferente.

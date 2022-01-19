@@ -111,7 +111,7 @@ var
 begin
   with Nota do
   begin
-    sSituacao := EnumeradoToStr(NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
+    sSituacao := EnumeradoToStr(NFSe.SituacaoNfse, ['N', 'C'], [snNormal, snCancelado]);
 
     sISSRetido := EnumeradoToStr(NFSe.Servico.Valores.IssRetido,
                                  ['N', 'S'], [stNormal, stRetencao]);

@@ -292,7 +292,7 @@ begin
       Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);
 
       Producao := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
-      Status := StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
+      StatusRps := StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
       OutrasInformacoes := INIRec.ReadString(sSecao, 'OutrasInformacoes', '');
 
       // Provedor ISSDSF e Siat

@@ -665,7 +665,7 @@ begin
     if NFSe.DataEmissao = 0 then
       NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
 
-    NFSe.Status := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
+    NFSe.StatusRps := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 
     LerRpsSubstituido(AuxNode);
   end;

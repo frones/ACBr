@@ -115,7 +115,7 @@ begin
     DataEmissao := StrToDateTime(aValor);
 
     CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
-    Status := StrToStatusRPS(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('nfestatus'), tcStr));
+    SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('nfestatus'), tcStr));
 
 //      <xsd:element name="nfecontrole" type="xsd:string"/>
 

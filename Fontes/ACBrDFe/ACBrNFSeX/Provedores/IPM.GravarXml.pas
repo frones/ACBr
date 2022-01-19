@@ -139,7 +139,7 @@ begin
   // Removido a condição da versão para gerar o grupo Forma de Pagamento para
   // a cidade de Panambi/RS
 //  if (NFSe.Status = srNormal) and (VersaoNFSe = ve101 ) then
-  if (NFSe.Status = srNormal) then
+  if (NFSe.SituacaoNfse = snNormal) then
   begin
     xmlNode := GerarFormaPagamento;
     NFSeNode.AppendChild(xmlNode);
@@ -460,7 +460,7 @@ function TNFSeW_IPM.GerarValoresServico: TACBrXmlNode;
 begin
   Result := CreateElement('nf');
 
-  if NFSe.Status = srCancelado then
+  if NFSe.SituacaoNfse = snCancelado then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'numero', 0, 9, 1,
                                                               NFSe.Numero, ''));

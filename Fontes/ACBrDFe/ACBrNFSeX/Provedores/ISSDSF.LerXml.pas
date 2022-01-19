@@ -223,7 +223,7 @@ begin
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('SituacaoRPS'), tcStr);
   if aValor <> '' then 
-    NFSe.Status := StrToEnumerado(ok, aValor, ['N','C'], [srNormal, srCancelado]);
+    NFSe.StatusRps := StrToEnumerado(ok, aValor, ['N','C'], [srNormal, srCancelado]);
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('RazaoSocialPrestador'), tcStr);
   if aValor <> '' then
@@ -444,9 +444,9 @@ begin
     aValor := ObterConteudo(ANode.Childrens.FindAnyNs('SituacaoRPS'), tcStr);
 
     if aValor = 'N' then
-      Status := srNormal
+      StatusRps := srNormal
     else
-      Status := srCancelado;
+      StatusRps := srCancelado;
 
     with RpsSubstituido do
     begin

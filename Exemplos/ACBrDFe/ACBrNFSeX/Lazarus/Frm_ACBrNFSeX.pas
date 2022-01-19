@@ -538,7 +538,7 @@ begin
         Producao := snNao;
 
       // TnfseStatusRPS = ( srNormal, srCancelado );
-      Status := srNormal;
+      StatusRps := srNormal;
 
       // Somente Os provedores Betha, FISSLex e SimplISS permitem incluir no RPS
       // a TAG: OutrasInformacoes os demais essa TAG é gerada e preenchida pelo

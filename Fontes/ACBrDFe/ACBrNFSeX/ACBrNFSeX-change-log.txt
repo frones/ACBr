@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/01/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Incluido a leitura da tag: MunicipioPrestacaoServico. 
+   Por: Italo Giurizzato Junior
 -- Tinus.GravarXml --
 [*] Incluido a configuração para o formato da Aliquota.
    Por: Italo Giurizzato Junior

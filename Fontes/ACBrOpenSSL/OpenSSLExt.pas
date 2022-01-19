@@ -272,25 +272,46 @@ type
     ext_val: pointer;	// extension value
   end;
 
-  DSA = record
-  pad: integer;
-  version: integer;
-  write_params: integer;
-  p: pointer;
-  q: pointer;
-  g: pointer;
-  pub_key: pointer;
-  priv_key: pointer;
-  kinv: pointer;
-  r: pointer;
-  flags: integer;
-  method_mont_p: PAnsiChar;
-  references: integer;
-  ex_data: record
-    sk: pointer;
-    dummy: integer;
+  X509_REQ_INFO = record
+    enc: Pointer;
+    version: Pointer;
+    subject: Pointer;
+    pubkey: Pointer;
+    attributes: Pointer;
   end;
-  meth: pointer;
+  PX509_REQ_INFO = ^X509_REQ_INFO;
+
+  X509_REQ = record
+    req_info: PX509_REQ_INFO;
+    sig_alg: Pointer;
+    signature: Pointer;
+    references: Integer;
+    lock: Pointer;
+    distinguishing_id: Pointer;
+    libctx: Pointer;
+    propq: Pointer;
+  end;
+  PX509_REQ = ^X509_REQ;
+
+  DSA = record
+    pad: integer;
+    version: integer;
+    write_params: integer;
+    p: pointer;
+    q: pointer;
+    g: pointer;
+    pub_key: pointer;
+    priv_key: pointer;
+    kinv: pointer;
+    r: pointer;
+    flags: integer;
+    method_mont_p: PAnsiChar;
+    references: integer;
+    ex_data: record
+      sk: pointer;
+      dummy: integer;
+    end;
+    meth: pointer;
   end;
   pDSA = ^DSA;
 
@@ -964,6 +985,12 @@ const
   V_ASN1_UNIVERSALSTRING         = 28;
   V_ASN1_BMPSTRING               = 30;
 
+  MBSTRING_FLAG  = $1000;
+  MBSTRING_UTF8 = MBSTRING_FLAG;
+  MBSTRING_ASC = $1001;
+  MBSTRING_BMP = $1002;
+  MBSTRING_UNIV = $1004;
+
   // BN
 {$ifdef cpu64}
 // * 64-bit processor with LP64 ABI
@@ -1190,6 +1217,8 @@ var
   procedure ERR_load_crypto_strings;
   function X509New: PX509;
   procedure X509Free(x: PX509);
+  function X509_NAME_new():PX509_NAME;
+  procedure X509_NAME_free(a: PX509_NAME);
   function X509NAMEprintEx(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint): cInt;
   function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: cInt): AnsiString;
   function X509GetSubjectName(a: PX509):PX509_NAME;
@@ -1212,6 +1241,13 @@ var
   function X509GetSerialNumber(x: PX509): PASN1_cInt;
   function X509GetExt(x: PX509; loc: integer): pX509_EXTENSION;
   function X509ExtensionGetData(ext: pX509_EXTENSION): pASN1_STRING;
+
+  function X509_REQ_new: PX509_REQ;
+  procedure X509_REQ_free(x: PX509_REQ);
+  function X509_REQ_set_subject_name(req: PX509_REQ; name: PX509_NAME): cInt;
+  function X509_REQ_set_pubkey(x: PX509_REQ; pkey: PEVP_PKEY): cInt;
+  function X509_REQ_sign(x: PX509_REQ; pkey: PEVP_PKEY; const md: PEVP_MD): cInt;
+
   function EvpPkeyNew: PEVP_PKEY;
   procedure EvpPkeyFree(pk: PEVP_PKEY);
   function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
@@ -1394,6 +1430,7 @@ var
   function PEM_write_bio_PUBKEY(bp: pBIO; x: pEVP_PKEY): integer;
   function PEM_read_bio_X509(bp: PBIO; x: PPX509; cb: ppem_password_cb; u: pointer): PX509;
   function PEM_write_bio_X509(bp: pBIO;  x: px509): integer;
+  function PEM_write_bio_X509_REQ(bp: pBIO;  x: PX509_REQ): integer;
   function PEM_write_bio_PKCS7(bp : PBIO; x : PPKCS7) : cint;
   function PEM_read_bio_RSAPrivateKey(bp: pBIO; var x: pRSA;
       cb: Ppem_password_cb; u: pointer): pRSA;
@@ -1697,6 +1734,8 @@ type
   TERR_load_crypto_strings = procedure; cdecl;
   TX509New = function: PX509; cdecl;
   TX509Free = procedure(x: PX509); cdecl;
+  TX509_NAME_new = function: PX509_NAME; cdecl;
+  TX509_NAME_free = procedure(a: PX509_NAME); cdecl;
   TX509NameOneline = function(a: PX509_NAME; buf: PAnsiChar; size: cInt):PAnsiChar; cdecl;
   TX509NAMEprintEx = function(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint):cInt; cdecl;
   TX509GetSubjectName = function(a: PX509):PX509_NAME; cdecl;
@@ -1719,6 +1758,11 @@ type
   TX509GetSerialNumber = function(x: PX509): PASN1_cInt; cdecl;
   TX509GetExt = function(x: PX509; loc: integer): pX509_EXTENSION; cdecl;
   TX509ExtensionGetData = function (ext: pX509_EXTENSION): pASN1_STRING cdecl;
+  TX509_REQ_new = function: PX509_REQ; cdecl;
+  TX509_REQ_free = procedure(x: PX509_REQ); cdecl;
+  TX509_REQ_set_subject_name = function(req: PX509_REQ; name: PX509_NAME): cInt; cdecl;
+  TX509_REQ_set_pubkey = function (x: PX509_REQ; pkey: PEVP_PKEY): cInt; cdecl;
+  TX509_REQ_sign = function(x: PX509_REQ; pkey: PEVP_PKEY; const md: PEVP_MD): cInt; cdecl;
   TEvpPkeyNew = function: PEVP_PKEY; cdecl;
   TEvpPkeyFree = procedure(pk: PEVP_PKEY); cdecl;
   TEvpPkeyAssign = function(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt; cdecl;
@@ -1880,6 +1924,8 @@ type
   TPEM_write_bio_PUBKEY = function(bp: pBIO; x: pEVP_PKEY): integer; cdecl;
   TPEM_read_bio_X509 = function(bp: pBIO; x: PPX509; cb: Ppem_password_cb; u: pointer): px509; cdecl;
   TPEM_write_bio_X509 = function(bp: pBIO; x: PX509): integer; cdecl;
+  TPEM_write_bio_X509_REQ = function(bp: pBIO;  x: PX509_REQ): integer; cdecl;
+
   TPEM_write_bio_PKCS7 = function(bp: pBIO; x: PPKCS7): integer; cdecl;
   TPEM_read_bio_RSAPrivateKey = function(bp: pBIO; var x: pRSA;
       cb: Ppem_password_cb; u: pointer): pRSA; cdecl;
@@ -1954,6 +2000,8 @@ var
   _ERR_load_crypto_strings: TERR_load_crypto_strings = nil;
   _X509New: TX509New = nil;
   _X509Free: TX509Free = nil;
+  _X509_NAME_new: TX509_NAME_new = nil;
+  _X509_NAME_free: TX509_NAME_free = nil;
   _X509NameOneline: TX509NameOneline = nil;
   _X509NAMEprintEx: TX509NAMEprintEx = nil;
   _X509GetSubjectName: TX509GetSubjectName = nil;
@@ -1975,6 +2023,11 @@ var
   _X509GetSerialNumber: TX509GetSerialNumber = nil;
   _X509GetExt: TX509GetExt = nil;
   _X509ExtensionGetData: TX509ExtensionGetData = nil;
+  _X509_REQ_new: TX509_REQ_new = nil;
+  _X509_REQ_free: TX509_REQ_free = nil;
+  _X509_REQ_set_subject_name: TX509_REQ_set_subject_name = nil;
+  _X509_REQ_set_pubkey: TX509_REQ_set_pubkey = nil;
+  _X509_REQ_sign: TX509_REQ_sign = nil;
   _EvpPkeyNew: TEvpPkeyNew = nil;
   _EvpPkeyFree: TEvpPkeyFree = nil;
   _EvpPkeyAssign: TEvpPkeyAssign = nil;
@@ -2140,7 +2193,8 @@ var
   _PEM_write_bio_PUBKEY: TPEM_write_bio_PUBKEY = nil;
   _PEM_read_bio_X509: TPEM_read_bio_X509 = nil;
   _PEM_write_bio_X509: TPEM_write_bio_X509 = nil;
-  _PEM_write_bio_PKCS7 : TPEM_write_bio_PKCS7 = Nil;
+  _PEM_write_bio_X509_REQ: TPEM_write_bio_X509_REQ = nil;
+  _PEM_write_bio_PKCS7 : TPEM_write_bio_PKCS7 = nil;
   _PEM_read_bio_RSAPrivateKey: TPEM_read_bio_RSAPrivateKey = nil;
   _PEM_write_bio_RSAPrivateKey: TPEM_write_bio_RSAPrivateKey = nil;
   _PEM_read_bio_RSAPublicKey: TPEM_read_bio_RSAPublicKey = nil;
@@ -2731,6 +2785,20 @@ begin
     _X509Free(x);
 end;
 
+function X509_NAME_new: PX509_NAME;
+begin
+  if InitSSLInterface and Assigned(_X509_NAME_new) then
+    Result := _X509_NAME_new
+  else
+    Result := nil;
+end;
+
+procedure X509_NAME_free(a: PX509_NAME);
+begin
+  if InitSSLInterface and Assigned(_X509_NAME_free) then
+    _X509_NAME_free(a);
+end;
+
 function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: cInt
   ): AnsiString;
 begin
@@ -3173,6 +3241,45 @@ begin
   else
     Result := ext^.value;
 end;
+
+function X509_REQ_new: PX509_REQ;
+begin
+  if InitSSLInterface and Assigned(_X509_REQ_new) then
+    Result := _X509_REQ_new
+  else
+    Result := nil;
+end;
+
+procedure X509_REQ_free(x: PX509_REQ);
+begin
+  if InitSSLInterface and Assigned(_X509_REQ_free) then
+    _X509_REQ_free(x);
+end;
+
+function X509_REQ_set_subject_name(req: PX509_REQ; name: PX509_NAME): cInt;
+begin
+  if InitSSLInterface and Assigned(_X509_REQ_set_subject_name) then
+    Result := _X509_REQ_set_subject_name(req,name)
+  else
+    Result := -1;
+end;
+
+function X509_REQ_set_pubkey(x: PX509_REQ; pkey: PEVP_PKEY): cInt;
+begin
+  if InitSSLInterface and Assigned(_X509_REQ_set_pubkey) then
+    Result := _X509_REQ_set_pubkey(x, pkey)
+  else
+    Result := -1;
+end;
+
+function X509_REQ_sign(x: PX509_REQ; pkey: PEVP_PKEY; const md: PEVP_MD): cInt;
+begin
+  if InitSSLInterface and Assigned(_X509_REQ_sign) then
+    Result := _X509_REQ_sign(x, pkey, md)
+  else
+    Result := -1;
+end;
+
 
 // 3DES functions
 procedure DESsetoddparity(Key: des_cblock);
@@ -4005,6 +4112,14 @@ function PEM_write_bio_X509(bp: pBIO;  x: px509): integer;
 begin
   if InitSSLInterface and Assigned(_PEM_write_bio_X509) then
     Result := _PEM_write_bio_X509(bp, x)
+  else
+    Result := 0;
+end;
+
+function PEM_write_bio_X509_REQ(bp: pBIO; x: PX509_REQ): integer;
+begin
+  if InitSSLInterface and Assigned(_PEM_write_bio_X509_REQ) then
+    Result := _PEM_write_bio_X509_REQ(bp, x)
   else
     Result := 0;
 end;
@@ -5117,6 +5232,8 @@ begin
   _ERR_load_crypto_strings := GetProcAddr(SSLUtilHandle, 'ERR_load_crypto_strings');
   _X509New := GetProcAddr(SSLUtilHandle, 'X509_new');
   _X509Free := GetProcAddr(SSLUtilHandle, 'X509_free');
+  _X509_NAME_new := GetProcAddr(SSLUtilHandle, 'X509_NAME_new');
+  _X509_NAME_free := GetProcAddr(SSLUtilHandle, 'X509_NAME_free');
   _X509NameOneline := GetProcAddr(SSLUtilHandle, 'X509_NAME_oneline');
   _X509NAMEprintEx := GetProcAddr(SSLUtilHandle, 'X509_NAME_print_ex');
   _X509GetSubjectName := GetProcAddr(SSLUtilHandle, 'X509_get_subject_name');
@@ -5138,6 +5255,11 @@ begin
   _X509GetSerialNumber := GetProcAddr(SSLUtilHandle, 'X509_get_serialNumber');
   _X509GetExt := GetProcAddr(SSLUtilHandle, 'X509_get_ext');
   _X509ExtensionGetData := GetProcAddr(SSLUtilHandle, 'X509_EXTENSION_get_data');
+  _X509_REQ_new := GetProcAddr(SSLUtilHandle, 'X509_REQ_new');
+  _X509_REQ_free := GetProcAddr(SSLUtilHandle, 'X509_REQ_free');
+  _X509_REQ_set_subject_name := GetProcAddr(SSLUtilHandle, 'X509_REQ_set_subject_name');
+  _X509_REQ_set_pubkey := GetProcAddr(SSLUtilHandle, 'X509_REQ_set_pubkey');
+  _X509_REQ_sign := GetProcAddr(SSLUtilHandle, 'X509_REQ_sign');
   _EvpPkeyNew := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_new');
   _EvpPkeyFree := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_free');
   _EvpPkeyAssign := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_assign');
@@ -5284,6 +5406,7 @@ begin
   _PEM_write_bio_PUBKEY := GetProcAddr(SSLUtilHandle, 'PEM_write_bio_PUBKEY');
   _PEM_read_bio_X509 := GetProcAddr(SSLUtilHandle, 'PEM_read_bio_X509');
   _PEM_write_bio_X509 := GetProcAddr(SSLUtilHandle,'PEM_write_bio_X509');
+  _PEM_write_bio_X509_REQ := GetProcAddr(SSLUtilHandle,'PEM_write_bio_X509_REQ');
   _PEM_write_bio_PKCS7 := GetProcAddr(SSLUtilHandle,'PEM_write_bio_PKCS7');
   _PEM_read_bio_RSAPrivateKey := GetProcAddr(SSLUtilHandle, 'PEM_read_bio_RSAPrivateKey');
   _PEM_write_bio_RSAPrivateKey := GetProcAddr(SSLUtilHandle, 'PEM_write_bio_RSAPrivateKey');
@@ -5619,7 +5742,14 @@ Procedure ClearUtilEntryPoints;
 begin
   _ERR_load_crypto_strings := nil;
   _X509New := nil;
+  _X509_REQ_new := nil;
+  _X509_REQ_free := nil;
+  _X509_REQ_set_subject_name := nil;
+  _X509_REQ_set_pubkey := nil;
+  _X509_REQ_sign := nil;
   _X509Free := nil;
+  _X509_NAME_new := nil;
+  _X509_NAME_free := nil;
   _X509NameOneline := nil;
   _X509NAMEprintEx := nil;
   _X509GetSubjectName := nil;
@@ -5783,6 +5913,7 @@ begin
   _PEM_write_bio_PUBKEY := nil;
   _PEM_read_bio_X509 := nil;
   _PEM_write_bio_X509 := nil;
+  _PEM_write_bio_X509_REQ := nil;
   _PEM_write_bio_PKCS7 := nil;
   _PEM_read_bio_RSAPrivateKey := nil ;
   _PEM_write_bio_RSAPrivateKey := nil ;

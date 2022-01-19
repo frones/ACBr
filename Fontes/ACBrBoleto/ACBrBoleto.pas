@@ -3705,7 +3705,7 @@ begin
        IniRetorno.WriteInteger(CCedente,'TipoDocumento',Integer(Cedente.TipoDocumento));
        IniRetorno.WriteInteger(CConta,'TipoCarteira',Integer(Cedente.TipoCarteira));
        IniRetorno.WriteInteger(CConta,'TipoInscricao',Integer(Cedente.TipoInscricao));
-       IniRetorno.WriteInteger(CConta,'IdentDistribuicao',Integer(Cedente.IdentDistribuicao));
+       IniRetorno.WriteInteger(CCedente,'IdentDistribuicao',Integer(Cedente.IdentDistribuicao));
        IniRetorno.WriteInteger(CConta,'ResponEmissao',Integer(Cedente.ResponEmissao));
        IniRetorno.WriteString(CConta,'Operacao',Cedente.Operacao);
 

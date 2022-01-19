@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/01/2022
+-- Tinus.GravarXml --
+[*] Incluido a configuração para o formato da Aliquota.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Removido o campo Cancelada, para saber se a nota esta cancelada devemos
     ler o valor do campo SituacaoNfse que pode conter os valores: snNormal ou

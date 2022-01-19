@@ -46,6 +46,7 @@ type
 
   TNFSeW_Tinus = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -55,5 +56,14 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Tinus
 //==============================================================================
+
+{ TNFSeW_Tinus }
+
+procedure TNFSeW_Tinus.Configuracao;
+begin
+  inherited Configuracao;
+
+  DivAliq100 := True;
+end;
 
 end.

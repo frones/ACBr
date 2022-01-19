@@ -1183,6 +1183,7 @@ type
      fBoletoFC: TACBrBoletoFCFortes;
      fIndice: Integer;
      function GetACBrTitulo: TACBrTitulo;
+
     { Private declarations }
   public
     { Public declarations }
@@ -1576,7 +1577,7 @@ begin
       txtDataDocumento2.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
       txtNumeroDocumento2.Caption     := Titulo.NumeroDocumento;
       txtEspecieDoc2.Caption          := Titulo.EspecieDoc;
-      txtAceite2.Caption              := ifThen(Titulo.Aceite = atSim,'S','N');
+      txtAceite2.Caption              := fBoletoFC.DefineAceiteImpressao(Titulo);
       txtDataProcessamento2.Caption   := IfThen(Titulo.DataProcessamento = 0,
                                                 FormatDateTime('dd/mm/yyyy',Now),
                                                 FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
@@ -1728,7 +1729,7 @@ begin
       txtDataDocto.Caption            := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
       txtNumeroDocto.Caption          := Titulo.NumeroDocumento;
       txtEspecieDoc.Caption           := Titulo.EspecieDoc;
-      txtAceite.Caption               := IfThen((atSim = Titulo.Aceite), 'S', 'N');
+      txtAceite.Caption               := fBoletoFC.DefineAceiteImpressao(Titulo);
       txtDataProces.Caption           := IfThen(Titulo.DataProcessamento = 0,
                                                 FormatDateTime('dd/mm/yyyy',Now),
                                                 FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
@@ -1884,7 +1885,7 @@ begin
       txtDataDocumentoRecTop1.Caption  := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
       txtNumeroDocumentoRecTop1.Caption:= Titulo.NumeroDocumento;
       txtEspecieDocRecTop1.Caption     := Titulo.EspecieDoc;
-      txtAceiteRecTop1.Caption         := IfThen((atSim = Titulo.Aceite), 'S', 'N');
+      txtAceiteRecTop1.Caption         := fBoletoFC.DefineAceiteImpressao(Titulo);
       txtDataProcessamentoRecTop1.Caption := FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento);
 
       txtUsoBancoRecTop1.Caption       := Titulo.UsoBanco;
@@ -2042,7 +2043,7 @@ begin
       lTertxtDataDocumento.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
       lTertxtNumeroDocumento.Caption     := Titulo.NumeroDocumento;
       lTertxtEspecieDoc.Caption          := Titulo.EspecieDoc;
-      lTertxtAceite.Caption              := ifThen(Titulo.Aceite = atSim,'S','N');
+      lTertxtAceite.Caption              := fBoletoFC.DefineAceiteImpressao(Titulo);
       lTertxtDataProcessamento.Caption   := IfThen(Titulo.DataProcessamento = 0,
                                                 FormatDateTime('dd/mm/yyyy',Now),
                                                 FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
@@ -2140,7 +2141,7 @@ begin
     txtDataDocumentoDet.Caption             := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
     txtNumeroDocumentoDet.Caption           := Titulo.NumeroDocumento;
     txtEspecieDocDEt.Caption                := Titulo.EspecieDoc;
-    txtAceiteDet.Caption                    := ifThen(Titulo.Aceite = atSim, 'S', 'N');
+    txtAceiteDet.Caption                    := fBoletoFC.DefineAceiteImpressao(Titulo);
     txtDataProcessamentoDet.Caption         := IfThen(Titulo.DataProcessamento = 0,FormatDateTime('dd/mm/yyyy', Now),FormatDateTime('dd/mm/yyyy', Titulo.DataProcessamento));
     txtNossoNumeroDet.Caption               := NossoNum;
     txtUsoBancoDet.Caption                  := Titulo.UsoBanco;
@@ -2336,7 +2337,7 @@ begin
     txtDataDocumentoServicos.Caption             := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
     txtNumeroDocumentoServicos.Caption           := Titulo.NumeroDocumento;
     txtEspecieDocServicos.Caption                := Titulo.EspecieDoc;
-    txtAceiteServicos.Caption                    := ifThen(Titulo.Aceite = atSim, 'S', 'N');
+    txtAceiteServicos.Caption                    := fBoletoFC.DefineAceiteImpressao(Titulo);
     txtDataProcessamentoServicos.Caption         := IfThen(Titulo.DataProcessamento = 0,FormatDateTime('dd/mm/yyyy', Now),FormatDateTime('dd/mm/yyyy', Titulo.DataProcessamento));
     txtNossoNumeroServicos.Caption               := NossoNum;
     txtUsoBancoServicos.Caption                  := Titulo.UsoBanco;

@@ -270,7 +270,7 @@ begin
   FcdsTitulo.FieldDefs.Add('EspecieDoc', ftString, 10);
   FcdsTitulo.FieldDefs.Add('EspecieMod', ftString, 10);
   FcdsTitulo.FieldDefs.Add('UsoBanco', ftString, 4);
-  FcdsTitulo.FieldDefs.Add('Aceite', ftInteger);
+  FcdsTitulo.FieldDefs.Add('Aceite', ftString,3);
   FcdsTitulo.FieldDefs.Add('DataProcessamento', ftDateTime);
   FcdsTitulo.FieldDefs.Add('NossoNumero', ftString, 20);
   FcdsTitulo.FieldDefs.Add('Carteira', ftString, 20);
@@ -604,7 +604,7 @@ var
         Field_EspecieMod.AsString := ListadeBoletos[Indice].EspecieMod;
         Field_EspecieDoc.AsString := ListadeBoletos[Indice].EspecieDoc;
         Field_UsoBanco.AsString := ListadeBoletos[Indice].UsoBanco;
-        Field_Aceite.AsInteger := Integer(ListadeBoletos[Indice].Aceite);
+        Field_Aceite.AsString := DefineAceiteImpressao(ListadeBoletos[Indice]);
         Field_DataProcessamento.AsDateTime := ListadeBoletos[Indice].DataProcessamento;
         Field_NossoNumero.AsString := ListadeBoletos[Indice].NossoNumero;
         Field_Carteira.AsString := Banco.MontarCampoCarteira(ListadeBoletos[Indice]);

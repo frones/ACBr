@@ -1668,6 +1668,7 @@ type
 
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -1777,6 +1778,7 @@ type
     procedure SetNumCopias(AValue: Integer);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function TituloRelatorio: String;
+    function DefineAceiteImpressao(const ATitulo : TACBrTitulo) : string;
   public
 
     Constructor Create(AOwner: TComponent); override;
@@ -5404,7 +5406,7 @@ begin
   with ACBrTitulo do
   begin
     case Aceite of
-         atSim :  Result := 'A';
+         atSim : Result := 'A';
        else
          Result := 'N';
     end;
@@ -5878,6 +5880,16 @@ begin
 
    if fACBrBoleto.ListadeBoletos.Count < 1 then
       raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
+end;
+
+function TACBrBoletoFCClass.DefineAceiteImpressao(
+  const ATitulo: TACBrTitulo): string;
+begin
+  case ATitulo.ACBrBoleto.Banco.TipoCobranca of
+    cobCaixaEconomica : Result := ifThen(ATitulo.Aceite = atSim,'A','N');
+    else
+      Result := ifThen(ATitulo.Aceite = atSim,'S','N');
+  end;
 end;
 
 procedure TACBrBoletoFCClass.GerarPDF;

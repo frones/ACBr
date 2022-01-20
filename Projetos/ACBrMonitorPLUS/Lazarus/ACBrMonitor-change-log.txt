@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2022
+--- DoACBrCTe ---
+[*] Ajuste na função de Consulta por chave 
+
 28/12/2021
 --- ACBrMonior1, ACBrMonitorConfig, ACBrMonitorConsts ---
 [+] Adicionado a propriedades Cedente CodigoOperacao do componente boleto

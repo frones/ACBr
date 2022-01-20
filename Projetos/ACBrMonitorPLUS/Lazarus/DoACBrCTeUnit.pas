@@ -72,7 +72,7 @@ protected
   procedure CarregarDFeXML( const AValue: String ); override;
   function ValidarDFe( const AValue: String ): Boolean; override;
 public
-  constructor Create(AACBrDFe: TACBrCTe; AXMLorFile: String ); reintroduce;
+  constructor Create(AACBrDFe: TACBrCTe; AXMLorFile: String; ARetornaFalha: Boolean = True ); reintroduce;
 end;
 
 { TACBrCarregarCTeEvento }
@@ -725,9 +725,9 @@ begin
                         + AValue + CExtensaoXmlCTe ;
 end;
 
-constructor TACBrCarregarCTe.Create(AACBrDFe: TACBrCTe; AXMLorFile: String);
+constructor TACBrCarregarCTe.Create(AACBrDFe: TACBrCTe; AXMLorFile: String; ARetornaFalha: Boolean = True);
 begin
-  inherited Create(AACBrDFe, AXMLorFile);
+  inherited Create(AACBrDFe, AXMLorFile, ARetornaFalha);
 end;
 
 { TACBrCarregarCTeEvento }
@@ -1196,7 +1196,7 @@ begin
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
     ACBrCTe.Conhecimentos.Clear;
-    CargaDFe := TACBrCarregarCTe.Create(ACBrCTe, AXML);
+    CargaDFe := TACBrCarregarCTe.Create(ACBrCTe, AXML, False);
     try
       ACBrCTe.WebServices.Consulta.ExtrairEventos := AExtrairEventos;
 

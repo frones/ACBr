@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/01/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Correção na leitura dos dados do prestador.
+   Por: Haroldo
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Possível correção para o problema no tratamento do retorno do cancelamento.
    Por: Italo Giurizzato Junior

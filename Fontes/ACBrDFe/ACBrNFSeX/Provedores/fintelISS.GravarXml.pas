@@ -69,9 +69,6 @@ type
 
 implementation
 
-uses
-  ACBrNFSeXProviderBase;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     fintelISS
@@ -144,7 +141,7 @@ begin
     Result[i].AppendChild(nodeArray[0]);
 
     Result[i].AppendChild(AddNode(tcStr, '#20', 'IssRetido       ', 1, 01, NrOcorrIssRetido,
-      TACBrNFSeXProvider(FpAOwner).SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
+      FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
     Result[i].AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
                                    NFSe.Servico.ItemListaServico, DSC_CLISTSERV));

@@ -37,7 +37,7 @@ unit ACBrNFSeXInterface;
 interface
 
 uses
-  ACBrNFSeXClass, ACBrNFSeXParametros;
+  ACBrNFSeXClass, ACBrNFSeXParametros, ACBrNFSeXConversao;
 
 type
   IACBrNFSeXProvider = interface ['{6A71A59C-9EA1-45BF-BCAB-59BB90B62AAA}']
@@ -64,6 +64,24 @@ type
     property ConfigMsgDados: TConfigMsgDados read GetConfigMsgDados;
     property ConfigAssinar: TConfigAssinar read GetConfigAssinar;
     property ConfigSchemas: TConfigSchemas read GetConfigSchemas;
+
+    function SimNaoToStr(const t: TnfseSimNao): string;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao;
+    function SimNaoDescricao(const t: TnfseSimNao): string;
+
+    function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string;
+    function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
+    function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string;
+
+    function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string;
+    function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria;
+    function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string;
+
+    function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string;
+    function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao;
+    function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
+
+    function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; 
   end;
 
 implementation

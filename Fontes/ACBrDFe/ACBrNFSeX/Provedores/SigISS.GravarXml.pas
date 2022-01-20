@@ -73,9 +73,6 @@ type
 
 implementation
 
-uses
-  ACBrNFSeXProviderBase;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     SigISS
@@ -363,7 +360,7 @@ begin
                                       NFSe.Servico.Valores.ValorIssRetido, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'incentivo_fiscal', 1, 1, 0,
-   TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
+   FpAOwner.SimNaoToStr(NFSe.IncentivadorCultural), DSC_INDINCCULT));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cod_municipio_prestacao_servico', 1, 7, 0,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));

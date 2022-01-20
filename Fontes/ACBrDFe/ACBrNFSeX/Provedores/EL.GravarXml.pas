@@ -80,9 +80,6 @@ type
 
 implementation
 
-uses
-  ACBrNFSeXProviderBase;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     EL
@@ -211,16 +208,16 @@ begin
                                               NFSe.Prestador.NomeFantasia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IncentivadorCultural', 1, 1, 1,
-      TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.IncentivadorCultural), ''));
+      FpAOwner.SimNaoToStr(NFSe.IncentivadorCultural), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'OptanteSimplesNacional', 1, 1, 1,
-    TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
+    FpAOwner.SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'NaturezaOperacao', 1, 1, 1,
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'RegimeEspecialTributacao', 1, 1, 1,
-    TACBrNFSeXProvider(FpAOwner).RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
+    FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
 
   xmlNode := GerarEnderecoPrestador;
   Result.AppendChild(xmlNode);

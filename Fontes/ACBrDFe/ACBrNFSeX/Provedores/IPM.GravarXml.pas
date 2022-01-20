@@ -81,7 +81,7 @@ type
 implementation
 
 uses
-  ACBrNFSeX, ACBrNFSeXProviderBase;
+  ACBrNFSeX;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -274,7 +274,7 @@ begin
     Result[i] := CreateElement('lista');
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'tributa_municipio_prestador', 1, 1, 1,
-      TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.ItemServico[I].TribMunPrestador), ''));
+      FpAOwner.SimNaoToStr(NFSe.Servico.ItemServico[I].TribMunPrestador), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_local_prestacao_servico', 1, 9, 1,
       CodIBGEToCodTOM(StrToIntDef(NFSe.Servico.ItemServico[I].CodMunPrestacao, 0)), ''));

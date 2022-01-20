@@ -89,9 +89,6 @@ type
 
 implementation
 
-uses
-  ACBrNFSeXProviderBase;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Infisc

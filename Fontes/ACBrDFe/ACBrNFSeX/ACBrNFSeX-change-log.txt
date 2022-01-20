@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 20/01/2022
+-- Diversos --
+[*] Possível correção para o problema do erro: Absctrat Error que estava
+    ocorrendo com o Delphi 7.
+   Por: Elton Barbosa / Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Correção na leitura dos dados do prestador.
    Por: Haroldo

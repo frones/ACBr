@@ -67,7 +67,7 @@ implementation
 
 uses
   ACBrXMLBase,
-  ACBrNFSeXConversao, ACBrNFSeXProviderBase,
+  ACBrNFSeXConversao,
   ACBrUtil,
   ACBrConsts;
 
@@ -145,9 +145,9 @@ begin
 
     NFSe.DataEmissaoRps           := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataEmissaoRps'), tcDat);
     NFSe.NaturezaOperacao         := StrToNaturezaOperacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr));
-    NFSe.RegimeEspecialTributacao := TACBrNFSeXProvider(FpAOwner).StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
-    NFSe.OptanteSimplesNacional   := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
-    NFSe.IncentivadorCultural     := TACBrNFSeXProvider(FpAOwner).StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivadorCultural'), tcStr));
+    NFSe.RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RegimeEspecialTributacao'), tcStr));
+    NFSe.OptanteSimplesNacional   := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
+    NFSe.IncentivadorCultural     := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivadorCultural'), tcStr));
 
     SCompet := Trim(AuxNode.Childrens.FindAnyNs('Competencia').Content);
     NFSe.Competencia              := EncodeDate(StrToInt(Copy(SCompet, 1, 4)),
@@ -258,7 +258,7 @@ begin
       ValorInss       := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorINSS').Content, '.', '', [rfReplaceAll]), 0);
       ValorIr         := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorIR').Content, '.', '', [rfReplaceAll]), 0);
       ValorCsll       := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorCSLL').Content, '.', '', [rfReplaceAll]), 0);
-      IssRetido       := TACBrNFSeXProvider(FpAOwner).StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ISSRetido'), tcStr));
+      IssRetido       := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ISSRetido'), tcStr));
       ValorIss        := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('ValorISS').Content, '.', '', [rfReplaceAll]), 0);
       OutrasRetencoes := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('OutrasRetencoes').Content, '.', '', [rfReplaceAll]), 0);
       BaseCalculo     := StringToFloatDef(StringReplace(AuxNode.Childrens.FindAnyNs('BaseCalculo').Content, '.', '', [rfReplaceAll]), 0);

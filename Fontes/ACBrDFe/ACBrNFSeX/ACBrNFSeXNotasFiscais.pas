@@ -173,7 +173,7 @@ implementation
 
 uses
   ACBrUtil, synautil, IniFiles, StrUtilsEx,
-  ACBrNFSeXProviderBase, ACBrNFSeX, ACBrNFSeXInterface;
+  ACBrNFSeX, ACBrNFSeXInterface, ACBrNFSeXProviderBase;
 
 function CompRpsPorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -267,11 +267,14 @@ var
   sSecao, sFim: String;
   Ok: Boolean;
   i: Integer;
-  Provider: TACBrNFSeXProvider;
+  FProvider: IACBrNFSeXProvider;
 begin
-  INIRec := TMemIniFile.Create('');
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
-  Provider := TACBrNFSeXProvider(TACBrNFSeX(FACBrNFSe).Provider);
+  if not Assigned(FProvider) then
+    raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  INIRec := TMemIniFile.Create('');
 
   try
     LerIniArquivoOuString(AIniString, INIRec);
@@ -291,7 +294,7 @@ begin
       // Provedor AssessorPublico
       Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);
 
-      Producao := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
+      Producao := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Producao', '1'));
       StatusRps := StrToStatusRPS(Ok, INIRec.ReadString(sSecao, 'Status', '1'));
       OutrasInformacoes := INIRec.ReadString(sSecao, 'OutrasInformacoes', '');
 
@@ -323,9 +326,9 @@ begin
 
       sSecao := 'Prestador';
 
-      RegimeEspecialTributacao := Provider.StrToRegimeEspecialTributacao(Ok, INIRec.ReadString(sSecao, 'Regime', '0'));
-      OptanteSimplesNacional := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'OptanteSN', '1'));
-      IncentivadorCultural := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'IncentivadorCultural', '1'));
+      RegimeEspecialTributacao := FProvider.StrToRegimeEspecialTributacao(Ok, INIRec.ReadString(sSecao, 'Regime', '0'));
+      OptanteSimplesNacional := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'OptanteSN', '1'));
+      IncentivadorCultural := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'IncentivadorCultural', '1'));
 
       with Prestador do
       begin
@@ -394,8 +397,8 @@ begin
           Email := INIRec.ReadString(sSecao, 'Email', '');
         end;
 
-        AtualizaTomador := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'AtualizaTomador', '1'));
-        TomadorExterior := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'TomadorExterior', '1'));
+        AtualizaTomador := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'AtualizaTomador', '1'));
+        TomadorExterior := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'TomadorExterior', '1'));
       end;
 
       sSecao := 'Intermediario';
@@ -428,7 +431,7 @@ begin
         ExigibilidadeISS := StrToExigibilidadeISS(Ok, INIRec.ReadString(sSecao, 'ExigibilidadeISS', '1'));
         MunicipioIncidencia := INIRec.ReadInteger(sSecao, 'MunicipioIncidencia', 0);
         UFPrestacao := INIRec.ReadString(sSecao, 'UFPrestacao', '');
-        ResponsavelRetencao := Provider.StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', '1'));
+        ResponsavelRetencao := FProvider.StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', '1'));
 
         i := 1;
         while true do
@@ -491,7 +494,7 @@ begin
 
             ValorTotal := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorTotal', ''), 0);
 
-            Tributavel := Provider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Tributavel', '1'));
+            Tributavel := FProvider.StrToSimNao(Ok, INIRec.ReadString(sSecao, 'Tributavel', '1'));
           end;
 
           Inc(i);
@@ -514,7 +517,7 @@ begin
           ValorIr := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorIr', ''), 0);
           ValorCsll := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorCsll', ''), 0);
 
-          ISSRetido := Provider.StrToSituacaoTributaria(Ok, INIRec.ReadString(sSecao, 'ISSRetido', '0'));
+          ISSRetido := FProvider.StrToSituacaoTributaria(Ok, INIRec.ReadString(sSecao, 'ISSRetido', '0'));
 
           OutrasRetencoes := StringToFloatDef(INIRec.ReadString(sSecao, 'OutrasRetencoes', ''), 0);
           DescontoIncondicionado := StringToFloatDef(INIRec.ReadString(sSecao, 'DescontoIncondicionado', ''), 0);

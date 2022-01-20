@@ -55,9 +55,6 @@ type
 
 implementation
 
-uses
-  ACBrNFSeXProviderBase;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     EloTech
@@ -112,7 +109,7 @@ begin
                                         NFSe.Servico.ItemServico[i].Descricao));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'Tributavel', 1, 1, 0,
-      TACBrNFSeXProvider(FpAOwner).SimNaoToStr(NFSe.Servico.ItemServico[i].Tributavel)));
+      FpAOwner.SimNaoToStr(NFSe.Servico.ItemServico[i].Tributavel)));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'Quantidade', 1, 17, 1,
                                        NFSe.Servico.ItemServico[i].Quantidade));

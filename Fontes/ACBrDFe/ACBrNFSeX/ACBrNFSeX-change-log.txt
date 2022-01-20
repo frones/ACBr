@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/01/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Formosa/GO trocou de provedor, novo agora é Centi.
+   Por: Alfredo - Jave Informatica
+-- ISSNet.GravarXml --
+[*] A configuação DivAliq100 agora esta condicionada ao valor de Params1.
+   Por: Italo Giurizzato Junior
+-- ISSFortaleza.Provider --
+[*] Sobrescrito o TratarRetornoCancelaNFSe, no ISSFortaleza o retorno é diferente.
+   Por: Italo Giurizzato Junior
+
 19/01/2022
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Incluido a leitura da tag: MunicipioPrestacaoServico. 

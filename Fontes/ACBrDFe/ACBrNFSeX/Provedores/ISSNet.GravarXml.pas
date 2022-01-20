@@ -70,7 +70,11 @@ begin
   inherited Configuracao;
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
-  DivAliq100 := True;
+
+  if Pos('NaoDiv100', FpAOwner.ConfigGeral.Params1) > 0 then
+    DivAliq100 := False
+  else
+    DivAliq100 := True;
 
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/01/2022
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Possível correção para o problema no tratamento do retorno do cancelamento.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade: Formosa/GO trocou de provedor, novo agora é Centi.
    Por: Alfredo - Jave Informatica

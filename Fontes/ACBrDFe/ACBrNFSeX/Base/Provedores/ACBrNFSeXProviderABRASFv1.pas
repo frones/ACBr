@@ -1308,7 +1308,7 @@ procedure TACBrNFSeProviderABRASFv1.TratarRetornoCancelaNFSe(Response: TNFSeCanc
 var
   AErro: TNFSeEventoCollectionItem;
   Document: TACBrXmlDocument;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, ANodePed, ANodeInfCon: TACBrXmlNode;
   Ret: TRetCancelamento;
   IdAttr: string;
 begin
@@ -1369,20 +1369,28 @@ begin
       else
         IdAttr := 'ID';
 
-      ANode := ANode.Childrens.FindAnyNs('Pedido');
-      ANode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
+      ANodePed := ANode.Childrens.FindAnyNs('Pedido');
+      ANodePed := ANodePed.Childrens.FindAnyNs('InfPedidoCancelamento');
 
-      Ret.Pedido.InfID.ID := ObterConteudoTag(ANode.Attributes.Items[IdAttr]);
-      Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
+      Ret.Pedido.InfID.ID := ObterConteudoTag(ANodePed.Attributes.Items[IdAttr]);
+      Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
 
-      ANode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
+      ANodePed := ANodePed.Childrens.FindAnyNs('IdentificacaoNfse');
 
       with Ret.Pedido.IdentificacaoNfse do
       begin
-        Numero := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
-        Cnpj := ObterConteudoTag(ANode.Childrens.FindAnyNs('Cnpj'), tcStr);
-        InscricaoMunicipal := ObterConteudoTag(ANode.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
-        CodigoMunicipio := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+        Numero := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('Numero'), tcStr);
+        Cnpj := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('Cnpj'), tcStr);
+        InscricaoMunicipal := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+        CodigoMunicipio := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+      end;
+
+      ANodeInfCon := ANode.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
+
+      if ANodeInfCon <> nil then
+      begin
+        Ret.Sucesso := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('Sucesso'), tcStr);
+        Ret.DataHora := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('DataHora'), tcDatHor);
       end;
     except
       on E:Exception do

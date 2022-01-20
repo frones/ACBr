@@ -111,7 +111,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrDFeUtil,
-  ACBrNFSeXConversao, ACBrNFSeXProviderBase;
+  ACBrNFSeXConversao, ACBrNFSeXInterface;
 
 constructor TACBrNFSeXDANFSeFR.Create(AOwner: TComponent);
 begin
@@ -849,9 +849,9 @@ end;
 procedure TACBrNFSeXDANFSeFR.CarregaItensServico(ANFSe: TNFSe);
 var
   I: Integer;
-  Provider: TACBrNFSeXProvider;
+  FProvider: IACBrNFSeXProvider;
 begin
-  Provider := TACBrNFSeXProvider(ACBrNFSe.Provider);
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
   with cdsItensServico do
   begin
@@ -865,7 +865,7 @@ begin
         cdsItensServico.FieldByName('Quantidade').AsString := FloatToStr(Quantidade);
         cdsItensServico.FieldByName('ValorUnitario').AsString := FormatFloatBr(ValorUnitario, ',0.00');
         cdsItensServico.FieldByName('ValorTotal').AsString := FormatFloatBr(ValorTotal, ',0.00');
-        cdsItensServico.FieldByName('Tributavel').AsString := Provider.SimNaoDescricao(Tributavel);
+        cdsItensServico.FieldByName('Tributavel').AsString := FProvider.SimNaoDescricao(Tributavel);
         cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr(Aliquota, '0.00');
         cdsItensServico.FieldByName('Unidade').AsString := Unidade;
         cdsItensServico.FieldByName('AliquotaISSST').AsString := FormatFloatBr(AliqISSST, '0.00');
@@ -878,9 +878,9 @@ end;
 
 procedure TACBrNFSeXDANFSeFR.CarregaParametros(ANFSe: TNFSe);
 var
-  Provider: TACBrNFSeXProvider;
+  FProvider: IACBrNFSeXProvider;
 begin
-  Provider := TACBrNFSeXProvider(ACBrNFSe.Provider);
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
   with cdsParametros do
   begin
@@ -890,21 +890,21 @@ begin
     with ANFSe do
     begin
       FieldByName('OutrasInformacoes').AsString := OutrasInformacoes;
-      FieldByName('NaturezaOperacao').AsString := Provider.NaturezaOperacaoDescricao(NaturezaOperacao);
+      FieldByName('NaturezaOperacao').AsString := FProvider.NaturezaOperacaoDescricao(NaturezaOperacao);
 
       if Provedor = proEL then
       begin
         if RegimeEspecialTributacao = retNenhum then
           FieldByName('RegimeEspecialTributacao').AsString := 'Tributação Normal'
         else
-          FieldByName('RegimeEspecialTributacao').AsString := Provider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
+          FieldByName('RegimeEspecialTributacao').AsString := FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
 
         if OptanteSimplesNacional = snSim then
           FieldByName('OptanteSimplesNacional').AsString := 'Optante'
         else
           FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
 
-        FieldByName('IncentivadorCultural').AsString := Provider.SimNaoDescricao(IncentivadorCultural);
+        FieldByName('IncentivadorCultural').AsString := FProvider.SimNaoDescricao(IncentivadorCultural);
 
         with Servico do
         begin
@@ -924,7 +924,7 @@ begin
       end
       else
       begin
-        FieldByName('RegimeEspecialTributacao').AsString := Provider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
+        FieldByName('RegimeEspecialTributacao').AsString := FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
 
         if Provedor = proAdm then
         begin
@@ -934,9 +934,9 @@ begin
             FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
         end
         else
-          FieldByName('OptanteSimplesNacional').AsString := Provider.SimNaoDescricao(OptanteSimplesNacional);
+          FieldByName('OptanteSimplesNacional').AsString := FProvider.SimNaoDescricao(OptanteSimplesNacional);
 
-        FieldByName('IncentivadorCultural').AsString := Provider.SimNaoDescricao(IncentivadorCultural);
+        FieldByName('IncentivadorCultural').AsString := FProvider.SimNaoDescricao(IncentivadorCultural);
 
         with Servico do
         begin
@@ -1053,9 +1053,9 @@ end;
 
 procedure TACBrNFSeXDANFSeFR.CarregaServicos(ANFSe: TNFSe);
 var
-  Provider: TACBrNFSeXProvider;
+  FProvider: IACBrNFSeXProvider;
 begin
-  Provider := TACBrNFSeXProvider(ACBrNFSe.Provider);
+  FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
   with cdsServicos do
   begin
@@ -1084,7 +1084,7 @@ begin
       FieldByName('CodigoPais').AsString := IntToStr(CodigoPais);
       FieldByName('NumeroProcesso').AsString := NumeroProcesso;
       FieldByName('Descricao').AsString := Descricao;
-      FieldByName('ResponsavelRetencao').AsString := Provider.ResponsavelRetencaoToStr(ResponsavelRetencao);
+      FieldByName('ResponsavelRetencao').AsString := FProvider.ResponsavelRetencaoToStr(ResponsavelRetencao);
       FieldByName('Tributacao').AsString := TributacaoToStr(Tributacao);
 
       with Valores do
@@ -1096,7 +1096,7 @@ begin
         FieldByName('ValorInss').AsFloat := ValorInss;
         FieldByName('ValorIr').AsFloat := ValorIr;
         FieldByName('ValorCsll').AsFloat := ValorCsll;
-        FieldByName('IssRetido').AsString := Provider.SituacaoTributariaDescricao(IssRetido);
+        FieldByName('IssRetido').AsString := FProvider.SituacaoTributariaDescricao(IssRetido);
         FieldByName('ValorIss').AsFloat := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat := OutrasRetencoes;
         FieldByName('BaseCalculo').AsFloat := BaseCalculo;
@@ -1243,7 +1243,6 @@ procedure TACBrNFSeXDANFSeFR.CarregaImagemPrestadora;
 var
   vStream: TMemoryStream;
   vStringStream: TStringStream;
-
 begin
   With DANFSeXClassOwner do
   begin

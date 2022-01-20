@@ -252,7 +252,7 @@ implementation
 
 uses
   StrUtils, DateUtils, ACBrUtil,
-  ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXProviderBase,
+  ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXInterface,
   ACBrValidador, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
@@ -401,23 +401,24 @@ end;
 procedure TfrlXDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   MostrarObra, MostrarNaturezaOperacao: Boolean;
-  Provider: TACBrNFSeXProvider;
+  FProvider: IACBrNFSeXProvider;
 begin
   inherited;
+
   RLLabel16.Visible := False;
   rllCodTributacaoMunicipio.Visible     := False;
   rlmDescCodTributacaoMunicipio.Visible := False;
 
-  Provider := TACBrNFSeXProvider(ACBrNFSe.Provider);
+  FProvider := ACBrNFSe.Provider;
 
   With fpNFSe do
   begin
-    rllNatOperacao.Caption    := ACBrStr(Provider.NaturezaOperacaoDescricao(NaturezaOperacao));
+    rllNatOperacao.Caption    := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
     MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
     RLLabel137.Visible        := MostrarNaturezaOperacao;
-    rllRegimeEspecial.Caption := ACBrStr(Provider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));
-    rllOpcaoSimples.Caption   := ACBrStr(Provider.SimNaoDescricao(OptanteSimplesNacional));
-    rllIncentivador.Caption   := ACBrStr(Provider.SimNaoDescricao(IncentivadorCultural));
+    rllRegimeEspecial.Caption := ACBrStr(FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));
+    rllOpcaoSimples.Caption   := ACBrStr(FProvider.SimNaoDescricao(OptanteSimplesNacional));
+    rllIncentivador.Caption   := ACBrStr(FProvider.SimNaoDescricao(IncentivadorCultural));
     rllCodObra.Caption        := ConstrucaoCivil.CodigoObra;
     rllCodART.Caption         := ConstrucaoCivil.Art;
 
@@ -483,7 +484,7 @@ begin
       rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
       rllBaseCalc.Caption             := FormatFloat(',0.00', BaseCalculo);
       rllAliquota.Caption             := ManterAliquota (Aliquota);
-      rllISSReter.Caption             := Provider.SituacaoTributariaDescricao(IssRetido);
+      rllISSReter.Caption             := FProvider.SituacaoTributariaDescricao(IssRetido);
       rllValorISS.Caption             := FormatFloat(',0.00',ValorIss);
     end;
   end;

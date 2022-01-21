@@ -59,7 +59,8 @@ type
   TdeducaoCollectionItem = class;
   Tarmazem = class;
   TdeclaracaoEe = class;
-  Ticms = class;
+  TicmsCollection = class;
+  TicmsCollectionItem = class;
   TdocumentoInstrucaoDespachoCollection = class;
   TdocumentoInstrucaoDespachoCollectionItem = class;
   TdossieCollection = class;
@@ -115,7 +116,7 @@ type
     FfreteTotalDolares: Currency;
     FfreteTotalMoeda: Currency;
     FfreteTotalReais: Currency;
-    Ficms: Ticms;
+    Ficms: TicmsCollection;
     FimportadorCodigoTipo: Integer;
     FimportadorCpfRepresentanteLegal: string;
     FimportadorEnderecoBairro: String;
@@ -207,7 +208,7 @@ type
     property freteTotalDolares: Currency                                       read FfreteTotalDolares                    write FfreteTotalDolares;
     property freteTotalMoeda: Currency                                         read FfreteTotalMoeda                      write FfreteTotalMoeda;
     property freteTotalReais: Currency                                         read FfreteTotalReais                      write FfreteTotalReais;
-    property icms: Ticms                                                       read Ficms;
+    property icms: TicmsCollection                                             read Ficms;
     property importadorCodigoTipo: Integer                                     read FimportadorCodigoTipo                 write FimportadorCodigoTipo;
     property importadorCpfRepresentanteLegal: String                           read FimportadorCpfRepresentanteLegal      write FimportadorCpfRepresentanteLegal;
     property importadorEnderecoBairro: String                                  read FimportadorEnderecoBairro             write FimportadorEnderecoBairro;
@@ -716,19 +717,31 @@ type
   private
     FcodigoTipoEmbalagem: Integer;
     FnomeEmbalagem: String;
+    FmoedaNegociadaCodigo: integer;
     FquantidadeVolume: Currency;
   public
-    property codigoTipoEmbalagem: Integer read FcodigoTipoEmbalagem write FcodigoTipoEmbalagem;
-    property nomeEmbalagem: String        read FnomeEmbalagem       write FnomeEmbalagem;
-    property quantidadeVolume: Currency   read FquantidadeVolume    write FquantidadeVolume;
+    property codigoTipoEmbalagem: Integer  read FcodigoTipoEmbalagem  write FcodigoTipoEmbalagem;
+    property nomeEmbalagem: String         read FnomeEmbalagem        write FnomeEmbalagem;
+    property moedaNegociadaCodigo: integer read FmoedaNegociadaCodigo write FmoedaNegociadaCodigo;
+    property quantidadeVolume: Currency    read FquantidadeVolume     write FquantidadeVolume;
   end;
 
-  Ticms = class(TObject)
+  TicmsCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TicmsCollectionItem;
+    procedure SetItem(Index: Integer; Value: TicmsCollectionItem);
+  public
+    function New: TicmsCollectionItem;
+    property Items[Index: Integer]: TicmsCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TicmsCollectionItem = class(TObject)
   private
     FagenciaIcms: Integer;
     FbancoIcms: Integer;
     FcodigoTipoRecolhimentoIcms: Integer;
     FcpfResponsavelRegistro: String;
+    FdataPagamentoIcms: TDateTime;
     FdataRegistro: TDateTime;
     FhoraRegistro: String;
     FnomeTipoRecolhimentoIcms: String;
@@ -740,6 +753,7 @@ type
     property bancoIcms: Integer                  read FbancoIcms                  write FbancoIcms;
     property codigoTipoRecolhimentoIcms: Integer read FcodigoTipoRecolhimentoIcms write FcodigoTipoRecolhimentoIcms;
     property cpfResponsavelRegistro: String      read FcpfResponsavelRegistro     write FcpfResponsavelRegistro;
+    property dataPagamentoIcms: TDateTime        read FdataPagamentoIcms          write FdataPagamentoIcms;
     property dataRegistro: TDateTime             read FdataRegistro               write FdataRegistro;
     property horaRegistro: String                read FhoraRegistro               write FhoraRegistro;
     property nomeTipoRecolhimentoIcms: String    read FnomeTipoRecolhimentoIcms   write FnomeTipoRecolhimentoIcms;
@@ -798,7 +812,7 @@ begin
   FdocumentoInstrucaoDespacho := TdocumentoInstrucaoDespachoCollection.Create;
   Fdossie       := TdossieCollection.Create;
   Fembalagem    := Tembalagem.Create;
-  Ficms         := Ticms.Create;
+  Ficms         := TicmsCollection.Create;
   Fpagamento    := TpagamentoCollection.Create;
 end;
 
@@ -1002,6 +1016,24 @@ function TpagamentoCollection.New: TpagamentoCollectionItem;
 begin
   Result := TpagamentoCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TicmsCollection }
+
+function TicmsCollection.GetItem(Index: Integer): TicmsCollectionItem;
+begin
+  Result := TicmsCollectionItem(inherited GetItem(Index));
+end;
+
+function TicmsCollection.New: TicmsCollectionItem;
+begin
+  Result := TicmsCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TicmsCollection.SetItem(Index: Integer; Value: TicmsCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

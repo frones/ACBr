@@ -364,9 +364,10 @@ begin
 
   if (Leitor.rExtrai(1, 'embalagem') <> '') then
   begin
-    DI.embalagem.codigoTipoEmbalagem := Leitor.rCampo(tcInt, 'codigoTipoEmbalagem');
-    DI.embalagem.nomeEmbalagem       := Leitor.rCampo(tcStr, 'nomeEmbalagem');
-    DI.embalagem.quantidadeVolume    := Leitor.rCampo(tcDe2, 'quantidadeVolume');
+    DI.embalagem.codigoTipoEmbalagem  := Leitor.rCampo(tcInt, 'codigoTipoEmbalagem');
+    DI.embalagem.nomeEmbalagem        := Leitor.rCampo(tcStr, 'nomeEmbalagem');
+    DI.embalagem.moedaNegociadaCodigo := Leitor.rCampo(tcInt, 'moedaNegociadaCodigo');
+    DI.embalagem.quantidadeVolume     := Leitor.rCampo(tcDe2, 'quantidadeVolume');
   end;
   Leitor.GroupRestore;
 
@@ -379,18 +380,23 @@ begin
   DI.freteTotalMoeda           := Leitor.rCampo(tcDe2, 'freteTotalMoeda');
   DI.freteTotalReais           := Leitor.rCampo(tcDe2, 'freteTotalReais');
 
-  if (Leitor.rExtrai(1, 'icms') <> '') then
+  i := 0;
+  DI.dossie.Clear;
+  while (Leitor.rExtrai(1, 'icms', '', i+1) <> '') do
   begin
-    DI.icms.agenciaIcms                := Leitor.rCampo(tcInt, 'agenciaIcms');
-    DI.icms.bancoIcms                  := Leitor.rCampo(tcInt, 'bancoIcms');
-    DI.icms.codigoTipoRecolhimentoIcms := Leitor.rCampo(tcInt, 'codigoTipoRecolhimentoIcms');
-    DI.icms.cpfResponsavelRegistro     := Leitor.rCampo(tcStr, 'cpfResponsavelRegistro');
-    DI.icms.dataRegistro               := Leitor.rCampo(tcDatCFe, 'dataRegistro');
-    DI.icms.horaRegistro               := Leitor.rCampo(tcHorCFe, 'horaRegistro');
-    DI.icms.nomeTipoRecolhimentoIcms   := Leitor.rCampo(tcStr, 'nomeTipoRecolhimentoIcms');
-    DI.icms.numeroSequencialIcms       := Leitor.rCampo(tcInt, 'numeroSequencialIcms');
-    DI.icms.ufIcms                     := Leitor.rCampo(tcStr, 'ufIcms');
-    DI.icms.valorTotalIcms             := Leitor.rCampo(tcDe2, 'valorTotalIcms');
+    DI.icms.New;
+    DI.icms[i].agenciaIcms                := Leitor.rCampo(tcInt, 'agenciaIcms');
+    DI.icms[i].bancoIcms                  := Leitor.rCampo(tcInt, 'bancoIcms');
+    DI.icms[i].codigoTipoRecolhimentoIcms := Leitor.rCampo(tcInt, 'codigoTipoRecolhimentoIcms');
+    DI.icms[i].cpfResponsavelRegistro     := Leitor.rCampo(tcStr, 'cpfResponsavelRegistro');
+    DI.icms[i].dataPagamentoIcms          := Leitor.rCampo(tcDatCFe, 'dataPagamentoIcms');
+    DI.icms[i].dataRegistro               := Leitor.rCampo(tcDatCFe, 'dataRegistro');
+    DI.icms[i].horaRegistro               := Leitor.rCampo(tcHorCFe, 'horaRegistro');
+    DI.icms[i].nomeTipoRecolhimentoIcms   := Leitor.rCampo(tcStr, 'nomeTipoRecolhimentoIcms');
+    DI.icms[i].numeroSequencialIcms       := Leitor.rCampo(tcInt, 'numeroSequencialIcms');
+    DI.icms[i].ufIcms                     := Leitor.rCampo(tcStr, 'ufIcms');
+    DI.icms[i].valorTotalIcms             := Leitor.rCampo(tcDe2, 'valorTotalIcms');
+    Inc(i);
   end;
   Leitor.GroupRestore;
 

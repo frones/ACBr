@@ -44,14 +44,7 @@ unit ACBrDFeReport;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef FMX}
-    FMX.Graphics, System.UITypes, System.UIConsts, FMX.Types,
-  {$Else}
-    Graphics,
-  {$EndIf}
-  ACBrBase,
-  pcnConversao;
+  Classes, SysUtils, ACBrBase, pcnConversao;
 
 type
 

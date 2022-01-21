@@ -978,7 +978,7 @@ begin
     else
       FieldByName('Mensagem0').AsString := IfThen(ANFSe.SituacaoNfse = snCancelado, 'NFSe CANCELADA', '');
 
-    if (ANFSe.Producao = snNao) then
+    if (ACBrNFSe.Configuracoes.WebServices.AmbienteCodigo = 2) then
       FieldByName('Mensagem0').AsString := Trim(FieldByName('Mensagem0').AsString + sLineBreak + ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'));
 
     Post;

@@ -677,7 +677,12 @@ begin
     end;
 
     if FCFe.Dest.CNPJCPF <> '' then
-      FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CPF %s', [FormatarCPF(OnlyNumber(FCFe.Dest.CNPJCPF))])
+    begin
+      if (FCFe.Dest.CNPJCPF.Length = 14) then
+        FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CNPJ %s', [FormatarCNPJ(OnlyNumber(FCFe.Dest.CNPJCPF))])
+      else
+        FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CPF %s', [FormatarCPF(OnlyNumber(FCFe.Dest.CNPJCPF))]);
+    end
     else
       FieldByName('CPFConsumidor').AsString := 'CONSUMIDOR NÃO IDENTIFICADO';
 

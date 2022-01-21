@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2022
+--ACBrBancoSafra--
+[*] Ajuste na Geração Detalhe Remessa CNAB400 NumeroRemessa
+
 07/10/2021
 --ACBrBoletoWS, ACBrBoletoRetorno--
 [*] Ajuste na atualização do Retorno WebService na lista de títulos

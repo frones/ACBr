@@ -978,7 +978,7 @@ begin
               PadRight(Sacado.SacadoAvalista.NomeAvalista, 30)                               + // 352 a 381 - Nome do Sacador Avalista / Mensagem específica vide nota 6.1.9 conforme manual do banco
               Space(7)                                                                       + // 382 a 388 - "Brancos"
               '422'                                                                          + // 389 a 391 - Banco Emitente do Boleto
-              copy(aRemessa.Text, 392, 3)                                                    + // 392 a 394 - Numero Seqüencial Geração Arquivo Remessa
+              IntToStrZero(FNumeroRemessa, 3)                                                + // 392 a 394 - Numero Seqüencial Geração Arquivo Remessa
               IntToStrZero(ARemessa.Count + 1, 6);                                             // 395 a 400 - Número Sequencial De Registro De Arquivo
 
     aTotal := aTotal + ValorDocumento;

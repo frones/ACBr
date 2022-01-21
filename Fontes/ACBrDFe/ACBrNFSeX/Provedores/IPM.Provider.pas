@@ -138,8 +138,8 @@ begin
     ConsultaNFSe := False;
   end;
 
-  ConfigAssinar.RpsGerarNFSe := (Pos('AssinarRps', ConfigGeral.Params2) > 0);
-  ConfigAssinar.CancelarNFSe := (Pos('AssinarCancelar', ConfigGeral.Params2) > 0);
+  ConfigAssinar.RpsGerarNFSe := (Pos('assinarrps', lowercase(ConfigGeral.Params2)) > 0);
+  ConfigAssinar.CancelarNFSe := (Pos('assinarcancelar', lowercase(ConfigGeral.Params2)) > 0);
 
   SetXmlNameSpace('');
 
@@ -889,7 +889,7 @@ begin
   else
     xSerie := '';
 
-  if ConfigGeral.Params1 = 'SolicitarCancelamento' then
+  if lowercase(ConfigGeral.Params1) = 'solicitarcancelamento' then
   begin
     Response.ArquivoEnvio := '<solicitacao_cancelamento>' +
                            '<prestador>' +

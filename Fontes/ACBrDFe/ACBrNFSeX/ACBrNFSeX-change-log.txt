@@ -45,6 +45,12 @@ Símbolo : Significado
 
 21/01/2022
 -- ACBrNFSeXServicos --
+[*] A cidade: Medianeira/PR se utiliza da versão 1.00 - provedor Pronim
+   Por: mdo Gomes
+-- Betha.GravarXml --
+[*] Imposta uma condição para gerar ou não a tag do Responsável pela retenção.
+   Por: Haroldo
+-- ACBrNFSeXServicos --
 [*] Incluida a cidade: Pires do Rio/GO - provedor Centi
    Por: Ramalho
 

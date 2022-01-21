@@ -108,10 +108,10 @@ begin
   FpNrOcorrCodigoCnae := 1;
   FpNrOcorrItemLei116 := 1;
 
-  if Pos('NaoGerarCodigoCnae', FpAOwner.ConfigGeral.Params2) > 0 then
+  if Pos('naogerarcodigocnae', lowercase(FpAOwner.ConfigGeral.Params2)) > 0 then
     FpNrOcorrCodigoCnae := -1;
 
-  if Pos('NaoGerarItemLei116', FpAOwner.ConfigGeral.Params2) > 0 then
+  if Pos('naogeraritemlei116', lowercase(FpAOwner.ConfigGeral.Params2)) > 0 then
     FpNrOcorrItemLei116 := -1;
 end;
 

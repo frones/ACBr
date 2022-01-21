@@ -95,7 +95,7 @@ procedure TNFSeW_Actcon202.Configuracao;
 begin
   inherited Configuracao;
 
-  if FpAOwner.ConfigGeral.Params1 = 'Date' then
+  if lowercase(FpAOwner.ConfigGeral.Params1) = 'date' then
     FormatoEmissao := tcDat
   else
     FormatoEmissao := tcDatHor;

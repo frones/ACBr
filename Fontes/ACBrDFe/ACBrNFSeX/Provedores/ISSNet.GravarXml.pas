@@ -71,7 +71,7 @@ begin
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
 
-  if Pos('NaoDiv100', FpAOwner.ConfigGeral.Params1) > 0 then
+  if Pos('naodiv100', lowercase(FpAOwner.ConfigGeral.Params1)) > 0 then
     DivAliq100 := False
   else
     DivAliq100 := True;

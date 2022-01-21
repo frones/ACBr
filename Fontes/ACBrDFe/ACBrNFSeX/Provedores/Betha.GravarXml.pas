@@ -59,7 +59,8 @@ type
   TNFSeW_Betha202 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
-
+  public
+    function GerarXml: Boolean; override;
   end;
 
 implementation
@@ -147,6 +148,16 @@ begin
   FormatoItemListaServico := filsSemFormatacao;
 
   NrOcorrCodigoPaisServico := -1;
+end;
+
+function TNFSeW_Betha202.GerarXml: Boolean;
+begin
+  if NFSe.Servico.Valores.IssRetido <> stNormal then
+    NrOcorrRespRetencao := 0   // se tem a retenção a tag deve ser gerada
+  else
+    NrOcorrRespRetencao := -1; // se não tem a retenção a tag não deve ser gerada
+
+  Result := inherited GerarXml;
 end;
 
 end.

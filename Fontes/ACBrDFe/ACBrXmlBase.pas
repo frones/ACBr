@@ -399,12 +399,24 @@ begin
   begin
     xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
 
-    // Alguns provedores retorna a data de competencia só com o mês e ano e
+    // Alguns provedores retorna a data de competencia com o ano, mês e dia e
+    // sem a barra exemplo <Competencia>20220121</Competencia>
+    // Correção: Inclusão da barra "/"
+    if (Pos('/', xData) = 0) and (Length(xData) = 8) then
+    begin
+      if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+        xData := copy(xData, 1, 4) + '/' + copy(xData, 5, 2) + '/' + copy(xData, 7, 2)
+      else
+        xData := copy(xData, 1, 2) + '/' + copy(xData, 3, 2) + '/' + copy(xData, 5, 4);
+    end;
+
+    // Alguns provedores retorna a data de competencia só com o ano e mês e
     // sem a barra exemplo <Competencia>202111</Competencia>
     // Correção: Inclusão da barra "/"
     if (Pos('/', xData) = 0) and (Length(xData) = 6) then
     begin
-      if Copy(xData, 1, 2) = Copy(IntToStr(YearOf(Date)), 1, 2) then
+      if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+//      if Copy(xData, 1, 2) = Copy(IntToStr(YearOf(Date)), 1, 2) then
         xData := copy(xData, 1, 4) + '/' + copy(xData, 5, 2)
       else
         xData := copy(xData, 1, 2) + '/' + copy(xData, 3, 4);

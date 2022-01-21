@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2022
+-- ACBrXmlBase --
+[*] A função LerDatas não estava previso uma data no formato AAAAMMDD.
+    Ajuste foi feito para reconhecer esse formato também.
+   Por: Italo Giurizzato Junior
+
 13/01/2022
 -- ACBrXmlBase --
 [+] Inclusão do tipo: TACBrTipoEmissao e das funções:TipoEmissaoToStr,

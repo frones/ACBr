@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  httpsend, ssl_openssl,
+  httpsend, ssl_openssl, ACBrOpenSSLUtils,
   ACBrBase,
   ACBrPIXBase, ACBrPIXQRCodeEstatico,
   ACBrPIXSchemasProblema,
@@ -55,6 +55,7 @@ const
   ChttpMethodDELETE = 'DELETE';
 
   CContentTypeUTF8 = 'charset=utf-8';
+  CContentTypeTextPlain = 'text/plain';
   CContentTypeApplicationJSon = 'application/json';
   CContentTypeApplicationWwwFormUrlEncoded = 'application/x-www-form-urlencoded';
 
@@ -123,6 +124,8 @@ resourcestring
   sErroPSPChavePIX = 'Chave Pix não informada';
   sErroPSPTipoChave = 'Chave Pix inválida';
   sErroHttp = 'Erro HTTP: %d, Metodo: %s, URL: %s';
+  sErroPropriedadeNaoDefinida = 'Propriedade %s não atribuida';
+
 
 type
 
@@ -130,6 +133,7 @@ type
   TACBrPSP = class;
 
   EACBrPixHttpException = class(EACBrPixException);
+  EACBrPSPException = class(EACBrPixException);
 
   TACBrPixCDAmbiente = (ambTeste, ambProducao, ambPreProducao);
 
@@ -207,10 +211,13 @@ type
   end;
 
   TACBrQuandoTransmitirHttp = procedure(var AURL: String; var AMethod: String;
-    var HttpBody: String) of object;
+    var HttpBody: AnsiString) of object;
 
   TACBrQuandoReceberRespostaHttp = procedure(const AURL: String; const AMethod: String;
-    const HttpResponse: String) of object;
+    const HttpResponse: AnsiString) of object;
+
+  TACBrQuandoNecessitarCredencial = procedure(const TipoCredencial: TACBrOpenSSLCredential;
+    var Resposta: AnsiString) of object;
 
 
   { TACBrQueryParams }
@@ -231,8 +238,8 @@ type
   TACBrPSP = class(TACBrComponent)
   private
     fChavePIX: String;
-    fPathParams: TStringList;
-    fQueryParams: TACBrQueryParams;
+    fURLPathParams: TStringList;
+    fURLQueryParams: TACBrQueryParams;
     fQuandoReceberRespostaHttp: TACBrQuandoReceberRespostaHttp;
     fQuandoTransmitirHttp: TACBrQuandoTransmitirHttp;
     fClientID: AnsiString;
@@ -250,7 +257,6 @@ type
     function GetClientSecret: String;
     procedure SetClientSecret(AValue: String);
     procedure SetTipoChave(AValue: TACBrPIXTipoChave);
-    procedure VerificarPIXCDAtribuido;
     procedure SetChavePIX(AValue: String);
     procedure SetACBrPixCD(AValue: TACBrPixCD);
   protected
@@ -260,6 +266,7 @@ type
     fpValidadeToken: TDateTime;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    procedure VerificarPIXCDAtribuido;
 
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; virtual;
     procedure ConfigurarHTTP; virtual;
@@ -271,23 +278,23 @@ type
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); virtual;
 
     procedure LimparHTTP; virtual;
-    procedure PreparaHTTP; virtual;
+    procedure PrepararHTTP; virtual;
     function AcessarEndPoint(const Method, EndPoind: String;
-      out ResultCode: Integer; out RespostaHttp: String): Boolean; virtual;
+      out ResultCode: Integer; out RespostaHttp: AnsiString): Boolean; virtual;
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
 
-    function TransmitirHttp(const Method, URL: String;
-      out ResultCode: Integer; out RespostaHttp: String): Boolean; virtual;
-    procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: String;
+    function TransmitirHttp(const Method, URL: String; out ResultCode: Integer; out
+      RespostaHttp: AnsiString): Boolean; virtual;
+    procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString;
       Problema: TACBrPIXProblema); virtual;
     procedure AtribuirErroHTTPProblema(Problema: TACBrPIXProblema); virtual;
 
+    property URLQueryParams: TACBrQueryParams read fURLQueryParams;
+    property URLPathParams: TStringList read fURLPathParams;
+  protected
     property ClientID: String read GetClientID write SetClientID;
     property ClientSecret: String read GetClientSecret write SetClientSecret;
-
-    property QueryParams: TACBrQueryParams read fQueryParams;
-    property PathParams: TStringList read fPathParams;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -318,39 +325,62 @@ type
 
   { TACBrPixRecebedor }
 
-  TACBrPixRecebedor = class(TComponent)
+  TACBrPixRecebedor = class(TPersistent)
   private
     fCEP: String;
     fCidade: String;
     fCodCategoriaComerciante: Integer;
     fNome: String;
+    fUF: String;
 
     procedure SetCEP(AValue: String);
     procedure SetCidade(AValue: String);
     procedure SetCodCategoriaComerciante(AValue: Integer);
     procedure SetNome(AValue: String);
+    procedure SetUF(AValue: String);
   public
-    constructor Create(AOwner: TComponent); override;
+    constructor Create;
     procedure Clear;
     procedure Assign(Source: TACBrPixRecebedor); reintroduce;
   published
     property Nome: String read fNome write SetNome;
     property Cidade: String read fCidade write SetCidade;
+    property UF: String read fUF write SetUF;
     property CEP: String read fCEP write SetCEP;
     property CodCategoriaComerciante: Integer read fCodCategoriaComerciante  // https://classification.codes/classifications/industry/mcc/
       write SetCodCategoriaComerciante;
   end;
 
+  { TACBrPixDadosAutomacao }
+
+  TACBrPixDadosAutomacao = class(TPersistent)
+  private
+    fCNPJSoftwareHouse: String;
+    fNomeAplicacao: String;
+    fNomeSoftwareHouse: String;
+    fVersaoAplicacao: String;
+  public
+    constructor Create;
+    procedure Clear;
+    procedure Assign(Source: TACBrPixDadosAutomacao); reintroduce;
+  published
+    property NomeSoftwareHouse: String read fNomeSoftwareHouse write fNomeSoftwareHouse;
+    property CNPJSoftwareHouse: String read fCNPJSoftwareHouse write fCNPJSoftwareHouse;
+    property NomeAplicacao: String read fNomeAplicacao write fNomeAplicacao ;
+    property VersaoAplicacao: String read fVersaoAplicacao write fVersaoAplicacao ;
+  end;
+
+
   { TACBrHttpProxy }
 
-  TACBrHttpProxy = class(TComponent)
+  TACBrHttpProxy = class(TPersistent)
   private
     fHost: String;
     fPass: String;
     fPort: String;
     fUser: String;
   public
-    constructor Create(AOwner: TComponent); override;
+    constructor Create;
     procedure Clear;
     procedure Assign(Source: TACBrHttpProxy); reintroduce;
   published
@@ -369,6 +399,7 @@ type
   private
     fAmbiente: TACBrPixCDAmbiente;
     fArqLOG: String;
+    fDadosAutomacao: TACBrPixDadosAutomacao;
     fNivelLog: Byte;
     fProxy: TACBrHttpProxy;
     fPSP: TACBrPSP;
@@ -377,6 +408,7 @@ type
     fTimeOut: Integer;
 
     procedure SetACBrPSP(AValue: TACBrPSP);
+    procedure SetDadosAutomacao(AValue: TACBrPixDadosAutomacao);
     procedure SetProxy(AValue: TACBrHttpProxy);
     procedure SetRecebedor(AValue: TACBrPixRecebedor);
 
@@ -394,6 +426,7 @@ type
     function GerarQRCodeEstatico(Valor: Currency; infoAdicional: String = ''; TxId: String = ''): String;
   published
     property Recebedor: TACBrPixRecebedor read fRecebedor write SetRecebedor;
+    property DadosAutomacao: TACBrPixDadosAutomacao read fDadosAutomacao write SetDadosAutomacao;
     property Proxy: TACBrHttpProxy read fProxy write SetProxy;
     property TimeOut: Integer read fTimeOut write fTimeOut default ChttpTimeOutDef;
     property Ambiente: TACBrPixCDAmbiente read fAmbiente write fAmbiente default ambTeste;
@@ -409,6 +442,7 @@ function URLComDelimitador(AURL: String): String;
 function URLSemDelimitador(AURL: String): String;
 function GetHeaderValue(const AValue : String; AStringList: TStringList) : String ;
 function ContentIsCompressed(AHeader: TStringList): Boolean;
+function DecompressStream(AStream: TStream): AnsiString;
 
 implementation
 
@@ -467,7 +501,7 @@ begin
   end;
 end;
 
-function DecompressStream(AStream: TStream): String;
+function DecompressStream(AStream: TStream): AnsiString;
 var
   zt: TCompressType;
 begin
@@ -539,7 +573,8 @@ end;
 
 function TACBrPixEndPointPix.ConsultarPix(const e2eid: String): Boolean;
 var
-  RespostaHttp, e: String;
+  e: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (Trim(e2eid) = '') then
@@ -549,13 +584,13 @@ begin
     raise EACBrPixException.Create(ACBrStr(e));
 
   Clear;
-  fPSP.PreparaHTTP;
-  fPSP.PathParams.Add(e2eid);
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(e2eid);
   fPSP.AcessarEndPoint(ChttpMethodGET, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fPix.AsJSON := RespostaHttp
+    fPix.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -564,13 +599,14 @@ function TACBrPixEndPointPix.ConsultarPixRecebidos(Inicio: TDateTime;
   Fim: TDateTime; const TxId: String; const CpfCnpj: String; PagAtual: Integer;
   ItensPorPagina: Integer): Boolean;
 var
-  RespostaHttp, s, e: String;
+  s, e: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   Clear;
-  fPSP.PreparaHTTP;
+  fPSP.PrepararHTTP;
 
-  with fPSP.QueryParams do
+  with fPSP.URLQueryParams do
   begin
     Values['inicio'] := DateTimeToIso8601(Inicio);
     Values['fim'] := DateTimeToIso8601(Fim);
@@ -606,7 +642,7 @@ begin
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fPixConsultados.AsJSON := RespostaHttp
+    fPixConsultados.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -614,7 +650,8 @@ end;
 function TACBrPixEndPointPix.SolicitarDevolucaoPix(const e2eid,
   idDevolucao: String): Boolean;
 var
-  RespostaHttp, Body: String;
+  Body: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (Trim(e2eid) = '') then
@@ -628,17 +665,17 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['DevolucaoSolicitada']);
 
   Clear;
-  fPSP.PreparaHTTP;
-  fPSP.PathParams.Add(e2eid);
-  fPSP.PathParams.Add('devolucao');
-  fPSP.PathParams.Add(idDevolucao);
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(e2eid);
+  fPSP.URLPathParams.Add('devolucao');
+  fPSP.URLPathParams.Add(idDevolucao);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPUT, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_CREATED);
 
   if Result then
-    fDevolucao.AsJSON := RespostaHttp
+    fDevolucao.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -646,7 +683,7 @@ end;
 function TACBrPixEndPointPix.ConsultarDevolucaoPix(const e2eid,
   idDevolucao: String): Boolean;
 var
-  RespostaHttp: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (Trim(e2eid) = '') then
@@ -656,15 +693,15 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['idDevolucao']);
 
   Clear;
-  fPSP.PreparaHTTP;
-  fPSP.PathParams.Add(e2eid);
-  fPSP.PathParams.Add('devolucao');
-  fPSP.PathParams.Add(idDevolucao);
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(e2eid);
+  fPSP.URLPathParams.Add('devolucao');
+  fPSP.URLPathParams.Add(idDevolucao);
   fPSP.AcessarEndPoint(ChttpMethodGET, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fDevolucao.AsJSON := RespostaHttp
+    fDevolucao.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -708,7 +745,8 @@ end;
 
 function TACBrPixEndPointCob.CriarCobrancaImediata: Boolean;
 var
-  RespostaHttp, Body: String;
+  Body: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   Body := Trim(fCobSolicitada.AsJSON);
@@ -716,21 +754,22 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobSolicitada']);
 
   Clear;
-  fPSP.PreparaHTTP;
+  fPSP.PrepararHTTP;
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPOST, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_CREATED);
 
   if Result then
-    fCobGerada.AsJSON := RespostaHttp
+    fCobGerada.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
 
 function TACBrPixEndPointCob.CriarCobrancaImediata(const TxId: String): Boolean;
 var
-  RespostaHttp, Body: String;
+  Body: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (Trim(TxId) = '') then
@@ -741,22 +780,23 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobSolicitada']);
 
   Clear;
-  fPSP.PreparaHTTP;
-  fPSP.PathParams.Add(TxId);
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(TxId);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPUT, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_CREATED);
 
   if Result then
-    fCobGerada.AsJSON := RespostaHttp
+    fCobGerada.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
 
 function TACBrPixEndPointCob.RevisarCobrancaImediata(const TxId: String): Boolean;
 var
-  RespostaHttp, Body: String;
+  Body: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (Trim(TxId) = '') then
@@ -767,15 +807,15 @@ begin
     raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobRevisada']);
 
   Clear;
-  fPSP.PreparaHTTP;
-  fPSP.PathParams.Add(TxId);
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(TxId);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPATCH, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fCobGerada.AsJSON := RespostaHttp
+    fCobGerada.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -783,23 +823,23 @@ end;
 function TACBrPixEndPointCob.ConsultarCobrancaImediata(const TxId: String;
   Revisao: Integer): Boolean;
 var
-  RespostaHttp: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (Trim(TxId) = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['txid']);
 
   Clear;
-  fPSP.PreparaHTTP;
-  fPSP.PathParams.Add(TxId);
+  fPSP.PrepararHTTP;
+  fPSP.URLPathParams.Add(TxId);
   if (Revisao <> 0) then
-    fPSP.QueryParams.Values['revisao'] := IntToStr(Revisao);
+    fPSP.URLQueryParams.Values['revisao'] := IntToStr(Revisao);
 
   fPSP.AcessarEndPoint(ChttpMethodGET, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fCobCompleta.AsJSON := RespostaHttp
+    fCobCompleta.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -808,13 +848,14 @@ function TACBrPixEndPointCob.ConsultarCobrancas(Inicio: TDateTime;
   Fim: TDateTime; const CpfCnpj: String; LocationPresente: Boolean;
   const Status: String; PagAtual: Integer; ItensPorPagina: Integer): Boolean;
 var
-  RespostaHttp, s, e: String;
+  s, e: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   Clear;
-  fPSP.PreparaHTTP;
+  fPSP.PrepararHTTP;
 
-  with fPSP.QueryParams do
+  with fPSP.URLQueryParams do
   begin
     Values['inicio'] := DateTimeToIso8601(Inicio);
     Values['fim'] := DateTimeToIso8601(Fim);
@@ -848,7 +889,7 @@ begin
   Result := (ResultCode = HTTP_OK);
 
   if Result then
-    fCobsConsultadas.AsJSON := RespostaHttp
+    fCobsConsultadas.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
 end;
@@ -893,8 +934,8 @@ begin
   fHttpSend := THTTPSend.Create;
   fepPix := TACBrPixEndPointPix.Create(Self);
   fepCob := TACBrPixEndPointCob.Create(Self);
-  fQueryParams := TACBrQueryParams.Create;
-  fPathParams := TStringList.Create;
+  fURLQueryParams := TACBrQueryParams.Create;
+  fURLPathParams := TStringList.Create;
 
   fQuandoTransmitirHttp := Nil;
   fQuandoReceberRespostaHttp := Nil;
@@ -905,8 +946,8 @@ begin
   fHttpSend.Free;
   fepPix.Free;
   fepCob.Free;
-  fQueryParams.Free;
-  fPathParams.Free;
+  fURLQueryParams.Free;
+  fURLPathParams.Free;
 
   inherited Destroy;
 end;
@@ -914,7 +955,7 @@ end;
 procedure TACBrPSP.Clear;
 begin
   fHttpSend.Clear;
-  fQueryParams.Clear;
+  fURLQueryParams.Clear;
   fepPix.Clear;
   fepCob.Clear;
 end;
@@ -1089,7 +1130,7 @@ begin
 end;
 
 function TACBrPSP.AcessarEndPoint(const Method, EndPoind: String; out
-  ResultCode: Integer; out RespostaHttp: String): Boolean;
+  ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
   AURL: String;
 begin
@@ -1111,13 +1152,13 @@ begin
     Result := Result + URLSemDelimitador(AEndPointPath);
 
   ConfigurarQueryParameters(Method, EndPoint);
-  if (fPathParams.Count > 0) then
+  if (fURLPathParams.Count > 0) then
   begin
-    for i := 0 to fPathParams.Count-1 do
-      Result := Result + '/' + URLSemDelimitador(EncodeURLElement(fPathParams[i]));
+    for i := 0 to fURLPathParams.Count-1 do
+      Result := Result + '/' + URLSemDelimitador(EncodeURLElement(fURLPathParams[i]));
   end;
 
-  p := fQueryParams.AsURL;
+  p := fURLQueryParams.AsURL;
   if (p <> '') then
     Result := Result + '?' + p;
 end;
@@ -1131,11 +1172,11 @@ end;
 procedure TACBrPSP.LimparHTTP;
 begin
   fHttpSend.Clear;
-  fPathParams.Clear;
-  fQueryParams.Clear;
+  fURLPathParams.Clear;
+  fURLQueryParams.Clear;
 end;
 
-procedure TACBrPSP.PreparaHTTP;
+procedure TACBrPSP.PrepararHTTP;
 begin
   VerificarPIXCDAtribuido;
   VerificarAutenticacao;
@@ -1143,16 +1184,17 @@ begin
 end;
 
 function TACBrPSP.TransmitirHttp(const Method, URL: String; out
-  ResultCode: Integer; out RespostaHttp: String): Boolean;
+  ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 
-  function GetHttpBody: String;
+  function GetHttpBody: AnsiString;
   begin
     fHttpSend.Document.Position := 0;
     Result := ReadStrFromStream(fHttpSend.Document, fHttpSend.Document.Size);
   end;
 
 var
-  AMethod, AURL, VarBody, HttpBody: String;
+  AMethod, AURL: String;
+  HttpBody, VarBody: AnsiString;
 begin
   VerificarPIXCDAtribuido;
   HttpBody := '';
@@ -1183,7 +1225,7 @@ begin
     if (HttpBody = '') then
       HttpBody := GetHttpBody;
 
-    fPixCD.RegistrarLog('Request Body:'+ sLineBreak + HttpBody);
+    fPixCD.RegistrarLog('Request Body:'+ sLineBreak + TranslateUnprintable(HttpBody));
   end;
 
   Result := fHttpSend.HTTPMethod(AMethod, AURL);
@@ -1198,14 +1240,14 @@ begin
     fPixCD.RegistrarLog('Response Headers:'+ sLineBreak + fHttpSend.Headers.Text);
 
   if (fPixCD.NivelLog > 1) then
-    fPixCD.RegistrarLog('Response Body:'+ sLineBreak + RespostaHttp);
+    fPixCD.RegistrarLog('Response Body:'+ sLineBreak + TranslateUnprintable(RespostaHttp));
 
   if Assigned(fQuandoReceberRespostaHttp) then
     fQuandoReceberRespostaHttp(AURL, AMethod, RespostaHttp);
 end;
 
 procedure TACBrPSP.TratarRetornoComErro(ResultCode: Integer;
-  const RespostaHttp: String; Problema: TACBrPIXProblema);
+  const RespostaHttp: AnsiString; Problema: TACBrPIXProblema);
 begin
   Problema.Clear;
   if (Trim(RespostaHttp) = '') then
@@ -1213,7 +1255,7 @@ begin
   else
   begin
     try
-      Problema.AsJSON := RespostaHttp;
+      Problema.AsJSON := String(RespostaHttp);
     except
     end;
 
@@ -1263,9 +1305,9 @@ end;
 
 { TACBrPixRecebedor }
 
-constructor TACBrPixRecebedor.Create(AOwner: TComponent);
+constructor TACBrPixRecebedor.Create;
 begin
-  inherited Create(AOwner);
+  inherited Create;
   Clear;
 end;
 
@@ -1309,6 +1351,24 @@ begin
   fNome := copy(TiraAcentos(Trim(AValue)),1,25);
 end;
 
+procedure TACBrPixRecebedor.SetUF(AValue: String);
+var
+  s, e: String;
+begin
+  if fUF = AValue then
+    Exit;
+
+  s := Trim(AValue);
+  if (s <> '') then
+  begin
+    e := ValidarUF(s);
+    if (e <> '') then
+      raise EACBrPixException.Create(ACBrStr(e));
+  end;
+
+  fUF := s;
+end;
+
 procedure TACBrPixRecebedor.SetCodCategoriaComerciante(AValue: Integer);
 begin
   if (fCodCategoriaComerciante = AValue) then
@@ -1320,11 +1380,35 @@ begin
   fCodCategoriaComerciante := AValue;
 end;
 
+{ TACBrPixDadosAutomacao }
+
+constructor TACBrPixDadosAutomacao.Create;
+begin
+  inherited Create;
+  Clear;
+end;
+
+procedure TACBrPixDadosAutomacao.Clear;
+begin
+  fCNPJSoftwareHouse := '';
+  fNomeAplicacao := '';
+  fNomeSoftwareHouse := '';
+  fVersaoAplicacao := '';
+end;
+
+procedure TACBrPixDadosAutomacao.Assign(Source: TACBrPixDadosAutomacao);
+begin
+  fCNPJSoftwareHouse := Source.CNPJSoftwareHouse;
+  fNomeSoftwareHouse := Source.NomeSoftwareHouse;
+  fNomeAplicacao := Source.NomeAplicacao;
+  fVersaoAplicacao := Source.VersaoAplicacao;
+end;
+
 { TACBrHttpProxy }
 
-constructor TACBrHttpProxy.Create(AOwner: TComponent);
+constructor TACBrHttpProxy.Create;
 begin
-  inherited Create(AOwner);
+  inherited Create;
   Clear;
 end;
 
@@ -1350,17 +1434,9 @@ constructor TACBrPixCD.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  fRecebedor := TACBrPixRecebedor.Create(Self);
-  fRecebedor.Name := 'Recebedor' ;
-  {$IFDEF COMPILER6_UP}
-  fRecebedor.SetSubComponent(True);
-  {$ENDIF}
-
-  fProxy := TACBrHttpProxy.Create(Self);
-  fProxy.Name := 'Proxy' ;
-  {$IFDEF COMPILER6_UP}
-  fProxy.SetSubComponent(True);
-  {$ENDIF}
+  fRecebedor := TACBrPixRecebedor.Create;
+  fDadosAutomacao := TACBrPixDadosAutomacao.Create;
+  fProxy := TACBrHttpProxy.Create;
 
   fTimeOut := ChttpTimeOutDef;
   fArqLOG := '';
@@ -1372,6 +1448,7 @@ end;
 destructor TACBrPixCD.Destroy;
 begin
   fRecebedor.Free;
+  fDadosAutomacao.Free;
   fProxy.Free;
 
   inherited Destroy;
@@ -1440,6 +1517,12 @@ begin
     AValue.FreeNotification(Self);
     AValue.ACBrPixCD := Self;
   end ;
+end;
+
+procedure TACBrPixCD.SetDadosAutomacao(AValue: TACBrPixDadosAutomacao);
+begin
+  if (fDadosAutomacao <> AValue) then
+    fDadosAutomacao.Assign(AValue);
 end;
 
 procedure TACBrPixCD.SetProxy(AValue: TACBrHttpProxy);

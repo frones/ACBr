@@ -60,6 +60,7 @@ resourcestring
 
 function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
 function ValidarChave(const AChave: String): String;
+function ValidarChaveAleatoria(const AChave: String): Boolean;
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
 function ValidarPSS(const AValue: Integer): String;
 function ValidarEndToEndId(const AValue: String): String;
@@ -108,15 +109,8 @@ begin
       Result := tchEmail;
   end
 
-  else if (l = 36) then
-  begin
-    if (copy(s,09,1) = '-') and
-       (copy(s,14,1) = '-') and
-       (copy(s,19,1) = '-') and
-       (copy(s,24,1) = '-') and
-       StrIsAlphaNum(StringReplace(s,'-','',[rfReplaceAll])) then
-      Result := tchAleatoria;
-  end;
+  else if ValidarChaveAleatoria(s) then
+    Result := tchAleatoria;
 end;
 
 function ValidarChave(const AChave: String): String;
@@ -128,6 +122,21 @@ begin
     Result := Format(sErroChaveInvalida, [AChave])
   else
     Result := '';
+end;
+
+function ValidarChaveAleatoria(const AChave: String): Boolean;
+var
+  s: String;
+  l: Integer;
+begin
+  s := Trim(AChave);
+  l := Length(s);
+  Result := (l = 36) and
+            (copy(s,09,1) = '-') and
+            (copy(s,14,1) = '-') and
+            (copy(s,19,1) = '-') and
+            (copy(s,24,1) = '-') and
+            StrIsAlphaNum(StringReplace(s,'-','',[rfReplaceAll]));
 end;
 
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer;

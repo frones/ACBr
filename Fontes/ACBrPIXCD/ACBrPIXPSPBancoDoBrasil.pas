@@ -168,7 +168,7 @@ procedure TACBrPSPBancoDoBrasil.ConfigurarQueryParameters(const Method, EndPoint
 begin
   inherited ConfigurarQueryParameters(Method, EndPoint);
 
-  with QueryParams do
+  with URLQueryParams do
   begin
     if (fDeveloperApplicationKey <> '') then
       Values['gw-dev-app-key'] := fDeveloperApplicationKey;

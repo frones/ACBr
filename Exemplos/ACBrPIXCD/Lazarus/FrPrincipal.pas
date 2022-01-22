@@ -41,7 +41,7 @@ uses
   ExtCtrls, Buttons, Spin, DateTimePicker,
   ACBrCEP,
   ACBrPIXCD, ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander,
-  ACBrPIXBase, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao;
+  ACBrPIXBase, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao, ACBrOpenSSLUtils;
 
 const
   CURL_ACBR = 'https://projetoacbr.com.br/tef/';
@@ -53,10 +53,14 @@ type
 
   TForm1 = class(TForm)
     ACBrCEP1: TACBrCEP;
+    ACBrOpenSSLUtils1: TACBrOpenSSLUtils;
     ACBrPixCD1: TACBrPixCD;
     ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil;
     ACBrPSPItau1: TACBrPSPItau;
     ACBrPSPSantander1: TACBrPSPSantander;
+    btItauGerarChavePrivada: TBitBtn;
+    btItauSolicitarCertificado: TBitBtn;
+    btItauValidarChaveCertificado: TBitBtn;
     btLimparConsultarPix: TBitBtn;
     btLimparConsultarPixRecebidos: TBitBtn;
     btLimparConsultarDevolucaoPix: TBitBtn;
@@ -71,52 +75,84 @@ type
     btQREAnalisar: TBitBtn;
     btQREGerar: TBitBtn;
     btSalvarParametros: TBitBtn;
+    btCriarCobrancaImediata: TBitBtn;
     cbxAmbiente: TComboBox;
-    cbxSolicitarDevolucaoPix_Natureza: TComboBox;
     cbxItauTipoChave: TComboBox;
+    cbxRecebedorUF: TComboBox;
+    cbxSolicitarDevolucaoPix_Natureza: TComboBox;
     cbxSantanderTipoChave: TComboBox;
     cbxNivelLog: TComboBox;
     cbxPSPAtual: TComboBox;
     cbxBBTipoChave: TComboBox;
+    cbxSolicitarDevolucaoPix_Natureza1: TComboBox;
     dtConsultarPixRecebidosInicio: TDateTimePicker;
     dtConsultarPixRecebidosFim: TDateTimePicker;
     edtArqLog: TEdit;
     edtConsultarDevolucaoPix_e2eid: TEdit;
+    edtItauArqCertificado: TEdit;
+    edtItauArqCertificado2: TEdit;
+    edtItauArqChavePrivada: TEdit;
+    edtItauArqChavePrivada2: TEdit;
+    edtItauChavePIX: TEdit;
+    edtItauClientID: TEdit;
+    edtItauClientSecret: TEdit;
+    edtItauXCorrelationId: TEdit;
+    edtSolicitarDevolucaoPix_Descricao1: TEdit;
     edtSolicitarDevolucaoPix_e2eid: TEdit;
     edtSolicitarDevolucaoPix_Descricao: TEdit;
     edtConsultarDevolucaoPix_id: TEdit;
+    edtSolicitarDevolucaoPix_e2eid1: TEdit;
     edtSolicitarDevolucaoPix_id: TEdit;
     edtConsultarPixRecebidosTxId: TEdit;
     edtConsultarPixRecebidosCPFCNPJ: TEdit;
+    edtSolicitarDevolucaoPix_id1: TEdit;
     feSolicitarDevolucaoPix_Valor: TFloatSpinEdit;
+    feSolicitarDevolucaoPix_Valor1: TFloatSpinEdit;
+    imgItauErroCertificado: TImage;
+    imgItauErroChavePIX: TImage;
+    imgItauErroChavePrivada: TImage;
+    imgItauErroClientID: TImage;
+    imgItauErroClientSecret: TImage;
     Label1: TLabel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    Label3: TLabel;
     Label37: TLabel;
+    Label38: TLabel;
+    Label39: TLabel;
+    Label4: TLabel;
+    Label40: TLabel;
+    Label41: TLabel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Label6: TLabel;
     lConsultarDevolucaoPixE2eid2: TLabel;
     lConsultarDevolucaoPixE2eid3: TLabel;
+    lConsultarDevolucaoPixE2eid4: TLabel;
+    lConsultarDevolucaoPixE2eid5: TLabel;
     lConsultarDevolucaoPixIdentificadorDevolucao1: TLabel;
+    lConsultarDevolucaoPixIdentificadorDevolucao2: TLabel;
     lConsultarPixE2eid: TLabel;
-    edtItauChavePIX: TEdit;
     edtBBClientID: TEdit;
     edtQREInfoAdicional: TEdit;
     edtConsultarPixE2eid: TEdit;
     edtQRETxId: TEdit;
     edtSantanderChavePIX: TEdit;
-    edtItauClientID: TEdit;
     edtBBClientSecret: TEdit;
     edtSantanderConsumerKey: TEdit;
-    edtItauClientSecret: TEdit;
     edtBBDevAppKey: TEdit;
     edtSantanderConsumerSecret: TEdit;
-    edtItauXCorrelationId: TEdit;
-    edtCEP: TEdit;
-    edtCidade: TEdit;
+    edtRecebedorCEP: TEdit;
+    edtRecebedorCidade: TEdit;
     edtBBChavePIX: TEdit;
     fleQREValor: TFloatSpinEdit;
     imgErrNome: TImage;
     imgErrPSP: TImage;
     imgQRE: TImage;
     imgBBErroChavePIX: TImage;
-    imgItauErroChavePIX: TImage;
     imgSantanderErroChavePIX: TImage;
     Label34: TLabel;
     Label35: TLabel;
@@ -126,13 +162,26 @@ type
     lInicio: TLabel;
     lFim: TLabel;
     lCPFCPNJ: TLabel;
+    lItauErroCertificado: TLabel;
+    lItauErroChavePrivada: TLabel;
     lPagina: TLabel;
     lPagina1: TLabel;
+    mItauChavePrivadaPEM: TMemo;
+    mItauTokenTemporario: TMemo;
+    mItauCertificadoPEM: TMemo;
     mSolicitarDevolucaoPix: TMemo;
     mConsultarPix: TMemo;
     mConsultarPixRecebidos: TMemo;
     mConsultarDevolucaoPix: TMemo;
     mQRE: TMemo;
+    mCriarCobrancaImediata: TMemo;
+    OpenDialog1: TOpenDialog;
+    PageControl1: TPageControl;
+    pgPSPItauGerarChaveCertificado: TPageControl;
+    Panel7: TPanel;
+    pgPSPItauChaveCertificado: TPageControl;
+    pConfPSPBB1: TPanel;
+    pgPSPItau: TPageControl;
     Panel3: TPanel;
     Panel4: TPanel;
     Panel5: TPanel;
@@ -152,21 +201,18 @@ type
     Label22: TLabel;
     Label23: TLabel;
     Label24: TLabel;
-    Label25: TLabel;
-    Label26: TLabel;
-    Label27: TLabel;
-    Label28: TLabel;
-    Label29: TLabel;
     Label30: TLabel;
     Label31: TLabel;
     Label32: TLabel;
     Label33: TLabel;
     pConfPSPBB: TPanel;
     pBotoesConfiguracao: TPanel;
-    pConfPSPBB1: TPanel;
     pConfPSPBB2: TPanel;
-    seMCC: TSpinEdit;
-    edtNome: TEdit;
+    pCriarCobrancaImediata: TPanel;
+    sbItauAcharArqCertificado: TSpeedButton;
+    sbItauAcharArqChavePrivada: TSpeedButton;
+    seRecebedorMCC: TSpinEdit;
+    edtRecebedorNome: TEdit;
     edtProxyHost: TEdit;
     edtProxySenha: TEdit;
     edtProxyUser: TEdit;
@@ -208,6 +254,14 @@ type
     seConsultarPixRecebidosPagina: TSpinEdit;
     seConsultarPixRecebidosItensPagina: TSpinEdit;
     Splitter1: TSplitter;
+    tsItauChaveCertificadoArquivos: TTabSheet;
+    tsItauGerarChaveCertificado: TTabSheet;
+    tsItauCertPasso1: TTabSheet;
+    tsItauCertPasso3: TTabSheet;
+    tsItauChave: TTabSheet;
+    tsItauCertificado: TTabSheet;
+    tsCriarCobrancaImediata: TTabSheet;
+    TabSheet2: TTabSheet;
     tsSolicitarDevolucaoPix: TTabSheet;
     tsConsultarDevolucaoPix: TTabSheet;
     tsConsultarPix: TTabSheet;
@@ -231,6 +285,9 @@ type
     procedure btConsultarPixRecebidosClick(Sender: TObject);
     procedure btConsultarPixClick(Sender: TObject);
     procedure btConsultarDevolucaoPixClick(Sender: TObject);
+    procedure btItauGerarChavePrivadaClick(Sender: TObject);
+    procedure btItauSolicitarCertificadoClick(Sender: TObject);
+    procedure btItauValidarChaveCertificadoClick(Sender: TObject);
     procedure btLimparConsultarDevolucaoPixClick(Sender: TObject);
     procedure btLimparConsultarPixClick(Sender: TObject);
     procedure btLimparConsultarPixRecebidosClick(Sender: TObject);
@@ -244,47 +301,62 @@ type
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
-    procedure edtCEPChange(Sender: TObject);
-    procedure edtCEPExit(Sender: TObject);
+    procedure edtRecebedorCEPChange(Sender: TObject);
+    procedure edtRecebedorCEPExit(Sender: TObject);
     procedure edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
     procedure edtConsultarPixRecebidosCPFCNPJChange(Sender: TObject);
+    procedure edtItauArqChavePrivadaChange(Sender: TObject);
     procedure edtItauChavePIXChange(Sender: TObject);
-    procedure edtNomeChange(Sender: TObject);
+    procedure edtItauClientIDChange(Sender: TObject);
+    procedure edtItauClientSecretChange(Sender: TObject);
+    procedure edtRecebedorNomeChange(Sender: TObject);
     procedure edtSantanderChavePIXChange(Sender: TObject);
     procedure mQREChange(Sender: TObject);
     procedure pgPrincipalChange(Sender: TObject);
+    procedure pgPSPItauChaveCertificadoChange(Sender: TObject);
     procedure QuandoMudarDadosQRCode(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure imgInfoMCCClick(Sender: TObject);
     procedure lURLTEFClick(Sender: TObject);
     procedure sbArqLogClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
+    procedure sbItauAcharArqCertificadoClick(Sender: TObject);
+    procedure sbItauAcharArqChavePrivadaClick(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
   private
+    procedure LerConfiguracao;
+    procedure GravarConfiguracao;
+    procedure AplicarConfiguracao;
+
     function GetNomeArquivoConfiguracao: String;
     procedure AdicionarLinhaLog(AMensagem: String);
     procedure TratarException(Sender : TObject; E : Exception);
 
     procedure LigarAlertasdeErrosDeConfiguracao;
+    procedure LigarAlertasdeErrosDeConfiguracaoPIXCD;
+    procedure LigarAlertasdeErrosDeConfiguracaoPSPItau;
+
+    procedure VerificarConfiguracao;
     procedure VerificarConfiguracaoPIXCD;
+    procedure VerificarConfiguracaoPSPItau;
+    procedure ValidarChaveCertificadoPSPItau;
+    procedure ValidarChavePSPItau;
+    procedure ValidarCertificadoPSPItau;
 
     procedure ConfigurarACBrPIXCD;
     procedure ConfigurarACBrPSPs;
 
     procedure LimparQRCodeEstatico;
     procedure PintarQRCodeEstatico;
-    procedure PintarQRCode(const Dados: String; ABMP: TBitmap);
     procedure MostrarPixEmLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
     procedure MostrarDevolucaoEmLinhas(const NomeDev: String;
       ADev: TACBrPIXDevolucao; SL: TStrings);
 
     function FormatarJSON(const AJSON: String): String;
+    function RemoverPathAplicacao(const AFileName: String): String;
+    function AdicionarPathAplicacao(const AFileName: String): String;
   public
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
-
-    procedure LerConfiguracao;
-    procedure GravarConfiguracao;
-    procedure AplicarConfiguracao;
 
   end;
 
@@ -299,7 +371,8 @@ uses
   {$EndIf}
   TypInfo, IniFiles, DateUtils,
   synacode,
-  ACBrDelphiZXingQRCode,
+  pcnConversao,
+  ACBrDelphiZXingQRCode, ACBrImage,
   ACBrUtil, ACBrValidador,
   ACBrPIXUtil, ACBrPIXQRCodeEstatico;
 
@@ -316,6 +389,10 @@ begin
   cbxPSPAtual.Items.Clear;
   For i := 0 to pgPSPs.PageCount-1 do
      cbxPSPAtual.Items.Add( pgPSPs.Pages[i].Caption );
+
+  cbxRecebedorUF.Items.Clear;
+  For i := Low(DFeUF) to High(DFeUF) do
+     cbxRecebedorUF.Items.Add( DFeUF[i] );
 
   cbxAmbiente.Items.Clear;
   For j := Low(TACBrPixCDAmbiente) to High(TACBrPixCDAmbiente) do
@@ -338,7 +415,13 @@ begin
   ImageList1.GetBitmap(6, imgErrCEP.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgErrPSP.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgBBErroChavePIX.Picture.Bitmap);
+
   ImageList1.GetBitmap(6, imgItauErroChavePIX.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imgItauErroClientID.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imgItauErroClientSecret.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imgItauErroChavePrivada.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imgItauErroCertificado.Picture.Bitmap);
+
   ImageList1.GetBitmap(6, imgSantanderErroChavePIX.Picture.Bitmap);
 
   pgPrincipal.ActivePageIndex := 0;
@@ -346,6 +429,10 @@ begin
   pgPSPs.ActivePageIndex := 0;
   pgTestes.ActivePageIndex := 0;
   pgTestesPix.ActivePageIndex := 0;
+
+  pgPSPItau.ActivePageIndex := 0;
+  pgPSPItauChaveCertificado.ActivePageIndex := 0;
+  pgPSPItauGerarChaveCertificado.ActivePageIndex := 0;
 
   dtConsultarPixRecebidosInicio.DateTime := EncodeDateTime(2020,04,01,0,0,0,0);
   dtConsultarPixRecebidosFim.DateTime := EncodeDateTime(2020,04,02,10,0,0,0);
@@ -389,15 +476,32 @@ var
   EndAchado: TACBrCEPEndereco;
 begin
   try
-    ACBrCEP1.BuscarPorCEP(OnlyNumber(edtCEP.Text));
+    ACBrCEP1.BuscarPorCEP(OnlyNumber(edtRecebedorCEP.Text));
     if (ACBrCEP1.Enderecos.Count > 0) then
     begin
       EndAchado := ACBrCEP1.Enderecos[0];
-      edtCidade.Text := EndAchado.Municipio;
+      edtRecebedorCidade.Text := EndAchado.Municipio;
+      cbxRecebedorUF.ItemIndex := cbxRecebedorUF.Items.IndexOf(EndAchado.UF);
     end;
   except
     MessageDlg('Erro ao executar Consulta do CEP', mtError, [mbOK], 0);
   end;
+end;
+
+procedure TForm1.sbItauAcharArqCertificadoClick(Sender: TObject);
+begin
+  OpenDialog1.FileName := edtItauArqCertificado.Text;
+  if OpenDialog1.Execute then
+    edtItauArqCertificado.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  ValidarCertificadoPSPItau;
+end;
+
+procedure TForm1.sbItauAcharArqChavePrivadaClick(Sender: TObject);
+begin
+  OpenDialog1.FileName := edtItauArqChavePrivada.Text;
+  if OpenDialog1.Execute then
+    edtItauArqChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  ValidarChavePSPItau;
 end;
 
 procedure TForm1.sbVerSenhaProxyClick(Sender: TObject);
@@ -413,15 +517,15 @@ begin
   Result := ChangeFileExt(Application.ExeName,'.ini');
 end;
 
-procedure TForm1.edtCEPChange(Sender: TObject);
+procedure TForm1.edtRecebedorCEPChange(Sender: TObject);
 begin
-  if (Length(edtCEP.Text) > 5) then
+  if (Length(edtRecebedorCEP.Text) > 5) then
   begin
-    edtCEP.Text := FormatarMascaraDinamica(OnlyNumber(edtCEP.Text), '*****-***');
-    edtCEP.SelStart := Length(edtCEP.Text);
+    edtRecebedorCEP.Text := FormatarMascaraDinamica(OnlyNumber(edtRecebedorCEP.Text), '*****-***');
+    edtRecebedorCEP.SelStart := Length(edtRecebedorCEP.Text);
   end;
 
-  imgErrCEP.Visible := (Length(edtCEP.Text) < 9);
+  imgErrCEP.Visible := (Length(edtRecebedorCEP.Text) < 9);
   sbConsultaCEP.Visible := not imgErrCEP.Visible;
 end;
 
@@ -436,6 +540,7 @@ var
   Ok: Boolean;
   i: Integer;
 begin
+  VerificarConfiguracao;
   mConsultarPixRecebidos.Lines.Clear;
   Ok := ACBrPixCD1.PSP.epPix.ConsultarPixRecebidos( dtConsultarPixRecebidosInicio.DateTime,
                                                     dtConsultarPixRecebidosFim.DateTime,
@@ -445,7 +550,7 @@ begin
                                                     seConsultarPixRecebidosItensPagina.Value);
   if Ok then
   begin
-    mConsultarPixRecebidos.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.PixConsultados.AsJSON);
+    mConsultarPixRecebidos.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.PixConsultados.AsJSON);
     mConsultarPixRecebidos.Lines.Add('');
     mConsultarPixRecebidos.Lines.Add('Encontrado: '+IntToStr(ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count)+', documentos PIX');
     for i := 0 to ACBrPixCD1.PSP.epPix.PixConsultados.pix.Count-1 do
@@ -457,36 +562,82 @@ begin
     end;
   end
   else
-    mConsultarPixRecebidos.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+    mConsultarPixRecebidos.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
 end;
 
 procedure TForm1.btConsultarPixClick(Sender: TObject);
 begin
+  VerificarConfiguracao;
   mConsultarPix.Lines.Clear;
   if ACBrPixCD1.PSP.epPix.ConsultarPix(edtConsultarPixE2eid.Text) then
   begin
-    mConsultarPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Pix.AsJSON);
+    mConsultarPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Pix.AsJSON);
     MostrarPixEmLinhas( '  Pix',
                         ACBrPixCD1.PSP.epPix.Pix,
                         mConsultarPix.Lines );
   end
   else
-    mConsultarPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+    mConsultarPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
 end;
 
 procedure TForm1.btConsultarDevolucaoPixClick(Sender: TObject);
 begin
+  VerificarConfiguracao;
   mConsultarDevolucaoPix.Lines.Clear;
   if ACBrPixCD1.PSP.epPix.ConsultarDevolucaoPix( edtConsultarDevolucaoPix_e2eid.Text,
                                                  edtConsultarDevolucaoPix_id.Text) then
   begin
-    mConsultarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
+    mConsultarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
     MostrarDevolucaoEmLinhas( '  Devolucao',
                               ACBrPixCD1.PSP.epPix.Devolucao,
                               mConsultarDevolucaoPix.Lines );
   end
   else
-    mConsultarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+    mConsultarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+end;
+
+procedure TForm1.btItauGerarChavePrivadaClick(Sender: TObject);
+var
+  aPrivateKey, aPublicKey: String;
+begin
+  if FileExists(edtItauArqChavePrivada2.Text) then
+    if MessageDlg( 'A chave já existe, deseja realmente sobreescrecer ?',
+                   mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+      Exit;
+
+  ACBrOpenSSLUtils.GenerateKeyPair(aPrivateKey, aPublicKey);
+  mItauChavePrivadaPEM.Lines.Text := ChangeLineBreak(aPrivateKey, sLineBreak);
+  mItauChavePrivadaPEM.Lines.SaveToFile(edtItauArqChavePrivada2.Text);
+end;
+
+procedure TForm1.btItauSolicitarCertificadoClick(Sender: TObject);
+var
+  t, c: String;
+begin
+  ValidarChavePSPItau;
+  if imgItauErroChavePrivada.Visible  then
+  begin
+    pgPSPItauChaveCertificado.ActivePageIndex := 0;
+    pgPSPItauGerarChaveCertificado.ActivePageIndex := 0;
+    MessageDlg('Favor configurar a Chave Privada', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+
+  t := Trim(mItauTokenTemporario.Lines.Text);
+  if (t = '') then
+  begin
+    MessageDlg('Favor informar o Token temporário', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+
+  c := ACBrPSPItau1.SolicitarCertificado(t);
+  mItauCertificadoPEM.Lines.Text := ChangeLineBreak(c, sLineBreak);
+  mItauCertificadoPEM.Lines.SaveToFile(edtItauArqCertificado2.Text);
+end;
+
+procedure TForm1.btItauValidarChaveCertificadoClick(Sender: TObject);
+begin
+  ValidarChaveCertificadoPSPItau;
 end;
 
 procedure TForm1.btLimparConsultarDevolucaoPixClick(Sender: TObject);
@@ -524,7 +675,7 @@ begin
     AdicionarLinhaLog('QrCode: '+qre.QRCode);
 
     qre.IgnorarErrosQRCode := True;
-    qre.QRCode := mQRE.Text;
+    qre.QRCode := mQRE.Lines.Text;
     AdicionarLinhaLog('');
     AdicionarLinhaLog('NomeRecebedor: '+qre.NomeRecebedor);
     AdicionarLinhaLog('CidadeRecebedor: '+qre.CidadeRecebedor);
@@ -543,7 +694,7 @@ end;
 
 procedure TForm1.btQREGerarClick(Sender: TObject);
 begin
-  VerificarConfiguracaoPIXCD;
+  VerificarConfiguracao;
   PintarQRCodeEstatico;
 end;
 
@@ -564,6 +715,7 @@ end;
 
 procedure TForm1.btSolicitarDevolucaoPixClick(Sender: TObject);
 begin
+  VerificarConfiguracao;
   mSolicitarDevolucaoPix.Lines.Clear;
 
   with ACBrPixCD1.PSP.epPix.DevolucaoSolicitada do
@@ -577,13 +729,13 @@ begin
   if ACBrPixCD1.PSP.epPix.SolicitarDevolucaoPix( edtSolicitarDevolucaoPix_e2eid.Text,
                                                  edtSolicitarDevolucaoPix_id.Text ) then
   begin
-    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
+    mSolicitarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Devolucao.AsJSON);
     MostrarDevolucaoEmLinhas( '  Devolucao',
                               ACBrPixCD1.PSP.epPix.Devolucao,
                               mSolicitarDevolucaoPix.Lines );
   end
   else
-    mSolicitarDevolucaoPix.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+    mSolicitarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
 end;
 
 procedure TForm1.cbxPSPAtualChange(Sender: TObject);
@@ -591,9 +743,9 @@ begin
   imgErrPSP.Visible := (cbxPSPAtual.ItemIndex < 1);
 end;
 
-procedure TForm1.edtCEPExit(Sender: TObject);
+procedure TForm1.edtRecebedorCEPExit(Sender: TObject);
 begin
-  if (not imgErrCEP.Visible) and (edtCidade.Text = '') then
+  if (not imgErrCEP.Visible) and (edtRecebedorCidade.Text = '') then
     sbConsultaCEP.Click;
 end;
 
@@ -617,6 +769,17 @@ begin
   edtConsultarPixRecebidosCPFCNPJ.SelStart := Length(edtConsultarPixRecebidosCPFCNPJ.Text);
 end;
 
+procedure TForm1.edtItauArqChavePrivadaChange(Sender: TObject);
+begin
+  lItauErroChavePrivada.Caption := '';
+  lItauErroCertificado.Caption := '';
+  btItauValidarChaveCertificado.Visible :=
+     imgItauErroChavePrivada.Visible or
+     imgItauErroCertificado.Visible or
+     (edtItauArqChavePrivada.Text <> ACBrPSPItau1.ArquivoChavePrivada) or
+     (edtItauArqCertificado.Text <> ACBrPSPItau1.ArquivoCertificado);
+end;
+
 procedure TForm1.edtBBChavePIXChange(Sender: TObject);
 begin
   cbxBBTipoChave.ItemIndex := Integer(DetectarTipoChave(edtBBChavePIX.Text));
@@ -629,9 +792,19 @@ begin
   imgItauErroChavePIX.Visible := (edtItauChavePIX.Text <> '') and (cbxItauTipoChave.ItemIndex = 0);
 end;
 
-procedure TForm1.edtNomeChange(Sender: TObject);
+procedure TForm1.edtItauClientIDChange(Sender: TObject);
 begin
-  imgErrNome.Visible := (Length(Trim(edtNome.Text)) < 5);
+  imgItauErroClientID.Visible := not ValidarChaveAleatoria(edtItauClientID.Text);
+end;
+
+procedure TForm1.edtItauClientSecretChange(Sender: TObject);
+begin
+  imgItauErroClientSecret.Visible := not ValidarChaveAleatoria(edtItauClientSecret.Text);
+end;
+
+procedure TForm1.edtRecebedorNomeChange(Sender: TObject);
+begin
+  imgErrNome.Visible := (Length(Trim(edtRecebedorNome.Text)) < 5);
 end;
 
 procedure TForm1.edtSantanderChavePIXChange(Sender: TObject);
@@ -642,7 +815,7 @@ end;
 
 procedure TForm1.mQREChange(Sender: TObject);
 begin
-  btQREAnalisar.Enabled := (Trim(mQRE.Text) <> '');
+  btQREAnalisar.Enabled := (Trim(mQRE.Lines.Text) <> '');
 end;
 
 procedure TForm1.pgPrincipalChange(Sender: TObject);
@@ -654,6 +827,32 @@ begin
   end;
 
   btSalvarParametros.Enabled := (pgPrincipal.ActivePageIndex = 1);
+end;
+
+procedure TForm1.pgPSPItauChaveCertificadoChange(Sender: TObject);
+var
+  a: String;
+begin
+  if (pgPSPItauChaveCertificado.ActivePageIndex = 1) then
+  begin
+    ValidarChavePSPItau;
+    a := AdicionarPathAplicacao(edtItauArqChavePrivada.Text);
+    if (a = '') then
+      a := AdicionarPathAplicacao('ItauChavePrivada.pem');
+    edtItauArqChavePrivada2.Text := a;
+    if FileExists(a) then
+    begin
+      ACBrOpenSSLUtils1.LoadPrivateKeyFromFile(a);
+      mItauChavePrivadaPEM.Lines.Text := ChangeLineBreak(ACBrOpenSSLUtils1.PrivateKeyAsString, sLineBreak);
+    end
+    else
+      mItauChavePrivadaPEM.Lines.Text := 'Arquivo: '+a+'  não encontrado';
+
+    a := AdicionarPathAplicacao(edtItauArqCertificado.Text);
+    if (a = '') then
+      a := AdicionarPathAplicacao('ItauCertificado.pem');
+    edtItauArqCertificado2.Text := a;
+  end;
 end;
 
 procedure TForm1.QuandoMudarDadosQRCode(Sender: TObject);
@@ -679,13 +878,32 @@ end;
 
 procedure TForm1.LigarAlertasdeErrosDeConfiguracao;
 begin
-  edtNomeChange(Nil);
-  edtCEPChange(Nil);
+  LigarAlertasdeErrosDeConfiguracaoPIXCD;
+  if (ACBrPixCD1.PSP = ACBrPSPItau1) then
+    LigarAlertasdeErrosDeConfiguracaoPSPItau;
+end;
+
+procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPIXCD;
+begin
+  edtRecebedorNomeChange(Nil);
+  edtRecebedorCEPChange(Nil);
   cbxPSPAtualChange(Nil);
-  edtBBChavePIXChange(Nil);
-  edtItauChavePIXChange(Nil);
-  edtSantanderChavePIXChange(Nil);
   mQREChange(Nil);
+end;
+
+procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPSPItau;
+begin
+  edtItauChavePIXChange(Nil);
+  edtItauClientIDChange(Nil);
+  edtItauClientSecretChange(Nil);
+  ValidarChaveCertificadoPSPItau;
+end;
+
+procedure TForm1.VerificarConfiguracao;
+begin
+  VerificarConfiguracaoPIXCD;
+  if (ACBrPixCD1.PSP = ACBrPSPItau1) then
+    VerificarConfiguracaoPSPItau;
 end;
 
 procedure TForm1.VerificarConfiguracaoPIXCD;
@@ -699,6 +917,89 @@ begin
   end;
 end;
 
+procedure TForm1.VerificarConfiguracaoPSPItau;
+begin
+  if imgItauErroChavePIX.Visible or imgItauErroClientID.Visible or imgItauErroClientSecret.Visible then
+  begin
+    pgPrincipal.ActivePageIndex := 1;
+    pgConfPixPSP.ActivePageIndex := 1;
+    pgPSPs.ActivePageIndex := 2;
+    pgPSPItau.ActivePageIndex := 0;
+    pgPSPItauChaveCertificado.ActivePageIndex := 0;
+    pgPSPItauGerarChaveCertificado.ActivePageIndex := 0;
+    MessageDlg('Favor configurar as credenciais de acesso ao Itaú', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+
+  if imgItauErroChavePrivada.Visible or imgItauErroCertificado.Visible then
+  begin
+    pgPrincipal.ActivePageIndex := 1;
+    pgConfPixPSP.ActivePageIndex := 1;
+    pgPSPs.ActivePageIndex := 2;
+    pgPSPItau.ActivePageIndex := 1;
+    pgPSPItauChaveCertificado.ActivePageIndex := 0;
+    pgPSPItauGerarChaveCertificado.ActivePageIndex := 0;
+    MessageDlg('Favor configurar a Chave Privada e Certificado', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+end;
+
+procedure TForm1.ValidarChaveCertificadoPSPItau;
+begin
+  ValidarChavePSPItau;
+  ValidarCertificadoPSPItau;
+end;
+
+procedure TForm1.ValidarChavePSPItau;
+var
+  a, e: String;
+begin
+  a := AdicionarPathAplicacao(edtItauArqChavePrivada.Text);
+  e := 'OK';
+  if (a = '') then
+    e := 'Arquivo não especificado'
+  else if (not FileExists(a)) then
+    e := 'Arquivo não encontrado'
+  else
+  begin
+    try
+      ACBrOpenSSLUtils1.LoadPrivateKeyFromFile(a);
+    except
+      On Ex: Exception do
+        e := Ex.Message;
+    end;
+  end;
+
+  lItauErroChavePrivada.Caption := e;
+  imgItauErroChavePrivada.Visible := (e <> 'OK');
+  btItauValidarChaveCertificado.Visible := imgItauErroChavePrivada.Visible;
+end;
+
+procedure TForm1.ValidarCertificadoPSPItau;
+var
+  a, e: String;
+begin
+  a := AdicionarPathAplicacao(edtItauArqCertificado.Text);
+  e := 'OK';
+  if (a = '') then
+    e := 'Arquivo não especificado'
+  else if (not FileExists(a)) then
+    e := 'Arquivo não encontrado'
+  else
+  begin
+    try
+      ACBrOpenSSLUtils1.LoadCertificateFromFile(a);  // Verifica se o arquivo de Chave é válido
+    except
+      On Ex: Exception do
+        e := Ex.Message;
+    end;
+  end;
+
+  lItauErroCertificado.Caption := e;
+  imgItauErroCertificado.Visible := (e <> 'OK');
+  btItauValidarChaveCertificado.Visible := imgItauErroCertificado.Visible;
+end;
+
 procedure TForm1.LerConfiguracao;
 Var
   Ini : TIniFile ;
@@ -706,10 +1007,12 @@ begin
   AdicionarLinhaLog('- LerConfiguracao: '+NomeArquivoConfiguracao);
   Ini := TIniFile.Create(NomeArquivoConfiguracao);
   try
-    edtNome.Text := Ini.ReadString('Recebedor', 'Nome', '');
-    edtCEP.Text := Ini.ReadString('Recebedor', 'CEP', '');
-    edtCidade.Text := Ini.ReadString('Recebedor', 'Cidade', '');
-    seMCC.Value := Ini.ReadInteger('Recebedor', 'MCC', 0);
+    edtRecebedorNome.Text := Ini.ReadString('Recebedor', 'Nome', '');
+    edtRecebedorCEP.Text := Ini.ReadString('Recebedor', 'CEP', '');
+    edtRecebedorCidade.Text := Ini.ReadString('Recebedor', 'Cidade', '');
+    cbxRecebedorUF.ItemIndex := cbxRecebedorUF.Items.IndexOf(Ini.ReadString('Recebedor', 'UF', ''));
+
+    seRecebedorMCC.Value := Ini.ReadInteger('Recebedor', 'MCC', 0);
 
     cbxPSPAtual.ItemIndex := Ini.ReadInteger('PIX','PSP', 0);
     cbxAmbiente.ItemIndex := Ini.ReadInteger('PIX','Ambiente', 0);
@@ -732,6 +1035,8 @@ begin
     edtItauClientID.Text := Ini.ReadString('Itau', 'ClientID', '');
     edtItauClientSecret.Text := Ini.ReadString('Itau', 'ClientSecret', '');
     edtItauXCorrelationId.Text := Ini.ReadString('Itau', 'XCorrelationId', '');
+    edtItauArqChavePrivada.Text := Ini.ReadString('Itau', 'ArqChavePrivada', edtItauArqChavePrivada.Text);
+    edtItauArqCertificado.Text := Ini.ReadString('Itau', 'ArqCertificado', edtItauArqCertificado.Text);
 
     edtSantanderChavePIX.Text := Ini.ReadString('Santander', 'ChavePIX', '');
     edtSantanderConsumerKey.Text := Ini.ReadString('Santander', 'ConsumerKey', '');
@@ -752,10 +1057,11 @@ begin
   AdicionarLinhaLog('- LerConfiguracao: '+NomeArquivoConfiguracao);
   Ini := TIniFile.Create(NomeArquivoConfiguracao);
   try
-    Ini.WriteString('Recebedor', 'Nome', edtNome.Text);
-    Ini.WriteString('Recebedor', 'CEP', edtCEP.Text);
-    Ini.WriteString('Recebedor', 'Cidade', edtCidade.Text);
-    Ini.WriteInteger('Recebedor', 'MCC', seMCC.Value);
+    Ini.WriteString('Recebedor', 'Nome', edtRecebedorNome.Text);
+    Ini.WriteString('Recebedor', 'CEP', edtRecebedorCEP.Text);
+    Ini.WriteString('Recebedor', 'Cidade', edtRecebedorCidade.Text);
+    Ini.WriteString('Recebedor', 'UF', cbxRecebedorUF.Text);
+    Ini.WriteInteger('Recebedor', 'MCC', seRecebedorMCC.Value);
 
     Ini.WriteInteger('PIX','PSP', cbxPSPAtual.ItemIndex);
     Ini.WriteInteger('PIX','Ambiente', cbxAmbiente.ItemIndex);
@@ -778,6 +1084,8 @@ begin
     Ini.WriteString('Itau', 'ClientID', edtItauClientID.Text);
     Ini.WriteString('Itau', 'ClientSecret', edtItauClientSecret.Text);
     Ini.WriteString('Itau', 'XCorrelationId', edtItauXCorrelationId.Text);
+    Ini.WriteString('Itau', 'ArqChavePrivada', edtItauArqChavePrivada.Text);
+    Ini.WriteString('Itau', 'ArqCertificado', edtItauArqCertificado.Text);
 
     Ini.WriteString('Santander', 'ChavePIX', edtSantanderChavePIX.Text);
     Ini.WriteString('Santander', 'ConsumerKey', edtSantanderConsumerKey.Text);
@@ -786,6 +1094,7 @@ begin
      Ini.Free ;
   end ;
 
+  LigarAlertasdeErrosDeConfiguracao;
 end;
 
 procedure TForm1.AplicarConfiguracao;
@@ -798,10 +1107,11 @@ end;
 procedure TForm1.ConfigurarACBrPIXCD;
 begin
   AdicionarLinhaLog('  - ConfigurarACBrPIXCD');
-  ACBrPixCD1.Recebedor.Nome := edtNome.Text;
-  ACBrPixCD1.Recebedor.CEP := edtCEP.Text;
-  ACBrPixCD1.Recebedor.Cidade := edtCidade.Text;
-  ACBrPixCD1.Recebedor.CodCategoriaComerciante := seMCC.Value;
+  ACBrPixCD1.Recebedor.Nome := edtRecebedorNome.Text;
+  ACBrPixCD1.Recebedor.CEP := edtRecebedorCEP.Text;
+  ACBrPixCD1.Recebedor.Cidade := edtRecebedorCidade.Text;
+  ACBrPixCD1.Recebedor.UF := cbxRecebedorUF.Text;
+  ACBrPixCD1.Recebedor.CodCategoriaComerciante := seRecebedorMCC.Value;
 
   ACBrPixCD1.Ambiente := TACBrPixCDAmbiente(cbxAmbiente.ItemIndex);
   ACBrPixCD1.TimeOut := seTimeout.Value;
@@ -836,6 +1146,8 @@ begin
   ACBrPSPItau1.ClientID := edtItauClientID.Text;
   ACBrPSPItau1.ClientSecret := edtItauClientSecret.Text;
   ACBrPSPItau1.xCorrelationID := edtItauXCorrelationId.Text;
+  ACBrPSPItau1.ArquivoChavePrivada := edtItauArqChavePrivada.Text;
+  ACBrPSPItau1.ArquivoCertificado := edtItauArqCertificado.Text;
 
   ACBrPSPSantander1.ChavePIX := edtItauChavePIX.Text;
   ACBrPSPSantander1.ConsumerKey := edtSantanderConsumerKey.Text;
@@ -844,48 +1156,14 @@ end;
 
 procedure TForm1.LimparQRCodeEstatico;
 begin
-  mQRE.Text := '';
+  mQRE.Lines.Clear;
   imgQRE.Picture.Clear;
 end;
 
 procedure TForm1.PintarQRCodeEstatico;
 begin
-  mQRE.Text := ACBrPixCD1.GerarQRCodeEstatico(fleQREValor.Value, edtQREInfoAdicional.Text, edtQRETxId.Text);
-  PintarQRCode(mQRE.Text, imgQRE.Picture.Bitmap);
-end;
-
-procedure TForm1.PintarQRCode(const Dados: String; ABMP: TBitmap);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8BOM;
-    QRCode.QuietZone := 2;
-    QRCode.Data      := widestring(Dados);
-
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    ABMP.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
+  mQRE.Lines.Text := ACBrPixCD1.GerarQRCodeEstatico(fleQREValor.Value, edtQREInfoAdicional.Text, edtQRETxId.Text);
+  PintarQRCode(mQRE.Lines.Text, imgQRE.Picture.Bitmap, qrUTF8BOM);
 end;
 
 procedure TForm1.MostrarPixEmLinhas(const NomePix: String;
@@ -956,5 +1234,45 @@ begin
   {$EndIf}
 end;
 
+function TForm1.RemoverPathAplicacao(const AFileName: String): String;
+var
+  s: String;
+begin
+  s := Trim(AFileName);
+  if (pos(ApplicationPath, s) = 1) then
+    Result := ExtractFileName(s)
+  else
+    Result := s;
+end;
+
+function TForm1.AdicionarPathAplicacao(const AFileName: String): String;
+var
+  s: String;
+begin
+  s := Trim(AFileName);
+  if (s = '') then
+    Result := s
+  else if (ExtractFilePath(AFileName) <> '') then
+    Result := s
+  else
+    Result := ApplicationPath + s;
+end;
+
 end.
+
+
+e := VerificarChavePrivadaItau(OpenDialog1.FileName);
+if (e <> '') then
+begin
+  mItauChavePrivadaPEM.Lines.Text := e;
+  edtItauArqChavePrivada2.Text := '';
+end
+else
+begin
+  AFile := OpenDialog1.FileName;
+  if (pos(ApplicationPath, AFile) = 1) then
+    AFile := ExtractFileName(AFile);
+  edtItauArqChavePrivada2.Text := AFile;
+  mItauChavePrivadaPEM.Lines.Text := ChangeLineBreak(ACBrOpenSSLUtils1.PrivateKeyAsString, sLineBreak);
+end;
 

@@ -27,25 +27,31 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="6">
+    <RequiredPackages Count="8">
       <Item1>
-        <PackageName Value="DateTimeCtrls"/>
+        <PackageName Value="PCNComum"/>
       </Item1>
       <Item2>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="DateTimeCtrls"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_PIXCD"/>
+        <PackageName Value="SynEdit"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item5>
       <Item6>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_PIXCD"/>
       </Item6>
+      <Item7>
+        <PackageName Value="ACBrComum"/>
+      </Item7>
+      <Item8>
+        <PackageName Value="LCL"/>
+      </Item8>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
@@ -80,7 +86,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="5">
+    <Exceptions Count="6">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -96,6 +102,9 @@
       <Item5>
         <Name Value="EACBrPixException"/>
       </Item5>
+      <Item6>
+        <Name Value="EJSONParser"/>
+      </Item6>
     </Exceptions>
   </Debugging>
 </CONFIG>

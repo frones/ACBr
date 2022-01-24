@@ -834,7 +834,7 @@ begin
       else
         FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
 
-      if (Provedor in [proGINFES, proBetha, proDSFSJC]) then
+      if (Provedor in [proGINFES, proBetha, proDSF]) then
         FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
       else
         FieldByName('DataEmissao').AsString := FormatDateBr(DataEmissao);

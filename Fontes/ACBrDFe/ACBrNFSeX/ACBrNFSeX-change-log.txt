@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/01/2022
+-- ACBrNFSeXServicos --
+[*] Diversos ajustes foram realizados em diversas cidades.
+   Por: InfoPointerp
 -- Diversos --
 [*] O prover DSFSJC na realidade é o provedor DSF só que se utiliza da versão 1 
     do layout da ABRASF.

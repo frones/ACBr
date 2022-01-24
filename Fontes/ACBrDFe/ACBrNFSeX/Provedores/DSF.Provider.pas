@@ -38,12 +38,35 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrXmlBase, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXProviderABRASFv1, ACBrNFSeXProviderABRASFv2,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
+  TACBrNFSeXWebserviceDSF = class(TACBrNFSeXWebserviceSoap11)
+
+  public
+    function Recepcionar(ACabecalho, AMSG: String): string; override;
+    function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
+    function Cancelar(ACabecalho, AMSG: String): string; override;
+
+    function AlterarNameSpace(aMsg: string): string;
+  end;
+
+  TACBrNFSeProviderDSF = class (TACBrNFSeProviderABRASFv1)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+  end;
+
   TACBrNFSeXWebserviceDSF200 = class(TACBrNFSeXWebserviceSoap11)
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
@@ -73,45 +96,154 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, DSF.GravarXml, DSF.LerXml;
+  ACBrDFeException,
+  DSF.GravarXml, DSF.LerXml;
 
-{ TACBrNFSeProviderDSF200 }
+{ TACBrNFSeXWebserviceDSF }
 
-procedure TACBrNFSeProviderDSF200.Configuracao;
+function TACBrNFSeXWebserviceDSF.AlterarNameSpace(aMsg: string): string;
+begin
+  Result := StringReplace(aMsg, 'http://www.abrasf.org.br/nfse.xsd',
+                            'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
+end;
+
+function TACBrNFSeXWebserviceDSF.Recepcionar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:RecepcionarLoteRpsV3>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
+  Request := Request + '</nfse:RecepcionarLoteRpsV3>';
+
+  Result := Executar('', Request,
+                     ['return', 'EnviarLoteRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDSF.ConsultarLote(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarLoteRpsV3>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
+  Request := Request + '</nfse:ConsultarLoteRpsV3>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarLoteRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDSF.ConsultarSituacao(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarSituacaoLoteRpsV3>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
+  Request := Request + '</nfse:ConsultarSituacaoLoteRpsV3>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarSituacaoLoteRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDSF.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfsePorRpsV3>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
+  Request := Request + '</nfse:ConsultarNfsePorRpsV3>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarNfseRpsResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDSF.ConsultarNFSe(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:ConsultarNfseV3>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
+  Request := Request + '</nfse:ConsultarNfseV3>';
+
+  Result := Executar('', Request,
+                     ['return', 'ConsultarNfseResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDSF.Cancelar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:CancelarNfseV3>';
+  Request := Request + '<arg0>' + IncluirCDATA(ACabecalho) + '</arg0>';
+  Request := Request + '<arg1>' + IncluirCDATA(AlterarNameSpace(AMSG)) + '</arg1>';
+  Request := Request + '</nfse:CancelarNfseV3>';
+
+  Result := Executar('', Request,
+                     ['return', 'CancelarNfseResposta'],
+                     ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+{ TACBrNFSeProviderDSF }
+
+procedure TACBrNFSeProviderDSF.Configuracao;
 begin
   inherited Configuracao;
 
   with ConfigAssinar do
   begin
-    Rps := True;
     LoteRps := True;
+    CancelarNFSe := True;
   end;
+
+  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
+
+  ConfigWebServices.AtribVerLote := 'versao';
+
+  ConfigMsgDados.DadosCabecalho := '<ns2:cabecalho versao="3" xmlns:ns2="http:/www.abrasf.org.br/nfse.xsd">' +
+                                   '<versaoDados>3</versaoDados>' +
+                                   '</ns2:cabecalho>';
 end;
 
-function TACBrNFSeProviderDSF200.CriarGeradorXml(
-  const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderDSF.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
 begin
-  Result := TNFSeW_DSF200.Create(Self);
+  Result := TNFSeW_DSF.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderDSF200.CriarLeitorXml(
-  const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderDSF.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
 begin
-  Result := TNFSeR_DSF200.Create(Self);
+  Result := TNFSeR_DSF.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderDSF200.CriarServiceClient(
-  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderDSF.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
 
   if URL <> '' then
-    Result := TACBrNFSeXWebserviceDSF200.Create(FAOwner, AMetodo, URL)
+    Result := TACBrNFSeXWebserviceDSF.Create(FAOwner, AMetodo, URL)
   else
   begin
     if ConfigGeral.Ambiente = taProducao then
@@ -119,15 +251,6 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
-end;
-
-procedure TACBrNFSeProviderDSF200.ValidarSchema(Response: TNFSeWebserviceResponse;
-  aMetodo: TMetodo);
-begin
-  inherited ValidarSchema(Response, aMetodo);
-
-  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
-                          ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', []);
 end;
 
 { TACBrNFSeXWebserviceDSF200 }
@@ -289,6 +412,60 @@ begin
   Result := Executar('', Request,
                      ['SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+{ TACBrNFSeProviderDSF200 }
+
+procedure TACBrNFSeProviderDSF200.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+  end;
+end;
+
+function TACBrNFSeProviderDSF200.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_DSF200.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderDSF200.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_DSF200.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderDSF200.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceDSF200.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderDSF200.ValidarSchema(Response: TNFSeWebserviceResponse;
+  aMetodo: TMetodo);
+begin
+  inherited ValidarSchema(Response, aMetodo);
+
+  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
+                          ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', []);
 end;
 
 end.

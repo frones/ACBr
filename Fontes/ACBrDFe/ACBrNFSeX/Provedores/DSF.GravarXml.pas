@@ -38,9 +38,16 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
+  ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXGravarXml_ABRASFv2;
 
 type
+  { TNFSeW_DSF }
+
+  TNFSeW_DSF = class(TNFSeW_ABRASFv1)
+  protected
+    procedure Configuracao; override;
+
+  end;
   { TNFSeW_DSF200 }
 
   TNFSeW_DSF200 = class(TNFSeW_ABRASFv2)
@@ -56,5 +63,20 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     DSF
 //==============================================================================
+
+{ TNFSeW_DSF }
+
+procedure TNFSeW_DSF.Configuracao;
+begin
+  inherited Configuracao;
+
+  NrOcorrAliquota := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorInss := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
+  NrOcorrValorIss := 1;
+end;
 
 end.

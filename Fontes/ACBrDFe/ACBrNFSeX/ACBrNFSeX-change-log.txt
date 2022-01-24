@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 24/01/2022
+-- Diversos --
+[*] O prover DSFSJC na realidade é o provedor DSF só que se utiliza da versão 1 
+    do layout da ABRASF.
+    Sendo assim agora só existe o provedor DSF para atender tanto as cidades que 
+    se utilizam da versão 1 quanto das que se utilizam da versão 2.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] O provedor SpeedGov tem uma URL de homologação padrão para todas as cidades
    Por: Danio

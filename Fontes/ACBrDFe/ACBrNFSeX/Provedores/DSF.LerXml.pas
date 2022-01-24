@@ -38,9 +38,17 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv2;
+  ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
 
 type
+  { TNFSeR_DSF }
+
+  TNFSeR_DSF = class(TNFSeR_ABRASFv1)
+  protected
+
+  public
+
+  end;
   { TNFSeR_DSF200 }
 
   TNFSeR_DSF200 = class(TNFSeR_ABRASFv2)

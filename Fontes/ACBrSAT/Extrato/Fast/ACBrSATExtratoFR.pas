@@ -678,7 +678,7 @@ begin
 
     if FCFe.Dest.CNPJCPF <> '' then
     begin
-      if (FCFe.Dest.CNPJCPF.Length = 14) then
+      if Length(FCFe.Dest.CNPJCPF) = 14 then
         FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CNPJ %s', [FormatarCNPJ(OnlyNumber(FCFe.Dest.CNPJCPF))])
       else
         FieldByName('CPFConsumidor').AsString := Format('CONSUMIDOR - CPF %s', [FormatarCPF(OnlyNumber(FCFe.Dest.CNPJCPF))]);

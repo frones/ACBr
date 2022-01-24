@@ -119,10 +119,13 @@
         <UnitName Value="ACBrPIXSchemasLotesCobVConsultadas"/>
       </Item25>
     </Files>
-    <RequiredPkgs Count="1">
+    <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="ACBrDiversos"/>
+      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

@@ -45,6 +45,9 @@ Símbolo : Significado
 
 24/01/2022
 -- ACBrNFSeXServicos --
+[*] O provedor SpeedGov tem uma URL de homologação padrão para todas as cidades
+   Por: Danio
+-- ACBrNFSeXServicos --
 [*] A cidade: Santo Antonio de Padua se utiliza da versão 2.03 - provedor Pronim
    Por: Fernando DNA Sistemas
 

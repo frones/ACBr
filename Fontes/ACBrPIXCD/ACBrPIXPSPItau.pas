@@ -126,7 +126,8 @@ end;
 
 procedure TACBrPSPItau.Autenticar;
 var
-  AURL, RespostaHttp, Body: String;
+  AURL, Body: String;
+  RespostaHttp: AnsiString;
   ResultCode, sec: Integer;
   js: TJsonObject;
   qp: TACBrQueryParams;
@@ -185,7 +186,8 @@ end;
 
 function TACBrPSPItau.SolicitarCertificado(const TokenTemporario: String): String;
 var
-  RespostaHttp, Body, AURL: String;
+  Body, AURL: String;
+  RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   LimparHTTP;

@@ -104,7 +104,8 @@ end;
 
 procedure TACBrPSPSantander.Autenticar;
 var
-  AURL, RespostaHttp, Body, client_id: String;
+  AURL, Body, client_id: String;
+  RespostaHttp: AnsiString;
   ResultCode, sec: Integer;
   js: TJsonObject;
   qp: TACBrQueryParams;

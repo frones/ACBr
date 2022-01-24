@@ -32,7 +32,8 @@ package ACBr_PIXCD;
 requires
   rtl,
   vcl,
-  ACBr_Diversos;
+  ACBr_Diversos,
+  ACBr_OpenSSL;
 
 contains
   ACBrPIXBase in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXBase.pas',

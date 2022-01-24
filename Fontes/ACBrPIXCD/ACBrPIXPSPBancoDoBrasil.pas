@@ -64,7 +64,7 @@ type
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
-    procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: String;
+    procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString;
       Problema: TACBrPIXProblema); override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -98,7 +98,8 @@ end;
 
 procedure TACBrPSPBancoDoBrasil.Autenticar;
 var
-  AURL, RespostaHttp, Body, BasicAutentication: String;
+  AURL, Body, BasicAutentication: String;
+  RespostaHttp: AnsiString;
   ResultCode, sec: Integer;
   js: TJsonObject;
   qp: TACBrQueryParams;
@@ -176,7 +177,7 @@ begin
 end;
 
 procedure TACBrPSPBancoDoBrasil.TratarRetornoComErro(ResultCode: Integer;
-  const RespostaHttp: String; Problema: TACBrPIXProblema);
+  const RespostaHttp: AnsiString; Problema: TACBrPIXProblema);
 var
   js, ej: TJsonObject;
   ae: TJsonArray;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/01/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Santo Antonio de Padua se utiliza da versão 2.03 - provedor Pronim
+   Por: Fernando DNA Sistemas
+
 21/01/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Medianeira/PR se utiliza da versão 1.00 - provedor Pronim

@@ -233,6 +233,8 @@ begin
         else
           GerarIdeFolhaPagto2(self.InfoExclusao.IdeFolhaPagto);
       end
+    else if ( self.InfoExclusao.tpEvento In [teS1280] ) then  //Fazendo isso, irá atender o layout novo e o antigo.
+       GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto)
     else
       begin
         if ( self.InfoExclusao.IdeFolhaPagto.perApur = '' ) then

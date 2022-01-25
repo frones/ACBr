@@ -61,6 +61,9 @@ var
 
 implementation
 
+uses
+  ACBrUtil;
+
 {$R *.dfm}
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -107,6 +110,8 @@ begin
           Node := trvwNFe.Items.AddChild(Lote,'CFe');
           trvwNFe.Items.AddChild(Node,'Chave= '  +InfCFe[J].Chave);
           trvwNFe.Items.AddChild(Node,'nCupom= '  +InfCFe[J].nCupom);
+          trvwNFe.Items.AddChild(Node,'vCFe= '  + FormatFloatBr( InfCFe[J].vCFe ));
+          trvwNFe.Items.AddChild(Node,'dEmi + hEmi= '  + FormatDateTimeBr( InfCFe[J].dEmi + InfCFe[J].hEmi ));
           trvwNFe.Items.AddChild(Node,'Situacao= '  +InfCFe[J].Situacao);
           trvwNFe.Items.AddChild(Node,'Erros= '  +InfCFe[J].Erros);
         end;

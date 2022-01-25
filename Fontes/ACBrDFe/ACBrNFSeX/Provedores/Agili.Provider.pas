@@ -256,7 +256,7 @@ procedure TACBrNFSeProviderAgili.TratarRetornoEmitir(Response: TNFSeEmiteRespons
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
   ANota: TNotaFiscal;
   NumRps: String;
 begin
@@ -301,9 +301,14 @@ begin
           Exit;
         end;
 
-        NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+        AuxNode := ANode;
+        AuxNode := AuxNode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+        AuxNode := AuxNode.Childrens.FindAnyNs('Rps');
+        AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+        AuxNode := AuxNode.Childrens.FindAnyNs('Numero');
+        NumRps  := AuxNode.AsString;
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if Assigned(ANota) then
           ANota.XML := ANode.OuterXml

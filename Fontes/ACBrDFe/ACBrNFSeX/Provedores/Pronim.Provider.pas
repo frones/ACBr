@@ -415,8 +415,12 @@ begin
 
   Result := Executar('http://tempuri.org/INFSEGeracao/GerarNfse', Request,
                      ACabecalho,
-                     ['GerarNfseResult', 'GerarNfseResposta'],
+                     ['GerarNfseResponseResult', 'GerarNfseResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
+ {
+   Alterado de GerarNfseResult para GerarNfseResponseResult
+   Versão 2.03
+ }
 end;
 
 function TACBrNFSeXWebservicePronim202.ConsultarLote(ACabecalho,

@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/01/2022
+-- Pronim.Provider --
+[*] Enviado uma possível correção, alterado o nome da tag para extrair o retorno
+    do GerarNfse.
+   Por: Italo Giurizzato Junior
+-- Agili.Provider --
+[*] Ao tratar o retorno do emitir não estava encontrando o Rps carregado no componente.
+   Por: plenustech
+
 24/01/2022
 -- ACBrNFSeXServicos --
 [*] Diversos ajustes foram realizados em diversas cidades.

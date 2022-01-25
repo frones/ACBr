@@ -69,11 +69,21 @@ type
     FnCupom : String;
     FSituacao : String;
     FErros : String;
+    FdhEmi : TDateTime;
+    FvCFe : Currency;
+
+    function GetdEmi : TDateTime;
+    function GethEmi : TDateTime;
+    procedure SetdEmi(AValue : TDateTime);
+    procedure SethEmi(AValue : TDateTime);
   public
     property Chave    : String        read FChave    write FChave;
     property nCupom   : String        read FnCupom   write FnCupom;
     property Situacao : String        read FSituacao write FSituacao;
     property Erros    : String        read FErros    write FErros;
+    property dEmi     : TDateTime     read GetdEmi   write SetdEmi;
+    property hEmi     : TDateTime     read GethEmi   write SethEmi;
+    property vCFe     : Currency      read FvCFe     write FvCFe;
   end;
 
   { TLoteCollection }
@@ -141,6 +151,9 @@ type
   end;
 
 implementation
+
+uses
+  dateutils;
 
 { TLoteCollectionItem }
 
@@ -279,6 +292,9 @@ begin
           FLote.Items[i].InfCFe[j].Chave    :=  Leitor.rCampo(tcStr, 'Chave');
           FLote.Items[i].InfCFe[j].nCupom   :=  Leitor.rCampo(tcStr, 'nCupom');
           FLote.Items[i].InfCFe[j].Situacao :=  Leitor.rCampo(tcStr, 'Situacao');
+          FLote.Items[i].InfCFe[j].dEmi     :=  Leitor.rCampo(tcDatCFe, 'dEmi');
+          FLote.Items[i].InfCFe[j].hEmi     :=  Leitor.rCampo(tcHorCFe, 'hEmi');
+          FLote.Items[i].InfCFe[j].vCFe     :=  Leitor.rCampo(tcDe2, 'vCFe');
           FLote.Items[i].InfCFe[j].Erros    :=  Leitor.rCampo(tcStr, 'cfeErros');
           Inc(J);
         end;
@@ -290,6 +306,28 @@ begin
   except
     Result := False;
   end;
+end;
+
+{ TInfCFeCollectionItem }
+
+function TInfCFeCollectionItem.GetdEmi: TDateTime;
+begin
+  Result := DateOf( FdhEmi );
+end;
+
+function TInfCFeCollectionItem.GethEmi: TDateTime;
+begin
+  Result := TimeOf( FdhEmi );
+end;
+
+procedure TInfCFeCollectionItem.SetdEmi(AValue: TDateTime);
+begin
+  FdhEmi := DateOf(AValue) + hEmi;
+end;
+
+procedure TInfCFeCollectionItem.SethEmi(AValue: TDateTime);
+begin
+  FdhEmi := dEmi + TimeOf(AValue);
 end;
 
 end.

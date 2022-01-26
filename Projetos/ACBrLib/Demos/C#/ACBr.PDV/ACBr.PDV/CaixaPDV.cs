@@ -268,7 +268,6 @@ namespace ACBr.PDV
         {
             var nfce = VendaAtual.ToNFCe();
             NFe.LimparLista();
-
             NFe.CarregarNota(nfce);
 
             var envioRet = NFe.Enviar(1, true, true);

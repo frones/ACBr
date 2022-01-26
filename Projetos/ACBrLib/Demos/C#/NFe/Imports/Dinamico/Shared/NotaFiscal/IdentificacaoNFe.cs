@@ -38,7 +38,7 @@ namespace ACBrLib.NFe
         /// <summary>
         /// Série do Documento Fiscal
         /// </summary>
-        public string serie { get; set; }
+        public string Serie { get; set; }
 
         /// <summary>
         /// Número do Documento Fiscal

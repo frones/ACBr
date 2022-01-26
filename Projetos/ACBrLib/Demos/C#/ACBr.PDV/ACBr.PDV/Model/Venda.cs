@@ -85,13 +85,13 @@ namespace ACBr.PDV.Model
             var ret = new NotaFiscal();
 
             // InfNFe
-            ret.InfNFe.versao = "4.0";
+            ret.InfNFe.Versao = "4.0";
 
             //Identificação
             ret.Identificacao.natOp = "Venda de Mercadoria";
             ret.Identificacao.indPag = IndicadorPagamento.ipVista;
             ret.Identificacao.mod = ModeloNFe.moNFCe;
-            ret.Identificacao.serie = Serie.ToString();
+            ret.Identificacao.Serie = Serie.ToString();
             ret.Identificacao.nNF = Numero;
             ret.Identificacao.dhEmi = Data;
             ret.Identificacao.tpNF = TipoNFe.tnSaida;

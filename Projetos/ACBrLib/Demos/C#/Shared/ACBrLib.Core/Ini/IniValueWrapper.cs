@@ -55,24 +55,8 @@ namespace ACBrLib.Core
 
                 case bool boValue: return boValue ? "1" : "0";
 
-                case Enum eValue when Attribute.IsDefined(type, typeof(FlagsAttribute)):
-                    var member = type.GetMember(eValue.ToString()).First();
-                    if (!Attribute.IsDefined(member, typeof(EnumValueAttribute)))
-                        return Convert.ToInt32(eValue).ToString();
-
-                    var values = eValue.GetFlagValues();
-                    var ret = values.Aggregate("[", (current, enValue) =>
-                    {
-                        if (current.Length > 1) current += ",";
-                        return current + enValue.GetEnumValueOrInt();
-                    });
-
-                    ret += "]";
-                    return ret;
-
-                case Enum eValue when !Attribute.IsDefined(type, typeof(FlagsAttribute)):
-                    var eMember = type.GetMember(eValue.ToString()).First();
-                    return Attribute.IsDefined(eMember, typeof(EnumValueAttribute)) ? eValue.GetEnumValueOrInt() : $"[{Enum.Format(type, eValue, "F")}]";
+                case Enum eValue:
+                    return eValue.GetEnumValue();
 
                 case string[] aString:
                     return string.Join("|", aString);

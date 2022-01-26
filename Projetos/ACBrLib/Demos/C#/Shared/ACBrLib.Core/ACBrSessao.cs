@@ -40,6 +40,8 @@
         BoletoBancoConfig,
         BoletoDiretorioConfig,
         BoletoBancoFCFortesConfig,
+        BoletoCedenteWS,
+        BoletoWebSevice,
         GNRe,
         Guia,
         Sedex,

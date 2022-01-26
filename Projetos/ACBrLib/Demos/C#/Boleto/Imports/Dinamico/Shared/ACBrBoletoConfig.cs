@@ -20,6 +20,8 @@ namespace ACBrLib.Boleto
             Cedente = new CedenteConfig(acbrboleto);
             Diretorio = new DiretorioConfig(acbrboleto);
             Impressao = new ImpressaoConfig(acbrboleto);
+            Webservice = new WebserviceConfig(acbrboleto);
+            CedenteWebservice = new CedenteWebserviceConfig(acbrboleto);
             Email = new EmailConfig<ACBrBoleto>(acbrboleto);
         }
 
@@ -46,6 +48,16 @@ namespace ACBrLib.Boleto
         /// Configurações da Sessão [BoletoBancoFCFortesConfig]
         /// </summary>
         public ImpressaoConfig Impressao { get; }
+
+        /// <summary>
+        /// Configurações da Sessão [BoletoWebSevice]
+        /// </summary>
+        public WebserviceConfig Webservice { get; }
+
+        /// <summary>
+        /// Configurações da Sessão [BoletoCedenteWS]
+        /// </summary>
+        public CedenteWebserviceConfig CedenteWebservice { get; }
 
         /// <summary>
         /// Configurações da Sessão [Email]

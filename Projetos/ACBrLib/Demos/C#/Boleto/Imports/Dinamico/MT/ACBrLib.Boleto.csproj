@@ -54,6 +54,7 @@
     <Compile Include="..\Shared\ACBrBoletoConfig.cs" Link="ACBrBoletoConfig.cs" />
     <Compile Include="..\Shared\BancoConfig.cs" Link="BancoConfig.cs" />
     <Compile Include="..\Shared\CedenteConfig.cs" Link="CedenteConfig.cs" />
+    <Compile Include="..\Shared\CedenteWebserviceConfig.cs" Link="CedenteWebserviceConfig.cs" />
     <Compile Include="..\Shared\DiretorioConfig.cs" Link="DiretorioConfig.cs" />
     <Compile Include="..\Shared\ImpressaoConfig.cs" Link="ImpressaoConfig.cs" />
     <Compile Include="..\Shared\Titulo\ACBrCaracTitulo.cs" Link="Titulo\ACBrCaracTitulo.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="..\Shared\Titulo\TipoOcorrencia.cs" Link="Titulo\TipoOcorrencia.cs" />
     <Compile Include="..\Shared\Titulo\TipoPagamento.cs" Link="Titulo\TipoPagamento.cs" />
     <Compile Include="..\Shared\Titulo\Titulo.cs" Link="Titulo\Titulo.cs" />
+    <Compile Include="..\Shared\WebserviceConfig.cs" Link="WebserviceConfig.cs" />
   </ItemGroup>
 
   <ItemGroup>

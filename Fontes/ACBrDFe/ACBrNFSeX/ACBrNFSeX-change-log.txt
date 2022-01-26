@@ -45,6 +45,9 @@ Símbolo : Significado
 
 26/01/2022
 -- Diversos --
+[*] Ajustes no provedor DSF para atender a cidade de Sorocaba/SP.
+   Por: Luiz Sodré/Italo Giurizzato Junior
+-- Diversos --
 [*] Removido os campos Params1 e Params2 e implementado o Params, favor abrir
     o arquivo ACBrNFSeXServicos que logo no inicio temos a sintaxe desse campo
     bem como as chaves já pré definidas.

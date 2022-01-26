@@ -48,10 +48,12 @@ type
     procedure Configuracao; override;
 
   end;
+
   { TNFSeW_DSF200 }
 
   TNFSeW_DSF200 = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   public
 
@@ -77,6 +79,15 @@ begin
   NrOcorrValorIr := 1;
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
+end;
+
+{ TNFSeW_DSF200 }
+
+procedure TNFSeW_DSF200.Configuracao;
+begin
+  inherited Configuracao;
+
+  GerarNSRps := False;
 end;
 
 end.

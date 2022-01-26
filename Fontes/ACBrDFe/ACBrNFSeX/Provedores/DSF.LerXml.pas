@@ -49,6 +49,7 @@ type
   public
 
   end;
+
   { TNFSeR_DSF200 }
 
   TNFSeR_DSF200 = class(TNFSeR_ABRASFv2)

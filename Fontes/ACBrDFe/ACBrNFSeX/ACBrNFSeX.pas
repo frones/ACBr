@@ -181,7 +181,7 @@ type
     property Status: TStatusACBrNFSe      read FStatus;
     property Provider: IACBrNFSeXProvider read FProvider;
     property NumID[ANFSe: TNFSe]: string  read GetNumID;
-    property WebService: TWebServices read FWebService;
+    property WebService: TWebServices     read FWebService;
 
   published
     property Configuracoes: TConfiguracoesNFSe read GetConfiguracoes write SetConfiguracoes;

@@ -92,6 +92,8 @@ type
 
     // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
     FGerarIDRps: Boolean;
+    // Gera ou não o NameSpace no grupo <Rps> da versão 2 do layout da ABRASF.
+    FGerarNSRps: Boolean;
 
     function GetOpcoes: TACBrXmlWriterOptions;
     procedure SetOpcoes(AValue: TACBrXmlWriterOptions);
@@ -145,6 +147,7 @@ type
     property NrOcorrItemListaServico: Integer read FNrOcorrItemListaServico write FNrOcorrItemListaServico;
 
     property GerarIDRps: Boolean read FGerarIDRps write FGerarIDRps;
+    property GerarNSRps: Boolean read FGerarNSRps write FGerarNSRps;
   end;
 
 implementation
@@ -183,6 +186,8 @@ begin
 
   // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
   FGerarIDRps := False;
+  // Gera ou não o NameSpace no grupo <Rps> da versão 2 do layout da ABRASF.
+  FGerarNSRps := True;
 end;
 
 procedure TNFSeWClass.DefinirIDRps;

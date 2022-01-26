@@ -93,6 +93,12 @@ type
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
+  TACBrNFSeProviderDSF203 = class (TACBrNFSeProviderDSF200)
+  protected
+    procedure Configuracao; override;
+
+  end;
+
 implementation
 
 uses
@@ -466,6 +472,29 @@ begin
 
   Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
                           ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', []);
+end;
+
+{ TACBrNFSeProviderDSF203 }
+
+procedure TACBrNFSeProviderDSF203.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    Rps := False;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+    RpsSubstituirNFSe := True;
+  end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.03';
+    VersaoAtrib := '2.03';
+  end;
+
+  SetXmlNameSpace('');
 end;
 
 end.

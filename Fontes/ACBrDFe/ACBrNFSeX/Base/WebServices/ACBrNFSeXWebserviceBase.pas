@@ -70,6 +70,7 @@ type
     HttpClient: TDFeSSLHttpClass;
 
     FPFaultNode: string;
+    FPSoapFaultNode: string;
     FPFaultCodeNode: string;
     FPFaultMsgNode: string;
 
@@ -295,6 +296,7 @@ begin
   FUseOuterXml := True;
 
   FPFaultNode := 'Fault';
+  FPSoapFaultNode := 'soap:Fault';
   FPFaultCodeNode := 'faultcode';
   FPFaultMsgNode := 'faultstring';
 
@@ -525,7 +527,7 @@ Var
   ANode: TACBrXmlNode;
   aMsg: string;
 begin
-  if ADocument.Root.Name = FPFaultNode then
+  if ((ADocument.Root.Name = FPFaultNode) or (ADocument.Root.Name = FPSoapFaultNode)) then
     ANode := ADocument.Root
   else
     ANode := ADocument.Root.Childrens.FindAnyNs(FPFaultNode);

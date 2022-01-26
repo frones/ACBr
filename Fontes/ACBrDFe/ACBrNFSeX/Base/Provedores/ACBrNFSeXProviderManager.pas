@@ -239,6 +239,7 @@ begin
           case Versao of
             ve100: Result := TACBrNFSeProviderDSF.Create(ACBrNFSe);
             ve200: Result := TACBrNFSeProviderDSF200.Create(ACBrNFSe);
+            ve203: Result := TACBrNFSeProviderDSF203.Create(ACBrNFSe);
           else
             Result := nil;
           end;

@@ -398,7 +398,9 @@ begin
   FDocument.Clear();
 
   NFSeNode := CreateElement('Rps');
-  NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
+
+  if GerarNSRps then
+    NFSeNode.SetNamespace(FpAOwner.ConfigMsgDados.XmlRps.xmlns, Self.PrefixoPadrao);
 
   FDocument.Root := NFSeNode;
 

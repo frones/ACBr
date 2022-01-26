@@ -100,6 +100,8 @@ begin
 
   // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
   GerarIDRps := False;
+  // Gera ou não o NameSpace no grupo <Rps> da versão 2 do layout da ABRASF.
+  GerarNSRps := True;
 
   GerarIDDeclaracao := True;
   GerarEnderecoExterior := False;

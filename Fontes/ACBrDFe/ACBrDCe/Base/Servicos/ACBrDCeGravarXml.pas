@@ -38,11 +38,10 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnConsts, pcnAuxiliar,
+  pcnConsts,
+  pcnAuxiliar,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
   ACBrUtil, ACBrDFeUtil, ACBrDCeClass;
-  {
-  ACBrDCeConversao, ACBrDCeConsts}
 
 type
 
@@ -51,7 +50,7 @@ type
     FAjustarTagNro: boolean;
     FGerarTagIPIparaNaoTributado: boolean;
     FNormatizarMunicipios: boolean;
-    FGerarTagAssinatura: TpcnTagAssinatura;
+    FGerarTagAssinatura: TACBrTagAssinatura;
     FPathArquivoMunicipios: string;
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
@@ -60,7 +59,7 @@ type
     property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
     property GerarTagIPIparaNaoTributado: boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
     property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
+    property GerarTagAssinatura: TACBrTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
     property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
     property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
@@ -123,7 +122,8 @@ type
 implementation
 
 uses
-  ACBrValidador, ACBrDCe, ACBrDCeConversao;
+  ACBrValidador,
+  ACBrDCe, ACBrDCeConversao;
 
 { TDCeXmlWriter }
 
@@ -135,7 +135,7 @@ begin
   Opcoes.GerarTagIPIparaNaoTributado := True;
   Opcoes.NormatizarMunicipios := False;
   Opcoes.PathArquivoMunicipios := '';
-  Opcoes.GerarTagAssinatura := pcnConversao.taSomenteSeAssinada;
+  Opcoes.GerarTagAssinatura := taSomenteSeAssinada;
   Opcoes.ValidarInscricoes := False;
   Opcoes.ValidarListaServicos := False;
 
@@ -769,15 +769,15 @@ begin
                                            DCe.infDCeSupl.urlChave, '', False));
   end;
 
-  Gerar := (Opcoes.GerarTagAssinatura = pcnConversao.taSempre) or
+  Gerar := (Opcoes.GerarTagAssinatura = taSempre) or
     (
-      (Opcoes.GerarTagAssinatura = pcnConversao.taSomenteSeAssinada) and
+      (Opcoes.GerarTagAssinatura = taSomenteSeAssinada) and
         (DCe.signature.DigestValue <> '') and
         (DCe.signature.SignatureValue <> '') and
         (DCe.signature.X509Certificate <> '')
     ) or
     (
-      (Opcoes.GerarTagAssinatura = pcnConversao.taSomenteParaNaoAssinada) and
+      (Opcoes.GerarTagAssinatura = taSomenteParaNaoAssinada) and
         (DCe.signature.DigestValue = '') and
         (DCe.signature.SignatureValue = '') and
         (DCe.signature.X509Certificate = '')

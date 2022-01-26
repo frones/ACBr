@@ -47,7 +47,8 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase, ACBrXmlBase,
-  ACBrDCeConversao, ACBrDCeProc, pcnConversao, pcnSignature, pcnGerador;
+  pcnSignature,
+  ACBrDCeConversao, ACBrDCeProc;
 
 type
 
@@ -529,9 +530,9 @@ end;
 function TinfDCe.GetVersaoStr: String;
 begin
   if FVersao <= 0 then
-     Result := V1_00
+    Result := 'versao="1.00"'
   else
-     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
+    Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
 
 { Tdest }

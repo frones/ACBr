@@ -38,10 +38,11 @@ interface
 
 uses
   Classes, SysUtils, synacode,
+  pcnAuxiliar,
+  pcnConversao,
   ACBrDFe, ACBrDFeWebService,
   ACBrDCeClass,
 //  pcnRetConsReciDFe,
-  pcnAuxiliar, pcnConversao,
   ACBrDCeConversao, ACBrDCeProc,
 //  pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
 //  pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
@@ -496,9 +497,10 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrDCe, ACBrDCeConsts, pcnConsts,
-  pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
-//  pDCeConsSitDCe, pDCeConsDCeNaoEnc,
+  ACBrUtil, ACBrCompress, ACBrDCe, ACBrDCeConsts,
+  pcnLeitor,
+  pcnConsStatServ, pcnRetConsStatServ,
+//  pmdfeConsSitDCe, pmdfeConsDCeNaoEnc,
   pcnConsReciDFe;
 
 { TDCeWebService }
@@ -759,7 +761,7 @@ begin
   begin
     FcUF := FDeclaracoes.Items[0].DCe.Ide.cUF;
 
-    if integer(FPConfiguracoesDCe.WebServices.Ambiente) <> Integer(FDeclaracoes.Items[0].DCe.Ide.tpAmb) then
+    if Integer(FPConfiguracoesDCe.WebServices.Ambiente) <> Integer(FDeclaracoes.Items[0].DCe.Ide.tpAmb) then
       raise EACBrDCeException.Create( ACBRDCe_CErroAmbDiferente );
   end
   else

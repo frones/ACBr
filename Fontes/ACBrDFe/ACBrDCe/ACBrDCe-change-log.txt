@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2022
+-- Diversos --
+[*] Inicio da remoção das Units: PCN dos fontes do componente.
+   Por: Italo Giurizzato Junior
+
 Data 15/01/2022
 [+] Doação do componente ACBrDCe para o Projeto ACBr (Ainda não esta funcional)
    Por: Italo Giurizzato Junior

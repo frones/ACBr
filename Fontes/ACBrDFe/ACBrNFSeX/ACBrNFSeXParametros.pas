@@ -42,6 +42,23 @@ uses
 
 type
 
+  { TACBrNFSeXConfigParams }
+
+  TACBrNFSeXConfigParams = Class
+    fSL: TStringList;
+  private
+    fParamsStr: String;
+    procedure SetParamsStr(AValue: String);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function TemParametro(const AParam: String): Boolean;
+    function ValorParametro(const AParam: String): String;
+
+    property AsString: String read fParamsStr write SetParamsStr;
+  end;
+
   { TConfigGeral }
   TConfigGeral = class
   private
@@ -79,9 +96,7 @@ type
     FConsultaPorFaixaPreencherNumNfseFinal: Boolean;
 
     // uso diverso
-    FParams1: string;
-    // uso diverso
-    FParams2: string;
+    FParams: TACBrNFSeXConfigParams;
 
     // Provedor lido do arquivo ACBrNFSeXServicos
     FProvedor: TnfseProvedor;
@@ -93,8 +108,10 @@ type
     FCodIBGE: string;
 
   public
-    procedure LoadParams1(AINI: TCustomIniFile; ASession: string);
-    procedure LoadParams2(AINI: TCustomIniFile; ASession: string);
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure LoadParams(AINI: TCustomIniFile; const ASession: string);
 
     property Identificador: string read FIdentificador write FIdentificador;
     property QuebradeLinha: string read FQuebradeLinha write FQuebradeLinha;
@@ -114,8 +131,7 @@ type
     property ConsultaPorFaixaPreencherNumNfseFinal: Boolean read FConsultaPorFaixaPreencherNumNfseFinal write FConsultaPorFaixaPreencherNumNfseFinal;
 
     // Parametros lidos no arquivo .Res ou .ini
-    property Params1: string read FParams1;
-    property Params2: string read FParams2;
+    property Params: TACBrNFSeXConfigParams read FParams;
 
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
     property Versao: TVersaoNFSe read FVersao write FVersao;
@@ -438,6 +454,48 @@ type
 
 implementation
 
+uses
+  ACBrUtil;
+
+{ TACBrNFSeXConfigParams }
+
+constructor TACBrNFSeXConfigParams.Create;
+begin
+  inherited Create;
+
+  fSL := TStringList.Create;
+end;
+
+destructor TACBrNFSeXConfigParams.Destroy;
+begin
+  fSL.Free;
+
+  inherited Destroy;
+end;
+
+function TACBrNFSeXConfigParams.TemParametro(const AParam: String): Boolean;
+var
+  p: Integer;
+begin
+  p := fSL.IndexOfName(Trim(AParam));
+  Result := (p >= 0);
+end;
+
+function TACBrNFSeXConfigParams.ValorParametro(const AParam: String): String;
+begin
+  Result := fSL.Values[AParam];
+end;
+
+procedure TACBrNFSeXConfigParams.SetParamsStr(AValue: String);
+var
+  s: String;
+begin
+  if fParamsStr = AValue then Exit;
+  fParamsStr := Trim(AValue);
+  s := StringReplace(fParamsStr, ':', '=', [rfReplaceAll]);
+  AddDelimitedTextToList(s, '|', fSL, #0);
+end;
+
 { TConfigWebServices }
 
 constructor TConfigWebServices.Create;
@@ -591,14 +649,23 @@ end;
 
 { TConfigGeral }
 
-procedure TConfigGeral.LoadParams1(AINI: TCustomIniFile; ASession: string);
+constructor TConfigGeral.Create;
 begin
-  FParams1 := AINI.ReadString(ASession, 'Params1', '');
+  inherited Create;
+
+  FParams := TACBrNFSeXConfigParams.Create;
 end;
 
-procedure TConfigGeral.LoadParams2(AINI: TCustomIniFile; ASession: string);
+destructor TConfigGeral.Destroy;
 begin
-  FParams2 := AINI.ReadString(ASession, 'Params2', '');
+  FParams.Free;
+
+  inherited Destroy;
+end;
+
+procedure TConfigGeral.LoadParams(AINI: TCustomIniFile; const ASession: string);
+begin
+  FParams.AsString := AINI.ReadString(ASession, 'Params', '');
 end;
 
 end.

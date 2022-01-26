@@ -526,9 +526,9 @@ var
   xPref: string;
 begin
   if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    xPref := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1
+    xPref := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade')
   else
-    xPref := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params2;
+    xPref := 'BANCO_DEMONSTRACAO';
 
   with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
   begin

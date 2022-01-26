@@ -102,7 +102,7 @@ begin
                                                    NFSe.CodigoVerificacao, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tsVrsImp', 1, 1, 1,
-                                              FpAOwner.ConfigGeral.Params2, ''));
+            FpAOwner.ConfigGeral.Params.ValorParametro('VersaoImpressao'), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tsNumDocTmd', 11, 14, 1,
                                 NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));

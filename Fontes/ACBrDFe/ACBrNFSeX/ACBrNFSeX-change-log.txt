@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/01/2022
+-- Diversos --
+[*] Removido os campos Params1 e Params2 e implementado o Params, favor abrir
+    o arquivo ACBrNFSeXServicos que logo no inicio temos a sintaxe desse campo
+    bem como as chaves já pré definidas.
+   Por: DSA/Italo Giurizzato Junior
+
 25/01/2022
 -- Pronim.Provider --
 [*] Enviado uma possível correção, alterado o nome da tag para extrair o retorno

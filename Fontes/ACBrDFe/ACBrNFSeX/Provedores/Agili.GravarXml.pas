@@ -100,18 +100,22 @@ implementation
 { TNFSeW_Agili }
 
 procedure TNFSeW_Agili.Configuracao;
+var
+  Params: string;
 begin
   inherited Configuracao;
 
-  FpAtividadeEconomica := Trim(FpAOwner.ConfigGeral.Params1);
+  FpAtividadeEconomica := Trim(FpAOwner.ConfigGeral.Params.ValorParametro('NomeTagAtividadeEconomica'));
 
   FpNrOcorrCodigoCnae := 1;
   FpNrOcorrItemLei116 := 1;
 
-  if Pos('naogerarcodigocnae', lowercase(FpAOwner.ConfigGeral.Params2)) > 0 then
+  Params := lowercase(FpAOwner.ConfigGeral.Params.ValorParametro('NaoGerarTag'));
+
+  if Pos('codigocnae', Params) > 0 then
     FpNrOcorrCodigoCnae := -1;
 
-  if Pos('naogeraritemlei116', lowercase(FpAOwner.ConfigGeral.Params2)) > 0 then
+  if Pos('itemlei116', Params) > 0 then
     FpNrOcorrItemLei116 := -1;
 end;
 

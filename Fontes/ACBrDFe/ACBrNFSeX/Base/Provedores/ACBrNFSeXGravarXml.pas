@@ -73,7 +73,6 @@ type
     FCodMunEmit: Integer;
     FUsuario: string;
     FSenha: string;
-    FMunicipio: string;
     FChaveAcesso: string;
     FChaveAutoriz: string;
     FFraseSecreta: string;
@@ -127,7 +126,6 @@ type
     property CodMunEmit: Integer         read FCodMunEmit     write FCodMunEmit;
     property Usuario: string             read FUsuario        write FUsuario;
     property Senha: string               read FSenha          write FSenha;
-    property Municipio: string           read FMunicipio      write FMunicipio;
     property ChaveAcesso: string         read FChaveAcesso    write FChaveAcesso;
     property ChaveAutoriz: string        read FChaveAutoriz   write FChaveAutoriz;
     property FraseSecreta: string        read FFraseSecreta   write FFraseSecreta;

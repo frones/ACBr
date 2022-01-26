@@ -141,13 +141,15 @@ end;
 
 function TACBrNFSeXWebserviceSiapSistemas203.GetNamespace: string;
 begin
-  Result := 'xmlns:nfse="' + TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1 +
-            'RPS"';
+  Result := 'xmlns:nfse="' +
+    TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade') +
+    'RPS"';
 end;
 
 function TACBrNFSeXWebserviceSiapSistemas203.GetSoapAction: string;
 begin
-  Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1 + 'RPSaction/';
+  Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade') +
+    'RPSaction/';
 end;
 
 function TACBrNFSeXWebserviceSiapSistemas203.Recepcionar(ACabecalho,

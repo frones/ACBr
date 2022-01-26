@@ -628,14 +628,21 @@ end;
 procedure TACBrNFSeXProvider.CarregarURL;
 var
   IniParams: TMemIniFile;
-  Sessao: String;
+  Sessao, Msg: String;
 begin
+  Msg := 'Arquivos:' + #13 +
+         'ACBrNFSeXServicos.ini e ou ACBrNFSeXServicos.res desatualizados' + #13 +
+         'Favor atualizar.';
+
   IniParams := TMemIniFile.Create('');
 
   with TACBrNFSeX(FAOwner) do
   begin
     IniParams.SetStrings(Configuracoes.WebServices.Params);
   end;
+
+  if IniParams.ReadString('3130309', 'Params1', '') <> '' then
+    raise EACBrDFeException.Create(Msg);
 
   try
     with TACBrNFSeX(FAOwner) do
@@ -653,8 +660,7 @@ begin
       ConfigWebServices.LoadSoapActionProducao(IniParams, Sessao);
       ConfigWebServices.LoadSoapActionHomologacao(IniParams, Sessao);
 
-      ConfigGeral.LoadParams1(IniParams, Sessao);
-      ConfigGeral.LoadParams2(IniParams, Sessao);
+      ConfigGeral.LoadParams(IniParams, Sessao);
 
       // Depois verifica as URLs definidas para o provedor
       if ConfigWebServices.Producao.Recepcionar = '' then
@@ -718,17 +724,10 @@ begin
       end;
 
       // Se Params1 estiver vazio usar o que foi definido para o provedor
-      if ConfigGeral.Params1 = '' then
+      if (ConfigGeral.Params.AsString = '') then
       begin
         Sessao := Configuracoes.Geral.xProvedor;
-        ConfigGeral.LoadParams1(IniParams, Sessao);
-      end;
-
-      // Se Params2 estiver vazio usar o que foi definido para o provedor
-      if ConfigGeral.Params2 = '' then
-      begin
-        Sessao := Configuracoes.Geral.xProvedor;
-        ConfigGeral.LoadParams2(IniParams, Sessao);
+        ConfigGeral.LoadParams(IniParams, Sessao);
       end;
     end;
   finally
@@ -887,11 +886,6 @@ begin
       AWriter.FraseSecreta := Configuracoes.Geral.Emitente.WSFraseSecr;
       AWriter.Provedor     := Configuracoes.Geral.Provedor;
       AWriter.VersaoNFSe   := Configuracoes.Geral.Versao;
-
-      if AWriter.Ambiente = taProducao then
-        AWriter.Municipio := ConfigGeral.Params1
-      else
-        AWriter.Municipio := ConfigGeral.Params2;
 
       pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 

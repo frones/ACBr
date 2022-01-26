@@ -664,7 +664,8 @@ var
   ambiente: string;
 begin
   if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    ambiente := 'producao/' + TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1
+    ambiente := 'producao/' +
+      TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade')
   else
     ambiente := 'homologacao/modelo';
 
@@ -677,9 +678,10 @@ var
   ambiente: string;
 begin
   if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    ambiente := 'producao/' + TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1
+    ambiente := 'producao/' +
+      TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade')
   else
-    Result := 'homologacao/modelo';
+    ambiente := 'homologacao/modelo';
 
   Result := 'urn:https://www.geisweb.net.br/' + ambiente +
             '/webservice/GeisWebServiceImpl.php#';

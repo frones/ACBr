@@ -283,7 +283,7 @@ begin
                                   SimNaoToStr(TACBrNFSeX(FAOwner).NotasFiscais.items[0].NFSe.OptanteSimplesNacional) +
                                '</isOptanteSimplesNacional>' +
                                '<idEntidade>' +
-                                  TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                                 TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
                                '</idEntidade>' +
                              '</prestador>' +
                              '<listaRps>' +
@@ -398,13 +398,13 @@ begin
   Response.ArquivoEnvio := '<es:esConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
-                              OnlyNumber(Emitente.InscMun) +
+                             OnlyNumber(Emitente.InscMun) +
                            '</nrInscricaoMunicipal>' +
                            '<cnpj>' +
-                              OnlyNumber(Emitente.CNPJ) +
+                             OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                             TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
                            '</idEntidade>' +
                          '</prestador>' +
                          xConsulta +
@@ -494,13 +494,13 @@ begin
   Response.ArquivoEnvio := '<es:esConsultarLoteRpsEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
-                              OnlyNumber(Emitente.InscMun) +
+                             OnlyNumber(Emitente.InscMun) +
                            '</nrInscricaoMunicipal>' +
                            '<cnpj>' +
-                              OnlyNumber(Emitente.CNPJ) +
+                             OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                             TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
                            '</idEntidade>' +
                          '</prestador>' +
                          xConsulta +
@@ -629,7 +629,7 @@ begin
                               OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
                            '</idEntidade>' +
                          '</prestador>' +
                        '</es:esConsultarNfsePorRpsEnvio>';
@@ -739,7 +739,7 @@ begin
                               OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
                            '</idEntidade>' +
                          '</prestador>' +
                          '<nrNfse>' +
@@ -868,7 +868,7 @@ begin
                               OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params1 +
+                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
                            '</idEntidade>' +
                          '</prestador>' +
                          '<nrNfse>' +

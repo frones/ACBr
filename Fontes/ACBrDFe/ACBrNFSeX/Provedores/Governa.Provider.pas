@@ -190,7 +190,7 @@ begin
                               OnlyNumber(Emitente.InscMun) +
                             '</tsCodCadBic>' +
                             '<tsVrsArq>' +
-                              ConfigGeral.Params1 +
+                              ConfigGeral.Params.ValorParametro('VersaoArquivo') +
                             '</tsVrsArq>' +
                             '<tsChvAcs>' +
                               OnlyNumber(Emitente.WSChaveAcesso) +
@@ -321,7 +321,7 @@ begin
                             OnlyNumber(Emitente.InscMun) +
                           '</tsCodCadBic>' +
                           '<tsVrsArq>' +
-                            ConfigGeral.Params1 +
+                            ConfigGeral.Params.ValorParametro('VersaoArquivo') +
                           '</tsVrsArq>' +
                           '<tsChvAcs>' +
                             OnlyNumber(Emitente.WSChaveAcesso) +
@@ -457,7 +457,7 @@ begin
                             OnlyNumber(Emitente.InscMun) +
                           '</tsCodCadBic>' +
                           '<tsVrsArq>' +
-                            ConfigGeral.Params1 +
+                            ConfigGeral.Params.ValorParametro('VersaoArquivo') +
                           '</tsVrsArq>' +
                           '<tsChvAcs>' +
                             OnlyNumber(Emitente.WSChaveAcesso) +

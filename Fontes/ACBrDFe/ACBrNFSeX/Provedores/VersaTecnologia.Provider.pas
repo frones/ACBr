@@ -277,9 +277,9 @@ var
   xURL: string;
 begin
   if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    xURL := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params1
+    xURL := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('URLProducao')
   else
-    xURL := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params2;
+    xURL := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('URLHomologacao');
 
   if TACBrNFSeX(FPDFeOwner).Configuracoes.Geral.Versao = ve201 then
     xURL := xURL + '/webservice'

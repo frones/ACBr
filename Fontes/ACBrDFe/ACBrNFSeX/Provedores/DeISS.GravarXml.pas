@@ -75,7 +75,11 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorInss := 1;
   NrOcorrOutrasRet := 1;
-  NrOcorrValorIss := StrToIntDef(FpAOwner.ConfigGeral.Params1, 1);
+
+  NrOcorrValorIss := 1;
+
+  if lowercase(FpAOwner.ConfigGeral.Params.ValorParametro('NaoGerarTag')) = 'valoriss' then
+    NrOcorrValorIss := -1;
 end;
 
 end.

@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2022
+--- ACBrMonior1---
+[+] Ajustes nas mensagens de interações em tela ref Terminal Consulta e Balança 
+
 20/01/2022
 --- DoACBrCTe ---
 [*] Ajuste na função de Consulta por chave 

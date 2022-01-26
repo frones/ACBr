@@ -10407,7 +10407,8 @@ begin
     begin
       ACBrBAL1.Desativar;
       AddLinesLog('BAL -> Balança não responde!');
-      MessageDlg('Balança', 'BAL -> Balança não responde!', mtInformation, [mbOK], 0);
+      if pgConfig.ActivePage = tsBAL then
+        MessageDlg('Balança', 'BAL -> Balança não responde!', mtInformation, [mbOK], 0);
     end;
   end
   else
@@ -10494,7 +10495,6 @@ begin
 
   AMsg:= 'Servidor de Terminal de Consulta: ' + IfThen(TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO');
   AddLinesLog(AMsg);
-  MessageDlg('Terminal de Consulta', AMsg, mtInformation, [mbOK], 0);
 
 end;
 

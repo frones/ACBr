@@ -1328,7 +1328,6 @@ begin
             end
             else
               RLFiltro.FilterPages(RLLayout.Pages);
-         end;
      end;
   finally
      frACBrBoletoFortes.Free ;

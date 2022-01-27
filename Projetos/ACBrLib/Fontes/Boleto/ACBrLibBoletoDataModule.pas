@@ -51,6 +51,9 @@ type
     BoletoFortes: TACBrBoletoFCFortes;
     FLayoutImpressao: Integer;
 
+  protected
+    procedure DoCreate; override;
+
   public
     procedure AplicarConfiguracoes; override;
     procedure ConfigurarImpressao(NomeImpressora: String = '');
@@ -69,6 +72,12 @@ uses
 {$R *.lfm}
 
 { TLibBoletoDM }
+
+procedure TLibBoletoDM.DoCreate;
+begin
+  inherited DoCreate;
+  FLayoutImpressao := -1;
+end;
 
 procedure TLibBoletoDM.AplicarConfiguracoes;
 var
@@ -181,8 +190,8 @@ begin
   begin
      DirLogo := LibConfig.BoletoFCFortesConfig.DirLogo;
      Filtro := LibConfig.BoletoFCFortesConfig.Filtro;
-     if (LayoutImpressao <> -1) then
-       Layout := TACBrBolLayOut(LayoutImpressao)
+     if (FLayoutImpressao <> -1) then
+       Layout := TACBrBolLayOut(FLayoutImpressao)
      else
        Layout := LibConfig.BoletoFCFortesConfig.Layout;
      MostrarPreview := LibConfig.BoletoFCFortesConfig.MostrarPreview;

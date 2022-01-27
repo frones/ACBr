@@ -197,12 +197,12 @@ begin
       Exit;
     end;
 {$ENDIF}
-      
-      if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
-         raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
-      
+      BoletoDM.ConfigurarImpressao;
+
       try
-        BoletoDM.ConfigurarImpressao;
+        if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
+         raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
+
         AtualizaLayoutImpressao;
 
         if TpSaida = 'I' then
@@ -235,10 +235,8 @@ begin
             end;
           end;
         end;
-
       finally
          BoletoDM.FinalizarImpressao;
-         
       end;
 
       Result := SetRetorno(ErrOk, Format('%d Titulo(s) Carregado(s)', [BoletoDM.ACBrBoleto1.ListadeBoletos.Count]));

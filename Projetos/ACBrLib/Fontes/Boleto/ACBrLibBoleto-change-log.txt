@@ -42,7 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-06/07/2021
+27/01/2022
+--- ACBrLibBoletoBase, ACBrLibBoletoDataModule --
+[-] Correção de erro na troca de layout de impressão.
+    Por: José M S Junior
+
+06/01/2022
 --- ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST --
 [*] Adicionado novos metodos para retornar o pdf em Base64 Boleto_SalvarPDF e Boleto_SalvarPDFBoleto.
     Por: Rafael Dias

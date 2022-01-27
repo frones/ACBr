@@ -128,8 +128,6 @@ uses
 { TACBrNFSeProviderIPM }
 
 procedure TACBrNFSeProviderIPM.Configuracao;
-var
-  Params: string;
 begin
   inherited Configuracao;
 
@@ -140,10 +138,11 @@ begin
     ConsultaNFSe := False;
   end;
 
-  Params := lowercase(ConfigGeral.Params.ValorParametro('Assinar'));
-
-  ConfigAssinar.RpsGerarNFSe := (Pos('assrpsgerarnfse', Params) > 0);
-  ConfigAssinar.CancelarNFSe := (Pos('asscancelarnfse', Params) > 0);
+  with ConfigAssinar do
+  begin
+    RpsGerarNFSe := ConfigGeral.Params.ParamTemValor('Assinar', 'AssRpsGerarNfse');
+    CancelarNFSe := ConfigGeral.Params.ParamTemValor('Assinar', 'AssCancelarNfse');
+  end;
 
   SetXmlNameSpace('');
 

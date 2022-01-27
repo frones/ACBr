@@ -45,9 +45,10 @@ type
   { TACBrNFSeXConfigParams }
 
   TACBrNFSeXConfigParams = Class
-    fSL: TStringList;
   private
+    fSL: TStringList;
     fParamsStr: String;
+
     procedure SetParamsStr(AValue: String);
   public
     constructor Create;
@@ -55,6 +56,7 @@ type
 
     function TemParametro(const AParam: String): Boolean;
     function ValorParametro(const AParam: String): String;
+    function ParamTemValor(const AParam, AValor: String): Boolean;
 
     property AsString: String read fParamsStr write SetParamsStr;
   end;
@@ -471,6 +473,12 @@ begin
   fSL.Free;
 
   inherited Destroy;
+end;
+
+function TACBrNFSeXConfigParams.ParamTemValor(const AParam,
+  AValor: String): Boolean;
+begin
+  Result := (Pos(lowercase(AValor), lowercase(ValorParametro(AParam))) > 0);
 end;
 
 function TACBrNFSeXConfigParams.TemParametro(const AParam: String): Boolean;

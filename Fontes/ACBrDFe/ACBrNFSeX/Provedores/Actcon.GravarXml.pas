@@ -97,7 +97,7 @@ begin
 
   FormatoEmissao := tcDatHor;
 
-  if lowercase(FpAOwner.ConfigGeral.Params.ValorParametro('DataEmissao')) = 'date' then
+  if FpAOwner.ConfigGeral.Params.ParamTemValor('DataEmissao', 'Date') then
     FormatoEmissao := tcDat;
 
   FormatoCompetencia := tcDat;

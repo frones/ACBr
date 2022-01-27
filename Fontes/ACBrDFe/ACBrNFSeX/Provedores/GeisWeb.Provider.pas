@@ -51,6 +51,7 @@ type
   private
     function GetNameSpace: string;
     function GetSoapAction: string;
+    function GetAliasCidade: string;
   public
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
@@ -59,6 +60,7 @@ type
 
     property NameSpace: string read GetNameSpace;
     property SoapAction: string read GetSoapAction;
+    property AliasCidade: string read GetAliasCidade;
   end;
 
   TACBrNFSeProviderGeisWeb = class (TACBrNFSeProviderProprio)
@@ -659,13 +661,17 @@ end;
 
 { TACBrNFSeXWebserviceGeisWeb }
 
+function TACBrNFSeXWebserviceGeisWeb.GetAliasCidade: string;
+begin
+  Result := TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade');
+end;
+
 function TACBrNFSeXWebserviceGeisWeb.GetNameSpace: string;
 var
   ambiente: string;
 begin
   if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    ambiente := 'producao/' +
-      TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade')
+    ambiente := 'producao/' + AliasCidade
   else
     ambiente := 'homologacao/modelo';
 
@@ -678,8 +684,7 @@ var
   ambiente: string;
 begin
   if TACBrNFSeX(FPDFeOwner).Configuracoes.WebServices.AmbienteCodigo = 1 then
-    ambiente := 'producao/' +
-      TACBrNFSeX(FPDFeOwner).Provider.ConfigGeral.Params.ValorParametro('AliasCidade')
+    ambiente := 'producao/' + AliasCidade
   else
     ambiente := 'homologacao/modelo';
 

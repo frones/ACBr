@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/01/2022
+-- Diversos --
+[+] Implementado a função: ParamTemValor com o objetivo de simplificar a
+    verificação de um valor de uma determinada chave incluida no campo
+    Params no arquivo ACBrNFSeXServicos.
+   Por: Italo Giurizzato Junior
+
 26/01/2022
 -- Diversos --
 [*] Ajustes no provedor DSF para atender a cidade de Sorocaba/SP.

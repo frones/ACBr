@@ -59,6 +59,8 @@ type
   end;
 
   TACBrNFSeProviderEquiplano = class (TACBrNFSeProviderProprio)
+  private
+    FpCodigoCidade: string;
   protected
     procedure Configuracao; override;
 
@@ -109,7 +111,11 @@ procedure TACBrNFSeProviderEquiplano.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.ModoEnvio := meLoteAssincrono;
+  with ConfigGeral do
+  begin
+    ModoEnvio := meLoteAssincrono;
+    FpCodigoCidade := Params.ValorParametro('CodigoCidade');
+  end;
 
   with ConfigAssinar do
   begin
@@ -283,7 +289,7 @@ begin
                                   SimNaoToStr(TACBrNFSeX(FAOwner).NotasFiscais.items[0].NFSe.OptanteSimplesNacional) +
                                '</isOptanteSimplesNacional>' +
                                '<idEntidade>' +
-                                 TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
+                                  FpCodigoCidade +
                                '</idEntidade>' +
                              '</prestador>' +
                              '<listaRps>' +
@@ -398,13 +404,13 @@ begin
   Response.ArquivoEnvio := '<es:esConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
-                             OnlyNumber(Emitente.InscMun) +
+                              OnlyNumber(Emitente.InscMun) +
                            '</nrInscricaoMunicipal>' +
                            '<cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
+                              OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                             TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
+                              FpCodigoCidade +
                            '</idEntidade>' +
                          '</prestador>' +
                          xConsulta +
@@ -494,13 +500,13 @@ begin
   Response.ArquivoEnvio := '<es:esConsultarLoteRpsEnvio' + NameSpace + '>' +
                          '<prestador>' +
                            '<nrInscricaoMunicipal>' +
-                             OnlyNumber(Emitente.InscMun) +
+                              OnlyNumber(Emitente.InscMun) +
                            '</nrInscricaoMunicipal>' +
                            '<cnpj>' +
-                             OnlyNumber(Emitente.CNPJ) +
+                              OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                             TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
+                              FpCodigoCidade +
                            '</idEntidade>' +
                          '</prestador>' +
                          xConsulta +
@@ -629,7 +635,7 @@ begin
                               OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
+                              FpCodigoCidade +
                            '</idEntidade>' +
                          '</prestador>' +
                        '</es:esConsultarNfsePorRpsEnvio>';
@@ -739,7 +745,7 @@ begin
                               OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
+                              FpCodigoCidade +
                            '</idEntidade>' +
                          '</prestador>' +
                          '<nrNfse>' +
@@ -868,7 +874,7 @@ begin
                               OnlyNumber(Emitente.CNPJ) +
                            '</cnpj>' +
                            '<idEntidade>' +
-                              TACBrNFSeX(FAOwner).Provider.ConfigGeral.Params.ValorParametro('CodigoCidade') +
+                              FpCodigoCidade +
                            '</idEntidade>' +
                          '</prestador>' +
                          '<nrNfse>' +

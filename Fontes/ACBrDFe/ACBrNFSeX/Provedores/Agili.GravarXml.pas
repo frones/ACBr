@@ -100,8 +100,6 @@ implementation
 { TNFSeW_Agili }
 
 procedure TNFSeW_Agili.Configuracao;
-var
-  Params: string;
 begin
   inherited Configuracao;
 
@@ -110,12 +108,10 @@ begin
   FpNrOcorrCodigoCnae := 1;
   FpNrOcorrItemLei116 := 1;
 
-  Params := lowercase(FpAOwner.ConfigGeral.Params.ValorParametro('NaoGerarTag'));
-
-  if Pos('codigocnae', Params) > 0 then
+  if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'CodigoCnae') then
     FpNrOcorrCodigoCnae := -1;
 
-  if Pos('itemlei116', Params) > 0 then
+  if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'ItemLei116') then
     FpNrOcorrItemLei116 := -1;
 end;
 

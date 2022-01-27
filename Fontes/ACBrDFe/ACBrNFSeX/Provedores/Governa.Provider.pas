@@ -55,6 +55,8 @@ type
   end;
 
   TACBrNFSeProviderGoverna = class (TACBrNFSeProviderProprio)
+  private
+    FpVersaoArquivo: string;
   protected
     procedure Configuracao; override;
 
@@ -101,6 +103,8 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaLote := False;
     ConsultaNFSe := False;
+
+    FpVersaoArquivo := Params.ValorParametro('VersaoArquivo');
   end;
 
   SetXmlNameSpace('http://tempuri.org/');
@@ -187,13 +191,13 @@ begin
   begin
     Response.ArquivoEnvio := '<tcLoteRps>' +
                             '<tsCodCadBic>' +
-                              OnlyNumber(Emitente.InscMun) +
+                               OnlyNumber(Emitente.InscMun) +
                             '</tsCodCadBic>' +
                             '<tsVrsArq>' +
-                              ConfigGeral.Params.ValorParametro('VersaoArquivo') +
+                               FpVersaoArquivo +
                             '</tsVrsArq>' +
                             '<tsChvAcs>' +
-                              OnlyNumber(Emitente.WSChaveAcesso) +
+                               OnlyNumber(Emitente.WSChaveAcesso) +
                             '</tsChvAcs>' +
                             Xml +
                          '</tcLoteRps>';
@@ -318,13 +322,13 @@ begin
 
   Response.ArquivoEnvio := '<tcConsultaRPS>' +
                           '<tsCodCadBic>' +
-                            OnlyNumber(Emitente.InscMun) +
+                             OnlyNumber(Emitente.InscMun) +
                           '</tsCodCadBic>' +
                           '<tsVrsArq>' +
-                            ConfigGeral.Params.ValorParametro('VersaoArquivo') +
+                             FpVersaoArquivo +
                           '</tsVrsArq>' +
                           '<tsChvAcs>' +
-                            OnlyNumber(Emitente.WSChaveAcesso) +
+                             OnlyNumber(Emitente.WSChaveAcesso) +
                           '</tsChvAcs>' +
                           '<tcInfConsultaRPS>' +
                             '<tsNumRPS>' + Response.NumRPS + '</tsNumRPS>' +
@@ -454,13 +458,13 @@ begin
 
   Response.ArquivoEnvio := '<tcLoteCancelamento>' +
                           '<tsCodCadBic>' +
-                            OnlyNumber(Emitente.InscMun) +
+                             OnlyNumber(Emitente.InscMun) +
                           '</tsCodCadBic>' +
                           '<tsVrsArq>' +
-                            ConfigGeral.Params.ValorParametro('VersaoArquivo') +
+                             FpVersaoArquivo +
                           '</tsVrsArq>' +
                           '<tsChvAcs>' +
-                            OnlyNumber(Emitente.WSChaveAcesso) +
+                             OnlyNumber(Emitente.WSChaveAcesso) +
                           '</tsChvAcs>' +
                           '<tcNotCan>' +
                             '<tcInfNotCan>' +
@@ -468,10 +472,10 @@ begin
                                 Response.InfCancelamento.NumeroNFSe +
                               '</tsNumNot>' +
                               '<tsCodVer>' +
-                                Response.InfCancelamento.CodVerificacao +
+                                 Response.InfCancelamento.CodVerificacao +
                               '</tsCodVer>' +
                               '<tsDesMotCan>' +
-                                Response.InfCancelamento.MotCancelamento +
+                                 Response.InfCancelamento.MotCancelamento +
                               '</tsDesMotCan>' +
                             '</tcInfNotCan>' +
                           '</tcNotCan>' +

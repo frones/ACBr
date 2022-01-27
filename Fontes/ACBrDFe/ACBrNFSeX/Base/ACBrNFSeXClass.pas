@@ -702,25 +702,6 @@ type
     property Items[Index: Integer]: TDespesaCollectionItem read GetItem write SetItem;
   end;
 
-  TAssinaComChaveParamsCollectionItem = class(TObject)
-  private
-    FParam: string;
-    FConteudo: string;
-  public
-    property Param: string read FParam write FParam;
-    property Conteudo: string read FConteudo write FConteudo;
-  end;
-
-  TAssinaComChaveParamsCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TAssinaComChaveParamsCollectionItem;
-    procedure SetItem(Index: Integer; Const Value: TAssinaComChaveParamsCollectionItem);
-  public
-    function Add: TAssinaComChaveParamsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TAssinaComChaveParamsCollectionItem;
-    property Items[Index: Integer]: TAssinaComChaveParamsCollectionItem read GetItem write SetItem; default;
-  end;
-
   TPedidoCancelamento = class(TObject)
   private
     FInfID: TInfID;
@@ -868,7 +849,6 @@ type
     FAssinatura: string;
     FInformacoesComplementares: string;
 
-    FAssinaComChaveParams: TAssinaComChaveParamsCollection;
     FPercentualCargaTributaria: Double;
     FValorCargaTributaria: Double;
     FPercentualCargaTributariaMunicipal: Double;
@@ -889,8 +869,6 @@ type
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
     procedure SetDespesa(const Value: TDespesaCollection);
-    procedure SetAssinaComChaveParams(
-      const Value: TAssinaComChaveParamsCollection);
     procedure SetGenericos(const Value: TGenericosCollection);
     procedure SetQuartos(const Value: TQuartoCollection);
   public
@@ -963,8 +941,6 @@ type
     property email: TemailCollection read Femail write Setemail;
 
     property TipoTributacaoRPS: TTipoTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
-
-    property AssinaComChaveParams: TAssinaComChaveParamsCollection read FAssinaComChaveParams write SetAssinaComChaveParams;
 
     // Provedor SP
     property Assinatura: string read FAssinatura write FAssinatura;
@@ -1167,7 +1143,6 @@ begin
   FTransportadora := TDadosTransportadora.Create;
   Femail := TemailCollection.Create;
   FDespesa := TDespesaCollection.Create;
-  FAssinaComChaveParams := TAssinaComChaveParamsCollection.Create;
   FGenericos := TGenericosCollection.Create;
 
   Clear;
@@ -1193,7 +1168,6 @@ begin
   FNfseCancelamento.Free;
   Femail.Free;
   FDespesa.Free;
-  FAssinaComChaveParams.Free;
   FTransportadora.Free;
   FGenericos.Free;
 
@@ -1223,12 +1197,6 @@ end;
 procedure TNFSe.SetDespesa(const Value: TDespesaCollection);
 begin
   FDespesa := Value;
-end;
-
-procedure TNFSe.SetAssinaComChaveParams(
-  const Value: TAssinaComChaveParamsCollection);
-begin
-  FAssinaComChaveParams := Value;
 end;
 
 { TPedidoCancelamento }
@@ -1430,31 +1398,6 @@ end;
 function TDespesaCollection.New: TDespesaCollectionItem;
 begin
   Result := TDespesaCollectionItem.Create;
-  Self.Add(Result);
-end;
-
-{ TAssinaComChaveParamsCollection }
-
-function TAssinaComChaveParamsCollection.Add: TAssinaComChaveParamsCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TAssinaComChaveParamsCollection.GetItem(
-  Index: Integer): TAssinaComChaveParamsCollectionItem;
-begin
-  Result := TAssinaComChaveParamsCollectionItem(inherited Items[Index]);
-end;
-
-procedure TAssinaComChaveParamsCollection.SetItem(Index: Integer;
-  const Value: TAssinaComChaveParamsCollectionItem);
-begin
-  inherited Items[Index] := Value;
-end;
-
-function TAssinaComChaveParamsCollection.New: TAssinaComChaveParamsCollectionItem;
-begin
-  Result := TAssinaComChaveParamsCollectionItem.Create;
   Self.Add(Result);
 end;
 

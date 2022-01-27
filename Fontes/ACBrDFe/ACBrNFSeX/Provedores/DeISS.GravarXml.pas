@@ -78,7 +78,7 @@ begin
 
   NrOcorrValorIss := 1;
 
-  if lowercase(FpAOwner.ConfigGeral.Params.ValorParametro('NaoGerarTag')) = 'valoriss' then
+  if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'ValorIss') then
     NrOcorrValorIss := -1;
 end;
 

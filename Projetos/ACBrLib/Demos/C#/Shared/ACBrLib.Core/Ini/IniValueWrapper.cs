@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -55,8 +56,34 @@ namespace ACBrLib.Core
 
                 case bool boValue: return boValue ? "1" : "0";
 
-                case Enum eValue:
-                    return eValue.GetEnumValue();
+                case Enum _:
+                    var enumType = type.IsGenericType ? type.GetGenericArguments()[0] : type;
+
+                    if (Attribute.IsDefined(enumType, typeof(FlagsAttribute)))
+                    {
+                        var member = enumType.GetMember(value.ToString()).First();
+
+                        if (!Attribute.IsDefined(member, typeof(EnumValueAttribute)))
+                            return $"[{Enum.Format(enumType, value, "F")}]";
+
+                        var flags = GetFlagValues(value);
+                        return flags.Aggregate("[", (current, enValue) =>
+                        {
+                            if (current.Length > 1) current += ",";
+
+                            var eMember = enumType.GetMember(enValue.ToString()).First();
+                            var eAtt = eMember.GetCustomAttributes(false).OfType<EnumValueAttribute>().First();
+                            if (eAtt == null) throw new ArgumentException("Tipo de enum [EnumValue], sem valores definidos.");
+
+                            return current + eAtt.Value;
+                        }, current => current + "]");
+                    }
+                    else
+                    {
+                        var member = enumType.GetMember(value.ToString()).First();
+                        var enumAttribute = member.GetCustomAttributes(false).OfType<EnumValueAttribute>().FirstOrDefault();
+                        return enumAttribute?.Value ?? Convert.ToInt32(value).ToString();
+                    }
 
                 case string[] aString:
                     return string.Join("|", aString);
@@ -176,6 +203,13 @@ namespace ACBrLib.Core
                    || type == typeof(Stream)
                    || type.IsEnum
                    || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && CanWrapUnwrap(type.GetGenericArguments()[0]);
+        }
+
+        private static IEnumerable<Enum> GetFlagValues(object flags)
+        {
+            if (!Attribute.IsDefined(flags.GetType(), typeof(FlagsAttribute))) throw new ArgumentException("Função apenas para enuns do tipo Flag.");
+
+            return from Enum value in Enum.GetValues(flags.GetType()) where ((Enum)flags).HasFlag(value) select value;
         }
 
         #endregion Methods

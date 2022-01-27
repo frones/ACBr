@@ -148,7 +148,7 @@ namespace ACBrLib.NFe
         /// <para>Observação ICMS=30: apenas 6, 7 e 9 podem ser usados</para>
         /// <para>Observação ICMS=40,41,50: de 1 a 11 podem ser usados</para>
         /// </summary>
-        public MotivoDesoneracaoICMS motDesICMS { get; set; }
+        public MotivoDesoneracaoICMS? motDesICMS { get; set; }
 
         /// <summary>
         /// Valor do ICMS

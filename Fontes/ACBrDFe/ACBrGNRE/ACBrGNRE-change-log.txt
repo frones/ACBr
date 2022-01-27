@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2022
+-- ACBrGNREWebServices --
+[*] Ajuste na função clear em TGNRERecibo, não limpar a property NumeroRecibo
+  Por: José M S Junior (Contribuição de WindSoft)
+
 17/01/2022
 -- ACBrGNREGuiasRetorno --
 [*] Possível correção para a leitura dos valores da guia.

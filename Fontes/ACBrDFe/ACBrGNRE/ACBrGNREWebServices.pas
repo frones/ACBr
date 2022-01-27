@@ -842,7 +842,6 @@ begin
   FPArqEnv := 'ped-rec';
   FPArqResp := 'pro-rec';
 
-  FnumeroRecibo := '';
   Fcodigo := 0;
   Fresultado := '';
   Fdescricao := '';

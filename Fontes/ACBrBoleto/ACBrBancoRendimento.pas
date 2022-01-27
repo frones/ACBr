@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:   Denis Cesar Zago, Victor H Gonzales - Pandaaa }
 {                                                                              }
@@ -162,7 +162,6 @@ var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia :String;
   Protesto, TipoSacado, MensagemCedente, aConta, CartTitulo:String;
   aCarteira, wLinha, ANossoNumero: String;
-  TipoBoleto :Char;
   aPercMulta: Double;
 
   function DoMontaInstrucoes1: string;
@@ -240,12 +239,6 @@ begin
       else
          Ocorrencia := '01';                                           {Remessa}
       end;
-
-      {Pegando Tipo de Boleto}
-      if CarteiraEnvio = tceCedente then
-         TipoBoleto := '2'
-      else
-         TipoBoleto := '1';
 
       if NossoNumero = EmptyStr then
         DigitoNossoNumero := '0';

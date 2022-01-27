@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda                   }
 {                               Leandro do Couto                               }
@@ -94,9 +94,9 @@ function TRetornoEnvio_Sicredi_API.LerRetorno: Boolean;
 var
   Retorno: TRetEnvio;
   AJson: TJson;
-  AJSonRejeicao, AJSonObject: TJsonObject;
+  AJSonObject: TJsonObject;
   ARejeicao: TRejeicao;
-  AJSonResp, AJsonBoletos: TJsonArray;
+  AJsonBoletos: TJsonArray;
   I: Integer;
   TipoOperacao : TOperacao;
 begin

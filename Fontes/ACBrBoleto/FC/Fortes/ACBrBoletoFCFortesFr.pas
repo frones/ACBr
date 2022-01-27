@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Juliana Tamizou                                 }
 {                                                                              }
@@ -1291,7 +1291,6 @@ begin
             if RLLayout.Prepare then
             begin
                case Filtro of
-                 fiPDF  : RLFiltro := RLPDFFilter1;
                  fiHTML : RLFiltro := RLHTMLFilter1;
                  fiJPG:
                  begin
@@ -1313,7 +1312,7 @@ begin
                    exit;
                  end
                else
-                  exit;
+                  RLFiltro := RLPDFFilter1;
                end
             end;
 

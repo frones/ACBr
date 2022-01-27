@@ -3803,7 +3803,6 @@ function TACBrBoleto.GravarConfiguracao(DirIniRetorno: string;
   const NomeArquivo: String): Boolean;
 var LArquivo : TStringList;
 begin
-  Result := false;
   LArquivo := TStringList.Create;
   try
     LArquivo.Text := Self.GravarArqIni('', '',true);
@@ -5913,13 +5912,14 @@ begin
    PrinterNameAntigo    := PrinterName;
    NomeArquivoAntigo    := NomeArquivo;
 
+   Filtro         := fiPDF;
+   MostrarPreview := false;
+   MostrarSetup   := false;
+   PrinterName    := '';
+   CalcularIndividual := (FIndiceImprimirIndividual >= 0) and (FCalcularNomeArquivoPDFIndividual);
+   
    try
-     Filtro         := fiPDF;
-     MostrarPreview := false;
-     MostrarSetup   := false;
-     PrinterName    := '';
-     CalcularIndividual := (FIndiceImprimirIndividual >= 0) and (FCalcularNomeArquivoPDFIndividual);
-
+    
      if fACBrBoleto.ListadeBoletos.Count < 1 then
        raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
@@ -5946,8 +5946,8 @@ procedure TACBrBoletoFCClass.GerarPDF(AIndex: Integer);
 var
    AOldIndex: Integer;
 begin
-  try
-    AOldIndex := FIndiceImprimirIndividual;
+  AOldIndex := FIndiceImprimirIndividual;
+  try   
     FIndiceImprimirIndividual := AIndex;
     GerarPDF;
   finally
@@ -5985,8 +5985,8 @@ procedure TACBrBoletoFCClass.GerarPDF(AIndex: Integer; AStream: TStream);
 var
    AOldIndex: Integer;
 begin
-  try
-    AOldIndex := FIndiceImprimirIndividual;
+  AOldIndex := FIndiceImprimirIndividual;
+  try   
     FIndiceImprimirIndividual := AIndex;
     GerarPDF(AStream);
   finally

@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/01/2022
+--ACBrBancoInter.pas, ACBrBancoRendimento.pas, ACBrBoleto.pas, ACBrBoletoFCFortesFR.pas, ACBrBoletoRet_Sicredi_Api.pas, ACBrBoletoW_Sicredi_Api.pas--
+[*] TK-2289 Remoção de Warnings e Hints
+Por : Waldir Paim
+
 --ACBrBancoInter.pas--
 [*] TK-2305 Ajuste remessa Banco Inter
 Por : Pandaaa / WindSoft

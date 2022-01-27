@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2022
+--ACBrBancoInter.pas--
+[*] TK-2305 Ajuste remessa Banco Inter
+Por : Pandaaa / WindSoft
+
 21/02/2022
 --ACBrBancoSafra--
 [*] Ajuste na Geração Detalhe Remessa CNAB400 NumeroRemessa

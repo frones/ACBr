@@ -6,7 +6,7 @@
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Victor Hugo Gonzales - Panda, Douglas Tybel,    }
-{   Rodrigo Cardilo                                                            }
+{   Rodrigo Cardilo, WindSoft                                                  }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -91,7 +91,7 @@ end;
 
 function TACBrBancoInter.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string;
 var
-  teste, CodigoBarras, FatorVencimento, DigitoCodBarras, ANossoNumero, aAgenciaCC: string;
+  CodigoBarras, FatorVencimento, DigitoCodBarras: string;
   Boleto : TACBrBoleto;
 begin
   Boleto := ACBrTitulo.ACBrBoleto;
@@ -185,16 +185,20 @@ procedure TACBrBancoInter.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARe
 var
   ACodigoMoraJuros, ATipoCedente, ATipoSacado, ADataMoraJuros, ADataDesconto, wLinha,
   wCarteira, ValorMora, EspecieDoc: string;
-  MoraJurosInt: Integer;
   Boleto : TACBrBoleto;
 begin
   Boleto := ACBrTitulo.ACBrBoleto;
 
   { Configuração Juros }
-  ACodigoMoraJuros := '2'; // Utilizando Percentual
-
-  { Data Mora }
-  ADataMoraJuros := DefineDataMoraJuros(ACBrTitulo, 'ddmmyy');
+  ACodigoMoraJuros := '0';
+  ADataMoraJuros   := '';
+  ValorMora  := '0';
+  if (ACBrTitulo.ValorMoraJuros > 0) then
+  begin
+    ACodigoMoraJuros := IfThen((ACBrTitulo.CodigoMoraJuros = cjValorDia),'1','2');
+    ADataMoraJuros   := DefineDataMoraJuros(ACBrTitulo, 'ddmmyy');
+    ValorMora  := CurrToStr(round(ACBrTitulo.ValorMoraJuros * 100));
+  end;
 
   // descontos
   if (ACBrTitulo.ValorDesconto > 0) and (ACBrTitulo.DataDesconto <> Null) then
@@ -226,7 +230,7 @@ begin
   wLinha := '1'                                                                                                                                          + // 1 a 1 Identificação do registro de transação
             Space(19)                                                                                                                                    + // 002 a 020 Branco
             '1120001' + PadLeft(Boleto.Cedente.Conta + Boleto.Cedente.ContaDigito, 10, '0')                                                              + // 021 a 037 Identificação da empresa beneficiária no Inter
-            PadLeft('', 25, '0')                                                                                                                         + // 038 a 062 Número de controle para uso da empresa.
+            PadRight(ACBrTitulo.SeuNumero, 25, ' ')                                                                                                      + // 038 a 062 Número de controle para uso da empresa.
             Space(3)                                                                                                                                     + // 063 a 065 Branco
             IfThen((ACBrTitulo.PercentualMulta > 0), IfThen(ACBrTitulo.MultaValorFixo, '1', '2'), '0')                                                   + // 066 a 066 Campo de multa
             IfThen(ACBrTitulo.MultaValorFixo, IntToStrZero(Round(ACBrTitulo.PercentualMulta * 100), 13), PadLeft('', 13, '0'))                           + // 067 a 079 Valor da multa
@@ -240,13 +244,13 @@ begin
             IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 13)                                                                                     + // 127 a 139 Valor do título
             IntToStrZero(Round(ACBrTitulo.DataLimitePagto - ACBrTitulo.Vencimento), 2)                                                                   + // 140 a 141 Data limite de pagamento
             Space(6)                                                                                                                                     + // 142 a 147 Branco
-            PadLeft(EspecieDoc, 2, ' ')                                                                                                       + // 148 a 149 Espécie do título
+            PadLeft(EspecieDoc, 2, ' ')                                                                                                                  + // 148 a 149 Espécie do título
             'N'                                                                                                                                          + // 150 a 150 Identificação
             Space(6)                                                                                                                                     + // 151 a 156 Data da emissão do título
             Space(3)                                                                                                                                     + // 157 a 159 Branco
             ACodigoMoraJuros                                                                                                                             + // 160 a 160 Campo de Tipo de Mora/juros (Utilizar Percentual)
-            IntToStrZero(0, 13)                                                                                                                          + // 161 a 173 (Valor zerado para utilizar percentual)
-            IntToStrZero(round(ACBrTitulo.ValorMoraJuros * 100), 4)                                                                                      + // 174 a 177 Percentual a ser cobrado juros/mora
+            PadLeft(IfThen(ACodigoMoraJuros = '1',ValorMora,'0'), 13, '0')                                                                           + // 161 a 173 (Valor zerado para utilizar percentual)
+            PadLeft(ifThen(ACodigoMoraJuros = '2',ValorMora,'0'), 4, '0')                                                                            + // 174 a 177 Percentual a ser cobrado juros/mora
             ADataMoraJuros                                                                                                                               + // 178 a 183 Data da mora
             '0'                                                                                                                                          + // 184 a 184 Campo de descontos
             PadLeft('', 13, '0')                                                                                                                         + // 185 a 197 Valor do desconto 1
@@ -303,8 +307,7 @@ end;
 procedure TACBrBancoInter.LerRetorno400(ARetorno: TStringList);
 var
   ContLinha: Integer;
-  Linha, rCedente, rDigitoConta: string;
-  rCNPJCPF, rAgencia, rConta: string;
+  Linha, rCedente: string;
   Titulo: TACBrTitulo;
   Boleto : TACBrBoleto;
 begin

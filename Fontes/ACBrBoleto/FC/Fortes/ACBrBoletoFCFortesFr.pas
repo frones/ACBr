@@ -1287,34 +1287,33 @@ begin
               RLLayout.Print;
          end
         else
-         begin
-            if RLLayout.Prepare then
-            begin
-               case Filtro of
-                 fiHTML : RLFiltro := RLHTMLFilter1;
-                 fiJPG:
-                 begin
-                   for i := 0 to RLLayout.Pages.PageCount - 1 do
-                   begin
-                     Bitmap := NeedAuxBitmap;
-                     Bitmap.Width := RLLayout.Pages[i].Width;
-                     Bitmap.Height := RLLayout.Pages[i].Height;
-                     Bitmap.PixelFormat := pf32bit;
+          if not RLLayout.Prepare then
+            Exit;
 
-                     Bitmap.Canvas.Brush.Color := clWhite;
-                     Bitmap.Canvas.Brush.Style := bsSolid;
-                     Bitmap.Canvas.FillRect(Rect(0, 0, Bitmap.Width, Bitmap.Height));
+           case Filtro of
+             fiHTML : RLFiltro := RLHTMLFilter1;
+             fiJPG:
+             begin
+               for i := 0 to RLLayout.Pages.PageCount - 1 do
+               begin
+                 Bitmap := NeedAuxBitmap;
+                 Bitmap.Width := RLLayout.Pages[i].Width;
+                 Bitmap.Height := RLLayout.Pages[i].Height;
+                 Bitmap.PixelFormat := pf32bit;
 
-                     RLLayout.Pages[i].PaintTo(Bitmap.Canvas, Rect(0, 0, Bitmap.Width, Bitmap.Height));
-                     NomeArquivo := ChangeFileExt(NomeArquivo, '');
-                     Bitmap.SaveToFile(NomeArquivo + FormatCurr('000', I+1) + '.bmp');
-                   end;
-                   exit;
-                 end
-               else
-                  RLFiltro := RLPDFFilter1;
-               end
-            end;
+                 Bitmap.Canvas.Brush.Color := clWhite;
+                 Bitmap.Canvas.Brush.Style := bsSolid;
+                 Bitmap.Canvas.FillRect(Rect(0, 0, Bitmap.Width, Bitmap.Height));
+
+                 RLLayout.Pages[i].PaintTo(Bitmap.Canvas, Rect(0, 0, Bitmap.Width, Bitmap.Height));
+                 NomeArquivo := ChangeFileExt(NomeArquivo, '');
+                 Bitmap.SaveToFile(NomeArquivo + FormatCurr('000', I+1) + '.bmp');
+               end;
+               exit;
+             end;
+           else
+              RLFiltro := RLPDFFilter1;
+           end;
 
             RLFiltro.ShowProgress := MostrarProgresso;
             RLFiltro.FileName := NomeArquivo;

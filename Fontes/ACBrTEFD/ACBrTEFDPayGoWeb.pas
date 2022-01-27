@@ -742,6 +742,7 @@ begin
     
     //DEBUG
     //Conteudo.Conteudo.SaveToFile('c:\temp\PGWeb.txt');
+    Resp.ViaClienteReduzida := TACBrTEFD(Owner).ImprimirViaClienteReduzida;
     ConteudoToProperty;
   end;
 end;

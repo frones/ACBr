@@ -583,6 +583,7 @@ begin
      CopiarResposta ;
 
      { Cria cópia do Objeto Resp, e salva no ObjectList "RespostasPendentes" }
+     Resp.ViaClienteReduzida := ImprimirViaClienteReduzida;
      RespostaPendente := TACBrTEFDRespTicketCar.Create ;
      RespostaPendente.Assign( Resp );
      RespostasPendentes.Add( RespostaPendente );

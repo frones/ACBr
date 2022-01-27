@@ -979,6 +979,7 @@ begin
      CopiarResposta ;
 
      { Cria cópia do Objeto Resp, e salva no ObjectList "RespostasPendentes" }
+     Resp.ViaClienteReduzida := ImprimirViaClienteReduzida;
      RespostaPendente := TACBrTEFDRespCliDTEF.Create ;
      RespostaPendente.Assign( Resp );
      RespostasPendentes.Add( RespostaPendente );

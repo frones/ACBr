@@ -46,6 +46,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/22
+-- ACBrTEFDClass, ACBrTEFDCliDTEF, ACBrTEFDCliSiTef, ACBrTEFDPayGoWeb,
+   ACBrTEFDTicketCar, ACBrTEFDVeSPague --
+[-] Ajuste para copiar em TACBrTEFResp.ViaClienteReduzida o valor de
+    TACBrTEFD.ImprimirViaClienteReduzida
+
+-- ACBrTEFPayGoWebComum --
+[*] Ajuste em "TACBrTEFPGWebAPI.ObterDadosDaTransacao", para não remover a
+    informação PWINFO_RCPTCHSHORT do Log de resposta do TEF
+
+-- ACBrTEFPayGoComum --
+[-] Ajuste em "ConteudoToPropertyPayGoWeb", para considerar todas as opções de
+    Via do Cliente, apesar das configurações de Via Reduzida
+    (por: DSA)
+
 18/18/21
 -- ACBrTEFDCliSiTef, ACBrTEFAPICliSiTef --
 [-] Ajuste para permitir interromper a leitura do QRCode exibido no PinPad,

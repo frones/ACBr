@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/01/2022
+-- ACBrNFSeXServicos --
+[*] São Carlos/SP trocou de provedor
+   Por: Marcos/Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado a função: ParamTemValor com o objetivo de simplificar a
     verificação de um valor de uma determinada chave incluida no campo

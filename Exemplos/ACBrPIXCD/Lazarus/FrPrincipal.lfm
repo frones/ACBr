@@ -93,11 +93,11 @@ object Form1: TForm1
     Height = 562
     Top = 0
     Width = 1006
-    ActivePage = tsConfiguracao
+    ActivePage = tsTestes
     Align = alClient
     Images = ImageList1
     TabHeight = 30
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabWidth = 400
     OnChange = pgPrincipalChange
@@ -111,11 +111,11 @@ object Form1: TForm1
         Height = 524
         Top = 0
         Width = 630
-        ActivePage = tsEndPoints
+        ActivePage = tsQRCodeEstatico
         Align = alClient
         Images = ImageList1
         TabHeight = 25
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 0
         TabWidth = 200
         object tsEndPoints: TTabSheet
@@ -1012,11 +1012,11 @@ object Form1: TForm1
         Height = 487
         Top = 0
         Width = 998
-        ActivePage = tsPSP
+        ActivePage = tsPIX
         Align = alClient
         Images = ImageList1
         TabHeight = 25
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 0
         TabWidth = 200
         object tsPIX: TTabSheet
@@ -1370,6 +1370,7 @@ object Form1: TForm1
                 Top = 19
                 Width = 170
                 ItemHeight = 15
+                OnChange = cbxAmbienteChange
                 Style = csDropDownList
                 TabOrder = 1
               end
@@ -1666,9 +1667,9 @@ object Form1: TForm1
                     Height = 323
                     Top = 24
                     Width = 898
-                    ActivePage = tsItauGerarChaveCertificado
+                    ActivePage = tsItauChaveCertificadoArquivos
                     Anchors = [akTop, akLeft, akRight, akBottom]
-                    TabIndex = 1
+                    TabIndex = 0
                     TabOrder = 0
                     OnChange = pgPSPItauChaveCertificadoChange
                     object tsItauChaveCertificadoArquivos: TTabSheet
@@ -1860,76 +1861,111 @@ object Form1: TForm1
                           Caption = 'Passo 2 - Solicitar Certificado'
                           ClientHeight = 247
                           ClientWidth = 832
-                          object Label4: TLabel
-                            Left = 16
-                            Height = 15
-                            Top = 51
-                            Width = 94
-                            Caption = 'Token Temporário'
-                          end
-                          object mItauTokenTemporario: TMemo
-                            Left = 16
-                            Height = 50
-                            Top = 67
-                            Width = 792
-                            Anchors = [akTop, akLeft, akRight]
-                            Font.Name = 'Lucida Console'
-                            ParentFont = False
-                            ScrollBars = ssAutoBoth
+                          object pItauEditCertificado: TPanel
+                            Left = 0
+                            Height = 56
+                            Top = 0
+                            Width = 832
+                            Align = alTop
+                            BevelOuter = bvNone
+                            ClientHeight = 56
+                            ClientWidth = 832
                             TabOrder = 0
+                            object btItauSolicitarCertificado: TBitBtn
+                              Left = 659
+                              Height = 26
+                              Top = 18
+                              Width = 149
+                              Anchors = [akTop, akRight]
+                              AutoSize = True
+                              Caption = 'Solicitar Certificado'
+                              Images = ImageList1
+                              ImageIndex = 4
+                              OnClick = btItauSolicitarCertificadoClick
+                              TabOrder = 0
+                            end
+                            object edtItauArqCertificado2: TEdit
+                              Left = 16
+                              Height = 23
+                              Top = 21
+                              Width = 608
+                              Anchors = [akTop, akLeft, akRight]
+                              AutoSize = False
+                              OnChange = edtItauArqChavePrivadaChange
+                              ReadOnly = True
+                              TabStop = False
+                              TabOrder = 1
+                              Text = 'ItauCertificado.pem'
+                            end
+                            object Label43: TLabel
+                              Left = 16
+                              Height = 15
+                              Top = 4
+                              Width = 103
+                              Caption = 'Arquivo Certificado'
+                            end
                           end
-                          object Label43: TLabel
-                            Left = 16
-                            Height = 15
-                            Top = 4
-                            Width = 103
-                            Caption = 'Arquivo Certificado'
-                          end
-                          object edtItauArqCertificado2: TEdit
-                            Left = 16
-                            Height = 23
-                            Top = 21
-                            Width = 608
-                            Anchors = [akTop, akLeft, akRight]
-                            AutoSize = False
-                            OnChange = edtItauArqChavePrivadaChange
-                            ReadOnly = True
-                            TabStop = False
+                          object pItauTokentemporario: TPanel
+                            Left = 0
+                            Height = 80
+                            Top = 56
+                            Width = 832
+                            Align = alTop
+                            BevelOuter = bvNone
+                            ClientHeight = 80
+                            ClientWidth = 832
                             TabOrder = 1
-                            Text = 'ItauCertificado.pem'
+                            object lTokenTemporario: TLabel
+                              Left = 0
+                              Height = 15
+                              Top = 0
+                              Width = 832
+                              Align = alTop
+                              Caption = 'Token Temporário'
+                            end
+                            object mItauTokenTemporario: TMemo
+                              Left = 0
+                              Height = 65
+                              Top = 15
+                              Width = 832
+                              Align = alClient
+                              Font.Name = 'Lucida Console'
+                              ParentFont = False
+                              ScrollBars = ssAutoBoth
+                              TabOrder = 0
+                            end
                           end
-                          object mItauCertificadoPEM: TMemo
-                            Left = 16
-                            Height = 90
-                            Top = 144
-                            Width = 792
-                            Anchors = [akTop, akLeft, akRight, akBottom]
-                            Font.Name = 'Lucida Console'
-                            ParentFont = False
-                            ReadOnly = True
-                            ScrollBars = ssAutoBoth
+                          object pItauCertificadoRecebido: TPanel
+                            Left = 0
+                            Height = 111
+                            Top = 136
+                            Width = 832
+                            Align = alClient
+                            BevelOuter = bvNone
+                            ClientHeight = 111
+                            ClientWidth = 832
                             TabOrder = 2
-                            WantReturns = False
-                          end
-                          object Label6: TLabel
-                            Left = 16
-                            Height = 15
-                            Top = 128
-                            Width = 110
-                            Caption = 'Certificado Recebido'
-                          end
-                          object btItauSolicitarCertificado: TBitBtn
-                            Left = 659
-                            Height = 26
-                            Top = 18
-                            Width = 149
-                            Anchors = [akTop, akRight]
-                            AutoSize = True
-                            Caption = 'Solicitar Certificado'
-                            Images = ImageList1
-                            ImageIndex = 4
-                            OnClick = btItauSolicitarCertificadoClick
-                            TabOrder = 3
+                            object Label6: TLabel
+                              Left = 0
+                              Height = 15
+                              Top = 0
+                              Width = 832
+                              Align = alTop
+                              Caption = 'Certificado Recebido'
+                            end
+                            object mItauCertificadoPEM: TMemo
+                              Left = 0
+                              Height = 96
+                              Top = 15
+                              Width = 832
+                              Align = alClient
+                              Font.Name = 'Lucida Console'
+                              ParentFont = False
+                              ReadOnly = True
+                              ScrollBars = ssAutoBoth
+                              TabOrder = 0
+                              WantReturns = False
+                            end
                           end
                         end
                       end

@@ -123,11 +123,10 @@ type
     Label37: TLabel;
     Label38: TLabel;
     Label39: TLabel;
-    Label4: TLabel;
+    Label43: TLabel;
     Label40: TLabel;
     Label41: TLabel;
     Label42: TLabel;
-    Label43: TLabel;
     Label6: TLabel;
     lConsultarDevolucaoPixE2eid2: TLabel;
     lConsultarDevolucaoPixE2eid3: TLabel;
@@ -166,9 +165,10 @@ type
     lItauErroChavePrivada: TLabel;
     lPagina: TLabel;
     lPagina1: TLabel;
+    lTokenTemporario: TLabel;
+    mItauCertificadoPEM: TMemo;
     mItauChavePrivadaPEM: TMemo;
     mItauTokenTemporario: TMemo;
-    mItauCertificadoPEM: TMemo;
     mSolicitarDevolucaoPix: TMemo;
     mConsultarPix: TMemo;
     mConsultarPixRecebidos: TMemo;
@@ -177,6 +177,9 @@ type
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
+    pItauCertificadoRecebido: TPanel;
+    pItauTokentemporario: TPanel;
+    pItauEditCertificado: TPanel;
     pgPSPItauGerarChaveCertificado: TPageControl;
     Panel7: TPanel;
     pgPSPItauChaveCertificado: TPageControl;
@@ -299,6 +302,7 @@ type
     procedure btQREColarClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
+    procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
     procedure edtRecebedorCEPChange(Sender: TObject);
@@ -374,7 +378,7 @@ uses
   pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage,
   ACBrUtil, ACBrValidador,
-  ACBrPIXUtil, ACBrPIXQRCodeEstatico;
+  ACBrPIXUtil, ACBrPIXBRCode;
 
 {$R *.lfm}
 
@@ -672,21 +676,21 @@ begin
   qre := TACBrPIXQRCodeEstatico.Create;
   try
     AdicionarLinhaLog('----- Analise do QRCode Estático -----');
-    AdicionarLinhaLog('QrCode: '+qre.QRCode);
+    AdicionarLinhaLog('QrCode: '+qre.AsString);
 
-    qre.IgnorarErrosQRCode := True;
-    qre.QRCode := mQRE.Lines.Text;
+    qre.IgnoreErrors := True;
+    qre.AsString := mQRE.Lines.Text;
     AdicionarLinhaLog('');
-    AdicionarLinhaLog('NomeRecebedor: '+qre.NomeRecebedor);
-    AdicionarLinhaLog('CidadeRecebedor: '+qre.CidadeRecebedor);
-    AdicionarLinhaLog('CEPRecebedor: '+qre.CEPRecebedor);
-    AdicionarLinhaLog('ChavePix: '+qre.ChavePix);
-    AdicionarLinhaLog('TipoChavePix: '+GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(qre.TipoChavePix)));
-    AdicionarLinhaLog('Valor: '+FormatFloat('0.00', qre.Valor));
-    AdicionarLinhaLog('infoAdicional: '+qre.infoAdicional);
+    AdicionarLinhaLog('NomeRecebedor: '+qre.MerchantName);
+    AdicionarLinhaLog('CidadeRecebedor: '+qre.MerchantCity);
+    AdicionarLinhaLog('CEPRecebedor: '+qre.PostalCode);
+    AdicionarLinhaLog('ChavePix: '+qre.PixKey);
+    AdicionarLinhaLog('TipoChavePix: '+GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(qre.PixKeyType)));
+    AdicionarLinhaLog('Valor: '+FormatFloat('0.00', qre.TransactionAmount));
+    AdicionarLinhaLog('infoAdicional: '+qre.AdditionalInfo);
     AdicionarLinhaLog('TxId: '+qre.TxId);
     AdicionarLinhaLog('pss: '+IntToStr(qre.pss));
-    AdicionarLinhaLog('mcc: '+IntToStr(qre.mcc));
+    AdicionarLinhaLog('mcc: '+IntToStr(qre.MerchantCategoryCode));
   finally
     qre.Free;
   end;
@@ -711,6 +715,7 @@ end;
 procedure TForm1.btSalvarParametrosClick(Sender: TObject);
 begin
   GravarConfiguracao;
+  AplicarConfiguracao;
 end;
 
 procedure TForm1.btSolicitarDevolucaoPixClick(Sender: TObject);
@@ -736,6 +741,11 @@ begin
   end
   else
     mSolicitarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+end;
+
+procedure TForm1.cbxAmbienteChange(Sender: TObject);
+begin
+  tsItauCertificado.Enabled := (cbxAmbiente.ItemIndex > 0);
 end;
 
 procedure TForm1.cbxPSPAtualChange(Sender: TObject);
@@ -879,8 +889,7 @@ end;
 procedure TForm1.LigarAlertasdeErrosDeConfiguracao;
 begin
   LigarAlertasdeErrosDeConfiguracaoPIXCD;
-  if (ACBrPixCD1.PSP = ACBrPSPItau1) then
-    LigarAlertasdeErrosDeConfiguracaoPSPItau;
+  LigarAlertasdeErrosDeConfiguracaoPSPItau;
 end;
 
 procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPIXCD;
@@ -896,6 +905,7 @@ begin
   edtItauChavePIXChange(Nil);
   edtItauClientIDChange(Nil);
   edtItauClientSecretChange(Nil);
+  tsItauCertificado.Enabled := (ACBrPixCD1.Ambiente > ambTeste);
   ValidarChaveCertificadoPSPItau;
 end;
 
@@ -931,16 +941,19 @@ begin
     Abort;
   end;
 
-  if imgItauErroChavePrivada.Visible or imgItauErroCertificado.Visible then
+  if (ACBrPixCD1.Ambiente > ambTeste) then
   begin
-    pgPrincipal.ActivePageIndex := 1;
-    pgConfPixPSP.ActivePageIndex := 1;
-    pgPSPs.ActivePageIndex := 2;
-    pgPSPItau.ActivePageIndex := 1;
-    pgPSPItauChaveCertificado.ActivePageIndex := 0;
-    pgPSPItauGerarChaveCertificado.ActivePageIndex := 0;
-    MessageDlg('Favor configurar a Chave Privada e Certificado', mtWarning, [mbOK], 0);
-    Abort;
+    if imgItauErroChavePrivada.Visible or imgItauErroCertificado.Visible then
+    begin
+      pgPrincipal.ActivePageIndex := 1;
+      pgConfPixPSP.ActivePageIndex := 1;
+      pgPSPs.ActivePageIndex := 2;
+      pgPSPItau.ActivePageIndex := 1;
+      pgPSPItauChaveCertificado.ActivePageIndex := 0;
+      pgPSPItauGerarChaveCertificado.ActivePageIndex := 0;
+      MessageDlg('Favor configurar a Chave Privada e Certificado', mtWarning, [mbOK], 0);
+      Abort;
+    end;
   end;
 end;
 
@@ -1162,7 +1175,9 @@ end;
 
 procedure TForm1.PintarQRCodeEstatico;
 begin
-  mQRE.Lines.Text := ACBrPixCD1.GerarQRCodeEstatico(fleQREValor.Value, edtQREInfoAdicional.Text, edtQRETxId.Text);
+  mQRE.Lines.Text := ACBrPixCD1.GerarQRCodeEstatico( fleQREValor.Value,
+                                                     edtQREInfoAdicional.Text,
+                                                     edtQRETxId.Text);
   PintarQRCode(mQRE.Lines.Text, imgQRE.Picture.Bitmap, qrUTF8BOM);
 end;
 

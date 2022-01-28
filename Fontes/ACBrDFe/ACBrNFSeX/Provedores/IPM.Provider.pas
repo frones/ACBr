@@ -223,24 +223,40 @@ begin
     begin
       aMsg := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('MensagemRetorno'), tcStr);
 
-      j := Pos('code', aMsg);
-
-      if j > 0 then
-       Codigo := Copy(aMsg, j + 6, 3);
-
-
-      j := Pos('msg', aMsg);
-
-      if j > 0 then
+      if aMsg = '' then
       begin
-        AErro := Response.Erros.New;
+        aMsg := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-        AErro.Codigo := Codigo;
-        AErro.Descricao := Copy(aMsg, j + 6, Length(aMsg));
-        k := Pos(',', AErro.Descricao);
-        AErro.Descricao := Copy(AErro.Descricao, 1, k - 2);
+        if aMsg <> '' then
+        begin
+          AErro := Response.Erros.New;
 
-        AErro.Correcao := '';
+          AErro.Codigo := Codigo;
+          AErro.Descricao := aMsg;
+          AErro.Correcao := '';
+        end;
+      end
+      else
+      begin
+        j := Pos('code', aMsg);
+
+        if j > 0 then
+         Codigo := Copy(aMsg, j + 6, 3);
+
+
+        j := Pos('msg', aMsg);
+
+        if j > 0 then
+        begin
+          AErro := Response.Erros.New;
+
+          AErro.Codigo := Codigo;
+          AErro.Descricao := Copy(aMsg, j + 6, Length(aMsg));
+          k := Pos(',', AErro.Descricao);
+          AErro.Descricao := Copy(AErro.Descricao, 1, k - 2);
+
+          AErro.Correcao := '';
+        end;
       end;
     end
     else
@@ -471,6 +487,7 @@ begin
       ANode := Document.Root;
 
       ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response, 'ListaMensagemRetorno', 'MensagemRetorno');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 

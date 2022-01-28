@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/01/2022
+-- ACBrNFSeXWebserviceBase --
+[*] Possível correção para o problema de caracteres acentuados e o cedilha.
+   Por: Italo Giurizzato Junior
+
 27/01/2022
 -- ACBrNFSeXServicos --
 [*] São Carlos/SP trocou de provedor

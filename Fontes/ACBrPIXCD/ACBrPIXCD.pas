@@ -427,6 +427,7 @@ type
       const TxId: String = ''): String; overload;
     function GerarQRCodeEstatico(const ChavePix: String; Valor: Currency;
       const infoAdicional: String = ''; const TxId: String = ''): String; overload;
+    function GerarQRCodeDinamico(const Location: String): String;
 
   published
     property Recebedor: TACBrPixRecebedor read fRecebedor write SetRecebedor;
@@ -1612,6 +1613,38 @@ begin
     RegistrarLog('   '+Result);
   finally
     QRCodeEstatico.Free;
+  end;
+end;
+
+function TACBrPixCD.GerarQRCodeDinamico(const Location: String): String;
+var
+  Erros: String;
+  QRCodeDinamico: TACBrPIXQRCodeDinamico;
+begin
+  RegistrarLog('GerarQRCodeDinamico( '+Location+' )');
+
+  Erros := '';
+  if (fRecebedor.Nome = '') then
+    Erros := Erros + sErroRecebedorNome + sLineBreak;
+
+  if (fRecebedor.Cidade = '') then
+    Erros := Erros + sErroRecebedorCidade + sLineBreak;
+
+  if (Erros <> '') then
+    DispararExcecao(EACBrPixException.Create(ACBrStr(Erros)));
+
+  QRCodeDinamico := TACBrPIXQRCodeDinamico.Create;
+  try
+    QRCodeDinamico.Clear;
+    QRCodeDinamico.MerchantName := fRecebedor.Nome;
+    QRCodeDinamico.MerchantCity := fRecebedor.Cidade;
+    QRCodeDinamico.PostalCode := fRecebedor.CEP;
+    QRCodeDinamico.URL := Location;
+
+    Result := QRCodeDinamico.AsString;
+    RegistrarLog('   '+Result);
+  finally
+    QRCodeDinamico.Free;
   end;
 end;
 

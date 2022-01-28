@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_PIXCD"/>
     <Type Value="RunAndDesignTime"/>
@@ -35,20 +35,20 @@
         <UnitName Value="ACBrPIXCD"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPItau.pas"/>
-        <UnitName Value="ACBrPIXPSPItau"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXBRCode.pas"/>
+        <UnitName Value="ACBrPIXBRCode"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBancoDoBrasil.pas"/>
-        <UnitName Value="ACBrPIXPSPBancoDoBrasil"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPItau.pas"/>
+        <UnitName Value="ACBrPIXPSPItau"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSantander.pas"/>
-        <UnitName Value="ACBrPIXPSPSantander"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBancoDoBrasil.pas"/>
+        <UnitName Value="ACBrPIXPSPBancoDoBrasil"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXQRCodeEstatico.pas"/>
-        <UnitName Value="ACBrPIXQRCodeEstatico"/>
+        <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSantander.pas"/>
+        <UnitName Value="ACBrPIXPSPSantander"/>
       </Item8>
       <Item9>
         <Filename Value="..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasProblema.pas"/>
@@ -119,6 +119,7 @@
         <UnitName Value="ACBrPIXSchemasLotesCobVConsultadas"/>
       </Item25>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBrOpenSSL"/>

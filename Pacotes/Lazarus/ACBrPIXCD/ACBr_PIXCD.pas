@@ -8,8 +8,8 @@ unit ACBr_PIXCD;
 interface
 
 uses
-  ACBrPIXCDReg, ACBrPIXBase, ACBrPIXUtil, ACBrPIXCD, ACBrPIXPSPItau, 
-  ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXQRCodeEstatico, 
+  ACBrPIXCDReg, ACBrPIXBase, ACBrPIXUtil, ACBrPIXCD, ACBrPIXBRCode, 
+  ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, 
   ACBrPIXSchemasProblema, ACBrPIXSchemasCalendario, ACBrPIXSchemasDevedor, 
   ACBrPIXSchemasLocation, ACBrPIXSchemasPaginacao, ACBrPIXSchemasDevolucao, 
   ACBrPIXSchemasPix, ACBrPIXSchemasParametrosConsultaPix, 

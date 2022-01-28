@@ -65,15 +65,18 @@ type
     btLimparConsultarPixRecebidos: TBitBtn;
     btLimparConsultarDevolucaoPix: TBitBtn;
     btLimparSolicitarDevolucaoPix: TBitBtn;
+    btQREAnalisar: TBitBtn;
+    btQREAnalisar2: TBitBtn;
+    btQREColar: TBitBtn;
+    btQREColar1: TBitBtn;
+    btQREGerar: TBitBtn;
+    btQRDGerar: TBitBtn;
     btSolicitarDevolucaoPix: TBitBtn;
     btConsultarPix: TBitBtn;
     btConsultarPixRecebidos: TBitBtn;
     btConsultarDevolucaoPix: TBitBtn;
     btQREAnalisar1: TBitBtn;
-    btQREColar: TBitBtn;
     btLerParametros: TBitBtn;
-    btQREAnalisar: TBitBtn;
-    btQREGerar: TBitBtn;
     btSalvarParametros: TBitBtn;
     btCriarCobrancaImediata: TBitBtn;
     cbxAmbiente: TComboBox;
@@ -97,6 +100,9 @@ type
     edtItauClientID: TEdit;
     edtItauClientSecret: TEdit;
     edtItauXCorrelationId: TEdit;
+    edtQREInfoAdicional: TEdit;
+    edtQRDLocation: TEdit;
+    edtQRETxId: TEdit;
     edtSolicitarDevolucaoPix_Descricao1: TEdit;
     edtSolicitarDevolucaoPix_e2eid: TEdit;
     edtSolicitarDevolucaoPix_Descricao: TEdit;
@@ -108,11 +114,14 @@ type
     edtSolicitarDevolucaoPix_id1: TEdit;
     feSolicitarDevolucaoPix_Valor: TFloatSpinEdit;
     feSolicitarDevolucaoPix_Valor1: TFloatSpinEdit;
+    fleQREValor: TFloatSpinEdit;
     imgItauErroCertificado: TImage;
     imgItauErroChavePIX: TImage;
     imgItauErroChavePrivada: TImage;
     imgItauErroClientID: TImage;
     imgItauErroClientSecret: TImage;
+    imgQRE: TImage;
+    imgQRD: TImage;
     Label1: TLabel;
     Label25: TLabel;
     Label26: TLabel;
@@ -120,6 +129,8 @@ type
     Label28: TLabel;
     Label29: TLabel;
     Label3: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
     Label37: TLabel;
     Label38: TLabel;
     Label39: TLabel;
@@ -127,6 +138,7 @@ type
     Label40: TLabel;
     Label41: TLabel;
     Label42: TLabel;
+    Label44: TLabel;
     Label6: TLabel;
     lConsultarDevolucaoPixE2eid2: TLabel;
     lConsultarDevolucaoPixE2eid3: TLabel;
@@ -136,9 +148,7 @@ type
     lConsultarDevolucaoPixIdentificadorDevolucao2: TLabel;
     lConsultarPixE2eid: TLabel;
     edtBBClientID: TEdit;
-    edtQREInfoAdicional: TEdit;
     edtConsultarPixE2eid: TEdit;
-    edtQRETxId: TEdit;
     edtSantanderChavePIX: TEdit;
     edtBBClientSecret: TEdit;
     edtSantanderConsumerKey: TEdit;
@@ -147,14 +157,10 @@ type
     edtRecebedorCEP: TEdit;
     edtRecebedorCidade: TEdit;
     edtBBChavePIX: TEdit;
-    fleQREValor: TFloatSpinEdit;
     imgErrNome: TImage;
     imgErrPSP: TImage;
-    imgQRE: TImage;
     imgBBErroChavePIX: TImage;
     imgSantanderErroChavePIX: TImage;
-    Label34: TLabel;
-    Label35: TLabel;
     lE2eid: TLabel;
     lConsultarDevolucaoPixE2eid1: TLabel;
     lConsultarDevolucaoPixIdentificadorDevolucao: TLabel;
@@ -169,14 +175,18 @@ type
     mItauCertificadoPEM: TMemo;
     mItauChavePrivadaPEM: TMemo;
     mItauTokenTemporario: TMemo;
+    mQRE: TMemo;
+    mQRD: TMemo;
     mSolicitarDevolucaoPix: TMemo;
     mConsultarPix: TMemo;
     mConsultarPixRecebidos: TMemo;
     mConsultarDevolucaoPix: TMemo;
-    mQRE: TMemo;
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
+    pgQRCode: TPageControl;
+    Panel1: TPanel;
+    Panel8: TPanel;
     pItauCertificadoRecebido: TPanel;
     pItauTokentemporario: TPanel;
     pItauEditCertificado: TPanel;
@@ -190,15 +200,17 @@ type
     Panel5: TPanel;
     Panel6: TPanel;
     pConsultarDevolucaoPix: TPanel;
+    pQREDados: TPanel;
+    pQRDDados: TPanel;
+    pQREGerado: TPanel;
+    pQREGerado1: TPanel;
+    pQREMemo: TPanel;
+    pQRDMemo: TPanel;
     pSolicitarDevolucaoPix: TPanel;
     pgTestesPix: TPageControl;
-    Panel1: TPanel;
     Panel2: TPanel;
     pConsultarPix: TPanel;
     pConsultarPixRecebidos: TPanel;
-    pQREMemo: TPanel;
-    pQREGerado: TPanel;
-    pQREDados: TPanel;
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
@@ -257,6 +269,8 @@ type
     seConsultarPixRecebidosPagina: TSpinEdit;
     seConsultarPixRecebidosItensPagina: TSpinEdit;
     Splitter1: TSplitter;
+    tsQRCodeEstatico: TTabSheet;
+    tsQRCodeDinamico: TTabSheet;
     tsItauChaveCertificadoArquivos: TTabSheet;
     tsItauGerarChaveCertificado: TTabSheet;
     tsItauCertPasso1: TTabSheet;
@@ -273,7 +287,7 @@ type
     tsEndPointCob: TTabSheet;
     tsEndPointCobV: TTabSheet;
     tsEndPoints: TTabSheet;
-    tsQRCodeEstatico: TTabSheet;
+    tsQRCode: TTabSheet;
     tsShipay: TTabSheet;
     tsBB: TTabSheet;
     tsItau: TTabSheet;
@@ -295,6 +309,7 @@ type
     procedure btLimparConsultarPixClick(Sender: TObject);
     procedure btLimparConsultarPixRecebidosClick(Sender: TObject);
     procedure btLimparSolicitarDevolucaoPixClick(Sender: TObject);
+    procedure btQRDGerarClick(Sender: TObject);
     procedure btQREAnalisar1Click(Sender: TObject);
     procedure btQREAnalisarClick(Sender: TObject);
     procedure btQREGerarClick(Sender: TObject);
@@ -352,6 +367,8 @@ type
 
     procedure LimparQRCodeEstatico;
     procedure PintarQRCodeEstatico;
+    procedure PintarQRCodeDinamico;
+
     procedure MostrarPixEmLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
     procedure MostrarDevolucaoEmLinhas(const NomeDev: String;
       ADev: TACBrPIXDevolucao; SL: TStrings);
@@ -433,6 +450,7 @@ begin
   pgPSPs.ActivePageIndex := 0;
   pgTestes.ActivePageIndex := 0;
   pgTestesPix.ActivePageIndex := 0;
+  pgQRCode.ActivePageIndex := 0;
 
   pgPSPItau.ActivePageIndex := 0;
   pgPSPItauChaveCertificado.ActivePageIndex := 0;
@@ -662,6 +680,12 @@ end;
 procedure TForm1.btLimparSolicitarDevolucaoPixClick(Sender: TObject);
 begin
   mSolicitarDevolucaoPix.Lines.Clear;
+end;
+
+procedure TForm1.btQRDGerarClick(Sender: TObject);
+begin
+  VerificarConfiguracao;
+  PintarQRCodeDinamico;
 end;
 
 procedure TForm1.btQREAnalisar1Click(Sender: TObject);
@@ -1179,6 +1203,12 @@ begin
                                                      edtQREInfoAdicional.Text,
                                                      edtQRETxId.Text);
   PintarQRCode(mQRE.Lines.Text, imgQRE.Picture.Bitmap, qrUTF8BOM);
+end;
+
+procedure TForm1.PintarQRCodeDinamico;
+begin
+  mQRD.Lines.Text := ACBrPixCD1.GerarQRCodeDinamico( edtQRDLocation.Text );
+  PintarQRCode(mQRD.Lines.Text, imgQRD.Picture.Bitmap, qrUTF8BOM);
 end;
 
 procedure TForm1.MostrarPixEmLinhas(const NomePix: String;

@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 570
-  Height = 593
-  Top = 164
+  Left = 643
+  Height = 598
+  Top = 148
   Width = 1006
   Caption = 'ACBrPIXCD Teste'
-  ClientHeight = 593
+  ClientHeight = 598
   ClientWidth = 1006
   Icon.Data = {
     9E09000000000100010018180000010020008809000016000000280000001800
@@ -90,7 +90,7 @@ object Form1: TForm1
   LCLVersion = '2.2.0.4'
   object pgPrincipal: TPageControl
     Left = 0
-    Height = 562
+    Height = 567
     Top = 0
     Width = 1006
     ActivePage = tsTestes
@@ -103,15 +103,15 @@ object Form1: TForm1
     OnChange = pgPrincipalChange
     object tsTestes: TTabSheet
       Caption = 'Testes'
-      ClientHeight = 524
+      ClientHeight = 529
       ClientWidth = 998
       ImageIndex = 14
       object pgTestes: TPageControl
         Left = 0
-        Height = 524
+        Height = 529
         Top = 0
         Width = 630
-        ActivePage = tsQRCodeEstatico
+        ActivePage = tsQRCode
         Align = alClient
         Images = ImageList1
         TabHeight = 25
@@ -120,12 +120,12 @@ object Form1: TForm1
         TabWidth = 200
         object tsEndPoints: TTabSheet
           Caption = 'End Points'
-          ClientHeight = 491
+          ClientHeight = 496
           ClientWidth = 622
           ImageIndex = 4
           object pgTesteEndPoints: TPageControl
             Left = 0
-            Height = 491
+            Height = 496
             Top = 0
             Width = 622
             ActivePage = tsEndPointPix
@@ -135,11 +135,11 @@ object Form1: TForm1
             TabWidth = 100
             object tsEndPointPix: TTabSheet
               Caption = '/pix'
-              ClientHeight = 463
+              ClientHeight = 468
               ClientWidth = 614
               object pgTestesPix: TPageControl
                 Left = 0
-                Height = 463
+                Height = 468
                 Top = 0
                 Width = 614
                 ActivePage = tsConsultarPix
@@ -148,7 +148,7 @@ object Form1: TForm1
                 TabOrder = 0
                 object tsConsultarPix: TTabSheet
                   Caption = 'ConsultarPix'
-                  ClientHeight = 435
+                  ClientHeight = 440
                   ClientWidth = 606
                   object pConsultarPix: TPanel
                     Left = 0
@@ -191,7 +191,7 @@ object Form1: TForm1
                   end
                   object mConsultarPix: TMemo
                     Left = 0
-                    Height = 294
+                    Height = 299
                     Top = 112
                     Width = 606
                     Align = alClient
@@ -201,7 +201,7 @@ object Form1: TForm1
                   object Panel3: TPanel
                     Left = 0
                     Height = 29
-                    Top = 406
+                    Top = 411
                     Width = 606
                     Align = alBottom
                     ClientHeight = 29
@@ -224,7 +224,7 @@ object Form1: TForm1
                 end
                 object tsConsultarPixRecebidos: TTabSheet
                   Caption = 'ConsultarPixRecebidos'
-                  ClientHeight = 435
+                  ClientHeight = 440
                   ClientWidth = 606
                   object pConsultarPixRecebidos: TPanel
                     Left = 0
@@ -379,7 +379,7 @@ object Form1: TForm1
                   end
                   object mConsultarPixRecebidos: TMemo
                     Left = 0
-                    Height = 254
+                    Height = 259
                     Top = 152
                     Width = 606
                     Align = alClient
@@ -389,7 +389,7 @@ object Form1: TForm1
                   object Panel4: TPanel
                     Left = 0
                     Height = 29
-                    Top = 406
+                    Top = 411
                     Width = 606
                     Align = alBottom
                     ClientHeight = 29
@@ -412,7 +412,7 @@ object Form1: TForm1
                 end
                 object tsSolicitarDevolucaoPix: TTabSheet
                   Caption = 'SolicitarDevolucaoPix'
-                  ClientHeight = 435
+                  ClientHeight = 440
                   ClientWidth = 606
                   ParentBiDiMode = False
                   object pSolicitarDevolucaoPix: TPanel
@@ -519,7 +519,7 @@ object Form1: TForm1
                   end
                   object mSolicitarDevolucaoPix: TMemo
                     Left = 0
-                    Height = 238
+                    Height = 243
                     Top = 168
                     Width = 606
                     Align = alClient
@@ -529,7 +529,7 @@ object Form1: TForm1
                   object Panel6: TPanel
                     Left = 0
                     Height = 29
-                    Top = 406
+                    Top = 411
                     Width = 606
                     Align = alBottom
                     ClientHeight = 29
@@ -552,7 +552,7 @@ object Form1: TForm1
                 end
                 object tsConsultarDevolucaoPix: TTabSheet
                   Caption = 'ConsultarDevolucaoPix'
-                  ClientHeight = 435
+                  ClientHeight = 440
                   ClientWidth = 606
                   object pConsultarDevolucaoPix: TPanel
                     Left = 0
@@ -610,7 +610,7 @@ object Form1: TForm1
                   end
                   object mConsultarDevolucaoPix: TMemo
                     Left = 0
-                    Height = 238
+                    Height = 243
                     Top = 168
                     Width = 606
                     Align = alClient
@@ -620,7 +620,7 @@ object Form1: TForm1
                   object Panel5: TPanel
                     Left = 0
                     Height = 29
-                    Top = 406
+                    Top = 411
                     Width = 606
                     Align = alBottom
                     ClientHeight = 29
@@ -645,11 +645,11 @@ object Form1: TForm1
             end
             object tsEndPointCob: TTabSheet
               Caption = '/cob'
-              ClientHeight = 463
+              ClientHeight = 468
               ClientWidth = 614
               object PageControl1: TPageControl
                 Left = 0
-                Height = 463
+                Height = 468
                 Top = 0
                 Width = 614
                 ActivePage = TabSheet2
@@ -658,7 +658,7 @@ object Form1: TForm1
                 TabOrder = 0
                 object tsCriarCobrancaImediata: TTabSheet
                   Caption = 'CriarCobrancaImediata'
-                  ClientHeight = 435
+                  ClientHeight = 440
                   ClientWidth = 606
                   object pCriarCobrancaImediata: TPanel
                     Left = 0
@@ -764,7 +764,7 @@ object Form1: TForm1
                   end
                   object mCriarCobrancaImediata: TMemo
                     Left = 0
-                    Height = 267
+                    Height = 272
                     Top = 168
                     Width = 606
                     Align = alClient
@@ -782,160 +782,300 @@ object Form1: TForm1
             end
           end
         end
-        object tsQRCodeEstatico: TTabSheet
-          Caption = 'QRCode Estático'
-          ClientHeight = 491
+        object tsQRCode: TTabSheet
+          Caption = 'QRCode'
+          ClientHeight = 496
           ClientWidth = 622
           ImageIndex = 1
-          object pQREDados: TPanel
+          object pgQRCode: TPageControl
             Left = 0
-            Height = 200
+            Height = 496
             Top = 0
             Width = 622
-            Align = alTop
-            BevelOuter = bvNone
-            ClientHeight = 200
-            ClientWidth = 622
-            TabOrder = 0
-            object Valor: TLabel
-              Left = 16
-              Height = 15
-              Top = 15
-              Width = 26
-              Caption = 'Valor'
-            end
-            object fleQREValor: TFloatSpinEdit
-              Left = 16
-              Height = 23
-              Top = 34
-              Width = 170
-              Alignment = taRightJustify
-              MaxValue = 99999999
-              OnChange = QuandoMudarDadosQRCode
-              TabOrder = 0
-            end
-            object Label34: TLabel
-              Left = 16
-              Height = 15
-              Top = 68
-              Width = 114
-              Caption = 'Informação Adicional'
-            end
-            object edtQREInfoAdicional: TEdit
-              Left = 16
-              Height = 23
-              Top = 88
-              Width = 590
-              Anchors = [akTop, akLeft, akRight]
-              OnChange = QuandoMudarDadosQRCode
-              TabOrder = 1
-            end
-            object Label35: TLabel
-              Left = 16
-              Height = 15
-              Top = 128
-              Width = 170
-              Caption = 'Identificador da Transação (TxId)'
-            end
-            object edtQRETxId: TEdit
-              Left = 16
-              Height = 23
-              Top = 148
-              Width = 590
-              Anchors = [akTop, akLeft, akRight]
-              OnChange = QuandoMudarDadosQRCode
-              TabOrder = 2
-            end
-          end
-          object pQREGerado: TPanel
-            Left = 0
-            Height = 291
-            Top = 200
-            Width = 622
+            ActivePage = tsQRCodeDinamico
             Align = alClient
-            ClientHeight = 291
-            ClientWidth = 622
-            TabOrder = 1
-            object imgQRE: TImage
-              Left = 1
-              Height = 257
-              Top = 1
-              Width = 298
-              Align = alLeft
-              Center = True
-              Proportional = True
-              Stretch = True
-            end
-            object pQREMemo: TPanel
-              Left = 299
-              Height = 257
-              Top = 1
-              Width = 322
-              Align = alClient
-              BevelOuter = bvNone
-              ClientHeight = 257
-              ClientWidth = 322
-              TabOrder = 0
-              Wordwrap = True
-              object mQRE: TMemo
+            TabIndex = 1
+            TabOrder = 0
+            TabWidth = 200
+            object tsQRCodeEstatico: TTabSheet
+              Caption = 'QRCode Estático'
+              ClientHeight = 468
+              ClientWidth = 614
+              object pQREDados: TPanel
                 Left = 0
-                Height = 138
-                Top = 119
-                Width = 322
-                Align = alBottom
-                Alignment = taCenter
-                OnChange = mQREChange
-                ScrollBars = ssAutoBoth
+                Height = 200
+                Top = 0
+                Width = 614
+                Align = alTop
+                BevelOuter = bvNone
+                ClientHeight = 200
+                ClientWidth = 614
                 TabOrder = 0
-                WantReturns = False
+                object Valor: TLabel
+                  Left = 16
+                  Height = 15
+                  Top = 15
+                  Width = 26
+                  Caption = 'Valor'
+                end
+                object fleQREValor: TFloatSpinEdit
+                  Left = 16
+                  Height = 23
+                  Top = 34
+                  Width = 170
+                  Alignment = taRightJustify
+                  MaxValue = 99999999
+                  OnChange = QuandoMudarDadosQRCode
+                  TabOrder = 0
+                end
+                object Label34: TLabel
+                  Left = 16
+                  Height = 15
+                  Top = 68
+                  Width = 114
+                  Caption = 'Informação Adicional'
+                end
+                object edtQREInfoAdicional: TEdit
+                  Left = 16
+                  Height = 23
+                  Top = 88
+                  Width = 582
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = QuandoMudarDadosQRCode
+                  TabOrder = 1
+                end
+                object Label35: TLabel
+                  Left = 16
+                  Height = 15
+                  Top = 128
+                  Width = 170
+                  Caption = 'Identificador da Transação (TxId)'
+                end
+                object edtQRETxId: TEdit
+                  Left = 16
+                  Height = 23
+                  Top = 148
+                  Width = 582
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = QuandoMudarDadosQRCode
+                  TabOrder = 2
+                end
               end
-              object btQREGerar: TBitBtn
-                Left = 78
-                Height = 49
-                Top = 25
-                Width = 161
-                Anchors = [akBottom]
-                Caption = 'Gerar QRCode'
-                Images = ImageList1
-                ImageIndex = 1
-                OnClick = btQREGerarClick
+              object pQREGerado: TPanel
+                Left = 0
+                Height = 268
+                Top = 200
+                Width = 614
+                Align = alClient
+                ClientHeight = 268
+                ClientWidth = 614
                 TabOrder = 1
+                object imgQRE: TImage
+                  Left = 1
+                  Height = 234
+                  Top = 1
+                  Width = 298
+                  Align = alLeft
+                  Center = True
+                  Proportional = True
+                  Stretch = True
+                end
+                object pQREMemo: TPanel
+                  Left = 299
+                  Height = 234
+                  Top = 1
+                  Width = 314
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 234
+                  ClientWidth = 314
+                  TabOrder = 0
+                  Wordwrap = True
+                  object mQRE: TMemo
+                    Left = 0
+                    Height = 138
+                    Top = 96
+                    Width = 314
+                    Align = alBottom
+                    Alignment = taCenter
+                    OnChange = mQREChange
+                    ScrollBars = ssAutoBoth
+                    TabOrder = 0
+                    WantReturns = False
+                  end
+                  object btQREGerar: TBitBtn
+                    Left = 74
+                    Height = 49
+                    Top = 24
+                    Width = 161
+                    Anchors = [akBottom]
+                    Caption = 'Gerar QRCode'
+                    Images = ImageList1
+                    ImageIndex = 1
+                    OnClick = btQREGerarClick
+                    TabOrder = 1
+                  end
+                end
+                object Panel1: TPanel
+                  Left = 1
+                  Height = 32
+                  Top = 235
+                  Width = 612
+                  Align = alBottom
+                  ClientHeight = 32
+                  ClientWidth = 612
+                  TabOrder = 1
+                  object btQREColar: TBitBtn
+                    Left = 422
+                    Height = 26
+                    Top = 3
+                    Width = 81
+                    Anchors = [akTop]
+                    AutoSize = True
+                    Caption = 'Copiar'
+                    Images = ImageList1
+                    ImageIndex = 13
+                    OnClick = btQREColarClick
+                    TabOrder = 0
+                  end
+                  object btQREAnalisar: TBitBtn
+                    Left = 507
+                    Height = 26
+                    Top = 3
+                    Width = 88
+                    Anchors = [akTop]
+                    AutoSize = True
+                    Caption = 'Analisar'
+                    Images = ImageList1
+                    ImageIndex = 5
+                    OnClick = btQREAnalisarClick
+                    TabOrder = 1
+                  end
+                end
               end
             end
-            object Panel1: TPanel
-              Left = 1
-              Height = 32
-              Top = 258
-              Width = 620
-              Align = alBottom
-              ClientHeight = 32
-              ClientWidth = 620
-              TabOrder = 1
-              object btQREColar: TBitBtn
-                Left = 428
-                Height = 26
-                Top = 3
-                Width = 81
-                Anchors = [akTop]
-                AutoSize = True
-                Caption = 'Copiar'
-                Images = ImageList1
-                ImageIndex = 13
-                OnClick = btQREColarClick
+            object tsQRCodeDinamico: TTabSheet
+              Caption = 'QRCode Dinâmico'
+              ClientHeight = 468
+              ClientWidth = 614
+              object pQRDDados: TPanel
+                Left = 0
+                Height = 152
+                Top = 0
+                Width = 614
+                Align = alTop
+                BevelOuter = bvNone
+                ClientHeight = 152
+                ClientWidth = 614
                 TabOrder = 0
+                object Label44: TLabel
+                  Left = 16
+                  Height = 15
+                  Top = 44
+                  Width = 75
+                  Caption = 'URL (location)'
+                end
+                object edtQRDLocation: TEdit
+                  Left = 16
+                  Height = 23
+                  Top = 64
+                  Width = 582
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = QuandoMudarDadosQRCode
+                  TabOrder = 0
+                end
               end
-              object btQREAnalisar: TBitBtn
-                Left = 514
-                Height = 26
-                Top = 3
-                Width = 88
-                Anchors = [akTop]
-                AutoSize = True
-                Caption = 'Analisar'
-                Images = ImageList1
-                ImageIndex = 5
-                OnClick = btQREAnalisarClick
+              object pQREGerado1: TPanel
+                Left = 0
+                Height = 316
+                Top = 152
+                Width = 614
+                Align = alClient
+                ClientHeight = 316
+                ClientWidth = 614
                 TabOrder = 1
+                object imgQRD: TImage
+                  Left = 1
+                  Height = 282
+                  Top = 1
+                  Width = 298
+                  Align = alLeft
+                  Center = True
+                  Proportional = True
+                  Stretch = True
+                end
+                object pQRDMemo: TPanel
+                  Left = 299
+                  Height = 282
+                  Top = 1
+                  Width = 314
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 282
+                  ClientWidth = 314
+                  TabOrder = 0
+                  Wordwrap = True
+                  object mQRD: TMemo
+                    Left = 0
+                    Height = 138
+                    Top = 144
+                    Width = 314
+                    Align = alBottom
+                    Alignment = taCenter
+                    OnChange = mQREChange
+                    ScrollBars = ssAutoBoth
+                    TabOrder = 0
+                    WantReturns = False
+                  end
+                  object btQRDGerar: TBitBtn
+                    Left = 74
+                    Height = 49
+                    Top = 72
+                    Width = 161
+                    Anchors = [akBottom]
+                    Caption = 'Gerar QRCode'
+                    Images = ImageList1
+                    ImageIndex = 1
+                    OnClick = btQRDGerarClick
+                    TabOrder = 1
+                  end
+                end
+                object Panel8: TPanel
+                  Left = 1
+                  Height = 32
+                  Top = 283
+                  Width = 612
+                  Align = alBottom
+                  ClientHeight = 32
+                  ClientWidth = 612
+                  TabOrder = 1
+                  object btQREColar1: TBitBtn
+                    Left = 422
+                    Height = 26
+                    Top = 3
+                    Width = 81
+                    Anchors = [akTop]
+                    AutoSize = True
+                    Caption = 'Copiar'
+                    Images = ImageList1
+                    ImageIndex = 13
+                    OnClick = btQREColarClick
+                    TabOrder = 0
+                  end
+                  object btQREAnalisar2: TBitBtn
+                    Left = 507
+                    Height = 26
+                    Top = 3
+                    Width = 88
+                    Anchors = [akTop]
+                    AutoSize = True
+                    Caption = 'Analisar'
+                    Images = ImageList1
+                    ImageIndex = 5
+                    OnClick = btQREAnalisarClick
+                    TabOrder = 1
+                  end
+                end
               end
             end
           end
@@ -943,16 +1083,16 @@ object Form1: TForm1
       end
       object pLogs: TPanel
         Left = 635
-        Height = 524
+        Height = 529
         Top = 0
         Width = 363
         Align = alRight
-        ClientHeight = 524
+        ClientHeight = 529
         ClientWidth = 363
         TabOrder = 1
         object mLog: TMemo
           Left = 4
-          Height = 469
+          Height = 474
           Top = 19
           Width = 355
           Align = alClient
@@ -972,7 +1112,7 @@ object Form1: TForm1
         object Panel2: TPanel
           Left = 1
           Height = 32
-          Top = 491
+          Top = 496
           Width = 361
           Align = alBottom
           ClientHeight = 32
@@ -995,7 +1135,7 @@ object Form1: TForm1
       end
       object Splitter1: TSplitter
         Left = 630
-        Height = 524
+        Height = 529
         Top = 0
         Width = 5
         Align = alRight
@@ -1004,12 +1144,12 @@ object Form1: TForm1
     end
     object tsConfiguracao: TTabSheet
       Caption = 'Configuracao'
-      ClientHeight = 524
+      ClientHeight = 529
       ClientWidth = 998
       ImageIndex = 2
       object pgConfPixPSP: TPageControl
         Left = 0
-        Height = 487
+        Height = 492
         Top = 0
         Width = 998
         ActivePage = tsPIX
@@ -1021,13 +1161,13 @@ object Form1: TForm1
         TabWidth = 200
         object tsPIX: TTabSheet
           Caption = 'PIX'
-          ClientHeight = 454
+          ClientHeight = 459
           ClientWidth = 990
           ImageIndex = 0
           object pConfPIX: TPanel
             Left = 207
             Height = 392
-            Top = 31
+            Top = 34
             Width = 592
             Anchors = []
             BevelOuter = bvSpace
@@ -1403,12 +1543,12 @@ object Form1: TForm1
         end
         object tsPSP: TTabSheet
           Caption = 'PSPs'
-          ClientHeight = 454
+          ClientHeight = 459
           ClientWidth = 990
           ImageIndex = 3
           object pgPSPs: TPageControl
             Left = 0
-            Height = 454
+            Height = 459
             Top = 0
             Width = 990
             ActivePage = tsItau
@@ -1421,12 +1561,12 @@ object Form1: TForm1
             end
             object tsBB: TTabSheet
               Caption = 'Banco do Brasil'
-              ClientHeight = 426
+              ClientHeight = 431
               ClientWidth = 982
               object pConfPSPBB: TPanel
                 Left = 26
                 Height = 240
-                Top = 89
+                Top = 91
                 Width = 926
                 Anchors = [akLeft, akRight]
                 BevelOuter = bvNone
@@ -1526,11 +1666,11 @@ object Form1: TForm1
             end
             object tsItau: TTabSheet
               Caption = 'Itaú'
-              ClientHeight = 426
+              ClientHeight = 431
               ClientWidth = 982
               object pgPSPItau: TPageControl
                 Left = 16
-                Height = 384
+                Height = 389
                 Top = 24
                 Width = 944
                 ActivePage = tsItauCertificado
@@ -1540,12 +1680,12 @@ object Form1: TForm1
                 TabOrder = 0
                 object tsItauChave: TTabSheet
                   Caption = 'Chave e Client ID'
-                  ClientHeight = 356
+                  ClientHeight = 361
                   ClientWidth = 936
                   object pConfPSPBB1: TPanel
                     Left = 0
                     Height = 240
-                    Top = 54
+                    Top = 56
                     Width = 926
                     Anchors = [akLeft, akRight]
                     BevelOuter = bvNone
@@ -1660,11 +1800,11 @@ object Form1: TForm1
                 end
                 object tsItauCertificado: TTabSheet
                   Caption = 'Chave  e Certificado'
-                  ClientHeight = 356
+                  ClientHeight = 361
                   ClientWidth = 936
                   object pgPSPItauChaveCertificado: TPageControl
                     Left = 19
-                    Height = 323
+                    Height = 328
                     Top = 24
                     Width = 898
                     ActivePage = tsItauChaveCertificadoArquivos
@@ -1674,12 +1814,12 @@ object Form1: TForm1
                     OnChange = pgPSPItauChaveCertificadoChange
                     object tsItauChaveCertificadoArquivos: TTabSheet
                       Caption = 'Arquivos'
-                      ClientHeight = 295
+                      ClientHeight = 300
                       ClientWidth = 890
                       object Panel7: TPanel
                         Left = 35
                         Height = 186
-                        Top = 48
+                        Top = 50
                         Width = 799
                         Anchors = [akLeft, akRight]
                         BevelOuter = bvNone
@@ -1796,11 +1936,11 @@ object Form1: TForm1
                     end
                     object tsItauGerarChaveCertificado: TTabSheet
                       Caption = 'Gerar Chave e Certificado'
-                      ClientHeight = 295
+                      ClientHeight = 300
                       ClientWidth = 890
                       object pgPSPItauGerarChaveCertificado: TPageControl
                         Left = 16
-                        Height = 275
+                        Height = 280
                         Top = 16
                         Width = 840
                         ActivePage = tsItauCertPasso3
@@ -1809,7 +1949,7 @@ object Form1: TForm1
                         TabOrder = 0
                         object tsItauCertPasso1: TTabSheet
                           Caption = 'Passo 1 - Definir Chave Privada'
-                          ClientHeight = 247
+                          ClientHeight = 252
                           ClientWidth = 832
                           object Label39: TLabel
                             Left = 16
@@ -1844,7 +1984,7 @@ object Form1: TForm1
                           end
                           object mItauChavePrivadaPEM: TMemo
                             Left = 16
-                            Height = 158
+                            Height = 163
                             Top = 72
                             Width = 792
                             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -1859,7 +1999,7 @@ object Form1: TForm1
                         end
                         object tsItauCertPasso3: TTabSheet
                           Caption = 'Passo 2 - Solicitar Certificado'
-                          ClientHeight = 247
+                          ClientHeight = 252
                           ClientWidth = 832
                           object pItauEditCertificado: TPanel
                             Left = 0
@@ -1937,12 +2077,12 @@ object Form1: TForm1
                           end
                           object pItauCertificadoRecebido: TPanel
                             Left = 0
-                            Height = 111
+                            Height = 116
                             Top = 136
                             Width = 832
                             Align = alClient
                             BevelOuter = bvNone
-                            ClientHeight = 111
+                            ClientHeight = 116
                             ClientWidth = 832
                             TabOrder = 2
                             object Label6: TLabel
@@ -1955,7 +2095,7 @@ object Form1: TForm1
                             end
                             object mItauCertificadoPEM: TMemo
                               Left = 0
-                              Height = 96
+                              Height = 101
                               Top = 15
                               Width = 832
                               Align = alClient
@@ -1976,12 +2116,12 @@ object Form1: TForm1
             end
             object tsSantander: TTabSheet
               Caption = 'Santander'
-              ClientHeight = 426
+              ClientHeight = 431
               ClientWidth = 982
               object pConfPSPBB2: TPanel
                 Left = 26
                 Height = 240
-                Top = 89
+                Top = 91
                 Width = 926
                 Anchors = [akLeft, akRight]
                 BevelOuter = bvNone
@@ -2070,7 +2210,7 @@ object Form1: TForm1
       object pBotoesConfiguracao: TPanel
         Left = 0
         Height = 37
-        Top = 487
+        Top = 492
         Width = 998
         Align = alBottom
         ClientHeight = 37
@@ -2106,7 +2246,7 @@ object Form1: TForm1
     Cursor = crHandPoint
     Left = 5
     Height = 21
-    Top = 567
+    Top = 572
     Width = 996
     Align = alBottom
     Alignment = taCenter

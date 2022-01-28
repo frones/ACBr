@@ -1,3 +1,35 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
 unit ACBrPIXSchemasTeste;
  
 {$I ACBr.inc}
@@ -6,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasCobV, ACBrPIXQRCodeEstatico,
+  ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasCobV, ACBrPIXBRCode,
   ACBrPIXSchemasProblema, ACBrPIXSchemasPixConsultados,
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCobsVConsultadas,
   ACBrPIXSchemasLoteCobV, ACBrPIXSchemasLotesCobVConsultadas,
@@ -20,6 +52,20 @@ type
   private
     fQRStr: String;
     fQREstatico: TACBrPIXQRCodeEstatico;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AtribuirDadosECalcularQRCode;
+    procedure AtribuirQRCodeEVerificarDados;
+  end;
+
+  { TTestQRCodeDinamico }
+
+  TTestQRCodeDinamico = class(TTestCase)
+  private
+    fQRStr: String;
+    fQRDinamico: TACBrPIXQRCodeDinamico;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -297,20 +343,67 @@ end;
 
 procedure TTestQRCodeEstatico.AtribuirDadosECalcularQRCode;
 begin
-  fQREstatico.ChavePix := '123e4567-e12b-12d1-a456-426655440000';
-  fQREstatico.NomeRecebedor := 'Fulano de Tal';
-  fQREstatico.CidadeRecebedor := 'BRASILIA';
+  fQREstatico.PixKey := '123e4567-e12b-12d1-a456-426655440000';
+  fQREstatico.MerchantName := 'Fulano de Tal';
+  fQREstatico.MerchantCity := 'BRASILIA';
 
-  CheckEquals(fQREstatico.QRCode, fQRStr);
+  CheckEquals(fQREstatico.AsString, fQRStr);
 end;
 
 procedure TTestQRCodeEstatico.AtribuirQRCodeEVerificarDados;
 begin
-  fQREstatico.QRCode := fQRStr;
-  CheckEquals(fQREstatico.ChavePix, '123e4567-e12b-12d1-a456-426655440000');
-  CheckEquals(fQREstatico.NomeRecebedor, 'Fulano de Tal');
-  CheckEquals(fQREstatico.CidadeRecebedor, 'BRASILIA');
-  CheckEquals(fQREstatico.QRCode, fQRStr);
+  fQREstatico.AsString := fQRStr;
+  CheckEquals(fQREstatico.PixKey, '123e4567-e12b-12d1-a456-426655440000');
+  CheckEquals(fQREstatico.MerchantName, 'Fulano de Tal');
+  CheckEquals(fQREstatico.MerchantCity, 'BRASILIA');
+  CheckEquals(fQREstatico.AsString, fQRStr);
+end;
+
+{ TTestQRCodeDinamico }
+
+procedure TTestQRCodeDinamico.SetUp;
+begin
+  inherited SetUp;
+  fQRDinamico := TACBrPIXQRCodeDinamico.Create;
+  fQRStr := '000201'+
+            '010212'+
+            '2687'+
+              '0014br.gov.bcb.pix'+
+              '2565qrcodepix-h.bb.com.br/pix/v2/d9b97f73-b48b-43f6-be7e-f0594fb275a6'+
+            '52040000'+
+            '5303986'+
+            '5802BR'+
+            '5920ALAN GUIACHERO BUENO'+
+            '6008BRASILIA'+
+            '6207'+
+              '0503***'+
+            '630464FF';
+end;
+
+procedure TTestQRCodeDinamico.TearDown;
+begin
+  fQRDinamico.Free;
+  inherited TearDown;
+end;
+
+procedure TTestQRCodeDinamico.AtribuirDadosECalcularQRCode;
+begin
+  fQRDinamico.PointOfInformationMethod := 12;
+  fQRDinamico.URL := 'qrcodepix-h.bb.com.br/pix/v2/d9b97f73-b48b-43f6-be7e-f0594fb275a6';
+  fQRDinamico.MerchantName := 'ALAN GUIACHERO BUENO';
+  fQRDinamico.MerchantCity := 'BRASILIA';
+
+  CheckEquals(fQRDinamico.AsString, fQRStr);
+end;
+
+procedure TTestQRCodeDinamico.AtribuirQRCodeEVerificarDados;
+begin
+  fQRDinamico.AsString := fQRStr;
+  CheckEquals(fQRDinamico.PointOfInformationMethod, 12);
+  CheckEquals(fQRDinamico.URL, 'qrcodepix-h.bb.com.br/pix/v2/d9b97f73-b48b-43f6-be7e-f0594fb275a6');
+  CheckEquals(fQRDinamico.MerchantName, 'ALAN GUIACHERO BUENO');
+  CheckEquals(fQRDinamico.MerchantCity, 'BRASILIA');
+  CheckEquals(fQRDinamico.AsString, fQRStr);
 end;
 
 { TTestCobrancaImediataExemplo1 }
@@ -790,60 +883,60 @@ begin
   inherited SetUp;
   fJSON := ACBrStr(
   '{'+
-  	'"parametros": {'+
-  		'"inicio": "2020-04-01T00:00:00Z",'+
-  		'"fim": "2020-04-01T23:59:59Z",'+
-  		'"paginacao": {'+
-  			'"paginaAtual": 0,'+
-  			'"itensPorPagina": 100,'+
-  			'"quantidadeDePaginas": 1,'+
-  			'"quantidadeTotalDeItens": 2'+
-  		'}'+
+    '"parametros": {'+
+      '"inicio": "2020-04-01T00:00:00Z",'+
+      '"fim": "2020-04-01T23:59:59Z",'+
+      '"paginacao": {'+
+        '"paginaAtual": 0,'+
+  	'"itensPorPagina": 100,'+
+  	'"quantidadeDePaginas": 1,'+
+  	'"quantidadeTotalDeItens": 2'+
+      '}'+
+    '},'+
+    '"pix": ['+
+      '{'+
+        '"endToEndId": "E12345678202009091221abcdef12345",'+
+  	'"txid": "cd1fe328c875481285a6f233ae41b662",'+
+  	'"valor": "100.00",'+
+  	'"horario": "2020-09-10T13:03:33.902Z",'+
+  	'"infoPagador": "Reforma da casa",'+
+  	'"devolucoes": ['+
+	  '{'+
+  	    '"id": "000AAA111",'+
+  	    '"rtrId": "D12345678202009091000abcde123456",'+
+  	    '"valor": "11.00",'+
+  	    '"horario": {'+
+  	      '"solicitacao": "2020-09-10T13:03:33.902Z"'+
+  	    '},'+
+  	    '"status": "EM_PROCESSAMENTO"'+
+  	  '}'+
+        ']'+
+      '},'+
+      '{'+
+        '"endToEndId": "E12345678202009091221ghijk78901234",'+
+  	'"txid": "5b933948f3224266b1050ac54319e775",'+
+  	'"valor": "200.00",'+
+  	'"horario": "2020-09-10T13:03:33.902Z",'+
+  	'"infoPagador": "Revisão do carro"'+
+      '},'+
+      '{'+
+        '"endToEndId": "E88631478202009091221ghijk78901234",'+
+  	'"txid": "82433415910c47e5adb6ac3527cca160",'+
+  	'"valor": "200.00",'+
+  	'"componentesValor": {'+
+  	  '"original": {'+
+  	    '"valor": "180.00"'+
+  	  '},'+
+  	  '"saque": {'+
+  	    '"valor": "20.00",'+
+            '"modalidadeAgente": "AGPSS",'+
+            '"prestadorDeServicoDeSaque": "12345678"'+
+  	  '}'+
   	'},'+
-  	'"pix": ['+
-  		'{'+
-  			'"endToEndId": "E12345678202009091221abcdef12345",'+
-  			'"txid": "cd1fe328c875481285a6f233ae41b662",'+
-  			'"valor": "100.00",'+
-  			'"horario": "2020-09-10T13:03:33.902Z",'+
-  			'"infoPagador": "Reforma da casa",'+
-  			'"devolucoes": ['+
-			    '{'+
-  				'"id": "000AAA111",'+
-  				'"rtrId": "D12345678202009091000abcde123456",'+
-  				'"valor": "11.00",'+
-  				'"horario": {'+
-  					'"solicitacao": "2020-09-10T13:03:33.902Z"'+
-  				'},'+
-  				'"status": "EM_PROCESSAMENTO"'+
-  			    '}'+
-                        ']'+
-  		'},'+
-  		'{'+
-  			'"endToEndId": "E12345678202009091221ghijk78901234",'+
-  			'"txid": "5b933948f3224266b1050ac54319e775",'+
-  			'"valor": "200.00",'+
-  			'"horario": "2020-09-10T13:03:33.902Z",'+
-  			'"infoPagador": "Revisão do carro"'+
-  		'},'+
-  		'{'+
-  			'"endToEndId": "E88631478202009091221ghijk78901234",'+
-  			'"txid": "82433415910c47e5adb6ac3527cca160",'+
-  			'"valor": "200.00",'+
-  			'"componentesValor": {'+
-  				'"original": {'+
-  					'"valor": "180.00"'+
-  				'},'+
-  				'"saque": {'+
-  					'"valor": "20.00",'+
-                  			'"modalidadeAgente": "AGPSS",'+
-                  			'"prestadorDeServicoDeSaque": "12345678"'+
-  				'}'+
-  			'},'+
-  			'"horario": "2020-09-10T13:03:33.902Z",'+
-  			'"infoPagador": "Saque Pix"'+
-  		'}'+
-  	']'+
+  	'"horario": "2020-09-10T13:03:33.902Z",'+
+  	'"infoPagador": "Saque Pix"'+
+      '}'+
+    ']'+
   '}');
   fACBrPixConsultados := TACBrPIXConsultados.Create('');
 end;
@@ -2263,61 +2356,61 @@ begin
   fACBrPIXLotesCobVConsultados := TACBrPIXLotesCobVConsultados.Create('');
   fJSON := ACBrStr(
   '{'+
-  	'"parametros": {'+
-  		'"inicio": "2020-01-01T00:00:00Z",'+
-  		'"fim": "2020-12-01T23:59:59Z",'+
-  		'"paginacao": {'+
-  			'"paginaAtual": 0,'+
-  			'"itensPorPagina": 100,'+
-  			'"quantidadeDePaginas": 1,'+
-  			'"quantidadeTotalDeItens": 2'+
+    '"parametros": {'+
+      '"inicio": "2020-01-01T00:00:00Z",'+
+      '"fim": "2020-12-01T23:59:59Z",'+
+      '"paginacao": {'+
+        '"paginaAtual": 0,'+
+  	'"itensPorPagina": 100,'+
+  	'"quantidadeDePaginas": 1,'+
+  	'"quantidadeTotalDeItens": 2'+
+      '}'+
+    '},'+
+    '"lotes": ['+
+      '{'+
+        '"descricao": "Cobranças dos alunos do turno vespertino",'+
+  	'"criacao": "2020-11-01T20:15:00.358Z",'+
+  	'"cobsv": ['+
+  	  '{'+
+  	    '"criacao": "2020-11-01T20:15:00.358Z",'+
+  	    '"txid": "fb2761260e554ad593c7226beb5cb650",'+
+  	    '"status": "CRIADA"'+
+  	  '},'+
+  	  '{'+
+  	    '"txid": "7978c0c97ea847e78e8849634473c1f1",'+
+  	    '"status": "NEGADA",'+
+  	    '"problema": {'+
+  	      '"type": "https://pix.bcb.gov.br/api/v2/error/CobVOperacaoInvalida",'+
+  	      '"title": "Cobrança inválida.",'+
+  	      '"status": 400,'+
+  	      '"detail": "A requisição que busca alterar ou criar uma cobrança com vencimento não respeita o _schema_ ou está semanticamente errada.",'+
+  	      '"violacoes": ['+
+  	        '{'+
+  		  '"razao": "O objeto cobv.devedor não respeita o _schema_.",'+
+  		  '"propriedade": "cobv.devedor"'+
   		'}'+
-  	'},'+
-  	'"lotes": ['+
-  		'{'+
-  			'"descricao": "Cobranças dos alunos do turno vespertino",'+
-  			'"criacao": "2020-11-01T20:15:00.358Z",'+
-  			'"cobsv": ['+
-  				'{'+
-  					'"criacao": "2020-11-01T20:15:00.358Z",'+
-  					'"txid": "fb2761260e554ad593c7226beb5cb650",'+
-  					'"status": "CRIADA"'+
-  				'},'+
-  				'{'+
-  					'"txid": "7978c0c97ea847e78e8849634473c1f1",'+
-  					'"status": "NEGADA",'+
-  					'"problema": {'+
-  						'"type": "https://pix.bcb.gov.br/api/v2/error/CobVOperacaoInvalida",'+
-  						'"title": "Cobrança inválida.",'+
-  						'"status": 400,'+
-  						'"detail": "A requisição que busca alterar ou criar uma cobrança com vencimento não respeita o _schema_ ou está semanticamente errada.",'+
-  						'"violacoes": ['+
-  							'{'+
-  								'"razao": "O objeto cobv.devedor não respeita o _schema_.",'+
-  								'"propriedade": "cobv.devedor"'+
-  							'}'+
-  						']'+
-  					'}'+
-  				'}'+
-  			']'+
-  		'},'+
-  		'{'+
-  			'"descricao": "Cobranças dos assinantes anuais",'+
-  			'"criacao": "2020-11-17T20:00:00.358Z",'+
-  			'"cobsv": ['+
-  				'{'+
-  					'"criacao": "2020-11-17T20:00:00.358Z",'+
-  					'"txid": "06601eaa3822423fbe897f613b983e01",'+
-  					'"status": "CRIADA"'+
-  				'},'+
-  				'{'+
-  					'"criacao": "2020-11-17T20:00:00.358Z",'+
-  					'"txid": "4e07059760d54cf493de6e7f1fbfad9a",'+
-  					'"status": "CRIADA"'+
-  				'}'+
-  			']'+
-  		'}'+
+  	      ']'+
+  	    '}'+
+  	  '}'+
   	']'+
+  	'},'+
+  	'{'+
+  	  '"descricao": "Cobranças dos assinantes anuais",'+
+  	  '"criacao": "2020-11-17T20:00:00.358Z",'+
+  	  '"cobsv": ['+
+  	    '{'+
+  	      '"criacao": "2020-11-17T20:00:00.358Z",'+
+  	      '"txid": "06601eaa3822423fbe897f613b983e01",'+
+  	      '"status": "CRIADA"'+
+  	    '},'+
+  	    '{'+
+  	      '"criacao": "2020-11-17T20:00:00.358Z",'+
+  	      '"txid": "4e07059760d54cf493de6e7f1fbfad9a",'+
+  	      '"status": "CRIADA"'+
+  	    '}'+
+  	  ']'+
+  	'}'+
+      ']'+
   '}' );
 end;
 
@@ -2405,6 +2498,7 @@ end;
 initialization
 
   _RegisterTest('ACBrPIXCD.QRCode', TTestQRCodeEstatico);
+  _RegisterTest('ACBrPIXCD.QRCode', TTestQRCodeDinamico);
   _RegisterTest('ACBrPIXCD.Schemas.Cob', TTestCobrancaImediataExemplo1);
   _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX);
   _RegisterTest('ACBrPIXCD.Schemas.Pix', TTestCobrancaImediataComSaquePIX2);

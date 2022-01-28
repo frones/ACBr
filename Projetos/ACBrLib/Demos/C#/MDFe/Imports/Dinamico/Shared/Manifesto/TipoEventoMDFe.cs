@@ -4,6 +4,9 @@ namespace ACBrLib.MDFe
 {
     public enum TipoEventoMDFe
     {
+        [EnumValue("-99999")]
+        teNaoMapeado,
+
         [EnumValue("110111")]
         teCancelamento,
 

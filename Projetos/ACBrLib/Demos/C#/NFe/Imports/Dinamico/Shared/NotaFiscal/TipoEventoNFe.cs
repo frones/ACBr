@@ -1,7 +1,12 @@
-﻿namespace ACBrLib.Core.DFe
+﻿using ACBrLib.Core;
+
+namespace ACBrLib.NFe
 {
     public enum TipoEventoNFe
     {
+        [EnumValue("-99999")]
+        teNaoMapeado,
+
         [EnumValue("110110")]
         teCCe,
 

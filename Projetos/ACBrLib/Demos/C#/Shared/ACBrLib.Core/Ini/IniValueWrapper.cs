@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -57,33 +56,10 @@ namespace ACBrLib.Core
                 case bool boValue: return boValue ? "1" : "0";
 
                 case Enum _:
-                    var enumType = type.IsGenericType ? type.GetGenericArguments()[0] : type;
-
-                    if (Attribute.IsDefined(enumType, typeof(FlagsAttribute)))
-                    {
-                        var member = enumType.GetMember(value.ToString()).First();
-
-                        if (!Attribute.IsDefined(member, typeof(EnumValueAttribute)))
-                            return $"[{Enum.Format(enumType, value, "F")}]";
-
-                        var flags = GetFlagValues(value);
-                        return flags.Aggregate("[", (current, enValue) =>
-                        {
-                            if (current.Length > 1) current += ",";
-
-                            var eMember = enumType.GetMember(enValue.ToString()).First();
-                            var eAtt = eMember.GetCustomAttributes(false).OfType<EnumValueAttribute>().First();
-                            if (eAtt == null) throw new ArgumentException("Tipo de enum [EnumValue], sem valores definidos.");
-
-                            return current + eAtt.Value;
-                        }, current => current + "]");
-                    }
-                    else
-                    {
-                        var member = enumType.GetMember(value.ToString()).First();
-                        var enumAttribute = member.GetCustomAttributes(false).OfType<EnumValueAttribute>().FirstOrDefault();
-                        return enumAttribute?.Value ?? Convert.ToInt32(value).ToString();
-                    }
+                    var member = value.GetType().GetMember(value.ToString()).FirstOrDefault();
+                    var enumAttribute = member?.GetCustomAttributes(false).OfType<EnumValueAttribute>().FirstOrDefault();
+                    var enumValue = enumAttribute?.Value;
+                    return enumValue ?? Convert.ToInt32(value).ToString();
 
                 case string[] aString:
                     return string.Join("|", aString);
@@ -121,7 +97,8 @@ namespace ACBrLib.Core
 
             if (type == typeof(DateTime) || type == typeof(DateTime?))
             {
-                DateTime.TryParseExact(value, new[] { "dd/MM/yyyy", "dd/MM/yyyy HH:mm:ss" }, null, DateTimeStyles.AssumeLocal, out var ret);
+                DateTime.TryParseExact(value, new[] { "dd/MM/yyyy", "dd/MM/yyyy HH:mm:ss" }, null,
+                    DateTimeStyles.AssumeLocal, out var ret);
                 return ret;
             }
 
@@ -145,8 +122,8 @@ namespace ACBrLib.Core
             {
                 var ret = new MemoryStream();
                 var pdfBytes = Convert.FromBase64String(value);
-                ret.WriteAsync(pdfBytes, 0, pdfBytes.Length).GetAwaiter().GetResult();
-                ret.FlushAsync().GetAwaiter().GetResult();
+                ret.Write(pdfBytes, 0, pdfBytes.Length);
+                ret.Flush();
 
                 ret.Position = 0;
             }
@@ -154,29 +131,11 @@ namespace ACBrLib.Core
             if (!type.IsSubclassOf(typeof(Enum))) return value;
 
             var enumType = type.IsGenericType ? type.GetGenericArguments()[0] : type;
-            var member = enumType.GetMembers(BindingFlags.Public | BindingFlags.Static).FirstOrDefault();
+            object enumValue = enumType.GetMembers().Where(x => x.HasAttribute<EnumValueAttribute>())
+                .SingleOrDefault(x => x.GetAttribute<EnumValueAttribute>().Value == value)?.Name;
 
-            if (!Attribute.IsDefined(member, typeof(EnumValueAttribute)))
-                return Attribute.IsDefined(type, typeof(FlagsAttribute)) ? Enum.Parse(enumType, value.Trim('[', ']'), true) :
-                                                                           Enum.ToObject(enumType, Convert.ToInt32(value));
-
-            if (Attribute.IsDefined(type, typeof(FlagsAttribute)))
-            {
-                var valores = value.Trim('[', ']').Split(',');
-                var enums = enumType.GetMembers().Where(x => valores.Contains(x.GetAttribute<EnumValueAttribute>().Value))
-                    .Select(x => (Enum)Enum.Parse(enumType, x.Name.ToString()));
-                var enumNames = "";
-                foreach (var eValue in enums)
-                {
-                    if (enumNames.Length > 0) enumNames += ",";
-                    enumNames += eValue.ToString();
-                }
-
-                return Enum.Parse(enumType, enumNames, true);
-            }
-
-            var eName = enumType.GetMembers(BindingFlags.Public | BindingFlags.Static).Single(x => x.GetAttribute<EnumValueAttribute>().Value == value).Name;
-            return Enum.Parse(enumType, eName);
+            return enumValue == null ? Enum.ToObject(enumType, Convert.ToInt32(value)) :
+                                       Enum.Parse(enumType, enumValue.ToString());
         }
 
         public static bool CanWrapUnwrap(Type type)
@@ -203,13 +162,6 @@ namespace ACBrLib.Core
                    || type == typeof(Stream)
                    || type.IsEnum
                    || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && CanWrapUnwrap(type.GetGenericArguments()[0]);
-        }
-
-        private static IEnumerable<Enum> GetFlagValues(object flags)
-        {
-            if (!Attribute.IsDefined(flags.GetType(), typeof(FlagsAttribute))) throw new ArgumentException("Função apenas para enuns do tipo Flag.");
-
-            return from Enum value in Enum.GetValues(flags.GetType()) where ((Enum)flags).HasFlag(value) select value;
         }
 
         #endregion Methods

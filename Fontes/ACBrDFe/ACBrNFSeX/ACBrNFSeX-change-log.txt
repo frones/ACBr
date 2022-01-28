@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/01/2022
+-- ACBrNFSeXServicos --
+[*] Garça/SP trocou de URL
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --
 [*] Possível correção para o problema de caracteres acentuados e o cedilha.
    Por: Italo Giurizzato Junior

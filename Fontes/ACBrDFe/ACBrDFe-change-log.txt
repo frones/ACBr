@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/2022
+-- ACBrXmlBase --
+[+] Criado o tipo TACBrTipoEncoding e a função TipoEncoding com
+    a finalidade de identificar o Encoding do XML.
+   Por: Italo Giurizzato Junior
+
 21/01/2022
 -- ACBrXmlBase --
 [*] A função LerDatas não estava previso uma data no formato AAAAMMDD.

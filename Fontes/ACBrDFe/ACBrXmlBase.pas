@@ -53,6 +53,8 @@ type
                     tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
                     tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
 
+  TACBrTipoEncoding = (teASCII, teUTF8, teUNICOD, teISO8859_1);
+
 const
   LineBreak = #13#10;
 
@@ -86,6 +88,8 @@ function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
 
 function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
+
+function TipoEncoding(const aXml: string): TACBrTipoEncoding;
 
 implementation
 
@@ -491,6 +495,52 @@ end;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
+end;
+
+function TipoEncoding(const aXml: string): TACBrTipoEncoding;
+var
+  i, j, FChar1, FChar2: Integer;
+begin
+  Result := teASCII;
+  i := 0;
+  j := Length(aXml);
+
+  while i < j do
+  begin
+    Inc(i);
+
+    FChar1 := Ord(aXml[i]);
+    FChar2 := Ord(aXml[i+1]);
+
+    if Pos('&amp;#', aXml) > 0 then
+    begin
+      Result := teUNICOD;
+      Exit
+    end;
+
+    if (FChar1 >= $C3) and (FChar1 <= $C3) then
+    begin
+      if (FChar2 >= $80) and (FChar2 <= $BF) then
+      begin
+        Result := teUTF8;
+        Exit
+      end;
+    end;
+
+    if FChar1 >= $80 then
+    begin
+      Result := teASCII;
+      Exit
+    end;
+    {
+       Como identificar um arquivo com um encoding ISO-8859-1 ?
+    if FChar1 >= ???? then
+    begin
+      Result := teISO8859_1;
+      Exit
+    end;
+    }
+  end;
 end;
 
 end.

@@ -40,7 +40,7 @@ uses
   Classes, SysUtils,
   httpsend, ssl_openssl, ACBrOpenSSLUtils,
   ACBrBase,
-  ACBrPIXBase, ACBrPIXQRCodeEstatico,
+  ACBrPIXBase, ACBrPIXBRCode,
   ACBrPIXSchemasProblema,
   ACBrPIXSchemasPixConsultados, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao,
   ACBrPIXSchemasCobsConsultadas, ACBrPIXSchemasCob;
@@ -423,7 +423,11 @@ type
     procedure RegistrarLog(const ALinha: String; NivelLog: Byte = 0);
     procedure DispararExcecao(E: Exception);
 
-    function GerarQRCodeEstatico(Valor: Currency; infoAdicional: String = ''; TxId: String = ''): String;
+    function GerarQRCodeEstatico(Valor: Currency; const infoAdicional: String = '';
+      const TxId: String = ''): String; overload;
+    function GerarQRCodeEstatico(const ChavePix: String; Valor: Currency;
+      const infoAdicional: String = ''; const TxId: String = ''): String; overload;
+
   published
     property Recebedor: TACBrPixRecebedor read fRecebedor write SetRecebedor;
     property DadosAutomacao: TACBrPixDadosAutomacao read fDadosAutomacao write SetDadosAutomacao;
@@ -1340,7 +1344,7 @@ begin
   if (fCidade = AValue) then
     Exit;
 
-  fCidade := copy(TiraAcentos(Trim(AValue)),1,15);
+  fCidade := TiraAcentos(copy(Trim(AValue),1,15));
 end;
 
 procedure TACBrPixRecebedor.SetNome(AValue: String);
@@ -1348,7 +1352,7 @@ begin
   if (fNome = AValue) then
     Exit;
 
-  fNome := copy(TiraAcentos(Trim(AValue)),1,25);
+  fNome := TiraAcentos(copy(Trim(AValue),1,25));
 end;
 
 procedure TACBrPixRecebedor.SetUF(AValue: String);
@@ -1375,7 +1379,7 @@ begin
     Exit;
 
   if (AValue <> 0) and (AValue < cMCCMinimo) or (AValue > cMCCMaximo) then
-    raise EACBrPixException.Create(ACBrStr(sErroMCCForaDaFaixa));
+    raise EACBrPixException.Create(ACBrStr(sErrMCCOutOfRange));
 
   fCodCategoriaComerciante := AValue;
 end;
@@ -1559,16 +1563,22 @@ begin
   end;
 end;
 
-function TACBrPixCD.GerarQRCodeEstatico(Valor: Currency; infoAdicional: String;
-  TxId: String): String;
+function TACBrPixCD.GerarQRCodeEstatico(Valor: Currency;
+  const infoAdicional: String; const TxId: String): String;
+begin
+  VerificarPSPAtribuido;
+  Result := GerarQRCodeEstatico(fPSP.ChavePIX, Valor, infoAdicional, TxId);
+end;
+
+function TACBrPixCD.GerarQRCodeEstatico(const ChavePix: String;
+  Valor: Currency; const infoAdicional: String; const TxId: String): String;
 var
   Erros: String;
   QRCodeEstatico: TACBrPIXQRCodeEstatico;
+  TipoChave: TACBrPIXTipoChave;
 begin
-  VerificarPSPAtribuido;
   RegistrarLog('GerarQRCodeEstatico( '+FloatToString(Valor)+', '+
-                                       infoAdicional+', '+
-                                       TxId+' )');
+    ChavePix+', '+infoAdicional+', '+TxId+' )');
 
   Erros := '';
   if (fRecebedor.Nome = '') then
@@ -1577,10 +1587,11 @@ begin
   if (fRecebedor.Cidade = '') then
     Erros := Erros + sErroRecebedorCidade + sLineBreak;
 
-  if (fPSP.ChavePIX = '') then
+  if (ChavePix = '') then
     Erros := Erros + sErroPSPChavePIX + sLineBreak;
 
-  if (fPSP.TipoChave = tchNenhuma) then
+  TipoChave := DetectarTipoChave(ChavePix);
+  if (TipoChave = tchNenhuma) then
     Erros := Erros + sErroPSPTipoChave + sLineBreak;
 
   if (Erros <> '') then
@@ -1588,15 +1599,16 @@ begin
 
   QRCodeEstatico := TACBrPIXQRCodeEstatico.Create;
   try
-    QRCodeEstatico.NomeRecebedor := fRecebedor.Nome;
-    QRCodeEstatico.CidadeRecebedor := fRecebedor.Cidade;
-    QRCodeEstatico.CEPRecebedor := fRecebedor.CEP;
-    QRCodeEstatico.ChavePix := fPSP.ChavePIX;
-    QRCodeEstatico.Valor := Valor;
-    QRCodeEstatico.infoAdicional := infoAdicional;
+    QRCodeEstatico.Clear;
+    QRCodeEstatico.MerchantName := fRecebedor.Nome;
+    QRCodeEstatico.MerchantCity := fRecebedor.Cidade;
+    QRCodeEstatico.PostalCode := fRecebedor.CEP;
+    QRCodeEstatico.PixKey := ChavePix;
+    QRCodeEstatico.TransactionAmount := Valor;
+    QRCodeEstatico.AdditionalInfo := infoAdicional;
     QRCodeEstatico.TxId := TxId;
 
-    Result := QRCodeEstatico.QRCode;
+    Result := QRCodeEstatico.AsString;
     RegistrarLog('   '+Result);
   finally
     QRCodeEstatico.Free;

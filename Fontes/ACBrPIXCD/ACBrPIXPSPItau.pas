@@ -186,18 +186,27 @@ end;
 
 function TACBrPSPItau.SolicitarCertificado(const TokenTemporario: String): String;
 var
-  Body, AURL: String;
+  Body, AURL, Token: String;
   RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
-  LimparHTTP;
+  VerificarPIXCDAtribuido;
 
   if (ACBrPixCD.Ambiente = ambProducao) then
-    AURL := cURLItauProducao + CURLPathCertificado + CURLPathCertificadoSolicitacao
+    AURL := cURLItauAuthProducao + CURLPathCertificado + CURLPathCertificadoSolicitacao
   else
+  begin
+    VerificarAutenticacao;
     AURL := cURLItauSandbox + CURLPathCertificado + CURLPathCertificadoSolicitacao;
+  end;
 
   Body := GerarCertificadoCSR;
+
+  LimparHTTP;
+  Token := IfEmptyThen(TokenTemporario, fpToken);
+  if (Token <> '') then
+    Http.Headers.Insert(0, ChttpHeaderAuthorization + 'Bearer '+Token);
+
   WriteStrToStream(Http.Document, Body);
   Http.MimeType := CContentTypeTextPlain;
 
@@ -208,7 +217,10 @@ begin
   begin
     Http.Document.Position := 0;
     Result := ReadStrFromStream(Http.Document, Http.Document.Size);
-  end;
+  end
+  else
+    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
+      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
 function TACBrPSPItau.GerarCertificadoCSR: String;

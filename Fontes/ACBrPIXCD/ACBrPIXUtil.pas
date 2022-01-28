@@ -64,9 +64,8 @@ function ValidarChaveAleatoria(const AChave: String): Boolean;
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
 function ValidarPSS(const AValue: Integer): String;
 function ValidarEndToEndId(const AValue: String): String;
-function FormatarQRCodeId(AId: Byte; const ValorId: String): String;
 function FormatarValorPIX(AValor: Double): String;
-function Crc16PIX(const AString: String): String;
+function Crc16BRCode(const AString: String): String;
 
 implementation
 
@@ -183,19 +182,6 @@ begin
       Result := sErroEndToEndIdentification;
 end;
 
-function FormatarQRCodeId(AId: Byte; const ValorId: String): String;
-var
-  s: String;
-  l: Integer;
-begin
-  s := Trim(ValorId);
-  l := Length(s);
-  if (l > 0) then
-    Result := IntToStrZero(AId, 2) + IntToStrZero(l, 2) + s
-  else
-    Result := '';
-end;
-
 function FormatarValorPIX(AValor: Double): String;
 var
   s: String;
@@ -205,7 +191,7 @@ begin
 end;
 
 // Fonte: https://github.com/bacen/pix-api/issues/189#issuecomment-783712221
-function Crc16PIX(const AString: String): String;
+function Crc16BRCode(const AString: String): String;
 const
   polynomial = $1021;
 var

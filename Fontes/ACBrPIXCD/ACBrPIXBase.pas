@@ -63,11 +63,8 @@ resourcestring
   sErroMetodoNaoImplementado = 'Método %s não implementado para Classe %s';
 
 const
-  cGUIPIX = 'br.gov.bcb.pix';
-  cBRCurrency = 986;
   cBRCountryCode = 'BR';
   cMPMValueNotInformed = '***';
-  cEMVLimit = 99;
 
 type
   TACBrPIXTipoChave = ( tchNenhuma,

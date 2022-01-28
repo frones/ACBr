@@ -735,6 +735,7 @@ procedure TACBrTEFAPIClassCliSiTef.InterpretarRespostaAPI;
 begin
   inherited;
   fpACBrTEFAPI.GravarLog( fpACBrTEFAPI.UltimaRespostaTEF.Conteudo.Conteudo.Text );
+  fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
   fpACBrTEFAPI.UltimaRespostaTEF.ConteudoToProperty;
   if (fUltimoRetornoAPI <> 0) then
     fpACBrTEFAPI.UltimaRespostaTEF.TextoEspecialOperador := fTEFCliSiTefAPI.TraduzirErroTransacao(fUltimoRetornoAPI);

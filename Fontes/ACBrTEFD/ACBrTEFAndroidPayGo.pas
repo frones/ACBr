@@ -202,6 +202,7 @@ end;
 procedure TACBrTEFAndroidPayGoClass.InterpretarRespostaAPI;
 begin
   inherited;
+  fpACBrTEFAPI.UltimaRespostaTEF.ViaClienteReduzida := fpACBrTEFAPI.DadosAutomacao.ImprimeViaClienteReduzida;
   DadosDaTransacaoToTEFResp( fTEFPayGoAPI.DadosDaTransacao,
                              fpACBrTEFAPI.UltimaRespostaTEF );
 end;

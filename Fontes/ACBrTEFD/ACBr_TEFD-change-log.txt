@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/22
+-- ACBrTEFAndroidPayGo, ACBrTEFAPICliSiTef, ACBrTEFAPIPayGoWeb --
+[*] Método "InterpretarRespostaAPI", ajustado para passar o valor de
+   DadosAutomacao.ImprimeViaClienteReduzida para UltimaRespostaTEF.
+   (por: DSA)
+
 27/01/22
 -- ACBrTEFDClass, ACBrTEFDCliDTEF, ACBrTEFDCliSiTef, ACBrTEFDPayGoWeb,
    ACBrTEFDTicketCar, ACBrTEFDVeSPague --

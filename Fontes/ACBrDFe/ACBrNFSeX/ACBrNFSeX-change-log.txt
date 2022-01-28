@@ -45,6 +45,9 @@ Símbolo : Significado
 
 28/01/2022
 -- ACBrNFSeXServicos --
+[*] Itajubá/MG trocou de provedor, agora é GovDigital
+   Por: Daycon
+-- ACBrNFSeXServicos --
 [*] Garça/SP trocou de URL
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --

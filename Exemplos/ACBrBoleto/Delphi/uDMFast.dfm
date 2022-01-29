@@ -1,7 +1,6 @@
 object dmFast: TdmFast
   Height = 150
   Width = 215
-  PixelsPerInch = 96
   object ACBrBoleto: TACBrBoleto
     Banco.Numero = 341
     Banco.TamanhoMaximoNossoNum = 8

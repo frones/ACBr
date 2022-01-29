@@ -31,6 +31,9 @@ namespace ACBrLib.NFe
         [EnumValue("111503")]
         teCanPedProrrog2,
 
+        [EnumValue("210200")]
+        teManifDestConfirmacao,
+
         [EnumValue("210210")]
         teManifDestCiencia,
 

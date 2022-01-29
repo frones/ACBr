@@ -1308,7 +1308,7 @@ begin
   Request := Request + '</nfe:TesteEnvioLoteRPSRequest>';
 
   Result := Executar('http://www.prefeitura.sp.gov.br/nfe/ws/testeenvio', Request,
-                     ['RetornoXML', 'RetornoEnvioRPS'],
+                     ['RetornoXML', 'RetornoEnvioLoteRPS'],
                      ['xmlns:nfe="http://www.prefeitura.sp.gov.br/nfe"']);
 end;
 

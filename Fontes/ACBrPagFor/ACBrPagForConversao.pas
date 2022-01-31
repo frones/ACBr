@@ -186,6 +186,8 @@ function DescricaoRetornoItau(const ADesc: string): string;
 
 function DescricaoRetornoSantander(const ADesc: string): string;
 
+function DescricaoRetornoBancoDoBrasil(const ADesc: string): string;
+
 implementation
 
 function StrToEnumerado(var ok: boolean; const s: string; const AString:
@@ -1098,6 +1100,293 @@ begin
     Result := 'Registro inconsistente (Título)'
   else
     Result := 'RETORNO NÃO IDENTIFICADO';
+end;
+
+function DescricaoRetornoBancoDoBrasil(const ADesc: string): string;
+var
+  vDesc: string;
+  i: integer;
+begin
+  result := '';
+  i := 0;
+  repeat
+    inc(i);
+    vDesc := copy(ADesc + '   ', i * 2 - 1, 2);
+    if VDesc = '00' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Este código indica que o pagamento foi confirmado'
+    else if VDesc = '01' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Insuficiência de Fundos - Débito Não Efetuado'
+    else if VDesc = '02' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Crédito ou Débito Cancelado pelo Pagador/Credor'
+    else if VDesc = '03' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Débito Autorizado pela Agência - Efetuado'
+    else if VDesc = 'AA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Controle Inválido'
+    else if VDesc = 'AB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo de Operação Inválido'
+    else if VDesc = 'AC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo de Serviço Inválido'
+    else if VDesc = 'AD' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Forma de Lançamento Inválida'
+    else if VDesc = 'AE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo/Número de Inscrição Inválido'
+    else if VDesc = 'AF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Convênio Inválido'
+    else if VDesc = 'AG' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Agência/Conta Corrente/DV Inválido'
+    else if VDesc = 'AH' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Nº Seqüencial do Registro no Lote Inválido'
+    else if VDesc = 'AI' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Segmento de Detalhe Inválido'
+    else if VDesc = 'AJ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo de Movimento Inválido'
+    else if VDesc = 'AK' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código da Câmara de Compensação do Banco Favorecido/Depositário Inválido'
+    else if VDesc = 'AL' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código do Banco Favorecido ou Depositário Inválido'
+    else if VDesc = 'AM' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Agência Mantenedora da Conta Corrente do Favorecido Inválida'
+    else if VDesc = 'AN' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Conta Corrente/DV do Favorecido Inválido'
+    else if VDesc = 'AO' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Nome do Favorecido Não Informado'
+    else if VDesc = 'AP' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Data Lançamento Inválido'
+    else if VDesc = 'AQ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo/Quantidade da Moeda Inválido'
+    else if VDesc = 'AR' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do Lançamento Inválido'
+    else if VDesc = 'AS' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Aviso ao Favorecido - Identificação Inválida'
+    else if VDesc = 'AT' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo/Número de Inscrição do Favorecido Inválido'
+    else if VDesc = 'AU' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Logradouro do Favorecido Não Informado'
+    else if VDesc = 'AV' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Nº do Local do Favorecido Não Informado'
+    else if VDesc = 'AW' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Cidade do Favorecido Não Informada'
+    else if VDesc = 'AX' then
+      Result := Result + IfThen(i = 1, '', '/') + 'CEP/Complemento do Favorecido Inválido'
+    else if VDesc = 'AY' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Sigla do Estado do Favorecido Inválida'
+    else if VDesc = 'AZ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código/Nome do Banco Depositário Inválido'
+    else if VDesc = 'BA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código/Nome da Agência Depositária Não Informado'
+    else if VDesc = 'BB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Seu Número Inválido'
+    else if VDesc = 'BC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Nosso Número Inválido'
+    else if VDesc = 'BD' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Inclusão Efetuada com Sucesso'
+    else if VDesc = 'BE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Alteração Efetuada com Sucesso'
+    else if VDesc = 'BF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Exclusão Efetuada com Sucesso'
+    else if VDesc = 'BG' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Agência/Conta Impedida Legalmente'
+    else if VDesc = 'BH' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empresa não pagou salário'
+    else if VDesc = 'BI' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Falecimento do mutuário'
+    else if VDesc = 'BJ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empresa não enviou remessa do mutuário'
+    else if VDesc = 'BK' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empresa não enviou remessa no vencimento'
+    else if VDesc = 'BL' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor da parcela inválida'
+    else if VDesc = 'BM' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Identificação do contrato inválida'
+    else if VDesc = 'BN' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Operação de Consignação Incluída com Sucesso'
+    else if VDesc = 'BO' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Operação de Consignação Alterada com Sucesso'
+    else if VDesc = 'BP' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Operação de Consignação Excluída com Sucesso'
+    else if VDesc = 'BQ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Operação de Consignação Liquidada com Sucesso'
+    else if VDesc = 'BR' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Reativação Efetuada com Sucesso'
+    else if VDesc = 'BS' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Suspensão Efetuada com Sucesso'
+    else if VDesc = 'CA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Barras - Código do Banco Inválido'
+    else if VDesc = 'CB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Barras - Código da Moeda Inválido'
+    else if VDesc = 'CC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Barras - Dígito Verificador Geral Inválido'
+    else if VDesc = 'CD' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Barras - Valor do Título Inválido'
+    else if VDesc = 'CE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Barras - Campo Livre Inválido'
+    else if VDesc = 'CF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do Documento Inválido'
+    else if VDesc = 'CG' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do Abatimento Inválido'
+    else if VDesc = 'CH' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do Desconto Inválido'
+    else if VDesc = 'CI' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor de Mora Inválido'
+    else if VDesc = 'CJ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor da Multa Inválido'
+    else if VDesc = 'CK' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do IR Inválido'
+    else if VDesc = 'CL' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do ISS Inválido'
+    else if VDesc = 'CM' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do IOF Inválido'
+    else if VDesc = 'CN' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor de Outras Deduções Inválido'
+    else if VDesc = 'CO' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor de Outros Acréscimos Inválido'
+    else if VDesc = 'CP' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Valor do INSS Inválido'
+    else if VDesc = 'HA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Lote Não Aceito'
+    else if VDesc = 'HB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Inscrição da Empresa Inválida para o Contrato'
+    else if VDesc = 'HC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Convênio com a Empresa Inexistente/Inválido para o Contrato'
+    else if VDesc = 'HD' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Agência/Conta Corrente da Empresa Inexistente/Inválido para o Contrato'
+    else if VDesc = 'HE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo de Serviço Inválido para o Contrato'
+    else if VDesc = 'HF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Conta Corrente da Empresa com Saldo Insuficiente'
+    else if VDesc = 'HG' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Lote de Serviço Fora de Seqüência'
+    else if VDesc = 'HH' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Lote de Serviço Inválido'
+    else if VDesc = 'HI' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Arquivo não aceito'
+    else if VDesc = 'HJ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo de Registro Inválido'
+    else if VDesc = 'HK' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código Remessa / Retorno Inválido'
+    else if VDesc = 'HL' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Versão de layout inválida'
+    else if VDesc = 'HM' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Mutuário não identificado'
+    else if VDesc = 'HN' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Tipo do beneficio não permite empréstimo'
+    else if VDesc = 'HO' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Beneficio cessado/suspenso'
+    else if VDesc = 'HP' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Beneficio possui representante legal'
+    else if VDesc = 'HQ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Beneficio é do tipo PA (Pensão alimentícia)'
+    else if VDesc = 'HR' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Quantidade de contratos permitida excedida'
+    else if VDesc = 'HS' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Beneficio não pertence ao Banco informado'
+    else if VDesc = 'HT' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Início do desconto informado já ultrapassado'
+    else if VDesc = 'HU' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Número da parcela inválida'
+    else if VDesc = 'HV' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Quantidade de parcela inválida'
+    else if VDesc = 'HW' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Margem consignável excedida para o mutuário dentro do prazo do contrato'
+    else if VDesc = 'HX' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empréstimo já cadastrado'
+    else if VDesc = 'HY' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empréstimo inexistente'
+    else if VDesc = 'HZ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empréstimo já encerrado'
+    else if VDesc = 'H1' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Arquivo sem trailer'
+    else if VDesc = 'H2' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Mutuário sem crédito na competência'
+    else if VDesc = 'H3' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Não descontado – outros motivos'
+    else if VDesc = 'H4' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Retorno de Crédito não pago'
+    else if VDesc = 'H5' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Cancelamento de empréstimo retroativo'
+    else if VDesc = 'H6' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Outros Motivos de Glosa'
+    else if VDesc = 'H7' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Margem consignável excedida para o mutuário acima do prazo do contrato'
+    else if VDesc = 'H8' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Mutuário desligado do empregador'
+    else if VDesc = 'H9' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Mutuário afastado por licença'
+    else if VDesc = 'IA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Primeiro nome do mutuário diferente do primeiro nome do movimento do censo ou diferente da base de Titular do Benefício'
+    else if VDesc = 'IB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício suspenso/cessado pela APS ou Sisobi'
+    else if VDesc = 'IC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício suspenso por dependência de cálculo'
+    else if VDesc = 'ID' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício suspenso/cessado pela inspetoria/auditoria'
+    else if VDesc = 'IE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício bloqueado para empréstimo pelo beneficiário'
+    else if VDesc = 'IF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício bloqueado para empréstimo por TBM'
+    else if VDesc = 'IG' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício está em fase de concessão de PA ou desdobramento'
+    else if VDesc = 'IH' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício cessado por óbito'
+    else if VDesc = 'II' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício cessado por fraude'
+    else if VDesc = 'IJ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício cessado por concessão de outro benefício'
+    else if VDesc = 'IK' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Benefício cessado: estatutário transferido para órgão de origem'
+    else if VDesc = 'IL' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empréstimo suspenso pela APS'
+    else if VDesc = 'IM' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empréstimo cancelado pelo banco'
+    else if VDesc = 'IN' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Crédito transformado em PAB'
+    else if VDesc = 'IO' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Término da consignação foi alterado'
+    else if VDesc = 'IP' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Fim do empréstimo ocorreu durante período de suspensão ou concessão'
+    else if VDesc = 'IQ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Empréstimo suspenso pelo banco'
+    else if VDesc = 'IR' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Não averbação de contrato – quantidade de parcelas/competências informadas ultrapassou a data limite da extinção de cota do dependente titular de benefícios'
+    else if VDesc = 'TA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Lote Não Aceito - Totais do Lote com Diferença'
+    else if VDesc = 'YA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Título Não Encontrado'
+    else if VDesc = 'YB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Identificador Registro Opcional Inválido'
+    else if VDesc = 'YC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código Padrão Inválido'
+    else if VDesc = 'YD' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Código de Ocorrência Inválido'
+    else if VDesc = 'YE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Complemento de Ocorrência Inválido'
+    else if VDesc = 'YF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Alegação já Informada'
+    else if VDesc = 'ZA' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Agência / Conta do Favorecido Substituída Observação: As ocorrências iniciadas ''ZA'' tem caráter informativo para o cliente'
+    else if VDesc = 'ZB' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Divergência entre o primeiro e último nome do beneficiário versus primeiro e último nome na Receita Federal'
+    else if VDesc = 'ZC' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Confirmação de Antecipação de Valor'
+    else if VDesc = 'ZD' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Antecipação parcial de valor'
+    else if VDesc = 'ZE' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Título bloqueado na base'
+    else if VDesc = 'ZF' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Sistema em contingência – título valor maior que referência'
+    else if VDesc = 'ZG' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Sistema em contingência – título vencido'
+    else if VDesc = 'ZH' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Sistema em contingência – título indexado'
+    else if VDesc = 'ZI' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Beneficiário divergente'
+    else if VDesc = 'ZJ' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Limite de pagamentos parciais excedido'
+    else if VDesc = 'ZK' then
+      Result := Result + IfThen(i = 1, '', '/') + 'Boleto já liquidado'
+    else if trim(VDesc).Length <> 0 then
+      Result := Result + IfThen(i = 1, '', '/') + 'RETORNO NÃO IDENTIFICADO';
+  until trim(VDesc).Length = 0;
 end;
 
 end.

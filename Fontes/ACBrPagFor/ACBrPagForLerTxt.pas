@@ -353,7 +353,7 @@ begin
 
         FPagFor.Lote.Last.SegmentoA.Last.DescOcorrencia := DescricaoRetornoBancoDoBrasil(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia);
 
-        if (FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia.Length > 0) and (POS(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0) then
+        if (Length(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia) > 0) and (POS(FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0) then
         begin
           FPagFor.Registro0.Aviso.New;
           FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoA.Last.CodOcorrencia;
@@ -707,7 +707,7 @@ begin
       end;
   end;
 
-  if (FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia.Length > 0) and (POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0) then
+  if (Length(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia) > 0) and (POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0) then
   begin
     FPagFor.Registro0.Aviso.New;
     FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia;

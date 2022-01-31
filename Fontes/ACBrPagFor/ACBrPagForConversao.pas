@@ -1384,9 +1384,9 @@ begin
       Result := Result + IfThen(i = 1, '', '/') + 'Limite de pagamentos parciais excedido'
     else if VDesc = 'ZK' then
       Result := Result + IfThen(i = 1, '', '/') + 'Boleto já liquidado'
-    else if trim(VDesc).Length <> 0 then
+    else if Length(trim(VDesc)) <> 0 then
       Result := Result + IfThen(i = 1, '', '/') + 'RETORNO NÃO IDENTIFICADO';
-  until trim(VDesc).Length = 0;
+  until Length(trim(VDesc)) = 0;
 end;
 
 end.

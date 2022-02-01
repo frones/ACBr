@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/02/2022
+-- Abaco.Provider --
+[*] Alterado para assinar o pedido de cancelamento na versão 2.04.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebserviceBase --
 [*] Mais ajustes na tentativa de ler corretamente o retorno do webservice no
     que se refere aos caracteres acentuados e o cedilha.

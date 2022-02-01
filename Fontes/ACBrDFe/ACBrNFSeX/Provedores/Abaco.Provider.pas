@@ -277,6 +277,7 @@ begin
   with ConfigAssinar do
   begin
     Rps := True;
+    CancelarNFSe := True;
   end;
 
   with ConfigWebServices do

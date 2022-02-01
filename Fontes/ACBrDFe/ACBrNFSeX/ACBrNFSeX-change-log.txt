@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/02/2022
+-- ACBrNFSeXServicos --
+[*] Senhor do Bonfim/BA trocou de provedor, agora é WebISS
+   Por: Italo Giurizzato Junior
 -- Abaco.Provider --
 [*] Alterado para assinar o pedido de cancelamento na versão 2.04.
    Por: Italo Giurizzato Junior

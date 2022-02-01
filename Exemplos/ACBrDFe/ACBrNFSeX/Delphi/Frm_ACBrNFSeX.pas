@@ -406,7 +406,7 @@ end;
 
 procedure TfrmACBrNFSe.AlimentarNFSe(NumDFe, NumLote: String);
 var
-  ValorISS: Double;
+  vValorISS: Double;
   i: Integer;
 begin
   with ACBrNFSeX1 do
@@ -560,9 +560,7 @@ begin
       Servico.Valores.ValorCsll := 0.00;
 
       // Provedor Elotech
-      Servico.Valores.AliquotaPis := 0;
       Servico.Valores.RetidoPis := snNao;
-      Servico.Valores.AliquotaCofins := 0;
       Servico.Valores.RetidoCofins := snNao;
       Servico.Valores.AliquotaInss := 0;
       Servico.Valores.RetidoInss := snNao;
@@ -589,7 +587,7 @@ begin
 
       Servico.Valores.Aliquota := 2;
 
-      ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
+      vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
       // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
       // parametro se refere ao numero de casas decimais.
@@ -597,7 +595,7 @@ begin
       // exemplos: RoundTo5(50.535, -2) ==> 50.54
       // exemplos: RoundTo5(50.536, -2) ==> 50.54
 
-      Servico.Valores.ValorISS := RoundTo5(ValorISS, -2);
+      Servico.Valores.ValorISS := RoundTo5(vValorISS, -2);
 
       Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
         Servico.Valores.ValorPis - Servico.Valores.ValorCofins -
@@ -718,6 +716,7 @@ begin
 
         // Provedor EloTech
         Tributavel := snNao;
+        CodigoCnae := '6203100';
 
         // Provedor IPM
         { define se o tributo é no municipio do prestador ou não }

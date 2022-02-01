@@ -41,7 +41,8 @@ uses
   ExtCtrls, Buttons, Spin, DateTimePicker,
   ACBrCEP,
   ACBrPIXCD, ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander,
-  ACBrPIXBase, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao, ACBrOpenSSLUtils;
+  ACBrPIXBase, ACBrPIXSchemasPix, ACBrPIXSchemasDevolucao, ACBrPIXSchemasCob,
+  ACBrOpenSSLUtils;
 
 const
   CURL_ACBR = 'https://projetoacbr.com.br/tef/';
@@ -87,11 +88,13 @@ type
     cbxNivelLog: TComboBox;
     cbxPSPAtual: TComboBox;
     cbxBBTipoChave: TComboBox;
-    cbxSolicitarDevolucaoPix_Natureza1: TComboBox;
+    chCriarCobrancaImediata_PermiterAlterarValor: TCheckBox;
     dtConsultarPixRecebidosInicio: TDateTimePicker;
     dtConsultarPixRecebidosFim: TDateTimePicker;
     edtArqLog: TEdit;
     edtConsultarDevolucaoPix_e2eid: TEdit;
+    edtCriarCobrancaImediata_TxId: TEdit;
+    edtCriarCobrancaImediata_CPF_CNPJ: TEdit;
     edtItauArqCertificado: TEdit;
     edtItauArqCertificado2: TEdit;
     edtItauArqChavePrivada: TEdit;
@@ -103,23 +106,24 @@ type
     edtQREInfoAdicional: TEdit;
     edtQRDLocation: TEdit;
     edtQRETxId: TEdit;
-    edtSolicitarDevolucaoPix_Descricao1: TEdit;
+    edtCriarCobrancaImediata_NomeDevedor: TEdit;
     edtSolicitarDevolucaoPix_e2eid: TEdit;
     edtSolicitarDevolucaoPix_Descricao: TEdit;
     edtConsultarDevolucaoPix_id: TEdit;
-    edtSolicitarDevolucaoPix_e2eid1: TEdit;
     edtSolicitarDevolucaoPix_id: TEdit;
     edtConsultarPixRecebidosTxId: TEdit;
     edtConsultarPixRecebidosCPFCNPJ: TEdit;
-    edtSolicitarDevolucaoPix_id1: TEdit;
+    edtCriarCobrancaImediata_SolicitacaoAoPagador: TEdit;
     feSolicitarDevolucaoPix_Valor: TFloatSpinEdit;
-    feSolicitarDevolucaoPix_Valor1: TFloatSpinEdit;
+    feCriarCobrancaImediatax_Valor: TFloatSpinEdit;
     fleQREValor: TFloatSpinEdit;
+    gbCobranca: TGroupBox;
     imgItauErroCertificado: TImage;
     imgItauErroChavePIX: TImage;
     imgItauErroChavePrivada: TImage;
     imgItauErroClientID: TImage;
     imgItauErroClientSecret: TImage;
+    imgQRCriarCobrancaImediata: TImage;
     imgQRE: TImage;
     imgQRD: TImage;
     Label1: TLabel;
@@ -132,17 +136,17 @@ type
     Label34: TLabel;
     Label35: TLabel;
     Label37: TLabel;
-    Label38: TLabel;
     Label39: TLabel;
+    lItauAvisoChaveCertificadoDesabilitado: TLabel;
     Label43: TLabel;
     Label40: TLabel;
     Label41: TLabel;
     Label42: TLabel;
     Label44: TLabel;
+    Label47: TLabel;
     Label6: TLabel;
     lConsultarDevolucaoPixE2eid2: TLabel;
     lConsultarDevolucaoPixE2eid3: TLabel;
-    lConsultarDevolucaoPixE2eid4: TLabel;
     lConsultarDevolucaoPixE2eid5: TLabel;
     lConsultarDevolucaoPixIdentificadorDevolucao1: TLabel;
     lConsultarDevolucaoPixIdentificadorDevolucao2: TLabel;
@@ -161,9 +165,11 @@ type
     imgErrPSP: TImage;
     imgBBErroChavePIX: TImage;
     imgSantanderErroChavePIX: TImage;
+    lCPFCPNJ1: TLabel;
     lE2eid: TLabel;
     lConsultarDevolucaoPixE2eid1: TLabel;
     lConsultarDevolucaoPixIdentificadorDevolucao: TLabel;
+    lE2eid1: TLabel;
     lInicio: TLabel;
     lFim: TLabel;
     lCPFCPNJ: TLabel;
@@ -183,7 +189,7 @@ type
     mConsultarDevolucaoPix: TMemo;
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
-    PageControl1: TPageControl;
+    pgTestesEndPointCob: TPageControl;
     pgQRCode: TPageControl;
     Panel1: TPanel;
     Panel8: TPanel;
@@ -224,6 +230,7 @@ type
     pBotoesConfiguracao: TPanel;
     pConfPSPBB2: TPanel;
     pCriarCobrancaImediata: TPanel;
+    sbCriarCobrancaImediata_GerarTxId: TSpeedButton;
     sbItauAcharArqCertificado: TSpeedButton;
     sbItauAcharArqChavePrivada: TSpeedButton;
     seRecebedorMCC: TSpinEdit;
@@ -268,6 +275,7 @@ type
     seTimeout: TSpinEdit;
     seConsultarPixRecebidosPagina: TSpinEdit;
     seConsultarPixRecebidosItensPagina: TSpinEdit;
+    seCobrancaExpiracao: TSpinEdit;
     Splitter1: TSplitter;
     tsQRCodeEstatico: TTabSheet;
     tsQRCodeDinamico: TTabSheet;
@@ -302,6 +310,7 @@ type
     procedure btConsultarPixRecebidosClick(Sender: TObject);
     procedure btConsultarPixClick(Sender: TObject);
     procedure btConsultarDevolucaoPixClick(Sender: TObject);
+    procedure btCriarCobrancaImediataClick(Sender: TObject);
     procedure btItauGerarChavePrivadaClick(Sender: TObject);
     procedure btItauSolicitarCertificadoClick(Sender: TObject);
     procedure btItauValidarChaveCertificadoClick(Sender: TObject);
@@ -320,6 +329,8 @@ type
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
+    procedure edtCriarCobrancaImediata_CPF_CNPJChange(Sender: TObject);
+    procedure edtCriarCobrancaImediata_NomeDevedorChange(Sender: TObject);
     procedure edtRecebedorCEPChange(Sender: TObject);
     procedure edtRecebedorCEPExit(Sender: TObject);
     procedure edOnlyNumbersKeyPress(Sender: TObject; var Key: char);
@@ -339,6 +350,7 @@ type
     procedure lURLTEFClick(Sender: TObject);
     procedure sbArqLogClick(Sender: TObject);
     procedure sbConsultaCEPClick(Sender: TObject);
+    procedure sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
     procedure sbItauAcharArqCertificadoClick(Sender: TObject);
     procedure sbItauAcharArqChavePrivadaClick(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
@@ -372,6 +384,8 @@ type
     procedure MostrarPixEmLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
     procedure MostrarDevolucaoEmLinhas(const NomeDev: String;
       ADev: TACBrPIXDevolucao; SL: TStrings);
+    procedure MostrarCobrancaEmLinhas(const NomeCobranca: String;
+      ACob: TACBrPIXCobGerada; SL: TStrings);
 
     function FormatarJSON(const AJSON: String): String;
     function RemoverPathAplicacao(const AFileName: String): String;
@@ -445,12 +459,14 @@ begin
 
   ImageList1.GetBitmap(6, imgSantanderErroChavePIX.Picture.Bitmap);
 
-  pgPrincipal.ActivePageIndex := 0;
+  pgPrincipal.ActivePageIndex := 1;
   pgConfPixPSP.ActivePageIndex := 0;
   pgPSPs.ActivePageIndex := 0;
   pgTestes.ActivePageIndex := 0;
   pgTestesPix.ActivePageIndex := 0;
   pgQRCode.ActivePageIndex := 0;
+  pgTesteEndPoints.ActivePageIndex := 1;
+  pgTestesEndPointCob.ActivePageIndex := 0;
 
   pgPSPItau.ActivePageIndex := 0;
   pgPSPItauChaveCertificado.ActivePageIndex := 0;
@@ -508,6 +524,11 @@ begin
   except
     MessageDlg('Erro ao executar Consulta do CEP', mtError, [mbOK], 0);
   end;
+end;
+
+procedure TForm1.sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
+begin
+  edtCriarCobrancaImediata_TxId.Text := CriarTxId;
 end;
 
 procedure TForm1.sbItauAcharArqCertificadoClick(Sender: TObject);
@@ -616,6 +637,60 @@ begin
   end
   else
     mConsultarDevolucaoPix.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epPix.Problema.AsJSON);
+end;
+
+procedure TForm1.btCriarCobrancaImediataClick(Sender: TObject);
+var
+  s, qrcode: String;
+  Ok: Boolean;
+begin
+  VerificarConfiguracao;
+  mCriarCobrancaImediata.Lines.Clear;
+
+  with ACBrPixCD1.PSP.epCob.CobSolicitada do
+  begin
+    Clear;
+    chave := ACBrPixCD1.PSP.ChavePIX;
+    calendario.expiracao := seCobrancaExpiracao.Value;
+
+    solicitacaoPagador := edtCriarCobrancaImediata_SolicitacaoAoPagador.Text;
+
+    s := Trim(edtCriarCobrancaImediata_NomeDevedor.Text);
+    if (s <> '') then
+    begin
+      devedor.nome := s;
+      s := OnlyNumber(edtCriarCobrancaImediata_CPF_CNPJ.Text);
+      if (s = '') then
+        raise Exception.Create('Caso o Nome do Devedor seja Informado, e necessário informar CPF ou CNPJ')
+      else if (Length(s) > 11) then
+        devedor.cnpj := s
+      else
+        devedor.cpf := s;
+    end;
+
+    valor.original := feCriarCobrancaImediatax_Valor.Value;
+    valor.modalidadeAlteracao := chCriarCobrancaImediata_PermiterAlterarValor.Checked;
+  end;
+
+  if (Trim(edtCriarCobrancaImediata_TxId.Text) <> '') then
+    Ok := ACBrPixCD1.PSP.epCob.CriarCobrancaImediata(edtCriarCobrancaImediata_TxId.Text)
+  else
+    Ok := ACBrPixCD1.PSP.epCob.CriarCobrancaImediata;
+
+  if Ok then
+  begin
+    mCriarCobrancaImediata.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCob.CobGerada.AsJSON);
+    MostrarCobrancaEmLinhas( '  CobGerada',
+                              ACBrPixCD1.PSP.epCob.CobGerada,
+                              mCriarCobrancaImediata.Lines );
+    qrcode := Trim(ACBrPixCD1.PSP.epCob.CobGerada.pixCopiaECola);
+    if (qrcode = '') then
+      qrcode := ACBrPixCD1.GerarQRCodeDinamico( ACBrPixCD1.PSP.epCob.CobGerada.location );
+    PintarQRCode(qrcode, imgQRCriarCobrancaImediata.Picture.Bitmap, qrUTF8BOM);
+  end
+  else
+    mCriarCobrancaImediata.Lines.Text := FormatarJSON(ACBrPixCD1.PSP.epCob.Problema.AsJSON);
+
 end;
 
 procedure TForm1.btItauGerarChavePrivadaClick(Sender: TObject);
@@ -770,6 +845,7 @@ end;
 procedure TForm1.cbxAmbienteChange(Sender: TObject);
 begin
   tsItauCertificado.Enabled := (cbxAmbiente.ItemIndex > 0);
+  lItauAvisoChaveCertificadoDesabilitado.Visible := not tsItauCertificado.Enabled;
 end;
 
 procedure TForm1.cbxPSPAtualChange(Sender: TObject);
@@ -818,6 +894,25 @@ procedure TForm1.edtBBChavePIXChange(Sender: TObject);
 begin
   cbxBBTipoChave.ItemIndex := Integer(DetectarTipoChave(edtBBChavePIX.Text));
   imgBBErroChavePIX.Visible := (edtBBChavePIX.Text <> '') and (cbxBBTipoChave.ItemIndex = 0);
+end;
+
+procedure TForm1.edtCriarCobrancaImediata_CPF_CNPJChange(Sender: TObject);
+var
+  AStr, Mascara: String;
+begin
+  AStr := OnlyNumber(edtCriarCobrancaImediata_CPF_CNPJ.Text);
+  if (Length(AStr) > 11) then
+    Mascara := '**.***.***/****-**'
+  else
+    Mascara := '***.***.***-**';
+
+  edtCriarCobrancaImediata_CPF_CNPJ.Text := ACBrValidador.FormatarMascaraDinamica(AStr, Mascara);
+  edtCriarCobrancaImediata_CPF_CNPJ.SelStart := Length(edtCriarCobrancaImediata_CPF_CNPJ.Text);
+end;
+
+procedure TForm1.edtCriarCobrancaImediata_NomeDevedorChange(Sender: TObject);
+begin
+  edtCriarCobrancaImediata_CPF_CNPJ.Enabled := (Trim(edtCriarCobrancaImediata_NomeDevedor.Text) <> '');
 end;
 
 procedure TForm1.edtItauChavePIXChange(Sender: TObject);
@@ -922,6 +1017,7 @@ begin
   edtRecebedorCEPChange(Nil);
   cbxPSPAtualChange(Nil);
   mQREChange(Nil);
+  cbxAmbienteChange(Nil)
 end;
 
 procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPSPItau;
@@ -1055,6 +1151,8 @@ begin
     cbxAmbiente.ItemIndex := Ini.ReadInteger('PIX','Ambiente', 0);
     seTimeout.Value := Ini.ReadInteger('PIX', 'TimeOut', ChttpTimeOutDef);
 
+    seCobrancaExpiracao.Value := Ini.ReadInteger('Cobranca', 'Expiracao', seCobrancaExpiracao.Value);
+
     edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
     seProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
     edtProxyUser.Text := Ini.ReadString('Proxy', 'User', '');
@@ -1103,6 +1201,8 @@ begin
     Ini.WriteInteger('PIX','PSP', cbxPSPAtual.ItemIndex);
     Ini.WriteInteger('PIX','Ambiente', cbxAmbiente.ItemIndex);
     Ini.WriteInteger('PIX', 'TimeOut', seTimeout.Value);
+
+    Ini.WriteInteger('Cobranca', 'Expiracao', seCobrancaExpiracao.Value);
 
     Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
     Ini.WriteString('Proxy', 'Porta', seProxyPorta.Text);
@@ -1249,6 +1349,42 @@ begin
   SL.Add(NomeDev+'.horario.liquidacao: '+FormatDateTimeBr(ADev.horario.liquidacao));
   SL.Add(NomeDev+'.status: '+ PIXStatusDevolucaoToString(ADev.status));
   SL.Add(NomeDev+'.motivo: '+ADev.motivo);
+end;
+
+procedure TForm1.MostrarCobrancaEmLinhas(const NomeCobranca: String;
+  ACob: TACBrPIXCobGerada; SL: TStrings);
+var
+  i: Integer;
+begin
+  SL.Add(NomeCobranca+'.calendario.criacao: '+FormatDateTimeBr(ACob.calendario.criacao));
+  SL.Add(NomeCobranca+'.calendario.expiracao: '+IntToStr(ACob.calendario.expiracao));
+  SL.Add(NomeCobranca+'.txId: '+ACob.txId);
+  SL.Add(NomeCobranca+'.revisao: '+IntToStr(ACob.revisao));
+  if (ACob.devedor.nome <> '') then
+  begin
+    SL.Add(NomeCobranca+'.devedor.nome: '+ACob.devedor.nome);
+    if (ACob.devedor.cpf <> '') then
+      SL.Add(NomeCobranca+'.devedor.cpf: '+ACob.devedor.cpf)
+    else
+      SL.Add(NomeCobranca+'.devedor.cnpj: '+ACob.devedor.cnpj)
+  end;
+  SL.Add(NomeCobranca+'.loc.id: '+IntToStr(ACob.loc.id));
+  SL.Add(NomeCobranca+'.loc.txId: '+ACob.loc.txId);
+  SL.Add(NomeCobranca+'.loc.location: '+ACob.loc.location);
+  SL.Add(NomeCobranca+'.loc.criacao: '+FormatDateTimeBr(ACob.loc.criacao));
+  SL.Add(NomeCobranca+'.location: '+ACob.location);
+  SL.Add(NomeCobranca+'.status: '+ PIXStatusCobrancaToString(ACob.status));
+  SL.Add(NomeCobranca+'.valor.original: '+FormatFloatBr(ACob.valor.original));
+  SL.Add(NomeCobranca+'.valor.modalidadeAlteracao: '+BoolToStr(ACob.valor.modalidadeAlteracao, True));
+  SL.Add(NomeCobranca+'.valor.retirada.saque.valor: '+FormatFloatBr(ACob.valor.retirada.saque.valor));
+  SL.Add(NomeCobranca+'.valor.retirada.saque.modalidadeAlteracao: '+BoolToStr(ACob.valor.retirada.saque.modalidadeAlteracao, True));
+  SL.Add(NomeCobranca+'.valor.retirada.saque.modalidadeAgente: '+PIXModalidadeAgenteToString(ACob.valor.retirada.saque.modalidadeAgente));
+  SL.Add(NomeCobranca+'.valor.retirada.saque.prestadorDoServicoDeSaque: '+IntToStr(ACob.valor.retirada.saque.prestadorDoServicoDeSaque));
+  SL.Add(NomeCobranca+'.valor.retirada.troco.valor: '+FormatFloatBr(ACob.valor.retirada.troco.valor));
+  SL.Add(NomeCobranca+'.valor.retirada.troco.modalidadeAlteracao: '+BoolToStr(ACob.valor.retirada.troco.modalidadeAlteracao, True));
+  SL.Add(NomeCobranca+'.valor.retirada.troco.modalidadeAgente: '+PIXModalidadeAgenteToString(ACob.valor.retirada.troco.modalidadeAgente));
+  SL.Add(NomeCobranca+'.valor.retirada.troco.prestadorDoServicoDeSaque: '+IntToStr(ACob.valor.retirada.troco.prestadorDoServicoDeSaque));
+  SL.Add(NomeCobranca+'.pixCopiaECola: '+ACob.pixCopiaECola);
 end;
 
 function TForm1.FormatarJSON(const AJSON: String): String;

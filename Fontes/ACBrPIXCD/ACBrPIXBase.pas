@@ -67,6 +67,14 @@ const
   cMPMValueNotInformed = '***';
 
 type
+  TACBrPIXAPIVersion = ( verNenhuma, verPropria,
+                         ver200,
+                         ver210, ver211, ver212,
+                         ver220, ver221, ver222,
+                         ver230,
+                         ver250,
+                         ver260, ver261, ver262 );
+
   TACBrPIXTipoChave = ( tchNenhuma,
                         tchEmail,
                         tchCPF,

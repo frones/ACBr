@@ -30,6 +30,12 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+(*
+
+  Documentação:
+  https://github.com/bacen/pix-api
+
+*)
 {$I ACBr.inc}
 
 unit ACBrPIXCD;
@@ -237,6 +243,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrPSP = class(TACBrComponent)
   private
+    fAPIVersion: TACBrPIXAPIVersion;
     fChavePIX: String;
     fURLPathParams: TStringList;
     fURLQueryParams: TACBrQueryParams;
@@ -312,6 +319,7 @@ type
 
     property Http: THTTPSend read fHttpSend;
   published
+    property APIVersion: TACBrPIXAPIVersion read fAPIVersion write fAPIVersion default ver262;
     property ChavePIX: String read fChavePIX write SetChavePIX;
     property TipoChave: TACBrPIXTipoChave read fTipoChave write SetTipoChave stored false;
 
@@ -929,6 +937,7 @@ constructor TACBrPSP.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  fAPIVersion := ver262;
   fChavePIX := '';
   fTipoChave := tchNenhuma;
   fpAutenticado := False;

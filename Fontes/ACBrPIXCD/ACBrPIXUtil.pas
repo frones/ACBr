@@ -61,6 +61,7 @@ resourcestring
 function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
 function ValidarChave(const AChave: String): String;
 function ValidarChaveAleatoria(const AChave: String): Boolean;
+function CriarTxId: String;
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
 function ValidarPSS(const AValue: Integer): String;
 function ValidarEndToEndId(const AValue: String): String;
@@ -136,6 +137,20 @@ begin
             (copy(s,19,1) = '-') and
             (copy(s,24,1) = '-') and
             StrIsAlphaNum(StringReplace(s,'-','',[rfReplaceAll]));
+end;
+
+function CriarTxId: String;
+var
+  guid: TGUID;
+begin
+  if (CreateGUID(guid) = 0) then
+  begin
+    Result := GUIDToString(guid);
+    Result := StringReplace(Result, '-', '', [rfReplaceAll]);
+    Result := copy(Result, 2, Length(Result)-2);
+  end
+  else
+    Result := '';
 end;
 
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer;

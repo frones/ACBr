@@ -204,7 +204,7 @@ begin
         FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#1', 'CodigoCnae', 1, 7, FpNrOcorrCodigoCnae,
-                                    FormatarCnae(NFSe.Servico.CodigoCnae), ''));
+                     FormatarCnae(NFSe.Servico.ItemServico[i].CodigoCnae), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#1', 'ItemLei116', 1, 140, FpNrOcorrItemLei116,
                                                                CodServico, ''));

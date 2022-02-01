@@ -697,18 +697,18 @@ begin
               FPRetorno := string(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
             }
 
-            FPRetorno := string(ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size));
+            FPRetorno := ReadStrFromStream(HttpClient.DataResp, HttpClient.DataResp.Size);
             FPRetorno := RemoverDeclaracaoXML(FPRetorno);
             FPRetorno := StrToXml(FPRetorno);
 
             case TipoEncoding(FPRetorno) of
               teUTF8:
-                FPRetorno := UTF8ToNativeString(AnsiString(FPRetorno));
+                FPRetorno := UTF8ToNativeString(FPRetorno);
 
               teISO8859_1:
                 FPRetorno := string(TranslateString(AnsiString(FPRetorno), 0, 28591));
 
-              teUNICOD:
+              teUNICODE:
                 begin
                   FPRetorno := FaststringReplace(FPRetorno, '&amp;', '&', [rfReplaceAll]);
                   FPRetorno := ConverterUnicode(FPRetorno);
@@ -720,17 +720,6 @@ begin
             // Alsuns provedores retorna uma string apenas com a mensagem de erro
             if Pos('Body', FPRetorno) = 0 then
               FPRetorno := GetSoapBody(FPRetorno);
-
-            {
-            if (Pos('ISO-8859-1', FPRetorno) > 0) or (Pos('iso-8859-1', CharSet) > 0) then
-            begin
-              FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-              FPRetorno := string(TranslateString(AnsiString(FPRetorno), 0, 28591));
-            end;
-
-            if Pos('<?xml version="1.0" ?>', FPRetorno) > 0 then
-              FPRetorno := RemoverDeclaracaoXML(FPRetorno);
-            }
 
             // Alguns provedores não retornam o XML em UTF-8
             FPRetorno := ConverteXMLtoUTF8(FPRetorno);

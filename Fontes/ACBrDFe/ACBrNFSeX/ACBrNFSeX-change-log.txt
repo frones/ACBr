@@ -43,6 +43,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/02/2022
+-- ACBrNFSeXWebserviceBase --
+[*] Mais ajustes na tentativa de ler corretamente o retorno do webservice no
+    que se refere aos caracteres acentuados e o cedilha.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXClass --
+[+] Incluido na classe TItemServicoCollectionItem o campo CodigoCnae.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Alterado o GerarXml de diversos provedores que permitem gerar uma lista de
+    serviços no XML.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Sorocaba/SP trocou de provedor, agora é DSF
+   Por: Luiz Sodré/Diogo Rodrigues
+
 29/01/2022
 -- ISSSaoPaulo.Provider --
 [*] Correção na gravia da tag de retorno do serviço EnvioLoteRPS (Teste).

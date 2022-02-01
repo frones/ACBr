@@ -140,13 +140,13 @@ begin
     nodeArray := GerarItemValores(i);
     Result[i].AppendChild(nodeArray[0]);
 
-    Result[i].AppendChild(AddNode(tcStr, '#20', 'IssRetido       ', 1, 01, NrOcorrIssRetido,
+    Result[i].AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 01, NrOcorrIssRetido,
       FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
     Result[i].AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 5, NrOcorrItemListaServico,
                                    NFSe.Servico.ItemListaServico, DSC_CLISTSERV));
 
-    Result[i].AppendChild(AddNode(tcStr, '#30', 'CodigoCnae      ', 1, 7, NrOcorrCodigoCNAE,
+    Result[i].AppendChild(AddNode(tcStr, '#30', 'CodigoCnae', 1, 7, NrOcorrCodigoCNAE,
                                   OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));
 
     Result[i].AppendChild(AddNode(tcStr, '#31', 'CodigoTributacaoMunicipio', 1, 20, NrOcorrCodTribMun_1,
@@ -160,7 +160,7 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#33', 'CodigoMunicipio', 1, 7, 1,
                              OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
 
-    Result[i].AppendChild(AddNode(tcInt, '#34', 'CodigoPais     ', 4, 4, NrOcorrCodigoPaisServico,
+    Result[i].AppendChild(AddNode(tcInt, '#34', 'CodigoPais', 4, 4, NrOcorrCodigoPaisServico,
                                             NFSe.Servico.CodigoPais, DSC_CPAIS));
 
     Result[i].AppendChild(AddNode(tcInt, '#35', 'ExigibilidadeISS',
@@ -170,7 +170,7 @@ begin
     Result[i].AppendChild(AddNode(tcInt, '#36', 'MunicipioIncidencia', 7, 07, NrOcorrMunIncid,
                                   NFSe.Servico.MunicipioIncidencia, DSC_MUNINCI));
 
-    Result[i].AppendChild(AddNode(tcStr, '#37', 'NumeroProcesso     ', 1, 30, NrOcorrNumProcesso,
+    Result[i].AppendChild(AddNode(tcStr, '#37', 'NumeroProcesso', 1, 30, NrOcorrNumProcesso,
                                    NFSe.Servico.NumeroProcesso, DSC_NPROCESSO));
   end;
 end;
@@ -179,22 +179,22 @@ function TNFSeW_fintelISS202.GerarValoresServico: TACBrXmlNode;
 begin
   Result := CreateElement('ValoresServico');
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis     ', 1, 15, NrOcorrValorPis,
+  Result.AppendChild(AddNode(tcDe2, '#15', 'ValorPis', 1, 15, NrOcorrValorPis,
                                       NFSe.Servico.Valores.ValorPis, DSC_VPIS));
 
-  Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins  ', 1, 15, NrOcorrValorCofins,
+  Result.AppendChild(AddNode(tcDe2, '#16', 'ValorCofins', 1, 15, NrOcorrValorCofins,
                                 NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS));
 
-  Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss    ', 1, 15, NrOcorrValorInss,
+  Result.AppendChild(AddNode(tcDe2, '#17', 'ValorInss', 1, 15, NrOcorrValorInss,
                                     NFSe.Servico.Valores.ValorInss, DSC_VINSS));
 
-  Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr      ', 1, 15, NrOcorrValorIr,
+  Result.AppendChild(AddNode(tcDe2, '#18', 'ValorIr', 1, 15, NrOcorrValorIr,
                                         NFSe.Servico.Valores.ValorIr, DSC_VIR));
 
-  Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll    ', 1, 15, NrOcorrValorCsll,
+  Result.AppendChild(AddNode(tcDe2, '#19', 'ValorCsll', 1, 15, NrOcorrValorCsll,
                                     NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));
 
-  Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss        ', 1, 15, NrOcorrValorISS,
+  Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss', 1, 15, NrOcorrValorISS,
                                       NFSe.Servico.Valores.ValorIss, DSC_VISS));
 
   Result.AppendChild(AddNode(tcDe2, '#13', 'ValorLiquidoNfse', 1, 15, 1,
@@ -222,7 +222,7 @@ begin
   Result[0].AppendChild(AddNode(tcDe2, '#14', 'ValorDeducoes', 1, 15, 1,
                      NFSe.Servico.ItemServico[i].ValorDeducoes, DSC_VDEDUCISS));
 
-  Result[0].AppendChild(AddNode(tcDe2, '#21', 'ValorIss     ', 1, 15, 1,
+  Result[0].AppendChild(AddNode(tcDe2, '#21', 'ValorIss', 1, 15, 1,
                                NFSe.Servico.ItemServico[i].ValorISS, DSC_VISS));
 
   Result[0].AppendChild(AddNode(FormatoAliq, '#25', 'Aliquota', 1, 05, 1,

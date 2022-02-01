@@ -237,6 +237,8 @@ type
     FValorIRRF: Double;
 
     FTributavel: TnfseSimNao;
+    FCodigoCnae: string;
+
     FTribMunPrestador: TnfseSimNao;
     FCodMunPrestacao: string;
     FSituacaoTributaria: Integer;
@@ -296,6 +298,7 @@ type
 
     // Provedor EloTech
     property Tributavel: TnfseSimNao read FTributavel write FTributavel;
+    property CodigoCnae: string read FCodigoCnae write FCodigoCnae;
 
     // Provedor IPM
     property TribMunPrestador: TnfseSimNao read FTribMunPrestador write FTribMunPrestador;

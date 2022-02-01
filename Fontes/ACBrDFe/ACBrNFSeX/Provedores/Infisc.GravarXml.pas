@@ -294,7 +294,7 @@ begin
     Result[i].AppendChild(xmlNode);
 
     // Retenção ISSQN
-    if NFSe.Servico.ItemServico.Items[i].ValorISSST > 0 then
+    if NFSe.Servico.ItemServico[i].ValorISSST > 0 then
     begin
       xmlNode := GerarISSST(i);
       Result[i].AppendChild(xmlNode);
@@ -717,14 +717,14 @@ begin
   if FPVersao = ve101 then
   begin
     Result.AppendChild(AddNode(tcDe2, '#1', 'vBCST', 1, 15, 0,
-                         NFSe.Servico.ItemServico.Items[Item].BaseCalculo, ''));
+                         NFSe.Servico.ItemServico[Item].BaseCalculo, ''));
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'pISSST', 1, 5, 0,
-                        NFSe.Servico.ItemServico.Items[Item].AliqISSST, ''));
+                        NFSe.Servico.ItemServico[Item].AliqISSST, ''));
   end;
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vISSST', 1, 15, 0,
-                          NFSe.Servico.ItemServico.Items[Item].ValorISSST, ''));
+                          NFSe.Servico.ItemServico[Item].ValorISSST, ''));
 end;
 
 function TNFSeW_Infisc.GerarObservacoes: TACBrXmlNode;
@@ -797,18 +797,18 @@ var
 begin
   Result := CreateElement('serv');
 
-  xServ := NFSe.Servico.ItemServico.Items[Item].Descricao;
+  xServ := NFSe.Servico.ItemServico[Item].Descricao;
 
-  if NFSe.Servico.ItemListaServico <> '' then
-    xServ := xServ + ' (Class.: ' + NFSe.Servico.ItemListaServico + ')';
+  if NFSe.Servico.ItemServico[Item].ItemListaServico <> '' then
+    xServ := xServ + ' (Class.: ' + NFSe.Servico.ItemServico[Item].ItemListaServico + ')';
 
   // CodServ = Código do Municipio
   Result.AppendChild(AddNode(tcStr, '#1', 'cServ', 1, 2, 1,
-                             NFSe.Servico.ItemServico.Items[Item].codServ, ''));
+                             NFSe.Servico.ItemServico[Item].codServ, ''));
 
   if FPVersao = ve101 then
     Result.AppendChild(AddNode(tcStr, '#1', 'cLCServ', 1, 2, 1,
-                           NFSe.Servico.ItemServico.Items[Item].codLCServ, ''));
+                           NFSe.Servico.ItemServico[Item].codLCServ, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xServ', 1, 12, 1, xServ, ''));
 
@@ -822,27 +822,27 @@ begin
   end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'uTrib', 1, 6, 1,
-                             NFSe.Servico.ItemServico.Items[Item].Unidade, ''));
+                             NFSe.Servico.ItemServico[Item].Unidade, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'qTrib', 1, 15, 1,
-                          NFSe.Servico.ItemServico.Items[Item].Quantidade, ''));
+                          NFSe.Servico.ItemServico[Item].Quantidade, ''));
 
   if FPVersao = ve100 then
     Result.AppendChild(AddNode(tcDe3, '#1', 'vUnit', 1, 15, 1,
-                       NFSe.Servico.ItemServico.Items[Item].ValorUnitario, ''))
+                       NFSe.Servico.ItemServico[Item].ValorUnitario, ''))
   else
     Result.AppendChild(AddNode(tcDe2, '#1', 'vUnit', 1, 15, 1,
-                       NFSe.Servico.ItemServico.Items[Item].ValorUnitario, ''));
+                       NFSe.Servico.ItemServico[Item].ValorUnitario, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vServ', 1, 15, 0,
-                          NFSe.Servico.ItemServico.Items[Item].ValorTotal, ''));
+                          NFSe.Servico.ItemServico[Item].ValorTotal, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vDesc', 1, 15, 0,
-              NFSe.Servico.ItemServico.Items[Item].DescontoIncondicionado, ''));
+              NFSe.Servico.ItemServico[Item].DescontoIncondicionado, ''));
 
   if FPVersao = ve101 then
     Result.AppendChild(AddNode(tcDe2, '#1', 'vDed', 1, 15, 0,
-                       NFSe.Servico.ItemServico.Items[Item].ValorDeducoes, ''));
+                       NFSe.Servico.ItemServico[Item].ValorDeducoes, ''));
 
   if (Nfse.RegimeEspecialTributacao = retSimplesNacional) or
      (Nfse.OptanteSimplesNacional = snSim) then
@@ -851,41 +851,41 @@ begin
     GeraTag := 0;
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vBCISS', 1, 15, GeraTag,
-                         NFSe.Servico.ItemServico.Items[Item].BaseCalculo, ''));
+                         NFSe.Servico.ItemServico[Item].BaseCalculo, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pISS', 1, 15, GeraTag,
-                            NFSe.Servico.ItemServico.Items[Item].Aliquota, ''));
+                            NFSe.Servico.ItemServico[Item].Aliquota, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vISS', 1, 15, GeraTag,
-                            NFSe.Servico.ItemServico.Items[Item].ValorISS, ''));
+                            NFSe.Servico.ItemServico[Item].ValorISS, ''));
 
-  FPdTotBCISS := FPdTotBCISS + NFSe.Servico.ItemServico.Items[Item].BaseCalculo;
-  FPdTotISS   := FPdTotISS   + NFSe.Servico.ItemServico.Items[Item].ValorISS;
+  FPdTotBCISS := FPdTotBCISS + NFSe.Servico.ItemServico[Item].BaseCalculo;
+  FPdTotISS   := FPdTotISS   + NFSe.Servico.ItemServico[Item].ValorISS;
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pRed', 1, 15, 0,
-                            NFSe.Servico.ItemServico.Items[Item].AliqReducao, ''));
+                         NFSe.Servico.ItemServico[Item].AliqReducao, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vRed', 1, 15, 0,
-                        NFSe.Servico.ItemServico.Items[Item].ValorReducao, ''));
+                        NFSe.Servico.ItemServico[Item].ValorReducao, ''));
 
   // Retenção INSS
-  if NFSe.Servico.ItemServico.Items[item].ValorINSS > 0 then
+  if NFSe.Servico.ItemServico[item].ValorINSS > 0 then
   begin
     if FPVersao = ve101 then
     begin
       Result.AppendChild(AddNode(tcDe2, '#1', 'vBCINSS', 1, 15, 1,
-                             NFSe.Servico.ItemServico.Items[Item].ValorBCINSS, ''));
+                         NFSe.Servico.ItemServico[Item].ValorBCINSS, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'pRetINSS', 1, 15, 1,
-                            NFSe.Servico.ItemServico.Items[Item].AliqRetINSS, ''));
+                         NFSe.Servico.ItemServico[Item].AliqRetINSS, ''));
     end;
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vRetINSS', 1, 15, 1,
-                           NFSe.Servico.ItemServico.Items[Item].ValorINSS, ''));
+                           NFSe.Servico.ItemServico[Item].ValorINSS, ''));
   end;
 
   // Retenção IRRF
-  if NFSe.Servico.ItemServico.Items[Item].ValorIRRF > 0 then
+  if NFSe.Servico.ItemServico[Item].ValorIRRF > 0 then
   begin
     if FPVersao = ve100 then
     begin
@@ -893,52 +893,52 @@ begin
                                                           'Retenção IRRF', ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetIRF', 1, 15, 1,
-                             NFSe.Servico.ItemServico.Items[Item].ValorIRRF, ''));
+                           NFSe.Servico.ItemServico[Item].ValorIRRF, ''));
     end
     else
     begin
       Result.AppendChild(AddNode(tcDe2, '#1', 'vBCRetIR', 1, 15, 1,
-                            NFSe.Servico.ItemServico.Items[Item].ValorBCRetIRRF, ''));
+                      NFSe.Servico.ItemServico[Item].ValorBCRetIRRF, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'pRetIR', 1, 15, 1,
-                              NFSe.Servico.ItemServico.Items[Item].AliqRetIRRF, ''));
+                         NFSe.Servico.ItemServico[Item].AliqRetIRRF, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetIR', 1, 15, 1,
-                             NFSe.Servico.ItemServico.Items[Item].ValorIRRF, ''));
+                           NFSe.Servico.ItemServico[Item].ValorIRRF, ''));
     end;
   end;
 
   if FPVersao = ve101 then
   begin
     // Retenção COFINS
-    if NFSe.Servico.ItemServico.Items[Item].ValorCOFINS > 0 then
+    if NFSe.Servico.ItemServico[Item].ValorCOFINS > 0 then
     begin
       Result.AppendChild(AddNode(tcDe2, '#1', 'vBCCOFINS', 1, 15, 1,
-                           NFSe.Servico.ItemServico.Items[Item].ValorBCCOFINS, ''));
+                       NFSe.Servico.ItemServico[Item].ValorBCCOFINS, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'pRetCOFINS', 1, 15, 1,
-                          NFSe.Servico.ItemServico.Items[Item].AliqRetCOFINS, ''));
+                       NFSe.Servico.ItemServico[Item].AliqRetCOFINS, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetCOFINS', 1, 15, 1,
-                         NFSe.Servico.ItemServico.Items[Item].ValorCOFINS, ''));
+                         NFSe.Servico.ItemServico[Item].ValorCOFINS, ''));
     end;
 
     // Retenção CSLL
-    if NFSe.Servico.ItemServico.Items[Item].ValorCSLL > 0 then
+    if NFSe.Servico.ItemServico[Item].ValorCSLL > 0 then
     begin
       Result.AppendChild(AddNode(tcDe2, '#1', 'vBCCSLL', 1, 15, 1,
-                             NFSe.Servico.ItemServico.Items[Item].ValorBCCSLL, ''));
+                         NFSe.Servico.ItemServico[Item].ValorBCCSLL, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'pRetCSLL', 1, 15, 1,
-                            NFSe.Servico.ItemServico.Items[Item].AliqRetCSLL, ''));
+                         NFSe.Servico.ItemServico[Item].AliqRetCSLL, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetCSLL', 1, 15, 1,
-                           NFSe.Servico.ItemServico.Items[Item].ValorCSLL, ''));
+                           NFSe.Servico.ItemServico[Item].ValorCSLL, ''));
     end;
   end;
 
   // Retenção PIS
-  if NFSe.Servico.ItemServico.Items[Item].ValorPIS > 0 then
+  if NFSe.Servico.ItemServico[Item].ValorPIS > 0 then
   begin
     if FPVersao = ve100 then
     begin
@@ -946,41 +946,41 @@ begin
                                                            'Retenção PIS', ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetLei10833-PIS-PASEP', 1, 15, 1,
-                            NFSe.Servico.ItemServico.Items[Item].ValorPIS, ''));
+                            NFSe.Servico.ItemServico[Item].ValorPIS, ''));
     end
     else
     begin
       Result.AppendChild(AddNode(tcDe2, '#1', 'vBCPISPASEP', 1, 15, 1,
-                         NFSe.Servico.ItemServico.Items[Item].ValorBCPIS, ''));
+                          NFSe.Servico.ItemServico[Item].ValorBCPIS, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'pRetPISPASEP', 1, 15, 1,
-                        NFSe.Servico.ItemServico.Items[Item].AliqRetPIS, ''));
+                          NFSe.Servico.ItemServico[Item].AliqRetPIS, ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetPISPASEP', 1, 15, 1,
-                            NFSe.Servico.ItemServico.Items[Item].ValorPIS, ''));
+                            NFSe.Servico.ItemServico[Item].ValorPIS, ''));
     end;
   end;
 
   if FPVersao = ve100 then
   begin
     // Retenção COFINS
-    if NFSe.Servico.ItemServico.Items[Item].ValorCOFINS > 0 then
+    if NFSe.Servico.ItemServico[Item].ValorCOFINS > 0 then
     begin
       Result.AppendChild(AddNode(tcStr, '#1', 'xRetLei10833-COFINS', 1, 100, 1,
                                                         'Retenção COFINS', ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetLei10833-COFINS', 1, 15, 1,
-                         NFSe.Servico.ItemServico.Items[Item].ValorCOFINS, ''));
+                         NFSe.Servico.ItemServico[Item].ValorCOFINS, ''));
     end;
 
     // Retenção CSLL
-    if NFSe.Servico.ItemServico.Items[Item].ValorCSLL > 0 then
+    if NFSe.Servico.ItemServico[Item].ValorCSLL > 0 then
     begin
       Result.AppendChild(AddNode(tcStr, '#1', 'xRetLei10833-CSLL', 1, 100, 1,
                                                           'Retenção CSLL', ''));
 
       Result.AppendChild(AddNode(tcDe2, '#1', 'vRetLei10833-CSLL', 1, 15, 1,
-                           NFSe.Servico.ItemServico.Items[Item].ValorCSLL, ''));
+                           NFSe.Servico.ItemServico[Item].ValorCSLL, ''));
     end;
   end;
 end;

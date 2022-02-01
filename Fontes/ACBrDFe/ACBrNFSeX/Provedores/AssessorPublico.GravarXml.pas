@@ -227,7 +227,7 @@ begin
                              NFSe.Servico.ItemServico.Items[i].Quantidade, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'DESCONTO', 1, 10, 1,
-                             NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, ''));
+                 NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, ''));
   end;
 
   if NFSe.Servico.ItemServico.Count > 10 then

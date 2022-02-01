@@ -107,6 +107,7 @@ type
 
     procedure DefinirIDRps; virtual;
     procedure DefinirIDDeclaracao; virtual;
+    procedure ConsolidarVariosItensServicosEmUmSo;
 
     function GerarCNPJ(const CNPJ: string): TACBrXmlNode; virtual;
     function GerarCPFCNPJ(const CPFCNPJ: string): TACBrXmlNode; virtual;
@@ -188,6 +189,91 @@ begin
   FGerarIDRps := False;
   // Gera ou não o NameSpace no grupo <Rps> da versão 2 do layout da ABRASF.
   FGerarNSRps := True;
+end;
+
+procedure TNFSeWClass.ConsolidarVariosItensServicosEmUmSo;
+var
+  i: Integer;
+  xDiscriminacao, xItemListaServico: string;
+  vValorDeducoes, vValorServicos, vDescontoCondicionado, vAliquota, vBaseCalculo,
+  vDescontoIncondicionado, vValorPis, vValorCofins, vValorInss, vValorIr,
+  vValorCsll, vValorIss, vAliquotaPis, vAliquotaCofins, vAliquotaInss,
+  vAliquotaIr, vAliquotaCsll, vValorIssRetido: Double;
+begin
+  if NFSe.Servico.ItemServico.Count > 0 then
+  begin
+    xDiscriminacao := '';
+    vValorDeducoes := 0;
+    vValorServicos := 0;
+    vDescontoCondicionado := 0;
+    vDescontoIncondicionado := 0;
+    vBaseCalculo := 0;
+    vValorPis := 0;
+    vValorCofins := 0;
+    vValorInss := 0;
+    vValorIr := 0;
+    vValorCsll := 0;
+    vValorIss := 0;
+    vValorIssRetido := 0;
+    vAliquota := 0;
+    vAliquotaPis := 0;
+    vAliquotaCofins := 0;
+    vAliquotaInss := 0;
+    vAliquotaIr := 0;
+    vAliquotaCsll := 0;
+
+    with NFSe.Servico do
+    begin
+      for i := 0 to ItemServico.Count -1 do
+      begin
+        xItemListaServico := ItemServico[i].ItemListaServico;
+        vAliquota := ItemServico[i].Aliquota;
+        vAliquotaPis := ItemServico[i].AliqRetPIS;
+        vAliquotaCofins := ItemServico[i].AliqRetCOFINS;
+        vAliquotaInss := ItemServico[i].AliqRetINSS;
+        vAliquotaIr := ItemServico[i].AliqRetIRRF;
+        vAliquotaCsll := ItemServico[i].AliqRetCSLL;
+
+        xDiscriminacao := xDiscriminacao + ItemServico[i].Descricao;
+        vValorDeducoes := vValorDeducoes + ItemServico[i].ValorDeducoes;
+        vValorServicos := vValorServicos + ItemServico[i].ValorTotal;
+        vDescontoCondicionado := vDescontoCondicionado + ItemServico[i].DescontoCondicionado;
+        vDescontoIncondicionado := vDescontoIncondicionado + ItemServico[i].DescontoIncondicionado;
+        vBaseCalculo := vBaseCalculo + ItemServico[i].BaseCalculo;
+        vValorPis := vValorPis + ItemServico[i].ValorPis;
+        vValorCofins := vValorCofins + ItemServico[i].ValorCofins;
+        vValorInss := vValorInss + ItemServico[i].ValorInss;
+        vValorIr := vValorIr + ItemServico[i].ValorIRRF;
+        vValorCsll := vValorCsll + ItemServico[i].ValorCsll;
+        vValorIss := vValorIss + ItemServico[i].ValorIss;
+        vValorIssRetido := vValorIssRetido + ItemServico[i].ValorIssRetido;
+      end;
+    end;
+
+    // Leva em consideração a informação do ultimo item da lista.
+    NFSe.Servico.ItemListaServico := xItemListaServico;
+    NFSe.Servico.Valores.Aliquota := vAliquota;
+    NFSe.Servico.Valores.AliquotaPis := vAliquotaPis;
+    NFSe.Servico.Valores.AliquotaCofins := vAliquotaCofins;
+    NFSe.Servico.Valores.AliquotaInss := vAliquotaInss;
+    NFSe.Servico.Valores.AliquotaIr := vAliquotaIr;
+    NFSe.Servico.Valores.AliquotaCsll := vAliquotaCsll;
+
+    // Consolida todos os itens da lista.
+    NFSe.Servico.Discriminacao := xDiscriminacao;
+    NFSe.Servico.Valores.ValorDeducoes := vValorDeducoes;
+    NFSe.Servico.Valores.ValorServicos := vValorServicos;
+    NFSe.Servico.Valores.DescontoCondicionado := vDescontoCondicionado;
+    NFSe.Servico.Valores.DescontoIncondicionado := vDescontoIncondicionado;
+    NFSe.Servico.Valores.BaseCalculo := vBaseCalculo;
+    NFSe.Servico.Valores.ValorPis := vValorPis;
+    NFSe.Servico.Valores.ValorCofins := vValorCofins;
+    NFSe.Servico.Valores.ValorInss := vValorInss;
+    NFSe.Servico.Valores.ValorIr := vValorIr;
+    NFSe.Servico.Valores.ValorCsll := vValorCsll;
+    NFSe.Servico.Valores.ValorIss := vValorIss;
+    NFSe.Servico.Valores.ValorIssRetido := vValorIssRetido;
+  end;
 end;
 
 procedure TNFSeWClass.DefinirIDRps;

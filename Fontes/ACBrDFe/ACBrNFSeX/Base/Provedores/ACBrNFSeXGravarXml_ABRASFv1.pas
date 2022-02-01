@@ -238,6 +238,12 @@ begin
 
   FDocument.Root := NFSeNode;
 
+  {
+    O ConsolidarVariosItensServicosEmUmSo esta comentado pois requer varios
+    testes.
+  }
+//  ConsolidarVariosItensServicosEmUmSo;
+
   xmlNode := GerarInfRps;
   NFSeNode.AppendChild(xmlNode);
 

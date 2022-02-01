@@ -149,20 +149,20 @@ begin
   begin
     Result[i] := CreateElement('Item');
 
-    sTributavel := EnumeradoToStr( NFSe.Servico.ItemServico.Items[i].Tributavel,
+    sTributavel := EnumeradoToStr( NFSe.Servico.ItemServico[i].Tributavel,
                                                     ['S', 'N'], [snSim, snNao]);
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'DiscriminacaoServico', 1, 80, 1,
-                              NFSe.Servico.ItemServico.Items[i].Descricao, ''));
+                              NFSe.Servico.ItemServico[i].Descricao, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'Quantidade', 1, 15, 1,
-                             NFSe.Servico.ItemServico.Items[i].Quantidade, ''));
+                             NFSe.Servico.ItemServico[i].Quantidade, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorUnitario', 1, 20, 1,
-                          NFSe.Servico.ItemServico.Items[i].ValorUnitario, ''));
+                          NFSe.Servico.ItemServico[i].ValorUnitario, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'ValorTotal', 1, 18, 1,
-                             NFSe.Servico.ItemServico.Items[i].ValorTotal, ''));
+                             NFSe.Servico.ItemServico[i].ValorTotal, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'Tributavel', 1, 1, 0,
                                                               sTributavel, ''));

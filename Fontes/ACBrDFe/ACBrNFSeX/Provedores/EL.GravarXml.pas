@@ -430,7 +430,7 @@ begin
     Result[i] := CreateElement('Servico');
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoCnae', 1, 07, 0,
-                                                  NFSe.Servico.CodigoCnae, ''));
+                                   NFSe.Servico.ItemServico[i].CodigoCnae, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'CodigoServico116', 1, 5, 1,
                                     NFSe.Servico.ItemServico[i].CodLCServ, ''));
@@ -445,13 +445,13 @@ begin
                                       NFSe.Servico.ItemServico[i].Unidade, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'Descricao', 1, 255, 1,
-                                NFSe.Servico.ItemServico[i].Descricao, ''));
+                                    NFSe.Servico.ItemServico[i].Descricao, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'Aliquota', 1, 5, 1,
                                NFSe.Servico.ItemServico[i].Aliquota / 100, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorServico', 1, 15, 1,
-                                NFSe.Servico.ItemServico[i].ValorTotal, ''));
+                                   NFSe.Servico.ItemServico[i].ValorTotal, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorIssqn', 1, 15, 1,
                                      NFSe.Servico.ItemServico[i].ValorISS, ''));

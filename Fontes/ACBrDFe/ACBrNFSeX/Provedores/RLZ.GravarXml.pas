@@ -85,28 +85,28 @@ begin
     Result[i] := CreateElement('servico');
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'quantidade', 1, 18, 1,
-                             NFSe.Servico.ItemServico.Items[i].Quantidade, ''));
+                             NFSe.Servico.ItemServico[i].Quantidade, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#1', 'atividade', 1, 320, 1,
-                              NFSe.Servico.ItemServico.Items[i].Descricao, ''));
+                              NFSe.Servico.ItemServico[i].Descricao, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'valor', 1, 18, 1,
-                          NFSe.Servico.ItemServico.Items[i].ValorUnitario, ''));
+                          NFSe.Servico.ItemServico[i].ValorUnitario, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'deducao', 1, 18, 1,
-                 NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, ''));
+                 NFSe.Servico.ItemServico[i].DescontoIncondicionado, ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#1', 'codigoservico', 1, 5, 1,
-                       NFSe.Servico.ItemServico.Items[i].ItemListaServico, ''));
+                       NFSe.Servico.ItemServico[i].ItemListaServico, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'aliquota', 1, 6, 0,
-                               NFSe.Servico.ItemServico.Items[i].Aliquota, ''));
+                               NFSe.Servico.ItemServico[i].Aliquota, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'inss', 1, 18, 0,
-                              NFSe.Servico.ItemServico.Items[i].ValorINSS, ''));
+                              NFSe.Servico.ItemServico[i].ValorINSS, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'total', 1, 18, 0,
-                             NFSe.Servico.ItemServico.Items[i].ValorTotal, ''));
+                             NFSe.Servico.ItemServico[i].ValorTotal, ''));
 
   end;
 

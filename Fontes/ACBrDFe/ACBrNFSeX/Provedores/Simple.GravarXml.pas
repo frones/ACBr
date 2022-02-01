@@ -125,7 +125,7 @@ begin
                  OnlyNumber(NFSe.Servico.ItemServico[i].ItemListaServico), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#55', 'sCNAE', 1, 6, 1,
-                                                  NFSe.Servico.CodigoCnae, ''));
+                                   NFSe.Servico.ItemServico[i].CodigoCnae, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#57', 'nValorServico', 1, 15, 1,
                          NFSe.Servico.ItemServico[i].ValorUnitario, DSC_VPARC));

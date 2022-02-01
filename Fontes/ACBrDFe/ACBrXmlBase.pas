@@ -53,7 +53,7 @@ type
                     tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
                     tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
 
-  TACBrTipoEncoding = (teASCII, teUTF8, teUNICOD, teISO8859_1);
+  TACBrTipoEncoding = (teASCII, teUTF8, teUNICODE, teISO8859_1);
 
 const
   LineBreak = #13#10;
@@ -89,7 +89,7 @@ function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
 function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 
-function TipoEncoding(const aXml: string): TACBrTipoEncoding;
+function TipoEncoding(const aText: string): TACBrTipoEncoding;
 
 implementation
 
@@ -497,24 +497,24 @@ begin
   result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
 end;
 
-function TipoEncoding(const aXml: string): TACBrTipoEncoding;
+function TipoEncoding(const aText: string): TACBrTipoEncoding;
 var
   i, j, FChar1, FChar2: Integer;
 begin
   Result := teASCII;
   i := 0;
-  j := Length(aXml);
+  j := Length(aText);
 
   while i < j do
   begin
     Inc(i);
 
-    FChar1 := Ord(aXml[i]);
-    FChar2 := Ord(aXml[i+1]);
+    FChar1 := Ord(aText[i]);
+    FChar2 := Ord(aText[i+1]);
 
-    if Pos('&amp;#', aXml) > 0 then
+    if Pos('&amp;#', aText) > 0 then
     begin
-      Result := teUNICOD;
+      Result := teUNICODE;
       Exit
     end;
 

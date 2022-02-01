@@ -15,6 +15,9 @@ namespace ACBrLib.NFe
 
         [EnumValue("110112")]
         teCancSubst,
+		
+		[EnumValue("110113")]
+        teEPEC,
 
         [EnumValue("110140")]
         teEPECNFe,

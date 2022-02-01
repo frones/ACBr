@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="AcbrBoletoDemo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="21" Y="6"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uDemo.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDemo"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="258"/>
+        <CursorPos X="8" Y="273"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uDMForte.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dmForte"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="35"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Report.inc"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\FC\Fortes\ACBrBoletoFCFortesFr.pas"/>
+        <ComponentName Value="ACBRBoletoFCFortesFr"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="36"/>
+        <CursorPos X="58" Y="46"/>
+        <UsageCount Value="10"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="20">
+      <Position>
+        <Filename Value="uDemo.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="41" Column="55" TopLine="41"/>
+      </Position>
+      <Position>
+        <Filename Value="uDMForte.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="44" Column="26" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="41" Column="55" TopLine="41"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="40" Column="43" TopLine="26"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="38" Column="36" TopLine="38"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="45" Column="38" TopLine="110"/>
+      </Position>
+      <Position>
+        <Filename Value="Report.inc"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="38" Column="41" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="39" Column="53" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="72" Column="18" TopLine="62"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="73" Column="18" TopLine="63"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="72" Column="18" TopLine="62"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="21" TopLine="21"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="217" Column="21" TopLine="207"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="218" Column="14" TopLine="201"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="933" Column="20" TopLine="916"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="218" TopLine="209"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="933" TopLine="916"/>
+      </Position>
+      <Position>
+        <Filename Value="uDemo.pas"/>
+        <Caret Line="934" TopLine="916"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
+</CONFIG>

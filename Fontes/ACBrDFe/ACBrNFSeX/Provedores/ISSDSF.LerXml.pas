@@ -499,6 +499,11 @@ begin
 
     TipoRecolhimento := AnsiUpperCase(ObterConteudo(ANode.Childrens.FindAnyNs('TipoRecolhimento'), tcStr));
 
+    with ConstrucaoCivil do
+    begin
+      CodigoMunicipioObra := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipalObra'), tcStr);
+    end;
+
     with Servico do
     begin
       CodigoCnae := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoAtividade'), tcStr);

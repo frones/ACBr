@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 01/02/2022
+-- Sigep.GravarXml --
+[*] Acrescentado a formatação para o ItemListaServico.
+   Por: Paulo Sergio de Almeida
+-- ISSDSF.GravarXml/ISSDSF.LerXml --
+[*] Acrescentado a geração e a leitura da tag: InscricaoMunicipalObra.
+   Por: Daivid
 -- ACBrNFSeXServicos --
 [*] Senhor do Bonfim/BA trocou de provedor, agora é WebISS
    Por: Italo Giurizzato Junior

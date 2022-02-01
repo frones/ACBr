@@ -69,6 +69,7 @@ begin
 
   FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
 
   NrMinExigISS := 2;
   NrMaxExigISS := 2;

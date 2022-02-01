@@ -337,6 +337,9 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EmailTomador', 1, 60, 1,
                                                NFSe.Tomador.Contato.Email, ''));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalObra', 1, 11, 0,
+                                 NFSe.ConstrucaoCivil.CodigoMunicipioObra, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DocTomadorEstrangeiro', 0, 20, 0,
                   NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, ''));
 

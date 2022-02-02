@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2022
+--ACBrBoletoSofisa.pas--
+[+] TK-2319 Adicionado banco Sofisa.
+
 27/01/2022
 --ACBrBancoInter.pas, ACBrBancoRendimento.pas, ACBrBoleto.pas, ACBrBoletoFCFortesFR.pas, ACBrBoletoRet_Sicredi_Api.pas, ACBrBoletoW_Sicredi_Api.pas--
 [*] TK-2289 Remoção de Warnings e Hints

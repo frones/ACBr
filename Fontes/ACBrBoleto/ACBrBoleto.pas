@@ -416,7 +416,8 @@ type
     cobMoneyPlus,
     cobBancoC6,
     cobBancoRendimento,
-	cobBancoInter
+	  cobBancoInter,
+    cobBancoSofisaSantander
     );
 
   TACBrTitulo = class;
@@ -1828,7 +1829,7 @@ Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
-     ACBrBancoBradescoMoneyPlus,ACBrBancoC6,ACBrBancoRendimento, ACBrBancoInter;
+     ACBrBancoBradescoMoneyPlus,ACBrBancoC6,ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -3311,8 +3312,13 @@ begin
     004: Result := cobBancoDoNordeste;
     008,033,353: Result := cobSantander;
     021: Result := cobBanestes;
+    025: Result := cobBancoAlfa;
     041: Result := cobBanrisul;
+    047: Result := cobBanese;
     070: Result := cobBRB;
+    077: Result := cobBancoInter;
+    084: Result := cobUniprimeNortePR;
+    085: Result := cobBancoCECRED;
     091: Result := cobUnicredRS;
     097: Result := cobCrediSIS;
     099: Result := cobUniprime;
@@ -3320,29 +3326,25 @@ begin
     133: Result := cobBancoCresol;
     136: Result := cobUnicredES;
     237: Result := cobBradesco;
+    246: Result := cobBancoABCBrasil;
     274: Result := cobMoneyPlus;
     336: Result := cobBancoC6;
     341: Result := cobItau;
     389: Result := cobBancoMercantil;
-    748: Result := cobSicred;
-    756: Result := cobBancoob;
     399: Result := cobHSBC;
     422: Result := cobBancoSafra;
-    085: Result := cobBancoCECRED;
-    047: Result := cobBanese;
-    745: Result := cobCitiBank;
-    246: Result := cobBancoABCBrasil;
-    707: Result := cobDaycoval;
-    084: Result := cobUniprimeNortePR;
-    025: Result := cobBancoAlfa;
     633: Result := cobBancoRendimento;
+    637: Result := cobBancoSofisaSantander;
     643: begin
            if StrToInt(Carteira) = 9 then
              Result := cobBancoPineBradesco
            else
              Result := cobBancoPine;
          end;
-    077: Result := cobBancoInter;
+    707: Result := cobDaycoval;
+    745: Result := cobCitiBank;
+    748: Result := cobSicred;
+    756: Result := cobBancoob;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));
@@ -4149,48 +4151,49 @@ begin
    fBancoClass.Free;
 
    case AValue of
-     cobBancoDoBrasil       : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-     cobBancoDoBrasilAPI    : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-     cobBancoDoBrasilWS     : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-     cobBancoDoBrasilSICOOB : fBancoClass := TACBrBancoBrasilSICOOB.Create(Self);   {001}
-     cobBancoDaAmazonia     : fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
-     cobBancoDoNordeste     : fBancoClass := TACBrBancoNordeste.create(Self);       {004}
-     cobBanestes            : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
-     cobSantander           : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
-     cobBanrisul            : fBancoClass := TACBrBanrisul.create(Self);            {041}
-     cobBRB                 : fBancoClass := TACBrBancoBRB.create(Self);            {070}
-     cobUnicredRS           : fBancoClass := TACbrBancoUnicredRS.Create(Self);      {091}
-     cobBancoCECRED         : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
-     cobCrediSIS            : fBancoClass := TACBrBancoCrediSIS.Create(Self);       {097}
-     cobUniprime            : fBancoClass := TACBrUniprime.create(Self);            {099}
-     cobCaixaEconomica      : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
-     cobCaixaSicob          : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
-     cobUnicredES           : fBancoClass := TACBrBancoUnicredES.create(Self);      {136}
-     cobBradesco            : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
-     cobItau                : fBancoClass := TACBrBancoItau.Create(Self);           {341}
-     cobBancoMercantil      : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
-     cobSicred              : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
-     cobBancoob             : fBancoClass := TACBrBancoob.create(Self);             {756}
-     cobHSBC                : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
-     cobBicBanco            : fBancoClass := TACBrBancoBic.create(Self);            {237}
-     cobBradescoSICOOB      : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
-     cobBancoSafra          : fBancoClass := TACBrBancoSafra.create(Self);          {422}
-     cobSafraBradesco       : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
-     cobBanese              : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
-     cobBancoCresolSCRS     : fBancoClass := TACBrBancoCresolSCRS.create(Self);     {133 + 237}
-     cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
-     cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
-     cobDaycoval            : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
-     cobUniprimeNortePR     : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}
-     cobBancoPine           : fBancoClass := TACBrBancoPine.create(Self);
-     cobBancoPineBradesco   : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
-     cobUnicredSC           : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}
-     cobBancoAlfa           : fBancoClass := TACBrBancoAlfa.Create(Self);           {025}
-     cobBancoCresol         : fBancoClass := TACBrBancoCresol.Create(Self);         {133}
-     cobMoneyPlus           : fBancoClass := TACBrBancoBradescoMoneyPlus.create(Self); {274}
-     cobBancoC6             : fBancoClass := TACBrBancoC6.Create(Self);             {336}
-     cobBancoRendimento     : fBancoClass := TACBrBancoRendimento.Create(Self);     {633}
-     cobBancoInter          : fBancoClass := TACBrBancoInter.Create(Self);          {077}
+     cobBancoDoBrasil        : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilAPI     : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilWS      : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilSICOOB  : fBancoClass := TACBrBancoBrasilSICOOB.Create(Self);   {001}
+     cobBancoDaAmazonia      : fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
+     cobBancoDoNordeste      : fBancoClass := TACBrBancoNordeste.create(Self);       {004}
+     cobBanestes             : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
+     cobSantander            : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
+     cobBanrisul             : fBancoClass := TACBrBanrisul.create(Self);            {041}
+     cobBRB                  : fBancoClass := TACBrBancoBRB.create(Self);            {070}
+     cobUnicredRS            : fBancoClass := TACbrBancoUnicredRS.Create(Self);      {091}
+     cobBancoCECRED          : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
+     cobCrediSIS             : fBancoClass := TACBrBancoCrediSIS.Create(Self);       {097}
+     cobUniprime             : fBancoClass := TACBrUniprime.create(Self);            {099}
+     cobCaixaEconomica       : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
+     cobCaixaSicob           : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
+     cobUnicredES            : fBancoClass := TACBrBancoUnicredES.create(Self);      {136}
+     cobBradesco             : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
+     cobItau                 : fBancoClass := TACBrBancoItau.Create(Self);           {341}
+     cobBancoMercantil       : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
+     cobSicred               : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
+     cobBancoob              : fBancoClass := TACBrBancoob.create(Self);             {756}
+     cobHSBC                 : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
+     cobBicBanco             : fBancoClass := TACBrBancoBic.create(Self);            {237}
+     cobBradescoSICOOB       : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
+     cobBancoSafra           : fBancoClass := TACBrBancoSafra.create(Self);          {422}
+     cobSafraBradesco        : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
+     cobBanese               : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
+     cobBancoCresolSCRS      : fBancoClass := TACBrBancoCresolSCRS.create(Self);     {133 + 237}
+     cobCitiBank             : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
+     cobBancoABCBrasil       : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
+     cobDaycoval             : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
+     cobUniprimeNortePR      : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}
+     cobBancoPine            : fBancoClass := TACBrBancoPine.create(Self);
+     cobBancoPineBradesco    : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
+     cobUnicredSC            : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}
+     cobBancoAlfa            : fBancoClass := TACBrBancoAlfa.Create(Self);           {025}
+     cobBancoCresol          : fBancoClass := TACBrBancoCresol.Create(Self);         {133}
+     cobMoneyPlus            : fBancoClass := TACBrBancoBradescoMoneyPlus.create(Self); {274}
+     cobBancoC6              : fBancoClass := TACBrBancoC6.Create(Self);             {336}
+     cobBancoRendimento      : fBancoClass := TACBrBancoRendimento.Create(Self);     {633}
+     cobBancoInter           : fBancoClass := TACBrBancoInter.Create(Self);          {077}
+     cobBancoSofisaSantander : fBancoClass := TACBrBancoSofisaSantander.Create(Self); {637}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

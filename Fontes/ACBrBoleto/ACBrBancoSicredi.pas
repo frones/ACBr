@@ -444,7 +444,7 @@ begin
          aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
 
          {8.3 Registro Mensagem}
-         if Mensagem.Count > 0 then
+         if (Mensagem.Count > 0) and (OcorrenciaOriginal.Tipo <> toRemessaBaixar) then
          begin
            TextoRegInfo := PadRight(Mensagem[0], 80);
            if Mensagem.Count > 1 then
@@ -462,18 +462,16 @@ begin
            else
              TextoRegInfo := TextoRegInfo + PadRight('', 80);
 
-           if OcorrenciaOriginal.Tipo <> toRemessaBaixar then // TK-2332
-           begin
-             wLinha:=
-               '2'                                                  + // 001 - 001 Tipo do Registro Detalhe
-               PadRight('', 11, ' ')                                + // 002 - 012 Filler - Deixar em Branco
-               PadLeft(wNossoNumeroCompleto,9,'0')                  + // 013 - 021 Nosso Número
-               TextoRegInfo                                         +  //022 - 341 1,2,3,4 instrucao impressa no boleto
-               ANumeroDocumento                                     + // 342 - 351 Seu Número
-               PadRight('', 43, ' ');                                 // 352 - 394 Filler - Deixar em Branco
+           wLinha:=
+             '2'                                                  + // 001 - 001 Tipo do Registro Detalhe
+             PadRight('', 11, ' ')                                + // 002 - 012 Filler - Deixar em Branco
+             PadLeft(wNossoNumeroCompleto,9,'0')                  + // 013 - 021 Nosso Número
+             TextoRegInfo                                         +  //022 - 341 1,2,3,4 instrucao impressa no boleto
+             ANumeroDocumento                                     + // 342 - 351 Seu Número
+             PadRight('', 43, ' ');                                 // 352 - 394 Filler - Deixar em Branco
 
-             wLinha:= wLinha + IntToStrZero(aRemessa.Count + 1, 6 );  // 395 - 400 Número sequencial do registro
-           end;
+           wLinha:= wLinha + IntToStrZero(aRemessa.Count + 1, 6 );  // 395 - 400 Número sequencial do registro
+
            ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
 
          end;

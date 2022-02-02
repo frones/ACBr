@@ -430,7 +430,9 @@ begin
       // Usado pelo provedor AssessorPublico
       {
         A tag SITUACAO refere-se ao código da situação da NFS-e e aceita números
-        inteiros de até 4 caracteres, sendo que devem estar previamente        cadastradas no sistema.      }
+        inteiros de até 4 caracteres, sendo que devem estar previamente
+        cadastradas no sistema.
+      }
       Situacao := 1;
 
 //      refNF := '123456789012345678901234567890123456789';
@@ -3251,6 +3253,7 @@ var
   xValor, xDecimais: String;
   p, nCasas: Integer;
   nValor: Double;
+  OldRM: TFPURoundingMode;
 begin
   nValor := Valor;
   xValor := Trim(FloatToStr(Valor));
@@ -3265,15 +3268,21 @@ begin
   begin
     xDecimais := Copy(xValor, p + 1, Length(xValor));
 
-    if Length(xDecimais) > nCasas then
-    begin
-      if xDecimais[nCasas + 1] >= '5' then
-        SetRoundMode(rmUP)
-      else
-        SetRoundMode(rmNearest);
-    end;
+    OldRM := GetRoundMode;
+    try
+      if Length(xDecimais) > nCasas then
+      begin
+        if xDecimais[nCasas + 1] >= '5' then
+          SetRoundMode(rmUP)
+        else
+          SetRoundMode(rmNearest);
+      end;
 
-    nValor := RoundTo(Valor, Casas);
+      nValor := RoundTo(Valor, Casas);
+
+    finally
+      SetRoundMode(OldRM);
+    end;
   end;
 
   Result := nValor;

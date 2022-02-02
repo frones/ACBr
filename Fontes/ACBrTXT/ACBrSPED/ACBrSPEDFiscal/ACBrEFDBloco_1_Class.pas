@@ -252,6 +252,7 @@ begin
   Registro1500Count := 0;
   Registro1510Count := 0;
   Registro1600Count := 0;
+  Registro1601Count := 0;
   Registro1700Count := 0;
   Registro1710Count := 0;
   Registro1800Count := 0;

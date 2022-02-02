@@ -53,7 +53,7 @@ namespace ACBrLib.NFe
         /// <summary>
         /// Data e hora de Saída ou da Entrada da Mercadoria/Produto
         /// </summary>
-        public DateTime dhSaiEnt { get; set; }
+        public DateTime? dhSaiEnt { get; set; }
 
         /// <summary>
         /// Tipo de Operação

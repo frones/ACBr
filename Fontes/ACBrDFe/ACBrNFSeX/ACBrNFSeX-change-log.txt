@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/02/2022
+-- AssessorPublico.LerXml --
+[*] Possível solução para a leitura do XML da Nota.
+   Por: Italo Giurizzato Junior
+
 01/02/2022
 -- Sigep.GravarXml --
 [*] Acrescentado a formatação para o ItemListaServico.

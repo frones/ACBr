@@ -110,7 +110,8 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('NOTA');
 
-  if AuxNode = nil then Exit;
+  if AuxNode = nil then
+    AuxNode := ANode;
 
   NFSe.Link       := ObterConteudo(AuxNode.Childrens.FindAnyNs('LINK'), tcStr);
   NFSe.NumeroLote := ObterConteudo(AuxNode.Childrens.FindAnyNs('LOTE'), tcStr);

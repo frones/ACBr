@@ -214,10 +214,7 @@ begin
 
   Result := '';
   if (ResultCode = HTTP_OK) then
-  begin
-    Http.Document.Position := 0;
-    Result := ReadStrFromStream(Http.Document, Http.Document.Size);
-  end
+    Result := StreamToAnsiString(Http.OutputStream)
   else
     ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));

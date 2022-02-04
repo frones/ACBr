@@ -60,6 +60,8 @@ const
   ChttpMethodPATCH = 'PATCH';
   ChttpMethodDELETE = 'DELETE';
 
+  cEndPointCob = '/cob';
+
   CContentTypeUTF8 = 'charset=utf-8';
   CContentTypeTextPlain = 'text/plain';
   CContentTypeApplicationJSon = 'application/json';
@@ -216,11 +218,17 @@ type
     property CobCompleta: TACBrPIXCobCompleta read fCobCompleta;
   end;
 
+  TACBrQuandoAcessarEndPoint = procedure(const AEndPoint: String;
+    var AURL: String; var AMethod: String) of object;
+
+  TACBrQuandoReceberRespostaEndPoint = procedure(const AEndPoint, AMethod: String;
+    var AResultCode: Integer; var RespostaHttp: AnsiString) of object;
+
   TACBrQuandoTransmitirHttp = procedure(var AURL: String; var AMethod: String;
-    var HttpBody: AnsiString) of object;
+    ReqHeaders: TStrings; ReqBody: AnsiString) of object;
 
   TACBrQuandoReceberRespostaHttp = procedure(const AURL: String; const AMethod: String;
-    const HttpResponse: AnsiString) of object;
+    RespHeaders: TStrings; var AResultCode: Integer; var RespostaHttp: AnsiString) of object;
 
   TACBrQuandoNecessitarCredencial = procedure(const TipoCredencial: TACBrOpenSSLCredential;
     var Resposta: AnsiString) of object;
@@ -258,6 +266,7 @@ type
     fepCob: TACBrPixEndPointCob;
     fPixCD: TACBrPixCD;
     fHttpSend: THTTPSend;
+    fHttpRespStream: TMemoryStream;
 
     function GetClientID: String;
     procedure SetClientID(AValue: String);
@@ -271,6 +280,8 @@ type
     fpToken: String;
     fpRefereshToken: String;
     fpValidadeToken: TDateTime;
+    fpQuandoAcessarEndPoint: TACBrQuandoAcessarEndPoint;
+    fpQuandoReceberRespostaEndPoint: TACBrQuandoReceberRespostaEndPoint;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure VerificarPIXCDAtribuido;
@@ -286,13 +297,20 @@ type
 
     procedure LimparHTTP; virtual;
     procedure PrepararHTTP; virtual;
-    function AcessarEndPoint(const Method, EndPoind: String;
+    function AcessarEndPoint(const Method, EndPoint: String;
       out ResultCode: Integer; out RespostaHttp: AnsiString): Boolean; virtual;
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
+    procedure ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
+      var AURL: String; var AMethod: String);
+    procedure ChamarEventoQuandoReceberRespostaEndPoint( const AEndPoint,
+      AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
 
     function TransmitirHttp(const Method, URL: String; out ResultCode: Integer; out
       RespostaHttp: AnsiString): Boolean; virtual;
+    procedure ChamarEventoQuandoTransmitirHttp(var AURL: String; var AMethod: String);
+    procedure ChamarEventoQuandoReceberRespostaHttp(const AURL: String;
+      const AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
     procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString;
       Problema: TACBrPIXProblema); virtual;
     procedure AtribuirErroHTTPProblema(Problema: TACBrPIXProblema); virtual;
@@ -451,6 +469,7 @@ type
     property QuandoGravarLog: TACBrGravarLog read fQuandoGravarLog write fQuandoGravarLog;
   end;
 
+function StreamToAnsiString(AStream: TStream): AnsiString;
 function URLComDelimitador(AURL: String): String;
 function URLSemDelimitador(AURL: String): String;
 function GetHeaderValue(const AValue : String; AStringList: TStringList) : String ;
@@ -464,6 +483,12 @@ uses
   synacode, synautil,
   ACBrUtil, ACBrCompress, ACBrValidador,
   ACBrPIXUtil;
+
+function StreamToAnsiString(AStream: TStream): AnsiString;
+begin
+  AStream.Position := 0;
+  Result := ReadStrFromStream(AStream, AStream.Size);
+end;
 
 function URLComDelimitador(AURL: String): String;
 begin
@@ -727,7 +752,7 @@ begin
     raise EACBrPixException.Create(ACBrStr(sErroPSPNaoAtribuido));
 
   inherited Create(AOwner);
-  fpEndPoint := '/cob';
+  fpEndPoint := cEndPointCob;
 
   fCobsConsultadas := TACBrPIXCobsConsultadas.Create('');
   fCobSolicitada := TACBrPIXCobSolicitada.Create('');
@@ -944,8 +969,13 @@ begin
   fpValidadeToken := 0;
   fpToken := '';
   fpRefereshToken := '';
+  fpQuandoAcessarEndPoint := Nil;
+  fpQuandoReceberRespostaEndPoint := Nil;
 
+  fHttpRespStream := TMemoryStream.Create;
   fHttpSend := THTTPSend.Create;
+  fHttpSend.OutputStream := fHttpRespStream;
+
   fepPix := TACBrPixEndPointPix.Create(Self);
   fepCob := TACBrPixEndPointCob.Create(Self);
   fURLQueryParams := TACBrQueryParams.Create;
@@ -958,6 +988,7 @@ end;
 destructor TACBrPSP.Destroy;
 begin
   fHttpSend.Free;
+  fHttpRespStream.Free;
   fepPix.Free;
   fepCob.Free;
   fURLQueryParams.Free;
@@ -1143,15 +1174,19 @@ begin
   { Sobreescrever no PSP, se necessário }
 end;
 
-function TACBrPSP.AcessarEndPoint(const Method, EndPoind: String; out
+function TACBrPSP.AcessarEndPoint(const Method, EndPoint: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
-  AURL: String;
+  AURL, AMethod: String;
+  HttpBody, vBody: AnsiString;
 begin
-  ConfigurarAutenticacao(Method, EndPoind);
-  AURL := CalcularURLEndPoint(Method, EndPoind);
+  ConfigurarAutenticacao(Method, EndPoint);
+  AURL := CalcularURLEndPoint(Method, EndPoint);
+  AMethod := Method;
 
-  Result := TransmitirHttp(Method, AURL, ResultCode, RespostaHttp);
+  ChamarEventoQuandoAcessarEndPoint(EndPoint, AURL, AMethod);
+  Result := TransmitirHttp(AMethod, AURL, ResultCode, RespostaHttp);
+  ChamarEventoQuandoReceberRespostaEndPoint(EndPoint,  AMethod, ResultCode, RespostaHttp);
 end;
 
 function TACBrPSP.CalcularURLEndPoint(const Method, EndPoint: String): String;
@@ -1183,6 +1218,86 @@ begin
   Result := Trim(EndPoint);
 end;
 
+procedure TACBrPSP.ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
+  var AURL: String; var AMethod: String);
+var
+  vURL, vMethod: String;
+  HttpBody, vBody: AnsiString;
+begin
+  if not Assigned(fpQuandoAcessarEndPoint) then
+    Exit;
+
+  vURL := AURL;
+  vMethod := AMethod;
+  if (fPixCD.NivelLog > 1) then
+  begin
+    HttpBody := StreamToAnsiString(fHttpSend.Document);
+    fPixCD.RegistrarLog('- Chamando Evento QuandoAcessarEndPoint');
+  end;
+
+  // Chama o Evento //
+  fpQuandoAcessarEndPoint(AEndPoint, vURL, vMethod);
+
+  if (AURL <> vURL) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  URL modificada: '+AURL+' -> '+vURL);
+    AURL := vURL;
+  end;
+
+  if (AMethod <> vMethod) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  Method modificado: '+AMethod+' -> '+vMethod);
+    AMethod := vMethod;
+  end;
+
+  if (fPixCD.NivelLog > 1) then
+  begin
+    vBody := StreamToAnsiString(fHttpSend.Document);
+    if (HttpBody <> vBody) then
+    begin
+      fPixCD.RegistrarLog('  Body Modificado:');
+      if (fPixCD.NivelLog > 2) then
+        fPixCD.RegistrarLog('  Body Original:'+ sLineBreak + TranslateUnprintable(HttpBody));
+    end;
+  end;
+end;
+
+procedure TACBrPSP.ChamarEventoQuandoReceberRespostaEndPoint(const AEndPoint,
+  AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
+var
+  vRespostaHttp: AnsiString;
+  vResultCode: Integer;
+begin
+  if not Assigned(fpQuandoReceberRespostaEndPoint) then
+    Exit;
+
+  if (fPixCD.NivelLog > 1) then
+    fPixCD.RegistrarLog('- Chamando Evento QuandoReceberRespostaEndPoint');
+
+  // Chama o Evento //
+  vResultCode := ResultCode;
+  vRespostaHttp := RespostaHttp;
+  fpQuandoReceberRespostaEndPoint(AEndPoint, AMethod, vResultCode, vRespostaHttp);
+
+  if (ResultCode <> vResultCode) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  Result Code modificado: '+IntToStr(ResultCode)+' -> '+IntToStr(vResultCode));
+    ResultCode := vResultCode;
+  end;
+
+  if (RespostaHttp <> vRespostaHttp) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  Resposta Http Modificada:');
+    if (fPixCD.NivelLog > 2) then
+      fPixCD.RegistrarLog('  Resposta Original:'+ sLineBreak + TranslateUnprintable(RespostaHttp));
+    RespostaHttp := vRespostaHttp;
+  end;
+end;
+
 procedure TACBrPSP.LimparHTTP;
 begin
   fHttpSend.Clear;
@@ -1199,13 +1314,6 @@ end;
 
 function TACBrPSP.TransmitirHttp(const Method, URL: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
-
-  function GetHttpBody: AnsiString;
-  begin
-    fHttpSend.Document.Position := 0;
-    Result := ReadStrFromStream(fHttpSend.Document, fHttpSend.Document.Size);
-  end;
-
 var
   AMethod, AURL: String;
   HttpBody, VarBody: AnsiString;
@@ -1218,46 +1326,111 @@ begin
   ConfigurarHTTP;
   ConfigurarHeaders(Method, AURL);
 
-  if Assigned(fQuandoTransmitirHttp) then
-  begin
-    HttpBody := GetHttpBody;
-    VarBody := HttpBody;
-    fQuandoTransmitirHttp(AURL, AMethod, VarBody);
-    if (HttpBody <> VarBody) then
-    begin
-      HttpBody := VarBody;
-      WriteStrToStream(fHttpSend.Document, HttpBody);
-    end;
-  end;
+  ChamarEventoQuandoTransmitirHttp(AURL, AMethod);
 
   fPixCD.RegistrarLog(sLineBreak+'---'+sLineBreak+'TransmitirHttp( '+AMethod+', '+AURL+' )'+sLineBreak+'---');
   if (fPixCD.NivelLog > 2) then
-    fPixCD.RegistrarLog('Request Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+    fPixCD.RegistrarLog('  Req.Headers:'+ sLineBreak + fHttpSend.Headers.Text);
 
   if (fPixCD.NivelLog > 1) then
   begin
-    if (HttpBody = '') then
-      HttpBody := GetHttpBody;
-
-    fPixCD.RegistrarLog('Request Body:'+ sLineBreak + TranslateUnprintable(HttpBody));
+    HttpBody := StreamToAnsiString(fHttpSend.Document);
+    fPixCD.RegistrarLog('  Req.Body:'+ sLineBreak + TranslateUnprintable(HttpBody));
   end;
 
-  Result := fHttpSend.HTTPMethod(AMethod, AURL);
+  fHttpRespStream.Clear;
+  Result := fHttpSend.HTTPMethod(AMethod, AURL);  // HTTP call
   ResultCode := fHttpSend.ResultCode;
-  if ContentIsCompressed(fHttpSend.Headers) then
-    RespostaHttp := DecompressStream(fHttpSend.Document)
-  else
-    RespostaHttp := ReadStrFromStream(fHttpSend.Document, fHttpSend.Document.Size);
 
-  fPixCD.RegistrarLog('Result Code: '+IntToStr(ResultCode)+' - '+fHttpSend.ResultString);
+  fPixCD.RegistrarLog('  Result Code: '+IntToStr(ResultCode)+' - '+fHttpSend.ResultString);
   if (fPixCD.NivelLog > 2) then
-    fPixCD.RegistrarLog('Response Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+    fPixCD.RegistrarLog('  Resp.Headers:'+ sLineBreak + fHttpSend.Headers.Text);
+
+  if ContentIsCompressed(fHttpSend.Headers) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('    Decompress Content');
+    RespostaHttp := DecompressStream(fHttpSend.OutputStream)
+  end
+  else
+    RespostaHttp := StreamToAnsiString(fHttpSend.OutputStream);
 
   if (fPixCD.NivelLog > 1) then
-    fPixCD.RegistrarLog('Response Body:'+ sLineBreak + TranslateUnprintable(RespostaHttp));
+    fPixCD.RegistrarLog('Resp.Body:'+ sLineBreak + TranslateUnprintable(RespostaHttp));
 
-  if Assigned(fQuandoReceberRespostaHttp) then
-    fQuandoReceberRespostaHttp(AURL, AMethod, RespostaHttp);
+  ChamarEventoQuandoReceberRespostaHttp(AURL, AMethod, ResultCode, RespostaHttp);
+end;
+
+procedure TACBrPSP.ChamarEventoQuandoTransmitirHttp(var AURL: String;
+  var AMethod: String);
+var
+  vURL, vMethod: String;
+  HttpBody, vBody: AnsiString;
+begin
+  if not Assigned(fQuandoTransmitirHttp) then
+    Exit;
+
+  if (fPixCD.NivelLog > 1) then
+    fPixCD.RegistrarLog('- Chamando Evento QuandoTransmitirHttp');
+
+  // Chama o Evento //
+  vURL := AURL;
+  vMethod := AMethod;
+  HttpBody := StreamToAnsiString(fHttpSend.Document);
+  vBody := HttpBody;
+  fQuandoTransmitirHttp(vURL, vMethod, fHttpSend.Headers, vBody);
+
+  if (AURL <> vURL) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  URL modificada: '+AURL+' -> '+vURL);
+    AURL := vURL;
+  end;
+
+  if (AMethod <> vMethod) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  Method modificado: '+AMethod+' -> '+vMethod);
+    AMethod := vMethod;
+  end;
+
+  if (HttpBody <> vBody) then
+  begin
+    fPixCD.RegistrarLog('  Body Modificado:');
+    if (fPixCD.NivelLog > 2) then
+      fPixCD.RegistrarLog('  Body Original:'+ sLineBreak + TranslateUnprintable(HttpBody));
+    WriteStrToStream(fHttpSend.Document, vBody);
+  end;
+end;
+
+procedure TACBrPSP.ChamarEventoQuandoReceberRespostaHttp(const AURL: String;
+  const AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
+var
+  vResultCode: Integer;
+  vRespostaHttp: AnsiString;
+begin
+  if not Assigned(fQuandoReceberRespostaHttp) then
+    Exit;
+
+  vResultCode := ResultCode;
+  vRespostaHttp := RespostaHttp;
+  fQuandoReceberRespostaHttp(AURL, AMethod, fHttpSend.Headers, vResultCode, vRespostaHttp);
+
+  if (ResultCode <> vResultCode) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  Result Code modificado: '+IntToStr(ResultCode)+' -> '+IntToStr(vResultCode));
+    ResultCode := vResultCode;
+  end;
+
+  if (RespostaHttp <> vRespostaHttp) then
+  begin
+    if (fPixCD.NivelLog > 1) then
+      fPixCD.RegistrarLog('  Resposta Http Modificada:');
+    if (fPixCD.NivelLog > 2) then
+      fPixCD.RegistrarLog('  Resposta Original:'+ sLineBreak + TranslateUnprintable(RespostaHttp));
+    RespostaHttp := vRespostaHttp;
+  end;
 end;
 
 procedure TACBrPSP.TratarRetornoComErro(ResultCode: Integer;
@@ -1287,10 +1460,7 @@ begin
     Problema.title := HTTP.ResultString;
 
   if (Problema.detail = '') then
-  begin
-    Http.Document.Position := 0;
-    Problema.detail := ReadStrFromStream(HTTP.Document, HTTP.Document.Size);
-  end;
+    Problema.detail := StreamToAnsiString(HTTP.OutputStream);
 end;
 
 procedure TACBrPSP.Autenticar;

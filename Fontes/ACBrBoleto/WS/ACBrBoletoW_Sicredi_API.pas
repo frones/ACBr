@@ -4,9 +4,9 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
-{ Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda                   }
-{                               Leandro do Couto                               }
-{                               Fernando Henrique                              }
+{ Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda, Leandro do Couto,}
+{  Fernando Henrique                                                           }
+{                                                                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -558,7 +558,7 @@ begin
         aJson.Add('cpfCnpj').Value.asString          := OnlyNumber(Titulos.Sacado.CNPJCPF);
         aJson.Add('nome').Value.AsString             := Titulos.Sacado.NomeSacado;
         aJson.Add('endereco').Value.AsString         := Titulos.Sacado.Logradouro + ' ' + Titulos.Sacado.Numero;
-        aJson.Add('cep').Value.AsInteger             := StrToInt(OnlyNumber(Titulos.Sacado.CEP));
+        aJson.Add('cep').Value.AsString              := OnlyNumber(Titulos.Sacado.CEP);
         aJson.Add('cidade').Value.AsString           := Titulos.Sacado.Cidade;
         aJson.Add('uf').Value.AsString               := Titulos.Sacado.UF;
         aJson.Add('telefone').Value.AsString         := IfThen( Titulos.Sacado.Fone='' , '0',Titulos.Sacado.Fone );

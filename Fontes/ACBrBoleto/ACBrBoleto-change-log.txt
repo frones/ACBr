@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2022
+--ACBrBoletoW_Sicredi_API.pas--
+[-] TK-2333 ACBrBoleto - Ajuste integração via API quando CEP iniciado com 0
+contribuicao : Fernando Henrique
+
 02/02/2022
 --ACBrBoletoSofisa.pas--
 [+] TK-2319 Adicionado banco Sofisa.

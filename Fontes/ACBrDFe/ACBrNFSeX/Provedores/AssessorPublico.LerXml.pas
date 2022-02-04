@@ -108,7 +108,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NOTA');
+  AuxNode := ANode;
 
   if AuxNode = nil then
     AuxNode := ANode;

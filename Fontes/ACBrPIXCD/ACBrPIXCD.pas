@@ -209,7 +209,8 @@ type
     function ConsultarCobrancaImediata(const TxId: String; Revisao: Integer = 0) : Boolean;
     function ConsultarCobrancas(Inicio: TDateTime; Fim: TDateTime;
       const CpfCnpj: String = ''; LocationPresente: Boolean = False;
-      const Status: String = ''; PagAtual: Integer = 0; ItensPorPagina: Integer = 100): Boolean;
+      AStatus: TACBrPIXStatusCobranca = stcNENHUM;
+      PagAtual: Integer = 0; ItensPorPagina: Integer = 100): Boolean;
 
     property CobsConsultadas: TACBrPIXCobsConsultadas read fCobsConsultadas;
     property CobSolicitada: TACBrPIXCobSolicitada read fCobSolicitada;
@@ -884,7 +885,8 @@ end;
 
 function TACBrPixEndPointCob.ConsultarCobrancas(Inicio: TDateTime;
   Fim: TDateTime; const CpfCnpj: String; LocationPresente: Boolean;
-  const Status: String; PagAtual: Integer; ItensPorPagina: Integer): Boolean;
+  AStatus: TACBrPIXStatusCobranca; PagAtual: Integer; ItensPorPagina: Integer
+  ): Boolean;
 var
   s, e: String;
   RespostaHttp: AnsiString;
@@ -912,9 +914,8 @@ begin
     end;
 
     Values['locationPresente'] := ifthen(LocationPresente, 'true', 'false');
-    s := Trim(Status);
-    if (s <> '') then
-      Values['status'] := s;
+    if (AStatus <> stcNENHUM) then
+      Values['status'] := PIXStatusCobrancaToString(AStatus);
 
     if (PagAtual > 0) then
       Values['paginacao.paginaAtual'] := IntToStr(PagAtual);

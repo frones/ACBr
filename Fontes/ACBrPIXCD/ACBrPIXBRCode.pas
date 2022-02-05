@@ -49,6 +49,7 @@ uses
 
 const
   cGUIPIX = 'br.gov.bcb.pix';
+  cGUIOTHER = 'br.com.other';
   cBRCurrency = 986;
   cMCCMinimo = 100;
   cMCCMaximo = 9999;
@@ -65,6 +66,8 @@ const
     cID_AdditionalInfo = 2;
     cID_Pss = 3;
     cID_URL = 25;
+  cID_MerchantAccountOtherInformation = 27;
+    cID_IdAcc = 1;
   cID_MerchantCategoryCode = 52;
   cID_TransactionCurrency = 53;
   cID_TransactionAmount = 54;
@@ -72,8 +75,10 @@ const
   cID_MerchantName = 59;
   cID_MerchantCity = 60;
   cID_PostalCode = 61;
-  cID_AdditionalDataFieldTemplate = 62;
+  cID_AdditionalDataField = 62;
     cID_TxId = 5;
+  cID_UnreservedTemplates = 80;
+    cID_ArbitraryInformation = 1;
   cID_CRC = 63;
 
 resourcestring
@@ -83,7 +88,6 @@ resourcestring
   sErrSintax = 'Erro na sintaxe';
   sErrCurrency = 'Moeda %s não é aceita';
   sErrCountryCode = 'País deve ser BR';
-  sErrGUIInvalid = 'GUI deve ser: ' + cGUIPIX;
   sErrTLVInvalid = 'String TLV inválida';
   sErrEMVInvalid = 'String EMV inválida';
   sErrEMVId = 'O ID máximo para EMV é 99';
@@ -135,14 +139,21 @@ type
   TACBrBRCode = class(TACBrEMVList)
   private
     fIgnoreErrors: Boolean;
-    fAdditionalDataFieldTemplate: TACBrEMVList;
+    fPixKeyType: TACBrPIXTipoChave;
+    fAdditionalDataField: TACBrEMVList;
     fMerchantAccountInformation: TACBrEMVList;
+    fMerchantAccountOtherInformation: TACBrEMVList;
+    fUnreservedTemplates: TACBrEMVList;
 
     procedure RaiseError(const e: String);
 
     function GetPayloadFormatIndicator: byte;
     function GetPointOfInformationMethod: byte;
     function GetMerchantAccountInformationCards: String;
+    function GetPixKey: String;
+    function GetAdditionalInfo: String;
+    function GetPss: Integer;
+    function GetURL: String;
     function GetMerchantCategoryCode: Integer;
     function GetTransactionCurrency: Integer;
     function GetTransactionAmount: currency;
@@ -151,20 +162,26 @@ type
     function GetMerchantCity: String;
     function GetPostalCode: String;
     function GetTxId: String;
+    function GetArbitraryInformation: String;
     function GetCRC16: String;
 
     procedure SetPayloadFormatIndicator(AValue: byte);
     procedure SetPointOfInformationMethod(AValue: byte);
-    procedure SetMerchantAccountInformationCards(AValue: String);
+    procedure SetMerchantAccountInformationCards(const AValue: String);
+    procedure SetPixKey(const AValue: String);
+    procedure SetAdditionalInfo(const AValue: String);
+    procedure SetPss(AValue: Integer);
+    procedure SetURL(const AValue: String);
     procedure SetMerchantCategoryCode(AValue: Integer);
     procedure SetTransactionCurrency(AValue: Integer);
     procedure SetTransactionAmount(AValue: currency);
-    procedure SetCountryCode(AValue: String);
+    procedure SetCountryCode(const AValue: String);
     procedure SetMerchantName(const AValue: String);
     procedure SetMerchantCity(const AValue: String);
-    procedure SetPostalCode(AValue: String);
-    procedure SetTxId(AValue: String);
-    procedure SetCRC16(AValue: String);
+    procedure SetPostalCode(const AValue: String);
+    procedure SetTxId(const AValue: String);
+    procedure SetArbitraryInformation(AValue: String);
+    procedure SetCRC16(const AValue: String);
 
     function GetAsString: String; override;
     procedure SetAsString(const AValue: String); override;
@@ -172,10 +189,24 @@ type
     function ComputeCRC: String;
     procedure ValidateCRC;
 
-    property MerchantAccountInformation: TACBrEMVList  // 26 - Template
+    property MerchantAccountInformation: TACBrEMVList  // 26
       read fMerchantAccountInformation;
-    property AdditionalDataFieldTemplate: TACBrEMVList  // 62 - Template
-      read fAdditionalDataFieldTemplate;
+    property MerchantAccountOtherInformation: TACBrEMVList  // 27
+      read fMerchantAccountOtherInformation;
+    property AdditionalDataField: TACBrEMVList  // 62
+      read fAdditionalDataField;
+    property UnreservedTemplates: TACBrEMVList  // 80
+      read fUnreservedTemplates;
+
+    property PixKey: String read GetPixKey write SetPixKey;
+    property PixKeyType: TACBrPIXTipoChave read fPixKeyType;  // 26-01
+    property AdditionalInfo: String read GetAdditionalInfo write SetAdditionalInfo;  // 26-02
+    property pss: Integer read GetPss write SetPss;  // 26-03 Prestador de serviço de saque
+
+    property URL: String read GetURL write SetURL;  // 26-25
+
+    property ArbitraryInformation: String read GetArbitraryInformation
+      write SetArbitraryInformation;  // 80-01
 
   public
     constructor Create;
@@ -211,26 +242,12 @@ type
 
   TACBrPIXQRCodeEstatico = class(TACBrBRCode)
   private
-    fPixKeyType: TACBrPIXTipoChave;
-
-    function GetPixKey: String;
-    function GetAdditionalInfo: String;
-    function GetPss: Integer;
-    procedure SetPixKey(const AValue: String);
-    procedure SetAdditionalInfo(AValue: String);
-    procedure SetPss(AValue: Integer);
-
     function GetAsString: String; override;
-  protected
-
   public
-    procedure Clear; override;
-    procedure Assign(Source: TACBrPIXQRCodeEstatico);
-
-    property PixKey: String read GetPixKey write SetPixKey;
-    property PixKeyType: TACBrPIXTipoChave read fPixKeyType;  // 26-01
-    property AdditionalInfo: String read GetAdditionalInfo write SetAdditionalInfo;  // 26-02
-    property pss: Integer read GetPss write SetPss;  // 26-03 Prestador de serviço de saque
+    property PixKey;
+    property PixKeyType;
+    property AdditionalInfo;
+    property pss;
   end;
 
   { TACBrPIXQRCodeDinamico }
@@ -238,10 +255,8 @@ type
   TACBrPIXQRCodeDinamico = class(TACBrBRCode)
   private
     function GetAsString: String; override;
-    function GetURL: String;
-    procedure SetURL(AValue: String);
   public
-    property URL: String read GetURL write SetURL;  // 26-25
+    property URL;
   end;
 
 implementation
@@ -398,24 +413,31 @@ end;
 constructor TACBrBRCode.Create;
 begin
   inherited Create;
-  fAdditionalDataFieldTemplate := TACBrEMVList.Create;
   fMerchantAccountInformation := TACBrEMVList.Create;
+  fMerchantAccountOtherInformation := TACBrEMVList.Create;
+  fAdditionalDataField := TACBrEMVList.Create;
+  fUnreservedTemplates := TACBrEMVList.Create;
   fIgnoreErrors := False;
   Clear;
 end;
 
 destructor TACBrBRCode.Destroy;
 begin
-  fAdditionalDataFieldTemplate.Free;
   fMerchantAccountInformation.Free;
+  fMerchantAccountOtherInformation.Free;
+  fAdditionalDataField.Free;
+  fUnreservedTemplates.Free;
   inherited Destroy;
 end;
 
 procedure TACBrBRCode.Clear;
 begin
   inherited Clear;
-  fAdditionalDataFieldTemplate.Clear;
   fMerchantAccountInformation.Clear;
+  fMerchantAccountOtherInformation.Clear;
+  fAdditionalDataField.Clear;
+  fUnreservedTemplates.Clear;
+  fPixKeyType := tchNenhuma;
   AddDefaultValues;
 end;
 
@@ -431,9 +453,12 @@ end;
 procedure TACBrBRCode.Assign(Source: TACBrBRCode);
 begin
   inherited Assign(Source);
-  fAdditionalDataFieldTemplate.Assign(Source.AdditionalDataFieldTemplate);
-  fMerchantAccountInformation.Assign(Source.MerchantAccountInformation);
+  fPixKeyType := Source.PixKeyType;
   fIgnoreErrors := Source.IgnoreErrors;
+  fMerchantAccountInformation.Assign(Source.MerchantAccountInformation);
+  fMerchantAccountOtherInformation.Assign(Source.MerchantAccountOtherInformation);
+  fAdditionalDataField.Assign(Source.AdditionalDataField);
+  fUnreservedTemplates.Assign(Source.UnreservedTemplates);
 end;
 
 function TACBrBRCode.ComputeCRC: String;
@@ -463,6 +488,26 @@ procedure TACBrBRCode.RaiseError(const e: String);
 begin
   if fIgnoreErrors then Exit;
   raise EACBrPixException.Create(e);
+end;
+
+function TACBrBRCode.GetPixKey: String;
+begin
+  Result := fMerchantAccountInformation.ID[cID_PixKey];
+end;
+
+function TACBrBRCode.GetAdditionalInfo: String;
+begin
+  Result := fMerchantAccountInformation.ID[cID_AdditionalInfo];
+end;
+
+function TACBrBRCode.GetPss: Integer;
+begin
+  Result := StrToIntDef(fMerchantAccountInformation.ID[cID_Pss], 0);
+end;
+
+function TACBrBRCode.GetURL: String;
+begin
+  Result := fMerchantAccountInformation.ID[cID_URL];
 end;
 
 function TACBrBRCode.GetPayloadFormatIndicator: byte;
@@ -517,7 +562,12 @@ end;
 
 function TACBrBRCode.GetTxId: String;
 begin
-  Result := fAdditionalDataFieldTemplate.ID[cID_TxId];
+  Result := fAdditionalDataField.ID[cID_TxId];
+end;
+
+function TACBrBRCode.GetArbitraryInformation: String;
+begin
+  Result := fUnreservedTemplates.ID[cID_ArbitraryInformation];
 end;
 
 function TACBrBRCode.GetCRC16: String;
@@ -525,10 +575,21 @@ begin
   Result := ID[cID_CRC];
 end;
 
-
 procedure TACBrBRCode.SetPayloadFormatIndicator(AValue: byte);
 begin
   ID[cID_PayloadFormatIndicator] := IntToStrZero(AValue, 2);
+end;
+
+procedure TACBrBRCode.SetPixKey(const AValue: String);
+var
+  TipoChave: TACBrPIXTipoChave;
+begin
+  TipoChave := DetectarTipoChave(AValue);
+  if (TipoChave = tchNenhuma) then
+    RaiseError(Format(ACBrStr(sErroChaveInvalida), [AValue]));
+
+  fMerchantAccountInformation.ID[cID_PixKey] := Trim(AValue);
+  fPixKeyType := TipoChave;
 end;
 
 procedure TACBrBRCode.SetPointOfInformationMethod(AValue: byte);
@@ -536,9 +597,41 @@ begin
   ID[cID_PointOfInformationMethod] := IntToStrZero(AValue, 2);
 end;
 
-procedure TACBrBRCode.SetMerchantAccountInformationCards(AValue: String);
+procedure TACBrBRCode.SetMerchantAccountInformationCards(const AValue: String);
 begin
   ID[cID_MerchantAccountInformationCards] := copy(AValue,1,14);
+end;
+
+procedure TACBrBRCode.SetAdditionalInfo(const AValue: String);
+begin
+  fMerchantAccountInformation.ID[cID_AdditionalInfo] := Trim(AValue);
+end;
+
+procedure TACBrBRCode.SetPss(AValue: Integer);
+var
+  e: String;
+begin
+  if AValue <= 0 then
+    fMerchantAccountInformation.ID[cID_Pss] := ''
+  else
+  begin
+    e := ValidarPSS(AValue);
+    if (e <> '') then
+      RaiseError(ACBrStr(e));
+
+    fMerchantAccountInformation.ID[cID_Pss] := IntToStrZero(AValue, 8);
+  end;
+end;
+
+procedure TACBrBRCode.SetURL(const AValue: String);
+var
+  s: String;
+begin
+  s := Trim(AValue);
+  if (pos('https://', s) = 1) then
+    s := copy(s, 9, Length(s));
+
+  fMerchantAccountInformation.ID[cID_URL] := s;
 end;
 
 procedure TACBrBRCode.SetMerchantCategoryCode(AValue: Integer);
@@ -562,7 +655,7 @@ begin
     ID[cID_TransactionAmount] := FormatarValorPIX(AValue);
 end;
 
-procedure TACBrBRCode.SetCountryCode(AValue: String);
+procedure TACBrBRCode.SetCountryCode(const AValue: String);
 begin
   ID[cID_CountryCode] := UpperCase(PadRight(AValue, 2));
 end;
@@ -577,35 +670,43 @@ begin
   ID[cID_MerchantCity] := TiraAcentos(copy(Trim(AValue), 1, 15));
 end;
 
-procedure TACBrBRCode.SetPostalCode(AValue: String);
+procedure TACBrBRCode.SetPostalCode(const AValue: String);
 begin
   ID[cID_PostalCode] := OnlyNumber(AValue);
 end;
 
-procedure TACBrBRCode.SetTxId(AValue: String);
+procedure TACBrBRCode.SetTxId(const AValue: String);
 var
   e, s: String;
 begin
   s := Trim(AValue);
   if (s = cMPMValueNotInformed) or (s = '') then
-    fAdditionalDataFieldTemplate.ID[cID_TxId] := cMPMValueNotInformed
+    fAdditionalDataField.ID[cID_TxId] := cMPMValueNotInformed
   else
   begin
     e := ValidarTxId(s, 25);
     if (e <> '') then
       RaiseError(ACBrStr(e));
 
-    fAdditionalDataFieldTemplate.ID[cID_TxId] := s;
+    fAdditionalDataField.ID[cID_TxId] := s;
   end;
 end;
 
-procedure TACBrBRCode.SetCRC16(AValue: String);
+procedure TACBrBRCode.SetArbitraryInformation(AValue: String);
+begin
+  fUnreservedTemplates.ID[cID_ArbitraryInformation] := Trim(AValue);
+end;
+
+procedure TACBrBRCode.SetCRC16(const AValue: String);
 begin
   ID[cID_CRC] := PadLeft(AValue, 4, '0');
 end;
 
 
 function TACBrBRCode.GetAsString: String;
+var
+  s: String;
+  l, d: Integer;
 begin
   if (PayloadFormatIndicator = 0) then
     RaiseError(Format(ACBrStr(sErrMandatoryFieldNotInformed),['PayloadFormatIndicator']));
@@ -629,14 +730,41 @@ begin
   begin
     fMerchantAccountInformation.ID[cID_GUI] := cGUIPIX;
     ID[cID_MerchantAccountInformation] := fMerchantAccountInformation.AsString;
+
+    // Se MerchantAccountInformation passou de 99 caracteres, ajuste cortando em AdditionalInfo
+    s := MerchantAccountInformation.AsString;
+    l := Length(s);
+    if (l > cEMVMaxLen) then
+    begin
+      d := cEMVMaxLen - l;
+      s := AdditionalInfo;
+      l := Length(s);
+      AdditionalInfo := copy(s, 1, l-d);
+    end;
   end
   else
     ID[cID_MerchantAccountInformation] := '';
 
-  if (fAdditionalDataFieldTemplate.Count > 0) then
-    ID[cID_AdditionalDataFieldTemplate] := fAdditionalDataFieldTemplate.AsString
+  if (fMerchantAccountOtherInformation.Count > 0) then
+  begin
+    fMerchantAccountOtherInformation.ID[cID_GUI] := cGUIOTHER;
+    ID[cID_MerchantAccountInformation] := fMerchantAccountOtherInformation.AsString;
+  end
   else
-    ID[cID_AdditionalDataFieldTemplate] := '';
+    ID[cID_MerchantAccountOtherInformation] := '';
+
+  if (fAdditionalDataField.Count > 0) then
+    ID[cID_AdditionalDataField] := fAdditionalDataField.AsString
+  else
+    ID[cID_AdditionalDataField] := '';
+
+  if (fUnreservedTemplates.Count > 0) then
+  begin
+    fUnreservedTemplates.ID[cID_GUI] := cGUIOTHER;
+    ID[cID_UnreservedTemplates] := fUnreservedTemplates.AsString;
+  end
+  else
+    ID[cID_UnreservedTemplates] := '';
 
   Result := ComputeCRC;
 end;
@@ -645,89 +773,17 @@ procedure TACBrBRCode.SetAsString(const AValue: String);
 begin
   inherited SetAsString(AValue);
   fMerchantAccountInformation.AsString := ID[cID_MerchantAccountInformation];
-  fAdditionalDataFieldTemplate.AsString := ID[cID_AdditionalDataFieldTemplate];
+  fMerchantAccountOtherInformation.AsString := ID[cID_MerchantAccountOtherInformation];
+  fAdditionalDataField.AsString := ID[cID_AdditionalDataField];
+  fUnreservedTemplates.AsString := ID[cID_UnreservedTemplates];;
 end;
 
 { TACBrPIXQRCodeEstatico }
 
-procedure TACBrPIXQRCodeEstatico.Clear;
-begin
-  inherited Clear;
-  fPixKeyType := tchNenhuma;
-end;
-
-procedure TACBrPIXQRCodeEstatico.Assign(Source: TACBrPIXQRCodeEstatico);
-begin
-  inherited Assign(Source);
-  fPixKeyType := Source.PixKeyType;
-end;
-
-function TACBrPIXQRCodeEstatico.GetPixKey: String;
-begin
-  Result := MerchantAccountInformation.ID[cID_PixKey];
-end;
-
-function TACBrPIXQRCodeEstatico.GetAdditionalInfo: String;
-begin
-  Result := MerchantAccountInformation.ID[cID_AdditionalInfo];
-end;
-
-function TACBrPIXQRCodeEstatico.GetPss: Integer;
-begin
-  Result := StrToIntDef(MerchantAccountInformation.ID[cID_Pss], 0);
-end;
-
-procedure TACBrPIXQRCodeEstatico.SetPixKey(const AValue: String);
-var
-  TipoChave: TACBrPIXTipoChave;
-begin
-  TipoChave := DetectarTipoChave(AValue);
-  if (TipoChave = tchNenhuma) then
-    RaiseError(Format(ACBrStr(sErroChaveInvalida), [AValue]));
-
-  MerchantAccountInformation.ID[cID_PixKey] := Trim(AValue);
-  fPixKeyType := TipoChave;
-end;
-
-procedure TACBrPIXQRCodeEstatico.SetAdditionalInfo(AValue: String);
-begin
-  MerchantAccountInformation.ID[cID_AdditionalInfo] := Trim(AValue);
-end;
-
-procedure TACBrPIXQRCodeEstatico.SetPss(AValue: Integer);
-var
-  e: String;
-begin
-  if AValue <= 0 then
-    MerchantAccountInformation.ID[cID_Pss] := ''
-  else
-  begin
-    e := ValidarPSS(AValue);
-    if (e <> '') then
-      RaiseError(ACBrStr(e));
-
-    MerchantAccountInformation.ID[cID_Pss] := IntToStrZero(AValue, 8);
-  end;
-end;
-
 function TACBrPIXQRCodeEstatico.GetAsString: String;
-var
-  s: String;
-  l, d: Integer;
 begin
   if (PixKey = '') then
     RaiseError(Format(ACBrStr(sErrMandatoryFieldNotInformed),['PixKey']));
-
-  MerchantAccountInformation.ID[cID_GUI] := cGUIPIX;
-  s := MerchantAccountInformation.AsString;
-  l := Length(s);
-  if (l > cEMVMaxLen) then
-  begin
-    d := cEMVMaxLen - l;
-    s := AdditionalInfo;
-    l := Length(s);
-    AdditionalInfo := copy(s, 1, l-d);
-  end;
 
   Result := inherited GetAsString;
 end;
@@ -740,22 +796,6 @@ begin
     RaiseError(Format(ACBrStr(sErrMandatoryFieldNotInformed),['URL']));
 
   Result := inherited GetAsString;
-end;
-
-function TACBrPIXQRCodeDinamico.GetURL: String;
-begin
-  Result := MerchantAccountInformation.ID[cID_URL];
-end;
-
-procedure TACBrPIXQRCodeDinamico.SetURL(AValue: String);
-var
-  s: String;
-begin
-  s := Trim(AValue);
-  if (pos('https://', s) = 1) then
-    s := copy(s, 9, Length(s));
-
-  MerchantAccountInformation.ID[cID_URL] := s;
 end;
 
 end.

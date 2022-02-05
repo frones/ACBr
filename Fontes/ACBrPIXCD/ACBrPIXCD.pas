@@ -132,6 +132,7 @@ resourcestring
   sErroPSPChavePIX = 'Chave Pix não informada';
   sErroPSPTipoChave = 'Chave Pix inválida';
   sErroHttp = 'Erro HTTP: %d, Metodo: %s, URL: %s';
+  sErroAutenticacao = 'Erro de Autenticação';
   sErroPropriedadeNaoDefinida = 'Propriedade %s não atribuida';
 
 
@@ -1437,6 +1438,9 @@ end;
 procedure TACBrPSP.TratarRetornoComErro(ResultCode: Integer;
   const RespostaHttp: AnsiString; Problema: TACBrPIXProblema);
 begin
+  if (ResultCode = HTTP_UNAUTHORIZED) then
+    fpAutenticado := False;
+
   Problema.Clear;
   if (Trim(RespostaHttp) = '') then
     AtribuirErroHTTPProblema(Problema)

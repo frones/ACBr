@@ -163,6 +163,9 @@ begin
     end;
    {$EndIf}
 
+   if (Trim(fpToken) = '') then
+     ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
+
    fpValidadeToken := IncSecond(Now, sec);
    fpAutenticado := True;
   end

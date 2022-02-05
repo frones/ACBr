@@ -86,6 +86,7 @@ implementation
 
 uses
   synautil, synacode,
+  ACBrUtil,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
   {$Else}
@@ -153,6 +154,9 @@ begin
       js.Free;
     end;
    {$EndIf}
+
+   if (Trim(fpToken) = '') then
+     ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
 
    fpValidadeToken := IncSecond(Now, sec);
    fpAutenticado := True;

@@ -71,6 +71,8 @@ const
   ChttpHeaderContentType = 'Content-Type:';
   ChttpHeaderContentEncoding = 'Content-Encoding:';
   ChhtpHeaderAcceptEncoding = 'Accept-Encoding:';
+
+  ChttpAuthorizationBearer = 'Bearer';
   ChttpContentEncodingCompress: array[0..2] of String = ('gzip', 'compress', 'deflate');
 
   HTTP_CONTINUE                     = 100;
@@ -320,6 +322,8 @@ type
     property URLQueryParams: TACBrQueryParams read fURLQueryParams;
     property URLPathParams: TStringList read fURLPathParams;
   protected
+    property APIVersion: TACBrPIXAPIVersion read fAPIVersion write fAPIVersion default ver262;
+
     property ClientID: String read GetClientID write SetClientID;
     property ClientSecret: String read GetClientSecret write SetClientSecret;
   public
@@ -339,11 +343,10 @@ type
 
     property Http: THTTPSend read fHttpSend;
   published
-    property APIVersion: TACBrPIXAPIVersion read fAPIVersion write fAPIVersion default ver262;
+    property ACBrPixCD: TACBrPixCD read fPixCD write SetACBrPixCD;
+
     property ChavePIX: String read fChavePIX write SetChavePIX;
     property TipoChave: TACBrPIXTipoChave read fTipoChave write SetTipoChave stored false;
-
-    property ACBrPixCD: TACBrPixCD read fPixCD write SetACBrPixCD;
 
     property QuandoTransmitirHttp : TACBrQuandoTransmitirHttp
       read fQuandoTransmitirHttp write fQuandoTransmitirHttp;
@@ -1163,7 +1166,7 @@ procedure TACBrPSP.ConfigurarAutenticacao(const Method, EndPoint: String);
 begin
   { Sobreescrever no PSP, se necessário }
   if (fpToken <> '') then
-    fHttpSend.Headers.Insert(0, ChttpHeaderAuthorization + 'Bearer '+fpToken);
+    fHttpSend.Headers.Insert(0, ChttpHeaderAuthorization + ChttpAuthorizationBearer+' '+fpToken);
 end;
 
 procedure TACBrPSP.ConfigurarPathParameters(const Method, EndPoint: String);

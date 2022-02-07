@@ -48,11 +48,17 @@ uses
   ACBrPIXCD, ACBrPIXSchemasProblema;
 
 const
-  cURLBBSandbox = 'https://api.hm.bb.com.br';  // 'https://api.sandbox.bb.com.br';
-  cURLBBProducao = 'https://api.bb.com.br';
-  cURLBBAPIPix = '/pix/v1';
-  cURLBBAuthTeste = 'https://oauth.hm.bb.com.br/oauth/token';
-  cURLBBAuthProducao = 'https://oauth.bb.com.br/oauth/token';
+  cBBParamDevAppKey = 'gw-dev-app-key';
+  cBBParamAppKey = 'gw-app-key';
+  cBBURLSandbox = 'https://api.hm.bb.com.br';  // 'https://api.sandbox.bb.com.br';
+  cBBURLProducao = 'https://api.bb.com.br';
+  cBBPathAPIPix = '/pix/v1';
+  cBBURLAuthTeste = 'https://oauth.hm.bb.com.br/oauth/token';
+  cBBURLAuthProducao = 'https://oauth.bb.com.br/oauth/token';
+  cBBPathSandboxPagarPix = '/testes-portal-desenvolvedor/v1';
+  cBBEndPointPagarPix = '/boletos-pix/pagar';
+  cBBURLSandboxPagarPix = cBBURLSandbox + cBBPathSandboxPagarPix + cBBEndPointPagarPix;
+  cBBKeySandboxPagarPix = '95cad3f03fd9013a9d15005056825665';
 
 type
 
@@ -74,7 +80,10 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
+
+    function SimularPagamentoPIX(const pixCopiaECola: String): Boolean;
   published
+    property APIVersion;
     property ClientID;
     property ClientSecret;
 
@@ -86,7 +95,7 @@ implementation
 
 uses
   synautil, synacode,
-  ACBrUtil,
+  ACBrUtil, ACBrPIXBase,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
   {$Else}
@@ -115,9 +124,9 @@ begin
   LimparHTTP;
 
   if (ACBrPixCD.Ambiente = ambProducao) then
-    AURL := cURLBBAuthProducao
+    AURL := cBBURLAuthProducao
   else
-    AURL := cURLBBAuthTeste;
+    AURL := cBBURLAuthTeste;
 
   qp := TACBrQueryParams.Create;
   try
@@ -166,6 +175,44 @@ begin
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
+function TACBrPSPBancoDoBrasil.SimularPagamentoPIX(const pixCopiaECola: String): Boolean;
+var
+  Body, AURL: String;
+  RespostaHttp: AnsiString;
+  ResultCode: Integer;
+  js: TJsonObject;
+begin
+  if (Trim(pixCopiaECola) = '') then
+    raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['pixCopiaECola']);
+
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+   try
+     js.S['pix'] := pixCopiaECola;
+     Body := js.ToJSON();
+   finally
+     js.Free;
+   end;
+  {$Else}
+   js := TJsonObject.Create;
+   try
+     js['pix'].AsString := pixCopiaECola;
+     Body := js.Stringify;
+   finally
+     js.Free;
+   end;
+  {$EndIf}
+
+  PrepararHTTP;
+  WriteStrToStream(Http.Document, Body);
+  Http.MimeType := CContentTypeApplicationJSon;
+  ConfigurarAutenticacao(ChttpMethodPOST, cBBEndPointPagarPix);
+  AURL := cBBURLSandboxPagarPix + '?' + cBBParamAppKey + '=' + cBBKeySandboxPagarPix;
+
+  Result := TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
+  Result := Result and (ResultCode = HTTP_OK);
+end;
+
 procedure TACBrPSPBancoDoBrasil.QuandoBancoDoBrasilAcessarEndPoint(
   const AEndPoint: String; var AURL: String; var AMethod: String);
 begin
@@ -188,11 +235,11 @@ end;
 function TACBrPSPBancoDoBrasil.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
   if (Ambiente = ambProducao) then
-    Result := cURLBBProducao
+    Result := cBBURLProducao
   else
-    Result := cURLBBSandbox;
+    Result := cBBURLSandbox;
 
-  Result := Result + cURLBBAPIPix;
+  Result := Result + cBBPathAPIPix;
 end;
 
 procedure TACBrPSPBancoDoBrasil.ConfigurarQueryParameters(const Method, EndPoint: String);
@@ -202,7 +249,7 @@ begin
   with URLQueryParams do
   begin
     if (fDeveloperApplicationKey <> '') then
-      Values['gw-dev-app-key'] := fDeveloperApplicationKey;
+      Values[cBBParamDevAppKey] := fDeveloperApplicationKey;
   end;
 end;
 

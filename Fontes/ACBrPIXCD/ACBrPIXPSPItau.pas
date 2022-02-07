@@ -48,15 +48,15 @@ uses
   ACBrPIXCD, ACBrOpenSSLUtils;
 
 const
-  cURLItauSandbox = 'https://api.itau.com.br/sandbox';
-  cURLItauProducao = 'https://secure.api.itau';
-  cURLPathItauAPIPix = '/pix_recebimentos/v2';
-  cURLItauAuthTeste = cURLItauSandbox+'/api/oauth/token';
-  cURLItauAuthProducao = 'https://sts.itau.com.br';
-  cURLPathItauAuthToken = '/as/token.oauth2';
-  CURLPathCertificado = '/seguranca/v1/certificado';
-  CURLPathCertificadoSolicitacao = '/solicitacao';
-  CURLPathCertificadoRenovacao = '/renovacao';
+  cItauURLSandbox = 'https://api.itau.com.br/sandbox';
+  cItauURLProducao = 'https://secure.api.itau';
+  cItauPathAPIPix = '/pix_recebimentos/v2';
+  cItauURLAuthTeste = cItauURLSandbox+'/api/oauth/token';
+  cItauURLAuthProducao = 'https://sts.itau.com.br';
+  cItauPathAuthToken = '/as/token.oauth2';
+  cItauPathCertificado = '/seguranca/v1/certificado';
+  cItauPathCertificadoSolicitacao = '/solicitacao';
+  cItauPathCertificadoRenovacao = '/renovacao';
 
 type
 
@@ -85,6 +85,7 @@ type
     function SolicitarCertificado(const TokenTemporario: String): String;
     function GerarCertificadoCSR: String;
   published
+    property APIVersion;
     property ClientID;
     property ClientSecret;
 
@@ -135,9 +136,9 @@ begin
   LimparHTTP;
 
   if (ACBrPixCD.Ambiente = ambProducao) then
-    AURL := cURLItauAuthProducao + cURLPathItauAuthToken
+    AURL := cItauURLAuthProducao + cItauPathAuthToken
   else
-    AURL := cURLItauAuthTeste;
+    AURL := cItauURLAuthTeste;
 
   qp := TACBrQueryParams.Create;
   try
@@ -196,11 +197,11 @@ begin
   VerificarPIXCDAtribuido;
 
   if (ACBrPixCD.Ambiente = ambProducao) then
-    AURL := cURLItauAuthProducao + CURLPathCertificado + CURLPathCertificadoSolicitacao
+    AURL := cItauURLAuthProducao + cItauPathCertificado + cItauPathCertificadoSolicitacao
   else
   begin
     VerificarAutenticacao;
-    AURL := cURLItauSandbox + CURLPathCertificado + CURLPathCertificadoSolicitacao;
+    AURL := cItauURLSandbox + cItauPathCertificado + cItauPathCertificadoSolicitacao;
   end;
 
   Body := GerarCertificadoCSR;
@@ -208,7 +209,7 @@ begin
   LimparHTTP;
   Token := IfEmptyThen(TokenTemporario, fpToken);
   if (Token <> '') then
-    Http.Headers.Insert(0, ChttpHeaderAuthorization + 'Bearer '+Token);
+    Http.Headers.Insert(0, ChttpHeaderAuthorization + ChttpAuthorizationBearer+' '+Token);
 
   WriteStrToStream(Http.Document, Body);
   Http.MimeType := CContentTypeTextPlain;
@@ -286,11 +287,11 @@ end;
 function TACBrPSPItau.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
   if (Ambiente = ambProducao) then
-    Result := cURLItauProducao
+    Result := cItauURLProducao
   else
-    Result := cURLItauSandbox;
+    Result := cItauURLSandbox;
 
-  Result := Result + cURLPathItauAPIPix;
+  Result := Result + cItauPathAPIPix;
 end;
 
 procedure TACBrPSPItau.ConfigurarQueryParameters(const Method, EndPoint: String);

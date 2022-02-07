@@ -33,54 +33,57 @@
 (*
 
   Documentação
-  https://developer.santander.com.br/
+  https://api-staging.shipay.com.br/docs.html
 
 *)
 
 {$I ACBr.inc}
 
-unit ACBrPIXPSPSantander;
+unit ACBrPIXPSPShipay;
 
 interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD;
+  ACBrPIXCD, ACBrShipaySchemas;
 
 const
-  cSantanderPathApiPIX = '/api/v1';
-  cSantanderURLSandbox = 'https://pix.santander.com.br'+cSantanderPathApiPIX+'/sandbox';
-  cSantanderURLPreProducao = 'https://trust-pix-h.santander.com.br'+cSantanderPathApiPIX;
-  cSantanderURLProducao = 'https://trust-pix.santander.com.br'+cSantanderPathApiPIX;
-
-  cSantanderURLAuthTeste = 'https://pix.santander.com.br/sandbox/oauth/token';
-  cSantanderURLAuthPreProducao = 'https://trust-pix-h.santander.com.br/oauth/token';
-  cSantanderURLAuthProducao = 'https://trust-pix.santander.com.br/oauth/token';
-
-resourcestring
-  sErroClienteIdDiferente = 'Cliente_Id diferente do Informado';
+  cShipayURLStaging = 'https://api-staging.shipay.com.br';
+  cShipayURLProducao = 'https://api.shipay.com.br';
+  cShipayVersaoAPI = '/v1';
+  cShipayEndPointAuth = '/pdvauth';
+  cShipayEndPointRefreshToken = '/refresh-token';
+  cShipayEndPointListaCarteiras = cShipayVersaoAPI+'/wallets';
 
 type
 
-  { TACBrPSPSantander }
+  { TACBrPSPShipay }
 
-  TACBrPSPSantander = class(TACBrPSP)
+  TACBrPSPShipay = class(TACBrPSP)
   private
-    fRefreshURL: String;
-    function GetConsumerKey: String;
-    function GetConsumerSecret: String;
-    procedure SetConsumerKey(AValue: String);
-    procedure SetConsumerSecret(AValue: String);
+    fAccessKey: String;
+    fRefreshToken: String;
+    fWallets: TShipayWalletArray;
+    function GetSecretKey: String;
+    procedure SetSecretKey(AValue: String);
+
+    procedure ProcessarAutenticacao(const AURL: String; ResultCode: Integer;
+      const RespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
     procedure Autenticar; override;
     procedure RenovarToken; override;
+    function GetWallets: Boolean;
+
+    property Wallets: TShipayWalletArray read fWallets;
   published
-    property APIVersion;
-    property ConsumerKey: String read GetConsumerKey write SetConsumerKey;
-    property ConsumerSecret: String read GetConsumerSecret write SetConsumerSecret;
+    property ClientID;
+    property SecretKey: String read GetSecretKey write SetSecretKey;
+    property AccessKey: String read fAccessKey write fAccessKey;
   end;
 
 implementation
@@ -95,57 +98,118 @@ uses
   {$EndIf},
   DateUtils;
 
-{ TACBrPSPSantander }
+{ TACBrPSPShipay }
 
-constructor TACBrPSPSantander.Create(AOwner: TComponent);
+constructor TACBrPSPShipay.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  fRefreshURL := '';
+  fWallets := TShipayWalletArray.Create('');
+  fRefreshToken := '';
+  fAccessKey := '';
 end;
 
-procedure TACBrPSPSantander.Autenticar;
+destructor TACBrPSPShipay.Destroy;
+begin
+  fWallets.Free;
+  inherited Destroy;
+end;
+
+procedure TACBrPSPShipay.Autenticar;
 var
-  AURL, Body, client_id: String;
+  AURL, Body: String;
   RespostaHttp: AnsiString;
-  ResultCode, sec: Integer;
+  ResultCode: Integer;
   js: TJsonObject;
-  qp: TACBrQueryParams;
 begin
   LimparHTTP;
+  AURL := ObterURLAmbiente( ACBrPixCD.Ambiente ) + cShipayEndPointAuth;
 
-  case ACBrPixCD.Ambiente of
-    ambProducao: AURL := cSantanderURLAuthProducao;
-    ambPreProducao: AURL := cSantanderURLAuthPreProducao;
-  else
-    AURL := cSantanderURLAuthTeste;
-  end;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+   try
+     js.S['access_key'] := AccessKey;
+     js.S['secret_key'] := SecretKey;
+     js.S['client_id'] := ClientID;
+     Body := js.ToJSON();
+   finally
+     js.Free;
+   end;
+  {$Else}
+   js := TJsonObject.Create;
+   try
+     js['access_key'].AsString := AccessKey;
+     js['secret_key'].AsString := SecretKey;
+     js['client_id'].AsString := ClientID;
+     Body := js.Stringify;
+   finally
+     js.Free;
+   end;
+  {$EndIf}
 
-  AURL := AURL + '?grant_type=client_credentials';
-
-  qp := TACBrQueryParams.Create;
-  try
-    qp.Values['client_id'] := ClientID;
-    qp.Values['client_secret'] := ClientSecret;
-    Body := qp.AsURL;
-    WriteStrToStream(Http.Document, Body);
-    Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;
-  finally
-    qp.Free;
-  end;
-
+  WriteStrToStream(Http.Document, Body);
+  Http.MimeType := CContentTypeApplicationJSon;
   TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
+  ProcessarAutenticacao(AURL, ResultCode, RespostaHttp);
+end;
 
+procedure TACBrPSPShipay.RenovarToken;
+var
+  AURL: String;
+  RespostaHttp: AnsiString;
+  ResultCode: Integer;
+begin
+  LimparHTTP;
+  AURL := ObterURLAmbiente( ACBrPixCD.Ambiente ) + cShipayEndPointRefreshToken;
+
+  Http.Headers.Insert(0, ChttpHeaderAuthorization + ChttpAuthorizationBearer+' '+fpRefereshToken);
+  TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
+  ProcessarAutenticacao(AURL, ResultCode, RespostaHttp);
+end;
+
+function TACBrPSPShipay.GetWallets: Boolean;
+var
+  RespostaHttp: AnsiString;
+  ResultCode: Integer;
+  AURL: String;
+begin
+  Wallets.Clear;
+  PrepararHTTP;
+  AcessarEndPoint(ChttpMethodGET, cShipayEndPointListaCarteiras, ResultCode, RespostaHttp);
+  Result := (ResultCode = HTTP_OK);
+
+  if Result then
+    fWallets.AsJSON := String(RespostaHttp)
+  else
+  begin
+    AURL := CalcularURLEndPoint(ChttpMethodGET, cShipayEndPointListaCarteiras);
+    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
+      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
+  end;
+end;
+
+function TACBrPSPShipay.GetSecretKey: String;
+begin
+   Result := ClientSecret;
+end;
+
+procedure TACBrPSPShipay.SetSecretKey(AValue: String);
+begin
+  ClientSecret := AValue;
+end;
+
+procedure TACBrPSPShipay.ProcessarAutenticacao(const AURL: String;
+  ResultCode: Integer; const RespostaHttp: AnsiString);
+var
+  js: TJsonObject;
+begin
+  Wallets.Clear;
   if (ResultCode = HTTP_OK) then
   begin
    {$IfDef USE_JSONDATAOBJECTS_UNIT}
     js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
     try
-      client_id := Trim(js.S['client_id']);
-      if (client_id <> ClientID) then
-        raise EACBrPixHttpException.Create(ACBrStr(sErroClienteIdDiferente));
       fpToken := js.S['access_token'];
-      sec := js.I['expires_in'];
-      fRefreshURL := js.S['refresh_token'];
+      fRefreshToken := js.S['refresh_token'];
     finally
       js.Free;
     end;
@@ -153,12 +217,8 @@ begin
     js := TJsonObject.Create;
     try
       js.Parse(RespostaHttp);
-      client_id := Trim(js['client_id'].AsString);
-      if (client_id <> ClientID) then
-        raise EACBrPixHttpException.Create(ACBrStr(sErroClienteIdDiferente));
       fpToken := js['access_token'].AsString;
-      sec := js['expires_in'].AsInteger;
-      fRefreshURL := js['refresh_token'].AsString;
+      fRefreshToken := js['refresh_token'].AsString;
     finally
       js.Free;
     end;
@@ -167,48 +227,22 @@ begin
     if (Trim(fpToken) = '') then
       ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
 
-    fpValidadeToken := IncSecond(Now, sec);
+    fpValidadeToken := IncHour(Now, 24);
     fpAutenticado := True;
+
+    GetWallets;
   end
   else
     ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-procedure TACBrPSPSantander.RenovarToken;
+function TACBrPSPShipay.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
-  // TODO: ??
-  inherited RenovarToken;
-end;
-
-function TACBrPSPSantander.GetConsumerKey: String;
-begin
-  Result := ClientID;
-end;
-
-function TACBrPSPSantander.GetConsumerSecret: String;
-begin
-  Result := ClientSecret;
-end;
-
-procedure TACBrPSPSantander.SetConsumerKey(AValue: String);
-begin
-  ClientID := AValue;
-end;
-
-procedure TACBrPSPSantander.SetConsumerSecret(AValue: String);
-begin
-  ClientSecret := AValue;
-end;
-
-function TACBrPSPSantander.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
-begin
-  case ACBrPixCD.Ambiente of
-    ambProducao: Result := cSantanderURLProducao;
-    ambPreProducao: Result := cSantanderURLPreProducao;
+  if (ACBrPixCD.Ambiente = ambProducao) then
+    Result := cShipayURLProducao
   else
-    Result := cSantanderURLSandbox;
-  end;
+    Result := cShipayURLStaging;
 end;
 
 end.

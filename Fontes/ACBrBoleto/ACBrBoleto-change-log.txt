@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2022
+--ACBrBancoDoBrasil.pas--
+[*] TK-2320 Ajuste remessa CNAB400 campo "DataDesconto" para ocorrencia 39
+
 04/02/2022
 --ACBrBoletoW_Sicredi_API.pas--
 [-] TK-2333 ACBrBoleto - Ajuste integração via API quando CEP iniciado com 0

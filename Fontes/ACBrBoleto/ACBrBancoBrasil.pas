@@ -1123,12 +1123,12 @@ begin
      sDiasBaixa := '   ';
      if ((ATipoOcorrencia = '01') or (ATipoOcorrencia = '39')) and (Max(DataBaixa, DataLimitePagto) > Vencimento ) then
        sDiasBaixa := IntToStrZero(DaysBetween(Vencimento, Max(DataBaixa, DataLimitePagto)), 3);
-	 if ATipoOcorrencia = '39' then
+     if ATipoOcorrencia = '39' then
      begin
        Instrucao1:= '00';
        Instrucao2:= '00';
        AInstrucao:= '0000';
-       aDataDesconto:= sDiasBaixa;
+       aDataDesconto:= sDiasBaixa + '000';
      end;
 
      with ACBrBoleto do

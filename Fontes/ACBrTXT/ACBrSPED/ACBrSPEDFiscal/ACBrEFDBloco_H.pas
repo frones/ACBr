@@ -363,6 +363,7 @@ end;
 
 destructor TRegistroH010.Destroy;
 begin
+  FRegistroH011.Free;
   FRegistroH020.Free;
   FRegistroH030.Free;
   inherited;

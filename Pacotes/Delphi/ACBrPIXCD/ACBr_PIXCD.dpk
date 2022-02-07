@@ -42,6 +42,7 @@ contains
   ACBrPIXPSPItau in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPItau.pas',
   ACBrPIXPSPBancoDoBrasil in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPBancoDoBrasil.pas',
   ACBrPIXPSPSantander in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSantander.pas',
+  ACBrPIXPSPShipay in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPShipay.pas',
   ACBrPIXBRCode in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXBRCode.pas',
   ACBrPIXSchemasProblema in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasProblema.pas',
   ACBrPIXSchemasCalendario in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCalendario.pas',

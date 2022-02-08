@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/02/2022
+-- SmarAPD.LerXml --
+[*] Correção na leitura da Insc. Munic. e CPF/CNPJ do Prestador.
+   Por: Paulo Henrique Panico
 -- eGoverneISS.GravarXml/eGoverne.Provider --
 [*] Ajustes, estava faltando as tags referente a construção civil e numero da
     CEI.

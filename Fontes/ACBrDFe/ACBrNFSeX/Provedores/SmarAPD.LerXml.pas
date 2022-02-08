@@ -193,7 +193,8 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := Arquivo;
+//  xRetorno := TratarXmlRetorno(Arquivo);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');
@@ -306,7 +307,7 @@ begin
 
       with IdentificacaoPrestador do
       begin
-        InscricaoMunicipal := Trim(copy(aValor, 23, (pos('CPF/CNPJ:', aValor) -24)));
+        InscricaoMunicipal := Trim(copy(aValor, 22, (pos('CPF/CNPJ:', aValor) -23)));
         CpfCnpj := Trim(copy(aValor, pos('CPF/CNPJ:', aValor) +10,
                                                             length(aValor) -1));
       end;

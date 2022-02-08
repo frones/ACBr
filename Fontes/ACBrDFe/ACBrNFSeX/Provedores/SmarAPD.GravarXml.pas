@@ -254,7 +254,7 @@ begin
                                              NFSe.IdentificacaoRps.Numero, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#2', 'codigoseriert', 1, 2, 1,
-                                                                     '17', ''));
+                                              NFSe.IdentificacaoRps.Serie, ''));
 
   NFSeNode.AppendChild(AddNode(tcDatVcto, '#2', 'dataemissaort', 1, 21, 1,
                                                       NFSe.DataEmissaoRps, ''));

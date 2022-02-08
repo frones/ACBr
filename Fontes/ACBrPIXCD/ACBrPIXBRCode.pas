@@ -59,6 +59,8 @@ const
 
   cID_PayloadFormatIndicator = 0;
   cID_PointOfInformationMethod = 1;
+    cEMVQrCodeStatic = 11;
+    cEMVQRCodeDynamic = 12;
   cID_MerchantAccountInformationCards = 14;
   cID_MerchantAccountInformation = 26;
     cID_GUI = 0;
@@ -244,6 +246,7 @@ type
   private
     function GetAsString: String; override;
   public
+    procedure AddDefaultValues; override;
     property PixKey;
     property PixKeyType;
     property AdditionalInfo;
@@ -256,6 +259,7 @@ type
   private
     function GetAsString: String; override;
   public
+    procedure AddDefaultValues; override;
     property URL;
   end;
 
@@ -788,6 +792,12 @@ begin
   Result := inherited GetAsString;
 end;
 
+procedure TACBrPIXQRCodeEstatico.AddDefaultValues;
+begin
+  inherited AddDefaultValues;
+  //PointOfInformationMethod := cEMVQrCodeStatic;
+end;
+
 { TACBrPIXQRCodeDinamico }
 
 function TACBrPIXQRCodeDinamico.GetAsString: String;
@@ -796,6 +806,12 @@ begin
     RaiseError(Format(ACBrStr(sErrMandatoryFieldNotInformed),['URL']));
 
   Result := inherited GetAsString;
+end;
+
+procedure TACBrPIXQRCodeDinamico.AddDefaultValues;
+begin
+  inherited AddDefaultValues;
+  PointOfInformationMethod := cEMVQrCodeStatic;
 end;
 
 end.

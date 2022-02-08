@@ -72,6 +72,7 @@ type
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
+    function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrPIXValor);
 
     property valor: Currency read fvalor write fvalor;
@@ -202,6 +203,11 @@ end;
 procedure TACBrPIXValor.Clear;
 begin
   fvalor := 0;
+end;
+
+function TACBrPIXValor.IsEmpty: Boolean;
+begin
+  Result := (fvalor = 0);
 end;
 
 procedure TACBrPIXValor.Assign(Source: TACBrPIXValor);

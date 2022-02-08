@@ -81,7 +81,8 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
 
-    function SimularPagamentoPIX(const pixCopiaECola: String): Boolean;
+    procedure SimularPagamentoPIX(const pixCopiaECola: String;
+      var Code: Integer; var Texto: String);
   published
     property APIVersion;
     property ClientID;
@@ -175,7 +176,8 @@ begin
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-function TACBrPSPBancoDoBrasil.SimularPagamentoPIX(const pixCopiaECola: String): Boolean;
+procedure TACBrPSPBancoDoBrasil.SimularPagamentoPIX(
+  const pixCopiaECola: String; var Code: Integer; var Texto: String);
 var
   Body, AURL: String;
   RespostaHttp: AnsiString;
@@ -209,8 +211,35 @@ begin
   ConfigurarAutenticacao(ChttpMethodPOST, cBBEndPointPagarPix);
   AURL := cBBURLSandboxPagarPix + '?' + cBBParamAppKey + '=' + cBBKeySandboxPagarPix;
 
-  Result := TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
-  Result := Result and (ResultCode = HTTP_OK);
+  TransmitirHttp(ChttpMethodPOST, AURL, ResultCode, RespostaHttp);
+  if (ResultCode = HTTP_OK) then
+  begin
+   {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+    try
+      code := js.I['code'];
+      texto := js.S['texto'];
+    finally
+      js.Free;
+    end;
+   {$Else}
+    js := TJsonObject.Create;
+    try
+      js.Parse(RespostaHttp);
+      code := js['code'].AsInteger;
+      texto := js['texto'].AsString;
+    finally
+      js.Free;
+    end;
+   {$EndIf}
+
+   if (code <> 0) then
+     ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create( 'Code: '+IntToStr(code)+' - '+
+                                                             UTF8ToNativeString(texto) ));
+  end
+  else
+    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
+      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
 procedure TACBrPSPBancoDoBrasil.QuandoBancoDoBrasilAcessarEndPoint(

@@ -298,9 +298,9 @@ var
   s: String;
 begin
   s := UpperCase(Trim(AString));
-  if (s = 'cobv') then
+  if (s = 'COBV') then
     Result := tcoCobV
-  else if (s = 'cob') then
+  else if (s = 'COB') then
     Result := tcoCob
   else
     Result := tcoNenhuma;

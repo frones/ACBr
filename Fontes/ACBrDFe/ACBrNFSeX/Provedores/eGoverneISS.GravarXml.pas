@@ -101,28 +101,34 @@ begin
                                    NFSe.Servico.CodigoTributacaoMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CEPPrestacaoServico', 1, 36, 1,
-                                              NFSe.Prestador.Endereco.CEP, ''));
+                                                NFSe.Tomador.Endereco.CEP, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ChaveAutenticacao', 1, 36, 1,
                                                               ChaveAcesso, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadePrestacaoServico', 1, 36, 1,
-                                       NFSe.Prestador.Endereco.xMunicipio, ''));
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodObra', 1, 15, 0,
+                                          NFSe.ConstrucaoCivil.CodigoObra, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EnderecoPrestacaoServico', 1, 36, 1,
-                                         NFSe.Prestador.Endereco.Endereco, ''));
+                                           NFSe.Tomador.Endereco.Endereco, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'EstadoPrestacaoServico', 2, 2, 1,
-                                               NFSe.Prestador.Endereco.UF, ''));
+                                                 NFSe.Tomador.Endereco.UF, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Homologacao', 4, 5, 1,
-                           ifThen(NFSe.Producao = snNao, 'false', 'true'), ''));
+                           ifThen(NFSe.Producao = snSim, 'false', 'true'), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InformacoesAdicionais', 1, 2300, 0,
                                                    NFSe.OutrasInformacoes, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NotificarTomadorPorEmail', 4, 5, 1,
                  ifThen(NFSe.Tomador.Contato.Email = '', 'false', 'true'), ''));
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NumeroCei', 1, 15, 0,
+                                                NFSe.ConstrucaoCivil.nCei, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'SubstituicaoTributaria', 5, 5, 1,
                                                                   'false', ''));
@@ -211,19 +217,11 @@ begin
   PrefixoPadrao := 'eis2';
 
   if Length(NFSE.Tomador.IdentificacaoTomador.CpfCnpj) > 11 then
-  begin
     Result.AppendChild(AddNode(tcStr, '#1', 'CNPJ', 1, 14, 1,
-                              NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
-
-//      Gerador.wCampo(tcStr, '', 'CPF',  01, 14, 1, '', '');
-  end
+                                 NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''))
   else
-  begin
-//      Gerador.wCampo(tcStr, '', 'CNPJ', 01, 14, 1, '', '');
-
     Result.AppendChild(AddNode(tcStr, '#1', 'CPF', 1, 14, 1,
-                              NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
-  end;
+                                NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
 
   if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 11 then
     Result.AppendChild(AddNode(tcStr, '#1', 'DDD', 1, 3, 0,
@@ -232,8 +230,6 @@ begin
     if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 10 then
       Result.AppendChild(AddNode(tcStr, '#1', 'DDD', 1, 3, 0,
                     LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone), 2), ''));
-//    else
-//      Gerador.wCampo(tcStr, '', 'DDD', 00, 03, 1, '', '');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Email', 1, 120, 0,
                                                NFSe.Tomador.Contato.Email, ''));

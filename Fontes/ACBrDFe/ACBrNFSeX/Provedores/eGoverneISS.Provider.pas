@@ -177,6 +177,10 @@ begin
     AErro := Response.Erros.New;
     AErro.Codigo := '';
     AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+    if AErro.Descricao = '' then
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
+
     AErro.Correcao := '';
   end;
 end;

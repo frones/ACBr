@@ -43,6 +43,8 @@
         cobBancoCresol = 38,
         cobMoneyPlus = 39,
         cobBancoC6 = 40,
-        cobBancoRendimento = 41
+        cobBancoRendimento = 41,
+        cobBancoInter = 42,
+        cobBancoSofisaSantander = 43
     }
 }

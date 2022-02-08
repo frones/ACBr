@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/02/2022
+-- Giap.GravarXml --
+[*] Removido o OnlyNumber do numero do endereço.
+   Por: Dercide Alvarez
+
 03/02/2022
 -- AssessorPublico.LerXml --
 [*] Possível solução para a leitura do XML da Nota.

@@ -84,7 +84,8 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+  NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) +
+                   NFSe.IdentificacaoRps.Serie;
 
   xmlNode := GerarDadosPrestador;
   NFSeNode.AppendChild(xmlNode);
@@ -143,7 +144,7 @@ begin
                                          NFSe.Prestador.Endereco.Endereco, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'numero', 1, 10, 1,
-                               OnlyNumber(NFSe.Prestador.Endereco.Numero), ''));
+                                           NFSe.Prestador.Endereco.Numero, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'pais', 1, 9, 1,
                                             NFSe.Prestador.Endereco.xPais, ''));
@@ -188,7 +189,7 @@ begin
                                                  NFSe.Tomador.RazaoSocial, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'numero', 1, 10, 1,
-                                 OnlyNumber(NFSe.Tomador.Endereco.Numero), ''));
+                                             NFSe.Tomador.Endereco.Numero, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'pais', 1, 9, 1,
                                               NFSe.Tomador.Endereco.xPais, ''));

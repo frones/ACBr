@@ -452,6 +452,21 @@ Public Enum BancoBoleto
     cobUnicredES = 26
     cobBancoCresolSCRS = 27
     cobCitiBank = 28
+    cobBancoABCBrasil = 29
+    cobDaycoval = 30
+    cobUniprimeNortePR = 31
+    cobBancoPine = 32
+    cobBancoPineBradesco = 33
+    cobUnicredSC = 34
+    cobBancoAlfa = 35
+    cobBancoDoBrasilAPI = 36
+    cobBancoDoBrasilWS = 37
+    cobBancoCresol = 38
+    cobMoneyPlus = 39
+    cobBancoC6 = 40
+    cobBancoRendimento = 41
+    cobBancoInter = 42
+    cobBancoSofisaSantander = 43
 End Enum
 
 Public Enum CNABBoleto

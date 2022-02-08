@@ -69,6 +69,8 @@ begin
   NrOcorrProducao := 1;
   NrOcorrSenha := 1;
   NrOcorrFraseSecreta := 1;
+
+  GerarIDRps := True;
 end;
 
 end.

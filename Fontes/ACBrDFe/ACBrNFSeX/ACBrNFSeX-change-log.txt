@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/02/2022
+-- ISSDigital.GravarXml --
+[*] Alterado o valor padrão do parâmetro GerarIDRps.
+   Por: Anadilson
 -- Giap.GravarXml --
 [*] Removido o OnlyNumber do numero do endereço.
    Por: Dercide Alvarez

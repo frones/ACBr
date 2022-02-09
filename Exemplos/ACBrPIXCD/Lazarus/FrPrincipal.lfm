@@ -128,9 +128,9 @@ object Form1: TForm1
             Height = 496
             Top = 0
             Width = 624
-            ActivePage = tsBBTestes
+            ActivePage = tsEndPointCob
             Align = alClient
-            TabIndex = 3
+            TabIndex = 1
             TabOrder = 0
             TabWidth = 100
             object tsEndPointPix: TTabSheet
@@ -775,7 +775,6 @@ object Form1: TForm1
                       Height = 23
                       Top = 125
                       Width = 24
-                      Anchors = [akTop, akRight]
                       Flat = True
                       Images = ImageList1
                       ImageIndex = 30
@@ -786,7 +785,7 @@ object Form1: TForm1
                     Left = 0
                     Height = 243
                     Top = 168
-                    Width = 464
+                    Width = 459
                     Align = alClient
                     ScrollBars = ssAutoBoth
                     TabOrder = 1
@@ -823,6 +822,14 @@ object Form1: TForm1
                       OnClick = btLimparCriarCobrancaImediataClick
                       TabOrder = 0
                     end
+                  end
+                  object Splitter2: TSplitter
+                    Left = 459
+                    Height = 243
+                    Top = 168
+                    Width = 5
+                    Align = alRight
+                    ResizeAnchor = akRight
                   end
                 end
                 object tsConsultarCobrancaImediata: TTabSheet
@@ -1583,11 +1590,11 @@ object Form1: TForm1
         Height = 492
         Top = 0
         Width = 1000
-        ActivePage = tsPSP
+        ActivePage = tsPIX
         Align = alClient
         Images = ImageList1
         TabHeight = 25
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 0
         TabWidth = 200
         object tsPIX: TTabSheet
@@ -1890,8 +1897,9 @@ object Form1: TForm1
                 Top = 61
                 Width = 210
                 ItemHeight = 15
-                ItemIndex = 1
+                ItemIndex = 2
                 Items.Strings = (
+                  'Nenhum'
                   'Baixo'
                   'Normal'
                   'Alto'

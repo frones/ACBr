@@ -321,6 +321,7 @@ type
     seConsultarPixRecebidosItensPagina: TSpinEdit;
     seCobrancaExpiracao: TSpinEdit;
     Splitter1: TSplitter;
+    Splitter2: TSplitter;
     tsBBSimularPagamento: TTabSheet;
     tsBBTestes: TTabSheet;
     tsConsultarCobrancas: TTabSheet;
@@ -812,6 +813,22 @@ begin
 
     valor.original := feCriarCobrancaImediatax_Valor.Value;
     valor.modalidadeAlteracao := chCriarCobrancaImediata_PermiterAlterarValor.Checked;
+
+    if (ACBrPixCD1.PSP is TACBrPSPShipay) then
+    begin
+      with infoAdicionais.New do
+      begin
+        nome := 'order_ref';
+        valor := IfEmptyThen(edtCriarCobrancaImediata_TxId.Text, FormatDateTime('yymmddhhnnss', Now));
+      end;
+      s := FormatarValorPIX(valor.original);
+      with infoAdicionais.New do
+      begin
+        nome := 'item_1';
+        valor := '{"ean": "0123456789012", "item_title": "produtos diversos",'+
+                 '"quantity": 1, "sku": "0001", "unit_price": '+s+' }';
+      end;
+    end;
   end;
 
   if (Trim(edtCriarCobrancaImediata_TxId.Text) <> '') then
@@ -1010,7 +1027,7 @@ end;
 
 procedure TForm1.cbxPSPAtualChange(Sender: TObject);
 begin
-  imgErrPSP.Visible := (cbxPSPAtual.ItemIndex < 1);
+  imgErrPSP.Visible := (cbxPSPAtual.ItemIndex < 0);
 end;
 
 procedure TForm1.edtRecebedorCEPExit(Sender: TObject);

@@ -27,31 +27,34 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="8">
+    <RequiredPackages Count="9">
       <Item1>
-        <PackageName Value="PCNComum"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="PCNComum"/>
       </Item2>
       <Item3>
-        <PackageName Value="DateTimeCtrls"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item3>
       <Item4>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="DateTimeCtrls"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="SynEdit"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_PIXCD"/>
+        <PackageName Value="ACBrTCP"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBr_PIXCD"/>
       </Item7>
       <Item8>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrComum"/>
       </Item8>
+      <Item9>
+        <PackageName Value="LCL"/>
+      </Item9>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>

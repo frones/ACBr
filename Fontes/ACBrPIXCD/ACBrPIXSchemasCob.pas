@@ -97,10 +97,11 @@ type
   protected
     function NewSchema: TACBrPIXSchema; override;
   public
-    Function Add(AInfoAdicional: TACBrPIXInfoAdicional): Integer;
-    Procedure Insert(Index: Integer; AInfoAdicional: TACBrPIXInfoAdicional);
+    function Add(AInfoAdicional: TACBrPIXInfoAdicional): Integer;
+    procedure Insert(Index: Integer; AInfoAdicional: TACBrPIXInfoAdicional);
     function New: TACBrPIXInfoAdicional;
     property Items[Index: Integer]: TACBrPIXInfoAdicional read GetItem write SetItem; default;
+    function Find(const ANome: String): TACBrPIXInfoAdicional;
   end;
 
   { TACBrPIXRetirada }
@@ -254,7 +255,7 @@ type
     property revisao: Integer read frevisao write SetRevisao;
     property devedor: TACBrPIXDevedor read fdevedor;
     property loc: TACBrPIXLocationCompleta read floc;
-    property location: String read flocation;
+    property location: String read flocation write flocation;
     property status: TACBrPIXStatusCobranca read fstatus write fstatus;
     property valor: TACBrPIXCobValor read fvalor;
   end;
@@ -357,7 +358,7 @@ procedure TACBrPIXInfoAdicional.SetNome(AValue: String);
 begin
   if fnome = AValue then
     Exit;
-  fnome := copy(AValue, 1, 50);
+  fnome := copy(Trim(AValue), 1, 50);
 end;
 
 procedure TACBrPIXInfoAdicional.SetValor(AValue: String);
@@ -401,6 +402,23 @@ function TACBrPIXInfoAdicionalArray.New: TACBrPIXInfoAdicional;
 begin
   Result := TACBrPIXInfoAdicional.Create('');
   Self.Add(Result);
+end;
+
+function TACBrPIXInfoAdicionalArray.Find(const ANome: String): TACBrPIXInfoAdicional;
+var
+  i: Integer;
+  s: String;
+begin
+  Result := Nil;
+  s := LowerCase(ANome);
+  for i := 0 to Count-1 do
+  begin
+    if (LowerCase(Items[i].nome) = s) then
+    begin
+      Result := Items[i];
+      Break;
+    end;
+  end;
 end;
 
 { TACBrPIXRetirada }

@@ -176,6 +176,7 @@ type
   private
     fbuyer: TShipayBuyer;
     fcallback_url: String;
+    fexpiration: Integer;
     fitems: TShipayItemArray;
     forder_ref: String;
     fpix_dict_key: String;
@@ -195,6 +196,7 @@ type
 
     property buyer: TShipayBuyer read fbuyer;
     property callback_url: String read fcallback_url write fcallback_url;
+    property expiration: Integer read fexpiration write fexpiration;
     property items: TShipayItemArray read fitems;
     property order_ref: String read forder_ref write forder_ref;
     property pix_dict_key: String read fpix_dict_key write Setpix_dict_key;
@@ -213,17 +215,35 @@ type
     spsRefundPending // Pagamento com devolução solicitada. Status aplicável para PIX e para a carteira digital Cielo Pay pois a ação de devolução não é síncrona nestes casos. No caso de PIX a devolução deve ser efetivada em até 90 segudos após a solicitação. No caso da Cielo Pay, a devolução ocorre sempre no dia seguinte à solicitação. Em ambos os casos, quando a devolução é efetivada, o status na Shipay é alterado para "refunded"
   );
 
+  { TShipayOrderBase }
+
+  TShipayOrderBase = class(TACBrPIXSchema)
+  private
+    forder_id: String;
+    fstatus: TShipayOrderStatus;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TShipayOrderBase);
+
+    property order_id: String read forder_id write forder_id;
+    property status: TShipayOrderStatus read fstatus write fstatus;
+  end;
+
   { TShipayOrderCreated }
 
-  TShipayOrderCreated = class(TACBrPIXSchema)
+  TShipayOrderCreated = class(TShipayOrderBase)
   private
     fdeep_link: String;
-    forder_id: String;
+    fexpiration_date: TDateTime;
     fpix_dict_key: String;
     fpix_psp: String;
     fqr_code: String;
     fqr_code_text: String;
-    fstatus: TShipayOrderStatus;
     fwallet: String;
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
@@ -235,12 +255,11 @@ type
     procedure Assign(Source: TShipayOrderCreated);
 
     property deep_link: String read fdeep_link write fdeep_link;
-    property order_id: String read forder_id write forder_id;
+    property expiration_date: TDateTime read fexpiration_date write fexpiration_date;
     property pix_dict_key: String read fpix_dict_key write fpix_dict_key;
     property pix_psp: String read fpix_psp write fpix_psp;
     property qr_code: String read fqr_code write fqr_code;
     property qr_code_text: String read fqr_code_text write fqr_code_text;
-    property status: TShipayOrderStatus read fstatus write fstatus;
     property wallet: String read fwallet write fwallet;
   end;
 
@@ -271,7 +290,7 @@ function StringToShipayOrderStatus(const AString: String): TShipayOrderStatus;
 var
   s: String;
 begin
-  s := UpperCase(Trim(AString));
+  s := LowerCase(Trim(AString));
   if (s = 'pending') then
     Result := spsPending
   else if (s = 'pendingv') then
@@ -653,6 +672,7 @@ begin
   fbuyer.Clear;
   fitems.Clear;
   fcallback_url := '';
+  fexpiration := 0;
   forder_ref := '';
   fpix_dict_key := '';
   ftotal := 0;
@@ -664,6 +684,7 @@ begin
   Result := fbuyer.IsEmpty and
             fitems.IsEmpty and
             (fcallback_url = '') and
+            (fexpiration = 0) and
             (forder_ref = '') and
             (fpix_dict_key = '') and
             (ftotal = 0) and
@@ -675,6 +696,7 @@ begin
   fbuyer.Assign(Source.buyer);
   fitems.Assign(Source.items);
   fcallback_url := Source.callback_url;
+  fexpiration := Source.expiration;
   forder_ref := Source.order_ref;
   fpix_dict_key := Source.pix_dict_key;
   ftotal := Source.total;
@@ -697,18 +719,26 @@ procedure TShipayOrder.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fbuyer.WriteToJSon(AJSon);
-   AJSon.S['callback_url'] := fcallback_url;
+   if (fcallback_url <> '') then
+     AJSon.S['callback_url'] := fcallback_url;
+   if (fexpiration > 0) then
+     AJSon.I['expiration'] := fexpiration;
    fitems.WriteToJSon(AJSon);
    AJSon.S['order_ref'] := forder_ref;
-   AJSon.S['pix_dict_key']:= fpix_dict_key;
+   if (fpix_dict_key <> '') then
+     AJSon.S['pix_dict_key']:= fpix_dict_key;
    AJSon.D['total'] := ftotal;
    AJSon.S['wallet'] := fwallet;
   {$Else}
    fbuyer.WriteToJSon(AJSon);
-   AJSon['callback_url'].AsString := fcallback_url;
+   if (fcallback_url <> '') then
+     AJSon['callback_url'].AsString := fcallback_url;
+   if (fexpiration > 0) then
+     AJSon['expiration'].AsInteger := fexpiration;
    fitems.WriteToJSon(AJSon);
    AJSon['order_ref'].AsString := forder_ref;
-   AJSon['pix_dict_key'].AsString := fpix_dict_key;
+   if (fpix_dict_key <> '') then
+     AJSon['pix_dict_key'].AsString := fpix_dict_key;
    AJSon['total'].AsNumber := ftotal;
    AJSon['wallet'].AsString := fwallet;
   {$EndIf}
@@ -719,6 +749,7 @@ begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fbuyer.ReadFromJSon(AJSon);
    fcallback_url := AJSon.S['callback_url'];
+   fexpiration := AJSon.I['expiration'];
    fitems.ReadFromJSon(AJSon);
    forder_ref:= AJSon.S['order_ref'];
    fpix_dict_key := AJSon.S['pix_dict_key'];
@@ -727,6 +758,7 @@ begin
   {$Else}
    fbuyer.ReadFromJSon(AJSon);
    fcallback_url := AJSon['callback_url'].AsString;
+   fexpiration := AJSon['expiration'].AsInteger;
    fitems.ReadFromJSon(AJSon);
    forder_ref:= AJSon['order_ref'].AsString;
    fpix_dict_key := AJSon['pix_dict_key'].AsString;
@@ -735,6 +767,53 @@ begin
   {$EndIf}
 end;
 
+{ TShipayOrderBase }
+
+constructor TShipayOrderBase.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TShipayOrderBase.Clear;
+begin
+  forder_id := '';
+  fstatus := spsNone;
+end;
+
+function TShipayOrderBase.IsEmpty: Boolean;
+begin
+  Result := (forder_id = '') and
+            (fstatus = spsNone);
+end;
+
+procedure TShipayOrderBase.Assign(Source: TShipayOrderBase);
+begin
+  forder_id := Source.order_id;
+  fstatus := Source.status;
+end;
+
+procedure TShipayOrderBase.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.S['order_id'] := forder_id;
+   AJSon.S['status'] := ShipayOrderStatusToString(fstatus);
+  {$Else}
+   AJSon['order_id'].AsString := forder_id;
+   AJSon['status'].AsString := ShipayOrderStatusToString(fstatus);
+  {$EndIf}
+end;
+
+procedure TShipayOrderBase.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   forder_id := AJSon.S['order_id'];
+   fstatus := StringToShipayOrderStatus( AJSon.S['status'] );
+  {$Else}
+   forder_id := AJSon['order_id'].AsString;
+   fstatus := StringToShipayOrderStatus( AJSon['status'].AsString );
+  {$EndIf}
+end;
 
 { TShipayOrderCreated }
 
@@ -746,82 +825,88 @@ end;
 
 procedure TShipayOrderCreated.Clear;
 begin
+  inherited Clear;
   fdeep_link := '';
-  forder_id := '';
+  fexpiration_date := 0;
   fpix_dict_key := '';
   fpix_psp := '';
   fqr_code := '';
   fqr_code_text := '';
-  fstatus := spsNone;
   fwallet := '';
 end;
 
 function TShipayOrderCreated.IsEmpty: Boolean;
 begin
-  Result := (fdeep_link = '') and
-            (forder_id = '') and
+  Result := inherited IsEmpty and
+            (fdeep_link = '') and
+            (fexpiration_date = 0) and
             (fpix_dict_key = '') and
             (fpix_psp = '') and
             (fqr_code = '') and
             (fqr_code_text = '') and
-            (fstatus = spsNone) and
             (fwallet = '');
 end;
 
 procedure TShipayOrderCreated.Assign(Source: TShipayOrderCreated);
 begin
+  inherited Assign(Source);
   fdeep_link := Source.deep_link;
-  forder_id := Source.order_id;
+  fexpiration_date := Source.expiration_date;
   fpix_dict_key := Source.pix_dict_key;
   fpix_psp := Source.pix_psp;
   fqr_code := Source.qr_code;
   fqr_code_text := Source.qr_code_text;
-  fstatus := Source.status;
   fwallet := Source.wallet;
 end;
 
 procedure TShipayOrderCreated.DoWriteToJSon(AJSon: TJsonObject);
 begin
+  inherited DoWriteToJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    AJSon.S['deep_link'] := fdeep_link;
-   AJSon.S['order_id'] := forder_id;
+   if (fexpiration_date <> 0) then
+     AJSon.S['expiration_date'] := DateTimeToIso8601(fexpiration_date);
    AJSon.S['pix_dict_key'] := fpix_dict_key;
    AJSon.S['pix_psp'] := fpix_psp;
    AJSon.S['qr_code'] := fqr_code;
    AJSon.S['qr_code_text'] := fqr_code_text;
-   AJSon.S['status'] := ShipayOrderStatusToString(fstatus);
    AJSon.S['wallet'] := fwallet;
   {$Else}
    AJSon['deep_link'].AsString := fdeep_link;
-   AJSon['order_id'].AsString := forder_id;
+   if (fexpiration_date <> 0) then
+     AJSon['expiration_date'].AsString := DateTimeToIso8601(fexpiration_date);
    AJSon['pix_dict_key'].AsString := fpix_dict_key;
    AJSon['pix_psp'].AsString := fpix_psp;
    AJSon['qr_code'].AsString := fqr_code;
    AJSon['qr_code_text'].AsString := fqr_code_text;
-   AJSon['status'].AsString := ShipayOrderStatusToString(fstatus);
    AJSon['wallet'].AsString := fwallet;
   {$EndIf}
 end;
 
 procedure TShipayOrderCreated.DoReadFromJSon(AJSon: TJsonObject);
+var
+  s: String;
 begin
+  inherited DoReadFromJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    fdeep_link := AJSon.S['deep_link'];
-   forder_id := AJSon.S['order_id'];
+   s := AJSon.S['expiration_date'];
+   if (s <> '') then
+     fexpiration_date := Iso8601ToDateTime(s);
    fpix_dict_key := AJSon.S['pix_dict_key'];
    fpix_psp := AJSon.S['pix_psp'];
    fqr_code := AJSon.S['qr_code'];
    fqr_code_text := AJSon.S['qr_code_text'];
-   fstatus := StringToShipayOrderStatus( AJSon.S['status'] );
    fwallet := AJSon.S['wallet'];
   {$Else}
    fdeep_link := AJSon['deep_link'].AsString;
-   forder_id := AJSon['order_id'].AsString;
+   s := AJSon['expiration_date'].AsString;
+   if (s <> '') then
+     fexpiration_date := Iso8601ToDateTime(s);
    fpix_dict_key := AJSon['pix_dict_key'].AsString;
    fpix_psp := AJSon['pix_psp'].AsString;
    fqr_code := AJSon['qr_code'].AsString;
    fqr_code_text := AJSon['qr_code_text'].AsString;
-   fstatus := StringToShipayOrderStatus( AJSon['status'].AsString );
    fwallet := AJSon['wallet'].AsString;
   {$EndIf}
 end;

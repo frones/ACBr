@@ -68,9 +68,9 @@ type
   private
     fDeveloperApplicationKey: String;
 
-    procedure QuandoBancoDoBrasilAcessarEndPoint(const AEndPoint: String;
+    procedure QuandoAcessarEndPoint(const AEndPoint: String;
       var AURL: String; var AMethod: String);
-    procedure QuandoBancoDoBrasilReceberRespostaEndPoint(const AEndPoint, AMethod: String;
+    procedure QuandoReceberRespostaEndPoint(const AEndPoint, AMethod: String;
       var AResultCode: Integer; var RespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
@@ -110,8 +110,8 @@ constructor TACBrPSPBancoDoBrasil.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fDeveloperApplicationKey := '';
-  fpQuandoAcessarEndPoint := QuandoBancoDoBrasilAcessarEndPoint;
-  fpQuandoReceberRespostaEndPoint := QuandoBancoDoBrasilReceberRespostaEndPoint;
+  fpQuandoAcessarEndPoint := QuandoAcessarEndPoint;
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
 end;
 
 procedure TACBrPSPBancoDoBrasil.Autenticar;
@@ -242,17 +242,18 @@ begin
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-procedure TACBrPSPBancoDoBrasil.QuandoBancoDoBrasilAcessarEndPoint(
+procedure TACBrPSPBancoDoBrasil.QuandoAcessarEndPoint(
   const AEndPoint: String; var AURL: String; var AMethod: String);
 begin
+  // Banco do Brasil, não tem: POST /cob   Mudando para /PUT com "txid" vazio
   if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) then
   begin
-    AMethod := ChttpMethodPUT;  // Banco do Brasil, não tem: POST /cob
+    AMethod := ChttpMethodPUT;
     AURL := StringReplace(AURL, cEndPointCob, '/cob/', [rfReplaceAll]);
   end;
 end;
 
-procedure TACBrPSPBancoDoBrasil.QuandoBancoDoBrasilReceberRespostaEndPoint(
+procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(
   const AEndPoint, AMethod: String; var AResultCode: Integer;
   var RespostaHttp: AnsiString);
 begin

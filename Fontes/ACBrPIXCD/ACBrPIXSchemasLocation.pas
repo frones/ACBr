@@ -67,7 +67,7 @@ type
   protected
     property id: Integer read fid write fid;
     property txId: String read ftxId write SetTxId;
-    property location: String read flocation;
+    property location: String read flocation write flocation;
     property criacao: TDateTime read fcriacao;
 
     procedure DoWriteToJSon(AJSon: TJsonObject); override;

@@ -41,7 +41,8 @@ uses
   {$IFNDEF VER130}
     Variants,
   {$ENDIF}
-  Classes, typinfo, StrUtils, ACBrUtil, ACBrBase, ACBrXmlBase;
+  Classes, typinfo, StrUtils,
+  ACBrBase;
 
 type
   TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeConsultaSituacao,
@@ -313,6 +314,11 @@ function MetodoToStr(const t: TMetodo): string;
 function ModoEnvioToStr(const t: TmodoEnvio): string;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrXmlBase;
+
 
 function StatusRPSToStr(const t: TStatusRPS): string;
 begin

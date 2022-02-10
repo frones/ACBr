@@ -37,8 +37,9 @@ unit ACBrNFSeXDANFSeRLClass;
 interface
 
 uses
-  Dialogs, Forms, SysUtils, Classes, ACBrNFSeXClass,
-  ACBrBase, ACBrNFSeXDANFSeClass;
+  Dialogs, Forms, SysUtils, Classes,
+  ACBrBase,
+  ACBrNFSeXClass, ACBrNFSeXDANFSeClass;
 
 type
   {$IFDEF RTL230_UP}
@@ -46,7 +47,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrNFSeXDANFSeRL = class(TACBrNFSeXDANFSeClass)
   protected
-    FDetalharServico : Boolean;
+    FDetalharServico: Boolean;
 	
   public
     constructor Create(AOwner: TComponent); override;
@@ -58,17 +59,18 @@ type
 
   published
     property DetalharServico: Boolean read FDetalharServico write FDetalharServico default False;
-	
   end;
 
 implementation
 
 uses
-  ACBrUtil, ACBrNFSeX, ACBrNFSeXDANFSeRLRetrato, ACBrNFSeXParametros;
+  ACBrUtil,
+  ACBrNFSeX, ACBrNFSeXDANFSeRLRetrato;
 
 constructor TACBrNFSeXDANFSeRL.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
   FDetalharServico := False;
 end;
 
@@ -101,7 +103,7 @@ begin
 end;
 
 procedure TACBrNFSeXDANFSeRL.ImprimirDANFSePDF(NFSe: TNFSe);
-Var
+var
   i: integer;
 begin
   TfrlXDANFSeRLRetrato.QuebradeLinha(TACBrNFSeX(ACBrNFSe).Provider.ConfigGeral.QuebradeLinha);
@@ -131,7 +133,7 @@ begin
 end;
 
 procedure TACBrNFSeXDANFSeRL.ImprimirDANFSePDF(AStream: TStream; NFSe: TNFSe);
-Var
+var
   i: integer;
 begin
   TfrlXDANFSeRLRetrato.QuebradeLinha(TACBrNFSeX(ACBrNFSe).Provider.ConfigGeral.QuebradeLinha);
@@ -143,7 +145,7 @@ begin
   end
   else
   begin
-      TfrlXDANFSeRLRetrato.SalvarPDF(Self, NFSe, AStream);
+    TfrlXDANFSeRLRetrato.SalvarPDF(Self, NFSe, AStream);
   end;
 end;
 

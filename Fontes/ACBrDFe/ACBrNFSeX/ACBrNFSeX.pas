@@ -38,11 +38,11 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  ACBrNFSeXDANFSeClass, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
-  ACBrNFSeXClass, ACBrXmlBase, ACBrNFSeXWebservices,
-  ACBrNFSeXInterface, ACBrNFSeXWebserviceBase,
-  ACBrNFSeXWebservicesResponse, ACBrNFSeXProviderManager, ACBrNFSeXConversao;
+  ACBrBase,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXWebservices,
+  ACBrNFSeXClass, ACBrNFSeXInterface, ACBrNFSeXConversao,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXDANFSeClass;
 
 resourcestring
   ERR_SEM_PROVEDOR = 'Nenhum provedor selecionado';
@@ -192,8 +192,10 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, Math,
-  ACBrDFeSSL, ACBrNFSeXProviderBase;
+  Math,
+  ACBrUtil,
+  ACBrDFeSSL,
+  ACBrNFSeXProviderManager;
 
 {$IFDEF FPC}
  {$R ACBrNFSeXServicos.rc}

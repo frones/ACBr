@@ -47,6 +47,7 @@ type
   protected
 
   public
+    function LerXml: Boolean; override;
 
   end;
 
@@ -56,5 +57,14 @@ implementation
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     BHISS
 //==============================================================================
+
+{ TNFSeR_BHISS }
+
+function TNFSeR_BHISS.LerXml: Boolean;
+begin
+  Arquivo := StringReplace(Arquivo, '&>', ' ', [rfReplaceAll]);
+
+  Result := inherited LerXml;
+end;
 
 end.

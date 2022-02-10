@@ -47,6 +47,7 @@ type
   protected
 
   public
+    function LerXml: Boolean; override;
 
   end;
 
@@ -56,14 +57,50 @@ type
   protected
 
   public
+    function LerXml: Boolean; override;
 
   end;
 
 implementation
 
+uses
+  ACBrUtil;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Abaco
 //==============================================================================
+
+{ TNFSeR_Abaco }
+
+function TNFSeR_Abaco.LerXml: Boolean;
+begin
+  Arquivo := TiraAcentos(Arquivo);
+  {
+  // Se o XML não tiver a codificação incluir ela.
+  if ObtemDeclaracaoXML(xRetorno) = '' then
+    xRetorno := CUTF8DeclaracaoXML + xRetorno;
+
+  // Alguns provedores não retornam o XML em UTF-8
+  xRetorno := ConverteXMLtoUTF8(xRetorno);
+  }
+  Result := inherited LerXml;
+end;
+
+{ TNFSeR_Abaco204 }
+
+function TNFSeR_Abaco204.LerXml: Boolean;
+begin
+  Arquivo := TiraAcentos(Arquivo);
+  {
+  // Se o XML não tiver a codificação incluir ela.
+  if ObtemDeclaracaoXML(xRetorno) = '' then
+    xRetorno := CUTF8DeclaracaoXML + xRetorno;
+
+  // Alguns provedores não retornam o XML em UTF-8
+  xRetorno := ConverteXMLtoUTF8(xRetorno);
+  }
+  Result := inherited LerXml;
+end;
 
 end.

@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, ACBrNFSeXParametros, ACBrNFSeXConversao;
+  ACBrDFeConfiguracoes, ACBrNFSeXConversao;
 
 type
 
@@ -222,8 +222,8 @@ type
 implementation
 
 uses
-  DateUtils,
-  ACBrUtil, ACBrNFSeX;
+  ACBrUtil,
+  ACBrNFSeX;
 
 { TEmitenteConfNFSe }
 

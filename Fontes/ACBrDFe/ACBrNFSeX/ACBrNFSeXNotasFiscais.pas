@@ -45,9 +45,7 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  pcnConversao, pcnAuxiliar,
-  ACBrBase, ACBrDFe, ACBrNFSeXConfiguracoes,
-  ACBrDFeUtil, ACBrNFSeXClass, ACBrNFSeXConversao;
+  ACBrBase, ACBrDFe, ACBrNFSeXConfiguracoes, ACBrNFSeXClass;
 
 type
 
@@ -172,8 +170,11 @@ type
 implementation
 
 uses
-  ACBrUtil, synautil, IniFiles, StrUtilsEx,
-  ACBrNFSeX, ACBrNFSeXInterface, ACBrNFSeXProviderBase;
+  synautil, IniFiles, StrUtilsEx,
+  pcnAuxiliar,
+  ACBrUtil,
+  ACBrDFeUtil,
+  ACBrNFSeX, ACBrNFSeXInterface, ACBrNFSeXConversao;
 
 function CompRpsPorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;

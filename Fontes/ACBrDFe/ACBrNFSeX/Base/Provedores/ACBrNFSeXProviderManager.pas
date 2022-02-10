@@ -37,8 +37,9 @@ unit ACBrNFSeXProviderManager;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
-  ACBrNFSeXInterface, ACBrNFSeXConversao, ACBrDFe;
+  SysUtils, Classes,
+  ACBrDFe,
+  ACBrNFSeXInterface;
 
 type
 
@@ -50,7 +51,7 @@ type
 implementation
 
 uses
-  ACBrNFSeX,
+  ACBrNFSeX, ACBrNFSeXConversao,
 
   // Provedores que seguem a versão 1 do layout da ABRASF
   BHISS.Provider,

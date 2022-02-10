@@ -37,17 +37,18 @@ unit ACBrNFSeXReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFSeX,
+  SysUtils, Classes,
   {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
+     LResources, LazarusPackageIntf, PropEdits, componenteditors,
   {$ELSE}
      {$IFNDEF COMPILER6_UP}
-        DsgnIntf
+        DsgnIntf,
      {$ELSE}
         DesignIntf,
-        DesignEditors
+        DesignEditors,
      {$ENDIF}
-  {$ENDIF} ;
+  {$ENDIF}
+  ACBrNFSeX;
 
 procedure Register;
 

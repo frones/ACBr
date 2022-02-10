@@ -38,10 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrUtil,
-  ACBrDFeException,
-  ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter, ACBrNFSeXInterface,
-  ACBrNFSeXParametros, ACBrNFSeXClass, ACBrNFSeXConversao;
+  ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
+  ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
 
 type
 
@@ -152,6 +150,10 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrDFeException;
 
 { TNFSeWClass }
 

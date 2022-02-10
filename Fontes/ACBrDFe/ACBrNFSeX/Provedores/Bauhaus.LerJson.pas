@@ -72,7 +72,8 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := TratarXmlRetorno(Arquivo);
+//italo  xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := Arquivo;
   xRetorno := TiraAcentos(xRetorno);
 
   if EstaVazio(xRetorno) then

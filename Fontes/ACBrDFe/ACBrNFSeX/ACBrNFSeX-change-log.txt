@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/02/2022
+-- Diversos --
+[*] Remoção de Units desnecesssarias.
+   Por: Italo Giurizzato Junior
+
 08/02/2022
 -- SmarAPD.LerXml --
 [*] Correção na leitura da Insc. Munic. e CPF/CNPJ do Prestador.

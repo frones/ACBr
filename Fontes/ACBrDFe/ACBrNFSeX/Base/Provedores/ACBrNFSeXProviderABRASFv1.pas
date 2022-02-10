@@ -38,8 +38,8 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrNFSeXClass, ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXLerXml, ACBrNFSeXGravarXml,
-  ACBrNFSeXWebserviceBase, ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
+  ACBrXmlDocument,
+  ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeProviderABRASFv1 = class(TACBrNFSeXProvider)
@@ -94,8 +94,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrXmlWriter, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXConsts, ACBrNFSeXNotasFiscais, ACBrNFSeXConversao;
+  ACBrUtil, ACBrDFeException, ACBrXmlBase,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
+  ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 
 { TACBrNFSeProviderABRASFv1 }
 

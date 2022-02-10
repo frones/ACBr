@@ -42,9 +42,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  SysUtils,
-  ACBrBase, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXWebserviceBase;
+  ACBrBase,
+  ACBrNFSeXClass, ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 
 type
   TNFSeEventoCollectionItem = class
@@ -327,6 +326,9 @@ type
   end;
 
 implementation
+
+uses
+  SysUtils;
 
 { TNFSeEventoCollection }
 

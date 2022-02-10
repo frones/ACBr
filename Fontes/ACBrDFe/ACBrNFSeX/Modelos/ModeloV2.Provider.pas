@@ -60,6 +60,11 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    {
+      Descomente a linha abaixo para definir um tratamento para o XML
+      retornado caso seja necessário.
+    }
+//    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderModeloV2200 = class (TACBrNFSeProviderABRASFv2)
@@ -499,4 +504,17 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
+    {
+      Descomente a definição da function abaixo para definir um tratamento para
+      o XML retornado caso seja necessário.
+    }
+
+{
+function TACBrNFSeXWebserviceModeloV2200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  // Reescrever se necessário;
+  Result := aXML;
+end;
+}
 end.

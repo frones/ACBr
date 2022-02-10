@@ -107,7 +107,7 @@ implementation
 
 uses
   ACBrUtil,
-  ACBrNFSeX, ACBrNFSeXConsts, ACBrNFSeXNotasFiscais, ACBrNFSeXConversao;
+  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts, ACBrNFSeXConversao;
 
 { TACBrNFSeProviderProprio }
 

@@ -37,8 +37,8 @@ unit ACBrNFSeXProviderBase;
 interface
 
 uses
-  SysUtils, Classes, IniFiles, ACBrUtil, ACBrDFe,
-  ACBrXmlDocument,
+  SysUtils, Classes,
+  ACBrDFe,
   ACBrNFSeXParametros, ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao,
   ACBrNFSeXLerXml, ACBrNFSeXGravarXml, ACBrNFSeXNotasFiscais,
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
@@ -196,8 +196,10 @@ type
 implementation
 
 uses
-  Math, pcnAuxiliar, ACBrXmlBase, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
-  ACBrDFeUtil, ACBrDFeException, ACBrNFSeX;
+  IniFiles,
+  pcnAuxiliar,
+  ACBrUtil, ACBrXmlBase, ACBrDFeException,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts;
 
 { TACBrNFSeXProvider }
 

@@ -53,12 +53,12 @@ type
     FNomeFantasia: String;
     FInscMunicipal: String;
     FCNPJ: String;
-    FEndereco : String;
-    FComplemento : String;
-    FMunicipio : String;
-    FUF : String;
+    FEndereco: String;
+    FComplemento: String;
+    FMunicipio: String;
+    FUF: String;
     FEMail: String;
-    FFone : String;
+    FFone: String;
     FLogo: String;
 
   public
@@ -76,7 +76,6 @@ type
     property Fone: String read FFone write FFone;
     property EMail: String read FEMail write FEMail;
     property Logo: String read FLogo write FLogo;
-
   end;
 
   { TTomadorConfig }
@@ -86,12 +85,12 @@ type
   {$ENDIF RTL230_UP}
   TTomadorConfig = class(TComponent)
   private
-    FInscEstadual : String;
-    FInscMunicipal : String;
-    FFone          : String;
-    FEndereco      : String;
-    FComplemento   : String;
-    FEmail         : String;
+    FInscEstadual: String;
+    FInscMunicipal: String;
+    FFone: String;
+    FEndereco: String;
+    FComplemento: String;
+    FEmail: String;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -103,7 +102,6 @@ type
     property Endereco: String read FEndereco write FEndereco;
     property Complemento: String read FComplemento write FComplemento;
     property Email: String read FEmail write FEmail;
-
   end;
 
   { TACBrNFSeXDANFSeClass }
@@ -114,9 +112,9 @@ type
   TACBrNFSeXDANFSeClass = class(TACBrDFeReport)
   private
     FProducao: TnfseSimNao;
+
     procedure SetACBrNFSe(const Value: TComponent);
     procedure ErroAbstract( const NomeProcedure: String );
-
   protected
     FACBrNFSe: TComponent;
     FPrefeitura: String;
@@ -131,12 +129,12 @@ type
     FPrestador: TPrestadorConfig;
     FTomador: TTomadorConfig;
 
-
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
     procedure VisualizarDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); overload; virtual;
@@ -151,18 +149,18 @@ type
     property Atividade: String read FAtividade write FAtividade;
     property Cancelada: Boolean read FNFSeCancelada write FNFSeCancelada;
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
-    property TipoDANFSE: TTipoDANFSE read FTipoDANFSE   write FTipoDANFSE default tpPadrao;
-    property Provedor: TNFSeProvedor read FProvedor     write FProvedor;
-    property TamanhoFonte: Integer   read FTamanhoFonte write FTamanhoFonte;
+    property TipoDANFSE: TTipoDANFSE read FTipoDANFSE write FTipoDANFSE default tpPadrao;
+    property Provedor: TNFSeProvedor read FProvedor write FProvedor;
+    property TamanhoFonte: Integer read FTamanhoFonte write FTamanhoFonte;
     property FormatarNumeroDocumentoNFSe: Boolean read FFormatarNumeroDocumentoNFSe write FFormatarNumeroDocumentoNFSe;
-    property Producao: TnfseSimNao   read FProducao     write FProducao;
-
+    property Producao: TnfseSimNao read FProducao write FProducao;
   end;
 
 implementation
 
 uses
-  ACBrNFSeX, ACBrUtil;
+  ACBrUtil,
+  ACBrNFSeX;
 
 { TPrestadorConfig }
 

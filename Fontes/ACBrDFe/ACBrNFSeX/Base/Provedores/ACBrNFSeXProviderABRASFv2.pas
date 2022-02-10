@@ -38,8 +38,8 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrNFSeXClass, ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXLerXml, ACBrNFSeXGravarXml,
-  ACBrNFSeXWebserviceBase, ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
+  ACBrXmlDocument,
+  ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeProviderABRASFv2 = class(TACBrNFSeXProvider)
@@ -109,8 +109,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXConsts, ACBrNFSeXNotasFiscais, ACBrNFSeXConversao;
+  ACBrUtil, ACBrDFeException, ACBrXmlBase,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
+  ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 
 { TACBrNFSeProviderABRASFv2 }
 
@@ -2354,15 +2355,11 @@ var
   AErro: TNFSeEventoCollectionItem;
   AAlerta: TNFSeEventoCollectionItem;
   Mensagem: string;
+
+procedure ProcessarErros;
+var
+  I: Integer;
 begin
-  ANode := RootNode.Childrens.FindAnyNs(AListTag);
-
-  if (ANode = nil) then
-    ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetornoLote');
-
-  if (ANode = nil) then
-    ANode := RootNode.Childrens.FindAnyNs('MensagemRetorno');
-
   if Assigned(ANode) then
   begin
     ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
@@ -2395,6 +2392,19 @@ begin
       end;
     end;
   end;
+end;
+
+begin
+  ANode := RootNode.Childrens.FindAnyNs(AListTag);
+
+  if (ANode = nil) then
+    ANode := RootNode.Childrens.FindAnyNs('MensagemRetorno');
+
+  ProcessarErros;
+
+  ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetornoLote');
+
+  ProcessarErros;
 
   ANode := RootNode.Childrens.FindAnyNs('ListaMensagemAlertaRetorno');
 

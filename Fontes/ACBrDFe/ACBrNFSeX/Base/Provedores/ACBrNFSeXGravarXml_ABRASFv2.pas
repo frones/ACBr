@@ -38,10 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrUtil,
-  ACBrXmlBase, ACBrXmlDocument,
-  pcnConsts,
-  ACBrNFSeXParametros, ACBrNFSeXGravarXml, ACBrNFSeXConversao, ACBrNFSeXConsts;
+  ACBrXmlDocument,
+  ACBrNFSeXGravarXml;
 
 type
   { TNFSeW_ABRASFv2 }
@@ -272,6 +270,12 @@ type
   end;
 
 implementation
+
+uses
+  pcnConsts,
+  ACBrUtil,
+  ACBrXmlBase,
+  ACBrNFSeXConversao, ACBrNFSeXConsts;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS dos provedores

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/02/2022
+-- ACBrNFSeXServicos --
+[*] Atualizações em diversas cidades.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Remoção de Units desnecesssarias.
    Por: Italo Giurizzato Junior

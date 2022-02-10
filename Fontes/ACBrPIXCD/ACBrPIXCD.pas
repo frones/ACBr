@@ -336,7 +336,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Clear;
+    procedure Clear; virtual;
 
     procedure Autenticar; virtual;
     procedure VerificarValidadeToken; virtual;

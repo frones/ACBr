@@ -75,6 +75,7 @@ type
     fAccessKey: String;
     fOrder: TShipayOrder;
     fOrderCreated: TShipayOrderCreated;
+    fOrderInfo: TShipayOrderInfo;
     fQuandoEnviarOrder: TShipayQuandoEnviarOrder;
     fRefreshToken: String;
     fWallets: TShipayWalletArray;
@@ -96,6 +97,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure Clear; override;
 
     procedure Autenticar; override;
     procedure RenovarToken; override;
@@ -107,6 +109,7 @@ type
     property Wallets: TShipayWalletArray read fWallets;
     property Order: TShipayOrder read fOrder;
     property OrderCreated: TShipayOrderCreated read fOrderCreated;
+    property OrderInfo: TShipayOrderInfo read fOrderInfo;
   published
     property ClientID;
     property SecretKey: String read GetSecretKey write SetSecretKey;
@@ -137,6 +140,7 @@ begin
   fWallets := TShipayWalletArray.Create('wallets');
   fOrder := TShipayOrder.Create('');
   fOrderCreated := TShipayOrderCreated.Create('');
+  fOrderInfo := TShipayOrderInfo.Create('');
   fRefreshToken := '';
   fAccessKey := '';
   fQuandoEnviarOrder := Nil;
@@ -149,7 +153,16 @@ begin
   fWallets.Free;
   fOrder.Free;
   fOrderCreated.Free;
+  fOrderInfo.Free;
   inherited Destroy;
+end;
+
+procedure TACBrPSPShipay.Clear;
+begin
+  inherited Clear;
+  fOrder.Clear;
+  fOrderCreated.Clear;
+  fOrderInfo.Clear;
 end;
 
 procedure TACBrPSPShipay.Autenticar;
@@ -260,7 +273,7 @@ begin
     fOrderCreated.AsJSON := String(RespostaHttp)
   else
   begin
-    AURL := CalcularURLEndPoint(ChttpMethodGET, ep);
+    AURL := CalcularURLEndPoint(ChttpMethodPOST, ep);
     ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
       sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
   end;
@@ -271,7 +284,6 @@ var
   Body, AURL: String;
   RespostaHttp: AnsiString;
   ResultCode: Integer;
-  fCobBase: TShipayOrderBase;
 begin
   if (Trim(order_id) = '') then
     ACBrPixCD.DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['order_id']));
@@ -283,26 +295,20 @@ begin
 
   if (ResultCode = HTTP_OK) then
   begin
-    fCobBase := TShipayOrderBase.Create('');
-    try
-      fCobBase.AsJSON := String(RespostaHttp);
-      if (fCobBase.order_id <> Trim(order_id)) then
+    fOrderInfo.AsJSON := String(RespostaHttp);
+    if (fOrderInfo.order_id <> Trim(order_id)) then
         ACBrPixCD.DispararExcecao(EACBrPixException.Create(sErrOrderIdDifferent));
 
-      if (fCobBase.status <> spsCancelled) then
+    if not (fOrderInfo.status in [spsCancelled, spsRefunded]) then
         ACBrPixCD.DispararExcecao(EACBrPixException.CreateFmt(
            ACBrStr(sErrOrderIdNotCancelled),
-          [fCobBase.order_id, ShipayOrderStatusToString(fCobBase.status)]));
-
-    finally
-      fCobBase.Free;
-    end;
+          [fOrderInfo.order_id, ShipayOrderStatusToString(fOrderInfo.status)]));
   end
   else
   begin
-    AURL := CalcularURLEndPoint(ChttpMethodGET, cShipayEndPointOrder);
+    AURL := CalcularURLEndPoint(ChttpMethodDELETE, cShipayEndPointOrder);
     ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
-      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
+      sErroHttp,[Http.ResultCode, ChttpMethodDELETE, AURL]));
   end;
 end;
 

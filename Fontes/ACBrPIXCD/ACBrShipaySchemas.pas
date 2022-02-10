@@ -263,6 +263,46 @@ type
     property wallet: String read fwallet write fwallet;
   end;
 
+
+  { TShipayOrderInfo }
+
+  TShipayOrderInfo = class(TShipayOrderBase)
+  private
+    fcreated_at: TDateTime;
+    fexpiration_date: TDateTime;
+    fexternal_id: String;
+    fitems: TShipayItemArray;
+    fpaid_amount: Currency;
+    fpayment_date: TDateTime;
+    fpix_psp: String;
+    ftotal_order: Currency;
+    fupdated_at: TDateTime;
+    fwallet: String;
+    fwallet_payment_id: String;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TShipayOrderInfo);
+
+    property created_at: TDateTime read fcreated_at write fcreated_at;
+    property expiration_date: TDateTime read fexpiration_date write fexpiration_date;
+    property external_id: String read fexternal_id write fexternal_id;
+    property items: TShipayItemArray read fitems;
+    property paid_amount: Currency read fpaid_amount write fpaid_amount;
+    property payment_date: TDateTime read fpayment_date write fpayment_date;
+    property pix_psp: String read fpix_psp write fpix_psp;
+    property total_order: Currency read ftotal_order write ftotal_order;
+    property updated_at: TDateTime read fupdated_at write fupdated_at;
+    property wallet: String read fwallet write fwallet;
+    property wallet_payment_id: String read fwallet_payment_id write fwallet_payment_id;
+  end;
+
+
 function ShipayOrderStatusToString(AStatus: TShipayOrderStatus): String;
 function StringToShipayOrderStatus(const AString: String): TShipayOrderStatus;
 
@@ -623,15 +663,19 @@ end;
 procedure TShipayBuyer.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['cpf_cnpj'] := fcpf_cnpj;
+   if (fcpf_cnpj <> '') then
+     AJSon.S['cpf_cnpj'] := fcpf_cnpj;
    AJSon.S['email'] := femail;
    AJSon.S['name'] := fname;
-   AJSon.S['phone'] := fphone;
+   if (fphone <> '') then
+     AJSon.S['phone'] := fphone;
   {$Else}
-   AJSon['cpf_cnpj'].AsString := fcpf_cnpj;
+   if (fcpf_cnpj <> '') then
+     AJSon['cpf_cnpj'].AsString := fcpf_cnpj;
    AJSon['email'].AsString := femail;
    AJSon['name'].AsString := fname;
-   AJSon['phone'].AsString := fphone;
+   if (fphone <> '') then
+     AJSon['phone'].AsString := fphone;
   {$EndIf}
 end;
 
@@ -863,20 +907,26 @@ procedure TShipayOrderCreated.DoWriteToJSon(AJSon: TJsonObject);
 begin
   inherited DoWriteToJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['deep_link'] := fdeep_link;
+   if (fdeep_link <> '') then
+     AJSon.S['deep_link'] := fdeep_link;
    if (fexpiration_date <> 0) then
      AJSon.S['expiration_date'] := DateTimeToIso8601(fexpiration_date);
-   AJSon.S['pix_dict_key'] := fpix_dict_key;
-   AJSon.S['pix_psp'] := fpix_psp;
+   if (fpix_dict_key <> '') then
+     AJSon.S['pix_dict_key'] := fpix_dict_key;
+   if (fpix_psp <> '') then
+     AJSon.S['pix_psp'] := fpix_psp;
    AJSon.S['qr_code'] := fqr_code;
    AJSon.S['qr_code_text'] := fqr_code_text;
    AJSon.S['wallet'] := fwallet;
   {$Else}
-   AJSon['deep_link'].AsString := fdeep_link;
+   if (fdeep_link <> '') then
+     AJSon['deep_link'].AsString := fdeep_link;
    if (fexpiration_date <> 0) then
      AJSon['expiration_date'].AsString := DateTimeToIso8601(fexpiration_date);
-   AJSon['pix_dict_key'].AsString := fpix_dict_key;
-   AJSon['pix_psp'].AsString := fpix_psp;
+   if (fpix_dict_key <> '') then
+     AJSon['pix_dict_key'].AsString := fpix_dict_key;
+   if (fpix_psp <> '') then
+     AJSon['pix_psp'].AsString := fpix_psp;
    AJSon['qr_code'].AsString := fqr_code;
    AJSon['qr_code_text'].AsString := fqr_code_text;
    AJSon['wallet'].AsString := fwallet;
@@ -908,6 +958,165 @@ begin
    fqr_code := AJSon['qr_code'].AsString;
    fqr_code_text := AJSon['qr_code_text'].AsString;
    fwallet := AJSon['wallet'].AsString;
+  {$EndIf}
+end;
+
+{ TShipayOrderInfo }
+
+constructor TShipayOrderInfo.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  fitems := TShipayItemArray.Create('items');
+  Clear;
+end;
+
+destructor TShipayOrderInfo.Destroy;
+begin
+  fitems.Free;
+  inherited Destroy;
+end;
+
+procedure TShipayOrderInfo.Clear;
+begin
+  inherited Clear;
+  fcreated_at := 0;
+  fexpiration_date := 0;
+  fexternal_id := '';
+  fitems.Clear;
+  fpaid_amount := 0;
+  fpayment_date := 0;
+  fpix_psp := '';
+  ftotal_order := 0;
+  fupdated_at := 0;
+  fwallet := '';
+  fwallet_payment_id := '';
+end;
+
+function TShipayOrderInfo.IsEmpty: Boolean;
+begin
+  Result := inherited IsEmpty and
+            fitems.IsEmpty and
+            (fcreated_at = 0) and
+            (fexpiration_date = 0) and
+            (fexternal_id = '') and
+            (fpaid_amount = 0) and
+            (fpayment_date = 0) and
+            (fpix_psp = '') and
+            (ftotal_order = 0) and
+            (fupdated_at = 0) and
+            (fwallet = '') and
+            (fwallet_payment_id = '');
+end;
+
+procedure TShipayOrderInfo.Assign(Source: TShipayOrderInfo);
+begin
+  inherited Assign(Source);
+  fcreated_at := Source.created_at;
+  fexpiration_date := Source.expiration_date;
+  fexternal_id := Source.external_id;
+  fitems.Assign(Source.items);
+  fpaid_amount := Source.paid_amount;
+  fpayment_date := Source.payment_date;
+  fpix_psp := Source.pix_psp;
+  ftotal_order := Source.total_order;
+  fupdated_at := Source.updated_at;
+  fwallet := Source.wallet;
+  fwallet_payment_id := Source.wallet_payment_id;
+end;
+
+procedure TShipayOrderInfo.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  inherited DoWriteToJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (fcreated_at <> 0) then
+     AJSon.S['created_at'] := DateTimeToIso8601(fcreated_at);
+   if (fexpiration_date <> 0) then
+     AJSon.S['expiration_date'] := DateTimeToIso8601(fexpiration_date);
+   if (fexternal_id <> '') then
+     AJSon.S['external_id'] := fexternal_id;
+   fitems.WriteToJSon(AJSon);
+   if (fpaid_amount <> 0) then
+     AJSon.D['paid_amount'] := fpaid_amount;
+   if (fpayment_date <> 0) then
+     AJSon.S['payment_date'] := DateTimeToIso8601(fpayment_date);
+   if (fpix_psp <> '') then
+     AJSon.S['pix_psp'] := fpix_psp;
+   if (ftotal_order <> 0) then
+     AJSon.D['total_order'] := ftotal_order;
+   if (fupdated_at <> 0) then
+     AJSon.S['updated_at'] := DateTimeToIso8601(fupdated_at);
+   AJSon.S['wallet'] := fwallet;
+   if (fwallet_payment_id <> '') then
+     AJSon.S['wallet_payment_id'] := fwallet_payment_id;
+  {$Else}
+   if (fcreated_at <> 0) then
+     AJSon['created_at'].AsString := DateTimeToIso8601(fcreated_at);
+   if (fexpiration_date <> 0) then
+     AJSon['expiration_date'].AsString := DateTimeToIso8601(fexpiration_date);
+   if (fexternal_id <> '') then
+     AJSon['external_id'].AsString := fexternal_id;
+   fitems.WriteToJSon(AJSon);
+   if (fpaid_amount <> 0) then
+     AJSon['paid_amount'].AsNumber := fpaid_amount;
+   if (fpayment_date <> 0) then
+     AJSon['payment_date'].AsString := DateTimeToIso8601(fpayment_date);
+   if (fpix_psp <> '') then
+     AJSon['pix_psp'].AsString := fpix_psp;
+   if (ftotal_order <> 0) then
+     AJSon['total_order'].AsNumber := ftotal_order;
+   if (fupdated_at <> 0) then
+     AJSon['updated_at'].AsString := DateTimeToIso8601(fupdated_at);
+   AJSon['wallet'].AsString := fwallet;
+   if (fwallet_payment_id <> '') then
+     AJSon['wallet_payment_id'].AsString := fwallet_payment_id;
+  {$EndIf}
+end;
+
+procedure TShipayOrderInfo.DoReadFromJSon(AJSon: TJsonObject);
+var
+  s: String;
+begin
+  inherited DoReadFromJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fitems.ReadFromJSon(AJSon);
+   s := AJSon.S['created_at'];
+   if (s <> '') then
+     fcreated_at := Iso8601ToDateTime(s);
+   s := AJSon.S['expiration_date'];
+   if (s <> '') then
+     fexpiration_date := Iso8601ToDateTime(s);
+   fexternal_id := AJSon.S['external_id'];
+   fpaid_amount := AJSon.D['paid_amount'];
+   s := AJSon.S['payment_date'];
+   if (s <> '') then
+     fpayment_date := Iso8601ToDateTime(s);
+   fpix_psp := AJSon.S['pix_psp'];
+   ftotal_order := AJSon.D['total_order'];
+   s := AJSon.S['updated_at'];
+   if (s <> '') then
+     fupdated_at := Iso8601ToDateTime(s);
+   fwallet := AJSon.S['wallet'];
+   fwallet_payment_id := AJSon.S['wallet_payment_id'];
+  {$Else}
+   fitems.ReadFromJSon(AJSon);
+   s := AJSon['created_at'].AsString;
+   if (s <> '') then
+     fcreated_at := Iso8601ToDateTime(s);
+   s := AJSon['expiration_date'].AsString;
+   if (s <> '') then
+     fexpiration_date := Iso8601ToDateTime(s);
+   fexternal_id := AJSon['external_id'].AsString;
+   fpaid_amount := AJSon['paid_amount'].AsNumber;
+   s := AJSon['payment_date'].AsString;
+   if (s <> '') then
+     fpayment_date := Iso8601ToDateTime(s);
+   fpix_psp := AJSon['pix_psp'].AsString;
+   ftotal_order := AJSon['total_order'].AsNumber;
+   s := AJSon['updated_at'].AsString;
+   if (s <> '') then
+     fupdated_at := Iso8601ToDateTime(s);
+   fwallet := AJSon['wallet'].AsString;
+   fwallet_payment_id := AJSon['wallet_payment_id'].AsString;
   {$EndIf}
 end;
 

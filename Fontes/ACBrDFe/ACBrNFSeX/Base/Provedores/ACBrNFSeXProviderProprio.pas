@@ -106,8 +106,9 @@ type
 implementation
 
 uses
-  ACBrUtil,
-  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts, ACBrNFSeXConversao;
+  ACBrUtil, ACBrDFeException,
+  ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts, ACBrNFSeXConversao,
+  ACBrNFSeXWebserviceBase;
 
 { TACBrNFSeProviderProprio }
 
@@ -308,6 +309,8 @@ end;
 procedure TACBrNFSeProviderProprio.PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaSituacao(
@@ -324,6 +327,8 @@ end;
 procedure TACBrNFSeProviderProprio.PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaLoteRps(
@@ -340,6 +345,8 @@ end;
 procedure TACBrNFSeProviderProprio.PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaporRps(
@@ -356,6 +363,8 @@ end;
 procedure TACBrNFSeProviderProprio.PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSe(
@@ -372,6 +381,8 @@ end;
 procedure TACBrNFSeProviderProprio.PrepararConsultaNFSeporFaixa(Response: TNFSeConsultaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSeporFaixa(
@@ -389,6 +400,8 @@ procedure TACBrNFSeProviderProprio.PrepararConsultaNFSeServicoPrestado(
   Response: TNFSeConsultaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSeServicoPrestado(
@@ -407,6 +420,8 @@ procedure TACBrNFSeProviderProprio.PrepararConsultaNFSeServicoTomado(
   Response: TNFSeConsultaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSeServicoTomado(
@@ -424,6 +439,8 @@ end;
 procedure TACBrNFSeProviderProprio.PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosCancelaNFSe(
@@ -587,6 +604,8 @@ procedure TACBrNFSeProviderProprio.GerarMsgDadosSubstituiNFSe(
   Response: TNFSeSubstituiNFSeResponse; Params: TNFSeParamsResponse);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
 procedure TACBrNFSeProviderProprio.TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse);

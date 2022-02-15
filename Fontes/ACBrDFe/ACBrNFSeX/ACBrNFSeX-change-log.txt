@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/02/2022
+-- ACBrNFSeXProviderProprio --
+[*] Possível correção para evitar o acesso a serviços não implementados pelo
+    provedor.
+   Por: Italo Giurizzato Junior
 -- CIGA.Provider --
 [*] Possível correção para a leitura correta dos retornos.
    Por: Italo Giurizzato Junior
@@ -51,7 +55,7 @@ Símbolo : Significado
 [*] Alteração visando assinar o pedido de cancelamento
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
-[*] Inclusão de novas cidades.
+[+] Inclusão de novas cidades.
    Por: Marcelo Dev
 -- ISSRio.GravarXml --
 [*] A aliquota deve ser informada dividida por 100.

@@ -56,7 +56,6 @@ type
     FNFSe: TNFSe;
     FACBrNFSe: TACBrDFe;
 
-    FXMLNFSe: String;
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
@@ -104,7 +103,6 @@ type
     // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
     property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
     property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
-    property XMLNFSe: String     read FXMLNFSe       write FXMLNFSe;
     property Confirmada: Boolean read FConfirmada    write FConfirmada;
     property Alertas: String     read FAlertas;
 
@@ -584,7 +582,7 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   Result := FProvider.LerXML(AXml, FNFSe);
-  FXMLOriginal := String(AXML);
+  FXMLOriginal := AXML;
 end;
 
 function TNotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;

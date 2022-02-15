@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/02/2022
+-- CIGA.Provider --
+[*] Possível correção para a leitura correta dos retornos.
+   Por: Italo Giurizzato Junior
 -- Tinus.Provider --
 [*] Alteração visando assinar o pedido de cancelamento
    Por: Italo Giurizzato Junior

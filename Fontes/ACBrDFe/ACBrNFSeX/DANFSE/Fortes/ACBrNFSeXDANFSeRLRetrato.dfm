@@ -2,11 +2,12 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
   Left = 349
   Top = 55
   Caption = 'frlXDANFSeRLRetrato'
-  ClientHeight = 1003
+  ClientHeight = 845
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
-    Top = 2
+    Left = 32
+    Top = 0
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 8.000000000000000000
     Margins.RightMargin = 5.099999999999999000
@@ -1003,7 +1004,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 492
       Width = 752
-      Height = 317
+      Height = 325
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -1685,7 +1686,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object RLLabel54: TRLLabel
         Left = 297
-        Top = 210
+        Top = 218
         Width = 176
         Height = 15
         Alignment = taCenter
@@ -1905,13 +1906,14 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rllNatOperacao: TRLLabel
+      object rllNatOperacao: TRLMemo
         Left = 297
         Top = 178
         Width = 176
-        Height = 30
+        Height = 38
         Alignment = taCenter
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1937,9 +1939,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object rllRegimeEspecial: TRLLabel
         Left = 297
-        Top = 226
+        Top = 235
         Width = 176
-        Height = 30
+        Height = 23
         Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -2026,7 +2028,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 809
+      Top = 817
       Width = 752
       Height = 103
       BandType = btSummary
@@ -2098,7 +2100,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 912
+      Top = 920
       Width = 752
       Height = 73
       BandType = btSummary

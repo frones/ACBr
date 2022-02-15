@@ -1,10 +1,12 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 267
-  Top = 115
-  Caption = 'frlDANFSeRLRetrato'
+  Left = 287
+  Height = 587
+  Top = 87
+  Caption = 'frlXDANFSeRLRetrato'
+  ClientHeight = 587
   inherited RLNFSe: TRLReport
-    Left = 8
-    Top = 2
+    Left = 32
+    Top = 0
     Margins.LeftMargin = 6
     Margins.TopMargin = 8
     Margins.RightMargin = 5.1
@@ -891,7 +893,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbItens: TRLBand[4]
       Left = 23
-      Height = 24
+      Height = 21
       Top = 453
       Width = 752
       Borders.Sides = sdCustom
@@ -899,7 +901,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      IntegralHeight = False
       BeforePrint = rlbItensBeforePrint
       object rlmDescricao: TRLMemo
         Left = 10
@@ -916,8 +917,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbISSQN: TRLBand[5]
       Left = 23
-      Height = 317
-      Top = 495
+      Height = 325
+      Top = 492
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -929,7 +930,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLDraw52: TRLDraw
         Left = 1
         Height = 1
-        Top = 72
+        Top = 76
         Width = 751
         DrawKind = dkLine
       end
@@ -1110,15 +1111,15 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object rlsLinhaH1: TRLDraw
         Left = 0
         Height = 1
-        Top = 38
+        Top = 56
         Width = 752
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rllCodigoObra: TRLLabel
-        Left = 12
+        Left = 346
         Height = 14
-        Top = 56
+        Top = 61
         Width = 76
         Caption = 'Código da Obra:'
         Font.Color = clWindowText
@@ -1128,9 +1129,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodObra: TRLLabel
-        Left = 92
+        Left = 426
         Height = 13
-        Top = 56
+        Top = 61
         Width = 64
         Font.Color = clWindowText
         Font.Height = -11
@@ -1140,9 +1141,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllTituloConstCivil: TRLLabel
-        Left = 205
+        Left = 6
         Height = 15
-        Top = 40
+        Top = 60
         Width = 334
         Alignment = taCenter
         Caption = 'DETALHAMENTO ESPECIFICO DA CONSTRUÇÃO CIVIL'
@@ -1154,9 +1155,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodigoArt: TRLLabel
-        Left = 404
+        Left = 527
         Height = 14
-        Top = 56
+        Top = 61
         Width = 64
         Caption = 'Código ART:'
         Font.Color = clWindowText
@@ -1166,9 +1167,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllCodART: TRLLabel
-        Left = 484
+        Left = 597
         Height = 13
-        Top = 56
+        Top = 62
         Width = 59
         Font.Color = clWindowText
         Font.Height = -11
@@ -1315,7 +1316,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel44: TRLLabel
         Left = 311
         Height = 15
-        Top = 75
+        Top = 79
         Width = 130
         Alignment = taCenter
         Caption = 'TRIBUTOS FEDERAIS'
@@ -1533,7 +1534,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       object RLLabel54: TRLLabel
         Left = 297
         Height = 15
-        Top = 210
+        Top = 218
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -1727,13 +1728,14 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rllNatOperacao: TRLLabel
+      object rllNatOperacao: TRLMemo
         Left = 297
-        Height = 30
+        Height = 38
         Top = 178
         Width = 176
         Alignment = taCenter
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
@@ -1755,8 +1757,8 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       end
       object rllRegimeEspecial: TRLLabel
         Left = 297
-        Height = 30
-        Top = 226
+        Height = 23
+        Top = 235
         Width = 176
         Alignment = taCenter
         AutoSize = False
@@ -1793,9 +1795,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object rllMsgTeste: TRLLabel
-        Left = 15
+        Left = 13
         Height = 31
-        Top = 57
+        Top = 45
         Width = 724
         Alignment = taCenter
         Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
@@ -1835,7 +1837,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object rbOutrasInformacoes: TRLBand[6]
       Left = 23
       Height = 103
-      Top = 812
+      Top = 817
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1901,7 +1903,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object rlbCanhoto: TRLBand[7]
       Left = 23
       Height = 73
-      Top = 915
+      Top = 920
       Width = 752
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -2073,7 +2075,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 14
         Top = 1
         Width = 48
-        Caption = 'Descrição'
+        Caption = 'DescriÃ§Ã£o'
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
@@ -2108,7 +2110,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     object subItens: TRLSubDetail[9]
       Left = 23
       Height = 18
-      Top = 477
+      Top = 474
       Width = 752
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2177,6 +2179,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Top = 72
+    Left = 96
   end
 end

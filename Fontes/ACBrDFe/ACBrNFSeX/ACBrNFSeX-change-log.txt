@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/02/2022
+-- ACBrNFSeXDANFSERLRetrato --
+[*] Ajuste na impressão do campo Natureza da Operação.
+   Por: Paulo Henrique Panico
+
 14/02/2022
 -- ACBrNFSeXServicos --
 [*] A cidade de Irece/BA trocou de Provedor de Fisco para Saatri.

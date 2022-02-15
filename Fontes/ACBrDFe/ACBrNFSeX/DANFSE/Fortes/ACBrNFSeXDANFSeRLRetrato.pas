@@ -177,7 +177,7 @@ type
     rllValorLiquido: TRLLabel;
     RLDraw17: TRLDraw;
     rllIncentivador: TRLLabel;
-    rllNatOperacao: TRLLabel;
+    rllNatOperacao: TRLMemo;
     rllValorDeducoes: TRLLabel;
     rllRegimeEspecial: TRLLabel;
     rllOpcaoSimples: TRLLabel;
@@ -413,7 +413,7 @@ begin
 
   With fpNFSe do
   begin
-    rllNatOperacao.Caption    := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
+    rllNatOperacao.Lines.Text := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
     MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
     RLLabel137.Visible        := MostrarNaturezaOperacao;
     rllRegimeEspecial.Caption := ACBrStr(FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));

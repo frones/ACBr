@@ -62,6 +62,8 @@ procedure TNFSeW_ISSRio.Configuracao;
 begin
   inherited Configuracao;
 
+  DivAliq100 := True;
+
   FormatoItemListaServico := filsSemFormatacao;
 end;
 

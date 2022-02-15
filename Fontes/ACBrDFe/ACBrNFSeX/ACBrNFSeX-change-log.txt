@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 15/02/2022
+-- ACBrNFSeXServicos --
+[*] Inclusão de novas cidades.
+   Por: Marcelo Dev
+-- ISSRio.GravarXml --
+[*] A aliquota deve ser informada dividida por 100.
+   Por: Guilherme Costa
+-- EL.GravarXml --
+[*] Alteração para o envio correto do grupo SubstituicaoRps.
+   Por: Luiz Sodré
 -- ACBrNFSeXDANFSERLRetrato --
 [*] Ajuste na impressão do campo Natureza da Operação.
    Por: Paulo Henrique Panico

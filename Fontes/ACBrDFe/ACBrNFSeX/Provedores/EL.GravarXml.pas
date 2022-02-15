@@ -405,17 +405,15 @@ begin
 end;
 
 function TNFSeW_EL.GerarRpsSubstituido: TACBrXmlNode;
+var
+  InfIDSubstituido: string;
 begin
   Result := CreateElement('RpsSubstituido');
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 15, 1,
-                        OnlyNumber(NFSe.RpsSubstituido.Numero), DSC_NUMRPSSUB));
+  InfIDSubstituido := Poem_Zeros(OnlyNumber(NFSe.RpsSubstituido.Numero) +
+                                 NFSe.RpsSubstituido.Serie, 15);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'Serie', 1, 5, 1,
-                                   NFSe.RpsSubstituido.Serie, DSC_SERIERPSSUB));
-
-  Result.AppendChild(AddNode(tcStr, '#1', 'Tipo', 1, 1, 1,
-                       TipoRPSToStr(NFSe.RpsSubstituido.Tipo), DSC_TIPORPSSUB));
+  Result.AppendChild(AddNode(tcStr, '#1', 'Id', 1, 15, 1, InfIDSubstituido, ''));
 end;
 
 function TNFSeW_EL.GerarServico: TACBrXmlNodeArray;

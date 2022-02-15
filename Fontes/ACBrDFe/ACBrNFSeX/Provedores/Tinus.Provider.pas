@@ -195,6 +195,7 @@ begin
   begin
     Rps := True;
     LoteRps := True;
+    CancelarNFSe := True;
   end;
 
   SetXmlNameSpace('http://www.tinus.com.br');

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/02/2022
+-- Tinus.Provider --
+[*] Alteração visando assinar o pedido de cancelamento
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Inclusão de novas cidades.
    Por: Marcelo Dev

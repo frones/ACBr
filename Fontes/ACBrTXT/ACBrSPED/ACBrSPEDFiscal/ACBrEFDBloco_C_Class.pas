@@ -3320,8 +3320,8 @@ begin
             LFill( UmRegC500.SER_DOC_REF ) +
             LFill( UmRegC500.NUM_DOC_REF ) +
             LFill( UmRegC500.MES_DOC_REF ) +
-            VLFill( UmRegC500.OUTRAS_DED, 0) +
-            VLFill( UmRegC500.ENER_INJET, 0)
+            VLFill( UmRegC500.ENER_INJET, 0) +
+            VLFill( UmRegC500.OUTRAS_DED, 0)
            ) ;
       end
       else if FBloco_0.Registro0000.COD_VER >= vlVersao113 then

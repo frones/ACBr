@@ -1,0 +1,20 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="EnviaLoteRpsAsyncResposta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="NumeroLote"/>
+          <xs:element type="xs:string" name="NumeroProtocolo"/>
+          <xs:element type="xs:string" name="DataRecebimento"/>
+                                 <xs:element name="Msg" maxOccurs="unbounded" minOccurs="0">
+                                     <xs:complexType>
+                                       <xs:sequence>
+                                          <xs:element type="xs:int" name="Erro"/>
+                                          <xs:element type="xs:string" name="Status"/>
+                                       </xs:sequence>
+                                    </xs:complexType>
+                                 </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

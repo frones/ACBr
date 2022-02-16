@@ -567,6 +567,7 @@ begin
         altContratual.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
         altContratual.infoContrato.horContratual.dscJorn   := INIRec.ReadString(sSecao, 'dscJorn', '');
         altContratual.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));
+        altContratual.infoContrato.horContratual.horNoturno:= eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'horNoturno', 'S'));  //26/01/2022
       end;
 
       I := 1;

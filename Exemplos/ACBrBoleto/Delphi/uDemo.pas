@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{																		                                      	   }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -307,7 +307,7 @@ begin
   if CobAnterior <> TACBrTipoCobranca(cbxBanco.ItemIndex) then
     edtLocalPag.Text := '';
 
-  Boleto.ListadeBoletos.Clear;
+  //Boleto.ListadeBoletos.Clear;
 
   Boleto.PrefixArqRemessa                  := edtPrefixRemessa.Text;
   Boleto.LayoutRemessa                     := TACBrLayoutRemessa(cbxCNAB.itemindex);
@@ -375,6 +375,7 @@ begin
   BeneficiarioWS.ClientSecret := edtClientSecret.Text;
   BeneficiarioWS.KeyUser      := edtKeyUser.Text;
   WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
+  WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
@@ -512,8 +513,8 @@ begin
   Titulo.CodigoMoraJuros   := cjIsento;
   //Mensagem.Text     := memMensagem.Text;
   Titulo.OcorrenciaOriginal.Tipo := toRemessaBaixar;
-  Titulo.Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
-  Titulo.Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
+  Titulo.Instrucao1        := trim(edtInstrucoes1.Text);
+  Titulo.Instrucao2        := trim(edtInstrucoes2.Text);
 
   Titulo.QtdePagamentoParcial   := 1;
   Titulo.TipoPagamento          := tpNao_Aceita_Valor_Divergente;
@@ -546,9 +547,10 @@ begin
     Titulo.Detalhamento.Add('Desconto ........................................................................... Valor: R$ 0,00' );
   end;
 
-  logo:= ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
+  //if FileExists(ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg') then
+    // logo := ExtractFileDir(ParamStr(0)) + '\acbr_logo.jpg';
 
-  Titulo.ArquivoLogoEmp := logo;  // logo da empresa
+  //Titulo.ArquivoLogoEmp := logo;  // logo da empresa
   Titulo.Verso := ((cbxImprimirVersoFatura.Checked) and ( cbxImprimirVersoFatura.Enabled = true ));
 
 end;
@@ -914,6 +916,7 @@ begin
 end;
 
 procedure TfrmDemo.btnConfigGravarClick(Sender: TObject);
+var teste : TStringList;
 begin
   AplicarConfiguracoesAoComponente;
   GravarIniComponente;

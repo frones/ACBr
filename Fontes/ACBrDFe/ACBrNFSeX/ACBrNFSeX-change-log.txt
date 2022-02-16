@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/02/2022
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade Viradouro/SP.
+   Por: Barrys
+
 15/02/2022
 -- ACBrNFSeXProviderProprio --
 [*] Possível correção para evitar o acesso a serviços não implementados pelo

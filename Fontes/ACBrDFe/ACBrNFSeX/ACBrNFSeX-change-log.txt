@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/02/2022
+-- CIGA.Provider --
+[*] Correção na grafia da tag de serviço de consulta a NFS-e por Rps.
+   Por: Metasis Sistemas
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade Viradouro/SP.
    Por: Barrys

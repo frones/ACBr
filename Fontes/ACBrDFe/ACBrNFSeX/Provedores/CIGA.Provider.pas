@@ -127,13 +127,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:ConsultarNfsePorRpsRequest>';
+  Request := '<nfse:ConsultarNfseRpsRequest>';
   Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
+  Request := Request + '</nfse:ConsultarNfseRpsRequest>';
+
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['outputXML', 'ConsultarNfsePorRpsResposta'],
+                     ['outputXML', 'ConsultarNfseRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

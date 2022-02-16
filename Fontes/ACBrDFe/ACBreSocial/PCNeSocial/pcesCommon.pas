@@ -127,6 +127,7 @@ type
   TInfoASO = class;
   TLocalTrabGeral = class;
   TLocalTrabDom = class;
+  TLocalTempDom = class;
   TInfoCeletista = class;
   TInfoEstatutario = class;
   TInfoRegimeTrab = class;
@@ -829,16 +830,39 @@ type
     property Uf: string read FUf write FUf;
   end;
 
+  TLocalTempDom = class
+  private
+    FTpLograd: String;
+    FDscLograd: string;
+    FNrLograd: string;
+    FComplemento: string;
+    FBairro: string;
+    FCep: string;
+    FCodMunic: integer;
+    FUf: string;
+  public
+    property TpLograd: String read FTpLograd write FTpLograd;
+    property DscLograd: string read FDscLograd write FDscLograd;
+    property NrLograd: string read FNrLograd write FNrLograd;
+    property Complemento: string read FComplemento write FComplemento;
+    property Bairro: string read FBairro write FBairro;
+    property Cep: string read FCep write FCep;
+    property CodMunic: integer read FCodMunic write FCodMunic;
+    property Uf: string read FUf write FUf;
+  end;
+
   TLocalTrabalho = class
   private
     FLocalTrabGeral: TLocalTrabGeral;
     FLocalTrabDom: TLocalTrabDom;
+    FLocalTempDom: TLocalTempDom;
   public
     constructor Create;
     destructor Destroy; override;
 
     property LocalTrabGeral: TLocalTrabGeral read FLocalTrabGeral write FLocalTrabGeral;
     property LocalTrabDom: TLocalTrabDom read FLocalTrabDom write FLocalTrabDom;
+    property LocalTempDom: TLocalTempDom read FLocalTempDom write FLocalTempDom;
   end;
 
   TNascimento = class
@@ -1036,7 +1060,7 @@ type
     FJustContr: string;
     FTpInclContr: tpInclContr;
     FJustProrr: string;
-
+    FIdeEstabVinc: TIdeEstabVinc;
     FIdeTomadorServ: TIdeTomadorServ;
     FIdeTrabSubstituido: TIdeTrabSubstituidoCollection;
   public
@@ -1049,6 +1073,7 @@ type
     property justProrr: string read FJustProrr write FJustProrr;
     property IdeTomadorServ: TIdeTomadorServ read FIdeTomadorServ write FIdeTomadorServ;
     property IdeTrabSubstituido: TIdeTrabSubstituidoCollection read FIdeTrabSubstituido write FIdeTrabSubstituido;
+    property IdeEstabVinc: TIdeEstabVinc read FIdeEstabVinc write FIdeEstabVinc;
   end;
 
   TAprend = class(TInscricao)
@@ -2055,12 +2080,14 @@ begin
   inherited;
   FIdeTomadorServ     := TIdeTomadorServ.Create;
   FIdeTrabSubstituido := TIdeTrabSubstituidoCollection.Create;
+  FIdeEstabVinc       := TIdeEstabVinc.Create;;
 end;
 
 destructor TTrabTemporario.Destroy;
 begin
   FIdeTomadorServ.Free;
   FIdeTrabSubstituido.Free;
+  FIdeEstabVinc.Free;
   inherited;
 end;
 
@@ -2219,8 +2246,8 @@ end;
 constructor TVinculo.Create;
 begin
   FInfoRegimeTrab := TInfoRegimeTrab.Create;
-  FInfoContrato:= TInfoContrato.Create;
-  FSucessaoVinc:= TSucessaoVinc.Create;
+  FInfoContrato := TInfoContrato.Create;
+  FSucessaoVinc := TSucessaoVinc.Create;
   ftransfDom := TtransfDom.Create;
   FMudancaCPF := TMudancaCPF.Create;
   FAfastamento := TAfastamento.Create;
@@ -2337,12 +2364,14 @@ constructor TLocalTrabalho.Create;
 begin
   FLocalTrabGeral := TLocalTrabGeral.Create;
   FLocalTrabDom := TLocalTrabDom.Create;
+  FLocalTempDom := TLocalTempDom.Create;
 end;
 
 destructor TLocalTrabalho.Destroy;
 begin
   FLocalTrabGeral.Free;
   FLocalTrabDom.Free;
+  FLocalTempDom.Free;
   inherited;
 end;
 

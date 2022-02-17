@@ -300,7 +300,7 @@ type
     procedure ConfigurarComponente;
     procedure AlimentarNFSe(NumDFe, NumLote: String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser;
-      NomeArq: string = 'temp.xml');
+      NomeArq: string = 'temp.xml'; aTempo: Integer = 0);
     procedure AtualizarSSLLibsCombo;
     procedure AtualizarCidades;
     function RoundTo5(Valor: Double; Casas: Integer): Double;
@@ -871,7 +871,7 @@ end;
 procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
   NumNFSe, Codigo, Motivo, NumLote, CodVerif, SerNFSe, NumRps,
-  SerRps, ValNFSe, ChNFSe: String;
+  SerRps, ValNFSe, ChNFSe, eMailTomador: String;
   CodCanc: Integer;
   InfCancelamento: TInfCancelamento;
   Titulo: string;
@@ -973,6 +973,13 @@ begin
       if not (InputQuery(Titulo, 'Código de Verificação ou Chave de Autenticação', CodVerif)) then
         exit;
     end;
+
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proSigISS then
+    begin
+      eMailTomador := '';
+      if not (InputQuery(Titulo, 'eMail do Tomador', eMailTomador)) then
+        exit;
+    end;
   end;
 
   InfCancelamento := TInfCancelamento.Create;
@@ -990,6 +997,7 @@ begin
       SerieRps        := SerRps;
       ValorNFSe       := StrToFloatDef(ValNFSe, 0);
       CodVerificacao  := CodVerif;
+      email           := eMailTomador;
     end;
 
     ACBrNFSeX1.CancelarNFSe(InfCancelamento);
@@ -2518,8 +2526,8 @@ begin
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
-                LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
-                LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+                LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);
+                LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml', 1000);
 
                 if Erros.Count > 0 then
                 begin
@@ -2565,8 +2573,8 @@ begin
                 memoLog.Lines.Add('Situação Lote : ' + Situacao);
                 memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
-                LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
-                LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+                LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);
+                LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml', 1000);
 
                 if Erros.Count > 0 then
                 begin
@@ -2753,6 +2761,7 @@ begin
             memoLog.Lines.Add('Situação      : ' + Situacao);
             memoLog.Lines.Add('Data          : ' + DateToStr(Data));
             memoLog.Lines.Add('Desc. Situação: ' + DescSituacao);
+            memoLog.Lines.Add('ID Nota       : ' + idNota);
             memoLog.Lines.Add('Link          : ' + Link);
             memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
@@ -2903,8 +2912,8 @@ begin
               memoLog.Lines.Add('Parâmetros de Retorno');
               memoLog.Lines.Add('Sucesso       : ' + BoolToStr(Sucesso, True));
 
-              LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml');
-              LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml');
+              LoadXML(XmlEnvio, WBXmlEnvio, 'temp1.xml', 1000);
+              LoadXML(XmlRetorno, WBXmlRetorno, 'temp2.xml', 1000);
 
               if Erros.Count > 0 then
               begin
@@ -3051,6 +3060,9 @@ begin
     memoLog.Lines.Add('Cod. Verificacao: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
     memoLog.Lines.Add('Prestador.......: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Prestador.RazaoSocial);
     memoLog.Lines.Add('Tomador.........: ' + ACBrNFSeX1.NotasFiscais.Items[i].NFSe.Tomador.RazaoSocial);
+
+    if ACBrNFSeX1.NotasFiscais.Items[i].NFSe.SituacaoNfse = ACBrNFSeXConversao.snCancelado then
+      memoLog.Lines.Add('A Nota encontra-se Cancelada.');
 
     if ACBrNFSeX1.NotasFiscais.Items[i].NomeArq <> '' then
     begin
@@ -3225,14 +3237,18 @@ begin
   lblVersaoSchemas.Caption := VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao);
 end;
 
-procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser; NomeArq: string);
+procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser;
+  NomeArq: string; aTempo: Integer);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
-                      AnsiString(RetWS), False, False);
+  if RetWS <> '' then
+  begin
+    ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
+                        AnsiString(RetWS), False, False);
 
-  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq);
+    MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq);
 
-  sleep(1000);
+    sleep(aTempo);
+  end;
 end;
 
 procedure TfrmACBrNFSe.PathClick(Sender: TObject);

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2022
+--ACBrBancoInter.pas--
+[-] TK2369 ACBrBancoInter - CNAB400 Sem Data Mora
+
 07/02/2022
 --ACBrBancoDoBrasil.pas--
 [*] TK-2320 Ajuste remessa CNAB400 campo "DataDesconto" para ocorrencia 39

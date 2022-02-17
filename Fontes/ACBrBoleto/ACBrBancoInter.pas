@@ -249,9 +249,9 @@ begin
             Space(6)                                                                                                                                     + // 151 a 156 Data da emissão do título
             Space(3)                                                                                                                                     + // 157 a 159 Branco
             ACodigoMoraJuros                                                                                                                             + // 160 a 160 Campo de Tipo de Mora/juros (Utilizar Percentual)
-            PadLeft(IfThen(ACodigoMoraJuros = '1',ValorMora,'0'), 13, '0')                                                                           + // 161 a 173 (Valor zerado para utilizar percentual)
-            PadLeft(ifThen(ACodigoMoraJuros = '2',ValorMora,'0'), 4, '0')                                                                            + // 174 a 177 Percentual a ser cobrado juros/mora
-            ADataMoraJuros                                                                                                                               + // 178 a 183 Data da mora
+            PadLeft(IfThen(ACodigoMoraJuros = '1',ValorMora,'0'), 13, '0')                                                                               + // 161 a 173 (Valor zerado para utilizar percentual)
+            PadLeft(ifThen(ACodigoMoraJuros = '2',ValorMora,'0'), 4, '0')                                                                                + // 174 a 177 Percentual a ser cobrado juros/mora
+            PadLeft(ADataMoraJuros, 6, '0')                                                                                                              + // 178 a 183 Data da mora
             '0'                                                                                                                                          + // 184 a 184 Campo de descontos
             PadLeft('', 13, '0')                                                                                                                         + // 185 a 197 Valor do desconto 1
             PadLeft('', 4, '0')                                                                                                                          + // 198 a 201 Percentual de desconto 1

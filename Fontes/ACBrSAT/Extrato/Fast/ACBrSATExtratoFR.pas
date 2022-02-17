@@ -77,7 +77,6 @@ type
     frxBarCodeObject: TfrxBarCodeObject;
     FFastExtrato: string;
     FTipoImpressao : TTipoImpressao;
-    FExportStream: TMemoryStream;
     function PrepareReport(ACFe: TCFe; ACFeCanc:TCFeCanc = nil): Boolean;
     function GetPreparedReport: TfrxReport;
     procedure CriarDataSetsFrx;
@@ -95,10 +94,9 @@ type
     procedure CarregaFormaPagamento;
     procedure AjustaMargensReports;
     procedure TipoImpressao(AValue:TTipoImpressao);
-    procedure SetExportStream(const Value: TMemoryStream);
   protected
     procedure Imprimir;
-    procedure ImprimirExtratoPDF(AStream : TStream = nil);
+    procedure ImprimirExtratoPDF;
     procedure ImprimirExtratoHTML;
 
   public
@@ -107,9 +105,13 @@ type
     procedure ImprimirExtrato(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe: TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+
+    procedure ImprimirExtrato(AStream: TStream; ACFe: TCFe = nil); override;
+    procedure ImprimirExtratoResumido(AStream: TStream; ACFe : TCFe = nil); override;
+    procedure ImprimirExtratoCancelamento(AStream: TStream; ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+
     property PreparedReport: TfrxReport read GetPreparedReport;
   published
-    property ExportStream: TMemoryStream read FExportStream write SetExportStream;
     property FastExtrato: string read FFastExtrato write FFastExtrato;
   end ;
 
@@ -184,11 +186,6 @@ begin
   frxReport.EnabledDataSets.Add(frxCalculoImposto);
   frxReport.EnabledDataSets.Add(frxFormaPagamento);
   frxReport.EnabledDataSets.Add(frxEntrega);
-end;
-
-procedure TACBrSATExtratoFR.SetExportStream(const Value: TMemoryStream);
-begin
-  FExportStream := Value;
 end;
 
 procedure TACBrSATExtratoFR.TipoImpressao(AValue: TTipoImpressao);
@@ -317,7 +314,6 @@ constructor TACBrSATExtratoFR.Create(AOwner: TComponent);
 begin
    inherited create(AOwner);
    FFastExtrato   := '';
-   FExportStream  := Nil;
    CriarDataSetsFrx;
 end;
 
@@ -338,7 +334,7 @@ begin
         else
           frxReport.Print;
       end;
-    fiPDF : ImprimirExtratoPDF(FExportStream);
+    fiPDF : ImprimirExtratoPDF;
     fiHTML: ImprimirExtratoHTML;
   end;
   TipoImpressao(tiNormal);
@@ -373,10 +369,10 @@ begin
   FPArquivoPDF := frxHTMLExport.FileName;
 end;
 
-procedure TACBrSATExtratoFR.ImprimirExtratoPDF(AStream : TStream = nil);
+procedure TACBrSATExtratoFR.ImprimirExtratoPDF;
 begin
-  if (AStream <> nil) then
-    frxPDFExport.Stream := AStream;
+  if (FStream <> nil) then
+    frxPDFExport.Stream := FStream;
 
   frxPDFExport.ShowDialog        := false;
   frxPDFExport.ShowProgress      := MostraStatus;
@@ -405,6 +401,19 @@ begin
   frxReport.Export(frxPDFExport);
   FPArquivoPDF := frxPDFExport.FileName;
 
+end;
+
+procedure TACBrSATExtratoFR.ImprimirExtratoResumido(AStream: TStream;
+  ACFe: TCFe);
+begin
+  inherited;
+  TipoImpressao(tiResumido);
+  try
+    if PrepareReport(ACFe) then
+      ImprimirExtratoPDF;
+  finally
+    TipoImpressao(tiNormal);
+  end;
 end;
 
 procedure TACBrSATExtratoFR.ImprimirExtratoResumido(ACFe: TCFe);
@@ -871,6 +880,31 @@ begin
       Page.LeftMargin := MargemEsquerda;
     if (MargemDireita > 0) then
       Page.RightMargin := MargemDireita;
+  end;
+end;
+
+procedure TACBrSATExtratoFR.ImprimirExtrato(AStream: TStream; ACFe: TCFe);
+begin
+  inherited;
+  TipoImpressao(tiNormal);
+  try
+    if PrepareReport(ACFe) then
+      ImprimirExtratoPDF;
+  finally
+    TipoImpressao(tiNormal);
+  end;
+end;
+
+procedure TACBrSATExtratoFR.ImprimirExtratoCancelamento(AStream: TStream;
+  ACFe: TCFe; ACFeCanc: TCFeCanc);
+begin
+  inherited;
+  TipoImpressao(tiCancelado);
+  try
+    if PrepareReport(ACFe,ACFeCanc) then
+      ImprimirExtratoPDF;
+  finally
+    TipoImpressao(tiNormal);
   end;
 end;
 

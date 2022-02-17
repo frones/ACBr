@@ -85,6 +85,11 @@ type
     procedure ImprimirExtrato(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+
+    procedure ImprimirExtrato(AStream: TStream; ACFe: TCFe = nil); override;
+    procedure ImprimirExtratoResumido(AStream: TStream; ACFe : TCFe = nil); override;
+    procedure ImprimirExtratoCancelamento(AStream: TStream; ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+
     function GerarImpressaoFiscalMFe(ACFe : TCFe = nil) : String;
   published
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
@@ -840,6 +845,22 @@ begin
   GerarFechamento;
 
   ImprimirCopias;
+end;
+
+procedure TACBrSATExtratoESCPOS.ImprimirExtrato(AStream: TStream; ACFe: TCFe);
+begin
+  raise EACBrSATErro.Create(cACBrSATStreamException);
+end;
+
+procedure TACBrSATExtratoESCPOS.ImprimirExtratoCancelamento(AStream: TStream; ACFe: TCFe;
+  ACFeCanc: TCFeCanc);
+begin
+  raise EACBrSATErro.Create(cACBrSATStreamException);
+end;
+
+procedure TACBrSATExtratoESCPOS.ImprimirExtratoResumido(AStream: TStream; ACFe: TCFe);
+begin
+  raise EACBrSATErro.Create(cACBrSATStreamException);
 end;
 
 function TACBrSATExtratoESCPOS.GerarImpressaoFiscalMFe(ACFe: TCFe): String;

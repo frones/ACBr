@@ -56,6 +56,7 @@ const
 
   cACBrSATClassCreateException = 'Essa Classe deve ser instanciada por TACBrSAT' ;
   cACBrSATSetModeloException   = 'Não é possível mudar o Modelo com o SAT Inicializado' ;
+  cACBrSATStreamException      = 'Este componente de impressão não da suporte a impressão em Stream' ;
   cACBrSATModeloNaoDefinido    = 'Modelo de SAT não definido' ;
   cACBrSATNaoInicializado      = 'ACBrSAT não foi inicializado corretamente' ;
   cACBrSATOcupadoException     = 'SAT ocupado!' + sLineBreak +

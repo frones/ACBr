@@ -51,7 +51,7 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrSATExtratoReportClass = class( TACBrSATExtratoClass )
+  TACBrSATExtratoReportClass = class(TACBrSATExtratoClass)
   private
     fLarguraBobina: Integer;
     fEspacoFinal: Integer;

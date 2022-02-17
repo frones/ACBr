@@ -95,6 +95,7 @@ type
     procedure VerificaExisteACBrSAT;
   protected
     FLayOut: TACBrSATExtratoLayOut;
+    FStream: TStream;
 
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
     procedure SetInternalCFe(ACFe: TCFe);
@@ -107,9 +108,12 @@ type
     property CFe     : TCFe                  read FCFe;
     property CFeCanc : TCFeCanc              read FCFeCanc;
 
-    procedure ImprimirExtrato(ACFe : TCFe = nil); virtual;
-    procedure ImprimirExtratoResumido(ACFe : TCFe = nil); virtual;
-    procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); virtual;
+    procedure ImprimirExtrato(ACFe : TCFe = nil); overload; virtual;
+    procedure ImprimirExtratoResumido(ACFe : TCFe = nil); overload; virtual;
+    procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); overload; virtual;
+    procedure ImprimirExtrato(AStream: TStream; ACFe : TCFe = nil); overload; virtual;
+    procedure ImprimirExtratoResumido(AStream: TStream; ACFe : TCFe = nil); overload; virtual;
+    procedure ImprimirExtratoCancelamento(AStream: TStream; ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); overload; virtual;
 
     function CalcularConteudoQRCode(const ID: String; dEmi_hEmi: TDateTime;
       Valor: Double; const CNPJCPF: String; const assinaturaQRCODE: String): String;
@@ -129,14 +133,13 @@ type
     property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default True;
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default True;
     property FormularioContinuo;
-  end ;
+  end;
 
 implementation
 
 uses ACBrSAT, ACBrSATClass, ACBrUtil;
 
 { TACBrSATExtratoClass }
-
 constructor TACBrSATExtratoClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
@@ -175,33 +178,53 @@ end;
 
 procedure TACBrSATExtratoClass.ImprimirExtrato(ACFe: TCFe);
 begin
-  SetInternalCFe( ACFe );
+  SetInternalCFe(ACFe);
   FLayOut := lCompleto;
 end;
 
-procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(ACFe: TCFe;
-  ACFeCanc: TCFeCanc);
+procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(ACFe: TCFe; ACFeCanc: TCFeCanc);
 begin
-  SetInternalCFe( ACFe );
-  SetInternalCFeCanc( ACFeCanc );
+  SetInternalCFe(ACFe);
+  SetInternalCFeCanc(ACFeCanc);
   FLayOut := lCancelamento;
-end;
-
-function TACBrSATExtratoClass.CalcularConteudoQRCode(const ID: String;
-  dEmi_hEmi:TDateTime; Valor: Double; const CNPJCPF: String;
-  const assinaturaQRCODE: String): String;
-begin
-  Result := ID + '|' +
-            FormatDateTime('yyyymmddhhnnss',dEmi_hEmi) + '|' +
-            FloatToString(Valor,'.','0.00') + '|' +
-            Trim(CNPJCPF) + '|' +
-            assinaturaQRCODE;
 end;
 
 procedure TACBrSATExtratoClass.ImprimirExtratoResumido(ACFe: TCFe);
 begin
   SetInternalCFe( ACFe );
   FLayOut := lResumido;
+end;
+
+procedure TACBrSATExtratoClass.ImprimirExtrato(AStream: TStream; ACFe : TCFe = nil);
+begin
+  SetInternalCFe(ACFe);
+  FLayOut := lCompleto;
+  FStream := AStream;
+end;
+
+procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(AStream: TStream; ACFe: TCFe; ACFeCanc: TCFeCanc);
+begin
+  SetInternalCFe(ACFe);
+  SetInternalCFeCanc(ACFeCanc);
+  FLayOut := lCancelamento;
+  FStream := AStream;
+end;
+
+procedure TACBrSATExtratoClass.ImprimirExtratoResumido(AStream: TStream; ACFe: TCFe);
+begin
+  SetInternalCFe( ACFe );
+  FLayOut := lResumido;
+  FStream := AStream;
+end;
+
+function TACBrSATExtratoClass.CalcularConteudoQRCode(const ID: String; dEmi_hEmi:TDateTime; Valor: Double;
+  const CNPJCPF: String; const assinaturaQRCODE: String): String;
+begin
+  Result := ID + '|' +
+            FormatDateTime('yyyymmddhhnnss',dEmi_hEmi) + '|' +
+            FloatToString(Valor,'.','0.00') + '|' +
+            Trim(CNPJCPF) + '|' +
+            assinaturaQRCODE;
 end;
 
 procedure TACBrSATExtratoClass.Notification(AComponent: TComponent;

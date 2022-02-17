@@ -52,6 +52,9 @@ Símbolo : Significado
 17/02/2022
 --ACBrBancoInter.pas--
 [-] TK2369 ACBrBancoInter - CNAB400 Sem Data Mora
+--ACBrBancoBS2.pas--
+[+] TK2337 ACBrBancoBS2 218 CNAB400 novo banco
+Contribuição: Paulo Cesar Alves de Oliveira
 
 07/02/2022
 --ACBrBancoDoBrasil.pas--

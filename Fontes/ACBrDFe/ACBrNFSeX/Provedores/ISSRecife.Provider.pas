@@ -53,6 +53,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderISSRecife = class (TACBrNFSeProviderABRASFv1)
@@ -186,6 +187,14 @@ begin
   Result := Executar('http://nfse.recife.pe.gov.br/CancelarNfse', Request,
                      ['outputXML', 'CancelarNfseResposta'],
                      []);
+end;
+
+function TACBrNFSeXWebserviceISSRecife.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
 end;
 
 { TACBrNFSeProviderISSRecife }

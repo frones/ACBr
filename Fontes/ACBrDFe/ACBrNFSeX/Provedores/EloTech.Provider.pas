@@ -511,7 +511,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'EnviarLoteRpsResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -522,7 +522,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -533,7 +533,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -544,7 +544,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'ConsultarNfsePorFaixaResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -555,7 +555,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -566,7 +566,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -577,7 +577,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -587,7 +587,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'CancelarNfseResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -598,7 +598,7 @@ begin
 
   Result := Executar('', AMSG,
 //                     ['return', 'outputXML', 'SubstituirNfseResposta'],
-                     [''],
+                     [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 

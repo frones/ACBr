@@ -75,7 +75,7 @@ procedure TNFSeW_Conam.Configuracao;
 begin
   inherited Configuracao;
 
-  PrefixoPadrao := 'nfe';
+//  PrefixoPadrao := 'nfe';
 end;
 
 function TNFSeW_Conam.GerarXml: Boolean;
@@ -123,7 +123,7 @@ begin
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DiscrSrv', 1, 4000, 1,
    StringReplace(NFSe.Servico.Discriminacao, ';',
-         FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase]), ''));
+        FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase]), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'VlNFS', 1, 16, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
@@ -133,7 +133,7 @@ begin
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DiscrDed', 1, 4000, 1,
    StringReplace(NFSe.Servico.Valores.JustificativaDeducao, ';',
-         FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase]), ''));
+        FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll, rfIgnoreCase]), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'VlBasCalc', 1, 16, 1,
                                          NFSe.Servico.Valores.BaseCalculo, ''));
@@ -154,8 +154,7 @@ begin
 
   {
     Se hover municipios com apostofro deve ser substituido por espaço,
-    por exemplo SANTA BARBARA D'OESTE
-    deve informar SANTA BARBARA D OESTE
+    por exemplo SANTA BARBARA D'OESTE deve informar SANTA BARBARA D OESTE.
   }
   MunPrestador:= UpperCase(StringReplace(NFSe.Prestador.Endereco.xMunicipio, '''', ' ', [rfReplaceAll]));
   MunTomador:= UpperCase(StringReplace(NFSe.Tomador.Endereco.xMunicipio, '''', ' ', [rfReplaceAll]));
@@ -230,11 +229,11 @@ begin
                                                                        '', ''));
 
   {
-    segundo o manual: Informar somente se Local de Prestação de Serviços
-    diferente do Endereço do Tomador
+    Segundo o manual: Informar somente se Local de Prestação de Serviços for
+    diferente do Endereço do Tomador.
 
-  O correto seria criar uma classe para informar o local da prestação de serviço
-  local este diferente do local do tomador e do prestador.
+    O correto seria criar uma classe para informar o local da prestação de
+    serviço local este diferente do local do tomador e do prestador.
   }
   if NFSe.LogradouLocalPrestacaoServico <> llpTomador then
   begin
@@ -281,8 +280,19 @@ begin
                                               NFSe.email.Items[0].emailCC, ''));
   end;
 
-  xmlNode := GerarReg30;
-  NFSeNode.AppendChild(xmlNode);
+  QtdReg30 := 0;
+  ValReg30 := 0;
+
+  // So gera se houver tributos declarados
+  if (NFSe.Servico.Valores.AliquotaPis > 0) or
+     (NFSe.Servico.Valores.AliquotaCofins > 0) or
+     (NFSe.Servico.Valores.AliquotaCsll > 0) or
+     (NFSe.Servico.Valores.AliquotaInss > 0) or
+     (NFSe.Servico.Valores.AliquotaIr > 0) then
+  begin
+    xmlNode := GerarReg30;
+    NFSeNode.AppendChild(xmlNode);
+  end;
 
   Result := True;
 end;
@@ -297,14 +307,7 @@ begin
   }
   Result := CreateElement('Reg30');
 
-  //So gera se houver tributos declarados
-  if (NFSe.Servico.Valores.AliquotaPis > 0) or
-     (NFSe.Servico.Valores.AliquotaCofins > 0) or
-     (NFSe.Servico.Valores.AliquotaCsll > 0) or
-     (NFSe.Servico.Valores.AliquotaInss > 0) or
-     (NFSe.Servico.Valores.AliquotaIr > 0) then
-  begin
-    {
+  {
     Contém os tributos municipais, Estaduais e Federais que devem ser
     destacados na nota fiscal eletrônica impressa.
     Siglas de tributos permitidas:
@@ -313,59 +316,56 @@ begin
     INSS
     IR
     PIS
-    }
-    QtdReg30 := 0;
-    ValReg30 := 0;
+  }
 
-    if NFSe.Servico.Valores.AliquotaPis > 0 then
-    begin
-      xmlNode := GerarReg30Item('PIS',
-        NFSe.Servico.Valores.AliquotaPis, NFSe.Servico.Valores.ValorPis);
-      Result.AppendChild(xmlNode);
+  if NFSe.Servico.Valores.AliquotaPis > 0 then
+  begin
+    xmlNode := GerarReg30Item('PIS',
+      NFSe.Servico.Valores.AliquotaPis, NFSe.Servico.Valores.ValorPis);
+    Result.AppendChild(xmlNode);
 
-      Inc(FQtdReg30);
-      ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorPis;
-    end;
+    Inc(FQtdReg30);
+    ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorPis;
+  end;
 
-    if NFSe.Servico.Valores.AliquotaCofins > 0 then
-    begin
-      xmlNode := GerarReg30Item('COFINS',
-        NFSe.Servico.Valores.AliquotaCofins, NFSe.Servico.Valores.ValorCofins);
-      Result.AppendChild(xmlNode);
+  if NFSe.Servico.Valores.AliquotaCofins > 0 then
+  begin
+    xmlNode := GerarReg30Item('COFINS',
+      NFSe.Servico.Valores.AliquotaCofins, NFSe.Servico.Valores.ValorCofins);
+    Result.AppendChild(xmlNode);
 
-      Inc(FQtdReg30);
-      ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorCofins;
-    end;
+    Inc(FQtdReg30);
+    ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorCofins;
+  end;
 
-    if NFSe.Servico.Valores.AliquotaCsll > 0 then
-    begin
-      xmlNode := GerarReg30Item('CSLL',
-        NFSe.Servico.Valores.AliquotaCsll, NFSe.Servico.Valores.ValorCsll);
-      Result.AppendChild(xmlNode);
+  if NFSe.Servico.Valores.AliquotaCsll > 0 then
+  begin
+    xmlNode := GerarReg30Item('CSLL',
+      NFSe.Servico.Valores.AliquotaCsll, NFSe.Servico.Valores.ValorCsll);
+    Result.AppendChild(xmlNode);
 
-      Inc(FQtdReg30);
-      ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorCsll;
-    end;
+    Inc(FQtdReg30);
+    ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorCsll;
+  end;
 
-    if NFSe.Servico.Valores.AliquotaInss > 0 then
-    begin
-      xmlNode := GerarReg30Item('INSS',
-        NFSe.Servico.Valores.AliquotaInss, NFSe.Servico.Valores.ValorInss);
-      Result.AppendChild(xmlNode);
+  if NFSe.Servico.Valores.AliquotaInss > 0 then
+  begin
+    xmlNode := GerarReg30Item('INSS',
+      NFSe.Servico.Valores.AliquotaInss, NFSe.Servico.Valores.ValorInss);
+    Result.AppendChild(xmlNode);
 
-      Inc(FQtdReg30);
-      ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorInss;
-    end;
+    Inc(FQtdReg30);
+    ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorInss;
+  end;
 
-    if NFSe.Servico.Valores.AliquotaIr > 0 then
-    begin
-      xmlNode := GerarReg30Item('IR',
-        NFSe.Servico.Valores.AliquotaIr, NFSe.Servico.Valores.ValorIr);
-      Result.AppendChild(xmlNode);
+  if NFSe.Servico.Valores.AliquotaIr > 0 then
+  begin
+    xmlNode := GerarReg30Item('IR',
+      NFSe.Servico.Valores.AliquotaIr, NFSe.Servico.Valores.ValorIr);
+    Result.AppendChild(xmlNode);
 
-      Inc(FQtdReg30);
-      ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorIr;
-    end;
+    Inc(FQtdReg30);
+    ValReg30 := ValReg30 + NFSe.Servico.Valores.ValorIr;
   end;
 end;
 

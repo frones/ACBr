@@ -55,6 +55,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
     function AlterarNameSpace(aMsg: string): string;
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderDSF = class (TACBrNFSeProviderABRASFv1)
@@ -102,7 +103,7 @@ type
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrUtil, ACBrDFeException,
   DSF.GravarXml, DSF.LerXml;
 
 { TACBrNFSeXWebserviceDSF }
@@ -207,6 +208,14 @@ begin
   Result := Executar('', Request,
                      ['return', 'CancelarNfseResposta'],
                      ['xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDSF.TratarXmlRetornado(const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 { TACBrNFSeProviderDSF }

@@ -53,8 +53,6 @@ type
                     tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
                     tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
 
-  TACBrTipoEncoding = (teASCII, teUTF8, teUNICODE, teISO8859_1);
-
 const
   LineBreak = #13#10;
 
@@ -73,10 +71,10 @@ function XmlToStr(const AXML: string): string;
 function StrToXml(const AXML: string): string;
 function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
-function ConverterUnicode(const aXML: string): string;
-function TratarXmlRetorno(const aXML: string): string;
+//function ConverterUnicode(const aXML: string): string;
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 function RemoverPrefixosDesnecessarios(const aXML: string): string;
+function RemoverCaracteresDesnecessarios(const aXML: string): string;
 
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
@@ -88,8 +86,6 @@ function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
 
 function TipoAmbienteToStr(const t: TACBrTipoAmbiente): string;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
-
-function TipoEncoding(const aText: string): TACBrTipoEncoding;
 
 implementation
 
@@ -158,6 +154,7 @@ begin
     XMLs := FaststringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, '> ', '>', [rfReplaceAll]);
     XMLs := FaststringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
+    XMLs := FaststringReplace(XMLs, #$D, '', [rfReplaceAll]);
   end;
 
   Result := XMLs;
@@ -169,16 +166,12 @@ begin
   Result := FaststringReplace(Result, '>', '&gt;', [rfReplaceAll]);
 end;
 
+
 function StrToXml(const AXML: string): string;
 begin
   Result := FaststringReplace(AXML, '&lt;', '<', [rfReplaceAll]);
   Result := FaststringReplace(Result, '&gt;', '>', [rfReplaceAll]);
   Result := FaststringReplace(Result, '&quot;', '"', [rfReplaceAll]);
-  Result := FaststringReplace(Result, ''#$A'', '', [rfReplaceAll]);
-  Result := FaststringReplace(Result, ''#$A#$A'', '', [rfReplaceAll]);
-  Result := FaststringReplace(Result, '<br >', ';', [rfReplaceAll]);
-  Result := FaststringReplace(Result, '<br>', ';', [rfReplaceAll]);
-  Result := FaststringReplace(Result, #9, '', [rfReplaceAll]);
 end;
 
 function IncluirCDATA(const aXML: string): string;
@@ -192,6 +185,7 @@ begin
   Result := FaststringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
+{
 function ConverterUnicode(const aXML: string): string;
 var
   Xml: string;
@@ -212,17 +206,7 @@ begin
 
   Result := StringToBinaryString(Xml);
 end;
-
-function TratarXmlRetorno(const aXML: string): string;
-begin
-  Result := StrToXml(aXML);
-  Result := RemoverCDATA(Result);
-  Result := RemoverDeclaracaoXML(Result);
-  Result := RemoverIdentacao(Result);
-//  Result := ConverterUnicode(Result);
-  Result := RemoverPrefixosDesnecessarios(Result);
-end;
-
+}
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 var
   i: Integer;
@@ -241,6 +225,17 @@ function RemoverPrefixosDesnecessarios(const aXML: string): string;
 begin
   Result := RemoverPrefixos(aXML, ['ns1:', 'ns2:', 'ns3:', 'ns4:', 'ns5:', 'tc:',
               'ii:', 'p1:']);
+end;
+
+function RemoverCaracteresDesnecessarios(const aXML: string): string;
+begin
+  Result := FaststringReplace(aXML, ''#$A'', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, ''#$A#$A'', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '<br >', ';', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '<br>', ';', [rfReplaceAll]);
+  Result := FaststringReplace(Result, #9, '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&#xD;', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&#xd;', '', [rfReplaceAll]);
 end;
 
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
@@ -401,6 +396,7 @@ begin
     Result := 0
   else
   begin
+    xData := StringReplace(xData, 'Z', '', [rfReplaceAll]);
     xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
 
     // Alguns provedores retorna a data de competencia com o ano, mês e dia e
@@ -495,52 +491,6 @@ end;
 function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'], [taProducao, taHomologacao]);
-end;
-
-function TipoEncoding(const aText: string): TACBrTipoEncoding;
-var
-  i, j, FChar1, FChar2: Integer;
-begin
-  Result := teASCII;
-  i := 0;
-  j := Length(aText);
-
-  while i < j do
-  begin
-    Inc(i);
-
-    FChar1 := Ord(aText[i]);
-    FChar2 := Ord(aText[i+1]);
-
-    if Pos('&amp;#', aText) > 0 then
-    begin
-      Result := teUNICODE;
-      Exit
-    end;
-
-    if (FChar1 >= $C3) and (FChar1 <= $C3) then
-    begin
-      if (FChar2 >= $80) and (FChar2 <= $BF) then
-      begin
-        Result := teUTF8;
-        Exit
-      end;
-    end;
-
-    if FChar1 >= $80 then
-    begin
-      Result := teASCII;
-      Exit
-    end;
-    {
-       Como identificar um arquivo com um encoding ISO-8859-1 ?
-    if FChar1 >= ???? then
-    begin
-      Result := teISO8859_1;
-      Exit
-    end;
-    }
-  end;
 end;
 
 end.

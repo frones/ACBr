@@ -56,6 +56,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderfintelISS200 = class (TACBrNFSeProviderABRASFv2)
@@ -325,6 +326,15 @@ begin
   Result := Executar('http://www.fintel.com.br/WebService/SubstituirNfse', Request,
                      ['SubstituirNfseResult', 'SubstituirNfseResposta'],
                      ['xmlns:web="http://www.fintel.com.br/WebService"']);
+end;
+
+function TACBrNFSeXWebservicefintelISS200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 { TACBrNFSeProviderfintelISS202 }

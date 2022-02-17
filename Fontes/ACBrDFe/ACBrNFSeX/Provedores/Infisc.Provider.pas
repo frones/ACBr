@@ -52,6 +52,7 @@ type
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderInfisc = class (TACBrNFSeProviderProprio)
@@ -77,10 +78,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = 'Erro'); override;
 
   public
     function SimNaoToStr(const t: TnfseSimNao): string; override;
@@ -108,6 +109,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderInfisc201 = class (TACBrNFSeProviderABRASFv2)
@@ -659,8 +661,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderInfisc.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -881,6 +883,15 @@ begin
                      ['xmlns="http://ws.pc.gif.com.br/"']);
 end;
 
+function TACBrNFSeXWebserviceInfisc.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+end;
+
 { TACBrNFSeXWebserviceInfisc201 }
 
 function TACBrNFSeXWebserviceInfisc201.Recepcionar(ACabecalho,
@@ -895,7 +906,7 @@ begin
   Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
   Request := Request + '</RecepcionarLoteRps>';
 
-  Result := Executar('', Request, [''], ['xmlns="http://nfse.abrasf.org.br"']);
+  Result := Executar('', Request, [], ['xmlns="http://nfse.abrasf.org.br"']);
 end;
 
 function TACBrNFSeXWebserviceInfisc201.RecepcionarSincrono(ACabecalho,
@@ -1048,6 +1059,15 @@ begin
 
   Result := Executar('', Request, ['SubstituirNfseResposta'],
                      ['xmlns="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceInfisc201.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

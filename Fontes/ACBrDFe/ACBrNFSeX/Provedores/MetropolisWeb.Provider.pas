@@ -52,6 +52,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderMetropolisWeb = class (TACBrNFSeProviderABRASFv1)
@@ -67,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrUtil, ACBrDFeException,
   MetropolisWeb.GravarXml, MetropolisWeb.LerXml;
 
 { TACBrNFSeProviderMetropolisWeb }
@@ -227,6 +228,15 @@ begin
   Result := Executar('', Request,
                      ['CancelarNfseResponse', 'outputXML', 'CancelarNfseResposta'],
                      ['xmlns:end="http://endpoint.nfse.ws.webservicenfse.edza.com.br/"']);
+end;
+
+function TACBrNFSeXWebserviceMetropolisWeb.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result));
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

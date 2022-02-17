@@ -43,7 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/02/2022
+-- Diversos --
+[*] Realizado diversos alterações visando a leitura correta do XML retornado.
+    Agora o tratamento especifico do retorno é feito pela Unit Provider do 
+    Provedor.
+   Por: Italo Giurizzato Junior / Elton / Daniel
+
 16/02/2022
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Incluida a linha para ler o valor do ID da tag <InfNfse>.
+   Por: Italo Giurizzato Junior/MauricioR
 -- CIGA.Provider --
 [*] Correção na grafia da tag de serviço de consulta a NFS-e por Rps.
    Por: Metasis Sistemas

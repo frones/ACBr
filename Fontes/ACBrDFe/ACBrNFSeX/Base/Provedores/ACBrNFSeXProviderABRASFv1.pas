@@ -84,10 +84,10 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = 'ListaMensagemRetorno';
-                                     AMessageTag: string = 'MensagemRetorno'); virtual;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'ListaMensagemRetorno';
+                                     const AMessageTag: string = 'MensagemRetorno'); virtual;
 
   end;
 
@@ -822,7 +822,7 @@ var
   ANode, AuxNode, AuxNodeCanc: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: TNotaFiscal;
-  NumNFSe: String;
+  NumNFSe, InfNfseID: String;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -890,11 +890,13 @@ begin
       if AuxNode <> nil then
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        InfNfseID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
         NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
 
         with Response do
         begin
           NumeroNota := NumNFSe;
+          idNota := InfNfseID;
           CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
           Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
         end;
@@ -1430,8 +1432,8 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
-procedure TACBrNFSeProviderABRASFv1.ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-  const Response: TNFSeWebserviceResponse; AListTag, AMessageTag: string);
+procedure TACBrNFSeProviderABRASFv1.ProcessarMensagemErros(RootNode: TACBrXmlNode;
+  Response: TNFSeWebserviceResponse; const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;

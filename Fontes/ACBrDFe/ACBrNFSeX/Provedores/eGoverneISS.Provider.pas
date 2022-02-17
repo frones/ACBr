@@ -76,10 +76,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = 'Erro'); override;
 
   end;
 
@@ -155,8 +155,8 @@ begin
 end;
 
 procedure TACBrNFSeProvidereGoverneISS.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -395,7 +395,7 @@ begin
   Request := Request + '</tem:EmitirEmLote>';
 
   Result := Executar('http://tempuri.org/INotaFiscalEletronicaServico/EmitirEmLote', Request,
-                     [''],
+                     [],
                      ['xmlns:tem="http://tempuri.org/"',
                       'xmlns:eis="http://schemas.datacontract.org/2004/07/Eissnfe.Negocio.WebServices.Mensagem"',
                       'xmlns:eis1="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Prestador"',
@@ -414,7 +414,7 @@ begin
   Request := Request + '</tem:Emitir>';
 
   Result := Executar('http://tempuri.org/INotaFiscalEletronicaServico/Emitir', Request,
-                     [''],
+                     [],
                      ['xmlns:tem="http://tempuri.org/"',
                       'xmlns:eis="http://schemas.datacontract.org/2004/07/Eissnfe.Negocio.WebServices.Mensagem"',
                       'xmlns:eis1="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Prestador"',
@@ -433,7 +433,7 @@ begin
   Request := Request + '</tem:ConsultarLote>';
 
   Result := Executar('http://tempuri.org/INotaFiscalEletronicaServico/ConsultarLote', Request,
-                     [''],
+                     [],
                      ['xmlns:tem="http://tempuri.org/"',
                       'xmlns:eis="http://schemas.datacontract.org/2004/07/Eissnfe.Negocio.WebServices.Mensagem"',
                       'xmlns:eis1="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Prestador"',
@@ -451,7 +451,7 @@ begin
   Request := Request + '</tem:Cancelar>';
 
   Result := Executar('http://tempuri.org/INotaFiscalEletronicaServico/Cancelar', Request,
-                     [''],
+                     [],
                      ['xmlns:tem="http://tempuri.org/"',
                       'xmlns:eis="http://schemas.datacontract.org/2004/07/Eissnfe.Negocio.WebServices.Mensagem"',
                       'xmlns:eis1="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Prestador"',

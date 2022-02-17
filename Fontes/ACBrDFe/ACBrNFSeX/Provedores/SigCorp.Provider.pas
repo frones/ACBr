@@ -56,6 +56,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSigCorp203 = class (TACBrNFSeProviderABRASFv2)
@@ -145,7 +146,7 @@ begin
   Request := Request + '</tem:RecepcionarLoteRps>';
 
   Result := Executar('http://tempuri.org/RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult', 'RecepcionarLoteRps'],
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
 end;
 
@@ -299,6 +300,15 @@ begin
   Result := Executar('http://tempuri.org/SubstituirNfse', Request,
                      ['SubstituirNfseResult', 'SubstituirNfseResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
+end;
+
+function TACBrNFSeXWebserviceSigCorp203.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

@@ -46,8 +46,8 @@ type
   TNFSeR_Abaco = class(TNFSeR_ABRASFv1)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
-    function LerXml: Boolean; override;
 
   end;
 
@@ -56,8 +56,8 @@ type
   TNFSeR_Abaco204 = class(TNFSeR_ABRASFv2)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
-    function LerXml: Boolean; override;
 
   end;
 
@@ -73,23 +73,14 @@ uses
 
 { TNFSeR_Abaco }
 
-function TNFSeR_Abaco.LerXml: Boolean;
+function TNFSeR_Abaco.NormatizarXml(const aXml: string): string;
 begin
   Arquivo := TiraAcentos(Arquivo);
-  {
-  // Se o XML não tiver a codificação incluir ela.
-  if ObtemDeclaracaoXML(xRetorno) = '' then
-    xRetorno := CUTF8DeclaracaoXML + xRetorno;
-
-  // Alguns provedores não retornam o XML em UTF-8
-  xRetorno := ConverteXMLtoUTF8(xRetorno);
-  }
-  Result := inherited LerXml;
 end;
 
 { TNFSeR_Abaco204 }
 
-function TNFSeR_Abaco204.LerXml: Boolean;
+function TNFSeR_Abaco204.NormatizarXml(const aXml: string): string;
 begin
   Arquivo := TiraAcentos(Arquivo);
   {
@@ -100,7 +91,6 @@ begin
   // Alguns provedores não retornam o XML em UTF-8
   xRetorno := ConverteXMLtoUTF8(xRetorno);
   }
-  Result := inherited LerXml;
 end;
 
 end.

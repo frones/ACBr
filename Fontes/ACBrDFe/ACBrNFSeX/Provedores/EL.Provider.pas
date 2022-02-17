@@ -98,10 +98,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = ''); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = ''); override;
 
   public
     procedure Emite; override;
@@ -121,6 +121,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderEL204 = class (TACBrNFSeProviderABRASFv2)
@@ -382,6 +383,15 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
+function TACBrNFSeXWebserviceEL204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+end;
+
 { TACBrNFSeProviderEL }
 
 function TACBrNFSeProviderEL.AbreSessao(
@@ -503,8 +513,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderEL.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -1211,7 +1221,7 @@ function TACBrNFSeXWebserviceEL.Recepcionar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1219,7 +1229,7 @@ function TACBrNFSeXWebserviceEL.AbrirSessao(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1227,7 +1237,7 @@ function TACBrNFSeXWebserviceEL.FecharSessao(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1236,7 +1246,7 @@ function TACBrNFSeXWebserviceEL.ConsultarSituacao(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1244,7 +1254,7 @@ function TACBrNFSeXWebserviceEL.ConsultarLote(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1253,7 +1263,7 @@ function TACBrNFSeXWebserviceEL.ConsultarNFSePorRps(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1261,7 +1271,7 @@ function TACBrNFSeXWebserviceEL.ConsultarNFSe(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 
@@ -1269,7 +1279,7 @@ function TACBrNFSeXWebserviceEL.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''],
+  Result := Executar('', AMSG, [],
                      ['xmlns:el="http://des36.el.com.br:8080/el-issonline/"']);
 end;
 

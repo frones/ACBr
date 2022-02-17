@@ -720,7 +720,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss', 1, 15, NrOcorrValorISS,
                                       NFSe.Servico.Valores.ValorIss, DSC_VISS));
 
-  Aliquota := AjustarAliquota(NFSe.Servico.Valores.Aliquota, DivAliq100);
+  Aliquota := NormatizarAliquota(NFSe.Servico.Valores.Aliquota, DivAliq100);
 
   Result.AppendChild(AddNode(FormatoAliq, '#25', 'Aliquota', 1, 5, NrOcorrAliquota,
                                                           Aliquota, DSC_VALIQ));

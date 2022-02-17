@@ -59,6 +59,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property Namespace: string read GetNamespace;
   end;
 
@@ -339,6 +341,16 @@ begin
   Result := Executar('Tributarioaction/ANFSE_WEB_SERVICE.SUBSTITUIRNFSE', Request,
                      ['Substituirnfseresponse', 'outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:trib="Tributario"', NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceCoplan201.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCDATA(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

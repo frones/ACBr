@@ -53,6 +53,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property Namespace: string read GetNamespace;
   end;
 
@@ -149,7 +151,7 @@ begin
   Request := Request + '<Body>' + XmlToStr(AMSG) + '</Body>';
   Request := Request + '</RecepcionarLoteRps>';
 
-  Result := Executar('RecepcionarLoteRps', Request, [''], [NameSpace]);
+  Result := Executar('RecepcionarLoteRps', Request, [], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceNotaInteligente200.GerarNFSe(ACabecalho,
@@ -163,7 +165,7 @@ begin
   Request := Request + '<Body>' + XmlToStr(AMSG) + '</Body>';
   Request := Request + '</GerarNfse>';
 
-  Result := Executar('GerarNfse', Request, [''], [NameSpace]);
+  Result := Executar('GerarNfse', Request, [], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceNotaInteligente200.ConsultarLote(ACabecalho,
@@ -177,7 +179,7 @@ begin
   Request := Request + '<Body>' + XmlToStr(AMSG) + '</Body>';
   Request := Request + '</ConsultarLoteRps>';
 
-  Result := Executar('ConsultarLoteRps', Request, [''], [NameSpace]);
+  Result := Executar('ConsultarLoteRps', Request, [], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceNotaInteligente200.Cancelar(ACabecalho, AMSG: String): string;
@@ -190,7 +192,7 @@ begin
   Request := Request + '<Body>' + XmlToStr(AMSG) + '</Body>';
   Request := Request + '</CancelarNfse>';
 
-  Result := Executar('CancelarNfse', Request, [''], [NameSpace]);
+  Result := Executar('CancelarNfse', Request, [], [NameSpace]);
 end;
 
 function TACBrNFSeXWebserviceNotaInteligente200.SubstituirNFSe(ACabecalho,
@@ -204,7 +206,16 @@ begin
   Request := Request + '<Body>' + XmlToStr(AMSG) + '</Body>';
   Request := Request + '</SubstituirNfse>';
 
-  Result := Executar('SubstituirNfse', Request, [''], [NameSpace]);
+  Result := Executar('SubstituirNfse', Request, [], [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceNotaInteligente200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

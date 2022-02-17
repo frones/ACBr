@@ -46,8 +46,8 @@ type
   TNFSeR_BHISS = class(TNFSeR_ABRASFv1)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
-    function LerXml: Boolean; override;
 
   end;
 
@@ -60,11 +60,9 @@ implementation
 
 { TNFSeR_BHISS }
 
-function TNFSeR_BHISS.LerXml: Boolean;
+function TNFSeR_BHISS.NormatizarXml(const aXml: string): string;
 begin
-  Arquivo := StringReplace(Arquivo, '&>', ' ', [rfReplaceAll]);
-
-  Result := inherited LerXml;
+  Result := StringReplace(Arquivo, '&>', ' ', [rfReplaceAll]);
 end;
 
 end.

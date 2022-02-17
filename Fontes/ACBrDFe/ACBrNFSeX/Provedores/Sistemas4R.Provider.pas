@@ -52,6 +52,7 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProvider4R200 = class (TACBrNFSeProviderABRASFv2)
@@ -67,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrDFeException, Sistemas4R.GravarXml, Sistemas4R.LerXml;
+  ACBrUtil, ACBrDFeException, Sistemas4R.GravarXml, Sistemas4R.LerXml;
 
 { TACBrNFSeXWebservice4R200 }
 
@@ -169,6 +170,16 @@ begin
   Request := Request + '</' + xTag + '>';
 
   Result := Executar(xSoap, Request, ['Resposta', 'CancelarNfseResposta'], []);
+end;
+
+function TACBrNFSeXWebservice4R200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProvider4R200 }

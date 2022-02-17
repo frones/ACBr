@@ -68,7 +68,8 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := TratarXmlRetorno(Arquivo);
+//  xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := Arquivo;
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');
@@ -108,7 +109,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode;
+  AuxNode := ANode.Childrens.FindAnyNs('NOTA');
 
   if AuxNode = nil then
     AuxNode := ANode;
@@ -120,6 +121,8 @@ begin
   NFSe.InfID.ID := NFSe.Numero;
 
   NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('RPS'), tcStr);
+  NFSe.CodigoVerificacao := NFSe.IdentificacaoRps.Numero;
+
   NFSe.IdentificacaoRps.Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
 
   NFSe.Competencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MESCOMP'), tcStr) +

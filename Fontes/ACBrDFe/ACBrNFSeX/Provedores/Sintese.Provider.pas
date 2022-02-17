@@ -57,6 +57,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSintese204 = class (TACBrNFSeProviderABRASFv2)
@@ -72,7 +73,7 @@ type
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrUtil, ACBrDFeException,
   Sintese.GravarXml, Sintese.LerXml;
 
 { TACBrNFSeProviderSintese204 }
@@ -303,6 +304,15 @@ begin
   Result := Executar('http://nfsews.sintesetecnologia.com.br/SubstituirNfse', Request,
                      ['outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceSintese204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

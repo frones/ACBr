@@ -59,6 +59,7 @@ type
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderConam = class (TACBrNFSeProviderProprio)
@@ -81,10 +82,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = 'Erro'); override;
 
   end;
 
@@ -112,13 +113,13 @@ begin
   end;
 
   SetXmlNameSpace('');
-
+{
   with ConfigMsgDados do
   begin
     Prefixo := 'nfe';
     PrefixoTS := 'nfe';
   end;
-
+}
   ConfigSchemas.Validar := False;
 end;
 
@@ -155,8 +156,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderConam.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -314,7 +315,8 @@ begin
 
     xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
 
-    xRps := '<nfe:Reg20Item>' + SeparaDados(xRps, 'nfe:Reg20Item') + '</nfe:Reg20Item>';
+//    xRps := '<nfe:Reg20Item>' + SeparaDados(xRps, 'nfe:Reg20Item') + '</nfe:Reg20Item>';
+    xRps := '<Reg20Item>' + SeparaDados(xRps, 'Reg20Item') + '</Reg20Item>';
 
     ListaRps := ListaRps + xRps;
   end;
@@ -341,6 +343,7 @@ begin
 
   if OptanteSimples = snSim then
   begin
+    {
     xOptante := '<nfe:TipoTrib>4</nfe:TipoTrib>' +
                 '<nfe:DtAdeSN>' +
                    FormatDateTime('dd/mm/yyyy', DataOptanteSimples) +
@@ -348,9 +351,18 @@ begin
                 '<nfe:AlqIssSN_IP>' +
                    Aliquota +
                 '</nfe:AlqIssSN_IP>';
+    }
+    xOptante := '<TipoTrib>4</nfe:TipoTrib>' +
+                '<DtAdeSN>' +
+                   FormatDateTime('dd/mm/yyyy', DataOptanteSimples) +
+                '</DtAdeSN>' +
+                '<AlqIssSN_IP>' +
+                   Aliquota +
+                '</AlqIssSN_IP>';
   end
   else
   begin
+    {
     case ExigibilidadeISS of
       exiExigivel:
         xOptante := '<nfe:TipoTrib>1</nfe:TipoTrib>';
@@ -367,8 +379,25 @@ begin
       exiExportacao:
         xOptante := '<nfe:TipoTrib>5</nfe:TipoTrib>';
     end;
-  end;
+    }
+    case ExigibilidadeISS of
+      exiExigivel:
+        xOptante := '<TipoTrib>1</TipoTrib>';
 
+      exiNaoIncidencia,
+      exiIsencao,
+      exiImunidade:
+        xOptante := '<TipoTrib>2</TipoTrib>';
+
+      exiSuspensaDecisaoJudicial,
+      exiSuspensaProcessoAdministrativo:
+        xOptante := '<TipoTrib>3</TipoTrib>';
+
+      exiExportacao:
+        xOptante := '<TipoTrib>5</TipoTrib>';
+    end;
+  end;
+{
   xReg90 := '<nfe:Reg90>' +
               '<nfe:QtdRegNormal>' +
                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
@@ -392,7 +421,31 @@ begin
                  StringReplace(FormatFloat('#.00', vTotTributos), '.', ',', [rfReplaceAll]) +
               '</nfe:ValorTributos>' +
             '</nfe:Reg90>';
-
+}
+  xReg90 := '<Reg90>' +
+              '<QtdRegNormal>' +
+                 IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+              '</QtdRegNormal>' +
+              '<ValorNFS>' +
+                 StringReplace(FormatFloat('#.00', vTotServicos), '.', ',', [rfReplaceAll]) +
+              '</ValorNFS>' +
+              '<ValorISS>' +
+                 StringReplace(FormatFloat('#.00', vTotISS), '.', ',', [rfReplaceAll]) +
+              '</ValorISS>' +
+              '<ValorDed>' +
+                 StringReplace(FormatFloat('#.00', vTotDeducoes), '.', ',', [rfReplaceAll]) +
+              '</ValorDed>' +
+              '<ValorIssRetTom>' +
+                 StringReplace(FormatFloat('#.00', vTotISSRetido), '.', ',', [rfReplaceAll]) +
+              '</ValorIssRetTom>' +
+              '<QtdReg30>' +
+                 IntToStr(QtdTributos) +
+              '</QtdReg30>' +
+              '<ValorTributos>' +
+                 StringReplace(FormatFloat('#.00', vTotTributos), '.', ',', [rfReplaceAll]) +
+              '</ValorTributos>' +
+            '</Reg90>';
+{
   Response.ArquivoEnvio := '<nfe:Sdt_processarpsin>' +
                          '<nfe:Login>' +
                            '<nfe:CodigoUsuario>' +
@@ -426,6 +479,40 @@ begin
                            xReg90 +
                          '</nfe:SDTRPS>' +
                        '</nfe:Sdt_processarpsin>';
+}
+  Response.ArquivoEnvio := '<Sdt_processarpsin>' +
+                         '<Login>' +
+                           '<CodigoUsuario>' +
+                              Emitente.WSUser +
+                           '</CodigoUsuario>' +
+                           '<CodigoContribuinte>' +
+                              Emitente.WSSenha +
+                           '</CodigoContribuinte>' +
+                         '</Login>' +
+                         '<SDTRPS>' +
+                           '<Ano>' +
+                              FormatDateTime('yyyy', DataInicial) +
+                           '</Ano>' +
+                           '<Mes>' +
+                              FormatDateTime('mm', DataInicial) +
+                           '</Mes>' +
+                           '<CPFCNPJ>' +
+                              Emitente.CNPJ +
+                           '</CPFCNPJ>' +
+                           '<DTIni>' +
+                              FormatDateTime('dd/mm/yyyy', DataInicial) +
+                           '</DTIni>' +
+                           '<DTFin>' +
+                              FormatDateTime('dd/mm/yyyy', DataFinal) +
+                           '</DTFin>' +
+                           xOptante +
+                           '<Versao>2.00</Versao>' +
+                           '<Reg20>' +
+                              ListaRps +
+                           '</Reg20>' +
+                           xReg90 +
+                         '</SDTRPS>' +
+                       '</Sdt_processarpsin>';
 end;
 
 procedure TACBrNFSeProviderConam.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -505,7 +592,7 @@ begin
     AErro.Descricao := Desc120;
     Exit;
   end;
-
+{
   Response.ArquivoEnvio := '<nfe:Sdt_consultaprotocoloin>' +
                          '<nfe:Protocolo>' +
                             Response.Protocolo +
@@ -519,6 +606,20 @@ begin
                            '</nfe:CodigoContribuinte>' +
                          '</nfe:Login>' +
                        '</nfe:Sdt_consultaprotocoloin>';
+}
+  Response.ArquivoEnvio := '<Sdt_consultaprotocoloin>' +
+                         '<Protocolo>' +
+                            Response.Protocolo +
+                         '</Protocolo>' +
+                         '<Login>' +
+                           '<CodigoUsuario>' +
+                              Emitente.WSUser +
+                           '</CodigoUsuario>' +
+                           '<CodigoContribuinte>' +
+                              Emitente.WSSenha +
+                           '</CodigoContribuinte>' +
+                         '</Login>' +
+                       '</Sdt_consultaprotocoloin>';
 end;
 
 procedure TACBrNFSeProviderConam.TratarRetornoConsultaSituacao(
@@ -599,7 +700,7 @@ begin
     AErro.Descricao := Desc120;
     Exit;
   end;
-
+ {
   Response.ArquivoEnvio := '<nfe:Sdt_consultanotasprotocoloin>' +
                          '<nfe:Protocolo>' +
                             Response.Protocolo +
@@ -613,6 +714,20 @@ begin
                            '</nfe:CodigoContribuinte>' +
                          '</nfe:Login>' +
                        '</nfe:Sdt_consultanotasprotocoloin>';
+}
+  Response.ArquivoEnvio := '<Sdt_consultanotasprotocoloin>' +
+                         '<Protocolo>' +
+                            Response.Protocolo +
+                         '</Protocolo>' +
+                         '<Login>' +
+                           '<CodigoUsuario>' +
+                              Emitente.WSUser +
+                           '</CodigoUsuario>' +
+                           '<CodigoContribuinte>' +
+                              Emitente.WSSenha +
+                           '</CodigoContribuinte>' +
+                         '</Login>' +
+                       '</Sdt_consultanotasprotocoloin>';
 end;
 
 procedure TACBrNFSeProviderConam.TratarRetornoConsultaLoteRps(
@@ -772,7 +887,7 @@ begin
     AErro.Descricao := Desc120;
     Exit;
   end;
-
+{
   Response.ArquivoEnvio := '<nfe:Sdt_cancelanfe>' +
                          '<nfe:Login>' +
                            '<nfe:CodigoUsuario>' +
@@ -804,6 +919,38 @@ begin
                            '<nfe:PodeCancelarGuia>S</nfe:PodeCancelarGuia>' +
                          '</nfe:Nota>' +
                        '</nfe:Sdt_cancelanfe>';
+}
+  Response.ArquivoEnvio := '<Sdt_cancelanfe>' +
+                         '<Login>' +
+                           '<CodigoUsuario>' +
+                              Emitente.WSUser +
+                           '</CodigoUsuario>' +
+                           '<CodigoContribuinte>' +
+                              Emitente.WSSenha +
+                           '</CodigoContribuinte>' +
+                         '</Login>' +
+                         '<Nota>' +
+                           '<SerieNota>' +
+                              Response.InfCancelamento.SerieNFSe +
+                           '</SerieNota>' +
+                           '<NumeroNota>' +
+                              Response.InfCancelamento.NumeroNFSe +
+                           '</NumeroNota>' +
+                           '<SerieRPS>' +
+                              Response.InfCancelamento.SerieRps +
+                           '</SerieRPS>' +
+                           '<NumeroRps>' +
+                              IntToStr(Response.InfCancelamento.NumeroRps) +
+                           '</NumeroRps>' +
+                           '<ValorNota>' +
+                              FormatFloat('#.00', Response.InfCancelamento.ValorNFSe) +
+                           '</ValorNota>' +
+                           '<MotivoCancelamento>' +
+                              Response.InfCancelamento.MotCancelamento +
+                           '</MotivoCancelamento>' +
+                           '<PodeCancelarGuia>S</PodeCancelarGuia>' +
+                         '</Nota>' +
+                       '</Sdt_cancelanfe>';
 end;
 
 procedure TACBrNFSeProviderConam.TratarRetornoCancelaNFSe(
@@ -916,6 +1063,15 @@ begin
   Result := Executar('NFeaction/AWS_NFE.CANCELANOTAELETRONICA', Request,
                      ['Sdt_retornocancelanfe'],
                      ['xmlns:nfe="NFe"']);
+end;
+
+function TACBrNFSeXWebserviceConam.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

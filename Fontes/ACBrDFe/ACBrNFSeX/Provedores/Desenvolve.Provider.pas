@@ -52,6 +52,7 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderDesenvolve203 = class (TACBrNFSeProviderABRASFv2)
@@ -226,6 +227,15 @@ begin
   Result := Executar('', Request,
                      ['return', 'CancelarNfseResposta'],
                      ['xmlns:tns="http://ws.integracao.nfsd.desenvolve/"']);
+end;
+
+function TACBrNFSeXWebserviceDesenvolve203.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

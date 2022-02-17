@@ -75,10 +75,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = 'Erro'); override;
   end;
 
   TACBrNFSeXWebserviceSmarAPD203 = class(TACBrNFSeXWebserviceSoap11)
@@ -119,6 +119,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSmarAPD204 = class (TACBrNFSeProviderABRASFv2)
@@ -221,8 +222,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderSmarAPD.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -562,7 +563,7 @@ begin
   Request := Request + '<nfd>' + XmlToStr(AMSG) + '</nfd>';
   Request := Request + '</sil:nfdEntrada>';
 
-  Result := Executar('', Request, [''], []);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.ConsultarLote(ACabecalho,
@@ -580,7 +581,7 @@ begin
   Request := Request + '<recibo>' + XmlToStr(AMSG) + '</recibo>';
   Request := Request + '</sil:nfdSaida>';
 
-  Result := Executar('', Request, [''], []);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebserviceSmarAPD.Cancelar(ACabecalho, AMSG: String): string;
@@ -594,7 +595,7 @@ begin
   Request := Request + '<nfd>' + XmlToStr(AMSG) + '</nfd>';
   Request := Request + '</sil:nfdEntradaCancelar>';
 
-  Result := Executar('', Request, [''], []);
+  Result := Executar('', Request, [], []);
 end;
 
 { TACBrNFSeProviderSmarAPD203 }
@@ -1044,6 +1045,17 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
                      ['outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceSmarAPD204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result));
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

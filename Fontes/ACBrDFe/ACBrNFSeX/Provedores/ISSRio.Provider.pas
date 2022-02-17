@@ -53,6 +53,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderISSRio = class (TACBrNFSeProviderABRASFv1)
@@ -65,6 +66,8 @@ type
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
+
+    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
 implementation
@@ -94,18 +97,11 @@ end;
 function TACBrNFSeXWebserviceISSRio.GerarNFSe(ACabecalho, AMSG: String): string;
 var
   Request: string;
-  xXml, NS1, NS2: string;
 begin
   FPMsgOrig := AMSG;
 
-  NS1 := 'xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"';
-  NS2 := 'xmlns:ns2="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" ' +
-         'xmlns="http://notacarioca.rio.gov.br/WSNacional/XSD/1/nfse_pcrj_v01.xsd"';
-
-  xXml := StringReplace(AMSG, NS1, NS2, [rfReplaceAll]);
-
   Request := '<GerarNfseRequest xmlns="http://notacarioca.rio.gov.br/">';
-  Request := Request + '<inputXML>' + XmlToStr(xXml) + '</inputXML>';
+  Request := Request + '<inputXML>' + XmlToStr(AMSG) + '</inputXML>';
   Request := Request + '</GerarNfseRequest>';
 
   Result := Executar('http://notacarioca.rio.gov.br/GerarNfse', Request,
@@ -188,6 +184,14 @@ begin
                      []);
 end;
 
+function TACBrNFSeXWebserviceISSRio.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+end;
+
 { TACBrNFSeProviderISSRio }
 
 procedure TACBrNFSeProviderISSRio.Configuracao;
@@ -196,7 +200,11 @@ begin
 
   ConfigGeral.QuebradeLinha := '';
 
-  ConfigAssinar.CancelarNFSe := True;
+  with ConfigAssinar do
+   begin
+     CancelarNFSe := True;
+//     RpsGerarNFSe := True;
+   end;
 end;
 
 function TACBrNFSeProviderISSRio.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
@@ -388,6 +396,25 @@ begin
     end;
   finally
     FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderISSRio.ValidarSchema(
+  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
+begin
+  inherited ValidarSchema(Response, aMetodo);
+
+  if aMetodo = tmGerar then
+  begin
+    Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+       'xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"',
+       'xmlns="http://notacarioca.rio.gov.br/WSNacional/XSD/1/nfse_pcrj_v01.xsd"',
+       [rfReplaceAll]);
+
+    Response.XmlEnvio := StringReplace(Response.XmlEnvio,
+       '<InfRps Id=',
+       '<InfRps xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" Id=',
+       [rfReplaceAll]);
   end;
 end;
 

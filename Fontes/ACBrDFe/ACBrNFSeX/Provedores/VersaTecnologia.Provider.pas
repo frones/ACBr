@@ -60,6 +60,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property URL: string read GetURL;
     property NameSpace: string read GetNameSpace;
     property SoapAction: string read GetSoapAction;
@@ -466,6 +468,15 @@ begin
   Result := Executar(SoapAction + 'SubstituirNfse', Request,
                      ['outputXML', 'SubstituirNfseResposta'],
                      [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceVersaTecnologia200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result));
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 { TACBrNFSeProviderVersaTecnologia201 }

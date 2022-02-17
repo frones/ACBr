@@ -53,6 +53,8 @@ type
     function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
@@ -73,7 +75,7 @@ type
 implementation
 
 uses
-  ACBrDFeException,
+  ACBrUtil, ACBrDFeException,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   DataSmart.GravarXml, DataSmart.LerXml;
@@ -615,6 +617,15 @@ begin
                      ['return', 'outputXML'],
                      ['xmlns:dat="http://www.datasmart.com.br/"',
                       'xmlns:nfse="http://www.abrasf.org.br/nfse.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceDataSmart202.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

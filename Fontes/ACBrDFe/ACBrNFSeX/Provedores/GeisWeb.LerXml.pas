@@ -115,12 +115,12 @@ begin
   begin
     with NFSe.Prestador.Endereco do
     begin
-      Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Rua'), tcStr);
-      Numero          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
-      Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
-      CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
-      UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
-      CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Rua'), tcStr);
+      Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+      Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
+      xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
+      UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
+      CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
     end;
   end;
 end;
@@ -138,7 +138,7 @@ begin
       Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Rua'), tcStr);
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
-      CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
+      xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
     end;
@@ -215,10 +215,10 @@ begin
 
   if AuxNode <> nil then
   begin
-    with NFSe.Servico do
+    with NFSe.OrgaoGerador do
     begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
-      UFPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
+      UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
     end;
   end;
 end;
@@ -326,7 +326,8 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := TratarXmlRetorno(Arquivo);
+//italo  xRetorno := TratarXmlRetorno(Arquivo);
+  xRetorno := Arquivo;
   xRetorno := TiraAcentos(xRetorno);
 
   if EstaVazio(xRetorno) then

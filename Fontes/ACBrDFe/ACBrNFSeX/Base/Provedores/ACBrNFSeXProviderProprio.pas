@@ -96,10 +96,10 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = 'ListaMensagemRetorno';
-                                     AMessageTag: string = 'MensagemRetorno'); virtual;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'ListaMensagemRetorno';
+                                     const AMessageTag: string = 'MensagemRetorno'); virtual;
 
   end;
 
@@ -613,8 +613,8 @@ begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;
 
-procedure TACBrNFSeProviderProprio.ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-  const Response: TNFSeWebserviceResponse; AListTag, AMessageTag: string);
+procedure TACBrNFSeProviderProprio.ProcessarMensagemErros(RootNode: TACBrXmlNode;
+  Response: TNFSeWebserviceResponse; const AListTag, AMessageTag: string);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;

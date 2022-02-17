@@ -56,6 +56,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderISSNet = class (TACBrNFSeProviderABRASFv1)
@@ -251,7 +252,7 @@ begin
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/RecepcionarLoteRps',
                      Request,
-                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], ['']);
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -266,7 +267,7 @@ begin
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarLoteRps',
                      Request,
-                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], ['']);
+                     ['ConsultarLoteRpsResult', 'ConsultarLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -281,7 +282,7 @@ begin
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultaSituacaoLoteRPS',
                      Request,
-                     ['ConsultaSituacaoLoteRPSResult', 'ConsultarSituacaoLoteRpsResposta'], ['']);
+                     ['ConsultaSituacaoLoteRPSResult', 'ConsultarSituacaoLoteRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -296,7 +297,7 @@ begin
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarNFSePorRPS',
                      Request,
-                     ['ConsultarNFSePorRPSResult', 'ConsultarNfseRpsResposta'], ['']);
+                     ['ConsultarNFSePorRPSResult', 'ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceISSNet.ConsultarNFSe(ACabecalho, AMSG: String): string;
@@ -311,7 +312,7 @@ begin
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/ConsultarNfse',
                      Request,
-                     ['ConsultarNfseResult', 'ConsultarNfseResposta'], ['']);
+                     ['ConsultarNfseResult', 'ConsultarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceISSNet.Cancelar(ACabecalho, AMSG: String): string;
@@ -326,7 +327,17 @@ begin
 
   Result := Executar('http://www.issnetonline.com.br/webservice/nfd/CancelarNfse',
                      Request,
-                     ['CancelarNfseResult', 'CancelarNfseResposta'], ['']);
+                     ['CancelarNfseResult', 'CancelarNfseResposta'], []);
+end;
+
+function TACBrNFSeXWebserviceISSNet.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 end.

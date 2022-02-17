@@ -53,6 +53,8 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+    procedure LevantarExcecaoHttp; override;
   end;
 
   TACBrNFSeProviderCIGA = class (TACBrNFSeProviderABRASFv1)
@@ -89,6 +91,37 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
+function TACBrNFSeXWebserviceCIGA.TratarXmlRetornado(
+  const aXML: string): string;
+var
+  i, f: Integer;
+begin
+  if Pos('<!DOCTYPE html>', aXML) > 0 then
+  begin
+    i := Pos('<div class="error">', aXML);
+    f := PosExA('</div>', AnsiString(aXML), i+1);
+
+    Result :=  Copy(aXML, i+19, f-(i+19));
+
+    Result := '<a>' +
+              '<ListaMensagemRetorno>' +
+                '<MensagemRetorno>' +
+                  '<Codigo>' + '</Codigo>' +
+                  '<Mensagem>' + Result + '</Mensagem>' +
+                  '<Correcao>' + '</Correcao>' +
+                '</MensagemRetorno>' +
+              '</ListaMensagemRetorno>' +
+            '</a>';
+
+    Result := ParseText(AnsiString(Result), True, False);
+    Result := RemoverCaracteresDesnecessarios(Result);
+  end
+  else
+  begin
+    Result := inherited TratarXmlRetornado(aXML);
+  end;
+end;
+
 function TACBrNFSeXWebserviceCIGA.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
@@ -119,6 +152,11 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/ConsultarSituacaoLoteRps', Request,
                      ['outputXML', 'ConsultarSituacaoLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+procedure TACBrNFSeXWebserviceCIGA.LevantarExcecaoHttp;
+begin
+  // Não executar nada aqui
 end;
 
 function TACBrNFSeXWebserviceCIGA.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;

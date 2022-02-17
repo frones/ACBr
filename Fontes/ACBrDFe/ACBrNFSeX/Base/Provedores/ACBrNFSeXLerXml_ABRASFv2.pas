@@ -38,9 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrUtil, ACBrConsts,
   ACBrXmlBase, ACBrXmlDocument,
-  ACBrNFSeXLerXml, ACBrNFSeXConversao;
+  ACBrNFSeXLerXml;
 
 type
   { TNFSeR_ABRASFv2 }
@@ -98,6 +97,10 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil, ACBrConsts,
+  ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva de ler o XML da NFS-e e RPS dos provedores:
@@ -723,7 +726,7 @@ begin
       else
         ResponsavelRetencao := FpAOwner.StrToResponsavelRetencao(Ok, Responsavel);
 
-      ItemListaServico          := NormatizaItemListaServico(CodigoItemServico);
+      ItemListaServico          := NormatizarItemListaServico(CodigoItemServico);
       xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
       CodigoCnae                := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnae'), tcStr);
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr);
@@ -880,30 +883,19 @@ end;
 function TNFSeR_ABRASFv2.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
-  xRetorno: string;
 begin
-  xRetorno := Arquivo;
-
-  // Se o XML não tiver a codificação incluir ela.
-  if ObtemDeclaracaoXML(xRetorno) = '' then
-    xRetorno := CUTF8DeclaracaoXML + xRetorno;
-
-  // Alguns provedores não retornam o XML em UTF-8
-  xRetorno := ConverteXMLtoUTF8(xRetorno);
-
-  xRetorno := TratarXmlRetorno(xRetorno);
-  xRetorno := TiraAcentos(xRetorno);
-
-  if EstaVazio(xRetorno) then
+  if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
-  tpXML := TipodeXMLLeitura(xRetorno);
+  Arquivo := NormatizarXml(Arquivo);
+
+  tpXML := TipodeXMLLeitura(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();
 
   Document.Clear();
-  Document.LoadFromXml(xRetorno);
+  Document.LoadFromXml(Arquivo);
 
   XmlNode := Document.Root;
 

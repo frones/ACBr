@@ -38,9 +38,10 @@ interface
 
 uses
   SysUtils, Classes,
+  ACBrXmlDocument,
   ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv1, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXProviderABRASFv1,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceDBSeller = class(TACBrNFSeXWebserviceSoap11)
@@ -55,8 +56,9 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
-    property Namespace: string read GetNamespace;
+    function TratarXmlRetornado(const aXML: string): string; override;
 
+    property Namespace: string read GetNamespace;
   end;
 
   TACBrNFSeProviderDBSeller = class (TACBrNFSeProviderABRASFv1)
@@ -67,12 +69,16 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'ListaMensagemRetorno';
+                                     const AMessageTag: string = 'MensagemRetorno'); override;
   end;
 
 implementation
 
 uses
-  ACBrXmlBase, ACBrDFeException,
+  ACBrUtil, ACBrXmlBase, ACBrDFeException,
   DBSeller.GravarXml, DBSeller.LerXml;
 
 { TACBrNFSeXWebserviceDBSeller }
@@ -171,6 +177,15 @@ begin
                      ['return', 'CancelarNfseResposta'], [Namespace]);
 end;
 
+function TACBrNFSeXWebserviceDBSeller.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+end;
+
 { TACBrNFSeProviderDBSeller }
 
 procedure TACBrNFSeProviderDBSeller.Configuracao;
@@ -217,6 +232,34 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+procedure TACBrNFSeProviderDBSeller.ProcessarMensagemErros(
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
+var
+  ANode: TACBrXmlNode;
+  AErro: TNFSeEventoCollectionItem;
+  Mensagem: string;
+begin
+  ANode := RootNode.Childrens.FindAnyNs(AListTag);
+
+  if (ANode = nil) then
+  begin
+    ANode := RootNode.Childrens.FindAnyNs('ErroWebServiceResposta');
+
+    Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('MensagemErro'), tcStr);
+
+    if Mensagem <> '' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoErro'), tcStr);
+      AErro.Descricao := Mensagem;
+      AErro.Correcao := '';
+    end;
+  end
+  else
+    inherited ProcessarMensagemErros(RootNode, Response, AListTag, AMessageTag);
 end;
 
 (*

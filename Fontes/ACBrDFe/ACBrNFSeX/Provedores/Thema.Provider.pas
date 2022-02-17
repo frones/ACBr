@@ -53,6 +53,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderThema = class (TACBrNFSeProviderABRASFv1)
@@ -185,6 +186,16 @@ begin
   Result := Executar('urn:cancelarNfse', Request,
                      ['return', 'CancelarNfseResposta'],
                      []);
+end;
+
+function TACBrNFSeXWebserviceThema.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 { TACBrNFSeProviderThema }

@@ -48,6 +48,7 @@ type
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderISSGoiania200 = class (TACBrNFSeProviderABRASFv2)
@@ -389,6 +390,14 @@ begin
   Result := Executar('http://nfse.goiania.go.gov.br/ws/ConsultarNfseRps', Request,
                      ['ConsultarNfseRpsResult', 'ConsultarNfseRpsResposta'],
                      ['xmlns:ws="http://nfse.goiania.go.gov.br/ws/"']);
+end;
+
+function TACBrNFSeXWebserviceISSGoiania200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result));
 end;
 
 end.

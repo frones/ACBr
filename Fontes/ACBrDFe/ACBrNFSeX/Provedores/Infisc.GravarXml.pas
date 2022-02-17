@@ -559,8 +559,10 @@ begin
 
   if FPVersao = ve101 then
   begin
-    Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1,
-                                       StatusRPSToStr(NFSe.StatusRps), ''));
+    if NFSe.StatusRps = srCancelado then
+      Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1, 'S', ''))
+    else
+      Result.AppendChild(AddNode(tcStr, '#1', 'cancelada', 1, 1, 1, 'N', ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'canhoto', 1, 1, 1,
                                                CanhotoToStr(NFSe.Canhoto), ''));

@@ -54,6 +54,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderPronim = class (TACBrNFSeProviderABRASFv1)
@@ -80,6 +81,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderPronim202 = class (TACBrNFSeProviderABRASFv2)
@@ -269,6 +271,16 @@ begin
                      ACabecalho,
                      ['CancelarNfseResult', 'CancelarNfseResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
+end;
+
+function TACBrNFSeXWebservicePronim.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 { TACBrNFSeProviderPronim202 }
@@ -539,6 +551,17 @@ begin
                      ACabecalho,
                      ['SubstituirNfseResult', 'SubstituirNfseResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
+end;
+
+function TACBrNFSeXWebservicePronim202.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

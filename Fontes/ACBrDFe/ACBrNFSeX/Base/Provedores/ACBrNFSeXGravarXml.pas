@@ -109,9 +109,9 @@ type
 
     function GerarCNPJ(const CNPJ: string): TACBrXmlNode; virtual;
     function GerarCPFCNPJ(const CPFCNPJ: string): TACBrXmlNode; virtual;
-    function PadronizarItemServico(const Codigo: string): string;
+    function NormatizarItemServico(const Codigo: string): string;
     function FormatarItemServico(const Codigo: string; Formato: TFormatoItemListaServico): string;
-    function AjustarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
+    function NormatizarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
 
  public
     constructor Create(AOwner: IACBrNFSeXProvider); virtual;
@@ -289,7 +289,7 @@ function TNFSeWClass.FormatarItemServico(const Codigo: string;
 var
   item: string;
 begin
-  item := PadronizarItemServico(Codigo);
+  item := NormatizarItemServico(Codigo);
 
   case Formato of
     filsSemFormatacao:
@@ -329,7 +329,7 @@ begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
-function TNFSeWClass.AjustarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
+function TNFSeWClass.NormatizarAliquota(const Aliquota: Double; DivPor100: Boolean = False): Double;
 var
   Aliq: Double;
 begin
@@ -344,7 +344,7 @@ begin
     Result := Aliq;
 end;
 
-function TNFSeWClass.PadronizarItemServico(const Codigo: string): string;
+function TNFSeWClass.NormatizarItemServico(const Codigo: string): string;
 var
   i: Integer;
   item: string;

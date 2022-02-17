@@ -89,10 +89,10 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = 'Erro'); override;
 
   end;
 
@@ -156,8 +156,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderAgili.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -1001,14 +1001,14 @@ function TACBrNFSeXWebserviceAgili.Recepcionar(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceAgili.GerarNFSe(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceAgili.ConsultarLote(ACabecalho,
@@ -1016,7 +1016,7 @@ function TACBrNFSeXWebserviceAgili.ConsultarLote(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceAgili.ConsultarNFSePorRps(ACabecalho,
@@ -1024,7 +1024,7 @@ function TACBrNFSeXWebserviceAgili.ConsultarNFSePorRps(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceAgili.ConsultarNFSePorFaixa(ACabecalho,
@@ -1032,14 +1032,14 @@ function TACBrNFSeXWebserviceAgili.ConsultarNFSePorFaixa(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceAgili.Cancelar(ACabecalho, AMSG: String): string;
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 function TACBrNFSeXWebserviceAgili.SubstituirNFSe(ACabecalho,
@@ -1047,7 +1047,7 @@ function TACBrNFSeXWebserviceAgili.SubstituirNFSe(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG, [''], []);
+  Result := Executar('', AMSG, [], []);
 end;
 
 end.

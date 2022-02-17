@@ -52,6 +52,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSafeWeb200 = class (TACBrNFSeProviderABRASFv2)
@@ -230,6 +231,15 @@ begin
 
   Result := Executar('http://tempuri.org/SubstituirNfse', Request,
                      ['SubstituirNfseResult', 'SubstituirNfseResposta'], []);
+end;
+
+function TACBrNFSeXWebserviceSafeWeb200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

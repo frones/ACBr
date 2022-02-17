@@ -59,6 +59,8 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property NameSpace: string read GetNameSpace;
   end;
 
@@ -87,10 +89,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = 'Erros';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = 'Erros';
+                                     const AMessageTag: string = 'Erro'); override;
 
   end;
 
@@ -282,8 +284,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderISSDSF.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -291,7 +293,6 @@ var
   AErro: TNFSeEventoCollectionItem;
   AAlerta: TNFSeEventoCollectionItem;
 begin
-  //erros
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
   if (ANode = nil) then
@@ -309,7 +310,6 @@ begin
       AErro.Descricao := ANodeArray[I].AsString;
   end;
 
-  //alertas
   ANode := RootNode.Childrens.FindAnyNs('Alertas');
 
   if (ANode = nil) then
@@ -568,6 +568,10 @@ begin
         Exit
       end;
 
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
+
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
       if AuxNode <> nil then
@@ -590,12 +594,12 @@ begin
             ValorTotalServico := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
           end;
           }
+          ProcessarMensagemErros(AuxNode, Response);
+
+          Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
         end;
       end;
 
-      ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
       {
       AuxNode := ANode.Childrens.FindAnyNs('ChavesNFeRPS');
 
@@ -1535,6 +1539,17 @@ begin
   Request := Request + '</lot:cancelar>';
 
   Result := Executar('', Request, ['cancelarReturn'], [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceISSDSF.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

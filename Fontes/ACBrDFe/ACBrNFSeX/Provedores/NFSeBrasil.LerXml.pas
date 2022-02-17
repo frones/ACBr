@@ -208,7 +208,7 @@ begin
 
     with NFSe.Servico do
     begin
-      ItemListaServico          := NormatizaItemListaServico(CodigoItemServico);
+      ItemListaServico          := NormatizarItemListaServico(CodigoItemServico);
       xItemListaServico         := ItemListaServicoDescricao(ItemListaServico);
       CodigoCnae                := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnae'), tcStr);
       CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoTributacaoMunicipio'), tcStr);
@@ -290,7 +290,7 @@ begin
   // Alguns provedores não retornam o XML em UTF-8
   xRetorno := ConverteXMLtoUTF8(xRetorno);
 
-  xRetorno := TratarXmlRetorno(xRetorno);
+//italo  xRetorno := TratarXmlRetorno(xRetorno);
   xRetorno := TiraAcentos(xRetorno);
 
   if EstaVazio(xRetorno) then

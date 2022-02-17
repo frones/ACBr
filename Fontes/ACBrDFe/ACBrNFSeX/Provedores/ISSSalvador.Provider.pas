@@ -51,6 +51,7 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderISSSalvador = class (TACBrNFSeProviderABRASFv1)
@@ -144,6 +145,14 @@ begin
   Result := Executar('http://tempuri.org/IConsultaNfse/ConsultarNfse', Request,
                      ['ConsultarNfseResult', 'ConsultarNfseResposta'],
                      ['xmlns:tem="http://tempuri.org/"']);
+end;
+
+function TACBrNFSeXWebserviceISSSalvador.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
 end;
 
 { TACBrNFSeProviderISSSalvador }

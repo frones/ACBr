@@ -59,6 +59,8 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property NameSpace: string read GetNameSpace;
   end;
 
@@ -347,6 +349,15 @@ begin
   Result := Executar('', Request,
                      ['return', 'CancelarNfseResposta'],
                      []);
+end;
+
+function TACBrNFSeXWebserviceGinfes.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

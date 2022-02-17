@@ -513,8 +513,9 @@ end;
 function TACBrNFSeXWebserviceModeloV2200.TratarXmlRetornado(
   const aXML: string): string;
 begin
+  Result := inherited TratarXmlRetornado(aXML);
+
   // Reescrever se necessário;
-  Result := aXML;
 end;
 }
 end.

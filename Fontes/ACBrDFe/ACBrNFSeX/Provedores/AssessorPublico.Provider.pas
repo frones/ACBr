@@ -56,6 +56,8 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
@@ -82,10 +84,10 @@ type
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
 
-    procedure ProcessarMensagemErros(const RootNode: TACBrXmlNode;
-                                     const Response: TNFSeWebserviceResponse;
-                                     AListTag: string = '';
-                                     AMessageTag: string = 'Erro'); override;
+    procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
+                                     Response: TNFSeWebserviceResponse;
+                                     const AListTag: string = '';
+                                     const AMessageTag: string = 'Erro'); override;
 
   end;
 
@@ -148,8 +150,8 @@ begin
 end;
 
 procedure TACBrNFSeProviderAssessorPublico.ProcessarMensagemErros(
-  const RootNode: TACBrXmlNode; const Response: TNFSeWebserviceResponse;
-  AListTag, AMessageTag: string);
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag, AMessageTag: string);
 var
   I: Integer;
   ANode: TACBrXmlNode;
@@ -612,7 +614,7 @@ begin
   Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
-  Result := Executar('nfseaction/ANFSE.Execute', Request, [''], ['xmlns:nfse="nfse"']);
+  Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
 end;
 
 function TACBrNFSeXWebserviceAssessorPublico.ConsultarLote(ACabecalho,
@@ -628,7 +630,7 @@ begin
   Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
-  Result := Executar('nfseaction/ANFSE.Execute', Request, [''], ['xmlns:nfse="nfse"']);
+  Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
 end;
 
 function TACBrNFSeXWebserviceAssessorPublico.ConsultarNFSe(ACabecalho,
@@ -644,7 +646,7 @@ begin
   Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
-  Result := Executar('nfseaction/ANFSE.Execute', Request, [''], ['xmlns:nfse="nfse"']);
+  Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
 end;
 
 function TACBrNFSeXWebserviceAssessorPublico.Cancelar(ACabecalho, AMSG: String): string;
@@ -659,7 +661,17 @@ begin
   Request := Request + '<nfse:Webxml>' + XmlToStr(AMSG) + '</nfse:Webxml>';
   Request := Request + '</nfse:Nfse.Execute>';
 
-  Result := Executar('nfseaction/ANFSE.Execute', Request, [''], ['xmlns:nfse="nfse"']);
+  Result := Executar('nfseaction/ANFSE.Execute', Request, [], ['xmlns:nfse="nfse"']);
+end;
+
+function TACBrNFSeXWebserviceAssessorPublico.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

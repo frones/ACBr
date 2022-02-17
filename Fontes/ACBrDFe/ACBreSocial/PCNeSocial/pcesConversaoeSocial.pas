@@ -1953,12 +1953,12 @@ end;
 
 function eSCodIncCPRPToStr(const t:tpCodIncCPRP ): string;
 begin
-  result := EnumeradoToStr2(t,[ '00', '11', '12', '31', '32', '91' ] );
+  result := EnumeradoToStr2(t,[ '00', '11', '12', '31', '32', '91', '99' ] );
 end;
 
 function eSStrToCodIncCPRP(var ok: boolean; const s: string): tpCodIncCPRP;
 begin
-  result := tpCodIncCPRP( StrToEnumerado2(ok , s,[ '00', '11', '12', '31', '32', '91' ] ));
+  result := tpCodIncCPRP( StrToEnumerado2(ok , s,[ '00', '11', '12', '31', '32', '91', '99' ] ));
 end;
 
 function eSIndSuspToStr(const t: tpIndSusp): string;

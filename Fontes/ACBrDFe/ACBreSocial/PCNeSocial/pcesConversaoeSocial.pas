@@ -105,8 +105,8 @@ type
                              teS1220, teS1250, teS1260, teS1270, teS1280, teS1295, teS1298, teS1299,
                              teS1300, teS2190, teS2200, teS2205, teS2206, teS2210, teS2220, teS2230,
                              teS2240, teS2245, teS2250, teS2260, teS2298, teS2299, teS2300, teS2305,
-                             teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS5001, teS5002,
-                             teS5003, teS5011, teS5012, teS5013, teS2221, teS2405, teS2410, teS2231,
+                             teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS2231, teS5002,
+                             teS5003, teS5011, teS5012, teS5013, teS2221, teS2405, teS2410, teS5001,
                              teS2416, teS2418, teS2420);
 
   tpSimNao                = (tpSim, tpNao);
@@ -2718,7 +2718,7 @@ begin
   result := TTipoEvento( 0 );
 
   try
-    for i := 0 to 43 do
+    for i := 0 to 49 do
       if Pos('<' + TEventoString[i]+ ' Id="', s) > 0 then
       begin
         ok := True;

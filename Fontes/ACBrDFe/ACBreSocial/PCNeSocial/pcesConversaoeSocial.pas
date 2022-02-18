@@ -447,15 +447,15 @@ type
 
   tpTpExameOcup           = (taAdmissional, taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual, taDemissional);
 
-  tpResAso                = (raApto, raInapto);
+  tpResAso                = (raApto, raInapto, raNaoInformado);
 
   TpMatBiolog             = (mbUrina, mbSangue);
 
   tpInterprExm            = (ieEE, ieSC, ieSCMais);
 
-  tpOrdExame              = (orReferencial, oeSequencial);
+  tpOrdExame              = (orReferencial, oeSequencial, orNaoInformado);
 
-  tpIndResult             = (irNormal, irAlterado, irEstavel, irAgravamento);
+  tpIndResult             = (irNormal, irAlterado, irEstavel, irAgravamento, irNaoInformado);
 
   tpTpAcid                = (taTipico, taDoenca, taTrajetoParaLocalTrabalhoOuEntreLocalTrabalhoEResidEmp);
 

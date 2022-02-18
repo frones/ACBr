@@ -251,6 +251,7 @@ end;
 constructor TAso.Create;
 begin
   inherited;
+  FResAso := raNaoInformado;
   FExame  := TExameCollection.Create;
   FMedico := TMedico.Create;
 end;
@@ -283,6 +284,10 @@ end;
 function TExameCollection.New: TExameCollectionItem;
 begin
   Result := TExameCollectionItem.Create;
+
+  Result.FOrdExame  := orNaoInformado;
+  Result.FIndResult := irNaoInformado;
+
   Self.Add(Result);
 end;
 
@@ -313,7 +318,8 @@ begin
   Gerador.wGrupo('aso');
 
   Gerador.wCampo(tcDat, '', 'dtAso',  10, 10, 1, self.exMedOcup.Aso.DtAso);
-  Gerador.wCampo(tcStr, '', 'resAso',  1,  1, 1, eSResAsoToStr(self.exMedOcup.Aso.ResAso));
+  if (self.exMedOcup.Aso.ResAso > raNaoInformado) then
+    Gerador.wCampo(tcStr, '', 'resAso',  1,  1, 1, eSResAsoToStr(self.exMedOcup.Aso.ResAso));
 
   GerarExame;
   GerarMedico;
@@ -352,9 +358,12 @@ begin
     Gerador.wCampo(tcDat, '', 'dtExm',         10,  10, 1, self.exMedOcup.Aso.Exame.Items[i].dtExm);
     Gerador.wCampo(tcStr, '', 'procRealizado',  1,   4, 1, self.exMedOcup.Aso.Exame.Items[i].procRealizado);
     Gerador.wCampo(tcStr, '', 'obsProc',        1, 999, 0, self.exMedOcup.Aso.Exame.Items[i].obsProc);
-    Gerador.wCampo(tcInt, '', 'ordExame',       1,   1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
-    if self.exMedOcup.Aso.Exame.Items[i].indResult >= irNormal then
-        Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
+
+    if (self.exMedOcup.Aso.Exame.Items[i].ordExame > orNaoInformado) then
+      Gerador.wCampo(tcInt, '', 'ordExame', 1, 1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
+
+    if (self.exMedOcup.Aso.Exame.Items[i].indResult > irNaoInformado) then
+      Gerador.wCampo(tcInt, '', 'indResult', 1, 1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
 
     Gerador.wGrupo('/exame');
   end;

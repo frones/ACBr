@@ -5,7 +5,7 @@ unit ACBrUtilTest;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Math,
   {$ifdef FPC}
   LConvEncoding,
   {$endif}
@@ -258,6 +258,36 @@ type
     procedure DoctoABNTRegra2_2;
     procedure DoctoABNTRegra2_3;
     procedure DoctoABNTRegra2_4;
+  end;
+
+  { RoundABNTMudancasDeArredondamentoPara_rmUpTest }
+
+  RoundABNTMudancasDeArredondamentoPara_rmUpTest = class(RoundABNTTest)
+  private
+    OldRM: TFPURoundingMode;
+  protected
+     procedure SetUp; override;
+     procedure TearDown; override;
+  end;
+
+  { RoundABNTMudancasDeArredondamentoPara_rmDownTest }
+
+  RoundABNTMudancasDeArredondamentoPara_rmDownTest = class(RoundABNTTest)
+  private
+    OldRM: TFPURoundingMode;
+  protected
+     procedure SetUp; override;
+     procedure TearDown; override;
+  end;
+
+  { RoundABNTMudancasDeArredondamentoPara_rmTruncateTest }
+
+  RoundABNTMudancasDeArredondamentoPara_rmTruncateTest = class(RoundABNTTest)
+  private
+    OldRM: TFPURoundingMode;
+  protected
+     procedure SetUp; override;
+     procedure TearDown; override;
   end;
 
   { padRightTest }
@@ -1081,7 +1111,7 @@ type
 implementation
 
 uses
-  Math, dateutils,
+  dateutils,
   synacode,
   ACBrUtil, ACBrCompress, ACBrConsts;
 
@@ -1827,7 +1857,7 @@ begin
   fTituloCompressGZipAndEncoded64 := 'H4sIAAAAAAAA/yWMQQqAIBQFr/IvkO7bPbWFkP2wPEBFEEEoInj9jGBWAzNzjvdZIkGrTB2BHCx70uzCZA3MQA2ElR00+POD1xYjGSblsdixVVcpqZey1irS/9uOPYsjPmLP8gVzteS/YwAAAA==';
   {$Else}
   fTituloCompressGZipAndEncoded64 := 'H4sIAAAAAAAAACWMQQqAIBQFr/IvkO7bPbWFkP2wPEBFEEEoInj9jGBWAzNzjvdZIkGrTB2BHCx70uzCZA3MQA2ElR00+POD1xYjGSblsdixVVcpqZey1irS/9uOPYsjPmLP8gVzteS/YwAAAA==';
-  {$EndIf} 
+  {$EndIf}
 
   For I := 0 to 255 do
     Linha := Linha + AnsiChr(i);
@@ -4912,6 +4942,58 @@ begin
   CheckEquals('Projeto ACBr', RemoverQuebraLinhaFinal(S));
 end;
 
+
+{ RoundABNTMudancasDeArredondamentoTest }
+
+procedure RoundABNTMudancasDeArredondamentoPara_rmUpTest.SetUp;
+begin
+  inherited;
+  //Isso simula que a aplicação esteja num modo de arredondamento diferente do esperado
+  // pelo método ACBrUtil.RoundABNT
+  OldRM := GetRoundMode;
+  SetRoundMode(rmUP);
+end;
+
+procedure RoundABNTMudancasDeArredondamentoPara_rmUpTest.TearDown;
+begin
+  SetRoundMode(OldRM);
+  inherited;
+end;
+
+{ RoundABNTMudancasDeArredondamentoPara_rmDownTest }
+
+procedure RoundABNTMudancasDeArredondamentoPara_rmDownTest.SetUp;
+begin
+  inherited;
+  //Isso simula que a aplicação esteja num modo de arredondamento diferente do esperado
+  // pelo método ACBrUtil.RoundABNT
+  OldRM := GetRoundMode;
+  SetRoundMode(rmDown);
+end;
+
+procedure RoundABNTMudancasDeArredondamentoPara_rmDownTest.TearDown;
+begin
+  SetRoundMode(OldRM);
+  inherited;
+end;
+
+{ RoundABNTMudancasDeArredondamentoPara_rmTruncateTest }
+
+procedure RoundABNTMudancasDeArredondamentoPara_rmTruncateTest.SetUp;
+begin
+  inherited;
+  //Isso simula que a aplicação esteja num modo de arredondamento diferente do esperado
+  // pelo método ACBrUtil.RoundABNT
+  OldRM := GetRoundMode;
+  SetRoundMode(rmTruncate);
+end;
+
+procedure RoundABNTMudancasDeArredondamentoPara_rmTruncateTest.TearDown;
+begin
+  inherited;
+  SetRoundMode(OldRM);
+end;
+
 initialization
   _RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste);
   _RegisterTest('ACBrComum.ACBrUtil', SplitTeste);
@@ -4930,6 +5012,9 @@ initialization
   _RegisterTest('ACBrComum.ACBrUtil', TruncFixTest);
   _RegisterTest('ACBrComum.ACBrUtil', TruncToTest);
   _RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmUpTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmDownTest);
+  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmTruncateTest);
   _RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest);
   _RegisterTest('ACBrComum.ACBrUtil', TestBitTest);
   _RegisterTest('ACBrComum.ACBrUtil', TesteSetBit);

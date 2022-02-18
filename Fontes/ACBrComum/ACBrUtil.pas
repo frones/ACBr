@@ -731,23 +731,27 @@ var
    RestPart: Double;
    IntCalc, FracCalc, LastNumber, IntValue : Int64;
    Negativo: Boolean;
+   OldRM: TRoundingMode;
 Begin
-   Negativo  := (AValue < 0);
+  OldRM := GetRoundMode;
+  try
+    SetRoundMode(rmNearest);
+    Negativo  := (AValue < 0);
 
-   Pow       := intpower(10, abs(Digits) );
-   PowValue  := abs(AValue) / 10 ;
-   IntValue  := trunc(PowValue);
-   FracValue := frac(PowValue);
+    Pow       := intpower(10, abs(Digits) );
+    PowValue  := abs(AValue) / 10 ;
+    IntValue  := trunc(PowValue);
+    FracValue := frac(PowValue);
 
-   PowValue := SimpleRoundToEX( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
-   IntCalc  := trunc( PowValue );
-   FracCalc := trunc( frac( PowValue ) * 100 );
+    PowValue := SimpleRoundToEX( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
+    IntCalc  := trunc( PowValue );
+    FracCalc := trunc( frac( PowValue ) * 100 );
 
-   if (FracCalc > 50) then
+    if (FracCalc > 50) then
      Inc( IntCalc )
 
-   else if (FracCalc = 50) then
-   begin
+    else if (FracCalc = 50) then
+    begin
      LastNumber := round( frac( IntCalc / 10) * 10);
 
      if odd(LastNumber) then
@@ -759,11 +763,14 @@ Begin
        if RestPart > Delta then
          Inc( IntCalc );
      end ;
-   end ;
+    end ;
 
-   Result := ((IntValue*10) + (IntCalc / Pow));
-   if Negativo then
+    Result := ((IntValue*10) + (IntCalc / Pow));
+    if Negativo then
      Result := -Result;
+  finally
+    SetRoundMode(OldRM);
+  end;
 end;
 
 function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;

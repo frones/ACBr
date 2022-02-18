@@ -132,8 +132,10 @@ type
   TInfoSubstPatrOpPortItem = class(TObject)
   private
     FcnpjOpPortuario : string;
+    FcodLotacao      : string;
   public
     property cnpjOpPortuario: string read FcnpjOpPortuario write FcnpjOpPortuario;
+    property codLotacao: string read FcodLotacao write FcodLotacao;
   end;
 
   TInfoSubstPatrOpPortColecao = class(TACBrObjectList)
@@ -256,7 +258,10 @@ begin
 
     Gerador.wGrupo('infoSubstPatrOpPort');
 
-    Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 14, 14, 1, objInfoSubstPatrOpPortItem.cnpjOpPortuario);
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 14, 14, 1, objInfoSubstPatrOpPortItem.cnpjOpPortuario)
+    else
+      Gerador.wCampo(tcStr, '', 'codLotacao ', 30, 30, 1, objInfoSubstPatrOpPortItem.codLotacao);
 
     Gerador.wGrupo('/infoSubstPatrOpPort');
   end;

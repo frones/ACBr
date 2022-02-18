@@ -277,6 +277,8 @@ type
     FValorNFSe: Double;
     FCodVerificacao: string;
     Femail: string;
+    FNumeroNFSeSubst: string;
+    FSerieNFSeSubst: string;
 
   public
     constructor Create;
@@ -294,6 +296,8 @@ type
     property ValorNFSe: Double       read FValorNFSe       write FValorNFSe;
     property CodVerificacao: string  read FCodVerificacao  write FCodVerificacao;
     property email: string           read Femail           write Femail;
+    property NumeroNFSeSubst: string read FNumeroNFSeSubst write FNumeroNFSeSubst;
+    property SerieNFSeSubst: string  read FSerieNFSeSubst  write FSerieNFSeSubst;
 
   end;
 
@@ -1191,6 +1195,8 @@ begin
   FValorNFSe := 0.0;
   FCodVerificacao := '';
   Femail := '';
+  FNumeroNFSeSubst := '';
+  FSerieNFSeSubst := '';
 end;
 
 function TInfCancelamento.LerFromIni(const AIniString: String): Boolean;
@@ -1219,6 +1225,8 @@ begin
     ValorNFSe       := StringToFloatDef(INIRec.ReadString(sSecao, 'ValorNFSe', ''), 0);
     CodVerificacao  := INIRec.ReadString(sSecao, 'CodVerificacao', '');
     email           := INIRec.ReadString(sSecao, 'email', '');
+    NumeroNFSeSubst := INIRec.ReadString(sSecao, 'NumeroNFSeSubst', '');
+    SerieNFSeSubst  := INIRec.ReadString(sSecao, 'SerieNFSeSubst', '');
 
     Result := True;
   finally

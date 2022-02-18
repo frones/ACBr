@@ -65,7 +65,7 @@ type
 
   TStatusRPS = (srNormal, srCancelado);
 
-  TStatusNFSe = (snNormal, snCancelado);
+  TStatusNFSe = (snNormal, snCancelado, snSubstituido);
 
   TnfseNaturezaOperacao = (no0, no1, no2, no3, no4, no5, no6, no7, no8, no9,
                            no10, no11, no12, no13, no14, no15, no17, no18,
@@ -337,15 +337,15 @@ end;
 function StatusNFSeToStr(const t: TStatusNFSe): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [snNormal, snCancelado]);
+                           ['1', '2', '3'],
+                           [snNormal, snCancelado, snSubstituido]);
 end;
 
 function StrToStatusNFSe(out ok: boolean; const s: string): TStatusNFSe;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [snNormal, snCancelado]);
+                           ['1', '2', '3'],
+                           [snNormal, snCancelado, snSubstituido]);
 end;
 
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao): string;

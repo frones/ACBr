@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/02/2022
+-- Diversos --
+[+] Implementado o grupo <substituta> no pedido de cancelamento no provedor IPM.
+   Por: Fabio Luiz Binhara
+-- ACBrNFSeXServicos --
+[*] A cidade de Ibiporã/PR trocou de provedor, agora é Elotech
+   Por: Ralty
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Ajustes para a leitura correta das informações de cancelamento da NFSe.
+   Por: Danio
+
 17/02/2022
 -- Diversos --
 [*] Realizado diversos alterações visando a leitura correta do XML retornado.

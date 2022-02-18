@@ -812,6 +812,9 @@ begin
     SerieRps := aInfCancelamento.SerieRps;
     ValorNFSe := aInfCancelamento.ValorNFSe;
     CodVerificacao := aInfCancelamento.CodVerificacao;
+    email := aInfCancelamento.email;
+    NumeroNFSeSubst := aInfCancelamento.NumeroNFSeSubst;
+    SerieNFSeSubst := aInfCancelamento.SerieNFSeSubst;
   end;
 
   FProvider.CancelaNFSe;

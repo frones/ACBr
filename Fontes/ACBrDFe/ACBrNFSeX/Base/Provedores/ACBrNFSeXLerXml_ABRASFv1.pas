@@ -108,6 +108,9 @@ begin
 
   AuxNode := ANode.Childrens.FindAnyNs('Confirmacao');
 
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
   if AuxNode <> nil then
   begin
     LerPedido(AuxNode);
@@ -434,6 +437,9 @@ begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
   AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('CancelamentoNfse');
 
   LerConfirmacao(AuxNode);
 end;

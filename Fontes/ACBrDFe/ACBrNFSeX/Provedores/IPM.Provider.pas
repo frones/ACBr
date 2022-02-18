@@ -865,7 +865,7 @@ procedure TACBrNFSeProviderIPM.PrepararCancelaNFSe(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  xSerie, IdAttr: string;
+  xSerie, IdAttr, xSubstituta: string;
 begin
   if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
   begin
@@ -902,6 +902,17 @@ begin
 
   if ConfigGeral.Params.TemParametro('SolicitarCancelamento') then
   begin
+    xSubstituta := '';
+    if Response.InfCancelamento.NumeroNFSeSubst <> '' then
+      xSubstituta := '<substituta>' +
+                       '<numero>' +
+                         Response.InfCancelamento.NumeroNFSeSubst +
+                       '</numero>' +
+                       '<serie>' +
+                         Response.InfCancelamento.SerieNFSeSubst +
+                       '</serie>' +
+                     '</substituta>';
+
     Response.ArquivoEnvio := '<solicitacao_cancelamento>' +
                            '<prestador>' +
                              '<cpfcnpj>' +
@@ -922,6 +933,7 @@ begin
                                '<observacao>' +
                                  Response.InfCancelamento.MotCancelamento +
                                '</observacao>' +
+                               xSubstituta +
                              '</nfse>' +
                            '</documentos>' +
                          '</solicitacao_cancelamento>';

@@ -52,6 +52,10 @@ Símbolo : Significado
     TACBrTEFResp.DataHoraTransacaoComprovante
     (por: Antonio Carlos)
 
+-- ACBrTEFDCliSiTef --
+[*] Ajuste na rotina "FinalizarTransacao", para priorizar "DataHoraFiscal", quando for informada
+    https://www.projetoacbr.com.br/forum/topic/66016-datahora-finalizacao-de-transacao-clisitef/
+
 28/01/22
 -- ACBrTEFAndroidPayGo, ACBrTEFAPICliSiTef, ACBrTEFAPIPayGoWeb --
 [*] Método "InterpretarRespostaAPI", ajustado para passar o valor de

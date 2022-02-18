@@ -526,6 +526,9 @@ begin
         PWINFO_AUTDATETIME:
           DataHoraTransacaoHost :=  Linha.Informacao.AsTimeStampSQL;
 
+        PWINFO_DATETIMERCPT:
+          DataHoraTransacaoComprovante := Linha.Informacao.AsTimeStampSQL;
+
         PWINFO_AUTHSYST:
         begin
           Rede := LinStr;

@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/22
+-- ACBrTEFPayGoComum --
+[+] Adicionado mapeamento do retorno do registrador PWINFO_DATETIMERCPT para
+    TACBrTEFResp.DataHoraTransacaoComprovante
+    (por: Antonio Carlos)
+
 28/01/22
 -- ACBrTEFAndroidPayGo, ACBrTEFAPICliSiTef, ACBrTEFAPIPayGoWeb --
 [*] Método "InterpretarRespostaAPI", ajustado para passar o valor de

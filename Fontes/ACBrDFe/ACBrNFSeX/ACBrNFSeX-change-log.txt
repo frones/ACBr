@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/02/2022
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Alterado o tamanho máximo da tag <CodigoCnae> de 7 para 9.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado o grupo <substituta> no pedido de cancelamento no provedor IPM.
    Por: Fabio Luiz Binhara

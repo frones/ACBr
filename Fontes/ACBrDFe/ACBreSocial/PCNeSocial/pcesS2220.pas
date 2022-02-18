@@ -386,16 +386,17 @@ end;
 
 procedure TevtMonit.GerarRespMonit;
 begin
-  Gerador.wGrupo('respMonit');
 
-  if Trim(self.exMedOcup.RespMonit.cpfResp) <> '' then
+  if (Trim(self.exMedOcup.RespMonit.cpfResp) <> '') or
+     (Trim(self.exMedOcup.RespMonit.FNMResp) <> '') then
+  begin
+    Gerador.wGrupo('respMonit');
     Gerador.wCampo(tcStr, '', 'cpfResp', 11, 11, 0, self.exMedOcup.RespMonit.cpfResp);
-
-  Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
-  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
-  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
-
-  Gerador.wGrupo('/respMonit');
+    Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
+    Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
+    Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
+    Gerador.wGrupo('/respMonit');
+  end;
 end;
 
 function TevtMonit.GerarXML: boolean;

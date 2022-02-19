@@ -731,7 +731,7 @@ var
    RestPart: Double;
    IntCalc, FracCalc, LastNumber, IntValue : Int64;
    Negativo: Boolean;
-   OldRM: TRoundingMode;
+   OldRM: TFPURoundingMode;
 Begin
   OldRM := GetRoundMode;
   try

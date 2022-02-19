@@ -364,7 +364,7 @@ begin
           nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
           dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
           cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
-          sexoDep  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'sexoDep', 'F'));
+          sexoDep  := INIRec.ReadString(sSecao, 'sexoDep', 'F');
           depIRRF  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', 'S'));
           depSF    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depSF', 'S'));
           incTrab  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incTrab', 'S'));

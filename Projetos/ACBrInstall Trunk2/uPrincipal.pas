@@ -361,9 +361,10 @@ begin
   if versao <> cVersaoConfig then
   begin
     if MessageDlg('Encontramos um arquivo de configuração antigo. Precisamos apagá-lo para continuar.' + sLineBreak +
-                  'Deseja Continuar?', mtWarning, mbYesNo, 0, mbNo) <> mrYes then
+                  'Deseja continuar?', mtWarning, mbYesNo, 0, mbNo) <> mrYes then
     begin
       Application.Terminate;
+      Exit;
     end;
 
     DeleteFile(PathArquivoIni);

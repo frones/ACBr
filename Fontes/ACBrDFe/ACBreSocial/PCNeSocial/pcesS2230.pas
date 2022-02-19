@@ -533,13 +533,16 @@ begin
       Gerador.wCampo(tcStr, '', 'indRemunCargo',  1,   1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMandElet.indRemunCargo));
       Gerador.wGrupo('/infoMandElet');
     end;
-        
-    // Critério de geração: F (Se {codMotAfast} = [01, 03, 35]); N (Nos demais casos)
-    if ((objInfoAfast.iniAfastamento.infoAtestadoInst) and
-        (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho,
-                                                     mtvAcidenteDoencaNaoTrabalho,
-                                                     mtvLicencaMaternidadeAntecipacaoProrrogacao])) then
-      GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
+
+    if (VersaoDF <= ve02_05_00) then
+    begin
+      // Critério de geração: F (Se {codMotAfast} = [01, 03, 35]); N (Nos demais casos)
+      if ((objInfoAfast.iniAfastamento.infoAtestadoInst) and
+          (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho,
+                                                       mtvAcidenteDoencaNaoTrabalho,
+                                                       mtvLicencaMaternidadeAntecipacaoProrrogacao])) then
+        GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
+    end;
 
     if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
       GerarInfoCessao(objInfoAfast.iniAfastamento.infoCessao);

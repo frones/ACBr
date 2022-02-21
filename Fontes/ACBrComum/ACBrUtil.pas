@@ -735,9 +735,10 @@ var
 Begin
   OldRM := GetRoundMode;
   try
-    SetRoundMode(rmNearest);
-    Negativo  := (AValue < 0);
+    if (OldRM <> rmNearest) then
+      SetRoundMode(rmNearest);
 
+    Negativo  := (AValue < 0);
     Pow       := intpower(10, abs(Digits) );
     PowValue  := abs(AValue) / 10 ;
     IntValue  := trunc(PowValue);

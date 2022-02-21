@@ -45,20 +45,11 @@ uses
   ACBrBase;
 
 type
-  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeConsultaSituacao,
-                     stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
-                     stNFSeSubstituicao, stNFSeAbrirSessao, stNFSeFecharSessao,
-                     stNFSeEnvioWebService, stNFSeImprimir);
-
-  TLayOutNFSe = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-                 LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
-                 LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
-                 LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse,
-                 LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
-                 LayNfseAbrirSessao, LayNfseFecharSessao);
-
-  TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe,
-                 schAbrirSessao, schFecharSessao);
+  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsultaSituacao,
+                     stNFSeConsulta, stNFSeCancelamento, stNFSeSubstituicao,
+                     stNFSeImprimir, stNFSeEmail, stNFSeAbrirSessao,
+                     stNFSeFecharSessao, stNFSeAguardaProcesso,
+                     stNFSeEnvioWebService);
 
   TVersaoNFSe = (ve100, ve101, ve103,
                  ve200, ve201, ve202, ve203, ve204);
@@ -223,8 +214,7 @@ function SituacaoLoteRPSToStr(const t: TSituacaoLoteRPS): string;
 function StrToSituacaoLoteRPS(out ok: boolean; const s: string): TSituacaoLoteRPS;
 function SituacaoLoteRPSToDescr(const t: TSituacaoLoteRPS): string;
 
-function ProvedorToStr(const t: TnfseProvedor): string;
-function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
+function StrToProvedor(const s: string): TnfseProvedor;
 
 function CodItemServToDesc(const s: string): string;
 function CodIBGEToCidade(const ACodigo: Integer): string;
@@ -251,15 +241,6 @@ function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: string;
 function VersaoXML(const AXML: string): string;
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: string;
                                ANumero: Int64; AModelo: Integer = 56): string;
-
-function LayOutToServico(const t: TLayOutNFSe): string;
-function ServicoToLayOut(out ok: Boolean; const s: string): TLayOutNFSe;
-
-function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
-function LayOutToStr(const t: TLayOutNFSe): string;
-
-function SchemaNFSeToStr(const t: TSchemaNFSe): string;
-function StrToSchemaNFSe(const s: string): TSchemaNFSe;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: string): TVersaoNFSe;
 function VersaoNFSeToStr(const t: TVersaoNFSe): string;
@@ -485,102 +466,20 @@ begin
                             sLoteProcessadoAviso]);
 end;
 
-function ProvedorToStr(const t: TnfseProvedor): string;
+function StrToProvedor(const s: string): TnfseProvedor;
+var
+  ProvedorStr: string;
+  CodProvedor: Integer;
 begin
-  Result := EnumeradoToStr(t,
-        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'Ginfes', 'ISSDSF',
-         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'ISSRecife',
-         'SimplISS', 'Thema', 'ISSRio', 'Publica', 'fintelISS', 'Digifred',
-         'Saatri', 'FISSLex', 'ISSGoiania', 'ISSCuritiba', 'BHISS', 'ISSNatal',
-         'ISSDigital', 'ISSe', 'Sistemas4R', 'GovDigital', 'Fiorilli', 'Coplan',
-         'Prodata', 'Agili', 'Virtual', 'ISSPortoVelho', 'Link3', 'SpeedGov',
-         'ISSVitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'eGoverneISS',
-         'SisPMJP', 'SystemPro', 'Infisc', 'ISSSalvador', 'DBSeller', 'Lexsom',
-         'NFSeBrasil', 'Tinus', 'ISSSJP', 'Conam',
-         'eReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'ISSSaoPaulo',
-         'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Adm',
-         'SmarAPD', 'Sigep', 'SafeWeb',
-         'SH3', 'SiapNet', 'IPM', 'ISSJoinville', 'Asten',
-         'Giss', 'DeISS', 'TcheInfo', 'DataSmart', 'MetropolisWeb',
-         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico',
-         'SigISS', 'EloTech', 'SilTecnologia', 'iiBrasil', 'WebFisco',
-         'ISSLencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
-         'Siat', 'ISSFortaleza', 'Futurize', 'AEG', 'GeisWeb',
-         'SiapSistemas', 'DSF', 'Tributus',
-         'ADPM', 'FGMaiss', 'Sudoeste', 'Simple',
-         'Sintese', 'Citta', 'Fisco'],
-        [proNenhum, proTiplan, proISSNet, proWebISS, proGinfes, proISSDSF,
-         proAbaco, proBetha, proEquiplano, proISSIntel, proGovBR, proISSRecife,
-         proSimplISS, proThema, proISSRio, proPublica,
-         profintelISS, proDigifred, proSaatri, proFISSLex, proISSGoiania,
-         proISSCuritiba, proBHISS, proISSNatal, proISSDigital, proISSe, proSistemas4R,
-         proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
-         proISSPortoVelho, proLink3, proSpeedGov, proISSVitoria, proMitra,
-         proTecnos, proPronim, proActcon, proEL, proeGoverneISS, proSisPMJP,
-         proSystemPro, proInfisc, proISSSalvador, proDBSeller, proLexsom,
-         proNFSeBrasil, proTinus, proISSSJP,
-         proConam, proeReceita, proGoverna, proNEAInformatica, proNotaInteligente,
-         proISSSaoPaulo, proABase, proVersaTecnologia, proCIGA, proSiam, proAdm,
-         proSmarAPD, proSigep,
-         proSafeWeb, proSH3, proSiapNet, proIPM, proISSJoinville,
-         proAsten, proGiss, proDeISS, proTcheInfo,
-         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-         proGiap, proAssessorPublico, proSigISS, proEloTech,
-         proSilTecnologia, proiiBrasil, proWebFisco,
-         proISSLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
-         proISSFortaleza, proFuturize, proAEG, proGeisWeb,
-         proSiapSistemas, proDSF, proTributus,
-         proADPM, proFGMaiss, proSudoeste, proSimple,
-         proSintese, proCitta, proFisco]);
-end;
+  ProvedorStr := 'pro' + s;
 
-function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
-begin
-  Result := StrToEnumerado(ok, s,
-        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'Ginfes', 'ISSDSF',
-         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'GovBR', 'ISSRecife',
-         'SimplISS', 'Thema', 'ISSRio', 'Publica', 'fintelISS', 'Digifred',
-         'Saatri', 'FISSLex', 'ISSGoiania', 'ISSCuritiba', 'BHISS', 'ISSNatal',
-         'ISSDigital', 'ISSe', 'Sistemas4R', 'GovDigital', 'Fiorilli', 'Coplan',
-         'Prodata', 'Agili', 'Virtual', 'ISSPortoVelho', 'Link3', 'SpeedGov',
-         'ISSVitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'eGoverneISS',
-         'SisPMJP', 'SystemPro', 'Infisc', 'ISSSalvador', 'DBSeller', 'Lexsom',
-         'NFSeBrasil', 'Tinus', 'ISSSJP', 'Conam',
-         'eReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'ISSSaoPaulo',
-         'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Adm',
-         'SmarAPD', 'Sigep', 'SafeWeb',
-         'SH3', 'SiapNet', 'IPM', 'ISSJoinville', 'Asten',
-         'Giss', 'DeISS', 'TcheInfo', 'DataSmart', 'MetropolisWeb',
-         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
-         'SigISS', 'EloTech', 'SilTecnologia', 'iiBrasil', 'WebFisco',
-         'ISSLencois', 'geNFe', 'MegaSoft', 'ModernizacaoPublica',
-         'Siat', 'ISSFortaleza', 'Futurize', 'AEG', 'GeisWeb',
-         'SiapSistemas', 'DSF', 'Tributus',
-         'ADPM', 'FGMaiss', 'Sudoeste', 'Simple',
-         'Sintese', 'Citta', 'Fisco'],
-        [proNenhum, proTiplan, proISSNet, proWebISS, proGinfes, proISSDSF,
-         proAbaco, proBetha, proEquiplano, proISSIntel, proGovBR, proISSRecife,
-         proSimplISS, proThema, proISSRio, proPublica,
-         profintelISS, proDigifred, proSaatri, proFISSLex, proISSGoiania,
-         proISSCuritiba, proBHISS, proISSNatal, proISSDigital, proISSe, proSistemas4R,
-         proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
-         proISSPortoVelho, proLink3, proSpeedGov, proISSVitoria, proMitra,
-         proTecnos, proPronim, proActcon, proEL, proeGoverneISS, proSisPMJP,
-         proSystemPro, proInfisc, proISSSalvador, proDBSeller, proLexsom,
-         proNFSeBrasil, proTinus, proISSSJP,
-         proConam, proeReceita, proGoverna, proNEAInformatica, proNotaInteligente,
-         proISSSaoPaulo, proABase, proVersaTecnologia, proCIGA, proSiam, proAdm,
-         proSmarAPD, proSigep,
-         proSafeWeb, proSH3, proSiapNet, proIPM, proISSJoinville,
-         proAsten, proGiss, proDeISS, proTcheInfo,
-         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp,
-         proGiap, proAssessorPublico, proSigISS, proEloTech,
-         proSilTecnologia, proiiBrasil, proWebFisco,
-         proISSLencois, progeNFe, proMegaSoft, proModernizacaoPublica, proSiat,
-         proISSFortaleza, proFuturize, proAEG, proGeisWeb,
-         proSiapSistemas, proDSF, proTributus,
-         proADPM, proFGMaiss, proSudoeste, proSimple,
-         proSintese, proCitta, proFisco]);
+  CodProvedor := GetEnumValue(TypeInfo(TnfseProvedor), ProvedorStr);
+
+  if CodProvedor = -1 then
+    raise Exception.Create(Format('"%s" não é um valor TnfseProvedor válido.',
+                                                                [ProvedorStr]));
+
+  Result := TnfseProvedor(CodProvedor);
 end;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
@@ -18099,112 +17998,6 @@ begin
   vNumero      := Poem_Zeros(ANumero, 15);
 
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
-end;
-
-function LayOutToServico(const t: TLayOutNFSe): string;
-begin
-  Result := EnumeradoToStr(t,
-    ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
-     'NfseConsultaSitLoteRps', 'NfseConsultaNfse',
-     'NfseConsultaNfsePorFaixa', 'NfseConsultaNfseServicoPrestado',
-     'NfseConsultaNfseServicoTomado', 'NfseCancelaNfse', 'NfseGerar',
-     'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse', 'NfseAbrirSessao',
-     'NfseFecharSessao'],
-    [LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
-     LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
-     LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse, LayNfseGerar,
-     LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse, LayNfseAbrirSessao,
-     LayNfseFecharSessao]);
-end;
-
-function ServicoToLayOut(out ok: Boolean; const s: string): TLayOutNFSe;
-begin
-  Result := StrToEnumerado(ok, s,
-  ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
-   'NfseConsultaSitLoteRps', 'NfseConsultaNfse',
-   'NfseConsultaNfsePorFaixa', 'NfseConsultaNfseServicoPrestado',
-   'NfseConsultaNfseServicoTomado', 'NfseCancelaNfse', 'NfseGerar',
-   'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse', 'NfseAbrirSessao',
-   'NfseFecharSessao'],
-  [LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-   LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
-   LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
-   LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse, LayNfseGerar,
-   LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse, LayNfseAbrirSessao,
-   LayNfseFecharSessao]);
-end;
-
-function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
-begin
-  case t of
-    LayNfseRecepcaoLote,
-    LayNfseGerar,
-    LayNfseRecepcaoLoteSincrono:        Result := schNFSe;
-
-    LayNfseConsultaLote,
-    LayNfseConsultaNfseRps,
-    LayNfseConsultaSitLoteRps,
-    LayNfseConsultaNfse,
-    LayNfseConsultaNfsePorFaixa,
-    LayNfseConsultaNfseServicoPrestado,
-    LayNfseConsultaNfseServicoTomado:   Result := schConsNFSe;
-
-    LayNfseCancelaNfse:                 Result := schCancNFSe;
-    LayNfseSubstituiNfse:               Result := schSubNFSe;
-    LayNfseAbrirSessao:                 Result := schAbrirSessao;
-    LayNfseFecharSessao:                Result := schFecharSessao;
-  else
-    Result := schErro;
-  end;
-end;
-
-function LayOutToStr(const t: TLayOutNFSe): string;
-begin
-  Result := EnumeradoToStr(t,
-    ['Enviar Lote', 'Consultar Lote', 'Consultar NFS-e por RPS',
-     'Consultar Situação do Lote', 'Consultar NFS-e',
-     'Consultar NFS-e Por Faixa',
-     'Consultar NFS-e Serviço Prestado', 'Consultar NFS-e Serviço Tomado',
-     'Cancelar NFS-e', 'Gerar', 'Enviar Lote - Síncrono', 'Substituir NFS-e',
-     'Abrir Sessão', 'Fechar Sessão'],
-    [LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse,
-     LayNfseConsultaNfsePorFaixa, LayNfseConsultaNfseServicoPrestado,
-     LayNfseConsultaNfseServicoTomado, LayNfseCancelaNfse, LayNfseGerar,
-     LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse, LayNfseAbrirSessao,
-     LayNfseFecharSessao]);
-end;
-
-function SchemaNFSeToStr(const t: TSchemaNFSe): string;
-begin
-  Result := GetEnumName(TypeInfo(TSchemaNFSe), Integer(t));
-  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
-end;
-
-function StrToSchemaNFSe(const s: string): TSchemaNFSe;
-var
-  P: Integer;
-  SchemaStr: string;
-  CodSchema: Integer;
-begin
-  P := pos('_',s);
-  if p > 0 then
-    SchemaStr := copy(s,1,P-1)
-  else
-    SchemaStr := s;
-
-  if LeftStr(SchemaStr,3) <> 'sch' then
-    SchemaStr := 'sch'+SchemaStr;
-
-  CodSchema := GetEnumValue(TypeInfo(TSchemaNFSe), SchemaStr);
-
-  if CodSchema = -1 then
-  begin
-    raise Exception.Create(Format('"%s" não é um valor TSchemaNFSe válido.',[SchemaStr]));
-  end;
-
-  Result := TSchemaNFSe(CodSchema);
 end;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: string): TVersaoNFSe;

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/02/2022
+-- ACBrNFSeXConversao --
+[*] Remoção de tipos e funções que não são mais utilizadas pelo novo componente.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Ajustes no nome do provedor de algumas cidades.
+   Por: Italo Giurizzato Junior
+
 18/02/2022
 -- ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Alterado o tamanho máximo da tag <CodigoCnae> de 7 para 9.

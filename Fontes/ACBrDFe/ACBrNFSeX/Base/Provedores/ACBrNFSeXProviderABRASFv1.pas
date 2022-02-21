@@ -1361,7 +1361,7 @@ begin
         Exit;
       end;
 
-      Ret :=  Response.RetCancelamento;
+      Ret := Response.RetCancelamento;
       Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
 
       if Ret.DataHora = 0 then

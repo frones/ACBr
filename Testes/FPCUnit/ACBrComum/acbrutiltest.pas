@@ -244,6 +244,7 @@ type
 
   { RoundABNTTest }
 
+  {Veja comentário na parte "initialization"}
   RoundABNTTest = class(TTestCase)
   published
     procedure AsIntegerImpar;
@@ -262,6 +263,7 @@ type
 
   { RoundABNTMudancasDeArredondamentoPara_rmUpTest }
 
+  {Veja comentário na parte "initialization"}
   RoundABNTMudancasDeArredondamentoPara_rmUpTest = class(RoundABNTTest)
   private
     OldRM: TFPURoundingMode;
@@ -272,6 +274,7 @@ type
 
   { RoundABNTMudancasDeArredondamentoPara_rmDownTest }
 
+  {Veja comentário na parte "initialization"}
   RoundABNTMudancasDeArredondamentoPara_rmDownTest = class(RoundABNTTest)
   private
     OldRM: TFPURoundingMode;
@@ -282,6 +285,7 @@ type
 
   { RoundABNTMudancasDeArredondamentoPara_rmTruncateTest }
 
+  {Veja comentário na parte "initialization"}
   RoundABNTMudancasDeArredondamentoPara_rmTruncateTest = class(RoundABNTTest)
   private
     OldRM: TFPURoundingMode;
@@ -5011,10 +5015,14 @@ initialization
   _RegisterTest('ACBrComum.ACBrUtil', ACBrStrToAnsiTest);
   _RegisterTest('ACBrComum.ACBrUtil', TruncFixTest);
   _RegisterTest('ACBrComum.ACBrUtil', TruncToTest);
-  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
+
+  {Temos 4 classes de testes da RoundABNT. No entanto, apenas uma delas pode ser executada por vez.
+   Quando mais de uma é adicionada, podem causar efeitos colaterais ao modificar o RoundingMode.
+   Mesmo assim, as outras podem ser adicionadas bastando descomentar as linhas abaixo}
+//  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest);
   _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmUpTest);
-  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmDownTest);
-  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmTruncateTest);
+//  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmDownTest);
+//  _RegisterTest('ACBrComum.ACBrUtil', RoundABNTMudancasDeArredondamentoPara_rmTruncateTest);
   _RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest);
   _RegisterTest('ACBrComum.ACBrUtil', TestBitTest);
   _RegisterTest('ACBrComum.ACBrUtil', TesteSetBit);

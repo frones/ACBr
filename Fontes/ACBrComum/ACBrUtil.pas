@@ -731,8 +731,12 @@ var
    RestPart: Double;
    IntCalc, FracCalc, LastNumber, IntValue : Int64;
    Negativo: Boolean;
+{$IFNDEF EXTERNALLINKER}
    OldRM: TFPURoundingMode;
-Begin
+{$ELSE}
+   OldRM: TRoundingMode;
+{$ENDIF}
+begin
   OldRM := GetRoundMode;
   try
     if (OldRM <> rmNearest) then

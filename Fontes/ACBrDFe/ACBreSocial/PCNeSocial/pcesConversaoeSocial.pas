@@ -1189,7 +1189,7 @@ function IntToTpProf(codCateg : Integer): tpTpProf;
 implementation
 
 uses
-  pcnConversao, typinfo;
+  pcnConversao, typinfo, ACBrUtil;
 
 const
   TTipoEventoString   : array[0..58] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',
@@ -2811,11 +2811,11 @@ begin
 //        exit;
 //      end;
 
-    intLastPos := s.LastIndexOf('Id="')+1;
+    intLastPos := PosLast('Id="',s)+1;
 
     if intLastPos > 0 then
     begin
-      intChar := string(Copy(s, 0, intLastPos -1)).LastIndexOf('<') + 1;
+      intChar := PosLast('<', Copy(s, 0, intLastPos -1)) + 1;
 
       if intChar > 0 then
         strSearchValue := Trim(Copy(s, intChar + 1, intLastPos - intChar - 1));
@@ -2981,19 +2981,21 @@ function GetMatrixEventoInfo(AInfoEventoMatrix: TMatrixEventoInfo; ASearchValue:
 var
   recMatrixEventoInfo: TRecMatrixEventoInfo;
   bolMatch           : Boolean;
+  i: Integer;
 begin
   bolMatch := False;
 
-  for recMatrixEventoInfo in __ARRAY_MATRIX_EVENTO_INFO do
+  for i := 1 to Length(__ARRAY_MATRIX_EVENTO_INFO) do
   begin
+    recMatrixEventoInfo := __ARRAY_MATRIX_EVENTO_INFO[i];
     case AInfoEventoMatrix of
-      meiTipoEvento: bolMatch            := recMatrixEventoInfo.TipoEvento = TTipoEvento(GetEnumValue(TypeInfo(TTipoEvento), ASearchValue));
-      meiTipoEventoString: bolMatch      := recMatrixEventoInfo.TipoEventoString = ASearchValue;
-      meiVersao: bolMatch                := recMatrixEventoInfo.Versao = ASearchValue;
-      meiEventoString: bolMatch          := recMatrixEventoInfo.EventoString = ASearchValue;
-      meiSchema: bolMatch                := recMatrixEventoInfo.Schema = TeSocialSchema(GetEnumValue(TypeInfo(TeSocialSchema), ASearchValue));
+      meiTipoEvento:            bolMatch := recMatrixEventoInfo.TipoEvento = TTipoEvento(GetEnumValue(TypeInfo(TTipoEvento), ASearchValue));
+      meiTipoEventoString:      bolMatch := recMatrixEventoInfo.TipoEventoString = ASearchValue;
+      meiVersao:                bolMatch := recMatrixEventoInfo.Versao = ASearchValue;
+      meiEventoString:          bolMatch := recMatrixEventoInfo.EventoString = ASearchValue;
+      meiSchema:                bolMatch := recMatrixEventoInfo.Schema = TeSocialSchema(GetEnumValue(TypeInfo(TeSocialSchema), ASearchValue));
       meiStrEventoToTipoEvento: bolMatch := recMatrixEventoInfo.StrEventoToTipoEvento = ASearchValue;
-      meiObservacao: bolMatch            := recMatrixEventoInfo.StrEventoToTipoEvento = ASearchValue;
+      meiObservacao:            bolMatch := recMatrixEventoInfo.StrEventoToTipoEvento = ASearchValue;
     end;
 
     if bolMatch then

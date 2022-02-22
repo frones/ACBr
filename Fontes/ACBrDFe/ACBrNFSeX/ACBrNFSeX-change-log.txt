@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 22/02/2022
+-- GeisWeb.LerXml --
+[*] Alguns tags não estavam sendo lidas ou lidas de forma incorreta.
+   Por: Adhelmar Rondon
+-- CIGA.Provider --
+[*] Sobreescrito o TratarRetornoCancelaNFSe.
+   Por: Metasis Sistemas
+-- IPM.LerXml --
+[*] O provedor esta retornado o CPF/CNPJ formatado, colocado a função OnlyNumber
+    para remover a formatação.
+   Por: Pedro A. Araújo
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade de Sao Francisco do Sul - Provedor IPM.
    Por: Maiquel Parisotto

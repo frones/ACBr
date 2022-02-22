@@ -65,31 +65,16 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
   end;
 
 implementation
 
 uses
   ACBrXmlBase, ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, CIGA.GravarXml, CIGA.LerXml;
+  ACBrNFSeXNotasFiscais, ACBrNFSeXConsts, CIGA.GravarXml, CIGA.LerXml;
 
 { TACBrNFSeXWebserviceCIGA }
-
-function TACBrNFSeXWebserviceCIGA.Recepcionar(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:RecepcionarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
-                     ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
 
 function TACBrNFSeXWebserviceCIGA.TratarXmlRetornado(
   const aXML: string): string;
@@ -122,6 +107,27 @@ begin
   end;
 end;
 
+procedure TACBrNFSeXWebserviceCIGA.LevantarExcecaoHttp;
+begin
+  // Não executar nada aqui
+end;
+
+function TACBrNFSeXWebserviceCIGA.Recepcionar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfse:RecepcionarLoteRpsRequest>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
+
+  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
+                     ['outputXML', 'EnviarLoteRpsResposta'],
+                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
 function TACBrNFSeXWebserviceCIGA.ConsultarLote(ACabecalho, AMSG: String): string;
 var
   Request: string;
@@ -152,11 +158,6 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/ConsultarSituacaoLoteRps', Request,
                      ['outputXML', 'ConsultarSituacaoLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
-procedure TACBrNFSeXWebserviceCIGA.LevantarExcecaoHttp;
-begin
-  // Não executar nada aqui
 end;
 
 function TACBrNFSeXWebserviceCIGA.ConsultarNFSePorRps(ACabecalho, AMSG: String): string;
@@ -247,6 +248,106 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderCIGA.TratarRetornoCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  Document: TACBrXmlDocument;
+  ANode, AuxNode, ANodePed, ANodeInfCon: TACBrXmlNode;
+  Ret: TRetCancelamento;
+  IdAttr: string;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ProcessarMensagemErros(Document.Root, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := Document.Root.Childrens.FindAnyNs('Cancelamento');
+
+      if ANode = nil then
+        ANode := Document.Root.Childrens.FindAnyNs('RetCancelamento');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod209;
+        AErro.Descricao := Desc209;
+        Exit;
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+      if AuxNode <> nil then
+        ANode := AuxNode;
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod204;
+        AErro.Descricao := Desc204;
+        Exit;
+      end;
+
+      Ret :=  Response.RetCancelamento;
+      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
+
+      if Ret.DataHora = 0 then
+        Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+
+      if ConfigAssinar.IncluirURI then
+        IdAttr := ConfigGeral.Identificador
+      else
+        IdAttr := 'ID';
+
+      ANodePed := ANode.Childrens.FindAnyNs('Pedido');
+      ANodePed := ANodePed.Childrens.FindAnyNs('InfPedidoCancelamento');
+
+      Ret.Pedido.InfID.ID := ObterConteudoTag(ANodePed.Attributes.Items[IdAttr]);
+      Ret.Pedido.CodigoCancelamento := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('CodigoCancelamento'), tcStr);
+
+      ANodePed := ANodePed.Childrens.FindAnyNs('IdentificacaoNfse');
+
+      with Ret.Pedido.IdentificacaoNfse do
+      begin
+        Numero := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('Numero'), tcStr);
+        Cnpj := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('Cnpj'), tcStr);
+        InscricaoMunicipal := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('InscricaoMunicipal'), tcStr);
+        CodigoMunicipio := ObterConteudoTag(ANodePed.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
+      end;
+
+      ANodeInfCon := ANode.Childrens.FindAnyNs('InfConfirmacaoCancelamento');
+
+      if ANodeInfCon <> nil then
+      begin
+        Ret.Sucesso := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('Sucesso'), tcStr);
+        Ret.DataHora := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 

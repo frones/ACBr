@@ -69,6 +69,8 @@ begin
 
   FormatoItemListaServico := filsSemFormatacao;
 
+  DivAliq100 := True;
+
   NrOcorrValorDeducoes := 1;
   NrOcorrValorPis := 1;
   NrOcorrValorCofins := 1;

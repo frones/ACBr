@@ -43,6 +43,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/02/2022
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Sao Francisco do Sul - Provedor IPM.
+   Por: Maiquel Parisotto
+-- Ginfes.Provider --
+[*] Incluida a função para remover os prefixos no tratamento do XML Retornado.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXlerXml_ABRASFv2 --
+[*] O provedor SilTecnologia gera o grupo Tomador fora do lugar, realizado ajustes.
+   Por: Innovae Brasil
+-- Equiplano.LerXml --
+[*] Correção na leitura do XML da NFS-e.
+   Por: Marcos
+
 21/02/2022
 -- ACBrNFSeXConversao --
 [*] Remoção de tipos e funções que não são mais utilizadas pelo novo componente.

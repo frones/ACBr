@@ -495,6 +495,7 @@ begin
 
     NFSe.ValorCredito := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);
 
+    LerTomadorServico(AuxNode);
     LerPrestadorServico(AuxNode);
     LerEnderecoPrestadorServico(AuxNode, 'EnderecoPrestadorServico');
     LerOrgaoGerador(AuxNode);

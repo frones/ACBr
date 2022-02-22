@@ -89,7 +89,7 @@ type
                              schevtTabFuncao, schevtTabHorTur, schevtTabLotacao, schevtTabOperPort,
                              schevtTabProcesso, schevtTabRubrica, schevtTotConting, schevtTSVAltContr,
                              schevtTSVInicio, schevtTSVTermino, schRetornoEnvioLoteEventos,
-                             schRetornoEvento, schRetornoProcessamentoLote, schConsultaIdentEventos, 
+                             schRetornoEvento, schRetornoProcessamentoLote, schConsultaIdentEventos,
                              schDownloadEventos, schEvtToxic, schEvtTreiCap,schevtCdBenefAlt,
                              schevtCdBenIn, schevtCessao, schevtCdBenAlt, schevtReativBen,
                              schevtCdBenTerm,
@@ -594,14 +594,14 @@ type
                              tpisbBeneficioConcedidoPeloProprioOrgaoDeclarante,
                              tpisbBeneficioTransferidoDeOutroOrgao,
                              tpisbMudandaDeCPFDoBeneficiario);
- 
+
   tpTpPenMorte            = (pmNada, pmVitalicia, pmTemporaria);
-  
+
   tpMotCessBenef          = (tmcbNenhum,
-                             tmcbObito, 
-                             tmcbReversao, 
-                             tmcbPorDecisaoJudicial, 
-                             tmcbCassacao, 
+                             tmcbObito,
+                             tmcbReversao,
+                             tmcbPorDecisaoJudicial,
+                             tmcbCassacao,
                              tmcbTerminoDoPrazoDoBeneficio,
                              tmcbExtincaoDeQuota,
                              tmcbNaoHomologadoPeloTribunalDeContas,
@@ -611,7 +611,7 @@ type
                              tmcbNaoRecadastramento);
 
   tpMtvTermino            = tpMotCessBenef;
-  
+
   tpMtvSuspensao          = (mtvNada,
                              mtvSuspensaoPorNaoRecadastramento,
                              mtvOutrosMotivosDeSuspensao);
@@ -636,30 +636,30 @@ const
                                           'evtTabCargo', 'evtTabCarreira',
                                           'evtTabFuncao', 'evtTabHorTur',
                                           'evtTabAmbiente', 'evtTabProcesso',
-                                          'evtTabOperPort', 'S-2100', 
-                                          'evtRemun', 'evtRmnRPPS', 
+                                          'evtTabOperPort', 'S-2100',
+                                          'evtRemun', 'evtRmnRPPS',
                                           'evtCdBenefIn', 'evtPgtos',
-                                          'S-1220', 'evtAqProd', 
-                                          'evtComProd', 'evtContratAvNP', 
-                                          'evtInfoComplPer', 'evtTotConting', 
-                                          'evtReabreEvPer', 'evtFechaEvPer', 
-                                          'evtContrSindPatr', 'evtAdmPrelim', 
-                                          'evtAdmissao', 'evtAltCadastral', 
-                                          'evtAltContratual', 'evtCAT', 
+                                          'S-1220', 'evtAqProd',
+                                          'evtComProd', 'evtContratAvNP',
+                                          'evtInfoComplPer', 'evtTotConting',
+                                          'evtReabreEvPer', 'evtFechaEvPer',
+                                          'evtContrSindPatr', 'evtAdmPrelim',
+                                          'evtAdmissao', 'evtAltCadastral',
+                                          'evtAltContratual', 'evtCAT',
                                           'evtMonit', 'evtAfastTemp',
-                                          'evtExpRisco', 'evtInsApo', 
-                                          'evtAvPrevio', 'evtConvInterm', 
-                                          'evtReintegr', 'evtDeslig', 
+                                          'evtExpRisco', 'evtInsApo',
+                                          'evtAvPrevio', 'evtConvInterm',
+                                          'evtReintegr', 'evtDeslig',
                                           'evtTSVInicio', 'S-2305',
                                           'evtTSVAltContr', 'evtTSVTermino',
-                                          'evtCdBenPrRP', 'evtExclusao', 
-                                          'evtCdBenefAlt', 'evtCdBenIn', 
-                                          'evtCessao', 'evtCdBenAlt', 
+                                          'evtCdBenPrRP', 'evtExclusao',
+                                          'evtCdBenefAlt', 'evtCdBenIn',
+                                          'evtCessao', 'evtCdBenAlt',
                                           'evtReativBen','evtCdBenTerm');
 
   TTrabalhadorSemVinculo: Array[0..27] of integer = (
-                                          201, 202, 304, 305, 308, 311, 313, 401, 410, 501, 
-                                          701, 711, 712, 721, 722, 723, 731, 734, 738, 741, 
+                                          201, 202, 304, 305, 308, 311, 313, 401, 410, 501,
+                                          701, 711, 712, 721, 722, 723, 731, 734, 738, 741,
                                           751, 761, 771, 781, 901, 902, 903, 904);
 
 const
@@ -1399,7 +1399,7 @@ end;
 
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 begin
- Result := GetMatrixEventoInfo(meiTipoEvento, GetEnumName(TypeInfo(TTipoEvento), Integer(t))).EventoString;  
+ Result := GetMatrixEventoInfo(meiTipoEvento, GetEnumName(TypeInfo(TTipoEvento), Integer(t))).EventoString;
 end;
 
 function eSProcEmiToStr(const t: TpProcEmi ): string;
@@ -2019,11 +2019,11 @@ function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
 begin
   result := tpCodIncIRRF( StrToEnumerado2(ok , s,[    '00',   '01',   '09',   '11',   '12',   '13',   '14',   '15',   '31',   '32',   '33',
                                                       '34',   '35',   '41',   '42',   '43',   '44',   '46',   '47',   '48',   '51',   '52',
-                                                      '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',   
-                                                      '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',   
+                                                      '53',   '54',   '55',   '61',   '62',   '63',   '64',   '65',   '66',   '67',   '70',
+                                                      '71',   '72',   '73',   '74',   '75',   '76',   '77',   '78',   '79',   '81',   '82',
                                                       '83',   '91',   '92',   '93',   '94',   '95',  '700',  '701', '9011', '9012', '9013',
                                                     '9014', '9031', '9032', '9033', '9034', '9831', '9832', '9833', '9834', '9041', '9042',
-                                                    '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063', 
+                                                    '9043', '9046', '9047', '9048', '9051', '9052', '9053', '9054', '9061', '9062', '9063',
                                                     '9064', '9065', '9066', '9067', '9082', '9083'  ] ));
 end;
 
@@ -2803,19 +2803,11 @@ begin
   strSearchValue := EmptyStr;
 
   try
-//    for i := 0 to 49 do
-//      if Pos('<' + TEventoString[i]+ ' Id="', s) > 0 then
-//      begin
-//        ok := True;
-//        result := TTipoEvento( i );
-//        exit;
-//      end;
-
-    intLastPos := PosLast('Id="',s)+1;
+    intLastPos := PosLast('Id="',s);
 
     if intLastPos > 0 then
     begin
-      intChar := PosLast('<', Copy(s, 0, intLastPos -1)) + 1;
+      intChar := PosLast('<', Copy(s, 0, intLastPos -1));
 
       if intChar > 0 then
         strSearchValue := Trim(Copy(s, intChar + 1, intLastPos - intChar - 1));
@@ -2925,7 +2917,7 @@ function eSTpIndSitBenefToStr(const t: tpIndSitBenef): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString0_3);
 end;
-                          
+
 function eSStrToTpIndSitBenef(var ok: boolean; const s: string): tpIndSitBenef;
 begin
   result := tpIndSitBenef(StrToEnumerado2(ok, s, TGenericosString0_3) );
@@ -2959,7 +2951,7 @@ end;
 function eSStrToTpMtvSuspensao(var ok: boolean; const s: string): tpMtvSuspensao;
 begin
   result := StrToEnumerado(ok, s, ['00', '01', '99'],
-                           [mtvNada, 
+                           [mtvNada,
                             mtvSuspensaoPorNaoRecadastramento,
                             mtvOutrosMotivosDeSuspensao]);
 end;

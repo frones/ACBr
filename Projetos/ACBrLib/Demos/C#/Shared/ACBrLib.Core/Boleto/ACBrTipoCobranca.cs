@@ -45,6 +45,7 @@
         cobBancoC6 = 40,
         cobBancoRendimento = 41,
         cobBancoInter = 42,
-        cobBancoSofisaSantander = 43
+        cobBancoSofisaSantander = 43,
+		cobBS2 = 44
     }
 }

@@ -467,6 +467,7 @@ Public Enum BancoBoleto
     cobBancoRendimento = 41
     cobBancoInter = 42
     cobBancoSofisaSantander = 43
+    cobBS2 = 44
 End Enum
 
 Public Enum CNABBoleto

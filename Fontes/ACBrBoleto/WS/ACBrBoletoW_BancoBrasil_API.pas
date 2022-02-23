@@ -232,8 +232,8 @@ begin
 
         Consulta.Add('agenciaBeneficiario='+OnlyNumber( Boleto.Cedente.Agencia ));
         Consulta.Add('contaBeneficiario='+OnlyNumber( Boleto.Cedente.Conta ));
-        //Consulta.Add('carteiraConvenio='+OnlyNumber(Boleto.Cedente.Convenio));
-        //Consulta.Add('variacaoCarteiraConvenio='+Boleto.Cedente.Modalidade);
+        Consulta.Add('carteiraConvenio='+OnlyNumber(Boleto.Cedente.Convenio));
+        Consulta.Add('variacaoCarteiraConvenio='+Boleto.Cedente.Modalidade);
 
         if Boleto.Configuracoes.WebService.Filtro.modalidadeCobranca > 0 then
           Consulta.Add('modalidadeCobranca='+ IntToStr(Boleto.Configuracoes.WebService.Filtro.modalidadeCobranca));

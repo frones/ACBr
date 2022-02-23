@@ -399,6 +399,24 @@ begin
         frmStatus.Show;
         frmStatus.BringToFront;
       end;
+
+    stNFSeAguardaProcesso:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Aguardando o Processo...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+
+    stNFSeEnvioWebService:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Enviando para o WebService...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
   end;
 
   Application.ProcessMessages;
@@ -3073,8 +3091,8 @@ begin
       else
         memoLog.Lines.Add('==> Xml da nota não salvo em disco.');
 
-      // Na propriedade XML temos o XML da NFS-e
-      LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XML, WBXmlNotas);
+      // Na propriedade XmlNfse temos o XML da NFS-e
+      LoadXML(ACBrNFSeX1.NotasFiscais.Items[i].XmlNfse, WBXmlNotas);
     end;
   end;
 

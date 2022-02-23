@@ -5728,7 +5728,7 @@ end;
 
 function TACBrBoletoFCClass.DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result:= ACBrTitulo.ACBrBoleto.Banco.fBancoClass.DefineAceiteImpressao(ACBrTitulo);
+  Result:= ACBrBoleto.Banco.BancoClass.DefineAceiteImpressao(ACBrTitulo);
 end;
 
 procedure TACBrBoletoFCClass.Notification ( AComponent: TComponent;

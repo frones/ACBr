@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/02/2022
+-- ACBrNFSeXServicos --
+[*] Atualização da URL da cidade de Brodowski - Provedor Fiorilli.
+   Por: Leandro Coelho
 -- Diversos --
 [*] Removido a propriedade XMLAssinado.
     Renomeado a proriedade XMLOriginal para XmlRps.

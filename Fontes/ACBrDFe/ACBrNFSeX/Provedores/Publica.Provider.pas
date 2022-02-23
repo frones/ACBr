@@ -321,33 +321,21 @@ begin
   begin
     Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
 
-    if EstaVazio(Nota.XMLAssinado) then
+    Nota.GerarXML;
+
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+
+    if ConfigAssinar.RpsGerarNFSe then
     begin
-      Nota.GerarXML;
-
-      Nota.XMLOriginal := ConverteXMLtoUTF8(Nota.XMLOriginal);
-      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
-
-      if ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(Nota.XMLOriginal,
-                                                ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
     end;
 
-    if FAOwner.Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(Nota.NomeArqRps) then
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-      else
-      begin
-        Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-      end;
-    end;
+    SalvarXmlRps(Nota);
 
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
+    xRps := RemoverDeclaracaoXML(Nota.XmlRps);
     xRps := PrepararRpsParaLote(xRps);
 
     ListaRps := ListaRps + xRps;
@@ -423,8 +411,9 @@ begin
         NumRps := AuxNode.AsString;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
         if Assigned(ANota) then
-          ANota.XML := ANode.AsString
+          ANota.XmlNfse := ANode.AsString
         else
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.AsString);
       end;
@@ -498,9 +487,9 @@ end;
 procedure TACBrNFSeProviderPublica.PrepararCancelaNFSe(
   Response: TNFSeCancelaNFSeResponse);
 var
-  NumNFSe: Integer;
+  NumNFSe: Int64;
 begin
-  NumNFSe := StrToIntDef(Response.InfCancelamento.NumeroNFSe, 0);
+  NumNFSe := StrToInt64Def(Response.InfCancelamento.NumeroNFSe, 0);
   Response.InfCancelamento.NumeroNFSe := FormatFloat('000000000000000', NumNFSe);
 
   inherited PrepararCancelaNFSe(Response);

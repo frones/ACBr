@@ -63,6 +63,9 @@ begin
   inherited Configuracao;
 
   NrOcorrAliquota := 1;
+
+  // Incluida a linha abaixo para a cidade Lauro de Freitas/BA em 23/02/2022
+  DivAliq100 := True;
 end;
 
 end.

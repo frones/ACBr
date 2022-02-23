@@ -275,7 +275,7 @@ begin
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
+          ANota.XmlNfse := ANode.OuterXml
         else
         begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
@@ -379,7 +379,7 @@ begin
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
+          ANota.XmlNfse := ANode.OuterXml
         else
         begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
@@ -533,7 +533,7 @@ begin
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
+          ANota.XmlNfse := ANode.OuterXml
         else
         begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
@@ -639,7 +639,7 @@ begin
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         if Assigned(ANota) then
-          ANota.XML := ANode.OuterXml
+          ANota.XmlNfse := ANode.OuterXml
         else
         begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);

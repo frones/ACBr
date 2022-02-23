@@ -44,6 +44,29 @@ Símbolo : Significado
 
 
 23/02/2022
+-- Diversos --
+[*] Removido a propriedade XMLAssinado.
+    Renomeado a proriedade XMLOriginal para XmlRps.
+    Incluida a propriedade XmlNfse. 
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Arroio Trinta - Provedor Publica.
+   Por: Metasis Sistemas
+-- SilTecnologia.Provider --
+[*] Incluida a função TratarXmlRetornado para a versão 2.03.
+   Por: Italo Giurizzato Junior
+-- Equiplano.Provider --
+[*] Possível correção para a gravação do XML da NFS-e.
+   Por: Marcos
+-- Publica.Provider --
+[*] Alterado a conversão de StrToIntDef para StrToInt64Def.
+   Por: Italo Giurizzato Junior
+-- MetropolisWeb.GravarXml --
+[*] Incluida o parâmetro para dividir a aliquota por 100.
+   Por: João Antônio
+-- Ginfes.LerXml --
+[*] Incluida a função para Normatizar o XML antes de ser carregado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alteração de versão da cidade Bom Despacho/MG - Provedor IPM.
    Por: Pedro A. Araújo

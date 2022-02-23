@@ -576,7 +576,7 @@ begin
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
             if Assigned(ANota) then
-              ANota.XML := ANode.OuterXml
+              ANota.XmlNfse := ANode.OuterXml
             else
             begin
               TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
@@ -695,9 +695,12 @@ begin
 
           if ANota.NFSe.IdentificacaoRps.Numero = Response.NumeroRps  then
           begin
-            aXmlNota := GerarXmlNota(ANota.XMLAssinado, Response.ArquivoRetorno);
+            if ANota.XmlRps = '' then
+              aXmlNota := GerarXmlNota(ANota.XmlNfse, Response.ArquivoRetorno)
+            else
+              aXmlNota := GerarXmlNota(ANota.XmlRps, Response.ArquivoRetorno);
 
-            ANota.XML := aXmlNota;
+            ANota.XmlNfse := aXmlNota;
 
             SalvarXmlNfse(ANota);
           end;
@@ -815,7 +818,7 @@ begin
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
             if Assigned(ANota) then
-              ANota.XML := ANode.OuterXml
+              ANota.XmlNfse := ANode.OuterXml
             else
             begin
               TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
@@ -1046,6 +1049,7 @@ begin
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

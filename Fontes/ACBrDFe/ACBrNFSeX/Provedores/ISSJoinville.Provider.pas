@@ -54,6 +54,8 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property Namespace: string read GetNamespace;
     property SoapAction: string read GetSoapAction;
   end;
@@ -271,6 +273,14 @@ begin
   Result := Executar(SoapAction + 'CancelarNfseEnvio', AMSG,
                      ['CancelarNfseResposta'],
                      [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceISSJoinville204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

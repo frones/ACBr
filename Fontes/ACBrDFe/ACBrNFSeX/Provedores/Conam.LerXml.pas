@@ -122,12 +122,10 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-//italo  xRetorno := TratarXmlRetorno(Arquivo);
-  xRetorno := Arquivo;
-  xRetorno := TiraAcentos(xRetorno);
-
-  if EstaVazio(xRetorno) then
+  if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
+
+  xRetorno := TiraAcentos(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();

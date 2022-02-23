@@ -75,14 +75,14 @@ uses
 
 function TNFSeR_Abaco.NormatizarXml(const aXml: string): string;
 begin
-  Arquivo := TiraAcentos(Arquivo);
+  Result := TiraAcentos(aXml);
 end;
 
 { TNFSeR_Abaco204 }
 
 function TNFSeR_Abaco204.NormatizarXml(const aXml: string): string;
 begin
-  Arquivo := TiraAcentos(Arquivo);
+  Result := TiraAcentos(aXml);
   {
   // Se o XML não tiver a codificação incluir ela.
   if ObtemDeclaracaoXML(xRetorno) = '' then

@@ -54,6 +54,7 @@ type
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProvidereGoverneISS = class (TACBrNFSeProviderProprio)
@@ -456,6 +457,14 @@ begin
                       'xmlns:eis="http://schemas.datacontract.org/2004/07/Eissnfe.Negocio.WebServices.Mensagem"',
                       'xmlns:eis1="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Prestador"',
                       'xmlns:eis2="http://schemas.datacontract.org/2004/07/Eissnfe.Dominio.DataTransferObject.Contribuinte"']);
+end;
+
+function TACBrNFSeXWebserviceeGoverneISS.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

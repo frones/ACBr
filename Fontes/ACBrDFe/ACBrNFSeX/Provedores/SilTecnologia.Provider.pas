@@ -79,6 +79,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSilTecnologia203 = class (TACBrNFSeProviderABRASFv2)
@@ -483,6 +484,16 @@ begin
   Result := Executar('', Request,
                      ['return', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceSilTecnologia203.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

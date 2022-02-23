@@ -56,20 +56,15 @@ type
     FNFSe: TNFSe;
     FACBrNFSe: TACBrDFe;
 
-    FXMLAssinado: String;
-    FXMLOriginal: String;
     FAlertas: String;
     FNomeArq: String;
     FNomeArqRps: String;
     FConfirmada: Boolean;
+    FXmlRps: String;
+    FXmlNfse: String;
 
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
-
-    function GetXMLAssinado: String;
-    procedure SetXML(const Value: String);
-    procedure SetXMLOriginal(const Value: String);
-
   public
     constructor Create(AOwner: TACBrDFe);
     destructor Destroy; override;
@@ -98,12 +93,10 @@ type
 
     property NFSe: TNFSe read FNFSe;
 
-    // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
-    property XML: String         read FXMLOriginal   write SetXML;
-    // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
-    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
-    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
-    property Confirmada: Boolean read FConfirmada    write FConfirmada;
+    property XmlRps: String read FXmlRps write FXmlRps;
+    property XmlNfse: String read FXmlNfse write FXmlNfse;
+
+    property Confirmada: Boolean read FConfirmada write FConfirmada;
     property Alertas: String     read FAlertas;
 
   end;
@@ -560,12 +553,6 @@ begin
       end;
     end;
 
-    {
-      Verificar a necessidade de gerar o Xml logo após ler o arquivo ini,
-      ou deixar para gerar pelo método Emitir.
-    }
-//    GerarXML; // ?????
-
     Result := True;
   finally
     INIRec.Free;
@@ -582,25 +569,26 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   Result := FProvider.LerXML(AXml, FNFSe);
-  FXMLOriginal := AXML;
+
+  FXmlNfse := AXML;
 end;
 
 function TNotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
-  if EstaVazio(FXMLOriginal) then
+  if EstaVazio(FXmlRps) then
     GerarXML;
 
   FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXMLOriginal);
+  Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXmlRps);
 end;
 
 function TNotaFiscal.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FXMLOriginal) then
+  if EstaVazio(FXmlRps) then
     GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FXMLOriginal));
+  WriteStrToStream(AStream, AnsiString(FXmlRps));
   Result := True;
 end;
 
@@ -658,8 +646,8 @@ begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  FProvider.GerarXml(NFSe, FXMLOriginal, FAlertas);
-  Result := XMLOriginal;
+  FProvider.GerarXml(NFSe, FXmlRps, FAlertas);
+  Result := FXmlRps;
 end;
 
 function TNotaFiscal.CalcularNomeArquivo: String;
@@ -703,26 +691,6 @@ begin
     PathArquivo := PathWithDelim(PathArquivo);
 
   Result := PathArquivo + NomeArquivo;
-end;
-
-function TNotaFiscal.GetXMLAssinado: String;
-begin
-  Result := FXMLAssinado;
-end;
-
-procedure TNotaFiscal.SetXML(const Value: String);
-begin
-  LerXML(Value);
-end;
-
-procedure TNotaFiscal.SetXMLOriginal(const Value: String);
-begin
-  FXMLOriginal := Value;
-
-  if XmlEstaAssinado(FXMLOriginal) then
-    FXMLAssinado := FXMLOriginal
-  else
-    FXMLAssinado := '';
 end;
 
 { TNotasFiscais }

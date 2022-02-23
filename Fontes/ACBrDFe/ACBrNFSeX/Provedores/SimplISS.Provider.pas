@@ -56,6 +56,8 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
@@ -362,6 +364,14 @@ begin
             'xmlns:nfse="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"']);
 end;
 
+function TACBrNFSeXWebserviceSimplISS.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
+end;
+
 { TACBrNFSeProviderSimplISS203 }
 
 procedure TACBrNFSeProviderSimplISS203.Configuracao;
@@ -588,6 +598,7 @@ begin
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 {

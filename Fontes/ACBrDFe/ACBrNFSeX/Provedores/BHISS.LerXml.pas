@@ -62,7 +62,7 @@ implementation
 
 function TNFSeR_BHISS.NormatizarXml(const aXml: string): string;
 begin
-  Result := StringReplace(Arquivo, '&>', ' ', [rfReplaceAll]);
+  Result := StringReplace(aXml, '&>', ' ', [rfReplaceAll]);
 end;
 
 end.

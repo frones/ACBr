@@ -742,11 +742,11 @@ begin
   if FAOwner.Configuracoes.Arquivos.Salvar then
   begin
     if NaoEstaVazio(aNota.NomeArqRps) then
-      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XMLOriginal)
+      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps)
     else
     begin
       aNota.NomeArqRps := aNota.CalcularNomeArquivoCompleto(aNota.NomeArqRps, '');
-      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XMLOriginal);
+      TACBrNFSeX(FAOwner).Gravar(aNota.NomeArqRps, aNota.XmlRps);
     end;
   end;
 end;
@@ -764,7 +764,7 @@ begin
   aNota.Confirmada := True;
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
-    TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XML, aPath);
+    TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XmlNfse, aPath);
 end;
 
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);

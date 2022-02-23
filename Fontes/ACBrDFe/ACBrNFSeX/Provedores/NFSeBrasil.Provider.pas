@@ -194,6 +194,7 @@ begin
   Result := RemoverDeclaracaoXML(Result);
   Result := string(NativeStringToUTF8(Result));
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderNFSeBrasil }
@@ -353,24 +354,21 @@ begin
   begin
     Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
 
-    if EstaVazio(Nota.XMLAssinado) then
+    Nota.GerarXML;
+
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+
+    if ConfigAssinar.Rps then
     begin
-      Nota.GerarXML;
-
-      Nota.XMLOriginal := ConverteXMLtoUTF8(Nota.XMLOriginal);
-      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
-
-      if ConfigAssinar.Rps then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(Nota.XMLOriginal,
-                                                PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
     end;
 
     SalvarXmlRps(Nota);
 
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
+    xRps := RemoverDeclaracaoXML(Nota.XmlRps);
     xRps := PrepararRpsParaLote(xRps);
 
     ListaRps := ListaRps + xRps;
@@ -567,7 +565,7 @@ begin
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
             if Assigned(ANota) then
-              ANota.XML := ANode.OuterXml
+              ANota.XmlNfse := ANode.OuterXml
             else
             begin
               TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(AuxNode.OuterXml, False);
@@ -690,7 +688,7 @@ begin
             ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumRps);
 
             if Assigned(ANota) then
-              ANota.XML := ANode.OuterXml
+              ANota.XmlNfse := ANode.OuterXml
             else
             begin
               TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(AuxNode.OuterXml, False);

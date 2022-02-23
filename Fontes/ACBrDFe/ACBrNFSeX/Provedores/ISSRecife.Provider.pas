@@ -244,7 +244,7 @@ procedure TACBrNFSeProviderISSRecife.PrepararEmitir(Response: TNFSeEmiteResponse
 var
   AErro: TNFSeEventoCollectionItem;
   Nota: TNotaFiscal;
-  IdAttr, NameSpace, xRps, ListaRps, Prefixo: string;
+  IdAttr, NameSpace, xRps, ListaRps: string;
   I: Integer;
 begin
   if Response.ModoEnvio <> meUnitario then
@@ -282,33 +282,21 @@ begin
   begin
     Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
 
-    if EstaVazio(Nota.XMLAssinado) then
+    Nota.GerarXML;
+
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+
+    if ConfigAssinar.RpsGerarNFSe then
     begin
-      Nota.GerarXML;
-
-      Nota.XMLOriginal := ConverteXMLtoUTF8(Nota.XMLOriginal);
-      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
-
-      if ConfigAssinar.RpsGerarNFSe then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(Nota.XMLOriginal,
-                                                ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
     end;
 
-    if FAOwner.Configuracoes.Arquivos.Salvar then
-    begin
-      if NaoEstaVazio(Nota.NomeArqRps) then
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-      else
-      begin
-        Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-        TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-      end;
-    end;
+    SalvarXmlRps(Nota);
 
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
+    xRps := RemoverDeclaracaoXML(Nota.XmlRps);
     xRps := PrepararRpsParaLote(xRps);
 
     ListaRps := ListaRps + xRps;
@@ -321,9 +309,9 @@ begin
   else
     NameSpace := ' xmlns="' + ConfigMsgDados.GerarNFSe.xmlns + '"';
 
-  Response.ArquivoEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
+  Response.ArquivoEnvio := '<GerarNfseEnvio' + NameSpace + '>' +
                           ListaRps +
-                       '</' + Prefixo + 'GerarNfseEnvio' + '>';
+                       '</GerarNfseEnvio' + '>';
 end;
 
 procedure TACBrNFSeProviderISSRecife.TratarRetornoEmitir(
@@ -385,7 +373,7 @@ begin
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
         if Assigned(ANota) then
-          ANota.XML := ANode.AsString
+          ANota.XmlNfse := ANode.AsString
         else
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.AsString);
       end;

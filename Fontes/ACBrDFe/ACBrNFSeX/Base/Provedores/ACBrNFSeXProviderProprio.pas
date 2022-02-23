@@ -238,25 +238,22 @@ begin
   begin
     Nota := TACBrNFSeX(FAOwner).NotasFiscais.Items[I];
 
-    if EstaVazio(Nota.XMLAssinado) then
+    Nota.GerarXML;
+
+    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+
+    if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
+       (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
     begin
-      Nota.GerarXML;
-
-      Nota.XMLOriginal := ConverteXMLtoUTF8(Nota.XMLOriginal);
-      Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
-
-      if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
-         (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
-      begin
-        Nota.XMLOriginal := FAOwner.SSL.Assinar(Nota.XMLOriginal,
-                                                PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
-                                                ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-      end;
+      Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                         PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
+                                         ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
     end;
 
     SalvarXmlRps(Nota);
 
-    xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
+    xRps := RemoverDeclaracaoXML(Nota.XmlRps);
     xRps := PrepararRpsParaLote(xRps);
 
     ListaRps := ListaRps + xRps;
@@ -531,35 +528,23 @@ begin
   else
     IdAttr := 'ID';
 
-  if EstaVazio(Nota.XMLAssinado) then
+  Nota.GerarXML;
+
+  Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
+  Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+
+  if ConfigAssinar.RpsSubstituirNFSe then
   begin
-    Nota.GerarXML;
-
-    Nota.XMLOriginal := ConverteXMLtoUTF8(Nota.XMLOriginal);
-    Nota.XMLOriginal := ChangeLineBreak(Nota.XMLOriginal, '');
-
-    if ConfigAssinar.RpsSubstituirNFSe then
-    begin
-      Nota.XMLOriginal := FAOwner.SSL.Assinar(Nota.XMLOriginal,
-                                              PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
-                                              ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
-    end;
+    Nota.XmlRps := FAOwner.SSL.Assinar(Nota.XmlRps,
+                                       PrefixoTS + ConfigMsgDados.XmlRps.DocElemento,
+                                       ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
   end;
 
-  if FAOwner.Configuracoes.Arquivos.Salvar then
-  begin
-    if NaoEstaVazio(Nota.NomeArqRps) then
-      TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal)
-    else
-    begin
-      Nota.NomeArqRps := Nota.CalcularNomeArquivoCompleto(Nota.NomeArqRps, '');
-      TACBrNFSeX(FAOwner).Gravar(Nota.NomeArqRps, Nota.XMLOriginal);
-    end;
-  end;
+  SalvarXmlRps(Nota);
 
   NumRps := Nota.NFSe.IdentificacaoRps.Numero;
 
-  xRps := RemoverDeclaracaoXML(Nota.XMLOriginal);
+  xRps := RemoverDeclaracaoXML(Nota.XmlRps);
   xRps := PrepararRpsParaLote(xRps);
 
   if ConfigGeral.Identificador <> '' then

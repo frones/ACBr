@@ -789,7 +789,7 @@ type
      property Descricao  : String  read GetDescricao;
      property CodigoBanco: String  read GetCodigoBanco;
   end;
-  
+
   { TACBrBancoClass }
   TACBrBancoClass = class
   protected
@@ -862,7 +862,7 @@ type
     function DefinePosicaoUsoExclusivo: String; virtual;                      //Utilizado para definir Posições de uso exclusivo FEBRABAN na Remessa
     function DefineCodBeneficiarioHeader: String; virtual;                    //Utilizado para definir CodBeneficiario no Header da Remessa
     function DefineTipoDocumento: String; virtual;                            //Define o Tipo de Documento na remessa
-
+    function DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizado para definir o tipo de aceite na impressao
   public
     Constructor create(AOwner: TACBrBanco);
     Destructor Destroy; override ;
@@ -928,7 +928,6 @@ type
     function CalcularNomeArquivoRemessa : String; Virtual;
     function ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';
        const AValidaCodCedente: Boolean= False ): Boolean; Virtual;
-
   end;
 
   { TACBrBanco }
@@ -975,7 +974,6 @@ type
     procedure SetLayoutVersaoLote(const AValue: Integer);
     procedure SetCasasDecimaisMoraJuros(const AValue: Integer);
     procedure SetDensidadeGravacao(const AValue: String);
-
     procedure SetCIP(const Value: string);
   public
     constructor Create( AOwner : TComponent); override;
@@ -1023,7 +1021,6 @@ type
     function ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';
        const AValidaCodCedente: Boolean= False ): Boolean;
     function ConverterCodigoBarrasITF25ParaLinhaDigitavel(const ACodigoBarras:String):String;
-
   published
     property Numero    : Integer        read GetNumero  write SetNumero default 0;
     property Digito    : Integer        read GetDigito  write SetDigito stored false;
@@ -1101,7 +1098,7 @@ type
     fTipoCarteira: TACBrTipoCarteira;
     fDigitoVerificadorAgenciaConta: String;
     fCedenteWS: TACBrCedenteWS;
-    fIdentDistribuicao: TACBrIdentDistribuicao; 
+    fIdentDistribuicao: TACBrIdentDistribuicao;
     fOperacao: string;
     procedure SetAgencia(const AValue: String);
     procedure SetCNPJCPF ( const AValue: String ) ;
@@ -1775,14 +1772,14 @@ type
     procedure SetPdfSenha(const Value: string);
     procedure SetTituloPreview(const Value: string);
     procedure SetIndiceImprimirIndividual(const Value: Integer);
+
   protected
     fACBrBoleto : TACBrBoleto;
     procedure SetNumCopias(AValue: Integer);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function TituloRelatorio: String;
-    function DefineAceiteImpressao(const ATitulo : TACBrTitulo) : string;
+    function DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String;
   public
-
     Constructor Create(AOwner: TComponent); override;
 
     procedure Imprimir; overload; virtual;
@@ -4134,7 +4131,7 @@ end;
 
 procedure TACBrBanco.SetTamanhoMaximoNossoNum(const Avalue: Integer);
 begin
-  {Altera o tamanho maximo do Nosso Numero} 
+  {Altera o tamanho maximo do Nosso Numero}
   BancoClass.fpTamanhoMaximoNossoNum := AValue;
 end;
 
@@ -5419,6 +5416,16 @@ begin
   end;
 end;
 
+function TACBrBancoClass.DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String;
+begin
+  case ACBrTitulo.Aceite of
+    atSim :
+      Result := 'S';
+  else
+    Result := 'N';
+  end;
+end;
+
 function TACBrBancoClass.DefineCodigoMoraJuros(const ACBrTitulo: TACBrTitulo): String;
 begin
   with ACBrTitulo do
@@ -5430,7 +5437,8 @@ begin
       if (ValorMoraJuros > 0) then
       begin
         case CodigoMoraJuros of
-          cjTaxaMensal, cjValorMensal   : Result := '2';
+          cjTaxaMensal, cjValorMensal   :
+            Result := '2';
         else
           Result := '1';
         end;
@@ -5718,6 +5726,11 @@ begin
 
 end;
 
+function TACBrBoletoFCClass.DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String;
+begin
+  Result:= ACBrTitulo.ACBrBoleto.Banco.fBancoClass.DefineAceiteImpressao(ACBrTitulo);
+end;
+
 procedure TACBrBoletoFCClass.Notification ( AComponent: TComponent;
    Operation: TOperation ) ;
 begin
@@ -5888,16 +5901,6 @@ begin
       raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 end;
 
-function TACBrBoletoFCClass.DefineAceiteImpressao(
-  const ATitulo: TACBrTitulo): string;
-begin
-  case ATitulo.ACBrBoleto.Banco.TipoCobranca of
-    cobCaixaEconomica : Result := ifThen(ATitulo.Aceite = atSim,'A','N');
-    else
-      Result := ifThen(ATitulo.Aceite = atSim,'S','N');
-  end;
-end;
-
 procedure TACBrBoletoFCClass.GerarPDF;
 var
    FiltroAntigo         : TACBrBoletoFCFiltro;
@@ -5924,9 +5927,9 @@ begin
    MostrarSetup   := false;
    PrinterName    := '';
    CalcularIndividual := (FIndiceImprimirIndividual >= 0) and (FCalcularNomeArquivoPDFIndividual);
-   
+
    try
-    
+
      if fACBrBoleto.ListadeBoletos.Count < 1 then
        raise Exception.Create(ACBrStr('Lista de Boletos está vazia'));
 
@@ -5954,7 +5957,7 @@ var
    AOldIndex: Integer;
 begin
   AOldIndex := FIndiceImprimirIndividual;
-  try   
+  try
     FIndiceImprimirIndividual := AIndex;
     GerarPDF;
   finally
@@ -5993,7 +5996,7 @@ var
    AOldIndex: Integer;
 begin
   AOldIndex := FIndiceImprimirIndividual;
-  try   
+  try
     FIndiceImprimirIndividual := AIndex;
     GerarPDF(AStream);
   finally
@@ -6087,4 +6090,3 @@ initialization
 {$endif}
 
 end.
-

@@ -46,6 +46,7 @@ type
   TACBrCaixaEconomica = class(TACBrBancoClass)
    protected
     function GetLocalPagamento: String; override;
+    function DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String; override;
    private
     fValorTotalDocs:Double;
     fQtRegLote: Integer;
@@ -282,6 +283,17 @@ begin
     else
        raise Exception.Create(ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"'));
 
+end;
+
+function TACBrCaixaEconomica.DefineAceiteImpressao(
+  const ACBrTitulo: TACBrTitulo): String;
+begin
+    case ACBrTitulo.Aceite of
+    atSim :
+      Result := 'A';
+  else
+    Result := 'N';
+  end;
 end;
 
 function TACBrCaixaEconomica.DefineCodigoCedente(const ACBrCedente: TACBrCedente): String;

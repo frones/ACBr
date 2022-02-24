@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/02/2022
+-- ISSSalvador.LerXml --
+[*] Incluida a função para Normatizar o XML antes de ser carregado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade de Agudos - Provedor AssessorPublico.
    Por: Paulo Henrique Panico

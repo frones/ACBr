@@ -104,6 +104,8 @@ begin
   else
   begin
     Result := inherited TratarXmlRetornado(aXML);
+
+    Result := ParseText(AnsiString(Result), True, False);
   end;
 end;
 

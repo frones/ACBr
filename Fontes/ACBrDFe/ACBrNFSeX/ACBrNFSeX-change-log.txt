@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 24/02/2022
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Agudos - Provedor AssessorPublico.
+   Por: Paulo Henrique Panico
+[+] Inclusão da cidade Santo Antonio do Sudoeste - Provedor Equiplano.
+   Por: Marcos Schmidt
 -- Ciga.Provider --
 [*] Possível correção no TratarXmlRetornado.
    Por: Italo Giurizzato Junior

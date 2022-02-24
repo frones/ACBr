@@ -392,6 +392,8 @@ begin
           FfrxPDFExport.Background    := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
           FfrxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
 
+          
+
           if NaoEstaVazio(PdfSenha) then
           begin
             FfrxPDFExport.UserPassword    := PdfSenha;
@@ -402,6 +404,7 @@ begin
             FfrxPDFExport.ProtectionFlags := [];
           end;
 
+          FfrxPDFExport.OwnerPassword   := FfrxPDFExport.UserPassword;
 
           if Filtro = fiNenhum then
           begin

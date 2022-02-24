@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ACBrLib.Core;
+using ACBrLib.Core.Boleto;
 
 namespace ACBrLib.Boleto
 {
@@ -138,7 +139,7 @@ namespace ACBrLib.Boleto
             iniFile.WriteToIni(this, sessao);
             iniFile.WriteToIni(OcorrenciaOriginal, sessao);
             iniFile.WriteToIni(Sacado, sessao);
-            if (!string.IsNullOrEmpty(Sacado.Avalista.CNPJCPF))
+            if (!string.IsNullOrEmpty(Sacado.Avalista.CNPJCPF) || (Sacado.Avalista.Pessoa == ACBrPessoa.pNenhum) )
                 iniFile.WriteToIni(Sacado.Avalista, sessao);
 
             if (Mensagem.Any())

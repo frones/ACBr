@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/02/2022
+-- GeisWeb.Provider --
+[*] Possível correção no  ProcessarMensagemErros.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais/ACBrNFSeXInterface/ACBrNFSeXProviderBase --
 [*] Acrescentado o parâmetro ATipo no método LerXml para a mesma contenha o 
     tipo de XML (Rps ou NFSe) lido.

@@ -91,7 +91,7 @@ type
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = '';
-                                     const AMessageTag: string = 'Erro'); override;
+                                     const AMessageTag: string = 'Msg'); override;
 
   end;
 
@@ -179,9 +179,9 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
 begin
-  ANode := RootNode.Childrens.FindAnyNs(AListTag);
+//  ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
-  if (ANode = nil) then
+//  if (ANode = nil) then
     ANode := RootNode;
 
   ANodeArray := ANode.Childrens.FindAllAnyNs(AMessageTag);
@@ -249,13 +249,14 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root;
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
+
       if not Assigned(ANodeArray) then
       begin
         AErro := Response.Erros.New;
@@ -353,13 +354,14 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root;
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('Rps');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -507,13 +509,14 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := Document.Root;
-
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -611,15 +614,16 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'Msg');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
-      ANode := Document.Root;
 
       Response.Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
       ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;

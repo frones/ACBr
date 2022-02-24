@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2022
+[-] TK-2409 Correção na geração de senha do PDF quando o boleto é gerado individualmente.
+Por : Pandaaa
+
 11/01/2022
 [-] TK-2255 Correção da impressão do QrCode do EMV do PIX
 [*] TK-2247 Alterado a visibilidade das propriedades do relatório e exportadores para publico, afim de manipulação direta pelo programador;

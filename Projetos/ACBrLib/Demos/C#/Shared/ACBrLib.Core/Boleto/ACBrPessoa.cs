@@ -4,6 +4,7 @@
     {
         pFisica = 0,
         pJuridica = 1,
-        pOutras = 2
+        pOutras = 2,
+        pNenhum = 3
     }
 }

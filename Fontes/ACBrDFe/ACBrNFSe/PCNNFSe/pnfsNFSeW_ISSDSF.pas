@@ -162,6 +162,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'CEPTomador',   01, 08, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
   Gerador.wCampo(tcStr, '', 'EmailTomador', 01, 60, 1, NFSe.Tomador.Contato.Email, '');
+  Gerador.wCampo(tcStr, '', 'InscricaoMunicipalObra', 01, 11, 01, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
 end;
 
 procedure TNFSeW_ISSDSF.GerarIntermediarioServico;

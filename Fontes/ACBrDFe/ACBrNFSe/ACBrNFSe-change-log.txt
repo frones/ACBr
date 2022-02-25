@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2022
+-- pnfsNFSeW_ISSDSF --
+[*] Alteração visando gerar a tag referente a Obra
+  Por: Claudio Souza Junior
+
 14/01/2022
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/65672-provedor-egoverneiss-consulta-lote-ap%C3%B3s-cancelar/

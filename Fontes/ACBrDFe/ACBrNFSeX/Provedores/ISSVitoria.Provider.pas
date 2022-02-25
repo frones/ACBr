@@ -97,8 +97,6 @@ begin
   end;
 
   SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-
-  ConfigMsgDados.XmlRps.xmlns := 'http://www.abrasf.org.br/';
 end;
 
 function TACBrNFSeProviderISSVitoria200.CriarGeradorXml(

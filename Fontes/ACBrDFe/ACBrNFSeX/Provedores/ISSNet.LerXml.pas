@@ -46,15 +46,28 @@ type
   TNFSeR_ISSNet = class(TNFSeR_ABRASFv1)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrUtil, ACBrXmlBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     ISSNet
 //==============================================================================
+
+{ TNFSeR_ISSNet }
+
+function TNFSeR_ISSNet.NormatizarXml(const aXml: string): string;
+begin
+  Result := RemoverPrefixosDesnecessarios(aXml);
+  Result := RemoverCaracteresDesnecessarios(Result);
+  Result := TiraAcentos(Result);
+end;
 
 end.

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/02/2022
+-- ISSNet.LerXml --
+[*] Incluida a função para Normatizar o XML antes de ser carregado.
+   Por: Angelo S Obreira
 -- ISSSalvador.Provider --
 [*] O cancelamento não pode ser realizado via WebService, incluida uma 
     mensagem indicando que o método de cancelamento não foi implementado.

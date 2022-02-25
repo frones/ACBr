@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2022
+--ACBrBancoBS2.pas--
+[*] TK-2420 Ajustes no DV NN BS2
+Por : Pandaaa
+
 22/02/2022
 --ACBrBancoInter.pas--
 [*] TK-2377 Ajustes nas informações de descontos

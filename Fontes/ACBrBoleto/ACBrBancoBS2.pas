@@ -73,6 +73,8 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string; override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
+
+    function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
   end;
 
 implementation
@@ -119,7 +121,8 @@ end;
 function TACBrBancoBS2.MontarCampoNossoNumero(
   const ACBrTitulo: TACBrTitulo): string;
 begin
-  Result:= Copy(ACBrTitulo.NossoNumero, 2, 10)+IntToStr(StrToInt(CalcularDigitoVerificador(ACBrTitulo))+1);
+  Result:= Copy(ACBrTitulo.NossoNumero, 2, 10)
+           + CalcularDigitoVerificador(ACBrTitulo);
 end;
 
 function TACBrBancoBS2.GerarRegistroHeader240(NumeroRemessa: Integer): String;
@@ -465,6 +468,19 @@ begin
   else
     Result := '02';
   end;
+end;
+
+function TACBrBancoBS2.CalcularDigitoVerificador(
+  const ACBrTitulo: TACBrTitulo): String;
+begin
+   Modulo.CalculoPadrao;
+   Modulo.Documento := ACBrTitulo.NossoNumero;
+   Modulo.Calcular;
+
+   if (Modulo.ModuloFinal = 0) or (Modulo.ModuloFinal = 1) then
+      Result:= '1'
+   else
+      Result:= IntToStr(Modulo.DigitoFinal);
 end;
 
 function TACBrBancoBS2.CalcularNomeArquivoRemessa: string;

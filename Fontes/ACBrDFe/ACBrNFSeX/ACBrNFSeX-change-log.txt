@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 28/02/2022
+-- ACBrNFSeXNotasFiscais --
+[*] Alterado a assinatura da função GravarXML passando a ter um terceiro 
+    parâmetro para que o desenvolvedor possa escolher se deseja gravar o 
+    XML do Rps ou da NFS-e.
+   Nova Assinatura da função:
+   function GravarXML(const NomeArquivo: String = '';
+      const PathArquivo: String = ''; aTipo: TtpXML = txmlNFSe): Boolean;
+   Por: Italo Giurizzato Junior
 -- SiapNet.Provider/SiapNet.LerXml --
 [*] Possível correção no TratarXmlRetornado e acrescentado o NormatizarXml antes
     da leitura do XML.

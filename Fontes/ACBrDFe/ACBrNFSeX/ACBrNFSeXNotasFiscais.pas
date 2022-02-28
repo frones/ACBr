@@ -45,7 +45,7 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrDFe, ACBrNFSeXConfiguracoes, ACBrNFSeXClass;
+  ACBrBase, ACBrDFe, ACBrNFSeXConfiguracoes, ACBrNFSeXClass, ACBrNFSeXConversao;
 
 type
 
@@ -77,7 +77,7 @@ type
 
     function GerarXML: String;
     function GravarXML(const NomeArquivo: String = '';
-      const PathArquivo: String = ''): Boolean;
+      const PathArquivo: String = ''; aTipo: TtpXML = txmlNFSe): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
@@ -165,7 +165,7 @@ uses
   pcnAuxiliar,
   ACBrUtil,
   ACBrDFeUtil,
-  ACBrNFSeX, ACBrNFSeXInterface, ACBrNFSeXConversao;
+  ACBrNFSeX, ACBrNFSeXInterface;
 
 function CompRpsPorNumero(const Item1,
   Item2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -577,13 +577,22 @@ begin
     FXmlRps := AXML;
 end;
 
-function TNotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
+function TNotaFiscal.GravarXML(const NomeArquivo: String;
+  const PathArquivo: String; aTipo: TtpXML): Boolean;
 begin
   if EstaVazio(FXmlRps) then
     GerarXML;
 
-  FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXmlRps);
+  if aTipo = txmlNFSe then
+  begin
+    FNomeArq := TACBrNFSeX(FACBrNFSe).GetNumID(NFSe) + '-nfse.xml';
+    Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArq, FXmlNfse, PathArquivo);
+  end
+  else
+  begin
+    FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
+    Result := TACBrNFSeX(FACBrNFSe).Gravar(FNomeArqRps, FXmlRps);
+  end;
 end;
 
 function TNotaFiscal.GravarStream(AStream: TStream): Boolean;

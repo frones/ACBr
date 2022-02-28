@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/02/2022
+-- Infinsc.Provider --
+[*] Implementado o TratarRetorno de vários métodos.
+   Por: Italo Giurizzato Junior
 -- VersaTecnologia.Provider --
 [*] Possível correção no TratarXmlRetornado
    Por: João Antônio

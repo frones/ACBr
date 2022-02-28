@@ -221,7 +221,7 @@ procedure TACBrNFSeProviderInfisc.TratarRetornoEmitir(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-//  ANode: TACBrXmlNode;
+  ANode: TACBrXmlNode;
 //  AuxNode, AuxNodeCPFCNPJ, AuxNodeChave: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
@@ -238,78 +238,18 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'mot');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response, '', 'mot');
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      {
-      ANode := Document.Root;
-
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
-
-      if AuxNode <> nil then
+      with Response do
       begin
-        with Response do
-        begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-
-          AuxNode := AuxNode.Childrens.FindAnyNs('InformacoesLote');
-
-          if AuxNode <> nil then
-          begin
-            with InformacoesLote do
-            begin
-              NumeroLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-              InscricaoPrestador := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-
-              AuxNodeCPFCNPJ := AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente');
-
-              if AuxNodeCPFCNPJ <> nil then
-              begin
-                CPFCNPJRemetente := ObterConteudoTag(AuxNodeCPFCNPJ.Childrens.FindAnyNs('CNPJ'), tcStr);
-
-                if CPFCNPJRemetente = '' then
-                  CPFCNPJRemetente := ObterConteudoTag(AuxNodeCPFCNPJ.Childrens.FindAnyNs('CPF'), tcStr);
-              end;
-
-              DataEnvioLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEnvioLote'), tcDatHor);
-              QtdNotasProcessadas := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('QtdNotasProcessadas'), tcInt);
-              TempoProcessamento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
-              ValorTotalServico := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
-            end;
-          end;
-        end;
+        Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
+        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;
-
-      AuxNode := ANode.Childrens.FindAnyNs('ChaveNFeRPS');
-
-      if AuxNode <> nil then
-      begin
-        AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveRPS');
-
-        if (AuxNodeChave <> nil) then
-        begin
-          with Response do
-          begin
-            InscricaoPrestador := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            SerieRPS := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
-            NumeroRPS := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('NumeroRPS'), tcStr);
-          end;
-        end;
-
-        AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveNFe');
-
-        if (AuxNodeChave <> nil) then
-        begin
-          with Response do
-          begin
-            InscricaoPrestador := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            Numero := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
-            CodigoVerificacao := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          end;
-        end;
-      end;
-      }
     except
       on E:Exception do
       begin
@@ -358,6 +298,7 @@ procedure TACBrNFSeProviderInfisc.TratarRetornoConsultaLoteRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
   {
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
@@ -380,22 +321,20 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'mot');
-
-      Response.Sucesso := (Response.Erros.Count = 0);
-      {
       ANode := Document.Root;
 
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+      ProcessarMensagemErros(ANode, Response, '', 'mot');
 
-      if AuxNode <> nil then
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      with Response do
       begin
-        with Response do
-        begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-        end;
+        Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
+        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;
 
+      {
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
       if not Assigned(ANodeArray) then
       begin
@@ -711,7 +650,7 @@ begin
   with ConfigAssinar do
   begin
     LoteRps := True;
-    ConsultarSituacao := True;
+    ConsultarLote := True;
     ConsultarNFSe := True;
     CancelarNFSe := True;
 
@@ -731,6 +670,12 @@ begin
     begin
       InfElemento := 'envioLote';
       DocElemento := 'envioLote';
+    end;
+
+    with ConsultarLote do
+    begin
+      InfElemento := 'pedidoStatusLote';
+      DocElemento := 'pedidoStatusLote';
     end;
   end;
 end;

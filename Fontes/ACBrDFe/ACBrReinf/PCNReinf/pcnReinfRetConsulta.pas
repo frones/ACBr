@@ -304,6 +304,7 @@ type
     FsituacaoEvento: String;
     FaplicacaoRecepcao: String;
     FiniValid: String;
+    FnrProtocolo: String;
   public
     property id: String read FId write FId;
     property dtHoraRecebimento: String read FdtHoraRecebimento write FdtHoraRecebimento;
@@ -311,6 +312,7 @@ type
     property situacaoEvento: String read FsituacaoEvento write FsituacaoEvento;
     property aplicacaoRecepcao: String read FaplicacaoRecepcao write FaplicacaoRecepcao;
     property iniValid: String read FiniValid write FiniValid;
+    property nrProtocolo : string read FnrProtocolo write FnrProtocolo;
   end;
 
   TEvtTotalContrib = class(TObject)
@@ -809,6 +811,7 @@ begin
               id                := Leitor.rAtributo('id=');
               iniValid          := leitor.rCampo(tcStr, 'iniValid');
               dtHoraRecebimento := leitor.rCampo(tcStr, 'dtHoraRecebimento');
+              nrProtocolo       := leitor.rCampo(tcStr, 'nrProtocolo');
               nrRecibo          := leitor.rCampo(tcStr, 'nrRecibo');
               situacaoEvento    := leitor.rCampo(tcStr, 'situacaoEvento');
               aplicacaoRecepcao := leitor.rCampo(tcStr, 'aplicacaoRecepcao');

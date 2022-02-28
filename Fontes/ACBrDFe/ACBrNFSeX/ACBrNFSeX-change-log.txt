@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/02/2022
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Acrescentado a leitura dos campos Numero e CodigoVerificacao
+   Por: Italo Giurizzato Junior
 -- ISSVitoria.Provider --
 [*] Possível correção no TratarXmlRetornado
    Por: Italo Giurizzato Junior

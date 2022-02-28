@@ -198,6 +198,8 @@ begin
 
     NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
 
+    LerListaServico(AuxNode);
+
     AuxNode := AuxNode.Childrens.FindAnyNs('cancelamento');
 
     if AuxNode <> nil then

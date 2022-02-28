@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 28/02/2022
+-- Equiplano.LerXml --
+[*] Incluido a chamada: LerListaServico para carregar os dados dos serviços
+   Por: Marcos
+-- Publica.Provider --
+[*] Implementado o TratarRetornoConsultaNFSeporRps
+   Por: Metasis Sistemas
+-- SmarAPD.Provider --
+[*] Implementado o TratarXmlRetornado
+   Por: Angelos Sobreira
 -- Infinsc.Provider --
 [*] Implementado o TratarRetorno de vários métodos.
    Por: Italo Giurizzato Junior

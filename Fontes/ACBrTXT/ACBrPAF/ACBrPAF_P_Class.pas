@@ -143,7 +143,7 @@ begin
      FRegistroP2.Sort(@OrdenarP2);
 
      Check(funChecaCNPJ(FRegistroP1.CNPJ), '(P2) ESTOQUE: O CNPJ "%s" digitado é inválido!', [FRegistroP1.CNPJ]);
-     Check(Trim(FRegistroP1.CNPJ)=EmptyStr, '(P1) Não tem CNPJ');
+     Check(Trim(FRegistroP1.CNPJ)<>EmptyStr, '(P1) Não tem CNPJ');
 
      for intFor := 0 to FRegistroP2.Count - 1 do
      begin

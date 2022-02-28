@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 28/02/2022
+-- SiapNet.Provider/SiapNet.LerXml --
+[*] Possível correção no TratarXmlRetornado e acrescentado o NormatizarXml antes
+    da leitura do XML.
+   Por: Italo Giurizzato Junior
 -- ADPM.Provider --
 [*] Possível correção no TratarXmlRetornado
    Por: Italo Giurizzato Junior

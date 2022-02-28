@@ -297,6 +297,9 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 end.

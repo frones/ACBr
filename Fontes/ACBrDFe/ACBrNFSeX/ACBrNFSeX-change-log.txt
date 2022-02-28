@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/02/2022
+-- VersaTecnologia.Provider --
+[*] Possível correção no TratarXmlRetornado
+   Por: João Antônio
 -- ACBrNFSeXNotasFiscais --
 [*] Alterado a assinatura da função GravarXML passando a ter um terceiro 
     parâmetro para que o desenvolvedor possa escolher se deseja gravar o 

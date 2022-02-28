@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2022
+-- ACBrXmlBase --
+[*] Incluido mais sequencia de Escape a serem removidos do XML na função:
+    RemoverCaracteresDesnecessarios.
+   Por: Italo Giurizzato Junior
+
 28/01/2022
 -- ACBrXmlBase --
 [+] Criado o tipo TACBrTipoEncoding e a função TipoEncoding com

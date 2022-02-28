@@ -79,6 +79,11 @@ function RemoverCaracteresDesnecessarios(const aXML: string): string;
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
 
+function DataSemBarra(const DataStr: string): string;
+function DataComBarra(const DataStr: string): string;
+function ParseDate(const DataStr: string): string;
+function ParseTime(const HoraStr: string): string;
+
 function LerDatas(const DataStr: string): TDateTime;
 
 function TipoEmissaoToStr(const t: TACBrTipoEmissao): string;
@@ -236,6 +241,8 @@ begin
   Result := FaststringReplace(Result, #9, '', [rfReplaceAll]);
   Result := FaststringReplace(Result, '&#xD;', '', [rfReplaceAll]);
   Result := FaststringReplace(Result, '&#xd;', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&amp;lt;', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&amp;gt;', '', [rfReplaceAll]);
 end;
 
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
@@ -386,86 +393,161 @@ begin
   end;
 end;
 
-function LerDatas(const DataStr: string): TDateTime;
+function DataSemBarra(const DataStr: string): string;
 var
   xData: string;
 begin
-  xData := Trim(DataStr);
+  xData := DataStr;
+
+  // Alguns provedores retorna a data no formato YYYYMMDD
+  // Correção: Inclusão da barra "/"
+  if Length(xData) = 8 then
+  begin
+    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+      xData := Copy(xData, 7, 2) + '/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4)
+    else
+      xData := Copy(xData, 1, 2) + '/' + Copy(xData, 3, 2) + '/' + Copy(xData, 5, 4);
+  end;
+
+  // Alguns provedores retorna a data no formato YYYYMM
+  // Correção: Inclusão da barra "/" e do dia "01"
+  if Length(xData) = 6 then
+  begin
+    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+      xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4)
+    else
+      xData := '01/' + Copy(xData, 1, 2) + '/' + Copy(xData, 3, 4);
+  end;
+
+  Result := xData;
+end;
+
+function DataComBarra(const DataStr: string): string;
+var
+  xData: string;
+begin
+  xData := DataStr;
+
+  // Converte de YYYY/MM/DD para DD/MM/YYYY
+  if Length(xData) = 10 then
+  begin
+    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+      xData := Copy(xData, 8, 2) + '/' + Copy(xData, 6, 2) + '/' + Copy(xData, 1, 4)
+    else
+      xData := Copy(xData, 1, 2) + '/' + Copy(xData, 4, 2) + '/' + Copy(xData, 7, 4);
+  end;
+
+  // Alguns provedores retorna a data com apenas 1 dígito no dia ou no mês
+  if Length(xData) = 9 then
+  begin
+    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+    begin
+      // Verifica se a data esta no formato YYYY/MM/D
+      if CharInSet(xData[8], ['/']) then
+        xData := '0' + Copy(xData, 9, 1) + '/' + Copy(xData, 6, 2) + '/' + Copy(xData, 1, 4)
+      else
+      // Verifica se a data esta no formato YYYY/M/DD
+      if CharInSet(xData[7], ['/']) then
+        xData := Copy(xData, 8, 2) + '/' + '0' + Copy(xData, 6, 1) + '/' + Copy(xData, 1, 4);
+    end
+    else
+    begin
+      // Verifica se a data esta no formato D/MM/YYYY
+      if CharInSet(xData[2], ['/']) then
+        xData := '0' + xData
+      else
+      // Verifica se a data esta no formato DD/M/YYYY
+      if CharInSet(xData[8], ['/']) then
+        xData := Copy(xData, 1, 3) + '0' + Copy(xData, 4, 6);
+    end;
+  end;
+
+  // Alguns provedores retorna a data com apenas 1 dígito no dia e no mês
+  if Length(xData) = 8 then
+  begin
+    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+      // Verifica se a data esta no formato YYYY/M/D
+      xData := '0' + Copy(xData, 8, 1) + '/' + '0' + Copy(xData, 6, 1) + '/' + Copy(xData, 1, 4)
+    else
+      // Verifica se a data esta no formato D/M/YYYY
+      xData := '0' + Copy(xData, 1, 1) + '/' + '0' + Copy(xData, 3, 1) + '/' + Copy(xData, 5, 4);
+  end;
+
+  Result := xData;
+end;
+
+function ParseDate(const DataStr: string): string;
+begin
+  // xData sempre será retornada no formato DD/MM/YYYY
+  Result := StringReplace(DataStr, '-', '/', [rfReplaceAll]);
+  Result := Trim(Result);
+
+  if Result = '' then
+    Result := '00/00/0000'
+  else
+  begin
+    if Pos('/', Result) = 0 then
+      Result := DataSemBarra(Result)
+    else
+      Result := DataComBarra(Result);
+  end;
+end;
+
+function ParseTime(const HoraStr: string): string;
+var
+  xHora: string;
+begin
+  xHora := Trim(HoraStr);
+
+  if xHora = '' then
+    xHora := '00:00:00'
+  else
+  begin
+    if Length(xHora) = 5 then
+      xHora := xHora + ':00';
+
+    if Length(xHora) > 8 then
+      xHora := Copy(xHora, 1, 8);
+  end;
+
+  // xHora sempre será retornada no formato HH:NN:SS
+  Result := xHora;
+end;
+
+function LerDatas(const DataStr: string): TDateTime;
+var
+  xData, xHora: string;
+begin
+  xData := StringReplace(DataStr, 'Z', '', [rfReplaceAll]);
+  xData := StringReplace(xData, 'PM', '', [rfReplaceAll]);
+  xData := StringReplace(xData, 'AM', '', [rfReplaceAll]);
+  xData := Trim(xData);
 
   if xData = '' then
     Result := 0
   else
   begin
-    xData := StringReplace(xData, 'Z', '', [rfReplaceAll]);
-    xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
+    xHora := '00:00:00';
 
-    // Alguns provedores retorna a data de competencia com o ano, mês e dia e
-    // sem a barra exemplo <Competencia>20220121</Competencia>
-    // Correção: Inclusão da barra "/"
-    if (Pos('/', xData) = 0) and (Length(xData) = 8) then
+    if Length(xData) > 10 then
     begin
-      if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-        xData := copy(xData, 1, 4) + '/' + copy(xData, 5, 2) + '/' + copy(xData, 7, 2)
-      else
-        xData := copy(xData, 1, 2) + '/' + copy(xData, 3, 2) + '/' + copy(xData, 5, 4);
+      xHora := Copy(xData, 11, Length(xData));
+      xHora := StringReplace(xHora, 'T', '', [rfReplaceAll]);
+      xHora := ParseTime(xHora);
+
+      xData := Copy(xData, 1, 10);
     end;
 
-    // Alguns provedores retorna a data de competencia só com o ano e mês e
-    // sem a barra exemplo <Competencia>202111</Competencia>
-    // Correção: Inclusão da barra "/"
-    if (Pos('/', xData) = 0) and (Length(xData) = 6) then
-    begin
-      if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-//      if Copy(xData, 1, 2) = Copy(IntToStr(YearOf(Date)), 1, 2) then
-        xData := copy(xData, 1, 4) + '/' + copy(xData, 5, 2)
-      else
-        xData := copy(xData, 1, 2) + '/' + copy(xData, 3, 4);
-    end;
+    xData := ParseDate(xData);
 
-    // Alguns provedores retorna a data de competencia só com o mês e ano
-    // Correção: Inclusão do dia na data
-    if Length(xData) = 7 then
-    begin
-      if Pos('/', xData) = 3 then
-        xData := '01/' + xData
-      else
-        xData := xData + '/01';
-    end;
-
-    if (Length(xData) >= 16) and CharInSet(xData[11], ['T', ' ']) then
-    begin
-      if Pos('/', xData) = 5 then
-        // Le a data/hora no formato YYYY/MM/DDTHH:MM:SS
-        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
-                             StrToInt(copy(xData, 6, 2)),
-                             StrToInt(copy(xData, 9, 2))) +
-                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
-                             StrToIntDef(copy(xData, 15, 2), 0),
-                             StrToIntDef(copy(xData, 18, 2), 0),
-                             0)
-      else
-        // Le a data/hora no formato DD/MM/YYYYTHH:MM:SS
-        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
-                             StrToInt(copy(xData, 4, 2)),
-                             StrToInt(copy(xData, 1, 2))) +
-                  EncodeTime(StrToIntDef(copy(xData, 12, 2), 0),
-                             StrToIntDef(copy(xData, 15, 2), 0),
-                             StrToIntDef(copy(xData, 18, 2), 0),
-                             0)
-    end
-    else
-    begin
-      if Pos('/', xData) = 5 then
-        // Le a data no formato YYYY/MM/DD
-        Result := EncodeDate(StrToInt(copy(xData, 1, 4)),
-                             StrToInt(copy(xData, 6, 2)),
-                             StrToInt(copy(xData, 9, 2)))
-      else
-        // Le a data no formato DD/MM/YYYY
-        Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
-                             StrToInt(copy(xData, 4, 2)),
-                             StrToInt(copy(xData, 1, 2)));
-    end;
+    // Le a data no formato DD/MM/YYYY e a hora no formato HH:MM:SS
+    Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
+                         StrToInt(copy(xData, 4, 2)),
+                         StrToInt(copy(xData, 1, 2))) +
+              EncodeTime(StrToIntDef(copy(xHora, 1, 2), 0),
+                         StrToIntDef(copy(xHora, 4, 2), 0),
+                         StrToIntDef(copy(xHora, 7, 2), 0),
+                         0);
   end;
 end;
 

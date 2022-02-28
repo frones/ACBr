@@ -677,17 +677,17 @@ procedure TACBrEDIConhectos.GerarComplConhecto( Registro: TComplConhecto );
 begin
   if Registro.IdRegistro <> '' then
     Conteudo.Add( Registro.IdRegistro +
-                MeioTransporteToStr(Registro.tpMeioTransp) +
-                FTxt.VLFill(Registro.vTotDespesa  , 13,  2, '0') +
-                FTxt.VLFill(Registro.vTotISS      , 13,  2, '0') +
-                Copy(Registro.flContratante       ,  1, 10)+
-                FTxt.RFill(Registro.xSerieContata ,  5) +
-                FTxt.RFill(Registro.CTeContratante, 12) +
-                FTxt.RFill(Registro.cColeta       , 15) +
-                FTxt.RFill(Registro.docViagemEmb  , 20) +
-                FTxt.RFill(Registro.docAutorizacao, 20) +
-                FTxt.RFill(Registro.xChaveAcesso  , 44) +
-                TpDoctoToStr(Registro.cTipoDocto) +
+                FTxt.RFill(MeioTransporteToStr(Registro.tpMeioTransp),  5) +
+                FTxt.VLFill(Registro.vTotDespesa                     , 15,  2, '0') +
+                FTxt.VLFill(Registro.vTotISS                         , 15,  2, '0') +
+                FTxt.RFill(Registro.flContratante                    , 10) +
+                FTxt.RFill(Registro.xSerieContata                    ,  5) +
+                FTxt.RFill(Registro.CTeContratante                   , 12) +
+                FTxt.RFill(Registro.cColeta                          , 15) +
+                FTxt.RFill(Registro.docViagemEmb                     , 20) +
+                FTxt.RFill(Registro.docAutorizacao                   , 20) +
+                FTxt.RFill(Registro.xChaveAcesso                     , 44) +
+                FTxt.RFill(TpDoctoToStr(Registro.cTipoDocto)         ,  3) +
                 FTxt.RFill(Registro.Filler, 513) ) ;
 end;
 

@@ -1345,7 +1345,7 @@ begin
     end;
 
   if (IntToTpProf(pIdeVinculo.codCateg) = ttpProfissionalEmpregado) then
-          Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 1, pIdeVinculo.matricula);
+          Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, pIdeVinculo.matricula);
   
   if not(pCessao) then
     if (pcodCateg) then

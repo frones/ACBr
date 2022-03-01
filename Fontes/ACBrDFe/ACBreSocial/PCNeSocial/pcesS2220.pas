@@ -373,30 +373,41 @@ begin
 end;
 
 procedure TevtMonit.GerarExMedOcup;
+  function DeveGerarRespMonit: Boolean;
+  begin
+    //layout 2.5 ou algum campo preenchido deve gerar grupo.
+    Result := (VersaoDF <= ve02_05_00) or (
+     (Trim(self.exMedOcup.RespMonit.nmResp) <> '') and
+     (Trim(self.exMedOcup.RespMonit.nrCRM)  <> '') and
+     (Trim(self.exMedOcup.RespMonit.ufCRM)  <> '')); 
+  end;
 begin
   Gerador.wGrupo('exMedOcup');
 
   Gerador.wCampo(tcStr, '', 'tpExameOcup',   1,  1, 1, eSTpExameOcupToStr(self.exMedOcup.FtpExameOcup));
 
   GerarASO;
-  GerarRespMonit;
+
+  if DeveGerarRespMonit then
+  begin
+    GerarRespMonit;
+  end;
 
   Gerador.wGrupo('/exMedOcup');
 end;
 
 procedure TevtMonit.GerarRespMonit;
 begin
+  Gerador.wGrupo('respMonit');
 
-  if (Trim(self.exMedOcup.RespMonit.cpfResp) <> '') or
-     (Trim(self.exMedOcup.RespMonit.FNMResp) <> '') then
-  begin
-    Gerador.wGrupo('respMonit');
+  if Trim(self.exMedOcup.RespMonit.cpfResp) <> '' then
     Gerador.wCampo(tcStr, '', 'cpfResp', 11, 11, 0, self.exMedOcup.RespMonit.cpfResp);
-    Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
-    Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
-    Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
-    Gerador.wGrupo('/respMonit');
-  end;
+
+  Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
+  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, self.exMedOcup.RespMonit.ufCRM);
+
+  Gerador.wGrupo('/respMonit');
 end;
 
 function TevtMonit.GerarXML: boolean;

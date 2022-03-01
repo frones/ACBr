@@ -292,13 +292,17 @@ begin
     Gerador.wGrupo('ageIntegracao');
 
     Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 14,  14, 1, obj.cnpjAgntInteg);
-    Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
-    Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
-    Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
-    Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
-    Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
-    Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
-    Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
+
+    if (VersaoDF <= ve02_05_00) then
+    begin
+      Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
+      Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
+      Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
+      Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
+      Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
+      Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
+      Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, obj.uf);
+    end;
 
     Gerador.wGrupo('/ageIntegracao');
   end;

@@ -318,7 +318,7 @@ begin
   Gerador.wGrupo('aso');
 
   Gerador.wCampo(tcDat, '', 'dtAso',  10, 10, 1, self.exMedOcup.Aso.DtAso);
-  if (self.exMedOcup.Aso.ResAso > raNaoInformado) then
+  if (self.exMedOcup.Aso.ResAso <> raNaoInformado) then
     Gerador.wCampo(tcStr, '', 'resAso',  1,  1, 1, eSResAsoToStr(self.exMedOcup.Aso.ResAso));
 
   GerarExame;
@@ -359,10 +359,10 @@ begin
     Gerador.wCampo(tcStr, '', 'procRealizado',  1,   4, 1, self.exMedOcup.Aso.Exame.Items[i].procRealizado);
     Gerador.wCampo(tcStr, '', 'obsProc',        1, 999, 0, self.exMedOcup.Aso.Exame.Items[i].obsProc);
 
-    if (self.exMedOcup.Aso.Exame.Items[i].ordExame > orNaoInformado) then
+    if (self.exMedOcup.Aso.Exame.Items[i].ordExame <> orNaoInformado) then
       Gerador.wCampo(tcInt, '', 'ordExame', 1, 1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
 
-    if (self.exMedOcup.Aso.Exame.Items[i].indResult > irNaoInformado) then
+    if (self.exMedOcup.Aso.Exame.Items[i].indResult <> irNaoInformado) then
       Gerador.wCampo(tcInt, '', 'indResult', 1, 1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
 
     Gerador.wGrupo('/exame');

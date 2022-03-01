@@ -930,6 +930,8 @@ type
     FTOT_ISS: currency;     /// Valor total bruto das prestações de serviços no campo de incidência do ISS
     FTOT_OUTROS: currency;  /// Valor total de operações deduzido dos valores dos campos TOT_VS e TOT_ISS.
   public
+    constructor Create(AOwner: TRegistro1001); virtual; /// Create
+
     property COD_PART_IP: String read FCOD_PART_IP write FCOD_PART_IP;
     property COD_PART_IT: String read FCOD_PART_IT write FCOD_PART_IT;
 
@@ -1788,7 +1790,7 @@ end;
 
 function TRegistro1601List.New(AOwner: TRegistro1001): TRegistro1601;
 begin
-  Result := TRegistro1601.Create();
+  Result := TRegistro1601.Create(AOwner);
   Add(Result);
 end;
 
@@ -2062,6 +2064,12 @@ end;
 { TRegistro1600 }
 
 constructor TRegistro1600.Create(AOwner: TRegistro1001);
+begin
+end;
+
+{ TRegistro1601 }
+
+constructor TRegistro1601.Create(AOwner: TRegistro1001);
 begin
 end;
 

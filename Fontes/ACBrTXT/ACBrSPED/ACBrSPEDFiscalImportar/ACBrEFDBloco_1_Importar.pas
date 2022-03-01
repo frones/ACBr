@@ -54,6 +54,7 @@ type
     procedure Reg1360;
     procedure Reg1370;
     procedure Reg1600;
+    procedure Reg1601;
     procedure Reg1900;
     procedure Reg1910;
     procedure Reg1920;
@@ -84,50 +85,29 @@ begin
 
   vHead := Head;
 
-  if (vHead = '1001') then 
-    Reg1001
-  else if (vHead = '1010') then
-    Reg1010
-  else if (vHead = '1300') then
-    Reg1300
-  else if (vHead = '1310') then
-    Reg1310
-  else if (vHead = '1320') then
-    Reg1320
-  else if (vHead = '1350') then
-    Reg1350
-  else if (vHead = '1360') then
-    Reg1360
-  else if (vHead = '1370') then
-    Reg1370
-  else if (vHead = '1600') then
-    Reg1600
-  else If (vHead = '1900') Then
-    Reg1900
-  else If (vHead = '1910') Then
-    Reg1910
-  else If (vHead = '1920') Then
-    Reg1920
-  else If (vHead = '1921') Then
-    Reg1921
-  else If (vHead = '1922') Then
-    Reg1922
-  else If (vHead = '1923') Then
-    Reg1923
-  else If (vHead = '1925') Then
-    Reg1925
-  else If (vHead = '1926') Then
-    Reg1926
-  else If (vHead = '1960') Then
-    Reg1960
-  else If (vHead = '1970') Then
-    Reg1970
-  else If (vHead = '1975') Then
-    Reg1975
-  else If (vHead = '1980') Then
-    Reg1980
-  else If (vHead = '1990') Then
-    Reg1990;
+  if (vHead = '1001')      then Reg1001
+  else if (vHead = '1010') then Reg1010
+  else if (vHead = '1300') then Reg1300
+  else if (vHead = '1310') then Reg1310
+  else if (vHead = '1320') then Reg1320
+  else if (vHead = '1350') then Reg1350
+  else if (vHead = '1360') then Reg1360
+  else if (vHead = '1370') then Reg1370
+  else if (vHead = '1600') then Reg1600
+  else if (vHead = '1601') then Reg1601
+  else If (vHead = '1900') then Reg1900
+  else If (vHead = '1910') then Reg1910
+  else If (vHead = '1920') then Reg1920
+  else If (vHead = '1921') then Reg1921
+  else If (vHead = '1922') then Reg1922
+  else If (vHead = '1923') then Reg1923
+  else If (vHead = '1925') then Reg1925
+  else If (vHead = '1926') then Reg1926
+  else If (vHead = '1960') then Reg1960
+  else If (vHead = '1970') then Reg1970
+  else If (vHead = '1975') then Reg1975
+  else If (vHead = '1980') then Reg1980
+  else If (vHead = '1990') then Reg1990;
 end;
 
 procedure TACBrSpedFiscalImportar_Bloco1.Reg1001;
@@ -245,6 +225,18 @@ begin
     COD_PART    := Valor;
     TOT_CREDITO := ValorF;
     TOT_DEBITO  := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1601;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1601New do
+  begin
+    COD_PART_IP := Valor;
+    COD_PART_IT := Valor;
+    TOT_VS      := ValorF;
+    TOT_ISS     := ValorF;
+    TOT_OUTROS  := ValorF;
   end;
 end;
 

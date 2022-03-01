@@ -132,6 +132,7 @@ type
     Ftermino: TTermino;
     FMudancaCPF: TMudancaCPF2;
     Fmatricula: String;
+    FnrProcTrab: String;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -145,6 +146,7 @@ type
     property afastamento: TAfastamento read Fafastamento write Fafastamento;
     property termino: TTermino read Ftermino write Ftermino;
     property matricula: String read Fmatricula write FMatricula;
+    property nrProcTrab: String read FnrProcTrab write FnrProcTrab;
   end;
 
   TinfoComplementares = class(TObject)
@@ -527,6 +529,9 @@ begin
 
   Gerador.wCampo(tcStr, '', 'codCateg',      0,  3, 1, obj.codCateg);
   Gerador.wCampo(tcDat, '', 'dtInicio',     10, 10, 1, obj.dtInicio);
+
+  if VersaoDF > ve02_05_00 then
+    Gerador.wCampo(tcStr, '', 'nrProcTrab',   1, 20, 0, obj.nrProcTrab);
 
   //    Validação: **Preenchimento obrigatório** para as categorias de avulso, cooperado e dirigente sindical.
   //               Não deve ser preenchido para as categorias Diretor não empregado, servidor público indicado a conselho, membro de conselho tutelar e estagiário.

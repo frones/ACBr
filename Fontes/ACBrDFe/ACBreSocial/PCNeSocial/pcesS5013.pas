@@ -410,7 +410,7 @@ begin
     s := Copy(FXML, Pos('/evt/evtFGTS/', FXML)+13, 16);
     s := Copy(s, 1, Pos('"', s)-1);
     VersaoDF := StrToEnumerado(ok, s, ['v02_04_01', 'v02_04_02', 'v02_05_00', 'v_S_01_00_00'], [ve02_04_01, ve02_04_02, ve02_05_00, veS01_00_00]);
-    
+
     if leitor.rExtrai(1, 'evtFGTS') <> '' then
     begin
       FId := Leitor.rAtributo('Id=');
@@ -418,7 +418,7 @@ begin
       if leitor.rExtrai(2, 'ideEvento') <> '' then
       begin
         if VersaoDF >= veS01_00_00 then
-          IdeEvento.indApuracao := leitor.rCampo(tcStr, 'indApuracao');
+          IdeEvento.IndApuracao := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
         IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
       end;
 

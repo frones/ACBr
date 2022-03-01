@@ -621,7 +621,7 @@ begin
       if leitor.rExtrai(2, 'ideEvento') <> '' then
       begin
         IdeEvento.nrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
-        IdeEvento.indApuracao  := leitor.rCampo(tcInt, 'indApuracao');
+        IdeEvento.IndApuracao := eSStrToIndApuracao(ok, leitor.rCampo(tcStr, 'IndApuracao'));
         IdeEvento.perApur      := leitor.rCampo(tcStr, 'perApur');
       end;
 

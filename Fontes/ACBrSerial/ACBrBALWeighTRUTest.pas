@@ -24,11 +24,12 @@ type
 
 implementation
 
-{ ACBrBALMarte }
 
 Uses
-  SysUtils, Math, StrUtils,DateUtils,
-  ACBrConsts, Windows ;
+   {$IFDEF MSWINDOWS}Windows,{$ENDIF}
+  SysUtils, Math, StrUtils, DateUtils, ACBrConsts;
+
+{ TACBrBALWeighTRUTest }
 
 constructor TACBrBALWeighTRUTest.Create(AOwner: TComponent);
 begin
@@ -116,13 +117,9 @@ begin
 end;
 procedure TACBrBALWeighTRUTest.SolicitarPeso;
 begin
-  inherited;
-
-
+//  inherited;
   fpDevice.Limpar;
   fpDevice.EnviaString('{RW}');
-
-
 end;
 
 end.

@@ -52,6 +52,8 @@ type
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
@@ -597,6 +599,15 @@ begin
   Request := Request + '</sil:nfdEntradaCancelar>';
 
   Result := Executar('', Request, [], []);
+end;
+
+function TACBrNFSeXWebserviceSmarAPD.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 { TACBrNFSeProviderSmarAPD203 }

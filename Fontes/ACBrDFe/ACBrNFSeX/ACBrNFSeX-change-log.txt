@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/03/2022
+-- SmarAPD.Provider/SmarAPD --
+[*] Ajustes na geração do XML do Rps e acrescentado o TratarXmlRetornado.
+   Por: Verissimo
 -- SiapSistemas.Provider --
 [*] Possível correção na geração do Lote de Rps.
    Por: Italo Giurizzato Junior

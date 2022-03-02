@@ -39,8 +39,8 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceSiapSistemas203 = class(TACBrNFSeXWebserviceSoap11)
@@ -66,6 +66,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse;
+      Params: TNFSeParamsResponse); override;
   end;
 
 implementation
@@ -134,6 +136,53 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderSiapSistemas203.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  Prestador: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    if Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono] then
+    begin
+      Prestador := '<' + Prefixo2 + 'Cnpj>' +
+                     GetCpfCnpj(Emitente.CNPJ, Prefixo2) +
+                   '</' + Prefixo2 + 'Cnpj>' +
+                   GetInscMunic(Emitente.InscMun, Prefixo2);
+
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                             '<' + Prefixo + 'LoteRps' + NameSpace2 + '>' +
+                               '<' + Prefixo2 + 'NumeroLote>' +
+                                  Response.Lote +
+                               '</' + Prefixo2 + 'NumeroLote>' +
+                               Prestador +
+                               '<' + Prefixo2 + 'QuantidadeRps>' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</' + Prefixo2 + 'QuantidadeRps>' +
+                               '<' + Prefixo2 + 'ListaRps>' +
+                                  Xml +
+                               '</' + Prefixo2 + 'ListaRps>' +
+
+                               '<' + Prefixo2 + 'Id>' +
+                                  'Lote_' + Response.Lote +
+                               '</' + Prefixo2 + 'Id>' +
+                               '<' + Prefixo2 + 'Versao>' +
+                                  ConfigWebServices.VersaoDados +
+                               '</' + Prefixo2 + 'Versao>' +
+
+                             '</' + Prefixo + 'LoteRps>' +
+                           '</' + Prefixo + TagEnvio + '>';
+    end
+    else
+      Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                              Xml +
+                           '</' + Prefixo + TagEnvio + '>';
   end;
 end;
 

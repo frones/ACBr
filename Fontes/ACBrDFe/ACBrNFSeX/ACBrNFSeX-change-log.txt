@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/03/2022
+-- SiapSistemas.Provider --
+[*] Possível correção na geração do Lote de Rps.
+   Por: Italo Giurizzato Junior
 -- ADPM.LerXml --
 [*] Acrescentado o NormatizarXml antes da leitura do XML.
    Por: Italo Giurizzato Junior

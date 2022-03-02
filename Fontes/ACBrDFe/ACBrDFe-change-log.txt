@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2022
+-- ACBrXmlBase --
+[-] Correção na leitura de uma data no formato AAAA/MM/DD estava lento /D em 
+    vem de DD.
+   Por: Italo Giurizzato Junior
+
 28/02/2022
 -- ACBrXmlBase --
 [*] Incluido mais sequencia de Escape a serem removidos do XML na função:

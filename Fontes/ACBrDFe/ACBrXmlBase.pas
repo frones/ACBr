@@ -71,7 +71,6 @@ function XmlToStr(const AXML: string): string;
 function StrToXml(const AXML: string): string;
 function IncluirCDATA(const aXML: string): string;
 function RemoverCDATA(const aXML: string): string;
-//function ConverterUnicode(const aXML: string): string;
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 function RemoverPrefixosDesnecessarios(const aXML: string): string;
 function RemoverCaracteresDesnecessarios(const aXML: string): string;
@@ -190,28 +189,6 @@ begin
   Result := FaststringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
-{
-function ConverterUnicode(const aXML: string): string;
-var
-  Xml: string;
-  p: Integer;
-begin
-  Xml := aXML;
-  p := Pos('&#', Xml);
-
-  while p > 0 do
-  begin
-    if Xml[p+5] = ';' then
-      Xml := FaststringReplace(Xml, Copy(Xml, p, 6), '\' + Copy(Xml, p+2, 3), [rfReplaceAll])
-    else
-      Xml := FaststringReplace(Xml, Copy(Xml, p, 5), '\' + Copy(Xml, p+2, 3), [rfReplaceAll]);
-
-    p := Pos('&#', Xml);
-  end;
-
-  Result := StringToBinaryString(Xml);
-end;
-}
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 var
   i: Integer;
@@ -243,6 +220,7 @@ begin
   Result := FaststringReplace(Result, '&#xd;', '', [rfReplaceAll]);
   Result := FaststringReplace(Result, '&amp;lt;', '', [rfReplaceAll]);
   Result := FaststringReplace(Result, '&amp;gt;', '', [rfReplaceAll]);
+  Result := FaststringReplace(Result, '&#13;', '', [rfReplaceAll]);
 end;
 
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
@@ -432,7 +410,7 @@ begin
   if Length(xData) = 10 then
   begin
     if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-      xData := Copy(xData, 8, 2) + '/' + Copy(xData, 6, 2) + '/' + Copy(xData, 1, 4)
+      xData := Copy(xData, 9, 2) + '/' + Copy(xData, 6, 2) + '/' + Copy(xData, 1, 4)
     else
       xData := Copy(xData, 1, 2) + '/' + Copy(xData, 4, 2) + '/' + Copy(xData, 7, 4);
   end;

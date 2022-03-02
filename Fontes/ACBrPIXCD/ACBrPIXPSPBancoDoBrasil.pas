@@ -70,7 +70,7 @@ type
 
     procedure QuandoAcessarEndPoint(const AEndPoint: String;
       var AURL: String; var AMethod: String);
-    procedure QuandoReceberRespostaEndPoint(const AEndPoint, AMethod: String;
+    procedure QuandoReceberRespostaEndPoint(const AEndPoint, AURL, AMethod: String;
       var AResultCode: Integer; var RespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
@@ -166,14 +166,14 @@ begin
    {$EndIf}
 
    if (Trim(fpToken) = '') then
-     ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
+     DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
 
    fpValidadeToken := IncSecond(Now, sec);
    fpAutenticado := True;
   end
   else
-    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
-      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
+    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
+       [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
 procedure TACBrPSPBancoDoBrasil.SimularPagamentoPIX(
@@ -234,12 +234,12 @@ begin
    {$EndIf}
 
    if (code <> 0) then
-     ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create( 'Code: '+IntToStr(code)+' - '+
-                                                             UTF8ToNativeString(texto) ));
+     DispararExcecao(EACBrPixHttpException.Create( 'Code: '+IntToStr(code)+' - '+
+                                                   UTF8ToNativeString(texto) ));
   end
   else
-    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
-      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
+    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
+       [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
 procedure TACBrPSPBancoDoBrasil.QuandoAcessarEndPoint(
@@ -253,9 +253,9 @@ begin
   end;
 end;
 
-procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(
-  const AEndPoint, AMethod: String; var AResultCode: Integer;
-  var RespostaHttp: AnsiString);
+procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(const AEndPoint,
+  AURL, AMethod: String; var AResultCode: Integer; var RespostaHttp: AnsiString
+  );
 begin
   // Banco do Brasil, responde OK a esse EndPoint, de forma diferente da espcificada
   if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then

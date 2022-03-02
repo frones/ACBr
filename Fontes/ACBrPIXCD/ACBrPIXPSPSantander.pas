@@ -165,14 +165,14 @@ begin
    {$EndIf}
 
     if (Trim(fpToken) = '') then
-      ACBrPixCD.DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
+      DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
 
     fpValidadeToken := IncSecond(Now, sec);
     fpAutenticado := True;
   end
   else
-    ACBrPixCD.DispararExcecao(EACBrPixHttpException.CreateFmt(
-      sErroHttp,[Http.ResultCode, ChttpMethodPOST, AURL]));
+    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
+       [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
 procedure TACBrPSPSantander.RenovarToken;

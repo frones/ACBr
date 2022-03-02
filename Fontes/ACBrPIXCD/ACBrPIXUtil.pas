@@ -62,6 +62,7 @@ function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
 function ValidarChave(const AChave: String): String;
 function ValidarChaveAleatoria(const AChave: String): Boolean;
 function CriarTxId: String;
+function FormatarGUID(const AString: String): String;
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer; MenorTamanho: Integer = 0): String;
 function ValidarPSS(const AValue: Integer): String;
 function ValidarEndToEndId(const AValue: String): String;
@@ -151,6 +152,15 @@ begin
   end
   else
     Result := '';
+end;
+
+function FormatarGUID(const AString: String): String;
+begin
+  Result := copy(AString, 1, 8) + '-' +
+            copy(AString, 9, 4) + '-' +
+            copy(AString,13, 4) + '-' +
+            copy(AString,17, 4) + '-' +
+            copy(AString,21, 8);
 end;
 
 function ValidarTxId(const ATxId: String; MaiorTamanho: Integer;

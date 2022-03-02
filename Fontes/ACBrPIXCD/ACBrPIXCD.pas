@@ -209,9 +209,8 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    function CriarCobrancaImediata: Boolean; overload;
-    function CriarCobrancaImediata(const TxId: String) : Boolean; overload;
-    function RevisarCobrancaImediata(const TxId: String) : Boolean;
+    function CriarCobrancaImediata(const TxId: String = ''): Boolean;
+    function RevisarCobrancaImediata(const TxId: String): Boolean;
     function ConsultarCobrancaImediata(const TxId: String; Revisao: Integer = 0) : Boolean;
     function ConsultarCobrancas(Inicio: TDateTime; Fim: TDateTime;
       const CpfCnpj: String = ''; LocationPresente: Boolean = False;
@@ -228,7 +227,7 @@ type
   TACBrQuandoAcessarEndPoint = procedure(const AEndPoint: String;
     var AURL: String; var AMethod: String) of object;
 
-  TACBrQuandoReceberRespostaEndPoint = procedure(const AEndPoint, AMethod: String;
+  TACBrQuandoReceberRespostaEndPoint = procedure(const AEndPoint, URL, AMethod: String;
     var AResultCode: Integer; var RespostaHttp: AnsiString) of object;
 
   TACBrQuandoTransmitirHttp = procedure(var AURL: String; var AMethod: String;
@@ -246,8 +245,9 @@ type
   TACBrQueryParams = class(TStringList)
   private
     function GetAsURL: String;
+    procedure SetAsURL(const AValue: String);
   public
-    property AsURL: String read GetAsURL;
+    property AsURL: String read GetAsURL write SetAsURL;
   end;
 
 
@@ -286,7 +286,7 @@ type
   protected
     fpAutenticado: Boolean;
     fpToken: String;
-    fpRefereshToken: String;
+    fpRefreshToken: String;
     fpValidadeToken: TDateTime;
     fpQuandoAcessarEndPoint: TACBrQuandoAcessarEndPoint;
     fpQuandoReceberRespostaEndPoint: TACBrQuandoReceberRespostaEndPoint;
@@ -294,6 +294,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure VerificarPIXCDAtribuido;
 
+    procedure DispararExcecao(E: Exception);
     procedure RegistrarLog(const ALinha: String);
     property NivelLog: Byte read GetNivelLog;
 
@@ -314,7 +315,7 @@ type
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
     procedure ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
       var AURL: String; var AMethod: String);
-    procedure ChamarEventoQuandoReceberRespostaEndPoint( const AEndPoint,
+    procedure ChamarEventoQuandoReceberRespostaEndPoint( const AEndPoint, AURL,
       AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
 
     function TransmitirHttp(const AMethod, AURL: String; out ResultCode: Integer; out
@@ -452,6 +453,7 @@ type
 
     procedure VerificarPSPAtribuido;
     procedure GravarLogEmArquivo(const ALinha: String) ;
+    procedure DispararExcecao(E: Exception);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -459,7 +461,6 @@ type
     destructor Destroy; override;
 
     procedure RegistrarLog(const ALinha: String);
-    procedure DispararExcecao(E: Exception);
 
     function GerarQRCodeEstatico(Valor: Currency; const infoAdicional: String = '';
       const TxId: String = ''): String; overload;
@@ -817,41 +818,14 @@ begin
   fCobCompleta.Clear;
 end;
 
-function TACBrPixEndPointCob.CriarCobrancaImediata: Boolean;
-var
-  Body: String;
-  RespostaHttp: AnsiString;
-  ResultCode: Integer;
-begin
-  if (NivelLog > 1) then
-    RegistrarLog('CriarCobrancaImediata');
-  Body := Trim(fCobSolicitada.AsJSON);
-  if (Body = '') then
-    raise EACBrPixException.CreateFmt(ACBrStr(sErroObjetoNaoPrenchido), ['CobSolicitada']);
-
-  Clear;
-  fPSP.PrepararHTTP;
-  WriteStrToStream(fPSP.Http.Document, Body);
-  fPSP.Http.MimeType := CContentTypeApplicationJSon;
-  fPSP.AcessarEndPoint(ChttpMethodPOST, EndPoint, ResultCode, RespostaHttp);
-  Result := (ResultCode = HTTP_CREATED);
-
-  if Result then
-    fCobGerada.AsJSON := String(RespostaHttp)
-  else
-    fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
-end;
-
 function TACBrPixEndPointCob.CriarCobrancaImediata(const TxId: String): Boolean;
 var
-  Body: String;
+  Body, ep: String;
   RespostaHttp: AnsiString;
   ResultCode: Integer;
 begin
   if (NivelLog > 1) then
     RegistrarLog('CriarCobrancaImediata( '+TxId+' )');
-  if (Trim(TxId) = '') then
-    raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['txid']);
 
   Body := Trim(fCobSolicitada.AsJSON);
   if (Body = '') then
@@ -859,10 +833,17 @@ begin
 
   Clear;
   fPSP.PrepararHTTP;
-  fPSP.URLPathParams.Add(TxId);
+  if (TxId <> '') then
+  begin
+    fPSP.URLPathParams.Add(TxId);
+    ep := ChttpMethodPUT;
+  end
+  else
+    ep := ChttpMethodPOST;
+
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
-  fPSP.AcessarEndPoint(ChttpMethodPUT, EndPoint, ResultCode, RespostaHttp);
+  fPSP.AcessarEndPoint(ep, EndPoint, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_CREATED);
 
   if Result then
@@ -1010,6 +991,19 @@ begin
   end;
 end;
 
+procedure TACBrQueryParams.SetAsURL(const AValue: String);
+var
+  s: String;
+begin
+  Clear;
+  s := Trim(AValue);
+  if (copy(s,1,1) = '?') then
+    System.Delete(s, 1, 1);
+
+  s := DecodeURL(s);
+  AddDelimitedTextToList(s, '&', Self, #0);
+end;
+
 { TACBrPSP }
 
 constructor TACBrPSP.Create(AOwner: TComponent);
@@ -1022,7 +1016,7 @@ begin
   fpAutenticado := False;
   fpValidadeToken := 0;
   fpToken := '';
-  fpRefereshToken := '';
+  fpRefreshToken := '';
   fpQuandoAcessarEndPoint := Nil;
   fpQuandoReceberRespostaEndPoint := Nil;
 
@@ -1094,6 +1088,15 @@ procedure TACBrPSP.VerificarPIXCDAtribuido;
 begin
   if not Assigned(fPixCD) then
     raise EACBrPixException.Create(ACBrStr(sErroPSPNaoAtribuido));
+end;
+
+procedure TACBrPSP.DispararExcecao(E: Exception);
+begin
+  if not Assigned(E) then
+    Exit;
+
+  RegistrarLog(E.ClassName + ': ' + E.Message);
+  raise E;
 end;
 
 procedure TACBrPSP.RegistrarLog(const ALinha: String);
@@ -1254,7 +1257,7 @@ begin
 
   ChamarEventoQuandoAcessarEndPoint(EndPoint, AURL, AMethod);
   Result := TransmitirHttp(AMethod, AURL, ResultCode, RespostaHttp);
-  ChamarEventoQuandoReceberRespostaEndPoint(EndPoint,  AMethod, ResultCode, RespostaHttp);
+  ChamarEventoQuandoReceberRespostaEndPoint(EndPoint, AURL, AMethod, ResultCode, RespostaHttp);
   if (NivelLog > 1) then
     RegistrarLog('  ResultCode:'+IntToStr(ResultCode));
   if (NivelLog > 2) then
@@ -1341,7 +1344,7 @@ begin
 end;
 
 procedure TACBrPSP.ChamarEventoQuandoReceberRespostaEndPoint(const AEndPoint,
-  AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
+  AURL, AMethod: String; var ResultCode: Integer; var RespostaHttp: AnsiString);
 var
   vRespostaHttp: AnsiString;
   vResultCode: Integer;
@@ -1355,7 +1358,7 @@ begin
   // Chama o Evento //
   vResultCode := ResultCode;
   vRespostaHttp := RespostaHttp;
-  fpQuandoReceberRespostaEndPoint(AEndPoint, AMethod, vResultCode, vRespostaHttp);
+  fpQuandoReceberRespostaEndPoint(AEndPoint, AURL, AMethod, vResultCode, vRespostaHttp);
 
   if (ResultCode <> vResultCode) then
   begin

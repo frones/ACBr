@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/03/2022
+-- ADPM.LerXml --
+[*] Acrescentado o NormatizarXml antes da leitura do XML.
+   Por: Italo Giurizzato Junior
+
 28/02/2022
 -- Equiplano.LerXml --
 [*] Incluido a chamada: LerListaServico para carregar os dados dos serviços

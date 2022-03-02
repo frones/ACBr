@@ -46,15 +46,26 @@ type
   TNFSeR_ADPM203 = class(TNFSeR_ABRASFv2)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrUtil;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     ADPM
 //==============================================================================
+
+{ TNFSeR_ADPM203 }
+
+function TNFSeR_ADPM203.NormatizarXml(const aXml: string): string;
+begin
+  Result := TiraAcentos(aXml);
+end;
 
 end.

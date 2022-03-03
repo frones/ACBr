@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/13/2022
+--ACBrBoletoFCFortesFr--
+[-] correção na configuração de preview de impressão, não deve passar informações de filtro
+https://www.projetoacbr.com.br/forum/topic/66160-exception-ao-exibir-boleto-fortes/
+
 08/12/2021
 --ACBrBoletoFCFortesFr--
 [+] Adição de novo layout lprestaservicos

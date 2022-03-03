@@ -1278,15 +1278,13 @@ begin
            if MostrarPreview then
            begin
               RLLayout.Title := '';
-              SelectedFilter := RLPDFFilter1;
-              RLPDFFilter1.FileName := NomeArquivo;
-
               RLLayout.PreviewModal;
            end
            else
               RLLayout.Print;
          end
         else
+        begin
           if not RLLayout.Prepare then
             Exit;
 
@@ -1328,6 +1326,7 @@ begin
             end
             else
               RLFiltro.FilterPages(RLLayout.Pages);
+        end;
      end;
   finally
      frACBrBoletoFortes.Free ;

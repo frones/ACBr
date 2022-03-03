@@ -3,12 +3,14 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: André Ferreira de Moraes,                       }
 {                              Paulo H. Ribeiro,                               }
 {                              Jackeline Bellon,                               }
-{                              Juliomar Marchetti                              }
+{                              Juliomar Marchetti,                             }
+{                              Victor H Gonzales,                              }
+{                              Fernando Rodrigo                                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -723,14 +725,14 @@ begin
 
     if ((DataProtesto <> 0) and (DiasDeProtesto > 0)) then
     begin
-      if not MatchText(Instrucao1, ['0', '1', '2', '3', '9']) then
+      if not MatchText(Instrucao1, ['1', '2', '4', '5', '8', '9']) then
         Instrucao1 := ACodProtesto;
       // Dias para protesto
       sDiasProtesto := PadLeft(IntToStr(DiasDeProtesto), 2, '0');
     end
     else
     begin
-      Instrucao1 := '0';  // Não protestar
+      Instrucao1 := '3';  // Não protestar Regra C026
       SDiasProtesto := '00';
     end;
 

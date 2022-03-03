@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2022
+--ACBrBancoSafra.pas--
+[-] TK-2410 Correção do dominio C026 (Código de Protesto)
+Por : Fernando Rodrigo / Pandaaa
+
 25/02/2022
 --ACBrBancoBS2.pas--
 [*] TK-2420 Ajustes no DV NN BS2

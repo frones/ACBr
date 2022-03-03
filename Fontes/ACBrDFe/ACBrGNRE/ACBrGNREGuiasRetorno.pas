@@ -287,6 +287,11 @@ begin
       if Leitor.rExtrai(Nivel, 'contribuinteEmitente') <> '' then
       begin
         GNRERetorno.DocEmitente         := Leitor.rCampo(tcStr, 'CNPJ');
+        if GNRERetorno.DocEmitente = '' then
+          GNRERetorno.DocEmitente         := Leitor.rCampo(tcStr, 'CPF');
+        if GNRERetorno.DocEmitente = '' then
+          GNRERetorno.DocEmitente         := Leitor.rCampo(tcStr, 'IE');
+
         GNRERetorno.RazaoSocialEmitente := Leitor.rCampo(tcStr, 'razaoSocial');
         GNRERetorno.EnderecoEmitente    := Leitor.rCampo(tcStr, 'endereco');
         GNRERetorno.MunicipioEmitente   := Leitor.rCampo(tcStr, 'municipio');

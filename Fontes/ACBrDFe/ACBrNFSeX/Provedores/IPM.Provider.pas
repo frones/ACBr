@@ -88,7 +88,7 @@ type
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = '';
-                                     const AMessageTag: string = 'Erro'); override;
+                                     const AMessageTag: string = 'mensagem'); override;
 
     function AjustarRetorno(const Retorno: string): string;
 
@@ -202,7 +202,7 @@ procedure TACBrNFSeProviderIPM.ProcessarMensagemErros(
   RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
   const AListTag, AMessageTag: string);
 var
-  I, j, k: Integer;
+  I{, j, k}: Integer;
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
@@ -219,8 +219,24 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+    aMsg := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
 
+    Codigo := Copy(aMsg, 1, 5);
+
+    {
+     Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
+     tem erros.
+    }
+    if Codigo <> '00001' then
+    begin
+      AErro := Response.Erros.New;
+
+      AErro.Codigo := Codigo;
+      AErro.Descricao := Copy(aMsg, 9, Length(aMsg));
+      AErro.Correcao := '';
+    end;
+
+    (*
     if Codigo <> '' then
     begin
       aMsg := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('MensagemRetorno'), tcStr);
@@ -260,24 +276,8 @@ begin
           AErro.Correcao := '';
         end;
       end;
-    end
-    else
-    begin
-      Codigo := Copy(aMsg, 1, 5);
-
-      {
-       Codigo = 00001 significa que o processamento ocorreu com sucesso, logo não
-       tem erros.
-      }
-      if Codigo <> '00001' then
-      begin
-        AErro := Response.Erros.New;
-
-        AErro.Codigo := Codigo;
-        AErro.Descricao := Copy(aMsg, 9, Length(aMsg));
-        AErro.Correcao := '';
-      end;
     end;
+    *)
   end;
 end;
 
@@ -350,7 +350,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -477,7 +477,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response);
       ProcessarMensagemErros(ANode, Response, 'ListaMensagemRetorno', 'MensagemRetorno');
 
       Response.Sucesso := (Response.Erros.Count = 0);
@@ -611,7 +611,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -755,7 +755,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -1002,7 +1002,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mensagem');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 

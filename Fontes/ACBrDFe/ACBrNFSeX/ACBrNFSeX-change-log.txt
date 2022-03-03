@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/03/2022
+-- IPM.Provider --
+[*] Possível correção no ProcessarMensagemErros.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais/ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção no TratarRetornoEmitir.
    Por: Italo Giurizzato Junior

@@ -80,8 +80,8 @@ type
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = '';
-                                     const AMessageTag: string = 'Erro'); override;
+                                     const AListTag: string = 'motivos';
+                                     const AMessageTag: string = 'mot'); override;
 
   public
     function SimNaoToStr(const t: TnfseSimNao): string; override;
@@ -240,7 +240,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mot');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -323,7 +323,7 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'mot');
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
@@ -429,8 +429,9 @@ procedure TACBrNFSeProviderInfisc.TratarRetornoConsultaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
+  ANode: TACBrXmlNode;
   {
-  ANode, AuxNode: TACBrXmlNode;
+  AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumRps: String;
@@ -451,12 +452,12 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'mot');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
       {
-      ANode := Document.Root;
-
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
       if AuxNode <> nil then
@@ -554,7 +555,8 @@ procedure TACBrNFSeProviderInfisc.TratarRetornoCancelaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-//  ANode, AuxNode: TACBrXmlNode;
+  ANode: TACBrXmlNode;
+//  AuxNode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -570,12 +572,12 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ProcessarMensagemErros(Document.Root, Response, '', 'mot');
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
       {
-      ANode := Document.Root;
-
       AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
       if AuxNode <> nil then
@@ -607,6 +609,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Descricao: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -619,14 +622,18 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := '';
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mot'), tcStr);
+    Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('mot'), tcStr);
 
-    if AErro.Descricao = '' then
-      AErro.Descricao := ANodeArray[I].AsString;
+    if Descricao = '' then
+      Descricao := ANodeArray[I].AsString;
 
-    AErro.Correcao := '';
+    if Descricao <> '' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := '';
+      AErro.Descricao := Descricao;
+      AErro.Correcao := '';
+    end;
   end;
 end;
 

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/03/2022
+-- Infisc.Provider --
+[*] Possível correção no ProcessarMensagemErros.
+   Por: Italo Giurizzato Junior
+
 02/03/2022
 -- SmarAPD.Provider/SmarAPD --
 [*] Ajustes na geração do XML do Rps e acrescentado o TratarXmlRetornado.

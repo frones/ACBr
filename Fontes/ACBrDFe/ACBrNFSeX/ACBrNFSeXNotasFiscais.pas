@@ -65,6 +65,7 @@ type
 
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
+    procedure SetXmlNfse(const Value: String);
   public
     constructor Create(AOwner: TACBrDFe);
     destructor Destroy; override;
@@ -94,7 +95,7 @@ type
     property NFSe: TNFSe read FNFSe;
 
     property XmlRps: String read FXmlRps write FXmlRps;
-    property XmlNfse: String read FXmlNfse write FXmlNfse;
+    property XmlNfse: String read FXmlNfse write SetXmlNfse;
 
     property Confirmada: Boolean read FConfirmada write FConfirmada;
     property Alertas: String     read FAlertas;
@@ -575,6 +576,12 @@ begin
     FXmlNfse := AXML
   else
     FXmlRps := AXML;
+end;
+
+procedure TNotaFiscal.SetXmlNfse(const Value: String);
+begin
+  LerXML(Value);
+  FXmlNfse := Value;
 end;
 
 function TNotaFiscal.GravarXML(const NomeArquivo: String;

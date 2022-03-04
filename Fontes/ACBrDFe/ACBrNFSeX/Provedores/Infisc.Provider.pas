@@ -240,16 +240,16 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       with Response do
       begin
         Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
         Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
     except
       on E:Exception do
       begin
@@ -323,16 +323,24 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response);
-
-      Response.Sucesso := (Response.Erros.Count = 0);
-
       with Response do
       begin
         Lote := ObterConteudoTag(ANode.Childrens.FindAnyNs('cLote'), tcStr);
         Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;
+
+      ANode := ANode.Childrens.FindAnyNs('NFSe');
+
+      with Response do
+      begin
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
+      end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
 
       {
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');

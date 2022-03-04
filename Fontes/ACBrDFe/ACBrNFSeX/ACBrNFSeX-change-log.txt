@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 04/03/2022
+-- Infisc.Provider --
+[*] Mais ajustes para obter o retorno dos métodos.
+   Por: Italo Giurizzato Junior
+-- SH3.Provider --
+[*] Incluido o TratarXmlRetornado
+   Por: Jeanny Paiva
 -- ACBrNFSeXServicos --
 [*] Inclusão das cidades: Tucuma/PA e Redenção/PA
    Por: Joemil

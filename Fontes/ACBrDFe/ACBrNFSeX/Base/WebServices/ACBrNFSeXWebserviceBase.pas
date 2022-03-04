@@ -635,6 +635,9 @@ begin
 
       if ANode = nil then
         ANode := Document.Root.Childrens.FindAnyNs(responseTag[0]);
+
+      if ANode = nil then
+        ANode := Document.Root;
     end;
 
     if ANode <> nil then
@@ -1022,7 +1025,8 @@ begin
     GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
       ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSSenha seja informada.'));
 
-  Texto := StringReplace(Message, '"', '''', [rfReplaceAll]);
+//  Texto := StringReplace(Message, '"', '''', [rfReplaceAll]);
+  Texto := StringReplace(Message, '"', '\"', [rfReplaceAll]);
   Texto := StringReplace(Texto, #10, '', [rfReplaceAll]);
   Texto := StringReplace(Texto, #13, '', [rfReplaceAll]);
 

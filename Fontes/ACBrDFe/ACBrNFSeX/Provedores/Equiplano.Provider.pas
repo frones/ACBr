@@ -687,6 +687,14 @@ begin
           NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nrRps'), tcStr);
         end;
 
+        AuxNode := AuxNode.Childrens.FindAnyNs('cancelamento');
+
+        if AuxNode <> nil then
+        begin
+          Response.Cancelamento.DataHora := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dtCancelamento'), tcDatHor);
+          Response.Cancelamento.Motivo := ObterConteudoTag(AuxNode.Childrens.FindAnyns('dsCancelamento'), tcStr);
+        end;
+
         i := TACBrNFSeX(FAOwner).NotasFiscais.Count;
 
         if i > 0 then

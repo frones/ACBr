@@ -187,14 +187,16 @@ begin
     Operacao := 'Homologacao'
   else
     Operacao := '';
-
+  {
   Request := '<GerarNfse' + Operacao +' xmlns="http://tempuri.org/">';
   Request := Request + '<aXml>' + XmlToStr(AMSG) + '</aXml>';
   Request := Request + DadosUsuario;
   Request := Request + '</GerarNfse>';
+  }
+  Request := AMSG;
 
   Result := Executar('http://tempuri.org/IServiceNfse/GerarNfse' + Operacao, Request,
-                            ['return', 'outputXML', 'GerarNfseResposta'], []);
+                            ['GerarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceCenti202.ConsultarNFSePorRps(ACabecalho,

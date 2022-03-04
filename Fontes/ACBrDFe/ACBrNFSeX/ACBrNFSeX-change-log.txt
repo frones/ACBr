@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 04/03/2022
+-- ACBrNFSeXWebserviceBase/Centi.Provider --
+[*] Possível Correção para o envio do Rps.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXWebServiceResponse/Equiplano.Provider --
+[*] Melhorias para retornar informações sobre nota cancelada ao consultar a
+    NFSe por Rps.
+   Por: Marcos
 -- ACBrNFSeX --
 [*] Possível Correção para quebras de linhas incluidas no motivo do cancelamento,
     elas podem gerar assinatura inválida.

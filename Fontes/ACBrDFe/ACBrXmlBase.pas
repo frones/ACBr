@@ -81,7 +81,7 @@ function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo)
 function DataSemBarra(const DataStr: string): string;
 function DataComBarra(const DataStr: string): string;
 function ParseDate(const DataStr: string): string;
-function ParseTime(const HoraStr: string): string;
+function ParseTime(const HoraStr: string; aIsPM: Boolean = False): string;
 
 function LerDatas(const DataStr: string): TDateTime;
 
@@ -402,54 +402,43 @@ end;
 
 function DataComBarra(const DataStr: string): string;
 var
-  xData: string;
+  xData, xValor, xDataF: string;
+  i, j, Valor: Integer;
 begin
   xData := DataStr;
 
-  // Converte de YYYY/MM/DD para DD/MM/YYYY
-  if Length(xData) = 10 then
-  begin
-    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-      xData := Copy(xData, 9, 2) + '/' + Copy(xData, 6, 2) + '/' + Copy(xData, 1, 4)
-    else
-      xData := Copy(xData, 1, 2) + '/' + Copy(xData, 4, 2) + '/' + Copy(xData, 7, 4);
-  end;
+  j :=  Length(xData);
 
-  // Alguns provedores retorna a data com apenas 1 dígito no dia ou no mês
-  if Length(xData) = 9 then
+  xValor := '';
+  xDataF := '';
+
+  // Padroniza a data com 2 dígitos para o dia e mês e 4 para o ano
+  for i := 1 to j do
   begin
-    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
+    if CharInSet(xData[i], ['/']) then
     begin
-      // Verifica se a data esta no formato YYYY/MM/D
-      if CharInSet(xData[8], ['/']) then
-        xData := '0' + Copy(xData, 9, 1) + '/' + Copy(xData, 6, 2) + '/' + Copy(xData, 1, 4)
+      Valor := StrToIntDef(xValor, 0);
+      if Valor > 31 then
+        xDataF := xDataF + FormatFloat('0000', Valor) + '/'
       else
-      // Verifica se a data esta no formato YYYY/M/DD
-      if CharInSet(xData[7], ['/']) then
-        xData := Copy(xData, 8, 2) + '/' + '0' + Copy(xData, 6, 1) + '/' + Copy(xData, 1, 4);
+        xDataF := xDataF + FormatFloat('00', Valor) + '/';
+
+      xValor := '';
     end
     else
-    begin
-      // Verifica se a data esta no formato D/MM/YYYY
-      if CharInSet(xData[2], ['/']) then
-        xData := '0' + xData
-      else
-      // Verifica se a data esta no formato DD/M/YYYY
-      if CharInSet(xData[8], ['/']) then
-        xData := Copy(xData, 1, 3) + '0' + Copy(xData, 4, 6);
-    end;
+      xValor := xValor + xData[i]
   end;
 
-  // Alguns provedores retorna a data com apenas 1 dígito no dia e no mês
-  if Length(xData) = 8 then
-  begin
-    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-      // Verifica se a data esta no formato YYYY/M/D
-      xData := '0' + Copy(xData, 8, 1) + '/' + '0' + Copy(xData, 6, 1) + '/' + Copy(xData, 1, 4)
-    else
-      // Verifica se a data esta no formato D/M/YYYY
-      xData := '0' + Copy(xData, 1, 1) + '/' + '0' + Copy(xData, 3, 1) + '/' + Copy(xData, 5, 4);
-  end;
+  xData := xDataF + xValor;
+
+  // Converte de YYYY/MM/DD para DD/MM/YYYY
+  if CharInSet(xData[5], ['/']) then
+    xData := Copy(xData, 9, 2) + Copy(xData, 5, 3) + '/' + Copy(xData, 1, 4);
+
+  // Verificar se a data esta no formato MM/DD/YYYY
+  // Este teste falha se o dia for <= 12
+  if Copy(xData, 4, 2) > '12' then
+    xData := Copy(xData, 4, 2) + '/' + Copy(xData, 1, 2) + Copy(xData, 6, 5);
 
   Result := xData;
 end;
@@ -471,9 +460,10 @@ begin
   end;
 end;
 
-function ParseTime(const HoraStr: string): string;
+function ParseTime(const HoraStr: string; aIsPM: Boolean = False): string;
 var
   xHora: string;
+  Hora: Integer;
 begin
   xHora := Trim(HoraStr);
 
@@ -488,6 +478,12 @@ begin
       xHora := Copy(xHora, 1, 8);
   end;
 
+  if aIsPM then
+  begin
+    Hora := StrToInt(Copy(xHora, 1, 2)) + 12;
+    xHora := FormatFloat('00', Hora) + Copy(xHora, 3, 6);
+  end;
+
   // xHora sempre será retornada no formato HH:NN:SS
   Result := xHora;
 end;
@@ -495,7 +491,10 @@ end;
 function LerDatas(const DataStr: string): TDateTime;
 var
   xData, xHora: string;
+  IsPM: Boolean;
 begin
+  IsPM := (Pos('PM', DataStr) > 0);
+
   xData := StringReplace(DataStr, 'Z', '', [rfReplaceAll]);
   xData := StringReplace(xData, 'PM', '', [rfReplaceAll]);
   xData := StringReplace(xData, 'AM', '', [rfReplaceAll]);
@@ -511,7 +510,7 @@ begin
     begin
       xHora := Copy(xData, 11, Length(xData));
       xHora := StringReplace(xHora, 'T', '', [rfReplaceAll]);
-      xHora := ParseTime(xHora);
+      xHora := ParseTime(xHora, IsPM);
 
       xData := Copy(xData, 1, 10);
     end;

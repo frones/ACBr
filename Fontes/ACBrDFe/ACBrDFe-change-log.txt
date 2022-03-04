@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2022
+-- ACBrXmlBase --
+[*] Melhorias na leitura de datas e checagem de horarios no formato 24h e 12h (PM/AM).
+   Por: Italo Giurizzato Junior
+
 02/03/2022
 -- ACBrXmlBase --
 [-] Correção na leitura de uma data no formato AAAA/MM/DD estava lento /D em 

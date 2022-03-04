@@ -806,7 +806,7 @@ begin
     SerieNFSe := aInfCancelamento.SerieNFSe;
     ChaveNFSe := aInfCancelamento.ChaveNFSe;
     CodCancelamento := aInfCancelamento.CodCancelamento;
-    MotCancelamento := aInfCancelamento.MotCancelamento;
+    MotCancelamento := ChangeLineBreak(aInfCancelamento.MotCancelamento);
     NumeroLote := aInfCancelamento.NumeroLote;
     NumeroRps := aInfCancelamento.NumeroRps;
     SerieRps := aInfCancelamento.SerieRps;
@@ -865,7 +865,7 @@ begin
     NumeroNFSe := aNumNFSe;
     SerieNFSe := aSerieNFSe;
     CodCancelamento := aCodCancelamento;
-    MotCancelamento := aMotCancelamento;
+    MotCancelamento := ChangeLineBreak(aMotCancelamento);
     NumeroLote := aNumLote;
     CodVerificacao := aCodVerificacao;
   end;

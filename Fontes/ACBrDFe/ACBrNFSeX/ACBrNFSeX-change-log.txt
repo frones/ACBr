@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 04/03/2022
+-- ACBrNFSeX --
+[*] Possível Correção para quebras de linhas incluidas no motivo do cancelamento,
+    elas podem gerar assinatura inválida.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXGravarXml/ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Possível Correção para os provedores cujo código de ItemListaServico tem
     um formato extendido, por exemplo: xx.yy.zz

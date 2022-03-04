@@ -458,29 +458,29 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<tcLoteCancelamento>' +
-                          '<tsCodCadBic>' +
-                             OnlyNumber(Emitente.InscMun) +
-                          '</tsCodCadBic>' +
-                          '<tsVrsArq>' +
-                             FpVersaoArquivo +
-                          '</tsVrsArq>' +
-                          '<tsChvAcs>' +
-                             OnlyNumber(Emitente.WSChaveAcesso) +
-                          '</tsChvAcs>' +
-                          '<tcNotCan>' +
-                            '<tcInfNotCan>' +
-                              '<tsNumNot>' +
-                                Response.InfCancelamento.NumeroNFSe +
-                              '</tsNumNot>' +
-                              '<tsCodVer>' +
-                                 Response.InfCancelamento.CodVerificacao +
-                              '</tsCodVer>' +
-                              '<tsDesMotCan>' +
-                                 Response.InfCancelamento.MotCancelamento +
-                              '</tsDesMotCan>' +
-                            '</tcInfNotCan>' +
-                          '</tcNotCan>' +
-                       '</tcLoteCancelamento>';
+                             '<tsCodCadBic>' +
+                               OnlyNumber(Emitente.InscMun) +
+                             '</tsCodCadBic>' +
+                             '<tsVrsArq>' +
+                               FpVersaoArquivo +
+                             '</tsVrsArq>' +
+                             '<tsChvAcs>' +
+                               OnlyNumber(Emitente.WSChaveAcesso) +
+                             '</tsChvAcs>' +
+                             '<tcNotCan>' +
+                               '<tcInfNotCan>' +
+                                 '<tsNumNot>' +
+                                   Response.InfCancelamento.NumeroNFSe +
+                                 '</tsNumNot>' +
+                                 '<tsCodVer>' +
+                                   Response.InfCancelamento.CodVerificacao +
+                                 '</tsCodVer>' +
+                                 '<tsDesMotCan>' +
+                                   Response.InfCancelamento.MotCancelamento +
+                                 '</tsDesMotCan>' +
+                               '</tcInfNotCan>' +
+                             '</tcNotCan>' +
+                           '</tcLoteCancelamento>';
 end;
 
 procedure TACBrNFSeProviderGoverna.TratarRetornoCancelaNFSe(

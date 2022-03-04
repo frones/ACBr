@@ -435,6 +435,8 @@ procedure TACBrNFSeProviderDSF200.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.QuebradeLinha := '&#xD;&#xA;';
+
   with ConfigAssinar do
   begin
     Rps := True;

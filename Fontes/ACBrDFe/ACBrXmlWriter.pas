@@ -141,6 +141,7 @@ begin
   FSuprimirDecimais := False;
   FSomenteValidar := False;
   FDecimalChar := '.';
+  FQuebraLinha := ';';
 end;
 
 { TACBrXmlWriter }

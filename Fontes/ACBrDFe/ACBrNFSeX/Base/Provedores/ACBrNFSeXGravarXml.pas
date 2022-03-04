@@ -349,11 +349,17 @@ var
   i: Integer;
   item: string;
 begin
-  item := OnlyNumber(Codigo);
-  i := StrToIntDef(item, 0);
-  item := Poem_Zeros(i, 4);
+  if Length(Codigo) <= 5 then
+  begin
+    item := OnlyNumber(Codigo);
 
-  Result := Copy(item, 1, 2) + '.' + Copy(item, 3, 2);
+    i := StrToIntDef(item, 0);
+    item := Poem_Zeros(i, 4);
+
+    Result := Copy(item, 1, 2) + '.' + Copy(item, 3, 2);
+  end
+  else
+    Result := Codigo;
 end;
 
 function TNFSeWClass.GetOpcoes: TACBrXmlWriterOptions;

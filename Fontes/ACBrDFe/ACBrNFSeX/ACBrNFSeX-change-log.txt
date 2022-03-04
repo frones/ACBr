@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 04/03/2022
+-- ACBrNFSeXGravarXml/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Possível Correção para os provedores cujo código de ItemListaServico tem
+    um formato extendido, por exemplo: xx.yy.zz
+   Por: Italo Giurizzato Junior
 -- Infisc.Provider --
 [*] Mais ajustes para obter o retorno dos métodos.
    Por: Italo Giurizzato Junior

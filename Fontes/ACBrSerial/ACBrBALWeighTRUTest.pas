@@ -1,5 +1,7 @@
 unit ACBrBALWeighTRUTest;
 
+{$I ACBr.inc}
+
 interface
 
 uses
@@ -48,7 +50,6 @@ end;
 function TACBrBALWeighTRUTest.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
-  wDecimais: Integer;
 begin
   Result := 0;
 
@@ -76,7 +77,6 @@ Var
 
 begin
 
-  IByte := 0;
   MillisecTimeOut  := 200;
   fpUltimoPesoLido := 0;
   fpUltimaResposta := '';
@@ -85,7 +85,6 @@ begin
 
     //O indicador responde com: [102.5] (estável) ou [U102.5] (não estável).
 
-    IByte := 0;
     IByte := fpDevice.BytesParaLer;
 
     fpUltimaResposta := fpDevice.LeString(MillisecTimeOut, IByte );

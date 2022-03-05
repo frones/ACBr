@@ -457,9 +457,9 @@ var
 begin
   Clear;
   PrepararHTTP;
-  URLQueryParams.Values['start_date'] := DateToISO8601(start_date);
+  URLQueryParams.Values['start_date'] := DateTimeToIso8601(start_date);
   if (end_date <> 0) then
-    URLQueryParams.Values['end_date'] := DateToISO8601(end_date);
+    URLQueryParams.Values['end_date'] := DateTimeToIso8601(end_date);
   if (limit <> 0) then
     URLQueryParams.Values['limit'] := IntToStr(limit);
   if (offset <> 0) then

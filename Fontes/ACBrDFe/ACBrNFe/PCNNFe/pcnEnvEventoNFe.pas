@@ -190,7 +190,7 @@ begin
 
     sDoc := OnlyNumber(Evento.Items[i].InfEvento.CNPJ);
     if EstaVazio(sDoc) then
-      sDoc := ExtrairCNPJChaveAcesso(Evento.Items[i].InfEvento.chNFe);
+      sDoc := ExtrairCNPJCPFChaveAcesso(Evento.Items[i].InfEvento.chNFe);
 
     // Verifica a Série do Documento, caso esteja no intervalo de 910-969
     // o emitente é pessoa fisica, logo na chave temos um CPF.

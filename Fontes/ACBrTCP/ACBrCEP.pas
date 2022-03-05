@@ -739,17 +739,17 @@ begin
   fOwner.fEnderecos.Clear;
 
   Buffer := fOwner.RespHTTP.Text;
-  if StrToIntDef(LerTagXML(Buffer, 'resultado'), 0) > 0 then
+  if StrToIntDef(SeparaDados(Buffer, 'resultado'), 0) > 0 then
   begin
     with fOwner.Enderecos.New do
     begin
       CEP             := FCepBusca ; // republica virtual nao devolve o cep na resposta
-      Tipo_Logradouro := LerTagXML(Buffer,'tipo_logradouro') ;
-      Logradouro      := LerTagXML(Buffer,'logradouro') ;
-      Complemento     := LerTagXML(Buffer,'complemento') ;
-      Bairro          := LerTagXML(Buffer,'bairro') ;
-      Municipio       := LerTagXML(Buffer,'cidade') ;
-      UF              := LerTagXML(Buffer,'uf') ;
+      Tipo_Logradouro := SeparaDados(Buffer,'tipo_logradouro') ;
+      Logradouro      := SeparaDados(Buffer,'logradouro') ;
+      Complemento     := SeparaDados(Buffer,'complemento') ;
+      Bairro          := SeparaDados(Buffer,'bairro') ;
+      Municipio       := SeparaDados(Buffer,'cidade') ;
+      UF              := SeparaDados(Buffer,'uf') ;
       IBGE_Municipio  := '';
     end ;
   end ;
@@ -898,17 +898,17 @@ begin
     begin
       s := SL1.Strings[i];
 
-      if LerTagXML(s, 'cep') <> '' then
+      if SeparaDados(s, 'cep') <> '' then
       begin
         with fOwner.Enderecos.New do
         begin
-          CEP             := LerTagXML(Buffer, 'cep');
+          CEP             := SeparaDados(Buffer, 'cep');
           Tipo_Logradouro := '';
-          Logradouro      := LerTagXML(Buffer, 'endereco');
-          Complemento     := LerTagXML(Buffer, 'complemento');
-          Bairro          := LerTagXML(Buffer, 'bairro');
-          Municipio       := LerTagXML(Buffer, 'cidade');
-          UF              := LerTagXML(Buffer, 'uf');
+          Logradouro      := SeparaDados(Buffer, 'endereco');
+          Complemento     := SeparaDados(Buffer, 'complemento');
+          Bairro          := SeparaDados(Buffer, 'bairro');
+          Municipio       := SeparaDados(Buffer, 'cidade');
+          UF              := SeparaDados(Buffer, 'uf');
           IBGE_Municipio  := '';
         end;
       end;
@@ -957,17 +957,17 @@ begin
   fOwner.fEnderecos.Clear;
 
   Buffer := fOwner.RespHTTP.Text;
-  if StrToIntDef(LerTagXML(Buffer, 'resultado'), 0) > 0 then
+  if StrToIntDef(SeparaDados(Buffer, 'resultado'), 0) > 0 then
   begin
     with fOwner.Enderecos.New do
     begin
       CEP             := FCepBusca ; // kingHost nao devolve o cep na resposta
-      Tipo_Logradouro := LerTagXML(Buffer,'tipo_logradouro') ;
-      Logradouro      := LerTagXML(Buffer,'logradouro') ;
-      Complemento     := LerTagXML(Buffer,'complemento') ;
-      Bairro          := LerTagXML(Buffer,'bairro') ;
-      Municipio       := LerTagXML(Buffer,'cidade') ;
-      UF              := LerTagXML(Buffer,'uf') ;
+      Tipo_Logradouro := SeparaDados(Buffer,'tipo_logradouro') ;
+      Logradouro      := SeparaDados(Buffer,'logradouro') ;
+      Complemento     := SeparaDados(Buffer,'complemento') ;
+      Bairro          := SeparaDados(Buffer,'bairro') ;
+      Municipio       := SeparaDados(Buffer,'cidade') ;
+      UF              := SeparaDados(Buffer,'uf') ;
       IBGE_Municipio  := '';
     end ;
   end ;
@@ -1355,20 +1355,20 @@ begin
   fOwner.fEnderecos.Clear;
 
   Buffer    := fOwner.RespHTTP.Text;
-  Resultado := LerTagXML(Buffer, 'resultado_txt') ;
+  Resultado := SeparaDados(Buffer, 'resultado_txt') ;
 
   if Resultado = 'sucesso' then
   begin
     with fOwner.Enderecos.New do
     begin
       CEP             := FCepBusca ; // DEVMEDIA nao devolve o cep na resposta
-      Tipo_Logradouro := LerTagXML(Buffer,'tipo_logradouro') ;
-      Logradouro      := LerTagXML(Buffer,'logradouro') ;
-      Complemento     := LerTagXML(Buffer,'complemento') ;
-      Bairro          := LerTagXML(Buffer,'bairro') ;
-      Municipio       := LerTagXML(Buffer,'cidade') ;
-      UF              := LerTagXML(Buffer,'uf') ;
-      IBGE_Municipio  := LerTagXML(Buffer,'codigomunicipio');
+      Tipo_Logradouro := SeparaDados(Buffer,'tipo_logradouro') ;
+      Logradouro      := SeparaDados(Buffer,'logradouro') ;
+      Complemento     := SeparaDados(Buffer,'complemento') ;
+      Bairro          := SeparaDados(Buffer,'bairro') ;
+      Municipio       := SeparaDados(Buffer,'cidade') ;
+      UF              := SeparaDados(Buffer,'uf') ;
+      IBGE_Municipio  := SeparaDados(Buffer,'codigomunicipio');
     end ;
   end
   else
@@ -1451,18 +1451,18 @@ begin
     begin
       s := SL1.Strings[i];
 
-      if LerTagXML(s, 'cep') <> '' then
+      if SeparaDados(s, 'cep') <> '' then
       begin
         with fOwner.Enderecos.New do
         begin
-          CEP             := LerTagXML(s, 'cep');
+          CEP             := SeparaDados(s, 'cep');
           Tipo_Logradouro := '';
-          Logradouro      := LerTagXML(s, 'logradouro');
-          Complemento     := LerTagXML(s, 'complemento');
-          Bairro          := LerTagXML(s, 'bairro');
-          Municipio       := LerTagXML(s, 'localidade');
-          UF              := LerTagXML(s, 'uf');
-          IBGE_Municipio  := LerTagXML(s, 'ibge');
+          Logradouro      := SeparaDados(s, 'logradouro');
+          Complemento     := SeparaDados(s, 'complemento');
+          Bairro          := SeparaDados(s, 'bairro');
+          Municipio       := SeparaDados(s, 'localidade');
+          UF              := SeparaDados(s, 'uf');
+          IBGE_Municipio  := SeparaDados(s, 'ibge');
         end;
       end;
     end;
@@ -1554,18 +1554,18 @@ begin
     begin
       s := SL1.Strings[i];
 
-      if LerTagXML(s, 'cep') <> '' then
+      if SeparaDados(s, 'cep') <> '' then
       begin
         with fOwner.Enderecos.New do
         begin
-          CEP             := LerTagXML(Buffer, 'cep');
+          CEP             := SeparaDados(Buffer, 'cep');
           Tipo_Logradouro := '';
-          Logradouro      := LerTagXML(Buffer, 'end');
-          Complemento     := Trim(LerTagXML(Buffer, 'complemento'));
-          Complemento2    := Trim(LerTagXML(Buffer, 'complemento2'));
-          Bairro          := LerTagXML(Buffer, 'bairro');
-          Municipio       := LerTagXML(Buffer, 'cidade');
-          UF              := LerTagXML(Buffer, 'uf');
+          Logradouro      := SeparaDados(Buffer, 'end');
+          Complemento     := Trim(SeparaDados(Buffer, 'complemento'));
+          Complemento2    := Trim(SeparaDados(Buffer, 'complemento2'));
+          Bairro          := SeparaDados(Buffer, 'bairro');
+          Municipio       := SeparaDados(Buffer, 'cidade');
+          UF              := SeparaDados(Buffer, 'uf');
           IBGE_Municipio  := '';
 
           if Complemento2 <> '' then
@@ -1763,19 +1763,19 @@ begin
   Buffer := StringReplace(Buffer, '</estado>'+ sLineBreak+'</cep>', '</estado>'+ sLineBreak+'</resposta>', [rfReplaceAll]);
   Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
 
-  if LerTagXML(Buffer, 'cep') <> '' then
+  if SeparaDados(Buffer, 'cep') <> '' then
   begin
     with fOwner.Enderecos.New do
     begin
-      CEP             := LerTagXML(Buffer, 'cep');
-      Logradouro      := LerTagXML(Buffer, 'logradouro');
-      Bairro          := LerTagXML(Buffer, 'bairro');
-      Municipio       := LerTagXML(Buffer, 'cidade');
-      UF              := LerTagXML(Buffer, 'uf');
-      IBGE_Municipio  := LerTagXML(Buffer, 'cod_ibge_municipio');
-      Altitude        := LerTagXML(Buffer, 'alt');
-      Latitude        := LerTagXML(Buffer, 'lat');
-      Longitude       := LerTagXML(Buffer, 'lng');
+      CEP             := SeparaDados(Buffer, 'cep');
+      Logradouro      := SeparaDados(Buffer, 'logradouro');
+      Bairro          := SeparaDados(Buffer, 'bairro');
+      Municipio       := SeparaDados(Buffer, 'cidade');
+      UF              := SeparaDados(Buffer, 'uf');
+      IBGE_Municipio  := SeparaDados(Buffer, 'cod_ibge_municipio');
+      Altitude        := SeparaDados(Buffer, 'alt');
+      Latitude        := SeparaDados(Buffer, 'lat');
+      Longitude       := SeparaDados(Buffer, 'lng');
     end;
   end;
 

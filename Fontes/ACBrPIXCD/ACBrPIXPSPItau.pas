@@ -161,7 +161,7 @@ begin
     try
       fpToken := js.S['access_token'];
       sec := js.I['expires_in'];
-      fpRefereshToken := js.S['refresh_token'];
+      fpRefreshToken := js.S['refresh_token'];
     finally
       js.Free;
     end;

@@ -146,6 +146,7 @@
             this.btnCodigoMoraAceitos = new System.Windows.Forms.Button();
             this.btnTamNossoNumero = new System.Windows.Forms.Button();
             this.btnMontarNossoNumero = new System.Windows.Forms.Button();
+            this.btnSalvarPDF = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1198,7 +1199,7 @@
             // 
             this.btnConfigDados.Location = new System.Drawing.Point(10, 225);
             this.btnConfigDados.Name = "btnConfigDados";
-            this.btnConfigDados.Size = new System.Drawing.Size(258, 23);
+            this.btnConfigDados.Size = new System.Drawing.Size(126, 23);
             this.btnConfigDados.TabIndex = 6;
             this.btnConfigDados.Text = "Configurar Dados Cedente";
             this.btnConfigDados.UseVisualStyleBackColor = true;
@@ -1374,11 +1375,22 @@
             this.btnMontarNossoNumero.UseVisualStyleBackColor = true;
             this.btnMontarNossoNumero.Click += new System.EventHandler(this.BtnMontarNossoNumero_Click);
             // 
+            // btnSalvarPDF
+            // 
+            this.btnSalvarPDF.Location = new System.Drawing.Point(142, 225);
+            this.btnSalvarPDF.Name = "btnSalvarPDF";
+            this.btnSalvarPDF.Size = new System.Drawing.Size(126, 23);
+            this.btnSalvarPDF.TabIndex = 24;
+            this.btnSalvarPDF.Text = "Salvar PDF (Stream)";
+            this.btnSalvarPDF.UseVisualStyleBackColor = true;
+            this.btnSalvarPDF.Click += new System.EventHandler(this.btnSalvarPDF_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 581);
+            this.Controls.Add(this.btnSalvarPDF);
             this.Controls.Add(this.btnMontarNossoNumero);
             this.Controls.Add(this.btnTamNossoNumero);
             this.Controls.Add(this.btnCodigoMoraAceitos);
@@ -1550,6 +1562,7 @@
         private System.Windows.Forms.Button btnCodigoMoraAceitos;
         private System.Windows.Forms.Button btnTamNossoNumero;
         private System.Windows.Forms.Button btnMontarNossoNumero;
+        private System.Windows.Forms.Button btnSalvarPDF;
     }
 }
 

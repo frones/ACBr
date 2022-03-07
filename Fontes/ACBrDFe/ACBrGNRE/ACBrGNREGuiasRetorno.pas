@@ -420,7 +420,14 @@ begin
             GNRERetorno.MunicipioDestinatario := Leitor.rCampo(tcStr, 'municipio');
 
             if GNRERetorno.DocDestinatario = '' then
-              GNRERetorno.DocDestinatario := Leitor.rCampo(tcStr, 'CPF');
+              GNRERetorno.DocDestinatario       := Leitor.rCampo(tcStr, 'CPF');
+
+            case Length(GNRERetorno.DocDestinatario) of
+              11: GNRERetorno.TipoDocDestinatario := 1;
+              14: GNRERetorno.TipoDocDestinatario := 2;
+            else
+              GNRERetorno.TipoDocDestinatario   := 1;
+            end;
           end;
 
           if Leitor.rExtrai(Nivel, 'camposExtras') <> '' then

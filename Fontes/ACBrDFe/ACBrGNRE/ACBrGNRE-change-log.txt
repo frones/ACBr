@@ -45,6 +45,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2022
+-- ACBrGNREGuiasRetorno.pas --
+[-] TK-2419 Correção exibição CPF/CNPJ na leitura para impressão
+  Por: Pandaaa (Contribuição de Windsoft)
+-- ACBrGNREGuiaFR.pas --
+[-] TK-2419 Correção de visibilidade do PreparedReport, BUG em Published, alterado para Public
+  Por: Pandaaa
+
 27/01/2022
 -- ACBrGNREWebServices --
 [*] Ajuste na função clear em TGNRERecibo, não limpar a property NumeroRecibo

@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 08/03/2022
+-- ACBrNFSeXServicos --
+[*] Troca de provedor da cidade de Taquari/RS
+   Por: Francistk
+[*] Troca de URL da cidade de Itaperuna/RJ
+   Por: Velmer
+[+] Inclusão da cidade de Castro/PR
+   Por: Guilherme Vaz
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes visando a leitura correta do XML da NFS-e baixado do portal da prefeitura.
    Por: Innovae Brasil Engenharia

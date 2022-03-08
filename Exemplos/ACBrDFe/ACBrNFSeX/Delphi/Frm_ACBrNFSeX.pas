@@ -628,17 +628,23 @@ begin
       //                              '1',       '',          '2',             ''
       Servico.ResponsavelRetencao := rtTomador;
 
-      Servico.ItemListaServico := '09.01';
-
-      if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proISSDSF, proSiat,
-          proAgili] then
-        Servico.CodigoCnae := '452000200'
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proSiapSistemas:
+          // código padrão ABRASF acrescido de um sub-item
+          Servico.ItemListaServico := '01.05.00';
       else
-        Servico.CodigoCnae := '6203100';
+        // código padrão da ABRASF
+        Servico.ItemListaServico := '09.01';
+      end;
 
-      if (ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSNet) and
-         (ACBrNFSeX1.Configuracoes.WebServices.Ambiente = taHomologacao)  then
-        Servico.CodigoCnae := '6511102';
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proISSDSF, proSiat, proAgili:
+          // código com 9 digitos
+          Servico.CodigoCnae := '452000200'
+      else
+        // código com 7 digitos
+        Servico.CodigoCnae := '6203100';
+      end;
 
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proISSSJP:

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/03/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes visando a leitura correta do XML da NFS-e baixado do portal da prefeitura.
+   Por: Innovae Brasil Engenharia
+-- GeisWeb.Provider --
+[*] Ajustes no TratarRetornoEmitir.
+   Por: Adhelmar Rondon
+
 04/03/2022
 -- ACBrNFSeXWebserviceBase/Centi.Provider --
 [*] Possível Correção para o envio do Rps.

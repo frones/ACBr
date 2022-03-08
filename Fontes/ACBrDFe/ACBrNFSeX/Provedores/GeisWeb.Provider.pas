@@ -230,7 +230,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANodeArray: TACBrXmlNodeArray;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, AuxNode2: TACBrXmlNode;
   i: Integer;
   NumRps: String;
   ANota: TNotaFiscal;
@@ -255,10 +255,11 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('Nfse');
+      ANodeArray := ANode.Childrens.FindAllAnyNs('EnviaLoteRPSResposta');
 
       if not Assigned(ANodeArray) then
       begin
+        Response.Sucesso := False;
         AErro := Response.Erros.New;
         AErro.Codigo := Cod203;
         AErro.Descricao := Desc203;
@@ -267,7 +268,18 @@ begin
 
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
-        ANode := ANodeArray[I];
+        AuxNode2 := ANodeArray[I].Childrens.FindAnyNs('Nfse');
+
+        if AuxNode2 =  nil then
+        begin
+          Response.Sucesso := False;
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit;
+        end;
+
+        ANode := AuxNode2;
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         if AuxNode <> nil then
@@ -282,6 +294,9 @@ begin
           TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
         end;
+
+        ANota.NFSe.Numero := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
+        ANota.NFSe.CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
 
         SalvarXmlNfse(ANota);
       end;

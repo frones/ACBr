@@ -495,6 +495,8 @@ begin
 
     NFSe.ValorCredito := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);
 
+    LerServico(AuxNode);
+
     LerTomadorServico(AuxNode);
     LerPrestadorServico(AuxNode);
     LerEnderecoPrestadorServico(AuxNode, 'EnderecoPrestadorServico');
@@ -839,6 +841,12 @@ begin
       begin
         BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('BaseCalculo'), tcDe2);
         NFSe.ValoresNfse.BaseCalculo := BaseCalculo;
+      end;
+
+      if NFSe.ValoresNfse.ValorIss = 0 then
+      begin
+        ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
+        NFSe.ValoresNfse.ValorIss := ValorIss;
       end;
 
       Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);

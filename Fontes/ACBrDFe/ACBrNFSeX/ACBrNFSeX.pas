@@ -434,6 +434,9 @@ begin
           FWebService.ConsultaLoteRps.Lote := '';
         end;
 
+        if not FProvider.ConfigGeral.ConsultaSitLote then
+          Sleep(Configuracoes.WebServices.AguardarConsultaRet);
+
         FProvider.ConsultaLoteRps;
       end;
     end;

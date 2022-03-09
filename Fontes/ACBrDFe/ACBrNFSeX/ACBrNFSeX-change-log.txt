@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 09/03/2022
+-- ACBrNFSeX --
+[*] Acrescentado um Sleep antes de Consultar o Lote de Rps quando a propriedade
+    ConsultaLoteAposEnvio estiver com o valor True.
+   Por: Italo Giurizzato Junior
 -- Digifred.LerXml --
 [*] Acrescentado o NormatizarXml antes da leitura do XML.
    Por: Italo Giurizzato Junior

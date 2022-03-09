@@ -467,46 +467,56 @@ begin
 
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
     JsonSerializationConfig.NullConvertsToValueTypes:=True;
-    AJSon := TJsonObject.Parse(ARetorno) as TJsonObject;
+
     try
-      if (FSSL.HTTPResultCode in [200, 201, 202]) then
-      begin
-        FToken := AJson.S['access_token'];
-        try
-          FExpire := Now + (AJson.I['expires_in'] * OneSecond);
-        except
-          FExpire:= 0;
-        end;
+      AJSon := TJsonObject.Parse(ARetorno) as TJsonObject;
+      try
+        if (FSSL.HTTPResultCode in [200, 201, 202]) then
+        begin
+          FToken := AJson.S['access_token'];
+          try
+            FExpire := Now + (AJson.I['expires_in'] * OneSecond);
+          except
+            FExpire:= 0;
+          end;
 
-      end
-      else
-        FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
-                           + ' Erro='+ AJson.S['error_description'];
+        end
+        else
+          FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
+                             + ' Erro='+ AJson.S['error_description'];
 
-    finally
-      AJSon.Free;
+      finally
+        AJSon.Free;
+      end;
+    except
+      FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
+                        + ' Erro='+ ARetorno;
     end;
 
   {$Else}
     AJSon := TJson.Create;
     try
       AJSon.Parse(ARetorno);
-      if (FSSL.HTTPResultCode in [200, 201, 202]) then
-      begin
-        FToken := AJson.Values['access_token'].AsString;
-        try
-          FExpire := Now + (AJson.Values['expires_in'].AsNumber * OneSecond);
-        except
-          FExpire:= 0;
-        end;
+      try
+        if (FSSL.HTTPResultCode in [200, 201, 202]) then
+        begin
+          FToken := AJson.Values['access_token'].AsString;
+          try
+            FExpire := Now + (AJson.Values['expires_in'].AsNumber * OneSecond);
+          except
+            FExpire:= 0;
+          end;
 
-      end
-      else
-        FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
-                           + ' Erro='+ AJson.Values['error_description'].AsString;
-
-    finally
-      AJson.Free;
+        end
+        else
+          FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
+                             + ' Erro='+ AJson.Values['error_description'].AsString;
+      finally
+        AJson.Free;
+      end;
+    except
+      FErroComunicacao := 'HTTP_Code='+ IntToStr(FSSL.HTTPResultCode)
+                        + ' Erro='+ ARetorno;
     end;
 
   {$EndIf}

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/2022
+--ACBrBoletoWS.pas--
+[-] TOAuth - PROTEÇÃO ERRO COM JSON MAL FORMATADO
+  Por : Victor H Gonzales - Pandaaa
+
 02/03/2022
 --ACBrBancoSafra.pas--
 [-] TK-2410 Correção do dominio C026 (Código de Protesto)

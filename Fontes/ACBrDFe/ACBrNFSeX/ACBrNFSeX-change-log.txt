@@ -43,6 +43,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/03/2022
+-- Digifred.LerXml --
+[*] Acrescentado o NormatizarXml antes da leitura do XML.
+   Por: Italo Giurizzato Junior
+-- DSF.Provider --
+[*] Ajustes no TratarXmlRetornado.
+   Por: Paulo C. L. Vicente
+-- GovDigital.Provider --
+[*] Ajustes no TratarXmlRetornado.
+   Por: Paulo C. L. Vicente
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Cacheira Paulista/SP
+   Por: Ze Marcio
+
 08/03/2022
 -- ACBrNFSeXServicos --
 [*] Troca de provedor da cidade de Taquari/RS

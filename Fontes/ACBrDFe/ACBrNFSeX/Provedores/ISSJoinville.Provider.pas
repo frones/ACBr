@@ -69,7 +69,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+//    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
 implementation
@@ -110,8 +110,8 @@ begin
 
   with ConfigMsgDados do
   begin
-    Prefixo := 'nfem';
-    PrefixoTS := 'nfem';
+//    Prefixo := 'nfem';
+//    PrefixoTS := 'nfem';
 
     GerarPrestadorLoteRps := True;
   end;
@@ -161,6 +161,7 @@ begin
     Result := Result + '\Homologacao\';
 end;
 
+{
 procedure TACBrNFSeProviderISSJoinville204.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 var
@@ -217,15 +218,15 @@ begin
 
   Response.ArquivoEnvio := xXml;
 end;
-
+}
 { TACBrNFSeXWebserviceISSJoinville204 }
 
 function TACBrNFSeXWebserviceISSJoinville204.GetNamespace: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
-    Result := 'xmlns:nfem="https://nfemws.joinville.sc.gov.br"'
+    Result := 'xmlns:nfem="https://nfemws.joinville.sc.gov.br/"'
   else
-    Result := 'xmlns:nfem="https://nfemwshomologacao.joinville.sc.gov.br"';
+    Result := 'xmlns:nfem="https://nfemwshomologacao.joinville.sc.gov.br/"';
 end;
 
 function TACBrNFSeXWebserviceISSJoinville204.GetSoapAction: string;

@@ -74,7 +74,7 @@ begin
 
   TagTomador := 'TomadorServico';
 
-  PrefixoPadrao := 'nfem';
+//  PrefixoPadrao := 'nfem';
 end;
 
 end.

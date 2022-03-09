@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 09/03/2022
+-- ISSJoinville.Provider/ISSJoinville.GravarXml --
+[*] Possível correção para que a emissão da NFS-e ocorra com sucesso.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [*] Acrescentado um Sleep antes de Consultar o Lote de Rps quando a propriedade
     ConsultaLoteAposEnvio estiver com o valor True.

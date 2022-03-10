@@ -102,6 +102,38 @@ type
 
   TSplitResult = array of string;
 
+{/////////  ACBrUtil.Compatibilidade (especialmente D6/D5)}
+{ PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
+  (que nao possui essa funçao) }
+{$IFNDEF COMPILER6_UP}
+  type TRoundToRange = -37..37;
+  function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double;
+  function SimpleRoundTo(const AValue: Double; const ADigit: TRoundToRange = -2): Double;
+
+  { IfThens retirada de Math.pas do D7, para compatibilizar com o Delphi 5
+  (que nao possue essas funçao) }
+  function IfThen(AValue: Boolean; const ATrue: Integer; const AFalse: Integer = 0): Integer; overload;
+  function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64 = 0): Int64; overload;
+  function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double = 0.0): Double; overload;
+
+  { IfThens retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 5
+  (que nao possue essas funçao) }
+  function IfThen(AValue: Boolean; const ATrue: string;
+    AFalse: string = ''): string; overload;
+{$endif}
+
+{$IFNDEF COMPILER7_UP}
+function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
+{$ENDIF}
+function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
+
+
+{$IfNDef HAS_CHARINSET}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
+{$EndIf}
+
+{/////////  ACBrUtil.XML}
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
 
@@ -113,16 +145,21 @@ function ObtemDeclaracaoXML(const AXML: String): String;
 function RemoverDeclaracaoXML(const AXML: String): String;
 function InserirDeclaracaoXMLSeNecessario(const AXML: String;
    const ADeclaracao: String = CUTF8DeclaracaoXML): String;
-
-function Split(const ADelimiter: Char; const AString: string): TSplitResult;
-function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados(const AString: String; const Chave: String; const MantemChave : Boolean = False;
   const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True) : String;
 function SeparaDadosArray(const AArray: Array of String; const AString: String; const MantemChave: Boolean = False;
   const PermitePrefixo: Boolean = True; const AIgnoreCase: Boolean = True) : String;
+procedure EncontrarInicioFinalTag(const aText, ATag: String; var PosIni, PosFim: integer;const PosOffset: integer = 0);
+function StripHTML(const AHTMLString : String) : String;
+procedure AcharProximaTag(const ABinaryString: AnsiString;
+  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+
+
+{/////////  ACBrUtil.Strings}
+
+function Split(const ADelimiter: Char; const AString: string): TSplitResult;
+function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
-procedure EncontrarInicioFinalTag(const aText, ATag: String;
-  var PosIni, PosFim: integer;const PosOffset: integer = 0);
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -136,19 +173,88 @@ function UTF8ToNativeString(const AUTF8String : AnsiString ) : String;
 function NativeStringToAnsi(const AString : String ) : AnsiString;
 function AnsiToNativeString(const AAnsiString : AnsiString ) : String;
 
-function ACBrUTF8ToAnsi( const AUTF8String : AnsiString ) : AnsiString;
-function ACBrAnsiToUTF8( const AAnsiString : AnsiString ) : AnsiString;
-
 {$IfDef FPC}
 function GetSysANSIencoding: String;
 {$EndIf}
+function ACBrUTF8ToAnsi( const AUTF8String : AnsiString ) : AnsiString;
+function ACBrAnsiToUTF8( const AAnsiString : AnsiString ) : AnsiString;
 
 function AnsiChr( b: Byte) : AnsiChar;
-{$IfNDef HAS_CHARINSET}
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
-function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
-{$EndIf}
 
+function PadRight(const AString : String; const nLen : Integer;
+   const Caracter : Char = ' ') : String;
+function PadRightA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
+function PadLeft(const AString : String; const nLen : Integer;
+   const Caracter : Char = ' ') : String;
+function PadLeftA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
+function PadCenter(const AString : String; const nLen : Integer;
+   const Caracter : Char = ' ') : String;
+function PadCenterA(const AAnsiString : AnsiString; const nLen : Integer;
+   const Caracter : AnsiChar = ' ') : AnsiString;
+function PadSpace(const AString : String; const nLen : Integer; Separador : String;
+   const Caracter : Char = ' '; const RemoverEspacos: Boolean = True) : String;
+
+function RemoveString(const sSubStr, sString: String): String;
+function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
+function RemoverEspacosDuplos(const AString: String): String;
+procedure RemoveEmptyLines( AStringList: TStringList);
+
+function RandomName(const LenName : Integer = 8) : String;
+
+function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True) : String;
+function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
+function RPos(const aSubStr, aString : AnsiString; const aStartPos: Integer): Integer; overload;
+function RPos(const aSubStr, aString : AnsiString): Integer; overload;
+function PosLast(const SubStr, S: String): Integer;
+function CountStr(const AString, SubStr : String ) : Integer ;
+Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
+function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
+function RemoveZerosEsquerda(const ANumStr: String): String;
+
+function StrIsAlpha(const S: String): Boolean;
+function StrIsAlphaNum(const S: String): Boolean;
+function StrIsNumber(const S: String): Boolean;
+function StrIsHexa(const S: String): Boolean;
+function StrIsBinary(const S: String): Boolean;
+function StrIsBase64(const S: String): Boolean;
+function CharIsAlpha(const C: Char): Boolean;
+function CharIsAlphaNum(const C: Char): Boolean;
+function CharIsNum(const C: Char): Boolean;
+function CharIsHexa(const C: Char): Boolean;
+function CharIsBinary(const C: Char): Boolean;
+function CharIsBase64(const C: Char): Boolean;
+function OnlyNumber(const AValue: String): String;
+function OnlyAlpha(const AValue: String): String;
+function OnlyAlphaNum(const AValue: String): String;
+function OnlyCharsInSet(const AValue: String; SetOfChars: TSetOfChars): String;
+
+function TiraAcentos( const AString : String ) : String ;
+function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
+
+function AjustaLinhas(const Texto: AnsiString; Colunas: Integer ;
+   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
+function QuebraLinhas(const Texto: String; const Colunas: Integer;
+   const CaracterQuebrar : AnsiChar = ' '): String;
+function RemoverQuebraLinhaFinal(const ATexto: String; const AQuebraLinha: String = ''): String;
+
+function TiraPontos(const Str: string): string;
+function TBStrZero(const i: string; const Casas: byte): string;
+function Space(Tamanho: Integer): string;
+function LinhaSimples(Tamanho: Integer): string;
+function LinhaDupla(Tamanho: Integer): string;
+
+function MatchText(const AText: String; const AValues: array of String): Boolean;
+
+function FindDelimiterInText( const AText: String; ADelimiters: String = ''): Char;
+function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
+   AStringList: TStrings; const AQuoteChar: Char = '"'): Integer;
+
+function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'): String;
+
+
+{/////////  ACBrUtil.Math}
 function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
 function TruncFix( X : Extended ) : Int64 ;
 function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
@@ -182,64 +288,25 @@ function HexToAsciiDef(const HexStr: String; const Default: AnsiString): AnsiStr
 function BinaryStringToString(const AString: AnsiString): String;
 function StringToBinaryString(const AString: String): AnsiString;
 
-function PadRight(const AString : String; const nLen : Integer;
-   const Caracter : Char = ' ') : String;
-function PadRightA(const AAnsiString : AnsiString; const nLen : Integer;
-   const Caracter : AnsiChar = ' ') : AnsiString;
-function PadLeft(const AString : String; const nLen : Integer;
-   const Caracter : Char = ' ') : String;
-function PadLeftA(const AAnsiString : AnsiString; const nLen : Integer;
-   const Caracter : AnsiChar = ' ') : AnsiString;
-function PadCenter(const AString : String; const nLen : Integer;
-   const Caracter : Char = ' ') : String;
-function PadCenterA(const AAnsiString : AnsiString; const nLen : Integer;
-   const Caracter : AnsiChar = ' ') : AnsiString;
-function PadSpace(const AString : String; const nLen : Integer; Separador : String;
-   const Caracter : Char = ' '; const RemoverEspacos: Boolean = True) : String ;
+{/////////  ACBrUtil.Dates}
+function FormatDateBr(const ADateTime: TDateTime; AFormat: String = ''): String;
+function FormatDateTimeBr(const ADate: TDateTime; AFormat: String = ''): String;
+Function StringToDateTime( const DateTimeString : String;
+   const Format : String = '') : TDateTime ;
+Function StringToDateTimeDef( const DateTimeString : String ;
+   const DefaultValue : TDateTime; const Format : String = '') : TDateTime ;
+function StoD( YYYYMMDDhhnnss: String) : TDateTime;
+function DtoS( ADate : TDateTime) : String;
+function DTtoS( ADateTime : TDateTime) : String;
 
-function RemoveString(const sSubStr, sString: String): String;
-function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
-function RemoverEspacosDuplos(const AString: String): String;
-function StripHTML(const AHTMLString : String) : String;
-procedure AcharProximaTag(const ABinaryString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
-procedure RemoveEmptyLines( AStringList: TStringList) ;
-function RandomName(const LenName : Integer = 8) : String ;
+function Iso8601ToDateTime(const AISODate: string): TDateTime;
+function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
 
-{ PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
-  (que nao possui essa funçao) }
-{$IFNDEF COMPILER7_UP}
-function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
-{$ENDIF}
-function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
+function IsWorkingDay(ADate: TDateTime): Boolean;
+function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
+function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
-{$IFNDEF COMPILER6_UP}
-  type TRoundToRange = -37..37;
-  function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double;
-  function SimpleRoundTo(const AValue: Double; const ADigit: TRoundToRange = -2): Double;
-
-  { IfThens retirada de Math.pas do D7, para compatibilizar com o Delphi 5
-  (que nao possue essas funçao) }
-  function IfThen(AValue: Boolean; const ATrue: Integer; const AFalse: Integer = 0): Integer; overload;
-  function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64 = 0): Int64; overload;
-  function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double = 0.0): Double; overload;
-
-  { IfThens retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 5
-  (que nao possue essas funçao) }
-  function IfThen(AValue: Boolean; const ATrue: string;
-    AFalse: string = ''): string; overload;
-{$endif}
-
-function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True) : String;
-function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
-function RPos(const aSubStr, aString : AnsiString; const aStartPos: Integer): Integer; overload;
-function RPos(const aSubStr, aString : AnsiString): Integer; overload;
-function PosLast(const SubStr, S: String): Integer;
-function CountStr(const AString, SubStr : String ) : Integer ;
-Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
-function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
-function RemoveZerosEsquerda(const ANumStr: String): String;
-
+{//// ACBrUtil manter aqui (seria algo como ACBrUtil.SysUtil)}
 {$IFDEF HAS_FORMATSETTINGS}
 Function CreateFormatSettings: TFormatSettings;
 {$ENDIF}
@@ -255,36 +322,6 @@ function StringDecimalToFloat(const AValue: String; const DecimalDigits: SmallIn
 Function StringToFloat(NumString : String): Double;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
-
-function FormatDateBr(const ADateTime: TDateTime; AFormat: String = ''): String;
-function FormatDateTimeBr(const ADate: TDateTime; AFormat: String = ''): String;
-Function StringToDateTime( const DateTimeString : String;
-   const Format : String = '') : TDateTime ;
-Function StringToDateTimeDef( const DateTimeString : String ;
-   const DefaultValue : TDateTime; const Format : String = '') : TDateTime ;
-function StoD( YYYYMMDDhhnnss: String) : TDateTime;
-function DtoS( ADate : TDateTime) : String;
-function DTtoS( ADateTime : TDateTime) : String;
-
-function Iso8601ToDateTime(const AISODate: string): TDateTime;
-function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
-
-function StrIsAlpha(const S: String): Boolean;
-function StrIsAlphaNum(const S: String): Boolean;
-function StrIsNumber(const S: String): Boolean;
-function StrIsHexa(const S: String): Boolean;
-function StrIsBinary(const S: String): Boolean;
-function StrIsBase64(const S: String): Boolean;
-function CharIsAlpha(const C: Char): Boolean;
-function CharIsAlphaNum(const C: Char): Boolean;
-function CharIsNum(const C: Char): Boolean;
-function CharIsHexa(const C: Char): Boolean;
-function CharIsBinary(const C: Char): Boolean;
-function CharIsBase64(const C: Char): Boolean;
-function OnlyNumber(const AValue: String): String;
-function OnlyAlpha(const AValue: String): String;
-function OnlyAlphaNum(const AValue: String): String;
-function OnlyCharsInSet(const AValue: String; SetOfChars: TSetOfChars): String;
 
 function StrIsIP(const AValue: String): Boolean;
 
@@ -302,19 +339,11 @@ function TamanhoIgual(const AValue: Integer; const ATamanho: Integer): Boolean;o
 procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; const AMensagem: String);overload;
 function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
 
-function TiraAcentos( const AString : String ) : String ;
-function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
-
-function AjustaLinhas(const Texto: AnsiString; Colunas: Integer ;
-   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
-function QuebraLinhas(const Texto: String; const Colunas: Integer;
-   const CaracterQuebrar : AnsiChar = ' '): String;
-function RemoverQuebraLinhaFinal(const ATexto: String; const AQuebraLinha: String = ''): String;
-
 function TraduzComando( const AString : String ) : AnsiString ;
 Function StringToAsc( const AString : AnsiString ) : String ;
 Function AscToString( const AString : String ) : AnsiString ;
 
+{//// ACBrUtil.IOFiles??}
 function InPort(const PortAddr:word): byte;
 procedure OutPort(const PortAddr: word; const Databyte: byte); overload ;
 
@@ -366,32 +395,15 @@ procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
 function TranslateUnprintable( const ABinaryString: AnsiString ): String;
 
-function TiraPontos(const Str: string): string;
-function TBStrZero(const i: string; const Casas: byte): string;
-function Space(Tamanho: Integer): string;
-function LinhaSimples(Tamanho: Integer): string;
-function LinhaDupla(Tamanho: Integer): string;
-
 function EAN13Valido( const CodEAN13 : String ) : Boolean ;
 function EAN13_DV( CodEAN13 : String ) : String ;
 
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
-function MatchText(const AText: String; const AValues: array of String): Boolean;
-
-function FindDelimiterInText( const AText: String; ADelimiters: String = ''): Char;
-function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
-   AStringList: TStrings; const AQuoteChar: Char = '"'): Integer;
 
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
 function Zip(AStream: TStream): AnsiString; overload;
 function Zip(const ABinaryString: AnsiString): AnsiString; overload;
-
-function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'): String;
-
-function IsWorkingDay(ADate: TDateTime): Boolean;
-function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
-function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
 procedure LerIniArquivoOuString(const IniArquivoOuString: String; AMemIni: TMemIniFile);
 function StringIsINI(const AString: String): Boolean;

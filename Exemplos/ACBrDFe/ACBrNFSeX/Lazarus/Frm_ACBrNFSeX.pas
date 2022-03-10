@@ -908,7 +908,16 @@ begin
   if (ACBrNFSeX1.Configuracoes.Geral.Provedor = proInfisc) and
      (ACBrNFSeX1.Configuracoes.Geral.Versao <> ve201) then
   begin
-    ChNFSe := '12345678';
+    {
+      A Chave é composta por:
+       2 | N |Código IBGE para UF do prestador
+      14 | N |CNPJ do prestador
+       2 | N |Modelo da nota (valor 98 por padrão)
+       3 | C |Série da nota (em maiúsculas, com zeros à direita)
+       9 | N |Número da nota (com zeros à esquerda)
+       9 | N |Código numérico aleatório
+    }
+    ChNFSe := '434945460000011998000000976482769641000';
     if not (InputQuery(Titulo, 'Chave da NFSe', ChNFSe)) then
       exit;
 

@@ -94,7 +94,8 @@ public abstract class ACBrLibBase implements AutoCloseable {
     }
 
     protected static String fromUTF8(ByteBuffer buffer, IntByReference len) {
-        return new String(buffer.array(), 0, len.getValue(), UTF8);
+        byte[] array = buffer.array();
+        return new String(array, 0, len.getValue(), UTF8);
     }
 
     /**
@@ -123,8 +124,9 @@ public abstract class ACBrLibBase implements AutoCloseable {
     protected String processResult(ByteBuffer buffer, IntByReference bufferLen){
         int bLen = bufferLen.getValue();
         if (bLen > STR_BUFFER_LEN) {
-            ByteBuffer nBuffer = ByteBuffer.allocate(bLen);
-            IntByReference nBufferLen = new IntByReference(bLen);
+            int tamanhoBuffer = (int)(Math.round(bLen * 1.3));
+            ByteBuffer nBuffer = ByteBuffer.allocate(tamanhoBuffer);
+            IntByReference nBufferLen = new IntByReference(tamanhoBuffer);
             UltimoRetorno(nBuffer, nBufferLen);
             return fromUTF8(nBuffer, nBufferLen);
         }

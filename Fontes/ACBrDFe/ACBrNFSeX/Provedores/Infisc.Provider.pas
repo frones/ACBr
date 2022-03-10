@@ -140,6 +140,7 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meLoteAssincrono;
+    ConsultaPorFaixa := True;
   end;
 
   with ConfigWebServices do
@@ -691,6 +692,18 @@ begin
     begin
       InfElemento := 'pedidoStatusLote';
       DocElemento := 'pedidoStatusLote';
+    end;
+
+    with ConsultarNFSe do
+    begin
+      InfElemento := 'pedidoLoteNFSe';
+      DocElemento := 'pedidoLoteNFSe';
+    end;
+
+    with CancelarNFSe do
+    begin
+      InfElemento := 'pedCancelaNFSe';
+      DocElemento := 'pedCancelaNFSe';
     end;
   end;
 end;

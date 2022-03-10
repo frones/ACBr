@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/03/2022
+-- ACBrNFSeX/Infisc.Provider/Infisc.GravarXml --
+[*] Alteração na configuração para que a consulta da NFS-e por Faixa e o pedido de 
+    cancelamento sejam assinados.
+   Por: Italo Giurizzato Junior
 -- ISSJoinville.Provider --
 [*] Alteração na configuração para que o pedido de cancelamento seja assinado.
    Por: Italo Giurizzato Junior

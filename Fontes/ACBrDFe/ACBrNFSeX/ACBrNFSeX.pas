@@ -818,6 +818,9 @@ begin
     email := aInfCancelamento.email;
     NumeroNFSeSubst := aInfCancelamento.NumeroNFSeSubst;
     SerieNFSeSubst := aInfCancelamento.SerieNFSeSubst;
+
+    if ChaveNFSe <> '' then
+      NumeroNFSe := Copy(ChaveNFSe, 22, 9);
   end;
 
   FProvider.CancelaNFSe;
@@ -825,25 +828,21 @@ begin
   if Configuracoes.Geral.ConsultaAposCancelar and
      FProvider.ConfigGeral.ConsultaNFSe then
   begin
-//    try
-      FWebService.ConsultaNFSe.Clear;
+    FWebService.ConsultaNFSe.Clear;
 
-      with FWebService.ConsultaNFSe.InfConsultaNFSe do
-      begin
-        if FProvider.ConfigGeral.ConsultaPorFaixa then
-          tpConsulta := tcPorFaixa
-        else
-          tpConsulta := tcPorNumero;
+    with FWebService.ConsultaNFSe.InfConsultaNFSe do
+    begin
+      if FProvider.ConfigGeral.ConsultaPorFaixa then
+        tpConsulta := tcPorFaixa
+      else
+        tpConsulta := tcPorNumero;
 
-        NumeroIniNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
-        NumeroFinNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
-        Pagina        := 1;
-      end;
+      NumeroIniNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
+      NumeroFinNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
+      Pagina        := 1;
+    end;
 
-      FProvider.ConsultaNFSe;
-//    finally
-//      FWebService.CancelaNFSe.Situacao := FWebService.ConsultaNFSe.Situacao;
-//    end;
+    FProvider.ConsultaNFSe;
   end;
 end;
 

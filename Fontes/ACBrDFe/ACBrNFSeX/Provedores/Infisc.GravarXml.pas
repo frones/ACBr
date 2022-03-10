@@ -507,9 +507,18 @@ begin
 end;
 
 begin
+  {
+    A Chave é composta por:
+     2 | N |Código IBGE para UF do prestador
+    14 | N |CNPJ do prestador
+     2 | N |Modelo da nota (valor 98 por padrão)
+     3 | C |Série da nota (em maiúsculas, com zeros à direita)
+     9 | N |Número da nota (com zeros à esquerda)
+     9 | N |Código numérico aleatório
+  }
   cUF := IntToStr(UFtoCUF(NFSe.Prestador.Endereco.UF));
   CNPJ := Poem_Zeros(OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), 14);
-  Modelo :=  NFSe.ModeloNFSe;
+  Modelo := NFSe.ModeloNFSe;
   aSerie := Poem_Zeros(UpperCase(NFSE.SeriePrestacao), 3);
   Numero := Poem_Zeros(NFSe.Numero, 9);
   Codigo := Poem_Zeros(NFSe.cNFSe, 9);

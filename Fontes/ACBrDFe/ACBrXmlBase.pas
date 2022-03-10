@@ -462,8 +462,8 @@ end;
 
 function ParseTime(const HoraStr: string; aIsPM: Boolean = False): string;
 var
-  xHora: string;
-  Hora: Integer;
+  xHora, xHoraF, xValor: string;
+  i, j, Valor, Hora: Integer;
 begin
   xHora := Trim(HoraStr);
 
@@ -471,17 +471,38 @@ begin
     xHora := '00:00:00'
   else
   begin
+    j :=  Length(xHora);
+
+    xValor := '';
+    xHoraF := '';
+
+    // Padroniza o Horário com 2 dígitos para a Hora, Minutos e Segundos
+    for i := 1 to j do
+    begin
+      if CharInSet(xHora[i], [':']) then
+      begin
+        Valor := StrToIntDef(xValor, 0);
+        xHoraF := xHoraF + FormatFloat('00', Valor) + ':';
+
+        xValor := '';
+      end
+      else
+        xValor := xValor + xHora[i]
+    end;
+
+    xHora := xHoraF + xValor;
+
     if Length(xHora) = 5 then
       xHora := xHora + ':00';
 
     if Length(xHora) > 8 then
       xHora := Copy(xHora, 1, 8);
-  end;
 
-  if aIsPM then
-  begin
-    Hora := StrToInt(Copy(xHora, 1, 2)) + 12;
-    xHora := FormatFloat('00', Hora) + Copy(xHora, 3, 6);
+    if aIsPM then
+    begin
+      Hora := StrToInt(Copy(xHora, 1, 2)) + 12;
+      xHora := FormatFloat('00', Hora) + Copy(xHora, 3, 6);
+    end;
   end;
 
   // xHora sempre será retornada no formato HH:NN:SS

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2022
+-- ACBrXmlBase --
+[-] Correção na leitura de horário que retorna hora com apenas 1 digito em vez de 2.
+   Por: Italo Giurizzato Junior
+
 04/03/2022
 -- ACBrXmlWrite --
 [*] Especificado um valor padrão para a quebra de linha.
@@ -50,7 +55,7 @@ Símbolo : Significado
 02/03/2022
 -- ACBrXmlBase --
 [-] Correção na leitura de uma data no formato AAAA/MM/DD estava lento /D em 
-    vem de DD.
+    vez de DD.
    Por: Italo Giurizzato Junior
 
 28/02/2022

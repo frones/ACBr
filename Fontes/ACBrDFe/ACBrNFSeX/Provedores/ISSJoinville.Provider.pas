@@ -68,8 +68,6 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
-
-//    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   end;
 
 implementation
@@ -95,6 +93,7 @@ begin
   begin
     Rps := True;
     LoteRps := True;
+    CancelarNFSe := True;
   end;
 
   with ConfigWebServices do
@@ -108,13 +107,7 @@ begin
   else
     SetXmlNameSpace('http://nfemwshomologacao.joinville.sc.gov.br');
 
-  with ConfigMsgDados do
-  begin
-//    Prefixo := 'nfem';
-//    PrefixoTS := 'nfem';
-
-    GerarPrestadorLoteRps := True;
-  end;
+  ConfigMsgDados.GerarPrestadorLoteRps := True;
 
   SetNomeXSD('nfse_v2-04.xsd');
 end;
@@ -161,64 +154,6 @@ begin
     Result := Result + '\Homologacao\';
 end;
 
-{
-procedure TACBrNFSeProviderISSJoinville204.ValidarSchema(
-  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
-var
-  xXml, FpNameSpace: string;
-begin
-  inherited ValidarSchema(Response, aMetodo);
-
-  xXml := Response.ArquivoEnvio;
-
-  if FAOwner.Configuracoes.WebServices.AmbienteCodigo = 1 then
-    FpNameSpace := 'xmlns:nfem="http://nfemws.joinville.sc.gov.br"'
-  else
-    FpNameSpace := 'xmlns:nfem="http://nfemwshomologacao.joinville.sc.gov.br"';
-
-  case aMetodo of
-    tmRecepcionar:
-      begin
-        xXml := RetornarConteudoEntre(xXml,
-          '<nfem:EnviarLoteRpsEnvio ' + FpNameSpace + '>',
-          '</nfem:EnviarLoteRpsEnvio>', False);
-
-        xXml := '<nfem:EnviarLoteRpsEnvio>' + xXml + '</nfem:EnviarLoteRpsEnvio>';
-      end;
-
-    tmConsultarLote:
-      begin
-        xXml := RetornarConteudoEntre(xXml,
-          '<nfem:ConsultarLoteRpsEnvio ' + FpNameSpace + '>',
-          '</nfem:ConsultarLoteRpsEnvio>', False);
-
-        xXml := '<nfem:ConsultarLoteRpsEnvio>' + xXml + '</nfem:ConsultarLoteRpsEnvio>';
-      end;
-
-    tmConsultarNFSePorRps:
-      begin
-        xXml := RetornarConteudoEntre(xXml,
-          '<nfem:ConsultarNfseRpsEnvio ' + FpNameSpace + '>',
-          '</nfem:ConsultarNfseRpsEnvio>', False);
-
-        xXml := '<nfem:ConsultarNfseRpsEnvio>' + xXml + '</nfem:ConsultarNfseRpsEnvio>';
-      end;
-
-    tmCancelarNFSe:
-      begin
-        xXml := RetornarConteudoEntre(xXml,
-          '<nfem:CancelarNfseEnvio ' + FpNameSpace + '>',
-          '</nfem:CancelarNfseEnvio>', False);
-
-        xXml := '<nfem:CancelarNfseEnvio>' + xXml + '</nfem:CancelarNfseEnvio>';
-      end;
-  else
-    Response.ArquivoEnvio := xXml;
-  end;
-
-  Response.ArquivoEnvio := xXml;
-end;
-}
 { TACBrNFSeXWebserviceISSJoinville204 }
 
 function TACBrNFSeXWebserviceISSJoinville204.GetNamespace: string;

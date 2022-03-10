@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/03/2022
+-- ISSJoinville.Provider --
+[*] Alteração na configuração para que o pedido de cancelamento seja assinado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Possível correção para os provedores que retornam o grupo <ConfirmacaoCancelamento>
     em vez de <Confirmacao>.

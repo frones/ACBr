@@ -73,8 +73,6 @@ begin
   GerarEnderecoExterior := True;
 
   TagTomador := 'TomadorServico';
-
-//  PrefixoPadrao := 'nfem';
 end;
 
 end.

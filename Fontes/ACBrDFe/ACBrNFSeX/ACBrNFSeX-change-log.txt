@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/03/2022
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Possível correção para os provedores que retornam o grupo <ConfirmacaoCancelamento>
+    em vez de <Confirmacao>.
+   Por: Italo Giurizzato Junior
+
 09/03/2022
 -- ISSJoinville.Provider/ISSJoinville.GravarXml --
 [*] Possível correção para que a emissão da NFS-e ocorra com sucesso.

@@ -866,6 +866,9 @@ begin
       begin
         AuxNode := AuxNode.Childrens.FindAnyNs('Confirmacao');
 
+        if AuxNode = nil then
+          AuxNode := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
         Response.Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
         Response.DescSituacao := 'Nota Cancelada';
       end;

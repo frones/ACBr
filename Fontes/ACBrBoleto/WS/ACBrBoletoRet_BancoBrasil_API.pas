@@ -103,25 +103,139 @@ begin
       AJSon := TJson.Create;
       try
         AJSon.Parse(RetWS);
-        AJSonResp              := AJson.Values['erros'].AsArray;
+
         Retorno.HTTPResultCode := HTTPResultCode;
         Retorno.JSON           := AJson.Stringify;
+
         //retorna quando houver erro
-        For I := 0 to Pred(AJSonResp.Count) do
-        begin
-          AJSonRejeicao := AJSonResp[I].AsObject;
-          ARejeicao            := Retorno.CriarRejeicaoLista;
-          ARejeicao.Codigo     := AJSonRejeicao.Values['codigo'].AsString;
-          ARejeicao.Versao     := AJSonRejeicao.Values['versao'].AsString;
-          ARejeicao.Mensagem   := AJSonRejeicao.Values['mensagem'].AsString;
-          ARejeicao.Ocorrencia := AJSonRejeicao.Values['ocorrencia'].AsString;
-        end;
-        if (AJson.Values['error'].AsString <> '') then
-        begin
-          ARejeicao            := Retorno.CriarRejeicaoLista;
-          ARejeicao.Codigo     := AJson.Values['statusCode'].AsString;
-          ARejeicao.Versao     := AJson.Values['error'].AsString;
-          ARejeicao.Mensagem   := AJson.Values['message'].AsString;
+        case TipoOperacao of
+          tpInclui,
+          tpPIXCriar,
+          tpPIXCancelar,
+          tpPIXConsultar :
+            begin
+              case HTTPResultCode of
+                400,
+                403,
+                500 :
+                  begin
+                    AJSonResp := AJson.Values['erros'].AsArray;
+                    for I := 0 to Pred(AJSonResp.Count) do
+                    begin
+                      AJSonRejeicao        := AJSonResp[I].AsObject;
+                      ARejeicao            := Retorno.CriarRejeicaoLista;
+                      ARejeicao.Codigo     := AJSonRejeicao.Values['codigo'].AsString;
+                      ARejeicao.Versao     := AJSonRejeicao.Values['versao'].AsString;
+                      ARejeicao.Mensagem   := AJSonRejeicao.Values['mensagem'].AsString;
+                      ARejeicao.Ocorrencia := AJSonRejeicao.Values['ocorrencia'].AsString;
+                    end;
+                  end;
+                401 :
+                  begin
+                    if (AJson.Values['error'].AsString <> '') then
+                    begin
+                      ARejeicao            := Retorno.CriarRejeicaoLista;
+                      ARejeicao.Codigo     := AJson.Values['statusCode'].AsString;
+                      ARejeicao.Versao     := AJson.Values['error'].AsString;
+                      ARejeicao.Mensagem   := AJson.Values['message'].AsString;
+                    end;
+                  end;
+                404 :
+                  begin
+                    ARejeicao            := Retorno.CriarRejeicaoLista;
+                    ARejeicao.Codigo     := '404';
+                    ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+                  end;
+                503 :
+                  begin
+                    ARejeicao            := Retorno.CriarRejeicaoLista;
+                    ARejeicao.Codigo     := '503';
+                    ARejeicao.Versao     := 'ERRO INTERNO BB';
+                    ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+                    ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Brasil.';
+                  end;
+              end;
+            end;
+          tpBaixa,
+          tpAltera,
+          tpConsultaDetalhe :
+            begin
+              case HTTPResultCode of
+                400,
+                403,
+                500 :
+                  begin
+                    AJSonResp := AJson.Values['errors'].AsArray;
+                    for I := 0 to Pred(AJSonResp.Count) do
+                    begin
+                      AJSonRejeicao        := AJSonResp[I].AsObject;
+                      ARejeicao            := Retorno.CriarRejeicaoLista;
+                      ARejeicao.Codigo     := AJSonRejeicao.Values['code'].AsString;
+                      ARejeicao.Mensagem   := AJSonRejeicao.Values['message'].AsString;
+                    end;
+                  end;
+                401 :
+                  begin
+                    if (AJson.Values['error'].AsString <> '') then
+                    begin
+                      ARejeicao            := Retorno.CriarRejeicaoLista;
+                      ARejeicao.Codigo     := AJson.Values['statusCode'].AsString;
+                      ARejeicao.Versao     := AJson.Values['error'].AsString;
+                      ARejeicao.Mensagem   := AJson.Values['message'].AsString;
+                    end;
+                  end;
+                404 :
+                  begin
+                    ARejeicao            := Retorno.CriarRejeicaoLista;
+                    ARejeicao.Codigo     := '404';
+                    ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+                  end;
+                503 :
+                  begin
+                    ARejeicao            := Retorno.CriarRejeicaoLista;
+                    ARejeicao.Codigo     := '503';
+                    ARejeicao.Versao     := 'ERRO INTERNO BB';
+                    ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+                    ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Brasil.';
+                  end;
+              end;
+            end;
+          tpConsulta :
+            begin
+              case HTTPResultCode of
+                400,
+                500,
+                503 :
+                  begin
+                    AJSonResp := AJson.Values['erros'].AsArray;
+                    for I := 0 to Pred(AJSonResp.Count) do
+                    begin
+                      AJSonRejeicao        := AJSonResp[I].AsObject;
+                      ARejeicao            := Retorno.CriarRejeicaoLista;
+                      ARejeicao.Codigo     := AJSonRejeicao.Values['codigoMensagem'].AsString;
+                      ARejeicao.Versao     := AJSonRejeicao.Values['versaoMensagem'].AsString;
+                      ARejeicao.Mensagem   := AJSonRejeicao.Values['textoMensagem'].AsString;
+                      ARejeicao.Ocorrencia := AJSonRejeicao.Values['codigoRetorno'].AsString;
+                    end;
+                  end;
+                401 :
+                  begin
+                    if (AJson.Values['error'].AsString <> '') then
+                    begin
+                      ARejeicao            := Retorno.CriarRejeicaoLista;
+                      ARejeicao.Codigo     := AJson.Values['statusCode'].AsString;
+                      ARejeicao.Versao     := AJson.Values['error'].AsString;
+                      ARejeicao.Mensagem   := AJson.Values['message'].AsString;
+                    end;
+                  end;
+                404 :
+                  begin
+                    ARejeicao            := Retorno.CriarRejeicaoLista;
+                    ARejeicao.Codigo     := '404';
+                    ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+                  end;
+              end;
+            end;
         end;
 
         //retorna quando tiver sucesso
@@ -142,10 +256,10 @@ begin
             Retorno.DadosRet.TituloRet.CodigoCliente := AJson.Values['codigoCliente'].AsNumber;
             Retorno.DadosRet.TituloRet.Contrato      := AJson.Values['numeroContratoCobranca'].AsString;
 
-            AJSonObject := AJson.Values['qrCode'].AsObject;
-            QRCodeRet.url := AJSonObject.Values['url'].AsString;
-            QRCodeRet.txId := AJSonObject.Values['txId'].AsString;
-            QRCodeRet.emv := AJSonObject.Values['emv'].AsString;
+            AJSonObject                              := AJson.Values['qrCode'].AsObject;
+            QRCodeRet.url                            := AJSonObject.Values['url'].AsString;
+            QRCodeRet.txId                           := AJSonObject.Values['txId'].AsString;
+            QRCodeRet.emv                            := AJSonObject.Values['emv'].AsString;
 
             Retorno.DadosRet.TituloRet.UrlPix        := QRCodeRet.url;
             Retorno.DadosRet.TituloRet.TxId          := QRCodeRet.txId;
@@ -243,6 +357,31 @@ begin
             Retorno.DadosRet.Comprovante.Data        := DateBBtoDateTime( AJson.Values['dataAtualizacao'].AsString);
             Retorno.DadosRet.Comprovante.Hora        := AJson.Values['horarioAtualizacao'].AsString;
 
+          end else
+          if (TipoOperacao = tpPIXCriar) or (TipoOperacao = tpPIXCancelar) then
+          begin;
+            QRCodeRet.url  := AJson.Values['qrCode.url'].AsString;
+            QRCodeRet.txId := AJson.Values['qrCode.txId'].AsString;
+            QRCodeRet.emv  := AJson.Values['qrCode.emv'].AsString;
+
+            Retorno.DadosRet.TituloRet.UrlPix        := QRCodeRet.url;
+            Retorno.DadosRet.TituloRet.TxId          := QRCodeRet.txId;
+            Retorno.DadosRet.TituloRet.EMV           := QRCodeRet.emv;
+          end else
+          if (TipoOperacao = tpPIXConsultar) then
+          begin;
+            Retorno.DadosRet.IDBoleto.NossoNum         := AJson.Values['id'].AsString;
+            Retorno.DadosRet.TituloRet.NossoNumero     := Retorno.DadosRet.IDBoleto.NossoNum;
+            Retorno.DadosRet.TituloRet.ValorDocumento  := AJson.Values['valorOriginalTituloCobranca'].AsNumber;
+            Retorno.DadosRet.TituloRet.DataRegistro    := DateBBtoDateTime( AJson.Values['dataRegistroTituloCobranca'].AsString );
+
+            QRCodeRet.url  := AJson.Values['qrCode.url'].AsString;
+            QRCodeRet.txId := AJson.Values['qrCode.txId'].AsString;
+            QRCodeRet.emv  := AJson.Values['qrCode.emv'].AsString;
+
+            Retorno.DadosRet.TituloRet.UrlPix        := QRCodeRet.url;
+            Retorno.DadosRet.TituloRet.TxId          := QRCodeRet.txId;
+            Retorno.DadosRet.TituloRet.EMV           := QRCodeRet.emv;;
           end;
         end;
 

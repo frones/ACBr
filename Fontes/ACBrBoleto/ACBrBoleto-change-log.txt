@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2022
+--ACBrBoletoConversao.pas-- --ACBrBoletoRet_BancoBrasil_API.pas-- --ACBrBoletoW_BancoBrasil_API.pas--
+[+] TK-2427 Criar / Consultar / Cancelar PIX Boleto Hibrido Banco do Brasil
+[*] TK-2399 Modificado o tratamento dos retornos de erros Boleto Hibrido Banco do Brasil
+
 09/03/2022
 --ACBrBoletoWS.pas--
 [-] TOAuth - PROTEÇÃO ERRO COM JSON MAL FORMATADO

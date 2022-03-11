@@ -268,6 +268,7 @@ const
   DSC_VFCPEFET = 'Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza (FCP)';
   DSC_INDSOMAPISST = 'Indica se o valor do PIS ST compõe o valor total da NF-e';
   DSC_INDSOMACOFINSST = 'Indica se o valor da COFINS ST compõe o valor total da NF-e';
+  DSC_TPATO = 'Tipo do Ato Concessório';
 
 implementation
 

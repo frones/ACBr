@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2022
+-- Diversos --
+[*] Alterações nos fontes do componente visando atender a NT 2021/004
+   Por: Italo Giurizzato Junior
+
 18/02/2022
 -- ACBrNFeServicos --
 [*] Atualização da URL do QR-Code da SEFAZ-MG

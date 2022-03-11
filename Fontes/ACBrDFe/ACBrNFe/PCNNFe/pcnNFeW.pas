@@ -123,6 +123,7 @@ type
     procedure GerarDetImpostoISSQN(const i: Integer);
     procedure GerarDetDevol(const i: Integer);
     procedure GerarDetImpostoICMSUFDest(const i: Integer);
+    procedure GerarDetObsItem(const i: Integer);
     procedure GerarTotal;
     procedure GerarTotalICMSTotal;
     procedure GerarTotalISSQNtot;
@@ -821,6 +822,8 @@ begin
 
     Gerador.IDNivel := 'H01';
     Gerador.wCampo(tcStr, 'V01', 'infAdProd', 01, 500, 0, nfe.Det[i].infAdProd, DSC_INFADPROD);
+    GerarDetObsItem(i);
+
     Gerador.wGrupo('/det');
   end;
   if nfe.Det.Count > 990 then
@@ -1444,7 +1447,8 @@ begin
                     Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N22', 'pICMSST ', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST);
                     Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
 
-                    if (NFe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.ICMS.CST = cst10) then
+//                    if (NFe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.ICMS.CST = cst10) then
+                    if (NFe.infNFe.Versao >= 4) then
                     begin
                       if (nfe.Det[i].Imposto.ICMS.vBCFCPST > 0) or (nfe.Det[i].Imposto.ICMS.pFCPST > 0) or (nfe.Det[i].Imposto.ICMS.vFCPST > 0) then
                       begin
@@ -1709,7 +1713,8 @@ begin
                       Gerador.wCampo(tcDe2, 'N23', 'vICMSST ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST);
                     end;
 
-                    if (NFe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.ICMS.CST = cst90) then
+//                    if (NFe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.ICMS.CST = cst90) then
+                    if (NFe.infNFe.Versao >= 4) then
                     begin
                       if (nfe.Det[i].Imposto.ICMS.vBCFCPST > 0) or (nfe.Det[i].Imposto.ICMS.pFCPST > 0) or (nfe.Det[i].Imposto.ICMS.vFCPST > 0) then
                       begin
@@ -2125,6 +2130,44 @@ begin
 
       Gerador.wGrupo('/PISST');
     end;
+  end;
+end;
+
+procedure TNFeW.GerarDetObsItem(const i: Integer);
+begin
+  if (NFe.Det[i].obsCont.xTexto <> '') or (NFe.Det[i].obsFisco.xTexto <> '') then
+  begin
+    Gerador.wGrupo('obsItem', 'VA01');
+
+    if (NFe.Det[i].obsCont.xTexto <> '') then
+    begin
+      Gerador.wGrupo('obsCont xCampo="' + NFe.Det[i].obsCont.xCampo + '"', 'VA02');
+
+      if length(trim(NFe.Det[i].obsCont.xCampo)) > 20 then
+        Gerador.wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
+      if length(trim(NFe.Det[i].obsCont.xCampo)) = 0 then
+        Gerador.wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+      Gerador.wCampo(tcStr, 'VA04', 'xTexto', 01, 60, 1, NFe.Det[i].obsCont.xTexto, DSC_XTEXTO);
+      Gerador.wGrupo('/obsCont');
+    end;
+
+    if (NFe.Det[i].obsFisco.xTexto <> '') then
+    begin
+      Gerador.wGrupo('obsFisco xCampo="' + NFe.Det[i].obsFisco.xCampo + '"', 'VA05');
+
+      if length(trim(NFe.Det[i].obsFisco.xCampo)) > 20 then
+        Gerador.wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
+      if length(trim(NFe.Det[i].obsFisco.xCampo)) = 0 then
+        Gerador.wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+      Gerador.wCampo(tcStr, 'VA07', 'xTexto', 01, 60, 1, NFe.Det[i].obsFisco.xTexto, DSC_XTEXTO);
+      Gerador.wGrupo('/obsCont');
+    end;
+
+    Gerador.wGrupo('/obsItem');
   end;
 end;
 
@@ -2687,9 +2730,16 @@ begin
       Gerador.wGrupo('procRef', 'Z10');
       Gerador.wCampo(tcStr, 'Z11', 'nProc  ', 01, 60, 1, nfe.InfAdic.procRef[i].nProc, DSC_NPROC);
       Gerador.wCampo(tcStr, 'Z12', 'indProc', 01, 01, 1, indProcToStr(nfe.InfAdic.procRef[i].indProc), DSC_INDPROC);
+
+      if nfe.InfAdic.procRef[i].indProc = ipSEFAZ then
+        Gerador.wCampo(tcStr, 'Z13', 'tpAto', 02, 02, 0, tpAtoToStr(nfe.InfAdic.procRef[i].tpAto), DSC_TPATO);
+
       Gerador.wGrupo('/procRef');
     end;
   end;
+
+  if nfe.InfAdic.procRef.Count > 100 then
+    Gerador.wAlerta('Z10', 'procRef', '', ERR_MSG_MAIOR_MAXIMO + '100');
 end;
 
 procedure TNFeW.GerarInfIntermed;

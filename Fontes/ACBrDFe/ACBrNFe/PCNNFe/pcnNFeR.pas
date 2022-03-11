@@ -819,6 +819,21 @@ begin
       end;
     end;
 
+    if Leitor.rExtrai(2, 'obsItem') <> '' then
+    begin
+      if Leitor.rExtrai(3, 'obsCont') <> '' then
+      begin
+        NFe.Det[i].obsCont.xCampo := Leitor.rAtributo('xCampo');
+        NFe.Det[i].obsCont.xTexto := Leitor.rCampo(tcStr, 'xTexto');
+      end;
+
+      if Leitor.rExtrai(3, 'obsFisco') <> '' then
+      begin
+        NFe.Det[i].obsFisco.xCampo := Leitor.rAtributo('xCampo');
+        NFe.Det[i].obsFisco.xTexto := Leitor.rCampo(tcStr, 'xTexto');
+      end;
+    end;
+
     inc(i);
   end;
 
@@ -1040,8 +1055,9 @@ begin
     while Leitor.rExtrai(2, 'procRef', '', i + 1) <> '' do
     begin
       NFe.InfAdic.procRef.New;
-      (*Z11*)NFe.InfAdic.procRef[i].nProc   := Leitor.rCampo(tcStr, 'nProc');
+      (*Z11*)NFe.InfAdic.procRef[i].nProc := Leitor.rCampo(tcStr, 'nProc');
       (*Z12*)NFe.InfAdic.procRef[i].indProc := StrToIndProc(ok, Leitor.rCampo(tcStr, 'indProc'));
+      (*Z13*)NFe.InfAdic.procRef[i].tpAto := StrTotpAto(ok, Leitor.rCampo(tcStr, 'tpAto'));
       inc(i);
     end;
   end;

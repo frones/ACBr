@@ -97,6 +97,8 @@ type
 
   TindIntermed = (iiSemOperacao, iiOperacaoSemIntermediador, iiOperacaoComIntermediador);
 
+  TtpAto = (taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica);
+
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 
@@ -159,6 +161,9 @@ function IndIntermedToStr(const t: TindIntermed): string;
 function StrToIndIntermed(out ok: boolean; const s: string): TindIntermed;
 
 function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
+
+function tpAtoToStr(const t: TtpAto): string;
+function StrTotpAto(out ok: boolean; const s: string): TtpAto;
 
 implementation
 
@@ -649,6 +654,18 @@ begin
              teCancelamentoMDFeAutComCTe, teMDFeAutorizado,
              teComprEntregaNFe, teCancComprEntregaNFe, teAtorInteressadoNFe,
              teComprEntregaCTe, teCancComprEntregaCTe, teCTeCancelado]);
+end;
+
+function tpAtoToStr(const t: TtpAto): string;
+begin
+  Result := EnumeradoToStr(t, ['', '08', '10', '12'],
+       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica]);
+end;
+
+function StrTotpAto(out ok: boolean; const s: string): TtpAto;
+begin
+  Result := StrToEnumerado(ok, s, ['', '08', '10', '12'],
+       [taNenhum, taTermoAcordo, taRegimeEspecial, taAutorizacaoEspecifica]);
 end;
 
 initialization

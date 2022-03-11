@@ -66,6 +66,7 @@ type
     procedure LerDetProdArma(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
     procedure LerDetProdComb(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
     procedure LerDetImposto(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
+    procedure LerDetObsItem(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
     procedure LerTotal(const ANode: TACBrXmlNode);
     procedure LerTransp(const ANode: TACBrXmlNode);
     procedure LerTranspVol(const ANode: TACBrXmlNode);
@@ -499,6 +500,8 @@ begin
       (*U61*)Item.vIPIDevol := ObterConteudo(AuxNode.Childrens.Find('vIPIDevol'), tcDe2);
     end;
   end;
+
+  LerDetObsItem(Item, ANode.Childrens.Find('obsItem'));
 end;
 
 procedure TNFeXmlReader.LerDetProd(const Item: TDetCollectionItem; const ANode: TACBrXmlNode);
@@ -1000,6 +1003,40 @@ begin
   end;
 end;
 
+procedure TNFeXmlReader.LerDetObsItem(const Item: TDetCollectionItem;
+  const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+  Atr: TACBrXmlAttribute;
+begin
+  if not Assigned(Item) or (Item = nil) then Exit;
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+  AuxNode := ANode.Childrens.Find('obsCont');
+
+  if (AuxNode <> nil) then
+  begin
+    Atr := AuxNode.Attributes.Items['xCampo'];
+
+    if Atr <> nil then
+      Item.obsCont.xCampo := Atr.Content;
+
+    Item.obsCont.xTexto := ObterConteudo(AuxNode.Childrens.Find('xTexto'), tcStr);
+  end;
+
+  AuxNode := ANode.Childrens.Find('obsFisco');
+
+  if (AuxNode <> nil) then
+  begin
+    Atr := AuxNode.Attributes.Items['xCampo'];
+
+    if Atr <> nil then
+      Item.obsFisco.xCampo := Atr.Content;
+
+    Item.obsFisco.xTexto := ObterConteudo(AuxNode.Childrens.Find('xTexto'), tcStr);
+  end;
+end;
+
 procedure TNFeXmlReader.LerTotal(const ANode: TACBrXmlNode);
 Var
   ok: Boolean;
@@ -1238,7 +1275,7 @@ begin
       (*Z06*)NFe.InfAdic.obsCont[i].xTexto := ObterConteudo(ANodes[i].Childrens.Find('xTexto'), tcStr);
     end;
 
-  NFe.InfAdic.obsCont.Clear;
+  NFe.InfAdic.obsFisco.Clear;
   ANodes := ANode.Childrens.FindAll('obsFisco');
   for i := 0 to Length(ANodes) - 1 do
   begin
@@ -1252,8 +1289,9 @@ begin
   for i := 0 to Length(ANodes) - 1 do
   begin
     NFe.InfAdic.obsCont.New;
-     (*Z11*)NFe.InfAdic.procRef[i].nProc   := ObterConteudo(ANodes[i].Childrens.Find('nProc'),tcStr);
-     (*Z12*)NFe.InfAdic.procRef[i].indProc := StrToIndProc(ok, ObterConteudo(ANodes[i].Childrens.Find('indProc'), tcStr));
+    (*Z11*)NFe.InfAdic.procRef[i].nProc := ObterConteudo(ANodes[i].Childrens.Find('nProc'),tcStr);
+    (*Z12*)NFe.InfAdic.procRef[i].indProc := StrToIndProc(ok, ObterConteudo(ANodes[i].Childrens.Find('indProc'), tcStr));
+    (*Z13*)NFe.InfAdic.procRef[i].tpAto := StrTotpAto(ok, ObterConteudo(ANodes[i].Childrens.Find('tpAto'), tcStr));
   end;
 end;
 

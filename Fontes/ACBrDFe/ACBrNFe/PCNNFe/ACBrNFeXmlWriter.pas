@@ -119,6 +119,7 @@ type
     function GerarDetImpostoISSQN(const i: integer): TACBrXmlNode;
     function GerarDetDevol(const i: integer): TACBrXmlNode;
     function GerarDetImpostoICMSUFDest(const i: integer): TACBrXmlNode;
+    function GerarDetObsItem(const i: Integer): TACBrXmlNode;
     function GerarTotal: TACBrXmlNode;
     function GerarTotalICMSTotal: TACBrXmlNode;
     function GerarTotalISSQNtot: TACBrXmlNode;
@@ -959,6 +960,8 @@ begin
 
     Result[i].AppendChild(AddNode(tcStr, 'V01', 'infAdProd', 01, 500,
       0, NFe.Det[i].infAdProd, DSC_INFADPROD));
+
+    Result[i].AppendChild(GerarDetObsItem(i));
   end;
   if NFe.Det.Count > 990 then
     wAlerta('H02', 'nItem', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '990');
@@ -1769,6 +1772,7 @@ begin
             NFe.Det[i].Imposto.ICMS.pICMSST, DSC_PICMSST));
           xmlNode.AppendChild(AddNode(tcDe2, 'N23', 'vICMSST ',
             01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST));
+
           if (NFe.infNFe.Versao >= 4) then
           begin
             if (NFe.Det[i].Imposto.ICMS.vBCFCPST > 0) or
@@ -1784,6 +1788,7 @@ begin
                 01, 15, 1, NFe.Det[i].Imposto.ICMS.vFCPST, DSC_VFCPST));
             end;
           end;
+
           if (NFe.Det[i].Imposto.ICMS.UFST <> '') or
             (NFe.Det[i].Imposto.ICMS.pBCOp <> 0) or
             (NFe.Det[i].Imposto.ICMS.CST = cstPart10) then
@@ -2153,6 +2158,7 @@ begin
             xmlNode.AppendChild(AddNode(tcDe2, 'N23', 'vICMSST ',
               01, 15, 1, NFe.Det[i].Imposto.ICMS.vICMSST, DSC_VICMSST));
           end;
+
           if (NFe.infNFe.Versao >= 4) then
           begin
             if (NFe.Det[i].Imposto.ICMS.vBCFCPST > 0) or
@@ -2168,6 +2174,7 @@ begin
                 01, 15, 0, NFe.Det[i].Imposto.ICMS.vFCPST, DSC_VFCPST));
             end;
           end;
+
           if (NFe.Det[i].Imposto.ICMS.CST = cst90) and
             (NFe.infNFe.Versao >= 3.10) and
             (NFe.Det[i].Imposto.ICMS.vICMSDeson > 0) then
@@ -2668,6 +2675,44 @@ begin
       if (nfe.infNFe.Versao >= 4) and (nfe.Det[i].Imposto.PISST.indSomaPISST <> ispNenhum) then
         Result.AppendChild(AddNode(tcStr, 'R07', 'indSomaPISST', 1, 1, 1,
           indSomaPISSTToStr(nfe.Det[i].Imposto.PISST.indSomaPISST), DSC_INDSOMAPISST));
+    end;
+  end;
+end;
+
+function TNFeXmlWriter.GerarDetObsItem(const i: Integer): TACBrXmlNode;
+begin
+  Result := nil;
+
+  if (NFe.Det[i].obsCont.xTexto <> '') or (NFe.Det[i].obsFisco.xTexto <> '') then
+  begin
+    Result := FDocument.CreateElement('obsItem');
+
+    if (NFe.Det[i].obsCont.xTexto <> '') then
+    begin
+      Result := FDocument.CreateElement('obsCont');
+      Result.SetAttribute('xCampo', NFe.Det[i].obsCont.xCampo);
+
+      if length(trim(NFe.Det[i].obsCont.xCampo)) > 20 then
+        wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
+      if length(trim(NFe.Det[i].obsCont.xCampo)) = 0 then
+        wAlerta('VA03', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+      Result.AppendChild(AddNode(tcStr, 'VA04', 'xTexto', 01, 60, 1, NFe.Det[i].obsCont.xTexto, DSC_XTEXTO));
+    end;
+
+    if (NFe.Det[i].obsFisco.xTexto <> '') then
+    begin
+      Result := FDocument.CreateElement('obsFisco');
+      Result.SetAttribute('xCampo', NFe.Det[i].obsFisco.xCampo);
+
+      if length(trim(NFe.Det[i].obsFisco.xCampo)) > 20 then
+        wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
+      if length(trim(NFe.Det[i].obsFisco.xCampo)) = 0 then
+        wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+      Result.AppendChild(AddNode(tcStr, 'VA07', 'xTexto', 01, 60, 1, NFe.Det[i].obsFisco.xTexto, DSC_XTEXTO));
     end;
   end;
 end;
@@ -3404,8 +3449,14 @@ begin
       Result[i] := FDocument.CreateElement('procRef');
       Result[i].AppendChild(AddNode(tcStr, 'Z11', 'nProc  ', 01, 60, 1, NFe.InfAdic.procRef[i].nProc, DSC_NPROC));
       Result[i].AppendChild(AddNode(tcStr, 'Z12', 'indProc', 01, 01, 1, indProcToStr(NFe.InfAdic.procRef[i].indProc), DSC_INDPROC));
+
+      if nfe.InfAdic.procRef[i].indProc = ipSEFAZ then
+        Result[i].AppendChild(AddNode(tcStr, 'Z13', 'tpAto', 02, 02, 0, tpAtoToStr(NFe.InfAdic.procRef[i].tpAto), DSC_TPATO));
     end;
   end;
+
+  if NFe.InfAdic.procRef.Count > 100 then
+    wAlerta('Z10', 'procRef', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '100');
 end;
 
 function TNFeXmlWriter.GerarInfIntermed: TACBrXmlNode;

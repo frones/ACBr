@@ -229,7 +229,7 @@ namespace ACBrLib.CTe.Demo
                 errorProvider.SetError(txtCertPassword, "Informe a senha");
                 return false;
             }
-            else if (txtCertNumero.Text == "")
+            else if ((txtCertNumero.Text == "") && (txtCertPath.Text == ""))
             {
                 errorProvider.SetError(txtCertNumero, "Informe o número de série");
                 return false;

@@ -2164,7 +2164,7 @@ begin
         Gerador.wAlerta('VA06', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
 
       Gerador.wCampo(tcStr, 'VA07', 'xTexto', 01, 60, 1, NFe.Det[i].obsFisco.xTexto, DSC_XTEXTO);
-      Gerador.wGrupo('/obsCont');
+      Gerador.wGrupo('/obsFisco');
     end;
 
     Gerador.wGrupo('/obsItem');

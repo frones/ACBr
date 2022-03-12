@@ -2188,14 +2188,18 @@ end;
 constructor TDetCollectionItem.Create;
 begin
   inherited Create;
-  FProd := TProd.Create();
+  FProd := TProd.Create;
   FImposto := TImposto.Create;
+  FobsCont := TobsItem.Create;
+  FobsFisco := TobsItem.Create;
 end;
 
 destructor TDetCollectionItem.Destroy;
 begin
   FProd.Free;
   FImposto.Free;
+  FobsCont.Free;
+  FobsFisco.Free;
   inherited;
 end;
 

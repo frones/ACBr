@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/03/2022
+-- Desenvolve.LerXml --
+[*] Acrescentado o NormatizarXml antes da leitura do XML.
+   Por: Italo Giurizzato Junior
+
 10/03/2022
 -- ACBrNFSeX/Infisc.Provider/Infisc.GravarXml --
 [*] Alteração na configuração para que a consulta da NFS-e por Faixa e o pedido de 

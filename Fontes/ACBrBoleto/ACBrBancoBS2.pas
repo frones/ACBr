@@ -167,7 +167,7 @@ end;
 procedure TACBrBancoBS2.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; ARemessa: TStringList);
 var
   ATipoCedente, ATipoSacado, ADataMoraJuros, ADataDesconto, wLinha,
-  wCarteira, EspecieDoc, codigoServico: string;
+  wCarteira, codigoServico: string;
 begin
 
   { Data Mora }

@@ -162,7 +162,7 @@ procedure TACBrBancoSofisaSantander.GerarRegistroTransacao400(ACBrTitulo :TACBrT
 var
   DigitoNossoNumero, Ocorrencia,aEspecie :String;
   Protesto, Multa, aAgencia, TipoSacado, wLinha :String;
-  aCarteira, I, mensagemBranco, totalMensagem: Integer;
+  aCarteira, I, mensagemBranco: Integer;
 begin
 
   aCarteira := StrToIntDef(ACBrTitulo.Carteira, 0 );
@@ -295,8 +295,6 @@ begin
       wLinha:= UpperCase(wLinha);
       if Mensagem.Count > 0 then
       begin
-        totalMensagem := Mensagem.Count;
-
         wLinha:= wLinha + #13#10                         +
                  '2' + '0';
         for I := 0 to Mensagem.Count - 1 do
@@ -353,11 +351,8 @@ end;
 
 procedure TACBrBancoSofisaSantander.GerarRegistroTrailler400( ARemessa:TStringList );
 var
-  vQtdeLinha : Integer;
   wLinha: String;
 begin
-   vQtdeLinha := StrToInt(copy(ARemessa.Text,Length(ARemessa.Text)-7,6));//lê a ultima linha gravada para pergar o codigo seq.
-
    wLinha:= '9'                                            + // ID Registro
             Space(393)                                     + // Complmentação do Registro (Brancos)
             IntToStrZero(ARemessa.Count + 1, 6);

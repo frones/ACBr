@@ -44,10 +44,9 @@ type
   TACBrPagForArquivoClass = class( TComponent )
    private
      procedure SetACBrPagFor(const Value: TComponent);
-     procedure ErroAbstract(const NomeProcedure : String );
    protected
      FACBrPagFor : TComponent;
-
+     procedure ErroAbstract(const NomeProcedure : String );
      procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
      constructor Create(AOwner: TComponent); override;

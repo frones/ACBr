@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/03/2022
+-- EloTech.Provider --
+[*] Incluio a função TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
 -- Infisc.Provider/Infisc.GravarXml/Infisc.LerXml --
 [*] Ajustes visando atender o provedor.
    Por: Italo Giurizzato Junior

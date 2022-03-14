@@ -55,6 +55,8 @@ type
     function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderEloTech203 = class (TACBrNFSeProviderABRASFv2)
@@ -509,9 +511,7 @@ function TACBrNFSeXWebserviceEloTech203.Recepcionar(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'EnviarLoteRpsResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -520,9 +520,7 @@ function TACBrNFSeXWebserviceEloTech203.RecepcionarSincrono(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'EnviarLoteRpsSincronoResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -531,9 +529,7 @@ function TACBrNFSeXWebserviceEloTech203.ConsultarLote(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'ConsultarLoteRpsResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -542,9 +538,7 @@ function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorFaixa(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'ConsultarNfsePorFaixaResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -553,9 +547,7 @@ function TACBrNFSeXWebserviceEloTech203.ConsultarNFSePorRps(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -564,9 +556,7 @@ function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoPrestado(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'ConsultarNfseServicoPrestadoResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -575,9 +565,7 @@ function TACBrNFSeXWebserviceEloTech203.ConsultarNFSeServicoTomado(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'ConsultarNfseServicoTomadoResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -585,9 +573,7 @@ function TACBrNFSeXWebserviceEloTech203.Cancelar(ACabecalho, AMSG: String): stri
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'CancelarNfseResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
 end;
 
@@ -596,10 +582,16 @@ function TACBrNFSeXWebserviceEloTech203.SubstituirNFSe(ACabecalho,
 begin
   FPMsgOrig := AMSG;
 
-  Result := Executar('', AMSG,
-//                     ['return', 'outputXML', 'SubstituirNfseResposta'],
-                     [],
+  Result := Executar('', AMSG, [],
         ['xmlns:nfse="http://shad.elotech.com.br/schemas/iss/nfse_v2_03.xsd"']);
+end;
+
+function TACBrNFSeXWebserviceEloTech203.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

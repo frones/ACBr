@@ -38,21 +38,21 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
+  ACBrXmlBase,
+  ACBrNFSeXClass, ACBrNFSeXConversao, ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
   ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
 
 type
   TACBrNFSeXWebserviceCenti202 = class(TACBrNFSeXWebserviceRest)
   private
-    function GetDadosUsuario: string;
+    function GetOperacao: string;
 
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
-    property DadosUsuario: string read GetDadosUsuario;
+    property Operacao: string read GetOperacao;
   end;
 
   TACBrNFSeProviderCenti202 = class (TACBrNFSeProviderABRASFv2)
@@ -72,8 +72,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, Centi.GravarXml, Centi.LerXml;
+  ACBrDFeException,
+  Centi.GravarXml, Centi.LerXml;
 
 { TACBrNFSeProviderCenti202 }
 
@@ -167,36 +167,25 @@ end;
 
 { TACBrNFSeXWebserviceCenti202 }
 
-function TACBrNFSeXWebserviceCenti202.GetDadosUsuario: string;
+function TACBrNFSeXWebserviceCenti202.GetOperacao: string;
 begin
-  with TACBrNFSeX(FPDFeOwner).Configuracoes.Geral do
-  begin
-    Result := '<aUsuario>' + Emitente.WSUser + '</aUsuario>' +
-              '<aSenha>' + Emitente.WSSenha + '</aSenha>';
-  end;
+  if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
+    Result := 'Homologacao'
+  else
+    Result := '';
 end;
 
 function TACBrNFSeXWebserviceCenti202.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
-  Request, Operacao: string;
+  Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  if FPConfiguracoes.WebServices.AmbienteCodigo = 2 then
-    Operacao := 'Homologacao'
-  else
-    Operacao := '';
-  {
-  Request := '<GerarNfse' + Operacao +' xmlns="http://tempuri.org/">';
-  Request := Request + '<aXml>' + XmlToStr(AMSG) + '</aXml>';
-  Request := Request + DadosUsuario;
-  Request := Request + '</GerarNfse>';
-  }
   Request := AMSG;
 
-  Result := Executar('http://tempuri.org/IServiceNfse/GerarNfse' + Operacao, Request,
-                            ['GerarNfseResposta'], []);
+  Result := Executar('http://tempuri.org/IServiceNfse/GerarNfse' + Operacao,
+                     Request, ['GerarNfseResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceCenti202.ConsultarNFSePorRps(ACabecalho,
@@ -206,13 +195,10 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ConsultarNfseRps xmlns="http://tempuri.org/">';
-  Request := Request + '<aXml>' + XmlToStr(AMSG) + '</aXml>';
-  Request := Request + DadosUsuario;
-  Request := Request + '</ConsultarNfseRps>';
+  Request := AMSG;
 
-  Result := Executar('http://tempuri.org/IServiceNfse/ConsultarNfseRps', Request,
-                     ['return', 'outputXML', 'ConsultarNfseRpsResposta'], []);
+  Result := Executar('http://tempuri.org/IServiceNfse/ConsultarNfseRps' + Operacao,
+                     Request, ['ConsultarNfseRpsResposta'], []);
 end;
 
 function TACBrNFSeXWebserviceCenti202.Cancelar(ACabecalho, AMSG: String): string;
@@ -221,13 +207,10 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<CancelarNfse xmlns="http://tempuri.org/">';
-  Request := Request + '<aXml>' + XmlToStr(AMSG) + '</aXml>';
-  Request := Request + DadosUsuario;
-  Request := Request + '</CancelarNfse>';
+  Request := AMSG;
 
-  Result := Executar('http://tempuri.org/IServiceNfse/CancelarNfse', Request,
-                         ['return', 'outputXML', 'CancelarNfseResposta'], []);
+  Result := Executar('http://tempuri.org/IServiceNfse/CancelarNfse' + Operacao,
+                     Request, ['CancelarNfseResposta'], []);
 end;
 
 end.

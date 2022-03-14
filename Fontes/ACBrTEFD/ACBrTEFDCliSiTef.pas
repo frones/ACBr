@@ -332,7 +332,7 @@ end;
 
 procedure TACBrTEFDCliSiTef.SetNumVias(const AValue : Integer);
 begin
-   fpNumVias := 2;
+   fpNumVias := AValue;
 end;
 
 procedure TACBrTEFDCliSiTef.Inicializar;
@@ -369,10 +369,16 @@ begin
 
   // acertar quebras de linhas e abertura e fechamento da lista de parametros
   ParamAdic := StringReplace(Trim(ParametrosAdicionais.Text), sLineBreak, ';', [rfReplaceAll]);
-  ParamAdic := '['+ ParamAdic + ']';
 
   if NaoEstaVazio(CNPJEstabelecimento) and NaoEstaVazio(CNPJSoftwareHouse) then
-     ParamAdic := ParamAdic + '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';
+  begin
+    if ParamAdic <> '' then
+      ParamAdic := ParamAdic + ';';
+    ParamAdic := ParamAdic + 'ParmsClient=1=' + CNPJEstabelecimento + ';2=' + CNPJSoftwareHouse;
+  end;
+
+  if ParamAdic <> '' then
+    ParamAdic := '[' + ParamAdic + ']';
 
   GravaLog( '*** ConfiguraIntSiTefInterativoEx. EnderecoIP: '   +fEnderecoIP+
                                             ' CodigoLoja: '     +fCodigoLoja+

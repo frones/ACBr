@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/03/2022
+-- Infisc.Provider/Infisc.GravarXml/Infisc.LerXml --
+[*] Ajustes visando atender o provedor.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade de Santa Rita do Trivelato/MT
    Por: Diego Reckziegel

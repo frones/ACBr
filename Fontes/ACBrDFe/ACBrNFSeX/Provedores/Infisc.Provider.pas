@@ -336,6 +336,7 @@ begin
       with Response do
       begin
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
+        idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chvAcessoNFSe'), tcStr);
       end;
 
       ProcessarMensagemErros(ANode, Response);
@@ -675,7 +676,7 @@ begin
 
   with ConfigWebServices do
   begin
-    VersaoDados := '1.10';
+    VersaoDados := '1.1';
     VersaoAtrib := '1.0';
     AtribVerLote := 'versao';
   end;

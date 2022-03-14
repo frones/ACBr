@@ -290,7 +290,8 @@ begin
   begin
     with NFSe do
     begin
-      CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('cNFS-e'), tcStr);
+      cNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('cNFS-e'), tcInt);
+      CodigoVerificacao := IntToStr(cNFSe);
       NaturezaOperacao  := StrToNaturezaOperacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('natOp'), tcStr));
       SeriePrestacao    := ObterConteudo(AuxNode.Childrens.FindAnyNs('serie'), tcStr);
       Numero            := ObterConteudo(AuxNode.Childrens.FindAnyNs('nNFS-e'), tcStr);

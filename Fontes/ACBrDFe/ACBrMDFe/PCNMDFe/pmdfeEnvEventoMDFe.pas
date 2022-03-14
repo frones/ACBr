@@ -272,6 +272,9 @@ begin
            Gerador.wCampo(tcStr, '#', 'indPag   ', 01, 01, 1, TIndPagToStr(indPag), DSC_INDPAG);
            Gerador.wCampo(tcDe2, '#', 'vAdiant  ', 01, 15, 0, vAdiant, DSC_VADIANT);
 
+           if indAntecipaAdiant = tiSim then
+             Gerador.wCampo(tcStr, '#', 'indAntecipaAdiant', 1, 1, 1, '1');
+
            // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
            if indPag = ipPrazo then
            begin
@@ -284,6 +287,8 @@ begin
                Gerador.wGrupo('/infPrazo');
              end;
            end;
+
+           Gerador.wCampo(tcStr, '#', 'tpAntecip', 1, 1, 0, tpAntecipToStr(tpAntecip), DSC_TPANTECIP);
 
            Gerador.wGrupo('infBanc', '#');
 
@@ -308,7 +313,88 @@ begin
 
        Gerador.wGrupo('/evPagtoOperMDFe');
      end;
+
+    teConfirmaServMDFe:
+      begin
+        Gerador.wGrupo('evConfirmaServMDFe');
+        Gerador.wCampo(tcStr, 'HP02', 'descEvento', 05, 24, 1, Evento.Items[0].InfEvento.DescEvento);
+        Gerador.wCampo(tcStr, 'HP03', 'nProt     ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+        Gerador.wGrupo('/evConfirmaServMDFe');
+      end;
+
+    teAlteracaoPagtoServMDFe:
+      begin
+        Gerador.wGrupo('evAlteracaoPagtoServMDFe');
+        Gerador.wCampo(tcStr, 'HP02', 'descEvento', 05, 24, 1, Evento.Items[0].InfEvento.DescEvento);
+        Gerador.wCampo(tcStr, 'HP03', 'nProt     ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+
+        with Evento.Items[0].InfEvento.detEvento.infPag[0] do
+        begin
+          Gerador.wGrupo('infPag', '#');
+
+          Gerador.wCampo(tcStr, '#', 'xNome', 02, 60, 0, xNome, DSC_XNOME);
+
+          if idEstrangeiro <> '' then
+            Gerador.wCampo(tcStr, '#', 'idEstrangeiro', 02, 20, 0, idEstrangeiro, DSC_IDESTRANGEIRO)
+          else
+            Gerador.wCampoCNPJCPF('#', '#', CNPJCPF);
+
+          // Componentes de Pagamento do Frete
+          for j := 0 to Comp.Count - 1 do
+          begin
+            Gerador.wGrupo('Comp', '#');
+            Gerador.wCampo(tcStr, '#', 'tpComp', 02, 02, 1, TCompToStr(Comp[j].tpComp), DSC_TPCOMP);
+            Gerador.wCampo(tcDe2, '#', 'vComp ', 01, 15, 1, Comp[j].vComp, DSC_VCOMP);
+            Gerador.wCampo(tcStr, '#', 'xComp ', 02, 60, 0, Comp[j].xComp, DSC_XCOMP);
+            Gerador.wGrupo('/Comp');
+          end;
+
+          Gerador.wCampo(tcDe2, '#', 'vContrato', 01, 15, 1, vContrato, DSC_VCONTRATO);
+          Gerador.wCampo(tcStr, '#', 'indPag   ', 01, 01, 1, TIndPagToStr(indPag), DSC_INDPAG);
+          Gerador.wCampo(tcDe2, '#', 'vAdiant  ', 01, 15, 0, vAdiant, DSC_VADIANT);
+
+          if indAntecipaAdiant = tiSim then
+            Gerador.wCampo(tcStr, '#', 'indAntecipaAdiant', 1, 1, 1, '1');
+
+          // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
+          if indPag = ipPrazo then
+          begin
+            for j := 0 to infPrazo.Count - 1 do
+            begin
+              Gerador.wGrupo('infPrazo', '#');
+              Gerador.wCampo(tcStr, '#', 'nParcela', 03, 03, 1, FormatFloat('000', infPrazo[j].nParcela), DSC_NPARCELA);
+              Gerador.wCampo(tcDat, '#', 'dVenc   ', 10, 10, 1, infPrazo[j].dVenc, DSC_DVENC);
+              Gerador.wCampo(tcDe2, '#', 'vParcela', 01, 15, 1, infPrazo[j].vParcela, DSC_VPARCELA);
+              Gerador.wGrupo('/infPrazo');
+            end;
+          end;
+
+          Gerador.wCampo(tcStr, '#', 'tpAntecip', 1, 1, 0, tpAntecipToStr(tpAntecip), DSC_TPANTECIP);
+
+          Gerador.wGrupo('infBanc', '#');
+
+          if infBanc.PIX <> '' then
+            Gerador.wCampo(tcStr, '#', 'PIX', 2, 60, 1, infBanc.PIX, DSC_PIX)
+          else
+          begin
+            if infBanc.CNPJIPEF <> '' then
+              Gerador.wCampo(tcStr, '#', 'CNPJIPEF', 14, 14, 1, infBanc.CNPJIPEF, DSC_CNPJIPEF)
+            else
+            begin
+              Gerador.wCampo(tcStr, '#', 'codBanco  ', 3, 05, 1, infBanc.codBanco, DSC_CODBANCO);
+              Gerador.wCampo(tcStr, '#', 'codAgencia', 1, 10, 1, infBanc.codAgencia, DSC_CODAGENCIA);
+            end;
+          end;
+
+          Gerador.wGrupo('/infBanc');
+
+          Gerador.wGrupo('/infPag');
+         end;
+
+        Gerador.wGrupo('/evAlteracaoPagtoServMDFe');
+      end;
   end;
+
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
 
@@ -435,6 +521,9 @@ begin
           vContrato := RetEventoMDFe.InfEvento.detEvento.infPag[i].vContrato;
           indPag    := RetEventoMDFe.InfEvento.detEvento.infPag[i].indPag;
           vAdiant   := RetEventoMDFe.InfEvento.detEvento.infPag[i].vAdiant;
+
+          indAntecipaAdiant := RetEventoMDFe.InfEvento.detEvento.infPag[i].indAntecipaAdiant;
+          tpAntecip := RetEventoMDFe.InfEvento.detEvento.infPag[i].tpAntecip;
 
           if indPag = ipPrazo then
           begin
@@ -575,6 +664,9 @@ begin
               vContrato := StringToFloatDef(INIRec.ReadString(sSecao, 'vContrato', ''), 0 );
               indPag    := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
               vAdiant   := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
+
+              indAntecipaAdiant := StrToTIndicador(ok, INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
+              tpAntecip := StrTotpAntecip(ok, INIRec.ReadString(sSecao, 'tpAntecip', ''));
 
               K := 1;
               while true do

@@ -262,6 +262,8 @@ begin
     teVistoriaSuframa              : Desc := 'Vistoria SUFRAMA';
     teConfInternalizacao           : Desc := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     tePagamentoOperacao            : Desc := 'Pagamento Operacao MDF-e';
+    teConfirmaServMDFe             : Desc := 'Confirmacao Servico Transporte';
+    teAlteracaoPagtoServMDFe       : Desc := 'Alteracao Pagamento Servico MDFe';
   else
     Result := '';
   end;
@@ -308,6 +310,8 @@ begin
     teVistoriaSuframa              : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao           : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     tePagamentoOperacao            : Result := 'Pagamento Operacao MDF-e';
+    teConfirmaServMDFe             : Result := 'Confirmacao Servico Transporte';
+    teAlteracaoPagtoServMDFe       : Result := 'Alteracao Pagamento Servico MDFe';
   else
     Result := 'Não Definido';
   end;

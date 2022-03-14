@@ -640,6 +640,13 @@ begin
               INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
               INIRec.WriteString(sSecao, 'idEstrangeiro', idEstrangeiro);
               INIRec.WriteString(sSecao, 'xNome', xNome);
+
+              if (infContrato.NroContrato <> '') and
+                 (infContrato.vContratoGlobal <> 0) then
+              begin
+                INIRec.WriteString(sSecao, 'NroContrato', infContrato.NroContrato);
+                INIRec.WriteFloat(sSecao, 'vContratoGlobal', infContrato.vContratoGlobal);
+              end;
             end;
           end;
 
@@ -655,6 +662,8 @@ begin
               INIRec.WriteString(sSecao, 'indAltoDesemp', indAltoDesempToStr(indAltoDesemp));
               INIRec.WriteString(sSecao, 'indPag', TindPagToStr(indPag));
               INIRec.WriteFloat(sSecao, 'vAdiant', vAdiant);
+              INIRec.WriteString(sSecao, 'indAntecipaAdiant', TIndicadorToStr(indAntecipaAdiant));
+              INIRec.WriteString(sSecao, 'tpAntecip', tpAntecipToStr(tpAntecip));
 
               for j := 0 to rodo.infANTT.infPag[I].Comp.Count - 1 do
               begin
@@ -1538,6 +1547,9 @@ begin
             CNPJCPF       := INIRec.ReadString(sSecao, 'CNPJCPF', '');
             idEstrangeiro := INIRec.ReadString(sSecao, 'idEstrangeiro', '');
             xNome         := INIRec.ReadString(sSecao, 'xNome', '');
+
+            infContrato.NroContrato := INIRec.ReadString(sSecao, 'NroContrato', '');
+            infContrato.vContratoGlobal := StringToFloatDef(INIRec.ReadString(sSecao, 'vContratoGlobal', ''), 0 );
           end;
 
           Inc(I);
@@ -1568,6 +1580,9 @@ begin
               indAltoDesemp := StrToindAltoDesemp(ok, INIRec.ReadString(sSecao, 'indAltoDesemp', ''));
               indPag        := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
               vAdiant       := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
+
+              indAntecipaAdiant := StrToTIndicador(ok, INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
+              tpAntecip := StrTotpAntecip(ok, INIRec.ReadString(sSecao, 'tpAntecip', ''));
 
               J := 1;
               while true do

@@ -664,6 +664,15 @@ begin
     else
       Gerador.wCampoCNPJCPF('#16', '#17', MDFe.rodo.infANTT.infContratante[i].CNPJCPF);
 
+    if (MDFe.rodo.infANTT.infContratante[i].infContrato.NroContrato <> '') and
+       (MDFe.rodo.infANTT.infContratante[i].infContrato.vContratoGlobal <> 0) then
+    begin
+      Gerador.wGrupo('infContrato', '#22');
+      Gerador.wCampo(tcStr, '#23', 'NroContrato',     01, 20, 1, MDFe.rodo.infANTT.infContratante[i].infContrato.NroContrato, DSC_NROCONTRATO);
+      Gerador.wCampo(tcDe2, '#24', 'vContratoGlobal', 01, 15, 1, MDFe.rodo.infANTT.infContratante[i].infContrato.vContratoGlobal, DSC_VCONTRATOGLOBAL);
+      Gerador.wGrupo('/infContrato');
+    end;
+
     Gerador.wGrupo('/infContratante');
   end;
   if MDFe.rodo.infANTT.infContratante.Count > 990 then
@@ -1387,6 +1396,9 @@ begin
     Gerador.wCampo(tcStr, '#', 'indPag       ', 01, 01, 1, TIndPagToStr(MDFe.rodo.infANTT.infPag[i].indPag), DSC_INDPAG);
     Gerador.wCampo(tcDe2, '#', 'vAdiant      ', 01, 15, 0, MDFe.rodo.infANTT.infPag[i].vAdiant, DSC_VADIANT);
 
+    if MDFe.rodo.infANTT.infPag[i].indAntecipaAdiant = tiSim then
+      Gerador.wCampo(tcStr, '#', 'indAntecipaAdiant', 1, 1, 1, '1');
+
     // Informações do pagamento a prazo. Obs: Informar somente se indPag for à Prazo
     if MDFe.rodo.infANTT.infPag[i].indPag = ipPrazo then
     begin
@@ -1402,6 +1414,8 @@ begin
       if MDFe.rodo.infANTT.infPag[i].infPrazo.Count > 990 then
         Gerador.wAlerta('#', 'infPrazo', '', ERR_MSG_MAIOR_MAXIMO + '990');
     end;
+
+    Gerador.wCampo(tcStr, '#', 'tpAntecip', 1, 1, 0, tpAntecipToStr(MDFe.rodo.infANTT.infPag[i].tpAntecip), DSC_TPANTECIP);
 
     Gerador.wGrupo('infBanc', '#');
 

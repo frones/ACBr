@@ -59,7 +59,8 @@ type
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe,
                      schdistDFeInt, schconsMDFeNaoEnc, schevInclusaoDFeMDFe,
-                     schevPagtoOperMDFe);
+                     schevPagtoOperMDFe, schevConfirmaServMDFe,
+                     schevAlteracaoPagtoServMDFe);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
@@ -84,6 +85,9 @@ type
                     tcVeicCom5Eixos, tcVeicCom6Eixos, tcVeicCom7Eixos,
                     tcVeicCom8Eixos, tcVeicCom9Eixos, tcVeicCom10Eixos,
                     tcVeicComAcima10Eixos);
+
+  TtpAntecip = (taNenhum, taNaoPermiteAntecipar, taPermiteAntecipar,
+                taPermiteAnteciparComConfirmacao);
 
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
@@ -119,8 +123,6 @@ function RspSeguroMDFeToStr(const t: TRspSegMDFe): String;
 function RspSeguroMDFeToStrText(const t: TRspSegMDFe): String;
 function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
 
-function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
-
 function TCargaToStr(const t: TCarga): String;
 function StrToTCarga(out ok: Boolean; const s: String): TCarga;
 
@@ -140,6 +142,11 @@ function StrTotpValePed(out ok: Boolean; const s: String): TtpValePed;
 function categCombVeicToStr(const t: TcategCombVeic): String;
 function categCombVeicToStrText(const t: TcategCombVeic): String;
 function StrTocategCombVeic(out ok: Boolean; const s: String): TcategCombVeic;
+
+function tpAntecipToStr(const t: TtpAntecip): String;
+function StrTotpAntecip(out ok: Boolean; const s: String): TtpAntecip;
+
+function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
 
 implementation
 
@@ -468,14 +475,29 @@ begin
                     tcVeicComAcima10Eixos]);
 end;
 
+function tpAntecipToStr(const t: TtpAntecip): String;
+begin
+  Result := EnumeradoToStr(t, ['', '0', '1', '2'],
+                          [taNenhum, taNaoPermiteAntecipar, taPermiteAntecipar,
+                           taPermiteAnteciparComConfirmacao]);
+end;
+
+function StrTotpAntecip(out ok: Boolean; const s: String): TtpAntecip;
+begin
+  Result := StrToEnumerado(ok, s, ['', '0', '1', '2'],
+                          [taNenhum, taNaoPermiteAntecipar, taPermiteAntecipar,
+                           taPermiteAnteciparComConfirmacao]);
+end;
+
 function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '110112', '110114', '110115', '110116',
-             '310112', '510620'],
+             '310112', '510620', '110117', '110118'],
             [teNaoMapeado, teCancelamento, teEncerramento, teInclusaoCondutor,
              teInclusaoDFe, tePagamentoOperacao, teEncerramentoFisco,
-             teRegistroPassagemBRId]);
+             teRegistroPassagemBRId, teConfirmaServMDFe,
+             teAlteracaoPagtoServMDFe]);
 end;
 
 initialization

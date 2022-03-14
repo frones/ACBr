@@ -386,7 +386,9 @@ type
     FindAltoDesemp: TIndicador;
     FindPag: TIndPag;
     FvAdiant: Double;
+    FindAntecipaAdiant: TIndicador;
     FinfPrazo: TInfPrazoCollection;
+    FtpAntecip: TtpAntecip;
     FinfBanc: TinfBanc;
   public
     constructor Create;
@@ -400,7 +402,9 @@ type
     property indAltoDesemp: TIndicador     read FindAltoDesemp write FindAltoDesemp;
     property indPag: TIndPag               read FindPag        write FindPag;
     property vAdiant: Double               read FvAdiant       write FvAdiant;
+    property indAntecipaAdiant: TIndicador read FindAntecipaAdiant write FindAntecipaAdiant;
     property infPrazo: TInfPrazoCollection read FinfPrazo      write FinfPrazo;
+    property tpAntecip: TtpAntecip         read FtpAntecip     write FtpAntecip;
     property infBanc: TinfBanc             read FinfBanc       write FinfBanc;
   end;
 
@@ -474,15 +478,29 @@ type
     property Items[Index: Integer]: TinfContratanteCollectionItem read GetItem write SetItem; default;
   end;
 
+  TinfContrato = class(TObject)
+  private
+    FNroContrato: String;
+    FvContratoGlobal: Double;
+  public
+    property NroContrato: String read FNroContrato write FNroContrato;
+    property vContratoGlobal: Double read FvContratoGlobal write FvContratoGlobal;
+  end;
+
   TinfContratanteCollectionItem = class(TObject)
   private
     FxNome: String;
     FCNPJCPF: String;
     FidEstrangeiro: String;
+    FinfContrato: TinfContrato;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property xNome: String         read FxNome         write FxNome;
     property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
     property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
+    property infContrato: TinfContrato read FinfContrato write FinfContrato;
   end;
 
   TveicTracao = class(TObject)
@@ -503,6 +521,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     property cInt: String                  read FcInt     write FcInt;
     property placa: String                 read Fplaca    write Fplaca;
     property RENAVAM: String               read FRENAVAM  write FRENAVAM;
@@ -2555,6 +2574,23 @@ procedure TinfPagCollection.SetItem(Index: Integer;
   Value: TinfPagCollectionItem);
 begin
   inherited Items[Index] := Value;
+end;
+
+{ TinfContratanteCollectionItem }
+
+constructor TinfContratanteCollectionItem.Create;
+begin
+  inherited Create;
+
+  FinfContrato := TinfContrato.Create;
+
+end;
+
+destructor TinfContratanteCollectionItem.Destroy;
+begin
+  FinfContrato.Free;
+
+  inherited;
 end;
 
 end.

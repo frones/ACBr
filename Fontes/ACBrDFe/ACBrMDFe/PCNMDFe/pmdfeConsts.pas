@@ -122,12 +122,16 @@ const
   DSC_PIX         = 'Chave PIX';
   DSC_TPVALEPED   = 'Tipo de Vale Pedágio';
   DSC_VADIANT     = 'Valor do Adiantamento';
+  DSC_TPANTECIP   = 'Tipo de Permissão de Antecipação das parcelas';
+  DSC_NROCONTRATO = 'Numero do Contrato do Transportador';
 
   DSC_INDCANALVERDE = 'Indicador de Canal Verde';
   DSC_INDCARREGAPOSTERIOR = 'Indicador de Carregamento Posterior';
   DSC_INFQRCODMDFE  = 'Texto com o QR-Code impresso no DAMDFE';
   DSC_IDESTRANGEIRO = 'Identificação do Estrangeiro';
   DSC_CATEGCOMBVEIC = 'Categoria de Combinação Veicular';
+
+  DSC_VCONTRATOGLOBAL = 'Valor Global do Contrato';
 
 implementation
 

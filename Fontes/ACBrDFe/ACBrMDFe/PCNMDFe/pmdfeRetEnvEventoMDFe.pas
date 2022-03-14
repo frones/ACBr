@@ -242,6 +242,9 @@ begin
               indPag    := StrToTIndPag(ok, Leitor.rCampo(tcStr, 'indPag'));
               vAdiant   := Leitor.rCampo(tcDe2, 'vAdiant');
 
+              indAntecipaAdiant := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indAntecipaAdiant'));
+              tpAntecip := StrTotpAntecip(ok, Leitor.rCampo(tcStr, 'tpAntecip'));
+
               j := 0;
               while Leitor.rExtrai(5, 'Comp', '', j + 1) <> '' do
               begin

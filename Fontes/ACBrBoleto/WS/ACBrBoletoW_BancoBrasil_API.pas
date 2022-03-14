@@ -119,7 +119,10 @@ var DevAPP, ID, NConvenio : String;
 begin
   FPURL     := IfThen(Boleto.Configuracoes.WebService.Ambiente = taProducao,C_URL, C_URL_HOM);
   DevAPP    := '?gw-dev-app-key='+Boleto.Cedente.CedenteWS.KeyUser;
-  ID        := Titulos.ACBrBoleto.Banco.MontarCampoNossoNumero(Titulos);
+
+  if Titulos <> nil then
+    ID      := Titulos.ACBrBoleto.Banco.MontarCampoNossoNumero(Titulos);
+
   NConvenio := OnlyNumber(Boleto.Cedente.Convenio);
 
   case Boleto.Configuracoes.WebService.Operacao of

@@ -948,13 +948,14 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLAngleLabel9: TRLAngleLabel
-        Left = 13
+        Left = 9
         Top = 20
         Width = 10
-        Height = 77
+        Height = 78
         Angle = 90.000000000000000000
         AngleBorders = True
-        Caption = 'DADOS ADICIONAIS'
+        AutoSize = False
+        Caption = 'DADOS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -986,6 +987,23 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Name = 'Times New Roman'
         Font.Style = []
         IntegralHeight = True
+        ParentFont = False
+      end
+      object RLAngleLabel10: TRLAngleLabel
+        Left = 21
+        Top = 20
+        Width = 10
+        Height = 78
+        Angle = 90.000000000000000000
+        AngleBorders = True
+        AutoSize = False
+        Caption = 'ADICIONAIS'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
         ParentFont = False
       end
     end
@@ -5170,7 +5188,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 10
         Left = 3
         Top = 107
-        Width = 95
+        Width = 94
         Height = 7
         Caption = 'NATUREZA DE OPERA'#199#195'O'
         Font.Charset = DEFAULT_CHARSET

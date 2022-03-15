@@ -1,7 +1,9 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 561
+  Height = 806
   Top = 164
   Caption = 'frlDANFeRLPaisagem'
+  ClientHeight = 806
   inherited RLNFe: TRLReport
     Left = -8
     Height = 794
@@ -874,13 +876,14 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         HoldStyle = hsRelatively
       end
       object RLAngleLabel9: TRLAngleLabel
-        Left = 13
-        Height = 77
-        Top = 20
+        Left = 8
+        Height = 30
+        Top = 43
         Width = 10
         Angle = 90
         AngleBorders = True
-        Caption = 'DADOS ADICIONAIS'
+        AutoSize = False
+        Caption = 'DADOS'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -909,6 +912,22 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Height = -9
         Font.Name = 'Times New Roman'
         IntegralHeight = True
+        ParentFont = False
+      end
+      object RLAngleLabel10: TRLAngleLabel
+        Left = 19
+        Height = 48
+        Top = 34
+        Width = 10
+        Angle = 90
+        AngleBorders = True
+        AutoSize = False
+        Caption = 'ADICIONAIS'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
         ParentFont = False
       end
     end

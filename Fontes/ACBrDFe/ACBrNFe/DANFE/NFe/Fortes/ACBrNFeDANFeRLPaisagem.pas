@@ -61,6 +61,7 @@ type
   { TfrlDANFeRLPaisagem }
 
   TfrlDANFeRLPaisagem = class(TfrlDANFeRL)
+    RLAngleLabel10: TRLAngleLabel;
     rlbCabecalhoItens: TRLBand;
     rlbDadosAdicionais: TRLBand;
     RLDraw50: TRLDraw;
@@ -996,6 +997,18 @@ begin
     rlmDadosAdicionais.AutoSize := True;
     RLDraw50.Height := (rlmDadosAdicionais.Top + rlmDadosAdicionais.Height) - RLLabel77.Top + 2;
     RLDraw51.Height := RLDraw50.Height;
+    RLDraw5.Height := RLDraw50.Height;
+
+    RLAngleLabel9.Caption:= 'DADOS';
+    RLAngleLabel9.Alignment:= taCenter;
+    RLAngleLabel9.Top:= RLDraw50.Top + 2;
+    RLAngleLabel9.Height:= RLDraw50.Height -4;
+
+    RLAngleLabel10.Caption:='ADIC.';
+    RLAngleLabel10.Alignment:= taCenter;
+    RLAngleLabel10.Top:= RLDraw50.Top + 2;
+    RLAngleLabel10.Height:= RLDraw50.Height -4;
+
     rllSistema.Top  := RLDraw50.Top + RLDraw50.Height;
     rllUsuario.Top  := rllSistema.Top;
   end;

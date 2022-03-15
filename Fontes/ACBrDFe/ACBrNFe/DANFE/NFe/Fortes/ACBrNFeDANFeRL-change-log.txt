@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2022
+-- ACBrNFeDANFeRLPaisagem --
+[*] Ajuste no campo de informações adicionais usando a configuração de ExpandirDadosAdicionaisAuto
+  Por: José M S Junior
+
 10/01/2022
 -- ACBrDANFCeFortesFrA4 --
 [*] Ajuste de Campos em tela, para impressão no Linux;

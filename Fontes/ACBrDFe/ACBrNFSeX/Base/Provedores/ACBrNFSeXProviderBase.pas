@@ -913,7 +913,15 @@ begin
   AReader.Arquivo := aXML;
 
   try
-    AReader.Provedor := TACBrNFSeX(FAOwner).Configuracoes.Geral.Provedor;
+    with TACBrNFSeX(FAOwner) do
+    begin
+      if Configuracoes.WebServices.AmbienteCodigo = 1 then
+        AReader.Ambiente := taProducao
+      else
+        AReader.Ambiente := taHomologacao;
+
+      AReader.Provedor := Configuracoes.Geral.Provedor;
+    end;
 
     Result := AReader.LerXml;
     ATipo := AReader.tpXML;

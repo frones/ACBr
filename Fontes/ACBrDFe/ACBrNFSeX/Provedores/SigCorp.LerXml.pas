@@ -38,6 +38,7 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
+  ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv2;
 
 type
@@ -45,16 +46,47 @@ type
 
   TNFSeR_SigCorp203 = class(TNFSeR_ABRASFv2)
   protected
-
+    function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; override;
+    function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrXmlBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     SigCorp
 //==============================================================================
+
+{ TNFSeR_SigCorp203 }
+
+function TNFSeR_SigCorp203.LerDataEmissao(const ANode: TACBrXmlNode): TDateTime;
+var
+  xDataHora: string;
+begin
+  xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
+
+  if Ambiente = taProducao then
+    result := EncodeDataHora(xDataHora, '')
+  else
+    result := EncodeDataHora(xDataHora, 'DD/MM/YYYY');
+end;
+
+function TNFSeR_SigCorp203.LerDataEmissaoRps(
+  const ANode: TACBrXmlNode): TDateTime;
+var
+  xDataHora: string;
+begin
+  xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
+
+  if Ambiente = taProducao then
+    result := EncodeDataHora(xDataHora, '')
+  else
+    result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
+end;
 
 end.

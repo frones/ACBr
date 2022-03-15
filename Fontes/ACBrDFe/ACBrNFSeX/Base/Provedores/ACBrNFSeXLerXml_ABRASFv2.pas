@@ -48,6 +48,11 @@ type
   private
 
   protected
+    function LerDataHora(const ANode: TACBrXmlNode): TDateTime; virtual;
+    function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; virtual;
+    function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; virtual;
+    function LerCompetencia(const ANode: TACBrXmlNode): TDateTime; virtual;
+
     procedure LerInfNfse(const ANode: TACBrXmlNode);
 
     procedure LerValoresNfse(const ANode: TACBrXmlNode);
@@ -93,7 +98,6 @@ type
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
-
   end;
 
 implementation
@@ -108,6 +112,27 @@ uses
 //==============================================================================
 
 { TNFSeR_ABRASFv2 }
+
+function TNFSeR_ABRASFv2.LerCompetencia(const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDat);
+end;
+
+function TNFSeR_ABRASFv2.LerDataEmissao(const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+end;
+
+function TNFSeR_ABRASFv2.LerDataEmissaoRps(
+  const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+end;
+
+function TNFSeR_ABRASFv2.LerDataHora(const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+end;
 
 procedure TNFSeR_ABRASFv2.LerConfirmacao(const ANode: TACBrXmlNode);
 var
@@ -124,7 +149,7 @@ begin
 
     with NFSe.NfseCancelamento do
     begin
-      DataHora := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      DataHora := LerDataHora(AuxNode);
 
       if DataHora > 0 then
         NFSe.SituacaoNfse := snCancelado;
@@ -422,7 +447,7 @@ begin
     with NFSe.NfseCancelamento do
     begin
       Sucesso  := ObterConteudo(AuxNode.Childrens.FindAnyNs('Sucesso'), tcBool);
-      DataHora := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      DataHora := LerDataHora(AuxNode);
     end;
 
     if NFSe.NfseCancelamento.DataHora > 0 then
@@ -447,7 +472,7 @@ begin
   begin
     LerRps(AuxNode);
 
-    NFSe.Competencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcDatHor);
+    NFSe.Competencia := LerCompetencia(AuxNode);
 
     LerServico(AuxNode);
     LerPrestador(AuxNode);
@@ -479,7 +504,7 @@ begin
   begin
     NFSe.Numero            := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-    NFSe.DataEmissao       := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+    NFSe.DataEmissao       := LerDataEmissao(AuxNode);
     NFSe.NfseSubstituida   := ObterConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
 
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
@@ -665,8 +690,7 @@ begin
   begin
     LerIdentificacaoRps(AuxNode);
 
-    if NFSe.DataEmissao = 0 then
-      NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDat);
+    NFSe.DataEmissaoRps := LerDataEmissaoRps(AuxNode);
 
     NFSe.StatusRps := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 

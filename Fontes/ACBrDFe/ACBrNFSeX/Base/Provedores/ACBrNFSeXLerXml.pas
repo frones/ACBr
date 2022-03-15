@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlReader,
+  ACBrXmlBase, ACBrXmlReader,
   ACBrNFSeXInterface, ACBrNFSeXClass, ACBrNFSeXConversao;
 
 type
@@ -47,8 +47,9 @@ type
   TNFSeRClass = class(TACBrXmlReader)
   private
     FNFSe: TNFSe;
-    FtpXML: TtpXML;
     FProvedor: TnfseProvedor;
+    FtpXML: TtpXML;
+    FAmbiente: TACBrTipoAmbiente;
 
   protected
     FpAOwner: IACBrNFSeXProvider;
@@ -65,6 +66,7 @@ type
     property NFSe: TNFSe             read FNFSe     write FNFSe;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
     property tpXML: TtpXML           read FtpXML    write FtpXML;
+    property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente default taHomologacao;
   end;
 
 implementation

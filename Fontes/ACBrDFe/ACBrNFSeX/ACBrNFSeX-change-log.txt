@@ -43,9 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/03/2022
+-- Diversos --
+[*] Ajustes para usar a função EncodeDataHora.
+   Por: Italo Giurizzato Junior
+
 14/03/2022
 -- EloTech.Provider --
-[*] Incluio a função TratarXmlRetornado.
+[*] Incluido a função TratarXmlRetornado.
    Por: Italo Giurizzato Junior
 -- Infisc.Provider/Infisc.GravarXml/Infisc.LerXml --
 [*] Ajustes visando atender o provedor.

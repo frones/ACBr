@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2022
+--ACBrBoletoW_BancoBrasil_API.pas--
+[+] Adição de novos filtros Carteira e CarteiraModalidade
+[-] Remoção de parametros na função GerarParametros e adicionados na Classe de Filtro
+TK-2470, TK-2471, TK-2472
+  Por: Pandaaa
+
 14/03/2022
 --ACBrBoletoBancoCresol--
 [*] TK-2408 Adicionado CNAB240 Remessa e Retorno baseados nos manuais

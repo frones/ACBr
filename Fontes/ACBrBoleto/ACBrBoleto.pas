@@ -1166,6 +1166,7 @@ type
     FIndiceContinuidade         : Extended;
     FModalidadeCobrancao        : Integer;
     FCarteira                   : Integer;
+    FCarteiraVariacao           : Integer;
     procedure SetContaCaucao(const Value: Integer);
     procedure SetCnpjCpfPagador(const Value: string);
     procedure SetDataVencimento(const Value: TACBrDataPeriodo);
@@ -1192,7 +1193,7 @@ type
     property indiceContinuidade         : Extended                     read FIndiceContinuidade         write SetIndiceContinuidade;
     property modalidadeCobranca         : integer                      read FModalidadeCobrancao        write SetModalidadeCobranca;
     property carteira                   : Integer                      read FCarteira                   write SetCarteira;
-
+    property carteiraVariacao           : Integer                      read FCarteiraVariacao           write FCarteiraVariacao;
   end;
 
   { TACBrWebService }

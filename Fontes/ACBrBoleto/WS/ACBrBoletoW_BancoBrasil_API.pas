@@ -258,9 +258,11 @@ begin
         Consulta.Add('agenciaBeneficiario='+OnlyNumber( Boleto.Cedente.Agencia ));
         Consulta.Add('contaBeneficiario='+OnlyNumber( Boleto.Cedente.Conta ));
 
-        //Removido temporariamente para contorno do tpConsulta por Pandaaa
-        //Consulta.Add('carteiraConvenio='+OnlyNumber(Boleto.Cedente.Convenio));
-        //Consulta.Add('variacaoCarteiraConvenio='+Boleto.Cedente.Modalidade);
+        if Boleto.Configuracoes.WebService.Filtro.carteira > 0 then
+          Consulta.Add('carteiraConvenio='+IntToStr(Boleto.Configuracoes.WebService.Filtro.carteira));
+
+        if Boleto.Configuracoes.WebService.Filtro.carteiraVariacao > 0 then
+          Consulta.Add('variacaoCarteiraConvenio='+IntToStr(Boleto.Configuracoes.WebService.Filtro.carteiraVariacao));
 
         if Boleto.Configuracoes.WebService.Filtro.modalidadeCobranca > 0 then
           Consulta.Add('modalidadeCobranca='+ IntToStr(Boleto.Configuracoes.WebService.Filtro.modalidadeCobranca));

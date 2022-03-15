@@ -832,6 +832,7 @@ function TACBrNFSeXWebserviceSmarAPD203.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverCaracteresDesnecessarios(Result);
 end;
 

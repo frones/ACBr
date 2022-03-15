@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/03/2022
+-- SmarAPD.Provider --
+[*] Incluido na função TratarXmlRetornado a chamada a função: 
+    ParseText.
+   Por: Italo Giurizzato Junior
 -- EloTech.Provider --
 [*] Incluido na função TratarXmlRetornado a chamada as funções: 
     ParseText e RemoverIdentacao.

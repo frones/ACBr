@@ -110,7 +110,8 @@ begin
     Result := ObterConteudo(ANode.Childrens.Find('CPF'), tcStr);
 end;
 
-function TACBrXmlReader.ObterConteudo(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant;
+function TACBrXmlReader.ObterConteudo(const ANode: TACBrXmlNode;
+  const Tipo: TACBrTipoCampo): variant;
 begin
   Result := ObterConteudoTag(ANode, Tipo);
 end;

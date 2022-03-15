@@ -78,12 +78,8 @@ function RemoverCaracteresDesnecessarios(const aXML: string): string;
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
 
-function DataSemBarra(const DataStr: string): string;
-function DataComBarra(const DataStr: string): string;
-function ParseDate(const DataStr: string): string;
-function ParseTime(const HoraStr: string; aIsPM: Boolean = False): string;
-
-function LerDatas(const DataStr: string): TDateTime;
+function EncodeDataHora(const DataStr: string;
+  const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
 
 function TipoEmissaoToStr(const t: TACBrTipoEmissao): string;
 function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
@@ -94,7 +90,7 @@ function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 implementation
 
 uses
-  StrUtilsEx, ACBrUtil, DateUtils;
+  StrUtilsEx, ACBrUtil, DateUtils, MaskUtils;
 
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
   RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean;
@@ -255,10 +251,19 @@ begin
 
     tcDat,
     tcDatHor,
+    tcDatCFe,
+    tcDatHorCFe:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := EncodeDataHora(ConteudoTag, 'YYYY/MM/DD')
+        else
+          result := 0;
+      end;
+
     tcDatVcto:
       begin
         if length(ConteudoTag) > 0 then
-          result := LerDatas(ConteudoTag)
+          result := EncodeDataHora(ConteudoTag, 'DD/MM/YYYY')
         else
           result := 0;
       end;
@@ -273,35 +278,12 @@ begin
           result := 0;
       end;
 
-    tcDatCFe:
-      begin
-        if length(ConteudoTag) > 0 then
-          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)),
-                               StrToInt(copy(ConteudoTag, 5, 2)),
-                               StrToInt(copy(ConteudoTag, 7, 2)))
-        else
-          result := 0;
-      end;
-
     tcHorCFe:
       begin
         if length(ConteudoTag) > 0 then
           result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)),
                                StrToInt(copy(ConteudoTag, 3, 2)),
                                StrToInt(copy(ConteudoTag, 5, 2)), 0)
-        else
-          result := 0;
-      end;
-
-    tcDatHorCFe:
-      begin
-        if length(ConteudoTag) > 0 then
-          result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)),
-                               StrToInt(copy(ConteudoTag, 05, 2)),
-                               StrToInt(copy(ConteudoTag, 07, 2))) +
-                    EncodeTime(StrToInt(copy(ConteudoTag, 9, 2)),
-                               StrToInt(copy(ConteudoTag, 11, 2)),
-                               StrToInt(copy(ConteudoTag, 13, 2)), 0)
         else
           result := 0;
       end;
@@ -371,181 +353,32 @@ begin
   end;
 end;
 
-function DataSemBarra(const DataStr: string): string;
+function EncodeDataHora(const DataStr: string;
+  const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
 var
-  xData: string;
+  Formato: TFormatSettings;
+  xData, xFormatoData: string;
 begin
-  xData := DataStr;
-
-  // Alguns provedores retorna a data no formato YYYYMMDD
-  // Correção: Inclusão da barra "/"
-  if Length(xData) = 8 then
-  begin
-    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-      xData := Copy(xData, 7, 2) + '/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4)
-    else
-      xData := Copy(xData, 1, 2) + '/' + Copy(xData, 3, 2) + '/' + Copy(xData, 5, 4);
-  end;
-
-  // Alguns provedores retorna a data no formato YYYYMM
-  // Correção: Inclusão da barra "/" e do dia "01"
-  if Length(xData) = 6 then
-  begin
-    if Copy(xData, 1, 4) = IntToStr(YearOf(Date)) then
-      xData := '01/' + Copy(xData, 5, 2) + '/' + Copy(xData, 1, 4)
-    else
-      xData := '01/' + Copy(xData, 1, 2) + '/' + Copy(xData, 3, 4);
-  end;
-
-  Result := xData;
-end;
-
-function DataComBarra(const DataStr: string): string;
-var
-  xData, xValor, xDataF: string;
-  i, j, Valor: Integer;
-begin
-  xData := DataStr;
-
-  j :=  Length(xData);
-
-  xValor := '';
-  xDataF := '';
-
-  // Padroniza a data com 2 dígitos para o dia e mês e 4 para o ano
-  for i := 1 to j do
-  begin
-    if CharInSet(xData[i], ['/']) then
-    begin
-      Valor := StrToIntDef(xValor, 0);
-      if Valor > 31 then
-        xDataF := xDataF + FormatFloat('0000', Valor) + '/'
-      else
-        xDataF := xDataF + FormatFloat('00', Valor) + '/';
-
-      xValor := '';
-    end
-    else
-      xValor := xValor + xData[i]
-  end;
-
-  xData := xDataF + xValor;
-
-  // Converte de YYYY/MM/DD para DD/MM/YYYY
-  if CharInSet(xData[5], ['/']) then
-    xData := Copy(xData, 9, 2) + Copy(xData, 5, 3) + '/' + Copy(xData, 1, 4);
-
-  // Verificar se a data esta no formato MM/DD/YYYY
-  // Este teste falha se o dia for <= 12
-  if Copy(xData, 4, 2) > '12' then
-    xData := Copy(xData, 4, 2) + '/' + Copy(xData, 1, 2) + Copy(xData, 6, 5);
-
-  Result := xData;
-end;
-
-function ParseDate(const DataStr: string): string;
-begin
-  // xData sempre será retornada no formato DD/MM/YYYY
-  Result := StringReplace(DataStr, '-', '/', [rfReplaceAll]);
-  Result := Trim(Result);
-
-  if Result = '' then
-    Result := '00/00/0000'
-  else
-  begin
-    if Pos('/', Result) = 0 then
-      Result := DataSemBarra(Result)
-    else
-      Result := DataComBarra(Result);
-  end;
-end;
-
-function ParseTime(const HoraStr: string; aIsPM: Boolean = False): string;
-var
-  xHora, xHoraF, xValor: string;
-  i, j, Valor, Hora: Integer;
-begin
-  xHora := Trim(HoraStr);
-
-  if xHora = '' then
-    xHora := '00:00:00'
-  else
-  begin
-    j :=  Length(xHora);
-
-    xValor := '';
-    xHoraF := '';
-
-    // Padroniza o Horário com 2 dígitos para a Hora, Minutos e Segundos
-    for i := 1 to j do
-    begin
-      if CharInSet(xHora[i], [':']) then
-      begin
-        Valor := StrToIntDef(xValor, 0);
-        xHoraF := xHoraF + FormatFloat('00', Valor) + ':';
-
-        xValor := '';
-      end
-      else
-        xValor := xValor + xHora[i]
-    end;
-
-    xHora := xHoraF + xValor;
-
-    if Length(xHora) = 5 then
-      xHora := xHora + ':00';
-
-    if Length(xHora) > 8 then
-      xHora := Copy(xHora, 1, 8);
-
-    if aIsPM then
-    begin
-      Hora := StrToInt(Copy(xHora, 1, 2)) + 12;
-      xHora := FormatFloat('00', Hora) + Copy(xHora, 3, 6);
-    end;
-  end;
-
-  // xHora sempre será retornada no formato HH:NN:SS
-  Result := xHora;
-end;
-
-function LerDatas(const DataStr: string): TDateTime;
-var
-  xData, xHora: string;
-  IsPM: Boolean;
-begin
-  IsPM := (Pos('PM', DataStr) > 0);
-
-  xData := StringReplace(DataStr, 'Z', '', [rfReplaceAll]);
-  xData := StringReplace(xData, 'PM', '', [rfReplaceAll]);
-  xData := StringReplace(xData, 'AM', '', [rfReplaceAll]);
-  xData := Trim(xData);
+  xData := Trim(StringReplace(DataStr, '-', '/', [rfReplaceAll]));
 
   if xData = '' then
     Result := 0
   else
   begin
-    xHora := '00:00:00';
+    xFormatoData := FormatoData;
 
-    if Length(xData) > 10 then
-    begin
-      xHora := Copy(xData, 11, Length(xData));
-      xHora := StringReplace(xHora, 'T', '', [rfReplaceAll]);
-      xHora := ParseTime(xHora, IsPM);
+    if xFormatoData = '' then
+      xFormatoData := 'YYYY/MM/DD';
 
-      xData := Copy(xData, 1, 10);
+    GetLocaleFormatSettings(0, Formato);
+    Formato.ShortDateFormat := xFormatoData;
+
+    case Length(xData) of
+      6: xData := FormatMaskText('!0000\/00;0;_', xData) + '/01';
+      8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
     end;
 
-    xData := ParseDate(xData);
-
-    // Le a data no formato DD/MM/YYYY e a hora no formato HH:MM:SS
-    Result := EncodeDate(StrToInt(copy(xData, 7, 4)),
-                         StrToInt(copy(xData, 4, 2)),
-                         StrToInt(copy(xData, 1, 2))) +
-              EncodeTime(StrToIntDef(copy(xHora, 1, 2), 0),
-                         StrToIntDef(copy(xHora, 4, 2), 0),
-                         StrToIntDef(copy(xHora, 7, 2), 0),
-                         0);
+    Result := StrToDateTime(xData, Formato);
   end;
 end;
 

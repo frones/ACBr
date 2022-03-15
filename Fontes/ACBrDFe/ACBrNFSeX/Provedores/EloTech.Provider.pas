@@ -591,6 +591,8 @@ function TACBrNFSeXWebserviceEloTech203.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
 end;
 

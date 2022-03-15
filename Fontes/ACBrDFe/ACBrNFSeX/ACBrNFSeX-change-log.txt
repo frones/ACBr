@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/03/2022
+-- EloTech.Provider --
+[*] Incluido na função TratarXmlRetornado a chamada as funções: 
+    ParseText e RemoverIdentacao.
+   Por: Italo Giurizzato Junior
 -- ISSNet.Provider --
 [*] Incluido na função TratarXmlRetornado a chamada a função: 
     RemoverCaracteresDesnecessarios.

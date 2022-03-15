@@ -289,7 +289,7 @@ begin
     FSituacao     := LerCampo(Resposta,ACBrStr('SITUAÇÃO CADASTRAL'));
     FSituacaoEspecial     := LerCampo(Resposta,ACBrStr('SITUAÇÃO ESPECIAL'));
     FDataSituacao := StringToDateTimeDef(LerCampo(Resposta,ACBrStr('DATA DA SITUAÇÃO CADASTRAL')),0);
-    FDataSituacaoEspecial :=  := StringToDateTimeDef(LerCampo(Resposta,ACBrStr('DATA DA SITUAÇÃO ESPECIAL')),0);
+    FDataSituacaoEspecial := StringToDateTimeDef(LerCampo(Resposta,ACBrStr('DATA DA SITUAÇÃO ESPECIAL')),0);
     FNaturezaJuridica := LerCampo(Resposta,ACBrStr('CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA'));
     FEndEletronico:= LerCampo(Resposta, ACBrStr('ENDEREÇO ELETRÔNICO'));
     if Trim(FEndEletronico) = 'TELEFONE' then

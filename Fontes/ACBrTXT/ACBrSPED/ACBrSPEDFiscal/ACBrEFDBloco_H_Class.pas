@@ -264,9 +264,22 @@ begin
           end
           else //versões vlVersao103 para trás.
           begin
-            Add( LFill('H005') +
-                 LFill( DT_INV ) +
-                 LFill( VL_INV, 0) ) ;
+
+            // Indicativo do DRCST ...
+            if (FBloco_0.Registro0000.IND_PERFIL = pfPerfilD) then
+            begin
+                strMotInv := '05';
+                Add( LFill('H005') +
+                     LFill( DT_INV ) +
+                     LFill( VL_INV, 0) +
+                     LFill( strMotInv ) ) ;
+            end
+            else
+            begin
+                Add( LFill('H005') +
+                     LFill( DT_INV ) +
+                     LFill( VL_INV, 0) ) ;
+            end;
           end;
         end;
         /// Registros FILHOS

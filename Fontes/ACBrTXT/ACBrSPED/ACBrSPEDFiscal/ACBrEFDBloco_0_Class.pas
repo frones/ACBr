@@ -421,11 +421,7 @@ begin
      with Registro0000 do
      begin
        strLinha := EmptyStr;
-       case IND_PERFIL of
-        pfPerfilA: strIND_PERFIL := 'A';
-        pfPerfilB: strIND_PERFIL := 'B';
-        pfPerfilC: strIND_PERFIL := 'C';
-       end;
+       strIND_PERFIL := IndPerfilToStr(IND_PERFIL);
 
        Check(funChecaCNPJ(CNPJ), '(0-0000) ENTIDADE: O CNPJ "%s" digitado é inválido!', [CNPJ]);
        Check(funChecaCPF(CPF), '(0-0000) ENTIDADE: O CPF "%s" digitado é inválido!', [CPF]);

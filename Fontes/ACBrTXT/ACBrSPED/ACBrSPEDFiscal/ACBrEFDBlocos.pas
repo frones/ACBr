@@ -51,6 +51,7 @@ type
   TACBrIndPerfil             = (pfPerfilA, // A – Perfil A
                                 pfPerfilB, // B – Perfil B
                                 pfPerfilC, // C – Perfil C
+                                pfPerfilD, // D – Perfil D
                                 pfNenhum   // Nenhum
                                 );
   TACBrPerfil = TACBrIndPerfil;
@@ -1169,6 +1170,7 @@ begin
     pfPerfilA : result := 'A';
     pfPerfilB : result := 'B';
     pfPerfilC : result := 'C';
+    pfPerfilD : result := 'D';
     else
       Result := '';
    end;
@@ -1187,6 +1189,7 @@ begin
      'A': Result := pfPerfilA;
      'B': Result := pfPerfilB;
      'C': Result := pfPerfilC;
+     'D': Result := pfPerfilD;
     else
       Result := pfNenhum;
    end;

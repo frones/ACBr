@@ -356,7 +356,7 @@ end;
 function EncodeDataHora(const DataStr: string;
   const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
 var
-  Formato: TFormatSettings;
+//  Formato: TFormatSettings;
   xData, xFormatoData: string;
 begin
   xData := Trim(StringReplace(DataStr, '-', '/', [rfReplaceAll]));
@@ -370,15 +370,16 @@ begin
     if xFormatoData = '' then
       xFormatoData := 'YYYY/MM/DD';
 
-    GetLocaleFormatSettings(0, Formato);
-    Formato.ShortDateFormat := xFormatoData;
+//    GetLocaleFormatSettings(0, Formato);
+//    Formato.ShortDateFormat := xFormatoData;
 
     case Length(xData) of
       6: xData := FormatMaskText('!0000\/00;0;_', xData) + '/01';
       8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
     end;
 
-    Result := StrToDateTime(xData, Formato);
+//    Result := StrToDateTime(xData, Formato);
+    Result := StringToDateTime(xData, xFormatoData);
   end;
 end;
 

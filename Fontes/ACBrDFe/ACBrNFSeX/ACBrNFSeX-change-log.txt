@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/03/2022
+-- WebISS.Provider --
+[*] Incluido a função TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.Provider --
 [*] Incluido na função TratarXmlRetornado a chamada a função: 
     ParseText.

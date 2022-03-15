@@ -52,6 +52,7 @@ type
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderWebISS = class (TACBrNFSeProviderABRASFv1)
@@ -259,6 +260,17 @@ begin
   Result := Executar('http://tempuri.org/INfseServices/CancelarNfse', Request,
                      ['CancelarNfseResult', 'CancelarNfseResposta'],
                      []);
+end;
+
+function TACBrNFSeXWebserviceWebISS.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderWebISS202 }

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/03/2022
+-- ISSNet.Provider --
+[*] Incluido na função TratarXmlRetornado a chamada a função: 
+    RemoverCaracteresDesnecessarios.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ajustes para usar a função EncodeDataHora.
    Por: Italo Giurizzato Junior

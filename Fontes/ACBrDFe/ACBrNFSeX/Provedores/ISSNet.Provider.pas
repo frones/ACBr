@@ -339,6 +339,7 @@ begin
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

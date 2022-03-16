@@ -593,7 +593,9 @@ begin
 
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverIdentacao(Result);
+  Result := RemoverDeclaracaoXML(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/03/2022
+-- EloTech.Provider --
+[*] Incluido na função TratarXmlRetornado as chamadas:
+    RemoverDeclaracaoXML e RemoverCaracteresDesnecessarios.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade de Tiete/SP
+   Por: ACTIO Sistemas
+
 15/03/2022
 -- WebISS.Provider --
 [*] Incluido a função TratarXmlRetornado.

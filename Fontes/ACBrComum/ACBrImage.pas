@@ -61,15 +61,17 @@ uses
   ,ACBrBase;
 
 const
-  cErrImgPCXMono = 'Imagem não é PCX Monocromática';
-  cErrImgBMPMono = 'Imagem não é BMP Monocromática';
   C_LUMINOSITY_THRESHOLD = 127;
+
+resourcestring
+  cErrImgBMPMono = 'Imagem não é BMP Monocromática';
 
 type
   EACBrImage = class(Exception);
 
 function IsPCX(S: TStream; CheckIsMono: Boolean = True): Boolean;
 function IsBMP(S: TStream; CheckIsMono: Boolean = True): Boolean;
+function IsPNG(S: TStream; CheckIsMono: Boolean = True): Boolean;
 
 procedure RasterStrToAscII(const ARasterStr: AnsiString; AWidth: Integer;
   InvertImg: Boolean; AscIIArtLines: TStrings);
@@ -104,56 +106,125 @@ uses
   math, strutils,
   ACBrUtil, ACBrConsts;
 
+// https://stackoverflow.com/questions/1689715/image-data-of-pcx-file
 function IsPCX(S: TStream; CheckIsMono: Boolean): Boolean;
 var
   p: Int64;
   b, bColorPlanes, bBitsPerPixel: Byte;
 begin
-  // https://stackoverflow.com/questions/1689715/image-data-of-pcx-file
   p := S.Position;
-  S.Position := 0;
-  b := 0;
-  S.ReadBuffer(b,1);
-  Result := (b = 10);
+  try
+    S.Position := 0;
+    b := 0;
+    S.ReadBuffer(b,1);
+    Result := (b = 10);
 
-  if Result and CheckIsMono then
-  begin
-    // Lendo as cores
-    bBitsPerPixel := 0; bColorPlanes := 0;
-    S.Position := 3;
-    S.ReadBuffer(bBitsPerPixel, 1);
-    S.Position := 65;
-    S.ReadBuffer(bColorPlanes, 1);
-    Result := (bColorPlanes = 1) and (bBitsPerPixel = 1);
+    if Result and CheckIsMono then
+    begin
+      // Lendo as cores
+      bBitsPerPixel := 0; bColorPlanes := 0;
+      S.Position := 3;
+      S.ReadBuffer(bBitsPerPixel, 1);
+      S.Position := 65;
+      S.ReadBuffer(bColorPlanes, 1);
+      Result := (bColorPlanes = 1) and (bBitsPerPixel = 1);
+    end;
+  finally
+    S.Position := p;
   end;
-
-  S.Position := p;
 end;
 
+//https://en.wikipedia.org/wiki/BMP_file_format
 function IsBMP(S: TStream; CheckIsMono: Boolean): Boolean;
 var
   Buffer: array[0..1] of AnsiChar;
   bColorPlanes, bBitsPerPixel: Word;
   p: Int64;
 begin
-  //https://en.wikipedia.org/wiki/BMP_file_format
   p := S.Position;
-  S.Position := 0;
-  Buffer[0] := ' ';
-  S.ReadBuffer(Buffer, 2);
-  Result := (Buffer = 'BM');
+  try
+    S.Position := 0;
+    Buffer[0] := ' ';
+    S.ReadBuffer(Buffer, 2);
+    Result := (Buffer = 'BM');
 
-  if Result and CheckIsMono then
+    if Result and CheckIsMono then
+    begin
+      // Lendo as cores
+      bColorPlanes := 0; bBitsPerPixel := 0;
+      S.Position := 26;
+      S.ReadBuffer(bColorPlanes, 2);
+      S.ReadBuffer(bBitsPerPixel, 2);
+      Result := (bColorPlanes = 1) and (bBitsPerPixel = 1);
+    end;
+  finally
+    S.Position := p;
+  end;
+end;
+
+// https://en.wikipedia.org/wiki/Portable_Network_Graphic
+function IsPNG(S: TStream; CheckIsMono: Boolean): Boolean;
+var
+  p: Int64;
+  Buffer: array[0..7] of Byte;
+  l: Cardinal;
+  t, d: AnsiString;
+
+  procedure ReadNextChunk(S: TStream; out Len: Cardinal; out ChunckType: AnsiString; out Data: AnsiString);
+  var
+    LenStr: AnsiString;
   begin
-    // Lendo as cores
-    bColorPlanes := 0; bBitsPerPixel := 0;
-    S.Position := 26;
-    S.ReadBuffer(bColorPlanes, 2);
-    S.ReadBuffer(bBitsPerPixel, 2);
-    Result := (bColorPlanes = 1) and (bBitsPerPixel = 1);
+    Len := 0; LenStr := ''; ChunckType := ''; Data := '';
+    Setlength(LenStr, 4);
+    S.Read(PAnsiChar(LenStr)^, 4);
+    Len := BEStrToInt(LenStr);
+    if (Len > 0) then
+    begin
+      Setlength(ChunckType, 4);
+      S.Read(PAnsiChar(ChunckType)^, 4);
+      Setlength(Data, Len);
+      S.Read(PAnsiChar(Data)^, Len);
+    end;
   end;
 
-  S.Position := p;
+begin
+  p := S.Position;
+  try
+    S.Position := 0;
+    Buffer[0] := 0;
+    S.ReadBuffer(Buffer,8);
+    Result := (Buffer[0] = 137) and
+              (Buffer[1] = 80) and
+              (Buffer[2] = 78) and
+              (Buffer[3] = 71) and
+              (Buffer[4] = 13) and
+              (Buffer[5] = 10) and
+              (Buffer[6] = 26) and
+              (Buffer[7] = 10);
+
+    if Result and CheckIsMono then
+    begin
+      t := '';
+      l := 1;
+      while (t <> 'IHDR') and (t <> 'IEND') and (l > 0) do
+        ReadNextChunk(S, l, t, d);
+
+      if (t = 'IHDR') and (l = 13) then
+      begin
+        { The IHDR chunk must appear FIRST. It contains:
+           Width:              4 bytes
+           Height:             4 bytes
+           Bit depth:          1 byte
+           Color type:         1 byte
+           Compression method: 1 byte
+           Filter method:      1 byte
+           Interlace method:   1 byte }
+        Result := (Byte(d[9]) = 1);
+      end;
+    end;
+  finally
+    S.Position := p;
+  end;
 end;
 
 procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out

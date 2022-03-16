@@ -350,6 +350,7 @@ procedure OutPort(const PortAddr: word; const Databyte: byte); overload ;
 function StrCrypt(const AString, StrChave: AnsiString): AnsiString;
 function SomaAscII(const AString : AnsiString): Integer;
 function StringCrc16(const AString : AnsiString ) : word;
+function StringCrcCCITT(const s: AnsiString; initial:Word=$1D0F; polynomial:Word=$1021): Word;
 
 function ApplicationPath: String;
 Procedure FindFiles( const FileMask : String; AStringList : TStrings;
@@ -2887,6 +2888,30 @@ begin
     bytecrc( ord( AString[i] ), Result);
 end;
 
+// https://forum.lazarus.freepascal.org/index.php/topic,38279.msg259717.html#msg259717
+function StringCrcCCITT(const s: AnsiString; initial:Word=$1D0F; polynomial:Word=$1021): Word;
+var
+  crc: Cardinal;
+  len, I, J: Integer;
+  b: Byte;
+  bit, c15: Boolean;
+begin
+  len := Length(s);
+  crc := initial; // initial value
+  for I := 1 to len do
+  begin
+    b := Byte(s[I]);
+    for J := 0 to 7 do
+    begin
+      bit := (((b shr (7-J)) and 1) = 1);
+      c15 := (((crc shr 15) and 1) = 1);
+      crc := crc shl 1;
+      if ((c15 xor bit)) then
+        crc := crc xor polynomial;
+    end;
+  end;
+  Result := crc and $ffff;
+end;
 
 {-----------------------------------------------------------------------------
  Lê 1 byte de uma porta de Hardware

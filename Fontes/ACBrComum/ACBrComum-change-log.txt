@@ -37,6 +37,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03//2022
+-- ACBrUtil --
+[+] Adicionado o método:
+    function StringCrcCCITT(const s: AnsiString; initial:Word=$1D0F; polynomial:Word=$1021): Word;
+    Calulo de CRC do PIX, Zebra e outros
+
+-- ACBrImage --
+[+] Adiciondo o método:
+    function IsPNG(S: TStream; CheckIsMono: Boolean = True): Boolean;
+    Verifica se o conteúdo do Stream é um PNG e Monocromático
+
 12/11/2022
 -- ACBrUtil --
 [*] Ajuste em "Iso8601ToDateTime", para considerar os Milisegundos, caso eles

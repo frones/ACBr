@@ -608,6 +608,7 @@ begin
 
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderSmarAPD203 }

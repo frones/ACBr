@@ -48,6 +48,8 @@ type
   protected
     function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; override;
     function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; override;
+
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
@@ -87,6 +89,11 @@ begin
     result := EncodeDataHora(xDataHora, '')
   else
     result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
+end;
+
+function TNFSeR_SigCorp203.NormatizarXml(const aXml: string): string;
+begin
+  Result := StringReplace(aXml, '&', '&amp;', [rfReplaceAll]);
 end;
 
 end.

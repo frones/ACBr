@@ -346,8 +346,8 @@ begin
 
   for i := 0 to Length(ANodes) - 1 do
   begin
-    NFSe.OutrasInformacoes := NFSe.OutrasInformacoes +
-                  ObterConteudo(ANodes[i].Childrens.FindAnyNs('infAdic'), tcStr);
+    NFSe.OutrasInformacoes := NFSe.OutrasInformacoes + ANodes[i].Content;
+//                  ObterConteudo(ANodes[i].Childrens.FindAnyNs('infAdic'), tcStr);
   end;
 end;
 

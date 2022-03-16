@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/03/2022
+-- Infisc.LerXml --
+[*] Possível correção para a leitura correta da lista de <infAdic>
+   Por: Italo Giurizzato Junior
 -- EloTech.Provider --
 [*] Incluido na função TratarXmlRetornado as chamadas:
     RemoverDeclaracaoXML e RemoverCaracteresDesnecessarios.

@@ -28,7 +28,7 @@ uses
   ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, 
   ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang, ACBrEscGPrinter, 
   ACBrEscDatecs, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, 
-  ACBrBALCapital, ACBrBALLenkeLK2500, LazarusPackageIntf;
+  ACBrBALCapital, ACBrBALLenkeLK2500, ACBrETQEscLabel, LazarusPackageIntf;
 
 implementation
 

@@ -116,6 +116,7 @@ contains
   ACBrETQPpla in '..\..\..\Fontes\ACBrSerial\ACBrETQPpla.pas',
   ACBrETQEpl2 in '..\..\..\Fontes\ACBrSerial\ACBrETQEpl2.pas',
   ACBrETQZplII in '..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas',
+  ACBrETQEscLabel in '..\..\..\Fontes\ACBrSerial\ACBrETQEscLabel.pas',
   ACBrGAV in '..\..\..\Fontes\ACBrSerial\ACBrGAV.pas',
   ACBrGAVClass in '..\..\..\Fontes\ACBrSerial\ACBrGAVClass.pas',
   ACBrGAVImpressoraComum in '..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraComum.pas',

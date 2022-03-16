@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2022
+--ACBrBoleto.pas--
+[-] TK-2482 ACBrBoleto IniReader - Tratamento para campos vazio Local de Pagamento e Orientações Banco não sobrescrever o construtor da classe.
+  Por: Pandaaa
+
 15/03/2022
 --ACBrBoletoW_BancoBrasil_API.pas--
 [+] Adição de novos filtros Carteira e CarteiraModalidade

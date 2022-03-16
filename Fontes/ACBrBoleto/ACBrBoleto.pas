@@ -3361,7 +3361,7 @@ var
   wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
   wVersaoLote, wVersaoArquivo: Integer;
   wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento: String;
-  Sessao, sFim: String;
+  Sessao, sFim, LocalPagamento, OrientacoesBanco: String;
   I, N: Integer;
 begin
   Result   := False;
@@ -3431,11 +3431,17 @@ begin
         wVersaoArquivo                    := IniBoletos.ReadInteger(CBanco,'VersaoArquivo', 0 );
         wVersaoLote                       := IniBoletos.ReadInteger(CBanco,'VersaoLote', 0 );
 
-        Banco.LocalPagamento              := IniBoletos.ReadString(CBanco,'LocalPagamento','');
+        LocalPagamento := IniBoletos.ReadString(CBanco,'LocalPagamento','');
+        if NaoEstaVazio(LocalPagamento) then
+          Banco.LocalPagamento              := LocalPagamento;
+
+        OrientacoesBanco := StringReplace(IniBoletos.ReadString(CBanco,'OrientacoesBanco',''), '|', sLineBreak, [rfReplaceAll]);
+        if NaoEstaVazio(OrientacoesBanco) then
+          Banco.OrientacoesBanco.Text       := OrientacoesBanco;
+
         Banco.CasasDecimaisMoraJuros      := IniBoletos.ReadInteger(CBanco,'CasasDecimaisMoraJuros',2);
         Banco.DensidadeGravacao           := IniBoletos.ReadString(CBanco,'DensidadeGravacao','');
         Banco.CIP                         := IniBoletos.ReadString(CBanco,'CIP','');
-        Banco.OrientacoesBanco.Text       := StringReplace(IniBoletos.ReadString(CBanco,'OrientacoesBanco',''), '|', sLineBreak, [rfReplaceAll]);
 
         PrefixArqRemessa                  := IniBoletos.ReadString(CBanco,'PrefixArqRemessa','');
         Homologacao                       := IniBoletos.ReadBool(CBanco,'Homologacao', false );

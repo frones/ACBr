@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 16/03/2022
+-- Fiorilli.Provider --
+[*] Incluido na função TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade de Novo Progresso/PA trocou para o provedor Fiorilli
+   Por: Luiz Nicolak
 -- Diversos --
 [*] Possível correção para a leitura correta do retorno.
    Por: Italo Giurizzato Junior

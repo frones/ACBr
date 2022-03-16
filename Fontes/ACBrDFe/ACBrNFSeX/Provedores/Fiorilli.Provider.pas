@@ -58,6 +58,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property DadosUsuario: string read GetDadosUsuario;
   end;
 
@@ -317,6 +319,14 @@ begin
   Result := Executar('http://ws.issweb.fiorilli.com.br/substituirNfse', Request,
                      ['SubstituirNfseResposta'],
                      ['xmlns:ws="http://ws.issweb.fiorilli.com.br/"']);
+end;
+
+function TACBrNFSeXWebserviceFiorilli200.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

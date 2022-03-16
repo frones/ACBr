@@ -2227,6 +2227,15 @@ Usar com série específica 920-969 para emitente pessoa física com inscrição
 											<xs:documentation>Endereço do emitente</xs:documentation>
 										</xs:annotation>
 									</xs:element>
+									<xs:element name="CRT" type="TCRT" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Código do Regime Tributário</xs:documentation>
+											<xs:documentation>Informar: 1=Simples Nacional; 
+2=Simples Nacional, excesso sublimite de receita bruta;
+3=Regime Normal. 
+</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -4127,6 +4136,15 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 									<xs:element name="enderEmit" type="TEndeEmi">
 										<xs:annotation>
 											<xs:documentation>Endereço do emitente</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="CRT" type="TCRT" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Código do Regime Tributário</xs:documentation>
+											<xs:documentation>Informar: 1=Simples Nacional; 
+2=Simples Nacional, excesso sublimite de receita bruta;
+3=Regime Normal. 
+</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 								</xs:sequence>
@@ -6567,6 +6585,19 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCRT">
+		<xs:annotation>
+			<xs:documentation>Tipo Código Regime Tributário</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProcEmi">

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2022
+-- ACBrXmlBase --
+[*] Incluida a remoção dos caracteres #10 e #13 na função:
+    RemoverCaracteresDesnecessarios.
+   Por: Italo Giurizzato Junior
+
 15/03/2022
 -- ACBrXmlBase --
 [+] Inclusão da função EncodeDataHora que tem por finalidade converter uma 

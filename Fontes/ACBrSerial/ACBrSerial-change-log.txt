@@ -38,6 +38,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/03/2022
+-- ACBrETQ, ACBrETQClass --
+[+] Adicionado o modelo "etqEscLabel", que implementa a comunicação do Protocolo
+    Esc/Label da Epson, baseado do Zpl2 da Zebra
+[*] Método "ImprimirCaixa", modificado para permitir informar Parâmetro com o
+    angulo dos Cantos. Canto: Integer = 0.
+    Suporta Valores 0 a 8 (0 sem arredondamento).
+    Suportado apenas em ZPL2 e EscLabel
+[*] Método "CarregarImagem", modificado para retornar por referência, o Nome do
+    arquivo da Imagem, como armazenado na memória da Impressora
+
+-- ACBrETQZplII --
+[*] Método "ComandoImprimirCaixa", modificado para processar o parâmeto recebido
+    em "Canto", para permitir caixas arredondadas
+[*] Métodos "ComandoImprimirImagem" e "ComandoCarregarImagem" refatorados,
+    para melhor detecção do Tipo e suportar arquivos "PNG" mono
+
+-- ACBrETQEscLabel --
+[+] Nova Unit com a implementação das diferenças de EscLabel e Zpl2
+    Suporte às Impressoras "Epson ColorWorks"
+    (por: DSA)
+
 -- ACBrDeviceLPT --
 [-] Correção para envio de Dados em Linux, Delphi FMX, por Stream
     (por: DSA)

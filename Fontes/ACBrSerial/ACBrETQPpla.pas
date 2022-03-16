@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:   Andrews Ricardo Bejatto                       }
 {                                Anderson Rogerio Bejatto                      }
@@ -110,12 +110,12 @@ type
       aAltura: Integer): AnsiString; override;
 
     function ComandoImprimirCaixa(aVertical, aHorizontal, aLargura, aAltura,
-      aEspVertical, aEspHorizontal: Integer): AnsiString; override;
+      aEspVertical, aEspHorizontal: Integer; aCanto: Integer = 0): AnsiString; override;
 
     function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
       aNomeImagem: String): AnsiString; override;
 
-    function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
+    function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
     function BMP2HEX(aStream: TStream; Inverter: Boolean): String;
   end;
@@ -488,8 +488,9 @@ begin
 end;
 
 function TACBrETQPpla.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,
-  aAltura, aEspVertical, aEspHorizontal: Integer): AnsiString;
+  aAltura, aEspVertical, aEspHorizontal: Integer; aCanto: Integer): AnsiString;
 begin
+  // aCanto, não é usado em PPLA
   Result := PrefixoComandoLinhaECaixa(orNormal) +
             ConverterCoordenadas(aVertical, aHorizontal) +
             'B' +
@@ -512,7 +513,7 @@ begin
 end;
 
 function TACBrETQPpla.ComandoCarregarImagem(aStream: TStream;
-  aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+  var aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 var
   Cmd: Char;
   DataImg: AnsiString;
@@ -554,7 +555,8 @@ begin
   if (DataImg = '') then
     DataImg := ReadStrFromStream(aStream, aStream.Size);
 
-  Result := STX + 'IA' + Cmd + AjustarNomeArquivoImagem(aNomeImagem) + CR +
+  aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem);
+  Result := STX + 'IA' + Cmd + aNomeImagem + CR +
             DataImg;
 end;
 

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:   Andrews Ricardo Bejatto                       }
 {                                Anderson Rogerio Bejatto                      }
@@ -97,12 +97,12 @@ type
       ): AnsiString; override;
 
     function ComandoImprimirCaixa(aVertical, aHorizontal, aLargura, aAltura,
-      aEspVertical, aEspHorizontal: Integer): AnsiString; override;
+      aEspVertical, aEspHorizontal: Integer; aCanto: Integer = 0): AnsiString; override;
 
     function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
       aNomeImagem: String): AnsiString; override;
 
-    function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
+    function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
   end;
 
@@ -183,7 +183,7 @@ end;
 
 function TACBrETQEpl2.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
 begin
-  Result := '"' + UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16)) + '"';
+  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16));
 end;
 
 function TACBrETQEpl2.ConverterUnidadeAlturaBarras(aAlturaBarras: Integer
@@ -410,8 +410,9 @@ begin
 end;
 
 function TACBrETQEpl2.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,
-  aAltura, aEspVertical, aEspHorizontal: Integer): AnsiString;
+  aAltura, aEspVertical, aEspHorizontal: Integer; aCanto: Integer): AnsiString;
 begin
+  // aCanto, não é usado em EPL2/PPLB
   Result := 'X' +
             ConverterCoordenadas(aVertical, aHorizontal)     + ',' +
             CalcularEspessuraLinha(aEspVertical, aEspHorizontal) + ',' +
@@ -423,11 +424,11 @@ function TACBrETQEpl2.ComandoImprimirImagem(aMultImagem, aVertical,
 begin
   Result := 'GG' +
             ConverterCoordenadas(aVertical, aHorizontal) + ',' +
-            AjustarNomeArquivoImagem(aNomeImagem);
+            '"' + AjustarNomeArquivoImagem(aNomeImagem)+ '"';
 end;
 
 function TACBrETQEpl2.ComandoCarregarImagem(aStream: TStream;
-  aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+  var aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 var
   ImgData: AnsiString;
 begin
@@ -445,11 +446,11 @@ begin
   ImgData := ReadStrFromStream(aStream, aStream.Size);
   aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem);
 
-  Result := 'GK' + aNomeImagem     + LF +    // deletes graphic "NomeImagem" - Required
-            'GK' + aNomeImagem     + LF +    // second delete graphic - Required
-            'GM' + aNomeImagem     +         // Prepares printer to receive graphic "NomeImagem";
-            IntToStr(aStream.Size) + LF +    // The Data Size
-            ImgData;                         // The Image Data
+  Result := 'GK"' + aNomeImagem + '"' + LF +    // deletes graphic "NomeImagem" - Required
+            'GK"' + aNomeImagem + '"' + LF +    // second delete graphic - Required
+            'GM"' + aNomeImagem + '"' +         // Prepares printer to receive graphic "NomeImagem";
+            IntToStr(aStream.Size) + LF +       // The Data Size
+            ImgData;                            // The Image Data
 end;
 
 end.

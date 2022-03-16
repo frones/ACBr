@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -46,6 +46,10 @@ uses
 const
   CInchCM = 2.54;
 
+resourcestring
+  cErrImgPCXMono = 'Imagem não é PCX Monocromática';
+  cErrImgPNG = 'Imagem não é PNG Monocromático';
+
 type
 
 { Classe generica de ETIQUETA, nao implementa nenhum modelo especifico, apenas
@@ -74,6 +78,7 @@ TACBrETQClass = class
     fpLimiteCopias: Integer;
 
     function ConverterUnidade(UnidadeSaida: TACBrETQUnidade; AValue: Integer): Integer; virtual;
+    procedure VerificarConteudoETipoImagemMono(ImgStream: TStream; const TipoImg: String);
 
     procedure AdicionarComandos( const ACmd: AnsiString; var ACmdList: AnsiString);
     procedure VerificarLimiteCopias( const NumCopias: Integer);
@@ -119,12 +124,12 @@ TACBrETQClass = class
       aAltura: Integer): AnsiString; virtual;
 
     function ComandoImprimirCaixa(aVertical, aHorizontal, aLargura, aAltura,
-      aEspVertical, aEspHorizontal: Integer): AnsiString; virtual;
+      aEspVertical, aEspHorizontal: Integer; aCanto: Integer = 0): AnsiString; virtual;
 
     function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
       aNomeImagem: String): AnsiString; virtual;
 
-    function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
+    function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; virtual;
 
     function ComandoGravaRFIDHexaDecimal(aValue:String): AnsiString; virtual;
@@ -146,7 +151,8 @@ end;
 implementation
 
 uses
-  ACBrConsts, ACBrETQ, ACBrUtil, SysUtils, math;
+  SysUtils, math,
+  ACBrConsts, ACBrETQ, ACBrUtil, ACBrImage;
 
 { TACBrBAETQClass }
 
@@ -223,6 +229,26 @@ begin
   end;
 
   Result := trunc(RoundTo(ADouble, 0));
+end;
+
+procedure TACBrETQClass.VerificarConteudoETipoImagemMono(ImgStream: TStream;
+  const TipoImg: String);
+begin
+  if (TipoImg = 'PCX') then
+  begin
+    if not IsPCX(ImgStream, True) then
+      raise Exception.Create(ACBrStr(cErrImgPCXMono));
+  end
+  else if (TipoImg = 'PNG') then
+  begin
+    if not IsPNG(ImgStream, True) then
+      raise Exception.Create(ACBrStr(cErrImgPNG));
+  end
+  else if (TipoImg = 'BMP') then
+  begin
+    if not IsBMP(ImgStream, True) then
+      raise Exception.Create(ACBrStr(cErrImgBMPMono));
+  end;
 end;
 
 procedure TACBrETQClass.AdicionarComandos(const ACmd: AnsiString;
@@ -415,7 +441,7 @@ begin
 end;
 
 function TACBrETQClass.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,
-  aAltura, aEspVertical, aEspHorizontal: Integer): AnsiString;
+  aAltura, aEspVertical, aEspHorizontal: Integer; aCanto: Integer): AnsiString;
 begin
   Result := EmptyStr;
   ErroNaoImplementado('ComandoImprimirCaixa');
@@ -429,7 +455,7 @@ begin
 end;
 
 function TACBrETQClass.ComandoCarregarImagem(aStream: TStream;
-  aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+  var aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 begin
   Result := EmptyStr;
   ErroNaoImplementado('ComandoCarregarImagem');

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -42,7 +42,7 @@ uses
 
 type
 
-TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
+TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
 
 
   { TACBrETQCmdList }
@@ -139,15 +139,15 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     procedure ImprimirLinha(Vertical, Horizontal, Largura, Altura: Integer); overload;
 
     procedure ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-      EspessuraVertical, EspessuraHorizontal: Integer);
+      EspessuraVertical, EspessuraHorizontal: Integer; Canto: Integer = 0);
 
     procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
       const NomeImagem: String);
 
-    procedure CarregarImagem(aStream: TStream; const NomeImagem: String;
+    procedure CarregarImagem(aStream: TStream; var NomeImagem: String;
       Flipped: Boolean = True; const Tipo: String = ''); overload;
 
-    procedure CarregarImagem(const ArquivoImagem, NomeImagem: String;
+    procedure CarregarImagem(const ArquivoImagem: String; var NomeImagem: String;
       Flipped: Boolean = True); overload;
 
     procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
@@ -187,7 +187,7 @@ implementation
 uses
   math, typinfo,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
-  ACBrUtil, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2
+  ACBrUtil, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2, ACBrETQEscLabel
   {$IfDef MSWINDOWS}
   ,ACBrWinUSBDevice
   {$EndIf};
@@ -401,6 +401,7 @@ begin
     etqPpla:          fsETQ := TACBrETQPpla.Create(Self);
     etqPplb, etqEpl2: fsETQ := TACBrETQEpl2.Create(Self);  // EPL2 = PPLB
     etqZPLII:         fsETQ := TACBrETQZplII.Create(Self);
+    etqEscLabel:      fsETQ := TACBrETQEscLabel.Create(Self);
   else
     fsETQ := TACBrETQClass.Create(Self);
   end;
@@ -773,7 +774,7 @@ begin
 end;
 
 procedure TACBrETQ.ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-  EspessuraVertical, EspessuraHorizontal: Integer);
+  EspessuraVertical, EspessuraHorizontal: Integer; Canto: Integer);
 var
   wCmd: AnsiString;
 begin
@@ -783,10 +784,11 @@ begin
             ', Largura:'+IntToStr(Largura)+
             ', Altura:'+IntToStr(Altura)+
             ', EspessuraVertical:'+IntToStr(EspessuraVertical)+
-            ', EspessuraHorizontal:'+IntToStr(EspessuraHorizontal));
+            ', EspessuraHorizontal:'+IntToStr(EspessuraHorizontal)+
+            ', Canto:'+IntToStr(Canto));
 
   wCmd := fsETQ.ComandoImprimirCaixa(Vertical, (Horizontal+MargemEsquerda),
-       Largura, Altura, EspessuraVertical, EspessuraHorizontal);
+       Largura, Altura, EspessuraVertical, EspessuraHorizontal, Canto);
 
   fsListaCmd.Add(wCmd);
 end;
@@ -808,7 +810,7 @@ begin
   fsListaCmd.Add(wCmd);
 end;
 
-procedure TACBrETQ.CarregarImagem(aStream: TStream; const NomeImagem: String;
+procedure TACBrETQ.CarregarImagem(aStream: TStream; var NomeImagem: String;
   Flipped: Boolean; const Tipo: String);
 var
   wCmd: AnsiString;
@@ -826,8 +828,8 @@ begin
   fsDevice.EnviaString(wCmd);
 end;
 
-procedure TACBrETQ.CarregarImagem(const ArquivoImagem, NomeImagem: String;
-  Flipped: Boolean = True);
+procedure TACBrETQ.CarregarImagem(const ArquivoImagem: String;
+  var NomeImagem: String; Flipped: Boolean);
 var
   wMS: TMemoryStream;
   wTipo: AnsiString;

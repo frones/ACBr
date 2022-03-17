@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -134,7 +135,7 @@ namespace ACBrLib.CEP
 
         #region Diversos
 
-        public string buscarPorCep(string eCEP)
+        public ACBrEndereco BuscarPorCep(string eCEP)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
@@ -144,20 +145,22 @@ namespace ACBrLib.CEP
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            var ini = ACBrIniFile.Parse(ProcessResult(buffer, bufferLen));
+            return ini.Where(x => x.Name.StartsWith("Endereco")).Select(ACBrEndereco.LerResposta).SingleOrDefault();
         }
 
-        public string buscarPorLogradouro(string eCidade, string eTipo_Logradouro, string eLogradouro, string eUF, string eBairro)
+        public ACBrEndereco[] BuscarPorLogradouro(string eCidade, string eTipoLogradouro, string eLogradouro, string eUF, string eBairro)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<CEP_BuscarPorLogradouro>();
-            var ret = ExecuteMethod(() => method((ToUTF8(eCidade)), (ToUTF8(eTipo_Logradouro)), (ToUTF8(eLogradouro)), (ToUTF8(eUF)), (ToUTF8(eUF)), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method((ToUTF8(eCidade)), (ToUTF8(eTipoLogradouro)), (ToUTF8(eLogradouro)), (ToUTF8(eUF)), (ToUTF8(eUF)), buffer, ref bufferLen));
 
             CheckResult(ret);
 
-            return ProcessResult(buffer, bufferLen);
+            var ini = ACBrIniFile.Parse(ProcessResult(buffer, bufferLen));
+            return ini.Where(x => x.Name.StartsWith("Endereco")).Select(ACBrEndereco.LerResposta).ToArray();
         }
 
         #endregion Diversos

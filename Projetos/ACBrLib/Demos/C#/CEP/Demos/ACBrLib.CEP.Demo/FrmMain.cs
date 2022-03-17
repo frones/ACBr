@@ -5,6 +5,7 @@ using ACBrLib;
 using ACBrLib.Core;
 using ACBrLib.CEP;
 using ACBrLib.Core.CEP;
+using System.Linq;
 
 namespace ACBrLibCEP.Demo
 {
@@ -135,12 +136,15 @@ namespace ACBrLibCEP.Demo
 
         private void btnBuscarPorCEP_Click(object sender, EventArgs e)
         {
-            txtRetorno.AppendText(ACBrCEP.BuscarPorCep(txtCEP.Text));
+            var ret = ACBrCEP.BuscarPorCep(txtCEP.Text);
+            txtRetorno.AppendLine(ret.Resposta);
         }
 
         private void btnBuscarPorLogradouro_Click(object sender, EventArgs e)
         {
-            txtRetorno.AppendText(ACBrCEP.BuscarPorLogradouro(txtCidade.Text, txtTipoLogradouro.Text, txtLogradouro.Text, txtUF.Text, txtBairro.Text));
+            var ret = ACBrCEP.BuscarPorLogradouro(txtCidade.Text, txtTipoLogradouro.Text, txtLogradouro.Text, txtUF.Text, txtBairro.Text);
+            txtRetorno.AppendLine(ret.Select(x => x.Resposta).ToArray());
+
         }
     }
 }

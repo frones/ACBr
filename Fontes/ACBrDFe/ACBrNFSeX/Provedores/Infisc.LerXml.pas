@@ -572,6 +572,7 @@ begin
       xMunTrans       := ObterConteudo(AuxNode.Childrens.FindAnyNs('xMunTrans'), tcStr);
       xUFTrans        := ObterConteudo(AuxNode.Childrens.FindAnyNs('xUfTrans'), tcStr);
       cPaisTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisTrans'), tcStr);
+      xPaisTrans      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPaisTrans'), tcStr);
       vTipoFreteTrans := StrToTipoFrete(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('vTipoFreteTrans'), tcStr));
     end;
   end;

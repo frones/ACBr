@@ -529,6 +529,9 @@ begin
     LerDeclaracaoPrestacaoServico(AuxNode);
 
     NFSe.ChaveAcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('ChaveAcesso'), tcStr);
+
+    if NFSe.IdentificacaoRps.Numero = '' then
+      NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
   end;
 end;
 

@@ -68,13 +68,17 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
+    procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
   end;
 
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, ISSJoinville.GravarXml, ISSJoinville.LerXml;
+  ACBrUtil, ACBrDFeException,
+  ACBrXmlDocument, ACBrXmlReader,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
+  ISSJoinville.GravarXml, ISSJoinville.LerXml;
 
 { TACBrNFSeProviderISSJoinville204 }
 
@@ -154,14 +158,104 @@ begin
     Result := Result + '\Homologacao\';
 end;
 
+procedure TACBrNFSeProviderISSJoinville204.TratarRetornoConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse);
+var
+  Document: TACBrXmlDocument;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  AErro: TNFSeEventoCollectionItem;
+  ANota: TNotaFiscal;
+  NumRps: String;
+  I: Integer;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Response.Situacao := '3'; // Processado com Falhas
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response, 'ListaMensagemRetornoLote', 'MensagemRetornoLote');
+
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Situacao'), tcStr);
+
+      ANode := ANode.Childrens.FindAnyNs('ListaNfse');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod202;
+        AErro.Descricao := Desc202;
+        Exit;
+      end;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfse');
+      if not Assigned(ANodeArray) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      for I := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        ANode := ANodeArray[I];
+        AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+        if Assigned(ANota) then
+          ANota.XmlNfse := ANode.OuterXml
+        else
+        begin
+          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+        end;
+
+        SalvarXmlNfse(ANota);
+
+        Response.Situacao := '4'; // Processado com sucesso pois retornou a nota
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
 { TACBrNFSeXWebserviceISSJoinville204 }
 
 function TACBrNFSeXWebserviceISSJoinville204.GetNamespace: string;
 begin
   if FPConfiguracoes.WebServices.AmbienteCodigo = 1 then
-    Result := 'xmlns:nfem="https://nfemws.joinville.sc.gov.br/"'
+    Result := 'xmlns="https://nfemws.joinville.sc.gov.br/"'
   else
-    Result := 'xmlns:nfem="https://nfemwshomologacao.joinville.sc.gov.br/"';
+    Result := 'xmlns="https://nfemwshomologacao.joinville.sc.gov.br/"';
 end;
 
 function TACBrNFSeXWebserviceISSJoinville204.GetSoapAction: string;

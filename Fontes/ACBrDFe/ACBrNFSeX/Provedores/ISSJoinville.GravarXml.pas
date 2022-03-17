@@ -73,6 +73,8 @@ begin
   GerarEnderecoExterior := True;
 
   TagTomador := 'TomadorServico';
+
+  GerarIDRps := True;  
 end;
 
 end.

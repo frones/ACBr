@@ -43,9 +43,26 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/03/2022
+-- ISSGoiania.Provider --
+[*] Incluido na função TratarXmlRetornado as chamadas:
+    RemoverDeclaracaoXML e RemoverIdentacao.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível ajuste para o provedor ISSJoinville.
+   Por: Italo Giurizzato Junior
+-- ISSJoinville.Provider/ISSJoinville.GravarXml --
+[*] Inclusão do GerarIDRps como true, para enviar o "Id" juntamente
+    a tag de RPS ao gerar o XML do RPS.
+    Realizada também a herança do método "TratarRetornoConsultaLoteRps" 
+    para tratar o retorno com erro e utilizamos o método "ProcessarMensagemErros" 
+    passando as tags de lista de erro e mensagem de erro corretos, 
+    conforme o retorno não padronizado do ABRASF.
+   Por: Luiz Sodré
+
 16/03/2022
 -- Fiorilli.Provider --
-[*] Incluido na função TratarXmlRetornado.
+[*] Incluido a função TratarXmlRetornado.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Novo Progresso/PA trocou para o provedor Fiorilli

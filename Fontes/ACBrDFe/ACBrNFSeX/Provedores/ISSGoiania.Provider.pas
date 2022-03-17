@@ -87,6 +87,7 @@ begin
   with ConfigAssinar do
   begin
     LoteGerarNFSe := True;
+//    ConsultarNFSeRps := True;
     IncluirURI := False;
   end;
 
@@ -388,7 +389,8 @@ begin
   Request := Request + '</ws:ConsultarNfseRps>';
 
   Result := Executar('http://nfse.goiania.go.gov.br/ws/ConsultarNfseRps', Request,
-                     ['ConsultarNfseRpsResult', 'ConsultarNfseRpsResposta'],
+                     ['ConsultarNfseRpsResult', 'GerarNfseResposta'],
+//                     ['ConsultarNfseRpsResult', 'ConsultarNfseRpsResposta'],
                      ['xmlns:ws="http://nfse.goiania.go.gov.br/ws/"']);
 end;
 
@@ -397,7 +399,9 @@ function TACBrNFSeXWebserviceISSGoiania200.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result));
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 end.

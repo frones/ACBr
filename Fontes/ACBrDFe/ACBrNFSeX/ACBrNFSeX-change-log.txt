@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/03/2022
+-- Citta.Provider --
+[*] Sobreescrita a função StrToSituacaoTributaria pois o provedor 
+    se utiliza de valores diferentes.
+   Por: Italo Giurizzato Junior
+
 17/03/2022
 -- infisc.LerXml --
 [*] Incluida a linha para ler o nome do pais da transportadora.

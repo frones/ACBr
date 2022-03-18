@@ -40,6 +40,20 @@ type
     procedure CampoString_ValorVazio_Ocorrencia1_GeraTag;
     procedure CampoString_ValorVazio_OcorrenciaZero_NaoGeraTag;
     procedure CampoString_ValorLongo_GeraCampo_GeraAlerta;
+    procedure CampoInt_ValorQualquer_OcorrenciaMenosUm_NaoGeraTag;
+    procedure CampoInt_ValorZero_OcorrenciaZero_NaoGeraTag;
+    procedure CampoInt_ValorString_OcorrenciaUm_GeraTagComValorZero;
+    procedure CampoInt_ValorPreenchido255_OcorrenciaUm_GeraTag;
+    procedure CampoInt_ValorPreenchido255_OcorrenciaUm_NaoGeraAlerta;
+    procedure CampoInt_ValorPreenchidoLimiteInteiro_OcorrenciaUm_GeraTag;
+    procedure CampoInt_ValorPreenchidoLimiteInteiro_TamanhoMaximo5_GeraAlerta;
+    procedure CampoInt64_ValorQualquer_OcorrenciaMenosUm_NaoGeraTag;
+    procedure CampoInt64_ValorZero_OcorrenciaZero_NaoGeraTag;
+    procedure CampoInt64_ValorString_OcorrenciaUm_GeraTagComValorZero;
+    procedure CampoInt64_ValorPreenchido255_OcorrenciaUm_GeraTag;
+    procedure CampoInt64_ValorPreenchido255_OcorrenciaUm_NaoGeraAlerta;
+    procedure CampoInt64_ValorPreenchidoLimiteInteiro64_OcorrenciaUm_GeraTag;
+    procedure CampoInt64_ValorPreenchidoLimiteInteiro_TamanhoMaximo15_GeraAlerta;
 
     {  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
@@ -290,6 +304,138 @@ begin
   UmGerador.wCampo(tcStr, '', 'Recibo', 1, 25, 1, '123456789012345678901234567890');
   a := UmGerador.ArquivoFormatoXML;
   CheckEquals('<Recibo>123456789012345678901234567890</Recibo>', a);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorQualquer_OcorrenciaMenosUm_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 30, -1, 1337);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorZero_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 30, 0, 0);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorString_OcorrenciaUm_GeraTagComValorZero;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 30, 1, 'VaiVirarZero');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>0</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorPreenchido255_OcorrenciaUm_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 30, 1, 255);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>255</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorPreenchido255_OcorrenciaUm_NaoGeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 30, 1, 255);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckEquals('', a, 'Não deveria conter um alerta.');
+
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorPreenchidoLimiteInteiro_OcorrenciaUm_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 30, 1, 2147483647);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>2147483647</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoInt_ValorPreenchidoLimiteInteiro_TamanhoMaximo5_GeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt, '', 'Recibo', 1, 5, 1, 2147483647);
+  //a := UmGerador.ArquivoFormatoXML;
+  //CheckEquals('<Recibo>2147483647</Recibo>', a);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorQualquer_OcorrenciaMenosUm_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 30, -1, 1337);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorZero_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 30, 0, 0);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorString_OcorrenciaUm_GeraTagComValorZero;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 30, 1, 'VaiVirarZero');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>0</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorPreenchido255_OcorrenciaUm_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 30, 1, 255);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>255</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorPreenchido255_OcorrenciaUm_NaoGeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 30, 1, 255);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckEquals('', a, 'Não deveria conter um alerta.');
+
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorPreenchidoLimiteInteiro64_OcorrenciaUm_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 30, 1, 9223372036854775807);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>9223372036854775807</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoInt64_ValorPreenchidoLimiteInteiro_TamanhoMaximo15_GeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcInt64, '', 'Recibo', 1, 15, 1, 9223372036854775807);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>9223372036854775807</Recibo>', a);
   a := UmGerador.ListaDeAlertas.Text;
   CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
 end;

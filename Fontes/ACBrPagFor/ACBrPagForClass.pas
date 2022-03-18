@@ -81,13 +81,9 @@ type
   private
     FTipo: TTipoInscricao; // Tamanho 1
     FNumero: String; // Tamanho 14 ou 15
-	FPixTipoChave: String;
-    FPixMensagem: String;
   public
     property Tipo: TTipoInscricao read FTipo write FTipo;
     property Numero: String read FNumero write FNumero;
-	property PixTipoChave: String read FPixTipoChave write FPixTipoChave;
-    property PixMensagem: String read FPixMensagem write FPixMensagem;
   end;
 
   TAgencia = class(TObject)
@@ -305,6 +301,7 @@ type
     FContaCorrente: TContaCorrente;
     FNome: String; // Tamanho 30
     FInscricao: TInscricao;
+    FIDTipoTransferencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -314,6 +311,7 @@ type
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
     property Nome: String read FNome write FNome;
     property Inscricao: TInscricao read FInscricao write FInscricao;
+    property IDTipoTransfencia: String read FIDTipoTransferencia write FIDTipoTransferencia;
   end;
 
   TMoeda = class(TObject)
@@ -489,6 +487,10 @@ type
     FCodOcorrencia: string;
     FDescOcorrencia: String;
     FCodigoISPB: Integer;
+    FPixTipoChave: TTipoChavePIX;
+    FPixMensagem: String;
+    FPixTXID: string;
+    FPixChave: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -511,6 +513,10 @@ type
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
     property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
+    property PixTipoChave: TTipoChavePix read FPixTipoChave write FPixTipoChave;
+    property PixMensagem: String read FPixMensagem write FPixMensagem;
+    property PixTXID: String read FPixTXID write FPixTXID;
+    property PixChave: String read FPixChave write FPixChave;
   end;
 
   TSegmentoBList = class(TObjectList)
@@ -737,6 +743,7 @@ type
     FCodigoComp: String; // Tamanho 2
     FAviso: Integer; // Tamanho 1
     FCodOcorrencia : String; // Tamanho 2
+    FNumeroDocumento: Integer;
 
     FSegmentoB: TSegmentoBList;
     FSegmentoC: TSegmentoCList;
@@ -770,6 +777,7 @@ type
     property CodOcorrencia: String read FCodOcorrencia write FCodOcorrencia;
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
+    property NumeroDocumento: Integer read FNumeroDocumento write FNumeroDocumento;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
     property SegmentoD: TSegmentoDList read FSegmentoD write SetSegmentoD;
@@ -923,6 +931,8 @@ type
     FPagador: TPagador;
     FBeneficiario: TBeneficiario;
     FSacadorAvalista: TSacadorAvalista;
+    FChave: String;
+    FTXID: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -932,6 +942,8 @@ type
     property Pagador: TPagador read FPagador write FPagador;
     property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
     property SacadorAvalista: TSacadorAvalista read FSacadorAvalista write FSacadorAvalista;
+    property Chave: string read FChave write FChave;
+    property TXID: string read FTXID write FTXID;
   end;
 
   TSegmentoJ52List = class(TObjectList)
@@ -2147,6 +2159,7 @@ begin
   inherited Create;
   FInscricao := TInscricao.Create;
   FEndereco  := TEndereco.Create;
+  FPixTipoChave := tcpNenhum;
 end;
 
 destructor TSegmentoB.Destroy;

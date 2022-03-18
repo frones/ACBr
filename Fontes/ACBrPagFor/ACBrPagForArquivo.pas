@@ -88,7 +88,7 @@ type
 implementation
 
 uses
-  ACBrPagFor;
+  ACBrPagFor, ACBrUtil;
 
 { TRegistro }
 
@@ -150,6 +150,10 @@ begin
     ArquivoGerado := TStringList.Create;
     try
       ArquivoGerado.Add(LocPagForTxt);
+
+      // remove todas as linhas em branco do arquivo
+      RemoveEmptyLines(ArquivoGerado);
+
       ArquivoGerado.SaveToFile(CaminhoArquivo);
       Result := True;
     finally

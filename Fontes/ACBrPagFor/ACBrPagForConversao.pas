@@ -46,11 +46,19 @@ uses
 type
   TVersaoLayout = (ve084);
 
-  TBanco = (pagNenhum, pagBancoDoBrasil, pagSantander, pagCaixaEconomica,
-            pagCaixaSicob, pagBradesco, pagItau, pagBancoMercantil, pagSicred,
-            pagBancoob, pagBanrisul, pagBanestes, pagHSBC, pagBancoDoNordeste,
-            pagBRB, pagBicBanco, pagBradescoSICOOB, pagBancoSafra,
-            pagSafraBradesco, pagBancoCECRED, pagUnibanco);
+  TBanco = (pagNenhum, pagABCBrasil, pagAgibank, pagAlfa, pagAndbank, pagB3, pagBancodaAmazonia, pagBancodaChinaBrasil,
+    pagBancodoBrasil, pagBancodoEstadodeSergipe, pagBancodoEstadodoPara, pagBanrisul, pagBancoDoNordeste, pagBANDEPE,
+    pagBANESTES, pagBankofAmericaMerrillLynch, pagBCV, pagBEXSBancodeCambio, pagBMG, pagBNPParibasBrasil, pagBNYMellonBanco,
+    pagBOCOMBBM, pagBradescard, pagBradesco, pagBRB, pagBS2, pagBTGPactual, pagC6Consignado, pagCaixaEconomica,
+    pagCaixaGeralBrasil, pagCargill, pagCetelem, pagChinaConstructionBank, pagCifra, pagCitibankNA, pagCitibank,
+    pagCreditAgricoleBrasil, pagCreditSuisse, pagDaycoval, pagDeutscheBank, pagDigimais, pagFibra, pagFinaxis, pagGenial,
+    pagGuanabara, pagHipercardBancoMultiplo, pagHSBC, pagInbursa, pagIndustrialdoBrasil, pagINGBankNV, pagInter,
+    pagInvestcredUni, pagItau, pagJPMorgan, pagJSafra, pagJohnDeere, pagJPMorganChaseBank,NationalAssociation,
+    pagKirtonBank, pagLetsbank, pagLusoBrasileiro, pagMaster, pagMercantil, pagMizuhodoBrasil, pagModal, pagMSBank,
+    pagMUFGBrasil, pagOleBonsucessoConsignado, pagOriginal, pagPAN, pagParanaBanco, pagPaulista, pagPine, pagRabobank,
+    pagRendimento, pagRodobens, pagSafra, pagSantander, pagScotiabankBrasil, pagSemear, pagSenff, pagSicoob, pagSicredi,
+    pagSocieteGeneraleBrasil, pagSorocred, pagStateStreetBrasil, pagSumitomoMitsui, pagTopazio, pagTravelex, pagTriangulo,
+    pagUBSBrasil, pagVoiter, pagVotorantim, pagVR, pagWesternUniondoBrasil, pagXP, pagBancoCECRED);
 
   TTipoInscricao = (tiIsento, tiCPF, tiCNPJ, tiPISPASEP, tiOutros);
 
@@ -87,7 +95,7 @@ type
                       flDebitoContaCorrente, flExtratoGestaoCaixa,
                       flDepositoJudicialContaCorrente, flCartaoSalarioItau,
                       flDepositoJudicialPoupanca, flExtratoContaInvestimento,
-                      flTributoGNRe, flNenhum);
+                      flTributoGNRe, flPIXTransferencia, flPIXQRCode, flNenhum);
 
   TTipoMovimento = (tmInclusao, tmConsulta, tmEstorno, tmAlteracao,
                     tmLiquidacao, tmExclusao);
@@ -142,6 +150,9 @@ type
                          cpgContribuicaoRetidaSobreNfFaturaEmpresaPrestadoraServicoCNPJ,
                          ReclamatoriaTrabalhistaCNPJ);
 
+  TTipoChavePix = (tcpNenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria);
+
+
 function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string; const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString: array of string; const AEnumerados: array of variant): variant;
 
@@ -170,6 +181,7 @@ function StrToInMovimento(var ok: boolean; const s: string): TInstrucaoMovimento
 function TpMoedaToStr(const t: TTipoMoeda): String;
 
 function TpIndTributoToStr(const t: TIndTributo): String;
+function StrToIndTributo(var ok: boolean; const s:string): TIndTributo;
 
 function TpOperacaoToStr(const t: TTipoOperacao): String;
 function StrToTpOperacao(var ok: boolean; const s:string): TTipoOperacao;
@@ -180,9 +192,14 @@ function StrToTpMovimentoPagto(var ok:boolean; const s:string): TTipoMovimentoPa
 function CodigoPagamentoGpsToStr(const t: TCodigoPagamentoGps): String;
 function StrToCodigoPagamentoGps(var ok: boolean; const s: string): TCodigoPagamentoGps;
 
+function TipoChavePixToStr(const t: TTipoChavePIX): String;
+function StrToTipoChavePIX(var ok:boolean; const s: string): TTipoChavePIX;
+
 function TpTributoToStr(const t: TTipoTributo): String;
 
-function DescricaoRetornoItau(const ADesc: string): string;
+function LinhaDigitavelParaBarras(const linha:string):string;
+
+function DescricaoRetornoItau(ADesc: string): string;
 
 function DescricaoRetornoSantander(const ADesc: string): string;
 
@@ -319,45 +336,81 @@ end;
 *)
 function BancoToStr(const t: TBanco): String;
 begin
-  result := EnumeradoToStr(t, ['000', '001', '033', '104',
-                               '000', '237', '341', '389', '748',
-                               '756', '000', '000', '399', '000',
-                               '000', '000', '000', '422',
-                               '000', '085', '409'],
-           [pagNenhum, pagBancoDoBrasil, pagSantander, pagCaixaEconomica,
-            pagCaixaSicob, pagBradesco, pagItau, pagBancoMercantil, pagSicred,
-            pagBancoob, pagBanrisul, pagBanestes, pagHSBC, pagBancoDoNordeste,
-            pagBRB, pagBicBanco, pagBradescoSICOOB, pagBancoSafra,
-            pagSafraBradesco, pagBancoCECRED, pagUnibanco]);
+  result := EnumeradoToStr(t, ['000', '246', '121', '025', '065', '096', '003', '083', '001', '047', '037', '041', '004', '024', '021',
+      '755', '250', '144', '318', '752', '017', '107', '063', '237', '070', '218', '208', '626', '104', '473', '040', '739', '320', '233',
+      '477', '745', '222', '505', '707', '487', '654', '224', '094', '125', '612', '062', '269', '012', '604', '492', '077', '249', '341',
+      '376', '074', '217', '488', '399', '630', '600', '243', '389', '370', '746', '128', '456', '169', '212', '623', '254', '611', '643',
+      '747', '633', '120', '422', '033', '751', '743', '276', '756', '748', '366', '299', '014', '464', '082', '095', '634', '129', '653',
+      '655', '610', '119', '102', '085'],
+      [pagNenhum, pagABCBrasil, pagAgibank, pagAlfa, pagAndbank, pagB3, pagBancodaAmazonia, pagBancodaChinaBrasil,
+        pagBancodoBrasil, pagBancodoEstadodeSergipe, pagBancodoEstadodoPara, pagBanrisul, pagBancoDoNordeste, pagBANDEPE,
+        pagBANESTES, pagBankofAmericaMerrillLynch, pagBCV, pagBEXSBancodeCambio, pagBMG, pagBNPParibasBrasil, pagBNYMellonBanco,
+        pagBOCOMBBM, pagBradescard, pagBradesco, pagBRB, pagBS2, pagBTGPactual, pagC6Consignado, pagCaixaEconomica,
+        pagCaixaGeralBrasil, pagCargill, pagCetelem, pagChinaConstructionBank, pagCifra, pagCitibankNA, pagCitibank,
+        pagCreditAgricoleBrasil, pagCreditSuisse, pagDaycoval, pagDeutscheBank, pagDigimais, pagFibra, pagFinaxis, pagGenial,
+        pagGuanabara, pagHipercardBancoMultiplo, pagHSBC, pagInbursa, pagIndustrialdoBrasil, pagINGBankNV, pagInter,
+        pagInvestcredUni, pagItau, pagJPMorgan, pagJSafra, pagJohnDeere, pagJPMorganChaseBank,NationalAssociation,
+        pagKirtonBank, pagLetsbank, pagLusoBrasileiro, pagMaster, pagMercantil, pagMizuhodoBrasil, pagModal, pagMSBank,
+        pagMUFGBrasil, pagOleBonsucessoConsignado, pagOriginal, pagPAN, pagParanaBanco, pagPaulista, pagPine, pagRabobank,
+        pagRendimento, pagRodobens, pagSafra, pagSantander, pagScotiabankBrasil, pagSemear, pagSenff, pagSicoob, pagSicredi,
+        pagSocieteGeneraleBrasil, pagSorocred, pagStateStreetBrasil, pagSumitomoMitsui, pagTopazio, pagTravelex, pagTriangulo,
+        pagUBSBrasil, pagVoiter, pagVotorantim, pagVR, pagWesternUniondoBrasil, pagXP, pagBancoCECRED]);
 end;
 
 function BancoToDesc(const t: TBanco): String;
 begin
-  result := EnumeradoToStr(t, ['Nenhum', 'Banco do Brasil', 'Santander',
-                               'Caixa Economica Federal', 'Caixa Sicob',
-                               'Bradesco', 'Itau', 'Banco Mercantil',
-                               'Sicred', 'Bancoob', 'Banrisul', 'Banestes',
-                               'HSBC', 'Banco do Nordeste', 'BRB',
-                               'Bic Banco', 'Bradesco Sicob', 'Banco Safra',
-                               'Safra Bradesco', 'Ailos', 'Unibanco'],
-           [pagNenhum, pagBancoDoBrasil, pagSantander, pagCaixaEconomica,
-            pagCaixaSicob, pagBradesco, pagItau, pagBancoMercantil, pagSicred,
-            pagBancoob, pagBanrisul, pagBanestes, pagHSBC, pagBancoDoNordeste,
-            pagBRB, pagBicBanco, pagBradescoSICOOB, pagBancoSafra,
-            pagSafraBradesco, pagBancoCECRED, pagUnibanco]);
+  result := EnumeradoToStr(t, ['Nenhum', 'ABC Brasil S.A.','Agibank S.A.','Alfa S.A.','Andbank','B3 S.A.','Banco da Amazonia S.A.',
+      'Banco da China Brasil S.A.','Banco do Brasil S.A.','Banco do Estado de Sergipe S.A.','Banco do Estado do Para S.A.',
+      'Banco do Estado do Rio Grande do Sul S.A.','Banco do Nordeste do Brasil S.A.','BANDEPE S.A.','BANESTES S.A. Banco do Estado do Espirito Santo',
+      'Bank of America Merrill Lynch Banco Multiplo S.A.','BCV - Banco de Credito e Varejo S.A.','BEXS Banco de Cambio S.A.','BMG S.A.',
+      'BNP Paribas Brasil S.A.','BNY Mellon Banco S.A.','BOCOM BBM S.A.','Bradescard S.A.','BANCO BRADESCO S.A.','BRB - Banco de Brasilia S.A.','BS2 S.A.',
+      'BTG Pactual S.A.','C6 Consignado S.A.','Caixa Economica Federal','Caixa Geral - Brasil S.A.','Cargill S.A.','Cetelem S.A.','China Construction Bank',
+      'Cifra S.A.','Citibank N.A.','Citibank S.A.','Credit Agricole Brasil S.A.','Credit Suisse','Daycoval S.A.','Deutsche Bank S.A. - Banco Alemao',
+      'Digimais S.A.','Fibra S.A.','Finaxis S.A.','Genial S.A.','Guanabara S.A.','Hipercard Banco Multiplo S.A.','HSBC Brasil S.A. - Banco de Investimento',
+      'Inbursa S.A.','Industrial do Brasil S.A.','ING Bank N.V.','Inter S.A.','Investcred UniS.A.','Itau Unibanco S.A.','J. P. Morgan S.A.','J. Safra S.A.',
+      'John Deere S.A.','JPMorgan Chase Bank, National Association','Kirton Bank S.A. - Multiplo','Letsbank S.A.','Luso Brasileiro S.A.','Master S.A.',
+      'Mercantil do Brasil S.A.','Mizuho do Brasil S.A.','Modal S.A.','MS Bank S.A. Banco de Cambio','MUFG Brasil S.A.','Ole Bonsucesso Consignado S.A.',
+      'Original S.A.','PAN S.A.','Parana Banco S.A.','Paulista S.A.','Pine S.A.','Rabobank International Brasil S.A.','Rendimento S.A.','Rodobens S.A.',
+      'Safra S.A.','Santander','Scotiabank Brasil S.A. Banco Multiplo','Semear S.A.','Senff S.A.','Sicoob S.A.','Sicredi S.A.','Societe Generale Brasil S.A.',
+      'Sorocred S.A. - Multiplo','State Street Brasil S.A. - Banco Comercial','Sumitomo Mitsui Brasileiro S.A.','Topazio S.A.','Travelex Banco de Cambio S.A.',
+      'Triangulo S.A.','UBS Brasil Banco de Investimento S.A.','Voiter S.A.','Votorantim S.A.','VR S.A.','Western Union do Brasil S.A.','XP S.A.',
+      'Cooperativa Central de Crédito – Ailos'],
+           [pagNenhum, pagABCBrasil, pagAgibank, pagAlfa, pagAndbank, pagB3, pagBancodaAmazonia, pagBancodaChinaBrasil,
+        pagBancodoBrasil, pagBancodoEstadodeSergipe, pagBancodoEstadodoPara, pagBanrisul, pagBancoDoNordeste, pagBANDEPE,
+        pagBANESTES, pagBankofAmericaMerrillLynch, pagBCV, pagBEXSBancodeCambio, pagBMG, pagBNPParibasBrasil, pagBNYMellonBanco,
+        pagBOCOMBBM, pagBradescard, pagBradesco, pagBRB, pagBS2, pagBTGPactual, pagC6Consignado, pagCaixaEconomica,
+        pagCaixaGeralBrasil, pagCargill, pagCetelem, pagChinaConstructionBank, pagCifra, pagCitibankNA, pagCitibank,
+        pagCreditAgricoleBrasil, pagCreditSuisse, pagDaycoval, pagDeutscheBank, pagDigimais, pagFibra, pagFinaxis, pagGenial,
+        pagGuanabara, pagHipercardBancoMultiplo, pagHSBC, pagInbursa, pagIndustrialdoBrasil, pagINGBankNV, pagInter,
+        pagInvestcredUni, pagItau, pagJPMorgan, pagJSafra, pagJohnDeere, pagJPMorganChaseBank,NationalAssociation,
+        pagKirtonBank, pagLetsbank, pagLusoBrasileiro, pagMaster, pagMercantil, pagMizuhodoBrasil, pagModal, pagMSBank,
+        pagMUFGBrasil, pagOleBonsucessoConsignado, pagOriginal, pagPAN, pagParanaBanco, pagPaulista, pagPine, pagRabobank,
+        pagRendimento, pagRodobens, pagSafra, pagSantander, pagScotiabankBrasil, pagSemear, pagSenff, pagSicoob, pagSicredi,
+        pagSocieteGeneraleBrasil, pagSorocred, pagStateStreetBrasil, pagSumitomoMitsui, pagTopazio, pagTravelex, pagTriangulo,
+        pagUBSBrasil, pagVoiter, pagVotorantim, pagVR, pagWesternUniondoBrasil, pagXP, pagBancoCECRED]);
 end;
 
 function StrToBanco(var ok: boolean; const s: String): TBanco;
 begin
-  Result := StrToEnumerado(ok, s,
-                           ['000', '001', '033', '104', '000', '237', '341',
-                            '389', '748', '756', '000', '000', '399', '000',
-                            '000', '000', '000', '422', '000', '085', '409'],
-                           [pagNenhum, pagBancoDoBrasil, pagSantander, pagCaixaEconomica,
-                            pagCaixaSicob, pagBradesco, pagItau, pagBancoMercantil, pagSicred,
-                            pagBancoob, pagBanrisul, pagBanestes, pagHSBC, pagBancoDoNordeste,
-                            pagBRB, pagBicBanco, pagBradescoSICOOB, pagBancoSafra,
-                            pagSafraBradesco, pagBancoCECRED, pagUnibanco]);
+  Result := StrToEnumerado(ok, s, ['000', '246', '121', '025', '065', '096', '003', '083', '001', '047', '037', '041', '004', '024', '021',
+      '755', '250', '144', '318', '752', '017', '107', '063', '237', '070', '218', '208', '626', '104', '473', '040', '739', '320', '233',
+      '477', '745', '222', '505', '707', '487', '654', '224', '094', '125', '612', '062', '269', '012', '604', '492', '077', '249', '341',
+      '376', '074', '217', '488', '399', '630', '600', '243', '389', '370', '746', '128', '456', '169', '212', '623', '254', '611', '643',
+      '747', '633', '120', '422', '033', '751', '743', '276', '756', '748', '366', '299', '014', '464', '082', '095', '634', '129', '653',
+      '655', '610', '119', '102', '085'],
+            [pagNenhum, pagABCBrasil, pagAgibank, pagAlfa, pagAndbank, pagB3, pagBancodaAmazonia, pagBancodaChinaBrasil,
+        pagBancodoBrasil, pagBancodoEstadodeSergipe, pagBancodoEstadodoPara, pagBanrisul, pagBancoDoNordeste, pagBANDEPE,
+        pagBANESTES, pagBankofAmericaMerrillLynch, pagBCV, pagBEXSBancodeCambio, pagBMG, pagBNPParibasBrasil, pagBNYMellonBanco,
+        pagBOCOMBBM, pagBradescard, pagBradesco, pagBRB, pagBS2, pagBTGPactual, pagC6Consignado, pagCaixaEconomica,
+        pagCaixaGeralBrasil, pagCargill, pagCetelem, pagChinaConstructionBank, pagCifra, pagCitibankNA, pagCitibank,
+        pagCreditAgricoleBrasil, pagCreditSuisse, pagDaycoval, pagDeutscheBank, pagDigimais, pagFibra, pagFinaxis, pagGenial,
+        pagGuanabara, pagHipercardBancoMultiplo, pagHSBC, pagInbursa, pagIndustrialdoBrasil, pagINGBankNV, pagInter,
+        pagInvestcredUni, pagItau, pagJPMorgan, pagJSafra, pagJohnDeere, pagJPMorganChaseBank,NationalAssociation,
+        pagKirtonBank, pagLetsbank, pagLusoBrasileiro, pagMaster, pagMercantil, pagMizuhodoBrasil, pagModal, pagMSBank,
+        pagMUFGBrasil, pagOleBonsucessoConsignado, pagOriginal, pagPAN, pagParanaBanco, pagPaulista, pagPine, pagRabobank,
+        pagRendimento, pagRodobens, pagSafra, pagSantander, pagScotiabankBrasil, pagSemear, pagSenff, pagSicoob, pagSicredi,
+        pagSocieteGeneraleBrasil, pagSorocred, pagStateStreetBrasil, pagSumitomoMitsui, pagTopazio, pagTravelex, pagTriangulo,
+        pagUBSBrasil, pagVoiter, pagVotorantim, pagVR, pagWesternUniondoBrasil, pagXP, pagBancoCECRED]);
 end;
 
 function TpInscricaoToStr(const t: TTipoInscricao): String;
@@ -437,7 +490,7 @@ begin
                           ['01', '02', '03', '04', '05', '06', '07', '10', '11', '13',
                            '16', '17', '18', '19', '20', '21', '22', '23', '24', '25',
                            '26', '27', '30', '31', '32', '33', '35', '40', '41', '43',
-                           '44', '50', '60', '70', '71', '72', '73', '91', '  '],
+                           '44', '50', '60', '70', '71', '72', '73', '91', '45', '47', '  '],
                          [flCreditoContaCorrente, flChequePagamento, flDocTed,
                           flCartaoSalario, flCreditoContaPoupanca, flCreditoContaCorrenteMesmaTitularidade, flDocMesmaTitularidade, flOPDisposicao,
                           flPagamentoContas, flPagamentoConcessionarias, flTributoDARFNormal, flTributoGPS,
@@ -454,7 +507,7 @@ begin
                           flDebitoContaCorrente, flCartaoSalarioItau,
                           flExtratoGestaoCaixa, flDepositoJudicialContaCorrente,
                           flDepositoJudicialPoupanca, flExtratoContaInvestimento,
-                          flTributoGNRe, flNenhum]);
+                          flTributoGNRe, flPIXTransferencia, flPIXQRCode, flNenhum]);
 end;
 
 function FmLancamentoToStr(const t: TFormaLancamento): String;
@@ -463,7 +516,7 @@ begin
                           ['01', '02', '03', '04', '05', '06', '07', '10', '11', '13',
                            '16', '17', '18', '19', '20', '21', '22', '23', '24', '25',
                            '26', '27', '30', '31', '32', '33', '35', '40', '41', '43',
-                           '44', '50', '60', '70', '71', '72', '73', '91', '  '],
+                           '44', '50', '60', '70', '71', '72', '73', '91', '45', '47', '  '],
                          [flCreditoContaCorrente, flChequePagamento, flDocTed,
                           flCartaoSalario, flCreditoContaPoupanca, flCreditoContaCorrenteMesmaTitularidade, flDocMesmaTitularidade, flOPDisposicao,
                           flPagamentoContas, flPagamentoConcessionarias, flTributoDARFNormal, flTributoGPS,
@@ -480,7 +533,7 @@ begin
                           flDebitoContaCorrente, flCartaoSalarioItau,
                           flExtratoGestaoCaixa, flDepositoJudicialContaCorrente,
                           flDepositoJudicialPoupanca, flExtratoContaInvestimento,
-                          flTributoGNRe, flNenhum]);
+                          flTributoGNRe, flPIXTransferencia, flPIXQRCode, flNenhum]);
 end;
 
 function TpMovimentoToStr(const t: TTipoMovimento): String;
@@ -554,6 +607,14 @@ begin
                            itIPVA, itLicenciamento, itDPVAT]);
 end;
 
+function StrToIndTributo(var ok: boolean; const s:string): TIndTributo;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['00', '16', '18', '17', '21', '25', '26', '27'],
+                           [itNenhum, itDANFNormal, itDARFSimples, itGPS, itDARJ,
+                           itIPVA, itLicenciamento, itDPVAT]);
+end;
+
 function TpOperacaoToStr(const t: TTipoOperacao): String;
 begin
   result := EnumeradoToStr(t, ['C', 'D', 'E', 'G', 'I', 'R', 'T'],
@@ -623,6 +684,18 @@ begin
                                    ReclamatoriaTrabalhistaCNPJ]);
 end;
 
+function TipoChavePixToStr(const t: TTipoChavePIX): String;
+begin
+  result := EnumeradoToStr(t, ['  ', '01', '02', '03', '04'],
+                  [tcpnenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria]);
+end;
+
+function StrToTipoChavePIX(var ok:boolean; const s: string): TTipoChavePIX;
+begin
+  result := StrToEnumerado(ok, s, ['', '  ', '01', '02', '03', '04'],
+       [tcpNenhum, tcpNenhum, tcpTelefone, tcpEmail, tcpCPFCNPJ, tcpAleatoria]);
+end;
+
 function TpTributoToStr(const t: TTipoTributo): String;
 begin
   Result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '07', '08', '', '11'],
@@ -630,242 +703,266 @@ begin
                              ttIPVA, ttDPVAT, ttLicenciamento, ttFGTS])
 end;
 
-function DescricaoRetornoItau(const ADesc: string): string;
+function LinhaDigitavelParaBarras(const linha:string):string;
 begin
-  if ADesc = '00' then
-    Result := 'PAGAMENTO EFETUADO'
-  else if ADesc = 'AE' then
-    Result := 'DATA DE PAGAMENTO ALTERADA'
-  else if ADesc = 'AG' then
-    Result := 'NÚMERO DO LOTE INVÁLIDO'
-  else if ADesc = 'AH' then
-    Result := 'NÚMERO SEQUENCIAL DO REGISTRO NO LOTE INVÁLIDO'
-  else if ADesc = 'AI' then
-    Result := 'PRODUTO DEMONSTRATIVO DE PAGAMENTO NÃO CONTRATADO'
-  else if ADesc = 'AJ' then
-    Result := 'TIPO DE MOVIMENTO INVÁLIDO'
-  else if ADesc = 'AL' then
-    Result := 'CÓDIGO DO BANCO FAVORECIDO INVÁLIDO'
-  else if ADesc = 'AM' then
-    Result := 'AGÊNCIA DO FAVORECIDO INVÁLIDA'
-  else if ADesc = 'AN' then
-    Result := 'CONTA CORRENTE DO FAVORECIDO INVÁLIDA / CONTA INVESTIMENTO EXTINTA EM 30/04/2011'
-  else if ADesc = 'AO' then
-    Result := 'NOME DO FAVORECIDO INVÁLIDO'
-  else if ADesc = 'AP' then
-    Result := 'DATA DE PAGAMENTO / DATA DE VALIDADE / HORA DE LANÇAMENTO / ARRECADAÇÃO / APURAÇÃO INVÁLIDA'
-  else if ADesc = 'AQ' then
-    Result := 'QUANTIDADE DE REGISTROS MAIOR QUE 999999'
-  else if ADesc = 'AR' then
-    Result := 'VALOR ARRECADADO / LANÇAMENTO INVÁLIDO'
-  else if ADesc = 'BC' then
-    Result := 'NOSSO NÚMERO INVÁLIDO'
-  else if ADesc = 'BD' then
-    Result := 'PAGAMENTO AGENDADO'
-  else if ADesc = 'BDCI' then
-    Result := 'PAGAMENTO ACATADO, PORÉM O CPF/CNPJ É INVÁLIDO.'
-  else if ADesc = 'BDCD' then
-    Result := 'PAGAMENTO ACATADO, PORÉM O CPF/CNPJ INFORMADO NÃO É O MESMO QUE ESTÁ CADASTRADO PARA A AGÊNCIA CONTA CREDITADA'
-  else if ADesc = 'BDCN' then
-    Result := 'PAGAMENTO ACATADO, PORÉM A AGÊNCIA/CONTA INFORMADA (AINDA) NÃO EXISTE'
-  else if ADesc = 'BE' then
-    Result := 'PAGAMENTO AGENDADO COM FORMA ALTEARADA PARA OP'
-  else if ADesc = 'BI' then
-    Result := 'CNPJ/CPF DO BENEFICIÁRIO INVÁLIDO NO SEGMENTO J-52 ou B INVÁLIDO'
-  else if ADesc = 'BL' then
-    Result := 'VALOR DA PARCELA INVÁLIDO'
-  else if ADesc = 'CD' then
-    Result := 'CNPJ / CPF INFORMADO DIVERGENTE DO CADASTRADO'
-  else if ADesc = 'CE' then
-    Result := 'PAGAMENTO CANCELADO'
-  else if ADesc = 'CF' then
-    Result := 'VALOR DO DOCUMENTO INVÁLIDO'
-  else if ADesc = 'CG' then
-    Result := 'VALOR DO ABATIMENTO INVÁLIDO'
-  else if ADesc = 'CH' then
-    Result := 'VALOR DO DESCONTO INVÁLIDO'
-  else if ADesc = 'CI' then
-    Result := 'CNPJ / CPF / IDENTIFICADOR / INSCRIÇÃO ESTADUAL / INSCRIÇÃO NO CAD / ICMS INVÁLIDO'
-  else if ADesc = 'CJ' then
-    Result := 'VALOR DA MULTA INVÁLIDO'
-  else if ADesc = 'CK' then
-    Result := 'TIPO DE INSCRIÇÃO INVÁLIDA'
-  else if ADesc = 'CL' then
-    Result := 'VALOR DO INSS INVÁLIDO'
-  else if ADesc = 'CM' then
-    Result := 'VALOR DO COFINS INVÁLIDO'
-  else if ADesc = 'CN' then
-    Result := 'CONTA NÃO CADASTRADA'
-  else if ADesc = 'CO' then
-    Result := 'VALOR DE OUTRAS ENTIDADES INVÁLIDO'
-  else if ADesc = 'CP' then
-    Result := 'CONFIRMAÇÃO DE OP CUMPRIDA'
-  else if ADesc = 'CQ' then
-    Result := 'SOMA DAS FATURAS DIFERE DO PAGAMENTO'
-  else if ADesc = 'CR' then
-    Result := 'VALOR DO CSLL INVÁLIDO'
-  else if ADesc = 'CS' then
-    Result := 'DATA DE VENCIMENTO DA FATURA INVÁLIDA'
-  else if ADesc = 'DA' then
-    Result := 'NÚMERO DE DEPEND. SALÁRIO FAMILIA INVALIDO'
-  else if ADesc = 'DB' then
-    Result := 'NÚMERO DE HORAS SEMANAIS INVÁLIDO'
-  else if ADesc = 'DC' then
-    Result := 'SALÁRIO DE CONTRIBUIÇÃO INSS INVÁLIDO'
-  else if ADesc = 'DD' then
-    Result := 'SALÁRIO DE CONTRIBUIÇÃO FGTS INVÁLIDO'
-  else if ADesc = 'DE' then
-    Result := 'VALOR TOTAL DOS PROVENTOS INVÁLIDO'
-  else if ADesc = 'DF' then
-    Result := 'VALOR TOTAL DOS DESCONTOS INVÁLIDO'
-  else if ADesc = 'DG' then
-    Result := 'VALOR LÍQUIDO NÃO NUMÉRICO'
-  else if ADesc = 'DH' then
-    Result := 'VALOR LIQ. INFORMADO DIFERE DO CALCULADO'
-  else if ADesc = 'DI' then
-    Result := 'VALOR DO SALÁRIO-BASE INVÁLIDO'
-  else if ADesc = 'DJ' then
-    Result := 'BASE DE CÁLCULO IRRF INVÁLIDA'
-  else if ADesc = 'DK' then
-    Result := 'BASE DE CÁLCULO FGTS INVÁLIDA'
-  else if ADesc = 'DL' then
-    Result := 'FORMA DE PAGAMENTO INCOMPATÍVEL COM HOLERITE'
-  else if ADesc = 'DM' then
-    Result := 'E-MAIL DO FAVORECIDO INVÁLIDO'
-  else if ADesc = 'DV' then
-    Result := 'DOC / TED DEVOLVIDO PELO BANCO FAVORECIDO'
-  else if ADesc = 'D0' then
-    Result := 'FINALIDADE DO HOLERITE INVÁLIDA'
-  else if ADesc = 'D1' then
-    Result := 'MÊS DE COMPETENCIA DO HOLERITE INVÁLIDA'
-  else if ADesc = 'D2' then
-    Result := 'DIA DA COMPETENCIA DO HOLETITE INVÁLIDA'
-  else if ADesc = 'D3' then
-    Result := 'CENTRO DE CUSTO INVÁLIDO'
-  else if ADesc = 'D4' then
-    Result := 'CAMPO NUMÉRICO DA FUNCIONAL INVÁLIDO'
-  else if ADesc = 'D5' then
-    Result := 'DATA INÍCIO DE FÉRIAS NÃO NUMÉRICA'
-  else if ADesc = 'D6' then
-    Result := 'DATA INÍCIO DE FÉRIAS INCONSISTENTE'
-  else if ADesc = 'D7' then
-    Result := 'DATA FIM DE FÉRIAS NÃO NUMÉRICO'
-  else if ADesc = 'D8' then
-    Result := 'DATA FIM DE FÉRIAS INCONSISTENTE'
-  else if ADesc = 'D9' then
-    Result := 'NÚMERO DE DEPENDENTES IR INVÁLIDO'
-  else if ADesc = 'EM' then
-    Result := 'CONFIRMAÇÃO DE OP EMITIDA'
-  else if ADesc = 'EX' then
-    Result := 'DEVOLUÇÃO DE OP NÃO SACADA PELO FAVORECIDO'
-  else if ADesc = 'E0' then
-    Result := 'TIPO DE MOVIMENTO HOLERITE INVÁLIDO'
-  else if ADesc = 'E1' then
-    Result := 'VALOR 01 DO HOLERITE / INFORME INVÁLIDO'
-  else if ADesc = 'E2' then
-    Result := 'VALOR 02 DO HOLERITE / INFORME INVÁLIDO'
-  else if ADesc = 'E3' then
-    Result := 'VALOR 03 DO HOLERITE / INFORME INVÁLIDO'
-  else if ADesc = 'E4' then
-    Result := 'VALOR 04 DO HOLERITE / INFORME INVÁLIDO'
-  else if ADesc = 'FC' then
-    Result := 'PAGAMENTO EFETUADO ATRAVÉS DE FINANCIAMENTO COMPROR'
-  else if ADesc = 'FD' then
-    Result := 'PAGAMENTO EFETUADO ATRAVÉS DE FINANCIAMENTO DESCOMPROR'
-  else if ADesc = 'HA' then
-    Result := 'ERRO NO HEADER DE ARQUIVO'
-  else if ADesc = 'HM' then
-    Result := 'ERRO NO HEADER DE LOTE'
-  else if ADesc = 'IB' then
-    Result := 'VALOR E/OU DATA DO DOCUMENTO INVÁLIDO'
-  else if ADesc = 'IC' then
-    Result := 'VALOR DO ABATIMENTO INVÁLIDO'
-  else if ADesc = 'ID' then
-    Result := 'VALOR DO DESCONTO INVÁLIDO'
-  else if ADesc = 'IE' then
-    Result := 'VALOR DA MORA INVÁLIDO'
-  else if ADesc = 'IF' then
-    Result := 'VALOR DA MULTA INVÁLIDO'
-  else if ADesc = 'IG' then
-    Result := 'VALOR DA DEDUÇÃO INVÁLIDO'
-  else if ADesc = 'IH' then
-    Result := 'VALOR DO ACRÉSCIMO INVÁLIDO'
-  else if ADesc = 'II' then
-    Result := 'DATA DE VENCIMENTO INVÁLIDA'
-  else if ADesc = 'IJ' then
-    Result := 'COMPETÊNCIA / PERÍODO REFERÊNCIA / PARCELA INVÁLIDA'
-  else if ADesc = 'IK' then
-    Result := 'TRIBUTO NÃO LIQUIDÁVEL VIA SISPAG OU NÃO CONVENIADO COM ITAÚ'
-  else if ADesc = 'IL' then
-    Result := 'CÓDIGO DE PAGAMENTO / EMPRESA /RECEITA INVÁLIDO'
-  else if ADesc = 'IM' then
-    Result := 'TIPO X FORMA NÃO COMPATÍVEL'
-  else if ADesc = 'IN' then
-    Result := 'BANCO/AGENCIA NÃO CADASTRADOS'
-  else if ADesc = 'IO' then
-    Result := 'DAC / VALOR / COMPETÊNCIA / IDENTIFICADOR DO LACRE INVÁLIDO'
-  else if ADesc = 'IP' then
-    Result := 'DAC DO CÓDIGO DE BARRAS INVÁLIDO'
-  else if ADesc = 'IQ' then
-    Result := 'DÍVIDA ATIVA OU NÚMERO DE ETIQUETA INVÁLIDO'
-  else if ADesc = 'IR' then
-    Result := 'PAGAMENTO ALTERADO'
-  else if ADesc = 'IS' then
-    Result := 'CONCESSIONÁRIA NÃO CONVENIADA COM ITAÚ'
-  else if ADesc = 'IT' then
-    Result := 'VALOR DO TRIBUTO INVÁLIDO'
-  else if ADesc = 'IU' then
-    Result := 'VALOR DA RECEITA BRUTA ACUMULADA INVÁLIDO'
-  else if ADesc = 'IV' then
-    Result := 'NÚMERO DO DOCUMENTO ORIGEM / REFERÊNCIA INVÁLIDO'
-  else if ADesc = 'IX' then
-    Result := 'CÓDIGO DO PRODUTO INVÁLIDO'
-  else if ADesc = 'LA' then
-    Result := 'DATA DE PAGAMENTO DE UM LOTE ALTERADA'
-  else if ADesc = 'LC' then
-    Result := 'LOTE DE PAGAMENTOS CANCELADO'
-  else if ADesc = 'NA' then
-    Result := 'PAGAMENTO CANCELADO POR FALTA DE AUTORIZAÇÃO'
-  else if ADesc = 'NB' then
-    Result := 'IDENTIFICAÇÃO DO TRIBUTO INVÁLIDA'
-  else if ADesc = 'NC' then
-    Result := 'EXERCÍCIO (ANO BASE) INVÁLIDO'
-  else if ADesc = 'ND' then
-    Result := 'CÓDIGO RENAVAM NÃO ENCONTRADO/INVÁLIDO'
-  else if ADesc = 'NE' then
-    Result := 'UF INVÁLIDA'
-  else if ADesc = 'NF' then
-    Result := 'CÓDIGO DO MUNICÍPIO INVÁLIDO'
-  else if ADesc = 'NG' then
-    Result := 'PLACA INVÁLIDA'
-  else if ADesc = 'NH' then
-    Result := 'OPÇÃO/PARCELA DE PAGAMENTO INVÁLIDA'
-  else if ADesc = 'NI' then
-    Result := 'TRIBUTO JÁ FOI PAGO OU ESTÁ VENCIDO'
-  else if ADesc = 'NR' then
-    Result := 'OPERAÇÃO NÃO REALIZADA'
-  else if ADesc = 'PD' then
-    Result := 'AQUISIÇÃO CONFIRMADA (EQUIVALE A OCORRÊNCIA 02 NO LAYOUT DE RISCO SACADO)'
-  else if ADesc = 'RJ' then
-    Result := 'REGISTRO REJEITADO'
-  else if ADesc = 'RS' then
-    Result := 'PAGAMENTO DISPONÍVEL PARA ANTECIPAÇÃO NO RISCO SACADO – MODALIDADE RISCO SACADO PÓS AUTORIZADO'
-  else if ADesc = 'SS' then
-    Result := 'PAGAMENTO CANCELADO POR INSUFICIÊNCIA DE SALDO/LIMITE DIÁRIO DE PAGTO'
-  else if ADesc = 'TA' then
-    Result := 'LOTE NÃO ACEITO - TOTAIS DO LOTE COM DIFERENÇA'
-  else if ADesc = 'TI' then
-    Result := 'TITULARIDADE INVÁLIDA'
-  else if ADesc = 'X1' then
-    Result := 'FORMA INCOMPATÍVEL COM LAYOUT 010'
-  else if ADesc = 'X2' then
-    Result := 'NÚMERO DA NOTA FISCAL INVÁLIDO'
-  else if ADesc = 'X3' then
-    Result := 'IDENTIFICADOR DE NF/CNPJ INVÁLIDO'
-  else if ADesc = 'X4' then
-    Result := 'FORMA 32 INVÁLIDA'
+  if length(linha) <> 47 then
+    raise Exception.Create('O tamanho da string não corresponde a uma linha digitável!')
   else
-    Result := 'RETORNO NÃO IDENTIFICADO'
+    Result := copy(linha, 01, 01) + copy(linha, 02, 03) + copy(linha, 33, 01) +
+           copy(linha, 34, 04) + copy(linha, 38, 10) + copy(linha, 05, 05) +
+           copy(linha, 11, 10) + copy(linha, 22, 10);
+end;
+
+function DescricaoRetornoItau(ADesc: string): string;
+
+  function GetOcorrencia(Codigo:string): string;
+  begin
+    if Codigo = '00' then
+      Result := 'PAGAMENTO EFETUADO'
+    else if Codigo = 'AE' then
+      Result := 'DATA DE PAGAMENTO ALTERADA'
+    else if Codigo = 'AG' then
+      Result := 'NÚMERO DO LOTE INVÁLIDO'
+    else if Codigo = 'AH' then
+      Result := 'NÚMERO SEQUENCIAL DO REGISTRO NO LOTE INVÁLIDO'
+    else if Codigo = 'AI' then
+      Result := 'PRODUTO DEMONSTRATIVO DE PAGAMENTO NÃO CONTRATADO'
+    else if Codigo = 'AJ' then
+      Result := 'TIPO DE MOVIMENTO INVÁLIDO'
+    else if Codigo = 'AL' then
+      Result := 'CÓDIGO DO BANCO FAVORECIDO INVÁLIDO'
+    else if Codigo = 'AM' then
+      Result := 'AGÊNCIA DO FAVORECIDO INVÁLIDA'
+    else if Codigo = 'AN' then
+      Result := 'CONTA CORRENTE DO FAVORECIDO INVÁLIDA / CONTA INVESTIMENTO EXTINTA EM 30/04/2011'
+    else if Codigo = 'AO' then
+      Result := 'NOME DO FAVORECIDO INVÁLIDO'
+    else if Codigo = 'AP' then
+      Result := 'DATA DE PAGAMENTO / DATA DE VALIDADE / HORA DE LANÇAMENTO / ARRECADAÇÃO / APURAÇÃO INVÁLIDA'
+    else if Codigo = 'AQ' then
+      Result := 'QUANTIDADE DE REGISTROS MAIOR QUE 999999'
+    else if Codigo = 'AR' then
+      Result := 'VALOR ARRECADADO / LANÇAMENTO INVÁLIDO'
+    else if Codigo = 'BC' then
+      Result := 'NOSSO NÚMERO INVÁLIDO'
+    else if Codigo = 'BD' then
+      Result := 'PAGAMENTO AGENDADO'
+    else if Codigo = 'BDCI' then
+      Result := 'PAGAMENTO ACATADO, PORÉM O CPF/CNPJ É INVÁLIDO.'
+    else if Codigo = 'BDCD' then
+      Result := 'PAGAMENTO ACATADO, PORÉM O CPF/CNPJ INFORMADO NÃO É O MESMO QUE ESTÁ CADASTRADO PARA A AGÊNCIA CONTA CREDITADA'
+    else if Codigo = 'BDCN' then
+      Result := 'PAGAMENTO ACATADO, PORÉM A AGÊNCIA/CONTA INFORMADA (AINDA) NÃO EXISTE'
+    else if Codigo = 'BE' then
+      Result := 'PAGAMENTO AGENDADO COM FORMA ALTEARADA PARA OP'
+    else if Codigo = 'BI' then
+      Result := 'CNPJ/CPF DO BENEFICIÁRIO INVÁLIDO NO SEGMENTO J-52 ou B INVÁLIDO'
+    else if Codigo = 'BL' then
+      Result := 'VALOR DA PARCELA INVÁLIDO'
+    else if Codigo = 'CD' then
+      Result := 'CNPJ / CPF INFORMADO DIVERGENTE DO CADASTRADO'
+    else if Codigo = 'CE' then
+      Result := 'PAGAMENTO CANCELADO'
+    else if Codigo = 'CF' then
+      Result := 'VALOR DO DOCUMENTO INVÁLIDO'
+    else if Codigo = 'CG' then
+      Result := 'VALOR DO ABATIMENTO INVÁLIDO'
+    else if Codigo = 'CH' then
+      Result := 'VALOR DO DESCONTO INVÁLIDO'
+    else if Codigo = 'CI' then
+      Result := 'CNPJ / CPF / IDENTIFICADOR / INSCRIÇÃO ESTADUAL / INSCRIÇÃO NO CAD / ICMS INVÁLIDO'
+    else if Codigo = 'CJ' then
+      Result := 'VALOR DA MULTA INVÁLIDO'
+    else if Codigo = 'CK' then
+      Result := 'TIPO DE INSCRIÇÃO INVÁLIDA'
+    else if Codigo = 'CL' then
+      Result := 'VALOR DO INSS INVÁLIDO'
+    else if Codigo = 'CM' then
+      Result := 'VALOR DO COFINS INVÁLIDO'
+    else if Codigo = 'CN' then
+      Result := 'CONTA NÃO CADASTRADA'
+    else if Codigo = 'CO' then
+      Result := 'VALOR DE OUTRAS ENTIDADES INVÁLIDO'
+    else if Codigo = 'CP' then
+      Result := 'CONFIRMAÇÃO DE OP CUMPRIDA'
+    else if Codigo = 'CQ' then
+      Result := 'SOMA DAS FATURAS DIFERE DO PAGAMENTO'
+    else if Codigo = 'CR' then
+      Result := 'VALOR DO CSLL INVÁLIDO'
+    else if Codigo = 'CS' then
+      Result := 'DATA DE VENCIMENTO DA FATURA INVÁLIDA'
+    else if Codigo = 'DA' then
+      Result := 'NÚMERO DE DEPEND. SALÁRIO FAMILIA INVALIDO'
+    else if Codigo = 'DB' then
+      Result := 'NÚMERO DE HORAS SEMANAIS INVÁLIDO'
+    else if Codigo = 'DC' then
+      Result := 'SALÁRIO DE CONTRIBUIÇÃO INSS INVÁLIDO'
+    else if Codigo = 'DD' then
+      Result := 'SALÁRIO DE CONTRIBUIÇÃO FGTS INVÁLIDO'
+    else if Codigo = 'DE' then
+      Result := 'VALOR TOTAL DOS PROVENTOS INVÁLIDO'
+    else if Codigo = 'DF' then
+      Result := 'VALOR TOTAL DOS DESCONTOS INVÁLIDO'
+    else if Codigo = 'DG' then
+      Result := 'VALOR LÍQUIDO NÃO NUMÉRICO'
+    else if Codigo = 'DH' then
+      Result := 'VALOR LIQ. INFORMADO DIFERE DO CALCULADO'
+    else if Codigo = 'DI' then
+      Result := 'VALOR DO SALÁRIO-BASE INVÁLIDO'
+    else if Codigo = 'DJ' then
+      Result := 'BASE DE CÁLCULO IRRF INVÁLIDA'
+    else if Codigo = 'DK' then
+      Result := 'BASE DE CÁLCULO FGTS INVÁLIDA'
+    else if Codigo = 'DL' then
+      Result := 'FORMA DE PAGAMENTO INCOMPATÍVEL COM HOLERITE'
+    else if Codigo = 'DM' then
+      Result := 'E-MAIL DO FAVORECIDO INVÁLIDO'
+    else if Codigo = 'DV' then
+      Result := 'DOC / TED DEVOLVIDO PELO BANCO FAVORECIDO'
+    else if Codigo = 'D0' then
+      Result := 'FINALIDADE DO HOLERITE INVÁLIDA'
+    else if Codigo = 'D1' then
+      Result := 'MÊS DE COMPETENCIA DO HOLERITE INVÁLIDA'
+    else if Codigo = 'D2' then
+      Result := 'DIA DA COMPETENCIA DO HOLETITE INVÁLIDA'
+    else if Codigo = 'D3' then
+      Result := 'CENTRO DE CUSTO INVÁLIDO'
+    else if Codigo = 'D4' then
+      Result := 'CAMPO NUMÉRICO DA FUNCIONAL INVÁLIDO'
+    else if Codigo = 'D5' then
+      Result := 'DATA INÍCIO DE FÉRIAS NÃO NUMÉRICA'
+    else if Codigo = 'D6' then
+      Result := 'DATA INÍCIO DE FÉRIAS INCONSISTENTE'
+    else if Codigo = 'D7' then
+      Result := 'DATA FIM DE FÉRIAS NÃO NUMÉRICO'
+    else if Codigo = 'D8' then
+      Result := 'DATA FIM DE FÉRIAS INCONSISTENTE'
+    else if Codigo = 'D9' then
+      Result := 'NÚMERO DE DEPENDENTES IR INVÁLIDO'
+    else if Codigo = 'EM' then
+      Result := 'CONFIRMAÇÃO DE OP EMITIDA'
+    else if Codigo = 'EX' then
+      Result := 'DEVOLUÇÃO DE OP NÃO SACADA PELO FAVORECIDO'
+    else if Codigo = 'E0' then
+      Result := 'TIPO DE MOVIMENTO HOLERITE INVÁLIDO'
+    else if Codigo = 'E1' then
+      Result := 'VALOR 01 DO HOLERITE / INFORME INVÁLIDO'
+    else if Codigo = 'E2' then
+      Result := 'VALOR 02 DO HOLERITE / INFORME INVÁLIDO'
+    else if Codigo = 'E3' then
+      Result := 'VALOR 03 DO HOLERITE / INFORME INVÁLIDO'
+    else if Codigo = 'E4' then
+      Result := 'VALOR 04 DO HOLERITE / INFORME INVÁLIDO'
+    else if Codigo = 'FC' then
+      Result := 'PAGAMENTO EFETUADO ATRAVÉS DE FINANCIAMENTO COMPROR'
+    else if Codigo = 'FD' then
+      Result := 'PAGAMENTO EFETUADO ATRAVÉS DE FINANCIAMENTO DESCOMPROR'
+    else if Codigo = 'HA' then
+      Result := 'ERRO NO HEADER DE ARQUIVO'
+    else if Codigo = 'HM' then
+      Result := 'ERRO NO HEADER DE LOTE'
+    else if Codigo = 'IB' then
+      Result := 'VALOR E/OU DATA DO DOCUMENTO INVÁLIDO'
+    else if Codigo = 'IC' then
+      Result := 'VALOR DO ABATIMENTO INVÁLIDO'
+    else if Codigo = 'ID' then
+      Result := 'VALOR DO DESCONTO INVÁLIDO'
+    else if Codigo = 'IE' then
+      Result := 'VALOR DA MORA INVÁLIDO'
+    else if Codigo = 'IF' then
+      Result := 'VALOR DA MULTA INVÁLIDO'
+    else if Codigo = 'IG' then
+      Result := 'VALOR DA DEDUÇÃO INVÁLIDO'
+    else if Codigo = 'IH' then
+      Result := 'VALOR DO ACRÉSCIMO INVÁLIDO'
+    else if Codigo = 'II' then
+      Result := 'DATA DE VENCIMENTO INVÁLIDA'
+    else if Codigo = 'IJ' then
+      Result := 'COMPETÊNCIA / PERÍODO REFERÊNCIA / PARCELA INVÁLIDA'
+    else if Codigo = 'IK' then
+      Result := 'TRIBUTO NÃO LIQUIDÁVEL VIA SISPAG OU NÃO CONVENIADO COM ITAÚ'
+    else if Codigo = 'IL' then
+      Result := 'CÓDIGO DE PAGAMENTO / EMPRESA /RECEITA INVÁLIDO'
+    else if Codigo = 'IM' then
+      Result := 'TIPO X FORMA NÃO COMPATÍVEL'
+    else if Codigo = 'IN' then
+      Result := 'BANCO/AGENCIA NÃO CADASTRADOS'
+    else if Codigo = 'IO' then
+      Result := 'DAC / VALOR / COMPETÊNCIA / IDENTIFICADOR DO LACRE INVÁLIDO'
+    else if Codigo = 'IP' then
+      Result := 'DAC DO CÓDIGO DE BARRAS INVÁLIDO'
+    else if Codigo = 'IQ' then
+      Result := 'DÍVIDA ATIVA OU NÚMERO DE ETIQUETA INVÁLIDO'
+    else if Codigo = 'IR' then
+      Result := 'PAGAMENTO ALTERADO'
+    else if Codigo = 'IS' then
+      Result := 'CONCESSIONÁRIA NÃO CONVENIADA COM ITAÚ'
+    else if Codigo = 'IT' then
+      Result := 'VALOR DO TRIBUTO INVÁLIDO'
+    else if Codigo = 'IU' then
+      Result := 'VALOR DA RECEITA BRUTA ACUMULADA INVÁLIDO'
+    else if Codigo = 'IV' then
+      Result := 'NÚMERO DO DOCUMENTO ORIGEM / REFERÊNCIA INVÁLIDO'
+    else if Codigo = 'IX' then
+      Result := 'CÓDIGO DO PRODUTO INVÁLIDO'
+    else if Codigo = 'LA' then
+      Result := 'DATA DE PAGAMENTO DE UM LOTE ALTERADA'
+    else if Codigo = 'LC' then
+      Result := 'LOTE DE PAGAMENTOS CANCELADO'
+    else if Codigo = 'NA' then
+      Result := 'PAGAMENTO CANCELADO POR FALTA DE AUTORIZAÇÃO'
+    else if Codigo = 'NB' then
+      Result := 'IDENTIFICAÇÃO DO TRIBUTO INVÁLIDA'
+    else if Codigo = 'NC' then
+      Result := 'EXERCÍCIO (ANO BASE) INVÁLIDO'
+    else if Codigo = 'ND' then
+      Result := 'CÓDIGO RENAVAM NÃO ENCONTRADO/INVÁLIDO'
+    else if Codigo = 'NE' then
+      Result := 'UF INVÁLIDA'
+    else if Codigo = 'NF' then
+      Result := 'CÓDIGO DO MUNICÍPIO INVÁLIDO'
+    else if Codigo = 'NG' then
+      Result := 'PLACA INVÁLIDA'
+    else if Codigo = 'NH' then
+      Result := 'OPÇÃO/PARCELA DE PAGAMENTO INVÁLIDA'
+    else if Codigo = 'NI' then
+      Result := 'TRIBUTO JÁ FOI PAGO OU ESTÁ VENCIDO'
+    else if Codigo = 'NR' then
+      Result := 'OPERAÇÃO NÃO REALIZADA'
+    else if Codigo = 'PD' then
+      Result := 'AQUISIÇÃO CONFIRMADA (EQUIVALE A OCORRÊNCIA 02 NO LAYOUT DE RISCO SACADO)'
+    else if Codigo = 'RJ' then
+      Result := 'REGISTRO REJEITADO'
+    else if Codigo = 'RS' then
+      Result := 'PAGAMENTO DISPONÍVEL PARA ANTECIPAÇÃO NO RISCO SACADO – MODALIDADE RISCO SACADO PÓS AUTORIZADO'
+    else if Codigo = 'SS' then
+      Result := 'PAGAMENTO CANCELADO POR INSUFICIÊNCIA DE SALDO/LIMITE DIÁRIO DE PAGTO'
+    else if Codigo = 'TA' then
+      Result := 'LOTE NÃO ACEITO - TOTAIS DO LOTE COM DIFERENÇA'
+    else if Codigo = 'TI' then
+      Result := 'TITULARIDADE INVÁLIDA'
+    else if Codigo = 'X1' then
+      Result := 'FORMA INCOMPATÍVEL COM LAYOUT 010'
+    else if Codigo = 'X2' then
+      Result := 'NÚMERO DA NOTA FISCAL INVÁLIDO'
+    else if Codigo = 'X3' then
+      Result := 'IDENTIFICADOR DE NF/CNPJ INVÁLIDO'
+    else if Codigo = 'X4' then
+      Result := 'FORMA 32 INVÁLIDA'
+    else
+      Result := 'RETORNO NÃO IDENTIFICADO'
+  end;
+
+begin
+  // O código de ocorrencia pode ter até 5 códigos de 2 dígitos cada
+  while length(ADesc) > 0 do
+  begin
+    Result := Result + '/' + GetOcorrencia(Copy(ADesc, 1, 2));
+    Delete(ADesc, 1, 2);
+  end;
+
+  if Result <> '' then
+    Delete(Result, 1, 1);
 end;
 
 function DescricaoRetornoSantander(const ADesc: string): string;

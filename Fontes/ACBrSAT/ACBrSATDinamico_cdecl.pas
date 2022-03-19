@@ -76,6 +76,8 @@ type
      xSAT_TrocarCodigoDeAtivacao : function ( numeroSessao : LongInt;
         codigoDeAtivacao : PAnsiChar; opcao : LongInt; novoCodigo,
         confNovoCodigo : PAnsiChar ) : PAnsiChar ; cdecl;
+     xSAT_ConsultarUltimaSessaoFiscal : function ( numeroSessao : LongInt;
+        codigoDeAtivacao : PAnsiChar) : PAnsiChar ; cdecl;
 
    protected
      procedure LoadDLLFunctions ; override;
@@ -106,6 +108,7 @@ type
      function TesteFimAFim( dadosVenda : AnsiString) : String ; override;
      function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao : Integer; novoCodigo: AnsiString ) : String ; override;
+     function ConsultarUltimaSessaoFiscal : String ; override;
    end;
 
 implementation
@@ -193,7 +196,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_ConsultarNumeroSessao( numeroSessao, PAnsiChar(codigoDeAtivacao),
-                                        cNumeroDeSessao) ;
+                                      cNumeroDeSessao) ;
   Result := String( Resp );
 end ;
 
@@ -213,6 +216,17 @@ begin
   Result := String( Resp );
 end ;
 
+function TACBrSATDinamico_cdecl.ConsultarUltimaSessaoFiscal: String;
+Var
+  Resp : PAnsiChar;
+begin
+  if not Assigned(xSAT_ConsultarUltimaSessaoFiscal) then
+    raise EACBrSATErro.Create( Format(cACBrSATFuncaoNaoEncontrada, ['ConsultarUltimaSessaoFiscal', NomeDLL]) ) ;
+
+  Resp := xSAT_ConsultarUltimaSessaoFiscal( numeroSessao, PAnsiChar(codigoDeAtivacao) );
+  Result := String( Resp );
+end;
+
 function TACBrSATDinamico_cdecl.DesbloquearSAT : String ;
 Var
   Resp : PAnsiChar;
@@ -226,7 +240,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_EnviarDadosVenda( numeroSessao, PAnsiChar(codigoDeAtivacao),
-                                   PAnsiChar(dadosVenda) ) ;
+                                 PAnsiChar(dadosVenda) ) ;
   Result := String( Resp );
 end ;
 
@@ -243,7 +257,7 @@ Var
   Resp : PAnsiChar;
 begin
   Resp := xSAT_TesteFimAFim( numeroSessao, PAnsiChar(codigoDeAtivacao),
-                               PAnsiChar(dadosVenda) );
+                             PAnsiChar(dadosVenda) );
   Result := String( Resp );
 end ;
 
@@ -281,6 +295,11 @@ begin
   FunctionDetectLibSAT( 'ExtrairLogs', @xSAT_ExtrairLogs);
   FunctionDetectLibSAT( 'TesteFimAFim', @xSAT_TesteFimAFim) ;
   FunctionDetectLibSAT( 'TrocarCodigoDeAtivacao', @xSAT_TrocarCodigoDeAtivacao);
+  // Função é nova, e pode não estar disponível nas DLLs antigas
+  try
+    FunctionDetectLibSAT( 'ConsultarUltimaSessaoFiscal', @xSAT_ConsultarUltimaSessaoFiscal);
+  except
+  end;
 end;
 
 procedure TACBrSATDinamico_cdecl.UnLoadDLLFunctions;
@@ -302,6 +321,7 @@ begin
   xSAT_ExtrairLogs                    := Nil;
   xSAT_TesteFimAFim                   := Nil;
   xSAT_TrocarCodigoDeAtivacao         := Nil;
+  xSAT_ConsultarUltimaSessaoFiscal    := Nil;
 end;
 
 (* Resposta válida do Kryptus

@@ -328,6 +328,7 @@ type
      function TesteFimAFim( dadosVenda : AnsiString) : String ; virtual;
      function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao : Integer; novoCodigo: AnsiString ) : String ; virtual;
+     function ConsultarUltimaSessaoFiscal : String ; virtual;
    end;
 
 implementation
@@ -584,6 +585,7 @@ ExtrairLogs..................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 BloquearSAT..................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 DesbloquearSAT...............: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+ConsultarUltimaSessaoFiscal..: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 
 }
   Clear;
@@ -839,6 +841,12 @@ begin
   ErroAbstract('ConsultarStatusOperacional');
   Result := '';
 end ;
+
+function TACBrSATClass.ConsultarUltimaSessaoFiscal: String;
+begin
+  ErroAbstract('ConsultarUltimaSessaoFiscal');
+  Result := '';
+end;
 
 function TACBrSATClass.DesbloquearSAT : String ;
 begin

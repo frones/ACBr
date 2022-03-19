@@ -179,6 +179,7 @@ type
     MenuItem21: TMenuItem;
     MenuItem22: TMenuItem;
     MenuItem23: TMenuItem;
+    MenuItem24: TMenuItem;
     N1: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
@@ -328,6 +329,7 @@ type
     procedure MenuItem19Click(Sender: TObject);
     procedure MenuItem22Click(Sender: TObject);
     procedure MenuItem23Click(Sender: TObject);
+    procedure MenuItem24Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -1415,6 +1417,11 @@ begin
     raise Exception.Create('Numero de sessão informado é inválido') ;
 
   ACBrSAT1.ConsultarNumeroSessao( nSessao );
+end;
+
+procedure TForm1.MenuItem24Click(Sender: TObject);
+begin
+  ACBrSAT1.ConsultarUltimaSessaoFiscal;
 end;
 
 procedure TForm1.mConsultarSATClick(Sender : TObject) ;

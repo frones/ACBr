@@ -1,24 +1,24 @@
 object Form1: TForm1
-  Left = 591
+  Left = 612
   Height = 498
-  Top = 281
-  Width = 900
+  Top = 143
+  Width = 873
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
   ClientHeight = 478
-  ClientWidth = 900
+  ClientWidth = 873
   Constraints.MinHeight = 460
   Constraints.MinWidth = 850
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.2.0.4'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 6
     Top = 254
-    Width = 900
+    Width = 873
     Align = alTop
     ResizeAnchor = akTop
   end
@@ -26,7 +26,7 @@ object Form1: TForm1
     Left = 0
     Height = 195
     Top = 260
-    Width = 900
+    Width = 873
     ActivePage = tsLog
     Align = alClient
     ParentFont = False
@@ -35,13 +35,13 @@ object Form1: TForm1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
       ClientHeight = 167
-      ClientWidth = 892
+      ClientWidth = 865
       ParentFont = False
       object mLog: TMemo
         Left = 0
         Height = 167
         Top = 0
-        Width = 892
+        Width = 865
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Height = -11
@@ -53,15 +53,15 @@ object Form1: TForm1
     end
     object tsGerado: TTabSheet
       Caption = 'XML Gerado'
-      ClientHeight = 187
-      ClientWidth = 892
+      ClientHeight = 167
+      ClientWidth = 865
       ParentFont = False
       inline mVendaEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 187
+        Height = 167
         Top = 0
-        Width = 892
+        Width = 865
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -511,15 +511,15 @@ object Form1: TForm1
     end
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
-      ClientHeight = 187
-      ClientWidth = 892
+      ClientHeight = 167
+      ClientWidth = 865
       ParentFont = False
       inline mRecebido: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 187
+        Height = 167
         Top = 0
-        Width = 892
+        Width = 865
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -969,15 +969,15 @@ object Form1: TForm1
     end
     object tsCancelamento: TTabSheet
       Caption = 'XML Cancelamento'
-      ClientHeight = 116
-      ClientWidth = 846
+      ClientHeight = 167
+      ClientWidth = 865
       ParentFont = False
       inline mCancelamentoEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 156
+        Height = 142
         Top = 0
-        Width = 842
+        Width = 865
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1427,11 +1427,11 @@ object Form1: TForm1
       object Panel2: TPanel
         Left = 0
         Height = 25
-        Top = 156
-        Width = 842
+        Top = 142
+        Width = 865
         Align = alBottom
         ClientHeight = 25
-        ClientWidth = 842
+        ClientWidth = 865
         ParentFont = False
         TabOrder = 1
         object Label18: TLabel
@@ -1443,14 +1443,13 @@ object Form1: TForm1
           BorderSpacing.Around = 5
           Caption = 'Chave Cancelamento:'
           Layout = tlCenter
-          ParentColor = False
           ParentFont = False
         end
         object edChaveCancelamento: TEdit
           Left = 127
           Height = 23
           Top = 1
-          Width = 704
+          Width = 727
           Align = alClient
           BorderSpacing.Right = 10
           ParentFont = False
@@ -1461,14 +1460,14 @@ object Form1: TForm1
     object tsRedeXML: TTabSheet
       Caption = 'XML Rede'
       ClientHeight = 167
-      ClientWidth = 892
+      ClientWidth = 865
       ParentFont = False
       inline mRede: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 167
         Top = 0
-        Width = 892
+        Width = 865
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1921,10 +1920,10 @@ object Form1: TForm1
     Left = 0
     Height = 254
     Top = 0
-    Width = 900
+    Width = 873
     Align = alTop
     ClientHeight = 254
-    ClientWidth = 900
+    ClientWidth = 873
     ParentFont = False
     TabOrder = 2
     object gpOperacao: TGroupBox
@@ -2017,27 +2016,27 @@ object Form1: TForm1
       Left = 170
       Height = 252
       Top = 1
-      Width = 729
+      Width = 702
       Align = alClient
       Caption = 'Configuração'
       ClientHeight = 232
-      ClientWidth = 725
+      ClientWidth = 698
       ParentFont = False
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 0
         Height = 232
         Top = 0
-        Width = 725
-        ActivePage = Impressao
+        Width = 698
+        ActivePage = tsDadosSAT
         Align = alClient
         ParentFont = False
-        TabIndex = 4
+        TabIndex = 0
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object Label9: TLabel
             Left = 16
@@ -2046,7 +2045,6 @@ object Form1: TForm1
             Width = 45
             Alignment = taRightJustify
             Caption = 'Arq.Log:'
-            ParentColor = False
             ParentFont = False
           end
           object edLog: TEdit
@@ -2068,21 +2066,20 @@ object Form1: TForm1
             ParentFont = False
           end
           object Label10: TLabel
-            Left = 217
+            Left = 218
             Height = 15
             Top = 7
             Width = 59
             Alignment = taRightJustify
             Caption = 'Nome DLL:'
-            ParentColor = False
             ParentFont = False
           end
           object edNomeDLL: TEdit
             Cursor = crIBeam
-            Left = 217
+            Left = 218
             Height = 23
-            Top = 24
-            Width = 282
+            Top = 23
+            Width = 281
             Anchors = [akTop, akLeft, akRight]
             ParentFont = False
             TabOrder = 1
@@ -2101,16 +2098,14 @@ object Form1: TForm1
             Top = 56
             Width = 104
             Caption = 'Código de Ativação'
-            ParentColor = False
             ParentFont = False
           end
           object Label4: TLabel
-            Left = 217
+            Left = 218
             Height = 15
             Top = 56
             Width = 39
             Caption = 'Cód.UF'
-            ParentColor = False
             ParentFont = False
           end
           object edtCodUF: TEdit
@@ -2127,7 +2122,6 @@ object Form1: TForm1
             Top = 57
             Width = 59
             Caption = 'Num.Caixa'
-            ParentColor = False
             ParentFont = False
           end
           object seNumeroCaixa: TSpinEdit
@@ -2147,7 +2141,6 @@ object Form1: TForm1
             Top = 106
             Width = 34
             Caption = 'Versão'
-            ParentColor = False
             ParentFont = False
           end
           object sfeVersaoEnt: TFloatSpinEdit
@@ -2175,7 +2168,7 @@ object Form1: TForm1
             TabOrder = 7
           end
           object cbxAmbiente: TComboBox
-            Left = 548
+            Left = 521
             Height = 23
             Top = 23
             Width = 152
@@ -2186,12 +2179,12 @@ object Form1: TForm1
             TabOrder = 2
           end
           object Label6: TLabel
-            Left = 504
+            Left = 521
             Height = 15
             Top = 6
             Width = 52
+            Anchors = [akTop, akRight]
             Caption = 'Ambiente'
-            ParentColor = False
             ParentFont = False
           end
           object cbxRemoverAcentos: TCheckBox
@@ -2207,7 +2200,7 @@ object Form1: TForm1
             TabOrder = 8
           end
           object GroupBox5: TGroupBox
-            Left = 436
+            Left = 409
             Height = 124
             Top = 56
             Width = 265
@@ -2350,7 +2343,7 @@ object Form1: TForm1
             end
           end
           object sbNomeDLL: TSpeedButton
-            Left = 503
+            Left = 476
             Height = 22
             Top = 25
             Width = 24
@@ -2364,7 +2357,6 @@ object Form1: TForm1
             Height = 23
             Top = 160
             Width = 90
-            Anchors = [akTop, akRight]
             Increment = 3
             MaxValue = 999
             MinValue = 3
@@ -2381,17 +2373,15 @@ object Form1: TForm1
             Height = 15
             Top = 164
             Width = 76
-            Anchors = [akTop, akRight]
             BorderSpacing.Right = 5
             Caption = 'Itens a Vender:'
-            ParentColor = False
             ParentFont = False
           end
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object Label11: TLabel
             Left = 12
@@ -2399,7 +2389,6 @@ object Form1: TForm1
             Top = 23
             Width = 27
             Caption = 'CNPJ'
-            ParentColor = False
             ParentFont = False
           end
           object Label12: TLabel
@@ -2408,7 +2397,6 @@ object Form1: TForm1
             Top = 23
             Width = 68
             Caption = 'Insc.Estadual'
-            ParentColor = False
             ParentFont = False
           end
           object Label14: TLabel
@@ -2417,7 +2405,6 @@ object Form1: TForm1
             Top = 23
             Width = 77
             Caption = 'Insc.Municipal'
-            ParentColor = False
             ParentFont = False
           end
           object edtEmitCNPJ: TEdit
@@ -2463,7 +2450,6 @@ object Form1: TForm1
             Top = 71
             Width = 101
             Caption = 'Regime Trib. ISSQN'
-            ParentColor = False
             ParentFont = False
           end
           object cbxIndRatISSQN: TComboBox
@@ -2482,7 +2468,6 @@ object Form1: TForm1
             Top = 71
             Width = 73
             Caption = 'Ind.Rat.ISSQN'
-            ParentColor = False
             ParentFont = False
           end
           object Label17: TLabel
@@ -2491,7 +2476,6 @@ object Form1: TForm1
             Top = 73
             Width = 93
             Caption = 'Regime Tributario'
-            ParentColor = False
             ParentFont = False
           end
           object cbxRegTributario: TComboBox
@@ -2508,7 +2492,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object Label2: TLabel
             Left = 10
@@ -2516,14 +2500,13 @@ object Form1: TForm1
             Top = 15
             Width = 27
             Caption = 'CNPJ'
-            ParentColor = False
             ParentFont = False
           end
           object edtSwHCNPJ: TEdit
             Left = 10
             Height = 23
             Top = 31
-            Width = 358
+            Width = 331
             Anchors = [akTop, akLeft, akRight]
             ParentFont = False
             TabOrder = 0
@@ -2534,14 +2517,13 @@ object Form1: TForm1
             Top = 71
             Width = 195
             Caption = 'Assinatura Sw.House (344 caracteres)'
-            ParentColor = False
             ParentFont = False
           end
           object edtSwHAssinatura: TEdit
             Left = 10
             Height = 23
             Top = 89
-            Width = 623
+            Width = 596
             Anchors = [akTop, akLeft, akRight]
             ParentFont = False
             TabOrder = 1
@@ -2550,7 +2532,7 @@ object Form1: TForm1
         object tsRede: TTabSheet
           Caption = 'Rede'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object gbPPPoE: TGroupBox
             Left = 160
@@ -2569,7 +2551,6 @@ object Form1: TForm1
               Top = 4
               Width = 40
               Caption = 'Usuario'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeUsuario: TEdit
@@ -2586,7 +2567,6 @@ object Form1: TForm1
               Top = 34
               Width = 32
               Caption = 'Senha'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeSenha: TEdit
@@ -2615,7 +2595,6 @@ object Form1: TForm1
               Top = 4
               Width = 10
               Caption = 'IP'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeIP: TEdit
@@ -2632,7 +2611,6 @@ object Form1: TForm1
               Top = 34
               Width = 28
               Caption = 'Mask'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeMask: TEdit
@@ -2649,7 +2627,6 @@ object Form1: TForm1
               Top = 64
               Width = 45
               Caption = 'Gateway'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeGW: TEdit
@@ -2666,7 +2643,6 @@ object Form1: TForm1
               Top = 4
               Width = 29
               Caption = 'DNS1'
-              ParentColor = False
               ParentFont = False
             end
             object lSSID6: TLabel
@@ -2675,7 +2651,6 @@ object Form1: TForm1
               Top = 34
               Width = 29
               Caption = 'DNS2'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeDNS1: TEdit
@@ -2738,7 +2713,6 @@ object Form1: TForm1
               Top = 4
               Width = 26
               Caption = 'SSID:'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeSSID: TEdit
@@ -2755,7 +2729,6 @@ object Form1: TForm1
               Top = 34
               Width = 22
               Caption = 'Seg:'
-              ParentColor = False
               ParentFont = False
             end
             object cbxRedeSeg: TComboBox
@@ -2782,7 +2755,6 @@ object Form1: TForm1
               Top = 64
               Width = 32
               Caption = 'Senha'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeCodigo: TEdit
@@ -2855,7 +2827,6 @@ object Form1: TForm1
               Top = 32
               Width = 10
               Caption = 'IP'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeProxyIP: TEdit
@@ -2873,7 +2844,6 @@ object Form1: TForm1
               Top = 62
               Width = 28
               Caption = 'Porta'
-              ParentColor = False
               ParentFont = False
             end
             object lSSID11: TLabel
@@ -2882,7 +2852,6 @@ object Form1: TForm1
               Top = 88
               Width = 40
               Caption = 'Usuario'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeProxyUser: TEdit
@@ -2900,7 +2869,6 @@ object Form1: TForm1
               Top = 114
               Width = 32
               Caption = 'Senha'
-              ParentColor = False
               ParentFont = False
             end
             object edRedeProxySenha: TEdit
@@ -2927,7 +2895,7 @@ object Form1: TForm1
         object Impressao: TTabSheet
           Caption = 'Impressao'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object GroupBox3: TGroupBox
             Left = -2
@@ -2953,7 +2921,6 @@ object Form1: TForm1
               Top = 0
               Width = 40
               Caption = 'Largura'
-              ParentColor = False
               ParentFont = False
             end
             object Label20: TLabel
@@ -2962,7 +2929,6 @@ object Form1: TForm1
               Top = 0
               Width = 26
               Caption = 'Topo'
-              ParentColor = False
               ParentFont = False
             end
             object seMargemTopo: TSpinEdit
@@ -2980,7 +2946,6 @@ object Form1: TForm1
               Top = 48
               Width = 34
               Caption = 'Fundo'
-              ParentColor = False
               ParentFont = False
             end
             object seMargemFundo: TSpinEdit
@@ -2998,7 +2963,6 @@ object Form1: TForm1
               Top = 48
               Width = 48
               Caption = 'Esquerda'
-              ParentColor = False
               ParentFont = False
             end
             object seMargemEsquerda: TSpinEdit
@@ -3016,7 +2980,6 @@ object Form1: TForm1
               Top = 48
               Width = 34
               Caption = 'Direita'
-              ParentColor = False
               ParentFont = False
             end
             object seMargemDireita: TSpinEdit
@@ -3045,7 +3008,6 @@ object Form1: TForm1
               Top = 110
               Width = 104
               Caption = 'Impresssora Default'
-              ParentColor = False
               ParentFont = False
             end
             object cbPreview: TCheckBox
@@ -3073,10 +3035,10 @@ object Form1: TForm1
             Left = 280
             Height = 154
             Top = 22
-            Width = 432
+            Width = 405
             Anchors = [akTop, akLeft, akRight]
             ClientHeight = 134
-            ClientWidth = 428
+            ClientWidth = 401
             ParentFont = False
             TabOrder = 3
             object Label25: TLabel
@@ -3089,7 +3051,6 @@ object Form1: TForm1
               Width = 73
               Anchors = [akRight, akBottom]
               Caption = 'Linhas à pular'
-              ParentColor = False
               ParentFont = False
             end
             object seLinhasPular: TSpinEdit
@@ -3112,7 +3073,6 @@ object Form1: TForm1
               Anchors = [akRight, akBottom]
               BorderSpacing.Right = 2
               Caption = 'Espaços entre linhas'
-              ParentColor = False
               ParentFont = False
             end
             object seEspLinhas: TSpinEdit
@@ -3135,7 +3095,6 @@ object Form1: TForm1
               Anchors = [akRight, akBottom]
               BorderSpacing.Right = 2
               Caption = 'Colunas'
-              ParentColor = False
               ParentFont = False
             end
             object seColunas: TSpinEdit
@@ -3160,7 +3119,6 @@ object Form1: TForm1
               Anchors = [akLeft, akBottom]
               BorderSpacing.Right = 2
               Caption = 'Modelo'
-              ParentColor = False
               ParentFont = False
             end
             object cbxModeloPosPrinter: TComboBox
@@ -3184,7 +3142,6 @@ object Form1: TForm1
               Anchors = [akLeft, akBottom]
               BorderSpacing.Right = 2
               Caption = 'Porta'
-              ParentColor = False
               ParentFont = False
             end
             object cbxPorta: TComboBox
@@ -3208,7 +3165,6 @@ object Form1: TForm1
               BorderSpacing.Right = 2
               BorderSpacing.Bottom = 2
               Caption = 'Pág. de código'
-              ParentColor = False
               ParentFont = False
             end
             object cbxPagCodigo: TComboBox
@@ -3302,7 +3258,6 @@ object Form1: TForm1
                 BorderSpacing.Right = 2
                 Caption = 'FatorY'
                 Layout = tlCenter
-                ParentColor = False
                 ParentFont = False
               end
               object seFatorY: TSpinEdit
@@ -3328,7 +3283,6 @@ object Form1: TForm1
                 BorderSpacing.Right = 2
                 Caption = 'FatorX'
                 Layout = tlCenter
-                ParentColor = False
                 ParentFont = False
               end
               object seFatorX: TSpinEdit
@@ -3350,7 +3304,6 @@ object Form1: TForm1
                 Top = 29
                 Width = 68
                 Caption = ' '
-                ParentColor = False
                 ParentFont = False
               end
               object lbKC1: TLabel
@@ -3363,7 +3316,6 @@ object Form1: TForm1
                 BorderSpacing.Right = 2
                 Caption = 'KC1'
                 Layout = tlCenter
-                ParentColor = False
                 ParentFont = False
               end
               object seKC1: TSpinEdit
@@ -3388,7 +3340,6 @@ object Form1: TForm1
                 BorderSpacing.Right = 2
                 Caption = 'KC2'
                 Layout = tlCenter
-                ParentColor = False
                 ParentFont = False
               end
               object seKC2: TSpinEdit
@@ -3422,7 +3373,7 @@ object Form1: TForm1
           object cbUsarEscPos: TRadioButton
             AnchorSideLeft.Control = GroupBox4
             AnchorSideLeft.Side = asrCenter
-            Left = 440
+            Left = 426
             Height = 25
             Top = -2
             Width = 113
@@ -3482,7 +3433,7 @@ object Form1: TForm1
         object tsMFe: TTabSheet
           Caption = 'MFE'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object Label30: TLabel
             Left = 8
@@ -3490,7 +3441,6 @@ object Form1: TForm1
             Top = 8
             Width = 71
             Caption = 'Pasta Entrada'
-            ParentColor = False
             ParentFont = False
           end
           object Label31: TLabel
@@ -3499,7 +3449,6 @@ object Form1: TForm1
             Top = 48
             Width = 78
             Caption = 'Pasta Resposta'
-            ParentColor = False
             ParentFont = False
           end
           object Label32: TLabel
@@ -3508,7 +3457,6 @@ object Form1: TForm1
             Top = 88
             Width = 44
             Caption = 'Timeout'
-            ParentColor = False
             ParentFont = False
           end
           object edMFEInput: TEdit
@@ -3583,7 +3531,7 @@ object Form1: TForm1
         object TabSheet1: TTabSheet
           Caption = 'Validação'
           ClientHeight = 204
-          ClientWidth = 717
+          ClientWidth = 690
           ParentFont = False
           object Label33: TLabel
             Left = 16
@@ -3592,7 +3540,6 @@ object Form1: TForm1
             Width = 132
             Alignment = taRightJustify
             Caption = 'Schema Venda Aplicação'
-            ParentColor = False
             ParentFont = False
           end
           object edSchemaVendaAPL: TEdit
@@ -3600,7 +3547,7 @@ object Form1: TForm1
             Left = 16
             Height = 23
             Top = 33
-            Width = 640
+            Width = 613
             Anchors = [akTop, akLeft, akRight]
             ParentFont = False
             TabOrder = 0
@@ -3610,7 +3557,7 @@ object Form1: TForm1
             AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = edSchemaVendaAPL
             AnchorSideTop.Side = asrCenter
-            Left = 659
+            Left = 632
             Height = 22
             Top = 33
             Width = 24
@@ -3624,7 +3571,7 @@ object Form1: TForm1
             AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = edSchemaVendaSAT
             AnchorSideTop.Side = asrCenter
-            Left = 659
+            Left = 632
             Height = 22
             Top = 81
             Width = 24
@@ -3638,7 +3585,7 @@ object Form1: TForm1
             Left = 16
             Height = 23
             Top = 81
-            Width = 640
+            Width = 613
             Anchors = [akTop, akLeft, akRight]
             ParentFont = False
             TabOrder = 1
@@ -3650,7 +3597,6 @@ object Form1: TForm1
             Width = 99
             Alignment = taRightJustify
             Caption = 'Schema Venda SAT'
-            ParentColor = False
             ParentFont = False
           end
         end
@@ -3661,7 +3607,7 @@ object Form1: TForm1
     Left = 0
     Height = 23
     Top = 455
-    Width = 900
+    Width = 873
     Panels = <    
       item
         Width = 200
@@ -3787,6 +3733,10 @@ object Form1: TForm1
       object mConsultarNumeroSessao: TMenuItem
         Caption = 'Consultar Numero Sessão'
         OnClick = mConsultarNumeroSessaoClick
+      end
+      object MenuItem24: TMenuItem
+        Caption = 'Consultar Última Sessão Fiscal'
+        OnClick = MenuItem24Click
       end
     end
     object MenuItem7: TMenuItem

@@ -274,6 +274,7 @@ type
     ACBrIntegrador1: TACBrIntegrador;
     N1: TMenuItem;
     CarregarLote1: TMenuItem;
+    ConsultarltimaSessoFiscal1: TMenuItem;
     procedure ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
       AData: TDateTime);
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
@@ -340,6 +341,7 @@ type
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
     procedure CarregarLote1Click(Sender: TObject);
+    procedure ConsultarltimaSessoFiscal1Click(Sender: TObject);
   private
     procedure ConfiguraRedeSAT;
     procedure LeDadosRedeSAT;
@@ -1304,6 +1306,11 @@ begin
     raise Exception.Create('Numero de sessão informado é inválido');
 
   ACBrSAT1.ConsultarNumeroSessao( nSessao );
+end;
+
+procedure TForm1.ConsultarltimaSessoFiscal1Click(Sender: TObject);
+begin
+  ACBrSAT1.ConsultarUltimaSessaoFiscal;
 end;
 
 procedure TForm1.mConsultarSATClick(Sender : TObject);

@@ -307,10 +307,11 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label6: TLabel
-            Left = 504
+            Left = 536
             Top = 6
             Width = 44
             Height = 13
+            Anchors = [akTop, akRight]
             Caption = 'Ambiente'
             Color = clBtnFace
             ParentColor = False
@@ -325,11 +326,10 @@ object Form1: TForm1
             OnClick = sbNomeDLLClick
           end
           object Label8: TLabel
-            Left = 188
+            Left = 204
             Top = 164
             Width = 72
             Height = 13
-            Anchors = [akTop, akRight]
             Caption = 'Itens a Vender:'
             Color = clBtnFace
             ParentColor = False
@@ -522,11 +522,10 @@ object Form1: TForm1
             end
           end
           object seItensVenda: TSpinEdit
-            Left = 269
+            Left = 280
             Top = 160
-            Width = 90
+            Width = 85
             Height = 22
-            Anchors = [akTop, akRight]
             Increment = 3
             MaxValue = 999
             MinValue = 3
@@ -537,7 +536,7 @@ object Form1: TForm1
             Left = 280
             Top = 120
             Width = 85
-            Height = 21
+            Height = 22
             TabOrder = 11
             Text = '0.07'
             OnChange = sfeVersaoEntChange
@@ -629,7 +628,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -638,7 +637,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -647,7 +646,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
           end
         end
@@ -1278,7 +1277,7 @@ object Form1: TForm1
               Width = 145
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 0
               OnChange = cbxModeloChange
             end
@@ -1287,7 +1286,7 @@ object Form1: TForm1
               Top = 32
               Width = 128
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 1
             end
             object cbxPagCodigo: TComboBox
@@ -1297,7 +1296,7 @@ object Form1: TForm1
               Height = 21
               Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 5
             end
           end
@@ -1425,7 +1424,7 @@ object Form1: TForm1
             MaxValue = 0
             MinValue = 10
             TabOrder = 2
-            Value = 10
+            Value = 0
           end
           object btMFEEnviarPagamento: TButton
             Left = 320
@@ -1540,7 +1539,7 @@ object Form1: TForm1
             Width = 192
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 2
           end
         end
@@ -1675,6 +1674,10 @@ object Form1: TForm1
       object mConsultarNumeroSessao: TMenuItem
         Caption = 'Consultar Numero Sess'#227'o'
         OnClick = mConsultarNumeroSessaoClick
+      end
+      object ConsultarltimaSessoFiscal1: TMenuItem
+        Caption = 'Consultar '#218'ltima Sess'#227'o Fiscal'
+        OnClick = ConsultarltimaSessoFiscal1Click
       end
     end
     object MenuItem7: TMenuItem

@@ -38,7 +38,8 @@ uses
   Dialogs, StdCtrls, ExtCtrls, Mask,
   {$IFDEF demo_forte} uDMForte,{$ELSE}uDMFast,{$ENDIF}
   ACBrBase, ACBrBoleto, ACBrUtil,
-  ACBrBoletoConversao, ACBrBoletoRetorno, Vcl.ComCtrls;
+  {$IFDEF VER150} ComCtrls,{$ELSE} Vlc.ComCtrls,{$ENDIF}
+  ACBrBoletoConversao, ACBrBoletoRetorno;
 
 type
   TfrmDemo = class(TForm)
@@ -213,7 +214,7 @@ type
     Label65: TLabel;
     edtPathRetorno: TEdit;
     Label66: TLabel;
-    flpndlgRetorno: TFileOpenDialog;
+    flpndlgRetorno: TOpenDialog;
     btnRetorno: TButton;
     edtClientID: TEdit;
     Label67: TLabel;
@@ -604,7 +605,7 @@ end;
 procedure TfrmDemo.FormCreate(Sender: TObject);
 var
   I: TACBrBolLayOut;
-  CurrentStyle : LONG;
+  CurrentStyle : longint;
 begin
   CurrentStyle := GetWindowLong(edtCNABLVLote.Handle, GWL_STYLE);
   CurrentStyle := CurrentStyle or ES_NUMBER;

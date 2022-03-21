@@ -1421,17 +1421,8 @@ object frmDemo: TfrmDemo
       OnClick = btnConfigGravarClick
     end
   end
-  object flpndlgRetorno: TFileOpenDialog
-    FavoriteLinks = <>
-    FileTypes = <
-      item
-        DisplayName = ''
-        FileMask = '*.txt'
-      end
-      item
-        DisplayName = ''
-        FileMask = '*.ret'
-      end>
+  object flpndlgRetorno: TOpenDialog
+    Filter = '*.txt|*.txt|*.ret|*.ret|*.*|*.*'
     Options = []
     Left = 879
     Top = 459

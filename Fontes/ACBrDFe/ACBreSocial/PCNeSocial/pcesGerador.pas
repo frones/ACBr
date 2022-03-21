@@ -1975,7 +1975,7 @@ begin
 
     GerarItensRemun(pIdeEstabLot[i].detVerbas, 'detVerbas');
 
-    if pIdeEstabLot[i].infoSaudeColetInst then
+    if (VersaoDF <= ve02_05_00) and (pIdeEstabLot[i].infoSaudeColetInst) then
       GerarInfoSaudeColet(pIdeEstabLot[i].infoSaudeColet);
 
     if pIdeEstabLot[i].infoAgNocivoInst then

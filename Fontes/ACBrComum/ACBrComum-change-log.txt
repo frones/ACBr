@@ -37,7 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-16/03//2022
+21/03/2022
+-- ACBrImage --
+[+] Adiciondo o método "PNGInfoIHDR", para obter informações da Imagem PNG, por Stream
+  procedure PNGInfoIHDR(S: TStream; out Width: LongWord; out Height: LongWord;
+                       out BitDepth: Byte; out ColorType: Byte; out CompressionMethod: Byte;
+                       out FilterMethod: Byte; out InterlaceMethod: Byte);
+  (por: DSA)
+
+16/03/2022
 -- ACBrUtil --
 [+] Adicionado o método:
     function StringCrcCCITT(const s: AnsiString; initial:Word=$1D0F; polynomial:Word=$1021): Word;

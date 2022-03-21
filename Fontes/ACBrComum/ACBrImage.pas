@@ -64,7 +64,8 @@ const
   C_LUMINOSITY_THRESHOLD = 127;
 
 resourcestring
-  cErrImgBMPMono = 'Imagem não é BMP Monocromática';
+  cErrImgNotBMPMono = 'Imagem não é BMP Monocromática';
+  cErrImgNotPNG = 'Imagem não é PNG';
 
 type
   EACBrImage = class(Exception);
@@ -72,6 +73,9 @@ type
 function IsPCX(S: TStream; CheckIsMono: Boolean = True): Boolean;
 function IsBMP(S: TStream; CheckIsMono: Boolean = True): Boolean;
 function IsPNG(S: TStream; CheckIsMono: Boolean = True): Boolean;
+procedure PNGInfoIHDR(S: TStream; out Width: LongWord; out Height: LongWord;
+                       out BitDepth: Byte; out ColorType: Byte; out CompressionMethod: Byte;
+                       out FilterMethod: Byte; out InterlaceMethod: Byte);
 
 procedure RasterStrToAscII(const ARasterStr: AnsiString; AWidth: Integer;
   InvertImg: Boolean; AscIIArtLines: TStrings);
@@ -89,11 +93,14 @@ procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
   InvertImg: Boolean; ABMPStream: TStream);
 
 {$IfNDef NOGUI}
-procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean;
-  out AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
-  LuminosityThreshold: Byte = C_LUMINOSITY_THRESHOLD);
-procedure PintarQRCode(const QRCodeData: String; ABitMap: TBitmap;
-  const AEncoding: TQRCodeEncoding);
+ {$IfNDef FPC}
+  procedure RedGreenBlue(rgb: TColorRef; out Red, Green, Blue: Byte);
+ {$EndIf}
+ procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean;
+   out AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
+   LuminosityThreshold: Byte = C_LUMINOSITY_THRESHOLD);
+ procedure PintarQRCode(const QRCodeData: String; ABitMap: TBitmap;
+   const AEncoding: TQRCodeEncoding);
 {$EndIf}
 
 implementation
@@ -165,6 +172,22 @@ end;
 // https://en.wikipedia.org/wiki/Portable_Network_Graphic
 function IsPNG(S: TStream; CheckIsMono: Boolean): Boolean;
 var
+  w, h: LongWord;
+  BitDepth, ct, cm, fm, im: Byte;
+begin
+  try
+    PNGInfoIHDR(S, w, h, BitDepth, ct, cm, fm, im);
+    Result := (BitDepth = 1) or (not CheckIsMono);
+  except
+    Result := False;
+  end;
+end;
+
+procedure PNGInfoIHDR(S: TStream; out Width: LongWord; out Height: LongWord;
+  out BitDepth: Byte; out ColorType: Byte; out CompressionMethod: Byte; out
+  FilterMethod: Byte; out InterlaceMethod: Byte);
+var
+  Ok: Boolean;
   p: Int64;
   Buffer: array[0..7] of Byte;
   l: Cardinal;
@@ -188,39 +211,47 @@ var
   end;
 
 begin
+  Width := 0; Height := 0; BitDepth := 0; ColorType := 0;
+  CompressionMethod := 0; FilterMethod := 0; InterlaceMethod := 0;
   p := S.Position;
   try
     S.Position := 0;
     Buffer[0] := 0;
     S.ReadBuffer(Buffer,8);
-    Result := (Buffer[0] = 137) and
-              (Buffer[1] = 80) and
-              (Buffer[2] = 78) and
-              (Buffer[3] = 71) and
-              (Buffer[4] = 13) and
-              (Buffer[5] = 10) and
-              (Buffer[6] = 26) and
-              (Buffer[7] = 10);
+    Ok := (Buffer[0] = 137) and
+          (Buffer[1] = 80) and
+          (Buffer[2] = 78) and
+          (Buffer[3] = 71) and
+          (Buffer[4] = 13) and
+          (Buffer[5] = 10) and
+          (Buffer[6] = 26) and
+          (Buffer[7] = 10);
 
-    if Result and CheckIsMono then
+    if not Ok then
+      raise EACBrImage.Create(ACBrStr(cErrImgNotPNG));
+
+    t := '';
+    l := 1;
+    while (t <> 'IHDR') and (t <> 'IEND') and (l > 0) do
+      ReadNextChunk(S, l, t, d);
+
+    if (t = 'IHDR') and (l = 13) then
     begin
-      t := '';
-      l := 1;
-      while (t <> 'IHDR') and (t <> 'IEND') and (l > 0) do
-        ReadNextChunk(S, l, t, d);
-
-      if (t = 'IHDR') and (l = 13) then
-      begin
-        { The IHDR chunk must appear FIRST. It contains:
-           Width:              4 bytes
-           Height:             4 bytes
-           Bit depth:          1 byte
-           Color type:         1 byte
-           Compression method: 1 byte
-           Filter method:      1 byte
-           Interlace method:   1 byte }
-        Result := (Byte(d[9]) = 1);
-      end;
+      { The IHDR chunk must appear FIRST. It contains:
+         Width:              4 bytes
+         Height:             4 bytes
+         Bit depth:          1 byte
+         Color type:         1 byte
+         Compression method: 1 byte
+         Filter method:      1 byte
+         Interlace method:   1 byte }
+      Width := BEStrToInt(copy(d, 1, 4));
+      Height := BEStrToInt(copy(d, 5, 4));
+      BitDepth := Byte(d[9]);
+      ColorType := Byte(d[10]);
+      CompressionMethod := Byte(d[11]);
+      FilterMethod := Byte(d[12]);
+      InterlaceMethod := Byte(d[13]);
     end;
   finally
     S.Position := p;
@@ -243,7 +274,7 @@ begin
   // https://github.com/asharif/img2grf/blob/master/src/main/java/org/orphanware/App.java
 
   if not IsBMP(ABMPStream, True) then
-    raise EACBrImage.Create(ACBrStr(cErrImgBMPMono));
+    raise EACBrImage.Create(ACBrStr(cErrImgNotBMPMono));
 
   // Lendo posição do Off-set da imagem
   ABMPStream.Position := 10;

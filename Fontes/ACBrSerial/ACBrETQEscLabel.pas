@@ -38,7 +38,7 @@ interface
 
 uses
   Classes,
-  ACBrETQZplII, ACBrDevice
+  ACBrETQZplII, ACBrETQClass
   {$IFDEF NEXTGEN}
    ,ACBrBase
   {$ENDIF};
@@ -51,9 +51,12 @@ type
   private
   protected
     function ConverterPaginaDeCodigo(aPaginaDeCodigo: TACBrETQPaginaCodigo): String; override;
+    function ComandoCor: String; override;
     function ComandoTemperatura: AnsiString; override;
     function ComandoResolucao: AnsiString; override;
     function ComandoVelocidade: AnsiString; override;
+    function ComandoDeteccao: AnsiString; override;
+    function ComandoDimensoes: AnsiString; override;
   public
     constructor Create(AOwner: TComponent);
     function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
@@ -86,8 +89,8 @@ begin
   if (aTipo = 'PNG') then       // EscLabel suporta PNG colorido
   begin
     aStream.Position := 0;
-    if not IsPNG(aStream) then
-      raise Exception.Create(ACBrStr('Imagem não é PNG'));
+    if not IsPNG(aStream, False) then
+      raise Exception.Create(ACBrStr(cErrImgNotPNG));
 
     Result := '~DY'+                // Download Graphics command
               'R:' +                // File Location
@@ -103,6 +106,21 @@ begin
   end
   else
     Result := inherited ComandoCarregarImagem(aStream, aNomeImagem, aFlipped, aTipo)
+end;
+
+function TACBrETQEscLabel.ComandoCor: String;
+begin
+  Result := '^F(C'+
+            IntToStr(CorFrente.R)+','+
+            IntToStr(CorFrente.G)+','+
+            IntToStr(CorFrente.B)+','+
+            IntToStr(CorFrente.Opacidade)+
+            ',D,'+     // D : Specified by "^FR"(field reverse)/"^LR"(label reverse);  N : Reversal canceled;  R : Reversal specified
+            IntToStr(CorFundo.R)+','+
+            IntToStr(CorFundo.G)+','+
+            IntToStr(CorFundo.B)+','+
+            IntToStr(CorFundo.Opacidade)+
+            ',D';
 end;
 
 function TACBrETQEscLabel.ConverterPaginaDeCodigo(aPaginaDeCodigo: TACBrETQPaginaCodigo): String;
@@ -130,9 +148,10 @@ begin
     ResDPI := '200';
   end;
 
-  Result := '^S(CLR,R,'+ ResDPI + sLineBreak + // Sets the format base in dots per inch
-            '^S(CLR,P,'+ ResDPI + sLineBreak + // Sets the print Resolution
-            '^S(CLR,Z,'+ ResDPI;               // Sets Print Resolution of replaced printer
+  Result := '';
+  AdicionarComandos( '^S(CLR,R,'+ ResDPI, Result);  // Sets the format base in dots per inch
+  AdicionarComandos( '^S(CLR,P,'+ ResDPI, Result);  // Sets the print Resolution
+  AdicionarComandos( '^S(CLR,Z,'+ ResDPI, Result);  // Sets Print Resolution of replaced printer
 end;
 
 function TACBrETQEscLabel.ComandoVelocidade: AnsiString;
@@ -144,6 +163,33 @@ begin
     Result := '^S(CMP,S,' + IntToStr(Velocidade)
   else
     Result := EmptyStr;
+end;
+
+function TACBrETQEscLabel.ComandoDeteccao: AnsiString;
+var
+  d: Char;
+begin
+  case DeteccaoEtiqueta of
+    mdeNone: d := 'N';
+    mdeBlackMark: d := 'M';
+  else
+    d := 'W';
+  end;
+
+  Result := '^S(CLM,D,'+d
+end;
+
+function TACBrETQEscLabel.ComandoDimensoes: AnsiString;
+begin
+  Result := '';
+  if (Dimensoes.Largura > 0) then
+    AdicionarComandos('^S(CLS,P,' + IntToStr(ConverterUnidade(etqDots, Dimensoes.Largura)), Result);
+  if (Dimensoes.Altura > 0) then
+    AdicionarComandos('^S(CLS,L,'+IntToStr(ConverterUnidade(etqDots, Dimensoes.Altura)), Result);
+  if (Dimensoes.EspacoEntreEtiquetas > 0) then
+    AdicionarComandos('^S(CLS,C,'+IntToStr(ConverterUnidade(etqDots, Dimensoes.EspacoEntreEtiquetas)), Result);
+  if (Dimensoes.EspacoEsquerda > 0) then
+    AdicionarComandos('^S(CLS,G,'+IntToStr(ConverterUnidade(etqDots, Dimensoes.EspacoEsquerda)), Result);
 end;
 
 function TACBrETQEscLabel.ComandoGravaRFIDHexaDecimal(aValue: String): AnsiString;

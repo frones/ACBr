@@ -42,8 +42,7 @@ uses
 
 type
 
-TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
-
+  TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
 
   { TACBrETQCmdList }
 
@@ -75,6 +74,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
     function GetLimparMemoria: Boolean;
     function GetModeloStr: String;
     function GetBackFeed: TACBrETQBackFeed;
+    function GetDeteccaoEtiqueta: TACBrETQDeteccaoEtiqueta;
     function GetOrigem: TACBrETQOrigem;
     function GetPaginaDeCodigo: TACBrETQPaginaCodigo;
     function GetUnidade: TACBrETQUnidade;
@@ -83,10 +83,12 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
     function GetPorta: String;
     function GetDPI : TACBrETQDPI;
     function GetAvanco: Integer;
+    function GetGuilhotina: Boolean;
 
     procedure SetUnidade(const AValue: TACBrETQUnidade);
     procedure SetModelo(const Value: TACBrETQModelo);
     procedure SetBackFeed(AValue: TACBrETQBackFeed);
+    procedure SetDeteccaoEtiqueta(AValue: TACBrETQDeteccaoEtiqueta);
     procedure SetLimparMemoria(const Value: Boolean);
     procedure SetTemperatura(const Value: Integer);
     procedure SetVelocidade(const Value: Integer);
@@ -94,6 +96,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
     procedure SetPorta(const Value: String);
     procedure SetOrigem(AValue: TACBrETQOrigem);
     procedure SetAvanco(const AValue: Integer);
+    procedure SetGuilhotina(AValue: Boolean);
     procedure SetAtivo(const Value: Boolean);
     procedure SetPaginaDeCodigo(AValue: TACBrETQPaginaCodigo);
     function GetNumeroPaginaDeCodigo(APagCod: TACBrETQPaginaCodigo): word;
@@ -137,23 +140,28 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
           LarguraModulo: Integer = 4; ErrorLevel: Integer = 0; Tipo: Integer = 2);
 
     procedure ImprimirLinha(Vertical, Horizontal, Largura, Altura: Integer); overload;
-
     procedure ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
       EspessuraVertical, EspessuraHorizontal: Integer; Canto: Integer = 0);
 
     procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
       const NomeImagem: String);
-
     procedure CarregarImagem(aStream: TStream; var NomeImagem: String;
       Flipped: Boolean = True; const Tipo: String = ''); overload;
-
     procedure CarregarImagem(const ArquivoImagem: String; var NomeImagem: String;
       Flipped: Boolean = True); overload;
 
-    procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
+    procedure DefinirCor(FrenteCor: Cardinal; FrenteOpacidade: Byte;
+      FundoCor: Cardinal; FundoOpacidade: Byte); overload;
+    procedure DefinirCor(FrenteR, FrenteG, FrenteB, FrenteOpacidade: Byte;
+      FundoR, FundoG, FundoB, FundoOpacidade: Byte); overload;
+    procedure DefinirCorPadrao;
+    procedure DefinirDimensoes(Largura, Altura: Integer;
+      EspacoEntreEtiquetas: Integer = -1; EspacoEsquerda: Integer = -1);
 
     procedure ComandoGravaRFIDHexaDecimal(aValue:String);
     procedure ComandoGravaRFIDASCII( aValue:String );
+
+    procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
 
     property ETQ:             TACBrETQClass    read fsETQ;
     property ListaCmd:        TACBrETQCmdList  read fsListaCmd;
@@ -172,7 +180,10 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2, etqEscLabel);
     property Origem:          TACBrETQOrigem   read GetOrigem        write SetOrigem default ogNone;
     property DPI:             TACBrETQDPI      read GetDPI           write SetDPI default dpi203;
     property Avanco:          Integer          read GetAvanco        write SetAvanco default 0;
+    property Guilhotina:      Boolean          read GetGuilhotina    write SetGuilhotina default False;
     property MargemEsquerda:  Integer          read fsMargemEsquerda write fsMargemEsquerda default 0;
+    property DeteccaoEtiqueta:TACBrETQDeteccaoEtiqueta read GetDeteccaoEtiqueta write SetDeteccaoEtiqueta default mdeGap;
+
     property OnGravarLog:     TACBrGravarLog   read fsOnGravarLog    write fsOnGravarLog;
     property ArqLOG:          String           read fsArqLOG         write fsArqLOG;
     property Porta:           String           read GetPorta         write SetPorta;
@@ -265,9 +276,19 @@ begin
   Result := fsETQ.LimparMemoria;
 end;
 
+function TACBrETQ.GetGuilhotina: Boolean;
+begin
+  Result := fsETQ.Guilhotina;
+end;
+
 function TACBrETQ.GetBackFeed: TACBrETQBackFeed;
 begin
   Result := fsETQ.BackFeed;
+end;
+
+function TACBrETQ.GetDeteccaoEtiqueta: TACBrETQDeteccaoEtiqueta;
+begin
+  Result := fsETQ.DeteccaoEtiqueta;
 end;
 
 function TACBrETQ.GetOrigem: TACBrETQOrigem;
@@ -313,6 +334,11 @@ end;
 procedure TACBrETQ.SetPaginaDeCodigo(AValue: TACBrETQPaginaCodigo);
 begin
   fsETQ.PaginaDeCodigo := AValue;
+end;
+
+procedure TACBrETQ.SetDeteccaoEtiqueta(AValue: TACBrETQDeteccaoEtiqueta);
+begin
+  fsETQ.DeteccaoEtiqueta := AValue;
 end;
 
 function TACBrETQ.GetNumeroPaginaDeCodigo(APagCod: TACBrETQPaginaCodigo): word;
@@ -453,6 +479,11 @@ end;
 procedure TACBrETQ.SetAvanco(const AValue: Integer);
 begin
   fsETQ.Avanco := AValue;
+end;
+
+procedure TACBrETQ.SetGuilhotina(AValue: Boolean);
+begin
+  fsETQ.Guilhotina := AValue;
 end;
 
 procedure TACBrETQ.SetAtivo(const Value: Boolean);
@@ -845,6 +876,66 @@ begin
   finally
     wMS.Free;
   end;
+end;
+
+procedure TACBrETQ.DefinirCor(FrenteCor: Cardinal; FrenteOpacidade: Byte;
+  FundoCor: Cardinal; FundoOpacidade: Byte);
+begin
+  GravarLog('- DefinirCor:'+
+            '  Frente:'+IntToHex(FrenteCor, 6)+
+            ', FrenteOpacidade:'+IntToStr(FrenteOpacidade)+
+            '  Fundo:'+IntToHex(FundoCor, 6)+
+            ', FundoOpacidade:'+IntToStr(FundoOpacidade) );
+
+  fsETQ.CorFrente.Color := FrenteCor;
+  fsETQ.CorFrente.Opacidade := FrenteOpacidade;
+  fsETQ.CorFundo.Color := FundoCor;
+  fsETQ.CorFundo.Opacidade := FundoOpacidade;
+end;
+
+procedure TACBrETQ.DefinirCor(FrenteR, FrenteG, FrenteB, FrenteOpacidade: Byte;
+  FundoR, FundoG, FundoB, FundoOpacidade: Byte);
+var
+  wCmd: AnsiString;
+begin
+  GravarLog('- DefinirCor:'+
+            '  FrenteR:'+IntToStr(FrenteR)+
+            ', FrenteG:'+IntToStr(FrenteG)+
+            ', FrenteB:'+IntToStr(FrenteB)+
+            ', FrenteOpacidade:'+IntToStr(FrenteOpacidade)+
+            ', FundoR:'+IntToStr(FundoR)+
+            ', FundoG:'+IntToStr(FundoG)+
+            ', FundoB:'+IntToStr(FundoB)+
+            ', FundoOpacidade:'+IntToStr(FundoOpacidade) );
+
+  fsETQ.CorFrente.R := FrenteR;
+  fsETQ.CorFrente.G := FrenteG;
+  fsETQ.CorFrente.B := FrenteB;
+  fsETQ.CorFrente.Opacidade := FrenteOpacidade;
+  fsETQ.CorFundo.R := FundoR;
+  fsETQ.CorFundo.G := FundoG;
+  fsETQ.CorFundo.B := FundoB;
+  fsETQ.CorFundo.Opacidade := FundoOpacidade;
+end;
+
+procedure TACBrETQ.DefinirCorPadrao;
+begin
+  DefinirCor($000000, 255, $FFFFFF, 0);
+end;
+
+procedure TACBrETQ.DefinirDimensoes(Largura, Altura: Integer;
+  EspacoEntreEtiquetas: Integer; EspacoEsquerda: Integer);
+begin
+  GravarLog('- DefinirDimensoes:'+
+            '  Largura:'+IntToStr(Largura)+
+            ', Altura:'+IntToStr(Altura)+
+            ', EspacoEntreEtiquetas:'+IntToStr(EspacoEntreEtiquetas)+
+            ', EspacoEsquerda:'+IntToStr(EspacoEsquerda) );
+
+  fsETQ.Dimensoes.Largura := Largura;
+  fsETQ.Dimensoes.Altura := Altura;
+  fsETQ.Dimensoes.EspacoEntreEtiquetas := EspacoEntreEtiquetas;
+  fsETQ.Dimensoes.EspacoEsquerda := EspacoEsquerda;
 end;
 
 end.

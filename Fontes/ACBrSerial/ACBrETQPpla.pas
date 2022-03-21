@@ -75,6 +75,7 @@ type
     function ConverterPaginaDeCodigo(aPaginaDeCodigo: TACBrETQPaginaCodigo): String;
   protected
     function ComandoAbertura: AnsiString; override;
+    function ComandoGuilhotina: AnsiString; override;
     function ComandoUnidade: AnsiString; override;
     function ComandoTemperatura: AnsiString; override;
     function ComandoPaginaDeCodigo: AnsiString; override;
@@ -374,6 +375,18 @@ begin
   Result := STX + 'L';
 end;
 
+function TACBrETQPpla.ComandoGuilhotina: AnsiString;
+var
+  n: Char;
+begin
+  if Guilhotina then
+    n := '1'
+  else
+    n := '0';
+
+  Result := STX + 'V' + n;
+end;
+
 function TACBrETQPpla.ComandosFinalizarEtiqueta(NumCopias: Integer;
   aAvancoEtq: Integer): AnsiString;
 var
@@ -529,14 +542,14 @@ begin
   if (aTipo = 'PCX') then
   begin
     if not IsPCX(aStream, True) then
-      raise Exception.Create(ACBrStr(cErrImgPCXMono));
+      raise Exception.Create(ACBrStr(cErrImgNotPCXMono));
 
     Cmd := 'p'
   end
   else if (aTipo = 'BMP') then
   begin
     if not IsBMP(aStream, True) then
-      raise Exception.Create(ACBrStr(cErrImgBMPMono));
+      raise Exception.Create(ACBrStr(cErrImgNotBMPMono));
 
     Cmd := 'F';
     DataImg := BMP2HEX(aStream, aFlipped);

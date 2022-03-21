@@ -38,6 +38,53 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/03/2022
+-- ACBrDevice, ACBrETQClass --
+[*] Os tipos abaixo, foram movidos de "ACBrDevice.pas" para "ACBrETQClass.pas"
+    TACBrETQUnidade, TACBrETQDPI, TACBrETQOrientacao, TACBrETQBarraExibeCodigo,
+    TACBrETQBackFeed, TACBrETQOrigem
+
+-- ACBrETQ, ACBrETQClass --
+[+] Adicionado os métodos:
+    procedure DefinirCor(FrenteCor: Cardinal; FrenteOpacidade: Byte;
+      FundoCor: Cardinal; FundoOpacidade: Byte); overload;
+    procedure DefinirCor(FrenteR, FrenteG, FrenteB, FrenteOpacidade: Byte;
+      FundoR, FundoG, FundoB, FundoOpacidade: Byte); overload;
+    procedure DefinirCorPadrao;
+    - Para permitir mudar a Cor de Impressão de Frente e Fundo de Objetos como
+      Texto, Caixa, Linhas, Códigos, etc
+      Usado apenas no modelo: "EscLabel"
+[+] Adicionado o método:
+    procedure DefinirDimensoes(Largura, Altura: Integer;
+      EspacoEntreEtiquetas: Integer = -1; EspacoEsquerda: Integer = -1);
+    - Para permitir definir as Dimensões de uma Etiqueta, em um formulário sem
+      Cortes, Gaps ou BlackMark
+      Usado apenas no modelo: "EscLabel"
+[+] Adicionada a propriedade: "Guilhotina: Boolean default False;"
+    Se for True, acionará a guilhotina da Impressora, após o término da Impressão,
+    (quando disponível)
+[+] Adicionada a propriedade: "DeteccaoEtiqueta: TACBrETQDeteccaoEtiqueta"
+    (mdeNone, mdeGap, mdeBlackMark), default mdeNone.
+
+-- ACBrETQClass --
+[+] Adicionados novos Métodos Protegidos (Protected)
+    function ComandoDeteccao: AnsiString; virtual;
+    function ComandoGuilhotina: AnsiString; virtual;
+    function ComandoDimensoes: AnsiString; virtual;
+[*] Método "ComandosIniciarEtiqueta", modificado para adicionar a lista de
+    comandos, chamadas para: ComandoDeteccao, ComandoGuilhotina, ComandoDimensoes
+
+-- ACBrETQEpl2, ACBrETQPpla, ACBrETQZplII --
+[+] Adicionado suporte ao comando "ComandoGuilhotina"
+
+-- ACBrETQEscLabel --
+[+] Adicionado suporte aos comandos: "ComandoCor", "ComandoDeteccao" e "ComandoDimensoes"
+
+-- ACBrETQZplII --
+[*] Adicionada sobrecarga de alguns métodos, movendo-os em Protected, para
+    permitir a sobrecarga em TACBrETQEscLabel
+    (por: DSA)
+
 Data: 16/03/2022
 -- ACBrETQ, ACBrETQClass --
 [+] Adicionado o modelo "etqEscLabel", que implementa a comunicação do Protocolo

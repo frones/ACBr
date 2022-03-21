@@ -72,6 +72,7 @@ type
 
     function ComandoLimparMemoria: AnsiString; override;
     function ComandoAbertura: AnsiString; override;
+    function ComandoGuilhotina: AnsiString; override;
     function ComandoBackFeed: AnsiString; override;
     function ComandoTemperatura: AnsiString; override;
     function ComandoPaginaDeCodigo: AnsiString; override;
@@ -272,7 +273,7 @@ end;
 
 function TACBrETQEpl2.ComandoOrigemCoordenadas: AnsiString;
 begin
-  if (fpOrigem = ogTop) then
+  if (Origem = ogTop) then
     Result := 'ZT'
   else
     Result := 'ZB';  // ACBr Default
@@ -324,7 +325,7 @@ end;
 
 function TACBrETQEpl2.ComandoBackFeed: AnsiString;
 begin
-  case fpBackFeed of
+  case BackFeed of
     bfOn : Result := 'JF';
     bfOff: Result := 'JB';
   else
@@ -335,6 +336,14 @@ end;
 function TACBrETQEpl2.ComandoAbertura: AnsiString;
 begin
   Result := 'R0,0';
+end;
+
+function TACBrETQEpl2.ComandoGuilhotina: AnsiString;
+begin
+  if Guilhotina then
+    Result := 'OC'  // thermal transfer, enables cutter and disables dispenser
+  else
+    Result := 'O';  // thermal transfer, disables cutter and dispenser
 end;
 
 function TACBrETQEpl2.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
@@ -440,7 +449,7 @@ begin
     aTipo := UpperCase(RightStr(aTipo, 3));
 
   if (aTipo <> 'PCX') or (not IsPCX(aStream, True)) then
-    raise Exception.Create(ACBrStr(cErrImgPCXMono));
+    raise Exception.Create(ACBrStr(cErrImgNotPCXMono));
 
   aStream.Position := 0;
   ImgData := ReadStrFromStream(aStream, aStream.Size);

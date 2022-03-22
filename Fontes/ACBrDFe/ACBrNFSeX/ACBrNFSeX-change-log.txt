@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 22/03/2022
+-- Sintese.Provider --
+[*] Configurado para assinar o pedido de cancelamento de NFS-e.
+   Por: Desenvolvedor
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Tumiritinga/MG - provedor Sintese.
+   Por: Desenvolvedor
 -- Diversos --
 [+] Implementado o provedor ISSCambe.
    Por: Marcos Villatore/Italo Giurizzato Junior

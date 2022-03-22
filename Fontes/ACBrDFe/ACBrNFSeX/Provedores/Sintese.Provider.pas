@@ -87,6 +87,7 @@ begin
     Rps := True;
     LoteRps := True;
     RpsGerarNFSe := True;
+    CancelarNFSe := True;
   end;
 
   with ConfigWebServices do

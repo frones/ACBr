@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 22/03/2022
+-- Thema.Provider --
+[*] Incluido na função TratarXmlRetornado a chamada:
+    RemoverPrefixosDesnecessarios.
+   Por: Italo Giurizzato Junior
 -- Sintese.Provider --
 [*] Configurado para assinar o pedido de cancelamento de NFS-e.
    Por: Desenvolvedor

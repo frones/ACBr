@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/03/2022
+-- Diversos --
+[+] Implementado o provedor ISSCambe.
+   Por: Marcos Villatore/Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] A mensagem "Nota Cancelada" estava retornando de forma indevida,
     pois alguns provedores retornam o grupo <NfseCancelamento> vazio

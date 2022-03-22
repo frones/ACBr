@@ -161,6 +161,7 @@ uses
   Giap.Provider,
   Governa.Provider,
   IPM.Provider,
+  ISSCambe.Provider,
   ISSDSF.Provider,
   ISSLencois.Provider,
   ISSSaoPaulo.Provider,
@@ -316,6 +317,9 @@ begin
             Result := nil;
           end;
         end;
+
+      proISSCambe:
+        Result := TACBrNFSeProviderISSCambe.Create(ACBrNFSe);
 
       proISSCuritiba:
         Result := TACBrNFSeProviderISSCuritiba.Create(ACBrNFSe);

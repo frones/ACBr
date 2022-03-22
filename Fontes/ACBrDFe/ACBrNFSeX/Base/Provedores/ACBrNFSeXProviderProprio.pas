@@ -358,10 +358,29 @@ begin
 end;
 
 procedure TACBrNFSeProviderProprio.PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
 begin
-  // Deve ser implementado para cada provedor que tem o seu próprio layout
-  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-  raise EACBrDFeException.Create(ERR_NAO_IMP);
+  if Response.InfConsultaNFSe.tpConsulta = tcPorNumero then
+  begin
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    raise EACBrDFeException.Create(ERR_NAO_IMP);
+  end
+  else
+  begin
+    case Response.InfConsultaNFSe.tpConsulta of
+      tcPorPeriodo,
+      tcPorFaixa: PrepararConsultaNFSeporFaixa(Response);
+      tcServicoPrestado: PrepararConsultaNFSeServicoPrestado(Response);
+      tcServicoTomado: PrepararConsultaNFSeServicoTomado(Response);
+    else
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod001;
+        AErro.Descricao := Desc001;
+      end;
+    end;
+  end;
 end;
 
 procedure TACBrNFSeProviderProprio.GerarMsgDadosConsultaNFSe(

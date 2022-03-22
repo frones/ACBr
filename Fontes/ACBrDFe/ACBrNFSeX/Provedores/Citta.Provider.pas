@@ -69,6 +69,7 @@ type
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
 
+  public
     function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
   end;
 

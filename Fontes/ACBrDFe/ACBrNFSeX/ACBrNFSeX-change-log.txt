@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 22/03/2022
+-- ACBrNFSeXServicos --
+[+] Incluida a cidade de Cambé/PR - provedor ISSCambe
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade de Palhoça/SC e Marechal Cândido Rondon/PR trocaram para 
+    a versão 1.01 do provedor IPM
+   Por: Rauber Gabri
+-- ACBrNFSeXServicos --
+[*] A cidade de Gurupi/TO trocou para a versão 2.02 do provedor WebISS
+   Por: MaxData
 -- Saatri.Provider --
 [*] Incluido a função TratarXmlRetornado.
    Por: Italo Giurizzato Junior

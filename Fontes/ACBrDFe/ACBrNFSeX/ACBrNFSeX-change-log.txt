@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 22/03/2022
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] A mensagem "Nota Cancelada" estava retornando de forma indevida,
+    pois alguns provedores retornam o grupo <NfseCancelamento> vazio
+    quando a nota não esta cancelada.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade de Cambé/PR - provedor ISSCambe
    Por: Italo Giurizzato Junior

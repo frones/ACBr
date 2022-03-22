@@ -870,7 +870,10 @@ begin
           AuxNode := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
 
         Response.Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
-        Response.DescSituacao := 'Nota Cancelada';
+        Response.DescSituacao := '';
+
+        if Response.Data > 0 then
+          Response.DescSituacao := 'Nota Cancelada';
       end;
 
       AuxNode := ANode.Childrens.FindAnyNs('Nfse');

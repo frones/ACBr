@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2022
+--ACBrBoletoFCFortesFr--
+[-] correção no layout Carne, cortando o campo parcela na margem esquerda ao gerar pdf
+
 03/13/2022
 --ACBrBoletoFCFortesFr--
 [-] correção na configuração de preview de impressão, não deve passar informações de filtro

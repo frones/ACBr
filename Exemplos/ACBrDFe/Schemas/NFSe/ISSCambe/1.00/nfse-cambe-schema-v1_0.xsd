@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.cambe.pr.gov.br.com/nfse-ws/xmlschema/v1_0"
+    targetNamespace="http://www.cambe.pr.gov.br.com/nfse-ws/xmlschema/v1_0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    version="1.0" >
+
+    <xs:element name="espelhoNFSe" type="tcEspelhoNFSe"/>
+    
+    <xs:complexType name="tcEspelhoNFSe">
+    	<xs:sequence>
+    		<xs:element name="NFSe" type="tcNFSe"/>
+    		<xs:element name="NFSeHash" type="xs:string"/>
+    		<xs:element name="dataHoraConsulta" type="xs:dateTime"/>
+    	</xs:sequence>
+    	<xs:attribute name="VersaoSchema" type="xs:string" default="1.0"/>
+    </xs:complexType>
+    
+    <xs:complexType name="tcNFSe">
+    	<xs:sequence>
+			<xs:element name="identificacaoNFSe" type="tcIdentificacaoNFSe"/>
+			<xs:element name="substituicaoNFSe" type="tcSubstituicaoNFSe" minOccurs="0"/>
+			<xs:element name="dadosNFSe" type="tcDadosNFSe"/>
+			<xs:element name="demaisDados" type="tcDemaisDados"/>		
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="tcIdentificacaoNFSe">
+    	<xs:sequence>
+    		<xs:element name="numero" type="xs:long" minOccurs="1" maxOccurs="1"/>
+    		<xs:element name="codigoVerificacao" minOccurs="1" maxOccurs="1">
+    			<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="9"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+    		<xs:element name="linkImpressao" minOccurs="1" maxOccurs="1">
+    			<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="255"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+    		<xs:element name="dataEmissao" type="xs:date" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="mesCompetencia" minOccurs="1" maxOccurs="1">
+    			<xs:simpleType>
+    				<xs:restriction base="xs:integer">
+    					<xs:totalDigits value="2"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+    		<xs:element name="anoCompetencia" minOccurs="1" maxOccurs="1">
+    			<xs:simpleType>
+    				<xs:restriction base="xs:integer">
+    					<xs:totalDigits value="4"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+			<xs:element name="statusNFSe" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+    					<xs:length value="50"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element> 
+    	</xs:sequence>
+    </xs:complexType>
+    
+	<xs:complexType name="tcSubstituicaoNFSe">
+		<xs:sequence>
+			<xs:element name="NFSeSubstituta" type="xs:long" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="NFSeSubstituida" type="xs:long" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>		
+	</xs:complexType>
+	
+	<xs:complexType name="tcDadosNFSe">
+		<xs:sequence>
+ 			<xs:element name="dadosPrestador" type="tcDadosPrestador" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="dadosTomador" type="tcDadosTomador" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="RPS" type="tcRPS" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="tcDadosPrestador">
+		<xs:sequence>
+			<xs:element name="prestadorCMC" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="prestadorCNPJ" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="14"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorRazaoSocial" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="60"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorNomeFantasia" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="150"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorLogradouro" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="40"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorNumero" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="6"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorComplemento" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="30"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorBairro" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="40"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>		
+			</xs:element>
+			<xs:element name="prestadorCEP" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="8"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>			
+			</xs:element>
+			<xs:element name="prestadorMunicipio" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="prestadorUF" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="2"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorTelefone" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="20"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="prestadorEmail" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="50"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="tcDadosTomador">
+		<xs:sequence>
+			<xs:element name="tipoTomador">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="1">
+							<xs:annotation>
+								<xs:documentation>Pessoa Jurídica do próprio Município</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="2">
+							<xs:annotation>
+								<xs:documentation>Pessoa Jurídica de outro Município</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="3">
+							<xs:annotation>
+								<xs:documentation>Pessoa Física Identificada</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="4">
+							<xs:annotation>
+								<xs:documentation>Pessoa Física Não Identificada</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="5">
+							<xs:annotation>
+								<xs:documentation>Pessoa estrangeira</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorCPFCNPJ" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="14"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorInscricaoEstadual" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="15"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+			<xs:element name="tomadorCMC" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="tomadorRazaoSocial" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="60"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorLogradouro" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="40"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorNumero" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="6"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorComplemento" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="30"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorBairro" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="40"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorCEP" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="8"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorMunicipio" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="tomadorUF" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="2"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorEmail" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="50"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="tomadorPais" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="5"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="tcRPS">
+		<xs:sequence>
+			<xs:element name="RPSnumero" type="xs:long" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="RPSDataEmissao" type="xs:date" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="tcDemaisDados">
+		<xs:sequence>
+			<xs:element name="codigoObra" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="15"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="ART" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="20"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="optanteSimplesNacional" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="incentivoFiscal" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="servicoISS" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="servicoDiscriminacao">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="1400"/>
+    					<xs:whiteSpace value="collapse"/>
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="servicoValor" type="currencyType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="tipoDeducao" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="50"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="valorDeducao" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="valorBaseCalculo" type="currencyType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="aliquota" type="currencyType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="valorISS" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="valorIR" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="valorPIS" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="valorCOFINS" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="valorCSLL" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="valorINSS" type="currencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ISSRetido" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="valorLiquidoNFSe" type="currencyType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="municipioPrestacao" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ISSDevido" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="50"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="paisPrestacao" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="5"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="municipioIncidencia" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="outrasInformacoes" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:length value="10485760"/>
+    					<xs:whiteSpace value="collapse" />
+    				</xs:restriction>
+    			</xs:simpleType>
+			</xs:element>
+			<xs:element name="municipioOrgaoGerador" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="UFOrgaoGerador" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="currencyType">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1953,7 +1953,7 @@ uses
   ConfiguraSerial, SelecionarCertificado, ACBrSATExtratoClass,
   ACBrNFeConfiguracoes, ACBrNFeDANFEClass, ACBrCTeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
-  ACBrReinfConfiguracoes, ACBrDFeDANFeReport, ACBrBPeConfiguracoes;
+  ACBrReinfConfiguracoes, ACBrDFeDANFeReport, ACBrBPeConfiguracoes, ACBrETQClass;
 
 {$R *.lfm}
 

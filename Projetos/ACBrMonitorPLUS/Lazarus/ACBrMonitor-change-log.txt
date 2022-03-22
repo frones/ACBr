@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2022
+--- ACBrMonior1, DoETQUnit---
+[*] Ajustes de enumerados, atualização de uses da classe ACBrETQClass
+
 26/01/2022
 --- ACBrMonior1---
 [+] Ajustes nas mensagens de interações em tela ref Terminal Consulta e Balança 

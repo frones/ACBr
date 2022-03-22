@@ -112,7 +112,7 @@ implementation
 uses
   typinfo, Printers, IniFiles,
   synautil, synacode,
-  ACBrUtil, ACBrImage
+  ACBrUtil, ACBrImage, ACBrETQClass
   {$IfDef MSWINDOWS}
   ,ACBrWinUSBDevice
   {$EndIf};

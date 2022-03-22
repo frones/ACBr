@@ -121,7 +121,7 @@ implementation
 uses
   typinfo, Printers, IniFiles,
   synautil, synacode,
-  ACBrUtil, ACBrImage
+  ACBrUtil, ACBrImage, ACBrETQClass
   {$IFDEF SUPPORT_PNG}
    ,pngimage
   {$ENDIF}

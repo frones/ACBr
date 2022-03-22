@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibConfig, ACBrLibETQConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibETQConfig, ACBrETQClass;
 
 { TACBrLibETQ }
 

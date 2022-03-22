@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBrLibConfig, ACBrDeviceConfig, ACBrDevice, ACBrETQ;
+  ACBrLibConfig, ACBrDeviceConfig, ACBrDevice, ACBrETQ, ACBrETQClass;
 
 type
 

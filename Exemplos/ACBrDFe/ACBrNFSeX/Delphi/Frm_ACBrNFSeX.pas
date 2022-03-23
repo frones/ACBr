@@ -3227,7 +3227,6 @@ begin
     ACBrNFSeX1.DANFSe.MargemEsquerda := 5;
     ACBrNFSeX1.DANFSe.MargemSuperior := 5;
     ACBrNFSeX1.DANFSe.MargemInferior := 5;
-    ACBrNFSeX1.DANFSE.Cancelada := True;
   end;
 
   with ACBrNFSeX1.MAIL do

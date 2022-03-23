@@ -3680,6 +3680,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    DANFSE = ACBrNFSeXDANFSeRL1
     Left = 334
     Top = 225
   end
@@ -3700,6 +3701,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFSe = ACBrNFSeX1
     Cancelada = False
     Provedor = proNenhum
     TamanhoFonte = 6

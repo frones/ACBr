@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2022
+-- ACBrXmlBase --
+[*] Incluida a remoção do caracter "T" na função:
+    EncodeDataHora.
+   Por: Renato Rubinho
+
 16/03/2022
 -- ACBrXmlBase --
 [*] Incluida a remoção dos caracteres #10 e #13 na função:

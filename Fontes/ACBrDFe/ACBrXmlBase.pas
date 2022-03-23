@@ -376,6 +376,10 @@ begin
       8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
     end;
 
+    if (Copy(xData, 5, 1) = '/') and (Copy(xData, 11, 1) = 'T') and
+       (Copy(xData, 14, 1) = ':') then
+      xData := Copy(xData, 1, 10) + ' ' + Copy(xData, 12, Length(xData) - 11);
+
     Result := StringToDateTime(xData, xFormatoData);
   end;
 end;

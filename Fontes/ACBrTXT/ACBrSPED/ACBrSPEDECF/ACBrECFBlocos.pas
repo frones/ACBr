@@ -196,7 +196,7 @@ type
   TACBrIndicadorDados = TACBrIndDad;
 
   /// Versão do Leiaute do arquivo - TRegistro0000
-  TACBrECFCodVer = (ECFVersao100, ECFVersao200, ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600, ECFVersao700);
+  TACBrECFCodVer = (ECFVersao100, ECFVersao200, ECFVersao300, ECFVersao400, ECFVersao500, ECFVersao600, ECFVersao700, ECFVersao800);
 //  TACBrECFVersaoLeiaute = TACBrECFCodVer;
 
   /// Código da finalidade do arquivo - TRegistro0000
@@ -973,11 +973,14 @@ begin
     Result := ECFVersao600
   else
   if AValue = '0007' then
-    Result := ECFVersao700	
+    Result := ECFVersao700
   else
-    raise Exception.CreateFmt('Valor informado [%s] deve estar entre (0001,0002 e 0003)', [AValue]);
+  if AValue = '0008' then
+    Result := ECFVersao800
+  else
+    raise Exception.CreateFmt('Valor informado [%s] deve estar entre (0001 e 0008)', [AValue]);
 end;
-              
+
 function CodVerToStr(AValue: TACBrECFCodVer): string;
 begin
   if AValue = ECFVersao100 then
@@ -1000,6 +1003,9 @@ begin
   else
   if AValue = ECFVersao700 then
     Result := '0007'
+  else
+  if AValue = ECFVersao800 then
+    Result := '0008'
   else
     raise Exception.Create('Valor informado inválido para ser convertido em TACBrECFCodVer');
 end;

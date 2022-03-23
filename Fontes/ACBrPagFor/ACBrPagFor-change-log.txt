@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2022
+-- ACBrPagForGravarTxt --
+[*] Ajustes no Segmento B para o PIX do banco Itau.
+   Por: Cantú
+
 18/03/2022
 -- ACBrPagForClass/ACBrPagForConversao/ACBrPagForGravarTxt/ACBrPagForLerTxt --
 [*] Ajustes para funcionar com o banco Itau

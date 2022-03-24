@@ -35,7 +35,8 @@ program ACBrComumTestCases;
 uses
   ACBrTests.Util in '..\..\ACBrTests.Util.pas',
   ACBrTests.Runner in '..\..\ACBrTests.Runner.pas',
-  acbrutiltest in '..\..\FPCUnit\ACBrComum\acbrutiltest.pas';
+  acbrutiltest in '..\..\FPCUnit\ACBrComum\acbrutiltest.pas',
+  ACBrUtil.StringsTests in '..\..\FPCUnit\ACBrComum\ACBrUtil.StringsTests.pas';
 
 begin
   ACBrRunTests;

@@ -10,7 +10,8 @@ interface
 uses
   ACBrBase, ACBrConsts, ACBrUtil, ACBrReg, ACBrAAC, ACBrPAFClass, 
   ACBrCompress, ACBrImage, StrUtilsEx, ACBrDelphiZXingQRCode, 
-  LazarusPackageIntf;
+  ACBrUtil.FilesIO, ACBrUtil.Math, ACBrUtil.Strings, ACBrUtil.XMLHTML, 
+  ACBrUtil.DateTime, LazarusPackageIntf;
 
 implementation
 

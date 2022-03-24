@@ -25,7 +25,7 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="12">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>
@@ -76,6 +76,26 @@
         <Filename Value="..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas"/>
         <UnitName Value="ACBrDelphiZXingQRCode"/>
       </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.FilesIO.pas"/>
+        <UnitName Value="ACBrUtil.FilesIO"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Math.pas"/>
+        <UnitName Value="ACBrUtil.Math"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas"/>
+        <UnitName Value="ACBrUtil.Strings"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.XMLHTML.pas"/>
+        <UnitName Value="ACBrUtil.XMLHTML"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.DateTime.pas"/>
+        <UnitName Value="ACBrUtil.DateTime"/>
+      </Item17>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

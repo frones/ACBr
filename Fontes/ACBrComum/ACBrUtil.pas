@@ -85,8 +85,17 @@ type
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
   TFindFileSortType = ACBrUtil.FilesIO.TFindFileSortType;
   TFindFileSortDirection = ACBrUtil.FilesIO.TFindFileSortDirection;
+
+{$IFDEF FPC}
+  {$DEFINE SUPPORTS_TYPE_ALIASES}
+{$ENDIF}
+{$IFDEF DELPHI2009_UP}
+  {$DEFINE SUPPORTS_TYPE_ALIASES}
+{$ENDIF}
+
+{$IFDEF SUPPORTS_TYPE_ALIASES}
+//deprecated const... Definidas na unit ACBrUtil.FilesIO
 const
-  //deprecated...
   fstNone     = TFindFileSortType.fstNone;
   fstDateTime = TFindFileSortType.fstDateTime;
   fstFileName = TFindFileSortType.fstFileName;
@@ -94,6 +103,7 @@ const
   fsdAscending  = TFindFileSortDirection.fsdAscending;
   fsdDescending = TFindFileSortDirection.fsdDescending;
   //...deprecated
+{$ENDIF}
 
 
 {/////////  ACBrUtil.Compatibilidade (especialmente D6/D5)}
@@ -108,7 +118,7 @@ const
   function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64 = 0): Int64; overload;
   function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double = 0.0): Double; overload;
   function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string = ''): string; overload;
-{$endif}
+{$ENDIF}
 
 {$IFNDEF COMPILER7_UP}
 { PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6

@@ -427,7 +427,7 @@ implementation
 
 uses
   StrUtils, TypInfo,
-  ACBrUtil;
+  ACBrUtil, ACBrUtil.FilesIO;
 
 { TACBrTEFAPIDadosAutomacao }
 

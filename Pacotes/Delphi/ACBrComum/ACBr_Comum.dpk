@@ -38,6 +38,7 @@ contains
   ACBrBase in '..\..\..\Fontes\ACBrComum\ACBrBase.pas',
   ACBrConsts in '..\..\..\Fontes\ACBrComum\ACBrConsts.pas',
   ACBrUtil in '..\..\..\Fontes\ACBrComum\ACBrUtil.pas',
+  ACBrUtil.Compatibilidade in '..\..\..\Fontes\ACBrComum\ACBrUtil.Compatibilidade.pas',
   ACBrUtil.DateTime in '..\..\..\Fontes\ACBrComum\ACBrUtil.DateTime.pas',
   ACBrUtil.FilesIO in '..\..\..\Fontes\ACBrComum\ACBrUtil.FilesIO.pas',
   ACBrUtil.Math in '..\..\..\Fontes\ACBrComum\ACBrUtil.Math.pas',

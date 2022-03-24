@@ -25,7 +25,7 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="17">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>
@@ -96,6 +96,10 @@
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.DateTime.pas"/>
         <UnitName Value="ACBrUtil.DateTime"/>
       </Item17>
+      <Item18>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Compatibilidade.pas"/>
+        <UnitName Value="ACBrUtil.Compatibilidade"/>
+      </Item18>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

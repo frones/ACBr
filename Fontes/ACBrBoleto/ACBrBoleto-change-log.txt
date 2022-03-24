@@ -49,6 +49,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2022
+--ACBrBoletoW_BancoBrasil_API.pas--
+[-] TK-2505 ACBrBoleto API BB - Correção Swagger - Data Juros
+--ACBrBoleto.pas--
+[*] TK-2493 ACBrBoleto - Alteração na forma de impressão do desconto, Mensagem Padrão
+  Por: Pandaaa
+
 16/03/2022
 --ACBrBoleto.pas--
 [-] TK-2482 ACBrBoleto IniReader - Tratamento para campos vazio Local de Pagamento e Orientações Banco não sobrescrever o construtor da classe.

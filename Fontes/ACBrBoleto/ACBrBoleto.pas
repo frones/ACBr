@@ -428,6 +428,7 @@ type
   TACBrBoleto = class;
   TConfiguracoes = class;
 
+  //quando alterar, verificar a mensagem de impressão do boleto.
   TACBrTipoDesconto = (
     tdNaoConcederDesconto,
     tdValorFixoAteDataInformada,
@@ -1668,6 +1669,9 @@ type
 
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    function CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto):Double;
+    function CalcularPercentualValor(AValorPercentual, AValorDocumento : Double) : Double;
+    function GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDate = 0): String;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -2906,6 +2910,66 @@ begin
    ACBrBoletoFC.GerarJPG;
 end;
 
+function TACBrBoleto.GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDate = 0): String;
+var ValorDesconto : Double;
+begin
+
+  case ATipoDesconto of
+    tdPercentualAteDataInformada,
+    tdPercentualSobreValorNominalDiaCorrido,
+    tdPercentualSobreValorNominalDiaUtil :
+      begin
+        ValorDesconto := CalcularPercentualValor(AValorDesconto, ATitulo.ValorDocumento);
+      end;
+    else
+      ValorDesconto := AValorDesconto;
+  end;
+  case ATipoDesconto of
+    tdValorFixoAteDataInformada,
+    tdPercentualAteDataInformada :
+      begin
+        if ADataDesconto > 0 then
+          Result := ACBrStr('Conceder desconto de ' +
+                            FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
+                            ' para pagamento até ' +
+                            FormatDateTime('dd/mm/yyyy',ADataDesconto)
+                   );
+      end;
+    tdValorAntecipacaoDiaCorrido,
+    tdPercentualSobreValorNominalDiaCorrido :
+      begin
+        Result := ACBrStr('Conceder desconto de ' +
+                          FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
+                          ' por dia de antecipaçao corrido.'
+                  );
+      end;
+    tdValorAntecipacaoDiaUtil,
+    tdPercentualSobreValorNominalDiaUtil :
+      begin
+        Result := ACBrStr('Conceder desconto de ' +
+                          FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
+                          ' por dia de antecipaçao útil.'
+                  );
+      end;
+    tdNaoConcederDesconto :
+      begin // depreciado... retrocompatibilidade com a implementação antiga
+            // utilizar os enumeradores corretos quando houver descontos a exibir.
+        if ADataDesconto > 0 then
+          Result := ACBrStr('Conceder desconto de ' +
+                            FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
+                            ' para pagamento até ' +
+                            FormatDateTime('dd/mm/yyyy',ADataDesconto)
+                   )
+        else
+        if ValorDesconto > 0 then
+          Result := ACBrStr('Conceder desconto de ' +
+                          FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
+                          ' por dia de antecipaçao corrido.'
+                  );
+      end;
+  end;
+end;
+
 procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
   sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
 var
@@ -3011,30 +3075,13 @@ begin
       end;
 
       if ValorDesconto <> 0 then
-      begin
-         if DataDesconto <> 0 then
-            AStringList.Add(ACBrStr('Conceder desconto de '                       +
-                             FormatFloatBr(ValorDesconto, 'R$ #,##0.00')       +
-                             ' para pagamento até ' +
-                             FormatDateTime('dd/mm/yyyy',DataDesconto)))
-         else
-            AStringList.Add(ACBrStr('Conceder desconto de '                 +
-                             FormatFloatBr(ValorDesconto, 'R$ #,##0.00') +
-                             ' por dia de antecipaçao'));
-      end;
+        AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto,Titulo.ValorDesconto,Titulo,DataDesconto));
 
       if ValorDesconto2 <> 0 then
-      begin
-        if DataDesconto2 <> 0 then
-          AStringList.Add(ACBrStr('Conceder desconto de '                       +
-                           FormatFloatBr(ValorDesconto2, 'R$ #,##0.00')       +
-                           ' para pagamento até ' +
-                           FormatDateTime('dd/mm/yyyy', DataDesconto2)))
-        else
-          AStringList.Add(ACBrStr('Conceder desconto de '                 +
-                           FormatFloatBr(ValorDesconto2, 'R$ #,##0.00') +
-                           ' por dia de antecipaçao'));
-      end;
+        AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto2,Titulo.ValorDesconto2,Titulo,DataDesconto2));
+
+      if ValorDesconto3 <> 0 then
+        AStringList.Add(GerarMensagemPadraoDesconto(tdValorFixoAteDataInformada,Titulo.ValorDesconto3,Titulo,DataDesconto3));
 
       if ValorMoraJuros <> 0 then
       begin
@@ -3238,6 +3285,31 @@ begin
    finally
      SlRetorno.Free;
    end;
+end;
+
+function TACBrBoleto.CalcularPercentualValor(AValorPercentual, AValorDocumento: Double): Double;
+begin
+  Result := (AValorPercentual / 100) * AValorDocumento;
+end;
+
+function TACBrBoleto.CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto): Double;
+begin
+  case ATipoDesconto of
+    tdValorFixoAteDataInformada,
+    tdValorAntecipacaoDiaCorrido,
+    tdValorAntecipacaoDiaUtil :
+      begin
+        Result := AValorDesconto;
+      end;
+    tdPercentualAteDataInformada,
+    tdPercentualSobreValorNominalDiaCorrido,
+    tdPercentualSobreValorNominalDiaUtil :
+      begin
+        Result := CalcularPercentualValor(AValorDesconto,AValorDocumento);
+      end;
+    else
+      result := 0;
+  end;
 end;
 
 procedure TACBrBoleto.ChecarDadosObrigatorios;

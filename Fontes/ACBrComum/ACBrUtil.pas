@@ -79,7 +79,7 @@ Uses
       {$EndIf}
     {$EndIf}
   {$EndIf}
-  , ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.Math, ACBrUtil.DateTime, ACBrUtil.FilesIO;
+  , ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.Math, ACBrUtil.DateTime, ACBrUtil.FilesIO;
 
 type
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
@@ -97,8 +97,6 @@ const
 
 
 {/////////  ACBrUtil.Compatibilidade (especialmente D6/D5)}
-{ PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
-  (que nao possui essa funçao) }
 {$IFNDEF COMPILER6_UP}
   type TRoundToRange = -37..37;
   function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double;
@@ -113,19 +111,22 @@ const
 {$endif}
 
 {$IFNDEF COMPILER7_UP}
+{ PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
+  (que nao possui essa funçao) }
 function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 {$ENDIF}
-function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
 
 {$IfNDef HAS_CHARINSET}
 function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
 function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
 {$EndIf}
 
-{//// ACBrUtil manter aqui??? (seria algo como ACBrUtil.SysUtil ou ACBrUtil.Base)}
 {$IFDEF HAS_FORMATSETTINGS}
-Function CreateFormatSettings: TFormatSettings;
+function CreateFormatSettings: TFormatSettings;
 {$ENDIF}
+
+{//// ACBrUtil manter aqui??? (seria algo como ACBrUtil.SysUtil ou ACBrUtil.Base)}
+function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
 
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String;
 function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
@@ -421,106 +422,6 @@ Uses
   ACBrCompress, StrUtilsEx, typinfo;
 
 
-{$IfNDef HAS_CHARINSET}
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
-begin
-  Result := C in CharSet;
-end;
-
-function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean;
-begin
-  Result := (C < #$0100) and (AnsiChar(C) in CharSet);
-end;
-{$EndIf}
-
-{$IFNDEF COMPILER6_UP}
-function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double;
-var
-  LFactor: Double;
-begin
-  LFactor := IntPower(10, ADigit);
-  Result := Round(AValue / LFactor) * LFactor;
-end;
-
-function SimpleRoundTo(const AValue: Double; const ADigit: TRoundToRange = -2): Double;
-var
-  LFactor: Double;
-begin
-  LFactor := IntPower(10, ADigit);
-  Result := Trunc((AValue / LFactor) + 0.5) * LFactor;
-end;
-
-function IfThen(AValue: Boolean; const ATrue: Integer; const AFalse: Integer): Integer;
-begin
-  if AValue then
-    Result := ATrue
-  else
-    Result := AFalse;
-end;
-
-function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64): Int64;
-begin
-  if AValue then
-    Result := ATrue
-  else
-    Result := AFalse;
-end;
-
-function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double): Double;
-begin
-  if AValue then
-    Result := ATrue
-  else
-    Result := AFalse;
-end;
-
-function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string = ''): string;
-begin
-  if AValue then
-    Result := ATrue
-  else
-    Result := AFalse;
-end;
-
-{$endif}
-
-{$IFNDEF COMPILER7_UP}
-{-----------------------------------------------------------------------------
- *** PosEx, retirada de StrUtils.pas do Borland Delphi ***
-  para compatibilizar com o Delphi 6  (que nao possui essa funçao)
- ---------------------------------------------------------------------------- }
-function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
-var
-  I,X: Integer;
-  Len, LenSubStr: Integer;
-begin
-  if Offset = 1 then
-    Result := Pos(SubStr, S)
-  else
-  begin
-    I := Offset;
-    LenSubStr := Length(SubStr);
-    Len := Length(S) - LenSubStr + 1;
-    while I <= Len do
-    begin
-      if S[I] = SubStr[1] then
-      begin
-        X := 1;
-        while (X < LenSubStr) and (S[I + X] = SubStr[X + 1]) do
-          Inc(X);
-        if (X = LenSubStr) then
-        begin
-          Result := I;
-          exit;
-        end;
-      end;
-      Inc(I);
-    end;
-    Result := 0;
-  end;
-end;
-{$EndIf}
-
 function PosExA(const SubStr, S: AnsiString; Offset: Integer): Integer;
 begin
   {$IFDEF DELPHIXE3_UP}
@@ -529,33 +430,6 @@ begin
    Result := PosEx(SubStr, S, Offset);
   {$EndIf}
 end;
-
-{$IFDEF HAS_FORMATSETTINGS}
-function CreateFormatSettings: TFormatSettings;
-begin
-  {$IFDEF FPC}
-   Result := DefaultFormatSettings;
-  {$ELSE}
-   Result := TFormatSettings.Create('');
-   Result.CurrencyString            := CurrencyString;
-   Result.CurrencyFormat            := CurrencyFormat;
-   Result.NegCurrFormat             := NegCurrFormat;
-   Result.ThousandSeparator         := ThousandSeparator;
-   Result.DecimalSeparator          := DecimalSeparator;
-   Result.CurrencyDecimals          := CurrencyDecimals;
-   Result.DateSeparator             := DateSeparator;
-   Result.ShortDateFormat           := ShortDateFormat;
-   Result.LongDateFormat            := LongDateFormat;
-   Result.TimeSeparator             := TimeSeparator;
-   Result.TimeAMString              := TimeAMString;
-   Result.TimePMString              := TimePMString;
-   Result.ShortTimeFormat           := ShortTimeFormat;
-   Result.LongTimeFormat            := LongTimeFormat;
-   Result.TwoDigitYearCenturyWindow := TwoDigitYearCenturyWindow;
-   Result.ListSeparator             := ListSeparator;
-  {$ENDIF}
-end;
-{$ENDIF}
 
 {-----------------------------------------------------------------------------
   Transforma <NumInteiro> em String, preenchendo com Zeros a Esquerda até
@@ -940,6 +814,72 @@ begin
     Exit;
   SetPropValue(AObject, AProp, AValue);
 end;
+
+
+{/////////  ACBrUtil.Compatibilidade (especialmente D6/D5)}
+{$IFNDEF COMPILER6_UP}
+function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double;
+begin
+  Result := ACBrUtil.Compatibilidade.RoundTo(AValue, ADigit);
+end;
+
+function SimpleRoundTo(const AValue: Double; const ADigit: TRoundToRange = -2): Double;
+begin
+  Result := ACBrUtil.Compatibilidade.SimpleRoundTo(AValue, ADigit);
+end;
+
+{ IfThens retirada de Math.pas do D7, para compatibilizar com o Delphi 5
+(que nao possue essas funçao) }
+function IfThen(AValue: Boolean; const ATrue: Integer; const AFalse: Integer = 0): Integer; overload;
+begin
+  Result := ACBrUtil.Compatibilidade.IfThen(AValue, ATrue, AFalse);
+end;
+
+function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64 = 0): Int64; overload;
+begin
+  Result := ACBrUtil.Compatibilidade.IfThen(AValue, ATrue, AFalse);
+end;
+
+function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double = 0.0): Double; overload;
+begin
+  Result := ACBrUtil.Compatibilidade.IfThen(AValue, ATrue, AFalse);
+end;
+
+function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string = ''): string; overload;
+begin
+  Result := ACBrUtil.Compatibilidade.IfThen(AValue, ATrue, AFalse);
+end;
+{$endif}
+
+{$IFNDEF COMPILER7_UP}
+{ PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
+  (que nao possui essa funçao) }
+function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
+begin
+  Result := ACBrUtil.Compatibilidade.PosEx(SubStr, S, Offset);
+end;
+{$ENDIF}
+
+{$IfNDef HAS_CHARINSET}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
+begin
+  Result := ACBrUtil.Compatibilidade.CharInSet(C, CharSet);
+end;
+
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
+begin
+  Result := ACBrUtil.Compatibilidade.CharInSet(C, CharSet);
+end;
+{$EndIf}
+
+{$IFDEF HAS_FORMATSETTINGS}
+function CreateFormatSettings: TFormatSettings;
+begin
+  Result := ACBrUtil.Compatibilidade.CreateFormatSettings;
+end;
+{$ENDIF}
+{///FIM//////  ACBrUtil.Compatibilidade (especialmente D6/D5)}
+
 
 
 {/////////  ACBrUtil.XMLHTML}

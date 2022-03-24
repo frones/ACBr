@@ -189,6 +189,8 @@ function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'):
 
 implementation
 
+uses
+  ACBrUtil.Compatibilidade;
 
 var
   Randomized : Boolean ;

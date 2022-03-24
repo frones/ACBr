@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/03/2022
+-- ISSGoiania.LerXml --
+[*] Acrescentado o NormatizarXml antes da leitura do XML.
+   Por: Italo Giurizzato Junior
+
 22/03/2022
 -- Thema.Provider --
 [*] Incluido na função TratarXmlRetornado a chamada:

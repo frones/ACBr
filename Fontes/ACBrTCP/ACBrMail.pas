@@ -262,7 +262,7 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 procedure SendEmailByThread(MailToClone: TACBrMail);
 var

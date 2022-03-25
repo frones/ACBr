@@ -275,7 +275,10 @@ uses
     Jsons,
   {$EndIf}
   blcksock, synautil,
-  ACBrUtil, ACBrCompress;
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrCompress;
 
 { TACBrIBGEUF }
 
@@ -1034,7 +1037,7 @@ begin
     Resp := ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size);
   end
   else
-    Resp := UnZip(HTTPSend.Document);
+    Resp := ACBrUtil.FilesIO.UnZip(HTTPSend.Document);
 
   CT := LowerCase( GetHeaderValue('Content-Type:') );
   RespIsUTF8 := (pos('utf-8', CT) > 0);

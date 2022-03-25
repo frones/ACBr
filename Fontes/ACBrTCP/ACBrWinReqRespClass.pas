@@ -193,7 +193,8 @@ implementation
 uses
   strutils, wininet,
   synautil,
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO;
 
 { EACBrWinINetReqResp }
 

@@ -253,9 +253,11 @@ function IsAbsoluteURL(const URL: String): Boolean;
 implementation
 
 Uses
-  math, StrUtils,
+  math, StrUtils, synacode,
   ACBrUtil,
-  synacode, synautil
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  synautil
   {$IFDEF UPDATE_SCREEN_CURSOR}
     ,Controls, Forms
   {$ENDIF};
@@ -984,9 +986,9 @@ begin
     end;
 
     if ParseText then
-       RespHTTP.Text := ACBrUtil.ParseText( AnsiString(RespHTTP.Text), True, RespIsUTF8 )
+       RespHTTP.Text := ACBrUtil.XMLHTML.ParseText( AnsiString(RespHTTP.Text), True, RespIsUTF8 )
     else
-       RespHTTP.Text := ACBrUtil.DecodeToString( AnsiString(RespHTTP.Text), RespIsUTF8 );
+       RespHTTP.Text := DecodeToString( AnsiString(RespHTTP.Text), RespIsUTF8 );
 
     if not OK then
        raise EACBrHTTPError.Create( 'Erro HTTP: '+IntToStr(HTTPSend.ResultCode)+' '+

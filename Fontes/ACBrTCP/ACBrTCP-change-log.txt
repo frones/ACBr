@@ -37,6 +37,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+
 20/01/2021
 -- ACBrConsultaCNPJ --
 [-] Ajuste para não tentar achar o Cod.IBGE de Cidades com Nome e UF com asterísticos

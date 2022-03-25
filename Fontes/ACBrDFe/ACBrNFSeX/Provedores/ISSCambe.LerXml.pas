@@ -70,7 +70,8 @@ implementation
 
 uses
   ACBrUtil,
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:

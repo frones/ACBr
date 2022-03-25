@@ -124,6 +124,7 @@ procedure TNFSeR_SmarAPD.LerItens(const ANode: TACBrXmlNode);
 var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
+  aValor: string;
 begin
   ANodes := ANode.Childrens.FindAllAnyNs('ITENS');
 
@@ -144,6 +145,17 @@ begin
       ValorTotal    := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorTotal'), tcDe2);
       Aliquota      := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Aliquota'), tcDe2);
       Tributavel    := snSim;
+
+      aValor := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ImpostoRetido'), tcStr);
+
+      if aValor = 'true' then
+      begin
+        NFSe.Servico.Valores.IssRetido := stRetencao;
+      end
+      else
+        NFSe.Servico.Valores.IssRetido := stNormal;
+
+      NFSe.Servico.Valores.Aliquota := Aliquota;
 
       NFSe.Servico.Valores.ValorServicos := (NFSe.Servico.Valores.ValorServicos +
                                                                   ValorTotal);
@@ -197,7 +209,6 @@ var
   xRetorno: string;
 begin
   xRetorno := Arquivo;
-//  xRetorno := TratarXmlRetorno(Arquivo);
 
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');
@@ -236,11 +247,6 @@ begin
   NFSe.SituacaoNfse := snNormal;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
-
-//  AuxNode := ANode.Childrens.FindAnyNs('NFe');
-
-//  if AuxNode = nil then
-//    AuxNode := ANode.Childrens.FindAnyNs('CompNfse');
 
   AuxNode := ANode.Childrens.FindAnyNs('nfdok');
 

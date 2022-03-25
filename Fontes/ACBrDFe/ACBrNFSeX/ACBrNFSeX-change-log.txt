@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/03/2022
+-- SmarAPD.LerXml --
+[*] Acrescentado a leitura da tag ISSRetido.
+   Por: Paulo Henrique Panico
 -- ACBrNFSeXServicos --
 [*] A cidade de Balneário de Camboriú/SC trocou para o provedor Publica.
    Por: TI Softin

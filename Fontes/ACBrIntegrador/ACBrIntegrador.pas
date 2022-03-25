@@ -181,7 +181,9 @@ implementation
 Uses
   dateutils, strutils,
   pcnConversao,
-  ACBrUtil;
+  ACBrUtil,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings;
 
 { TComandoIntegrador }
 

@@ -99,7 +99,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, Abaco.GravarXml, Abaco.LerXml;
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, Abaco.GravarXml, Abaco.LerXml;
 
 { TACBrNFSeXWebserviceAbaco }
 

@@ -103,7 +103,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   DSF.GravarXml, DSF.LerXml;
 
 { TACBrNFSeXWebserviceDSF }

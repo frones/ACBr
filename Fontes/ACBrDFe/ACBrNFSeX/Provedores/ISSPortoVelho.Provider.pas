@@ -72,7 +72,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, ISSPortoVelho.GravarXml, ISSPortoVelho.LerXml;
 
 { TACBrNFSeProviderISSPortoVelho200 }

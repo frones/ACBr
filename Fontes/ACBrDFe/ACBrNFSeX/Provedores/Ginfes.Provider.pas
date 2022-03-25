@@ -81,7 +81,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrXmlDocument,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrXmlDocument,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Ginfes.GravarXml, Ginfes.LerXml;
 

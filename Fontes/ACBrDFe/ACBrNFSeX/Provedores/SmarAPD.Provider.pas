@@ -138,7 +138,11 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, SynaCode,
+  SynaCode,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, SmarAPD.GravarXml, SmarAPD.LerXml;
 

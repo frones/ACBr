@@ -38,6 +38,9 @@ interface
 
 uses
   SysUtils, Classes, Variants,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   ACBrDFeSSL,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXNotasFiscais,
@@ -99,7 +102,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSSaoPaulo.GravarXml, ISSSaoPaulo.LerXml;
 
@@ -128,7 +131,7 @@ begin
       else
         sIndTomador := '3';
 
-    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14);
+    sTomador := sIndTomador + ACBrUtil.Strings.Poem_Zeros(sCPFCNPJTomador, 14);
 
     // Prestador Intermediario
     sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
@@ -145,20 +148,20 @@ begin
                                       ['N', 'S'], [stNormal, stRetencao]);
 
     if sIndInter <> '3' then
-      sInter := sIndInter + Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
+      sInter := sIndInter + ACBrUtil.Strings.Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
     else
       sInter := '';
 
-    sAssinatura := Poem_Zeros(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 8) +
+    sAssinatura := ACBrUtil.Strings.Poem_Zeros(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 8) +
                    PadRight(NFSe.IdentificacaoRps.Serie, 5 , ' ') +
-                   Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
+                   ACBrUtil.Strings.Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
                    FormatDateTime('yyyymmdd', NFse.DataEmissao) +
                    TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS) +
                    sSituacao +
                    sISSRetido +
-                   Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
-                   Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
-                   Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
+                   ACBrUtil.Strings.Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
+                   ACBrUtil.Strings.Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
+                   ACBrUtil.Strings.Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
                    sTomador +
                    sInter;
 
@@ -1169,7 +1172,8 @@ begin
   InscMun := OnlyNumber(Emitente.InscMun);
   NumeroNFSe := OnlyNumber(Response.InfCancelamento.NumeroNFSe);
 
-  sAssinatura := Poem_Zeros(InscMun, 8) + Poem_Zeros(NumeroNFSe, 12);
+  sAssinatura := ACBrUtil.Strings.Poem_Zeros(InscMun, 8) +
+                 ACBrUtil.Strings.Poem_Zeros(NumeroNFSe, 12);
 
   sAssinatura := string(TACBrNFSeX(FAOwner).SSL.CalcHash(AnsiString(sAssinatura),
                                                     dgstSHA1, outBase64, True));

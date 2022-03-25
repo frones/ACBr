@@ -68,7 +68,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   MetropolisWeb.GravarXml, MetropolisWeb.LerXml;
 
 { TACBrNFSeProviderMetropolisWeb }

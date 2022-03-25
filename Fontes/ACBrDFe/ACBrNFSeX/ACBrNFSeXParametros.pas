@@ -457,7 +457,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { TACBrNFSeXConfigParams }
 

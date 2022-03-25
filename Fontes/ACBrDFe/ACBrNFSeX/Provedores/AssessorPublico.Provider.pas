@@ -94,7 +94,11 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, SynaCode,
+  SynaCode,
+  ACBrUtil,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Math,
+  ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   AssessorPublico.GravarXml, AssessorPublico.LerXml;
 

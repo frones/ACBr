@@ -74,7 +74,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, iiBrasil.GravarXml, iiBrasil.LerXml;
 
 { TACBrNFSeProvideriiBrasil204 }

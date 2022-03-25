@@ -273,7 +273,7 @@ implementation
 
 uses
   pcnConsts,
-  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrXmlBase,
   ACBrNFSeXConversao, ACBrNFSeXConsts;
 

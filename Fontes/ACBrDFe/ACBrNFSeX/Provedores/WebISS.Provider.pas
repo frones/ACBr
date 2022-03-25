@@ -94,7 +94,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   WebISS.GravarXml, WebISS.LerXml;
 
 { TACBrNFSeProviderWebISS }

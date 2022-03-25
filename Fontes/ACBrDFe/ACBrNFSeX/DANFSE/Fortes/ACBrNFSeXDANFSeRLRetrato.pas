@@ -37,9 +37,10 @@ unit ACBrNFSeXDANFSeRLRetrato;
 interface
 
 uses
-  SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ACBrNFSeXDANFSeRL, RLFilters, RLPDFFilter, RLReport,
-  ACBrNFSeXConversao, ACBrDelphiZXingQRCode;
+  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  RLFilters, RLPDFFilter, RLReport,
+  ACBrDelphiZXingQRCode,
+  ACBrNFSeXConversao, ACBrNFSeXDANFSeRL;
 
 type
 
@@ -252,7 +253,9 @@ var
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrUtil,
+  StrUtils, DateUtils,
+  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXInterface,
   ACBrValidador, ACBrDFeReportFortes;
 

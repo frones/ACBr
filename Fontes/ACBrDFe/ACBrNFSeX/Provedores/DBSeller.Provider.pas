@@ -78,7 +78,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrXmlBase, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrXmlBase, ACBrDFeException,
   DBSeller.GravarXml, DBSeller.LerXml;
 
 { TACBrNFSeXWebserviceDBSeller }

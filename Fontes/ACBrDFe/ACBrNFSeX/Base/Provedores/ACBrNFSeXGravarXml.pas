@@ -152,7 +152,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrDFeException;
 
 { TNFSeWClass }

@@ -95,7 +95,9 @@ implementation
 
 uses
   DateUtils,
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Tecnos.GravarXml, Tecnos.LerXml;
 
 { TACBrNFSeProviderTecnos201 }
@@ -231,7 +233,7 @@ function TACBrNFSeProviderTecnos201.DefinirIDCancelamento(const CNPJ: string;
   const InscMunic: string; const NumNfse: string): string;
 begin
   Result := ' ' + ConfigGeral.Identificador + '="' + CNPJ +
-            Poem_Zeros(OnlyNumber(NumNfse), 9) + '"';
+            ACBrUtil.Strings.Poem_Zeros(OnlyNumber(NumNfse), 9) + '"';
 end;
 
 function TACBrNFSeProviderTecnos201.DefinirIDLote(const ID: string): string;
@@ -243,7 +245,7 @@ begin
   Result := ' ' + ConfigGeral.Identificador + '="1' + // Tipo de operação, no caso envio
             IntToStr(YearOf(Date)) + // ano do lote enviado no formato AAAA
             OnlyNumber(Cnpj) +
-            Poem_Zeros(OnlyNumber(ID), 16) + '"';
+            ACBrUtil.Strings.Poem_Zeros(OnlyNumber(ID), 16) + '"';
 end;
 
 procedure TACBrNFSeProviderTecnos201.GerarMsgDadosCancelaNFSe(

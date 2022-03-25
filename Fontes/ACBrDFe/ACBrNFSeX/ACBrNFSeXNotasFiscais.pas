@@ -165,6 +165,8 @@ uses
   synautil, IniFiles, StrUtilsEx,
   pcnAuxiliar,
   ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBrDFeUtil,
   ACBrNFSeX, ACBrNFSeXInterface;
 

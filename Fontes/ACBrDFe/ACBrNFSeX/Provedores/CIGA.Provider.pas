@@ -71,7 +71,10 @@ type
 implementation
 
 uses
-  ACBrXmlBase, ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil,
+  ACBrUtil.XMLHTML,
+  ACBrXmlBase,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, ACBrNFSeXConsts, CIGA.GravarXml, CIGA.LerXml;
 
 { TACBrNFSeXWebserviceCIGA }

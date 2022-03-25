@@ -96,7 +96,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrXmlBase,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrXmlBase,
   SilTecnologia.GravarXml, SilTecnologia.LerXml;
 
 { TACBrNFSeXWebserviceSilTecnologia }

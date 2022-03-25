@@ -159,7 +159,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrNFSeX;
 
 { TPrestadorConfig }

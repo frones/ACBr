@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+
 24/03/2022
 -- ISSGoiania.LerXml --
 [*] Acrescentado o NormatizarXml antes da leitura do XML.

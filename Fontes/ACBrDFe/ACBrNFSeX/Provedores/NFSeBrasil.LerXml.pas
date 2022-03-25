@@ -66,10 +66,11 @@ type
 implementation
 
 uses
-  ACBrXMLBase,
-  ACBrNFSeXConversao,
   ACBrUtil,
-  ACBrConsts;
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrConsts,
+  ACBrXMLBase, ACBrNFSeXConversao;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:

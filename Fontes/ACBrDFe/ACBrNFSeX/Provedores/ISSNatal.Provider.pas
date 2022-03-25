@@ -72,7 +72,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   ACBrNFSeX, ISSNatal.GravarXml, ISSNatal.LerXml;
 
 { TACBrNFSeXWebserviceISSNatal }

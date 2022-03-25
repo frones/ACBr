@@ -68,7 +68,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrXmlBase, ACBrNFSeX, ACBrNFSeXConsts,
+  ACBrUtil,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrXmlBase, ACBrNFSeX, ACBrNFSeXConsts,
   ISSSalvador.GravarXml, ISSSalvador.LerXml;
 
 { TACBrNFSeXWebserviceISSSalvador }

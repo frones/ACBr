@@ -297,7 +297,9 @@ function ModoEnvioToStr(const t: TmodoEnvio): string;
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
   ACBrXmlBase;
 
 
@@ -17965,12 +17967,12 @@ var
   vUF, vDataEmissao, vSerie, vNumero,
   vCodigo, vModelo: string;
 begin
-  vUF          := Poem_Zeros(AUF, 2);
+  vUF          := ACBrUtil.Strings.Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
-  vModelo      := Poem_Zeros(AModelo, 2);
-  vSerie       := Poem_Zeros(ASerie, 3);
-  vNumero      := Poem_Zeros(ANumero, 9);
-  vCodigo      := Poem_Zeros(ACodigo, 9);
+  vModelo      := ACBrUtil.Strings.Poem_Zeros(AModelo, 2);
+  vSerie       := ACBrUtil.Strings.Poem_Zeros(ASerie, 3);
+  vNumero      := ACBrUtil.Strings.Poem_Zeros(ANumero, 9);
+  vCodigo      := ACBrUtil.Strings.Poem_Zeros(ACodigo, 9);
 
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vSerie + vNumero + vCodigo;
 end;
@@ -17992,10 +17994,10 @@ function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: strin
 var
   vUF, vDataEmissao, vNumero, vModelo: string;
 begin
-  vUF          := Poem_Zeros(AUF, 2);
+  vUF          := ACBrUtil.Strings.Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
-  vModelo      := Poem_Zeros(AModelo, 2);
-  vNumero      := Poem_Zeros(ANumero, 15);
+  vModelo      := ACBrUtil.Strings.Poem_Zeros(AModelo, 2);
+  vNumero      := ACBrUtil.Strings.Poem_Zeros(ANumero, 15);
 
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
 end;

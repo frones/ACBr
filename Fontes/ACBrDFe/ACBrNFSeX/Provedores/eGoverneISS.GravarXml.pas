@@ -59,6 +59,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil.Strings;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     eGoverneISS

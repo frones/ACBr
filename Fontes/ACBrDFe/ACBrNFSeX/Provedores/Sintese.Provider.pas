@@ -73,7 +73,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   Sintese.GravarXml, Sintese.LerXml;
 
 { TACBrNFSeProviderSintese204 }

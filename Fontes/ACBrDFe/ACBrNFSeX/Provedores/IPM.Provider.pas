@@ -122,7 +122,10 @@ type
 implementation
 
 uses
-  ACBrUtil, synacode,
+  synacode,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   IPM.GravarXml, IPM.LerXml;

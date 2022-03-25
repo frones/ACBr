@@ -38,7 +38,6 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, synacode,
-  ACBrUtil,
   ACBrXmlBase, ACBrXmlDocument,
   pcnAuxiliar,
   ACBrNFSeXConversao, ACBrNFSeXLerXml;
@@ -59,6 +58,10 @@ type
   end;
 
 implementation
+
+uses
+//  ACBrUtil,
+  ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -164,10 +167,9 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-//italo  xRetorno := TratarXmlRetorno(Arquivo);
-  xRetorno := Arquivo;
+  xRetorno := Trim(Arquivo);
 
-  if EstaVazio(xRetorno) then
+  if xRetorno = '' then
     raise Exception.Create('Arquivo xml não carregado.');
 
   if FDocument = nil then

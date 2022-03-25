@@ -99,7 +99,10 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSDSF.GravarXml, ISSDSF.LerXml;
 
@@ -128,10 +131,10 @@ begin
       else
         sIndTomador := '3';
 
-    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14);
+    sTomador := sIndTomador + ACBrUtil.Strings.Poem_Zeros(sCPFCNPJTomador, 14);
 
     // Prestador Intermediario
-    sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
+    sCPFCNPJInter := ACBrUtil.Strings.OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
 
     if Length(sCPFCNPJInter) = 11 then
       sIndInter := '1'
@@ -145,20 +148,20 @@ begin
                                       ['N', 'S'], [stNormal, stRetencao]);
 
     if sIndInter <> '3' then
-      sInter := sIndInter + Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
+      sInter := sIndInter + ACBrUtil.Strings.Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
     else
       sInter := '';
 
-    sAssinatura := Poem_Zeros(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 8) +
+    sAssinatura := ACBrUtil.Strings.Poem_Zeros(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 8) +
                    PadRight(NFSe.IdentificacaoRps.Serie, 5 , ' ') +
-                   Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
+                   ACBrUtil.Strings.Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
                    FormatDateTime('yyyymmdd', NFse.DataEmissao) +
                    TipoTributacaoRPSToStr(NFSe.TipoTributacaoRPS) +
                    sSituacao +
                    sISSRetido +
-                   Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
-                   Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
-                   Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
+                   ACBrUtil.Strings.Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
+                   ACBrUtil.Strings.Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
+                   ACBrUtil.Strings.Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
                    sTomador +
                    sInter;
 

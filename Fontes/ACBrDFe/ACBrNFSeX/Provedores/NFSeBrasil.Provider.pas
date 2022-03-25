@@ -89,7 +89,10 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrXmlBase,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrXmlBase,
   ACBrNFSeXNotasFiscais, NFSeBrasil.GravarXml, NFSeBrasil.LerXml,
   ACBrNFSeXConsts;
 
@@ -149,7 +152,7 @@ begin
   Request := Request + '</urn:tm_lote_rps_service.consultarRPS>';
 
   Result := Executar('urn:loterpswsdl#tm_lote_rps_service.consultarRPS', Request,
-                     ['return', 'ConsultarNfseResposta'],
+                     ['return', 'ConsultarRpsResposta'],
                      ['xmlns:urn="urn:loterpswsdl"']);
 end;
 
@@ -190,11 +193,13 @@ function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result), True, False);
+  Result := StrToXml(Result);
+  Result := RemoverCDATA(Result);
   Result := RemoverDeclaracaoXML(Result);
-  Result := string(NativeStringToUTF8(Result));
+  Result := RemoverIdentacao(Result);
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := string(NativeStringToUTF8(Result));
 end;
 
 { TACBrNFSeProviderNFSeBrasil }

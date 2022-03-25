@@ -103,7 +103,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrConsts,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrConsts,
   ACBrNFSeXConversao;
 
 //==============================================================================

@@ -68,7 +68,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, Sistemas4R.GravarXml, Sistemas4R.LerXml;
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, Sistemas4R.GravarXml, Sistemas4R.LerXml;
 
 { TACBrNFSeXWebservice4R200 }
 

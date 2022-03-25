@@ -65,6 +65,7 @@ implementation
 
 uses
   ACBrUtil,
+  ACBrUtil.FilesIO,
   ACBrNFSeX, ACBrNFSeXDANFSeRLRetrato;
 
 constructor TACBrNFSeXDANFSeRL.Create(AOwner: TComponent);

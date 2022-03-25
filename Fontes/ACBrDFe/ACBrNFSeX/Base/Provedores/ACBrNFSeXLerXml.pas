@@ -72,7 +72,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrDFeException;
 
 { TNFSeRClass }

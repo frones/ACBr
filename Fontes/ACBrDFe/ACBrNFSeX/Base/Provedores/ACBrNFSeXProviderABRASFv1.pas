@@ -94,7 +94,10 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrXmlBase,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrXmlBase,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 

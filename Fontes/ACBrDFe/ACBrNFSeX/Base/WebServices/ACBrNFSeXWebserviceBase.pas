@@ -305,7 +305,12 @@ implementation
 
 uses
   IniFiles, StrUtils, synautil,
-  ACBrUtil, ACBrConsts, ACBrDFeException, ACBrXmlBase,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrConsts, ACBrDFeException, ACBrXmlBase,
   ACBrNFSeX, ACBrNFSeXConfiguracoes;
 
 { TACBrNFSeXWebservice }

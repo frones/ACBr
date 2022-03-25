@@ -90,7 +90,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX,
   Actcon.GravarXml, Actcon.LerXml;
 
 { TACBrNFSeXWebserviceActcon200 }

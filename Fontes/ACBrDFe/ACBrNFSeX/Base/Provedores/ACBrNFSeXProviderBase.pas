@@ -198,7 +198,10 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar,
-  ACBrUtil, ACBrXmlBase, ACBrDFeException,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrXmlBase, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts;
 
 { TACBrNFSeXProvider }

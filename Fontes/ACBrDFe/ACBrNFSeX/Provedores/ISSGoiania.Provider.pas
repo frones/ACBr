@@ -68,7 +68,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXNotasFiscais,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXNotasFiscais,
   ISSGoiania.GravarXml, ISSGoiania.LerXml;
 
 { TACBrNFSeProviderISSGoiania200 }

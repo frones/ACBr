@@ -101,8 +101,12 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrXmlWriter, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, SimplISS.GravarXml, SimplISS.LerXml;
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrXmlWriter,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrNFSeXNotasFiscais,
+  SimplISS.GravarXml, SimplISS.LerXml;
 
 { TACBrNFSeProviderSimplISS }
 

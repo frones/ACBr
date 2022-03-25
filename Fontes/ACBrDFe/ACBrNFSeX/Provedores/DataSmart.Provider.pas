@@ -75,7 +75,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeX, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   DataSmart.GravarXml, DataSmart.LerXml;

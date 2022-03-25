@@ -222,7 +222,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.FilesIO,
   ACBrNFSeX;
 
 { TEmitenteConfNFSe }

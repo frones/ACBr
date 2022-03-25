@@ -72,7 +72,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
   ADPM.GravarXml, ADPM.LerXml;
 
 { TACBrNFSeProviderADPM203 }

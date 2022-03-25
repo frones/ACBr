@@ -76,7 +76,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX,
+  ACBrUtil.XMLHTML,
+  ACBrDFeException, ACBrNFSeX,
   Saatri.GravarXml, Saatri.LerXml;
 
 { TACBrNFSeProviderSaatri201 }

@@ -193,7 +193,8 @@ implementation
 
 uses
   Math,
-  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.Compatibilidade,
   ACBrDFeSSL,
   ACBrNFSeXProviderManager;
 
@@ -467,7 +468,7 @@ begin
 
   for i := 1 to J do
   begin
-    if {$IFNDEF HAS_CHARINSET}ACBrUtil.{$ENDIF}CharInSet(AXML[i], ['!'..'~']) then
+    if {$IFNDEF HAS_CHARINSET}ACBrUtil.Compatibilidade.{$ENDIF}CharInSet(AXML[i], ['!'..'~']) then
       XML := XML + AXML[i];
   end;
 

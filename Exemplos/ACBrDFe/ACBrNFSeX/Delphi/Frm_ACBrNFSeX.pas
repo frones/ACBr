@@ -6,7 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeReport, ACBrMail, ACBrNFSeX,
+  ACBrBase,
+  ACBrUtil,
+  ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrDFe, ACBrDFeReport, ACBrMail, ACBrNFSeX,
   ACBrNFSeXConversao, ACBrNFSeXWebservicesResponse,
   ACBrNFSeXDANFSeClass, ACBrNFSeXDANFSeRLClass;
 
@@ -3274,7 +3277,7 @@ procedure TfrmACBrNFSe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser;
 begin
   if RetWS <> '' then
   begin
-    ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
+    WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq,
                         AnsiString(RetWS), False, False);
 
     MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + NomeArq);

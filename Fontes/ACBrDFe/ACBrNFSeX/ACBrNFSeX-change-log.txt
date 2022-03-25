@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/03/2022
+-- ACBrNFSeXServicos --
+[*] A cidade de Balneário de Camboriú/SC trocou para o provedor Publica.
+   Por: TI Softin
 -- Diversos --
 [*] Remoção de Warnings e Hints.
    Por: Italo Giurizzato Junior

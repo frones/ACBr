@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+
 21/03/2022
 -- ACBrImage --
 [+] Adiciondo o método "PNGInfoIHDR", para obter informações da Imagem PNG, por Stream

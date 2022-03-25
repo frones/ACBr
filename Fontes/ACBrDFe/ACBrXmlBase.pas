@@ -74,6 +74,7 @@ function RemoverCDATA(const aXML: string): string;
 function RemoverPrefixos(const aXML: string; APrefixo: array of string): string;
 function RemoverPrefixosDesnecessarios(const aXML: string): string;
 function RemoverCaracteresDesnecessarios(const aXML: string): string;
+function NormatizarBoolean(const aBool: string): string;
 
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
@@ -90,7 +91,12 @@ function StrToTipoAmbiente(out ok: boolean; const s: string): TACBrTipoAmbiente;
 implementation
 
 uses
-  StrUtilsEx, ACBrUtil, DateUtils, MaskUtils;
+  StrUtilsEx,
+  DateUtils, MaskUtils,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.DateTime;
 
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
   RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean;
@@ -221,6 +227,18 @@ begin
   Result := FaststringReplace(Result, #13, '', [rfReplaceAll]);
 end;
 
+function NormatizarBoolean(const aBool: string): string;
+var
+  xBool: string;
+begin
+  xBool := LowerCase(aBool);
+
+  if xBool = 'true' then
+    Result := 'True'
+  else
+    Result := 'False';
+end;
+
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 begin
   if not Assigned(AAtt) or (AAtt = nil) then
@@ -332,7 +350,10 @@ begin
     tcBool:
       begin
         if length(ConteudoTag) > 0 then
-          result := StrToBool(ConteudoTag)
+        begin
+          ConteudoTag := NormatizarBoolean(ConteudoTag);
+          result := StrToBool(ConteudoTag);
+        end
         else
           result := False;
       end;

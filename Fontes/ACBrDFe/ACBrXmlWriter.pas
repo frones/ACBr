@@ -126,7 +126,9 @@ implementation
 
 uses
   variants, dateutils,
-  ACBrDFeUtil, ACBrUtil,
+  ACBrDFeUtil,
+  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrValidador;
 
 { TACBrXmlWriterOptions }

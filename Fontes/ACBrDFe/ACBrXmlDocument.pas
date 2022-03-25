@@ -325,7 +325,10 @@ type
 implementation
 
 uses
-  TypInfo, ACBrUtil, synautil;
+  TypInfo, synautil,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 { XmlNode }
 constructor TACBrXmlNode.Create(xmlDoc: TACBrXmlDocument; xmlNode: xmlNodePtr);

@@ -157,7 +157,10 @@ const
 implementation
 
 uses
-  DateUtils, ACBrUtil, pcnConsts;
+  DateUtils,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  pcnConsts;
 
 { TGeradorOpcoes }
 

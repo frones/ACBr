@@ -147,7 +147,11 @@ var
 implementation
 
 uses
-  DateUtils, ACBrUtil, ACBrValidador;
+  DateUtils,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.XMLHTML,
+  ACBrValidador;
 
 function CodigoParaUF(const codigo: integer): string;
 const

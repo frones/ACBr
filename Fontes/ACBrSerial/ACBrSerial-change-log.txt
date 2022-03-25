@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2022
+-- ACBrWinUSBDevice --
+[*] Remoção de Warnings e Hints.
+   Por: Waldir Paim
+
 Data: 21/03/2022
 -- ACBrDevice, ACBrETQClass --
 [*] Os tipos abaixo, foram movidos de "ACBrDevice.pas" para "ACBrETQClass.pas"

@@ -326,7 +326,7 @@ implementation
 
 uses
   Types, dateutils, strutils, math, 
-  ACBrConsts;
+  ACBrConsts, ACBrUtil.Strings;
 
 function DeviceKindDescription(ADeviceKind: TACBrUSBHardwareType): String;
 begin

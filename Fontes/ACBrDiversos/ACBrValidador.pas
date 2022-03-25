@@ -203,7 +203,8 @@ function MascaraIE(const AValue : String; UF : String) : String;
 implementation
 uses
  {$IfDef COMPILER6_UP} Variants , Math, StrUtils, {$EndIf}
-  ACBrUtil;
+  ACBrUtil,
+  ACBrUtil.Strings;
 
 function ValidarCPF(const Documento : String) : String ;
 begin

@@ -1167,7 +1167,7 @@ end;
 
 function StrIsHexa(const S: String): Boolean;
 begin
-  Result := ACBrUtil.Strings.StrIsNumber(S);
+  Result := ACBrUtil.Strings.StrIsHexa(S);
 end;
 
 function StrIsBinary(const S: String): Boolean;

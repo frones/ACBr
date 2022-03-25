@@ -75,9 +75,10 @@ type
 implementation
 
 uses
-  typinfo,
-  ACBrDFeException, ACBrUtil, ACBrConsts,
-  synautil;
+  typinfo, synautil,
+  ACBrDFeException,
+  ACBrUtil.Strings,
+  ACBrConsts;
 
 { TDFeHttpOpenSSL }
 

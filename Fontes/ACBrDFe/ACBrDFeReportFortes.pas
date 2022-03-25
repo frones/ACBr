@@ -46,7 +46,10 @@ interface
 uses
   Classes, SysUtils, math, Graphics,
   RLReport, RLPrinters, RLPDFFilter,
-  ACBrUtil, ACBrDFeReport;
+  ACBrUtil,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrDFeReport;
 
 type
   TDFeReportFortes = class

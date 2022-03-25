@@ -384,7 +384,10 @@ implementation
 uses
   Math, strutils, DateUtils,
   synautil, synacode,
-  ACBrDFe, ACBrDFeException, ACBrUtil;
+  ACBrDFe, ACBrDFeException,
+  ACBrUtil,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings;
 
 { TConfiguracoes }
 

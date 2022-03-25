@@ -112,10 +112,13 @@ function BioToStr(ABio: pBIO): AnsiString;
 implementation
 
 uses
-  strutils, dateutils, typinfo,
-  ACBrUtil, ACBrDFeException,
-  pcnAuxiliar,
-  synautil, synacode;
+  strutils, dateutils, typinfo, synautil, synacode,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.DateTime,
+  ACBrDFeException,
+  pcnAuxiliar;
 
 function CertToDERBase64(cert: pX509): AnsiString;
 var

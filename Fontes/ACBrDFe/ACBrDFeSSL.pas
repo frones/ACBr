@@ -489,7 +489,13 @@ implementation
 uses
   strutils, dateutils,
   synacode, synautil,
-  ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrDFeException, ACBrConsts
+  ACBrDFeUtil, ACBrValidador,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Math,
+  ACBrDFeException, ACBrConsts
   {$IfNDef DFE_SEM_OPENSSL}
    ,ACBrDFeOpenSSL, ACBrDFeHttpOpenSSL
    {$IfNDef DFE_SEM_XMLSEC}

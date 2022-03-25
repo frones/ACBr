@@ -108,7 +108,10 @@ implementation
 
 uses
   synacode,
-  ACBrUtil, ACBrDFeUtil,
+  ACBrUtil,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  ACBrDFeUtil,
   ACBrConsts, ACBrDFeException;
 
 constructor TDFeSSLXmlSignLibXml2.Create(ADFeSSL: TDFeSSL);

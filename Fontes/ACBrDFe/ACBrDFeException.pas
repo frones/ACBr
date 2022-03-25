@@ -54,7 +54,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { EACBrDFeException }
 

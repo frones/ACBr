@@ -79,9 +79,6 @@ function NormatizarBoolean(const aBool: string): string;
 function ObterConteudoTag(const AAtt: TACBrXmlAttribute): string; overload;
 function ObterConteudoTag(const ANode: TACBrXmlNode; const Tipo: TACBrTipoCampo): variant; overload;
 
-function EncodeDataHora(const DataStr: string;
-  const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
-
 function TipoEmissaoToStr(const t: TACBrTipoEmissao): string;
 function StrToTipoEmissao(out ok: boolean; const s: string): TACBrTipoEmissao;
 
@@ -92,7 +89,6 @@ implementation
 
 uses
   StrUtilsEx,
-  DateUtils, MaskUtils,
   ACBrUtil,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
@@ -373,35 +369,6 @@ begin
   else
     raise Exception.Create('Node <' + ANode.Name + '> com conteúdo inválido. ' +
                            ConteudoTag);
-  end;
-end;
-
-function EncodeDataHora(const DataStr: string;
-  const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
-var
-  xData, xFormatoData: string;
-begin
-  xData := Trim(StringReplace(DataStr, '-', '/', [rfReplaceAll]));
-
-  if xData = '' then
-    Result := 0
-  else
-  begin
-    xFormatoData := FormatoData;
-
-    if xFormatoData = '' then
-      xFormatoData := 'YYYY/MM/DD';
-
-    case Length(xData) of
-      6: xData := FormatMaskText('!0000\/00;0;_', xData) + '/01';
-      8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
-    end;
-
-    if (Copy(xData, 5, 1) = '/') and (Copy(xData, 11, 1) = 'T') and
-       (Copy(xData, 14, 1) = ':') then
-      xData := Copy(xData, 1, 10) + ' ' + Copy(xData, 12, Length(xData) - 11);
-
-    Result := StringToDateTime(xData, xFormatoData);
   end;
 end;
 

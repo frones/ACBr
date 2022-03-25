@@ -132,8 +132,8 @@ implementation
 
 uses
   strutils, typinfo, comobj,
-  ACBrUtil,
-  synautil, synacode;
+  synautil, synacode,
+  ACBrUtil.FilesIO;
 
 function MsgErroGetCryptProvider(WinErro: DWORD): String;
 begin

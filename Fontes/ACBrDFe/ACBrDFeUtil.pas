@@ -81,17 +81,22 @@ implementation
 
 uses
   Variants, DateUtils,
-  ACBrDFeException, ACBrUtil, ACBrValidador;
+  ACBrDFeException,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
+  ACBrValidador;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin
-  AValue := Poem_Zeros(AValue, 9);
+  AValue := ACBrUtil.Strings.Poem_Zeros(AValue, 9);
   Result := copy(AValue, 1, 3) + '.' + copy(AValue, 4, 3) + '.' + copy(AValue, 7, 3);
 end;
 
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
 begin
-  AValue := Poem_Zeros(AValue, 15);
+  AValue := ACBrUtil.Strings.Poem_Zeros(AValue, 15);
   Result := copy(AValue, 1, 4) + '.' + copy(AValue, 5, 12);
 end;
 
@@ -153,14 +158,14 @@ begin
   if ACodigo <= -2 then
     ACodigo := 0;
 
-  vUF          := Poem_Zeros(AUF, 2);
+  vUF          := ACBrUtil.Strings.Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
   vCNPJ        := PadLeft(OnlyNumber(ACNPJ), 14, '0');
-  vModelo      := Poem_Zeros(AModelo, 2);
-  vSerie       := Poem_Zeros(ASerie, 3);
-  vNumero      := Poem_Zeros(ANumero, 9);
-  vtpEmi       := Poem_Zeros(AtpEmi, 1);
-  vCodigo      := Poem_Zeros(ACodigo, 8);
+  vModelo      := ACBrUtil.Strings.Poem_Zeros(AModelo, 2);
+  vSerie       := ACBrUtil.Strings.Poem_Zeros(ASerie, 3);
+  vNumero      := ACBrUtil.Strings.Poem_Zeros(ANumero, 9);
+  vtpEmi       := ACBrUtil.Strings.Poem_Zeros(AtpEmi, 1);
+  vCodigo      := ACBrUtil.Strings.Poem_Zeros(ACodigo, 8);
 
   Result := vUF + vDataEmissao + vCNPJ + vModelo + vSerie + vNumero + vtpEmi + vCodigo;
   Result := Result + Modulo11(Result);

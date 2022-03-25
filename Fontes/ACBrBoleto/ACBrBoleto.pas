@@ -1671,7 +1671,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto):Double;
     function CalcularPercentualValor(AValorPercentual, AValorDocumento : Double) : Double;
-    function GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDate = 0): String;
+    function GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDateTime = 0): String;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -2910,7 +2910,7 @@ begin
    ACBrBoletoFC.GerarJPG;
 end;
 
-function TACBrBoleto.GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDate = 0): String;
+function TACBrBoleto.GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDateTime = 0): String;
 var ValorDesconto : Double;
 begin
 

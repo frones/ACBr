@@ -90,8 +90,10 @@ contains
   ACBrBoletoW_Credisis in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Credisis.pas',
   ACBrBoletoRet_Credisis in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Credisis.pas',
   ACBrBoletoW_Sicredi_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_Sicredi_API.pas',
-  ACBrBoletoRet_Sicredi_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Sicredi_API.pas';
+  ACBrBoletoRet_Sicredi_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_Sicredi_API.pas',
+  ACBrBancoRendimento in '..\..\..\Fontes\ACBrBoleto\ACBrBancoRendimento.pas',
+  ACBrBancoInter in '..\..\..\Fontes\ACBrBoleto\ACBrBancoInter.pas',
+  ACBrBancoSofisaSantander in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSofisaSantander.pas',
+  ACBrBancoBS2 in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBS2.pas';
 
 end.
-
-

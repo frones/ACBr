@@ -98,7 +98,10 @@ end ;
 
 implementation
 
-uses Math, ACBrUtil;
+uses
+  Math,
+  ACBrUtil,
+  ACBrUtil.Strings;
 
 { TACBrExtenso }
 

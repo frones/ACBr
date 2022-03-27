@@ -36,7 +36,7 @@ unit ACBrCMC7;
 interface
 
 uses
-  SysUtils, Classes, ACBrBase, ACBrUtil;
+  SysUtils, Classes, ACBrBase;
 
 type
   {$IFDEF RTL230_UP}
@@ -103,13 +103,15 @@ function CalcDigitoCMC7(const Documento : String; Inicial, Final : integer) : St
 implementation
 
 uses
+  ACBrUtil.Strings,
+  ACBrUtil.Compatibilidade,
   ACBrValidador;
 
 function FormataCMC7(const ACMC7: String): String;
 var
   CMC7: String;
 begin
-  CMC7 := ACBrUtil.OnlyNumber(ACMC7);
+  CMC7 := OnlyNumber(ACMC7);
 
   if Length(CMC7) <> 30 then
     raise Exception.Create('Código CMC7 Inválido!');

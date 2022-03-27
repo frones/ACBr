@@ -339,7 +339,7 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil;
+  ACBrConsts, ACBrUtil.Strings;
 
 { TACBrCargaBalSetor }
 constructor TACBrCargaBalSetor.Create;
@@ -883,7 +883,7 @@ end;
 
 procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado: TStringList; Versao: Integer);
 var
-  i, Total,LIndex: Integer;
+  i, Total : Integer;
   ANutri, AReceita, ATara, AFornecedor, AFracionador, AConservacao, ASetor: string;
   LTXTeclas:TStringList;
 begin

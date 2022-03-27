@@ -81,7 +81,7 @@ implementation
 
 uses StrUtils, Variants, math,
      {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-     ACBrUtil;
+     ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrCaixaEconomicaSICOB.create(AOwner: TACBrBanco);
 begin

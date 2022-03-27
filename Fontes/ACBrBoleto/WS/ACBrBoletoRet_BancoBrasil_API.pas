@@ -63,7 +63,7 @@ type
 implementation
 
 uses
-  ACBrBoletoConversao;
+  ACBrBoletoConversao, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TRetornoEnvio }
 

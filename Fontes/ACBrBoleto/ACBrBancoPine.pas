@@ -78,8 +78,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils,
-  ACBrUtil, ACBrValidador ;
+  StrUtils, ACBrUtil, ACBrValidador, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoPine }
 

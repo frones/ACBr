@@ -86,7 +86,8 @@ const
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils, pcnConsts;
+  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils, pcnConsts, ACBrUtil.Strings,
+  ACBrUtil.XMLHTML;
 
 { TBoletoW_BancoBrasil }
 
@@ -278,8 +279,8 @@ begin
     Gerador.wCampo(tcStr, '#25', PrefixTag('textoNumeroTituloBeneficiario'         ), 01, 15, 1, SeuNumero, DSC_NOSSO_NUMERO);
     Gerador.wCampo(tcStr, '#26', PrefixTag('textoCampoUtilizacaoBeneficiario'      ), 01, 25, 1, Boleto.Cedente.CodigoCedente, DSC_CODIGO_CEDENTE);
     Gerador.wCampo(tcStr, '#27', PrefixTag('codigoTipoContaCaucao'                 ), 01, 01, 1, '0', DSC_NOSSO_NUMERO);
-    Gerador.wCampo(tcStr, '#28', PrefixTag('textoNumeroTituloCliente'              ), 01, 20, 1, '000' + ACBrUtil.PadLeft(Boleto.Cedente.Convenio, 7, '0')
-                                                                                                       + ACBrUtil.PadLeft(NossoNumero, 10, '0'), DSC_NOSSO_NUMERO);
+    Gerador.wCampo(tcStr, '#28', PrefixTag('textoNumeroTituloCliente'              ), 01, 20, 1, '000' + ACBrUtil.Strings.PadLeft(Boleto.Cedente.Convenio, 7, '0')
+                                                                                                       + ACBrUtil.Strings.PadLeft(NossoNumero, 10, '0'), DSC_NOSSO_NUMERO);
 
     if (Mensagem.Count > 0) then
       Gerador.wCampo(tcStr, '#29', PrefixTag('textoMensagemBloquetoOcorrencia'  ), 00, 220, 1, Mensagem.Text, DSC_MENSAGEM);
@@ -289,7 +290,7 @@ begin
     else
       Gerador.wCampo(tcStr, '#30', PrefixTag('codigoTipoInscricaoPagador'       ), 01, 01, 1, '2', DSC_NOME_SACADO);
 
-    Gerador.wCampo(tcStr, '#31', PrefixTag('numeroInscricaoPagador'             ), 00, 15, 1, OnlyNumber(Sacado.CNPJCPF), DSC_NOME_SACADO);
+    Gerador.wCampo(tcStr, '#31', PrefixTag('numeroInscricaoPagador'             ), 00, 15, 1, ACBrUtil.Strings.OnlyNumber(Sacado.CNPJCPF), DSC_NOME_SACADO);
     Gerador.wCampo(tcStr, '#32', PrefixTag('nomePagador'                        ), 00, 60, 1, Sacado.NomeSacado, DSC_NOME_SACADO);
     Gerador.wCampo(tcStr, '#33', PrefixTag('textoEnderecoPagador'               ), 00, 60, 1, Sacado.Logradouro, DSC_LOGRADOURO);
     Gerador.wCampo(tcStr, '#34', PrefixTag('numeroCepPagador'                   ), 00, 08, 1, Sacado.Cep, DSC_CEP);

@@ -58,7 +58,7 @@ type
 implementation
 
 uses
-  ACBrBoletoConversao;
+  ACBrBoletoConversao, ACBrUtil.XMLHTML;
 
 { TRetornoEnvio }
 

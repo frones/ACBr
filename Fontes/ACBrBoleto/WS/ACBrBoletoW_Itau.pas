@@ -92,7 +92,7 @@ const
 implementation
 
 uses
-  synacode, strutils;
+  synacode, strutils, ACBrUtil.Strings;
 
 { TBoletoW_Itau }
 
@@ -297,7 +297,7 @@ begin
             OnlyNumber(ACBrBoleto.Cedente.CNPJCPF);
           JsonConta.Add('agencia_beneficiario').Value.AsString :=
             ACBrBoleto.Cedente.Agencia;
-          JsonConta.Add('conta_beneficiario').Value.AsString := ACBrUtil.PadLeft(ACBrBoleto.Cedente.Conta, 7, '0');
+          JsonConta.Add('conta_beneficiario').Value.AsString := ACBrUtil.Strings.PadLeft(ACBrBoleto.Cedente.Conta, 7, '0');
           JsonConta.Add('digito_verificador_conta_beneficiario').Value.AsString :=
             ACBrBoleto.Cedente.ContaDigito;
 
@@ -373,7 +373,7 @@ begin
           JsonDadosPagador.Add('bairro_pagador').Value.AsString := Copy(Sacado.Bairro, 1, 15);
           JsonDadosPagador.Add('cidade_pagador').Value.AsString := Copy(Sacado.Cidade, 1, 20);
           JsonDadosPagador.Add('uf_pagador').Value.AsString := Sacado.UF;
-          JsonDadosPagador.Add('cep_pagador').Value.AsString := ACBrUtil.PadLeft(OnlyNumber(Sacado.CEP), 8, '0');
+          JsonDadosPagador.Add('cep_pagador').Value.AsString := ACBrUtil.Strings.PadLeft(OnlyNumber(Sacado.CEP), 8, '0');
           if (Sacado.Email <> '') then
             GerarEmailPagador(JsonDadosPagador);
 

@@ -103,7 +103,7 @@ Const
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils, pcnConsts;
+ ACBrUtil, ACBrUtil.XMLHTML, ACBrUtil.Strings, synacode, ACBrBoletoPcnConsts, strutils, pcnConsts;
 
 
 { TBoletoW_Credisis }
@@ -402,9 +402,9 @@ begin
 
         vNossoNumero := '097'+
                         CalcularDigitoVerificador(Titulos)+
-                        ACBrUtil.PadLeft(Titulos.ACBrBoleto.Cedente.Agencia,4,'0')+
-                        ACBrUtil.PadLeft(Titulos.ACBrBoleto.Cedente.Convenio,6,'0')+
-                        ACBrUtil.PadLeft(Titulos.NossoNumero,6,'0');
+                        PadLeft(Titulos.ACBrBoleto.Cedente.Agencia,4,'0')+
+                        PadLeft(Titulos.ACBrBoleto.Cedente.Convenio,6,'0')+
+                        PadLeft(Titulos.NossoNumero,6,'0');
 
         Gerador.wGrupo('boletos');
         Gerador.wGrupo('boleto');

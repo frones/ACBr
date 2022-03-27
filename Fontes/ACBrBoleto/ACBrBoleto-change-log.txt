@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Renato Rubinho
+
 24/03/2022
 --ACBrBoletoW_BancoBrasil_API.pas--
 [-] TK-2505 ACBrBoleto API BB - Correção Swagger - Data Juros

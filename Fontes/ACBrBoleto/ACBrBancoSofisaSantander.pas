@@ -74,9 +74,7 @@ implementation
 
 uses
   {$ifdef COMPILER6_UP} DateUtils {$else} ACBrD5 {$endif},
-  StrUtils,
-  ACBrBoletoConversao,
-  ACBrUtil;
+  StrUtils, ACBrBoletoConversao, ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoSofisaSantander }
 

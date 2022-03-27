@@ -72,7 +72,7 @@ implementation
 
 uses
   {$ifdef COMPILER6_UP} DateUtils {$else} ACBrD5 {$endif}, StrUtils, Variants,
-  ACBrValidador, ACBrUtil ;
+  ACBrValidador, ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime ;
 
 constructor TACBrBancoInter.Create(AOwner: TACBrBanco);
 begin

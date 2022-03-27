@@ -82,7 +82,7 @@ implementation
 
 uses StrUtils, Variants,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  ACBrUtil;
+  ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrCaixaEconomica.create(AOwner: TACBrBanco);
 begin

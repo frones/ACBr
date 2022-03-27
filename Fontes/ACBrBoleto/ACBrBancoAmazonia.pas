@@ -74,7 +74,8 @@ type
 
 implementation
 
-uses {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF}, StrUtils, Variants, ACBrUtil;
+uses {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF}, StrUtils, Variants,
+   ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 function Modulo11BB(const AValor: String; Base: Integer = 9): string;
 {

@@ -97,7 +97,7 @@ const
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPcnConsts, pcnConsts;
+ ACBrUtil, synacode, ACBrBoletoPcnConsts, pcnConsts, ACBrUtil.Strings, ACBrUtil.XMLHTML;
 
 { TBoletoW_Caixa }
 
@@ -188,22 +188,22 @@ begin
   if length(NossoNumero) = 17 then
     sNossoNumero := NossoNumero
   else //adicionar o prefixo 14 no nosso número
-    sNossoNumero := '14' + ACBrUtil.PadLeft(NossoNumero, 15, '0');
+    sNossoNumero := '14' + ACBrUtil.Strings.PadLeft(NossoNumero, 15, '0');
   case Operacao of
     tpInclui, tpAltera:
       begin
         sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + sNossoNumero
             + FormatDateTime('ddmmyyyy', DataVenc )
             + Format('%15.15d', [StrToInt(OnlyNumber((FormatFloat('#0.00', Valor))))])
-            + FormatFloat(Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
+            + FormatFloat(ACBrUtil.Strings.Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
       end;
 
     tpBaixa, tpConsulta:
       begin
         sAutenticacao := Format('%7.7d',[StrToInt(CodBenef)]) + sNossoNumero
-            + Poem_Zeros('',8)
-            + Poem_Zeros('',15)
-            + FormatFloat(Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
+            + ACBrUtil.Strings.Poem_Zeros('',8)
+            + ACBrUtil.Strings.Poem_Zeros('',15)
+            + FormatFloat(ACBrUtil.Strings.Poem_Zeros('',14),StrToFloat(OnlyNumber(CNPJCPFBenef)));
       end;
   end;
 
@@ -368,7 +368,7 @@ begin
         AEspecieDoc := '99';
 
       Gerador.wGrupo('TITULO');
-      Gerador.wCampo(tcStr, '#02', 'NOSSO_NUMERO    ', 17, 17, 1, '14' + ACBrUtil.PadLeft(NossoNumero, 15, '0'), DSC_NOSSO_NUMERO);
+      Gerador.wCampo(tcStr, '#02', 'NOSSO_NUMERO    ', 17, 17, 1, '14' + ACBrUtil.Strings.PadLeft(NossoNumero, 15, '0'), DSC_NOSSO_NUMERO);
       Gerador.wCampo(tcStr, '#03', 'NUMERO_DOCUMENTO', 11, 11, 1, NumeroDocumento, DSC_NUMERO_DOCUMENTO);
       Gerador.wCampo(tcDat, '#04', 'DATA_VENCIMENTO ', 10, 10, 1, Vencimento, DSC_DATA_VENCIMENTO);
       Gerador.wCampo(tcDe2, '#05', 'VALOR           ', 01, 15, 1, ValorDocumento, DSC_VALOR_DOCUMENTO);

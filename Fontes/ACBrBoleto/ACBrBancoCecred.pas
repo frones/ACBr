@@ -91,8 +91,7 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  StrUtils, Variants,
-  ACBrValidador, ACBrUtil, math;
+  StrUtils, Variants, ACBrValidador, ACBrUtil, Math, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoCecred.create(AOwner: TACBrBanco);
 begin

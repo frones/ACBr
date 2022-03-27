@@ -62,7 +62,7 @@ implementation
 
 uses StrUtils, Variants,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  ACBrUtil;
+  ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoCitiBank.Create(AOwner: TACBrBanco);
 begin

@@ -110,7 +110,7 @@ const
 implementation
 
 uses
-  synacode, strutils, DateUtils;
+  synacode, strutils, DateUtils, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TBoletoW_BancoBrasil_API }
 

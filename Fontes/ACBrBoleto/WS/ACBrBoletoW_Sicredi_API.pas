@@ -119,6 +119,8 @@ const
   C_ACCESS_TOKEN    = 'token';
 
 implementation
+	uses
+   		ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 
 { TBoletoW_Sicredi_API }

@@ -37,7 +37,7 @@ unit ACBrBancoBancoob;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, ACBrBoletoConversao;
+  Classes, SysUtils, ACBrBoleto, ACBrBoletoConversao, ACBrUtil;
 
 type
 
@@ -74,7 +74,7 @@ implementation
 
 uses  StrUtils, Variants, math,
       {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-      ACBrUtil;
+      ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoob.create(AOwner: TACBrBanco);
 begin
@@ -565,11 +565,11 @@ begin
 
             for I := 0 to 4 do
             begin
-              CodMotivo := StrToIntDef(IfThen(Copy(Linha, MotivoLinha, 2) = Poem_Zeros('0', 2), '00', Copy(Linha, MotivoLinha, 2)), 0); 
+              CodMotivo := StrToIntDef(IfThen(Copy(Linha, MotivoLinha, 2) = ACBrUtil.Strings.Poem_Zeros('0', 2), '00', Copy(Linha, MotivoLinha, 2)), 0);
 
               if CodMotivo <> 0 then
               begin
-                MotivoRejeicaoComando.Add(Poem_Zeros(CodMotivo,2)); 
+                MotivoRejeicaoComando.Add(ACBrUtil.Strings.Poem_Zeros(CodMotivo,2));
                 DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodMotivo));
               end;
 

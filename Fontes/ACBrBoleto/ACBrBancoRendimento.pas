@@ -68,9 +68,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils,
-  ACBrUtil,
-  ACBrBoletoConversao ;
+  StrUtils, ACBrUtil, ACBrBoletoConversao, ACBrUtil.Strings, ACBrUtil.DateTime ;
 
 { TACBrBancoRendimento }
 

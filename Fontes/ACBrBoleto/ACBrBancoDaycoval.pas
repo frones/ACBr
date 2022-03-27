@@ -70,8 +70,7 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, Variants,
-  ACBrValidador, ACBrUtil;
+  StrUtils, Variants, ACBrValidador, ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoDaycoval }
 

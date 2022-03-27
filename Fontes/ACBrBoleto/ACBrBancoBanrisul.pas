@@ -76,7 +76,8 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF},
-  StrUtils, ACBrUtil;
+  StrUtils, ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrUtil.Math;
 
 var
   aTotal: Extended;

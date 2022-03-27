@@ -82,8 +82,8 @@ type
 
 implementation
 
-Uses
-  ACBrUtil;
+uses
+  ACBrUtil.Strings;
 
 { TConsReciDFe }
 

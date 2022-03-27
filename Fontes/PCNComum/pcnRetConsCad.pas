@@ -148,7 +148,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { RetConsCad }
 

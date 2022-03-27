@@ -346,7 +346,10 @@ type
 implementation
 
 uses 
-  ACBrUtil;
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO;
 
 { TitensAverbadosCollection }
 
@@ -505,7 +508,7 @@ begin
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
         FdocZip.Items[i].FInfZip := StrAux;
-        StrDecod := UnZip(DecodeBase64(StrAux));
+        StrDecod := ACBrUtil.FilesIO.UnZip(DecodeBase64(StrAux));
 
         oLeitorInfZip := TLeitor.Create;
         try

@@ -539,7 +539,7 @@ begin
   if DS <> ',' then
     NumString := StringReplace(NumString, ',', DS, [rfReplaceAll]);
 
-  while CountStr(NumString, DS) > 1 do
+  while ACBrUtil.Strings.CountStr(NumString, DS) > 1 do
     NumString := StringReplace(NumString, DS, '', []);
 
   Result := StrToFloat(NumString);
@@ -720,7 +720,7 @@ function AscToString(const AString: String): AnsiString;
      if AToken[1] = '#' then
      begin
        if TryStrToInt(copy(string(AToken), 2, Length(string(AToken))), n) then
-         AToken := AnsiChr(n);
+         AToken := ACBrUtil.Strings.AnsiChr(n);
      end;
    end;
 
@@ -764,8 +764,8 @@ function EAN13_DV(CodEAN13: String): String;
 Var A,DV : Integer ;
 begin
    Result   := '' ;
-   CodEAN13 := PadLeft(Trim(CodEAN13),12,'0');
-   if not StrIsNumber( CodEAN13 ) then
+   CodEAN13 := ACBrUtil.Strings.PadLeft(Trim(CodEAN13),12,'0');
+   if not ACBrUtil.Strings.StrIsNumber( CodEAN13 ) then
       exit ;
 
    DV := 0;

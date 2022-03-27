@@ -106,12 +106,7 @@ procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
 implementation
 
 uses
-// DEBUG
-// {$IfDef ANDROID}
-// System.IOUtils,
-// {$EndIf}
-  math, strutils,
-  ACBrUtil, ACBrConsts;
+  Math, strutils, ACBrUtil, ACBrConsts, ACBrUtil.Strings, ACBrUtil.Math;
 
 // https://stackoverflow.com/questions/1689715/image-data-of-pcx-file
 function IsPCX(S: TStream; CheckIsMono: Boolean): Boolean;
@@ -322,7 +317,7 @@ begin
   RealWidth := trunc(WidthExtended);
   BytesPerWidth := ceil(RealWidth / 8);
   if RealWidth < WidthExtended then
-    bSizePixelArr := (BytesPerWidth * bHeight) ;
+    bSizePixelArr := (LongWord(BytesPerWidth) * bHeight) ;
 
   StreamLastPos := min(Int64(bPixelOffset + bSizePixelArr - 1), ABMPStream.Size-1);
 

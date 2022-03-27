@@ -324,7 +324,11 @@ implementation
 uses
   StrUtils, math,
   ACBrNFe, ACBrDFeDANFeReport, ACBrDFeReportFortes,
-  ACBrValidador, ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode;
+  ACBrValidador,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrImage, ACBrDelphiZXingQRCode;
 
 {$ifdef FPC}
   {$R *.lfm}

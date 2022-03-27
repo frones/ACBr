@@ -195,7 +195,10 @@ implementation
 
 Uses
   pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
-  ACBrDFeUtil, pcnConsts, ACBrUtil, ACBrValidador;
+  ACBrDFeUtil, pcnConsts,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrValidador;
 
 { TNFeW }
 

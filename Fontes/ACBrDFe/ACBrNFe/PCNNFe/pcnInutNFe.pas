@@ -111,8 +111,9 @@ type
 
 implementation
 
-Uses pcnAuxiliar,
-  ACBrUtil;
+uses
+  pcnAuxiliar,
+  ACBrUtil.Strings;
 
 { TinutNFe }
 

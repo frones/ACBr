@@ -44,7 +44,7 @@ uses
   Variants, Graphics, Controls, Forms, Dialogs,
   ACBrBase, ACBrNFeDANFEClass, pcnNFe, ACBrNFe,
   RLReport, RLHTMLFilter, RLFilters, RLPDFFilter,
-  ACBrUtil, pcnConversao, ACBrDFeUtil;
+  pcnConversao, ACBrDFeUtil;
 
 type
   TACBrNFeDANFCeFortesA4Filtro = (fiNenhum, fiPDF, fiHTML ) ;
@@ -308,6 +308,10 @@ implementation
 uses
   StrUtils,
   RLPrinters,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
   ACBrDFeDANFeReport, ACBrDFeReportFortes,
   ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
 

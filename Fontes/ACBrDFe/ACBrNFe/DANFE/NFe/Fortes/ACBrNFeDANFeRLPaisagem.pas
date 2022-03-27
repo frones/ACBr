@@ -646,7 +646,11 @@ uses
   DateUtils, StrUtils, Math,
   pcnNFe, pcnConversao, pcnConversaoNFe,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador,
-  ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrUtil, ACBrNFe;
+  ACBrDFeDANFeReport, ACBrDFeReportFortes,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrNFe;
 
 {$IfNDef FPC}
   {$R *.dfm}

@@ -82,7 +82,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { TConsSitNFe }
 

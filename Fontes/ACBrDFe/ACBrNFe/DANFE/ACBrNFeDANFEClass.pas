@@ -180,7 +180,10 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrValidador, ACBrUtil,
+  ACBrDFeUtil, ACBrValidador,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   StrUtils;
 
 { TACBrNFeDANFEClass }

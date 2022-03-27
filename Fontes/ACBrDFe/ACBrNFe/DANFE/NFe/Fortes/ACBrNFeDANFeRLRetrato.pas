@@ -746,7 +746,10 @@ implementation
 
 uses
   DateUtils, StrUtils, Math,
-  ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador, ACBrUtil,
+  ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   ACBrDFeDANFeReport, ACBrDFeReportFortes,
   pcnNFe, pcnConversaoNFe, ACBrNFe;
 

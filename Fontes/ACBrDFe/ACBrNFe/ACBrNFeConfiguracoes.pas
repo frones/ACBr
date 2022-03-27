@@ -143,7 +143,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrNFe,
+  ACBrUtil,
+  ACBrUtil.FilesIO,
+  ACBrNFe,
   DateUtils;
 
 { TConfiguracoesNFe }

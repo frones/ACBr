@@ -42,7 +42,7 @@ Símbolo : Significado
 27/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.
-   Por: Renato Rubinho
+   Por: Waldir Paim
 
 25/03/2022
 -- ACBrValidador --

@@ -55,7 +55,7 @@ Símbolo : Significado
    Por: Waldir Paim
 -- Diversos --
 [*] Remoção de Warnings e Hints.
-   Por: Renato Rubinho
+   Por: Waldir Paim
 
 24/03/2022
 --ACBrBoletoW_BancoBrasil_API.pas--

@@ -105,7 +105,7 @@ uses
   {$IfDef ANDROID}
    Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, System.Types, System.Permissions,
   {$EndIf}
-  ACBrDevice, ACBrUtil;
+  ACBrDevice, ACBrUtil.Strings;
 
 { TACBrDeviceBlueTooth }
 

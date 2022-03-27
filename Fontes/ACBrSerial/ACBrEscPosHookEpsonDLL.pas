@@ -95,7 +95,10 @@ implementation
 
 uses
   strutils,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Math,
+  ACBrConsts;
 
 constructor TEpsonUSBPrinter.Create;
 begin

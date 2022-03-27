@@ -36,7 +36,6 @@ unit ACBrDeviceHook;
 
 interface
 
-
 uses
   Classes, SysUtils,
   ACBrDeviceClass, ACBrBase;

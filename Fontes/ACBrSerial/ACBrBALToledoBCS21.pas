@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrConsts, SysUtils,
+  ACBrUtil.Strings, ACBrConsts, SysUtils,
   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF};
 
 { TACBrBALToledo }

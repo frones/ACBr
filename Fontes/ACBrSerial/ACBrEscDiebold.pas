@@ -64,8 +64,7 @@ type
 implementation
 
 uses
-  strutils, math,
-  ACBrConsts, ACBrUtil;
+  StrUtils, Math, ACBrConsts, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math;
 
 { TACBrEscDiebold }
 

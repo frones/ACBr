@@ -61,8 +61,7 @@ type
 implementation
 
 Uses
-  math,
-  ACBrUtil;
+  Math, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math;
 
 { TACBrEscElgin }
 

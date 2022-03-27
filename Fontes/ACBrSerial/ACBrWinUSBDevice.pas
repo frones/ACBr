@@ -326,7 +326,9 @@ implementation
 
 uses
   Types, dateutils, strutils, math, 
-  ACBrConsts, ACBrUtil.Strings;
+  ACBrConsts,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO;
 
 function DeviceKindDescription(ADeviceKind: TACBrUSBHardwareType): String;
 begin
@@ -750,12 +752,12 @@ const
 begin
   if FLoaded then Exit;
 
-  FunctionDetect(CSetupAPILibName, 'SetupDiEnumDeviceInfo', @xSetupDiEnumDeviceInfo);
-  FunctionDetect(CSetupAPILibName, 'SetupDiGetClassDevsA', @xSetupDiGetClassDevsA);
-  FunctionDetect(CSetupAPILibName, 'SetupDiGetDeviceRegistryProperty'+ApiSuffix, @xSetupDiGetDeviceRegistryProperty);
-  FunctionDetect( CSetupAPILibName, 'SetupDiEnumDeviceInterfaces', @xSetupDiEnumDeviceInterfaces);
-  FunctionDetect( CSetupAPILibName, 'SetupDiGetDeviceInterfaceDetail'+ApiSuffix, @xSetupDiGetDeviceInterfaceDetail);
-  FunctionDetect( CSetupAPILibName, 'SetupDiDestroyDeviceInfoList', @xSetupDiDestroyDeviceInfoList);
+  ACBrUtil.FilesIO.FunctionDetect(CSetupAPILibName, 'SetupDiEnumDeviceInfo', @xSetupDiEnumDeviceInfo);
+  ACBrUtil.FilesIO.FunctionDetect(CSetupAPILibName, 'SetupDiGetClassDevsA', @xSetupDiGetClassDevsA);
+  ACBrUtil.FilesIO.FunctionDetect(CSetupAPILibName, 'SetupDiGetDeviceRegistryProperty'+ApiSuffix, @xSetupDiGetDeviceRegistryProperty);
+  ACBrUtil.FilesIO.FunctionDetect( CSetupAPILibName, 'SetupDiEnumDeviceInterfaces', @xSetupDiEnumDeviceInterfaces);
+  ACBrUtil.FilesIO.FunctionDetect( CSetupAPILibName, 'SetupDiGetDeviceInterfaceDetail'+ApiSuffix, @xSetupDiGetDeviceInterfaceDetail);
+  ACBrUtil.FilesIO.FunctionDetect( CSetupAPILibName, 'SetupDiDestroyDeviceInfoList', @xSetupDiDestroyDeviceInfoList);
 
   FLoaded := True;
 end;

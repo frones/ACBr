@@ -80,7 +80,7 @@ uses
   {$IF defined(POSIX)}
     Posix.Unistd,
   {$IfEnd}
-  ACBrUtil, ACBrConsts, ACBrDevice;
+  ACBrUtil.Strings, ACBrConsts, ACBrDevice;
 
 
 { TACBrDeviceRaw }

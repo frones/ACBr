@@ -644,7 +644,10 @@ uses
       Graphics,
     {$EndIf}
   {$EndIf}
-  ACBrUtil, ACBrImage, ACBrConsts, ACBrExtenso, ACBrCMC7,
+  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrImage, ACBrConsts, ACBrExtenso, ACBrCMC7,
   synacode, synautil,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
   ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar,

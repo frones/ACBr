@@ -200,8 +200,9 @@ uses
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
   ACBrUtil, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2, ACBrETQEscLabel
   {$IfDef MSWINDOWS}
-  ,ACBrWinUSBDevice
-  {$EndIf};
+  ,ACBrWinUSBDevice,
+  {$EndIf}
+  ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO;
 
 { TACBrETQCmdList }
 
@@ -895,8 +896,6 @@ end;
 
 procedure TACBrETQ.DefinirCor(FrenteR, FrenteG, FrenteB, FrenteOpacidade: Byte;
   FundoR, FundoG, FundoB, FundoOpacidade: Byte);
-var
-  wCmd: AnsiString;
 begin
   GravarLog('- DefinirCor:'+
             '  FrenteR:'+IntToStr(FrenteR)+

@@ -104,7 +104,7 @@ uses
   {$IF defined(POSIX)}
    Posix.Unistd,
   {$IfEnd}
-  ACBrDevice, ACBrUtil, ACBrConsts;
+  ACBrDevice, ACBrUtil.Strings, ACBrConsts;
 
 { TACBrThreadEnviaLPT }
 

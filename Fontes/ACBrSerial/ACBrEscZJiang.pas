@@ -59,8 +59,7 @@ type
 implementation
 
 uses
-  strutils, math,
-  ACBrUtil, ACBrConsts;
+  StrUtils, Math, ACBrConsts, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math;
 
 { TACBrEscZJiang }
 

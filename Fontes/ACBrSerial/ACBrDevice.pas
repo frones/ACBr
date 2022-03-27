@@ -397,7 +397,7 @@ implementation
 
 uses
   typinfo, Math, StrUtils,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO, ACBrConsts;
 
 { TACBrTag }
 

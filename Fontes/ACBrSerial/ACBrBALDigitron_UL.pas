@@ -58,7 +58,7 @@ implementation
 
 uses
   SysUtils, Math,
-  ACBrConsts, ACBrUtil,
+  ACBrConsts, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP}
     DateUtils, StrUtils
   {$ELSE}

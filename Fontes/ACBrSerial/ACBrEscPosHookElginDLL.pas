@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math;
 
 constructor TElginUSBPrinter.Create;
 begin

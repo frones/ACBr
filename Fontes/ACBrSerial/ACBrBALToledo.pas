@@ -66,8 +66,8 @@ type
 implementation
 
 uses
-  SysUtils,
-  ACBrConsts, ACBrUtil,
+  SysUtils, ACBrUtil,
+  ACBrConsts, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP}
    DateUtils, StrUtils
   {$ELSE}

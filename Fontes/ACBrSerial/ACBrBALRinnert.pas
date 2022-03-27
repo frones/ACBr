@@ -59,7 +59,7 @@ implementation
 
 uses
   SysUtils,
-  ACBrConsts, ACBrUtil,
+  ACBrConsts, ACBrUtil.Strings,
   {$IFDEF Delphi6_UP}
    DateUtils, StrUtils
   {$ELSE}

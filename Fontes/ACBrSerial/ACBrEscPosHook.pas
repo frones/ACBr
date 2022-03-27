@@ -110,7 +110,9 @@ procedure RegisterHook(AHookClass: TACBrPosPrinterHookClass);
 implementation
 
 uses
-  ACBrUtil, ACBrPosPrinter;
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrPosPrinter;
 
 procedure RegisterHook(AHookClass: TACBrPosPrinterHookClass);
 var

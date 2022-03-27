@@ -57,7 +57,7 @@ type
 implementation
 
 uses
-  SysUtils, ACBrUtil,
+  SysUtils, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP}
    DateUtils
   {$ELSE}

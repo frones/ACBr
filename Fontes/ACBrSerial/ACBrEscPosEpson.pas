@@ -99,8 +99,7 @@ type
 implementation
 
 uses
-  strutils, math,
-  ACBrUtil, ACBrImage, ACBrConsts;
+  StrUtils, Math, ACBrImage, ACBrConsts, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math;
 
 function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
   const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;

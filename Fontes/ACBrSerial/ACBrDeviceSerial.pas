@@ -120,7 +120,7 @@ implementation
 
 uses
   typinfo, dateutils, math,
-  ACBrDevice, ACBrUtil, ACBrConsts;
+  ACBrDevice, ACBrUtil.Strings, ACBrUtil.Compatibilidade, ACBrConsts;
 
 { TACBrDeviceSerial }
 

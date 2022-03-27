@@ -124,9 +124,10 @@ type
 implementation
 
 uses
-  math, sysutils, strutils,
+  Math, sysutils, strutils,
   {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
-  ACBrUtil, ACBrImage, ACBrConsts, synautil;
+  ACBrUtil, ACBrImage, ACBrConsts, synautil, ACBrUtil.Strings,
+  ACBrUtil.Math;
 
 { TACBrETQPpla }
 

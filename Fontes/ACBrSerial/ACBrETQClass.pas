@@ -221,8 +221,7 @@ type
 implementation
 
 uses
-  SysUtils, math,
-  ACBrConsts, ACBrETQ, ACBrUtil, ACBrImage;
+  SysUtils, math, ACBrConsts, ACBrETQ, ACBrUtil, ACBrImage, ACBrUtil.Strings;
 
 { TACBrETQDimensoes }
 

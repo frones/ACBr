@@ -112,7 +112,7 @@ implementation
 uses
   math, SysUtils,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-  ACBrUtil, ACBrImage, ACBrConsts, synautil;
+  ACBrUtil, ACBrImage, ACBrConsts, synautil, ACBrUtil.Strings;
 
 { TACBrETQEpl2 }
 

@@ -71,7 +71,10 @@ implementation
 
 uses
   strutils, math,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.FilesIO,
+  ACBrConsts;
 
 { TACBrEscCustomPos }
 

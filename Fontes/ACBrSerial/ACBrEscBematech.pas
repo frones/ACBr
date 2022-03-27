@@ -78,9 +78,7 @@ type
 implementation
 
 Uses
-  strutils, math,
-  ACBrUtil, ACBrEscPosEpson;
-
+  strutils, Math, ACBrEscPosEpson, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math;
 
 { TACBrEscBematech }
 

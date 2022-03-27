@@ -143,7 +143,7 @@ TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 implementation
 
 uses
-  ACBrUtil, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert,
+  ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert,
   ACBrBALMuller, ACBrBALLucasTec,  ACBrBALToledo2180, ACBrBALMagna,
   ACBrBALDigitron, ACBrBALMagellan, ACBrBALUranoPOP, ACBrBALLider,
   ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS, ACBrBALLibratek,
@@ -152,7 +152,7 @@ uses
   ACBrBALToledo2090N, ACBrBALToledoBCS21, ACBrBALPrecision,
   ACBrBALDigitron_UL, ACBrBALLibratekWT3000IR, ACBrBALToledoTi420,
   ACBrBALWeightechWT27R_ETH, ACBrBALCapital, ACBrBALMarte, ACBrBalLenkeLK2500, ACBrBALWeighTRUTest,
-  {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
+  {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF}, ACBrUtil.Strings;
 
 { TACBrBAL }
 constructor TACBrBAL.Create(AOwner: TComponent);

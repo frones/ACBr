@@ -52,7 +52,7 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrSocket, ACBrDownload, ACBrUtil;
+  ACBrBase, ACBrSocket, ACBrDownload;
 
 type
   TACBrCodSistema = (csSpedFiscal, csSpedPisCofins, csSpedContabil, csSpedECF);
@@ -122,6 +122,8 @@ type
   end;
 
 implementation
+ uses
+   ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.XMLHTML;
 
 constructor TACBrSpedTabelas.Create(AOwner: TComponent);
 begin

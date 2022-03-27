@@ -157,7 +157,7 @@ type
 
 implementation
 
-uses ACBrDownload, ACBrUtil;
+uses ACBrDownload, ACBrUtil.FilesIO;
 
 { TACBrDownloadClass }
 

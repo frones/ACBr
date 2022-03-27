@@ -343,7 +343,7 @@ uses
   {$Else}
     Jsons,
   {$EndIf}
-  ACBrUtil, ACBrConsts;
+  ACBrUtil, ACBrConsts, ACBrUtil.Strings, ACBrUtil.XMLHTML;
 
 { TACBrCEPEndereco ************************************************************}
 

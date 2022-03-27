@@ -206,7 +206,8 @@ type
 implementation
 
 uses
-  StrUtils, ACBrValidador, ACBrUtil;
+  StrUtils, ACBrValidador, ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrUtil.DateTime, ACBrUtil.XMLHTML;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin
@@ -802,7 +803,7 @@ begin
         '<aliqFedImp>' + FloatToString(Itens[I].FederalImportado) + '</aliqFedImp>' +
         '<aliqEst>' + FloatToString(Itens[I].Estadual) + '</aliqEst>' +
         '<aliqMun>' + FloatToString(Itens[I].Municipal) + '</aliqMun>' +
-        '<descricao>' + ACBrUtil.ParseText( AnsiString( Itens[I].Descricao ), False, False) + '</descricao>' +
+        '<descricao>' + ACBrUtil.XMLHTML.ParseText( AnsiString( Itens[I].Descricao ), False, False) + '</descricao>' +
       '</imposto>';
   end;
   Texto := Texto + '</IBPTax>';
@@ -854,7 +855,7 @@ begin
         '<td>' + FloatToStr(Itens[I].FederalImportado) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].Estadual) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].Municipal) + '</td>' + slineBreak +
-        '<td>' + ACBrUtil.ParseText( AnsiString( Itens[I].Descricao ), False, False) + '</td>' + slineBreak +
+        '<td>' + ACBrUtil.XMLHTML.ParseText( AnsiString( Itens[I].Descricao ), False, False) + '</td>' + slineBreak +
       '</tr>' + slineBreak;
   end;
 

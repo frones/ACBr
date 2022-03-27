@@ -216,7 +216,7 @@ type
 
 implementation
 
-uses ACBrUtil;
+uses ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDFiscal.dcr}

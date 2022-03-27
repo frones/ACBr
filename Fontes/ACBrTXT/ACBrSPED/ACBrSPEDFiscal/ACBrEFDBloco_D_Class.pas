@@ -244,7 +244,7 @@ type
 
 implementation
 
-Uses ACBrUtil, StrUtils;
+Uses ACBrUtil.Strings, StrUtils;
 
 { TBloco_D }
 

@@ -35,7 +35,7 @@ unit ACBrEFDBloco_1_Class;
 interface
 
 uses SysUtils, StrUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_1,
-     ACBrEFDBloco_0_Class, ACBrEFDBlocos, ACBrUtil;
+     ACBrEFDBloco_0_Class, ACBrEFDBlocos;
 
 type
   /// TBLOCO_1 -
@@ -212,6 +212,9 @@ type
   end;
 
 implementation
+
+  uses
+     ACBrUtil.Strings;
 
 { TBloco_1 }
 

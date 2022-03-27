@@ -35,7 +35,7 @@ unit ACBrEFDBloco_D;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, DateUtils, ACBrEFDBlocos, ACBrUtil;
+  SysUtils, Classes, Contnrs, DateUtils, ACBrEFDBlocos;
 
 type
   TRegistroD100List = class;
@@ -1527,6 +1527,9 @@ type
   end;
 
 implementation
+
+  uses
+    ACBrUtil.Strings;
 
 { TRegistroD100List }
 

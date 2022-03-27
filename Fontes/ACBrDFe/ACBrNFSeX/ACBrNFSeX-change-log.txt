@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/03/2022
+-- ACBrNFSeXServicos --
+[*] A cidade de Jacarei/SP trocou para o provedor SiapNet.
+   Por: Anadilson
+
 25/03/2022
 -- SmarAPD.LerXml --
 [*] Acrescentado a leitura da tag ISSRetido.

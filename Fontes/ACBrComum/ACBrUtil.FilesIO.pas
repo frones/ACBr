@@ -168,7 +168,7 @@ function GetFileVersion(const AFile: String): String;
 implementation
 
 uses
-  ACBrUtil, ACBrCompress, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
+  ACBrCompress, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
 
 const
 {$IFDEF WIN64}

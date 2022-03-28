@@ -106,7 +106,7 @@ procedure AcharProximaTag(const ABinaryString: AnsiString; const PosIni: Integer
 implementation
 
 uses
-  ACBrUtil, ACBrUtil.Strings, StrUtilsEx;
+  ACBrUtil.Base, ACBrUtil.Strings, StrUtilsEx;
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web

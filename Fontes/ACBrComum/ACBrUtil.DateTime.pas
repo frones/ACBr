@@ -103,7 +103,8 @@ implementation
 
 uses
   MaskUtils,
-  ACBrUtil;
+  ACBrUtil.Compatibilidade,
+  ACBrUtil.Base;
 
 {-----------------------------------------------------------------------------
   Converte uma <ADateTime> para String, semelhante ao FormatDateTime,

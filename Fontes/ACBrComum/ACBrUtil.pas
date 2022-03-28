@@ -79,99 +79,109 @@ Uses
       {$EndIf}
     {$EndIf}
   {$EndIf}
-  , ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.Math, ACBrUtil.DateTime, ACBrUtil.FilesIO;
+  , ACBrUtil.Compatibilidade, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.Math, ACBrUtil.DateTime,
+    ACBrUtil.FilesIO;
 
 type
-  TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
+  TFormatMask = ACBrUtil.Base.TFormatMask;
   TFindFileSortType = ACBrUtil.FilesIO.TFindFileSortType;
   TFindFileSortDirection = ACBrUtil.FilesIO.TFindFileSortDirection;
 
 {$IFDEF FPC}
-  {$DEFINE SUPPORTS_TYPE_ALIASES}
+  {$DEFINE SUPPORTS_SCOPEDENUMS}
 {$ENDIF}
 {$IFDEF DELPHI2009_UP}
-  {$DEFINE SUPPORTS_TYPE_ALIASES}
+  {$DEFINE SUPPORTS_SCOPEDENUMS}
 {$ENDIF}
 
-{$IFDEF SUPPORTS_TYPE_ALIASES}
+const
+  msk4x2  = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk4x2  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk7x2  = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk7x2  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk9x2  = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk9x2  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk10x2 = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk10x2 deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk13x2 = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk13x2 deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk15x2 = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk15x2 deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk6x3  = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk6x3  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  msk6x4  = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}msk6x4  deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+  mskAliq = {$IFDEF SUPPORTS_SCOPEDENUMS}TFormatMask.{$ENDIF}mskAliq deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFormatMask da Unit ACBrUtil.Base.pas' {$ENDIF};
+
 //deprecated const... Definidas na unit ACBrUtil.FilesIO
 const
-  fstNone     = TFindFileSortType.fstNone;
-  fstDateTime = TFindFileSortType.fstDateTime;
-  fstFileName = TFindFileSortType.fstFileName;
-  fsdNone       = TFindFileSortDirection.fsdNone;
-  fsdAscending  = TFindFileSortDirection.fsdAscending;
-  fsdDescending = TFindFileSortDirection.fsdDescending;
+  fstNone     = {$IFDEF SUPPORTS_SCOPEDENUMS}TFindFileSortType.{$ENDIF}fstNone deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFindFileSortType da Unit ACBrUtil.FilesIO.pas' {$ENDIF};
+  fstDateTime = {$IFDEF SUPPORTS_SCOPEDENUMS}TFindFileSortType.{$ENDIF}fstDateTime deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFindFileSortType da Unit ACBrUtil.FilesIO.pas' {$ENDIF};
+  fstFileName = {$IFDEF SUPPORTS_SCOPEDENUMS}TFindFileSortType.{$ENDIF}fstFileName deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFindFileSortType da Unit ACBrUtil.FilesIO.pas' {$ENDIF};
+  fsdNone       = {$IFDEF SUPPORTS_SCOPEDENUMS}TFindFileSortDirection.{$ENDIF}fsdNone deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFindFileSortDirection da Unit ACBrUtil.FilesIO.pas' {$ENDIF};
+  fsdAscending  = {$IFDEF SUPPORTS_SCOPEDENUMS}TFindFileSortDirection.{$ENDIF}fsdAscending deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFindFileSortDirection da Unit ACBrUtil.FilesIO.pas' {$ENDIF};
+  fsdDescending = {$IFDEF SUPPORTS_SCOPEDENUMS}TFindFileSortDirection.{$ENDIF}fsdDescending deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o tipo TFindFileSortDirection da Unit ACBrUtil.FilesIO.pas' {$ENDIF};
   //...deprecated
-{$ENDIF}
+
 
 
 {/////////  ACBrUtil.Compatibilidade (especialmente D6/D5)}
 {$IFNDEF COMPILER6_UP}
   type TRoundToRange = -37..37;
-  function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double;
-  function SimpleRoundTo(const AValue: Double; const ADigit: TRoundToRange = -2): Double;
+  function RoundTo(const AValue: Double; const ADigit: TRoundToRange): Double; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
+  function SimpleRoundTo(const AValue: Double; const ADigit: TRoundToRange = -2): Double; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
 
   { IfThens retirada de Math.pas do D7, para compatibilizar com o Delphi 5
   (que nao possue essas funçao) }
-  function IfThen(AValue: Boolean; const ATrue: Integer; const AFalse: Integer = 0): Integer; overload;
-  function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64 = 0): Int64; overload;
-  function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double = 0.0): Double; overload;
-  function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string = ''): string; overload;
+  function IfThen(AValue: Boolean; const ATrue: Integer; const AFalse: Integer = 0): Integer; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
+  function IfThen(AValue: Boolean; const ATrue: Int64; const AFalse: Int64 = 0): Int64; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
+  function IfThen(AValue: Boolean; const ATrue: Double; const AFalse: Double = 0.0): Double; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
+  function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string = ''): string; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
 {$ENDIF}
 
 {$IFNDEF COMPILER7_UP}
 { PosEx, retirada de StrUtils.pas do D7, para compatibilizar com o Delphi 6
   (que nao possui essa funçao) }
-function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
+function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
 {$ENDIF}
 
 {$IfNDef HAS_CHARINSET}
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
-function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
 {$EndIf}
 
 {$IFDEF HAS_FORMATSETTINGS}
-function CreateFormatSettings: TFormatSettings;
+function CreateFormatSettings: TFormatSettings; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Compatibilidade.pas' {$ENDIF};
 {$ENDIF}
 
-{//// ACBrUtil manter aqui??? (seria algo como ACBrUtil.SysUtil ou ACBrUtil.Base)}
-function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer;
+{/////////  ACBrUtil.Base}
+function PosExA(const SubStr, S: AnsiString; Offset: Integer = 1): Integer; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 
-Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String;
-function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
+Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
-  const AFormat: String = ''): String;
-function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
-function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
-function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String;
-function StringDecimalToFloat(const AValue: String; const DecimalDigits: SmallInt = 2): Double;
-Function StringToFloat(NumString : String): Double;
-Function StringToFloatDef( const NumString : String ;
-   const DefaultValue : Double ) : Double ;
+  const AFormat: String = ''): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function StringDecimalToFloat(const AValue: String; const DecimalDigits: SmallInt = 2): Double; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+Function StringToFloat(NumString : String): Double; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+Function StringToFloatDef(const NumString : String; const DefaultValue : Double ) : Double; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 
-function EstaVazio(const AValue: String): Boolean;overload;
-procedure EstaVazio(const AValue, AMensagem: String);overload;
-function NaoEstaVazio(const AValue: String): Boolean;
-function EstaZerado(const AValue: Double): Boolean;overload;
-function EstaZerado(const AValue: Integer): Boolean;overload;
-procedure EstaZerado(const AValue: Integer; const AMensagem: String);overload;
-function NaoEstaZerado(const AValue: Double): Boolean;overload;
-function NaoEstaZerado(const AValue: Integer): Boolean;overload;
-function TamanhoIgual(const AValue: String; const ATamanho: Integer): Boolean;overload;
-procedure TamanhoIgual(const AValue: String; const ATamanho: Integer; const AMensagem: String);overload;
-function TamanhoIgual(const AValue: Integer; const ATamanho: Integer): Boolean;overload;
-procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; const AMensagem: String);overload;
-function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
+function EstaVazio(const AValue: String): Boolean; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+procedure EstaVazio(const AValue, AMensagem: String); overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function NaoEstaVazio(const AValue: String): Boolean; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function EstaZerado(const AValue: Double): Boolean;overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function EstaZerado(const AValue: Integer): Boolean;overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+procedure EstaZerado(const AValue: Integer; const AMensagem: String);overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function NaoEstaZerado(const AValue: Double): Boolean;overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function NaoEstaZerado(const AValue: Integer): Boolean;overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function TamanhoIgual(const AValue: String; const ATamanho: Integer): Boolean;overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+procedure TamanhoIgual(const AValue: String; const ATamanho: Integer; const AMensagem: String);overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function TamanhoIgual(const AValue: Integer; const ATamanho: Integer): Boolean;overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; const AMensagem: String);overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 
-function TraduzComando( const AString : String ) : AnsiString ;
-Function StringToAsc( const AString : AnsiString ) : String ;
-Function AscToString( const AString : String ) : AnsiString ;
+function TraduzComando( const AString : String ) : AnsiString ; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+Function StringToAsc( const AString : AnsiString ) : String ; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+Function AscToString( const AString : String ) : AnsiString ; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 
-function EAN13Valido( const CodEAN13 : String ) : Boolean ;
-function EAN13_DV( CodEAN13 : String ) : String ;
+function EAN13Valido( const CodEAN13 : String ) : Boolean ; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
+function EAN13_DV( CodEAN13 : String ) : String ; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 
-procedure RttiSetProp(AObject: TObject; AProp: String; AValue: String);
+procedure RttiSetProp(AObject: TObject; AProp: String; AValue: String); deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método da Unit ACBrUtil.Base.pas' {$ENDIF};
 
 {/////////  ACBrUtil.XMLHTML}
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
@@ -434,11 +444,7 @@ Uses
 
 function PosExA(const SubStr, S: AnsiString; Offset: Integer): Integer;
 begin
-  {$IFDEF DELPHIXE3_UP}
-   Result := Pos(SubStr, S, Offset);
-  {$Else}
-   Result := PosEx(SubStr, S, Offset);
-  {$EndIf}
+  Result := ACBrUtil.Base.PosExA(SubStr, S, Offset);
 end;
 
 {-----------------------------------------------------------------------------
@@ -447,7 +453,7 @@ end;
  ---------------------------------------------------------------------------- }
 function IntToStrZero(const NumInteiro : Int64 ; Tamanho : Integer) : String ;
 begin
-  Result := ACBrUtil.Strings.Poem_Zeros( NumInteiro, Tamanho) ;
+  Result := ACBrUtil.Base.IntToStrZero( NumInteiro, Tamanho) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -455,19 +461,9 @@ end ;
   verifica se a virgula é '.' ou ',' efetuando a conversão se necessário
   Se não for possivel converter, retorna <DefaultValue>
  ---------------------------------------------------------------------------- }
-function StringToFloatDef(const NumString : String ; const DefaultValue : Double
-   ) : Double ;
+function StringToFloatDef(const NumString : String ; const DefaultValue : Double) : Double ;
 begin
-  if EstaVazio(NumString) then
-     Result := DefaultValue
-  else
-   begin
-     try
-        Result := StringToFloat( NumString ) ;
-     except
-        Result := DefaultValue ;
-     end ;
-   end;
+  Result := ACBrUtil.Base.StringToFloatDef(NumString, DefaultValue);
 end ;
 
 {-----------------------------------------------------------------------------
@@ -475,49 +471,13 @@ end ;
   o separador de decimal = ',' e o separador de milhar como Ponto
  ---------------------------------------------------------------------------- }
 function FormatFloatBr(const AValue: Extended; AFormat: String): String;
-Var
-  {$IFDEF HAS_FORMATSETTINGS}
-  FS: TFormatSettings;
-  {$ELSE}
-  OldDecimalSeparator, OldThousandSeparator : Char ;
-  {$ENDIF}
 begin
-  if AFormat = '' then
-     AFormat := FloatMask();
-
-  {$IFDEF HAS_FORMATSETTINGS}
-  FS := CreateFormatSettings;
-  FS.DecimalSeparator := ',';
-  FS.ThousandSeparator := '.';
-  Result := FormatFloat(AFormat, AValue, FS);
-  {$ELSE}
-  OldDecimalSeparator := DecimalSeparator;
-  OldThousandSeparator := ThousandSeparator;
-  try
-    DecimalSeparator := ',';
-    ThousandSeparator := '.';
-    Result := FormatFloat(AFormat, AValue);
-  finally
-    DecimalSeparator := OldDecimalSeparator;
-    ThousandSeparator := OldThousandSeparator;
-  end;
-  {$ENDIF}
+  Result := ACBrUtil.Base.FormatFloatBr(AValue, AFormat);
 end;
 
-function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean
-  ): String;
+function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean): String;
 begin
-  if DecimalDigits > 0 then
-  begin
-    if UseThousandSeparator then
-      Result := ','
-    else
-      Result := '';
-
-    Result := Result + '0.' + StringOfChar('0',DecimalDigits)
-  end
-  else
-    Result := '0';
+  Result := ACBrUtil.Base.FloatMask(DecimalDigits, UseThousandSeparator);
 end;
 
 {-----------------------------------------------------------------------------
@@ -526,36 +486,17 @@ end;
   Se não for possivel converter, dispara Exception
  ---------------------------------------------------------------------------- }
 function StringToFloat(NumString: String): Double;
-var
-  DS: Char;
 begin
-  NumString := Trim(NumString);
-
-  DS := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator;
-
-  if DS <> '.' then
-    NumString := StringReplace(NumString, '.', DS, [rfReplaceAll]);
-
-  if DS <> ',' then
-    NumString := StringReplace(NumString, ',', DS, [rfReplaceAll]);
-
-  while ACBrUtil.Strings.CountStr(NumString, DS) > 1 do
-    NumString := StringReplace(NumString, DS, '', []);
-
-  Result := StrToFloat(NumString);
+  Result := ACBrUtil.Base.StringToFloat(NumString);
 end;
 
 {-----------------------------------------------------------------------------
   Converte um Double para string, SEM o separator decimal, considerando as
   decimais como parte final da String. Ex: 100,00 = "10000"; 1,23 = "123"
  ---------------------------------------------------------------------------- }
-function FloatToIntStr(const AValue : Double ; const DecimalDigits : SmallInt
-   ) : String ;
-var
-   Pow : Extended ;
+function FloatToIntStr(const AValue : Double ; const DecimalDigits : SmallInt) : String ;
 begin
-  Pow    := intpower(10, abs(DecimalDigits) );
-  Result := IntToStr( Trunc( SimpleRoundTo( AValue * Pow ,0) ) ) ;
+  Result := ACBrUtil.Base.FloatToIntStr(AValue, DecimalDigits);
 end;
 
 {-----------------------------------------------------------------------------
@@ -563,18 +504,8 @@ end;
   parte final da String como as decimais. Ex: 10000 = "100,00"; 123 = "1,23"
  ---------------------------------------------------------------------------- }
 function StringDecimalToFloat(const AValue: String; const DecimalDigits: SmallInt): Double;
-var
-  iTam: Integer;
-  sValue: String;
 begin
-  sValue := AValue;
-  iTam   := LengthNativeString(sValue);
-  if (iTam < DecimalDigits) then
-    sValue := StringOfChar('0', (DecimalDigits - iTam)) + sValue;
-
-  sValue := ReverseString(sValue);
-  Insert({$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator, sValue, DecimalDigits+1);
-  Result := StrToFloat(ReverseString(sValue));
+  Result := ACBrUtil.Base.StringDecimalToFloat(AValue, DecimalDigits);
 end;
 
 {-----------------------------------------------------------------------------
@@ -582,97 +513,74 @@ end;
   garante que não haverá separador de Milhar e o Separador Decimal será igual a
   "SeparadorDecimal" ( o default é .(ponto))
  ---------------------------------------------------------------------------- }
-function FloatToString(const AValue: Double; SeparadorDecimal: Char;
-  const AFormat: String): String;
-var
-  DS, TS: Char;
+function FloatToString(const AValue: Double; SeparadorDecimal: Char; const AFormat: String): String;
 begin
-  if EstaVazio(AFormat) then
-    Result := FloatToStr(AValue)
-  else
-    Result := FormatFloat(AFormat, AValue);
-
-  DS := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator;
-  TS := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}ThousandSeparator;
-
-  // Removendo Separador de milhar //
-  if ( DS <> TS ) then
-    Result := StringReplace(Result, TS, '', [rfReplaceAll]);
-
-  // Verificando se precisa mudar Separador decimal //
-  if DS <> SeparadorDecimal then
-    Result := StringReplace(Result, DS, SeparadorDecimal, [rfReplaceAll]);
+  Result := ACBrUtil.Base.FloatToString(AValue, SeparadorDecimal, AFormat);
 end;
 
 function EstaVazio(const AValue: String): Boolean;
 begin
-  Result := (AValue = '');
+  Result := ACBrUtil.Base.EstaVazio(AValue);
 end;
 
 procedure EstaVazio(const AValue, AMensagem: String);
 begin
-  if EstaVazio(AValue) then
-    raise Exception.Create(AMensagem);
+  ACBrUtil.Base.EstaVazio(AValue, AMensagem);
 end;
 
 function NaoEstaVazio(const AValue: String): Boolean;
 begin
-  Result := not EstaVazio(AValue);
+  Result := ACBrUtil.Base.NaoEstaVazio(AValue);
 end;
 
 function EstaZerado(const AValue: Double): Boolean;
 begin
-  Result := (AValue = 0);
+  Result := ACBrUtil.Base.EstaZerado(AValue);
 end;
 
 function EstaZerado(const AValue: Integer): Boolean;
 begin
-  Result := (AValue = 0);
+  Result := ACBrUtil.Base.EstaZerado(AValue);
 end;
 
 procedure EstaZerado(const AValue: Integer; const AMensagem: String);
 begin
-  if EstaZerado(AValue) then
-    raise Exception.Create(AMensagem);
+  ACBrUtil.Base.EstaZerado(AValue, AMensagem);
 end;
 
 function NaoEstaZerado(const AValue: Double): Boolean;
 begin
-  Result := not EstaZerado(AValue);
+  Result := ACBrUtil.Base.NaoEstaZerado(AValue);
 end;
 
 function NaoEstaZerado(const AValue: Integer): Boolean;
 begin
-  Result := not EstaZerado(AValue);
+  Result := ACBrUtil.Base.NaoEstaZerado(AValue);
 end;
 
 function TamanhoIgual(const AValue: String; const ATamanho: Integer): Boolean;
 begin
- Result := (Length(AValue) = ATamanho);
+  Result := ACBrUtil.Base.TamanhoIgual(AValue, ATamanho);
 end;
 
-procedure TamanhoIgual(const AValue: String; const ATamanho: Integer;
-  const AMensagem: String);
+procedure TamanhoIgual(const AValue: String; const ATamanho: Integer; const AMensagem: String);
 begin
-  if not TamanhoIgual(AValue, ATamanho) then
-    raise Exception.Create(AMensagem);
+  ACBrUtil.Base.TamanhoIgual(AValue, ATamanho, AMensagem);
 end;
 
 function TamanhoIgual(const AValue: Integer; const ATamanho: Integer): Boolean;
 begin
-  Result := (Length(IntToStr(AValue)) = ATamanho);
+  Result := ACBrUtil.Base.TamanhoIgual(AValue, ATamanho);
 end;
 
-procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer;
-  const AMensagem: String);
+procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; const AMensagem: String);
 begin
-  if not TamanhoIgual(AValue, ATamanho) then
-    raise Exception.Create(AMensagem);
+  ACBrUtil.Base.TamanhoIgual(AValue, ATamanho, AMensagem);
 end;
 
 function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
 begin
-  Result := (Length(AValue) < ATamanho);
+  Result := ACBrUtil.Base.TamanhoMenor(AValue, ATamanho);
 end;
 
 {-----------------------------------------------------------------------------
@@ -680,30 +588,17 @@ end;
    texto apos a String ' | '
  ---------------------------------------------------------------------------- }
 function TraduzComando(const AString: String): AnsiString;
-Var 
-  A : Integer ;
-  VString : String;
 begin
-  VString := AString;
-  A := pos(' | ', VString ) ;
-  if A > 0 then
-     VString := copy(VString,1,A-1) ;   { removendo texto apos ' | ' }
-
-  Result := AscToString( VString ) ;
-end ;
+  Result := ACBrUtil.Base.TraduzComando(AString);
+end;
 
 {-----------------------------------------------------------------------------
   Traduz Strings do Tipo chr(13)+chr(10) para uma representação que possa ser
    lida por AscToString Ex: '#13,#10'
  ---------------------------------------------------------------------------- }
 function StringToAsc(const AString: AnsiString): String;
-Var A : Integer ;
 begin
-  Result := '' ;
-  For A := 1 to Length( AString ) do
-     Result := Result + '#'+IntToStr( Ord( AString[A] ) )+',' ;
-
-  Result := copy(Result,1, Length( Result )-1 ) ;
+  Result := ACBrUtil.Base.StringToAsc(AString);
 end;
 
 {-----------------------------------------------------------------------------
@@ -712,48 +607,8 @@ end;
   chr(13)+'v'+chr(10)
  ---------------------------------------------------------------------------- }
 function AscToString(const AString: String): AnsiString;
-
-   procedure ConverteToken(var AToken: AnsiString);
-   var
-     n: Integer;
-   begin
-     if AToken[1] = '#' then
-     begin
-       if TryStrToInt(copy(string(AToken), 2, Length(string(AToken))), n) then
-         AToken := ACBrUtil.Strings.AnsiChr(n);
-     end;
-   end;
-
-Var
-  posicao, tamanhoString : Integer ;
-  Token : AnsiString ;
-  VString : string;
-  C : Char ;
 begin
-  VString       := Trim( AString  );
-  Result        := '' ;
-  posicao       := 1  ;
-  Token         := '' ;
-  tamanhoString := Length( VString );
-
-  while posicao <= tamanhoString + 1 do
-  begin
-    if posicao > tamanhoString then
-      C := ','
-    else
-      C := VString[posicao] ;
-
-    if (C = ',') and (Length( Token ) >= 1) then
-    begin
-      ConverteToken(Token);
-      Result := Result + Token;
-      Token  := '' ;
-    end
-    else
-      Token := Token + AnsiString(C) ;
-
-    posicao := posicao + 1 ;
-  end ;
+  Result := ACBrUtil.Base.AscToString(AString);
 end;
 
 {------------------------------------------------------------------------------
@@ -761,20 +616,8 @@ end;
   caracteres de <CodEAN13>
  ------------------------------------------------------------------------------}
 function EAN13_DV(CodEAN13: String): String;
-Var A,DV : Integer ;
 begin
-   Result   := '' ;
-   CodEAN13 := ACBrUtil.Strings.PadLeft(Trim(CodEAN13),12,'0');
-   if not ACBrUtil.Strings.StrIsNumber( CodEAN13 ) then
-      exit ;
-
-   DV := 0;
-   For A := 12 downto 1 do
-      DV := DV + (StrToInt( CodEAN13[A] ) * IfThen(odd(A),1,3));
-
-   DV := (Ceil( DV / 10 ) * 10) - DV ;
-
-   Result := IntToStr( DV );
+  Result := ACBrUtil.Base.EAN13_DV(CodEAN13);
 end;
 
 {------------------------------------------------------------------------------
@@ -782,48 +625,22 @@ end;
  ------------------------------------------------------------------------------}
 function EAN13Valido(const CodEAN13: String): Boolean;
 begin
-  Result := false ;
-  if Length(CodEAN13) = 13 then
-     Result := ( CodEAN13[13] =  EAN13_DV(CodEAN13) ) ;
+  Result := ACBrUtil.Base.EAN13Valido(CodEAN13);
 end;
 
 function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
-var
-  Mask: String;
 begin
-  case AFormat of
-    msk4x2  : Mask := '#,##0.00';
-    msk7x2  : Mask := '#,###,##0.00';
-    msk9x2  : Mask := '###,###,##0.00';
-    msk10x2 : Mask := '#,###,###,##0.00';
-    msk13x2 : Mask := '#,###,###,###,##0.00';
-    msk15x2 : Mask := '###,###,###,###,##0.00';
-    msk6x3  : Mask := ',0.000';
-    msk6x4  : Mask := ',0.0000';
-    mskAliq : Mask := '#00%';
-  end;
-
-  Result := FormatFloatBr(AValue, Mask);
-  {$IfDef FPC}
-  // Workround para BUG em FPC
-  if (AValue > 999) and (pos(',', Mask) > 0) and (pos('.', Result) = 0) then
-    Result := FormatFloatBr(AValue);
-  {$EndIf}
+  Result := ACBrUtil.Base.FormatFloatBr(AFormat, AValue);
 end;
-
 
 {------------------------------------------------------------------------------
    Inserir um valor a propriedade por RTTI
  ------------------------------------------------------------------------------}
 procedure RttiSetProp(AObject: TObject; AProp, AValue: String);
-var
-  Propinfo: PPropInfo;
 begin
-  PropInfo := GetPropInfo(AObject.ClassInfo, AProp);
-  if (PropInfo = nil) then
-    Exit;
-  SetPropValue(AObject, AProp, AValue);
+  ACBrUtil.Base.RttiSetProp(AObject, AProp, AValue);
 end;
+{///FIM//////  ACBrUtil.Base}
 
 
 {/////////  ACBrUtil.Compatibilidade (especialmente D6/D5)}

@@ -665,7 +665,8 @@ implementation
 uses
   dateutils,
   synacode,
-  ACBrCompress, ACBrConsts, ACBrUtil, ACBrUtil.Strings;
+  ACBrCompress, ACBrConsts, ACBrUtil.Compatibilidade, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
+  ACBrUtil.Math, ACBrUtil.XMLHTML, ACBrUtil.Strings;
 
 { TestePutBit }
 
@@ -843,7 +844,7 @@ begin
   WorkingDays  := 11;
   ADateResult  := EncodeDate(2017,07,03);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_DataInicioDomingo;
@@ -855,7 +856,7 @@ begin
   WorkingDays  := 11;
   ADateResult  := EncodeDate(2017,07,03);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_PosSemana;
@@ -867,7 +868,7 @@ begin
   WorkingDays  := 10;
   ADateResult  := EncodeDate(2017,07,07);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_DiaFinalSabado;
@@ -879,7 +880,7 @@ begin
   WorkingDays  := 2;
   ADateResult  := EncodeDate(2017,06,26);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_DiaFinalDomingo;
@@ -891,7 +892,7 @@ begin
   WorkingDays  := 1;
   ADateResult  := EncodeDate(2017,06,26);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaSabado;
@@ -903,7 +904,7 @@ begin
   WorkingDays  := 0;
   ADateResult  := EncodeDate(2017,06,26);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaDomingo;
@@ -915,7 +916,7 @@ begin
   WorkingDays  := 0;
   ADateResult  := EncodeDate(2017,06,26);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaSemana;
@@ -927,7 +928,7 @@ begin
   WorkingDays  := 0;
   ADateResult  := EncodeDate(2017,06,26);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativo;
@@ -939,7 +940,7 @@ begin
   WorkingDays  := -3;
   ADateResult  := EncodeDate(2017,06,14);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativoInicioSabado;
@@ -951,7 +952,7 @@ begin
   WorkingDays  := -6;
   ADateResult  := EncodeDate(2017,06,16);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativoInicioDomingo;
@@ -963,7 +964,7 @@ begin
   WorkingDays  := -6;
   ADateResult  := EncodeDate(2017,06,16);
 
-  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+  CheckEquals(ADateResult, IncWorkingDay(ADateIni,WorkingDays));
 end;
 
 { WorkingDaysBetweenTest }
@@ -974,7 +975,7 @@ var
 begin
   ADateIni := EncodeDate(2017,06,26);
   ADateEnd := EncodeDate(2017,06,30);
-  CheckEquals(4,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(4, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataPosSemana;
@@ -983,7 +984,7 @@ var
 begin
   ADateIni := EncodeDate(2017,06,26);
   ADateEnd := EncodeDate(2017,07,07);
-  CheckEquals(9,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(9, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicioSabado;
@@ -992,7 +993,7 @@ var
 begin
   ADateIni := EncodeDate(2017,06,24);
   ADateEnd := EncodeDate(2017,07,03);
-  CheckEquals(6,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(6, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicioDomingo;
@@ -1001,7 +1002,7 @@ var
 begin
   ADateIni := EncodeDate(2017,06,25);
   ADateEnd := EncodeDate(2017,07,03);
-  CheckEquals(6,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(6, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalSabado;
@@ -1010,7 +1011,7 @@ var
 begin
   ADateIni := EncodeDate(2017,06,25);
   ADateEnd := EncodeDate(2017,07,08);
-  CheckEquals(10,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(10, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalDomingo;
@@ -1019,7 +1020,7 @@ var
 begin
   ADateIni := EncodeDate(2017,06,25);
   ADateEnd := EncodeDate(2017,07,09);
-  CheckEquals(10,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(10, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalMenor;
@@ -1028,7 +1029,7 @@ var
 begin
   ADateIni := EncodeDate(2017,07,10);
   ADateEnd := EncodeDate(2017,07,09);
-  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(0, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataZero;
@@ -1037,7 +1038,7 @@ var
 begin
   ADateIni := 0;
   ADateEnd := 0;
-  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(0, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicialZero;
@@ -1046,7 +1047,7 @@ var
 begin
   ADateIni := 0;
   ADateEnd := EncodeDate(2017,07,09);
-  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(0, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalZero;
@@ -1055,7 +1056,7 @@ var
 begin
   ADateIni := EncodeDate(2017,07,09);
   ADateEnd := 0;
-  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+  CheckEquals(0, WorkingDaysBetween(ADateIni,ADateEnd));
 end;
 
 { ZipUnzip }
@@ -1225,146 +1226,146 @@ begin
   CheckEquals( '8', EAN13_DV('123456789012'));
   CheckEquals( '5', EAN13_DV('789835741001'));
 
-  CheckTrue( EAN13Valido('2004700001341') );
-  CheckTrue( EAN13Valido('1234567890128') );
-  CheckTrue( EAN13Valido('7898357410015') );
+  CheckTrue(EAN13Valido('2004700001341') );
+  CheckTrue(EAN13Valido('1234567890128') );
+  CheckTrue(EAN13Valido('7898357410015') );
 end;
 
 procedure EAN13Test.TamanhoMaior;
 begin
-   CheckFalse( EAN13Valido('78983574100156'));
+   CheckFalse(EAN13Valido('78983574100156'));
 end;
 
 procedure EAN13Test.TamanhoMenor;
 begin
-  CheckFalse( EAN13Valido('789835741001'));
+  CheckFalse(EAN13Valido('789835741001'));
 end;
 
 procedure EAN13Test.DigitoInvalido;
 begin
-  CheckFalse( EAN13Valido('7898357410010'));
-  CheckFalse( EAN13Valido('1234567890129'));
+  CheckFalse(EAN13Valido('7898357410010'));
+  CheckFalse(EAN13Valido('1234567890129'));
 end;
 
 procedure EAN13Test.ComLetras;
 begin
-  CheckFalse( EAN13Valido('A89835741001D'));
+  CheckFalse(EAN13Valido('A89835741001D'));
 end;
 
 procedure EAN13Test.EAN13Valido_String0000000000000_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('0000000000000'));
+  CheckTrue(EAN13Valido('0000000000000'));
 end;
 
 procedure EAN13Test.EAN13Valido_String2000100002629_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('2000100002629'));
+  CheckTrue(EAN13Valido('2000100002629'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7506195185568_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7506195185568'));
+  CheckTrue(EAN13Valido('7506195185568'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7891060886139_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7891060886139'));
+  CheckTrue(EAN13Valido('7891060886139'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7893946087173_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7893946087173'));
+  CheckTrue(EAN13Valido('7893946087173'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7896232517828_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7896232517828'));
+  CheckTrue(EAN13Valido('7896232517828'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7896645900026_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7896645900026'));
+  CheckTrue(EAN13Valido('7896645900026'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7897186015095_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7897186015095'));
+  CheckTrue(EAN13Valido('7897186015095'));
 end;
 
 procedure EAN13Test.EAN13Valido_String7898132132019_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7898132132019'));
+  CheckTrue(EAN13Valido('7898132132019'));
 
 end;
 
 procedure EAN13Test.EAN13Valido_String7898908141016_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('7898908141016'));
+  CheckTrue(EAN13Valido('7898908141016'));
 end;
 
 procedure EAN13Test.EAN13Valido_StringInvalida_RetornaFalso;
 begin
-  CheckFalse(ACBrUtil.EAN13Valido('abcdefghijklm'));
+  CheckFalse(EAN13Valido('abcdefghijklm'));
 end;
 
 procedure EAN13Test.EAN13Valido_StringValida_RetornaTrue;
 begin
-  CheckTrue(ACBrUtil.EAN13Valido('1234567890128'));
+  CheckTrue(EAN13Valido('1234567890128'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo000000000000_Retorna0;
 begin
-  CheckEquals('0', ACBrUtil.EAN13_DV('000000000000'));
+  CheckEquals('0', EAN13_DV('000000000000'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo200010000262_Retorna9;
 begin
-  CheckEquals('9', ACBrUtil.EAN13_DV('200010000262'));
+  CheckEquals('9', EAN13_DV('200010000262'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo750619518556_Retorna8;
 begin
-  CheckEquals('8', ACBrUtil.EAN13_DV('750619518556'));
+  CheckEquals('8', EAN13_DV('750619518556'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789106088613_Retorna9;
 begin
-  CheckEquals('9', ACBrUtil.EAN13_DV('789106088613'));
+  CheckEquals('9', EAN13_DV('789106088613'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789394608717_Retorna3;
 begin
-  CheckEquals('3', ACBrUtil.EAN13_DV('789394608717'));
+  CheckEquals('3', EAN13_DV('789394608717'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789623251782_Retorna8;
 begin
-  CheckEquals('8', ACBrUtil.EAN13_DV('789623251782'));
+  CheckEquals('8', EAN13_DV('789623251782'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789664590002_Retorna6;
 begin
-  CheckEquals('6', ACBrUtil.EAN13_DV('789664590002'));
+  CheckEquals('6', EAN13_DV('789664590002'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789718601509_Retorna5;
 begin
-  CheckEquals('5', ACBrUtil.EAN13_DV('789718601509'));
+  CheckEquals('5', EAN13_DV('789718601509'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789813213201_Retorna9;
 begin
-  CheckEquals('9', ACBrUtil.EAN13_DV('789813213201'));
+  CheckEquals('9', EAN13_DV('789813213201'));
 end;
 
 procedure EAN13Test.EAN13_DV_Codigo789890814101_Retorna6;
 begin
-  CheckEquals('6', ACBrUtil.EAN13_DV('789890814101'));
+  CheckEquals('6', EAN13_DV('789890814101'));
 end;
 
 procedure EAN13Test.EAN13_DV_StringAlphanumerica_RetornaVazio;
 begin
-  CheckEquals('', ACBrUtil.EAN13_DV('1234567890ab'));
+  CheckEquals('', EAN13_DV('1234567890ab'));
 end;
 
 { TranslateUnprintableTest }
@@ -2854,19 +2855,25 @@ end;
 
 procedure LerTagXMLTest.Simples;
 begin
-  CheckEquals('Teste Simples', LerTagXML('<ACBr>Teste Simples</ACBr>', 'acbr'));
+  {$warnings off}
+    CheckEquals('Teste Simples', LerTagXML('<ACBr>Teste Simples</ACBr>', 'acbr'));
+  {$warnings on}
 end;
 
 procedure LerTagXMLTest.SemIgnorarCase;
 begin
-  CheckEquals('Teste sem ignorar case', LerTagXML('<ACBr>Teste sem ignorar case</ACBr>', 'ACBr', false));
-  CheckEquals('', LerTagXML('<ACBr>Teste sem ignorar case</ACBr>', 'acbr', false));
-  CheckEquals('Ler Aqui', LerTagXML('<ACBr>Teste sem <acbr>Ler Aqui</acbr> ignorar case</ACBr>', 'acbr', false));
+  {$warnings off}
+    CheckEquals('Teste sem ignorar case', LerTagXML('<ACBr>Teste sem ignorar case</ACBr>', 'ACBr', false));
+    CheckEquals('', LerTagXML('<ACBr>Teste sem ignorar case</ACBr>', 'acbr', false));
+    CheckEquals('Ler Aqui', LerTagXML('<ACBr>Teste sem <acbr>Ler Aqui</acbr> ignorar case</ACBr>', 'acbr', false));
+  {$warnings on}
 end;
 
 procedure LerTagXMLTest.ComVariasTags;
 begin
-  CheckEquals('mais um teste', LerTagXML('<ACBr> teste <br> outro teste </br> <b>mais um teste</b> </ACBr>', 'b'));
+  {$warnings off}
+    CheckEquals('mais um teste', LerTagXML('<ACBr> teste <br> outro teste </br> <b>mais um teste</b> </ACBr>', 'b'));
+  {$warnings on}
 end;
 
 { TestXmlEhUTF8 }

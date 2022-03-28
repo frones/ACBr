@@ -54,7 +54,18 @@ type
     procedure CampoInt64_ValorPreenchido255_OcorrenciaUm_NaoGeraAlerta;
     procedure CampoInt64_ValorPreenchidoLimiteInteiro64_OcorrenciaUm_GeraTag;
     procedure CampoInt64_ValorPreenchidoLimiteInteiro_TamanhoMaximo15_GeraAlerta;
+    procedure CampoData_ValorValido_GeraTag;
+    procedure CampoData_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoData_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoDataCFe_ValorValido_GeraTag;
+    procedure CampoDataCFe_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoDataCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
 
+{
+procedure CampoXXX_ValorValido_GeraTag;
+procedure CampoXXX_ValorVazio_Ocorrencia1_GeraTag;
+procedure CampoXXX_ValorVazio_OcorrenciaZero_NaoGeraTag;
+}
     {  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64);}
@@ -438,6 +449,64 @@ begin
   CheckEquals('<Recibo>9223372036854775807</Recibo>', a);
   a := UmGerador.ListaDeAlertas.Text;
   CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
+end;
+
+procedure pcnGeradorTest.CampoData_ValorValido_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDat, '', 'Recibo', 1, 30, 1, EncodeDate(2022,03,14));
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>2022-03-14</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoData_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDate;
+begin
+  UmGerador.wCampo(tcDat, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoData_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDate;
+begin
+  UmGerador.wCampo(tcDat, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoDataCFe_ValorValido_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDatCFe, '', 'Recibo', 1, 30, 1, EncodeDate(2022,03,14));
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>20220314</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataCFe_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDate;
+begin
+  UmGerador.wCampo(tcDatCFe, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDate;
+begin
+  UmGerador.wCampo(tcDatCFe, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
 end;
 
 

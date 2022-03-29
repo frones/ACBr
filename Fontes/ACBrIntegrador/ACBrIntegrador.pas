@@ -181,7 +181,7 @@ implementation
 Uses
   dateutils, strutils,
   pcnConversao,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings;
 

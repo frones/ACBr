@@ -89,7 +89,7 @@ implementation
 
 uses
   StrUtilsEx,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime;

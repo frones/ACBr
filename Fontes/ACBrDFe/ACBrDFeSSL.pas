@@ -490,7 +490,7 @@ uses
   strutils, dateutils,
   synacode, synautil,
   ACBrDFeUtil, ACBrValidador,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.XMLHTML,

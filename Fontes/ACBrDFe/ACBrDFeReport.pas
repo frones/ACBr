@@ -262,7 +262,7 @@ implementation
 
 uses
   Math,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO;
 
 { TCasasDecimais }

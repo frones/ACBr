@@ -385,7 +385,7 @@ uses
   Math, strutils, DateUtils,
   synautil, synacode,
   ACBrDFe, ACBrDFeException,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings;
 

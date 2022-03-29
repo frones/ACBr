@@ -46,9 +46,6 @@ interface
 uses
   Classes, SysUtils, math, Graphics,
   RLReport, RLPrinters, RLPDFFilter,
-  ACBrUtil,
-  ACBrUtil.FilesIO,
-  ACBrUtil.Strings,
   ACBrDFeReport;
 
 type
@@ -67,6 +64,11 @@ type
 
 
 implementation
+
+uses
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings;
 
 class procedure TDFeReportFortes.AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
 begin

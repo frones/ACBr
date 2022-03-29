@@ -82,7 +82,7 @@ implementation
 uses
   Variants, DateUtils,
   ACBrDFeException,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.XMLHTML,

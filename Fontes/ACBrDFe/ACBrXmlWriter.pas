@@ -127,7 +127,7 @@ implementation
 uses
   variants, dateutils,
   ACBrDFeUtil,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrValidador;
 

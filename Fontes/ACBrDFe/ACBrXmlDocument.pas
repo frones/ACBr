@@ -326,7 +326,7 @@ implementation
 
 uses
   TypInfo, synautil,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime;
 

@@ -143,7 +143,7 @@ uses
   strutils,
   pcnConsts,
   ACBrDFeException,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrUtil.XMLHTML;
 

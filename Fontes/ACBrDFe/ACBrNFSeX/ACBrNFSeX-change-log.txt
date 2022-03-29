@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 29/03/2022
+-- ACBrNFSeXServicos --
+[*] Corrigido a URL de homologação da cidade do Rio de Janeiro/RJ
+   Por: Guilherme Costa
+[*] Corrigido a versão do XML da cidade de Campo Ere/SC.
+   Por: Valtairsis
+[*] A cidade de Conselheiro Lafaiete/MT trocou para o provedor Betha.
+   Por: Thiagfb
 -- Diversos --
 [*] Remoção de Warnings e Hints.
    Por: Italo Giurizzato Junior

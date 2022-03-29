@@ -211,7 +211,7 @@ var
   {$ENDIF}
   lTypeInfo: PPTypeInfo;
   lpTypeInfo: PPPTypeInfo;
-  Prop: PPropInfo;
+ // Prop: PPropInfo;
   j : integeR;
   arrobj : TObjectDynArray;
   arrstr : TStringDynArray;

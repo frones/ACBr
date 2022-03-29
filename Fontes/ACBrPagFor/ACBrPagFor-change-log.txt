@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2022
+-- Diversos --
+[*] Ajustes para atender o banco Sicredi.
+   Por: Suporte AT Info
+
 23/03/2022
 -- ACBrPagForGravarTxt --
 [*] Ajustes no Segmento B para o PIX do banco Itau.

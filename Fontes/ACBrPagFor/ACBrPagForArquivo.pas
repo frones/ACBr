@@ -88,7 +88,8 @@ type
 implementation
 
 uses
-  ACBrPagFor, ACBrUtil;
+  ACBrPagFor,
+  ACBrUtil.Strings;
 
 { TRegistro }
 

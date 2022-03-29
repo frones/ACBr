@@ -37,7 +37,7 @@ unit ACBrPagForConfiguracoes;
 interface
 
 uses
-  Classes, Forms, SysUtils, ACBrPagForConversao, ACBrUtil;
+  Classes, Forms, SysUtils, ACBrPagForConversao;
 
 type
   TGeralConf = class(TComponent)
@@ -99,7 +99,10 @@ type
 implementation
 
 uses
-  ACBrPagFor, Math, StrUtils, DateUtils;
+  Math, StrUtils, DateUtils,
+  ACBrUtil,
+  ACBrUtil.FilesIO,
+  ACBrPagFor;
 
 { TConfiguracoes }
 

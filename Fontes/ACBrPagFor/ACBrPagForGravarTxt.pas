@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrPagForClass, ACBrPagForConversao, ACBrUtil;
+  ACBrPagForClass, ACBrPagForConversao;
 
 type
   TPagForW = class(TPersistent)
@@ -115,6 +115,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil.Strings;
 
 { TPagForW }
 
@@ -1091,34 +1094,64 @@ begin
   
           pagItau:
             begin
-              if(PixTipoChave <> tcpNenhum)then
+              if (PixTipoChave <> tcpNenhum) then
               begin
-                  wregistro := wregistro + PadRight(TipoChavePixToStr(PixTipoChave), 2);
+                wregistro := wregistro + TipoChavePixToStr(PixTipoChave);
                 wregistro := wregistro + ' ';
                 wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
                 wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
                 wregistro := wregistro + Space(30);
                 wregistro := wregistro + PadRight(PixMensagem, 65);
               end;
-  
+
               wregistro := wregistro + PadRight(Email, 100); //ENDEREÇO DE E-MAIL
               wregistro := wregistro + Space(3);
               wregistro := wregistro + Space(10);
             end;
-  
+
           pagSicredi:
             begin
-              wregistro := wregistro + FormatDateTime('ddmmyyyy', DataVencimento);
-              wregistro := wregistro + FormatFloat('000000000000000', Valor * 100);
-              wregistro := wregistro + FormatFloat('000000000000000', Abatimento * 100);
-              wregistro := wregistro + FormatFloat('000000000000000', Desconto * 100);
-              wregistro := wregistro + FormatFloat('000000000000000', Mora * 100);
-              wregistro := wregistro + FormatFloat('000000000000000', Multa * 100);
-              wregistro := wregistro + PadRight(TiraAcentos(CodigoDOC), 15);
-              wregistro := wregistro + FormatFloat('0', Aviso);
-              wregistro := wregistro + FormatFloat('000000', CodigoUG);
-              wregistro := wregistro + FormatFloat('00000000', CodigoISPB)
-            end
+              if (PixTipoChave <> tcpNenhum) then
+              begin
+                wregistro := wregistro + TipoChavePixToStr(PixTipoChave);
+                wregistro := wregistro + ' ';
+                wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
+                wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
+                wregistro := wregistro + Space(95);
+                wregistro := wregistro + PadRight(PixMensagem, 99);
+
+                if CodigoUG > 0 then
+                   wregistro := wregistro + FormatFloat('000000', CodigoUG)
+                else
+                   wregistro := wregistro + Space(6);
+
+                if CodigoISPB > 0 then
+                   wregistro := wregistro + FormatFloat('00000000', CodigoISPB)
+                else
+                   wregistro := wregistro + Space(8);
+              end
+              else
+              begin
+                 wregistro := wregistro + FormatDateTime('ddmmyyyy', DataVencimento);
+                 wregistro := wregistro + FormatFloat('000000000000000', Valor * 100);
+                 wregistro := wregistro + FormatFloat('000000000000000', Abatimento * 100);
+                 wregistro := wregistro + FormatFloat('000000000000000', Desconto * 100);
+                 wregistro := wregistro + FormatFloat('000000000000000', Mora * 100);
+                 wregistro := wregistro + FormatFloat('000000000000000', Multa * 100);
+                 wregistro := wregistro + PadRight(TiraAcentos(CodigoDOC), 15);
+                 wregistro := wregistro + FormatFloat('0', Aviso);
+
+                 if CodigoUG > 0 then
+                   wregistro := wregistro + FormatFloat('000000', CodigoUG)
+                 else
+                   wregistro := wregistro + Space(6);
+
+                if CodigoISPB > 0 then
+                  wregistro := wregistro + FormatFloat('00000000', CodigoISPB)
+                else
+                  wregistro := wregistro + Space(8);
+              end;
+           end
         else
           begin
             wregistro := wregistro + FormatDateTime('ddmmyyyy', DataVencimento);
@@ -2346,6 +2379,7 @@ begin
       FArquivoTXT := FArquivoTXT + sLineBreak + wregistro;
 
       {opcionais segmento O}
+      GeraSegmentoW(SegmentoW);
       GeraSegmentoZ(SegmentoZ);
     end;
   end;

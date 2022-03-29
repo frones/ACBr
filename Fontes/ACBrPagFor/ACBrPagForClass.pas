@@ -1472,11 +1472,14 @@ type
     FSeuNumero         : String; // Tamanho 20
     FNossoNumero       : String; // Tamanho 20
     FCodOcorrencia : String;
+    FSegmentoW: TSegmentoWList;
     FSegmentoZ: TSegmentoZList;
     FQuantidadeMoeda: Double;
     FValorPago: Double;
     FNotaFiscal: Integer;
     FDescOcorrencia: String;
+
+    procedure SetSegmentoW(const Value: TSegmentoWList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
   public
@@ -1493,6 +1496,7 @@ type
     property NossoNumero: String read FNossoNumero write FNossoNumero;
     property CodOcorrencia: String read FCodOcorrencia write FCodOcorrencia;
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
     property QuantidadeMoeda: Double read FQuantidadeMoeda write FQuantidadeMoeda;
     property ValorPago: Double read FValorPago write FValorPago;
@@ -2593,18 +2597,27 @@ end;
 constructor TSegmentoO.Create;
 begin
   inherited Create;
+
+  FSegmentoW := TSegmentoWList.Create;
   FSegmentoZ := TSegmentoZList.Create;
 end;
 
 destructor TSegmentoO.Destroy;
 begin
+  FSegmentoW.Free;
   FSegmentoZ.Free;
+
   inherited;
 end;
 
 function TSegmentoO.GetPagamentoLiberado: Boolean;
 begin
   Result := POS(CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
+end;
+
+procedure TSegmentoO.SetSegmentoW(const Value: TSegmentoWList);
+begin
+  FSegmentoW := Value;
 end;
 
 procedure TSegmentoO.SetSegmentoZ(const Value: TSegmentoZList);

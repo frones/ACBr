@@ -147,7 +147,7 @@ implementation
 uses
   strutils,
   ACBrDFeUtil, ACBrDFeException,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.XMLHTML,

@@ -644,7 +644,7 @@ uses
       Graphics,
     {$EndIf}
   {$EndIf}
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrImage, ACBrConsts, ACBrExtenso, ACBrCMC7,

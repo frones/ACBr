@@ -100,7 +100,7 @@ implementation
 
 uses
   Math,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings;
 
 { TACBrExtenso }

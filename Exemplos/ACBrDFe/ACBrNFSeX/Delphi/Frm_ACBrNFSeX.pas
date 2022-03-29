@@ -7,7 +7,7 @@ uses
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
   ACBrBase,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFe, ACBrDFeReport, ACBrMail, ACBrNFSeX,
   ACBrNFSeXConversao, ACBrNFSeXWebservicesResponse,
@@ -897,11 +897,10 @@ end;
 
 procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
-  NumNFSe, Codigo, Motivo, NumLote, CodVerif, SerNFSe, NumRps,
-  SerRps, ValNFSe, ChNFSe, eMailTomador: String;
+  Titulo, NumNFSe, Codigo, Motivo, NumLote, CodVerif, SerNFSe, NumRps,
+  SerRps, ValNFSe, ChNFSe, eMailTomador, vNumRPS: String;
   CodCanc: Integer;
   InfCancelamento: TInfCancelamento;
-  Titulo: string;
 begin
   Titulo := 'Cancelar NFSe';
 
@@ -985,9 +984,10 @@ begin
 
     // Os Provedores da lista requerem que seja informado o motivo do cancelamento
     if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
-      proConam, proEquiplano, proGoverna, proIPM, proISSDSF, proISSLencois,
-      proModernizacaoPublica, proPublica, proSiat, proSigISS, proSigep,
-      proSmarAPD, proWebFisco, proTecnos, proSudoeste, proSimple, proFGMaiss] then
+      proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
+      proISSDSF, proISSLencois, proModernizacaoPublica, proPublica, proSiat,
+      proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
+      proWebFisco] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -1016,6 +1016,16 @@ begin
       if not (InputQuery(Titulo, 'eMail do Tomador', eMailTomador)) then
         exit;
     end;
+  end;
+
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor = proISSBarueri then
+  begin
+    vNumRPS := '';
+    if not(InputQuery('Substituir NFS-e', 'Numero do novo RPS', vNumRPS)) then
+      exit;
+
+    ACBrNFSeX1.NotasFiscais.Clear;
+    AlimentarNFSe(vNumRPS, '1');
   end;
 
   InfCancelamento := TInfCancelamento.Create;

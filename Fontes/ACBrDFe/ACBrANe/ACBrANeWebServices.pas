@@ -175,7 +175,11 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrANe,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.DateTime,
+  ACBrANe,
   pcnGerador, pcnLeitor;
 
 { TANeWebService }

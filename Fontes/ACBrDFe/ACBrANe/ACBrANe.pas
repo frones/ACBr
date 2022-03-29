@@ -38,7 +38,9 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrANeConfiguracoes, ACBrANeWebServices, ACBrANeDocumentos,
   pcnConversao, pcaConversao;
 

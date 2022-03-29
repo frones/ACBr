@@ -138,7 +138,12 @@ type
 implementation
 
 uses
-  ACBrANe, ACBrUtil, pcaConversao, synautil;
+  ACBrANe,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  pcaConversao, synautil;
 
 { Documento }
 

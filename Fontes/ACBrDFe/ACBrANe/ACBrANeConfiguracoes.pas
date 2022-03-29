@@ -115,7 +115,7 @@ type
 implementation
 
 uses
-  ACBrUtil, DateUtils;
+  ACBrUtil.Base, DateUtils;
 
 { TConfiguracoesANe }
 

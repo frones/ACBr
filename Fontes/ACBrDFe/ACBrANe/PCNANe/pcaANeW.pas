@@ -38,7 +38,9 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrUtil,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts, pcaConversao, pcaANe;
 
 type

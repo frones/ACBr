@@ -264,8 +264,8 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
-  pcnAuxiliar, pcnConversao, pcaConversao,
+  ACBrDFeSSL,
+  pcnConversao, ACBrANeConversao,
   Frm_Status, Frm_SelecionarCertificado;
 
 const

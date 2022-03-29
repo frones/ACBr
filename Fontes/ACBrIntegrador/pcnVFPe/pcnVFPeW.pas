@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnVFPe, ACBrUtil;
+  pcnConversao, pcnGerador, pcnVFPe, ACBrUtil.Base;
 
 const
   cChaveAcessoIntegrador = '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';

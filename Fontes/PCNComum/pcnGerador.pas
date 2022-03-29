@@ -158,7 +158,7 @@ implementation
 
 uses
   DateUtils,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   pcnConsts;
 

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Waldir Paim
+
 21/12/2020
 -- pcnRetRecepcaoLeitura --
 [+] Inclusão de um novo campo no retorno do envio da leitura.

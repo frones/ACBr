@@ -43,7 +43,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrUtil, synacode,
+  ACBrBase, ACBrUtil.Base, ACBrUtil.FilesIO, synacode,
   pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type

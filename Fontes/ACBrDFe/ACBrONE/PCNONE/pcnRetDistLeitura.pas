@@ -233,7 +233,9 @@ implementation
 
 uses
   pcnAuxiliar,
-  ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings;
 
 { TLeituraCollection }
 

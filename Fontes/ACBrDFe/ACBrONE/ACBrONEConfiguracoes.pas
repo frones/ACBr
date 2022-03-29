@@ -108,7 +108,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrONE,
+  ACBrUtil.Base, ACBrONE,
   DateUtils;
 
 { TConfiguracoesONE }

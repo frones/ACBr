@@ -133,7 +133,10 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar, pcnRetRecepcaoLeitura,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrDFeUtil;
 
 { TRecepcaoLeitura }
 

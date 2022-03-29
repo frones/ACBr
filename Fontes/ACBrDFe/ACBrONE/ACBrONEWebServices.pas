@@ -300,7 +300,11 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrONE,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.DateTime,
+  ACBrONE,
   pcnGerador, pcnLeitor;
 
 { TONEWebService }

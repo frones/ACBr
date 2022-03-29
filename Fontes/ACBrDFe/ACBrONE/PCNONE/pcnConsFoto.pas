@@ -37,7 +37,7 @@ unit pcnConsFoto;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil.Base,
   pcnConsts, pcnONEConsts;
 
 type

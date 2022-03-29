@@ -101,7 +101,10 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar, pcnRetManutencaoEQP,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrDFeUtil;
 
 { TManutencaoEQP }
 

@@ -35,8 +35,10 @@
 unit ACBrValidador;
 
 interface
-uses SysUtils, Classes,
-  ACBrBase;
+
+uses
+ SysUtils, Classes,
+ ACBrBase;
 
 const
   cIgnorarChar = './-' ;
@@ -201,9 +203,11 @@ function Modulo11(const Documento: string; const Peso: Integer = 2; const Base: 
 function MascaraIE(const AValue : String; UF : String) : String;
 
 implementation
+
 uses
  {$IfDef COMPILER6_UP} Variants , Math, StrUtils, {$EndIf}
-  ACBrUtil,
+  ACBrUtil.Base,
+  ACBrUtil.Compatibilidade,
   ACBrUtil.Strings;
 
 function ValidarCPF(const Documento : String) : String ;

@@ -37,7 +37,7 @@ unit pcteConsSitCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador,
   pcnConsts, pcteConsts;
 
 type
@@ -60,6 +60,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil.Strings;
 
 { TConsSitCTe }
 

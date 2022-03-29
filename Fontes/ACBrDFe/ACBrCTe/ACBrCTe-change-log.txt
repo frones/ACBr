@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+
 12/11/2021
 -- pcteCTeR --
 [*] Onde tem listas antes de iniciar a leitura foi colocado a chamada do Clear.

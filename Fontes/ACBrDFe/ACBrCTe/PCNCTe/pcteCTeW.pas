@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteCTe,
-  ACBrUtil, pcteConversaoCTe, pcnConsts, pcteConsts, ACBrDFeUtil;
+  pcteConversaoCTe, pcnConsts, pcteConsts, ACBrDFeUtil;
 
 type
 
@@ -187,6 +187,10 @@ type
   end;
 
 implementation
+
+uses
+ ACBrUtil.Base,
+ ACBrUtil.Strings;
 
 { TCTeW }
 
@@ -832,6 +836,8 @@ begin
   Gerador.wCampo(tcStr, '#102', 'xFant', 02, 60, 0, CTe.Emit.xFant, DSC_XFANT);
 
   GerarEnderEmit;
+
+  Gerador.wCampo(tcStr, '#', 'CRT', 1, 1, 0, CRTCTeToStr(CTe.Emit.CRT), DSC_CRTCTE);
   Gerador.wGrupo('/emit');
 end;
 

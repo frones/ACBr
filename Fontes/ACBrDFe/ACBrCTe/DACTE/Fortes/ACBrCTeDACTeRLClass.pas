@@ -68,7 +68,10 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrCTe, pcteEnvEventoCTe,
+  StrUtils, Dialogs,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrCTe, pcteEnvEventoCTe,
   ACBrCTeDAInutRL, ACBrCTeDAInutRLRetrato,
   ACBrCTeDACTeRL, ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5,
   ACBrCTeDAEventoRL, ACBrCTeDAEventoRLRetrato;

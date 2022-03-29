@@ -130,7 +130,11 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar, pcteRetEnvEventoCTe,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil;
 
 { TEventoCTe }
 

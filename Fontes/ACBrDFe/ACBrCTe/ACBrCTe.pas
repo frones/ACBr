@@ -45,7 +45,7 @@ uses
   ACBrCTeDACTEClass, ACBrDFeException,
   pcteCTe, pcnConversao, pcteConversaoCTe,
   pcteEnvEventoCTe, pcteInutCTe, 
-  ACBrDFeUtil, ACBrUtil;
+  ACBrDFeUtil;
 
 const
   ACBRCTE_NAMESPACE = 'http://www.portalfiscal.inf.br/cte';
@@ -160,7 +160,11 @@ implementation
 
 uses
   dateutils,
-  pcnAuxiliar, ACBrDFeSSL;
+  pcnAuxiliar,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrCTeServicos.rc}

@@ -518,7 +518,11 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe,
+  DateUtils, ACBrDFeUtil,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrValidador, pcteConversaoCTe,
   pcteCTe, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}

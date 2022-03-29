@@ -720,7 +720,10 @@ implementation
 
 uses
   DateUtils,
-  ACBrUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
   ACBrCTe, pcteConversaoCTe,
   ACBrDFeUtil, ACBrDFeReportFortes;
 

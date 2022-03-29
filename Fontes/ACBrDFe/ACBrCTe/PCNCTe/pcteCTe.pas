@@ -752,15 +752,18 @@ type
     FxNome     : String;
     FxFant     : String;
     FEnderEmit : TEnderEmit;
+    FCRT: TCRT;
   public
     constructor Create;
     destructor Destroy; override;
+
     property CNPJ: String          read FCNPJ      write FCNPJ;
     property IE: String            read FIE        write FIE;
     property IEST: String          read FIEST      write FIEST;
     property xNome: String         read FxNome     write FxNome;
     property xFant: String         read FxFant     write FxFant;
     property enderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
+    property CRT: TCRT             read FCRT       write FCRT;
   end;
 
   TEnderEmit = class(TObject)
@@ -2568,7 +2571,7 @@ const
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Base;
 
 { TCTe }
 

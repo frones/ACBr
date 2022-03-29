@@ -576,7 +576,12 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrCTe,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  ACBrCompress, ACBrCTe,
   pcnGerador, pcnLeitor, pcnConsCad, pcnConsStatServ, pcnRetConsStatServ,
   pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcnConsReciDFe;
 
@@ -2029,7 +2034,7 @@ function TCTeConsulta.TratarResposta: Boolean;
 
 procedure SalvarEventos(Retorno: TRetConsSitCTe);
 var
-  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJ: string;
+  aIDEvento, sPathEvento, sCNPJ: string;
   i, Inicio, Fim: Integer;
   TipoEvento: TpcnTpEvento;
   Ok: Boolean;

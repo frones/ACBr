@@ -45,7 +45,7 @@ uses
   {$ELSE}
   Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcteCTe, pcnConversao, ACBrCTe, ACBrCTeDAInutRL, ACBrUtil,
+  pcteCTe, pcnConversao, ACBrCTe, ACBrCTeDAInutRL,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 
@@ -127,7 +127,7 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil;
+  DateUtils, ACBrUtil.Strings, ACBrDFeUtil;
 
 {$IFnDEF FPC}
   {$R *.dfm}

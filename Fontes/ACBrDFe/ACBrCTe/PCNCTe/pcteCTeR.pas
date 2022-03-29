@@ -59,7 +59,9 @@ implementation
 
 uses
   pcnAuxiliar, pcteConversaoCTe,
-  ACBrConsts, ACBrUtil;
+  ACBrConsts,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TCTeR }
 
@@ -332,6 +334,7 @@ begin
     CTe.emit.IEST  := Leitor.rCampo(tcStr, 'IEST');
     CTe.emit.xNome := Leitor.rCampo(tcStr, 'xNome');
     CTe.emit.xFant := Leitor.rCampo(tcStr, 'xFant');
+    CTe.emit.CRT   := StrToCRTCTe(ok, Leitor.rCampo(tcStr, 'CRT'));
 
     if Leitor.rExtrai(2, 'enderEmit') <> '' then
     begin

@@ -93,7 +93,9 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil, pcnConsts, pcteConsts;
+  pcnAuxiliar,
+  ACBrUtil.Strings,
+  pcnConsts, pcteConsts;
 
 { TProcCTe }
 

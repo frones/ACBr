@@ -99,6 +99,8 @@ type
 
   TtpNumerario = (tnNacional, tnEstrangeiro);
 
+  TCRT = (crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
+
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
 
@@ -198,13 +200,16 @@ function StrToUniMed(out ok: Boolean; const s: String): TpUniMed;
 function TpFretamentoToStr(const t: TtpFretamento): String;
 function StrToTpFretamento(out ok: Boolean; const s: String): TtpFretamento;
 
-function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
-
 function tpCompToStr(const t: TtpComp): String;
 function StrTotpComp(out ok: Boolean; const s: String): TtpComp;
 
 function tpNumerarioToStr(const t: TtpNumerario): String;
 function StrTotpNumerario(out ok: Boolean; const s: String): TtpNumerario;
+
+function CRTCTeToStr(const t: TCRT): string;
+function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
+
+function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 
 implementation
 
@@ -745,6 +750,19 @@ begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                               [tnNacional, tnEstrangeiro]);
 end;
+
+function CRTCTeToStr(const t: TCRT): string;
+begin
+  result := EnumeradoToStr(t, ['', '1', '2', '3'],
+    [crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal]);
+end;
+
+function StrToCRTCTe(out ok: boolean; const s: string): TCRT;
+begin
+  result := StrToEnumerado(ok, s, ['', '1', '2', '3'],
+    [crtNenhum, crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal]);
+end;
+
 
 function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 begin

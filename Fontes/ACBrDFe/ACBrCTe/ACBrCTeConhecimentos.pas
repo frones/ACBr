@@ -172,7 +172,13 @@ implementation
 uses
   dateutils, IniFiles,
   synautil,
-  ACBrCTe, ACBrUtil, ACBrDFeUtil, pcteConversaoCTe;
+  ACBrCTe,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil, pcteConversaoCTe;
 
 { Conhecimento }
 
@@ -720,6 +726,8 @@ begin
       INIRec.WriteString('emit', 'IE', Emit.IE);
       INIRec.WriteString('emit', 'xNome', Emit.xNome);
       INIRec.WriteString('emit', 'xFant', Emit.xFant);
+      INIRec.WriteString('emit', 'CRT', CRTCTeToStr(Emit.CRT));
+
       INIRec.WriteString('emit', 'xLgr', Emit.enderEmit.xLgr);
       INIRec.WriteString('emit', 'nro', Emit.enderEmit.nro);
       INIRec.WriteString('emit', 'xCpl', Emit.enderEmit.xCpl);
@@ -1534,6 +1542,7 @@ begin
       Emit.IE    := INIRec.ReadString('emit','IE','');
       Emit.xNome := INIRec.ReadString('emit','xNome','');
       Emit.xFant := INIRec.ReadString('emit','xFant','');
+      Emit.CRT   := StrToCRTCTe(ok, INIRec.ReadString(sSecao,'CRT', ''));
 
       Emit.enderEmit.xLgr    := INIRec.ReadString('emit','xLgr','');
       Emit.enderEmit.nro     := INIRec.ReadString('emit','nro','');

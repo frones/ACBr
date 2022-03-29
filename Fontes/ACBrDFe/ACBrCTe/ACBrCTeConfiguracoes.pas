@@ -121,7 +121,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrCTe, DateUtils;
+  ACBrUtil.FilesIO, ACBrCTe, DateUtils;
 
 { TConfiguracoesCTe }
 

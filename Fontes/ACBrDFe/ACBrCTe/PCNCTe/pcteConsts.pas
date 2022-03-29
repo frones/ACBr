@@ -135,6 +135,7 @@ const
   DSC_PESOBC    = 'Peso Base de Calculo de Frete em Toneladas';
   DSC_COTM      = 'Número do Certificado do Operador de Transporte Multimodal';
   DSC_INDNEG    = 'Indicador Negociável';
+  DSC_CRTCTE    = 'Código do Regime Tributário';
 
   DSC_PONTOFULGOR  = 'Ponto de Fulgor';
   DSC_QTOTEMB      = 'Quantidade Total de Embalagens';

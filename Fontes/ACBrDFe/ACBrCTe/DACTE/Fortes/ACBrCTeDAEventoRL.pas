@@ -78,7 +78,7 @@ type
 implementation
 
 uses
-  MaskUtils, ACBrUtil, ACBrDFeReportFortes;
+  MaskUtils, ACBrUtil.Strings, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
   {$R *.dfm}

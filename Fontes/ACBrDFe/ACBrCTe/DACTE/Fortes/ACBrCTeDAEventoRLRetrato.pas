@@ -210,7 +210,10 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe;
+  DateUtils, ACBrDFeUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrValidador, pcteConversaoCTe;
 
 {$IFnDEF FPC}
   {$R *.dfm}

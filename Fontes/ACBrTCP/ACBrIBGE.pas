@@ -275,7 +275,7 @@ uses
     Jsons,
   {$EndIf}
   blcksock, synautil,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrCompress;

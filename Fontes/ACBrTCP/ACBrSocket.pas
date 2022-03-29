@@ -254,7 +254,7 @@ implementation
 
 Uses
   math, StrUtils, synacode,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   synautil

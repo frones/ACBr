@@ -69,7 +69,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings;
 
 //==============================================================================

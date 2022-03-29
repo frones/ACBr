@@ -809,6 +809,7 @@ begin
     NumeroNFSe := aInfCancelamento.NumeroNFSe;
     SerieNFSe := aInfCancelamento.SerieNFSe;
     ChaveNFSe := aInfCancelamento.ChaveNFSe;
+    DataEmissaoNFSe := aInfCancelamento.DataEmissaoNFSe;
     CodCancelamento := aInfCancelamento.CodCancelamento;
     MotCancelamento := ChangeLineBreak(aInfCancelamento.MotCancelamento);
     NumeroLote := aInfCancelamento.NumeroLote;

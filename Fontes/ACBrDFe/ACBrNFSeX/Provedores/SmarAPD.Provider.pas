@@ -139,7 +139,7 @@ implementation
 
 uses
   SynaCode,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrDFeException,

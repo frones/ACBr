@@ -82,7 +82,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,

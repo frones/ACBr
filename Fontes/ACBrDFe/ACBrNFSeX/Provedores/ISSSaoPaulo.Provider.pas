@@ -38,9 +38,6 @@ interface
 
 uses
   SysUtils, Classes, Variants,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
   ACBrDFeSSL,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXNotasFiscais,
@@ -103,6 +100,9 @@ implementation
 
 uses
   ACBrDFeException,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSSaoPaulo.GravarXml, ISSSaoPaulo.LerXml;
 

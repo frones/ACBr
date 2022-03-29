@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[+] Implementado o provedor ISSBarueri.
+   Por: Giquieu/Italo Giurizzato Junior
+
 27/03/2022
 -- ACBrNFSeXServicos --
 [*] A cidade de Jacarei/SP trocou para o provedor SiapNet.

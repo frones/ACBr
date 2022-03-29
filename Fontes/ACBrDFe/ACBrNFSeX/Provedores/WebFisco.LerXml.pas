@@ -38,7 +38,6 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrUtil,
   ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXConversao, ACBrNFSeXLerXml;
 
@@ -56,6 +55,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil.Base;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     WebFisco
@@ -68,7 +70,6 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-//italo  xRetorno := TratarXmlRetorno(Arquivo);
   xRetorno := Arquivo;
 
   if EstaVazio(xRetorno) then

@@ -92,7 +92,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrDFeException,
+  ACBrUtil.Base,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   WebFisco.GravarXml, WebFisco.LerXml;
 

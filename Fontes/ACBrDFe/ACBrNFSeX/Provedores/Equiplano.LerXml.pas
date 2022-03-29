@@ -57,7 +57,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings;
 
 //==============================================================================
@@ -151,7 +151,6 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-//italo  xRetorno := TratarXmlRetorno(Arquivo);
   xRetorno := Arquivo;
 
   if EstaVazio(xRetorno) then

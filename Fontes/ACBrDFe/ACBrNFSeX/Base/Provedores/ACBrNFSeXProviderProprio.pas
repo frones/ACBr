@@ -42,6 +42,9 @@ uses
   ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
+
+  { TACBrNFSeProviderProprio }
+
   TACBrNFSeProviderProprio = class(TACBrNFSeXProvider)
   protected
     procedure Configuracao; override;
@@ -96,6 +99,9 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
+    function AplicarXMLtoUTF8(AXMLRps: String): String; virtual;
+    function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; virtual;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -106,7 +112,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrDFeException,
@@ -243,8 +249,8 @@ begin
 
     Nota.GerarXML;
 
-    Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
-    Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+    Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
+    Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
 
     if (ConfigAssinar.Rps and (Response.ModoEnvio in [meLoteAssincrono, meLoteSincrono])) or
        (ConfigAssinar.RpsGerarNFSe and (Response.ModoEnvio = meUnitario)) then
@@ -275,7 +281,7 @@ begin
 
   IdAttr := DefinirIDLote(Response.Lote);
 
-  ListaRps := ChangeLineBreak(ListaRps, '');
+  ListaRps := AplicarLineBreak(ListaRps, '');
 
   aParams := TNFSeParamsResponse.Create;
   aParams.Clear;
@@ -552,8 +558,8 @@ begin
 
   Nota.GerarXML;
 
-  Nota.XmlRps := ConverteXMLtoUTF8(Nota.XmlRps);
-  Nota.XmlRps := ChangeLineBreak(Nota.XmlRps, '');
+  Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
+  Nota.XmlRps := AplicarLineBreak(Nota.XmlRps, '');
 
   if ConfigAssinar.RpsSubstituirNFSe then
   begin
@@ -620,8 +626,19 @@ begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;
 
-procedure TACBrNFSeProviderProprio.ProcessarMensagemErros(RootNode: TACBrXmlNode;
-  Response: TNFSeWebserviceResponse; const AListTag, AMessageTag: string);
+function TACBrNFSeProviderProprio.AplicarXMLtoUTF8(AXMLRps: String): String;
+begin
+  Result := ConverteXMLtoUTF8(AXMLRps);
+end;
+
+function TACBrNFSeProviderProprio.AplicarLineBreak(AXMLRps: String; const ABreak: String): String;
+begin
+  Result := ChangeLineBreak(AXMLRps, ABreak);
+end;
+
+procedure TACBrNFSeProviderProprio.ProcessarMensagemErros(
+  RootNode: TACBrXmlNode; Response: TNFSeWebserviceResponse;
+  const AListTag: string; const AMessageTag: string);
 begin
   // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;

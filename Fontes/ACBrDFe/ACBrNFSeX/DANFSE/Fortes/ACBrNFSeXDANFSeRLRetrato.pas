@@ -254,7 +254,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXInterface,
   ACBrValidador, ACBrDFeReportFortes;

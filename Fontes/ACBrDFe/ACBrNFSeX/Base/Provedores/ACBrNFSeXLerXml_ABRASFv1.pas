@@ -95,7 +95,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrConsts,
+  ACBrUtil.Base, ACBrConsts,
   ACBrNFSeXConversao;
 
 //==============================================================================

@@ -99,6 +99,8 @@ type
   protected
     FpAOwner: IACBrNFSeXProvider;
 
+    FConteudoTxt: TStringList;
+
     function CreateOptions: TACBrXmlWriterOptions; override;
 
     procedure Configuracao; virtual;
@@ -115,9 +117,12 @@ type
 
  public
     constructor Create(AOwner: IACBrNFSeXProvider); virtual;
+    destructor Destroy; override;
 
     function ObterNomeArquivo: String; Override;
     function GerarXml: Boolean; Override;
+    function ConteudoTxt: String;
+
 
     property Opcoes: TACBrXmlWriterOptions read GetOpcoes write SetOpcoes;
 
@@ -168,6 +173,9 @@ begin
   TXmlWriterOptions(Opcoes).PathArquivoMunicipios := '';
   TXmlWriterOptions(Opcoes).ValidarInscricoes := False;
   TXmlWriterOptions(Opcoes).ValidarListaServicos := False;
+
+  FConteudoTxt := TStringList.Create;
+  FConteudoTxt.Clear;
 
   Configuracao;
 end;
@@ -278,10 +286,22 @@ begin
   end;
 end;
 
+function TNFSeWClass.ConteudoTxt: String;
+begin
+  Result := FConteudoTxt.Text;
+end;
+
 procedure TNFSeWClass.DefinirIDRps;
 begin
   FNFSe.InfID.ID := 'Rps_' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                     FNFSe.IdentificacaoRps.Serie;
+end;
+
+destructor TNFSeWClass.Destroy;
+begin
+  FConteudoTxt.Free;
+
+  inherited Destroy;
 end;
 
 function TNFSeWClass.FormatarItemServico(const Codigo: string;

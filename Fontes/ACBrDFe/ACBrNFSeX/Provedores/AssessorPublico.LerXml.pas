@@ -56,7 +56,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime;
 
@@ -72,7 +72,6 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-//  xRetorno := TratarXmlRetorno(Arquivo);
   xRetorno := Arquivo;
 
   if EstaVazio(xRetorno) then

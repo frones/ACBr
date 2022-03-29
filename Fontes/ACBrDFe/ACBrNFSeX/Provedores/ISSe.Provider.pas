@@ -99,6 +99,12 @@ begin
     LoteRps := True;
     CancelarNFSe := True;
   end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.01';
+    VersaoAtrib := '2.01';
+  end;
 end;
 
 function TACBrNFSeProviderISSe200.CriarGeradorXml(

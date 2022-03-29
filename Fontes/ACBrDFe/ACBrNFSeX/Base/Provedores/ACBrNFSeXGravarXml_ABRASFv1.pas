@@ -364,7 +364,7 @@ begin
                        (NFSe.Prestador.Endereco.CodigoMunicipio <> '3304557')));
 }
   Result.AppendChild(AddNode(tcStr, '#', 'InformacoesComplementares', 1, 255, NrOcorrInformacoesComplemetares,
-                                                   NFSe.OutrasInformacoes, ''));
+                                           NFSe.InformacoesComplementares, ''));
 
   Result.AppendChild(GerarServicoCodigoMunicipio);
 

@@ -71,7 +71,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrXmlBase,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,

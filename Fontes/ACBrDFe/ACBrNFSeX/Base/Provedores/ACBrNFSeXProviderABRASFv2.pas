@@ -109,7 +109,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrXmlBase,

@@ -269,6 +269,7 @@ type
     FNumeroNFSe: string;
     FSerieNFSe: string;
     FChaveNFSe: string;
+    FDataEmissaoNFSe: TDateTime;
     FCodCancelamento: string;
     FMotCancelamento: string;
     FNumeroLote: string;
@@ -288,6 +289,7 @@ type
     property NumeroNFSe: string      read FNumeroNFSe      write FNumeroNFSe;
     property SerieNFSe: string       read FSerieNFSe       write FSerieNFSe;
     property ChaveNFSe: string       read FChaveNFSe       write FChaveNFSe;
+    property DataEmissaoNFSe: TDateTime read FDataEmissaoNFSe write FDataEmissaoNFSe;
     property CodCancelamento: string read FCodCancelamento write FCodCancelamento;
     property MotCancelamento: string read FMotCancelamento write FMotCancelamento;
     property NumeroLote: string      read FNumeroLote      write FNumeroLote;
@@ -305,7 +307,7 @@ implementation
 
 uses
   IniFiles, StrUtils, synautil,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   ACBrUtil.DateTime,
@@ -1196,6 +1198,7 @@ begin
   FNumeroNFSe := '';
   FSerieNFSe := '';
   FChaveNFSe := '';
+  FDataEmissaoNFSe := 0;
   FCodCancelamento := '';
   FMotCancelamento := '';
   FNumeroLote := '';
@@ -1226,6 +1229,7 @@ begin
     NumeroNFSe      := INIRec.ReadString(sSecao, 'NumeroNFSe', '');
     SerieNFSe       := INIRec.ReadString(sSecao, 'SerieNFSe', '');
     ChaveNFSe       := INIRec.ReadString(sSecao, 'ChaveNFSe', '');
+    DataEmissaoNFSe := INIRec.ReadDateTime(sSecao, 'DataEmissaoNFSe', 0);
     CodCancelamento := INIRec.ReadString(sSecao, 'CodCancelamento', '');
     MotCancelamento := INIRec.ReadString(sSecao, 'MotCancelamento', '');
     NumeroLote      := INIRec.ReadString(sSecao, 'NumeroLote', '');

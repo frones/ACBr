@@ -198,7 +198,7 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrXmlBase, ACBrDFeException,
@@ -901,7 +901,12 @@ begin
     end;
 
     Result := AWriter.GerarXml;
-    aXml := AWriter.Document.Xml;
+
+    aXml := AWriter.ConteudoTxt;
+
+    if aXml = '' then
+      aXml := AWriter.Document.Xml;
+
     aAlerts := ACBrStr(AWriter.ListaDeAlertas.Text);
   finally
     AWriter.Destroy;

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 29/03/2022
+-- NFSeBrasil.LerXml --
+[*] Correção no tipo de campo a ser lido (tcDatVcto) pois as datas são geradas
+    no formato DD/MM/AAAA em vez de AAAA/MM/DD.
+   Por: Jéter Rabelo Ferreira
 -- ACBrNFSeXServicos --
 [*] Corrigido a URL de homologação da cidade do Rio de Janeiro/RJ
    Por: Guilherme Costa

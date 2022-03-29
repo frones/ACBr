@@ -61,7 +61,7 @@ implementation
 
 uses
   pcnConversaoNFe,
-  ACBrUtil;
+  ACBrUtil.Base;
 
 { TNFeR }
 

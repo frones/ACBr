@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  synautil, ACBrUtil;
+  synautil, ACBrUtil.Base;
 
 { TDeclaracaoImportacao }
 

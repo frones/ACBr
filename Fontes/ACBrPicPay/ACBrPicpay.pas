@@ -62,7 +62,7 @@ uses
     Jsons,
 //  {$EndIf}
   httpsend, synautil,
-   ACBRBase, ACBRValidador, ACBrUtil, ACBrSocket
+   ACBRBase, ACBRValidador, ACBrSocket
    , SyncObjs
    //, ACBrPicpayThreadCallback
    ;
@@ -243,6 +243,9 @@ uses
     System.NetEncoding,
   {$ENDIF}
   StrUtils,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   DateUtils;
 
 { *** TACBrPicPayThread *** }

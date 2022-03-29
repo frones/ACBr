@@ -51,7 +51,7 @@ type
 implementation
 
 uses
-  ACBrUtil, SysUtils;
+  SysUtils;
 
 { TACBrSMSDaruma }
 

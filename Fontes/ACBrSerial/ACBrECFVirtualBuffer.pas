@@ -172,8 +172,10 @@ Function StuffMascaraItem( const Linha, MascaraItem : AnsiString; Letra : AnsiCh
 implementation
 
 Uses
-  math, strutils,
-  ACBrUtil;
+  Math, StrUtils,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 Function StuffMascaraItem( const Linha, MascaraItem : AnsiString; Letra : AnsiChar;
    const TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;

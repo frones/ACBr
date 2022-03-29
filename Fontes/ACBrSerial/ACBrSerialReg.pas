@@ -64,7 +64,7 @@ type
 procedure Register;
 
 implementation
-Uses ACBrUtil, ACBrReg,
+Uses ACBrReg,
      ACBrECF, ACBrGAV, ACBrCHQ, ACBrLCB, ACBrDIS, ACBrTER, ACBrBAL, ACBrETQ,
      ACBrRFD, ACBrSMS, ACBrPosPrinter, ACBrECFVirtualNaoFiscal,
      SysUtils;

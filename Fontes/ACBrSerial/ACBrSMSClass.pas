@@ -160,7 +160,7 @@ implementation
 
 uses
   strutils, dateutils,
-  ACBrSMS, ACBrUtil, ACBrConsts;
+  ACBrSMS, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrConsts;
 
 { TACBrSMSMensagens }
 

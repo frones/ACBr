@@ -130,7 +130,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrSMSDaruma, ACBrSMSZTE;
+  ACBrUtil.Strings, ACBrSMSDaruma, ACBrSMSZTE;
 
 { TACBrSMS }
 

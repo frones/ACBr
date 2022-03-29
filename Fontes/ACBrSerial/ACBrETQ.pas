@@ -198,11 +198,11 @@ implementation
 uses
   math, typinfo,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
-  ACBrUtil, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2, ACBrETQEscLabel
+  ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2, ACBrETQEscLabel,
   {$IfDef MSWINDOWS}
-  ,ACBrWinUSBDevice,
+  ACBrWinUSBDevice,
   {$EndIf}
-  ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO;
 
 { TACBrETQCmdList }
 

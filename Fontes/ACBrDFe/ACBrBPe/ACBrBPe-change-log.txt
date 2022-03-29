@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+
 31/03/2021
 -- pcnConversaoBPe --
 [+] Inclusão do tipo de serviço (micro-ônibus) e da forma de pagamento (PIX).

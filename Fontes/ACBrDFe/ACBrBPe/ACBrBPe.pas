@@ -40,8 +40,7 @@ uses
   Classes, SysUtils, synautil,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase, 
   ACBrBPeConfiguracoes, ACBrBPeWebServices, ACBrBPeBilhetes, ACBrBPeDABPEClass,
-  pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe, 
-  ACBrUtil;
+  pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe;
 
 const
   ACBRBPE_NAMESPACE = 'http://www.portalfiscal.inf.br/bpe';
@@ -144,6 +143,9 @@ implementation
 
 uses
   dateutils,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   pcnAuxiliar, ACBrDFeSSL;
 
 {$IFDEF FPC}

@@ -109,7 +109,11 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar, pcnRetEnvEventoBPe, pcnConversaoBPe,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 { TEventoBPe }
 

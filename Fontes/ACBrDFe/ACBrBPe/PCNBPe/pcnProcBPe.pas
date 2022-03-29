@@ -91,7 +91,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnLeitor, ACBrUtil;
+  pcnAuxiliar, pcnLeitor, ACBrUtil.Strings;
 
 { TProcBPe }
 

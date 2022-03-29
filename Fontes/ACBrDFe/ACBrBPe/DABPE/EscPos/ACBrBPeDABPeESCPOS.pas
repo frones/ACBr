@@ -100,7 +100,10 @@ implementation
 
 uses
   strutils, Math,
-  ACBrBPe, ACBrValidador, ACBrUtil, ACBrDFeUtil, ACBrConsts,
+  ACBrBPe, ACBrValidador,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrDFeUtil, ACBrConsts,
   pcnConversao, pcnConversaoBPe, pcnAuxiliar;
 
 { TACBrBPeDABPeESCPOS }

@@ -175,7 +175,13 @@ implementation
 uses
   dateutils, IniFiles,
   synautil,
-  ACBrBPe, ACBrUtil, ACBrDFeUtil, pcnConversaoBPe;
+  ACBrBPe,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil, pcnConversaoBPe;
 
 { Bilhete }
 
@@ -301,7 +307,7 @@ end;
 procedure Bilhete.Validar;
 var
   Erro, AXML, Grupo: String;
-  BilheteEhValida, Ok: Boolean;
+  BilheteEhValida: Boolean;
   ALayout: TLayOutBPe;
   VerServ: Real;
 begin
@@ -351,8 +357,7 @@ end;
 function Bilhete.VerificarAssinatura: Boolean;
 var
   Erro, AXML, Grupo: String;
-  AssEhValida, Ok: Boolean;
-  Modelo: TModeloBPe;
+  AssEhValida: Boolean;
 begin
   AXML := FXMLAssinado;
   if AXML = '' then

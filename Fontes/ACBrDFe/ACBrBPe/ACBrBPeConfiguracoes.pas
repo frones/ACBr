@@ -125,7 +125,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrBPe,
+  ACBrUtil.FilesIO,
+  ACBrBPe,
   DateUtils;
 
 { TConfiguracoesBPe }

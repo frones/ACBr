@@ -58,7 +58,8 @@ implementation
 
 uses
   pcnConversaoBPe,
-  ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TBPeR }
 

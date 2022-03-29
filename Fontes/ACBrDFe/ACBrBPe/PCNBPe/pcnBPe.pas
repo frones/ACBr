@@ -773,7 +773,7 @@ const
 implementation
 
 uses
-  ACBrUtil, pcnBPeR;
+  ACBrUtil.Base, pcnBPeR;
 
 procedure TBPe.Assign(Source: TBPe);
 begin

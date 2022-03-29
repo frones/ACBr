@@ -124,7 +124,9 @@ implementation
 
 uses
   pcnConversaoBPe, pcnAuxiliar,
-  ACBrDFeUtil, pcnConsts, ACBrUtil;
+  ACBrDFeUtil, pcnConsts,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TBPeW }
 

@@ -148,7 +148,12 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrCIOT,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
+  ACBrCIOT,
   pcnGerador, pcnLeitor;
 
 { TCIOTWebService }

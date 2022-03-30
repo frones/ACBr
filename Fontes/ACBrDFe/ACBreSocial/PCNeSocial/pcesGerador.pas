@@ -51,7 +51,6 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, variants,
-  ACBrUtil,
   pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar, pcnConsts,
   pcesCommon, pcesConversaoeSocial;
 
@@ -217,6 +216,9 @@ type
 implementation
 
 uses
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
   ACBreSocial, ACBrDFeSSL, ACBrDFeUtil;
 
 {TeSocialEvento}

@@ -46,7 +46,7 @@ unit pcesS1080;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
+  SysUtils, Classes,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
@@ -153,6 +153,8 @@ implementation
 
 uses
   IniFiles,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
   ACBreSocial;
 
 { TS1080Collection }

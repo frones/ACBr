@@ -1189,7 +1189,8 @@ function IntToTpProf(codCateg : Integer): tpTpProf;
 implementation
 
 uses
-  pcnConversao, typinfo, ACBrUtil;
+  pcnConversao, typinfo,
+  ACBrUtil.Strings;
 
 const
   TTipoEventoString   : array[0..58] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030',

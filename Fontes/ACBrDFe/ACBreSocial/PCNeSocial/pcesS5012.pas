@@ -55,7 +55,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, pcnConversao, pcnLeitor, ACBrUtil,
+  ACBrBase, pcnConversao, pcnLeitor,
   pcesCommon, pcesConversaoeSocial, Dialogs;
 
 type
@@ -144,7 +144,8 @@ type
 implementation
 
 uses
-  IniFiles;
+  IniFiles,
+  ACBrUtil.Base;
 
 { TS5012 }
 

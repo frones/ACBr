@@ -52,7 +52,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
+  ACBrBase, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesRetornoClass, pcesConversaoeSocial;
 
 type
@@ -98,6 +98,8 @@ type
 
 implementation
 
+uses
+  ACBrUtil.Strings;
 { TRetIdentEvtsCollection }
 
 function TArquivoCollection.Add: TArquivoCollectionItem;

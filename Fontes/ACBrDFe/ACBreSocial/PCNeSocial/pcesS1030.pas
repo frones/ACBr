@@ -58,7 +58,7 @@ uses
   {$ELSE}
    Contnrs,
   {$IFEND}
-  ACBrBase, ACBrUtil,
+  ACBrBase,
   pcnConversao, pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -198,6 +198,8 @@ implementation
 
 uses
   IniFiles,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
   ACBreSocial;
 
 { TS1030Collection }

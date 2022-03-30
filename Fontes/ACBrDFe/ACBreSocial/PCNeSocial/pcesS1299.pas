@@ -54,7 +54,7 @@ uses
   {$ELSE}
    Contnrs,
   {$IFEND}
-  ACBrBase, pcnConversao, ACBrUtil, pcnConsts,
+  ACBrBase, pcnConversao, pcnConsts,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -135,6 +135,7 @@ implementation
 
 uses
   IniFiles,
+  ACBrUtil.FilesIO,
   ACBreSocial;
 
 { TS1299Collection }

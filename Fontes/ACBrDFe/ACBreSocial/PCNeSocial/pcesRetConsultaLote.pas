@@ -55,7 +55,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
+  ACBrBase, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, pcesS5013;
 
@@ -145,6 +145,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil.Strings;
 
 { TtotCollection }
 

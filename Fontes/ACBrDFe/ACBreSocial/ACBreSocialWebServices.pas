@@ -47,7 +47,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeWebService,
+  ACBrDFe, ACBrDFeWebService,
   pcnLeitor, pcnConsts,
   ACBreSocialLoteEventos, ACBreSocialConfiguracoes,
   pcesConversaoeSocial, pcesCommon, pcesRetEnvioLote, pcesRetConsultaLote,
@@ -245,6 +245,10 @@ implementation
 
 uses
   StrUtils, blcksock, DateUtils,
+  ACBrUtil.Base,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
   pcnConversao, pcnGerador,
   ACBreSocial;
 

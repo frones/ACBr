@@ -47,7 +47,7 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnConversaoCIOT, ACBrUtil;
+  pcnConversao, pcnConversaoCIOT;
 
 type
 
@@ -1037,6 +1037,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil.Strings;
 
 { TCIOT }
 

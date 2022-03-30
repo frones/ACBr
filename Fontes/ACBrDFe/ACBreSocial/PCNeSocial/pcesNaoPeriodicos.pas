@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes, synautil,
-  ACBrUtil, pcesConversaoeSocial,
+  pcesConversaoeSocial,
   pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2231,
   pcesS2240, pcesS2221, pcesS2205, pcesS2206, pcesS2210,
   pcesS2250, pcesS2260, pcesS2298, pcesS2299, pcesS2300,
@@ -160,6 +160,8 @@ type
 implementation
 
 uses
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBreSocial;
 
 { TNaoPeriodicos }

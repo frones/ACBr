@@ -133,7 +133,12 @@ type
 implementation
 
 uses
-  ACBrCIOT, ACBrUtil, synautil;
+  ACBrCIOT,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  synautil;
 
 { Documento }
 

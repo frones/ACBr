@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
+  ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrCIOTConfiguracoes, ACBrCIOTWebServices, ACBrCIOTContratos,
   pcnConversao, pcnConversaoCIOT;
 
@@ -107,6 +107,8 @@ implementation
 
 uses
   dateutils,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
   pcnAuxiliar;
 
 {$IFDEF FPC}

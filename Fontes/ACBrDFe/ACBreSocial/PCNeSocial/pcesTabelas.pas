@@ -47,7 +47,7 @@ interface
 
 uses
   SysUtils, Classes, synautil,
-  ACBrUtil, pcesConversaoeSocial,
+  pcesConversaoeSocial,
   pcesS1010, pcesS1020, pcesS1030, pcesS1035, pcesS1040,
   pcesS1050, pcesS1070, pcesS1080, pcesS1060;
 
@@ -105,6 +105,8 @@ type
 implementation
 
 uses
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   ACBreSocial;
 
 { TTabelas }

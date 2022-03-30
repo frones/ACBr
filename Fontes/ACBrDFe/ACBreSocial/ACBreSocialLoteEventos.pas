@@ -54,7 +54,7 @@ uses
   {$ELSE}
    Contnrs,
   {$IFEND}
-  ACBrBase, ACBrUtil,
+  ACBrBase,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
   ACBreSocialConfiguracoes, ACBreSocialEventos,
   pcesCommon, pcesConversaoeSocial;
@@ -114,7 +114,10 @@ type
 implementation
 
 uses
-  ACBreSocial, DateUtils, pcnConsts;
+  DateUtils,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBreSocial, pcnConsts;
 
 { TLoteEventos }
 

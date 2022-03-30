@@ -46,7 +46,7 @@ unit ACBreSocial;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil,
+  Classes, SysUtils,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase,
   ACBreSocialConfiguracoes, ACBreSocialWebServices, ACBreSocialEventos,
   pcnConversao, pcesConversaoeSocial;
@@ -140,6 +140,8 @@ implementation
 { TACBreSocial }
 
 uses
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
   ACBrDFeSSL;
 
 constructor TACBreSocial.Create(AOwner: TComponent);

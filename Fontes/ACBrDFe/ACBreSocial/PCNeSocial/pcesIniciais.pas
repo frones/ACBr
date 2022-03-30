@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes, synautil,
-  ACBrUtil, pcesConversaoeSocial,
+  pcesConversaoeSocial,
   pcesS1000, pcesS1005;
 
 type
@@ -85,6 +85,8 @@ type
 implementation
 
 uses
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
   ACBreSocial;
 
 { TIniciais }

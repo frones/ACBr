@@ -56,7 +56,7 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnLeitor, ACBrUtil,
+  pcnConversao, pcnLeitor,
   pcesCommon, pcesConversaoeSocial;
 
 type
@@ -283,7 +283,8 @@ type
 implementation
 
 uses
-  IniFiles;
+  IniFiles,
+  ACBrUtil.Base;
 
 { TS5002 }
 

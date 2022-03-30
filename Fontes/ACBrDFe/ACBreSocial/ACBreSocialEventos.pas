@@ -128,7 +128,8 @@ implementation
 
 uses
   dateutils,
-  ACBrUtil, ACBrDFeUtil, ACBreSocial;
+  ACBrUtil.Strings,
+  ACBrDFeUtil, ACBreSocial;
 
 { TGeradosCollection }
 

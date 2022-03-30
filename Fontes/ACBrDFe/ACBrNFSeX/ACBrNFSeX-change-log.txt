@@ -45,6 +45,9 @@ Símbolo : Significado
 
 30/03/2022
 -- ACBrNFSeXServicos --
+[*] Corrigido as URLs de produção e homologação da cidade do Porto Seguro/BA
+   Por: Ricardo Miranda
+-- ACBrNFSeXServicos --
 [*] Corrigido as URLs de produção e homologação da cidade do Maringa/PR
    Por: Italo Giurizzato Junior
 -- Simple.Provider --

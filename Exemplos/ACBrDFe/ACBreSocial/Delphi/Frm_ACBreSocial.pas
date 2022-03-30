@@ -44,7 +44,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib, ACBrUtil, ACBrBase, ACBrDFe, pcnConversao,
+  ShellAPI, XMLIntf, XMLDoc, zlib, ACBrBase, ACBrDFe, pcnConversao,
   pcesConversaoeSocial, ACBreSocial;
 
 type
@@ -356,7 +356,11 @@ implementation
 
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
-  IniFiles, Printers, pcnAuxiliar, pcesS5001, pcesS5002, pcesS5011, pcesS5012,
+  IniFiles, Printers,
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  pcnAuxiliar, pcesS5001, pcesS5002, pcesS5011, pcesS5012,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBreSocialEventos, ACBreSocialConfiguracoes, Frm_Status, Frm_SelecionarCertificado;
 

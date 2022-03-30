@@ -38,7 +38,7 @@ uses
   Spin, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail,
   ACBrPosPrinter, ACBrBPeDABPeESCPOS, ACBrBPeDABPEClass,
   ACBrDFeReport, ACBrBase, ACBrDFe,
-  ACBrBPe, ACBrUtil, ShellAPI, XMLIntf, XMLDoc, zlib;
+  ACBrBPe, ShellAPI, XMLIntf, XMLDoc, zlib;
 
 type
   TfrmACBrBPe = class(TForm)
@@ -331,6 +331,11 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.XMLHTML,
   pcnAuxiliar, pcnBPe, pcnConversao, pcnConversaoBPe, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrBPeBilhetes, ACBrBPeConfiguracoes,
@@ -2177,8 +2182,8 @@ end;
 
 procedure TfrmACBrBPe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+                      ConverteXMLtoUTF8(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

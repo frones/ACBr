@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/03/2022
+-- Simple.Provider --
+[*] Melhorias na procedure: ProcessarMensagemErros.
+   Por: Microsys Sistemas
+
 29/03/2022
 -- NFSeBrasil.LerXml --
 [*] Correção no tipo de campo a ser lido (tcDatVcto) pois as datas são geradas

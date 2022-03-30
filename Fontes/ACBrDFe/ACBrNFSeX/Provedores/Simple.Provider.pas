@@ -157,6 +157,7 @@ var
   I: Integer;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  vDescricao: string;
 begin
   ANodeArray := RootNode.Childrens.FindAllAnyNs('Nota');
 
@@ -167,14 +168,18 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := '';
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('sRetorno'), tcStr);
+    vDescricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('sRetorno'), tcStr);
 
-    if AErro.Descricao = '' then
-      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('sRetornoCanc'), tcStr);
+    if vDescricao = '' then
+      vDescricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('sRetornoCanc'), tcStr);
 
-    AErro.Correcao := '';
+    if (vDescricao <> 'Atualizado OK') and (vDescricao <> 'Nota Cancelada') then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := '';
+      AErro.Descricao := vDescricao;
+      AErro.Correcao := '';
+    end;
   end;
 end;
 

@@ -265,7 +265,7 @@ uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
   ACBrDFeSSL,
-  pcnConversao, ACBrANeConversao,
+  pcnConversao, pcaConversao,
   Frm_Status, Frm_SelecionarCertificado;
 
 const

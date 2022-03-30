@@ -329,6 +329,7 @@ begin
     c22_telefoneEmitente := edtEmitFone.Text;
     c27_tipoIdentificacaoEmitente := 1;
     c28_tipoDocOrigem := 10;
+    c26_produto := 20;
 
     c33_dataPagamento := Now;
 

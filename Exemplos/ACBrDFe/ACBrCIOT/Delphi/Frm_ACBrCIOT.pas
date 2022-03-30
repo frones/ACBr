@@ -36,8 +36,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrBase, ACBrUtil, ACBrDFe,
-  ACBrMail, ACBrCIOT;
+  ACBrBase, ACBrDFe, ACBrMail, ACBrCIOT;
 
 type
   TfrmACBrCIOT = class(TForm)
@@ -271,7 +270,13 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  pcnAuxiliar, pcnConversao, pcnConversaoCIOT,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML,
+  pcnConversao,
+  pcnConversaoCIOT,
   ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   Frm_Status, Frm_SelecionarCertificado;
 
@@ -1701,8 +1706,8 @@ end;
 
 procedure TfrmACBrCIOT.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+                      ConverteXMLtoUTF8(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 end;

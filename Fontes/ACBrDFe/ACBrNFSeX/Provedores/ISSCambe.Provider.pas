@@ -100,7 +100,7 @@ begin
     Result := '<auth:authentication xmlns:auth="http://www.cambe.pr.gov.br.com/nfse-ws/security">' +
                 '<auth:username>' + Emitente.WSUser + '</auth:username>' +
                 '<auth:password>' + Emitente.WSSenha + '</auth:password>' +
-                '<auth:CNPJ>' + Emitente.CNPJ + '</auth:CNPJ>' +
+                '<auth:CNPJ>' + OnlyNumber(Emitente.CNPJ) + '</auth:CNPJ>' +
               '</auth:authentication>';
   end;
 

@@ -81,7 +81,7 @@ end;
 
 function TNFSeW_ISSCambe.GerarDadosPrestador: TACBrXmlNode;
 begin
-   Result := CreateElement('DadosPrestadorInfo');
+   Result := CreateElement('dadosPrestador');
 
    Result.AppendChild(AddNode(tcInt, '#1', 'prestadorCMC', 1, 9, 1,
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
@@ -91,7 +91,7 @@ function TNFSeW_ISSCambe.GerarDadosTomador: TACBrXmlNode;
 var
   TipoTomador: string;
 begin
-   Result := CreateElement('DadosTomadorInfo');
+   Result := CreateElement('dadosTomador');
 
    TipoTomador := EnumeradoToStr(NFSe.Tomador.IdentificacaoTomador.Tipo,
                                  ['1', '2', '3', '4', '5'],
@@ -114,7 +114,7 @@ begin
                                                  NFSe.Tomador.RazaoSocial, ''));
 
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorLogradouro', 1, 40, 0,
-                                  NFSe.Tomador.Endereco.EnderecoInformado, ''));
+                                           NFSe.Tomador.Endereco.Endereco, ''));
 
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorNumero', 1, 6, 0,
                                              NFSe.Tomador.Endereco.Numero, ''));
@@ -146,7 +146,7 @@ var
   OptanteSimplesNacional: string;
   Aliquota: Double;
 begin
-   Result := CreateElement('DemaisDadosInfo');
+   Result := CreateElement('demaisDados');
 
    Result.AppendChild(AddNode(tcInt, '#1', 'servicoISS', 1, 9, 1,
                                 OnlyNumber(NFSe.Servico.ItemListaServico), ''));
@@ -212,7 +212,7 @@ end;
 
 function TNFSeW_ISSCambe.GerarRPS: TACBrXmlNode;
 begin
-   Result := CreateElement('RPSInfo');
+   Result := CreateElement('RPS');
 
    Result.AppendChild(AddNode(tcInt, '#1', 'RPSNumero', 1, 10, 1,
                                              NFSe.IdentificacaoRps.Numero, ''));

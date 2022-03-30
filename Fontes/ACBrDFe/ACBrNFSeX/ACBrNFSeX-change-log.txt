@@ -44,6 +44,18 @@ Símbolo : Significado
 
 
 30/03/2022
+-- ISSCambe.GravarXml --
+[*] Correção na nomenclatura de alguns campos.
+   Por: Italo Giurizzato Junior
+-- ISSCambe.Provider --
+[*] Removido a formatação do CNPJ ao gerar o Cabeçalho.
+   Por: Marcos Villatore
+-- WebFisco.Provider --
+[*] Alterado o valor do parâmetro UseCertificateHTTP para False.
+   Por: Italo Giurizzato Junior
+-- SmarAPD.LerXml --
+[*] Correção no calculo do Valor Liquido.
+   Por: Paulo Henrique Panico
 -- ACBrNFSeXServicos --
 [*] Corrigido as URLs de produção e homologação da cidade do Porto Seguro/BA
    Por: Ricardo Miranda

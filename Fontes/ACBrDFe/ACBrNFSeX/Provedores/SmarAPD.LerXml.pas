@@ -395,7 +395,9 @@ begin
       ValorIss         := (ValorServicos * Aliquota) /100;
       ValorLiquidoNfse := ValorServicos -
                                       (ValorDeducoes + DescontoCondicionado +
-                                       DescontoIncondicionado + ValorIssRetido);
+                                       DescontoIncondicionado + ValorIssRetido +
+                                       ValorPis + ValorCofins + ValorInss +
+                                       ValorIr + ValorCsll);
       BaseCalculo      := ValorLiquidoNfse;
     end;
   end;

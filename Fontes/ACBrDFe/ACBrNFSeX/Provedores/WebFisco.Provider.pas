@@ -107,6 +107,7 @@ begin
   begin
     Identificador := '';
     ModoEnvio := meUnitario;
+    UseCertificateHTTP := False;
   end;
 
   SetXmlNameSpace('');

@@ -36,7 +36,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrBase, ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeReport, ACBrCTe,
+  ACBrBase, ACBrMail, ACBrDFe, ACBrDFeReport, ACBrCTe,
   ACBrCTeDACTEClass, ACBrCTeDACTeRLClass;
 
 type
@@ -331,6 +331,11 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.XMLHTML,
   pcnAuxiliar, pcteCTe, pcnConversao, pcteConversaoCTe, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
@@ -564,13 +569,13 @@ begin
     vPrest.vRec    := 100.00;
 
     {Carrega componentes do valor da prestacao}
-    with vPrest.comp.Add do
+    with vPrest.comp.New do
     begin
       xNome := 'Componente 1';
       vComp := 30.00;
     end;
 
-    with vPrest.comp.Add do
+    with vPrest.comp.New do
     begin
       xNome := 'Componente 2';
       vComp := 70.00;
@@ -1021,6 +1026,55 @@ begin
         cUnid  := uUnidade;
         tpMed  := 'Caixa';
         qCarga := 5;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uM3;
+        tpMed  := 'Volume';
+        qCarga := 10;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uTON;
+        tpMed  := 'Toneladas';
+        qCarga := 1;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uLITROS;
+        tpMed  := 'Litros';
+        qCarga := 10;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uLITROS;
+        tpMed  := 'Litros2';
+        qCarga := 10;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uLITROS;
+        tpMed  := 'Litros3';
+        qCarga := 10;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uLITROS;
+        tpMed  := 'Litros4';
+        qCarga := 10;
+      end;
+
+      with infCarga.InfQ.New do
+      begin
+        cUnid  := uLITROS;
+        tpMed  := 'Litros5';
+        qCarga := 10;
       end;
 
       {Informações dos Documentos}
@@ -3003,8 +3057,8 @@ end;
 
 procedure TfrmACBrCTe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+                      ConverteXMLtoUTF8(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

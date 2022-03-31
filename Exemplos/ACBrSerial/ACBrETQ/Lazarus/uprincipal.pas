@@ -53,12 +53,14 @@ type
     bConfSalvar: TButton;
     bConfLer: TButton;
     cbBackFeed: TComboBox;
+    cbDeteccaoEtiqueta: TComboBox;
     cbOrigem: TComboBox;
     cbDPI: TComboBox;
     cbModelo: TComboBox;
     cbPorta: TComboBox;
     cbPagCodigo: TComboBox;
     ckMemoria: TCheckBox;
+    ckGuilhotina: TCheckBox;
     edAvanco: TEdit;
     eCopias: TEdit;
     edNomeImg: TEdit;
@@ -110,7 +112,7 @@ var
 
 implementation
 uses
-  typinfo, Printers, IniFiles,
+  typinfo, Printers, IniFiles, Math,
   synautil, synacode,
   ACBrUtil, ACBrImage, ACBrETQClass
   {$IfDef MSWINDOWS}
@@ -123,11 +125,12 @@ procedure TFPrincipal.FormCreate(Sender: TObject);
 var
   I : TACBrETQModelo ;
   J: TACBrETQDPI;
-  K: TACBrETQUnidade;
+  //K: TACBrETQUnidade;
   L: TACBrETQBackFeed;
   M: Integer;
   N: TACBrETQOrigem;
   O: TACBrETQPaginaCodigo;
+  P: TACBrETQDeteccaoEtiqueta;
 begin
   cbModelo.Items.Clear ;
   For I := Low(TACBrETQModelo) to High(TACBrETQModelo) do
@@ -150,7 +153,7 @@ begin
      cbPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrETQPaginaCodigo), integer(O) ) ) ;
 
   cbPorta.Items.Clear;
-  //ACBrETQ.Device.AcharPortasSeriais( cbPorta.Items );
+  ACBrETQ.Device.AcharPortasSeriais( cbPorta.Items );
 
   {$IfDef MSWINDOWS}
    ACBrETQ.Device.WinUSB.FindUSBPrinters();
@@ -171,6 +174,10 @@ begin
   {$EndIf}
   cbPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
+  cbDeteccaoEtiqueta.Items.Clear ;
+  For P := Low(TACBrETQDeteccaoEtiqueta) to High(TACBrETQDeteccaoEtiqueta) do
+     cbDeteccaoEtiqueta.Items.Add( GetEnumName(TypeInfo(TACBrETQDeteccaoEtiqueta), integer(P) ) ) ;
+
   cbPagCodigo.ItemIndex := 2;
   cbDPI.ItemIndex := 0;
   cbModelo.ItemIndex := 1;
@@ -185,28 +192,45 @@ begin
 
   with ACBrETQ do
   begin
-     if not (ETQ is TACBrETQZplII) then
-      begin
-        ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'RAÇÃO PARA CÃES ÁÉÍÓÚ 5KG', 0, True);
-        ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'MÉDIO PORTE');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
-        ImprimirCaixa(10,32,56,13,1,1);
-        ImprimirTexto(orNormal, 3, 3, 2, 16, 35, 'R$');
-        ImprimirTexto(orNormal, 3, 4, 4, 12, 50, '20,59');
-      end
-      else
-      begin
-        ImprimirCaixa(3,3,90,5,5,0, 4);
-        ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'RAÇÃO PARA CÃES ÁÉÍÓÚ 5KG', 0, True);
-        ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'MÉDIO PORTE');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
-        ImprimirCaixa(13,32,56,17,1,1);
-        ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
-        ImprimirTexto(orNormal, 'G', 55, 100, 15, 50, '20,59');
-      end;
+    if (Modelo = etqZPLII) then
+    begin
+      ImprimirCaixa(3,3,90,5,5,0, 4);
+      ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'RAÇÃO PARA CÃES ÁÉÍÓÚ 5KG', 0, True);
+      ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'MÉDIO PORTE');
+      ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+      ImprimirCaixa(13,32,56,17,1,1);
+      ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
+      ImprimirTexto(orNormal, 'G', 55, 100, 15, 50, '20,59');
+    end
+    else if (Modelo = etqEscLabel) then
+    begin
+      DefinirDimensoes(104, 33, 6, 0);
+      DefinirCor(clBlue, 255, clYellow, 200);
+      ImprimirCaixa(2,1,85,7,7,0,4);
+      DefinirCorPadrao;
+      ImprimirTexto(orNormal, 'T', 9, 9, 3, 3, 'RAÇÃO PARA CÃES ÁÉÍÓÚ 5KG', 0, True);
+      ImprimirTexto(orNormal, 'S', 9, 7, 9, 3, 'MÉDIO PORTE');
+      DefinirCor(clRed, 255, clWhite, 0);
+      ImprimirBarras(orNormal, barEAN13, 2, 2, 15, 5, '7896003701685', 10, becSIM);
+      DefinirCor(clBlack, 255, clGreen, 150);
+      ImprimirCaixa(13,32,56,17,1,1);
+      DefinirCorPadrao;
+      ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
+      ImprimirTexto(orNormal, 'G', 55, 100, 15, 50, '20,59');
+    end
+    else
+    begin
+      DefinirCor(clBlue, 0, 0, 0);
+      ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'RAÇÃO PARA CÃES ÁÉÍÓÚ 5KG', 0, True);
+      ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'MÉDIO PORTE');
+      ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+      ImprimirCaixa(10,32,56,13,1,1);
+      ImprimirTexto(orNormal, 3, 3, 2, 16, 35, 'R$');
+      ImprimirTexto(orNormal, 3, 4, 4, 12, 50, '20,59');
+    end;
 
-     ImprimirEtiquetaComCopiasEAvanco;
-     Desativar;
+    ImprimirEtiquetaComCopiasEAvanco;
+    Desativar;
   end;
 end;
 
@@ -358,9 +382,12 @@ begin
 
   with ACBrETQ do
   begin
-     ImprimirImagem(1,1,10,edNomeImg.Text);
-     ImprimirEtiquetaComCopiasEAvanco;
-     Desativar;
+    if (Modelo = etqEscLabel) then
+       DefinirDimensoes(104, trunc(RoundTo(ConverterUnidade(etqDots, 1871, Unidade, DPI),0)), 0, 0);
+
+    ImprimirImagem(1,1,1,edNomeImg.Text);
+    ImprimirEtiquetaComCopiasEAvanco;
+    Desativar;
   end ;
 end;
 
@@ -458,12 +485,14 @@ begin
      Modelo := TACBrETQModelo(cbModelo.ItemIndex);
      Porta := cbPorta.Text;
      LimparMemoria := ckMemoria.Checked;
+     Guilhotina := ckGuilhotina.Checked;
      Temperatura := StrToIntDef(edTemperatura.Text,10);
      Velocidade := StrToIntDef(edVelocidade.Text,-1);
      BackFeed := TACBrETQBackFeed(cbBackFeed.ItemIndex);
      Unidade := etqMilimetros; //etqDecimoDeMilimetros;
      MargemEsquerda := StrToIntDef(edMargemEsquerda.Text, 0);
      Origem := TACBrETQOrigem(cbOrigem.ItemIndex);
+     DeteccaoEtiqueta := TACBrETQDeteccaoEtiqueta(cbDeteccaoEtiqueta.ItemIndex);
      PaginaDeCodigo := TACBrETQPaginaCodigo(cbPagCodigo.ItemIndex);
 
      Ativar;
@@ -494,7 +523,9 @@ begin
     cbBackFeed.ItemIndex := INI.ReadInteger('ETQ', 'BackFeed', Integer(ACBrETQ.BackFeed));
     cbPagCodigo.ItemIndex := INI.ReadInteger('ETQ','PaginaDeCodigo', Integer(ACBrETQ.PaginaDeCodigo));
     cbOrigem.ItemIndex := INI.ReadInteger('ETQ','Origem', Integer(ACBrETQ.Origem));
+    cbDeteccaoEtiqueta.ItemIndex := INI.ReadInteger('ETQ','DeteccaoEtiqueta', Integer(ACBrETQ.DeteccaoEtiqueta));
     ckMemoria.Checked  := INI.ReadBool('ETQ','Memoria', ACBrETQ.LimparMemoria);
+    ckGuilhotina.Checked := INI.ReadBool('ETQ','Guilhotina', ACBrETQ.Guilhotina);
   finally
      INI.Free ;
   end ;
@@ -518,11 +549,14 @@ begin
     INI.WriteInteger('ETQ', 'BackFeed', cbBackFeed.ItemIndex);
     INI.WriteInteger('ETQ','PaginaDeCodigo', cbPagCodigo.ItemIndex);
     INI.WriteInteger('ETQ','Origem', cbOrigem.ItemIndex);
+    INI.WriteInteger('ETQ','DeteccaoEtiqueta', cbDeteccaoEtiqueta.ItemIndex);
     INI.WriteBool('ETQ','Memoria', ckMemoria.Checked);
+    INI.WriteBool('ETQ','Guilhotina', ckGuilhotina.Checked);
   finally
      INI.Free ;
   end ;
 end;
 
 end.
+
 

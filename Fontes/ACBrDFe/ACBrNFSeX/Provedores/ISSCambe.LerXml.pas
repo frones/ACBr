@@ -202,7 +202,7 @@ begin
   begin
     with NFSe.Tomador.IdentificacaoTomador do
     begin
-      Tipo := StrToTipoPessoa(ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tipoTomador'), tcStr));
+      Tipo := FpAOwner.StrToTipoPessoa(ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tipoTomador'), tcStr));
       CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorCPFCNPJ'), tcStr);
       InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorInscricaoEstadual'), tcStr);
       InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorCMC'), tcStr);

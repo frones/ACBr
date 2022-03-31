@@ -281,9 +281,6 @@ function SepararDados(const Astring: string; const Chave: string;
 function SituacaoTribToStr(const t: TSituacaoTrib): string;
 function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib;
 
-function TipoPessoaToStr(const t: TTipoPessoa): string;
-function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa;
-
 function tpConsultaToStr(const t: TtpConsulta): string;
 function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
 
@@ -18291,22 +18288,6 @@ begin
                            ['tp', 'tt', 'is', 'im', 'nt'],
                            [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
                             tsImune, tsNaoTributada]);
-end;
-
-function TipoPessoaToStr(const t: TTipoPessoa): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5'],
-                           [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
-                            tpPJforaMunicipio, tpPJforaPais]);
-end;
-
-function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5'],
-                           [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
-                            tpPJforaMunicipio, tpPJforaPais]);
 end;
 
 function tpConsultaToStr(const t: TtpConsulta): string;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/03/2022
+-- Diversos --
+[*] Melhorias visando o provedor ISSCambe.
+   Por: Italo Giurizzato Junior/Marcos Villatore
+
 30/03/2022
 -- ISSCambe.GravarXml --
 [*] Correção na nomenclatura de alguns campos.

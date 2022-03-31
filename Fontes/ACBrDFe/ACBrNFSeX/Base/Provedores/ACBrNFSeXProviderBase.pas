@@ -191,6 +191,9 @@ type
     function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String; virtual;
 
     function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; virtual;
+
+    function TipoPessoaToStr(const t: TTipoPessoa): string; virtual;
+    function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa; virtual;
   end;
 
 implementation
@@ -1088,6 +1091,23 @@ begin
   else
     Result := '';
   end;
+end;
+
+function TACBrNFSeXProvider.TipoPessoaToStr(const t: TTipoPessoa): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
+                            tpPJforaMunicipio, tpPJforaPais]);
+end;
+
+function TACBrNFSeXProvider.StrToTipoPessoa(out ok: boolean;
+  const s: string): TTipoPessoa;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
+                            tpPJforaMunicipio, tpPJforaPais]);
 end;
 
 function TACBrNFSeXProvider.PrepararRpsParaLote(const aXml: string): string;

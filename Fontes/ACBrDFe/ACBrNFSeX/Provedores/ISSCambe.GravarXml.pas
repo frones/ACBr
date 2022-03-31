@@ -76,7 +76,7 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe4;
-  DivAliq100  := True;
+  DivAliq100  := False;
 end;
 
 function TNFSeW_ISSCambe.GerarDadosPrestador: TACBrXmlNode;
@@ -88,18 +88,11 @@ begin
 end;
 
 function TNFSeW_ISSCambe.GerarDadosTomador: TACBrXmlNode;
-var
-  TipoTomador: string;
 begin
    Result := CreateElement('dadosTomador');
 
-   TipoTomador := EnumeradoToStr(NFSe.Tomador.IdentificacaoTomador.Tipo,
-                                 ['1', '2', '3', '4', '5'],
-                                 [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
-                                 tpPJforaMunicipio, tpPJforaPais]);
-
    Result.AppendChild(AddNode(tcStr, '#1', 'tipoTomador', 1, 1, 1,
-                                                              TipoTomador, ''));
+         FpAOwner.TipoPessoaToStr(NFSe.Tomador.IdentificacaoTomador.Tipo), ''));
 
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorCPFCNPJ', 1, 14, 0,
                                 NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
@@ -137,7 +130,7 @@ begin
    Result.AppendChild(AddNode(tcStr, '#1', 'tomadorEmail', 1, 50, 0,
                                                NFSe.Tomador.Contato.Email, ''));
 
-   Result.AppendChild(AddNode(tcStr, '#1', 'tomadorPais', 1, 5, 0,
+   Result.AppendChild(AddNode(tcInt, '#1', 'tomadorPais', 1, 5, 0,
                                          NFSe.Tomador.Endereco.CodigoPais, ''));
 end;
 

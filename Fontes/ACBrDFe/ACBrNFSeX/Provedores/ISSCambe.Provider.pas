@@ -77,6 +77,10 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); override;
+
+  public
+    function TipoPessoaToStr(const t: TTipoPessoa): string; override;
+    function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa; override;
   end;
 
 implementation
@@ -428,6 +432,24 @@ begin
       AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
     end;
   end;
+end;
+
+function TACBrNFSeProviderISSCambe.TipoPessoaToStr(
+  const t: TTipoPessoa): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [tpPJdoMunicipio, tpPJforaMunicipio, tpPF,
+                            tpPFNaoIdentificada, tpPJforaPais]);
+end;
+
+function TACBrNFSeProviderISSCambe.StrToTipoPessoa(out ok: boolean;
+  const s: string): TTipoPessoa;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [tpPJdoMunicipio, tpPJforaMunicipio, tpPF,
+                            tpPFNaoIdentificada, tpPJforaPais]);
 end;
 
 end.

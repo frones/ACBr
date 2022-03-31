@@ -136,7 +136,7 @@ begin
                                                NFSe.Servico.Discriminacao, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_tipo', 1, 1, 1,
-                  TipoPessoaToStr(NFSe.Tomador.IdentificacaoTomador.Tipo), ''));
+         FpAOwner.TipoPessoaToStr(NFSe.Tomador.IdentificacaoTomador.Tipo), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_cnpj', 1, 15, 1,
                     OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), ''));
@@ -381,7 +381,7 @@ begin
                                                NFSe.Servico.Discriminacao, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_tipo', 1, 1, 1,
-                  TipoPessoaToStr(NFSe.Tomador.IdentificacaoTomador.Tipo), ''));
+         FpAOwner.TipoPessoaToStr(NFSe.Tomador.IdentificacaoTomador.Tipo), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tomador_cnpj', 1, 15, 1,
                     OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), ''));

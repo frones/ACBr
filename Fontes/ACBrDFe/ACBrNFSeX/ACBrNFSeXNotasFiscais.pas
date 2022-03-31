@@ -362,7 +362,7 @@ begin
       begin
         with IdentificacaoTomador do
         begin
-          Tipo := StrToTipoPessoa(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
+          Tipo := FProvider.StrToTipoPessoa(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
           CpfCnpj := INIRec.ReadString(sSecao, 'CNPJCPF', '');
           InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
           InscricaoEstadual := INIRec.ReadString(sSecao, 'InscricaoEstadual', '');

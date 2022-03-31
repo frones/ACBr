@@ -82,6 +82,9 @@ type
     function ResponsavelRetencaoDescricao(const t: TnfseResponsavelRetencao): String;
 
     function NaturezaOperacaoDescricao(const t: TnfseNaturezaOperacao): string; 
+
+    function TipoPessoaToStr(const t: TTipoPessoa): string;
+    function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa;
   end;
 
 implementation

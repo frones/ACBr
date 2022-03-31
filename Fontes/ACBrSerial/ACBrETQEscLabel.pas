@@ -68,7 +68,8 @@ type
 implementation
 
 uses
-  SysUtils, synautil, ACBrUtil, ACBrImage, ACBrUtil.Strings;
+  SysUtils, synautil, ACBrImage,
+  ACBrUtil.Strings;
 
 { TACBrETQEscLabel }
 

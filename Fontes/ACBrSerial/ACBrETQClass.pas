@@ -221,7 +221,8 @@ type
 implementation
 
 uses
-  SysUtils, math, ACBrConsts, ACBrETQ, ACBrImage, ACBrUtil.Base, ACBrUtil.Strings;
+  SysUtils, math, ACBrConsts, ACBrETQ, ACBrImage,
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 { TACBrETQDimensoes }
 
@@ -334,52 +335,13 @@ end;
 function TACBrETQClass.ConverterUnidade(UnidadeSaida: TACBrETQUnidade;
   AValue: Integer): Integer;
 var
-  DotsMM, DotsPI, ADouble: Double;
+  ADouble: Double;
 begin
   Result := AValue;
   if (UnidadeSaida = Unidade) then
     Exit;
 
-  case DPI of
-    dpi300: DotsPI := 300;
-    dpi600: DotsPI := 600;
-  else
-    DotsPI := 203;
-  end;
-
-  // 1 Inch = 2.54 cm = 25.4 mm
-  DotsMM := DotsPI / CInchCM / 10;
-  ADouble := AValue;
-
-  case UnidadeSaida of
-    etqMilimetros:
-    begin
-      case Unidade of
-        etqPolegadas:          ADouble := (AValue*10) * CInchCM;
-        etqDots:               ADouble := AValue / DotsMM;
-        etqDecimoDeMilimetros: ADouble := AValue * 10;
-      end;
-    end;
-
-    etqPolegadas:
-    begin
-      case Unidade of
-        etqMilimetros:         ADouble := ((AValue/10) / CInchCM);
-        etqDots:               ADouble := AValue / DotsPI;
-        etqDecimoDeMilimetros: ADouble := ((AValue/100) / CInchCM);
-      end;
-    end;
-
-    etqDots:
-    begin
-      case Unidade of
-        etqMilimetros:         ADouble := (AValue * DotsMM);
-        etqPolegadas:          ADouble := (AValue * DotsPI);
-        etqDecimoDeMilimetros: ADouble := ((AValue/10) * DotsMM);
-      end;
-    end;
-  end;
-
+  ADouble := ACBrETQ.ConverterUnidade(Unidade, AValue, UnidadeSaida, DPI);
   Result := trunc(RoundTo(ADouble, 0));
 end;
 

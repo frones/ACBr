@@ -193,6 +193,9 @@ type
     property Device: TACBrDevice read fsDevice;
   end;
 
+function ConverterUnidade(UnidadeEntrada: TACBrETQUnidade; ValorEntrada: Double;
+  UnidadeSaida: TACBrETQUnidade; DPI: TACBrETQDPI = dpi203): Double;
+
 implementation
 
 uses
@@ -203,6 +206,55 @@ uses
   ACBrWinUSBDevice,
   {$EndIf}
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO;
+
+function ConverterUnidade(UnidadeEntrada: TACBrETQUnidade;
+  ValorEntrada: Double; UnidadeSaida: TACBrETQUnidade; DPI: TACBrETQDPI): Double;
+var
+  DotsMM, DotsPI: Double;
+begin
+  Result := ValorEntrada;
+  if (UnidadeSaida = UnidadeEntrada) then
+    Exit;
+
+  case DPI of
+    dpi300: DotsPI := 300;
+    dpi600: DotsPI := 600;
+  else
+    DotsPI := 203;
+  end;
+
+  // 1 Inch = 2.54 cm = 25.4 mm
+  DotsMM := DotsPI / CInchCM / 10;
+
+  case UnidadeSaida of
+    etqMilimetros:
+    begin
+      case UnidadeEntrada of
+        etqPolegadas:          Result := (ValorEntrada*10) * CInchCM;
+        etqDots:               Result := ValorEntrada / DotsMM;
+        etqDecimoDeMilimetros: Result := ValorEntrada * 10;
+      end;
+    end;
+
+    etqPolegadas:
+    begin
+      case UnidadeEntrada of
+        etqMilimetros:         Result := ((ValorEntrada/10) / CInchCM);
+        etqDots:               Result := ValorEntrada / DotsPI;
+        etqDecimoDeMilimetros: Result := ((ValorEntrada/100) / CInchCM);
+      end;
+    end;
+
+    etqDots:  // pixels
+    begin
+      case UnidadeEntrada of
+        etqMilimetros:         Result := (ValorEntrada * DotsMM);
+        etqPolegadas:          Result := (ValorEntrada * DotsPI);
+        etqDecimoDeMilimetros: Result := ((ValorEntrada/10) * DotsMM);
+      end;
+    end;
+  end;
+end;
 
 { TACBrETQCmdList }
 

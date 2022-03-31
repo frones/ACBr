@@ -122,8 +122,8 @@ implementation
 
 uses
   Math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
-  synautil, synacode, ACBrUtil, ACBrImage, ACBrConsts, ACBrUtil.Strings,
-  ACBrUtil.FilesIO, ACBrUtil.Math;
+  synautil, synacode, ACBrImage, ACBrConsts,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Math;
 
 { TACBrETQPpla }
 

@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2022
+-- ACBrETQ, ACBrETQClass --
+[*] Metodo "ConverterUnidade" modificado para ser Publico na Unit e independente
+    da Classe
+-- ACBrETQ, ACBrETQClass, ACBrETQEpl2, ACBrETQEscLabel, ACBrETQPpla, ACBrETQZplII --
+[*] Remoção de Hints
+    (por: DSA)
+
 27/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

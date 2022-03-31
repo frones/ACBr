@@ -149,6 +149,7 @@ type
       Flipped: Boolean = True; const Tipo: String = ''); overload;
     procedure CarregarImagem(const ArquivoImagem: String; var NomeImagem: String;
       Flipped: Boolean = True); overload;
+    procedure ApagarImagem(const NomeImagem: String = '*');
 
     procedure DefinirCor(FrenteCor: Cardinal; FrenteOpacidade: Byte;
       FundoCor: Cardinal; FundoOpacidade: Byte); overload;
@@ -929,6 +930,18 @@ begin
   finally
     wMS.Free;
   end;
+end;
+
+procedure TACBrETQ.ApagarImagem(const NomeImagem: String);
+var
+  wCmd: AnsiString;
+begin
+  GravarLog('- ApagarImagem:'+NomeImagem);
+  AtivarSeNecessario;
+
+  wCmd := fsETQ.ComandoApagarImagem(NomeImagem);
+  GravarLog(wCmd, True);
+  fsDevice.EnviaString(wCmd);
 end;
 
 procedure TACBrETQ.DefinirCor(FrenteCor: Cardinal; FrenteOpacidade: Byte;

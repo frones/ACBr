@@ -42,8 +42,11 @@ Símbolo : Significado
 -- ACBrETQ, ACBrETQClass --
 [*] Metodo "ConverterUnidade" modificado para ser Publico na Unit e independente
     da Classe
+
 -- ACBrETQ, ACBrETQClass, ACBrETQEpl2, ACBrETQEscLabel, ACBrETQPpla, ACBrETQZplII --
 [*] Remoção de Hints
+[+] Implementado o método: "ApagarImagem(const NomeImagem: String = '*');"
+    Se NomeImagem for '*', apaga todas as Imagens
     (por: DSA)
 
 27/03/2022

@@ -111,8 +111,9 @@ type
       aNomeImagem: String): AnsiString; override;
     function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
-    function ComandoBMP2GRF(aStream: TStream; aNomeImagem: String; Inverter: Boolean = True): AnsiString;
+    function ComandoApagarImagem(const NomeImagem: String = '*'): String; override;
 
+    function ComandoBMP2GRF(aStream: TStream; aNomeImagem: String; Inverter: Boolean = True): AnsiString;
     function ComandoGravaRFIDHexaDecimal(aValue:String): AnsiString; override;
     function ComandoGravaRFIDASCII( aValue:String ): AnsiString; override;
 
@@ -123,6 +124,7 @@ implementation
 uses
   Math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
   synautil, synacode, ACBrImage, ACBrConsts,
+  ACBrETQ,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Math;
 
 { TACBrETQPpla }
@@ -257,6 +259,9 @@ begin
     if (aTipo = '') then
       aTipo := 'GRF';
   end;
+
+  if (aTipo = 'BMP') then
+    aTipo := 'GRF';
 
   Result := UpperCase(LeftStr(OnlyAlphaNum(aNome), 8)) + '.' + aTipo;
 end;
@@ -527,9 +532,6 @@ var
 begin
   ATipo := '';
   aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem, ATipo);
-  if (ATipo = 'BMP') then
-    aNomeImagem := ChangeFileExt(aNomeImagem, '.GRF');
-
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
             '^XGR:' + aNomeImagem + ',' +
                       ConverterMultiplicadorImagem(aMultImagem) + ',' +
@@ -551,15 +553,8 @@ begin
   aStream.Position := 0;
   VerificarConteudoETipoImagemMono(aStream, aTipo);
 
-  if (aTipo = 'BMP') then
-  begin
-    aNomeImagem := ChangeFileExt(aNomeImagem, '.GRF');
-    aTipo := 'GRF';
-  end;
-
-  if (aTipo = 'GRF') then
+  if (aTipo = 'GRF') then  // BMP = GRF
     Result := ComandoBMP2GRF(aStream, aNomeImagem)
-
   else
   begin
     ImgData := ReadStrFromStream(aStream, aStream.Size);
@@ -591,6 +586,25 @@ begin
 
   Result := '^IDR:' + aNomeImagem + '^FS' +  // Apaga a imagem existente com o mesmo nome
             Result;
+end;
+
+function TACBrETQZplII.ComandoApagarImagem(const NomeImagem: String): String;
+var
+  s, t: String;
+begin
+  if (NomeImagem = '*') then
+    Result := '^IDR:*.*^FS'
+  else
+  begin
+    t := '';
+    s := AjustarNomeArquivoImagem(NomeImagem, t);
+    Result := '^IDR:' + s + '^FS';
+  end;
+
+  if not TACBrETQ(fpOwner).EtqInicializada then
+    Result := ComandoAbertura +
+              Result +
+              ComandoImprimir;
 end;
 
 // Fonte: https://github.com/asharif/img2grf/blob/master/src/main/java/org/orphanware/App.java

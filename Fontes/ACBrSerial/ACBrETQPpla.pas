@@ -115,9 +115,10 @@ type
 
     function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
       aNomeImagem: String): AnsiString; override;
-
     function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
+    function ComandoApagarImagem(const NomeImagem: String = '*'): String; override;
+
     function BMP2HEX(aStream: TStream; Inverter: Boolean): String;
   end;
 
@@ -572,6 +573,19 @@ begin
   aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem);
   Result := STX + 'IA' + Cmd + aNomeImagem + CR +
             DataImg;
+end;
+
+function TACBrETQPpla.ComandoApagarImagem(const NomeImagem: String): String;
+var
+  s: String;
+begin
+  if (NomeImagem = '*') then
+    Result := STX + 'qA'
+  else
+  begin
+    s := AjustarNomeArquivoImagem(NomeImagem);
+    Result := STX + 'xAG' + s + CR;
+  end;
 end;
 
 function TACBrETQPpla.BMP2HEX(aStream: TStream; Inverter: Boolean): String;

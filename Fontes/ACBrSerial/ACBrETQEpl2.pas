@@ -102,9 +102,9 @@ type
 
     function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
       aNomeImagem: String): AnsiString; override;
-
     function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
+    function ComandoApagarImagem(const NomeImagem: String = '*'): String; override;
   end;
 
 implementation
@@ -461,6 +461,20 @@ begin
             'GM"' + aNomeImagem + '"' +         // Prepares printer to receive graphic "NomeImagem";
             IntToStr(aStream.Size) + LF +       // The Data Size
             ImgData;                            // The Image Data
+end;
+
+function TACBrETQEpl2.ComandoApagarImagem(const NomeImagem: String): String;
+var
+  s: String;
+begin
+  if (NomeImagem = '*') then
+    Result := 'GK"*"' + LF
+  else
+  begin
+    s := AjustarNomeArquivoImagem(NomeImagem);
+    Result := 'GK"' + s + '"' + LF +    // deletes graphic "NomeImagem" - Required
+              'GK"' + s + '"' + LF;     // second delete graphic - Required
+  end;
 end;
 
 end.

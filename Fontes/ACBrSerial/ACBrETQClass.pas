@@ -138,6 +138,7 @@ type
   protected
     fpModeloStr: String;
     fpDevice: TACBrDevice;
+    fpOwner: TComponent;
     fpLimiteCopias: Integer;
 
     function ConverterUnidade(UnidadeSaida: TACBrETQUnidade; AValue: Integer): Integer; virtual;
@@ -196,6 +197,7 @@ type
       aNomeImagem: String): AnsiString; virtual;
     function ComandoCarregarImagem(aStream: TStream; var aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; virtual;
+    function ComandoApagarImagem(const NomeImagem: String = '*'): String; virtual;
 
     function ComandoGravaRFIDHexaDecimal(aValue:String): AnsiString; virtual;
     function ComandoGravaRFIDASCII( aValue:String ): AnsiString; virtual;
@@ -298,14 +300,14 @@ begin
     raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrETQ'));
 
   fPaginaDeCodigo := pceNone;
-  fDPI            := dpi203;
-  fLimparMemoria  := True;
-  fOrigem         := ogNone;
-  fAvanco         := 0;
-  fGuilhotina     := False;
-  fTemperatura    := 10;
-  fVelocidade     := -1;
-  fUnidade        := etqDecimoDeMilimetros;
+  fDPI := dpi203;
+  fLimparMemoria := True;
+  fOrigem := ogNone;
+  fAvanco := 0;
+  fGuilhotina := False;
+  fTemperatura := 10;
+  fVelocidade := -1;
+  fUnidade := etqDecimoDeMilimetros;
   fDeteccaoEtiqueta := mdeGap;
   fCorFrente := TACBrETQCor.Create;
   fCorFrente.Color := $000000; // Black
@@ -315,8 +317,9 @@ begin
   fCorFundo.Opacidade := 0;
   fDimensoes := TACBrETQDimensoes.Create;
 
-  fpModeloStr     := 'Não Definida';
-  fpLimiteCopias  := 999;
+  fpOwner := AOwner;
+  fpModeloStr := 'Não Definida';
+  fpLimiteCopias := 999;
 end;
 
 destructor TACBrETQClass.Destroy;
@@ -591,6 +594,12 @@ function TACBrETQClass.ComandoCarregarImagem(aStream: TStream;
 begin
   Result := EmptyStr;
   ErroNaoImplementado('ComandoCarregarImagem');
+end;
+
+function TACBrETQClass.ComandoApagarImagem(const NomeImagem: String): String;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoApagarImagem');
 end;
 
 end.

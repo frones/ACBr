@@ -489,40 +489,58 @@ begin
   if ((Copy(FArquivoTXT.Strings[i], 8, 1) + Copy(FArquivoTXT.Strings[i], 14, 1)) <> '3B') then
     Exit;
 
-  mSegmentoBList.New;
-  mSegmentoBList.Last.Inscricao.Tipo       := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 18, 1));
-  mSegmentoBList.Last.Inscricao.Numero     := Copy(FArquivoTXT.Strings[i], 19, 14);
-  mSegmentoBList.Last.Endereco.Logradouro  := Copy(FArquivoTXT.Strings[i], 33, 30);
-  mSegmentoBList.Last.Endereco.Numero      := StrToIntDef(Copy(FArquivoTXT.Strings[i], 63, 5),0);
-  mSegmentoBList.Last.Endereco.Complemento := Copy(FArquivoTXT.Strings[i], 68, 15);
-  mSegmentoBList.Last.Endereco.Bairro      := Copy(FArquivoTXT.Strings[i], 83, 15);
-  mSegmentoBList.Last.Endereco.Cidade      := Copy(FArquivoTXT.Strings[i], 98, 20);
-  mSegmentoBList.Last.Endereco.CEP         := StrToIntDef(Copy(FArquivoTXT.Strings[i], 118, 8),0);
-  mSegmentoBList.Last.Endereco.Estado      := Copy(FArquivoTXT.Strings[i], 126, 2);
-
-  case FPagFor.Geral.Banco of
-    pagItau:
-      begin
-        mSegmentoBList.Last.Email := Copy(FArquivoTXT.Strings[i], 128, 100);
-      end;
-
-    pagSicredi:
-      begin
-        mSegmentoBList.Last.Valor      := StrToInt(Copy(FArquivoTXT.Strings[i], 136, 13)) / 100;
-        mSegmentoBList.Last.Abatimento := StrToInt(Copy(FArquivoTXT.Strings[i], 151, 13)) / 100;
-        mSegmentoBList.Last.Desconto   := StrToInt(Copy(FArquivoTXT.Strings[i], 166, 13)) / 100;
-        mSegmentoBList.Last.Mora       := StrToInt(Copy(FArquivoTXT.Strings[i], 181, 13)) / 100;
-        mSegmentoBList.Last.Multa      := StrToInt(Copy(FArquivoTXT.Strings[i], 196, 13)) / 100;
-
-        // PIX
-        if Trim(Copy(FArquivoTXT.Strings[i], 15, 2)) <> '' then
+  if Trim(Copy(FArquivoTXT.Strings[i], 15, 2)) <> '' then    // PIX
+  begin
+    case FPagFor.Geral.Banco of
+      pagSicredi:
         begin
-          mSegmentoBList.Last.PixTipoChave := StrToTipoChavePix(mOk, Copy(FArquivoTXT.Strings[i], 15, 2));
-          mSegmentoBList.Last.PixMensagem  := Copy(FArquivoTXT.Strings[i], 128, 99);
-          mSegmentoBList.Last.CodigoUG     := StrToInt(Copy(FArquivoTXT.Strings[i], 227, 6));
-          mSegmentoBList.Last.CodigoISPB   := StrToInt(Copy(FArquivoTXT.Strings[i], 233, 8));
+          mSegmentoBList.New;
+          mSegmentoBList.Last.Inscricao.Tipo   := StrToTpInscricao(mOk,Copy(FArquivoTXT.Strings[i], 18, 1));
+          mSegmentoBList.Last.Inscricao.Numero := Copy(FArquivoTXT.Strings[i], 19, 14);
+          mSegmentoBList.Last.PixTipoChave     := StrToTipoChavePIX(mok,copy(FArquivoTXT.Strings[i], 15, 2));
+          mSegmentoBList.Last.PixMensagem      := Copy(FArquivoTXT.Strings[i], 128, 99);
+          mSegmentoBList.Last.CodigoUG         := StrToIntDef(Copy(FArquivoTXT.Strings[i], 227, 6),0);
+          mSegmentoBList.Last.CodigoISPB       := StrToIntDef(Copy(FArquivoTXT.Strings[i], 233, 8),0);
         end;
-      end;
+    end;
+  end
+  else
+  begin
+    mSegmentoBList.New;
+    mSegmentoBList.Last.Inscricao.Tipo       := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 18, 1));
+    mSegmentoBList.Last.Inscricao.Numero     := Copy(FArquivoTXT.Strings[i], 19, 14);
+    mSegmentoBList.Last.Endereco.Logradouro  := Copy(FArquivoTXT.Strings[i], 33, 30);
+    mSegmentoBList.Last.Endereco.Numero      := StrToIntDef(Copy(FArquivoTXT.Strings[i], 63, 5),0);
+    mSegmentoBList.Last.Endereco.Complemento := Copy(FArquivoTXT.Strings[i], 68, 15);
+    mSegmentoBList.Last.Endereco.Bairro      := Copy(FArquivoTXT.Strings[i], 83, 15);
+    mSegmentoBList.Last.Endereco.Cidade      := Copy(FArquivoTXT.Strings[i], 98, 20);
+    mSegmentoBList.Last.Endereco.CEP         := StrToIntDef(Copy(FArquivoTXT.Strings[i], 118, 8),0);
+    mSegmentoBList.Last.Endereco.Estado      := Copy(FArquivoTXT.Strings[i], 126, 2);
+
+    case FPagFor.Geral.Banco of
+      pagItau:
+        begin
+          mSegmentoBList.Last.Email := Copy(FArquivoTXT.Strings[i], 128, 100);
+        end;
+
+      pagSicredi:
+        begin
+          mSegmentoBList.Last.Valor      := StrToInt(Copy(FArquivoTXT.Strings[i], 136, 13)) / 100;
+          mSegmentoBList.Last.Abatimento := StrToInt(Copy(FArquivoTXT.Strings[i], 151, 13)) / 100;
+          mSegmentoBList.Last.Desconto   := StrToInt(Copy(FArquivoTXT.Strings[i], 166, 13)) / 100;
+          mSegmentoBList.Last.Mora       := StrToInt(Copy(FArquivoTXT.Strings[i], 181, 13)) / 100;
+          mSegmentoBList.Last.Multa      := StrToInt(Copy(FArquivoTXT.Strings[i], 196, 13)) / 100;
+
+          // PIX
+          if Trim(Copy(FArquivoTXT.Strings[i], 15, 2)) <> '' then
+          begin
+            mSegmentoBList.Last.PixTipoChave := StrToTipoChavePix(mOk, Copy(FArquivoTXT.Strings[i], 15, 2));
+            mSegmentoBList.Last.PixMensagem  := Copy(FArquivoTXT.Strings[i], 128, 99);
+            mSegmentoBList.Last.CodigoUG     := StrToInt(Copy(FArquivoTXT.Strings[i], 227, 6));
+            mSegmentoBList.Last.CodigoISPB   := StrToInt(Copy(FArquivoTXT.Strings[i], 233, 8));
+          end;
+        end;
+    end;
   end;
 end;
 
@@ -764,16 +782,16 @@ begin
           end;
         end;
     end;
-  end;
 
-  if POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
-  begin
-    FPagFor.Registro0.Aviso.New;
-    FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia;
-    FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia;
-    FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
-    FPagFor.Registro0.Aviso.Last.SegmentoFilho   := '';
-    FPagFor.Registro0.Aviso.Last.SeuNumero       := FPagFor.Lote.Last.SegmentoJ.Last.ReferenciaSacado;
+    if POS(FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia, PAGAMENTO_LIBERADO_AVISO) = 0 then
+    begin
+      FPagFor.Registro0.Aviso.New;
+      FPagFor.Registro0.Aviso.Last.CodigoRetorno   := FPagFor.Lote.Last.SegmentoJ.Last.CodOcorrencia;
+      FPagFor.Registro0.Aviso.Last.MensagemRetorno := FPagFor.Lote.Last.SegmentoJ.Last.DescOcorrencia;
+      FPagFor.Registro0.Aviso.Last.Segmento        := 'J';
+      FPagFor.Registro0.Aviso.Last.SegmentoFilho   := '';
+      FPagFor.Registro0.Aviso.Last.SeuNumero       := FPagFor.Lote.Last.SegmentoJ.Last.ReferenciaSacado;
+    end;
   end;
 
   // Segmentos B, C, Z, etc. também existem para outros tipos de segmento que não sejam o J, portanto,
@@ -1123,7 +1141,6 @@ begin
       end
   else
     begin
-
       //Tributo N3 - DARF SIMPLES
       if StrToInt(Copy(FArquivoTXT.Strings[i], 133, 2)) <> 18 then
          Exit;

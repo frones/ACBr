@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/03/2022
+-- ACBrPagForGravarTxt/ACBrPagForLerTxt --
+[*] Mais ajustes para o Sicredi
+   Por: SuporteATInfo
 -- ACBrPagForConversao --
 [*] Acrescentado todos os bancos (assim espero) e
     refeito as funções: BancoToStr, BancoToDesc e StrToBanco  

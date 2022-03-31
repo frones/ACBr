@@ -1054,16 +1054,20 @@ begin
       end
       else // Segmento B "normal" (não PIX) ou PIX de outros bancos que ainda nao foram implementados corretamente aqui
       begin
-        wregistro := wregistro + Space(3);
-        wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
-        wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
-        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Logradouro), 30);
-        wregistro := wregistro + FormatFloat('00000', Endereco.Numero);
-        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Complemento), 15);
-        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Bairro), 15);
-        wregistro := wregistro + PadRight(TiraAcentos(Endereco.Cidade), 20);
-        wregistro := wregistro + FormatFloat('00000000', Endereco.CEP);
-        wregistro := wregistro + PadRight(Endereco.Estado, 2);
+        // Campo são enviados apenas quando não é PIX
+        if PixTipoChave = tcpNenhum then
+        begin
+          wregistro := wregistro + Space(3);
+          wregistro := wregistro + TpInscricaoToStr(Inscricao.Tipo);
+          wregistro := wregistro + TBStrZero(Inscricao.Numero, 14);
+          wregistro := wregistro + PadRight(TiraAcentos(Endereco.Logradouro), 30);
+          wregistro := wregistro + FormatFloat('00000', Endereco.Numero);
+          wregistro := wregistro + PadRight(TiraAcentos(Endereco.Complemento), 15);
+          wregistro := wregistro + PadRight(TiraAcentos(Endereco.Bairro), 15);
+          wregistro := wregistro + PadRight(TiraAcentos(Endereco.Cidade), 20);
+          wregistro := wregistro + FormatFloat('00000000', Endereco.CEP);
+          wregistro := wregistro + PadRight(Endereco.Estado, 2);
+        end;
 
         case FPagFor.Geral.Banco of
           pagSantander:

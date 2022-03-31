@@ -100,7 +100,7 @@ implementation
 
 uses
   Math, StrUtils, DateUtils,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.FilesIO,
   ACBrPagFor;
 

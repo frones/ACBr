@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2022
+-- ACBrPagForConversao --
+[*] Acrescentado todos os bancos (assim espero) e
+    refeito as funções: BancoToStr, BancoToDesc e StrToBanco  
+   Por: Italo Giurizzato Junior
+
 29/03/2022
 -- Diversos --
 [*] Ajustes para atender o banco Sicredi.

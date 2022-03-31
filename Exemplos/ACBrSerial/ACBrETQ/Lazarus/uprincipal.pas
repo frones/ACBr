@@ -52,6 +52,7 @@ type
     bImprimirImagem: TButton;
     bConfSalvar: TButton;
     bConfLer: TButton;
+    bEtqLogistica: TButton;
     cbBackFeed: TComboBox;
     cbDeteccaoEtiqueta: TComboBox;
     cbOrigem: TComboBox;
@@ -94,6 +95,7 @@ type
     procedure bEtqCarreirasClick(Sender: TObject);
     procedure bImprimirImagemClick(Sender : TObject);
     procedure bCarregarImgClick(Sender : TObject);
+    procedure bEtqLogisticaClick(Sender: TObject);
     procedure cbModeloChange(Sender : TObject) ;
     procedure eOnlyNumberKeyPress(Sender : TObject ; var Key : char) ;
     procedure FormCreate(Sender: TObject);
@@ -462,6 +464,82 @@ begin
   end;
 
   ACBrETQ.Desativar;
+end;
+
+procedure TFPrincipal.bEtqLogisticaClick(Sender: TObject);
+begin
+  ConfigurarACBrETQ;
+  //Modelo etiqueta de Envio 138 x 106mm
+  with ACBrETQ do
+  begin
+    if not (ETQ is TACBrETQZplII) then
+    begin
+      ImprimirImagem(1,7,4,edNomeImg.Text);
+      ImprimirQRCode( 2, 55, 'www.projetoacbr.com.br', 8 );
+      ImprimirTexto(orNormal, '2', 1, 1, 22, 3, 'www.projetoacbr.com.br');
+      ImprimirTexto(orNormal, '2', 1, 2, 29, 1,  '______________________________________________________');
+
+      ImprimirTexto(orNormal, '2', 1, 2, 35, 1,  'NF: 000025417');
+      ImprimirTexto(orNormal, '2', 1, 2, 35, 30, 'Pedido: 0025482');
+      ImprimirTexto(orNormal, '2', 1, 2, 35, 60, 'Peso(g): 500.00');
+      ImprimirBarras(orNormal, barCODE128, 3, 3, 41, 0, 'SL 600 370 126 BR', 18, becSIM);
+      ImprimirTexto(orNormal, '2', 1, 1, 72, 1,  'Nome.: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');
+      ImprimirTexto(orNormal, '2', 1, 1, 76, 1,  'Ass.: _ _ _ _ _ _ _ _ _ _ _ _Doc.: _ _ _ _ _ _ _ _ _ _');
+
+      ImprimirTexto(orNormal, '2', 2, 2, 86, 0,  '  DESTINATARIO              ', 0, True);
+
+      ImprimirCaixa(90,0,84,35,0,0);
+      ImprimirTexto(orNormal, '2', 2, 2, 95, 55,   'Vol. 1/1');
+      ImprimirTexto(orNormal, '2', 1, 1, 102, 3, 'Nome: JOSE SANTOS');
+      ImprimirTexto(orNormal, '2', 1, 1, 106, 3, 'Rua do Bosque 1952');
+      ImprimirTexto(orNormal, '2', 1, 1, 110, 3, 'Bairro: Boqueirao');
+      ImprimirTexto(orNormal, '2', 1, 1, 114, 3, 'CEP: 99999-999 Curitiba PR');
+      ImprimirBarras(orNormal, barCODE128, 2, 2, 102, 45, '99999-999', 18);
+
+      ImprimirTexto(orNormal, '2', 1, 1, 128, 3, 'REMETENTE');
+      ImprimirTexto(orNormal, '2', 1, 1, 132, 3, 'Nome: MERCADO SHOPPING');
+      ImprimirTexto(orNormal, '2', 1, 1, 136, 3, 'Alameda Gen. Roque Brás 5203 - Sala 05');
+      ImprimirTexto(orNormal, '2', 1, 1, 140, 3, 'Bairro: Lapa');
+      ImprimirTexto(orNormal, '2', 1, 1, 144, 3, 'CEP: 99999-999 São Paulo - SP');
+      ImprimirTexto(orNormal, '2', 1, 2, 146, 1, '______________________________________________________');
+    end
+    else
+    begin
+      ImprimirImagem(1,7,4,edNomeImg.Text);
+      ImprimirQRCode( 2, 55, 'www.projetoacbr.com.br', 8 );
+      ImprimirTexto(orNormal, '0', 30, 20, 22, 1, 'www.projetoacbr.com.br');
+      ImprimirTexto(orNormal, '0', 20, 20, 29, 1,  '___________________________________________________________________');
+
+      ImprimirTexto(orNormal, '0', 25, 20, 35, 1,  'NF: 000025417');
+      ImprimirTexto(orNormal, '0', 25, 20, 35, 30, 'Pedido: 0025482');
+      ImprimirTexto(orNormal, '0', 25, 20, 35, 60, 'Peso(g): 500.00');
+      ImprimirBarras(orNormal, barCODE128, 3, 3, 41, 0, 'SL 600 370 126 BR', 18, becSIM);
+      ImprimirTexto(orNormal, '0', 20, 20, 72, 1,  'Nome.: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');
+      ImprimirTexto(orNormal, '0', 20, 20, 76, 1,  'Ass.: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _Doc.: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');
+
+      ImprimirCaixa(85,0,82,6,5,0);
+      ImprimirTexto(orNormal, '0', 40, 40, 86, 3,  'DESTINATÁRIO', 0, True);
+
+      ImprimirCaixa(91,0,82,35,0,0);
+      ImprimirTexto(orNormal, 'T', 30, 20, 95, 60, 'Vol. 1 / 1');
+      ImprimirTexto(orNormal, '0', 20, 20, 102, 3, 'Nome: JOSE SANTOS');
+      ImprimirTexto(orNormal, '0', 20, 20, 106, 3, 'Rua do Bosque 1952');
+      ImprimirTexto(orNormal, '0', 20, 20, 110, 3, 'Bairro: Boqueirao');
+      ImprimirTexto(orNormal, '0', 20, 20, 114, 3, 'CEP: 99999-999 Curitiba PR');
+      ImprimirBarras(orNormal, barCODE128, 2, 2, 102, 45, '99999-999', 18);
+
+      ImprimirTexto(orNormal, '0', 30, 20, 128, 3, 'REMETENTE');
+      ImprimirTexto(orNormal, '0', 20, 20, 132, 3, 'Nome: MERCADO SHOPPING');
+      ImprimirTexto(orNormal, '0', 20, 20, 136, 3, 'Alameda Gen. Roque Brás 5203 - Sala 05');
+      ImprimirTexto(orNormal, '0', 20, 20, 140, 3, 'Bairro: Lapa');
+      ImprimirTexto(orNormal, '0', 20, 20, 144, 3, 'CEP: 99999-999 São Paulo - SP');
+      ImprimirTexto(orNormal, '0', 20, 20, 146, 1, '___________________________________________________________________');
+
+    end;
+    ImprimirEtiquetaComCopiasEAvanco;
+    Desativar;
+
+  end ;
 end;
 
 procedure TFPrincipal.cbModeloChange(Sender : TObject) ;

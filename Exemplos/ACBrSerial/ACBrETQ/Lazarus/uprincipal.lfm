@@ -557,6 +557,15 @@ object FPrincipal: TFPrincipal
       OnClick = bQRCodeClick
       TabOrder = 5
     end
+    object bEtqLogistica: TButton
+      Left = 16
+      Height = 32
+      Top = 256
+      Width = 150
+      Caption = 'Etiqueta de Envio'
+      OnClick = bEtqLogisticaClick
+      TabOrder = 6
+    end
   end
   object ACBrETQ: TACBrETQ
     Origem = ogTop

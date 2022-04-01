@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2022
+-- ACBrPagForConversao/ACBrPagForLerTxt --
+[*] Ajustes nos nomes dos bancos e correções para a leitura
+    correta do retorno.
+   Por: SuporteATInfo
+
 31/03/2022
 -- ACBrPagForGravarTxt/ACBrPagForLerTxt --
 [*] Mais ajustes para o Sicredi

@@ -900,12 +900,13 @@ begin
   if (FPagFor.Geral.Banco = pagItau) and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '01') then // Só processa se for GPS
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN1.New;
-  FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodMovimento := TInstrucaoMovimento(StrToInt(Copy(FArquivoTXT.Strings[i], 15, 3)));
-
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+        FPagFor.Lote.Last.SegmentoN1.New;
+        FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodMovimento := TInstrucaoMovimento(StrToInt(Copy(FArquivoTXT.Strings[i], 15, 3)));
+
         FPagFor.Lote.Last.SegmentoN1.Last.CodigoPagamento          := StrToCodigoPagamentoGps(mOk, Copy(FArquivoTXT.Strings[i], 20, 4));
         FPagFor.Lote.Last.SegmentoN1.Last.MesAnoCompetencia        := StrToInt(Copy(FArquivoTXT.Strings[i], 24, 6));
         FPagFor.Lote.Last.SegmentoN1.Last.idContribuinte           := Copy(FArquivoTXT.Strings[i], 30, 14);
@@ -999,12 +1000,13 @@ begin
   if (FPagFor.Geral.Banco = pagItau) and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '02') then // Só processa se for DARF
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN2.New;
-  FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
-
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+        FPagFor.Lote.Last.SegmentoN2.New;
+        FPagFor.Lote.Last.SegmentoN2.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+
         FPagFor.Lote.Last.SegmentoN2.Last.Receita                    := StrToInt(Copy(FArquivoTXT.Strings[i], 20, 4));
         FPagFor.Lote.Last.SegmentoN2.Last.TipoContribuinte           := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 24, 1));
         FPagFor.Lote.Last.SegmentoN2.Last.idContribuinte             := Copy(FArquivoTXT.Strings[i], 25, 14);
@@ -1105,12 +1107,13 @@ begin
   if (FPagFor.Geral.Banco = pagItau) and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '03') then // Só processa se for DARF Simples
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN3.New;
-  FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
-
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+        FPagFor.Lote.Last.SegmentoN3.New;
+        FPagFor.Lote.Last.SegmentoN3.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+
         FPagFor.Lote.Last.SegmentoN3.Last.Receita                    := StrToInt(Copy(FArquivoTXT.Strings[i], 0, 0));
         FPagFor.Lote.Last.SegmentoN3.Last.TipoContribuinte           := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
         FPagFor.Lote.Last.SegmentoN3.Last.idContribuinte             := Copy(FArquivoTXT.Strings[i], 0, 0);
@@ -1214,12 +1217,16 @@ begin
   if (FPagFor.Geral.Banco = pagItau) and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '05') then // Só processa se for GARE SP ICMS
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN4.New;
-  FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+  if (FPagFor.Geral.Banco <> pagItau) then // Teste para sair se for outro Banco
+    Exit;
 
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+        FPagFor.Lote.Last.SegmentoN4.New;
+        FPagFor.Lote.Last.SegmentoN4.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+
         FPagFor.Lote.Last.SegmentoN4.Last.Receita                    := StrToInt(Copy(FArquivoTXT.Strings[i], 20, 4));
         FPagFor.Lote.Last.SegmentoN4.Last.TipoContribuinte           := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 24, 1));
         FPagFor.Lote.Last.SegmentoN4.Last.idContribuinte             := Copy(FArquivoTXT.Strings[i], 25, 14);
@@ -1287,12 +1294,17 @@ begin
   if (FPagFor.Geral.Banco = pagItau) and (Pos(Copy(FArquivoTXT.Strings[i], 18, 2), '07 08') = 0) then // Só processa se for IPVA/DPVAT
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN567.New;
-  FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+  if (FPagFor.Geral.Banco <> pagItau) then // Teste para sair se for outro Banco
+    Exit;
+
 
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+        FPagFor.Lote.Last.SegmentoN567.New;
+        FPagFor.Lote.Last.SegmentoN567.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+
         FPagFor.Lote.Last.SegmentoN567.Last.TipoContribuinte           := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
         FPagFor.Lote.Last.SegmentoN567.Last.idContribuinte             := Copy(FArquivoTXT.Strings[i], 0, 0);
         FPagFor.Lote.Last.SegmentoN567.Last.Exercicio                  := StrToInt(Copy(FArquivoTXT.Strings[i], 0, 0));
@@ -1359,12 +1371,16 @@ begin
 
   if FPagFor.Geral.Banco = pagItau then exit; // Nao encontrei regsitro N8 para o Itau
 
-  FPagFor.Lote.Last.SegmentoN8.New;
-  FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+  if (FPagFor.Geral.Banco <> pagItau) then // Teste para sair se for outro Banco
+    Exit;
 
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+         FPagFor.Lote.Last.SegmentoN8.New;
+         FPagFor.Lote.Last.SegmentoN8.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+
         FPagFor.Lote.Last.SegmentoN8.Last.Receita                    := StrToInt(Copy(FArquivoTXT.Strings[i], 0, 0));
         FPagFor.Lote.Last.SegmentoN8.Last.TipoContribuinte           := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
         FPagFor.Lote.Last.SegmentoN8.Last.idContribuinte             := Copy(FArquivoTXT.Strings[i], 0, 0);
@@ -1431,12 +1447,16 @@ begin
   if (FPagFor.Geral.Banco = pagItau) and (Copy(FArquivoTXT.Strings[i], 18, 2) <> '11') then // Só processa se for FGTS
     Exit;
 
-  FPagFor.Lote.Last.SegmentoN9.New;
-  FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+  if (FPagFor.Geral.Banco <> pagItau) then // Teste para sair se for outro Banco
+    Exit;
 
   case FPagFor.Geral.Banco of
     pagItau:
       begin
+
+        FPagFor.Lote.Last.SegmentoN9.New;
+        FPagFor.Lote.Last.SegmentoN9.Last.SegmentoN.CodMovimento := StrToInMovimento(mOk, Copy(FArquivoTXT.Strings[i], 0, 0));
+
         FPagFor.Lote.Last.SegmentoN9.Last.Receita                    := StrToInt(Copy(FArquivoTXT.Strings[i], 0, 0));
 
         if FArquivoTXT.Strings[i] = '1' then // Nesse segmento, 1 = CNPJ e 2 = CEI

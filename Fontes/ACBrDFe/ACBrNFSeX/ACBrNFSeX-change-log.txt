@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 01/04/2022
+-- ISSCambe.GravarXml --
+[*] Ajuste para não gerar o grupo RPS.
+   Por: Marcos Villatore
+-- ISSCambe.Provider/ISSCambe.LerXml --
+[*] Ajustes na leitura do XML e tratamento do retorno.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Sorocaba trocou para o provedor DSF (ABRASF v2.03)
    Por: Italo Giurizzato Junior

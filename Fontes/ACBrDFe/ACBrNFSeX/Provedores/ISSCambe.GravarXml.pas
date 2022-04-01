@@ -228,8 +228,11 @@ begin
 
   FDocument.Root := NFSeNode;
 
-  xmlNode := GerarRPS;
-  NFSeNode.AppendChild(xmlNode);
+  if NFSe.IdentificacaoRps.Numero <> '' then
+  begin
+    xmlNode := GerarRPS;
+    NFSeNode.AppendChild(xmlNode);
+  end;
 
   xmlNode := GerarDadosPrestador;
   NFSeNode.AppendChild(xmlNode);

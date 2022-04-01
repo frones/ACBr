@@ -233,6 +233,8 @@ begin
       ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
+
+      Response.ArquivoRetorno := StringReplace(Response.ArquivoRetorno, '&', '&amp;', [rfReplaceAll]);
       {
       with Response do
       begin

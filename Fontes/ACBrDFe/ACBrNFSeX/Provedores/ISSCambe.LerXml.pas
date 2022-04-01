@@ -136,7 +136,12 @@ begin
   else
     NFSe.OptanteSimplesNacional := snNao;
 
-  //NFSe.IncentivoFiscal:=
+  aValor:=  ObterConteudo(AuxNode.Childrens.FindAnyNs('incentivoFiscal'), tcStr);
+
+  if aValor = 'true' then
+    NFSe.IncentivadorCultural := snSim
+  else
+    NFSe.IncentivadorCultural := snNao;
 
   aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('servicoISS'), tcStr);
 
@@ -148,7 +153,7 @@ begin
   begin
     ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('servicoValor'), tcDe2);
     //tipoDeducao
-    //valorDeducao
+
     BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorBaseCalculo'), tcDe2);
     Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('aliquota'), tcDe2) * 100;
     ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorISS'), tcDe2);
@@ -156,6 +161,8 @@ begin
 
   with NFSe.Servico.Valores do
   begin
+    ValorDeducoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('valorDeducao'), tcDe2);
+
     ValorServicos := NFSe.ValoresNfse.ValorLiquidoNfse;
     BaseCalculo := NFSe.ValoresNfse.BaseCalculo;
     Aliquota := NFSe.ValoresNfse.Aliquota;
@@ -214,8 +221,8 @@ begin
     begin
       Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorLogradouro'), tcStr);
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorNumero'), tcStr);
-      Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorBairro'), tcStr);
-      Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
+      Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorComplemento'), tcStr);
+      Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorBairro'), tcStr);
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorCEP'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorUF'), tcStr);
@@ -310,6 +317,7 @@ begin
     NFSe.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
     NFSe.Link := ObterConteudo(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+    NFSe.Link := StringReplace(NFSe.Link, '&amp;', '&', [rfReplaceAll]);
     NFSe.DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dataEmissao'), tcDatHor);
     NFSe.Competencia := LerCompetencia(AuxNode);
 
@@ -380,7 +388,7 @@ begin
   Document.Clear();
   Document.LoadFromXml(xRetorno);
 
-  if (Pos('NFe', xRetorno) > 0) then
+  if (Pos('DadosNFSe', xRetorno) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;

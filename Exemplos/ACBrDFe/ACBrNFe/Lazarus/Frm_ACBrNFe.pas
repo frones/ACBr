@@ -643,8 +643,8 @@ begin
       Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
       Prod.cProd    := '123456';
       Prod.cEAN     := '7896523206646';
-      Prod.xProd    := 'Descrição do Produto';
-      Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+      Prod.xProd    := 'Camisa Polo ACBr';
+      Prod.NCM      := '61051000';
       Prod.EXTIPI   := '';
       Prod.CFOP     := '5101';
       Prod.uCom     := 'UN';
@@ -662,7 +662,7 @@ begin
       Prod.vSeg      := 0;
       Prod.vDesc     := 0;
 
-      Prod.CEST := '1111111';
+      //Prod.CEST := '1111111';
 
 //         infAdProd      := 'Informação Adicional do Produto';
 
@@ -1129,8 +1129,8 @@ begin
   Produto.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
   Produto.Prod.cProd    := '123456';
   Produto.Prod.cEAN     := '7896523206646';
-  Produto.Prod.xProd    := 'TESTE DE PRODUTO';
-  Produto.Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+  Produto.Prod.xProd    := 'Camisa Polo ACBr';
+  Produto.Prod.NCM      := '61051000';
   Produto.Prod.EXTIPI   := '';
   Produto.Prod.CFOP     := '5101';
   Produto.Prod.uCom     := 'UN';
@@ -1148,7 +1148,7 @@ begin
   Produto.Prod.vSeg      := 0;
   Produto.Prod.vDesc     := 0;
 
-  Produto.Prod.CEST := '1111111';
+  //Produto.Prod.CEST := '1111111';
 
   Produto.infAdProd := 'Informacao Adicional do Produto';
 
@@ -2118,7 +2118,7 @@ begin
     {
       Envio de NF-e modelo 55
     }
-    ACBrNFe1.Enviar(vNumLote)
+    ACBrNFe1.Enviar(vNumLote, True, False, True)
   else
   begin
     {
@@ -2138,7 +2138,7 @@ begin
         Se o lote tem apenas 1 nota o envio tem que ser no modo
         síncrono (terceiro parâmetro tem que valer True)
       }
-      ACBrNFe1.Enviar(vNumLote, True, True);
+      ACBrNFe1.Enviar(vNumLote, True, True, True);
   end;
 
   pgRespostas.ActivePageIndex := 1;

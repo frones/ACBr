@@ -343,7 +343,7 @@ begin
                    Aliquota +
                 '</nfe:AlqIssSN_IP>';
     }
-    xOptante := '<TipoTrib>4</nfe:TipoTrib>' +
+    xOptante := '<TipoTrib>4</TipoTrib>' +
                 '<DtAdeSN>' +
                    FormatDateTime('dd/mm/yyyy', DataOptanteSimples) +
                 '</DtAdeSN>' +

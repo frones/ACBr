@@ -146,7 +146,7 @@ begin
 
       frlGuiaRLRetrato.SavePDF(Self,
           NomeArq,
-          TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[0].GNRE,
+          TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE,
           Email,
           Fax,
           NumCopias,

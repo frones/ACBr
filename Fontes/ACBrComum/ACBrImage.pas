@@ -106,7 +106,7 @@ procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
 implementation
 
 uses
-  Math, strutils, ACBrUtil, ACBrConsts, ACBrUtil.Strings, ACBrUtil.Math;
+  Math, strutils, ACBrUtil.Base, ACBrConsts, ACBrUtil.Strings, ACBrUtil.Math;
 
 // https://stackoverflow.com/questions/1689715/image-data-of-pcx-file
 function IsPCX(S: TStream; CheckIsMono: Boolean): Boolean;

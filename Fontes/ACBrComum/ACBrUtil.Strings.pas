@@ -48,8 +48,9 @@ interface
 
 Uses
   SysUtils, Math, Classes,
-  ACBrBase, ACBrConsts, IniFiles,
-  {$IfDef COMPILER6_UP} StrUtils, DateUtils {$Else} ACBrD5, FileCtrl {$EndIf}
+  ACBrBase, ACBrConsts, IniFiles
+//  {$IfDef HAS_UNIT_ANSISTRINGS} , AnsiStrings {$EndIf}
+  {$IfDef COMPILER6_UP}, StrUtils, DateUtils {$Else}, ACBrD5, FileCtrl {$EndIf}
   {$IfDef FPC}
     ,dynlibs, LazUTF8, LConvEncoding, LCLType
     {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
@@ -114,6 +115,7 @@ function AnsiChr( b: Byte) : AnsiChar;
 
 function LengthNativeString(const AString: String): Integer;
 function LeftStrNativeString(const AString: String; const ALen: Integer): String;
+function RightStrNativeString(const AString: String; const ALen: Integer): String;
 function PadRight(const AString : String; const nLen : Integer;
    const Caracter : Char = ' ') : String;
 function PadRightA(const AAnsiString : AnsiString; const nLen : Integer;
@@ -186,6 +188,7 @@ function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
 
 function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'): String;
 
+function UTF8Decode(const S: String): String;
 
 implementation
 
@@ -577,7 +580,27 @@ begin
   {$IfDef FPC}
    Result := UTF8LeftStr(AString, ALen);
   {$Else}
-   Result := LeftStr(AString, ALen);
+//    {$IfDef HAS_UNIT_ANSISTRINGS}
+//     Result := Ansistrings.LeftStr(AString, ALen);
+//    {$Else}
+     Result := LeftStr(AString, ALen);
+//    {$EndIf}
+  {$EndIf}
+end;
+
+{-----------------------------------------------------------------------------
+  Semelhante a RightStr(), mas trata corretanmente Strings em UTF8 no FPC
+ ---------------------------------------------------------------------------- }
+function RightStrNativeString(const AString: String; const ALen: Integer): String;
+begin
+  {$IfDef FPC}
+   Result := UTF8RightStr(AString, ALen);
+  {$Else}
+//    {$IfDef HAS_UNIT_ANSISTRINGS}
+//     Result := Ansistrings.RightStr(AString, ALen);
+//    {$Else}
+     Result := RightStr(AString, ALen);
+//    {$EndIf}
   {$EndIf}
 end;
 
@@ -1563,6 +1586,14 @@ begin
   end
 end;
 
+function UTF8Decode(const S: String): String;
+begin
+  {$IfDef COMPILER6_UP}
+    Result := System.UTF8ToString(S);
+  {$Else}
+   Result := System.UTF8Decode(S);
+  {$EndIf}
+end;
 
 initialization
 {$IfDef FPC}

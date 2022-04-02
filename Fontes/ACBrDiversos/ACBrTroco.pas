@@ -135,7 +135,7 @@ TTrocoList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TTroco>{$EndIf})
   end;
 
 implementation
-uses ACBrUtil, Math;
+uses Math, ACBrUtil.Base, ACBrUtil.Math, ACBrUtil.Strings;
 
 {-------------------------------- TACBrTroco ---------------------------------}
 constructor TACBrTroco.Create( AOwner: TComponent );

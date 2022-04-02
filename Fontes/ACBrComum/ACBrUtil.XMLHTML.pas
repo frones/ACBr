@@ -101,8 +101,6 @@ procedure EncontrarInicioFinalTag(const aText, ATag: String; var PosIni, PosFim:
 function StripHTML(const AHTMLString : String) : String;
 procedure AcharProximaTag(const ABinaryString: AnsiString; const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 
-
-
 implementation
 
 uses

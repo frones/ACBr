@@ -102,6 +102,7 @@ Procedure FindFiles( const FileMask : String; AStringList : TStrings;
   SortDirection: TFindFileSortDirection = fsdNone ) ;
 Procedure FindSubDirectories( const APath: String; AStringList : TStrings;
   IncludePath : Boolean = True ) ;
+function FileAgeACBr(const FileName: string): TDateTime;
 Function FilesExists(const FileMask: String) : Boolean ;
 Procedure DeleteFiles(const FileMask: String; RaiseExceptionOnFail : Boolean = True)  ;
 Procedure TryDeleteFile(const AFile: String; WaitTime: Integer = 1000)  ;
@@ -559,6 +560,19 @@ begin
   finally
      SysUtils.FindClose(SearchRec) ;
   end ;
+end;
+
+function FileAgeACBr(const FileName: string): TDateTime;
+begin
+{$IfDef FPC}
+  SysUtils.FileAge(FileName, Result);
+{$ELSE}
+  {$IfDef DELPHI2007_UP}
+    SysUtils.FileAge(FileName, Result);
+  {$ELSE}
+    Result:= FileDateToDateTime(SysUtils.FileAge(FileName));
+  {$ENDIF}
+{$ENDIF}
 end;
 
 {-----------------------------------------------------------------------------

@@ -100,7 +100,7 @@ procedure Register ;
 //{$ENDIF}
 implementation
 
-Uses ACBrUtil, ACBrAAC ;
+Uses ACBrUtil.Base, ACBrAAC ;
 {$IFNDEF FPC}
    {$R DCLACBrComum.dcr}
 {$ENDIF}

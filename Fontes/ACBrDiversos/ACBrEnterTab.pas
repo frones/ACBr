@@ -99,7 +99,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 { TACBrEnterTab }
 constructor TACBrEnterTab.Create(AOwner: TComponent);

@@ -324,7 +324,8 @@ type
 
 implementation
 
-Uses ACBrUtil, strutils, math ;
+Uses
+  strutils, math, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrECFEmpresa }
 

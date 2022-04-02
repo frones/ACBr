@@ -62,7 +62,7 @@ type
 procedure Register;
 
 implementation
-Uses ACBrReg, ACBrEnterTab, ACBrUtil, ACBrGIF, ACBrCargaBal,
+Uses ACBrReg, ACBrEnterTab, ACBrUtil.Base, ACBrGIF, ACBrCargaBal,
      ACBrCalculadora, ACBrExtenso, ACBrTroco, ACBrValidador,
      ACBrCMC7, ACBrFala, ACBrBarCode, ACBrInStore, SysUtils;
 

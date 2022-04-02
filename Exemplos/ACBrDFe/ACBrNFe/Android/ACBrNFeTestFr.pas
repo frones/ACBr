@@ -47,8 +47,11 @@ uses
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView,  FMX.VirtualKeyboard,
   FileSelectFrame,
-  ACBrPosPrinterElginE1Service, ACBrPosPrinterElginE1Lib,
-  ACBrPosPrinterGEDI,
+  ACBrPosPrinterElginE1Service,
+  {$IfDef ANDROID}
+   ACBrPosPrinterElginE1Lib,
+   ACBrPosPrinterGEDI,
+  {$EndIf}
   ACBrIBGE, ACBrSocket, ACBrCEP,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrPosPrinter, ACBrDFe, ACBrNFe, ACBrBase, ACBrMail, FMX.Memo.Types;
@@ -260,9 +263,9 @@ type
     ShadowEffect2: TShadowEffect;
     GridPanelLayout1: TGridPanelLayout;
     laBtnTestes: TLayout;
-    Image2: TImage;
+    iTestes: TImage;
     ShadowEffect3: TShadowEffect;
-    Label27: TLabel;
+    lTestes: TLabel;
     laBtnConfiguracao: TLayout;
     Image3: TImage;
     ShadowEffect4: TShadowEffect;
@@ -437,8 +440,10 @@ type
   private
     { Private declarations }
     fE1Printer: TACBrPosPrinterElginE1Service;
-    fGEDIPrinter: TACBrPosPrinterGEDI;
-    fE1Lib: TACBrPosPrinterElginE1Lib;
+    {$IfDef ANDROID}
+     fGEDIPrinter: TACBrPosPrinterGEDI;
+     fE1Lib: TACBrPosPrinterElginE1Lib;
+    {$EndIf}
 
     FVKService: IFMXVirtualKeyboardService;
     FcMunList: TStringList;
@@ -501,6 +506,7 @@ implementation
 
 uses
   System.typinfo, System.IniFiles, System.StrUtils, System.Permissions, System.IOUtils,
+  System.DateUtils,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes, Androidapi.IOUtils,
   Androidapi.JNI.Widget, FMX.Helpers.Android,
@@ -509,7 +515,12 @@ uses
   FileSelectFr,
   ssl_openssl_lib, blcksock, ACBrLibXml2,
   pcnConversao, pcnConversaoNFe,
-  ACBrUtil, ACBrConsts, ACBrValidador,
+  ACBrConsts, ACBrValidador,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.Math,
   ACBrDFeSSL, ACBrDFeUtil;
 
 {$R *.fmx}
@@ -549,10 +560,12 @@ begin
   // Criando Classes de Impressoras Externas //
   fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
   fE1Printer.Modelo := TElginE1Printers.prnSmartPOS;
+  {$IfDef ANDROID}
   fE1Printer.OnErroImpressao := ExibirErroImpressaoE1;
   fGEDIPrinter := TACBrPosPrinterGEDI.Create(ACBrPosPrinter1);
   fE1Lib := TACBrPosPrinterElginE1Lib.Create(ACBrPosPrinter1);
   fE1Lib.Modelo := TElginE1LibPrinters.prnM8;
+  {$EndIf}
 
   imgErrorCep.Bitmap := ImageList1.Bitmap(TSizeF.Create(imgErrorCep.Width,imgErrorCep.Height),14);
   imgErrorCNPJ.Bitmap := imgErrorCep.Bitmap;
@@ -607,8 +620,10 @@ begin
   FcMunList.Free;
   FTabList.Free;
   fE1Printer.Free;
+  {$IfDef ANDROID}
   fGEDIPrinter.Free;
   fE1Lib.Free;
+  {$EndIf}
 end;
 
 procedure TACBrNFCeTestForm.AppExceptionHandle(Sender: TObject; E: Exception);
@@ -917,6 +932,7 @@ end;
 procedure TACBrNFCeTestForm.btnGerarNFCeClick(Sender: TObject);
 var
   NomeArqXML: string;
+  tini, tfim: TDateTime;
 begin
   if swEmailNFCe.IsChecked then
     VerificarErrosDeConfiguracaoEmail;
@@ -924,6 +940,10 @@ begin
   if swImprimirNFCe.IsChecked then
     VerificarErrosDeConfiguracaoImpressora;
 
+  tini := now;
+  mLog.Lines.Clear;
+  mLog.Lines.Add('-- Inicio: '+FormatDateTimeBr(tini,'hh:nn:ss.zzz') + ' --');
+  mLog.Lines.Add('----- Criando XML NFCe -----');
   OperacaoNFCe := opGerando;
   CriarNFCe;
 
@@ -937,7 +957,6 @@ begin
   ACBrNFe1.NotasFiscais.GravarXML;
 
   NomeArqXML := ACBrNFe1.NotasFiscais.Items[0].NomeArq;
-  mLog.Lines.Clear;
   mLog.Lines.Add('----- Gerar NFCe -----');
   mLog.Lines.Add('Arquivo gerado em:');
   mLog.Lines.Add(NomeArqXML);
@@ -950,10 +969,13 @@ begin
   begin
     OperacaoNFCe := opTransmitindo;
     EnviarNFCe;
+    tfim := Now;
+    mLog.Lines.Add( '-- Enviado em: '+FormatFloat('##0.000', SecondSpan(tini,tfim))+' segundos --' );
   end;
 
   if swImprimirNFCe.IsChecked then
   begin
+    tini := now;
     OperacaoNFCe := opImprimindo;
     ImprimirNFCe;
   end;
@@ -1501,12 +1523,16 @@ begin
 
   if rbClasseExterna.IsChecked then
   begin
+    {$IfDef ANDROID}
     case cbxModelo.ItemIndex of
       0: ACBrPosPrinter1.ModeloExterno := fE1Printer;
       1: ACBrPosPrinter1.ModeloExterno := fE1Lib;
     else
       ACBrPosPrinter1.ModeloExterno := fGEDIPrinter;
     end;
+    {$Else}
+     ACBrPosPrinter1.ModeloExterno := fE1Printer;
+    {$EndIf}
 
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf('NULL');
   end
@@ -1752,7 +1778,7 @@ begin
 
   ACBrNFe1.Enviar(IntToStr(Trunc(sbLote.Value)), False, True, False);  // NãoImprimir, Sincrono
 
-  mLog.Lines.Clear;
+  //mLog.Lines.Clear;
   mLog.Lines.Add('----- RetWS -----');
   mLog.Lines.Add( XML.XMLDoc.FormatXMLData(UTF8ToNativeString(
     ACBrNFe1.WebServices.Enviar.RetWS )));
@@ -1825,7 +1851,8 @@ end;
 procedure TACBrNFCeTestForm.ExibirLogs;
 begin
   TabForward(tabLog) ;
-  mLog.ScrollBy(0, mlog.ContentBounds.Height, True);
+  mLog.ScrollToTop(False);
+  mLog.GoToTextEnd;
 end;
 
 procedure TACBrNFCeTestForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -1867,6 +1894,12 @@ var
   OffSet, NovoY: Extended;
   AParent: TControl;
 begin
+  if (Sender = mLog) then
+  begin
+    KeyboardVisible := False;
+    Exit;
+  end;
+
   if not Assigned(FControlToCenter) then
     Exit;
 
@@ -2501,8 +2534,8 @@ begin
       Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
       Prod.cProd    := '123456';
       Prod.cEAN     := '7896523206646';
-      Prod.xProd    := 'Descrição do Produto. Teste acentos ÁÉÍÓÚ';
-      Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+      Prod.xProd    := 'Camisa Polo ACBr';
+      Prod.NCM      := '61051000'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
       Prod.EXTIPI   := '';
       Prod.CFOP     := '5101';
       Prod.uCom     := 'UN';

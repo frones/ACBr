@@ -41,7 +41,7 @@ uses
   ACBrBase, ACBrPosPrinter,
   ACBrPosPrinterElginE1Service,
   {$IfDef ANDROID}
-  ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib,
+   ACBrPosPrinterGEDI, ACBrPosPrinterElginE1Lib,
   {$EndIf}
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.ListBox, FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.SpinBox,
@@ -95,7 +95,7 @@ type
     GridPanelLayout4: TGridPanelLayout;
     btnImprimir: TCornerButton;
     btnLimpar: TCornerButton;
-    ListBoxItem1: TListBoxItem;
+    lbCodBarras: TListBoxItem;
     GridPanelLayout5: TGridPanelLayout;
     Label1: TLabel;
     Label4: TLabel;

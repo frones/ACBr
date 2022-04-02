@@ -1832,7 +1832,7 @@ Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
-     ACBrBancoBradescoMoneyPlus,ACBrBancoC6,ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
+     ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
      ACBrBancoBS2;
 
 {$IFNDEF FPC}

@@ -197,28 +197,44 @@ begin
 
   with ACBrETQ do
   begin
-     if not (ETQ is TACBrETQZplII) then
-      begin
-        ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
-        ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'M…DIO PORTE');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
-        ImprimirCaixa(10,32,56,13,1,1);
-        ImprimirTexto(orNormal, 3, 3, 2, 16, 35, 'R$');
-        ImprimirTexto(orNormal, 3, 4, 4, 12, 50, '20,59');
-      end
-      else
-      begin
-        ImprimirCaixa(3,3,90,5,5,0, 4);
-        ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
-        ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'M…DIO PORTE');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
-        ImprimirCaixa(13,32,56,17,1,1);
-        ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
-        ImprimirTexto(orNormal, 'G', 55, 100, 15, 50, '20,59');
-      end;
+    if (Modelo = etqZPLII) then
+    begin
+      ImprimirCaixa(3,3,90,5,5,0, 4);
+      ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
+      ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'M…DIO PORTE');
+      ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+      ImprimirCaixa(13,32,56,17,1,1);
+      ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
+      ImprimirTexto(orNormal, 'G', 55, 100, 15, 50, '20,59');
+    end
+    else if (Modelo = etqEscLabel) then
+    begin
+      DefinirCor(clBlue, 255, clYellow, 200);
+      ImprimirCaixa(2,1,85,7,7,0,4);
+      DefinirCorPadrao;
+      ImprimirTexto(orNormal, 'T', 9, 9, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
+      ImprimirTexto(orNormal, 'S', 9, 7, 9, 3, 'M…DIO PORTE');
+      DefinirCor(clRed, 255, clWhite, 0);
+      ImprimirBarras(orNormal, barEAN13, 2, 2, 15, 5, '7896003701685', 10, becSIM);
+      DefinirCor(clBlack, 255, clGreen, 150);
+      ImprimirCaixa(13,32,56,17,1,1);
+      DefinirCorPadrao;
+      ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');
+      ImprimirTexto(orNormal, 'G', 55, 100, 15, 50, '20,59');
+    end
+    else
+    begin
+      DefinirCor(clBlue, 0, 0, 0);
+      ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'RA«√O PARA C√ES ¡…Õ”⁄ 5KG', 0, True);
+      ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'M…DIO PORTE');
+      ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+      ImprimirCaixa(10,32,56,13,1,1);
+      ImprimirTexto(orNormal, 3, 3, 2, 16, 35, 'R$');
+      ImprimirTexto(orNormal, 3, 4, 4, 12, 50, '20,59');
+    end;
 
-     ImprimirEtiquetaComCopiasEAvanco;
-     Desativar;
+    ImprimirEtiquetaComCopiasEAvanco;
+    Desativar;
   end;
 end;
 

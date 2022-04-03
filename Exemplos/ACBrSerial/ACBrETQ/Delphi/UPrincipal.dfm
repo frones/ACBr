@@ -2,7 +2,7 @@ object FPrincipal: TFPrincipal
   Left = 621
   Top = 301
   Width = 756
-  Height = 379
+  Height = 390
   Caption = 'Impress'#227'o de Etiquetas'
   Color = clBtnFace
   Constraints.MinHeight = 340
@@ -21,19 +21,18 @@ object FPrincipal: TFPrincipal
     Left = 0
     Top = 0
     Width = 246
-    Height = 340
+    Height = 351
     Align = alLeft
     Caption = 'Configura'#231#245'es da Impressora'
     TabOrder = 0
     DesignSize = (
       246
-      340)
+      351)
     object lbModelo: TLabel
       Left = 136
       Top = 21
       Width = 38
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Modelo:'
     end
     object lbPorta: TLabel
@@ -41,7 +40,6 @@ object FPrincipal: TFPrincipal
       Top = 21
       Width = 28
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Porta:'
     end
     object lbAvanco: TLabel
@@ -56,7 +54,6 @@ object FPrincipal: TFPrincipal
       Top = 66
       Width = 75
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'DPI Impressora:'
     end
     object lbTemperatura: TLabel
@@ -64,7 +61,6 @@ object FPrincipal: TFPrincipal
       Top = 66
       Width = 63
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Temperatura:'
     end
     object lbBackFeed: TLabel
@@ -72,7 +68,6 @@ object FPrincipal: TFPrincipal
       Top = 157
       Width = 52
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'BackFeed:'
     end
     object lbMargem: TLabel
@@ -81,7 +76,6 @@ object FPrincipal: TFPrincipal
       Width = 89
       Height = 13
       Hint = 'Utilize '#39'-1'#39' para usar velocidade padr'#227'o da impressora'
-      Anchors = [akLeft, akBottom]
       Caption = 'Margem Esquerda:'
     end
     object lbTemperatura2: TLabel
@@ -90,7 +84,6 @@ object FPrincipal: TFPrincipal
       Width = 56
       Height = 13
       Hint = 'Utilize '#39'-1'#39' para usar velocidade padr'#227'o da impressora'
-      Anchors = [akLeft, akBottom]
       Caption = 'Velocidade:'
     end
     object lbBackFeed1: TLabel
@@ -98,7 +91,6 @@ object FPrincipal: TFPrincipal
       Top = 201
       Width = 36
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Origem:'
     end
     object Label5: TLabel
@@ -221,7 +213,7 @@ object FPrincipal: TFPrincipal
     end
     object bConfSalvar: TButton
       Left = 14
-      Top = 275
+      Top = 286
       Width = 94
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -231,7 +223,7 @@ object FPrincipal: TFPrincipal
     end
     object bConfLer: TButton
       Left = 134
-      Top = 275
+      Top = 286
       Width = 94
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -244,18 +236,18 @@ object FPrincipal: TFPrincipal
     Left = 246
     Top = 0
     Width = 309
-    Height = 340
+    Height = 351
     Align = alClient
     Caption = 'Carregar Imagem'
     TabOrder = 1
     DesignSize = (
       309
-      340)
+      351)
     object Image1: TImage
       Left = 2
       Top = 15
       Width = 305
-      Height = 200
+      Height = 211
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
       Center = True
@@ -377,7 +369,7 @@ object FPrincipal: TFPrincipal
     end
     object lbNomeImg: TLabel
       Left = 15
-      Top = 227
+      Top = 238
       Width = 111
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -385,7 +377,7 @@ object FPrincipal: TFPrincipal
     end
     object edNomeImg: TEdit
       Left = 15
-      Top = 240
+      Top = 251
       Width = 258
       Height = 21
       Anchors = [akLeft, akBottom]
@@ -394,7 +386,7 @@ object FPrincipal: TFPrincipal
     end
     object bCarregarImg: TButton
       Left = 15
-      Top = 270
+      Top = 281
       Width = 152
       Height = 32
       Anchors = [akLeft, akBottom]
@@ -404,7 +396,7 @@ object FPrincipal: TFPrincipal
     end
     object rbStream: TRadioButton
       Left = 183
-      Top = 287
+      Top = 298
       Width = 87
       Height = 19
       Anchors = [akLeft, akBottom]
@@ -415,7 +407,7 @@ object FPrincipal: TFPrincipal
     end
     object rbArquivo: TRadioButton
       Left = 183
-      Top = 270
+      Top = 281
       Width = 90
       Height = 19
       Anchors = [akLeft, akBottom]
@@ -427,16 +419,16 @@ object FPrincipal: TFPrincipal
     Left = 555
     Top = 0
     Width = 185
-    Height = 340
+    Height = 351
     Align = alRight
     Caption = 'Impress'#227'o'
     TabOrder = 2
     DesignSize = (
       185
-      340)
+      351)
     object lbCopias: TLabel
       Left = 16
-      Top = 21
+      Top = 32
       Width = 47
       Height = 13
       Anchors = [akLeft, akBottom]

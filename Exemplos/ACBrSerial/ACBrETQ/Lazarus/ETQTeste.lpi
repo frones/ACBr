@@ -100,19 +100,18 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UPrincipal"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="368"/>
-        <CursorPos X="25" Y="381"/>
+        <TopLine Value="201"/>
+        <CursorPos X="27" Y="213"/>
         <UsageCount Value="200"/>
-        <Bookmarks Count="2">
-          <Item0 X="3" Y="539" ID="2"/>
-          <Item1 X="15" Y="135" ID="1"/>
+        <Bookmarks Count="1">
+          <Item0 X="3" Y="557" ID="2"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrSerial-change-log.txt"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="38"/>
         <CursorPos X="66" Y="47"/>
         <UsageCount Value="104"/>
@@ -122,16 +121,16 @@
       <Unit3>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="241"/>
-        <CursorPos Y="257"/>
+        <TopLine Value="187"/>
+        <CursorPos X="25" Y="204"/>
         <UsageCount Value="111"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="334"/>
-        <CursorPos X="27" Y="345"/>
+        <TopLine Value="297"/>
+        <CursorPos X="12" Y="310"/>
         <UsageCount Value="112"/>
         <Loaded Value="True"/>
       </Unit4>
@@ -144,25 +143,28 @@
       </Unit5>
       <Unit6>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQEpl2.pas"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="93"/>
-        <CursorPos X="3" Y="116"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="91"/>
+        <CursorPos X="84" Y="107"/>
         <UsageCount Value="112"/>
+        <Bookmarks Count="1">
+          <Item0 X="50" Y="461" ID="1"/>
+        </Bookmarks>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQPpla.pas"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="329"/>
-        <CursorPos X="25" Y="346"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="104"/>
+        <CursorPos X="84" Y="120"/>
         <UsageCount Value="112"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="105"/>
-        <CursorPos X="17" Y="126"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="588"/>
+        <CursorPos Y="607"/>
         <UsageCount Value="112"/>
         <Loaded Value="True"/>
       </Unit8>
@@ -208,7 +210,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="130"/>
         <CursorPos X="53" Y="156"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit14>
       <Unit15>
@@ -234,10 +236,10 @@
       </Unit17>
       <Unit18>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQEscLabel.pas"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="47"/>
         <CursorPos X="3" Y="72"/>
-        <UsageCount Value="90"/>
+        <UsageCount Value="94"/>
         <Loaded Value="True"/>
       </Unit18>
       <Unit19>
@@ -307,140 +309,138 @@
       </Unit27>
       <Unit28>
         <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrUtil.Math.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="558"/>
         <CursorPos X="3" Y="590"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit28>
       <Unit29>
         <Filename Value="..\..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="358"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit29>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="360" TopLine="341"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
+        <Caret Line="302" Column="3" TopLine="295"/>
       </Position1>
       <Position2>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="214" TopLine="197"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
+        <Caret Line="301" TopLine="294"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="215" TopLine="197"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
+        <Caret Line="165" Column="31" TopLine="136"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="216" TopLine="197"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <Caret Line="603" Column="14" TopLine="588"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="219" TopLine="200"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <Caret Line="604" TopLine="588"/>
       </Position5>
       <Position6>
         <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="220" TopLine="200"/>
+        <Caret Line="209" Column="35" TopLine="192"/>
       </Position6>
       <Position7>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="227" TopLine="206"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="510" Column="13" TopLine="507"/>
       </Position7>
       <Position8>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="229" TopLine="206"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="405" TopLine="395"/>
       </Position8>
       <Position9>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="232" TopLine="209"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <Caret Line="604" TopLine="588"/>
       </Position9>
       <Position10>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="234" TopLine="209"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <Caret Line="606" TopLine="588"/>
       </Position10>
       <Position11>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="257" TopLine="241"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <Caret Line="605" TopLine="588"/>
       </Position11>
       <Position12>
-        <Filename Value="uprincipal.pas"/>
-        <Caret Line="388" TopLine="368"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQZplII.pas"/>
+        <Caret Line="606" TopLine="588"/>
       </Position12>
       <Position13>
         <Filename Value="uprincipal.pas"/>
-        <Caret Line="383" Column="48" TopLine="368"/>
+        <Caret Line="402" Column="23" TopLine="395"/>
       </Position13>
       <Position14>
         <Filename Value="uprincipal.pas"/>
-        <Caret Line="386" TopLine="368"/>
+        <Caret Line="404" Column="15" TopLine="395"/>
       </Position14>
       <Position15>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="378" TopLine="361"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="402" TopLine="395"/>
       </Position15>
       <Position16>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="379" TopLine="361"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="403" TopLine="395"/>
       </Position16>
       <Position17>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="380" TopLine="361"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="405" Column="26" TopLine="395"/>
       </Position17>
       <Position18>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="358" TopLine="341"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="402" TopLine="395"/>
       </Position18>
       <Position19>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="359" TopLine="341"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="406" Column="18" TopLine="395"/>
       </Position19>
       <Position20>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="360" TopLine="341"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="403" Column="33" TopLine="395"/>
       </Position20>
       <Position21>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="214" TopLine="197"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="402" TopLine="395"/>
       </Position21>
       <Position22>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="215" TopLine="197"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="407" Column="49" TopLine="395"/>
       </Position22>
       <Position23>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="216" TopLine="197"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="466" TopLine="410"/>
       </Position23>
       <Position24>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="219" TopLine="197"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="106" Column="16" TopLine="90"/>
       </Position24>
       <Position25>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="220" TopLine="197"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="116" Column="88" TopLine="90"/>
       </Position25>
       <Position26>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="227" TopLine="199"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="418" Column="73" TopLine="396"/>
       </Position26>
       <Position27>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="229" TopLine="204"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="327" Column="3" TopLine="325"/>
       </Position27>
       <Position28>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="232" TopLine="204"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="407" Column="12" TopLine="396"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="234" TopLine="209"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="109" Column="16" TopLine="93"/>
       </Position29>
       <Position30>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <Caret Line="257" TopLine="241"/>
+        <Filename Value="uprincipal.pas"/>
+        <Caret Line="254" Column="49" TopLine="235"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -483,7 +483,7 @@
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="uprincipal.pas"/>
-        <Line Value="386"/>
+        <Line Value="523"/>
       </Item1>
     </BreakPoints>
     <Exceptions Count="6">

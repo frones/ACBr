@@ -1,7 +1,7 @@
 object FPrincipal: TFPrincipal
-  Left = 631
+  Left = 483
   Height = 346
-  Top = 238
+  Top = 220
   Width = 740
   Caption = 'Impressão de Etiquetas'
   ClientHeight = 346
@@ -521,7 +521,7 @@ object FPrincipal: TFPrincipal
     object bEtqCarreiras: TButton
       Left = 16
       Height = 32
-      Top = 95
+      Top = 88
       Width = 150
       BorderSpacing.InnerBorder = 4
       Caption = 'Etiqueta 3 Colunas'
@@ -531,7 +531,7 @@ object FPrincipal: TFPrincipal
     object bImprimirImagem: TButton
       Left = 16
       Height = 32
-      Top = 175
+      Top = 154
       Width = 150
       Caption = 'Imprimir Imagem'
       OnClick = bImprimirImagemClick
@@ -540,7 +540,7 @@ object FPrincipal: TFPrincipal
     object bEtqBloco: TButton
       Left = 16
       Height = 32
-      Top = 135
+      Top = 121
       Width = 150
       BorderSpacing.InnerBorder = 4
       Caption = 'Bloco de Etiquetas'
@@ -550,21 +550,31 @@ object FPrincipal: TFPrincipal
     object bQRCode: TButton
       Left = 16
       Height = 32
-      Top = 215
+      Top = 220
       Width = 150
       BorderSpacing.InnerBorder = 4
       Caption = 'Imprimir QRCode'
       OnClick = bQRCodeClick
-      TabOrder = 5
+      TabOrder = 6
     end
     object bEtqLogistica: TButton
       Left = 16
       Height = 32
-      Top = 256
+      Top = 253
       Width = 150
       Caption = 'Etiqueta de Envio'
       OnClick = bEtqLogisticaClick
-      TabOrder = 6
+      TabOrder = 7
+    end
+    object bApagarImagem: TButton
+      Left = 16
+      Height = 32
+      Top = 187
+      Width = 150
+      BorderSpacing.InnerBorder = 4
+      Caption = 'Apagar Imagem'
+      OnClick = bApagarImagemClick
+      TabOrder = 5
     end
   end
   object ACBrETQ: TACBrETQ

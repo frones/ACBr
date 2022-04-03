@@ -53,6 +53,7 @@ type
     bConfSalvar: TButton;
     bConfLer: TButton;
     bEtqLogistica: TButton;
+    bApagarImagem: TButton;
     cbBackFeed: TComboBox;
     cbDeteccaoEtiqueta: TComboBox;
     cbOrigem: TComboBox;
@@ -76,6 +77,7 @@ type
     lbAvanco: TLabel;
     lbBackFeed: TLabel;
     lbBackFeed1: TLabel;
+    lbBackFeed2: TLabel;
     lbCopias: TLabel;
     lbDPI: TLabel;
     lbModelo: TLabel;
@@ -87,6 +89,7 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     rbArquivo: TRadioButton;
     rbStream: TRadioButton;
+    procedure bApagarImagemClick(Sender: TObject);
     procedure bConfLerClick(Sender: TObject);
     procedure bConfSalvarClick(Sender: TObject);
     procedure bEtqBlocoClick(Sender: TObject);
@@ -319,6 +322,18 @@ begin
   LerParametros;
 end;
 
+procedure TFPrincipal.bApagarImagemClick(Sender: TObject);
+begin
+  if (edNomeImg.Text = '') then
+  begin
+    ShowMessage('Escreva o nome para a Imagem a ser removida, use * para todas');
+    Exit;
+  end;
+
+  ConfigurarACBrETQ;
+  ACBrETQ.ApagarImagem(edNomeImg.Text);
+end;
+
 procedure TFPrincipal.bConfSalvarClick(Sender: TObject);
 begin
   GravarParametros;
@@ -385,9 +400,9 @@ begin
   with ACBrETQ do
   begin
     if (Modelo = etqEscLabel) then
-       DefinirDimensoes(104, trunc(RoundTo(ConverterUnidade(etqDots, 1871, Unidade, DPI),0)), 0, 0);
+       DefinirDimensoes(104, 149 {trunc(RoundTo(ConverterUnidade(etqDots, Image1.Height, Unidade, DPI),0))}, -1, -1);
 
-    ImprimirImagem(1,1,1,edNomeImg.Text);
+    ImprimirImagem(1,0,1,edNomeImg.Text);
     ImprimirEtiquetaComCopiasEAvanco;
     Desativar;
   end ;
@@ -505,6 +520,9 @@ begin
     end
     else
     begin
+      if (Modelo = etqEscLabel) then
+        DefinirDimensoes(104, 150, 0, 0);
+
       ImprimirImagem(1,7,4,edNomeImg.Text);
       ImprimirQRCode( 2, 55, 'www.projetoacbr.com.br', 8 );
       ImprimirTexto(orNormal, '0', 30, 20, 22, 1, 'www.projetoacbr.com.br');

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/04/02 11:11:47.000.776,=C:\Users\dopid\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/04/02 11:15:37.000.987,C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSerial\ACBrETQ\Android\FormPrincipal.pas=C:\Users\dopid\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/04/02 11:15:37.000.987,C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSerial\ACBrETQ\Android\FormPrincipal.fmx=C:\Users\dopid\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2022/04/02 11:15:45.000.484,C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSerial\ACBrETQ\Android\ACBrEpsonColorWorksDemo.dproj=C:\Users\dopid\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile Android="" Android64="TS08P0B540036"/>
+	</ActiveMobileDevice>
+</BorlandProject>

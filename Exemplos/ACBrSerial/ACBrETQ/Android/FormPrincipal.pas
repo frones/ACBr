@@ -195,6 +195,7 @@ type
     img_devm: TImage;
     img_devf: TImage;
     img_cao: TImage;
+    img_misto: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
@@ -224,6 +225,13 @@ type
     procedure img_devmClick(Sender: TObject);
     procedure img_devfClick(Sender: TObject);
     procedure img_caoClick(Sender: TObject);
+    procedure img_leiaClick(Sender: TObject);
+    procedure img_superClick(Sender: TObject);
+    procedure img_wonderClick(Sender: TObject);
+    procedure img_mascClick(Sender: TObject);
+    procedure img_feminClick(Sender: TObject);
+    procedure img_acessivelClick(Sender: TObject);
+    procedure img_mistoClick(Sender: TObject);
   private
     FTabList: TList<TTabItem>;
     FImgFile: String;
@@ -248,9 +256,12 @@ type
     procedure ImpressaoTextoAdicionalBrancoFundoMaisColorWorks;
     procedure ImpressaoTextoAdicionalBrancoFundo;
     procedure ImpressaoTextoAdicionalPretoFundo;
+    procedure ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca;
     procedure ImpressaoTextoWiFi;
-    procedure ImpressaoTextoWC;
+    procedure ImpressaoTextoWCPretoFundo;
+    procedure ImpressaoTextoWCBrancoTopo;
     procedure ImpressaoColorWorks;
+    procedure ImpressaoACBrLateralBranca;
 
     procedure IrParaImpressao(AImg: TBitmap; ImgFile: String;
       MaxChars: Integer; ProcImpressao: TProc);
@@ -390,6 +401,7 @@ begin
   img_masc.Bitmap.LoadFromFile(CalcularPathImagem('wc','masc'));
   img_femin.Bitmap.LoadFromFile(CalcularPathImagem('wc','femin'));
   img_acessivel.Bitmap.LoadFromFile(CalcularPathImagem('wc','acessivel'));
+  img_misto.Bitmap.LoadFromFile(CalcularPathImagem('wc','misto'));
 
   img_wifi.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','wifi'));
   img_fumar.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','fumar'));
@@ -465,6 +477,7 @@ end;
 
 procedure TFrPrincipal.laBtnWCClick(Sender: TObject);
 begin
+  FTextoImpressao := 'QUE A FORÇA ESTEJA COM VOCÊ';
   TabForward(tabWC);
 end;
 
@@ -552,6 +565,13 @@ begin
   TabForward(tabConfig);
 end;
 
+procedure TFrPrincipal.img_acessivelClick(Sender: TObject);
+begin
+  IrParaImpressao( img_acessivel.Bitmap,
+                   CalcularPathImagem('wc', 'acessivel'),
+                   30, ImpressaoTextoWCBrancoTopo);
+end;
+
 procedure TFrPrincipal.img_brasilClick(Sender: TObject);
 begin
   IrParaImpressao( img_brasil.Bitmap,
@@ -590,22 +610,22 @@ end;
 procedure TFrPrincipal.img_dartClick(Sender: TObject);
 begin
   IrParaImpressao( img_dart.Bitmap,
-                   CalcularPathImagem('frases', 'falha'),
-                   26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
+                   CalcularPathImagem('wc', 'dart'),
+                   30, ImpressaoTextoWCPretoFundo);
 end;
 
 procedure TFrPrincipal.img_devfClick(Sender: TObject);
 begin
   IrParaImpressao( img_devf.Bitmap,
                    CalcularPathImagem('sinalize', 'devf'),
-                   22, ImpressaoTextoAdicionalPretoFundo);
+                   22, ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca);
 end;
 
 procedure TFrPrincipal.img_devmClick(Sender: TObject);
 begin
   IrParaImpressao( img_devm.Bitmap,
                    CalcularPathImagem('sinalize', 'devm'),
-                   22, ImpressaoTextoAdicionalPretoFundo);
+                   22, ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca);
 end;
 
 procedure TFrPrincipal.img_epsonClick(Sender: TObject);
@@ -629,6 +649,13 @@ begin
                    26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
 end;
 
+procedure TFrPrincipal.img_feminClick(Sender: TObject);
+begin
+  IrParaImpressao( img_femin.Bitmap,
+                   CalcularPathImagem('wc', 'femin'),
+                   30, ImpressaoTextoWCBrancoTopo);
+end;
+
 procedure TFrPrincipal.img_fumarClick(Sender: TObject);
 begin
   IrParaImpressao( img_fumar.Bitmap,
@@ -641,6 +668,27 @@ begin
   IrParaImpressao( img_iniciar.Bitmap,
                    CalcularPathImagem('frases', 'iniciar'),
                    26, ImpressaoTextoAdicionalBrancoTopo);
+end;
+
+procedure TFrPrincipal.img_leiaClick(Sender: TObject);
+begin
+  IrParaImpressao( img_leia.Bitmap,
+                   CalcularPathImagem('wc', 'leia'),
+                   30, ImpressaoTextoWCPretoFundo);
+end;
+
+procedure TFrPrincipal.img_mascClick(Sender: TObject);
+begin
+  IrParaImpressao( img_masc.Bitmap,
+                   CalcularPathImagem('wc', 'masc'),
+                   30, ImpressaoTextoWCBrancoTopo);
+end;
+
+procedure TFrPrincipal.img_mistoClick(Sender: TObject);
+begin
+  IrParaImpressao( img_misto.Bitmap,
+                   CalcularPathImagem('wc', 'misto'),
+                   30, ImpressaoTextoWCBrancoTopo);
 end;
 
 procedure TFrPrincipal.img_problemaClick(Sender: TObject);
@@ -657,11 +705,25 @@ begin
                    26,ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
 end;
 
+procedure TFrPrincipal.img_superClick(Sender: TObject);
+begin
+  IrParaImpressao( img_super.Bitmap,
+                   CalcularPathImagem('wc', 'super'),
+                   30, ImpressaoTextoWCPretoFundo);
+end;
+
 procedure TFrPrincipal.img_wifiClick(Sender: TObject);
 begin
   IrParaImpressao( img_wifi.Bitmap,
                    CalcularPathImagem('sinalize', 'wifi'),
                    30, ImpressaoTextoWiFi);
+end;
+
+procedure TFrPrincipal.img_wonderClick(Sender: TObject);
+begin
+  IrParaImpressao( img_wonder.Bitmap,
+                   CalcularPathImagem('wc', 'wonder'),
+                   30, ImpressaoTextoWCPretoFundo);
 end;
 
 procedure TFrPrincipal.IrParaImpressao(AImg: TBitmap; ImgFile: String;
@@ -678,14 +740,20 @@ begin
   TabForward(tabImprimir);
 end;
 
+procedure TFrPrincipal.ImpressaoACBrLateralBranca;
+begin
+  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
+  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ACBrETQ1.DefinirCorPadrao;
+end;
+
 procedure TFrPrincipal.ImpressaoColorWorks;
 begin
   ACBrETQ1.DefinirCor($ffffff, 255, $ffffff, 255);  // Branco
   ACBrETQ1.ImprimirCaixa(3,3,19,19,19,0,2);
   ACBrETQ1.DefinirCorPadrao;
   ACBrETQ1.ImprimirQRCode(4, 4, 'https://epson.com.br/impressoras-etiquetas-coloridas-colorworks', 6);
-  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0);  // Branco e Transparente
-  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ImpressaoACBrLateralBranca;
   ACBrETQ1.DefinirCorPadrao;
 end;
 
@@ -711,14 +779,38 @@ begin
 
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCorPadrao;
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 120, 4, msg );
-  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
-  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 120, 14, msg );
 end;
 
-procedure TFrPrincipal.ImpressaoTextoWC;
+procedure TFrPrincipal.ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca;
 begin
+  ImpressaoTextoAdicionalPretoFundo;
+  ImpressaoACBrLateralBranca;
+end;
 
+procedure TFrPrincipal.ImpressaoTextoWCBrancoTopo;
+var
+  msg: string;
+begin
+  if (not edTextoImprimir.Visible) or edTextoImprimir.Text.IsEmpty then
+    Exit;
+
+  msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
+  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 50, 50, 12, 14, msg );
+  ACBrETQ1.DefinirCorPadrao;
+end;
+
+procedure TFrPrincipal.ImpressaoTextoWCPretoFundo;
+var
+  msg: string;
+begin
+  if (not edTextoImprimir.Visible) or edTextoImprimir.Text.IsEmpty then
+    Exit;
+
+  msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
+  ACBrETQ1.DefinirCorPadrao;
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 50, 50, 122, 18, msg );
 end;
 
 procedure TFrPrincipal.ImpressaoTextoWiFi;
@@ -759,7 +851,7 @@ begin
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
   ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 120, 6, msg );
-  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ImpressaoACBrLateralBranca;
   ACBrETQ1.DefinirCorPadrao;
 end;
 

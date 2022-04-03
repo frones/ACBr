@@ -20,7 +20,7 @@ object FrPrincipal: TFrPrincipal
     Size.Height = 634.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 6
+    TabIndex = 5
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
@@ -2984,7 +2984,7 @@ object FrPrincipal: TFrPrincipal
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 11
       Size.Width = 66.000000000000000000
       Size.Height = 49.000000000000000000
@@ -3087,6 +3087,7 @@ object FrPrincipal: TFrPrincipal
             Size.Width = 250.000000000000000000
             Size.Height = 300.000000000000000000
             Size.PlatformDefault = False
+            OnClick = img_leiaClick
           end
           object img_super: TImage
             MultiResBitmap.Height = 1764
@@ -3099,6 +3100,7 @@ object FrPrincipal: TFrPrincipal
             Size.Width = 250.000000000000000000
             Size.Height = 300.000000000000000000
             Size.PlatformDefault = False
+            OnClick = img_superClick
           end
           object img_wonder: TImage
             MultiResBitmap.Height = 1764
@@ -3111,6 +3113,7 @@ object FrPrincipal: TFrPrincipal
             Size.Width = 250.000000000000000000
             Size.Height = 300.000000000000000000
             Size.PlatformDefault = False
+            OnClick = img_wonderClick
           end
           object img_masc: TImage
             MultiResBitmap.Height = 1764
@@ -3123,6 +3126,7 @@ object FrPrincipal: TFrPrincipal
             Size.Width = 250.000000000000000000
             Size.Height = 300.000000000000000000
             Size.PlatformDefault = False
+            OnClick = img_mascClick
           end
           object img_femin: TImage
             MultiResBitmap.Height = 1764
@@ -3135,6 +3139,7 @@ object FrPrincipal: TFrPrincipal
             Size.Width = 250.000000000000000000
             Size.Height = 300.000000000000000000
             Size.PlatformDefault = False
+            OnClick = img_feminClick
           end
           object img_acessivel: TImage
             MultiResBitmap.Height = 1764
@@ -3142,11 +3147,25 @@ object FrPrincipal: TFrPrincipal
             MultiResBitmap = <
               item
               end>
-            Position.X = 140.000000000000000000
+            Position.X = 5.000000000000000000
             Position.Y = 960.000000000000000000
             Size.Width = 250.000000000000000000
             Size.Height = 300.000000000000000000
             Size.PlatformDefault = False
+            OnClick = img_acessivelClick
+          end
+          object img_misto: TImage
+            MultiResBitmap.Height = 1764
+            MultiResBitmap.Width = 1157
+            MultiResBitmap = <
+              item
+              end>
+            Position.X = 275.000000000000000000
+            Position.Y = 960.000000000000000000
+            Size.Width = 250.000000000000000000
+            Size.Height = 300.000000000000000000
+            Size.PlatformDefault = False
+            OnClick = img_mistoClick
           end
         end
       end
@@ -3155,7 +3174,7 @@ object FrPrincipal: TFrPrincipal
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 14
       Size.Width = 66.000000000000000000
       Size.Height = 49.000000000000000000

@@ -52,7 +52,6 @@ type
     iSinalizacoes: TImage;
     ShadowEffect4: TShadowEffect;
     Label32: TLabel;
-    FloatAnimation4: TFloatAnimation;
     laBtnWC: TLayout;
     iWC: TImage;
     ShadowEffect5: TShadowEffect;
@@ -61,7 +60,6 @@ type
     laBtnFrases: TLayout;
     iFrases: TImage;
     Label37: TLabel;
-    FloatAnimation2: TFloatAnimation;
     tabConfig: TTabItem;
     tobConfig: TToolBar;
     lblTituloConfig: TLabel;
@@ -90,17 +88,14 @@ type
     ckGuilhotina: TCheckBox;
     edtPortaImpresora: TEdit;
     ACBrETQ1: TACBrETQ;
-    StyleBook1: TStyleBook;
     laBtnSlap: TLayout;
     iSlap: TImage;
     ShadowEffect6: TShadowEffect;
     Label4: TLabel;
-    FloatAnimation5: TFloatAnimation;
     laBtnLembranca: TLayout;
     iLembranca: TImage;
     ShadowEffect7: TShadowEffect;
     Label5: TLabel;
-    FloatAnimation6: TFloatAnimation;
     ShadowEffect3: TShadowEffect;
     imgConfig: TImage;
     ShadowEffect8: TShadowEffect;
@@ -196,6 +191,7 @@ type
     img_devf: TImage;
     img_cao: TImage;
     img_misto: TImage;
+    StyleBook1: TStyleBook;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);

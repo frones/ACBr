@@ -151,6 +151,50 @@ type
     edTextoImprimir: TEdit;
     btImprimir: TCornerButton;
     sbCopias: TSpinBox;
+    tabFrases: TTabItem;
+    toolFrases: TToolBar;
+    Label9: TLabel;
+    iToolFrases: TImage;
+    ShadowEffect13: TShadowEffect;
+    SpeedButton5: TSpeedButton;
+    VertScrollBox2: TVertScrollBox;
+    FlowLayout2: TFlowLayout;
+    img_erro: TImage;
+    img_iniciar: TImage;
+    img_falha: TImage;
+    img_problema: TImage;
+    img_sonhar: TImage;
+    ListBoxGroupHeader3: TListBoxGroupHeader;
+    ListBoxItem3: TListBoxItem;
+    edtArqLog: TEdit;
+    tabWC: TTabItem;
+    ToolBar3: TToolBar;
+    Label10: TLabel;
+    iToolWC: TImage;
+    ShadowEffect14: TShadowEffect;
+    SpeedButton6: TSpeedButton;
+    VertScrollBox3: TVertScrollBox;
+    FlowLayout3: TFlowLayout;
+    img_dart: TImage;
+    img_leia: TImage;
+    img_super: TImage;
+    img_wonder: TImage;
+    img_masc: TImage;
+    img_femin: TImage;
+    img_acessivel: TImage;
+    tabSinalize: TTabItem;
+    ToolBar5: TToolBar;
+    Label11: TLabel;
+    iToolSinalize: TImage;
+    ShadowEffect15: TShadowEffect;
+    SpeedButton7: TSpeedButton;
+    VertScrollBox4: TVertScrollBox;
+    FlowLayout4: TFlowLayout;
+    img_wifi: TImage;
+    img_fumar: TImage;
+    img_devm: TImage;
+    img_devf: TImage;
+    img_cao: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
@@ -166,16 +210,25 @@ type
     procedure img_brasilClick(Sender: TObject);
     procedure img_codaberto2Click(Sender: TObject);
     procedure img_codaberto1Click(Sender: TObject);
+    procedure img_erroClick(Sender: TObject);
+    procedure img_iniciarClick(Sender: TObject);
+    procedure img_falhaClick(Sender: TObject);
+    procedure img_problemaClick(Sender: TObject);
+    procedure img_sonharClick(Sender: TObject);
+    procedure laBtnFrasesClick(Sender: TObject);
+    procedure laBtnWCClick(Sender: TObject);
+    procedure img_dartClick(Sender: TObject);
+    procedure laBtnSinalizacoesClick(Sender: TObject);
+    procedure img_wifiClick(Sender: TObject);
+    procedure img_fumarClick(Sender: TObject);
+    procedure img_devmClick(Sender: TObject);
+    procedure img_devfClick(Sender: TObject);
+    procedure img_caoClick(Sender: TObject);
   private
     FTabList: TList<TTabItem>;
     FImgFile: String;
-    FTextPos: TPoint;
-    FFonte: Char;
-    FMultiplicador: Integer;
-    FTextColor: Cardinal;
-    FTextOpacidade: Byte;
-    FFundoColor: Cardinal;
-    FFundoOpacidade: Byte;
+    FProcImpressao: TProc;
+    FTextoImpressao: String;
 
     procedure DoDidFinish(Image: TBitmap);
     procedure DoMessageListener(const Sender: TObject; const M: TMessage);
@@ -183,6 +236,7 @@ type
     procedure TabForward(ANewTab: TTabItem);
     procedure TabBack;
 
+    procedure CarregarImagensNaInterface;
     procedure LimparAbaLembranca;
 
     function CalcularPathImagem(Pasta, Imagem: String): String;
@@ -190,11 +244,16 @@ type
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
 
+    procedure ImpressaoTextoAdicionalBrancoTopo;
+    procedure ImpressaoTextoAdicionalBrancoFundoMaisColorWorks;
+    procedure ImpressaoTextoAdicionalBrancoFundo;
+    procedure ImpressaoTextoAdicionalPretoFundo;
+    procedure ImpressaoTextoWiFi;
+    procedure ImpressaoTextoWC;
+    procedure ImpressaoColorWorks;
+
     procedure IrParaImpressao(AImg: TBitmap; ImgFile: String;
-      MaxChars: Integer; TextPos: TPoint;
-      Fonte: Char = 'V'; Multiplicador: Integer = 10;
-      TextColor: Cardinal = $FFFFFF; TextoOpacidade: Byte = 255;
-      FundoColor: Cardinal = $000000; FundoOpacidade: Byte = 0);
+      MaxChars: Integer; ProcImpressao: TProc);
     procedure ConfigurarACBrETQ;
   public
 
@@ -252,6 +311,7 @@ var
   p: TACBrETQPaginaCodigo;
 begin
   FTabList := TList<TTabItem>.Create;
+  FTextoImpressao := '';
 
   cbxDPI.Items.Clear ;
   For d := Low(TACBrETQDPI) to High(TACBrETQDPI) do
@@ -270,10 +330,14 @@ begin
   tabsPrincipal.TabPosition := TTabPosition.None;
 
   iToolEuAmo.Bitmap.Assign(iEuAmo.Bitmap);
+  iToolFrases.Bitmap.Assign(iFrases.Bitmap);
+  iToolSinalize.Bitmap.Assign(iSinalizacoes.Bitmap);
+  iToolWC.Bitmap.Assign(iWC.Bitmap);
   iToolConfig.Bitmap.Assign(imgConfig.Bitmap);
   iToolLembranca.Bitmap.Assign(iLembranca.Bitmap);
   iToolImprimir.Bitmap := ImageList1.Bitmap(TSizeF.Create(iToolImprimir.Width,iToolImprimir.Height), 10);
 
+  CarregarImagensNaInterface;
   LerConfiguracao;
 end;
 
@@ -303,6 +367,35 @@ end;
 function TFrPrincipal.CalcularPathImagem(Pasta, Imagem: String): String;
 begin
   Result := ApplicationPath + 'img' +PathDelim + Pasta + PathDelim + Imagem+'.png';
+end;
+
+procedure TFrPrincipal.CarregarImagensNaInterface;
+begin
+  img_colorworks.Bitmap.LoadFromFile(CalcularPathImagem('euamo','colorworks'));
+  img_epson.Bitmap.LoadFromFile(CalcularPathImagem('euamo','epson'));
+  img_brasil.Bitmap.LoadFromFile(CalcularPathImagem('euamo','brasil'));
+  img_codaberto1.Bitmap.LoadFromFile(CalcularPathImagem('euamo','codaberto1'));
+  img_codaberto2.Bitmap.LoadFromFile(CalcularPathImagem('euamo','codaberto2'));
+
+  img_erro.Bitmap.LoadFromFile(CalcularPathImagem('frases','erro'));
+  img_iniciar.Bitmap.LoadFromFile(CalcularPathImagem('frases','iniciar'));
+  img_falha.Bitmap.LoadFromFile(CalcularPathImagem('frases','falha'));
+  img_problema.Bitmap.LoadFromFile(CalcularPathImagem('frases','problema'));
+  img_sonhar.Bitmap.LoadFromFile(CalcularPathImagem('frases','sonhar'));
+
+  img_dart.Bitmap.LoadFromFile(CalcularPathImagem('wc','dart'));
+  img_leia.Bitmap.LoadFromFile(CalcularPathImagem('wc','leia'));
+  img_super.Bitmap.LoadFromFile(CalcularPathImagem('wc','super'));
+  img_wonder.Bitmap.LoadFromFile(CalcularPathImagem('wc','wonder'));
+  img_masc.Bitmap.LoadFromFile(CalcularPathImagem('wc','masc'));
+  img_femin.Bitmap.LoadFromFile(CalcularPathImagem('wc','femin'));
+  img_acessivel.Bitmap.LoadFromFile(CalcularPathImagem('wc','acessivel'));
+
+  img_wifi.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','wifi'));
+  img_fumar.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','fumar'));
+  img_devm.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','devm'));
+  img_devf.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','devf'));
+  img_cao.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','cao'));
 end;
 
 procedure TFrPrincipal.bFotoLembrancaClick(Sender: TObject);
@@ -348,13 +441,31 @@ end;
 
 procedure TFrPrincipal.laBtnEuAmoClick(Sender: TObject);
 begin
+  FTextoImpressao := 'AUTOCOM 2022';
   TabForward(tabEuAmo);
+end;
+
+procedure TFrPrincipal.laBtnFrasesClick(Sender: TObject);
+begin
+  FTextoImpressao := 'Use a Força leia os Fontes';
+  TabForward(tabFrases);
 end;
 
 procedure TFrPrincipal.laBtnLembrancaClick(Sender: TObject);
 begin
   LimparAbaLembranca;
   TabForward(tabLembranca);
+end;
+
+procedure TFrPrincipal.laBtnSinalizacoesClick(Sender: TObject);
+begin
+  FTextoImpressao := '';
+  TabForward(tabSinalize);
+end;
+
+procedure TFrPrincipal.laBtnWCClick(Sender: TObject);
+begin
+  TabForward(tabWC);
 end;
 
 procedure TFrPrincipal.LimparAbaLembranca;
@@ -372,13 +483,14 @@ begin
   INI := TIniFile.Create(ArqINI);
   try
     edtPortaImpresora.Text := INI.ReadString('ETQ','Porta','');
-    cbxDPI.ItemIndex := INI.ReadInteger('ETQ','DPI', Integer(ACBrETQ1.DPI));
-    cbxDeteccao.ItemIndex := INI.ReadInteger('ETQ','DeteccaoEtiqueta', Integer(ACBrETQ1.DeteccaoEtiqueta));
-    cbxPagCodigo.ItemIndex := INI.ReadInteger('ETQ','PaginaDeCodigo', Integer(ACBrETQ1.PaginaDeCodigo));
-    ckLimparMemoria.IsChecked := INI.ReadBool('ETQ','LimparMemoria', ACBrETQ1.LimparMemoria);
-    ckGuilhotina.IsChecked := INI.ReadBool('ETQ','Guilhotina', ACBrETQ1.Guilhotina);
+    cbxDPI.ItemIndex := INI.ReadInteger('ETQ','DPI', 1);
+    cbxDeteccao.ItemIndex := INI.ReadInteger('ETQ','DeteccaoEtiqueta', 0);
+    cbxPagCodigo.ItemIndex := INI.ReadInteger('ETQ','PaginaDeCodigo', 2);
+    ckLimparMemoria.IsChecked := INI.ReadBool('ETQ','LimparMemoria', True);
+    ckGuilhotina.IsChecked := INI.ReadBool('ETQ','Guilhotina', True);
     edPastaImagens.Text := INI.ReadString('Diversos','PastaImagens', '');
     sbLarguraEtiqueta.Value := INI.ReadInteger('Diversos','LarguraEtiqueta', 106);
+    edtArqLog.Text := INI.ReadString('ETQ','ArqLog','');
   finally
     INI.Free ;
   end;
@@ -400,6 +512,7 @@ begin
     INI.WriteBool('ETQ','Guilhotina', ckGuilhotina.IsChecked);
     INI.WriteString('Diversos','PastaImagens', edPastaImagens.Text);
     INI.WriteInteger('Diversos','LarguraEtiqueta', Trunc(sbLarguraEtiqueta.Value));
+    INI.WriteString('ETQ','ArqLog',edtArqLog.Text);
   finally
     INI.Free ;
   end;
@@ -443,65 +556,211 @@ procedure TFrPrincipal.img_brasilClick(Sender: TObject);
 begin
   IrParaImpressao( img_brasil.Bitmap,
                    CalcularPathImagem('euamo', 'brasil'),
-                   36,
-                   TPoint.Create(0, 120),
-                   '0', 80 );
+                   26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks );
+end;
+
+procedure TFrPrincipal.img_caoClick(Sender: TObject);
+begin
+  IrParaImpressao( img_cao.Bitmap,
+                   CalcularPathImagem('sinalize', 'cao'),
+                   0, nil);
 end;
 
 procedure TFrPrincipal.img_codaberto1Click(Sender: TObject);
 begin
   IrParaImpressao( img_codaberto1.Bitmap,
                    CalcularPathImagem('euamo', 'codaberto1'),
-                   36,
-                   TPoint.Create(0, 120),
-                   '0', 80 );
+                   26, ImpressaoTextoAdicionalBrancoTopo);
 end;
 
 procedure TFrPrincipal.img_codaberto2Click(Sender: TObject);
 begin
   IrParaImpressao( img_codaberto2.Bitmap,
                    CalcularPathImagem('euamo', 'codaberto2'),
-                   36,
-                   TPoint.Create(0, 10),
-                   '0', 80 );
+                   26, ImpressaoTextoAdicionalBrancoTopo);
 end;
 
 procedure TFrPrincipal.img_colorworksClick(Sender: TObject);
 begin
   IrParaImpressao( img_colorworks.Bitmap,
                    CalcularPathImagem('euamo', 'colorworks'),  //'C:\temp\teste2.png',
-                   36,
-                   TPoint.Create(0, 120),
-                   '0', 80 );
+                   0, ImpressaoColorWorks );
+end;
+
+procedure TFrPrincipal.img_dartClick(Sender: TObject);
+begin
+  IrParaImpressao( img_dart.Bitmap,
+                   CalcularPathImagem('frases', 'falha'),
+                   26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
+end;
+
+procedure TFrPrincipal.img_devfClick(Sender: TObject);
+begin
+  IrParaImpressao( img_devf.Bitmap,
+                   CalcularPathImagem('sinalize', 'devf'),
+                   22, ImpressaoTextoAdicionalPretoFundo);
+end;
+
+procedure TFrPrincipal.img_devmClick(Sender: TObject);
+begin
+  IrParaImpressao( img_devm.Bitmap,
+                   CalcularPathImagem('sinalize', 'devm'),
+                   22, ImpressaoTextoAdicionalPretoFundo);
 end;
 
 procedure TFrPrincipal.img_epsonClick(Sender: TObject);
 begin
   IrParaImpressao( img_epson.Bitmap,
                    CalcularPathImagem('euamo', 'epson'),
-                   36,
-                   TPoint.Create(0, 10),
-                   '0', 80 );
+                   26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks );
+end;
+
+procedure TFrPrincipal.img_erroClick(Sender: TObject);
+begin
+  IrParaImpressao( img_erro.Bitmap,
+                   CalcularPathImagem('frases', 'erro'),
+                   26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
+end;
+
+procedure TFrPrincipal.img_falhaClick(Sender: TObject);
+begin
+  IrParaImpressao( img_falha.Bitmap,
+                   CalcularPathImagem('frases', 'falha'),
+                   26, ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
+end;
+
+procedure TFrPrincipal.img_fumarClick(Sender: TObject);
+begin
+  IrParaImpressao( img_fumar.Bitmap,
+                   CalcularPathImagem('sinalize', 'fumar'),
+                   0, nil);
+end;
+
+procedure TFrPrincipal.img_iniciarClick(Sender: TObject);
+begin
+  IrParaImpressao( img_iniciar.Bitmap,
+                   CalcularPathImagem('frases', 'iniciar'),
+                   26, ImpressaoTextoAdicionalBrancoTopo);
+end;
+
+procedure TFrPrincipal.img_problemaClick(Sender: TObject);
+begin
+  IrParaImpressao( img_problema.Bitmap,
+                   CalcularPathImagem('frases', 'problema'),
+                   26, ImpressaoTextoAdicionalBrancoFundo);
+end;
+
+procedure TFrPrincipal.img_sonharClick(Sender: TObject);
+begin
+  IrParaImpressao( img_sonhar.Bitmap,
+                   CalcularPathImagem('frases', 'sonhar'),
+                   26,ImpressaoTextoAdicionalBrancoFundoMaisColorWorks);
+end;
+
+procedure TFrPrincipal.img_wifiClick(Sender: TObject);
+begin
+  IrParaImpressao( img_wifi.Bitmap,
+                   CalcularPathImagem('sinalize', 'wifi'),
+                   30, ImpressaoTextoWiFi);
 end;
 
 procedure TFrPrincipal.IrParaImpressao(AImg: TBitmap; ImgFile: String;
-  MaxChars: Integer; TextPos: TPoint; Fonte: Char; Multiplicador: Integer;
-  TextColor: Cardinal; TextoOpacidade: Byte;
-  FundoColor: Cardinal; FundoOpacidade: Byte);
+  MaxChars: Integer; ProcImpressao: TProc);
 begin
   FImgFile := ImgFile;
-  FTextPos := TextPos;
-  FFonte := Fonte;
-  FMultiplicador := Multiplicador;
-  FTextColor := TextColor;
-  FTextOpacidade := TextoOpacidade;
-  FFundoColor := FFundoColor;
-  FFundoOpacidade := FundoOpacidade;
+  FProcImpressao := ProcImpressao;
 
   imgImprimir.Bitmap.Assign(AImg);
   edTextoImprimir.Visible := (MaxChars > 0);
   edTextoImprimir.MaxLength := MaxChars;
+  edTextoImprimir.Text := FTextoImpressao;
+
   TabForward(tabImprimir);
+end;
+
+procedure TFrPrincipal.ImpressaoColorWorks;
+begin
+  ACBrETQ1.DefinirCor($ffffff, 255, $ffffff, 255);  // Branco
+  ACBrETQ1.ImprimirCaixa(3,3,19,19,19,0,2);
+  ACBrETQ1.DefinirCorPadrao;
+  ACBrETQ1.ImprimirQRCode(4, 4, 'https://epson.com.br/impressoras-etiquetas-coloridas-colorworks', 6);
+  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0);  // Branco e Transparente
+  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ACBrETQ1.DefinirCorPadrao;
+end;
+
+procedure TFrPrincipal.ImpressaoTextoAdicionalBrancoTopo;
+var
+  msg: string;
+begin
+  if (not edTextoImprimir.Visible) or edTextoImprimir.Text.IsEmpty then
+    Exit;
+
+  msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
+  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 10, 6, msg );
+  ACBrETQ1.DefinirCorPadrao;
+end;
+
+procedure TFrPrincipal.ImpressaoTextoAdicionalPretoFundo;
+var
+  msg: string;
+begin
+  if (not edTextoImprimir.Visible) or edTextoImprimir.Text.IsEmpty then
+    Exit;
+
+  msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
+  ACBrETQ1.DefinirCorPadrao;
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 120, 4, msg );
+  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
+  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+end;
+
+procedure TFrPrincipal.ImpressaoTextoWC;
+begin
+
+end;
+
+procedure TFrPrincipal.ImpressaoTextoWiFi;
+var
+  s, rede, senha: string;
+  p: Integer;
+begin
+  if (not edTextoImprimir.Visible) or edTextoImprimir.Text.IsEmpty then
+    Exit;
+
+  s := edTextoImprimir.Text;
+  p := pos(' ',s);
+  if (p = 0) then
+    p := s.Length;
+
+  rede := Copy(s, 1, p-1);
+  senha := Copy(s, p+1, s.Length);
+
+  ACBrETQ1.DefinirCorPadrao;
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 99, 35, rede );
+  if not senha.IsEmpty then
+    ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 108, 35, senha );
+end;
+
+procedure TFrPrincipal.ImpressaoTextoAdicionalBrancoFundoMaisColorWorks;
+begin
+ ImpressaoTextoAdicionalBrancoFundo;
+ ImpressaoColorWorks;
+end;
+
+procedure TFrPrincipal.ImpressaoTextoAdicionalBrancoFundo;
+var
+  msg: string;
+begin
+  if (not edTextoImprimir.Visible) or edTextoImprimir.Text.IsEmpty then
+    Exit;
+
+  msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
+  ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 120, 6, msg );
+  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ACBrETQ1.DefinirCorPadrao;
 end;
 
 procedure TFrPrincipal.btImprimirClick(Sender: TObject);
@@ -535,18 +794,8 @@ begin
                              -1, -1);
   ACBrETQ1.ImprimirImagem(1, 0, 0, NomeImagem);
 
-  if edTextoImprimir.Visible then
-  begin
-    msg := edTextoImprimir.Text;
-    if (FTextPos.X = 0) then
-      msg := PadCenter(msg, edTextoImprimir.MaxLength);
-
-    ACBrETQ1.DefinirCor(FTextColor, FTextOpacidade, FFundoColor, FFundoOpacidade);
-    ACBrETQ1.ImprimirTexto( orNormal, FFonte,
-                            FMultiplicador, FMultiplicador,
-                            FTextPos.Y, FTextPos.X,
-                            msg );
-  end;
+  if Assigned(FProcImpressao) then
+    FProcImpressao;
 
   ACBrETQ1.Imprimir(Trunc(sbCopias.Value));
 
@@ -558,6 +807,9 @@ end;
 
 procedure TFrPrincipal.ConfigurarACBrETQ;
 begin
+  if edtPortaImpresora.Text.IsEmpty then
+    raise Exception.Create('Porta da Impressora não Definida');
+
   with ACBrETQ1 do
   begin
      Desativar;
@@ -566,11 +818,11 @@ begin
      Porta := edtPortaImpresora.Text;
      LimparMemoria := ckLimparMemoria.IsChecked;
      Guilhotina := ckGuilhotina.IsChecked;
-     Unidade := etqMilimetros; //etqDecimoDeMilimetros;
+     Unidade := etqMilimetros;
      MargemEsquerda := 0;
      DeteccaoEtiqueta := TACBrETQDeteccaoEtiqueta(cbxDeteccao.ItemIndex);
      PaginaDeCodigo := TACBrETQPaginaCodigo(cbxPagCodigo.ItemIndex);
-     ArqLOG := ApplicationPath+'ACBrETQ.log';
+     ArqLOG := edtArqLog.Text;
 
      Ativar;
      edtPortaImpresora.Text := Porta;

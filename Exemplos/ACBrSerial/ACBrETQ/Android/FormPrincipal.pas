@@ -106,9 +106,6 @@ type
     SpeedButton1: TSpeedButton;
     imgLembranca: TImage;
     GridPanelLayout2: TGridPanelLayout;
-    edLembranca: TEdit;
-    bFotoLembranca: TCornerButton;
-    bImprimirLembranca: TCornerButton;
     OpenDialog1: TOpenDialog;
     tabConfDiversos: TTabItem;
     ListBox1: TListBox;
@@ -191,6 +188,50 @@ type
     img_devf: TImage;
     img_cao: TImage;
     img_misto: TImage;
+    tabSlap: TTabItem;
+    ToolBar6: TToolBar;
+    Label12: TLabel;
+    iToolSlap: TImage;
+    ShadowEffect16: TShadowEffect;
+    SpeedButton8: TSpeedButton;
+    VertScrollBox5: TVertScrollBox;
+    FlowLayout5: TFlowLayout;
+    img_avise: TImage;
+    img_horas: TImage;
+    img_banheiro: TImage;
+    img_ingles: TImage;
+    img_talento: TImage;
+    lAvise: TLabel;
+    lHoras: TLabel;
+    lBanheiro: TLabel;
+    lIngles: TLabel;
+    lTalento: TLabel;
+    GridPanelLayout3: TGridPanelLayout;
+    bFotoLembranca: TCornerButton;
+    bLerImagem: TCornerButton;
+    Layout2: TLayout;
+    bImprimirLembranca: TCornerButton;
+    sbCopiasLembranca: TSpinBox;
+    edtLembranca: TEdit;
+    ListBoxGroupHeader4: TListBoxGroupHeader;
+    ListBoxItem4: TListBoxItem;
+    edTextoLembranca: TEdit;
+    Label13: TLabel;
+    ListBoxItem5: TListBoxItem;
+    edTextoEuAmo: TEdit;
+    Label14: TLabel;
+    ListBoxItem6: TListBoxItem;
+    edTextoFrases: TEdit;
+    Label15: TLabel;
+    ListBoxItem7: TListBoxItem;
+    edTextoSinalizacoes: TEdit;
+    Label16: TLabel;
+    ListBoxItem8: TListBoxItem;
+    edTextoWC: TEdit;
+    Label17: TLabel;
+    ListBoxItem9: TListBoxItem;
+    edTextoSlap: TEdit;
+    Label18: TLabel;
     StyleBook1: TStyleBook;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -228,6 +269,14 @@ type
     procedure img_feminClick(Sender: TObject);
     procedure img_acessivelClick(Sender: TObject);
     procedure img_mistoClick(Sender: TObject);
+    procedure laBtnSlapClick(Sender: TObject);
+    procedure img_aviseClick(Sender: TObject);
+    procedure img_horasClick(Sender: TObject);
+    procedure img_banheiroClick(Sender: TObject);
+    procedure img_inglesClick(Sender: TObject);
+    procedure img_talentoClick(Sender: TObject);
+    procedure bLerImagemClick(Sender: TObject);
+    procedure bImprimirLembrancaClick(Sender: TObject);
   private
     FTabList: TList<TTabItem>;
     FImgFile: String;
@@ -241,7 +290,6 @@ type
     procedure TabBack;
 
     procedure CarregarImagensNaInterface;
-    procedure LimparAbaLembranca;
 
     function CalcularPathImagem(Pasta, Imagem: String): String;
     function CalcularNomeArqINI: String;
@@ -254,10 +302,15 @@ type
     procedure ImpressaoTextoAdicionalPretoFundo;
     procedure ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca;
     procedure ImpressaoTextoWiFi;
+    procedure ImpressaoTextoSlapEsquerda;
+    procedure ImpressaoTextoSlapFundo;
     procedure ImpressaoTextoWCPretoFundo;
     procedure ImpressaoTextoWCBrancoTopo;
     procedure ImpressaoColorWorks;
+    procedure ImpressaoLembranca;
     procedure ImpressaoACBrLateralBranca;
+
+    function PedirPermissoes: Boolean;
 
     procedure IrParaImpressao(AImg: TBitmap; ImgFile: String;
       MaxChars: Integer; ProcImpressao: TProc);
@@ -274,12 +327,15 @@ implementation
 uses
   System.IniFiles,
   System.typinfo,
+  System.Math,
   FMX.DialogService.Async,
   FMX.MediaLibrary,
   FMX.Platform,
   {$IfDef ANDROID}
    Androidapi.JNI.Widget,
+   Androidapi.JNI.Os,
    Androidapi.Helpers,
+   System.Permissions,
   {$EndIf}
   {$IfDef MSWINDOWS}
    Winapi.ShellAPI,
@@ -340,6 +396,7 @@ begin
   iToolFrases.Bitmap.Assign(iFrases.Bitmap);
   iToolSinalize.Bitmap.Assign(iSinalizacoes.Bitmap);
   iToolWC.Bitmap.Assign(iWC.Bitmap);
+  iToolSlap.Bitmap.Assign(iSlap.Bitmap);
   iToolConfig.Bitmap.Assign(imgConfig.Bitmap);
   iToolLembranca.Bitmap.Assign(iLembranca.Bitmap);
   iToolImprimir.Bitmap := ImageList1.Bitmap(TSizeF.Create(iToolImprimir.Width,iToolImprimir.Height), 10);
@@ -404,6 +461,12 @@ begin
   img_devm.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','devm'));
   img_devf.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','devf'));
   img_cao.Bitmap.LoadFromFile(CalcularPathImagem('sinalize','cao'));
+
+  img_avise.Bitmap.LoadFromFile(CalcularPathImagem('slap','avise'));
+  img_horas.Bitmap.LoadFromFile(CalcularPathImagem('slap','horas'));
+  img_banheiro.Bitmap.LoadFromFile(CalcularPathImagem('slap','banheiro'));
+  img_ingles.Bitmap.LoadFromFile(CalcularPathImagem('slap','ingles'));
+  img_talento.Bitmap.LoadFromFile(CalcularPathImagem('slap','talento'));
 end;
 
 procedure TFrPrincipal.bFotoLembrancaClick(Sender: TObject);
@@ -424,12 +487,7 @@ begin
   begin
    {$IfDef MSWINDOWS}
     ShellExecute(0, 'OPEN', PChar('microsoft.windows.camera:'), '', '', 1);
-    OpenDialog1.InitialDir := edPastaImagens.Text;
-    OpenDialog1.DefaultExt := 'JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|All files (*.*)|*.*';
-    if OpenDialog1.Execute then
-    begin
-      imgLembranca.Bitmap.LoadFromFile(OpenDialog1.FileName);
-    end;
+    bLerImagemClick(nil);
    {$Else}
     ShowMessage('This device does not support the camera service');
    {$EndIf}
@@ -449,38 +507,39 @@ end;
 
 procedure TFrPrincipal.laBtnEuAmoClick(Sender: TObject);
 begin
-  FTextoImpressao := 'AUTOCOM 2022';
+  FTextoImpressao := edTextoEuAmo.Text;
   TabForward(tabEuAmo);
 end;
 
 procedure TFrPrincipal.laBtnFrasesClick(Sender: TObject);
 begin
-  FTextoImpressao := 'Use a Força leia os Fontes';
+  FTextoImpressao := edTextoFrases.Text;
   TabForward(tabFrases);
 end;
 
 procedure TFrPrincipal.laBtnLembrancaClick(Sender: TObject);
 begin
-  LimparAbaLembranca;
+  imgLembranca.Bitmap := nil;
+  edtLembranca.Text := edTextoLembranca.Text;
   TabForward(tabLembranca);
 end;
 
 procedure TFrPrincipal.laBtnSinalizacoesClick(Sender: TObject);
 begin
-  FTextoImpressao := '';
+  FTextoImpressao := edTextoSinalizacoes.Text;
   TabForward(tabSinalize);
+end;
+
+procedure TFrPrincipal.laBtnSlapClick(Sender: TObject);
+begin
+  lAvise.Text := edTextoSlap.Text;
+  TabForward(tabSlap);
 end;
 
 procedure TFrPrincipal.laBtnWCClick(Sender: TObject);
 begin
-  FTextoImpressao := 'QUE A FORÇA ESTEJA COM VOCÊ';
+  FTextoImpressao := edTextoWC.Text;
   TabForward(tabWC);
-end;
-
-procedure TFrPrincipal.LimparAbaLembranca;
-begin
-  imgLembranca.Bitmap := nil;
-  edLembranca.Text := 'Estive na Autocom 2022';
 end;
 
 procedure TFrPrincipal.LerConfiguracao;
@@ -497,12 +556,58 @@ begin
     cbxPagCodigo.ItemIndex := INI.ReadInteger('ETQ','PaginaDeCodigo', 2);
     ckLimparMemoria.IsChecked := INI.ReadBool('ETQ','LimparMemoria', True);
     ckGuilhotina.IsChecked := INI.ReadBool('ETQ','Guilhotina', True);
+
     edPastaImagens.Text := INI.ReadString('Diversos','PastaImagens', '');
     sbLarguraEtiqueta.Value := INI.ReadInteger('Diversos','LarguraEtiqueta', 106);
-    edtArqLog.Text := INI.ReadString('ETQ','ArqLog','');
+    edtArqLog.Text := INI.ReadString('Diversos','ArqLog','');
+
+    edTextoEuAmo.Text := INI.ReadString('Texto','EuAmo',edTextoEuAmo.Text);
+    edTextoFrases.Text := INI.ReadString('Texto','Frases',edTextoFrases.Text);
+    edTextoSinalizacoes.Text := INI.ReadString('Texto','Sinalizacoes',edTextoSinalizacoes.Text);
+    edTextoWC.Text := INI.ReadString('Texto','WC',edTextoWC.Text);
+    edTextoSlap.Text := INI.ReadString('Texto','Slap',edTextoSlap.Text);
+    edTextoLembranca.Text := INI.ReadString('Texto','Lembranca',edTextoLembranca.Text);
   finally
     INI.Free ;
   end;
+end;
+
+function TFrPrincipal.PedirPermissoes: Boolean;
+Var
+  Ok: Boolean;
+begin
+  Ok := True;
+  {$IfDef ANDROID}
+  PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
+                                          JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN),
+                                          JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_PRIVILEGED),
+                                          JStringToString(TJManifest_permission.JavaClass.CAMERA)],
+      procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
+      var
+        GR: TPermissionStatus;
+      begin
+        Ok := (Length(AGrantResults) = 4);
+
+        if Ok then
+        begin
+          for GR in AGrantResults do
+            if (GR <> TPermissionStatus.Granted) then
+            begin
+              Ok := False;
+              Break;
+            end;
+        end;
+      end );
+
+  if not OK then
+  begin
+    TDialogServiceAsync.MessageDialog( 'Sem permissões para acessar despositivo BlueTooth',
+                                       TMsgDlgType.mtError, [TMsgDlgBtn.mbOK],
+                                       TMsgDlgBtn.mbOk, 0, nil, nil);
+  end;
+  {$EndIf}
+
+  Result := Ok;
 end;
 
 procedure TFrPrincipal.GravarConfiguracao;
@@ -521,7 +626,14 @@ begin
     INI.WriteBool('ETQ','Guilhotina', ckGuilhotina.IsChecked);
     INI.WriteString('Diversos','PastaImagens', edPastaImagens.Text);
     INI.WriteInteger('Diversos','LarguraEtiqueta', Trunc(sbLarguraEtiqueta.Value));
-    INI.WriteString('ETQ','ArqLog',edtArqLog.Text);
+    INI.WriteString('Diversos','ArqLog',edtArqLog.Text);
+
+    INI.WriteString('Texto','EuAmo',edTextoEuAmo.Text);
+    INI.WriteString('Texto','Frases',edTextoFrases.Text);
+    INI.WriteString('Texto','Sinalizacoes',edTextoSinalizacoes.Text);
+    INI.WriteString('Texto','WC',edTextoWC.Text);
+    INI.WriteString('Texto','Slap',edTextoSlap.Text);
+    INI.WriteString('Texto','Lembranca',edTextoLembranca.Text);
   finally
     INI.Free ;
   end;
@@ -566,6 +678,22 @@ begin
   IrParaImpressao( img_acessivel.Bitmap,
                    CalcularPathImagem('wc', 'acessivel'),
                    30, ImpressaoTextoWCBrancoTopo);
+end;
+
+procedure TFrPrincipal.img_aviseClick(Sender: TObject);
+begin
+  FTextoImpressao := lAvise.Text;
+  IrParaImpressao( img_avise.Bitmap,
+                   CalcularPathImagem('slap', 'avise'),
+                   48, ImpressaoTextoSlapEsquerda);
+end;
+
+procedure TFrPrincipal.img_banheiroClick(Sender: TObject);
+begin
+  FTextoImpressao := lBanheiro.Text;
+  IrParaImpressao( img_banheiro.Bitmap,
+                   CalcularPathImagem('slap', 'banheiro'),
+                   48, ImpressaoTextoSlapEsquerda);
 end;
 
 procedure TFrPrincipal.img_brasilClick(Sender: TObject);
@@ -659,6 +787,22 @@ begin
                    0, nil);
 end;
 
+procedure TFrPrincipal.img_horasClick(Sender: TObject);
+begin
+  FTextoImpressao := lHoras.Text;
+  IrParaImpressao( img_horas.Bitmap,
+                   CalcularPathImagem('slap', 'horas'),
+                   48, ImpressaoTextoSlapEsquerda);
+end;
+
+procedure TFrPrincipal.img_inglesClick(Sender: TObject);
+begin
+  FTextoImpressao := lIngles.Text;
+  IrParaImpressao( img_ingles.Bitmap,
+                   CalcularPathImagem('slap', 'ingles'),
+                   48, ImpressaoTextoSlapEsquerda);
+end;
+
 procedure TFrPrincipal.img_iniciarClick(Sender: TObject);
 begin
   IrParaImpressao( img_iniciar.Bitmap,
@@ -708,6 +852,14 @@ begin
                    30, ImpressaoTextoWCPretoFundo);
 end;
 
+procedure TFrPrincipal.img_talentoClick(Sender: TObject);
+begin
+  FTextoImpressao := lTalento.Text;
+  IrParaImpressao( img_talento.Bitmap,
+                   CalcularPathImagem('slap', 'talento'),
+                   80, ImpressaoTextoSlapFundo);
+end;
+
 procedure TFrPrincipal.img_wifiClick(Sender: TObject);
 begin
   IrParaImpressao( img_wifi.Bitmap,
@@ -753,6 +905,12 @@ begin
   ACBrETQ1.DefinirCorPadrao;
 end;
 
+procedure TFrPrincipal.ImpressaoLembranca;
+begin
+  ImpressaoTextoAdicionalBrancoTopo;
+  ImpressaoACBrLateralBranca;
+end;
+
 procedure TFrPrincipal.ImpressaoTextoAdicionalBrancoTopo;
 var
   msg: string;
@@ -782,6 +940,72 @@ procedure TFrPrincipal.ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca;
 begin
   ImpressaoTextoAdicionalPretoFundo;
   ImpressaoACBrLateralBranca;
+end;
+
+procedure TFrPrincipal.ImpressaoTextoSlapFundo;
+var
+  msg: string;
+  SL: TStringList;
+  l, i, v: Integer;
+begin
+  msg := edTextoImprimir.Text;
+  if msg.Trim.IsEmpty then
+    Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.Text := QuebraLinhas(msg, 20);
+    l := min(SL.Count, 4);
+    v := 28;
+    if (l < 3) then
+      Inc(v, 7);
+
+    ACBrETQ1.DefinirCor($FF0000, 255, $FF0000, 255);  // Azul, Azul
+    ACBrETQ1.ImprimirCaixa(27, 1, 98, 30, 0, 0, 2);
+    ACBrETQ1.DefinirCor($FFFFFF, 255, $000000, 0);
+    for i := 0 to l-1 do
+    begin
+      ACBrETQ1.ImprimirTexto(orNormal, 'E', 40, 100, v, 2, PadCenter(SL[i], 20));
+      Inc(v, 7);
+    end;
+    ACBrETQ1.DefinirCorPadrao;
+  finally
+    SL.Free;
+  end;
+
+end;
+
+procedure TFrPrincipal.ImpressaoTextoSlapEsquerda;
+var
+  msg: string;
+  SL: TStringList;
+  l, i, v: Integer;
+begin
+  msg := edTextoImprimir.Text;
+  if msg.Trim.IsEmpty then
+    Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.Text := QuebraLinhas(msg, 12);
+    l := min(SL.Count, 4);
+    v := 7;
+    if (l < 3) then
+      Inc(v, 11);
+
+    ACBrETQ1.DefinirCor($0000FF, 255, $0000FF, 255);  // Vermelho $0000FF
+    ACBrETQ1.ImprimirCaixa(6, 1, 60, 48, 0, 0, 2);
+    ACBrETQ1.DefinirCor($FFFFFF, 255, $000000, 0);  // Branco e Transparente
+    for i := 0 to l-1 do
+    begin
+      msg := PadCenter(SL[i], 12);
+      ACBrETQ1.ImprimirTexto(orNormal, 'E', 40, 150, v, 2, msg);
+      Inc(v, 11);
+    end;
+    ACBrETQ1.DefinirCorPadrao;
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TFrPrincipal.ImpressaoTextoWCBrancoTopo;
@@ -849,6 +1073,58 @@ begin
   ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 120, 6, msg );
   ImpressaoACBrLateralBranca;
   ACBrETQ1.DefinirCorPadrao;
+end;
+
+procedure TFrPrincipal.bImprimirLembrancaClick(Sender: TObject);
+var
+  NomeImagem: string;
+  MS: TMemoryStream;
+  w, h: Cardinal;
+  b, c, o, f, i: Byte;
+  msg: string;
+begin
+  NomeImagem := 'ACBR.PNG';
+  ConfigurarACBrETQ;
+
+  MS := TMemoryStream.Create;
+  try
+    imgLembranca.Bitmap.SaveToStream(MS);
+    ACBrETQ1.CarregarImagem(MS, NomeImagem);
+  finally
+    MS.Free;
+  end;
+
+  ACBrETQ1.DefinirDimensoes( Trunc(sbLarguraEtiqueta.Value),
+                             trunc(ConverterUnidade(etqDots, imgLembranca.Bitmap.Height, etqMilimetros, ACBrETQ1.DPI)),
+                             -1, -1);
+  ACBrETQ1.ImprimirImagem(1, 0, 0, NomeImagem);
+  if not edtLembranca.Text.IsEmpty then
+  begin
+    msg := ' '+FormatDateTime('dd/mm/yy hh:nn', Now) + ' - ' + edtLembranca.Text+' ';
+    ACBrETQ1.DefinirCor($FF0000, 255, $ffffff, 100); // Azul sobre Branco com opacidade
+    ACBrETQ1.ImprimirTexto(or90, 'T', 1, 1, 5, 2, msg);
+    ACBrETQ1.DefinirCorPadrao;
+  end;
+
+  ACBrETQ1.Imprimir(Trunc(sbCopiasLembranca.Value));
+
+  ACBrETQ1.ApagarImagem(NomeImagem);
+  ACBrETQ1.Desativar;
+
+  TabBack;
+end;
+
+procedure TFrPrincipal.bLerImagemClick(Sender: TObject);
+begin
+  OpenDialog1.InitialDir := edPastaImagens.Text;
+  OpenDialog1.Filter := 'Arquivos de Imagem (png,jpg,bmp)|*.png;*.jpg;*.bmp|Todos Arquivos (*.*)|*.*';
+  imgLembranca.Bitmap := Nil;
+  if OpenDialog1.Execute then
+  begin
+    imgLembranca.Bitmap.LoadFromFile(OpenDialog1.FileName);
+    if imgLembranca.Bitmap.Width > imgLembranca.Bitmap.Height then
+      imgLembranca.Bitmap.Rotate(90);
+  end
 end;
 
 procedure TFrPrincipal.btImprimirClick(Sender: TObject);

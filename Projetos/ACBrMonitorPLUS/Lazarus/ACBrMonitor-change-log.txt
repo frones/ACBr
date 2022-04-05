@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2022
+---DoACBrNFeUnit---
+[*] Ajustes na geração da tag autXML a partir das configurações em tela
+
 22/03/2022
 --- ACBrMonior1, DoETQUnit---
 [*] Ajustes de enumerados, atualização de uses da classe ACBrETQClass

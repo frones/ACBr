@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2022
+--- ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST, ACBrLibBoletoStaticImportsMT,ACBrLibBoletoStaticImports, ACBrLibBoleto.dpr --
+[+] Adicionado método Boleto_ConsultarTitulosPorPeriodo utilizado na consulta por API BB
+    Por: José M S Junior
+
 27/01/2022
 --- ACBrLibBoletoBase, ACBrLibBoletoDataModule --
 [-] Correção de erro na troca de layout de impressão.

@@ -165,6 +165,9 @@ function Boleto_RetornaCodigoBarras(const libHandle: TLibHandle; eIndice: longin
 function Boleto_EnviarBoleto(const libHandle: TLibHandle; eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
+function Boleto_ConsultarTitulosPorPeriodo(const libHandle: TLibHandle; eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
+
 {%endregion}
 
 

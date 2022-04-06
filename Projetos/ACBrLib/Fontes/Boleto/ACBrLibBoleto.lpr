@@ -89,7 +89,8 @@ exports
   Boleto_MontarNossoNumero,
   Boleto_RetornaLinhaDigitavel,
   Boleto_RetornaCodigoBarras,
-  Boleto_EnviarBoleto;
+  Boleto_EnviarBoleto,
+  Boleto_ConsultarTitulosPorPeriodo;
 
 begin
   {$IFDEF DEBUG}

@@ -91,6 +91,7 @@ type
     function RetornaLinhaDigitavel(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function RetornaCodigoBarras(eIndice: longint; const sResposta: PChar; var esTamanho: longint): longint;
     function EnviarBoleto(eCodigoOperacao: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    function ConsultarTitulosPorPeriodo(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 
   end;
 
@@ -1167,6 +1168,70 @@ begin
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
+end;
+
+function TACBrLibBoleto.ConsultarTitulosPorPeriodo(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  ArquivoIni: AnsiString;
+  Resposta: AnsiString;
+  Titulo : TRetornoRegistroWeb;
+  Titulos: TArray<TRetornoRegistroWeb>;
+  I: Integer;
+begin
+  try
+    ArquivoIni := ConverterAnsiParaUTF8(eArquivoIni);
+
+    if Config.Log.Nivel > logNormal then
+      GravarLog('Boleto_ConsultarTitulosPeriodo(' + ArquivoIni + ' )', logCompleto, True)
+    else
+      GravarLog('Boleto_ConsultarTitulosPeriodo', logNormal);
+
+    BoletoDM.Travar;
+    try
+      if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
+        raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
+
+      BoletoDM.ACBrBoleto1.Configuracoes.WebService.Operacao := tpConsulta;
+      BoletoDM.ACBrBoleto1.EnviarBoleto;
+
+      if BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count > 0 then
+      begin
+        SetLength(Titulos, BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count);
+        try
+          for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
+          begin
+            Titulo := TRetornoRegistroWeb.Create(I + 1, Config.TipoResposta, Config.CodResposta);
+            Titulo.Processar(BoletoDM.ACBrBoleto1.ListaRetornoWeb[I]);
+            Titulos[I] := Titulo;
+          end;
+
+          Resposta := TACBrObjectSerializer.Gerar<TRetornoRegistroWeb>(Titulos, Config.TipoResposta, Config.CodResposta);
+        finally
+          for I:= 0 to High(Titulos) do
+          begin
+            Titulo := Titulos[I] as TRetornoRegistroWeb;
+            FreeAndNil(Titulo);
+          end;
+
+          SetLength(Titulos, 0);
+          Titulos := nil;
+        end;
+      end;
+
+      MoverStringParaPChar(Resposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, Resposta);
+
+    finally
+      BoletoDM.Destravar;
+    end;
+
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+
 end;
 
 end.

@@ -120,6 +120,8 @@ function Boleto_RetornaCodigoBarras(const libHandle: PLibHandle; eIndice: longin
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function Boleto_EnviarBoleto(const libHandle: PLibHandle; eCodigoOperacao: longint;
   const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function Boleto_ConsultarTitulosPorPeriodo(const libHandle: PLibHandle; eArquivoIni: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 {%endregion}
 
@@ -612,6 +614,21 @@ begin
   try
     VerificarLibInicializada(libHandle);
     Result := TACBrLibBoleto(libHandle^.Lib).EnviarBoleto(eCodigoOperacao, sResposta, esTamanho);
+  except
+    on E: EACBrLibException do
+      Result := E.Erro;
+
+    on E: Exception do
+      Result := ErrExecutandoMetodo;
+  end;
+end;
+
+function Boleto_ConsultarTitulosPorPeriodo(const libHandle: PLibHandle;
+  eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibBoleto(libHandle^.Lib).ConsultarTitulosPorPeriodo(eArquivoIni, sResposta, esTamanho);
   except
     on E: EACBrLibException do
       Result := E.Erro;

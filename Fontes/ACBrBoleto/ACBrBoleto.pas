@@ -3435,6 +3435,7 @@ var
   wLocalPagto, MemFormatada, MemInformativo, MemDetalhamento: String;
   Sessao, sFim, LocalPagamento, OrientacoesBanco: String;
   I, N: Integer;
+  DtMovimento, DtRegistro, DtVencimento: String;
 begin
   Result   := False;
 
@@ -3633,7 +3634,7 @@ begin
             DataAbatimento      := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataAbatimento','')),0);
             DataDesconto        := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataDesconto','')),0);
             DataMoraJuros       := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMoraJuros','')),0);
-  	    DataMulta           := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMulta','')),0);
+  	        DataMulta           := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMulta','')),0);
             DiasDeProtesto      := IniBoletos.ReadInteger(Sessao,'DiasDeProtesto',0);
             if (DiasDeProtesto = 0) then
               DataProtesto      := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataProtesto','')),0);
@@ -3664,6 +3665,7 @@ begin
             Detalhamento.Text   := MemDetalhamento;
             Instrucao1          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao1',Instrucao1),2);
             Instrucao2          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao2',Instrucao2),2);
+            Instrucao3          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao3',Instrucao3),2);
             TotalParcelas       := IniBoletos.ReadInteger(Sessao,'TotalParcelas',TotalParcelas);
             Parcela             := IniBoletos.ReadInteger(Sessao,'Parcela',Parcela);
             ValorAbatimento     := IniBoletos.ReadFloat(Sessao,'ValorAbatimento',ValorAbatimento);
@@ -3729,6 +3731,45 @@ begin
           Result := True;
         end;
       end;
+    end;
+
+    //Filtro para Consulta por API
+    if (IniBoletos.SectionExists('ConsultaAPI')) then
+    begin
+      Configuracoes.WebService.Filtro.Clear;
+
+      Sessao := 'ConsultaAPI';
+      sFim   := IniBoletos.ReadString(Sessao,'IndicadorSituacaoBoleto','0');
+      if (sFim <> '0')  then
+        Configuracoes.WebService.Filtro.indicadorSituacao := TACBrIndicadorSituacaoBoleto(StrToInt64Def(sFim,0))
+      else
+        raise exception.Create('Nenhum Indicador de Situacao definido para consulta!');
+
+      DtMovimento  := Trim(IniBoletos.ReadString(Sessao,'DataInicioMovimento','0'));
+      DtVencimento := Trim(IniBoletos.ReadString(Sessao,'DataInicioVencimento','0'));
+      DtRegistro   := Trim(IniBoletos.ReadString(Sessao,'DataInicioRegistro','0'));
+
+      if (DtMovimento = '0') and (DtVencimento = '0') and (DtRegistro = '0') then
+        raise exception.Create('Nenhuma Data Definida para Consulta!');
+
+      Configuracoes.WebService.Filtro.dataMovimento.FDataInicio := StrToDateDef(DtMovimento,0);
+      Configuracoes.WebService.Filtro.dataMovimento.FDataFinal := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataFinalMovimento',DtMovimento)),0);
+
+      Configuracoes.WebService.Filtro.dataVencimento.FDataInicio := StrToDateDef(DtVencimento,0);
+      Configuracoes.WebService.Filtro.dataVencimento.FDataFinal := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataFinalVencimento',DtVencimento)),0);
+
+      Configuracoes.WebService.Filtro.dataRegistro.FDataInicio := StrToDateDef(DtRegistro,0);
+      Configuracoes.WebService.Filtro.dataRegistro.FDataFinal := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataFinalRegistro',DtRegistro)),0);
+
+      Configuracoes.WebService.Filtro.cnpjCpfPagador := IniBoletos.ReadString(Sessao,'cnpjCpfPagador', '' );
+      Configuracoes.WebService.Filtro.contaCaucao := IniBoletos.ReadInteger(Sessao,'ContaCaucao', 0 );
+      Configuracoes.WebService.Filtro.codigoEstadoTituloCobranca := IniBoletos.ReadInteger(Sessao,'CodigoEstadoTituloCobranca', 0 );
+      Configuracoes.WebService.Filtro.modalidadeCobranca := IniBoletos.ReadInteger(Sessao,'ModalidadeCobranca', 0 );
+      Configuracoes.WebService.Filtro.carteira := IniBoletos.ReadInteger(Sessao,'Carteira', 0 );
+      Configuracoes.WebService.Filtro.carteiraVariacao := IniBoletos.ReadInteger(Sessao,'CarteiraVariacao', 0 );
+      Configuracoes.WebService.Filtro.indiceContinuidade := IniBoletos.ReadInteger(Sessao,'IndiceContinuidade', 0 );
+
+      Result := True;
     end;
 
   finally

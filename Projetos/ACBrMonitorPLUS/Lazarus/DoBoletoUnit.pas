@@ -245,6 +245,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoConsultarTitulosPorPeriodo }
+TMetodoConsultarTitulosPorPeriodo  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses DoACBrUnit, DoEmailUnit, ACBrBoletoRelatorioRetorno, ACBrLibComum,
@@ -285,6 +291,7 @@ begin
   ListaDeMetodos.Add(CMetodoEnviarEmailBoleto);
   ListaDeMetodos.Add(CMetodoEnviarBoleto);
   ListaDeMetodos.Add(CMetodoSetOperacaoWS);
+  ListaDeMetodos.Add(CMetodoConsultarTitulosPorPeriodo);
 
 end;
 
@@ -327,6 +334,7 @@ begin
     23 : AMetodoClass := TMetodoEnviarEmailBoleto;
     24 : AMetodoClass := TMetodoEnviarBoleto;
     25 : AMetodoClass := TMetodoSetOperacaoWS;
+    26 : AMetodoClass := TMetodoConsultarTitulosPorPeriodo;
 
     else
       begin
@@ -350,6 +358,59 @@ begin
       Ametodo.Free;
     end;
 
+  end;
+
+end;
+
+{ TMetodoConsultarTitulosPorPeriodo }
+
+{ Params: 0 - Ini - Uma String com um Path completo arquivo .ini seção [ConsultaAPI]
+                         ou Uma String com conteúdo txt da Configuracao do Filtro [ConsultaAPI]
+}
+procedure TMetodoConsultarTitulosPorPeriodo.Executar;
+var
+  AIni: String;
+  I : Integer;
+  Titulos: TArray<TRetornoRegistroWeb>;
+  Titulo : TRetornoRegistroWeb;
+begin
+  AIni := fpCmd.Params(0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    LerIniBoletos(AIni);
+
+    try
+      ACBrBoleto.Configuracoes.WebService.Operacao:= tpConsulta;
+      ACBrBoleto.EnviarBoleto;
+      if ACBrBoleto.ListaRetornoWeb.Count > 0 then
+      begin
+        SetLength(Titulos, ACBrBoleto.ListaRetornoWeb.Count);
+        try
+          for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
+          begin
+            Titulo := TRetornoRegistroWeb.Create(I + 1, TpResp, codUTF8);
+            Titulo.Processar(ACBrBoleto.ListaRetornoWeb[I]);
+            Titulos[I] := Titulo;
+          end;
+
+          fpCmd.Resposta := TACBrObjectSerializer.Gerar<TRetornoRegistroWeb>(Titulos, TpResp, codUTF8);
+        finally
+          for I:= 0 to High(Titulos) do
+          begin
+            Titulo := Titulos[I] as TRetornoRegistroWeb;
+            FreeAndNil(Titulo);
+          end;
+
+          SetLength(Titulos, 0);
+          Titulos := nil;
+        end;
+      end;
+
+    except
+      on E: Exception do
+        raise Exception.Create('Falha ao Realizar Consulta. '+ sLineBreak + E.Message);
+    end;
   end;
 
 end;

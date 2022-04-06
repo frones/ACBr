@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2022
+---DoACBrBoletoUnit, ACBrMonitorConsts---
+[+] Adicionado metodo ConsultarTitulosPorPeriodo para consulta API Banco do Brasil
+
 05/04/2022
 ---DoACBrNFeUnit---
 [*] Ajustes na geração da tag autXML a partir das configurações em tela

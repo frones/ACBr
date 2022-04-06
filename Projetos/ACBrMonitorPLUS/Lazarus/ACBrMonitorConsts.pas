@@ -578,6 +578,7 @@ const
   CMetodoEnviarEmailBoleto =         'enviaremailboleto';
   CMetodoEnviarBoleto =              'enviarboleto';
   CMetodoSetOperacaoWS =             'setoperacaows';
+  CMetodoConsultarTitulosPorPeriodo= 'consultartitulosporperiodo';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';

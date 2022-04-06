@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2022
+-- ACBrBoletoInter--
+[*] #TK2543 ACBrBoleto - 77 INTER - Campo data limite de pagamento aceitar somente dominio [0,30,60]
+  Por : Pandaaa
+
 27/03/2022
 -- ACBrBoletoW_Credisis --
 [-] Correção para compilar no Lazarus

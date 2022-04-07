@@ -11,7 +11,6 @@ object frmDemo: TfrmDemo
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
     AlignWithMargins = True
@@ -721,7 +720,7 @@ object frmDemo: TfrmDemo
           Height = 25
           Caption = 'Gerar PDF Individual'
           TabOrder = 5
-          OnClick = btnImpressaoPDFClick
+          OnClick = btnImpressaoPDFIndividualClick
         end
       end
     end

@@ -39,7 +39,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 32
         Top = 316
-        Width = 142
+        Width = 139
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.CharSet = ANSI_CHARSET
@@ -833,7 +833,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 11
         Top = 305
-        Width = 142
+        Width = 139
         AutoSize = False
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -845,7 +845,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 154
         Height = 14
         Top = 52
-        Width = 412
+        Width = 408
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Color = clBlack
@@ -857,7 +857,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 154
         Height = 13
         Top = 80
-        Width = 412
+        Width = 408
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9
@@ -1076,7 +1076,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 23
         Top = 283
-        Width = 142
+        Width = 139
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.CharSet = ANSI_CHARSET
@@ -1089,7 +1089,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 198
         Height = 12
         Top = 71
-        Width = 368
+        Width = 364
         AutoSize = False
         Caption = 'Endereco Cedente'
         Font.Color = clBlack
@@ -1101,7 +1101,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 58
         Top = 225
-        Width = 142
+        Width = 139
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.CharSet = ANSI_CHARSET
@@ -1208,7 +1208,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   object LayoutBoleto: TRLReport
     Left = 1008
     Height = 1123
-    Top = 16
+    Top = 10
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -1827,7 +1827,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand1: TRLBand
       Left = 15
-      Height = 412
+      Height = 407
       Top = 630
       Width = 768
       BeforePrint = RLBand1BeforePrint
@@ -2029,7 +2029,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object lblLocalPagto: TRLMemo
         Left = 9
-        Height = 17
+        Height = 12
         Top = 54
         Width = 557
         AutoSize = False
@@ -2765,8 +2765,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
     object RLBand2: TRLBand
       Left = 15
-      Height = 430
-      Top = 1042
+      Height = 425
+      Top = 1037
       Width = 768
       RealBounds.UsedUnit = buMilimeters
       BeforePrint = RLBand2BeforePrint
@@ -2943,7 +2943,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtLocalPagamento3: TRLMemo
         Left = 4
-        Height = 17
+        Height = 12
         Top = 64
         Width = 533
         AutoSize = False
@@ -7016,7 +7016,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand5: TRLBand
       Left = 15
-      Height = 521
+      Height = 515
       Top = 19
       Width = 768
       BeforePrint = RLBand5BeforePrint
@@ -7669,7 +7669,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtLocalPagamentoRecTop1: TRLMemo
         Left = 4
-        Height = 18
+        Height = 12
         Top = 223
         Width = 533
         AutoSize = False

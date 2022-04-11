@@ -175,7 +175,7 @@ function QuebraLinhas(const Texto: String; const Colunas: Integer;
 function RemoverQuebraLinhaFinal(const ATexto: String; const AQuebraLinha: String = ''): String;
 
 function TiraPontos(const Str: string): string;
-function TBStrZero(const i: string; const Casas: byte): string;
+function TBStrZero(const Texto: string; const Casas: byte): string;
 function Space(Tamanho: Integer): string;
 function LinhaSimples(Tamanho: Integer): string;
 function LinhaDupla(Tamanho: Integer): string;
@@ -941,6 +941,8 @@ end ;
 
 {-----------------------------------------------------------------------------
   Insere ZEROS (0) a esquerda de <Texto> até completar <Tamanho>
+  Se Length(<Texto>) for maior que <Tamanho>, a string <Texto> será truncada
+  Se você precisa que o texto não seja truncado use a função TBStrZero.
  ---------------------------------------------------------------------------- }
 function Poem_Zeros(const Texto : String ; const Tamanho : Integer) : String ;
 begin
@@ -1423,13 +1425,18 @@ begin
   SetLength(Result, Count);
 end;
 
-function TBStrZero(const i: string; const Casas: byte): string;
+{-----------------------------------------------------------------------------
+  Insere ZEROS (0) a esquerda de <Texto> até completar <Tamanho>
+  Se Length(<Texto>) for maior que <Tamanho>, a string <Texto> NÃO SERÁ truncada
+  Se você precisa que o texto SEJA truncado use a função Poem_Zeros.
+ ---------------------------------------------------------------------------- }
+function TBStrZero(const Texto: string; const Casas: byte): string;
 var
   Ch: Char;
 begin
-  Result := I;
+  Result := Texto;
 
-  if length(i)>Casas then
+  if length(Texto)>Casas then
     Exit
   else
     Ch := '0';

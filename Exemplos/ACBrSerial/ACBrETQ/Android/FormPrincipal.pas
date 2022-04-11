@@ -138,7 +138,6 @@ type
     SpeedButton4: TSpeedButton;
     ListBoxGroupHeader2: TListBoxGroupHeader;
     ListBoxItem2: TListBoxItem;
-    sbLarguraEtiqueta: TSpinBox;
     Layout1: TLayout;
     edTextoImprimir: TEdit;
     btImprimir: TCornerButton;
@@ -233,6 +232,9 @@ type
     edTextoSlap: TEdit;
     Label18: TLabel;
     StyleBook1: TStyleBook;
+    GridPanelLayout4: TGridPanelLayout;
+    sbLarguraEtiqueta: TSpinBox;
+    sbMargem: TSpinBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
@@ -559,6 +561,7 @@ begin
 
     edPastaImagens.Text := INI.ReadString('Diversos','PastaImagens', '');
     sbLarguraEtiqueta.Value := INI.ReadInteger('Diversos','LarguraEtiqueta', 106);
+    sbMargem.Value := INI.ReadInteger('Diversos','Margem', 0);
     edtArqLog.Text := INI.ReadString('Diversos','ArqLog','');
 
     edTextoEuAmo.Text := INI.ReadString('Texto','EuAmo',edTextoEuAmo.Text);
@@ -626,6 +629,8 @@ begin
     INI.WriteBool('ETQ','Guilhotina', ckGuilhotina.IsChecked);
     INI.WriteString('Diversos','PastaImagens', edPastaImagens.Text);
     INI.WriteInteger('Diversos','LarguraEtiqueta', Trunc(sbLarguraEtiqueta.Value));
+    INI.WriteInteger('Diversos','Margem', Trunc(sbMargem.Value));
+
     INI.WriteString('Diversos','ArqLog',edtArqLog.Text);
 
     INI.WriteString('Texto','EuAmo',edTextoEuAmo.Text);
@@ -727,7 +732,7 @@ end;
 procedure TFrPrincipal.img_colorworksClick(Sender: TObject);
 begin
   IrParaImpressao( img_colorworks.Bitmap,
-                   CalcularPathImagem('euamo', 'colorworks'),  //'C:\temp\teste2.png',
+                   CalcularPathImagem('euamo', 'colorworks'),
                    0, ImpressaoColorWorks );
 end;
 
@@ -891,16 +896,16 @@ end;
 procedure TFrPrincipal.ImpressaoACBrLateralBranca;
 begin
   ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
-  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94, 'www.projetoacbr.com.br');
+  ACBrETQ1.ImprimirTexto(or270, 'T', 1, 1, 5, 94+Trunc(sbMargem.Value), 'www.projetoacbr.com.br');
   ACBrETQ1.DefinirCorPadrao;
 end;
 
 procedure TFrPrincipal.ImpressaoColorWorks;
 begin
   ACBrETQ1.DefinirCor($ffffff, 255, $ffffff, 255);  // Branco
-  ACBrETQ1.ImprimirCaixa(3,3,19,19,19,0,2);
+  ACBrETQ1.ImprimirCaixa(3,3+Trunc(sbMargem.Value),19,19,19,0,2);
   ACBrETQ1.DefinirCorPadrao;
-  ACBrETQ1.ImprimirQRCode(4, 4, 'https://epson.com.br/impressoras-etiquetas-coloridas-colorworks', 6);
+  ACBrETQ1.ImprimirQRCode(4, 4+Trunc(sbMargem.Value), 'https://epson.com.br/impressoras-etiquetas-coloridas-colorworks', 6);
   ImpressaoACBrLateralBranca;
   ACBrETQ1.DefinirCorPadrao;
 end;
@@ -920,7 +925,7 @@ begin
 
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 10, 6, msg );
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 10, 6+Trunc(sbMargem.Value), msg );
   ACBrETQ1.DefinirCorPadrao;
 end;
 
@@ -933,7 +938,7 @@ begin
 
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCorPadrao;
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 120, 14, msg );
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 120, 14+Trunc(sbMargem.Value), msg );
 end;
 
 procedure TFrPrincipal.ImpressaoTextoAdicionalPretoFundoMaisACBrLateralBranca;
@@ -961,11 +966,11 @@ begin
       Inc(v, 7);
 
     ACBrETQ1.DefinirCor($FF0000, 255, $FF0000, 255);  // Azul, Azul
-    ACBrETQ1.ImprimirCaixa(27, 1, 98, 30, 0, 0, 2);
+    ACBrETQ1.ImprimirCaixa(27, 1+Trunc(sbMargem.Value), 98, 30, 0, 0, 2);
     ACBrETQ1.DefinirCor($FFFFFF, 255, $000000, 0);
     for i := 0 to l-1 do
     begin
-      ACBrETQ1.ImprimirTexto(orNormal, 'E', 40, 100, v, 2, PadCenter(SL[i], 20));
+      ACBrETQ1.ImprimirTexto(orNormal, 'E', 40, 100, v, 2+Trunc(sbMargem.Value), PadCenter(SL[i], 20));
       Inc(v, 7);
     end;
     ACBrETQ1.DefinirCorPadrao;
@@ -999,7 +1004,7 @@ begin
     for i := 0 to l-1 do
     begin
       msg := PadCenter(SL[i], 12);
-      ACBrETQ1.ImprimirTexto(orNormal, 'E', 40, 150, v, 2, msg);
+      ACBrETQ1.ImprimirTexto(orNormal, 'E', 40, 150, v, 2+Trunc(sbMargem.Value), msg);
       Inc(v, 11);
     end;
     ACBrETQ1.DefinirCorPadrao;
@@ -1017,7 +1022,7 @@ begin
 
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 50, 50, 12, 14, msg );
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 50, 50, 12, 14+Trunc(sbMargem.Value), msg );
   ACBrETQ1.DefinirCorPadrao;
 end;
 
@@ -1030,7 +1035,7 @@ begin
 
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCorPadrao;
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 50, 50, 122, 18, msg );
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 50, 50, 122, 18+Trunc(sbMargem.Value), msg );
 end;
 
 procedure TFrPrincipal.ImpressaoTextoWiFi;
@@ -1050,9 +1055,9 @@ begin
   senha := Copy(s, p+1, s.Length);
 
   ACBrETQ1.DefinirCorPadrao;
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 99, 35, rede );
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 99, 35+Trunc(sbMargem.Value), rede );
   if not senha.IsEmpty then
-    ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 108, 35, senha );
+    ACBrETQ1.ImprimirTexto( orNormal, '0', 100, 100, 108, 35+Trunc(sbMargem.Value), senha );
 end;
 
 procedure TFrPrincipal.ImpressaoTextoAdicionalBrancoFundoMaisColorWorks;
@@ -1070,7 +1075,7 @@ begin
 
   msg := PadCenter(edTextoImprimir.Text, edTextoImprimir.MaxLength);
   ACBrETQ1.DefinirCor($ffffff, 255, $000000, 0); // Branco e Transparente
-  ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 120, 6, msg );
+  ACBrETQ1.ImprimirTexto( orNormal, '0', 80, 80, 120, 6+Trunc(sbMargem.Value), msg );
   ImpressaoACBrLateralBranca;
   ACBrETQ1.DefinirCorPadrao;
 end;
@@ -1097,12 +1102,12 @@ begin
   ACBrETQ1.DefinirDimensoes( Trunc(sbLarguraEtiqueta.Value),
                              trunc(ConverterUnidade(etqDots, imgLembranca.Bitmap.Height, etqMilimetros, ACBrETQ1.DPI)),
                              -1, -1);
-  ACBrETQ1.ImprimirImagem(1, 0, 0, NomeImagem);
+  ACBrETQ1.ImprimirImagem(1, 0, Trunc(sbMargem.Value), NomeImagem);
   if not edtLembranca.Text.IsEmpty then
   begin
-    msg := ' '+FormatDateTime('dd/mm/yy hh:nn', Now) + ' - ' + edtLembranca.Text+' ';
+    msg := ' '+edtLembranca.Text+' - '+FormatDateTime('dd/mm/yy hh:nn', Now)+' ';
     ACBrETQ1.DefinirCor($FF0000, 255, $ffffff, 100); // Azul sobre Branco com opacidade
-    ACBrETQ1.ImprimirTexto(or90, 'T', 1, 1, 5, 2, msg);
+    ACBrETQ1.ImprimirTexto(or90, 'S', 1, 1, 5, 1+Trunc(sbMargem.Value), msg);
     ACBrETQ1.DefinirCorPadrao;
   end;
 
@@ -1156,7 +1161,7 @@ begin
   ACBrETQ1.DefinirDimensoes( Trunc(sbLarguraEtiqueta.Value),
                              trunc(ConverterUnidade(etqDots, h, etqMilimetros, ACBrETQ1.DPI)),
                              -1, -1);
-  ACBrETQ1.ImprimirImagem(1, 0, 0, NomeImagem);
+  ACBrETQ1.ImprimirImagem(1, 0, Trunc(sbMargem.Value), NomeImagem);
 
   if Assigned(FProcImpressao) then
     FProcImpressao;
@@ -1180,6 +1185,8 @@ begin
      DPI := TACBrETQDPI(cbxDPI.ItemIndex);
      Modelo := etqEscLabel;
      Porta := edtPortaImpresora.Text;
+     Device.SendBytesCount := 1024000;
+     Device.SendBytesInterval := 1;
      LimparMemoria := ckLimparMemoria.IsChecked;
      Guilhotina := ckGuilhotina.IsChecked;
      Unidade := etqMilimetros;

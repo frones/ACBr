@@ -45,6 +45,7 @@ type
 
   TNFSeW_ISSIntel = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -54,5 +55,14 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     ISSIntel
 //==============================================================================
+
+{ TNFSeW_ISSIntel }
+
+procedure TNFSeW_ISSIntel.Configuracao;
+begin
+  inherited Configuracao;
+
+  DivAliq100  := True;
+end;
 
 end.

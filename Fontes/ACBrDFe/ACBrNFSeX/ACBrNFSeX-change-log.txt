@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/04/2022
+-- ISSIntel.GravarXml --
+[*] Ajuste para gerar a aliquota com 4 casas decimais
+   Por: Italo Giurizzato Junior
+
 01/04/2022
 -- Conam.Provider --
 [*] Remoção de prefixo indevido na tag TipoTrib.

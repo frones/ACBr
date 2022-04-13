@@ -197,17 +197,17 @@ type
 
   TRegistroH030 = class
   private
-    fVL_ICMS_OP: currency; /// Valor médio unitário do ICMS OP.
-    fVL_BC_ICMS_ST: currency; /// Valor médio unitário da base de cálculo do ICMS ST.
-    fVL_ICMS_ST: currency; /// Valor médio unitário do ICMS ST.
-    fVL_FCP: currency; /// Valor médio unitário do FCP.
+    fVL_ICMS_OP: Double; /// Valor médio unitário do ICMS OP.
+    fVL_BC_ICMS_ST: Double; /// Valor médio unitário da base de cálculo do ICMS ST.
+    fVL_ICMS_ST: Double; /// Valor médio unitário do ICMS ST.
+    fVL_FCP: Double; /// Valor médio unitário do FCP.
   public
     constructor Create(AOwner: TRegistroH010); virtual; /// Create
 
-    property VL_ICMS_OP: currency read fVL_ICMS_OP write fVL_ICMS_OP;
-    property VL_BC_ICMS_ST: currency read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
-    property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
-    property VL_FCP: currency read fVL_FCP write fVL_FCP;
+    property VL_ICMS_OP: Double read fVL_ICMS_OP write fVL_ICMS_OP;
+    property VL_BC_ICMS_ST: Double read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
+    property VL_ICMS_ST: Double read fVL_ICMS_ST write fVL_ICMS_ST;
+    property VL_FCP: Double read fVL_FCP write fVL_FCP;
   end;
 
   /// Registro H030 - Lista

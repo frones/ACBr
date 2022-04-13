@@ -170,7 +170,8 @@ begin
       FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
 
       i := 0;
-      while (FcStat in [100, 102]) and (Leitor.rExtrai(1, 'protBPe', '', i + 1) <> '') do
+      while (FcStat in [100, 102, 150]) and
+            (Leitor.rExtrai(1, 'protBPe', '', i + 1) <> '') do
       begin
         ProtBPe.New;
 

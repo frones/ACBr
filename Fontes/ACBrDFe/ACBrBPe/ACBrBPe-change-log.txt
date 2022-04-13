@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2022
+-- pcnRetEnvBPe --
+[*] Ao ler o retorno não estava considerando o status 150 - Autorizado fora do
+    prazo.
+   Por: Italo Giurizzato Junior
+
 29/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

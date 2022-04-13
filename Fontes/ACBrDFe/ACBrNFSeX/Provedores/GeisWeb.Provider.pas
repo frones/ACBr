@@ -283,25 +283,40 @@ begin
         end;
 
         ANode := AuxNode2;
+
+        with Response do
+        begin
+          Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataLancamento'), tcDatVcto);
+          Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('LinkConsulta'), tcStr);
+        end;
+
         AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoNfse');
 
         if AuxNode <> nil then
+        begin
           NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+          with Response do
+          begin
+            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
+            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          end;
 
-        if Assigned(ANota) then
-          ANota.XmlNfse := ANode.OuterXml
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+          if Assigned(ANota) then
+            ANota.XmlNfse := ANode.OuterXml
+          else
+          begin
+            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
+          end;
+
+          ANota.NFSe.Numero := Response.NumeroNota;
+          ANota.NFSe.CodigoVerificacao := Response.CodVerificacao;
+
+          SalvarXmlNfse(ANota);
         end;
-
-        ANota.NFSe.Numero := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
-        ANota.NFSe.CodigoVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-
-        SalvarXmlNfse(ANota);
       end;
     except
       on E:Exception do

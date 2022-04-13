@@ -160,7 +160,7 @@ begin
   begin
     with NFSe do
     begin
-      numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
+      Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
       CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
       IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroRps'), tcStr);
     end;
@@ -376,9 +376,9 @@ begin
   begin
     LerIdentificacaoNfse(ANode);
 
-    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDat);
-    Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDat);
-//           <xs:element name="DataLancamento" type="xs:string"></xs:element>
+    DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
+    dhRecebimento := ObterConteudo(ANode.Childrens.FindAnyNs('DataLancamento'), tcDatVcto);
+    Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDatVcto);
     RegimeEspecialTributacao := StrToRegime(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
 
     LerServico(ANode);

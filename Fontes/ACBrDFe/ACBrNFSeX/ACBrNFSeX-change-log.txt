@@ -43,9 +43,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/04/2022
+-- ACBrNFSeX --
+[*] Remoção de acentos no motivo de cancelamento.
+   Por: Italo Giurizzato Junior
+-- GeisWeb.LerXml/GeisWeb.Provider --
+[*] Ajuste para ler as datas corretamente.
+   Por: Italo Giurizzato Junior
+-- WebISS.LerXml --
+[*] Acrescentado o NormatizarXml antes da leitura do XML.
+   Por: Italo Giurizzato Junior
+
 12/04/2022
 -- ISSIntel.GravarXml --
-[*] Ajuste para gerar a aliquota com 4 casas decimais
+[*] Ajuste para gerar a aliquota com 4 casas decimais.
    Por: Italo Giurizzato Junior
 
 01/04/2022

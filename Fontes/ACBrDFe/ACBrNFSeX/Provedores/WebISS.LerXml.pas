@@ -46,6 +46,7 @@ type
   TNFSeR_WebISS = class(TNFSeR_ABRASFv1)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
@@ -55,15 +56,33 @@ type
   TNFSeR_WebISS202 = class(TNFSeR_ABRASFv2)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrUtil.Strings;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     WebISS
 //==============================================================================
+
+{ TNFSeR_WebISS }
+
+function TNFSeR_WebISS.NormatizarXml(const aXml: string): string;
+begin
+  Result := TiraAcentos(aXml);
+end;
+
+{ TNFSeR_WebISS202 }
+
+function TNFSeR_WebISS202.NormatizarXml(const aXml: string): string;
+begin
+  Result := TiraAcentos(aXml);
+end;
 
 end.

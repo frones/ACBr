@@ -69,6 +69,12 @@ type
     procedure CampoDataVencimento_ValorValido_GeraTag;
     procedure CampoDataVencimento_ValorVazio_Ocorrencia1_GeraTag;
     procedure CampoDataVencimento_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoHora_ValorValido_GeraTag;
+    procedure CampoHora_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoHora_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoHoraCFe_ValorValido_GeraTag;
+    procedure CampoHoraCFe_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoHoraCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
 
 {
 procedure CampoXXX_ValorValido_GeraTag;
@@ -582,7 +588,6 @@ begin
   CheckEquals('', a);
 end;
 
-
 procedure pcnGeradorTest.CampoDataVencimento_ValorValido_GeraTag;
 var
   a: string;
@@ -611,6 +616,70 @@ begin
   a := UmGerador.ArquivoFormatoXML;
   CheckEquals('', a);
 end;
+
+procedure pcnGeradorTest.CampoHora_ValorValido_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  b := EncodeTime(11,12,13,14);
+  UmGerador.wCampo(tcHor, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>11:12:13</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoHora_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcHor, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoHora_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcHor, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoHoraCFe_ValorValido_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  b := EncodeTime(11,12,13,14);
+  UmGerador.wCampo(tcHorCFe, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>111213</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoHoraCFe_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcHorCFe, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoHoraCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcHorCFe, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+
 
 initialization
 

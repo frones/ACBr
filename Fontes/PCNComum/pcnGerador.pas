@@ -437,7 +437,7 @@ begin
         EstaVazio := (wHor = 0) and (wMin = 0) and (wSeg = 0);
       end;
 
-    tcDatHor:
+    tcDatHor, tcDatHorCFe:
       begin
         DecodeDateTime( VarToDateTime(valor), wAno, wMes, wDia, wHor, wMin, wSeg, wMse);
         ConteudoProcessado := FormatFloat('0000', wAno) + '-' +
@@ -446,6 +446,9 @@ begin
                               FormatFloat('00', wHor) + ':' +
                               FormatFloat('00', wMin) + ':' +
                               FormatFloat('00', wSeg);
+        if Tipo = tcDatHorCFe then
+          ConteudoProcessado := OnlyNumber(ConteudoProcessado);
+
         EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
       end;
 

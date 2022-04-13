@@ -327,7 +327,7 @@ begin
                LFill(APUR_CSLL) +
                LFill(strIND_REC_RECEITA) );
 			   
-	    ECFVersao700:
+	    ECFVersao700,ECFVersao800:
 		Add( LFill('0010') +
                LFill(HASH_ECF_ANTERIOR) +
                LFill(strOPT_REFIS) +
@@ -458,7 +458,7 @@ begin
                LFill(IND_PAIS_A_PAIS) +
                LFill(IND_DEREX));
 			   
-		  ECFVersao700:
+		  ECFVersao700,ECFVersao800:
           Add( LFill('0020') +
                LFill(IND_ALIQ_CSLL) +
                LFill(IND_QTE_SCP, 3) +

@@ -78,6 +78,7 @@ type
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); override;
 
+    function AjustarRetorno(const Retorno: string): string;
   public
     function TipoPessoaToStr(const t: TTipoPessoa): string; override;
     function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa; override;
@@ -86,13 +87,9 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
-  ACBrNFSeX,
-  ACBrNFSeXConsts,
-  ACBrNFSeXConfiguracoes,
+  ACBrNFSeX, ACBrNFSeXConsts, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
   ISSCambe.GravarXml, ISSCambe.LerXml;
 
 { TACBrNFSeXWebserviceISSCambe }
@@ -147,6 +144,12 @@ begin
 end;
 
 { TACBrNFSeProviderISSCambe }
+
+function TACBrNFSeProviderISSCambe.AjustarRetorno(
+  const Retorno: string): string;
+begin
+  Result := StringReplace(Retorno, '&', '&amp;', [rfReplaceAll]);
+end;
 
 procedure TACBrNFSeProviderISSCambe.Configuracao;
 begin
@@ -210,9 +213,9 @@ procedure TACBrNFSeProviderISSCambe.TratarRetornoEmitir(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
-//  ANota: NotaFiscal;
-//  Xml: string;
+  ANode, AuxNode: TACBrXmlNode;
+  NumNFSe: String;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -226,6 +229,8 @@ begin
         Exit
       end;
 
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
+
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
@@ -234,27 +239,27 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      Response.ArquivoRetorno := StringReplace(Response.ArquivoRetorno, '&', '&amp;', [rfReplaceAll]);
-      {
-      with Response do
+      AuxNode := ANode.Childrens.FindAnyNs('ListaDadosNFSeInfo');
+      AuxNode := AuxNode.Childrens.FindAnyNs('DadosNFSe');
+      AuxNode := AuxNode.Childrens.FindAnyNs('EspelhoXML');
+      AuxNode := AuxNode.Childrens.FindAnyNs('NFSe');
+      AuxNode := AuxNode.Childrens.FindAnyNs('identificacaoNFSe');
+      NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+
+      Response.NumeroNota := NumNFSe;
+      Response.Link       := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+      if Assigned(ANota) then
+        ANota.XmlNfse := ANode.OuterXml
+      else
       begin
-        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('validacao'), tcStr);
+        TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
       end;
 
-      Xml := ObterConteudoTag(ANode.Childrens.FindAnyNs('xml'), tcStr);
-
-      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps();
-
-        if Assigned(ANota) then
-          ANota.XmlNfse := ANode.OuterXml
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
-
-        SalvarXmlNfse(ANota);
-      }
+      SalvarXmlNfse(ANota);
     except
       on E:Exception do
       begin
@@ -276,71 +281,91 @@ var
   xDataI, xDataF, xFaixaData: string;
   wAno, wMes, wDia: Word;
 begin
-  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod105;
-    AErro.Descricao := Desc105;
-    Exit;
+  case Response.InfConsultaNFSe.tpConsulta of
+    tcPorFaixa:
+      begin
+        if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod105;
+          AErro.Descricao := Desc105;
+          Exit;
+        end;
+
+        if EstaVazio(Response.InfConsultaNFSe.NumeroFinNFSe) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod106;
+          AErro.Descricao := Desc106;
+          Exit;
+        end;
+
+        Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+        Response.Metodo := tmConsultarNFSePorFaixa;
+
+        Response.ArquivoEnvio := '<servicosTomados>2</servicosTomados>'+ {1=SIM / 2=NÃO :  Consulta de NFSe tomada não deve ser filtrada por faixa de número}
+                                 '<faixaNumero>' +
+                                   '<numeroInicial>' +
+                                     Response.InfConsultaNFSe.NumeroIniNFSe +
+                                   '</numeroInicial>' +
+                                   '<numeroFinal>' +
+                                     Response.InfConsultaNFSe.NumeroFinNFSe +
+                                   '</numeroFinal>' +
+                                   '<tipoFaixa>' +
+                                     '1' +  // NFSe
+                                   '</tipoFaixa>' +
+                                 '</faixaNumero>'+
+                                 '<dadosPrestador>' +
+                                    '<prestadorCMC>' +
+                                      OnlyNumber(Emitente.InscMun) +
+                                    '</prestadorCMC>' +
+                                 '</dadosPrestador>';
+      end;
+
+    tcPorPeriodo:
+      begin
+        Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+        Response.Metodo := tmConsultarNFSePorFaixa;
+
+        xDataI := '';
+        xDataF := '';
+
+        if Response.InfConsultaNFSe.DataInicial > 0 then
+        begin
+          DecodeDate(VarToDateTime(Response.InfConsultaNFSe.DataInicial), wAno, wMes, wDia);
+          xDataI := FormatFloat('0000', wAno) + '-' +
+                    FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
+        end;
+
+        if Response.InfConsultaNFSe.DataFinal > 0 then
+        begin
+          DecodeDate(VarToDateTime(Response.InfConsultaNFSe.DataFinal), wAno, wMes, wDia);
+          xDataF := FormatFloat('0000', wAno) + '-' +
+                    FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
+        end;
+
+        if (xDataI <> '') and (xDataF <> '') then
+        begin
+          xFaixaData := '<faixaData>' +
+                          '<dataInicial>' + xDataI + '</dataInicial>' +
+                          '<dataFinal>' + xDataF + '</dataFinal>' +
+                          '<tipoFaixa>' +
+                            '1' +  // Período de Emissão
+                          '</tipoFaixa>' +
+                        '</faixaData>';
+        end;
+
+        Response.ArquivoEnvio := '<servicosTomados>2</servicosTomados>'+ {1=SIM / 2=NÃO}
+                                 xFaixaData +
+                                 '<dadosPrestador>' +
+                                   '<prestadorCMC>' +
+                                     OnlyNumber(Emitente.InscMun) +
+                                   '</prestadorCMC>' +
+                                 '</dadosPrestador>';
+      end;
   end;
-
-  if EstaVazio(Response.InfConsultaNFSe.NumeroFinNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod106;
-    AErro.Descricao := Desc106;
-    Exit;
-  end;
-
-  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
-  Response.Metodo := tmConsultarNFSePorFaixa;
-
-  xDataI := '';
-  xDataF := '';
-
-  if Response.InfConsultaNFSe.DataInicial > 0 then
-  begin
-    DecodeDate(VarToDateTime(Response.InfConsultaNFSe.DataInicial), wAno, wMes, wDia);
-    xDataI := FormatFloat('0000', wAno) + '-' +
-              FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
-  end;
-
-  if Response.InfConsultaNFSe.DataFinal > 0 then
-  begin
-    DecodeDate(VarToDateTime(Response.InfConsultaNFSe.DataFinal), wAno, wMes, wDia);
-    xDataF := FormatFloat('0000', wAno) + '-' +
-              FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
-  end;
-
-  if (xDataI <> '') and (xDataF <> '') then
-  begin
-    xFaixaData := '<faixaData>' +
-                    '<dataInicial>' + xDataI + '</dataInicial>' +
-                    '<dataFinal>' + xDataF + '</dataFinal>' +
-                    '<tipoFaixa>' +
-                      '1' +  // Período de Emissão
-                    '</tipoFaixa>' +
-                  '</faixaData>';
-  end;
-
-  Response.ArquivoEnvio := '<faixaNumero>' +
-                             '<numeroInicial>' +
-                               Response.InfConsultaNFSe.NumeroIniNFSe +
-                             '</numeroInicial>' +
-                             '<numeroFinal>' +
-                               Response.InfConsultaNFSe.NumeroFinNFSe +
-                             '</numeroFinal>' +
-                             '<tipoFaixa>' +
-                               '1' +  // NFSe
-                             '</tipoFaixa>' +
-                           '</faixaNumero>' +
-                           xFaixaData +
-                           '<dadosPrestador>' +
-                             '<prestadorCMC>' +
-                               OnlyNumber(Emitente.InscMun) +
-                             '</prestadorCMC>' +
-                           '</dadosPrestador>';
 end;
 
 procedure TACBrNFSeProviderISSCambe.TratarRetornoConsultaNFSe(
@@ -348,9 +373,9 @@ procedure TACBrNFSeProviderISSCambe.TratarRetornoConsultaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
-//  ANota: NotaFiscal;
-//  Xml: string;
+  ANode, AuxNode: TACBrXmlNode;
+  NumNFSe: String;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -364,6 +389,8 @@ begin
         Exit
       end;
 
+      Response.ArquivoRetorno := AjustarRetorno(Response.ArquivoRetorno);
+
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
@@ -371,26 +398,28 @@ begin
       ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-      {
-      with Response do
+
+      AuxNode := ANode.Childrens.FindAnyNs('ListaDadosNFSeInfo');
+      AuxNode := AuxNode.Childrens.FindAnyNs('DadosNFSe');
+      AuxNode := AuxNode.Childrens.FindAnyNs('EspelhoXML');
+      AuxNode := AuxNode.Childrens.FindAnyNs('NFSe');
+      AuxNode := AuxNode.Childrens.FindAnyNs('identificacaoNFSe');
+      NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
+
+      Response.NumeroNota := NumNFSe;
+      Response.Link       := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('linkImpressao'), tcStr);
+
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+      if Assigned(ANota) then
+        ANota.XmlNfse := ANode.OuterXml
+      else
       begin
-        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('validacao'), tcStr);
+        TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
       end;
 
-      Xml := ObterConteudoTag(ANode.Childrens.FindAnyNs('xml'), tcStr);
-
-      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps();
-
-        if Assigned(ANota) then
-          ANota.XmlNfse := ANode.OuterXml
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
-
-        SalvarXmlNfse(ANota);
-      }
+      SalvarXmlNfse(ANota);
     except
       on E:Exception do
       begin

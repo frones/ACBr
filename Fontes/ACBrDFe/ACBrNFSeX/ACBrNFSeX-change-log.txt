@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/04/2022
+-- ISSCambe.LerXml/ISSCambe.Provider --
+[*] Ajustes necessários no componente para tratar os retornos.
+   Por: Marcos Villatore
 -- ACBrNFSeXServicos --
 [*] A cidade de Nova Erechim trocou para o provedor IPM
    Por: Infoel

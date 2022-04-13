@@ -85,7 +85,7 @@ var
   Competencia: string;
 begin
   Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('anoCompetencia'), tcStr) +
-                 ObterConteudo(ANode.Childrens.FindAnyNs('mesCompetencia'), tcStr);
+                 FormatFloat('00', StrToInt(ObterConteudo(ANode.Childrens.FindAnyNs('mesCompetencia'), tcStr)));
 
   if length(Competencia) > 0 then
     Result := EncodeDataHora(Competencia, 'YYYY/MM/DD')

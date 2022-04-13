@@ -614,8 +614,8 @@ begin
   end;
 end;
 
-function Boleto_ConsultarTitulosPorPeriodo(eArquivoIni: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint; cdecl;
+function Boleto_ConsultarTitulosPorPeriodo(eArquivoIni: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
       VerificarLibInicializada(pLib);

@@ -404,6 +404,7 @@ var
   xData, xFormatoData: string;
 begin
   xData := Trim(StringReplace(DataStr, '-', '/', [rfReplaceAll]));
+  xData := Trim(UpperCase(StringReplace(xData, 'Z', '', [rfReplaceAll])));
 
   if xData = '' then
     Result := 0
@@ -416,6 +417,10 @@ begin
 
     case Length(xData) of
       6: xData := FormatMaskText('!0000\/00;0;_', xData) + '/01';
+      7: if Pos('/',xData) = 3 then
+           xData := '01/' + xData
+         else
+           xData := xData + '/01';
       8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
     end;
 

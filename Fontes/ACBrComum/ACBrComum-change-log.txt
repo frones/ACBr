@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2022
+-- ACBrUtil.DateTime --
+[*] Incluida a remoção do caracter "Z" na função:
+    EncodeDataHora.
+   Por: Victor H. Gonzales - Panda
+
 27/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

@@ -60,14 +60,25 @@ type
     procedure CampoDataCFe_ValorValido_GeraTag;
     procedure CampoDataCFe_ValorVazio_Ocorrencia1_GeraTag;
     procedure CampoDataCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoDataHora_ValorValido_GeraTag;
+    procedure CampoDataHora_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoDataHora_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoDataHoraCFe_ValorValido_GeraTag;
+    procedure CampoDataHoraCFe_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoDataHoraCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoDataVencimento_ValorValido_GeraTag;
+    procedure CampoDataVencimento_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoDataVencimento_ValorVazio_OcorrenciaZero_NaoGeraTag;
 
 {
 procedure CampoXXX_ValorValido_GeraTag;
 procedure CampoXXX_ValorVazio_Ocorrencia1_GeraTag;
 procedure CampoXXX_ValorVazio_OcorrenciaZero_NaoGeraTag;
-}
+}//                       x      x    x         x
     {  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
+                                                               x                   X
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
+                      ERRO                                       x
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64);}
 
   end;
@@ -509,6 +520,97 @@ begin
   CheckEquals('', a);
 end;
 
+procedure pcnGeradorTest.CampoDataHora_ValorValido_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  b := EncodeDate(2022,03,14) + EncodeTime(11,12,13,14);
+  UmGerador.wCampo(tcDatHor, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>2022-03-14T11:12:13</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataHora_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcDatHor, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataHora_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcDatHor, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoDataHoraCFe_ValorValido_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  b := EncodeDate(2022,03,14) + EncodeTime(11,12,13,14);
+  UmGerador.wCampo(tcDatHorCFe, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>20220314111213</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataHoraCFe_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcDatHorCFe, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataHoraCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDateTime;
+begin
+  UmGerador.wCampo(tcDatHorCFe, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+
+procedure pcnGeradorTest.CampoDataVencimento_ValorValido_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDatVcto, '', 'Recibo', 1, 30, 1, EncodeDate(2022,03,14));
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>14/03/2022</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataVencimento_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+  b: TDate;
+begin
+  UmGerador.wCampo(tcDatVcto, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampoDataVencimento_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+  b: TDate;
+begin
+  UmGerador.wCampo(tcDatVcto, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
 
 initialization
 

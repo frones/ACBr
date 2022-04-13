@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 13/04/2022
+-- ACBrNFSeXServicos --
+[*] A cidade de Nova Erechim trocou para o provedor IPM
+   Por: Infoel
+[*] A cidade de Ourinhos trocou a versão para 2.04 bem como as URLs
+   Por: Jefferson Alves da Silva
 -- ACBrNFSeX --
 [*] Remoção de acentos no motivo de cancelamento.
    Por: Italo Giurizzato Junior

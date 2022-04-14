@@ -361,8 +361,10 @@ begin
 
       if ANode <> nil then
       begin
+        Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
         Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr);
         Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
+        Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('wsLink'), tcStr);
       end;
     except
       on E:Exception do

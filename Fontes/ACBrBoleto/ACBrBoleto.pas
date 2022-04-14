@@ -864,6 +864,11 @@ type
     function DefineCodBeneficiarioHeader: String; virtual;                    //Utilizado para definir CodBeneficiario no Header da Remessa
     function DefineTipoDocumento: String; virtual;                            //Define o Tipo de Documento na remessa
     function DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String; virtual;  //Utilizado para definir o tipo de aceite na impressao
+    procedure EhObrigatorioAgencia; virtual;
+    procedure EhObrigatorioAgenciaDV; virtual;
+    procedure EhObrigatorioConta; virtual;
+    procedure EhObrigatorioContaDV; virtual;
+    procedure EhObrigatorioNomeBeneficiario; virtual;
   public
     Constructor create(AOwner: TACBrBanco);
     Destructor Destroy; override ;
@@ -1672,7 +1677,12 @@ type
     function CalcularValorDesconto(AValorDocumento, AValorDesconto : Double; ATipoDesconto : TACBrTipoDesconto):Double;
     function CalcularPercentualValor(AValorPercentual, AValorDocumento : Double) : Double;
     function GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDateTime = 0): String;
-
+    function GerarMensagemPadraoMulta(ATitulo: TACBrTitulo):String;
+    function GerarMensagemPadraoJuros(ATitulo: TACBrTitulo):String;
+    function GerarMensagemPadraoNegativacao(ATitulo: TACBrTitulo):String;
+    function GerarMensagemPadraoProtesto(ATitulo: TACBrTitulo):String;
+    function GerarMensagemPadraoAbatimento(ATitulo: TACBrTitulo):String;
+    function GerarMensagemPadraoDataLimitePagamento(ATitulo: TACBrTitulo):String;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -1702,7 +1712,14 @@ type
     function GerarRemessa(NumeroRemessa : Integer) : String;
     function GerarRemessaStream(NumeroRemessa : Integer; Stream:TStream) : String;
     procedure LerRetorno(AStream : TStream = Nil);
+
+
     procedure ChecarDadosObrigatorios;
+    procedure EhObrigatorioAgencia;
+    procedure EhObrigatorioAgenciaDV;
+    procedure EhObrigatorioConta;
+    procedure EhObrigatorioContaDV;
+    procedure EhObrigatorioNomeBeneficiario;
 
     function EnviarBoleto: boolean;
 
@@ -1824,7 +1841,9 @@ type
 implementation
 
 Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
-     ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoAmazonia, ACBrBancoBanestes,
+     ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,ACBrUtil.XMLHTML,
+     ACBrUtil.FilesIO,
+     ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoAmazonia, ACBrBancoBanestes,
      ACBrBancoItau, ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB, ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
@@ -2910,6 +2929,24 @@ begin
    ACBrBoletoFC.GerarJPG;
 end;
 
+function TACBrBoleto.GerarMensagemPadraoAbatimento(
+  ATitulo: TACBrTitulo): String;
+begin
+  if ATitulo.DataAbatimento <> 0 then
+    Result := ACBrStr('Conceder abatimento de ' + FormatFloatBr(ATitulo.ValorAbatimento, 'R$ #,##0.00')+' para pagamento ate ' + FormatDateTime('dd/mm/yyyy',ATitulo.DataAbatimento))
+  else
+    Result := ACBrStr('Conceder abatimento de ' + FormatFloatBr(ATitulo.ValorAbatimento, 'R$ #,##0.00'));
+end;
+
+function TACBrBoleto.GerarMensagemPadraoDataLimitePagamento(
+  ATitulo: TACBrTitulo): String;
+begin
+  if ATitulo.DataLimitePagto > ATitulo.Vencimento then
+    Result:= ACBrStr('Não Receber após ' + IntToStr(DaysBetween(ATitulo.Vencimento, ATitulo.DataLimitePagto))+ ' dias')
+  else
+    Result := ACBrStr('Não Receber após o Vencimento');
+end;
+
 function TACBrBoleto.GerarMensagemPadraoDesconto(const ATipoDesconto : TACBrTipoDesconto; AValorDesconto : Double; ATitulo : TACBrTitulo; ADataDesconto : TDateTime = 0): String;
 var ValorDesconto : Double;
 begin
@@ -2968,6 +3005,60 @@ begin
                   );
       end;
   end;
+end;
+
+function TACBrBoleto.GerarMensagemPadraoJuros(ATitulo: TACBrTitulo): String;
+var ATipoJuros,AJurosQuando : String;
+begin
+  if (ATitulo.CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (ATitulo.CodigoMora = '2') or (ATitulo.CodigoMora = 'B') then
+    ATipoJuros := FloatToStr(ATitulo.ValorMoraJuros) + '% ao mês'
+  else
+    ATipoJuros := FormatFloatBr(ATitulo.ValorMoraJuros, 'R$ #,##0.00 por dia');
+
+  if ATitulo.DataMoraJuros <> 0 then
+  begin
+    if ATitulo.Vencimento = ATitulo.DataMoraJuros then
+      AJurosQuando := 'após o vencimento'
+    else
+      AJurosQuando := 'a partir de '+FormatDateTime('dd/mm/yyyy',ATitulo.DataMoraJuros);
+  end else
+    AJurosQuando := ' por dia de atraso';
+
+  Result := ACBrStr(Format('Cobrar juros de %s de atraso para pagamento %s.',[ATipoJuros,AJurosQuando]));
+end;
+
+function TACBrBoleto.GerarMensagemPadraoMulta(ATitulo: TACBrTitulo): String;
+var AValorMulta : Currency;
+  ATipoMulta : String;
+begin
+
+  if ATitulo.MultaValorFixo then
+    AValorMulta := ATitulo.PercentualMulta
+  else
+    AValorMulta := CalcularPercentualValor(ATitulo.PercentualMulta,ATitulo.ValorDocumento);
+
+  if (ATitulo.DataMulta <> 0) and (ATitulo.DataMulta > ATitulo.Vencimento) then
+    ATipoMulta := 'a partir de ' + FormatDateTime('dd/mm/yyyy',ATitulo.DataMulta)
+  else
+    ATipoMulta := 'após o vencimento';
+
+  Result := ACBrStr(Format('Cobrar multa de R$%s para pagamento %s.',[FormatFloatBr(AValorMulta),ATipoMulta]));
+end;
+
+function TACBrBoleto.GerarMensagemPadraoNegativacao(ATitulo: TACBrTitulo): String;
+begin
+  if ATitulo.TipoDiasNegativacao = diCorridos then
+    Result := ACBrStr('Negativar em ' + IntToStr(DaysBetween(ATitulo.Vencimento, ATitulo.DataNegativacao))+ ' dias corridos após o vencimento')
+  else
+    Result := ACBrStr('Negativar no '+IntToStr(max(ATitulo.DiasDeNegativacao,1)) + 'º dia útil após o vencimento');
+end;
+
+function TACBrBoleto.GerarMensagemPadraoProtesto(ATitulo: TACBrTitulo): String;
+begin
+  if ATitulo.TipoDiasProtesto = diCorridos then
+    Result := ACBrStr('Protestar em ' + IntToStr(DaysBetween(ATitulo.Vencimento, ATitulo.DataProtesto))+ ' dias corridos após o vencimento')
+  else
+    Result := ACBrStr('Protestar no '+IntToStr(max(ATitulo.DiasDeProtesto,1)) + 'º dia útil após o vencimento');
 end;
 
 procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
@@ -3043,82 +3134,35 @@ end;
 procedure TACBrBoleto.AdicionarMensagensPadroes(Titulo: TACBrTitulo;
   AStringList: TStrings);
 begin
-   if not ImprimirMensagemPadrao  then
-      exit;
+  if not ImprimirMensagemPadrao  then
+    exit;
 
-   with Titulo do
-   begin
-      if DataProtesto <> 0 then
-      begin
-         if TipoDiasProtesto = diCorridos then
-            AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dias corridos após o vencimento'))
-         else
-            AStringList.Add(ACBrStr('Protestar no '+IntToStr(max(DiasDeProtesto,1)) + 'º dia útil após o vencimento'));
-      end;
-      if DataNegativacao <> 0 then
-      begin
-         if TipoDiasNegativacao = diCorridos then
-            AStringList.Add(ACBrStr('Negativar em ' + IntToStr(DaysBetween(Vencimento, DataNegativacao))+ ' dias corridos após o vencimento'))
-         else
-            AStringList.Add(ACBrStr('Negativar no '+IntToStr(max(DiasDeNegativacao,1)) + 'º dia útil após o vencimento'));
-      end;
+  if Titulo.DataProtesto <> 0 then
+   AStringList.Add(GerarMensagemPadraoProtesto(Titulo));
 
-      if ValorAbatimento <> 0 then
-      begin
-         if DataAbatimento <> 0 then
-            AStringList.Add(ACBrStr('Conceder abatimento de ' +
-                             FormatFloatBr(ValorAbatimento, 'R$ #,##0.00') +
-                             ' para pagamento ate ' + FormatDateTime('dd/mm/yyyy',DataAbatimento)))
-         else
-            AStringList.Add(ACBrStr('Conceder abatimento de ' +
-                             FormatFloatBr(ValorAbatimento, 'R$ #,##0.00')));
-      end;
+  if Titulo.DataNegativacao <> 0 then
+   AStringList.Add(GerarMensagemPadraoNegativacao(Titulo));
 
-      if ValorDesconto <> 0 then
-        AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto,Titulo.ValorDesconto,Titulo,DataDesconto));
+  if Titulo.ValorAbatimento <> 0 then
+   AStringList.Add(GerarMensagemPadraoAbatimento(Titulo));
 
-      if ValorDesconto2 <> 0 then
-        AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto2,Titulo.ValorDesconto2,Titulo,DataDesconto2));
+  if Titulo.ValorDesconto <> 0 then
+    AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto,Titulo.ValorDesconto,Titulo,Titulo.DataDesconto));
 
-      if ValorDesconto3 <> 0 then
-        AStringList.Add(GerarMensagemPadraoDesconto(tdValorFixoAteDataInformada,Titulo.ValorDesconto3,Titulo,DataDesconto3));
+  if Titulo.ValorDesconto2 <> 0 then
+    AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto2,Titulo.ValorDesconto2,Titulo,Titulo.DataDesconto2));
 
-      if ValorMoraJuros <> 0 then
-      begin
-         if DataMoraJuros <> 0 then
-            AStringList.Add(ACBrStr('Cobrar juros de '                        +
-                            ifthen(((CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
-                                   FormatFloatBr(ValorMoraJuros, 'R$ #,##0.00 por dia'))         +
-                             ' de atraso para pagamento '+
-                             ifthen(Vencimento = DataMoraJuros, 'após o vencimento.',
-                                    'a partir de '+FormatDateTime('dd/mm/yyyy',DataMoraJuros))))
-         else
-            AStringList.Add(ACBrStr('Cobrar juros de '                +
-                                    ifthen(((CodigoMoraJuros in [cjTaxaMensal, cjValorMensal]) or (CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
-                                           FormatFloatBr(ValorMoraJuros, 'R$ #,##0.00 por dia'))         +
-                             ' de atraso'));
-      end;
+  if Titulo.ValorDesconto3 <> 0 then
+    AStringList.Add(GerarMensagemPadraoDesconto(tdValorFixoAteDataInformada,Titulo.ValorDesconto3,Titulo,Titulo.DataDesconto3));
 
-      if PercentualMulta <> 0 then
-      begin
-        if DataMulta <> 0 then
-          AStringList.Add(ACBrStr('Cobrar multa de ' + FormatFloatBr(
-            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  ), 'R$ #,##0.00') +
-                         ' para pagamento'+ IfThen(DataMulta = Vencimento, ' após o vencimento.',
-                                                   ' a partir de '+ FormatDateTime('dd/mm/yyyy',DataMulta))))
-        else
-          AStringList.Add(ACBrStr('Multa de ' + FormatFloatBr(
-            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  ), 'R$ #,##0.00') +
-                         ' após o vencimento.'));
-      end;
-      if DataLimitePagto <> 0 then
-      begin
-        if DataLimitePagto > Vencimento then
-          AStringList.Add(ACBrStr('Não Receber após ' + IntToStr(DaysBetween(Vencimento, DataLimitePagto))+ ' dias'))
-        else
-          AStringList.Add(ACBrStr('Não Receber após o Vencimento'));
-      end;
-   end;
+  if Titulo.ValorMoraJuros <> 0 then
+    AStringList.Add(GerarMensagemPadraoJuros(Titulo));
+
+  if Titulo.PercentualMulta <> 0 then
+    AStringList.Add(GerarMensagemPadraoMulta(Titulo));
+
+  if Titulo.DataLimitePagto <> 0 then
+    AStringList.Add(GerarMensagemPadraoDataLimitePagamento(Titulo));
 end;
 
 function TACBrBoleto.GerarRemessa(NumeroRemessa : Integer) : String;
@@ -3314,17 +3358,36 @@ end;
 
 procedure TACBrBoleto.ChecarDadosObrigatorios;
 begin
-  if Cedente.Nome = '' then
-    Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
-  if Cedente.Conta = '' then
-    Raise Exception.Create(ACBrStr('Conta não informada'));
-  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese, cobCitiBank,cobBancoDoBrasilAPI,cobBancoCECRED])) then
-    Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
-  if Cedente.Agencia = '' then
-    Raise Exception.Create(ACBrStr('Agência não informada'));
-  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanese,
-     cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob, cobCitiBank,cobBancoDoBrasilAPI])) then
-    Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
+  EhObrigatorioNomeBeneficiario;
+  EhObrigatorioConta;
+  EhObrigatorioContaDV;
+  EhObrigatorioAgencia;
+  EhObrigatorioAgenciaDV;
+end;
+
+procedure TACBrBoleto.EhObrigatorioAgencia;
+begin
+  fBanco.BancoClass.EhObrigatorioAgencia;
+end;
+
+procedure TACBrBoleto.EhObrigatorioAgenciaDV;
+begin
+  fBanco.BancoClass.EhObrigatorioAgenciaDV;
+end;
+
+procedure TACBrBoleto.EhObrigatorioConta;
+begin
+  fBanco.BancoClass.EhObrigatorioConta;
+end;
+
+procedure TACBrBoleto.EhObrigatorioContaDV;
+begin
+  fBanco.BancoClass.EhObrigatorioContaDV;
+end;
+
+procedure TACBrBoleto.EhObrigatorioNomeBeneficiario;
+begin
+  fBanco.BancoClass.EhObrigatorioNomeBeneficiario;
 end;
 
 function TACBrBoleto.EnviarBoleto: boolean;
@@ -4508,6 +4571,36 @@ begin
    fpModulo.Free;
    fpOrientacoesBanco.Free;
    Inherited Destroy;
+end;
+
+procedure TACBrBancoClass.EhObrigatorioAgencia;
+begin
+  if ACBrBanco.ACBrBoleto.Cedente.Agencia = '' then
+    Raise Exception.Create(ACBrStr('Agência não informada'));
+end;
+
+procedure TACBrBancoClass.EhObrigatorioAgenciaDV;
+begin
+  if ACBrBanco.ACBrBoleto.Cedente.AgenciaDigito = '' then
+    Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
+end;
+
+procedure TACBrBancoClass.EhObrigatorioConta;
+begin
+  if ACBrBanco.ACBrBoleto.Cedente.Conta = '' then
+    Raise Exception.Create(ACBrStr('Conta não informada'));
+end;
+
+procedure TACBrBancoClass.EhObrigatorioContaDV;
+begin
+  if ACBrBanco.ACBrBoleto.Cedente.ContaDigito = '' then
+    Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
+end;
+
+procedure TACBrBancoClass.EhObrigatorioNomeBeneficiario;
+begin
+  if ACBrBanco.ACBrBoleto.Cedente.Nome = '' then
+    Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
 end;
 
 procedure TACBrBancoClass.GerarRegistroHeader400(NumeroRemessa: Integer; ARemessa: TStringList);

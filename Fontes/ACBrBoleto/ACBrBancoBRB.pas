@@ -58,7 +58,7 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF},
-  StrUtils, ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
+  StrUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoBRB }
 

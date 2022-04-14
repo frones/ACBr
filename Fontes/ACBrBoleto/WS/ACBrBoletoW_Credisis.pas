@@ -103,7 +103,7 @@ Const
 implementation
 
 uses
- pcnConsts, ACBrBoletoPcnConsts, ACBrUtil, ACBrUtil.XMLHTML, ACBrUtil.Strings;
+ pcnConsts, ACBrBoletoPcnConsts, ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings;
 
 
 { TBoletoW_Credisis }

@@ -46,6 +46,8 @@ type
   private
     fValorTotalDocs: Double;
   protected
+    procedure EhObrigatorioContaDV; override;
+    procedure EhObrigatorioAgenciaDV; override;
   public
     constructor Create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): String; override;
@@ -62,7 +64,7 @@ implementation
 
 uses StrUtils, Variants,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoCitiBank.Create(AOwner: TACBrBanco);
 begin
@@ -75,6 +77,16 @@ begin
   fpTamanhoConta   := 12;
   fpTamanhoCarteira:= 3;
   fValorTotalDocs  := 0;
+end;
+
+procedure TACBrBancoCitiBank.EhObrigatorioAgenciaDV;
+begin
+  //sem validação
+end;
+
+procedure TACBrBancoCitiBank.EhObrigatorioContaDV;
+begin
+  //sem validação
 end;
 
 function TACBrBancoCitiBank.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): String;

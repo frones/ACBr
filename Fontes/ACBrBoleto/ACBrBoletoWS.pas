@@ -36,13 +36,13 @@ unit ACBrBoletoWS;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, pcnGerador, pcnLeitor, ACBrUtil, pcnConversao, synacode, synautil,
+  Classes, SysUtils, ACBrBoleto, pcnGerador, pcnLeitor, ACBrUtil.Strings, pcnConversao, synacode, synautil,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
     JsonDataObjects_ACBr,
   {$Else}
     Jsons,
   {$EndIf}
-  ACBrBoletoConversao, ACBrBoletoRetorno, ACBrDFeSSL, dateutils, strutils;
+  ACBrBoletoConversao, ACBrBoletoRetorno, ACBrDFeSSL, dateutils, strutils,ACBrUtil.Base,ACBrUtil.FilesIO,ACBrUtil.XMLHTML;
 
 type
 

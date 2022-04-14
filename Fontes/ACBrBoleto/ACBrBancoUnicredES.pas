@@ -72,7 +72,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, ACBrUtil, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.DateTime;
+  StrUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.DateTime;
 
 { TACBrBancoUnicredES }
 

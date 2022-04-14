@@ -76,7 +76,7 @@ type
 implementation
 
 
-uses StrUtils, ACBrUtil, Variants, ACBrValidador, ACBrUtil.Strings, ACBrUtil.DateTime;
+uses StrUtils, ACBrUtil.Base, Variants, ACBrValidador, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 
 constructor TACBrBancoBrasilSICOOB.create(AOwner: TACBrBanco);

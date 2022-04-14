@@ -46,6 +46,7 @@ type
   TACBrCaixaEconomicaSICOB = class(TACBrBancoClass)
    protected
     function GetLocalPagamento: String; override;
+    procedure EhObrigatorioAgenciaDV; override;
    private
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function CalcularDVAgCD(Header: Boolean = False): string;
@@ -81,7 +82,7 @@ implementation
 
 uses StrUtils, Variants, math,
      {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-     ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
+     ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrCaixaEconomicaSICOB.create(AOwner: TACBrBanco);
 begin
@@ -98,6 +99,11 @@ begin
                           'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 ' + sLineBreak +
                           'Ouvidoria: 0800 725 7474') + sLineBreak+
                           '     caixa.gov.br      ');
+end;
+
+procedure TACBrCaixaEconomicaSICOB.EhObrigatorioAgenciaDV;
+begin
+  //sem validação
 end;
 
 function TACBrCaixaEconomicaSICOB.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

@@ -64,7 +64,7 @@ type
 
     function ConverteEspecieDoc(const ACodigoEspecie: Integer = 0): String;
     procedure DefineDataProtestoNegativacao(const ACBrTitulo: TACBrTitulo);
-
+    procedure EhObrigatorioAgenciaDV; override;
   public
     Constructor create(AOwner: TACBrBanco);
     function MontarCampoNossoNumero ( const ACBrTitulo: TACBrTitulo) : String; override;
@@ -97,7 +97,7 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, Variants, ACBrValidador, ACBrUtil, ACBrUtil.FilesIO,
+  StrUtils, Variants, ACBrValidador, ACBrUtil.Base, ACBrUtil.FilesIO,
   ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoItau.create(AOwner: TACBrBanco);
@@ -281,6 +281,11 @@ begin
      end;
 
   end;
+end;
+
+procedure TACBrBancoItau.EhObrigatorioAgenciaDV;
+begin
+  //sem validação
 end;
 
 function TACBrBancoItau.DefinePosicaoNossoNumeroRetorno: Integer;

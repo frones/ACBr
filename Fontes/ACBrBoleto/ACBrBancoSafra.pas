@@ -92,7 +92,7 @@ type
 
 implementation
 
-uses ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
+uses ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 var
   aTotal: Extended;

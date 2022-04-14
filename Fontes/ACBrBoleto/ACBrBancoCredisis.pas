@@ -77,7 +77,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  StrUtils, Variants, ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime;
+  StrUtils, Variants, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoCredisis.create(AOwner: TACBrBanco);
 begin

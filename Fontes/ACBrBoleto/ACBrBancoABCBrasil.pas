@@ -89,7 +89,7 @@ implementation
 
 uses
 {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF},
-  StrUtils, math, ACBrUtil, ACBrValidador, ACBrUtil.Strings, ACBrUtil.DateTime;
+  StrUtils, math, ACBrUtil.Base, ACBrValidador, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoABCBrasil }
 

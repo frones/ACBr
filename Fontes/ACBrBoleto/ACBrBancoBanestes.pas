@@ -54,6 +54,8 @@ type
     fASBACE: string;
     function GetASBACE: string;
   protected
+    procedure EhObrigatorioContaDV; override;
+    procedure EhObrigatorioAgenciaDV; override;
   public
     Constructor create(AOwner: TACBrBanco);
 
@@ -83,7 +85,7 @@ type
 implementation
 
 uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
-  StrUtils, MaskUtils, ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  StrUtils, MaskUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrUtil.DateTime;
 
 { TACBrBancoBanestes }
@@ -100,6 +102,16 @@ begin
    fpTamanhoCarteira       := 2;
    fpLayoutVersaoArquivo   := 40;
    fpLayoutVersaoLote      := 40;
+end;
+
+procedure TACBrBancoBanestes.EhObrigatorioAgenciaDV;
+begin
+  // sem validação
+end;
+
+procedure TACBrBancoBanestes.EhObrigatorioContaDV;
+begin
+  // sem validação
 end;
 
 function TACBrBancoBanestes.CalcularCampoASBACE(

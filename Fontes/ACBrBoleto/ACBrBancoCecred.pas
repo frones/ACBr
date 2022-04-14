@@ -55,6 +55,7 @@ type
     fCountRegR:Integer;
     procedure DefineDataProtestoNegativacao(const ACBrTitulo: TACBrTitulo);
     function DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String; override;
+    procedure EhObrigatorioContaDV; override;
   public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -91,7 +92,7 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  StrUtils, Variants, ACBrValidador, ACBrUtil, Math, ACBrUtil.Strings, ACBrUtil.DateTime;
+  StrUtils, Variants, ACBrValidador, ACBrUtil.Base, Math, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrBancoCecred.create(AOwner: TACBrBanco);
 begin
@@ -185,6 +186,11 @@ begin
 
   end;
 
+end;
+
+procedure TACBrBancoCecred.EhObrigatorioContaDV;
+begin
+  //validação
 end;
 
 function TACBrBancoCecred.DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String;

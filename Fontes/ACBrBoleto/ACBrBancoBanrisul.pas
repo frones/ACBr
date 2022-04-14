@@ -48,6 +48,7 @@ type
   private
     FiQtdSegmentoR: integer;
   Protected
+    procedure EhObrigatorioAgenciaDV; override;
   Public
     constructor create(AOwner: TACBrBanco);
     function MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string; Override;
@@ -76,7 +77,7 @@ implementation
 
 uses
   {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF},
-  StrUtils, ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime,
+  StrUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.Math;
 
 var
@@ -101,6 +102,11 @@ begin
   fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
                                  'OUVIDORIA BANRISUL - 0800 644 2200'));
   FiQtdSegmentoR := 0;
+end;
+
+procedure TACBrBanrisul.EhObrigatorioAgenciaDV;
+begin
+  //sem validação
 end;
 
 function Modulo11(const Valor: string; Base: Integer=9; Resto: boolean=false): string;

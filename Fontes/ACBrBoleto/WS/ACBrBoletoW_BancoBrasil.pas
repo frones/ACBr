@@ -86,8 +86,8 @@ const
 implementation
 
 uses
-  ACBrUtil, synacode, ACBrBoletoPcnConsts, strutils, pcnConsts, ACBrUtil.Strings,
-  ACBrUtil.XMLHTML;
+  synacode, ACBrBoletoPcnConsts, strutils, pcnConsts, ACBrUtil.Strings,
+  ACBrUtil.XMLHTML, ACBrUtil.Base;
 
 { TBoletoW_BancoBrasil }
 

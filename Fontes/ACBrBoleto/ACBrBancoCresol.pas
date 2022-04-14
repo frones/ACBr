@@ -58,7 +58,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrBoletoConversao, ACBrUtil.Strings, ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrBoletoConversao, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 { TACBrBancoCresol }
 

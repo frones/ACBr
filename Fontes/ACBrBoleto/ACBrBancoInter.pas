@@ -72,7 +72,7 @@ implementation
 
 uses
   {$ifdef COMPILER6_UP} DateUtils {$else} ACBrD5 {$endif}, StrUtils, Variants,
-  ACBrValidador, ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime ;
+  ACBrValidador, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime ;
 
 constructor TACBrBancoInter.Create(AOwner: TACBrBanco);
 begin
@@ -358,6 +358,15 @@ begin
       Continue;
 
     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+    if ACBrBanco.ACBrBoleto.LeCedenteRetorno then
+    begin
+      ACBrBanco.ACBrBoleto.Cedente.Nome    := rCedente;
+      Titulo.Carteira                      := copy(Linha, 21, 3);
+      ACBrBanco.ACBrBoleto.Cedente.Agencia := copy(Linha, 24, 4);
+      ACBrBanco.ACBrBoleto.Cedente.Conta   := copy(Linha, 28,10);
+    end;
+
 
     Titulo.SeuNumero               := copy(Linha, 38, 25);
     Titulo.NumeroDocumento         := copy(Linha, 98, 10);

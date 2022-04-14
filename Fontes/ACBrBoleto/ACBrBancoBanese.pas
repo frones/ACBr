@@ -54,6 +54,8 @@ type
     function RetornaModalidade(const ACBrTitulo :TACBrTitulo): String;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
   protected
+    procedure EhObrigatorioContaDV; override;
+    procedure EhObrigatorioAgenciaDV; override;
   public
     Constructor create(AOwner: TACBrBanco);
 
@@ -88,7 +90,7 @@ implementation
 
 uses StrUtils, Variants,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  ACBrUtil, ACBrUtil.Strings, ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 
 
@@ -109,6 +111,16 @@ begin
    fRegLote                := 0;
 end;
 
+
+procedure TACBrBancoBanese.EhObrigatorioAgenciaDV;
+begin
+  //sem validação
+end;
+
+procedure TACBrBancoBanese.EhObrigatorioContaDV;
+begin
+  //sem validação
+end;
 
 function TACBrBancoBanese.GetASBACE: string;
 begin

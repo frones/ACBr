@@ -47,6 +47,7 @@ type
    protected
     function GetLocalPagamento: String; override;
     function DefineAceiteImpressao(const ACBrTitulo: TACBrTitulo): String; override;
+    procedure EhObrigatorioAgenciaDV; override;
    private
     fValorTotalDocs:Double;
     fQtRegLote: Integer;
@@ -82,7 +83,7 @@ implementation
 
 uses StrUtils, Variants,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
-  ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 constructor TACBrCaixaEconomica.create(AOwner: TACBrBanco);
 begin
@@ -303,6 +304,11 @@ begin
     Result := PadLeft(  ACBrCedente.CodigoCedente, 7, '0')
   else
     Result := PadLeft(  ACBrCedente.CodigoCedente, 6, '0');
+end;
+
+procedure TACBrCaixaEconomica.EhObrigatorioAgenciaDV;
+begin
+  //sem validação
 end;
 
 function TACBrCaixaEconomica.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;

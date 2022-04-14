@@ -49,6 +49,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/04/2022
+--TODAS UNIT DO COMPONETE--
+TK-2542 Remoção de Warnings @deprecated ACBrUtil
+  Por : Pandaaa
+TK-2522 Refatoração função de mensagem automática
+TK-2238,2520 Metodo para calculo de juros e mensagem padrão
+TK-2239,2521 Metodo para calculo de multas e mensagem padrão
+TK-2539 Refatoração de Dados obrigatórios - metodo e sobrecarga de metodo em classe propria
+  Por : Pandaaa
+
 06/04/2022
 --ACBrBoleto--
 [+] Adicionado compos para Consulta de Titulos via API na função LerINI

@@ -97,7 +97,7 @@ const
 implementation
 
 uses
- ACBrUtil, synacode, ACBrBoletoPcnConsts, pcnConsts, ACBrUtil.Strings, ACBrUtil.XMLHTML;
+ synacode, ACBrBoletoPcnConsts, pcnConsts, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML;
 
 { TBoletoW_Caixa }
 

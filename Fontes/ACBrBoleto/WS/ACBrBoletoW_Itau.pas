@@ -43,7 +43,7 @@ uses
 //  {$Else}
     Jsons,
 //  {$EndIf}
-  ACBrUtil;
+  ACBrUtil.Base;
 
 type
 

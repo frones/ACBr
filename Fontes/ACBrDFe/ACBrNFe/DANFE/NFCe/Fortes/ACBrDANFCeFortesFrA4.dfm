@@ -278,11 +278,11 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
-        Left = 570
+        Left = 565
         Top = 0
-        Width = 70
+        Width = 79
         Height = 16
-        Caption = 'Acr'#233'scimo'
+        Caption = 'Acr'#233'sc/Frete'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13

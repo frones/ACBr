@@ -250,11 +250,11 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
-        Left = 569
+        Left = 565
         Height = 16
         Top = 0
-        Width = 70
-        Caption = 'Acréscimo'
+        Width = 79
+        Caption = 'Acrésc/Frete'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'

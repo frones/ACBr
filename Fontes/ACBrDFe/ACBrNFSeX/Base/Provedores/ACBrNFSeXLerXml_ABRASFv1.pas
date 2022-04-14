@@ -435,6 +435,7 @@ begin
   if AuxNode <> nil then
   begin
     NFSe.Numero            := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+    NFSe.Link              := ObterConteudo(AuxNode.Childrens.FindAnyNs('LinkVisualizacaoNfse'), tcStr);
     NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
     NFSe.DataEmissao       := LerDataEmissao(AuxNode);
     NFSe.NfseSubstituida   := ObterConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);

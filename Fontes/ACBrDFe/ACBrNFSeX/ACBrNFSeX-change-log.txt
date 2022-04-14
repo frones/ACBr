@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/04/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Incluido a leitura da tag LinkVisualizacaoNfse gerada pelo provedor Publica.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.Provider --
 [*] Possível solução para enviar nomes com o caractere "&".
    Por: Italo Giurizzato Junior

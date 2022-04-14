@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/04/2022
+--ACBrBancoSofisaSantander--
+[*] Adicionado validação do tipo Multa para definir calculo de casas decimais, baseado na documentação CNAB400
+   por: MarcianoBandeira (https://www.projetoacbr.com.br/forum/topic/66710-banco-sofisa-santander-percentual-da-multa-com-4-casas-decimais-na-remessa/)
+
+
+14/04/2022
 --TODAS UNIT DO COMPONETE--
 TK-2542 Remoção de Warnings @deprecated ACBrUtil
   Por : Pandaaa

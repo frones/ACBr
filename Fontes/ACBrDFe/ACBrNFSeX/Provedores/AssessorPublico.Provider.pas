@@ -506,11 +506,11 @@ var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
-  if EstaVazio(Response.InfCancelamento.NumeroNFSe) then
+  if Response.InfCancelamento.NumeroRps = 0 then
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := Cod108;
-    AErro.Descricao := Desc108;
+    AErro.Codigo := Cod102;
+    AErro.Descricao := Desc102;
     Exit;
   end;
 
@@ -533,21 +533,22 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<NFSE>' +
-                         '<IDENTIFICACAO>' +
-                           '<INSCRICAO>' +
-                              Emitente.InscMun +
-                           '</INSCRICAO>' +
-                           '<LOTE>' +
-                              Response.InfCancelamento.NumeroLote +
-                           '</LOTE>' +
-                           '<SEQUENCIA>' +
-                              Response.InfCancelamento.NumeroNFSe +
-                           '</SEQUENCIA>' +
-                           '<OBSERVACAO>' +
-                              Response.InfCancelamento.MotCancelamento +
-                           '</OBSERVACAO>' +
-                         '</IDENTIFICACAO>' +
-                       '</NFSE>';
+                             '<IDENTIFICACAO>' +
+                               '<INSCRICAO>' +
+                                  Emitente.InscMun +
+                               '</INSCRICAO>' +
+                               '<LOTE>' +
+                                  Response.InfCancelamento.NumeroLote +
+                               '</LOTE>' +
+                               '<SEQUENCIA>' +
+    //                              Response.InfCancelamento.NumeroNFSe +
+                                  IntToStr(Response.InfCancelamento.NumeroRps) +
+                               '</SEQUENCIA>' +
+                               '<OBSERVACAO>' +
+                                  Response.InfCancelamento.MotCancelamento +
+                               '</OBSERVACAO>' +
+                             '</IDENTIFICACAO>' +
+                           '</NFSE>';
 end;
 
 procedure TACBrNFSeProviderAssessorPublico.TratarRetornoCancelaNFSe(
@@ -571,7 +572,12 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ANode := Document.Root.Childrens.FindAnyNs('NFSE');
+      ANode := Document.Root.Childrens.FindAnyNs('Mensagem');
+
+      if ANode <> nil then
+        ANode := ANode.Childrens.FindAnyNs('NFSE')
+      else
+        ANode := Document.Root.Childrens.FindAnyNs('NFSE');
 
       if ANode <> nil then
       begin

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 14/04/2022
+-- ACBrNFSeXServicos --
+[*] Incluida a cidade de Votorantim/SP - provedor AssessorPublico
+   Por: José Jair de Oliveira
+-- Diversos --
+[*] Ajustes diversos para o provedor AssessorPublico
+   Por: José Jair de Oliveira/Italo Giurizzato Junior
 -- Giap.Provider --
 [*] Acrescentado os retornos: CodVerificacao e Link no 
     TratarRetornoConsultaNFSeporRps.

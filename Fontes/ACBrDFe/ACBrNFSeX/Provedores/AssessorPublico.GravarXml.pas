@@ -159,7 +159,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'LOGRADOURO', 1, 60, 1,
                                            NFSe.Tomador.Endereco.Endereco, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'COMPLEMENTO', 1, 60, 0,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'COMPLEMENTO', 1, 60, 1,
                                         NFSe.Tomador.Endereco.Complemento, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'NUMERO', 1, 10, 1,

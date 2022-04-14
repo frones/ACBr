@@ -841,7 +841,8 @@ begin
 
       NumeroIniNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
       NumeroFinNFSe := FWebService.CancelaNFSe.InfCancelamento.NumeroNFSe;
-      Pagina        := 1;
+      NumeroLote := FWebService.CancelaNFSe.InfCancelamento.NumeroLote;
+      Pagina := 1;
     end;
 
     FProvider.ConsultaNFSe;

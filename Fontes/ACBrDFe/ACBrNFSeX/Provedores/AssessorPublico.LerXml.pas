@@ -47,6 +47,7 @@ type
   TNFSeR_AssessorPublico = class(TNFSeRClass)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -56,9 +57,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.DateTime, ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -123,11 +122,14 @@ begin
 
   NFSe.InfID.ID := NFSe.Numero;
 
+  NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
+  NFSe.CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('RPS'), tcStr);
+  {
   NFSe.IdentificacaoRps.Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('RPS'), tcStr);
   NFSe.CodigoVerificacao := NFSe.IdentificacaoRps.Numero;
 
   NFSe.IdentificacaoRps.Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('SEQUENCIA'), tcStr);
-
+  }
   NFSe.Competencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MESCOMP'), tcStr) +
                       ObterConteudo(AuxNode.Childrens.FindAnyNs('ANOCOMP'), tcStr);
 
@@ -381,6 +383,11 @@ begin
       end;
     end;
   end;
+end;
+
+function TNFSeR_AssessorPublico.NormatizarXml(const aXml: string): string;
+begin
+  Result := TiraAcentos(aXml);
 end;
 
 end.

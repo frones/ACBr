@@ -260,6 +260,10 @@ begin
   // Banco do Brasil, responde OK a esse EndPoint, de forma diferente da espcificada
   if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
     AResultCode := HTTP_CREATED;
+
+  // Ajuste para o Método Patch do BB - Icozeira - 14/04/2022
+  if (UpperCase(AMethod) = ChttpMethodPATCH) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_CREATED) then
+    AResultCode := HTTP_OK;
 end;
 
 function TACBrPSPBancoDoBrasil.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;

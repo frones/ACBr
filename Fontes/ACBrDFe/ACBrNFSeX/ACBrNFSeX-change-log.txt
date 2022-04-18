@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/04/2022
+-- SystemPro.Provider --
+[*] Incluido a função TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
+
 14/04/2022
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Incluido a leitura da tag LinkVisualizacaoNfse gerada pelo provedor Publica.

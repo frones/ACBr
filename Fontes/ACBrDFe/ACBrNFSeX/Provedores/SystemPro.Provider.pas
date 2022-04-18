@@ -38,9 +38,10 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlBase, ACBrXmlDocument, ACBrNFSeXClass, ACBrNFSeXConversao,
-  ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrXmlBase,
+  ACBrNFSeXClass, ACBrNFSeXConversao,
+  ACBrNFSeXGravarXml, ACBrNFSeXLerXml, ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase;
 
 type
   TACBrNFSeXWebserviceSystemPro201 = class(TACBrNFSeXWebserviceSoap11)
@@ -51,6 +52,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSystemPro201 = class (TACBrNFSeProviderABRASFv2)
@@ -66,8 +68,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, SystemPro.GravarXml, SystemPro.LerXml;
+  ACBrUtil.XMLHTML,
+  ACBrDFeException,
+  SystemPro.GravarXml, SystemPro.LerXml;
 
 { TACBrNFSeProviderSystemPro201 }
 
@@ -208,6 +211,15 @@ begin
   Result := Executar('', Request,
                      ['return', 'SubstituirNfseResposta'],
                      ['xmlns:ns2="http://NFSe.wsservices.systempro.com.br/"']);
+end;
+
+function TACBrNFSeXWebserviceSystemPro201.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

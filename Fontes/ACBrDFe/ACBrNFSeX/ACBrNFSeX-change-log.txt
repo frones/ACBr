@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/04/2022
+-- ACBrNFSeXServicos --
+[*] Alteração das URLs da cidade de Mirassol/SP
+   Por: Neto
 -- NFSeBrasil.Provider --
 [*] Incluido na função TratarXmlRetornado a troca de: '&amp;' por: '&'.
    Por: Italo Giurizzato Junior

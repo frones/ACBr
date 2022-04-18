@@ -51,10 +51,15 @@ type
     fpProtocolo: AnsiString;
     fpDecimais: Integer;
 
+    function ProtocoloADetectado(const wPosIni: Integer; const aResposta: AnsiString): Boolean;
+    function ProtocoloBDetectado(const wPosIni: Integer; const aResposta: AnsiString): Boolean;
+    function ProtocoloEthDetectado(const wPosIni: Integer; const aResposta: AnsiString): Boolean;
+    function ProtocoloP03Detectado(const wPosIni: Integer; const aResposta: AnsiString): Boolean;
     function InterpretarProtocoloA(const aResposta: AnsiString): AnsiString;
     function InterpretarProtocoloB(const aResposta: AnsiString): AnsiString;
     function InterpretarProtocoloC(const aResposta: AnsiString): AnsiString;
     function InterpretarProtocoloEth(const aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloP03(const aResposta: AnsiString): AnsiString;
   public
     constructor Create(AOwner: TComponent);
 
@@ -66,8 +71,8 @@ type
 implementation
 
 uses
-  SysUtils, ACBrUtil,
-  ACBrConsts, ACBrUtil.Strings,
+  SysUtils,
+  ACBrConsts, ACBrUtil.Compatibilidade, ACBrUtil.Math, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP}
    DateUtils, StrUtils
   {$ELSE}
@@ -75,6 +80,44 @@ uses
   {$ENDIF};
 
 { TACBrBALToledo }
+
+function TACBrBALToledo.ProtocoloEthDetectado(const  wPosIni:Integer; const aResposta: AnsiString): Boolean;
+begin
+  Result := (Copy(aResposta, wPosIni + 1, 2) = '02') and (Copy(aResposta, wPosIni + 60, 1) = ETX);
+end;
+
+function TACBrBALToledo.ProtocoloADetectado(const  wPosIni:Integer; const aResposta: AnsiString): Boolean;
+begin
+  Result := (Copy(aResposta, wPosIni + 21, 1) = CR);
+end;
+
+function TACBrBALToledo.ProtocoloBDetectado(const  wPosIni:Integer; const aResposta: AnsiString): Boolean;
+begin
+  Result := (PosEx(ETX, aResposta, wPosIni + 1) > 0);
+end;
+
+function TACBrBALToledo.ProtocoloP03Detectado(const  wPosIni:Integer; const aResposta: AnsiString): Boolean;
+var
+  l_posini, l_posfim: Integer;
+begin
+  // detecta o padrão p03 na string.
+  //                   1     2      3    4    567890   123456    7    8 (8 é opcional)
+  // Protocolo P03 = [STX] [SWA] [SWB] [SWC] [IIIIII] [TTTTTT] [CR] [CS]
+  if  (aresposta[1] = STX) and (aresposta[17] = CR) then
+      // primeiro caracter da string é STX e o 17 é CR
+    Result := True
+  else
+  begin
+    // pode ocorrer da string ser lida quebrada, assim procura o primeiro CR, depois do primeiro STX
+    // [IIII] [STX] [SWA] [SWB] [SWC] [IIIIII] [TTTTTT] [CR]
+    l_posini := Pos(STX, aResposta);
+    l_posfim := PosEX(CR, aResposta, l_posini + 1);
+    if  l_posfim = 0 then
+      l_posfim := Length(aResposta) + 1;
+
+    Result := l_posfim - l_posini = 16;
+  end;
+end;
 
 function TACBrBALToledo.InterpretarProtocoloA(const aResposta: AnsiString): AnsiString;
 var
@@ -222,6 +265,57 @@ begin
   Result := Trim(Copy(aResposta, wPosIni + 6, 6));
 end;
 
+function TACBrBALToledo.InterpretarProtocoloP03(const aResposta: AnsiString): AnsiString;
+var
+  l_strpso: string;
+  l_swa: Char;
+  l_posini, l_posfim: Integer;
+begin
+  fpProtocolo := 'Protocolo P03';
+  // localiza o primeiro STX, e depois procura pelo CR para obter a string do peso
+  l_posini := Pos(STX, aResposta);
+  l_posfim := PosEX(CR, aResposta, l_posini + 1);
+  if  l_posfim = 0 then
+      l_posfim := Length(aResposta);
+
+  // [TTTT][STX] [SWA] [SWB] [SWC] [IIIIII] [TTTTTT] [CR] [CS][STX] [SWA] [SWB] [SWC] [IIIIII] [TTTTTT] [CR]
+  //         ^                                         ^
+  // Separa a primeira string contendo o peso
+  l_strpso := Copy(aResposta, l_posini, l_posfim - l_posini + 1);
+
+  {Protocolo P03 = [STX] [SWA] [SWB] [SWC] [IIIIII] [TTTTTT] [CR] [CS]
+   SWA = Status Word "A"
+         bit 2, 1 e 0:
+            001 - display / 0,1     10^-1
+            010 - display / 1       10^0
+            011 - display / 10      10^2
+            100 - display / 100     10^3
+            101 - display / 1000    10^4
+            110 - display / 10000   10^5
+         bits 4 e 3:
+            01 - tamanho incrementado é 1
+            10 - tamanho incrementado é 2
+            11 - tamanho incrementado é 5
+         bit 6 = sempre 01
+         bit 5 = sempre 01
+         bit 7 = paridade par
+   SWB = Status Word "B"
+   SWC = Status Word "C"
+   III = Peso
+   TTT = Tara
+   CR  = Carriage Return
+   CS  = Byte de Check-Sum (se C12 = L)
+  }
+
+  l_swa    := l_strpso[2];
+  if  TestBit(Ord(l_swa), 3) then
+      // Bit 3 de l_swa ligado = 2 casas decimais
+      fpDecimais := 100;
+
+  // obtem o peso da string lida
+  Result := Copy(l_strpso, 5, 6);
+end;
+
 constructor TACBrBALToledo.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -259,18 +353,19 @@ begin
   Result  := 0;
   wPosIni := PosLast(STX, aResposta);
 
-  if (Copy(aResposta, wPosIni + 1, 2) = '02') and
-     (Copy(aResposta, wPosIni + 60, 1) = ETX) then
+  if ProtocoloEthDetectado(wPosIni, aResposta) then
     wResposta := InterpretarProtocoloEth(aResposta)
-  else if (Copy(aResposta, wPosIni + 21, 1) = CR) then
+  else if ProtocoloADetectado(wPosIni, aResposta) then
     wResposta := InterpretarProtocoloA(aResposta)
-  else if (PosEx(ETX, aResposta, wPosIni + 1) > 0) then
+  else if ProtocoloBDetectado(wPosIni, aResposta) then
     wResposta := InterpretarProtocoloB(aResposta)
+  else if ProtocoloP03Detectado(wPosIni, aResposta) then
+    wResposta := InterpretarProtocoloP03(aResposta)
   else
+    //protocolo P05
     wResposta := InterpretarProtocoloC(aResposta);
 
-  if (aResposta = EmptyStr) then
-    Exit;
+  if  (aResposta = EmptyStr) then Exit;
 
   { Ajustando o separador de Decimal corretamente }
   wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);

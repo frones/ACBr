@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 18/04/2022
+-- NFSeBrasil.Provider --
+[*] Incluido na função TratarXmlRetornado a troca de: '&amp;' por: '&'.
+   Por: Italo Giurizzato Junior
 -- SystemPro.Provider --
 [*] Incluido a função TratarXmlRetornado.
    Por: Italo Giurizzato Junior

@@ -193,6 +193,7 @@ function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := StringReplace(Result, '&amp;', '&', [rfReplaceAll]);
   Result := StrToXml(Result);
   Result := RemoverCDATA(Result);
   Result := RemoverDeclaracaoXML(Result);

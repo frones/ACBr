@@ -45,6 +45,11 @@ Símbolo : Significado
 
 18/04/2022
 -- ACBrNFSeXServicos --
+[+] Incluida a cidade Campos Altos/MG - provedor WebISS 2.02
+   Por: Danio
+[+] Incluida a cidade Conceicao do Araguaia/PA - provedor ISSIntel
+   Por: Joemil
+-- ACBrNFSeXServicos --
 [*] Alteração das URLs da cidade de Mirassol/SP
    Por: Neto
 -- NFSeBrasil.Provider --

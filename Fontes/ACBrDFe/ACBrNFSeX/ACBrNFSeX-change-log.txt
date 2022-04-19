@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 19/04/2022
+-- Simple.LerXml/ACBrNFSeXDANFSeXRLRetrato --
+[*] Incluido a leitura da Competencia e ValorLiquidoNfse e ajustes
+    na impressão do DANFSE para o provedor Simple, pois este não
+    traz a quantidade de serviços somente o valor unitário e total.
+   Por: Microsys Sistemas
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Incluido uma verificação do código de erro L000 pois não
     é um erro.

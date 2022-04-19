@@ -654,6 +654,10 @@ begin
   rlbItens.Visible := not (fpDANFSe.DetalharServico);
   rlbHeaderItensDetalhado.Visible := fpDANFSe.DetalharServico;
   subItens.Visible := fpDANFSe.DetalharServico;
+
+  // Estudar a melhor forma de não especificar o provedor.
+  RLLabel65.Visible := not (ACBrNFSe.Configuracoes.Geral.Provedor in [proSimple]);
+  txtServicoQtde.Visible := not (ACBrNFSe.Configuracoes.Geral.Provedor in [proSimple]);
 end;
 
 procedure TfrlXDANFSeRLRetrato.subItensDataRecord(Sender: TObject;

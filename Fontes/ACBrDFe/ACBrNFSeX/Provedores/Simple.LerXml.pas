@@ -188,10 +188,13 @@ begin
     DataEmissao := ObterConteudo(AuxNode.Childrens.FindAnyNs('dDataEmissao'), tcDatHor);
     CodigoVerificacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('sCodigoVerificador'), tcStr);
     SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('sSituacao'), tcStr));
+    Competencia := DataEmissao;
 
     Servico.Valores.ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('nValorTotal'), tcDe2);
     Servico.Valores.ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('nValorIss'), tcDe2);
     Servico.Valores.BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('nValorBaseCalculo'), tcDe2);
+
+    Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos;
   end;
 
   LerTomador(AuxNode);

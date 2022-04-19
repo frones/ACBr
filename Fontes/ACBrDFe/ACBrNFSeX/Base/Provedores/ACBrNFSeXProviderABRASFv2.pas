@@ -2382,7 +2382,7 @@ begin
     end
     else
     begin
-      Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+      Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
       Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
       if (Mensagem <> '') and (Codigo <> 'L000') then

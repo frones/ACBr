@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/04/2022
+-- NFSeBrasil.Provider --
+[*] Possível correção na leitura do XML retornado.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] A cidade Apucarana/PR trocou para o provedor IPM
    Por: Cleverton Martins

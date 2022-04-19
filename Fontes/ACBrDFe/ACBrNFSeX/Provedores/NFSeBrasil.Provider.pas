@@ -193,13 +193,16 @@ function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := StringReplace(Result, '&amp;', '&', [rfReplaceAll]);
-  Result := StrToXml(Result);
+//  Result := StringReplace(Result, '&amp;', '&', [rfReplaceAll]);
+//  Result := StrToXml(Result);
+  Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverCDATA(Result);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := RemoverPrefixosDesnecessarios(Result);
+  // Troca o & por &amp; no conteudo da tag <url>
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
   Result := string(NativeStringToUTF8(Result));
 end;
 

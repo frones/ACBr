@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/04/2022
+-- ACBrNFSeXServicos --
+[+] A cidade Apucarana/PR trocou para o provedor IPM
+   Por: Cleverton Martins
 -- Simple.LerXml/ACBrNFSeXDANFSeXRLRetrato --
 [*] Incluido a leitura da Competencia e ValorLiquidoNfse e ajustes
     na impressão do DANFSE para o provedor Simple, pois este não

@@ -308,7 +308,7 @@ begin
   else
     Result := Retorno;
 
-  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+  Result := Trim(StringReplace(Result, '&', '&amp;', [rfReplaceAll]));
 end;
 
 function TACBrNFSeProviderIPM.PrepararRpsParaLote(const aXml: string): string;

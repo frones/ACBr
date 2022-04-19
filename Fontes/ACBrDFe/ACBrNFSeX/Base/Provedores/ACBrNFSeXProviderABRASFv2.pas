@@ -2354,7 +2354,7 @@ var
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
   AAlerta: TNFSeEventoCollectionItem;
-  Mensagem: string;
+  Codigo, Mensagem: string;
 
 procedure ProcessarErros;
 var
@@ -2368,12 +2368,13 @@ begin
     begin
       for I := Low(ANodeArray) to High(ANodeArray) do
       begin
+        Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
         Mensagem := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
 
-        if Mensagem <> '' then
+        if (Mensagem <> '') and (Codigo <> 'L000') then
         begin
           AErro := Response.Erros.New;
-          AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
+          AErro.Codigo := Codigo;
           AErro.Descricao := Mensagem;
           AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
         end;
@@ -2381,12 +2382,13 @@ begin
     end
     else
     begin
+      Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Codigo'), tcStr);
       Mensagem := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
 
-      if Mensagem <> '' then
+      if (Mensagem <> '') and (Codigo <> 'L000') then
       begin
         AErro := Response.Erros.New;
-        AErro.Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+        AErro.Codigo := Codigo;
         AErro.Descricao := Mensagem;
         AErro.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;

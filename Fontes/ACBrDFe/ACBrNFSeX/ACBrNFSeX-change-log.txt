@@ -43,6 +43,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/04/2022
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Incluido uma verificação do código de erro L000 pois não
+    é um erro.
+   Por: Italo Giurizzato Junior
+-- ISSSaoPaulo.LerXml --
+[*] Correção na grafia das tags.
+   Por: ftellini
+-- IPM.Provider --
+[*] Incluido a função AjustarRetorno um Trim para remover 
+    caracteres em branco detectados no retorno do cancelamento.
+   Por: DuarteRS / Italo Giurizzato Junior
+-- ISSDSF.GravarXml --
+[*] Incluido a linha para gerar a tag <ServicoObra>
+   Por: acm
+
 18/04/2022
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade Campos Altos/MG - provedor WebISS 2.02

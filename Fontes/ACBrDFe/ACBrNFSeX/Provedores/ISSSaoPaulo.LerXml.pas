@@ -289,11 +289,11 @@ begin
     BaseCalculo   := NFSe.ValoresNfse.BaseCalculo;
     Aliquota      := NFSe.ValoresNfse.Aliquota;
     ValorIss      := NFSe.ValoresNfse.ValorIss;
-    ValorPis      := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
-    ValorCofins   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
-    ValorInss     := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
-    ValorIr       := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
-    ValorCsll     := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+    ValorPis      := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPIS'), tcDe2);
+    ValorCofins   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCOFINS'), tcDe2);
+    ValorInss     := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorINSS'), tcDe2);
+    ValorIr       := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIR'), tcDe2);
+    ValorCsll     := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCSLL'), tcDe2);
 
     if aValor = 'false' then
       IssRetido := stNormal

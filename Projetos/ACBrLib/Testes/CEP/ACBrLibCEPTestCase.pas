@@ -72,14 +72,14 @@ uses
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
 begin
     AssertEquals(ErrDiretorioNaoExiste, CEP_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
 begin
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals(ErrOK, CEP_Finalizar(Handle));
@@ -87,7 +87,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Ja_Inicializado;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
 begin
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
@@ -96,7 +96,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Finalizar;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
 begin
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
@@ -104,7 +104,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Finalizar_Ja_Finalizado;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
 begin
 
   Handle:=0;
@@ -123,7 +123,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Obtendo_LenBuffer;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -136,7 +136,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -151,7 +151,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -167,7 +167,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -182,7 +182,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Versao;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -205,7 +205,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigLerValor;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -221,7 +221,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigGravarValor;
 var
-  Handle: longint;
+  Handle: TLIBHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -240,51 +240,42 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEP;
 var
-  Handle: longint;
-  Qtde: Integer;
-  Resposta: PChar;
+  Handle: TLIBHandle;
+  Resposta: String;
   Tamanho: Longint;
 begin
   // Buscando o Endereço por CEP
-  Qtde := 0;
-  Resposta := '';
-  Tamanho := 0;
+  Resposta := space(10240);
+  Tamanho := 10240;
 
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, '10'));  // Via Cep
   AssertEquals('Erro ao buscar o endereço por CEP', ErrOk,
-    CEP_BuscarPorCEP(Handle, '08717220', Qtde, Resposta, Tamanho));
+    CEP_BuscarPorCEP(Handle, '18272230', PChar(Resposta), Tamanho));
 
-  if Qtde > 0 then
-  begin
-    AssertEquals('Qtde = ' + IntToStr(Qtde), '', '');
-    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  end;
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorLogradouro;
 var
-  Handle: longint;
-  Qtde: Integer;
-  Resposta: PChar;
+  Handle: TLIBHandle;
+  Resposta: String;
   Tamanho: Longint;
 begin
   // Buscando o CEP por Logradouro
-  Qtde := 0;
-  Resposta := '';
-  Tamanho := 0;
+  Resposta := space(10240);
+  Tamanho := 10240;
 
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+  AssertEquals('Erro ao Mudar configuração', ErrOk, CEP_ConfigGravarValor(Handle, CSessaoCEP, CChaveWebService, '10'));  // Via Cep
   AssertEquals('Erro ao buscar o CEP por Logradouro', ErrOk,
-    CEP_BuscarPorLogradouro(Handle, 'Mogi das Cruzes', 'Rua', 'Domingos Alonso Guerra', 'SP', 'Mogi Moderno', Qtde, Resposta, Tamanho));
+    CEP_BuscarPorLogradouro(Handle, 'Tatuí', 'Rua', 'Caridade Terceira', 'SP', '',
+                            PChar(Resposta), Tamanho));
 
-  if Qtde > 0 then
-  begin
-    AssertEquals('Qtde = ' + IntToStr(Qtde), '', '');
-    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
-    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  end;
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 

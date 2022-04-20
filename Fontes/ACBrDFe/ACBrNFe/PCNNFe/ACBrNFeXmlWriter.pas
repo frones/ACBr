@@ -1348,7 +1348,7 @@ begin
       NFe.Det[i].Prod.veicProd.pesoB, DSC_PESOB));
     Result.AppendChild(AddNode(tcStr, 'J10', 'nSerie  ', 00, 09, 1,
       NFe.Det[i].Prod.veicProd.nSerie, DSC_NSERIE));
-    Result.AppendChild(AddNode(tcStr, 'J11', 'tpComb  ', 02, 02, 1,
+    Result.AppendChild(AddNode(tcStr, 'J11', 'tpComb  ', 01, 02, 1,
       NFe.Det[i].Prod.veicProd.tpComb, DSC_TPCOMB));
     Result.AppendChild(AddNode(tcStr, 'J12', 'nMotor  ', 00, 21, 1,
       NFe.Det[i].Prod.veicProd.nMotor, DSC_NMOTOR));

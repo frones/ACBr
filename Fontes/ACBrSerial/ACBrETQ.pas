@@ -206,7 +206,7 @@ uses
   {$IfDef MSWINDOWS}
   ACBrWinUSBDevice,
   {$EndIf}
-  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO;
 
 function ConverterUnidade(UnidadeEntrada: TACBrETQUnidade;
   ValorEntrada: Double; UnidadeSaida: TACBrETQUnidade; DPI: TACBrETQDPI): Double;

@@ -177,7 +177,8 @@ uses
   FMX.Surfaces,
   StrUtils, Math,
   synacode,
-  ACBrUtil, ACBrImage;
+  ACBrUtil.Strings,
+  ACBrImage;
 
 //https://forums.embarcadero.com/thread.jspa?threadID=245452&tstart=0
 Function BitmapToJBitmap(const ABitmap: TBitmap): JBitmap;

@@ -38,6 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2022
+-- ACBrETQZplII --
+[*] Ajustes nos métodos de Carregamento e impressão de Imagem, para considerar
+    a propriedade "LimparMemoria", e carregar a imagem em uma área volátil ou não
+
+-- ACBRETQ, ACBrPosPrinterElginE1Lib, ACBrPosPrinterGEDI --
+[*] Ajustes para usar novas Units de ACBrUtil
+    (por: DSA)
+
 31/03/2022
 -- ACBrETQ, ACBrETQClass --
 [*] Metodo "ConverterUnidade" modificado para ser Publico na Unit e independente

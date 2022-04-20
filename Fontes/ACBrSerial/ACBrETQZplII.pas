@@ -53,6 +53,7 @@ type
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
     function ConverterExibeCodigo(aExibeCodigo: TACBrETQBarraExibeCodigo): String;
     function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
+    function GetDriverImagens: String;
   protected
     function ConverterPaginaDeCodigo(aPaginaDeCodigo: TACBrETQPaginaCodigo): String; virtual;
     function ComandoTamanhoBarras( aBarraFina, aBarraLargaa , aAlturaBarra:Integer ):String; virtual;
@@ -273,6 +274,14 @@ begin
     raise Exception.Create('Multiplicador Imagem deve ser de 1 a 10');
 
   Result := IntToStr(aMultiplicador);
+end;
+
+function TACBrETQZplII.GetDriverImagens: String;
+begin
+  if LimparMemoria then
+    Result := 'R:'
+  else
+    Result := 'E:';
 end;
 
 function TACBrETQZplII.ConverterPaginaDeCodigo(
@@ -533,9 +542,10 @@ begin
   ATipo := '';
   aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem, ATipo);
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
-            '^XGR:' + aNomeImagem + ',' +
-                      ConverterMultiplicadorImagem(aMultImagem) + ',' +
-                      ConverterMultiplicadorImagem(aMultImagem) +
+            '^XG' + GetDriverImagens +
+                    aNomeImagem + ',' +
+                    ConverterMultiplicadorImagem(aMultImagem) + ',' +
+                    ConverterMultiplicadorImagem(aMultImagem) +
             '^FS';
 end;
 
@@ -575,7 +585,7 @@ begin
     end;
 
     Result := '~DY'+                // Download Graphics command
-              'R:' +                // File Location
+              GetDriverImagens +    // File Location
               aNomeImagem + ',' +   // Filename
               Format + ',' +        // Format - A = uncompressed (ZB64, ASCII), B = uncompressed (binary), C = AR-compressed (used only by Zebra’s BAR-ONE® v5), P = portable network graphic (.PNG) - ZB64 encoded
               Extension + ',' +     // Extension - B = bitmap, G = raw bitmap (.GRF), P = store as compressed (.PNG), T = TrueType (.TTF) or X = Paintbrush (.PCX)
@@ -584,7 +594,7 @@ begin
               ImgData;
   end;
 
-  Result := '^IDR:' + aNomeImagem + '^FS' +  // Apaga a imagem existente com o mesmo nome
+  Result := '^ID' + GetDriverImagens + aNomeImagem + '^FS' +  // Apaga a imagem existente com o mesmo nome
             Result;
 end;
 
@@ -593,12 +603,12 @@ var
   s, t: String;
 begin
   if (NomeImagem = '*') then
-    Result := '^IDR:*.*^FS'
+    Result := '^ID' + GetDriverImagens + '*.*^FS'
   else
   begin
     t := '';
     s := AjustarNomeArquivoImagem(NomeImagem, t);
-    Result := '^IDR:' + s + '^FS';
+    Result := '^ID' + GetDriverImagens + s + '^FS';
   end;
 
   if not TACBrETQ(fpOwner).EtqInicializada then
@@ -622,7 +632,7 @@ begin
   ImgHex := AsciiToHex(ARasterImg);
   BytesPerRow := ceil(AWidth / 8);
 
-  Result := '~DGR:' + aNomeImagem + ',' + IntToStr(LenImg)+ ',' +
+  Result := '~DG' + GetDriverImagens + aNomeImagem + ',' + IntToStr(LenImg)+ ',' +
             IntToStr(BytesPerRow) + ',' + ImgHex;
 end;
 

@@ -52,9 +52,9 @@ const
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrBoletoLIBName = 'ACBrBoleto64.so';
+  CACBrBoletoLIBName = 'libacbrboleto64.so';
   {$Else}
-  CACBrBoletoLIBName = 'ACBrBoleto32.so';
+  CACBrBoletoLIBName = 'libacbrboleto32.so';
 
   {$EndIf}
  {$EndIf}

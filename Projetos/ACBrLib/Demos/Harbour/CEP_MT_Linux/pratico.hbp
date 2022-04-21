@@ -1,0 +1,40 @@
+#-- Bibliotecas
+
+-inc
+-cpp
+-cpp=yes
+-lpng
+-lhbgt
+-lhbnetio
+-lhbmemio
+-lhbct
+
+#-gui
+#- Complemento das LIB's
+
+gtqtc.hbc
+#hbcairo.hbc
+#hbzebra.hbc
+#hbpgsql.hbc
+#sddpg.hbc
+xhb.hbc
+#hbgd.hbc
+#hbcups.hbc
+#hbssl.hbc
+#hbtip.hbc
+#hbnf.hbc
+#hbxpp.hbc
+#hbunix.hbc
+#hbfimage.hbc
+#hbcurl.hbc
+#hbmisc.hbc
+
+#-- Ambiente
+#-b
+#-m
+#-mt
+
+#-- Fontes .PRG
+-ocep
+cep.prg
+acbrcep.prg

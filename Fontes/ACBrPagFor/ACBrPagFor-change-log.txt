@@ -42,6 +42,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2022
+-- ACBrPagForLerTxt --
+[*] Os registros 0 e 1 não estava sendo tratado o banco Bradesco ao ler os dados
+    de agência e conta e feita uma correção na leitura da inscrição da empresa no
+    Registro 1.
+   Por: Wanessa Franco
+-- ACBrPagForLerTxt --
+[*] Os Segmentos G e H retornados pelo banco Sicredi as datas estão no formato
+    AAAAMMDD em vez de DDMMAAAA.
+   Por: SuporteATInfo
+
 01/04/2022
 -- ACBrPagForConversao/ACBrPagForLerTxt --
 [*] Ajustes nos nomes dos bancos e correções para a leitura

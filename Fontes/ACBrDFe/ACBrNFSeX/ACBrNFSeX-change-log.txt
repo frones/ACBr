@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/04/2022
+-- ACBrNFSeXServicos --
+[-] Correção na URL de homologação da cidade de Tumiritinga/MG
+   Por: Desenvolvedor
+
 19/04/2022
 -- NFSeBrasil.Provider --
 [*] Possível correção na leitura do XML retornado.

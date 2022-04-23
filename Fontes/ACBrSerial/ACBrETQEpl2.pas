@@ -185,7 +185,7 @@ end;
 
 function TACBrETQEpl2.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
 begin
-  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16));
+  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 8));
 end;
 
 function TACBrETQEpl2.ConverterUnidadeAlturaBarras(aAlturaBarras: Integer

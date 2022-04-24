@@ -1,93 +1,360 @@
 object Form1: TForm1
-  Left = 211
-  Height = 301
-  Top = 184
-  Width = 843
+  Left = 372
+  Height = 541
+  Top = 250
+  Width = 1165
   Caption = 'Form1'
-  ClientHeight = 301
-  ClientWidth = 843
+  ClientHeight = 541
+  ClientWidth = 1165
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
-  LCLVersion = '1.6.0.4'
-  object Label1: TLabel
-    Left = 164
-    Height = 13
-    Top = 13
-    Width = 100
-    Caption = 'Numero de Registros'
-    ParentColor = False
-  end
+  OnCreate = FormCreate
+  LCLVersion = '2.2.0.4'
   object DBGrid1: TDBGrid
-    Left = 0
-    Height = 255
-    Top = 46
-    Width = 843
-    Align = alBottom
+    Left = 248
+    Height = 541
+    Top = 0
+    Width = 917
+    Align = alClient
     Color = clWindow
     Columns = <    
       item
+        MinSize = 12
+        MaxSize = 250
         Title.Caption = 'NCM'
-        Width = 102
+        Width = 128
         FieldName = 'CODNCM'
       end    
       item
+        MinSize = 12
+        MaxSize = 250
         Title.Caption = 'DESCRICAO'
-        Width = 350
+        Width = 400
         FieldName = 'DESCRICAO'
+      end    
+      item
+        Alignment = taCenter
+        Title.Alignment = taCenter
+        Title.Caption = 'Data Início'
+        Width = 120
+        FieldName = 'DATAINICIO'
+      end    
+      item
+        Alignment = taCenter
+        Title.Alignment = taCenter
+        Title.Caption = 'Data Fim'
+        Width = 120
+        FieldName = 'DATAFIM'
+      end    
+      item
+        Title.Alignment = taCenter
+        Title.Caption = 'Tipo Ato'
+        Width = 120
+        FieldName = 'TIPOATO'
+      end    
+      item
+        Alignment = taCenter
+        Title.Alignment = taCenter
+        Title.Caption = 'Número Ato'
+        Width = 120
+        FieldName = 'NUMEROATO'
+      end    
+      item
+        Alignment = taCenter
+        Title.Alignment = taCenter
+        Title.Caption = 'Ano Ato'
+        Width = 120
+        FieldName = 'ANOATO'
       end>
     DataSource = DataSource1
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+    FixedCols = 0
+    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Color = clWindowText
-    TitleFont.Height = -11
+    TitleFont.Height = -14
     TitleFont.Name = 'Tahoma'
   end
-  object BitBtn1: TBitBtn
-    Left = 8
-    Height = 25
-    Top = 8
-    Width = 145
-    Caption = 'Listar NCM''s'
-    OnClick = BitBtn1Click
+  object pnMenu: TPanel
+    Left = 0
+    Height = 541
+    Top = 0
+    Width = 248
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 541
+    ClientWidth = 248
     TabOrder = 1
+    object btListarNCMs: TBitBtn
+      AnchorSideLeft.Control = pnMenu
+      AnchorSideTop.Control = pnMenu
+      AnchorSideRight.Control = pnMenu
+      AnchorSideRight.Side = asrBottom
+      Left = 20
+      Height = 31
+      Top = 20
+      Width = 208
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 20
+      BorderSpacing.Top = 20
+      BorderSpacing.Right = 20
+      Caption = 'Obter NCM''s'
+      OnClick = btListarNCMsClick
+      TabOrder = 0
+    end
+    object btSalvar: TBitBtn
+      AnchorSideLeft.Control = pnMenu
+      AnchorSideTop.Control = btListarNCMs
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pnMenu
+      AnchorSideRight.Side = asrBottom
+      Left = 20
+      Height = 31
+      Top = 61
+      Width = 208
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 20
+      BorderSpacing.Top = 10
+      BorderSpacing.Right = 20
+      Caption = 'Salvar em Arquivo'
+      OnClick = btSalvarClick
+      TabOrder = 1
+    end
+    object lbNumRegistros: TLabel
+      Left = 20
+      Height = 17
+      Top = 504
+      Width = 208
+      Align = alBottom
+      BorderSpacing.Left = 20
+      BorderSpacing.Right = 20
+      BorderSpacing.Bottom = 20
+      Caption = 'Numero de Registros: 0'
+    end
+    object lbUltAtualizacao: TLabel
+      Left = 20
+      Height = 17
+      Top = 482
+      Width = 208
+      Align = alBottom
+      BorderSpacing.Left = 20
+      BorderSpacing.Right = 20
+      BorderSpacing.Bottom = 5
+      Caption = 'Última Atualização: '
+    end
+    object gbValidar: TGroupBox
+      AnchorSideLeft.Control = pnMenu
+      AnchorSideTop.Control = gbFiltrarPorDescricao
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pnMenu
+      AnchorSideRight.Side = asrBottom
+      Left = 10
+      Height = 103
+      Top = 363
+      Width = 228
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = True
+      BorderSpacing.Left = 10
+      BorderSpacing.Top = 10
+      BorderSpacing.Right = 10
+      Caption = 'Validar NCM'
+      ClientHeight = 81
+      ClientWidth = 224
+      TabOrder = 2
+      object edValidar: TEdit
+        Left = 10
+        Height = 25
+        Top = 5
+        Width = 204
+        Align = alTop
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+      end
+      object btValidar: TBitBtn
+        Left = 10
+        Height = 31
+        Top = 35
+        Width = 204
+        Align = alTop
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        BorderSpacing.Bottom = 15
+        Caption = 'Validar'
+        OnClick = btValidarClick
+        TabOrder = 1
+      end
+    end
+    object gbFiltrarPorCodigo: TGroupBox
+      AnchorSideLeft.Control = pnMenu
+      AnchorSideTop.Control = btSalvar
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pnMenu
+      AnchorSideRight.Side = asrBottom
+      Left = 10
+      Height = 103
+      Top = 107
+      Width = 228
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = True
+      BorderSpacing.Left = 10
+      BorderSpacing.Top = 15
+      BorderSpacing.Right = 10
+      Caption = 'Filtrar por Código'
+      ClientHeight = 81
+      ClientWidth = 224
+      TabOrder = 3
+      object btFiltrarPorCodigo: TButton
+        AnchorSideLeft.Control = gbFiltrarPorCodigo
+        AnchorSideTop.Control = edFiltroCodigo
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = gbFiltrarPorCodigo
+        AnchorSideRight.Side = asrBottom
+        Left = 10
+        Height = 31
+        Top = 35
+        Width = 204
+        Align = alCustom
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        BorderSpacing.Bottom = 15
+        Caption = 'Filtrar'
+        OnClick = btFiltrarPorCodigoClick
+        TabOrder = 0
+      end
+      object edFiltroCodigo: TEdit
+        AnchorSideLeft.Control = gbFiltrarPorCodigo
+        AnchorSideTop.Control = gbFiltrarPorCodigo
+        AnchorSideRight.Control = gbFiltrarPorCodigo
+        AnchorSideRight.Side = asrBottom
+        Left = 10
+        Height = 25
+        Top = 5
+        Width = 204
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        TabOrder = 1
+      end
+    end
+    object gbFiltrarPorDescricao: TGroupBox
+      AnchorSideLeft.Control = pnMenu
+      AnchorSideTop.Control = gbFiltrarPorCodigo
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pnMenu
+      AnchorSideRight.Side = asrBottom
+      Left = 10
+      Height = 133
+      Top = 220
+      Width = 228
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = True
+      BorderSpacing.Left = 10
+      BorderSpacing.Top = 10
+      BorderSpacing.Right = 10
+      Caption = 'Filtrar por Descrição'
+      ClientHeight = 111
+      ClientWidth = 224
+      TabOrder = 4
+      object btFiltrarPorDescricao: TButton
+        AnchorSideLeft.Control = gbFiltrarPorDescricao
+        AnchorSideTop.Control = edFiltroDescricao
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = gbFiltrarPorDescricao
+        AnchorSideRight.Side = asrBottom
+        Left = 10
+        Height = 31
+        Top = 65
+        Width = 204
+        Align = alCustom
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        BorderSpacing.Bottom = 15
+        Caption = 'Filtrar'
+        OnClick = btFiltrarPorDescricaoClick
+        TabOrder = 0
+      end
+      object edFiltroDescricao: TEdit
+        AnchorSideLeft.Control = gbFiltrarPorDescricao
+        AnchorSideTop.Control = cbTipoFiltro
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = gbFiltrarPorDescricao
+        AnchorSideRight.Side = asrBottom
+        Left = 10
+        Height = 25
+        Top = 35
+        Width = 204
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        TabOrder = 1
+      end
+      object cbTipoFiltro: TComboBox
+        AnchorSideLeft.Control = gbFiltrarPorDescricao
+        AnchorSideTop.Control = gbFiltrarPorDescricao
+        AnchorSideRight.Control = gbFiltrarPorDescricao
+        AnchorSideRight.Side = asrBottom
+        Left = 10
+        Height = 25
+        Top = 5
+        Width = 204
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 5
+        BorderSpacing.Right = 10
+        ItemHeight = 17
+        ItemIndex = 0
+        Items.Strings = (
+          'Inicia Com'
+          'Contém'
+          'Finaliza Com'
+        )
+        Style = csDropDownList
+        TabOrder = 2
+        Text = 'Inicia Com'
+      end
+    end
   end
-  object BitBtn2: TBitBtn
-    Left = 695
-    Height = 25
-    Top = 8
-    Width = 137
-    Caption = 'Validar NCM'
-    OnClick = BitBtn2Click
+  object pCarregando: TPanel
+    Left = 605
+    Height = 62
+    Top = 248
+    Width = 282
+    Anchors = []
+    Caption = 'Aguarde Carregando na Tabela'
     TabOrder = 2
-  end
-  object Edit1: TEdit
-    Left = 616
-    Height = 21
-    Top = 10
-    Width = 73
-    MaxLength = 8
-    NumbersOnly = True
-    TabOrder = 3
+    Visible = False
   end
   object ACBrNcms1: TACBrNCMs
     ProxyPort = '8080'
-    UrlConsulta = 'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?'
-    left = 744
-    top = 64
+    UrlConsulta = 'https://portalunico.siscomex.gov.br/classif/api/publico/nomenclatura/download/json'
+    CacheArquivo = 'ACBrNCM.json'
+    Left = 304
+    Top = 208
   end
   object DataSource1: TDataSource
     DataSet = BufDataset1
-    left = 216
-    top = 112
+    Left = 304
+    Top = 56
   end
   object BufDataset1: TBufDataset
+    PacketRecords = 1
     FieldDefs = <>
-    left = 309
-    top = 114
-    object BufDataset1CODNCM1: TStringField
-      DisplayWidth = 8
+    Left = 304
+    Top = 128
+    object BufDataset1CODNCM: TStringField
       FieldKind = fkData
       FieldName = 'CODNCM'
       Index = 0
@@ -95,9 +362,9 @@ object Form1: TForm1
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Size = 8
+      Size = 15
     end
-    object BufDataset1DESCRICAO1: TStringField
+    object BufDataset1DESCRICAO: TStringField
       DisplayWidth = 200
       FieldKind = fkData
       FieldName = 'DESCRICAO'
@@ -107,6 +374,52 @@ object Form1: TForm1
       ReadOnly = False
       Required = False
       Size = 200
+    end
+    object BufDataset1DATAINICIO: TDateField
+      FieldKind = fkData
+      FieldName = 'DATAINICIO'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object BufDataset1DATAFIM: TDateField
+      FieldKind = fkData
+      FieldName = 'DATAFIM'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object BufDataset1TIPOATO: TStringField
+      FieldKind = fkData
+      FieldName = 'TIPOATO'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object BufDataset1NUMEROATO: TStringField
+      FieldKind = fkData
+      FieldName = 'NUMEROATO'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 6
+    end
+    object BufDataset1ANOATO: TLongintField
+      FieldKind = fkData
+      FieldName = 'ANOATO'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
     end
   end
 end

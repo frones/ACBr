@@ -3,8 +3,10 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:  Elias Cesar Vieira                             }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -28,14 +30,14 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+
 unit Unit1;
 
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, ACBrBase, ACBrSocket, ACBrNCMs, DB, BufDataset,
-  StdCtrls, Buttons, Grids, DBGrids;
+  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ACBrNCMs, DB, BufDataset, StdCtrls, Buttons, DBGrids, ExtCtrls;
 
 type
 
@@ -43,19 +45,41 @@ type
 
   TForm1 = class(TForm)
     ACBrNcms1: TACBrNcms;
+    btFiltrarPorCodigo: TButton;
+    btFiltrarPorDescricao: TButton;
+    btListarNCMs: TBitBtn;
+    btSalvar: TBitBtn;
+    btValidar: TBitBtn;
     BufDataset1: TBufDataset;
-    BufDataset1CODNCM1: TStringField;
-    BufDataset1DESCRICAO1: TStringField;
+    BufDataset1ANOATO: TLongintField;
+    BufDataset1CODNCM: TStringField;
+    BufDataset1DATAFIM: TDateField;
+    BufDataset1DATAINICIO: TDateField;
+    BufDataset1DESCRICAO: TStringField;
+    BufDataset1NUMEROATO: TStringField;
+    BufDataset1TIPOATO: TStringField;
+    cbTipoFiltro: TComboBox;
     DBGrid1: TDBGrid;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    Edit1: TEdit;
     DataSource1: TDataSource;
-    Label1: TLabel;
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    edFiltroCodigo: TEdit;
+    edFiltroDescricao: TEdit;
+    edValidar: TEdit;
+    gbFiltrarPorDescricao: TGroupBox;
+    gbValidar: TGroupBox;
+    gbFiltrarPorCodigo: TGroupBox;
+    lbNumRegistros: TLabel;
+    lbUltAtualizacao: TLabel;
+    pCarregando: TPanel;
+    pnMenu: TPanel;
+    procedure ACBrNcms1BuscaEfetuada(Sender: TObject);
+    procedure btFiltrarPorCodigoClick(Sender: TObject);
+    procedure btFiltrarPorDescricaoClick(Sender: TObject);
+    procedure btListarNCMsClick(Sender: TObject);
+    procedure btValidarClick(Sender: TObject);
+    procedure btSalvarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure AtualizarInterface(aListaNCM: TACBrNCMsList);
   public
     { Public declarations }
   end;
@@ -65,49 +89,115 @@ var
 
 implementation
 
+uses
+  ACBrUtil.DateTime, ACBrUtil.Base;
+
 {$R *.lfm}
 
-procedure TForm1.BitBtn1Click(Sender: TObject);
-var
-  I: integer;
+procedure TForm1.btListarNCMsClick(Sender: TObject);
 begin
-  ACBrNcms1.ListarNcms();
-
-  try
-    BufDataset1.CreateDataSet;
-  except
-  end;
-
-
-  for I := 0 to ACBrNcms1.Ncms.Count - 1 do
-  begin
-    BufDataset1.Append;
-
-    BufDataset1CODNCM1.Value := ACBrNcms1.Ncms[i].CodigoNcm;
-    BufDataset1DESCRICAO1.Value := ACBrNcms1.Ncms[i].DescricaoNcm;
-
-    BufDataset1.Post;
-
-    Application.ProcessMessages;
-  end;
-
-  Label1.Caption := 'Numero de Registros: ' + IntToStr(BufDataset1.RecordCount);
-  MessageDlg('Fim do Processo!', mtInformation, [mbOK], 0);
+  ACBrNcms1.ObterNCMs;
+  AtualizarInterface(ACBrNcms1.NCMs);
 end;
 
-procedure TForm1.BitBtn2Click(Sender: TObject);
+procedure TForm1.btFiltrarPorCodigoClick(Sender: TObject);
 begin
-  if Length(Edit1.Text) <> 8 then
+  edFiltroDescricao.Text := '';
+  if EstaVazio(edFiltroCodigo.Text) then
   begin
-    MessageDlg('O codigo do NCM deve conter 8 Caracteres', mtWarning, [mbOK], 0);
+    AtualizarInterface(ACBrNcms1.NCMs);
     Exit;
   end;
 
+  ACBrNcms1.BuscarPorCodigo(edFiltroCodigo.Text, False);
+  AtualizarInterface(ACBrNcms1.NCMsFiltrados);
+end;
 
-  if not ACBrNcms1.validar(Edit1.Text) then
-    MessageDlg('Codigo NCM Invalido', mtWarning, [mbOK], 0)
+procedure TForm1.btFiltrarPorDescricaoClick(Sender: TObject);
+begin
+  edFiltroCodigo.Text := '';
+  if EstaVazio(edFiltroDescricao.Text) then
+  begin
+    AtualizarInterface(ACBrNcms1.NCMs);
+    Exit;
+  end;
+
+  case cbTipoFiltro.ItemIndex of
+    0: ACBrNcms1.BuscarPorDescricao(edFiltroDescricao.Text, ntfIniciaCom);
+    1: ACBrNcms1.BuscarPorDescricao(edFiltroDescricao.Text, ntfContem);
+    2: ACBrNcms1.BuscarPorDescricao(edFiltroDescricao.Text, ntfFinalizaCom);
+  end;
+
+  AtualizarInterface(ACBrNcms1.NCMsFiltrados);
+end;
+
+procedure TForm1.ACBrNcms1BuscaEfetuada(Sender: TObject);
+begin
+  AtualizarInterface(ACBrNcms1.NCMsFiltrados);
+  MessageDlg('Fim do Processo!', mtInformation, [mbOK], 0);
+end;
+
+procedure TForm1.btValidarClick(Sender: TObject);
+begin
+  if not ACBrNcms1.Validar(edValidar.Text) then
+    MessageDlg('Codigo NCM Inválido', mtError, [mbOK], 0)
   else
-    MessageDlg('Codigo NCM Valido OK!', mtInformation, [mbOK], 0);
+    MessageDlg('Codigo NCM Válido OK!', mtInformation, [mbOK], 0);
+end;
+
+procedure TForm1.btSalvarClick(Sender: TObject);
+var
+  wArq: String;
+begin
+  if (ACBrNcms1.NCMS.Count <= 0) then
+  begin
+    MessageDlg('Nenhum NCM encontrado. Utilize "Listar NCM''s', mtWarning, [mbOK], 0);
+    Exit;
+  end;
+
+  wArq := Application.GetNamePath + 'NCMs.txt';
+  ACBrNcms1.NCMS.SaveToFile(wArq);
+  MessageDlg('Lista de NCMS gravada no arquivo : ' + sLineBreak + wArq, mtInformation, [mbOK], 0);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  BufDataset1.CreateDataSet;
+end;
+
+procedure TForm1.AtualizarInterface(aListaNCM: TACBrNCMsList);
+var
+  I: Integer;
+begin
+  pCarregando.Visible := True;
+  DBGrid1.Visible := False;
+  try
+    lbNumRegistros.Caption := 'Numero de Registros: ' + IntToStr(aListaNCM.Count);
+    lbUltAtualizacao.Caption := 'Última Atualização: ' + FormatDateBr(ACBrNcms1.UltimaAtualizacao);
+    Application.ProcessMessages;
+
+    BufDataset1.Close;
+    BufDataset1.Open;
+
+    for I := 0 to aListaNCM.Count - 1 do
+    begin
+      BufDataset1.Append;
+      BufDataset1CODNCM.Value := aListaNCM[I].CodigoNcm;
+      BufDataset1DESCRICAO.Value := aListaNCM[I].DescricaoNcm;
+      BufDataset1DATAINICIO.Value := aListaNCM[I].DataInicio;
+      BufDataset1DATAFIM.Value := aListaNCM[I].DataFim;
+      BufDataset1TIPOATO.Value := aListaNCM[I].TipoAto;
+      BufDataset1NUMEROATO.Value := aListaNCM[I].NumeroAto;
+      BufDataset1ANOATO.Value := aListaNCM[I].AnoAto;
+      BufDataset1.Post;
+    end;
+
+    BufDataset1.First;
+  finally
+    DBGrid1.Visible := True;
+    pCarregando.Visible := False;
+    Application.ProcessMessages;
+  end;
 end;
 
 end.

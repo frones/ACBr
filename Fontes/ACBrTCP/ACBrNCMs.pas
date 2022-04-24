@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo:  Elias Cesar Vieira                             }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -29,11 +29,6 @@
 { Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
-{******************************************************************************
- |* Historico
- |* Doação por "datilas" no link
- |* http://www.projetoacbr.com.br/forum/index.php?/topic/17549-criar-componente-de-consulta-a-ncm-online/#entry109857
- ******************************************************************************}
 
 {$I ACBr.inc}
 unit ACBrNCMs;
@@ -49,64 +44,165 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrSocket, ACBrUtil;
+  ACBrBase, ACBrSocket;
+
+const
+  CNCM_ARQUIVO_CACHE = 'ACBrNCM.json';
+  CNCM_URL = 'https://portalunico.siscomex.gov.br/classif/api/publico/nomenclatura/download/json';
 
 type
   EACBrNcmException = class(Exception);
 
+  TACBrNCMTipoFiltro = (ntfIniciaCom, ntfContem, ntfFinalizaCom);
+
+  { TACBrNCM }
+
   TACBrNCM = class
   private
-    fCodigoNcm: string;
-    fDescricaoNcm: string;
-    fDescrCategoriaNcm: string;
-    fCodigoCategoriaNcm: string;
-
+    fAnoAto: Integer;
+    fCodigoNcm: String;
+    fDataFim: TDateTime;
+    fDataInicio: TDateTime;
+    fDescricaoNcm: String;
+    fDescrCategoriaNcm: String;
+    fCodigoCategoriaNcm: String;
+    fNumeroAto: String;
+    fTipoAto: String;
   public
-    property CodigoNcm: string read fCodigoNcm write fCodigoNcm;
-    property CodigoCategoriaNcm: string read fCodigoCategoriaNcm write fCodigoCategoriaNcm;
-    property DescrCategoriaNcm: string read fDescrCategoriaNcm write fDescrCategoriaNcm;
-    property DescricaoNcm: string read fDescricaoNcm write fDescricaoNcm;
+    property CodigoNcm: String read fCodigoNcm write fCodigoNcm;
+    property CodigoCategoriaNcm: String read fCodigoCategoriaNcm write fCodigoCategoriaNcm;
+    property DescrCategoriaNcm: String read fDescrCategoriaNcm write fDescrCategoriaNcm;
+    property DescricaoNcm: String read fDescricaoNcm write fDescricaoNcm;
+    property DataInicio: TDateTime read fDataInicio write fDataInicio;
+    property DataFim: TDateTime read fDataFim write fDataFim;
+    property TipoAto: String read fTipoAto write fTipoAto;
+    property NumeroAto: String read fNumeroAto write fNumeroAto;
+    property AnoAto: Integer read fAnoAto write fAnoAto;
+
+    procedure Assign(aNCMOrigem: TACBrNCM);
   end;
 
   { TACBrNCMsList }
 
-  TACBrNCMsList = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrNCM>{$EndIf})
+  TACBrNCMsList = class(TACBrObjectList)
   protected
+    fSortOrder: Integer;  // 0-Nenhum, 1-Codigo, 2-Descrição
     procedure SetObject(Index: integer; Item: TACBrNCM);
     function GetObject(Index: integer): TACBrNCM;
   public
+    constructor Create(FreeObjects: boolean = True);
+    procedure Clear; override;
+
     function Add(Obj: TACBrNCM): integer;
     function New: TACBrNCM;
-    property Objects[Index: integer]: TACBrNCM read GetObject write SetObject; default;
+    function Copy(Obj: TACBrNCM): Integer;
+    function Find(const aCodigoNCM: String; Exact: Boolean = False): Integer;
+    function FindDesc(const aDescricaoNCM: String; Exact: Boolean = False): Integer;
+
+    procedure SortByCodigo;
+    procedure SortByDescricao;
+
     procedure SaveToFile(const AFileName: String);
+
+    property Objects[Index: Integer]: TACBrNCM read GetObject write SetObject; default;
   end;
+
+  { TACBrNCMs }
+
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNCMs = class(TACBrHTTP)
   private
-    fNcms: TACBrNCMsList;
+    fCacheLido: Boolean;
+    fCacheArquivo: String;
+    fCacheDiasValidade: Integer;
+    fNCMs: TACBrNCMsList;
+    fNCMsFiltrados: TACBrNCMsList;
+    fOnBuscaEfetuada: TNotifyEvent;
+    fUltimaAtualizacao: TDateTime;
     fUrlConsulta: string;
+
+    procedure HTTPGetCompressed(const AURL: String);
+    function UnZipHttpDoc: String;
+
+    function GetCacheArquivo: String;
+    function LimparDescricao(const aStr: String): String;
+    function DownloadArquivo: String;
+    procedure GravarCache(const aJsonStr: String);
+    procedure CarregarCache;
+
+    procedure CarregarJson(const aJsonStr: String);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ListarNcms(const codigoCapitulo: string = '');
-    function Validar(const CodigoNcm: string): boolean;
-    function DescricaoNcm(const CodigoNcm: string): string;
-    property NCMS: TACBrNCMsList read fNcms write fNcms;
+    procedure Clear;
+
+    procedure ListarNcms(const aCodigoCapitulo: String = '');  // Procedure mantida para retrocompatibilidade
+    procedure ObterNCMs;
+
+    function Validar(const aCodigoNcm: String): Boolean;
+    function DescricaoNcm(const aCodigoNcm: String): String;
+
+    function BuscarPorCodigo(const aCodigoNCM: String; Exato: Boolean = True): Integer;
+    function BuscarPorDescricao(const aDescricao: String; aTipoFiltro: TACBrNCMTipoFiltro = ntfIniciaCom): Integer;
+
+    property NCMs: TACBrNCMsList read fNCMs;
+    property NCMsFiltrados: TACBrNCMsList read fNCMsFiltrados;
+    property UltimaAtualizacao: TDateTime read fUltimaAtualizacao;
+
   published
     property UrlConsulta: string read fUrlConsulta write fUrlConsulta;
+    property CacheArquivo: String read GetCacheArquivo write fCacheArquivo;
+    property CacheDiasValidade: Integer read fCacheDiasValidade
+      write fCacheDiasValidade default 0;  // 0 - Não Expira
+    property OnBuscaEfetuada: TNotifyEvent read fOnBuscaEfetuada write fOnBuscaEfetuada;
   end;
+
+  function CompNCMCodAsc(const pNCM1, pNCM2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+  function CompNCMDescAsc(const pNCM1, pNCM2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
 
 implementation
 
-constructor TACBrNCMs.Create(AOwner: TComponent);
+uses
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+    JsonDataObjects_ACBr,
+  {$Else}
+    {$IfDef FPC}fpjson{$Else}Jsons{$EndIf},
+  {$EndIf}
+  DateUtils,
+  synautil,
+  ACBrCompress,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrUtil.FilesIO, ACBrUtil.XMLHTML;
+
+{ TACBrNCM }
+
+procedure TACBrNCM.Assign(aNCMOrigem: TACBrNCM);
 begin
-  inherited;
-  fNcms := TACBrNCMsList.Create;
-  fNcms.Clear;
-  fUrlConsulta :=
-    'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?';
+  fAnoAto := aNCMOrigem.AnoAto;
+  fCodigoNcm := aNCMOrigem.CodigoNcm;
+  fDataFim := aNCMOrigem.DataFim;
+  fDataInicio := aNCMOrigem.DataInicio;
+  fDescricaoNcm := aNCMOrigem.DescricaoNcm;
+  fDescrCategoriaNcm := aNCMOrigem.DescrCategoriaNcm;
+  fCodigoCategoriaNcm := aNCMOrigem.CodigoCategoriaNcm;
+  fNumeroAto := aNCMOrigem.NumeroAto;
+  fTipoAto := aNCMOrigem.TipoAto;
+end;
+
+{ TACBrNCMsList }
+
+constructor TACBrNCMsList.Create(FreeObjects: boolean);
+begin
+  inherited Create(FreeObjects);
+  Clear;
+end;
+
+procedure TACBrNCMsList.Clear;
+begin
+  inherited Clear;
+  fSortOrder := 0;
 end;
 
 procedure TACBrNCMsList.SetObject(Index: integer; Item: TACBrNCM);
@@ -119,21 +215,117 @@ begin
   Result := TACBrNCM(inherited Items[Index]);
 end;
 
+function TACBrNCMsList.Add(Obj: TACBrNCM): integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
 function TACBrNCMsList.New: TACBrNCM;
 begin
   Result := TACBrNCM.Create;
   Add(Result);
 end;
 
+function TACBrNCMsList.Copy(Obj: TACBrNCM): Integer;
+var
+  aNCM: TACBrNCM;
+begin
+  aNCM := TACBrNCM.Create;
+  aNCM.Assign(Obj);
+  Result := Add(aNCM);
+end;
+
+function TACBrNCMsList.Find(const aCodigoNCM: String; Exact: Boolean): Integer;
+var
+  I: Integer;
+  wNCM: TACBrNCM;
+begin
+  Result := -1;
+  if (Count < 1) or EstaVazio(aCodigoNCM) then
+    Exit;
+
+  SortByCodigo;
+
+  wNCM := TACBrNCM.Create;
+  try
+    wNCM.CodigoNcm := aCodigoNCM;
+    {$IfDef HAS_SYSTEM_GENERICS}
+    I := FindObject(wNCM, TComparer<TObject>.Construct(CompNCMCodAsc), (not Exact));
+    {$Else}
+    I := FindObject(Pointer(wNCM), @CompNCMCodAsc, (not Exact));
+    {$EndIf}
+
+    if (I >= 0) then
+      Result := I;
+  finally
+    wNCM.Free;
+  end;
+end;
+
+function TACBrNCMsList.FindDesc(const aDescricaoNCM: String; Exact: Boolean): Integer;
+var
+  I: Integer;
+  wNCM: TACBrNCM;
+begin
+  Result := -1;
+  if (Count < 1) or EstaVazio(aDescricaoNCM) then
+    Exit;
+
+  SortByDescricao;
+
+  wNCM := TACBrNCM.Create;
+  try
+    wNCM.DescricaoNcm := aDescricaoNCM;
+    {$IfDef HAS_SYSTEM_GENERICS}
+    I := FindObject(wNCM, TComparer<TObject>.Construct(CompNCMDescAsc), (not Exact));
+    {$Else}
+    I := FindObject(Pointer(wNCM), @CompNCMDescAsc, (not Exact));
+    {$EndIf}
+
+    if (I >= 0) then
+      Result := I;
+  finally
+    wNCM.Free;
+  end;
+end;
+
+procedure TACBrNCMsList.SortByCodigo;
+begin
+  if (fSortOrder = 1) then
+    Exit;
+
+  {$IfDef HAS_SYSTEM_GENERICS}
+  Self.Sort(TComparer<TObject>.Construct(CompNCMCodAsc));
+  {$Else}
+  Self.Sort(@CompNCMCodAsc);
+  {$EndIf}
+
+  fSortOrder := 1;
+end;
+
+procedure TACBrNCMsList.SortByDescricao;
+begin
+  if (fSortOrder = 2) then
+    Exit;
+
+  {$IfDef HAS_SYSTEM_GENERICS}
+  Self.Sort(TComparer<TObject>.Construct(CompNCMDescAsc));
+  {$Else}
+  Self.Sort(@CompNCMDescAsc);
+  {$EndIf}
+
+  fSortOrder := 2;
+end;
+
 procedure TACBrNCMsList.SaveToFile(const AFileName: String);
-Var
-  SL : TStringList;
+var
+  SL: TStringList;
   I: Integer;
 begin
   SL := TStringList.Create;
   try
     for I := 0 to Count - 1 do
-      SL.Add( Objects[i].CodigoNcm + ';' + Objects[i].DescricaoNcm );
+      SL.Add( Objects[i].CodigoNcm + ';' + Objects[i].DescricaoNcm);
 
     SL.SaveToFile(AFileName);
   finally
@@ -141,198 +333,431 @@ begin
   end;
 end;
 
-function TACBrNCMsList.Add(Obj: TACBrNCM): integer;
+{ TACBrNCMs }
+
+constructor TACBrNCMs.Create(AOwner: TComponent);
 begin
-  Result := inherited Add(Obj);
+  inherited;
+
+  fNCMs := TACBrNCMsList.Create;
+  fNCMsFiltrados := TACBrNCMsList.Create;
+
+  fCacheArquivo := CNCM_ARQUIVO_CACHE;
+  fCacheDiasValidade := 0;
+  fUrlConsulta := CNCM_URL;
+
+  fOnBuscaEfetuada := Nil;
+  Clear;
 end;
 
 destructor TACBrNCMs.Destroy;
 begin
-  fNcms.Free;
+  fNCMs.Free;
+  fNCMsFiltrados.Free;
   inherited Destroy;
 end;
 
-procedure TACBrNCMs.ListarNcms(const codigoCapitulo: string = '');
-var
-  Buffer: string;
-  SL1, SL2: TStringList;
-  Cont: integer;
-
-  function IndexOfPos(Lista : TStrings; S: string; SomenteInicio : Boolean): Integer;
-  var
-    Temp : string;
-    I : Integer;
-  begin
-    S := UpperCase(S);
-    I := Length(S);
-    for Result := 0 to Lista.Count - 1 do begin
-      Temp := UpperCase(Lista[Result]);
-      if SomenteInicio then begin
-        if S = Copy(Temp, 1, I) then
-          Exit;
-        end
-      else
-        if Pos(S, Temp) > 0 then
-          Exit;
-    end;
-    Result := -1;
-  end;
-
-
-  function CountPos(const subtext: string; Text: string): Integer;
-  begin
-    if (Length(subtext) = 0) or (Length(Text) = 0) or (Pos(subtext, Text) = 0)
-    then
-      Result := 0
-    else
-      Result := (Length(Text) - Length(StringReplace(Text, subtext, '',
-        [rfReplaceAll]))) div Length(subtext);
-  end;
-
-
-  function CopyDeAte(Texto, TextIni, TextFim: string): string;
-  var
-    ContIni, ContFim, iPosI, iPosF: integer;
-  begin
-    Result := '';
-    iPosI := Pos(TextIni, Texto);
-    iPosF := Pos(TextFim, Texto);
-    if (iPosF <> 0) and (iPosI <> 0) then
-    begin
-      ContIni := Pos(TextIni, Texto) + Length(TextIni);
-      ContFim := Pos(TextFim, Texto);
-      Result := Copy(Texto, ContIni, ContFim - ContIni);
-    end;
-  end;
-
-  procedure CarregaResultado;
-  var
-    Texto: string;
-    i, idx, iIniCopy: integer;
-    bcboPosicao: Boolean;
-  begin
-    Buffer := Self.RespHTTP.Text;
-
-    Buffer := StringReplace(Buffer, '&lt;', '<', [rfReplaceAll]);
-    Buffer := StringReplace(Buffer, '&gt;', '>' + sLineBreak, [rfReplaceAll]);
-
-    SL2 := TStringList.Create;
-    SL1 := TStringList.Create;
-    try
-      SL1.Text := Buffer;
-      bcboPosicao := false;
-      for i := 0 to SL1.Count - 1 do
-      begin
-        if not(bcboPosicao) then begin
-          Texto := Trim(CopyDeAte(SL1[i], '<select name="codigoPosicao"', 'class="caixa_selecao">'));
-          bcboPosicao := (Copy(Texto,1,15) = 'id="cboPosicao"');
-          end
-        else begin
-          Texto := Trim(CopyDeAte(SL1[i], '>', '</option>'));
-          if (Texto <> '') and (Texto <> '* Selecione *')  then
-            SL2.Add(Trim(Copy(Texto, 1, Length(Texto))));
-        end;
-      end;
-    finally
-      SL1.Free;
-    end;
-
-    SL1 := TStringList.Create;
-    try
-      SL1.Text := Buffer;
-      for i := 0 to SL1.Count - 1 do
-      begin
-        Texto := CopyDeAte(SL1[i], 'codNCM.value=', '</a>');
-        if Trim(Texto) <> '' then
-        begin
-          with Ncms.New do
-          begin
-            CodigoNcm := Trim(Copy(Texto, 13, 8));
-
-            iIniCopy := CountPos('-', Trim(Copy(Texto, 24, Length(Texto))));
-
-            DescricaoNcm := Trim(Copy(Texto, 24+iIniCopy, Length(Texto)));
-
-            idx := IndexOfPos(SL2, Copy(CodigoNcm,1,4), false);
-            if idx <> -1 then
-              Texto := SL2.Strings[idx]
-            else
-              Texto := Copy(CodigoNcm,1,4)+' - '+DescricaoNcm;
-
-            CodigoCategoriaNcm := Trim(Copy(Texto,1,4));
-            DescrCategoriaNcm := Trim(Copy(Texto,7, Length(Texto)));
-          end;
-        end;
-      end;
-    finally
-      SL1.Free;
-      SL2.Free;
-    end;
-  end;
-
+procedure TACBrNCMs.Clear;
 begin
-  if Trim(codigoCapitulo) <> '' then
-  begin
-    try
-      Self.HTTPGet(fUrlConsulta + 'codigo=' + Copy(codigoCapitulo, 1, 2) +
-        '&codigoCapitulo=' + Copy(codigoCapitulo, 1, 2) +
-        '&codigoPosicao=&button=Exibir+NCMs');
-    except
-      on E: Exception do
-      begin
-        raise EACBrNcmException.Create('Erro ao consultar Ncm' + #13#10 + E.Message);
-      end;
-    end;
-
-    CarregaResultado;
-  end
-  else
-  begin
-    Cont := 0;
-    while Cont < 98 do
-    begin
-      Inc(Cont);
-      try
-        Self.HTTPGet(fUrlConsulta + 'codigo=' + FormatFloat('00', Cont) +
-          '&codigoCapitulo=' + FormatFloat('00', Cont) +
-          '&codigoPosicao=&button=Exibir+NCMs');
-      except
-        on E: Exception do
-        begin
-          raise EACBrNcmException.Create('Erro ao consultar Ncm' + #13#10 + E.Message);
-        end;
-      end;
-      CarregaResultado;
-    end;
-  end;
+  fNCMs.Clear;
+  fNCMsFiltrados.Clear;
+  fCacheLido := False;
+  fUltimaAtualizacao := 0;
 end;
 
-function TACBrNCMs.validar(const CodigoNcm: string): boolean;
+function TACBrNCMs.GetCacheArquivo: String;
 var
-  i: integer;
+  aPath: String;
 begin
-  Result := False;
-  ListarNcms(Copy(CodigoNcm, 1, 2));
-  for i := 0 to Ncms.Count - 1 do
-    if Ncms[i].CodigoNcm = CodigoNcm then
-    begin
-      Result := True;
-      Break;
-    end;
+  if (fCacheArquivo <> '') and (not (csDesigning in Self.ComponentState)) and
+     (Pos(PathDelim, fCacheArquivo) = 0) then
+  begin
+    aPath := ExtractFilePath(fCacheArquivo);
+    if (aPath = '') then
+      fCacheArquivo := ApplicationPath + fCacheArquivo;
+  end;
+
+  Result := fCacheArquivo;
 end;
 
-function TACBrNCMs.descricaoNcm(const CodigoNcm: string): string;
-var
-  i: integer;
+function TACBrNCMs.LimparDescricao(const aStr: String): String;
+begin
+  if EstaVazio(aStr) then
+    Exit;
+
+  Result := StripHTML(aStr);
+  while (Length(Result) > 0) and CharInSet(Result[1], ['-',' ','.','"']) do
+    Delete(Result, 1, 1);
+end;
+
+function TACBrNCMs.DownloadArquivo: String;
 begin
   Result := '';
-  ListarNcms(Copy(CodigoNcm, 1, 2));
-  for i := 0 to Ncms.Count - 1 do
-    if Ncms[i].CodigoNcm = CodigoNcm then
+  if (fUrlConsulta = EmptyStr) then
+    Exit;
+
+  HTTPGetCompressed(fUrlConsulta);
+  Result := UnZipHttpDoc;
+end;
+
+procedure TACBrNCMs.HTTPGetCompressed(const AURL: String);
+begin
+  HTTPSend.Headers.Add('Accept-Encoding: deflate, gzip');
+  HTTPMethod( 'GET', AURL );
+end;
+
+function TACBrNCMs.UnZipHttpDoc: String;
+var
+  CT: String;
+  Resp: AnsiString;
+  RespIsUTF8: Boolean;
+  zt: TCompressType;
+begin
+  zt := DetectCompressType(HTTPSend.Document);
+  if zt = ctUnknown then
+  begin
+    HTTPSend.Document.Position := 0;
+    Resp := ReadStrFromStream(HTTPSend.Document, HTTPSend.Document.Size);
+  end
+  else
+    Resp := ACBrUtil.FilesIO.UnZip(HTTPSend.Document);
+
+  CT := LowerCase( GetHeaderValue('Content-Type:') );
+  RespIsUTF8 := True; //(pos('utf-8', CT) > 0);
+  if RespIsUTF8 then
+    Result := UTF8ToNativeString(Resp)
+  else
+    Result := String(Resp);
+end;
+
+procedure TACBrNCMs.CarregarJson(const aJsonStr: String);
+var
+  I: Integer;
+  wJsonNCM: TJsonObject;
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  wJSonArr: TJsonArray;
+  wJSonArq: TJsonObject;
+  {$Else}
+  wJSon: TJSONObject;
+  wJSonArr: TJsonArray;
+  {$EndIf}
+begin
+  if (aJsonStr = EmptyStr) then
+    Exit;
+
+  NCMs.Clear;
+
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  wJSonArq := TJsonObject.Parse(aJSonStr) as TJsonObject;
+  fUltimaAtualizacao := StringToDateTime(wJSonArq.S['Data_Ultima_Atualizacao_NCM']);
+  wJSonArr := wJSonArq.A['Nomenclaturas'];
+  try
+    for I := 0 to wJSonArr.Count - 1 do
     begin
-      Result := Ncms[i].DescricaoNcm;
-      Break;
+      wJSonNCM := wJSonArr.Items[I].ObjectValue;
+
+      with NCMs.New do
+      begin
+        CodigoNcm := OnlyNumber(wJsonNCM.S['Codigo']);
+        DescricaoNcm := LimparDescricao(wJsonNCM.S['Descricao']);
+        DataInicio := wJsonNCM.D['Data_Inicio'];
+        DataFim := wJsonNCM.D['Data_Fim'];
+        TipoAto := wJsonNCM.S['Tipo_Ato'];
+        NumeroAto := wJsonNCM.S['Numero_Ato'];
+        AnoAto := wJsonNCM.I['Ano_Ato'];
+      end;
     end;
+  finally
+    wJSonArq.Free;
+  end;
+  {$Else}
+  {$IfDef FPC}
+  wJSon := TJSONObject.Create;
+  try
+    wJSon := GetJSON(aJsonStr) as TJSONObject;
+    fUltimaAtualizacao := StringToDateTimeDef(wJson.Strings['Data_Ultima_Atualizacao_NCM'], 0, 'dd/mm/yyyy');
+    wJSonArr := wJSon.Arrays['Nomenclaturas'];
+
+    for I := 0 to wJSonArr.Count - 1 do
+    begin
+      wJsonNCM := wJSonArr.Objects[I];
+      with NCMs.New do
+      begin
+        CodigoNcm := OnlyNumber(wJsonNCM.Strings['Codigo']);
+        DescricaoNcm := LimparDescricao(wJsonNCM.Strings['Descricao']);
+        DataInicio := StringToDateTimeDef(wJsonNCM.Strings['Data_Inicio'], 0, 'dd/mm/yyyy');
+        DataFim := StringToDateTimeDef(wJsonNCM.Strings['Data_Fim'], 0, 'dd/mm/yyyy');
+        TipoAto := wJsonNCM.Strings['Tipo_Ato'];
+        NumeroAto := wJsonNCM.Strings['Numero_Ato'];
+        AnoAto := wJsonNCM.Integers['Ano_Ato'];
+      end;
+    end;
+  finally
+    wJSon.Free
+  end;
+  {$Else}
+  wJSon := TJsonObject.Create;
+  try
+    wJSon.Parse(aJsonStr);
+    fUltimaAtualizacao := StringToDateTimeDef(wJson.Values['Data_Ultima_Atualizacao_NCM'].AsString, 0, 'dd/mm/yyyy');
+    wJSonArr := wJSon.Values['Nomenclaturas'].AsArray;
+
+    for I := 0 to wJSonArr.Count - 1 do
+    begin
+      wJsonNCM := wJSonArr.Items[I].AsObject;
+      with NCMs.New do
+      begin
+        CodigoNcm := OnlyNumber(wJsonNCM.Values['Codigo'].AsString);
+        DescricaoNcm := LimparDescricao(wJsonNCM.Values['Descricao'].AsString);
+        DataInicio := StringToDateTimeDef(wJsonNCM.Values['Data_Inicio'].AsString, 0, 'dd/mm/yyyy');
+        DataFim := StringToDateTimeDef(wJsonNCM.Values['Data_Fim'].AsString, 0, 'dd/mm/yyyy');
+        TipoAto := wJsonNCM.Values['Tipo_Ato'].AsString;
+        NumeroAto := wJsonNCM.Values['Numero_Ato'].AsString;
+        AnoAto := wJsonNCM.Values['Ano_Ato'].AsInteger;
+      end;
+    end;
+  finally
+    wJSon.Free
+  end;
+  {$EndIf}
+  {$EndIf}
+end;
+
+procedure TACBrNCMs.ListarNcms(const aCodigoCapitulo: String);
+begin
+  if EstaVazio(aCodigoCapitulo) then
+    ObterNCMs
+  else
+    BuscarPorCodigo(aCodigoCapitulo);
+end;
+
+procedure TACBrNCMs.CarregarCache;
+var
+  wArq: String;
+  wSL: TStringList;
+  wDataCache: TDateTime;
+begin
+  Clear;
+  wDataCache := 0;
+  fCacheLido := True;
+  wArq := CacheArquivo;
+
+  if (wArq = EmptyStr) or (not FileExists(wArq)) then
+    Exit;
+
+  if (CacheDiasValidade > 0) then
+  begin
+    {$IFDEF FPC}
+    FileAge(wArq, wDataCache);
+    {$ELSE}
+      {$IFDEF DELPHI2007_UP}
+      FileAge(wArq, wDataCache);
+      {$ELSE}
+      wDataCache := FileDateToDateTime(FileAge(wArq));
+      {$ENDIF}
+    {$ENDIF}
+
+    if (DaysBetween(Now, wDataCache) > CacheDiasValidade) then
+    begin
+      DeleteFile(wArq);
+      Exit;
+    end;
+  end;
+
+  wSL := TStringList.Create;
+  try
+    wSL.LoadFromFile(wArq);
+    CarregarJson(wSL.Text);
+  finally
+    wSL.Free;
+  end;
+end;
+
+procedure TACBrNCMs.GravarCache(const aJsonStr: String);
+var
+  wArq: String;
+begin
+  wArq := CacheArquivo;
+  fCacheLido := False;
+  if (Length(wArq) = 0) or (Length(aJsonStr) = 0) then
+    Exit;
+
+  WriteToFile(wArq, aJsonStr, True);
+end;
+
+procedure TACBrNCMs.ObterNCMs;
+var
+  aJsonStr: String;
+begin
+  if (not fCacheLido) then
+    CarregarCache;
+
+  if (NCMs.Count > 0) then  // Carregou do Cache ?
+    Exit;
+
+  aJsonStr := DownloadArquivo;
+  GravarCache(aJsonStr);
+  CarregarJson(aJsonStr);
+end;
+
+function TACBrNCMs.Validar(const aCodigoNcm: String): Boolean;
+var
+  wIndex: Integer;
+begin
+  Result := False;
+
+  if EstaVazio(aCodigoNCM) then
+    raise EACBrNcmException.Create(ACBrStr('Código do NCM deve ser informado'));
+
+  ObterNCMs;
+  wIndex := NCMs.Find(aCodigoNCM, True);
+
+  if (wIndex > 0) then
+    Result := (aCodigoNcm = NCMs[wIndex].CodigoNcm);
+end;
+
+function TACBrNCMs.DescricaoNcm(const aCodigoNcm: String): String;
+var
+  wIndex: Integer;
+begin
+  Result := EmptyStr;
+
+  if EstaVazio(aCodigoNCM) then
+    raise EACBrNcmException.Create(ACBrStr('Código do NCM deve ser informado'));
+
+  ObterNCMs;
+
+  wIndex := NCMs.Find(aCodigoNCM, True);
+
+  if (wIndex > 0) and (aCodigoNcm = NCMs[wIndex].CodigoNcm) then
+    Result := NCMs[wIndex].DescricaoNcm;
+end;
+
+function TACBrNCMs.BuscarPorCodigo(const aCodigoNCM: String; Exato: Boolean): Integer;
+var
+  I, wTam: Integer;
+begin
+  NCMsFiltrados.Clear;
+  if EstaVazio(aCodigoNCM) then
+    raise EACBrNcmException.Create(ACBrStr('Código do NCM deve ser informado'));
+
+  ObterNCMs;
+
+  I := NCMs.Find(aCodigoNCM, Exato);
+  wTam := Length(aCodigoNCM);
+  if (I >= 0) then
+  begin
+    while (I < NCMs.Count) do
+    begin
+      if Exato and ((aCodigoNCM = NCMs[I].CodigoNcm) or
+         (OnlyNumber(aCodigoNCM) = OnlyNumber(NCMs[I].CodigoNcm))) then
+        NCMsFiltrados.Copy(NCMs[I])
+      else if (aCodigoNCM = Copy(NCMs[I].CodigoNcm, 1, wTam)) then
+        NCMsFiltrados.Copy(NCMs[I])
+      else
+        Break;
+
+      Inc(I);
+    end;
+  end;
+
+  Result := NCMsFiltrados.Count;
+
+  if Assigned(fOnBuscaEfetuada) then
+    OnBuscaEfetuada(Self);
+end;
+
+function TACBrNCMs.BuscarPorDescricao(const aDescricao: String;
+  aTipoFiltro: TACBrNCMTipoFiltro): Integer;
+
+  procedure FiltrarIniciaCom;
+  var
+    I, wTam: Integer;
+  begin
+    I := NCMs.FindDesc(aDescricao, False);
+    wTam := Length(aDescricao);
+    if (I >= 0) then
+    begin
+      while (I < NCMs.Count) do
+      begin
+        if (UpperCase(aDescricao) = UpperCase(LeftStrNativeString(NCMs[I].DescricaoNcm, wTam))) then
+          NCMsFiltrados.Copy(NCMs[I])
+        else
+          Break;
+           
+        Inc(I);
+      end;
+    end;
+  end;
+
+  procedure FiltrarContem;
+  var
+    I: Integer;
+  begin
+    for I := 0 to Pred(NCMs.Count) do
+      if (Pos(aDescricao, NCMs[I].DescricaoNcm) > 0) then
+        NCMsFiltrados.Copy(NCMs[I]);
+  end;
+
+  procedure FiltrarFinalizaCom;
+  var
+    I: Integer;
+    wTam: Integer;
+  begin
+    wTam := Length(aDescricao);
+    for I := 0 to Pred(NCMs.Count) do
+      if (aDescricao = RightStrNativeString(NCMs[I].DescricaoNcm, wTam)) then
+        NCMsFiltrados.Copy(NCMs[I]);
+  end;
+
+begin
+  NCMsFiltrados.Clear;
+  if EstaVazio(aDescricao) then
+    raise EACBrNcmException.Create(ACBrStr('Descrição do NCM deve ser informada'));
+
+  ObterNCMs;
+
+  if (aTipoFiltro = ntfIniciaCom) then
+    FiltrarIniciaCom
+  else if (aTipoFiltro = ntfFinalizaCom) then
+    FiltrarFinalizaCom
+  else
+    FiltrarContem;
+
+  Result := NCMsFiltrados.Count;
+
+  if Assigned(OnBuscaEfetuada) then
+     OnBuscaEfetuada(Self);
+end;
+
+function CompNCMCodAsc(const pNCM1, pNCM2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+var
+  aNCM1, aNCM2: TACBrNCM;
+begin
+  aNCM1 := TACBrNCM(pNCM1);
+  aNCM2 := TACBrNCM(pNCM2);
+
+  if aNCM1.CodigoNcm > aNCM2.CodigoNcm then
+    Result := 1
+  else if aNCM1.CodigoNcm < aNCM2.CodigoNcm then
+    Result := -1
+  else
+    Result := 0;
+end;
+
+function CompNCMDescAsc(const pNCM1, pNCM2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
+var
+  aNCM1, aNCM2: TACBrNCM;
+begin
+  aNCM1 := TACBrNCM(pNCM1);
+  aNCM2 := TACBrNCM(pNCM2);
+
+  if aNCM1.DescricaoNcm > aNCM2.DescricaoNcm then
+    Result := 1
+  else if aNCM1.DescricaoNcm < aNCM2.DescricaoNcm then
+    Result := -1
+  else
+    Result := 0;
 end;
 
 end.

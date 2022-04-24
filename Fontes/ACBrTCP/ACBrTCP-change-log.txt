@@ -37,6 +37,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/04/2022
+-- ACBrIBGE --
+[*] Refactoring para tentar usar compactação em comunicação, sempre que disponível
+
+-- ACBrNCM --
+[*] Reconstrução do componente, baseado em Novo WebService, da Siscomex
+    - Sistema de cache em Arquivo Local, baseado no mecanismo de ACBrIBGE
+    - Possibilidade de classificar por Código ou Descrição
+    - Novas possibilidade de Busca por Descrição, contendo texto.
+    - Otimização da Busca com arvore binária
+    https://portalunico.siscomex.gov.br/classif/api/publico/nomenclatura/download/json
+    Baseado em contribuiçao de: http://www.projetoacbr.com.br/forum/index.php?showtopic=66845
+    (por: Elias Cesar, DSA e  maiko_bito)
+
 29/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

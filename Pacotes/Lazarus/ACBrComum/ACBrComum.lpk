@@ -19,6 +19,14 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsDwarf3"/>
+          <UseHeaptrc Value="True"/>
+          <TrashVariables Value="True"/>
+          <UseExternalDbgSyms Value="True"/>
+        </Debugging>
+      </Linking>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca Comum, Consts, Util, AAC  - (http://www.projetoacbr.com.br/)
 "/>

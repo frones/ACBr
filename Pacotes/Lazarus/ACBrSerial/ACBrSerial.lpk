@@ -18,6 +18,13 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsDwarf3"/>
+          <UseHeaptrc Value="True"/>
+          <TrashVariables Value="True"/>
+        </Debugging>
+      </Linking>
       <Other>
         <CompilerMessages>
           <IgnoredMessages idx5043="True" idx5024="True" idx4080="True" idx4079="True"/>

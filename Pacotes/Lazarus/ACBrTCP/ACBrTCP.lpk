@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBrTCP"/>
     <Type Value="RunAndDesignTime"/>
@@ -18,6 +18,14 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsDwarf3"/>
+          <UseHeaptrc Value="True"/>
+          <TrashVariables Value="True"/>
+          <UseExternalDbgSyms Value="True"/>
+        </Debugging>
+      </Linking>
       <Other>
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
@@ -28,7 +36,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="23">
+    <Files Count="24">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -75,54 +83,59 @@
         <UnitName Value="ACBrIBPTax"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
-        <UnitName Value="ACBrCotacao"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas"/>
+        <UnitName Value="ACBrNCMs"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <UnitName Value="ACBrMail"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
+        <UnitName Value="ACBrCotacao"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
-        <UnitName Value="ACBrConsultaCPF"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
+        <UnitName Value="ACBrMail"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
-        <UnitName Value="ACBrSpedTabelas"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
+        <UnitName Value="ACBrConsultaCPF"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
-        <UnitName Value="ACBrSedex"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
+        <UnitName Value="ACBrSpedTabelas"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
-        <UnitName Value="ACBrWinReqRespClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
+        <UnitName Value="ACBrSedex"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
-        <UnitName Value="ACBrWinHTTPReqResp"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
+        <UnitName Value="ACBrWinReqRespClass"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
-        <UnitName Value="ACBrWinINetReqResp"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
+        <UnitName Value="ACBrWinHTTPReqResp"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
-        <UnitName Value="ACBrFeriado"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
+        <UnitName Value="ACBrWinINetReqResp"/>
       </Item20>
       <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
-        <UnitName Value="ACBrFeriadoWSCalendario"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
+        <UnitName Value="ACBrFeriado"/>
       </Item21>
       <Item22>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
-        <UnitName Value="ACBrFeriadoWSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
+        <UnitName Value="ACBrFeriadoWSCalendario"/>
       </Item22>
       <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
+        <UnitName Value="ACBrFeriadoWSClass"/>
+      </Item23>
+      <Item24>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas"/>
         <UnitName Value="ACBrFeriadoWSJSON"/>
-      </Item23>
+      </Item24>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDiversos"/>
@@ -133,7 +146,6 @@
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
     <CustomOptions Items="ExternHelp" Version="2">
       <_ExternHelp Items="Count"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_SAT"/>
     <Type Value="RunAndDesignTime"/>
@@ -12,6 +12,14 @@
         <OtherUnitFiles Value="..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT;..\..\..\Fontes\ACBrSAT\PCNMFe;..\..\..\Fontes\ACBrSAT\Extrato"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrSAT\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsDwarf3"/>
+          <UseHeaptrc Value="True"/>
+          <TrashVariables Value="True"/>
+          <UseExternalDbgSyms Value="True"/>
+        </Debugging>
+      </Linking>
       <Other>
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
@@ -91,6 +99,7 @@
         <UnitName Value="ACBrSATExtratoReportClass"/>
       </Item17>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

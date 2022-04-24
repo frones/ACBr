@@ -4,14 +4,15 @@
 
 unit ACBrTCP;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, 
   ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
-  ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, ACBrSedex, 
-  ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, ACBrFeriado, 
-  ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
+  ACBrNCMs, ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, 
+  ACBrSedex, ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, 
+  ACBrFeriado, ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
   LazarusPackageIntf;
 
 implementation

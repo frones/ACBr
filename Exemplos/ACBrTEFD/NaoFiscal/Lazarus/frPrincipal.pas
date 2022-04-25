@@ -1820,8 +1820,8 @@ begin
   // AQUI você deve cancelar a sua venda no Banco de Dados, desfazendo baixa de
   // estoque ou outras operações que ocorreram durante a venda.
 
-  ACBrTEFD1.CancelarTransacoesPendentes;
   StatusVenda := stsCancelada;
+  ACBrTEFD1.CancelarTransacoesPendentes;
 end;
 
 procedure TFormPrincipal.FinalizarVenda;

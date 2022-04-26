@@ -33,6 +33,7 @@
 {$I ACBr.inc}
 
 unit ACBrBancoCecred;
+//Banco passou por reestruturação de marca agora chama Ailos
 
 interface
 
@@ -56,6 +57,7 @@ type
     procedure DefineDataProtestoNegativacao(const ACBrTitulo: TACBrTitulo);
     function DefineCodigoProtesto(const ACBrTitulo: TACBrTitulo): String; override;
     procedure EhObrigatorioContaDV; override;
+    function GetLocalPagamento: String; override;
   public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -779,6 +781,11 @@ begin
          aRemessa.Text := aRemessa.Text + UpperCase(wLinha);
       end;
    end;
+end;
+
+function TACBrBancoCecred.GetLocalPagamento: String;
+begin
+  Result := ACBrStr('Pagar preferencialmente nas cooperativas do Sistema Ailos.');
 end;
 
 function TACBrBancoCecred.GerarRegistroTrailler240(ARemessa: TStringList): String;

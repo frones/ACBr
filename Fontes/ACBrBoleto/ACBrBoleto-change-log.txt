@@ -49,11 +49,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2022
+--ACBrBancoCecred--
+[*] TK-2591 Banco 085 Ajuste de Logo PB e Colorida e Literal de Mensagem Padrão de Pagamento ACBrBoleto - CECRED mudou para AILOS
+  por: Pandaaa
+
 14/04/2022
 --ACBrBancoSofisaSantander--
 [*] Adicionado validação do tipo Multa para definir calculo de casas decimais, baseado na documentação CNAB400
    por: MarcianoBandeira (https://www.projetoacbr.com.br/forum/topic/66710-banco-sofisa-santander-percentual-da-multa-com-4-casas-decimais-na-remessa/)
-
 
 14/04/2022
 --TODAS UNIT DO COMPONETE--

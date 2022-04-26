@@ -89,7 +89,7 @@ function XmlEhUTF8(const AXML: String): Boolean;
 function ConverteXMLtoUTF8(const AXML: String): String;
 function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
-function RemoverDeclaracaoXML(const AXML: String): String;
+function RemoverDeclaracaoXML(const AXML: String; aTodas: Boolean = False): String;
 function InserirDeclaracaoXMLSeNecessario(const AXML: String;
    const ADeclaracao: String = CUTF8DeclaracaoXML): String;
 
@@ -236,14 +236,19 @@ end;
 {------------------------------------------------------------------------------
    Retorna XML sem a Declaração, Ex: <?xml version="1.0"?>
  ------------------------------------------------------------------------------}
-function RemoverDeclaracaoXML(const AXML: String): String;
+function RemoverDeclaracaoXML(const AXML: String; aTodas: Boolean = False): String;
 var
   DeclaracaoXML: String;
 begin
   DeclaracaoXML := ObtemDeclaracaoXML(AXML);
 
   if DeclaracaoXML <> '' then
-    Result := FastStringReplace(AXML, DeclaracaoXML, '', [])
+  begin
+    if aTodas then
+      Result := FastStringReplace(AXML, DeclaracaoXML, '', [rfReplaceAll])
+    else
+      Result := FastStringReplace(AXML, DeclaracaoXML, '', []);
+  end
   else
     Result := AXML;
 end;

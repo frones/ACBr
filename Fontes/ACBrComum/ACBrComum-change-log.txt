@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2022
+-- ACBrUtil.XMLHTML --
+[*] Incluído o parâmetro: aTodas na função RemoverDeclaracaoXML.
+    por padrão o valor é False, se for True vai remover todas as
+    Declarações que existam no XML.
+   Por: Italo Giurizzato Junior
+
 13/04/2022
 -- ACBrUtil.DateTime --
 [*] Incluida a remoção do caracter "Z" na função:

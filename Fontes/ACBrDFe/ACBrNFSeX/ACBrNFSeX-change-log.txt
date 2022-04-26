@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 26/04/2022
+-- SmarAPD.GravarXml --
+[*] Alterado a configuração para gerar a tag Aliquota mesmo com o valor zero.
+   Por: Douglas Santos Miiller
+-- Giap.Provider --
+[*] Ajustes nos tratamentos de retornos dos métodos do provedor.
+   Por: JVRS
 -- ACBrNFSeXServicos --
 [*] Alteração na URL de Produção da cidade de Itabira/MG
    Por: Anadilson

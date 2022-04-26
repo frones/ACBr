@@ -385,6 +385,7 @@ begin
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrNIFTomador := 0;
   NrOcorrValTotTrib := 0;
+  NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := -1;
 
   GerarEnderecoExterior := True;

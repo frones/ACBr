@@ -96,17 +96,17 @@ var
 begin
   Result := True;
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
+
+  Retorno := ACBrBoleto.CriarRetornoWebNaLista;
+  Retorno.HTTPResultCode := HTTPResultCode;
+
   if RetWS <> '' then
   begin
-    Retorno := ACBrBoleto.CriarRetornoWebNaLista;
     try
       AJSon := TJson.Create;
       try
         AJSon.Parse(RetWS);
-
-        Retorno.HTTPResultCode := HTTPResultCode;
         Retorno.JSON           := AJson.Stringify;
-
         //retorna quando houver erro
         case TipoOperacao of
           tpInclui,
@@ -140,20 +140,6 @@ begin
                       ARejeicao.Mensagem   := AJson.Values['message'].AsString;
                     end;
                   end;
-                404 :
-                  begin
-                    ARejeicao            := Retorno.CriarRejeicaoLista;
-                    ARejeicao.Codigo     := '404';
-                    ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
-                  end;
-                503 :
-                  begin
-                    ARejeicao            := Retorno.CriarRejeicaoLista;
-                    ARejeicao.Codigo     := '503';
-                    ARejeicao.Versao     := 'ERRO INTERNO BB';
-                    ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
-                    ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Brasil.';
-                  end;
               end;
             end;
           tpBaixa,
@@ -184,20 +170,6 @@ begin
                       ARejeicao.Mensagem   := AJson.Values['message'].AsString;
                     end;
                   end;
-                404 :
-                  begin
-                    ARejeicao            := Retorno.CriarRejeicaoLista;
-                    ARejeicao.Codigo     := '404';
-                    ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
-                  end;
-                503 :
-                  begin
-                    ARejeicao            := Retorno.CriarRejeicaoLista;
-                    ARejeicao.Codigo     := '503';
-                    ARejeicao.Versao     := 'ERRO INTERNO BB';
-                    ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
-                    ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Brasil.';
-                  end;
               end;
             end;
           tpConsulta :
@@ -227,12 +199,6 @@ begin
                       ARejeicao.Versao     := AJson.Values['error'].AsString;
                       ARejeicao.Mensagem   := AJson.Values['message'].AsString;
                     end;
-                  end;
-                404 :
-                  begin
-                    ARejeicao            := Retorno.CriarRejeicaoLista;
-                    ARejeicao.Codigo     := '404';
-                    ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
                   end;
               end;
             end;
@@ -394,6 +360,36 @@ begin
       Result := False;
     end;
 
+  end else
+  begin
+    case TipoOperacao of
+      tpInclui,
+      tpBaixa,
+      tpAltera,
+      tpConsulta,
+      tpConsultaDetalhe,
+      tpPIXCriar,
+      tpPIXCancelar,
+      tpPIXConsultar :
+        begin
+          case HTTPResultCode of
+            404 :
+              begin
+                ARejeicao            := Retorno.CriarRejeicaoLista;
+                ARejeicao.Codigo     := '404';
+                ARejeicao.Mensagem   := 'NÃO ENCONTRADO. O servidor não conseguiu encontrar o recurso solicitado.';
+              end;
+            503 :
+              begin
+                ARejeicao            := Retorno.CriarRejeicaoLista;
+                ARejeicao.Codigo     := '503';
+                ARejeicao.Versao     := 'ERRO INTERNO BB';
+                ARejeicao.Mensagem   := 'SERVIÇO INDISPONÍVEL. O servidor está impossibilitado de lidar com a requisição no momento. Tente mais tarde.';
+                ARejeicao.Ocorrencia := 'ERRO INTERNO nos servidores do Banco do Brasil.';
+              end;
+          end;
+        end;
+    end;
   end;
 
 end;

@@ -50,6 +50,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/04/2022
+--ACBrBoletoRet_BancoBrasil_API--
+[*] TK-2577 ACBrBoleto - Ajuste integração via WS com o BB quando o retorno do Json é nulo - Tratamento de retorno de erros do WS
+  por: Pandaaa
 --ACBrBancoCecred--
 [*] TK-2591 Banco 085 Ajuste de Logo PB e Colorida e Literal de Mensagem Padrão de Pagamento ACBrBoleto - CECRED mudou para AILOS
   por: Pandaaa

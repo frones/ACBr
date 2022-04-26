@@ -37,6 +37,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/04/2022
+-- ACBrNCMs --
+[-] Ajuste para carregar corretamente os campos 'Data_Inicio' e 'Data_Fim' da lista
+	de NCMs em versões mais recentes do Delphi.
+	https://www.projetoacbr.com.br/forum/topic/67091-acbrncms/#comment-437010
+	(Por: Elias César)
+
 23/04/2022
 -- ACBrIBGE --
 [*] Refactoring para tentar usar compactação em comunicação, sempre que disponível

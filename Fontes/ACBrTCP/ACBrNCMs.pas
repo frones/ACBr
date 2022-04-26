@@ -460,8 +460,8 @@ begin
       begin
         CodigoNcm := OnlyNumber(wJsonNCM.S['Codigo']);
         DescricaoNcm := LimparDescricao(wJsonNCM.S['Descricao']);
-        DataInicio := wJsonNCM.D['Data_Inicio'];
-        DataFim := wJsonNCM.D['Data_Fim'];
+        DataInicio := StringToDateTimeDef(wJsonNCM.S['Data_Inicio'], 0, 'dd/mm/yyyy');
+        DataFim := StringToDateTimeDef(wJsonNCM.S['Data_Fim'], 0, 'dd/mm/yyyy');
         TipoAto := wJsonNCM.S['Tipo_Ato'];
         NumeroAto := wJsonNCM.S['Numero_Ato'];
         AnoAto := wJsonNCM.I['Ano_Ato'];

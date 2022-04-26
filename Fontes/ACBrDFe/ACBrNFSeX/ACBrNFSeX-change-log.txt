@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/04/2022
+-- NFSeBrasil.Provider --
+[*] Possível solução para remover todas as Declarações que existam no XML.
+   Por: Italo Giurizzato Junior
+
 22/04/2022
 -- ACBrNFSeXServicos --
 [-] Correção na URL de homologação da cidade de Tumiritinga/MG

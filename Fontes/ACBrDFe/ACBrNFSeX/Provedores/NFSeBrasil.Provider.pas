@@ -193,11 +193,11 @@ function TACBrNFSeXWebserviceNFSeBrasil.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-//  Result := StringReplace(Result, '&amp;', '&', [rfReplaceAll]);
-//  Result := StrToXml(Result);
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverCDATA(Result);
-  Result := RemoverDeclaracaoXML(Result);
+  // O provedor tem mais de uma declaração no XML,
+  // neste caso o segundo parâmentro tem que ser True para remover todas.
+  Result := RemoverDeclaracaoXML(Result, True);
   Result := RemoverIdentacao(Result);
   Result := StringReplace(Result, 'R$', '', [rfReplaceAll]);
   Result := RemoverPrefixosDesnecessarios(Result);

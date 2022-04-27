@@ -46,15 +46,26 @@ type
   TNFSeR_Saatri201 = class(TNFSeR_ABRASFv2)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrUtil.Strings;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Saatri
 //==============================================================================
+
+{ TNFSeR_Saatri201 }
+
+function TNFSeR_Saatri201.NormatizarXml(const aXml: string): string;
+begin
+  Result := TiraAcentos(aXml);
+end;
 
 end.

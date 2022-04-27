@@ -307,6 +307,9 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RazaoSocialTomador', 1, 120, 1,
                                                  NFSe.Tomador.RazaoSocial, ''));
 
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DocTomadorEstrangeiro', 0, 20, 0,
+                  NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, ''));
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'TipoLogradouroTomador', 0, 10, 1,
                                      NFSe.Tomador.Endereco.TipoLogradouro, ''));
 
@@ -344,12 +347,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalObra', 1, 11, 0,
                                  NFSe.ConstrucaoCivil.CodigoMunicipioObra, ''));
 
-  if VersaoNFSe <> ve101 then
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ServicoObra', 1, 2, 0,
-                                            NFSe.Servico.ItemListaServico, ''));
-
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DocTomadorEstrangeiro', 0, 20, 0,
-                  NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ServicoObra', 1, 2, 0,
+                                          NFSe.ConstrucaoCivil.CodigoObra, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividade', 1, 9, 1,
                                                   NFSe.Servico.CodigoCnae, ''));

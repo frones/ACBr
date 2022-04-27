@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 27/04/2022
+-- ISSDSF.GravarXml --
+[*] Possível correção para o erro 400.
+   Por: Italo Giurizzato Junior
+-- ISSSalvador.Provider --
+[*] Possível correção para tratar o retorno do envio.
+   Por: Italo Giurizzato Junior
+-- Saatri.LerXml --
+[*] Possível correção para o problema ao ler o XML.
+   Por: Italo Giurizzato Junior
 -- DSF.LerXml --
 [*] Possível correção para o problema ao ler o XML.
    Por: Italo Giurizzato Junior

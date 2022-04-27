@@ -336,7 +336,7 @@ begin
         FormatDateBr(Objects[I].DataFim) + ';' +
         Objects[I].TipoAto + ';' +
         Objects[I].NumeroAto + ';' +
-        Objects[I].AnoAto.ToString);
+        IntToStr(Objects[I].AnoAto));
 
     SL.SaveToFile(AFileName);
   finally

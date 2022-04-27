@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/04/2022
+-- Giap.Provider/Giap.GravarXml/Giap.LerXml --
+[*] Ajustes para gerar e ler o XML corretamente.
+   Por: JVRS/Italo Giurizzato Junior
+
 26/04/2022
 -- SmarAPD.GravarXml --
 [*] Alterado a configuração para gerar a tag Aliquota mesmo com o valor zero.

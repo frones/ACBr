@@ -112,10 +112,10 @@ begin
   Result.AppendChild(AddNode(tcDatVcto, '#1', 'dataEmissao', 1, 21, 1,
                                                       NFSe.DataEmissaoRps, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'im', 1, 11, 1,
+  Result.AppendChild(AddNode(tcInt, '#1', 'im', 1, 11, 1,
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'numeroRps', 1, 11, 1,
+  Result.AppendChild(AddNode(tcInt, '#1', 'numeroRps', 1, 11, 1,
                                              NFSe.IdentificacaoRps.Numero, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'numeroNota', 1, 11, 0,
@@ -140,7 +140,7 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 30, 1,
                                        NFSe.Prestador.Endereco.xMunicipio, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 0,
                                       NFSe.Prestador.Endereco.Complemento, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'logradouro', 1, 50, 1,
@@ -170,19 +170,19 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
                                           NFSe.Tomador.Endereco.xMunicipio, ''))
   else
-  Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 30, 1,
+    Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
     CodIBGEToCidade(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 0,
                                         NFSe.Tomador.Endereco.Complemento, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'documento', 1, 14, 1,
+  Result.AppendChild(AddNode(tcInt64, '#1', 'documento', 1, 14, 1,
                     OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'email', 1, 14, 1,
                                                NFSe.Tomador.Contato.Email, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'ie', 1, 14, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'ie', 1, 14, 0,
           OnlyNumber(NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'logradouro', 1, 50, 1,
@@ -230,8 +230,8 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'ir', 1, 15, 1,
                                              NFSe.Servico.Valores.ValorIr, ''));
 
-  Result.AppendChild(AddNode(tcDe2, '#1', 'issRetido', 1, 15, 1,
-                                      NFSe.Servico.Valores.ValorIssRetido, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'issRetido', 1, 1, 1,
+         FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), ''));
 
   xmlNode := GerarItem;
   Result.AppendChild(xmlNode);
@@ -250,10 +250,10 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'aliquota', 1, 15, 1,
                                             NFSe.Servico.Valores.Aliquota, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cnae', 1, 8, 0,
+  Result.AppendChild(AddNode(tcInt, '#1', 'cnae', 1, 8, 0,
                                       OnlyNumber(NFSe.Servico.CodigoCnae), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'codigo', 1, 4, 1,
+  Result.AppendChild(AddNode(tcInt, '#1', 'codigo', 1, 4, 1,
                                 OnlyNumber(NFSe.Servico.ItemListaServico), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricao', 1, 4000, 1,

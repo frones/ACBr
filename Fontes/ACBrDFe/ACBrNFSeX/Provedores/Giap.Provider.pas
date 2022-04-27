@@ -82,6 +82,10 @@ type
                                      const AListTag: string = '';
                                      const AMessageTag: string = 'Erro'); override;
 
+  public
+    function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
+    function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
+    function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string; override;
   end;
 
 implementation
@@ -187,6 +191,29 @@ begin
       AErro.Correcao := '';
     end;
   end;
+end;
+
+function TACBrNFSeProviderGiap.SituacaoTributariaDescricao(
+  const t: TnfseSituacaoTributaria): string;
+begin
+  case t of
+    stNormal:   Result := '0 - Não' ;
+    stRetencao: Result := '1 - Sim' ;
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderGiap.SituacaoTributariaToStr(
+  const t: TnfseSituacaoTributaria): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1'], [stNormal, stRetencao]);
+end;
+
+function TACBrNFSeProviderGiap.StrToSituacaoTributaria(out ok: boolean;
+  const s: string): TnfseSituacaoTributaria;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1'], [stNormal, stRetencao]);
 end;
 
 function TACBrNFSeProviderGiap.PrepararRpsParaLote(const aXml: string): string;

@@ -183,6 +183,7 @@ end;
 procedure TNFSeR_Giap.LerDetalheServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('detalheServico');
 
@@ -196,14 +197,10 @@ begin
       ValorInss              := ObterConteudo(AuxNode.Childrens.FindAnyNs('inss'), tcDe2);
       ValorIr                := ObterConteudo(AuxNode.Childrens.FindAnyNs('ir'), tcDe2);
       ValorCsll              := ObterConteudo(AuxNode.Childrens.FindAnyNs('csll'), tcDe2);
-      ValorIssRetido         := ObterConteudo(AuxNode.Childrens.FindAnyNs('issRetido'), tcDe2);
       ValorDeducoes          := ObterConteudo(AuxNode.Childrens.FindAnyNs('deducaoMaterial'), tcDe2);
       DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('descontoIncondicional'), tcDe2);
 
-      if ValorIssRetido > 0 then
-        IssRetido := stRetencao
-      else
-        IssRetido := stNormal;
+      IssRetido := FpAOwner.StrToSituacaoTributaria(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('issRetido'), tcStr));
 
       AliquotaPIS    := 0;
       AliquotaCOFINS := 0;
@@ -220,7 +217,7 @@ begin
     begin
       ValorIss         := (ValorServicos * Aliquota) / 100;
       ValorLiquidoNfse := ValorServicos -
-      (ValorDeducoes + DescontoCondicionado + DescontoIncondicionado +
+        (ValorDeducoes + DescontoCondicionado + DescontoIncondicionado +
                                                                 ValorIssRetido);
       BaseCalculo      := ValorLiquidoNfse;
     end;

@@ -53,6 +53,8 @@ const
 type
   EACBrNcmException = class(Exception);
 
+  TACBrNCMGetJson = procedure(var aJson: String) of object;
+
   TACBrNCMTipoFiltro = (ntfIniciaCom, ntfContem, ntfFinalizaCom);
 
   { TACBrNCM }
@@ -120,6 +122,7 @@ type
     fNCMs: TACBrNCMsList;
     fNCMsFiltrados: TACBrNCMsList;
     fOnBuscaEfetuada: TNotifyEvent;
+    fOnGetJson: TACBrNCMGetJson;
     fUltimaAtualizacao: TDateTime;
     fUrlConsulta: string;
 
@@ -129,9 +132,9 @@ type
     function GetCacheArquivo: String;
     function LimparDescricao(const aStr: String): String;
     function DownloadArquivo: String;
-    procedure GravarCache(const aJsonStr: String);
-    procedure CarregarCache;
+    function CarregarCache: String;
 
+    procedure GravarCache(const aJsonStr: String);
     procedure CarregarJson(const aJsonStr: String);
   public
     constructor Create(AOwner: TComponent); override;
@@ -157,6 +160,7 @@ type
     property CacheDiasValidade: Integer read fCacheDiasValidade
       write fCacheDiasValidade default 0;  // 0 - Não Expira
     property OnBuscaEfetuada: TNotifyEvent read fOnBuscaEfetuada write fOnBuscaEfetuada;
+    property OnGetJson: TACBrNCMGetJson read fOnGetJson write fOnGetJson;
   end;
 
   function CompNCMCodAsc(const pNCM1, pNCM2: {$IfDef HAS_SYSTEM_GENERICS}TObject{$Else}Pointer{$EndIf}): Integer;
@@ -325,7 +329,14 @@ begin
   SL := TStringList.Create;
   try
     for I := 0 to Count - 1 do
-      SL.Add( Objects[i].CodigoNcm + ';' + Objects[i].DescricaoNcm);
+      SL.Add(
+        Objects[I].CodigoNcm + ';' +
+        Objects[I].DescricaoNcm + ';' +
+        FormatDateBr(Objects[I].DataInicio) + ';' +
+        FormatDateBr(Objects[I].DataFim) + ';' +
+        Objects[I].TipoAto + ';' +
+        Objects[I].NumeroAto + ';' +
+        Objects[I].AnoAto.ToString);
 
     SL.SaveToFile(AFileName);
   finally
@@ -347,6 +358,7 @@ begin
   fUrlConsulta := CNCM_URL;
 
   fOnBuscaEfetuada := Nil;
+  fOnGetJson := Nil;
   Clear;
 end;
 
@@ -408,7 +420,7 @@ end;
 
 function TACBrNCMs.UnZipHttpDoc: String;
 var
-  CT: String;
+  //CT: String;
   Resp: AnsiString;
   RespIsUTF8: Boolean;
   zt: TCompressType;
@@ -422,7 +434,7 @@ begin
   else
     Resp := ACBrUtil.FilesIO.UnZip(HTTPSend.Document);
 
-  CT := LowerCase( GetHeaderValue('Content-Type:') );
+  //CT := LowerCase( GetHeaderValue('Content-Type:') );
   RespIsUTF8 := True; //(pos('utf-8', CT) > 0);
   if RespIsUTF8 then
     Result := UTF8ToNativeString(Resp)
@@ -531,7 +543,7 @@ begin
     BuscarPorCodigo(aCodigoCapitulo);
 end;
 
-procedure TACBrNCMs.CarregarCache;
+function TACBrNCMs.CarregarCache: String;
 var
   wArq: String;
   wSL: TStringList;
@@ -540,6 +552,7 @@ begin
   Clear;
   wDataCache := 0;
   fCacheLido := True;
+  Result := EmptyStr;
   wArq := CacheArquivo;
 
   if (wArq = EmptyStr) or (not FileExists(wArq)) then
@@ -567,7 +580,7 @@ begin
   wSL := TStringList.Create;
   try
     wSL.LoadFromFile(wArq);
-    CarregarJson(wSL.Text);
+    Result := wSL.Text;
   finally
     wSL.Free;
   end;
@@ -589,14 +602,19 @@ procedure TACBrNCMs.ObterNCMs;
 var
   aJsonStr: String;
 begin
-  if (not fCacheLido) then
-    CarregarCache;
+  aJsonStr := EmptyStr;
+  if Assigned(OnGetJson) then
+    OnGetJson(aJsonStr);
 
-  if (NCMs.Count > 0) then  // Carregou do Cache ?
-    Exit;
+  if EstaVazio(aJsonStr) and (not fCacheLido) then  // Carregou no Evento ?
+    aJsonStr := CarregarCache;
 
-  aJsonStr := DownloadArquivo;
-  GravarCache(aJsonStr);
+  if EstaVazio(aJsonStr) then  // Carregou do Cache ?
+  begin
+    aJsonStr := DownloadArquivo;
+    GravarCache(aJsonStr);
+  end;
+
   CarregarJson(aJsonStr);
 end;
 

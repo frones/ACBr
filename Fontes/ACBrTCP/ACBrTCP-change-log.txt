@@ -37,6 +37,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/04/2022
+-- ACBrNCMs --
+[+] Inclusão do evento 'OnGetJson', possibilitando que a aplicação informe um 
+    arquivo Json antes do componente realizar o download.
+[*] Inclusão das novas propriedades do objeto TACBrNCM no arquivo gerado
+    pela função TACBrNCMsList.SaveToFile. 
+
 26/04/2022
 -- ACBrNCMs --
 [-] Ajuste para carregar corretamente os campos 'Data_Inicio' e 'Data_Fim' da lista

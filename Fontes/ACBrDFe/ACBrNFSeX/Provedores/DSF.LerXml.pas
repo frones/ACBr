@@ -55,15 +55,26 @@ type
   TNFSeR_DSF200 = class(TNFSeR_ABRASFv2)
   protected
 
+    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
+uses
+  ACBrUtil.Strings;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     DSF
 //==============================================================================
+
+{ TNFSeR_DSF200 }
+
+function TNFSeR_DSF200.NormatizarXml(const aXml: string): string;
+begin
+  Result := TiraAcentos(aXml);
+end;
 
 end.

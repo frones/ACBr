@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/04/2022
+-- DSF.LerXml --
+[*] Possível correção para o problema ao ler o XML.
+   Por: Italo Giurizzato Junior
 -- Giap.Provider/Giap.GravarXml/Giap.LerXml --
 [*] Ajustes para gerar e ler o XML corretamente.
    Por: JVRS/Italo Giurizzato Junior

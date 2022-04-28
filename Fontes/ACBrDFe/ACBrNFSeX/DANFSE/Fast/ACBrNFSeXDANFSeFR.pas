@@ -475,7 +475,7 @@ begin
       Add('LogoPrefExpandido', ftString, 1);
       Add('LogoPrefCarregado', ftBlob);
       Add('Nome_Prefeitura', ftString, 256);
-      Add('Mensagem0', ftString, 50);
+      Add('Mensagem0', ftString, 60);
       Add('Sistema', ftString, 150);
       Add('Usuario', ftString, 50);
       Add('Site', ftString, 50);

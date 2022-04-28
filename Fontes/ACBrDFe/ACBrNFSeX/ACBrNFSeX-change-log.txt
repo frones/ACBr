@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/04/2022
+-- SilTecnologia.GravarXml --
+[*] Incluído na Configuração para gerar a tag Aliquota mesmo com o percentual zero.
+   Por: Italo Giurizzato Junior
+
 27/04/2022
 -- ISSDSF.GravarXml --
 [*] Possível correção para o erro 400.

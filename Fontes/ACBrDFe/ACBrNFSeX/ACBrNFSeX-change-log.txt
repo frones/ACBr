@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 28/04/2022
+-- ACBrNFSeXServicos --
+[*] A cidade Vera Cruz/RS trocou de provedor agora é IPM
+   Por: Renan R Pozzo
+[*] A cidade Catanduva/SP trocou de provedor agora é Fiorilli
+   Por: F Tellini
 -- SigCorp.LerXml --
 [*] Possível correção para a leitura da data.
    Por: Italo Giurizzato Junior

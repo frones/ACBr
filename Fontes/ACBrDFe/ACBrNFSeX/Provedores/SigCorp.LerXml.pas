@@ -73,10 +73,15 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
 
-  if Ambiente = taProducao then
-    result := EncodeDataHora(xDataHora, '')
+  if Pos('/', xDataHora) = 3 then
+  begin
+    if Copy(xDataHora, 1, 2) > '12' then
+      result := EncodeDataHora(xDataHora, 'DD/MM/YYYY')
+    else
+      result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
+  end
   else
-    result := EncodeDataHora(xDataHora, 'DD/MM/YYYY');
+    result := EncodeDataHora(xDataHora, '');
 end;
 
 function TNFSeR_SigCorp203.LerDataEmissaoRps(
@@ -86,10 +91,15 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
 
-  if Ambiente = taProducao then
-    result := EncodeDataHora(xDataHora, '')
+  if Pos('/', xDataHora) = 3 then
+  begin
+    if Copy(xDataHora, 1, 2) > '12' then
+      result := EncodeDataHora(xDataHora, 'DD/MM/YYYY')
+    else
+      result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
+  end
   else
-    result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
+    result := EncodeDataHora(xDataHora, '');
 end;
 
 function TNFSeR_SigCorp203.NormatizarXml(const aXml: string): string;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/04/2022
+-- SigCorp.LerXml --
+[*] Possível correção para a leitura da data.
+   Por: Italo Giurizzato Junior
 -- SilTecnologia.GravarXml --
 [*] Incluído na Configuração para gerar a tag Aliquota mesmo com o percentual zero.
    Por: Italo Giurizzato Junior

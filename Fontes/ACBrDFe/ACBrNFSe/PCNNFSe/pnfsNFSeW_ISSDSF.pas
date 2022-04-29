@@ -162,7 +162,9 @@ begin
 
   Gerador.wCampo(tcStr, '', 'CEPTomador',   01, 08, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
   Gerador.wCampo(tcStr, '', 'EmailTomador', 01, 60, 1, NFSe.Tomador.Contato.Email, '');
-  Gerador.wCampo(tcStr, '', 'InscricaoMunicipalObra', 01, 11, 01, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
+
+  // Dependendo da cidade tem que gerar a tag abaixo
+//  Gerador.wCampo(tcStr, '', 'InscricaoMunicipalObra', 01, 11, 0, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
 end;
 
 procedure TNFSeW_ISSDSF.GerarIntermediarioServico;
@@ -304,7 +306,7 @@ var
   sIEEmit, SerieRPS, NumeroRPS, sDataEmis,
   sTributacao, sSituacaoRPS, sTipoRecolhimento,
   sValorServico, sValorDeducao, sCodAtividade,
-  sCPFCNPJTomador, sAssinatura: String;
+  sCPFCNPJTomador, sAssinatura, sDdd, sTelefone: String;
 begin
   Gerador.Prefixo := '';
   Gerador.wGrupo('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
@@ -343,25 +345,43 @@ begin
   GerarTomador;
   GerarValoresServico;
 
-  if Length(OnlyNumber(NFSe.PrestadorServico.Contato.Telefone)) = 11 then
-    Gerador.wCampo(tcStr, '', 'DDDPrestador', 00, 03, 1, LeftStr(OnlyNumber(NFSe.PrestadorServico.Contato.Telefone),3), '')
-  else
-    if Length(OnlyNumber(NFSe.PrestadorServico.Contato.Telefone)) = 10 then
-      Gerador.wCampo(tcStr, '', 'DDDPrestador', 00, 03, 1, LeftStr(OnlyNumber(NFSe.PrestadorServico.Contato.Telefone),2), '')
-    else
-      Gerador.wCampo(tcStr, '', 'DDDPrestador', 00, 03, 1, '', '');
+  sDdd := '';
+  sTelefone := OnlyNumber(NFSe.PrestadorServico.Contato.Telefone);
+  if (Length(sTelefone) = 11) then begin
+    if (Copy(sTelefone,1,1) = '0') then begin
+      sDdd := Copy(sTelefone,2,2);
+      sTelefone := RightStr(sTelefone,8);
+    end else begin
+      sDdd := LeftStr(sTelefone,2);
+      sTelefone := RightStr(sTelefone,9);
+    end;
+  end else begin
+    if Length(sTelefone) = 10 then begin
+      sDdd := Copy(sTelefone,1,2);
+      sTelefone := RightStr(sTelefone,8);
+    end;
+  end;
+  Gerador.wCampo(tcStr, '', 'DDDPrestador', 00, 03, 1, sDdd, '');
+  Gerador.wCampo(tcStr, '', 'TelefonePrestador', 00, 08, 1, sTelefone, '');
 
-  Gerador.wCampo(tcStr, '', 'TelefonePrestador', 00, 08, 1, RightStr(OnlyNumber(NFSe.PrestadorServico.Contato.Telefone),8), '');
-
-  if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 11 then
-    Gerador.wCampo(tcStr, '', 'DDDTomador', 00, 03, 1, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),3), '')
-  else
-    if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 10 then
-      Gerador.wCampo(tcStr, '', 'DDDTomador', 00, 03, 1, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),2), '')
-    else
-      Gerador.wCampo(tcStr, '', 'DDDTomador', 00, 03, 1, '', '');
-
-  Gerador.wCampo(tcStr, '', 'TelefoneTomador', 00, 08, 1, RightStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),8), '');
+  sDdd := '';
+  sTelefone := OnlyNumber(NFSe.Tomador.Contato.Telefone);
+  if (Length(sTelefone) = 11) then begin
+    if (Copy(sTelefone,1,1) = '0') then begin
+      sDdd := Copy(sTelefone,2,2);
+      sTelefone := RightStr(sTelefone,8);
+    end else begin
+      sDdd := LeftStr(sTelefone,2);
+      sTelefone := RightStr(sTelefone,9);
+    end;
+  end else begin
+    if Length(sTelefone) = 10 then begin
+      sDdd := Copy(sTelefone,1,2);
+      sTelefone := RightStr(sTelefone,8);
+    end;
+  end;
+  Gerador.wCampo(tcStr, '', 'DDDTomador', 00, 03, 1, sDdd, '');
+  Gerador.wCampo(tcStr, '', 'TelefoneTomador', 00, 08, 1, sTelefone, '');
 
   if (NFSe.Status = srCancelado) then
     Gerador.wCampo(tcStr, '', 'MotCancelamento',01, 80, 1, NFSE.MotivoCancelamento, '')

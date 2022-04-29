@@ -95,6 +95,7 @@ uses
   DSF.Provider,
   EloTech.Provider,
   eReceita.Provider,
+  Etherium.Provider,
   fintelISS.Provider,
   Fiorilli.Provider,
   Fisco.Provider,
@@ -269,6 +270,7 @@ begin
         Result := TACBrNFSeProviderEquiplano.Create(ACBrNFSe);
 
       proeReceita: Result := TACBrNFSeProvidereReceita202.Create(ACBrNFSe);
+      proEtherium: Result := TACBrNFSeProviderEtherium203.Create(ACBrNFSe);
       proFGMaiss:  Result :=TACBrNFSeProviderFGMaiss.Create(ACBrNFSe);
 
       profintelISS:

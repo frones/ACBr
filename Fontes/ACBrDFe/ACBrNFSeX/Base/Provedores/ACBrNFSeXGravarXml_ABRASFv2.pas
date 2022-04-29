@@ -788,23 +788,24 @@ begin
   begin
     Result := CreateElement(FTagTomador);
 
-    if ((NFSe.Tomador.Endereco.UF <> 'EX') and
-        ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
-         (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> ''))) then
-    begin
-      Result.AppendChild(GerarIdentificacaoTomador);
-    end;
-
     if NFSe.Tomador.Endereco.UF = 'EX' then
       Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, NrOcorrNIFTomador,
-                                                      NFSe.Tomador.NifTomador));
+                                                      NFSe.Tomador.NifTomador))
+    else
+    begin
+      if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+         (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') then
+        Result.AppendChild(GerarIdentificacaoTomador);
+    end;
 
     Result.AppendChild(AddNode(tcStr, '#38', 'RazaoSocial', 1, 115, 0,
                                           NFSe.Tomador.RazaoSocial, DSC_XNOME));
 
-    Result.AppendChild(GerarEnderecoExteriorTomador);
+    if NFSe.Tomador.Endereco.UF = 'EX' then
+      Result.AppendChild(GerarEnderecoExteriorTomador)
+    else
+      Result.AppendChild(GerarEnderecoTomador);
 
-    Result.AppendChild(GerarEnderecoTomador);
     Result.AppendChild(GerarContatoTomador);
 
     Result.AppendChild(AddNode(tcStr, '#', 'AtualizaTomador', 1, 1, NrOcorrAtualizaTomador,
@@ -834,8 +835,7 @@ function TNFSeW_ABRASFv2.GerarEnderecoExteriorTomador: TACBrXmlNode;
 begin
   Result := nil;
 
-  if GerarEnderecoExterior and (NFSe.Tomador.Endereco.Endereco <> '') and
-     (NFSe.Tomador.Endereco.UF = 'EX') then
+  if GerarEnderecoExterior and (NFSe.Tomador.Endereco.Endereco <> '') then
   begin
     Result := CreateElement('EnderecoExterior');
 

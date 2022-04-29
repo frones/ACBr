@@ -44,6 +44,14 @@ Símbolo : Significado
 
 
 29/04/2022
+-- SimplISS.GravarXml --
+[*] Alterado o valor de NrOcorrNIFTomador para 1 para gerar a tag quando o
+    tomador for do exterior.
+   Por: Paulo Alexandre Hostert
+-- ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Ajustes para a correta gravação do XML do Rps quando o tomador for do 
+    exterior.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes para a correta leitura do XML da NFS-e do provedor ISSJoinville
    Por: Italo Giurizzato Junior

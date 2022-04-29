@@ -45,7 +45,7 @@ Símbolo : Significado
 
 29/04/2022
 -- Diversos --
-[+] Implementando o provedor Etherim que atende a cidade de Santa Luzia/MG
+[+] Implementando o provedor Etherium que atende a cidade de Santa Luzia/MG
    Por: Italo Giurizzato Junior
 -- SigCorp.LerXml --
 [*] Possível correção para o erro que ocorre na leitura do XML da NFS-e.

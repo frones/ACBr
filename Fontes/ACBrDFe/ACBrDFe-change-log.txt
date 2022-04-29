@@ -44,7 +44,6 @@ Símbolo : Significado
 [*] Remoção de Warnings e Hints.
    Por: Italo Giurizzato Junior
 
-
 25/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

@@ -841,27 +841,51 @@ begin
     with NFSe.Servico.Valores do
     begin
       ValorServicos   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
+
+      if ValorServicos = 0 then
+        ValorServicos := ValorLiquidoNfse;
+
       ValorDeducoes   := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorDeducoes'), tcDe2);
 
-      AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaPis'), tcDe2);
+      if AliquotaPis = 0 then
+        AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaPis'), tcDe2);
+
       RetidoPis := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoPis'), tcStr));
-      ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
 
-      AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCofins'), tcDe2);
+      if ValorPis = 0 then
+        ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+
+      if AliquotaCofins = 0 then
+        AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCofins'), tcDe2);
+
       RetidoCofins := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCofins'), tcStr));
-      ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
 
-      AliquotaInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaInss'), tcDe2);
+      if ValorCofins = 0 then
+        ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+
+      if AliquotaInss = 0 then
+        AliquotaInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaInss'), tcDe2);
+
       RetidoInss := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoInss'), tcStr));
-      ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
 
-      AliquotaIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaIr'), tcDe2);
+      if ValorInss = 0 then
+        ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
+
+      if AliquotaIr = 0 then
+        AliquotaIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaIr'), tcDe2);
+
       RetidoIr := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoIr'), tcStr));
-      ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
 
-      AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCsll'), tcDe2);
+      if ValorIr = 0 then
+        ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
+
+      if AliquotaCsll = 0 then
+        AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCsll'), tcDe2);
+
       RetidoCsll := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('RetidoCsll'), tcStr));
-      ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+
+      if ValorCsll = 0 then
+        ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
 
       ValorIss        := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
@@ -912,8 +936,23 @@ begin
 
     with NFSe.Servico.Valores do
     begin
+      AliquotaIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaIr'), tcDe2);
+      AliquotaInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaInss'), tcDe2);
+      AliquotaPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaPis'), tcDe2);
+      AliquotaCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCofins'), tcDe2);
+      AliquotaCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCsll'), tcDe2);
+
+      ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIr'), tcDe2);
+      ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
+      ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+      ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+      ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+
       BaseCalculo := NFSe.ValoresNfse.BaseCalculo;
+      Aliquota := NFSe.ValoresNfse.Aliquota;
+      ValorIss := NFSe.ValoresNfse.ValorIss;
       ValorLiquidoNfse := NFSe.ValoresNfse.ValorLiquidoNfse;
+      ValorServicos := ValorLiquidoNfse;
     end;
   end;
 end;

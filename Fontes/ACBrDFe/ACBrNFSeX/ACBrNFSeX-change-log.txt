@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/04/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes para a correta leitura do XML da NFS-e do provedor ISSJoinville
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementando o provedor Etherium que atende a cidade de Santa Luzia/MG
    Por: Italo Giurizzato Junior

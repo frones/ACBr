@@ -58,6 +58,7 @@ implementation
 
 uses
   ACBrXmlBase,
+  ACBrUtil.Strings,
   ACBrUtil.DateTime;
 
 //==============================================================================
@@ -105,6 +106,7 @@ end;
 function TNFSeR_SigCorp203.NormatizarXml(const aXml: string): string;
 begin
   Result := StringReplace(aXml, '&', '&amp;', [rfReplaceAll]);
+  Result := TiraAcentos(Result);
 end;
 
 end.

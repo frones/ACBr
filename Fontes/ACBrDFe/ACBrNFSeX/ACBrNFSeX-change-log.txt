@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 29/04/2022
+-- SigCorp.LerXml --
+[*] Possível correção para o erro que ocorre na leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.LerXml --
 [*] Correção na leitura da Discriminação dos serviços bem como o valor do 
     ISS Retido.

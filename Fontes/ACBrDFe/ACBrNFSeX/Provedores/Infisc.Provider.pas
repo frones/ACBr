@@ -302,9 +302,9 @@ procedure TACBrNFSeProviderInfisc.TratarRetornoConsultaLoteRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
-  {
   ANode, AuxNode: TACBrXmlNode;
+  {
+  ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
   NumRps: String;
@@ -334,18 +334,20 @@ begin
         Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
       end;
 
-      ANode := ANode.Childrens.FindAnyNs('NFSe');
+      AuxNode := ANode.Childrens.FindAnyNs('NFSe');
 
-      with Response do
+      if AuxNode <> nil then
       begin
-        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('sit'), tcStr);
-        idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chvAcessoNFSe'), tcStr);
+        with Response do
+        begin
+          Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('sit'), tcStr);
+          idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chvAcessoNFSe'), tcStr);
+        end;
       end;
 
       ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
-
 
       {
       ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');

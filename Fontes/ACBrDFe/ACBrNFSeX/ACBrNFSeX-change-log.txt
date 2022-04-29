@@ -43,6 +43,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/04/2022
+-- SmarAPD.LerXml --
+[*] Correção na leitura da Discriminação dos serviços bem como o valor do 
+    ISS Retido.
+   Por: Paulo Henrique Panico
+-- AssessorPublico.LerXml --
+[*] Correção no calculo do Valor Total.
+   Por: José Jair de Oliveira
+-- Coplan.Provider --
+[*] Alterado a configuração para gerar a tag do numero final na consulta de NFSe
+    por faixa mesmo ele sendo igual ao numero inicial
+   Por: Italo Giurizzato Junior
+-- IPM.GravarXml --
+[*] Implementado a função de define se deve ou não gerar o grupo RPS no XML.
+   Por: Douglas G V/Italo Giurizzato Junior
+
 28/04/2022
 -- ACBrNFSeXServicos --
 [*] A cidade Vera Cruz/RS trocou de provedor agora é IPM

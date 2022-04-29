@@ -138,8 +138,10 @@ begin
       ItemListaServico := ObterConteudo(ANodes[i].Childrens.FindAnyNs('CodigoAtividade'), tcStr);
       Descricao := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Servico'), tcStr);
 
-      if NFSe.Servico.Discriminacao = '' then
-        NFSe.Servico.Discriminacao := Descricao;
+      if NFSe.Servico.Discriminacao <> '' then
+        NFSe.Servico.Discriminacao := NFSe.Servico.Discriminacao + ';';
+
+      NFSe.Servico.Discriminacao := NFSe.Servico.Discriminacao + Descricao;
 
       ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorUnitario'), tcDe2);
       ValorTotal    := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorTotal'), tcDe2);
@@ -151,6 +153,7 @@ begin
       if aValor = 'true' then
       begin
         NFSe.Servico.Valores.IssRetido := stRetencao;
+        NFSe.Servico.Valores.ValorIssRetido := ObterConteudo(ANode.Childrens.FindAnyNs('ISSQNCliente'), tcDe2);
       end
       else
         NFSe.Servico.Valores.IssRetido := stNormal;

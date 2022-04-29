@@ -53,6 +53,7 @@ type
   protected
     procedure Configuracao; override;
 
+    function GerarGrupoRPS: Boolean;
     function GerarIdentificacaoRPS: TACBrXmlNode;
     function GerarValoresServico: TACBrXmlNode;
     function GerarPrestador: TACBrXmlNode;
@@ -200,11 +201,25 @@ begin
   end;
 end;
 
+function TNFSeW_IPM.GerarGrupoRPS: Boolean;
+var
+  NaoGerar: Boolean;
+begin
+  {
+    Se no arquivo ACBrNFSeXServicos.ini existe o campo: NaoGerarGrupoRps na
+    definição da cidade o valor de NaoGerar é True
+  }
+  NaoGerar := FpAOwner.ConfigGeral.Params.TemParametro('NaoGerarGrupoRps');
+
+  // Na condição abaixo se faz necessário o "not".
+  Result := (StrToIntDef(NFSe.IdentificacaoRps.Numero, 0) > 0) and (not NaoGerar);
+end;
+
 function TNFSeW_IPM.GerarIdentificacaoRPS: TACBrXmlNode;
 begin
   Result :=  nil;
 
-  if( StrToIntDef( NFSe.IdentificacaoRps.Numero, 0 ) > 0 ) then
+  if GerarGrupoRPS then
   begin
     Result := CreateElement('rps');
 

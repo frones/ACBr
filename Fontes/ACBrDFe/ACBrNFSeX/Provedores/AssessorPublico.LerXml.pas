@@ -251,7 +251,7 @@ begin
 
         DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('DESCONTO'), tcDe2);
 
-        ValorTotal := Quantidade + ValorUnitario;
+        ValorTotal := Quantidade * ValorUnitario;
         Tributavel := snSim;
       end;
     end;

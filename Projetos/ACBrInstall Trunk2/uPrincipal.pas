@@ -46,7 +46,7 @@ uses
   IOUtils, UITypes, JclIDEUtils, JclCompilerUtils,
   Types, JvComponentBase, JvExControls, JvAnimatedImage,
   JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, CheckLst,
-  uFrameLista, ACBrUtil, ACBrPacotes, UACBrPlataformaInstalacaoAlvo,
+  uFrameLista, ACBrPacotes, UACBrPlataformaInstalacaoAlvo,
   ACBrInstallDelphiComponentes;
 
 type
@@ -164,7 +164,7 @@ var
 implementation
 
 uses
-  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils;
+  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrUtil.FilesIO, ACBrInstallUtils;
 
 {$R *.dfm}
 

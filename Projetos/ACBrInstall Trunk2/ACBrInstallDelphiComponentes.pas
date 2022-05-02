@@ -159,7 +159,7 @@ implementation
 
 uses
   ShellApi, Types, IOUtils,
-  ACBrUtil, ACBrInstallUtils, IniFiles,
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrInstallUtils, IniFiles,
   JvVersionInfo;
 
 

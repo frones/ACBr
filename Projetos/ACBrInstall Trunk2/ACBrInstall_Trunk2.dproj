@@ -124,7 +124,8 @@
         <DCCReference Include="ACBrInstallDelphiComponentes.pas"/>
         <DCCReference Include="ACBrInstallUtils.pas"/>
         <DCCReference Include="ACBrPacotes.pas"/>
-        <DCCReference Include="..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <DCCReference Include="..\..\Fontes\ACBrComum\ACBrUtil.Strings.pas"/>
+        <DCCReference Include="..\..\Fontes\ACBrComum\ACBrUtil.FilesIO.pas"/>
         <DCCReference Include="UACBrPlataformaInstalacaoAlvo.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>

@@ -166,7 +166,7 @@
   DELPHIX_RIO            Alias for DELPHI26
   DELPHI27               Defined when compiling with Delphi 10.4 for Win32 (Codename DENALI)
   DELPHIX_SYDNEY         Alias for DELPHI27
-  DELPHI28               Defined when compiling with Delphi 10.4 for Win32 (Codename OLYMPUS)
+  DELPHI28               Defined when compiling with Delphi 11 for Win32 (Codename OLYMPUS)
   DELPHIX_ALEXANDRIA     Alias for DELPHI28
   DELPHI1_UP             Defined when compiling with Delphi 1 or higher
   DELPHI2_UP             Defined when compiling with Delphi 2 or higher
@@ -592,10 +592,10 @@
   SUPPORTS_DEPRECATED_WARNINGS   Compiler supports deprecated warnings (D6+/BCB6+)
   SUPPORTS_LIBRARY_WARNINGS      Compiler supports library warnings (D6+/BCB6+)
   SUPPORTS_PLATFORM_WARNINGS     Compiler supports platform warnings (D6+/BCB6+)
-  SUPPORTS_UNSAFE_WARNINGS       Compiler supports unsafe warnings (D7)
-  SUPPORTS_WEAKPACKAGEUNIT       Compiler supports the WEAKPACKAGEUNIT directive
-  SUPPORTS_COMPILETIME_MESSAGES  Compiler supports the MESSAGE directive
-  SUPPORTS_PACKAGES              Compiler supports Packages
+  SUPPORTS_UNSAFE_WARNINGS       Compiler supports unsafe warnings (D7+)
+  SUPPORTS_WEAKPACKAGEUNIT       Compiler supports the WEAKPACKAGEUNIT directive (D3+)
+  SUPPORTS_COMPILETIME_MESSAGES  Compiler supports the MESSAGE directive (D6+)
+  SUPPORTS_PACKAGES              Compiler supports Packages (D1+)
   HAS_UNIT_LIBC                  Unit Libc exists (Kylix, FPC on Linux/x86)
   HAS_UNIT_RTLCONSTS             Unit RTLConsts exists (D6+/BCB6+/FPC)
   HAS_UNIT_TYPES                 Unit Types exists (D6+/BCB6+/FPC)
@@ -609,14 +609,20 @@
   HAS_UNIT_PNGIMAGE              Unit PngImage exists (D12+)
   HAS_UNIT_CHARACTER             Unit Character exists (D12+)
   XPLATFORM_RTL                  The RTL supports crossplatform function names (e.g. RaiseLastOSError) (D6+/BCB6+/FPC)
+  SUPPORTS_TYPED_POINTERMATH     Compiler supports arithmetic operations on typed pointers (D12+)
+  SUPPORTS_STRINGCHECKS          Compiler supports the STRINGCHECKS directive (D12+)
   SUPPORTS_UNICODE               string type is aliased to an unicode string (WideString or UnicodeString) (DX.NET, D12+)
   SUPPORTS_UNICODE_STRING        Compiler supports UnicodeString (D12+)
   SUPPORTS_INT_ALIASES           Types Int8, Int16, Int32, UInt8, UInt16 and UInt32 are defined in the unit System (D12+)
   HAS_UNIT_RTTI                  Unit RTTI is available (D14+)
+  SUPPORTS_EXTENDED_RTTI         Compiler supports the extended RTTI directive (D14+)
   SUPPORTS_CAST_INTERFACE_TO_OBJ The compiler supports casts from interfaces to objects (D14+)
   SUPPORTS_DELAYED_LOADING       The compiler generates stubs for delaying imported function loads (D14+)
   HAS_UNIT_REGULAREXPRESSIONSAPI Unit RegularExpressionsAPI is available (D15+)
+  HAS_UNITSCOPE                  Has unit scope, i.e. System.Classes instead of Classes (D16+)
   HAS_UNIT_SYSTEM_UITYPES        Unit System.UITypes is available (D16+)
+  HAS_UNIT_SYSTEM_ZIP            Unit System.Zip is available (D16+)
+  HAS_UNIT_SYSTEM_ZLIB           Unit System.ZLib is available (D16+)
   HAS_UNIT_SYSTEM_ACTIONS        Unit System.Actions is available (D17+)
   DEPRECATED_SYSUTILS_ANSISTRINGS  AnsiString functions from SysUtils are deprecated and moved to System.AnsiStrings (D18+)
   HAS_PROPERTY_STYLEELEMENTS     TControl has a StyleElements property (D17+)
@@ -624,11 +630,15 @@
   HAS_EARGUMENTEXCEPTION         Exception class EArgumentException is available (D14+)
   HAS_ENOTIMPLEMENTED            Exception class ENotImplemented is available (D15+)
   HAS_UNIT_VCL_THEMES            Unit Vcl.Themes is available (D16+)
+  SUPPORTS_EXCESSPRECISION       Compiler supports the EXCESSPRECISION directive (D16+)
+  HAS_TSTRINGS_ENCODING          RTL supports TStrings.Encoding (D16+)
+  EXTENDED_IS_DOUBLE_ALIAS       Compiler uses Double instead of Extended (64 bit D16+)
   HAS_UNIT_UXTHEME               Unit (Vcl.)UxTheme is available (D7+)
   HAS_EXCEPTION_STACKTRACE       Exception class has the StackTrace propery (D12+)
   SUPPORTS_LEGACYIFEND           Compiler supports the LEGACYIFEND directive (D17+)
   DEPRECATED_TCHARACTER          TCharacter is deprecated and replaced by a record helper on Char (D18+)
   HAS_PROPERTY_OLDCREATEORDER    The OldCreateOrder property is available (D5 - D27)
+  SUPPORTS_SCOPEDENUMS           Compiler supports the SCOPEDENUMS directive and enumerations can be scoped (D12+)
 
 
 - Compiler Settings
@@ -666,9 +676,10 @@
 { Set FreePascal to Delphi mode }
 {$IFDEF FPC}
   {$MODE DELPHI}
-  {$IFNDEF CPUARM}
+  // Assembler mode Intel is only available for the x86 CPU family
+  {$IF DEFINED(CPUI8086) OR DEFINED(CPUI386) OR DEFINED(CPUX86_64)}
     {$ASMMODE Intel}
-  {$ENDIF}   
+  {$IFEND}
   {$UNDEF BORLAND}
   {$DEFINE CPUASM}
    // FPC defines CPU32, CPU64 and Unix automatically
@@ -677,20 +688,20 @@
 {$IFDEF BORLAND}
   {$IFDEF LINUX}
     {$IFDEF VER140} // Only under Delphi 6, LINUX implies Kylix
-    {$DEFINE KYLIX}
+      {$DEFINE KYLIX}
     {$ENDIF}
   {$ENDIF LINUX}
   {$IFNDEF CLR}
     {$IFNDEF CPUX86}
       // CPUX86 is not defined, which means it most likely is a 64 bits compiler.
       // However, this is only the case if either of two other symbols are defined:
-      // http://docwiki.embarcadero.com/RADStudio/Seattle/en/Conditional_compilation_%28Delphi%29
+      // http://docwiki.embarcadero.com/RADStudio/Alexandria/en/Conditional_compilation_%28Delphi%29
       {$DEFINE CPU64}
       {$DEFINE DELPHI64_TEMPORARY}
       {$IFNDEF CPUX64}
         {$IFNDEF CPU64BITS}
           {$DEFINE CPU386}  // None of the two 64-bits symbols are defined, assume this is 32-bit
-          {$DEFINE CPU32}   
+          {$DEFINE CPU32}
           {$UNDEF CPU64}
           {$UNDEF DELPHI64_TEMPORARY}
         {$ENDIF ~CPU64BITS}
@@ -1753,8 +1764,8 @@
       { older than 2.2.4 }
 
       {$IFDEF VER2_2}
-        {$SUPPORTS_SETPEFLAGS}
-        {$SUPPORTS_STRICT}
+        {$DEFINE SUPPORTS_SETPEFLAGS}
+        {$DEFINE SUPPORTS_STRICT}
       {$ENDIF}
     {$IFEND}
   {$ENDIF}
@@ -1881,7 +1892,10 @@
   {$DEFINE SUPPORTS_GENERIC_TYPES}
   {$DEFINE SUPPORTS_GENERIC_METHODS}
   {$DEFINE SUPPORTS_DEPRECATED_DETAILS}
+  {$DEFINE SUPPORTS_TYPED_POINTERMATH}
+  {$DEFINE SUPPORTS_STRINGCHECKS}
   {$DEFINE SUPPORTS_INT_ALIASES}
+  {$DEFINE SUPPORTS_SCOPEDENUMS}
   {$IFNDEF CLR}
     {$DEFINE SUPPORTS_UNICODE}
     {$DEFINE SUPPORTS_UNICODE_STRING}
@@ -1890,13 +1904,18 @@
 
 {$IFDEF COMPILER14_UP}
   {$DEFINE SUPPORTS_CLASS_CTORDTORS}
+  {$DEFINE SUPPORTS_EXTENDED_RTTI}
   {$DEFINE HAS_UNIT_RTTI}
   {$DEFINE SUPPORTS_CAST_INTERFACE_TO_OBJ}
   {$DEFINE SUPPORTS_DELAYED_LOADING}
 {$ENDIF COMPILER14_UP}
 
 {$IFDEF COMPILER16_UP}
-  {$DEFINE USE_64BIT_TYPES}
+  {$DEFINE USE_64BIT_TYPES} // TODO -oOutchy : Document in Feature Directives
+  {$DEFINE SUPPORTS_EXCESSPRECISION}
+  {$IFDEF CPU64}
+    {$DEFINE EXTENDED_IS_DOUBLE_ALIAS}
+  {$ENDIF}
 {$ENDIF COMPILER16_UP}
 
 {$IFDEF COMPILER17_UP}
@@ -1905,6 +1924,11 @@
 
 {$IFDEF RTL130_UP}
   {$DEFINE HAS_UNIT_CONTNRS}
+  {$IFDEF COMPILER25}
+    {$IFDEF LINUX}
+      {$UNDEF HAS_UNIT_CONTNRS}
+    {$ENDIF LINUX}
+  {$ENDIF COMPILER25}
   {$DEFINE HAS_PROPERTY_OLDCREATEORDER}
 {$ENDIF RTL130_UP}
 
@@ -1952,6 +1976,9 @@
   {$DEFINE HAS_UNITSCOPE}
   {$DEFINE HAS_UNIT_SYSTEM_UITYPES}
   {$DEFINE HAS_UNIT_VCL_THEMES}
+  {$DEFINE HAS_UNIT_SYSTEM_ZIP}
+  {$DEFINE HAS_UNIT_SYSTEM_ZLIB}
+  {$DEFINE HAS_TSTRINGS_ENCODING}
 {$ENDIF RTL230_UP}
 
 {$IFDEF RTL240_UP}

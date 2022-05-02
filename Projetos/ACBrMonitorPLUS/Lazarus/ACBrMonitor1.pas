@@ -186,6 +186,9 @@ type
     btnCancMDFe: TButton;
     btnCancNF: TButton;
     btnCancNFeSubs: TButton;
+    btNCMConsultar: TBitBtn;
+    btNCMSalvarArquivo: TBitBtn;
+    btNCMValidadeHelp: TBitBtn;
     btnConsultar: TButton;
     btnConsultarCTe: TButton;
     btnConsultarMDFe: TButton;
@@ -207,7 +210,7 @@ type
     btnSATEMAIL: TPanel;
     btnBalanca: TPanel;
     btnBoleto: TPanel;
-    btnBoletoCedente: TPanel;
+    btnBoletoBeneficiario: TPanel;
     btnBoletoCont: TPanel;
     btnBoletoConta: TPanel;
     btnBoletoEmail: TPanel;
@@ -443,7 +446,7 @@ type
     chgDescricaoPagamento: TCheckGroup;
     chkBOLRelMostraPreview: TCheckBox;
     chkExibeRazaoSocial: TCheckBox;
-    chkLerCedenteRetorno: TCheckBox;
+    chkLerBeneficiarioRetorno: TCheckBox;
     cbxBOLEmailMensagemHTML: TCheckBox;
     chkMostraLogNaTela: TCheckBox;
     ChkLogBoletoWeb: TCheckBox;
@@ -487,7 +490,10 @@ type
     edEmailUsuario: TEdit;
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
-    edtOperacaoCedente: TEdit;
+    edNCMCodigo: TEdit;
+    edNCMDiasValidade: TSpinEdit;
+    edNCMDiretorio: TDirectoryEdit;
+    edtOperacaoBeneficiario: TEdit;
     edLCBPreExcluir: TEdit;
     edLogArq: TEdit;
     edLogComp: TEdit;
@@ -666,6 +672,8 @@ type
     gbLog: TGroupBox;
     gbLogComp: TGroupBox;
     gbLogotipo: TGroupBox;
+    gbNCMConsultar: TGroupBox;
+    gbNCMSalvarArquivo: TGroupBox;
     gbPPPoE: TGroupBox;
     gbProxy: TGroupBox;
     gbQRCode: TGroupBox;
@@ -693,7 +701,7 @@ type
     GroupBox12: TGroupBox;
     GroupBox13: TGroupBox;
     GrbVersaoDFe: TGroupBox;
-    GrbDadosCedenteBoletoWeb: TGroupBox;
+    GrbDadosBeneficiarioBoletoWeb: TGroupBox;
     grbWsConfig: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
@@ -778,6 +786,9 @@ type
     Label259: TLabel;
     lblPathLogBoleto: TLabel;
     labelbolcep: TLabel;
+    lbNCMCarregando: TLabel;
+    lbNCMDiasValidade: TLabel;
+    lbNCMDiretorio: TLabel;
     lBolUF: TLabel;
     lBOLLogradouro: TLabel;
     Label11: TLabel;
@@ -1144,6 +1155,7 @@ type
     pgTestes: TPageControl;
     pgTipoWebService: TPageControl;
     pnLogoBanco: TPanel;
+    pnNCMCarregando: TPanel;
     pRespostas: TPanel;
     pTopCmd: TPanel;
     pTopRespostas: TPanel;
@@ -1306,6 +1318,7 @@ type
     SynXMLSyn1: TSynXMLSyn;
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
+    tsNCM: TTabSheet;
     tsWebBoleto: TTabSheet;
     TrayIcon1: TTrayIcon;
     bCancelar: TBitBtn;
@@ -1327,7 +1340,7 @@ type
     tsCadSwDados: TTabSheet;
     tsCadSwH: TTabSheet;
     tsCadUsuario: TTabSheet;
-    tsCedente: TTabSheet;
+    tsBeneficiario: TTabSheet;
     tsCertificadoDFe: TTabSheet;
     tsCHQ: TTabSheet;
     tsConfiguracaoDFe: TTabSheet;
@@ -1408,7 +1421,7 @@ type
     procedure btCertInfoClick(Sender: TObject);
     procedure btConsultarStatusOPSATClick(Sender: TObject);
     procedure btnBalancaClick(Sender: TObject);
-    procedure btnBoletoCedenteClick(Sender: TObject);
+    procedure btnBoletoBeneficiarioClick(Sender: TObject);
     procedure btnBoletoClick(Sender: TObject);
     procedure btnBoletoContaClick(Sender: TObject);
     procedure btnBoletoEmailClick(Sender: TObject);
@@ -1420,6 +1433,9 @@ type
     procedure btnCancMDFeClick(Sender: TObject);
     procedure btnCancNFClick(Sender: TObject);
     procedure btnCancNFeSubsClick(Sender: TObject);
+    procedure btNCMConsultarClick(Sender: TObject);
+    procedure btNCMSalvarArquivoClick(Sender: TObject);
+    procedure btNCMValidadeHelpClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnConsultarCTeClick(Sender: TObject);
     procedure btnConsultarMDFeClick(Sender: TObject);
@@ -1864,6 +1880,7 @@ type
     function VerificarErrosConfiguracaoBoleto: String;
 
     procedure CarregarListaDeCidades(cUF: Integer);
+    procedure VerificarInterfaceNCM(Carregando: Boolean = True);
 
     procedure LeDadosRedeSAT;
     procedure ConfiguraRedeSAT;
@@ -1932,8 +1949,6 @@ type
     procedure OnFormataDecimalSAT;
     procedure OnMensagemCanhotoNFe;
     procedure OnSATManual;
-
-
 
     property MonitorConfig: TMonitorConfig read FMonitorConfig;
   end;
@@ -2808,26 +2823,6 @@ begin
   end;
 end;
 
-{procedure TFrmACBrMonitor.bDownloadListaClick(Sender: TObject);
-var
-  DirNcmSalvar: string;
-begin
-  if (deNcmSalvar.Text = '') then
-    DirNcmSalvar := ExtractFilePath(Application.ExeName)
-  else
-    DirNcmSalvar := PathWithoutDelim(deNcmSalvar.Text);
-
-  DirNcmSalvar := DirNcmSalvar + PathDelim + 'ListaNCM.csv';
-
-  with ACBrNCMs1 do
-  begin
-    ListarNcms();
-    NCMS.SaveToFile(DirNcmSalvar);
-  end;
-
-  AddLinesLog('Arquivo salvo em: ' + DirNcmSalvar);
-end; }
-
 procedure TFrmACBrMonitor.bEmailTestarConfClick(Sender: TObject);
 var
   Teste: string;
@@ -2965,25 +2960,6 @@ begin
     bInicializar.Caption := 'Inicializar' ;
 
 end;
-
-{procedure TFrmACBrMonitor.bNcmConsultarClick(Sender: TObject);
-var
-  AMsg: string;
-begin
-  AMsg := '';
-  with ACBrNCMs1 do
-  begin
-    if (Length(OnlyNumber(edtNcmNumero.Text)) <> 8) then
-      raise Exception.Create('O codigo do NCM deve conter 8 Caracteres');
-
-    if validar(OnlyNumber(edtNcmNumero.Text)) then
-      AMsg := 'OK: NCM Valido'
-    else
-      AMsg := 'Erro: NCM Invalido';
-  end;
-
-  AddLinesLog(AMsg);
-end;}
 
 procedure TFrmACBrMonitor.bRSAeECFcClick(Sender: TObject);
 var
@@ -3182,10 +3158,10 @@ begin
   pgConfig.ActivePage := tsBAL;
 end;
 
-procedure TFrmACBrMonitor.btnBoletoCedenteClick(Sender: TObject);
+procedure TFrmACBrMonitor.btnBoletoBeneficiarioClick(Sender: TObject);
 begin
   SetColorSubButtons(Sender);
-  pgBoleto.ActivePage := tsCedente;
+  pgBoleto.ActivePage := tsBeneficiario;
 end;
 
 procedure TFrmACBrMonitor.btnBoletoClick(Sender: TObject);
@@ -3195,7 +3171,7 @@ begin
   pgConfig.ActivePage := tsACBrBoleto;
     SetScroll(TPanel(Sender).Parent);
   // Ativa a 1a página do pegecontrol
-  btnBoletoCedenteClick(btnBoletoCedente);
+  btnBoletoBeneficiarioClick(btnBoletoBeneficiario);
 end;
 
 procedure TFrmACBrMonitor.btnBoletoContaClick(Sender: TObject);
@@ -3388,6 +3364,68 @@ begin
     ACBrNFe1.EnviarEvento(StrToInt(idLote));
     ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
   end;
+end;
+
+procedure TFrmACBrMonitor.btNCMConsultarClick(Sender: TObject);
+var
+  aMsg: String;
+begin
+  aMsg := EmptyStr;
+
+  if (Length(edNCMCodigo.Text) <> 8) then
+  begin
+    MessageDlg('O Codigo NCM deve conter 8 caracteres', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+
+  VerificarInterfaceNCM;
+  try
+    if ACBrNCMs1.Validar(edNCMCodigo.Text) then
+      aMsg := 'OK: NCM Valido'
+    else
+      aMsg := 'Erro: NCM Invalido';
+  finally
+    VerificarInterfaceNCM(False);
+  end;
+
+  AddLinesLog(aMsg);
+  MessageDlg(aMsg, mtInformation, [mbOK], 0);
+end;
+
+procedure TFrmACBrMonitor.btNCMSalvarArquivoClick(Sender: TObject);
+var
+  aMsg, aDiretorio: String;
+begin
+  if (edNCMDiretorio.Text = EmptyStr) then
+    aDiretorio := PathWithoutDelim(ExtractFilePath(Application.ExeName))
+  else
+    aDiretorio := PathWithoutDelim(edNCMDiretorio.Text);
+
+  aDiretorio := aDiretorio + PathDelim + 'ListaNCM.csv';
+
+  VerificarInterfaceNCM;
+  try
+    with ACBrNCMs1 do
+    begin
+      CacheDiasValidade := edNCMDiasValidade.Value;
+      ObterNCMs;
+      NCMS.SaveToFile(aDiretorio);
+    end;
+  finally
+    VerificarInterfaceNCM(False);
+  end;
+
+  aMsg := 'Arquivo com a lista de NCMs salvo em: ' + aDiretorio;
+  AddLinesLog(aMsg);
+  MessageDlg(aMsg, mtInformation, [mbOK], 0);
+end;
+
+procedure TFrmACBrMonitor.btNCMValidadeHelpClick(Sender: TObject);
+begin
+  MessageDlg('Número de dias que o arquivo de NCMs baixado será válido' +
+    sLineBreak + 'Após a validade o Download será feito novamente ' +
+    sLineBreak + '(Zero para sempre ler NCMs do Cache local)',
+    mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmACBrMonitor.btnConsultarClick(Sender: TObject);
@@ -3911,8 +3949,8 @@ end;
 
 procedure TFrmACBrMonitor.btnNCMClick(Sender: TObject);
 begin
-  //SetColorButtons(Sender);
-  //pgConfig.ActivePage := tsNcm;
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsNCM;
 end;
 
 procedure TFrmACBrMonitor.btnPosPrinterClick(Sender: TObject);
@@ -5467,7 +5505,7 @@ begin
       edtBOLDigitoAgConta.Text         := DigitoAgenciaConta;
       edtCodCliente.Text               := CodCedente;
       edtBOLLocalPagamento.Text        := LocalPagamento;
-      edtOperacaoCedente.Text          := CodigoOperacao;
+      edtOperacaoBeneficiario.Text          := CodigoOperacao;
     end;
 
     with RemessaRetorno do
@@ -5476,7 +5514,7 @@ begin
       deBolDirRetorno.Text             := DirArquivoRetorno;
       edtCodTransmissao.Text           := CodTransmissao;
       cbxCNAB.ItemIndex                := StrToInt(IfThen(CNAB = 0, '1', '0'));
-      chkLerCedenteRetorno.Checked     := LerCedenteRetorno;
+      chkLerBeneficiarioRetorno.Checked     := LerCedenteRetorno;
       chkRemoveAcentos.Checked         := RemoveAcentos;
       edtPrefixRemessa.Text            := PrefixArqRemessa;
     end;
@@ -5563,9 +5601,11 @@ begin
   end;
 
   {Parametro NCM}
-  //with FMonitorConfig.NCM do
-    //deNcmSalvar.Text                   := DirNCMSalvar;
-
+  with FMonitorConfig.NCM do
+  begin
+    edNCMDiretorio.Text := DirNCMSalvar;
+    edNCMDiasValidade.Value := DiasValidadeCache;
+  end;
 
   {Parametro DFe}
   with FMonitorConfig.DFE do
@@ -6346,7 +6386,7 @@ begin
     Cedente.ContaDigito := edtBOLDigitoConta.Text;
     Cedente.DigitoVerificadorAgenciaConta := edtBOLDigitoAgConta.Text;
     Cedente.Modalidade := edtModalidade.Text;
-    Cedente.Operacao := edtOperacaoCedente.Text;
+    Cedente.Operacao := edtOperacaoBeneficiario.Text;
 
     case cbxBOLEmissao.ItemIndex of
       0: Cedente.ResponEmissao := tbCliEmite;
@@ -6362,7 +6402,7 @@ begin
 
     DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
-    LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
+    LeCedenteRetorno:= chkLerBeneficiarioRetorno.Checked;
     RemoveAcentosArqRemessa:= chkRemoveAcentos.Checked;
     PrefixArqRemessa:= edtPrefixRemessa.Text;
 
@@ -6536,15 +6576,15 @@ begin
       'para proteger sua Chave Privada');
   end;
 
-  {if Trim(deNcmSalvar.Text) <> '' then
+  if (Trim(edNCMDiretorio.Text) <> EmptyStr) then
   begin
-    if not DirectoryExists(deNcmSalvar.Text) then
+    if (not DirectoryExists(edNCMDiretorio.Text)) then
     begin
       btnNCMClick(btnNCM); //pgConfig.ActivePageIndex := 15;
-      deNcmSalvar.SetFocus;
-      raise Exception.Create('Diretorio para salvar arquivo de NCM nao encontrado.');
+      edNCMDiretorio.SetFocus;
+      raise Exception.Create('Diretorio para salvar arquivo de NCM nao encontrado');
     end;
-  end; }
+  end;
 
   SalvarSW;
 
@@ -6784,8 +6824,11 @@ begin
     end;
 
     { Parametros NCM }
-    //with FMonitorConfig.NCM do
-      //DirNCMSalvar            := PathWithoutDelim(deNcmSalvar.Text);
+    with FMonitorConfig.NCM do
+    begin
+      DirNCMSalvar := edNCMDiretorio.Text;
+      DiasValidadeCache := edNCMDiasValidade.Value;
+    end;
 
     { Parametros DFe }
     with FMonitorConfig.DFE do
@@ -7236,7 +7279,7 @@ begin
          Validar;
        except
          btnBoletoClick(btnBoleto);
-         btnBoletoCedenteClick(btnBoletoCedente);
+         btnBoletoBeneficiarioClick(btnBoletoBeneficiario);
          edtBOLCNPJ.SetFocus;
          raise;
        end;
@@ -7272,7 +7315,7 @@ begin
        Pessoa                   := cbxBOLF_J.ItemIndex;
        Modalidade               := edtModalidade.Text;
        Convenio                 := edtConvenio.Text;
-       CodigoOperacao           := edtOperacaoCedente.Text;
+       CodigoOperacao           := edtOperacaoBeneficiario.Text;
      end;
 
      with Layout do
@@ -7294,7 +7337,7 @@ begin
        DirArquivoRemessa        := PathWithoutDelim(deBolDirRemessa.Text);
        DirArquivoRetorno        := PathWithoutDelim(deBolDirRetorno.Text);
        CNAB                     := StrToInt(IfThen(cbxCNAB.ItemIndex = 0, '1', '0'));
-       LerCedenteRetorno        := chkLerCedenteRetorno.Checked;
+       LerCedenteRetorno        := chkLerBeneficiarioRetorno.Checked;
        CodTransmissao           := edtCodTransmissao.Text;
        RemoveAcentos            := chkRemoveAcentos.Checked;
        PrefixArqRemessa         := edtPrefixRemessa.Text;
@@ -9986,6 +10029,17 @@ begin
   except
     AddLinesLog( 'ERRO: Erro ao carregar cidades! Verifique a configuração de CONSULTA IBGE.'  );
   end;
+end;
+
+procedure TFrmACBrMonitor.VerificarInterfaceNCM(Carregando: Boolean);
+begin
+  if Carregando and (ACBrNCMs1.NCMs.Count > 0) then  // Já carregou os itens?
+    Exit;
+
+  pnNCMCarregando.Visible := Carregando;
+  gbNCMConsultar.Enabled := (not Carregando);
+  gbNCMSalvarArquivo.Enabled := (not Carregando);
+  Application.ProcessMessages;
 end;
 
 procedure TFrmACBrMonitor.LeDadosRedeSAT;

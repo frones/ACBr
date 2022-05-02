@@ -44,6 +44,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2022
+--- ACBrMonior1 ---
+[+] Reincluída aba de NCMs, possibilitando consultar um código NCM e salvar a lista de arquivos.
+
+--- DoNcmUnit, ACBrMonitorConsts ---
+[*] Ajuste para voltarem a funcionar os comandos referentes ao NCM;
+[+] Inclusão dos novos comandos 'BuscarPorCodigo' e 'BuscarPorDescricao', retornando uma 
+    lista os NCMs filtrados.
+	
+--- Sobre ---
+[-] Correção da URL chamada ao clicar no botão de ajuda.
+
 06/04/2022
 ---DoACBrBoletoUnit, ACBrMonitorConsts---
 [+] Adicionado metodo ConsultarTitulosPorPeriodo para consulta API Banco do Brasil

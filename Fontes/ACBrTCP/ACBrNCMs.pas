@@ -104,7 +104,8 @@ type
     procedure SortByCodigo;
     procedure SortByDescricao;
 
-    procedure SaveToFile(const AFileName: String);
+    procedure SaveToFile(const AFileName: String; aSeparator: Char = ';');
+    procedure SaveToStringList(aStrings: TStrings; aSeparator: Char = ';');
 
     property Objects[Index: Integer]: TACBrNCM read GetObject write SetObject; default;
   end;
@@ -116,7 +117,6 @@ type
   {$ENDIF RTL230_UP}
   TACBrNCMs = class(TACBrHTTP)
   private
-    fCacheLido: Boolean;
     fCacheArquivo: String;
     fCacheDiasValidade: Integer;
     fNCMs: TACBrNCMsList;
@@ -136,6 +136,7 @@ type
 
     procedure GravarCache(const aJsonStr: String);
     procedure CarregarJson(const aJsonStr: String);
+    procedure CarregarListaNCMs;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -321,23 +322,34 @@ begin
   fSortOrder := 2;
 end;
 
-procedure TACBrNCMsList.SaveToFile(const AFileName: String);
+procedure TACBrNCMsList.SaveToStringList(aStrings: TStrings; aSeparator: Char);
 var
-  SL: TStringList;
   I: Integer;
 begin
+  if (not Assigned(aStrings)) then
+    Exit;
+
+  for I := 0 to Count - 1 do
+    aStrings.Add(
+      Objects[I].CodigoNcm + aSeparator +
+      Objects[I].DescricaoNcm + aSeparator +
+      FormatDateBr(Objects[I].DataInicio) + aSeparator +
+      FormatDateBr(Objects[I].DataFim) + aSeparator +
+      Objects[I].TipoAto + aSeparator +
+      Objects[I].NumeroAto + aSeparator +
+      IntToStr(Objects[I].AnoAto));
+end;
+
+procedure TACBrNCMsList.SaveToFile(const AFileName: String; aSeparator: Char);
+var
+  SL: TStringList;
+begin
+  if EstaVazio(AFileName) then
+    raise EACBrNcmException.Create(ACBrStr('Nome do arquivo nao informado'));
+
   SL := TStringList.Create;
   try
-    for I := 0 to Count - 1 do
-      SL.Add(
-        Objects[I].CodigoNcm + ';' +
-        Objects[I].DescricaoNcm + ';' +
-        FormatDateBr(Objects[I].DataInicio) + ';' +
-        FormatDateBr(Objects[I].DataFim) + ';' +
-        Objects[I].TipoAto + ';' +
-        Objects[I].NumeroAto + ';' +
-        IntToStr(Objects[I].AnoAto));
-
+    SaveToStringList(SL);
     SL.SaveToFile(AFileName);
   finally
     SL.Free;
@@ -373,7 +385,6 @@ procedure TACBrNCMs.Clear;
 begin
   fNCMs.Clear;
   fNCMsFiltrados.Clear;
-  fCacheLido := False;
   fUltimaAtualizacao := 0;
 end;
 
@@ -484,9 +495,8 @@ begin
   end;
   {$Else}
   {$IfDef FPC}
-  wJSon := TJSONObject.Create;
+  wJSon := GetJSON(aJsonStr) as TJSONObject;
   try
-    wJSon := GetJSON(aJsonStr) as TJSONObject;
     fUltimaAtualizacao := StringToDateTimeDef(wJson.Strings['Data_Ultima_Atualizacao_NCM'], 0, 'dd/mm/yyyy');
     wJSonArr := wJSon.Arrays['Nomenclaturas'];
 
@@ -505,7 +515,7 @@ begin
       end;
     end;
   finally
-    wJSon.Free
+    wJSon.Free;
   end;
   {$Else}
   wJSon := TJsonObject.Create;
@@ -535,6 +545,30 @@ begin
   {$EndIf}
 end;
 
+procedure TACBrNCMs.CarregarListaNCMs;
+var
+  aJsonStr: String;
+begin
+  aJsonStr := EmptyStr;
+
+  if (NCMs.Count > 0) then  // Já obteve os NCMs ?  ...Sai
+    Exit;
+
+  if Assigned(OnGetJson) then
+    OnGetJson(aJsonStr);
+
+  if EstaVazio(aJsonStr) then  // Carregou no Evento ?
+    aJsonStr := CarregarCache;
+
+  if EstaVazio(aJsonStr) then  // Carregou do Cache ?
+  begin
+    aJsonStr := DownloadArquivo;
+    GravarCache(aJsonStr);
+  end;
+
+  CarregarJson(aJsonStr);
+end;
+
 procedure TACBrNCMs.ListarNcms(const aCodigoCapitulo: String);
 begin
   if EstaVazio(aCodigoCapitulo) then
@@ -551,7 +585,6 @@ var
 begin
   Clear;
   wDataCache := 0;
-  fCacheLido := True;
   Result := EmptyStr;
   wArq := CacheArquivo;
 
@@ -591,7 +624,6 @@ var
   wArq: String;
 begin
   wArq := CacheArquivo;
-  fCacheLido := False;
   if (Length(wArq) = 0) or (Length(aJsonStr) = 0) then
     Exit;
 
@@ -599,23 +631,9 @@ begin
 end;
 
 procedure TACBrNCMs.ObterNCMs;
-var
-  aJsonStr: String;
 begin
-  aJsonStr := EmptyStr;
-  if Assigned(OnGetJson) then
-    OnGetJson(aJsonStr);
-
-  if EstaVazio(aJsonStr) and (not fCacheLido) then  // Carregou no Evento ?
-    aJsonStr := CarregarCache;
-
-  if EstaVazio(aJsonStr) then  // Carregou do Cache ?
-  begin
-    aJsonStr := DownloadArquivo;
-    GravarCache(aJsonStr);
-  end;
-
-  CarregarJson(aJsonStr);
+  Clear;
+  CarregarListaNCMs;
 end;
 
 function TACBrNCMs.Validar(const aCodigoNcm: String): Boolean;
@@ -625,9 +643,9 @@ begin
   Result := False;
 
   if EstaVazio(aCodigoNCM) then
-    raise EACBrNcmException.Create(ACBrStr('Código do NCM deve ser informado'));
+    raise EACBrNcmException.Create(ACBrStr('Codigo do NCM deve ser informado'));
 
-  ObterNCMs;
+  CarregarListaNCMs;
   wIndex := NCMs.Find(aCodigoNCM, True);
 
   if (wIndex > 0) then
@@ -641,13 +659,15 @@ begin
   Result := EmptyStr;
 
   if EstaVazio(aCodigoNCM) then
-    raise EACBrNcmException.Create(ACBrStr('Código do NCM deve ser informado'));
+    raise EACBrNcmException.Create(ACBrStr('Codigo do NCM deve ser informado'));
 
-  ObterNCMs;
-
+  CarregarListaNCMs;
   wIndex := NCMs.Find(aCodigoNCM, True);
 
-  if (wIndex > 0) and (aCodigoNcm = NCMs[wIndex].CodigoNcm) then
+  if (wIndex < 0) then
+    raise EACBrNcmException.Create(ACBrStr('Codigo NCM nao encontrado'));
+
+  if (aCodigoNcm = NCMs[wIndex].CodigoNcm) then
     Result := NCMs[wIndex].DescricaoNcm;
 end;
 
@@ -657,10 +677,9 @@ var
 begin
   NCMsFiltrados.Clear;
   if EstaVazio(aCodigoNCM) then
-    raise EACBrNcmException.Create(ACBrStr('Código do NCM deve ser informado'));
+    raise EACBrNcmException.Create(ACBrStr('Codigo do NCM deve ser informado'));
 
-  ObterNCMs;
-
+  CarregarListaNCMs;
   I := NCMs.Find(aCodigoNCM, Exato);
   wTam := Length(aCodigoNCM);
   if (I >= 0) then
@@ -713,7 +732,7 @@ function TACBrNCMs.BuscarPorDescricao(const aDescricao: String;
     I: Integer;
   begin
     for I := 0 to Pred(NCMs.Count) do
-      if (Pos(aDescricao, NCMs[I].DescricaoNcm) > 0) then
+      if (Pos(UpperCase(aDescricao), UpperCase(NCMs[I].DescricaoNcm)) > 0) then
         NCMsFiltrados.Copy(NCMs[I]);
   end;
 
@@ -724,17 +743,16 @@ function TACBrNCMs.BuscarPorDescricao(const aDescricao: String;
   begin
     wTam := Length(aDescricao);
     for I := 0 to Pred(NCMs.Count) do
-      if (aDescricao = RightStrNativeString(NCMs[I].DescricaoNcm, wTam)) then
+      if (UpperCase(aDescricao) = UpperCase(RightStrNativeString(NCMs[I].DescricaoNcm, wTam))) then
         NCMsFiltrados.Copy(NCMs[I]);
   end;
 
 begin
   NCMsFiltrados.Clear;
   if EstaVazio(aDescricao) then
-    raise EACBrNcmException.Create(ACBrStr('Descrição do NCM deve ser informada'));
+    raise EACBrNcmException.Create(ACBrStr('Descriçao do NCM deve ser informada'));
 
-  ObterNCMs;
-
+  CarregarListaNCMs;
   if (aTipoFiltro = ntfIniciaCom) then
     FiltrarIniciaCom
   else if (aTipoFiltro = ntfFinalizaCom) then

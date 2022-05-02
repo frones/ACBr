@@ -153,7 +153,7 @@ end;
 
 procedure TfrmSobre.bAjudaClick(Sender: TObject);
 begin
- ShowHelpOrErrorForKeyword('','ACBrMonitor/Apresentacao.htm');
+ ShowHelpOrErrorForKeyword('','ACBrMonitor/Apresentacao.html');
 end;
 
 procedure TfrmSobre.FormShortCut(Key: Integer; Shift: TShiftState;

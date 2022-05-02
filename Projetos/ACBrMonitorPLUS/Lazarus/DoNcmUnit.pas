@@ -35,8 +35,8 @@ unit DoNcmUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrNCMs,
-  ACBrMonitorConsts, ACBrMonitorConfig;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrNCMs, ACBrMonitorConsts, ACBrMonitorConfig;
 
 type
 
@@ -52,20 +52,38 @@ public
   property ACBrNcm: TACBrNcms read fACBrNcm;
 end;
 
-{ TMetodoValidar}
+{ TMetodoValidar }
 TMetodoValidar = class(TACBrMetodo)
 public
   procedure Executar; override;
 end;
 
-{ TMetodoBaixarLista}
+{ TMetodoBaixarLista }
 TMetodoBaixarLista = class(TACBrMetodo)
 public
   procedure Executar; override;
 end;
 
-{ TMetodoDescricaoNCM}
+{ TMetodoDescricaoNCM }
 TMetodoDescricaoNCM = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoBuscarPorCodigo }
+TMetodoBuscarPorCodigo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoBuscarPorDescricao }
+TMetodoBuscarPorDescricao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoObterNCMs }
+TMetodoObterNCMs = class(TACBrMetodo)
 public
   procedure Executar; override;
 end;
@@ -83,6 +101,9 @@ begin
   ListaDeMetodos.Add(CMetodoValidar);
   ListaDeMetodos.Add(CMetodoBaixarLista);
   ListaDeMetodos.Add(CMetodoDescricaoNCM);
+  ListaDeMetodos.Add(CMetodoBuscarPorCodigo);
+  ListaDeMetodos.Add(CMetodoBuscarPorDescricao);
+  ListaDeMetodos.Add(CMetodoObterNCMs);
 end;
 
 procedure TACBrObjetoNcm.Executar(ACmd: TACBrCmd);
@@ -97,9 +118,12 @@ begin
   AMetodoClass := Nil;
 
   case CmdNum of
-    0  : AMetodoClass := TMetodoValidar;
-    1  : AMetodoClass := TMetodoBaixarLista;
-    2  : AMetodoClass := TMetodoDescricaoNCM;
+    0: AMetodoClass := TMetodoValidar;
+    1: AMetodoClass := TMetodoBaixarLista;
+    2: AMetodoClass := TMetodoDescricaoNCM;
+    3: AMetodoClass := TMetodoBuscarPorCodigo;
+    4: AMetodoClass := TMetodoBuscarPorDescricao;
+    5: AMetodoClass := TMetodoObterNCMs;
   end;
 
   if Assigned(AMetodoClass) then
@@ -115,55 +139,131 @@ end;
 
 { TMetodoValidar }
 
-{ Params: 0 - String com o codigo Ncm
-}
+// Params: 0 - String com o codigo Ncm
 procedure TMetodoValidar.Executar;
 var
-  ANCM: String;
+  aNCM: String;
 begin
-  ANCM := OnlyNumber(fpCmd.Params(0));
+  aNCM := OnlyNumber(fpCmd.Params(0));
+
+  fpCmd.Resposta := 'NCM Valido';
+
+  if (Length(aNCM) <> 8) then
+    raise Exception.Create('O codigo do NCM deve conter 8 Caracteres');
 
   with TACBrObjetoNcm(fpObjetoDono) do
-  begin
-    fpCmd.Resposta := 'NCM Valido';
-
-    if (Length(ANCM) <> 8) then
-      raise Exception.Create('O codigo do NCM deve conter 8 Caracteres');
-
-    if not  ACBrNcm.validar(ANCM) then
+    if not  ACBrNcm.Validar(aNCM) then
       raise Exception.Create('NCM Invalido');
-  end;
 end;
 
 { TMetodoBaixarLista }
 
-{ Params: 0 - String com o nome do Arquivo a ser salvo em disco
-}
+// Params: 0 - String com o nome do Arquivo a ser salvo em disco
 procedure TMetodoBaixarLista.Executar;
 var
-  FileName: String;
+  aFileName: String;
 begin
-  FileName := fpCmd.Params(0);
+  aFileName := fpCmd.Params(0);
 
   with TACBrObjetoNcm(fpObjetoDono) do
   begin
-    ACBrNcm.ListarNcms();
-    ACBrNcm.NCMS.SaveToFile( FileName );
-
-    fpCmd.Resposta := 'Arquivo salvo em: ' + FileName;
+    ACBrNcm.ObterNCMs;
+    ACBrNcm.NCMS.SaveToFile(aFileName);
   end;
+
+  fpCmd.Resposta := 'Arquivo salvo em: ' + aFileName;
 end;
 
 { TMetodoDescricaoNCM }
 
-{ Params: 0 - String com o NCM
-}
+// Params: 0 - String com o NCM
 procedure TMetodoDescricaoNCM.Executar;
 begin
   with TACBrObjetoNcm(fpObjetoDono) do
-  begin
-    fpCmd.Resposta := ACBrNcm.DescricaoNcm( fpCmd.Params(0) );
+    fpCmd.Resposta := ACBrNcm.DescricaoNcm(fpCmd.Params(0));
+end;
+
+{ TMetodoBuscarPorCodigo }
+
+// Params: 0 - String com filtro desejado
+procedure TMetodoBuscarPorCodigo.Executar;
+var
+  wFiltro: String;
+  wSL: TStringList;
+begin
+  wFiltro := Trim(fpCmd.Params(0));
+  if EstaVazio(wFiltro) then
+    raise Exception.Create('Filtro nao informado');
+
+  wSL := TStringList.Create;
+  try 
+    with TACBrObjetoNcm(fpObjetoDono) do
+    begin
+      ACBrNcm.BuscarPorCodigo(wFiltro);
+
+      if (ACBrNcm.NCMsFiltrados.Count <= 0) then
+        raise Exception.Create('Nenhum NCM encontrado com codigo: ' + wFiltro);
+
+      ACBrNcm.NCMsFiltrados.SaveToStringList(wSL, '|');
+      fpCmd.Resposta := wSL.Text;
+    end;
+  finally
+    wSL.Free;
   end;
+end;
+
+{ TMetodoBuscarPorDescricao }
+
+// Params:
+// 0 - String com filtro desejado
+// 1 - Tipo Filtro (0: IniciaCom | 1: Contém | 2: FinalizaCom)
+procedure TMetodoBuscarPorDescricao.Executar;
+var
+  wSL: TStringList;
+  wTipoFiltro: Integer;
+  wFiltro, wMsgErro: String;
+begin
+  wMsgErro := EmptyStr;
+  wFiltro := Trim(fpCmd.Params(0));
+  wTipoFiltro := StrToIntDef(fpCmd.Params(1), 0);
+
+  if EstaVazio(wFiltro) then
+    raise Exception.Create('Filtro nao informado');
+
+  wSL := TStringList.Create;
+  try
+    with TACBrObjetoNcm(fpObjetoDono) do
+    begin
+      ACBrNcm.BuscarPorDescricao(wFiltro, TACBrNCMTipoFiltro(wTipoFiltro));
+
+      if (ACBrNcm.NCMsFiltrados.Count <= 0) then
+      begin
+        case wTipoFiltro of
+          1: wMsgErro := 'contendo';
+          2: wMsgErro := 'finalizada com';
+        else
+          wMsgErro := 'iniciando com';
+        end;
+
+        raise Exception.Create(Format('Nenhum NCM encontrado com descricao %s a string %s',
+          [wMsgErro, QuotedStr(wFiltro)]));
+      end;
+
+      ACBrNcm.NCMsFiltrados.SaveToStringList(wSL, '|');
+      fpCmd.Resposta := wSL.Text;
+    end;
+  finally
+    wSL.Free;
+  end;
+end;
+
+{ TMetodoObterNCMs }
+
+procedure TMetodoObterNCMs.Executar;
+begin
+  with TACBrObjetoNcm(fpObjetoDono) do
+    ACBrNcm.ObterNCMs;
+  fpCmd.Resposta := 'Lista de NCMs atualizada';
 end;
 
 end.

@@ -177,6 +177,7 @@ type
 
   TNCM = record
     DirNCMSalvar      : String;
+    DiasValidadeCache : Integer;
   end;
 
   TEmail = record
@@ -959,6 +960,7 @@ begin
     with NCM do
     begin
       Ini.WriteString( CSecNCM, CKeyDirNCMSalvar, DirNCMSalvar );
+      Ini.WriteInteger( CSecNCM, CKeyDiasValidadeCache, DiasValidadeCache );
     end;
 
      with Email do
@@ -1688,6 +1690,7 @@ begin
     with NCM do
     begin
       DirNCMSalvar              := Ini.ReadString( CSecNCM, CKeyDirNCMSalvar, DirNCMSalvar );
+      DiasValidadeCache         := Ini.ReadInteger( CSecNCM, CKeyDiasValidadeCache, DiasValidadeCache );
     end;
 
     with Email do

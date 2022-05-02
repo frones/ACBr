@@ -37,6 +37,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/05/2022
+-- ACBrNCMs --
+[+] Inclusão de função que permite salvar uma lista de NCMs em um TStrings
+[-] Correção de memory leak ao ObterNCMs em FPC(Lazarus)
+[-] Ajuste para corrigir problema onde o download do arquivo era efetuado mesmo 
+    após a leitura do cache local
+
 27/04/2022
 -- ACBrNCMs --
 [+] Inclusão do evento 'OnGetJson', possibilitando que a aplicação informe um 

@@ -63,23 +63,27 @@ type
 
     procedure Test_CEP_BuscarPorCEP;
     procedure Test_CEP_BuscarPorLogradouro;
+
+    procedure Test_CEP_BuscarPorCEPJSON;
+    procedure Test_CEP_BuscarPorCEPXML;
+
   end;
 
 implementation
 
 uses
-  ACBrLibCEPStaticImportMT, ACBrLibCEPConsts, ACBrLibConsts, ACBrUtil, Dialogs;
+  Dialogs, ACBrLibCEPStaticImportMT, ACBrLibCEPConsts, ACBrLibConsts, ACBrUtil.Strings;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
 begin
     AssertEquals(ErrDiretorioNaoExiste, CEP_Inicializar(Handle, 'C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals(ErrOK, CEP_Finalizar(Handle));
@@ -87,7 +91,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Inicializar_Ja_Inicializado;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
@@ -96,7 +100,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Finalizar;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
@@ -104,7 +108,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Finalizar_Ja_Finalizado;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
 begin
 
   Handle:=0;
@@ -123,7 +127,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Obtendo_LenBuffer;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -136,7 +140,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -151,7 +155,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -167,7 +171,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -182,7 +186,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_Versao;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -205,7 +209,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigLerValor;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -221,7 +225,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_ConfigGravarValor;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -234,13 +238,14 @@ begin
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, CEP_ConfigLerValor(Handle, CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
+
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEP;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   Resposta: String;
   Tamanho: Longint;
 begin
@@ -260,7 +265,7 @@ end;
 
 procedure TTestACBrCEPLib.Test_CEP_BuscarPorLogradouro;
 var
-  Handle: TLIBHandle;
+  Handle: TLibHandle;
   Resposta: String;
   Tamanho: Longint;
 begin
@@ -276,6 +281,78 @@ begin
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
+end;
+
+procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEPJSON;
+var
+  Handle: TLibHandle;
+  Qtde: Integer;
+  Resposta: string;
+  Tamanho: Longint;
+  Retorno: PChar;
+  Tamanho2: Longint;
+begin
+  // Buscando o Endereço por CEP
+  Resposta := space(10240);
+  Tamanho := 10240;
+
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+
+  CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '2');  // 2 -json
+  CEP_ConfigGravarValor(Handle, 'CEP', 'WebService', '11');
+
+  Qtde := CEP_BuscarPorCEP(Handle, '08717220', pchar(Resposta), Tamanho);
+
+  if Qtde <0 then
+  begin
+    CEP_UltimoRetorno(Handle, Retorno, Tamanho2 );
+  end;
+  AssertEquals('Erro ao buscar o endereço por CEP', ErrOk, Qtde);
+
+
+  if Qtde > 0 then
+  begin
+    AssertEquals('Qtde = ' + IntToStr(Qtde), '', '');
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  end;
+  AssertEquals(ErrOk, CEP_Finalizar(Handle));
+end;
+
+procedure TTestACBrCEPLib.Test_CEP_BuscarPorCEPXML;
+var
+  Handle: TLibHandle;
+  Qtde: Integer;
+  Resposta: string;
+  Tamanho: Longint;
+  Retorno: PChar;
+  Tamanho2: Longint;
+begin
+  // Buscando o Endereço por CEP
+  Resposta := space(10240);
+  Tamanho := 10240;
+
+  AssertEquals(ErrOk, CEP_Inicializar(Handle, '',''));
+
+  CEP_ConfigGravarValor(Handle, CSessaoPrincipal, CChaveTipoResposta, '1');  // 2 -json
+  CEP_ConfigGravarValor(Handle, 'CEP', 'WebService', '11');
+
+  Qtde := CEP_BuscarPorCEP(Handle, '08717220', pchar(Resposta), Tamanho);
+
+  if Qtde <0 then
+  begin
+    CEP_UltimoRetorno(Handle, Retorno, Tamanho2 );
+  end;
+  AssertEquals('Erro ao buscar o endereço por CEP', ErrOk, Qtde);
+
+
+  if Qtde > 0 then
+  begin
+    AssertEquals('Qtde = ' + IntToStr(Qtde), '', '');
+    AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+    AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+  end;
   AssertEquals(ErrOk, CEP_Finalizar(Handle));
 end;
 

@@ -75,16 +75,23 @@ type
     procedure CampoHoraCFe_ValorValido_GeraTag;
     procedure CampoHoraCFe_ValorVazio_Ocorrencia1_GeraTag;
     procedure CampoHoraCFe_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampoBoolStr_ValorValido_GeraTag;
+    //procedure CampoBoolStr_ValorVazio_Ocorrencia1_GeraTag;
+    //procedure CampoBoolStr_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampotcEsp_ValorValido_GeraTag;
+    procedure CampotcEsp_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampotcEsp_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampotcEsp_ValorContemLetras_GeraTag_GeraAlterta;
 
 {
 procedure CampoXXX_ValorValido_GeraTag;
 procedure CampoXXX_ValorVazio_Ocorrencia1_GeraTag;
 procedure CampoXXX_ValorVazio_OcorrenciaZero_NaoGeraTag;
-}//                       x      x    x         x
+}//                       x      x    x         x        x
     {  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
-                                                               x                   X
+                                                         x      x        x       X
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
-                      ERRO                                       x
+                        x           x                              x
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64);}
 
   end;
@@ -679,6 +686,59 @@ begin
   CheckEquals('', a);
 end;
 
+procedure pcnGeradorTest.CampoBoolStr_ValorValido_GeraTag;
+var
+  a: string;
+  b: Boolean;
+begin
+  b := True;
+  UmGerador.wCampo(tcBoolStr, '', 'Recibo', 1, 1, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>true</Recibo>', a);
+
+end;
+
+procedure pcnGeradorTest.CampotcEsp_ValorValido_GeraTag;
+var
+  a,b: string;
+begin
+  b := '123';
+  UmGerador.wCampo(tcEsp, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>123</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcEsp_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a,b: string;
+begin
+  b := '';
+  UmGerador.wCampo(tcEsp, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampotcEsp_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a,b: string;
+begin
+  b := '';
+  UmGerador.wCampo(tcEsp, '', 'Recibo', 1, 30, 0, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+
+procedure pcnGeradorTest.CampotcEsp_ValorContemLetras_GeraTag_GeraAlterta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcEsp, '', 'Recibo', 1, 30, 0, '123a');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>123a</Recibo>', a);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckNotEquals('', a, 'Deveria conter um alerta sobre o valor não ser somente números.');
+end;
 
 
 initialization

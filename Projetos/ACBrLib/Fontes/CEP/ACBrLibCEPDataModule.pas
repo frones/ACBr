@@ -65,7 +65,6 @@ type
 implementation
 
 uses
-  ACBrUtil,
   ACBrLibCEPConfig, ACBrLibCEPBase;
 
 {$R *.lfm}

@@ -183,7 +183,7 @@ implementation
 uses
   strutils, strings,
   synacode, synautil,
-  ACBrConsts, ACBrUtil,
+  ACBrConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.DateTime, ACBrUtil.Strings,
   ACBrLibConsts, ACBrLibResposta;
 
 { EACBrLibException }

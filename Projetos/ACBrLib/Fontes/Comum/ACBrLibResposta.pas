@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes, TypInfo,
-  rttiutils, ACBrBase, ACBrUtil;
+  rttiutils, ACBrBase;
 
 const
   CSessaoHttpResposta = 'RespostaHttp';

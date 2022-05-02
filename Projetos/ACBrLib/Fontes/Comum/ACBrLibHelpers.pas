@@ -70,7 +70,7 @@ type
 implementation
 
 uses
-  TypInfo, ACBrLibComum, ACBrUtil;
+  TypInfo, ACBrLibComum, ACBrUtil.Strings;
 
 { TACBrMemIniFileHelper }
 procedure TACBrMemIniFileHelper.LoadFromString(const IniString: string);

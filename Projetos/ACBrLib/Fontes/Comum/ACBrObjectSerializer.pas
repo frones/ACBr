@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, laz2_DOM, laz2_XMLWrite,
   inifiles, fpjson, jsonparser, TypInfo,
-  rttiutils, ACBrUtil, ACBrLibResposta;
+  rttiutils, ACBrUtil.Strings, ACBrLibResposta;
 
 const
   CSessionFormat = '%s%.3d';

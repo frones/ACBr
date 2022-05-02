@@ -1397,7 +1397,7 @@ begin
                fpSalvarArquivoBackup := False;
            end;
 
-           ReqVS.Retorno := ifthen( Cancelar, 9, 0;
+           ReqVS.Retorno := ifthen( Cancelar, 9, 0);
 
            TransmiteCmd;
         end ;

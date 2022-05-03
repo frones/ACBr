@@ -46,26 +46,15 @@ type
   TNFSeR_SiapNet200 = class(TNFSeR_ABRASFv2)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
-uses
-  ACBrUtil.Strings;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     SiapNet
 //==============================================================================
-
-{ TNFSeR_SiapNet200 }
-
-function TNFSeR_SiapNet200.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-end;
 
 end.

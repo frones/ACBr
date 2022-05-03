@@ -105,8 +105,9 @@ end;
 
 function TNFSeR_SigCorp203.NormatizarXml(const aXml: string): string;
 begin
-  Result := StringReplace(aXml, '&', '&amp;', [rfReplaceAll]);
-  Result := TiraAcentos(Result);
+  Result := inherited NormatizarXml(aXml);
+
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 end;
 
 end.

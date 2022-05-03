@@ -46,26 +46,15 @@ type
   TNFSeR_Etherium203 = class(TNFSeR_ABRASFv2)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
-uses
-  ACBrUtil.Strings;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Etherium
 //==============================================================================
-
-{ TNFSeR_Etherium203 }
-
-function TNFSeR_Etherium203.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-end;
 
 end.

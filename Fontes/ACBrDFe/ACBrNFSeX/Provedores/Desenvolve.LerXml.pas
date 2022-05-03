@@ -46,26 +46,15 @@ type
   TNFSeR_Desenvolve203 = class(TNFSeR_ABRASFv2)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
-uses
-  ACBrUtil.Strings;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Desenvolve
 //==============================================================================
-
-{ TNFSeR_Desenvolve203 }
-
-function TNFSeR_Desenvolve203.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-end;
 
 end.

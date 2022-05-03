@@ -46,26 +46,15 @@ type
   TNFSeR_Digifred200 = class(TNFSeR_ABRASFv2)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
-uses
-  ACBrUtil.Strings;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Digifred
 //==============================================================================
-
-{ TNFSeR_Digifred200 }
-
-function TNFSeR_Digifred200.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-end;
 
 end.

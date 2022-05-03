@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/05/2022
+-- Diversos --
+[*] Possível solução para o problema de erro UTF-8 ao ler um XML de NFS-e ou Rps.
+   Por: Italo Giurizzato Junior
 -- DSF.Provider --
 [*] Se faz necessário assinar a consulta do Lote e da NFS-e por Rps
    Por: Luciana Cristina Pereira / Italo Giurizzato Junior

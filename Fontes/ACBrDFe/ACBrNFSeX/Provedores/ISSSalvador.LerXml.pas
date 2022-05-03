@@ -46,26 +46,15 @@ type
   TNFSeR_ISSSalvador = class(TNFSeR_ABRASFv1)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
-uses
-  ACBrUtil.Strings;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     ISSSalvador
 //==============================================================================
-
-{ TNFSeR_ISSSalvador }
-
-function TNFSeR_ISSSalvador.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-end;
 
 end.

@@ -66,9 +66,10 @@ uses
 
 function TNFSeR_ISSNet.NormatizarXml(const aXml: string): string;
 begin
-  Result := RemoverPrefixosDesnecessarios(aXml);
+  Result := inherited NormatizarXml(aXml);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
-  Result := TiraAcentos(Result);
 end;
 
 end.

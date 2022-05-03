@@ -62,8 +62,9 @@ implementation
 
 function TNFSeR_BHISS.NormatizarXml(const aXml: string): string;
 begin
-  Result := StringReplace(aXml, '&>', ' ', [rfReplaceAll]);
-  Result := TiraAcentos(Result);
+  Result := inherited NormatizarXml(aXml);
+
+  Result := StringReplace(Result, '&>', ' ', [rfReplaceAll]);
 end;
 
 end.

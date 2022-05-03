@@ -335,12 +335,10 @@ var
   XmlNode: TACBrXmlNode;
   xRetorno: string;
 begin
-  xRetorno := Arquivo;
-
-  if EstaVazio(xRetorno) then
+  if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
-  xRetorno := TiraAcentos(xRetorno);
+  xRetorno := TiraAcentos(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();

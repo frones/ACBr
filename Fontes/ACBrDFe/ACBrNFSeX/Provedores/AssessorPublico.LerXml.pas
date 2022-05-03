@@ -47,7 +47,6 @@ type
   TNFSeR_AssessorPublico = class(TNFSeRClass)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -383,11 +382,6 @@ begin
       end;
     end;
   end;
-end;
-
-function TNFSeR_AssessorPublico.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
 end;
 
 end.

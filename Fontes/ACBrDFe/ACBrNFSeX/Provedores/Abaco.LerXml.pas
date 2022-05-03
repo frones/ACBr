@@ -46,7 +46,6 @@ type
   TNFSeR_Abaco = class(TNFSeR_ABRASFv1)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
@@ -56,41 +55,15 @@ type
   TNFSeR_Abaco204 = class(TNFSeR_ABRASFv2)
   protected
 
-    function NormatizarXml(const aXml: string): string; override;
   public
 
   end;
 
 implementation
 
-uses
-  ACBrUtil.Strings;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Abaco
 //==============================================================================
-
-{ TNFSeR_Abaco }
-
-function TNFSeR_Abaco.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-end;
-
-{ TNFSeR_Abaco204 }
-
-function TNFSeR_Abaco204.NormatizarXml(const aXml: string): string;
-begin
-  Result := TiraAcentos(aXml);
-  {
-  // Se o XML não tiver a codificação incluir ela.
-  if ObtemDeclaracaoXML(xRetorno) = '' then
-    xRetorno := CUTF8DeclaracaoXML + xRetorno;
-
-  // Alguns provedores não retornam o XML em UTF-8
-  xRetorno := ConverteXMLtoUTF8(xRetorno);
-  }
-end;
 
 end.

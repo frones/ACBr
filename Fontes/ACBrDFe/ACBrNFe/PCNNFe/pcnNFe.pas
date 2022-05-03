@@ -600,6 +600,7 @@ type
     function GetItem(Index: Integer): TDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetCollectionItem);
   public
+    procedure Assign(Source: TDetCollection);
     function Add: TDetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TDetCollectionItem;
     property Items[Index: Integer]: TDetCollectionItem read GetItem write SetItem; default;
@@ -2152,6 +2153,15 @@ end;
 function TDetCollection.Add: TDetCollectionItem;
 begin
   Result := Self.New;
+end;
+
+procedure TDetCollection.Assign(Source: TDetCollection);
+var
+  I: Integer;
+begin
+  Self.Clear;
+  for I := 0 to Source.Count - 1 do
+    Self.New.Assign(Source.Items[I]);
 end;
 
 function TDetCollection.GetItem(Index: Integer): TDetCollectionItem;

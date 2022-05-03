@@ -100,7 +100,7 @@ begin
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 5;
    fpTamanhoCarteira       := 1;
-   fpCodigosMoraAceitos    := 'AB012';
+   fpCodigosMoraAceitos    := 'AB0123';
    fpCodigosGeracaoAceitos := '23456789';
    fpLayoutVersaoArquivo   := 81;
    fpLayoutVersaoLote      := 40;

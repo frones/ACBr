@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 03/05/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível solução para o problema de leitura do XML, estava zerando o valor
+    da aliquota e do ISS.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Possível solução para o problema de erro na leitura da data que esta no formato
     DD/MM/AAAA.

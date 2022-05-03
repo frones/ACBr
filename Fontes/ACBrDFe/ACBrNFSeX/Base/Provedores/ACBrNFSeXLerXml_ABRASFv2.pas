@@ -887,7 +887,9 @@ begin
       if ValorCsll = 0 then
         ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
 
-      ValorIss        := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
+      if ValorIss = 0 then
+        ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIss'), tcDe2);
+
       OutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasRetencoes'), tcDe2);
 
       if NFSe.ValoresNfse.BaseCalculo = 0 then
@@ -902,7 +904,8 @@ begin
         NFSe.ValoresNfse.ValorIss := ValorIss;
       end;
 
-      Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
+      if Aliquota = 0 then
+        Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('Aliquota'), tcDe4);
 
       if NFSe.ValoresNfse.ValorLiquidoNfse = 0 then
       begin

@@ -329,6 +329,7 @@ begin
   if (not Assigned(aStrings)) then
     Exit;
 
+  aStrings.Clear;
   for I := 0 to Count - 1 do
     aStrings.Add(
       Objects[I].CodigoNcm + aSeparator +

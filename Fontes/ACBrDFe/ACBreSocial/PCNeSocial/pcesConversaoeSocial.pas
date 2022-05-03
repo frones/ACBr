@@ -657,6 +657,19 @@ const
                                           'evtCessao', 'evtCdBenAlt',
                                           'evtReativBen','evtCdBenTerm');
 
+  EventoStringNova: array[0..58] of String =
+      ('evtInfoEmpregador', 'evtTabEstab', 'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
+       'evtTabFuncao', 'evtTabHorContratual', 'evtTabAmbiente', 'evtTabProcesso','evtTabOperPortuario',
+       'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtCdBenefIn', 'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd',
+       'evtContratAvNP', 'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
+       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral','evtAltContratual', 'evtCAT',
+       'evtASO', 'evtAfastTemp', 'evtExpRisco', 'evtInsApo', 'evtAvPrevio', 'evtConvInterm',
+       'evtReintegr', 'evtDeslig', 'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino',
+       'evtCdBenPrRP', 'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
+       'S-5012', 'S-5013', 'evtToxic', 'evtCdBenefAlt', 'evtCdBenIn', 'evtCessao', 'evtCdBenAlt',
+       'evtReativBen', 'evtCdBenTerm');
+
+
   TTrabalhadorSemVinculo: Array[0..27] of integer = (
                                           201, 202, 304, 305, 308, 311, 313, 401, 410, 501,
                                           701, 711, 712, 721, 722, 723, 731, 734, 738, 741,
@@ -2770,27 +2783,30 @@ begin
 end;
 
 function StrEventoToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
-const
-  EventoString: array[0..58] of String =('evtInfoEmpregador', 'evtTabEstab',
-       'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
-       'evtTabFuncao', 'evtTabHorContratual', 'evtTabAmbiente', 'evtTabProcesso',
-       'evtTabOperPortuario', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtCdBenefIn',
-       'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
-       'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
-       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
-       'evtAltContratual', 'evtCAT', 'evtASO', 'evtAfastTemp', 'evtExpRisco',
-       'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
-       'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP',
-       'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011', 'S-5012', 'S-5013',
-       'evtToxic', 'evtCdBenefAlt', 'evtCdBenIn', 'evtCessao', 'evtCdBenAlt',
-       'evtReativBen', 'evtCdBenTerm');
 begin
-  result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
+  result := TTipoEvento( StrToEnumerado2(ok , s, EventoStringNova ) );
 end;
 
 function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
+var
+  i: integer;
 begin
-  Result := StringXMLToTipoEvento(ok, s);
+  ok := False;
+  Result := teNaoIdentificado;
+
+  try
+    for i := 0 to Length(__ARRAY_MATRIX_EVENTO_INFO) -1 do
+    begin
+      if Pos('[' + __ARRAY_MATRIX_EVENTO_INFO[i].EventoString + ']', s) > 0 then
+      begin
+        ok := True;
+        Result := __ARRAY_MATRIX_EVENTO_INFO[i].TipoEvento;
+        exit;
+      end;
+    end;
+  except
+    ok := False;
+  end;
 end;
 
 function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;

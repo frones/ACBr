@@ -89,6 +89,7 @@ procedure TNFSeW_ISSBarueri.GerarRegistroTipo2;
 var
   Quantidade: Integer;
   SituacaoRPS, CodCancelamento, MotCancelamento: String;
+  ValorTotalRetencoes: Double;
 begin
   SituacaoRPS := 'E';
 
@@ -106,6 +107,11 @@ begin
   if (Assigned(NFSe.Servico.ItemServico)) and
      (Pred(NFSe.Servico.ItemServico.Count) > 0) then
     Quantidade := Trunc(NFSe.Servico.ItemServico.Items[0].Quantidade);
+
+  ValorTotalRetencoes := NFSe.Servico.Valores.ValorIr +
+                         NFSe.Servico.Valores.ValorPis +
+                         NFSe.Servico.Valores.ValorCofins +
+                         NFSe.Servico.Valores.ValorCsll;
 
   FConteudoTxt.Add(
     '2'+ // Tipo do Registro S Numérico 1 1 1 2
@@ -134,12 +140,12 @@ begin
     PadLeft(IntToStr(Quantidade), 6, '0')+ // Quantidade de Serviço S Numérico 6 458 463
     PadLeft(FloatToStr(NFSe.Servico.Valores.ValorServicos * 100), 15, '0')+ // Valor do Serviço S Numérico 15 464 478 Exemplo: R$10,25 = 000000000001025
     '     '+ //  Reservado N Texto 5 479 483
-    PadLeft('0', 15, '0')+ // Valor Total das Retenções S Numérico 15 484 498
+    PadLeft(FloatToStr(ValorTotalRetencoes * 100), 15, '0')+ // Valor Total das Retenções S Numérico 15 484 498
     '2'+ // Tomador Estrangeiro S Numérico 1 499 499 1 Para Tomador Estrangeiro 2 para Tomador Brasileiro
     PadRight('', 3, ' ')+ // Pais da Nacionalidade do Tomador Estrangeiro S* Numérico 3 500 502 Códido do pais de nacionalidade do tomador, conforme tabela de paises, quando o tomador for estrangeiro
     '2'+ // Serviço Prestado é exportação S* Numérico 1 503 503 1 Para Serviço exportado 2 para Serviço não exportado
     IfThen(Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) > 11, '2', '1')+ // Indicador do CPF/CNPJ do Tomador, pegar do Pessoas a constante S* Numérico 1 504 504 1 para CPF / 2 para CNPJ
-    PadRight(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, 14, ' ')+ // CPF/ CNPJ do Tomador S* Numérico 14 505 518
+    PadLeft(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, 14, ' ')+ // CPF/ CNPJ do Tomador S* Numérico 14 505 518
     PadRight(NFSe.Tomador.RazaoSocial, 60, ' ')+ // Razão Social / Nome do Tomador S Texto 60 519 578
     PadRight(NFSe.Tomador.Endereco.Endereco, 75, ' ')+ // Endereço Logradouro Tomador S* Texto 75 579 653
     PadRight(NFSe.Tomador.Endereco.Numero, 9, ' ')+ // Numero Logradouro Tomador S* Texto 9 654 662
@@ -211,8 +217,8 @@ begin
   FConteudoTxt.Add(
     '9'+ // Tipo do Registro S Numérico 1 1 1 9
     PadRight(IntToStr(FConteudoTxt.Count + 1), 7, ' ')+ // Número Total de Linhas do Arquivo S Numérico 7 2 8
-    PadLeft(FloatToStr(NFSe.Servico.Valores.ValorLiquidoNfse * 100), 15, '0')+ // Valor Total dos Serviços contidos no Arquivo S Numérico 15 9 23
-    PadLeft(FloatToStr(ValorTotalRetencoes), 15, '0') // Valor Total dos Valores contidos no registro 3 S Numérico 15 24 38 Valor Total das Retenções e outros valores informados no registro 3
+    PadLeft(FloatToStr(NFSe.Servico.Valores.ValorServicos * 100), 15, '0')+ // Valor Total dos Serviços contidos no Arquivo S Numérico 15 9 23
+    PadLeft(FloatToStr(ValorTotalRetencoes * 100), 15, '0') // Valor Total dos Valores contidos no registro 3 S Numérico 15 24 38 Valor Total das Retenções e outros valores informados no registro 3
   );
 end;
 

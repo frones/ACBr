@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 03/05/2022
+-- ISSBarueri.GravarXml --
+[*] Ajustes na geração do TXT.
+   Por: Giquieu
 -- ACBrNFSeXServicos --
 [*] Incluida as cidades Agrolandia/SC e Rio do Oeste/SC - Provedor IPM.
    Por: PraMag Sistemas

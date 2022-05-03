@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/05/2022
+-- ACBrNFSeXServicos --
+[*] Incluida as cidades Agrolandia/SC e Rio do Oeste/SC - Provedor IPM.
+   Por: PraMag Sistemas
+
 29/04/2022
 -- SimplISS.GravarXml --
 [*] Alterado o valor de NrOcorrNIFTomador para 1 para gerar a tag quando o

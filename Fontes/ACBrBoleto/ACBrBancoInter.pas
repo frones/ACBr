@@ -456,7 +456,7 @@ begin
     toRetornoAlteracaoDadosBaixa                                       : Result := '05';
     toRetornoLiquidado                                                 : Result := '06';
     toRetornoLiquidadoEmCartorio                                       : Result := '08';
-    toRetornoBaixaSimples                                              : Result := '09';
+    toRetornoBaixaSimples                                              : Result := '07';
     toRetornoBaixaPorTerSidoLiquidado                                  : Result := '10';
     toRetornoTituloEmSer                                               : Result := '11';
     toRetornoAbatimentoConcedido                                       : Result := '12';

@@ -49,6 +49,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2022
+--ACBrBancoInter--
+[*] Ajuste do código de Retorno para Baixa de Título
+   Por: Rodrigo Cardilo
+	https://www.projetoacbr.com.br/forum/topic/67188-corre%C3%A7%C3%A3o-retorno-banco-inter/
+
+02/05/2022
+--ACBrBancoSicred--
+[*] Atualização dos Códigos de Mora Aceitos pela classe.
+   Por: Eloildo Vieira
+	https://www.projetoacbr.com.br/forum/topic/67046-manual-cnab240-do-sicredi-agora-possui-um-novo-c%C3%B3digo-de-juros-de-mora/
+
 26/04/2022
 --ACBrBoletoRet_BancoBrasil_API--
 [*] TK-2577 ACBrBoleto - Ajuste integração via WS com o BB quando o retorno do Json é nulo - Tratamento de retorno de erros do WS

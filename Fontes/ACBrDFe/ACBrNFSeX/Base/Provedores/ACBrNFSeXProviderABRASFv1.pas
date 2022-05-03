@@ -834,10 +834,10 @@ var
     begin
       AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('Confirmacao');
 
-      Response.Data := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), tcDatHor);
       Response.DescSituacao := '';
 
-      if Response.Data > 0 then
+      if Response.DataCanc > 0 then
         Response.DescSituacao := 'Nota Cancelada';
     end;
   end;

@@ -104,19 +104,32 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); virtual;
+
+    function LerDatas(const xData: string): TDateTime;
   end;
 
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrDFeException, ACBrXmlBase,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 
 { TACBrNFSeProviderABRASFv2 }
+
+function TACBrNFSeProviderABRASFv2.LerDatas(const xData: string): TDateTime;
+begin
+  if Pos('/', xData) = 3 then
+  begin
+    if Copy(xData, 1, 2) > '12' then
+      result := EncodeDataHora(xData, 'DD/MM/YYYY')
+    else
+      result := EncodeDataHora(xData, 'MM/DD/YYYY');
+  end
+  else
+    result := EncodeDataHora(xData, '');
+end;
 
 procedure TACBrNFSeProviderABRASFv2.Configuracao;
 const
@@ -872,10 +885,10 @@ begin
         if AuxNode = nil then
           AuxNode := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
 
-        Response.Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
         Response.DescSituacao := '';
 
-        if Response.Data > 0 then
+        if Response.DataCanc > 0 then
           Response.DescSituacao := 'Nota Cancelada';
       end;
 
@@ -890,7 +903,7 @@ begin
         begin
           NumeroNota := NumNFSe;
           CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+          Data := LerDatas(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
         end;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);

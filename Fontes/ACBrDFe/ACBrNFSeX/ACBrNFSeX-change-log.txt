@@ -45,6 +45,10 @@ Símbolo : Significado
 
 03/05/2022
 -- Diversos --
+[*] Possível solução para o problema de erro na leitura da data que esta no formato
+    DD/MM/AAAA.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Possível solução para o problema de erro UTF-8 ao ler um XML de NFS-e ou Rps.
    Por: Italo Giurizzato Junior
 -- DSF.Provider --

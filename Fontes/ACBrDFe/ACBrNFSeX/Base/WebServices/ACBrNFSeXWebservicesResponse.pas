@@ -156,6 +156,7 @@ type
     FNumeroNota: string;
     FSerieNota: string;
     FData: TDateTime;
+    FDataCanc: TDateTime;
     FidNota: string;
     FLink: String;
     FProtocolo: String;
@@ -187,6 +188,7 @@ type
     property NumeroNota: string read FNumeroNota write FNumeroNota;
     property SerieNota: string read FSerieNota write FSerieNota;
     property Data: TDateTime read FData write FData;
+    property DataCanc: TDateTime read FDataCanc write FDataCanc;
     property idNota: string read FidNota write FidNota;
     property Link: String read FLink write FLink;
     property Protocolo: String read FProtocolo write FProtocolo;

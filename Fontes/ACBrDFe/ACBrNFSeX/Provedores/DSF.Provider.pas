@@ -499,6 +499,8 @@ begin
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
   end;
 
   with ConfigWebServices do

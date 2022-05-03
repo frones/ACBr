@@ -181,7 +181,7 @@ begin
   begin
     xId := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Id'), tcStr);
 
-    if xId <> 'OK' then
+    if (xId <> 'OK') and (xId <> 'EXITO') then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := xId;
@@ -934,7 +934,7 @@ begin
                               IntToStr(Response.InfCancelamento.NumeroRps) +
                            '</NumeroRps>' +
                            '<ValorNota>' +
-                              FormatFloat('#.00', Response.InfCancelamento.ValorNFSe) +
+                              StringReplace( FormatFloat('#.00', Response.InfCancelamento.ValorNFSe), ',', '.', [rfReplaceAll] ) +
                            '</ValorNota>' +
                            '<MotivoCancelamento>' +
                               Response.InfCancelamento.MotCancelamento +

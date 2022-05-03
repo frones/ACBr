@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 03/05/2022
+-- DSF.Provider --
+[*] Se faz necessário assinar a consulta do Lote e da NFS-e por Rps
+   Por: Luciana Cristina Pereira / Italo Giurizzato Junior
+-- Conam.Provider --
+[*] Ajustes no tratamento do retorno do cancelamento de NFS-e.
+   Por: Paulo Henrique Panico
+-- BHISS.LerXml --
+[*] Incluído a remoção de acentos na função NormatizarXml.
+   Por: Tiago Ropke
 -- ISSBarueri.GravarXml --
 [*] Ajustes na geração do TXT.
    Por: Giquieu

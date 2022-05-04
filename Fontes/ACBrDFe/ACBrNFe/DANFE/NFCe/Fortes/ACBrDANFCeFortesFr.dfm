@@ -91,13 +91,23 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object mLinhaTotalItem: TRLMemo
           Left = 0
           Top = 12
-          Width = 278
+          Width = 234
           Height = 12
-          Align = faTop
+          Align = faLeft
           Alignment = taRightJustify
           Behavior = [beSiteExpander]
           Lines.Strings = (
             '123456789012345678901234567890123456789012345678901234')
+        end
+        object lTotalItem: TRLLabel
+          Left = 234
+          Top = 12
+          Width = 44
+          Height = 12
+          Align = faRightBottom
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Layout = tlBottom
         end
       end
       object rlbDescItem: TRLBand

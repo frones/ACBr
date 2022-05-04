@@ -1405,6 +1405,7 @@ type
     fOcorrenciaOriginal: TACBrOcorrencia;
     fTipoDesconto      : TACBrTipoDesconto;
     fTipoDesconto2     : TACBrTipoDesconto;
+    fTipoDesconto3     : TACBrTipoDesconto;
     fParcela           : Integer;
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
@@ -1561,6 +1562,7 @@ type
      property OcorrenciaOriginal : TACBrOcorrencia read  fOcorrenciaOriginal write fOcorrenciaOriginal;
      property TipoDesconto       : TACBrTipoDesconto read fTipoDesconto write fTipoDesconto;
      property TipoDesconto2      : TACBrTipoDesconto read fTipoDesconto2 write fTipoDesconto2;
+     property TipoDesconto3      : TACBrTipoDesconto read fTipoDesconto3 write fTipoDesconto3;
 
      property MotivoRejeicaoComando          : TStrings    read fMotivoRejeicaoComando  write fMotivoRejeicaoComando;
      property DescricaoMotivoRejeicaoComando : TStrings    read fDescricaoMotivoRejeicaoComando  write fDescricaoMotivoRejeicaoComando;
@@ -2071,14 +2073,14 @@ function TACBrBancoClass.TipoDescontoToString(const AValue: TACBrTipoDesconto):s
 begin
   Result := '0';
   case AValue of
-     tdNaoConcederDesconto : Result := '0';
-     tdValorFixoAteDataInformada : Result := '1';
-     tdPercentualAteDataInformada : Result := '2';
-     tdValorAntecipacaoDiaCorrido : Result := '3';
-     tdValorAntecipacaoDiaUtil : Result := '4';
+     tdNaoConcederDesconto                   : Result := '0';
+     tdValorFixoAteDataInformada             : Result := '1';
+     tdPercentualAteDataInformada            : Result := '2';
+     tdValorAntecipacaoDiaCorrido            : Result := '3';
+     tdValorAntecipacaoDiaUtil               : Result := '4';
      tdPercentualSobreValorNominalDiaCorrido : Result := '5';
-     tdPercentualSobreValorNominalDiaUtil : Result := '6';
-     tdCancelamentoDesconto : Result := '7';
+     tdPercentualSobreValorNominalDiaUtil    : Result := '6';
+     tdCancelamentoDesconto                  : Result := '7';
   end;
 end;
 
@@ -2358,7 +2360,7 @@ begin
   fTipoImpressao        := tipNormal;
   fTipoDesconto         := tdNaoConcederDesconto ;
   fTipoDesconto2        := tdNaoConcederDesconto ;
-
+  fTipoDesconto3        := tdNaoConcederDesconto ;
   fCodigoMora    := '';
   fCodigoGeracao := '2';
   fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
@@ -3153,7 +3155,7 @@ begin
     AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto2,Titulo.ValorDesconto2,Titulo,Titulo.DataDesconto2));
 
   if Titulo.ValorDesconto3 <> 0 then
-    AStringList.Add(GerarMensagemPadraoDesconto(tdValorFixoAteDataInformada,Titulo.ValorDesconto3,Titulo,Titulo.DataDesconto3));
+    AStringList.Add(GerarMensagemPadraoDesconto(Titulo.TipoDesconto3,Titulo.ValorDesconto3,Titulo,Titulo.DataDesconto3));
 
   if Titulo.ValorMoraJuros <> 0 then
     AStringList.Add(GerarMensagemPadraoJuros(Titulo));

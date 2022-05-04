@@ -54,6 +54,11 @@ Símbolo : Significado
 [-] TK-2597 Ajuste na propriedade de geração de data de Multa na remessa do CNAB240
   Contribuição D'Avila Junior
   https://www.projetoacbr.com.br/forum/topic/67103-remessa-banco-credisis-acbrbancocredisis/
+[*]
+--ACBrBoleto-- --ACBrBoletoBradesco--
+[*] TK-2571 Ajuste add property TipoDesconto3 e não utilizar TipoDesconto2 para essa finalidade do Desconto3
+  Contribuição Allanbrrj / Por : Pandaaa
+  https://www.projetoacbr.com.br/forum/topic/63180-desconto-por-data-23-e-4-no-bradesco/
 
 02/05/2022
 --ACBrBancoInter--

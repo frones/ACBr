@@ -496,11 +496,14 @@ begin
   with ConfigAssinar do
   begin
     Rps := False;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
+    ConsultarNFSePorFaixa := True;
+    ConsultarNFSeServicoPrestado := True;
+    ConsultarNFSeServicoTomado := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
     RpsSubstituirNFSe := True;
-    ConsultarLote := True;
-    ConsultarNFSeRps := True;
   end;
 
   with ConfigWebServices do

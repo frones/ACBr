@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2022
+--ACBrBancoCredisis--
+[-] TK-2597 Ajuste na propriedade de geração de data de Multa na remessa do CNAB240
+  Contribuição D'Avila Junior
+  https://www.projetoacbr.com.br/forum/topic/67103-remessa-banco-credisis-acbrbancocredisis/
+
 02/05/2022
 --ACBrBancoInter--
 [*] Ajuste do código de Retorno para Baixa de Título

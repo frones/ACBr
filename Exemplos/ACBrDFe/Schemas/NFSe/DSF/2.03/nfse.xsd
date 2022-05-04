@@ -1292,7 +1292,7 @@
 					minOccurs="1" maxOccurs="1" />
 				<xsd:element name="Prestador" type="tcIdentificacaoPrestador"
 					minOccurs="1" maxOccurs="1" />
-    			<xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
+                                <xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -1343,6 +1343,7 @@
 				<xsd:element name="Intermediario" type="tcIdentificacaoIntermediario"
 					minOccurs="0" maxOccurs="1" />
 				<xsd:element name="Pagina" type="tsPagina" minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -1402,6 +1403,7 @@
 				<xsd:element name="Intermediario" type="tcIdentificacaoIntermediario"
 					minOccurs="0" maxOccurs="1" />
 				<xsd:element name="Pagina" type="tsPagina" minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -1439,6 +1441,7 @@
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="Pagina" type="tsPagina" minOccurs="1" maxOccurs="1"/>
+				<xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>

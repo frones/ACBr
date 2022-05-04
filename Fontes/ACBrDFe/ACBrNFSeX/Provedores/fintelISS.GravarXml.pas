@@ -100,6 +100,11 @@ begin
 
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := 1;
+  NrOcorrValorPis := 1;
+  NrOcorrValorCofins := 1;
+  NrOcorrValorInss := 1;
+  NrOcorrValorIr := 1;
+  NrOcorrValorCsll := 1;
 end;
 
 function TNFSeW_fintelISS202.GerarListaServicos: TACBrXmlNode;

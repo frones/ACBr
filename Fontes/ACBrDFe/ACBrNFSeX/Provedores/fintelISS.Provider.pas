@@ -346,7 +346,7 @@ begin
 
   with ConfigAssinar do
   begin
-    Rps := True;
+    Rps := False;
     LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;

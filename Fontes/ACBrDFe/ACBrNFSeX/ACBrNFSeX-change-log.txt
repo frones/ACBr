@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/05/2022
+-- fintelISS.GravarXml
+[*] Alterado a configuração para gerar as tags referente ao PIS, COFINS, INSS,
+    IR e CSLL.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Incluida a cidade: Nova Bassano/RS - Provedor Tecnos.
    Por: Gabriel Bobello

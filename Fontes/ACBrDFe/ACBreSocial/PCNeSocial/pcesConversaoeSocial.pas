@@ -2795,7 +2795,7 @@ begin
   Result := teNaoIdentificado;
 
   try
-    for i := 0 to Length(__ARRAY_MATRIX_EVENTO_INFO) -1 do
+    for i := 1 to (Length(__ARRAY_MATRIX_EVENTO_INFO) ) do
     begin
       if Pos('[' + __ARRAY_MATRIX_EVENTO_INFO[i].EventoString + ']', s) > 0 then
       begin

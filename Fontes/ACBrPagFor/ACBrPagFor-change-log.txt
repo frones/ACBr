@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2022
+-- ACBrPagForGravarTxt --
+[*] Ajustes nos registros: 1 e 5, bem como nos segmentos:  A, B e J52 para o banco
+    Bradesco.
+   Por: Wanessa Franco
+
 22/04/2022
 -- ACBrPagForLerTxt --
 [*] Os registros 0 e 1 não estava sendo tratado o banco Bradesco ao ler os dados

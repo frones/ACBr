@@ -50,4 +50,4 @@ Símbolo : Significado
 
 22/03/2022
 [+] TK-2397 Adicionado Componente a Suite
-   Por : Pandaaa - Contribuição Tiago Passarela
+   Por : Pandaaa - Contribuição Tiago Passarela, Leonardo Gregianin

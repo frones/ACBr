@@ -37,6 +37,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/05/2022
+-- ACBrNCMs --
+[-] Correção de erro ao carregar um arquivo Json invalido. Efetuada alteração 
+    para renomear o arquivo cache, caso ele exista e seja invalido.
+    (Por: Elias César)
+
 03/05/2022
 -- ACBrNCMs --
 [-] Correção para não duplicar o conteúdo da lista de NCMs, caso a procedure 

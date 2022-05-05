@@ -2291,7 +2291,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 1
         Width = 48
         Height = 14
-        Caption = 'Descri'#195#167#195#163'o'
+        Caption = 'Descri'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11

@@ -107,6 +107,7 @@ begin
     ModoEnvio := meLoteAssincrono;
     ConsultaLote := False;
     ConsultaNFSe := False;
+    DetalharServico := True;
 
     FpVersaoArquivo := Params.ValorParametro('VersaoArquivo');
   end;

@@ -157,6 +157,7 @@ begin
     Identificador := 'id';
     ModoEnvio := meLoteAssincrono;
     ConsultaNFSe := False;
+    DetalharServico := True;
   end;
 
   with ConfigAssinar do

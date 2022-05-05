@@ -646,14 +646,22 @@ end;
 
 procedure TfrlXDANFSeRLRetrato.RLNFSeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  Detalhar: Boolean;
 begin
   inherited;
 
+  Detalhar := ACBrNFSe.Provider.ConfigGeral.DetalharServico;
+
   RLNFSe.Title := 'NFS-e: ' + fpNFSe.Numero;
   TDFeReportFortes.AjustarMargem(RLNFSe, fpDANFSe);
-  rlbItens.Visible := not (fpDANFSe.DetalharServico);
-  rlbHeaderItensDetalhado.Visible := fpDANFSe.DetalharServico;
-  subItens.Visible := fpDANFSe.DetalharServico;
+  rlbItens.Visible := not Detalhar;
+  rlbHeaderItensDetalhado.Visible := Detalhar;
+  subItens.Visible := Detalhar;
+
+//  rlbItens.Visible := not (fpDANFSe.DetalharServico);
+//  rlbHeaderItensDetalhado.Visible := fpDANFSe.DetalharServico;
+//  subItens.Visible := fpDANFSe.DetalharServico;
 
   // Estudar a melhor forma de não especificar o provedor.
   RLLabel65.Visible := not (ACBrNFSe.Configuracoes.Geral.Provedor in [proSimple]);

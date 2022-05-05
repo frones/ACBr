@@ -112,6 +112,7 @@ begin
   begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
+    DetalharServico := True;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;

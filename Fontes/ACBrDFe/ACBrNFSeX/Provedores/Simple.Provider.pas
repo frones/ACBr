@@ -113,6 +113,7 @@ begin
   with ConfigGeral do
   begin
     ModoEnvio := meLoteSincrono;
+    DetalharServico := True;
   end;
 
   ConfigSchemas.Validar := False;

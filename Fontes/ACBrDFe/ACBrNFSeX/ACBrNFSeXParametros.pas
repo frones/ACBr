@@ -108,6 +108,9 @@ type
     FAmbiente: TACBrTipoAmbiente;
     // Código IBGE da Cidade lido do arquivo ACBrNFSeXServicos
     FCodIBGE: string;
+    // define se deve imprimir o conteudo do campo Discriminação ou a lista de
+    // serviços
+    FDetalharServico: Boolean;
 
   public
     constructor Create;
@@ -139,6 +142,7 @@ type
     property Versao: TVersaoNFSe read FVersao write FVersao;
     property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente;
     property CodIBGE: string read FCodIBGE write FCodIBGE;
+    property DetalharServico: Boolean read FDetalharServico write FDetalharServico;
   end;
 
   { TWebserviceInfo }

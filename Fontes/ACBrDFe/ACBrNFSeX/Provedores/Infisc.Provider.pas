@@ -144,6 +144,7 @@ begin
     Identificador := '';
     ModoEnvio := meLoteAssincrono;
     ConsultaPorFaixa := True;
+    DetalharServico := True;
   end;
 
   with ConfigWebServices do
@@ -733,6 +734,8 @@ end;
 procedure TACBrNFSeProviderInfisc201.Configuracao;
 begin
   inherited Configuracao;
+
+  ConfigGeral.DetalharServico := False;
 
   with ConfigAssinar do
   begin

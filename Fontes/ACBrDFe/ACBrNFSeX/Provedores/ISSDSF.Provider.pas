@@ -178,6 +178,7 @@ begin
   begin
     QuebradeLinha := '<br >';
     ModoEnvio := meLoteSincrono;
+    DetalharServico := True;
   end;
 
   with ConfigAssinar do

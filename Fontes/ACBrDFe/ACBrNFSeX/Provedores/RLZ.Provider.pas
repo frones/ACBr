@@ -345,6 +345,7 @@ begin
     Identificador := '';
     QuebradeLinha := '|';
     ModoEnvio := meUnitario;
+    DetalharServico := True;
   end;
 
   ConfigSchemas.Validar := False;

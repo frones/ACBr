@@ -118,6 +118,7 @@ begin
   begin
     identificador := 'id';
     UseCertificateHTTP := False;
+    DetalharServico := True;
   end;
 
   SetXmlNameSpace('http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd');

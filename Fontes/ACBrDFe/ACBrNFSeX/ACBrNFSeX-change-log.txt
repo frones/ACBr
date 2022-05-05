@@ -42,11 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2022
+-- Diversos --
+[+] Implementado uma propriede de parametrização que determina se ao imprimir
+    o DANFSE vai ser impresso a lista de serviços ou simplemente o conteúdo do
+    campo Discriminacao.
+   Por: Italo Giurizzato Junior
+
 04/05/2022
 -- ACBrNFSeXServicos --
 [*] Alterado a URL de homologação da cidade de Parauapebas
    Por: Glênio Duarte Moura
--- fintelISS.GravarXml
+-- fintelISS.GravarXml --
 [*] Alterado a configuração para gerar as tags referente ao PIS, COFINS, INSS,
     IR e CSLL.
    Por: Italo Giurizzato Junior

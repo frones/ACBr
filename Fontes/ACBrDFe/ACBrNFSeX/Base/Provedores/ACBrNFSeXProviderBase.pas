@@ -456,6 +456,7 @@ begin
     CancPreencherMotivo := False;
     CancPreencherSerieNfse := False;
     CancPreencherCodVerificacao := False;
+    DetalharServico := False;
 
     with TACBrNFSeX(FAOwner) do
     begin

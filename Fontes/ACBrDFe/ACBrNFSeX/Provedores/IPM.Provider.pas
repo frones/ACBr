@@ -141,6 +141,7 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+    DetalharServico := True;
   end;
 
   with ConfigAssinar do

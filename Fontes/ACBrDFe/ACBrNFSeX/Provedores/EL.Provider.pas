@@ -1176,6 +1176,7 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
     NumMaxRpsEnviar := 5;
+    DetalharServico := True;
   end;
 
   SetXmlNameSpace('http://www.el.com.br/nfse/xsd/el-nfse.xsd');

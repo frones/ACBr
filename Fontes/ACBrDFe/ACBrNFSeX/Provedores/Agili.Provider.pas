@@ -116,6 +116,7 @@ begin
     Identificador := '';
     UseCertificateHTTP := False;
     ModoEnvio := meLoteAssincrono;
+    DetalharServico := True;
   end;
 
   SetXmlNameSpace('http://www.agili.com.br/nfse_v_1.00.xsd');

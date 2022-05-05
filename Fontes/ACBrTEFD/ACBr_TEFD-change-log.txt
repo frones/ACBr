@@ -50,6 +50,11 @@ Símbolo : Significado
 -- ACBrTEFAPIComum --
 [*] Propriedade "ImprimeViaClienteReduzida: Boolean", modificada de Default "True"
     para "False"
+
+-- TACBrTEFPGWebAPI --
+[-] Método "TACBrPOSPGWebAPI.ExecutarTransacaoTEF", modificado para sempre criar
+    arquivo de Backup, pois "xPTI_EFT_Confirm", pode falhar, por falta de
+    comunicação
     (por: DSA)
 
 14/03/22

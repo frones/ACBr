@@ -1248,10 +1248,9 @@ begin
 
     if (iRet = PTIRET_OK) then
     begin
+      GravarBackupDaTransacao(TerminalId);
       if ConfirmarAntesImpressao then
-        FinalizarTrancao( TerminalId, cnfSucesso )
-      else
-        GravarBackupDaTransacao(TerminalId);
+        FinalizarTrancao( TerminalId, cnfSucesso );
 
       if (Comprovantes <> prnNaoImprimir) then
       begin

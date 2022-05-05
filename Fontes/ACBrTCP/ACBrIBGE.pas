@@ -1238,7 +1238,7 @@ begin
     Exit;
 
   AURL := StringReplace(CIBGE_URL_MUN_UF, '{idUF}', IntToStrZero(ACodUF,2), []);
-  HTTPGetCompressed( AURL );
+  HTTPGet( AURL );
   fListaCidades.AddFromJSonStr(UnZipHttpDoc);
 
   oUF.CidadesCarregadas := True;

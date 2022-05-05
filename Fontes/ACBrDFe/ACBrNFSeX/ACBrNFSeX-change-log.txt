@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/05/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Possível solução para o problema de leitura da data de cancelamento e com
+    isso setar a nota como cancelada.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Implementado uma propriede de parametrização que determina se ao imprimir
     o DANFSE vai ser impresso a lista de serviços ou simplemente o conteúdo do

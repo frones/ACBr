@@ -130,6 +130,9 @@ function TNFSeR_ABRASFv1.LerDataHoraCancelamento(
   const ANode: TACBrXmlNode): TDateTime;
 begin
   Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
+
+  if Result = 0 then
+    Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 end;
 
 procedure TNFSeR_ABRASFv1.LerConfirmacao(const ANode: TACBrXmlNode);

@@ -62,6 +62,7 @@ type
     procedure EnviaString(const AString: AnsiString); override;
     function LeString(ATimeOutMilissegundos: Integer = 0; NumBytes: Integer = 0;
       const Terminador: AnsiString = ''): AnsiString; override;
+    procedure Limpar; override;
 
     procedure DetectarTipoEProtocoloDispositivoUSB(const APorta: String;
       var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
@@ -162,6 +163,11 @@ begin
     Result := fsWinUSB.ReceiveTerminated( Terminador, ATimeOutMilissegundos)
   else
     Result := fsWinUSB.ReceivePacket( ATimeOutMilissegundos );
+end;
+
+procedure TACBrDeviceWinUSB.Limpar;
+begin
+  fsWinUSB.Purge;
 end;
 
 procedure TACBrDeviceWinUSB.DetectarTipoEProtocoloDispositivoUSB(const APorta: String;

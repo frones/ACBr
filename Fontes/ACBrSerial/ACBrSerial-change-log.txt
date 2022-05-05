@@ -38,6 +38,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2022
+-- ACBrWinUSBDevice --
+[+] Adicionado o método "Purge", para limpar dados enviados e recebidos da USB
+
+-- ACBrDeviceWinUSB --
+[+] Implementado o método "TACBrDeviceWinUSB.Limpar"
+
+-- ACBrPosPrinter --
+[*] Método "TACBrPosPrinter.TxRx", TimeOut default, diminuido de 500 para 300
+[*] Método "TACBrPosPrinter.ConfigurarRegiaoModoPagina": Adicionado Parâmetro
+    para permitir definir a direção do texto:
+    function ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura, ALargura: Integer;
+      ADirecao: TACBrPosDirecao = dirEsquerdaParaDireita
+
+-- ACBrUSBID.ini --
+[+] Adicionada identificação (VID/PID) de Impressora da Sunmi NT210
+
+-- ACBrDeviceBlueTooth --
+[-] Corrigido problema de vazamento de memória, caso a chamada ao método
+    BlueToothSocket.Connect falhe
+    (por: DSA)
+
 22/04/2022
 -- ACBrETQEpl2 --
 [*] Correçao em "AjustarNomeArquivoImagem", para calcular nomes com no máximo 8

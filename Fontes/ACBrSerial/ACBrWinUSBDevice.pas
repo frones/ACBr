@@ -301,6 +301,7 @@ type
 
     procedure Connect(AInterfaceName: String);
     procedure Close;
+    procedure Purge;
     function SendData(const AData: AnsiString; ATimeout: Integer = 0): Integer;
     function ReceiveNumBytes(BytesToRead: Integer; ATimeout: Integer = 0): AnsiString;
     function ReceiveTerminated(const ATerminator: AnsiString; ATimeOut: Integer = 0): AnsiString;
@@ -1091,6 +1092,18 @@ begin
   FInterfaceName := '';
 end;
 
+procedure TACBrUSBWinDeviceAPI.Purge;
+begin
+  DoLog('Purge');
+  if Active then
+  begin
+    DoLog('  RX');
+    PurgeComm(FUSBHandle, PURGE_RXABORT);
+    DoLog('  TX');
+    PurgeComm(FUSBHandle, PURGE_TXABORT);
+  end;
+end;
+
 function TACBrUSBWinDeviceAPI.SendData(const AData: AnsiString; ATimeout: Integer
   ): Integer;
 var
@@ -1120,7 +1133,7 @@ begin
         raise Exception.CreateFmt(sErrACBrWinUSBSendData, ['TimeOut', s]);
       end;
 
-      GetOverlappedResult(usbHandle, AOverlapped, BytesWritten, False);
+      GetOverlappedResult(FUSBHandle, AOverlapped, BytesWritten, False);
     end
     else if (Err <> ERROR_SUCCESS) then
       raise Exception.CreateFmt(sErrACBrWinUSBSendData, [GetLastErrorAsHexaStr(Err), s]);
@@ -1219,7 +1232,7 @@ begin
       if (x = WAIT_TIMEOUT) then
       begin
         DoLog('  ReadFile: TimeOut');
-        PurgeComm(usbHandle, PURGE_RXABORT);
+        PurgeComm(FUSBHandle, PURGE_RXABORT);
         Break;
       end;
 

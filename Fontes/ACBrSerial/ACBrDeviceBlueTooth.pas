@@ -220,6 +220,7 @@ begin
   if not Assigned(fsBlueToothDevice) then  // Já passou por Conectar ?
     Exit;
 
+  FecharSocket;
   fsBlueToothSocket := fsBlueToothDevice.CreateClientSocket(GUID_BLUETOOTH_PRINTER, False);
   if Assigned(fsBlueToothSocket) then
   begin

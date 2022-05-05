@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/22
+-- ACBrTEFAPIComum --
+[*] Propriedade "ImprimeViaClienteReduzida: Boolean", modificada de Default "True"
+    para "False"
+    (por: DSA)
+
 14/03/22
 -- ACBrTEFDCliSiTef --
 [-] Correções na geração dos dados do campo ParametrosAdicionais

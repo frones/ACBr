@@ -364,8 +364,8 @@ begin
         PadRight(Sacado.UF, 2, ' ')                         + //Unidade da Federação 152 153 2 - Alfa G036
         {Dados do sacador/avalista}
         '0'                                                 + // 154 a 154 - Tipo de Inscrição 154 154 1 - Num *G005
-        PadRight('', 15, '0')                               + // Número de Inscrição 155 169 15 - Num *G006
-        PadRight('', 40, ' ')                               + // Nome do Pagadorr/Avalista 170 209 40 - Alfa G013
+        PadRight(Sacado.SacadoAvalista.CNPJCPF, 15, '0')    + // Número de Inscrição 155 169 15 - Num *G006
+        PadRight(Sacado.SacadoAvalista.NomeAvalista, 40,' ')+ // Nome do Pagadorr/Avalista 170 209 40 - Alfa G013
         PadRight('0', 3, '0')                               + // Cód. Bco. Corresp. na Compensação 210 212 3 - Num *C031
         PadRight('',20, ' ')                                + // Nosso Nº no Banco Correspondente 213 232 20 - Alfa *C032
         PadRight('', 8, ' '));                                 // FEBRABAN/CNAB 233 240 8 - Alfa Brancos G004

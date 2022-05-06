@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2022
+--ACBrBoletoBradesco--
+[*] TK-2627 Segmento Q Adicionado Beneficiario Final
+  Contribuição : TopSolution
+
 04/05/2022
 --ACBrBancoCredisis--
 [-] TK-2597 Ajuste na propriedade de geração de data de Multa na remessa do CNAB240

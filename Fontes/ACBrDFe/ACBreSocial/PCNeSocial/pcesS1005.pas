@@ -176,6 +176,7 @@ type
   TDadosEstab = class(TObject)
   private
     FCnaePrep: string;
+    FcnpjResp: string;
     FAliqGilrat: TAliqGilRat;
     FinfoCaepf : TinfoCaepf;
     FInfoObra: TInfoObra;
@@ -191,6 +192,7 @@ type
     function infoCaepfInst(): Boolean;
 
     property cnaePrep: string read FCnaePrep write FCnaePrep;
+    property cnpjResp: string read FcnpjResp write FcnpjResp;
     property aliqGilrat: TAliqGilRat read FAliqGilrat write FAliqGilrat;
     property infoObra: TInfoObra read getInfoObra write FInfoObra;
     property infoCaepf : TinfoCaepf read getinfoCaepf write FinfoCaepf;
@@ -440,6 +442,10 @@ begin
   Gerador.wGrupo('dadosEstab');
 
   Gerador.wCampo(tcStr, '', 'cnaePrep', 1, 7, 1, infoEstab.DadosEstab.cnaePrep);
+
+  if (VersaoDF > ve02_05_00) and
+     (infoEstab.DadosEstab.cnpjResp <> '') then
+    Gerador.wCampo(tcStr, '', 'cnpjResp', 1, 14, 1, infoEstab.DadosEstab.cnpjResp);
 
   GerarAliqGilRat(FIdeEmpregador, infoEstab.FIdeEstab.tpInsc, infoEstab.DadosEstab.aliqGilrat, 'aliqGilrat');
   GerarInfoCaepf;

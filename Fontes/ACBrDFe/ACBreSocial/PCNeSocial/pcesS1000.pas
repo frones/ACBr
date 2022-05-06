@@ -171,6 +171,7 @@ type
     FSoftwareHouse: TSoftwareHouseCollection;
     FInfoComplementares: TInfoComplementares;
     FcnpjEFR: String;
+    FdtTrans11096 : TDatetime;
 
     function getDadosIsencao(): TDadosIsencao;
     function getInfoOrgInternacional(): TInfoOrgInternacional;
@@ -201,6 +202,7 @@ type
     property InfoOrgInternacional: TInfoOrgInternacional read getInfoOrgInternacional write FInfoOrgInternacional;
     property SoftwareHouse: TSoftwareHouseCollection read FSoftwareHouse write FSoftwareHouse;
     property InfoComplementares: TInfoComplementares read FInfoComplementares write FInfoComplementares;
+    property dtTrans11096 : TDatetime read FdtTrans11096 write FdtTrans11096;
   end;
 
   TInfoComplementares = class(TObject)
@@ -507,8 +509,13 @@ begin
     Gerador.wCampo(tcStr, '', 'indOpcCP', 1, 001, 0, eSIndOpcCPToStr(Self.infoEmpregador.infoCadastro.IndOpcCP));
 
   if (VersaoDF >= ve02_05_00) and (Not (Self.infoEmpregador.infoCadastro.ClassTrib in [ct21, ct22])) then
+  begin
     if (Self.infoEmpregador.infoCadastro.IndPorte = tpSim) then //Somente empresas que não são (ME e EPP)
       Gerador.wCampo(tcStr, '', 'indPorte',       1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndPorte));
+
+    if (DateToStr(infoEmpregador.infoCadastro.dtTrans11096) <> '') then
+      Gerador.wCampo(tcDat, '', 'dtTrans11096', 10, 10, 0, infoEmpregador.infoCadastro.dtTrans11096);
+  end;
 
   Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
 
@@ -520,15 +527,15 @@ begin
     Gerador.wCampo(tcStr, '', 'indEtt',           0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
     Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 030, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
   end;
-  
+
   GerarDadosIsencao;
 
   if VersaoDF <= ve02_05_00 then
   begin
     GerarContato;
     GerarInfoOp;
-  end 
-  else 
+  end
+  else
   if Self.infoEmpregador.infoCadastro.cnpjEFR <> '' then
     Gerador.wCampo(tcStr, '', 'cnpjEFR', 14, 14, 0, Self.infoEmpregador.infoCadastro.cnpjEFR);
   

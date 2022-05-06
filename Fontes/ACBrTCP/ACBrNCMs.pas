@@ -463,7 +463,7 @@ var
 
   function CriarEValidarJson: TJSONObject;
   begin
-    wJSon := Nil;
+    Result := Nil;
     try
       {$IfDef USE_JSONDATAOBJECTS_UNIT}
       Result := TJsonObject.Parse(aJSonStr) as TJsonObject;;
@@ -478,8 +478,8 @@ var
     except
       On E: Exception do
       begin
-        if Assigned(wJSon) then
-          wJSon.Free;
+        if Assigned(Result) then
+          Result.Free;
 
         if RenomearCacheErro then
           raise EACBrNcmException.Create('Cache local invalido. Renomeado para: ' +

@@ -48,6 +48,7 @@ type
   private
 
   protected
+    function LerDataHoraCancelamento(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataHora(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; virtual;
@@ -136,6 +137,12 @@ begin
   Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
 end;
 
+function TNFSeR_ABRASFv2.LerDataHoraCancelamento(
+  const ANode: TACBrXmlNode): TDateTime;
+begin
+  Result := ObterConteudo(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+end;
+
 procedure TNFSeR_ABRASFv2.LerConfirmacao(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
@@ -151,7 +158,7 @@ begin
 
     with NFSe.NfseCancelamento do
     begin
-      DataHora := LerDataHora(AuxNode);
+      DataHora := LerDataHoraCancelamento(AuxNode);
 
       if DataHora > 0 then
         NFSe.SituacaoNfse := snCancelado;

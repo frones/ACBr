@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2022
+-- ACBrNFSeXLerXml_ABRASFv2/SigCorp.LerXml --
+[*] Possível solução para o problema de leitura da data de cancelamento - Provedor
+    SigCorp.
+   Por: Italo Giurizzato Junior
+
 05/05/2022
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Possível solução para o problema de leitura da data de cancelamento e com

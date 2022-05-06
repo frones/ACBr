@@ -46,6 +46,7 @@ type
 
   TNFSeR_SigCorp203 = class(TNFSeR_ABRASFv2)
   protected
+    function LerDataHoraCancelamento(const ANode: TACBrXmlNode): TDateTime; override;
     function LerDataEmissao(const ANode: TACBrXmlNode): TDateTime; override;
     function LerDataEmissaoRps(const ANode: TACBrXmlNode): TDateTime; override;
 
@@ -91,6 +92,24 @@ var
   xDataHora: string;
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
+
+  if Pos('/', xDataHora) = 3 then
+  begin
+    if Copy(xDataHora, 1, 2) > '12' then
+      result := EncodeDataHora(xDataHora, 'DD/MM/YYYY')
+    else
+      result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
+  end
+  else
+    result := EncodeDataHora(xDataHora, '');
+end;
+
+function TNFSeR_SigCorp203.LerDataHoraCancelamento(
+  const ANode: TACBrXmlNode): TDateTime;
+var
+  xDataHora: string;
+begin
+  xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcStr);
 
   if Pos('/', xDataHora) = 3 then
   begin

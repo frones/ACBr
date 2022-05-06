@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2022
+-- DANFeNFCe5_00.fr3 --
+[-] TK-2639 Correção de alinhamento do nome do consumidor final, quando nome é grande e utilizado margem no fr3.
+  Por: Pandaaa
+
 15/05/2020
 -- DANFeNFCe5_00.fr3 --
 [-] Correção para exibir o acréscimo por item.

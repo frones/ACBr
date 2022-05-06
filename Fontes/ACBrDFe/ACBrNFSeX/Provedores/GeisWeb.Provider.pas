@@ -815,6 +815,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := StrToXml(Result);
+  Result := RemoverIdentacao(Result);
   Result := string(NativeStringToUTF8(Result));
 end;
 

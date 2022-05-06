@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/05/2022
+-- ACBrNFSeXServicos --
+[*] A cidade Taubaté/SP trocou de provedor, agora é Etherium
+   Por: Gildicley
+-- ACBrNFSeXServicos --
+[*] Corrigido a sessão da cidade Marechal Candido Rondon/PR
+   Por: Guilherme Bernardi
 -- ACBrNFSeXLerXml_ABRASFv2/SigCorp.LerXml --
 [*] Possível solução para o problema de leitura da data de cancelamento - Provedor
     SigCorp.

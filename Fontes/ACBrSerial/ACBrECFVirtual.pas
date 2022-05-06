@@ -255,7 +255,7 @@ TACBrECFVirtualClassCupom = class
       const TipoAcrescimoDesconto: String = 'D') ;
     procedure CancelaItem(NumItem: Integer);
 
-    function EfetuaPagamento(AValor: Currency; const AObservacao: String; APosFPG: Integer):
+    function EfetuaPagamento(AValor: Double; const AObservacao: String; APosFPG: Integer):
        TACBrECFVirtualClassPagamentoCupom;
 
     function RegistraCNF(AValor: Currency; const AObservacao: String; APosCNF: Integer):
@@ -1245,7 +1245,7 @@ begin
   end;
 end;
 
-function TACBrECFVirtualClassCupom.EfetuaPagamento(AValor: Currency;
+function TACBrECFVirtualClassCupom.EfetuaPagamento(AValor: Double;
   const AObservacao: String; APosFPG: Integer): TACBrECFVirtualClassPagamentoCupom;
 begin
   if fpPagamentosCupom.Count >= 999 then

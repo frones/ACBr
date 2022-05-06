@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, ACBrBase,
   ACBrDFe, pcnRetEnvBlocoX, ACBrDFeWebService,
-  ACBrUtil, pcnConversao, ACBrBlocoX_Comum;
+  ACBrUtil.XMLHTML, pcnConversao, ACBrBlocoX_Comum;
 
 const
   ACBRBLOCOX_VERSAO = '1.1.0a';

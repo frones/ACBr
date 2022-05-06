@@ -149,7 +149,7 @@ type
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil, pcnConversao, pcnConsts, pcnGerador;
+  ACBrBlocoX, ACBrUtil.XMLHTML, ACBrUtil.FilesIO, pcnConversao, pcnConsts, pcnGerador;
 
 { TACBrBlocoX_ConsultarProcessamentoArquivo }
 

@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, ACBrBase,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrBlocoX_WebServices, 
   ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrBlocoX_Comum, 
-  ACBrBlocoX_Consulta, ACBrUtil;
+  ACBrBlocoX_Consulta, ACBrUtil.FilesIO;
 
 type
 

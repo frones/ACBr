@@ -82,6 +82,15 @@ type
     procedure CampotcEsp_ValorVazio_Ocorrencia1_GeraTag;
     procedure CampotcEsp_ValorVazio_OcorrenciaZero_NaoGeraTag;
     procedure CampotcEsp_ValorContemLetras_GeraTag_GeraAlterta;
+    procedure CampotcStrOrig_ValorValido_GeraTag;
+    procedure CampotcStrOrig_ValorAcentuadoComEspacos_GeraSemAcento;
+    procedure CampotcStrOrig_ValorAcentuadoComEspacos_NaoGeraAlerta;
+    procedure CampotcStrOrig_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampotcStrOrig_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampotcStrOrig_ValorSoComEspacos_Ocorrencia1_GeraTag;
+    procedure CampotcStrOrig_ValorSoComEspacos_OcorrenciaZero_GeraTag;
+    procedure CampotcStrOrig_ValorLongo_GeraCampo_GeraAlerta;
+    procedure CampotcStrOrig_ValorLongoComEspacos_GeraCampo_GeraAlerta;
 
 {
 procedure CampoXXX_ValorValido_GeraTag;
@@ -89,7 +98,7 @@ procedure CampoXXX_ValorVazio_Ocorrencia1_GeraTag;
 procedure CampoXXX_ValorVazio_OcorrenciaZero_NaoGeraTag;
 }//                       x      x    x         x        x
     {  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
-                                                         x      x        x       X
+                                                          x      x         x         X
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
                         x           x                              x
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64);}
@@ -319,7 +328,6 @@ begin
   UmGerador.wCampo(tcStr, '', 'Recibo', 1, 36, 1, '');
   a := UmGerador.ArquivoFormatoXML;
   CheckEquals('<Recibo/>', a);
-
 end;
 
 procedure pcnGeradorTest.CampoString_ValorVazio_OcorrenciaZero_NaoGeraTag;
@@ -329,7 +337,6 @@ begin
   UmGerador.wCampo(tcStr, '', 'Recibo', 1, 36, 0, '');
   a := UmGerador.ArquivoFormatoXML;
   CheckEquals('', a);
-
 end;
 
 procedure pcnGeradorTest.CampoString_ValorLongo_GeraCampo_GeraAlerta;
@@ -738,6 +745,94 @@ begin
   CheckEquals('<Recibo>123a</Recibo>', a);
   a := UmGerador.ListaDeAlertas.Text;
   CheckNotEquals('', a, 'Deveria conter um alerta sobre o valor não ser somente números.');
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorValido_GeraTag;
+var
+  a,b: string;
+begin
+  b := '123abc';
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>123abc</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorAcentuadoComEspacos_GeraSemAcento;
+var
+  a,b: string;
+begin
+  b := ' 123 abc áéíàêãç ';
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>123 abc aeiaeac</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorAcentuadoComEspacos_NaoGeraAlerta;
+var
+  a,b: string;
+begin
+  b := ' 123 abc áéíàêãç ';
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 1, b);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckEquals('', a, 'Não deveria conter um alerta.');
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 1, '');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo/>', a);
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 0, '');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorSoComEspacos_Ocorrencia1_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 1, '    ');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo></Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorSoComEspacos_OcorrenciaZero_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 0, '    ');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo></Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorLongo_GeraCampo_GeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 25, 1, '123456789012345678901234567890');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>123456789012345678901234567890</Recibo>', a);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
+end;
+
+procedure pcnGeradorTest.CampotcStrOrig_ValorLongoComEspacos_GeraCampo_GeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcStrOrig, '', 'Recibo', 1, 30, 1, '1234567890 1234567890 1234567890');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>1234567890 1234567890 1234567890</Recibo>', a);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
 end;
 
 

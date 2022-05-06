@@ -78,54 +78,61 @@ var
   wAchouE, wAchouO: Boolean;
   wPosEO: Integer;
   wResposta: AnsiString;
+
+  function SanitizarRespostaPeso(const aResposta: AnsiString) : AnsiString;
+  begin
+    Result := Trim(aResposta);
+
+    if Result = EmptyStr then
+      Exit;
+
+    Result := StringReplace(Result, 'А', '0', [rfReplaceAll]);
+    Result := StringReplace(Result, 'Б', '1', [rfReplaceAll]);
+    Result := StringReplace(Result, 'В', '2', [rfReplaceAll]);
+    Result := StringReplace(Result, 'Г', '3', [rfReplaceAll]);
+    Result := StringReplace(Result, 'Д', '4', [rfReplaceAll]);
+    Result := StringReplace(Result, 'Е', '5', [rfReplaceAll]);
+    Result := StringReplace(Result, 'Ж', '6', [rfReplaceAll]);
+    Result := StringReplace(Result, 'З', '7', [rfReplaceAll]);
+    Result := StringReplace(Result, 'И', '8', [rfReplaceAll]);
+    Result := StringReplace(Result, 'Й', '9', [rfReplaceAll]);
+    Result := StringReplace(Result, #13, '', [rfReplaceAll]);
+    Result := StringReplace(Result, #10, '', [rfReplaceAll]);
+    Result := StringReplace(Result, '[CR]', '', [rfReplaceAll]);
+    Result := StringReplace(Result, '[LF]', '', [rfReplaceAll]);
+  end;
+
 begin
   Result := 0;
+  wAchouE := False;
+  wAchouO := False;
+  wPosEO := -1;
+  wResposta := EmptyStr;
 
-  if (aResposta = EmptyStr) then
+  { Removendo caracteres especiais, caso encontre algum }
+  wResposta := SanitizarRespostaPeso(aResposta);
+
+  if (Trim(wResposta) = EmptyStr) then
     Exit;
 
-  wAchouE := (Pos('E', UpperCase(aResposta)) > 0);
-  wAchouO := (Pos('O', UpperCase(aResposta)) > 0);
+  wResposta := UpperCase(wResposta);
+  wAchouE := (Pos('E', wResposta) > 0);
+  wAchouO := (Pos('O', wResposta) > 0);
 
   // Se encontrar a letra 'E' (Estсvel) ou 'O' (Oscilante), captura o peso da
   // posiчуo 1 a 7 da string
   if wAchouE or wAchouO then
   begin
     if wAchouE then
-      wPosEO := Pos('E', UpperCase(aResposta))
+      wPosEO := Pos('E', wResposta)
     else
-      wPosEO := Pos('O', UpperCase(aResposta));
+      wPosEO := Pos('O', wResposta);
 
-    wResposta := Copy(aResposta, 0, wPosEO - 1);
-
-    { Removendo caracteres especiais, caso encontre algum }
-    wResposta := StringReplace(wResposta, 'А', '0', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Б', '1', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'В', '2', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Г', '3', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Д', '4', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Е', '5', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Ж', '6', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'З', '7', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'И', '8', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Й', '9', [rfReplaceAll]);
+    wResposta := Copy(wResposta, 0, wPosEO - 1);
   end
   else
   begin
-    wResposta := Copy(aResposta, 1, 9);
-    { Removendo caracteres especiais, caso encontre algum }
-    wResposta := StringReplace(wResposta, 'А', '0', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Б', '1', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'В', '2', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Г', '3', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Д', '4', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Е', '5', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Ж', '6', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'З', '7', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'И', '8', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, 'Й', '9', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, #13, '', [rfReplaceAll]);
-    wResposta := StringReplace(wResposta, #10, '', [rfReplaceAll]);
+    wResposta := Copy(wResposta, 1, 9);
   end;
 
   if (Length(wResposta) > 0) then

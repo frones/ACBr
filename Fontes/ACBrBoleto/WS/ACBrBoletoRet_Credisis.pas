@@ -37,7 +37,7 @@ unit ACBrBoletoRet_Credisis;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, ACBrBoletoWS, ACBrBoletoRetorno,  ACBrUtil, DateUtils, pcnConversao;
+  Classes, SysUtils, ACBrBoleto, ACBrBoletoWS, ACBrBoletoRetorno, pcnConversao;
 
 type
 

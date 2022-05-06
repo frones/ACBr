@@ -463,6 +463,7 @@ var
 
   function CriarEValidarJson: TJSONObject;
   begin
+    wJSon := Nil;
     try
       {$IfDef USE_JSONDATAOBJECTS_UNIT}
       Result := TJsonObject.Parse(aJSonStr) as TJsonObject;;
@@ -477,6 +478,9 @@ var
     except
       On E: Exception do
       begin
+        if Assigned(wJSon) then
+          wJSon.Free;
+
         if RenomearCacheErro then
           raise EACBrNcmException.Create('Cache local invalido. Renomeado para: ' +
             QuotedStr(ChangeFileExt(fCacheArquivo, '.err')))
@@ -494,9 +498,10 @@ begin
 
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
   wJSon := CriarEValidarJson;
-  fUltimaAtualizacao := StringToDateTime(wJSon.S['Data_Ultima_Atualizacao_NCM']);
-  wJSonArr := wJSon.A['Nomenclaturas'];
   try
+    fUltimaAtualizacao := StringToDateTime(wJSon.S['Data_Ultima_Atualizacao_NCM']);
+    wJSonArr := wJSon.A['Nomenclaturas'];
+
     for I := 0 to wJSonArr.Count - 1 do
     begin
       wJSonNCM := wJSonArr.Items[I].ObjectValue;

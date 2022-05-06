@@ -39,6 +39,11 @@ Símbolo : Significado
 
 05/05/2022
 -- ACBrNCMs --
+[-] Correção de memory leak ao carregar um arquivo Json inválido.
+    (Por: Elias César)
+
+05/05/2022
+-- ACBrNCMs --
 [-] Correção de erro ao carregar um arquivo Json invalido. Efetuada alteração 
     para renomear o arquivo cache, caso ele exista e seja invalido.
     (Por: Elias César)

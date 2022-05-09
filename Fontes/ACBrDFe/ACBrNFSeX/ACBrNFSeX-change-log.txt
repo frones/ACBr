@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2022
+-- Diversos --
+[*] Alguns provedores que seguem a versão 1 do layout da ABRASF mas
+    disponibilizam o serviço GerarNFSe, o tratar retorna estava 
+    pegando o XML de forma errada e não estava salvando o mesmo.
+    Foi feita a correção.
+   Por: Italo Giurizzato Junior
+
 06/05/2022
 -- ACBrNFSeXServicos --
 [*] A cidade Taubaté/SP trocou de provedor, agora é Etherium

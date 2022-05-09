@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2022
+--ACBrBancoCresol--
+[*] Atualização do código de Mora aceitos na inicialização da Classe
+
 06/05/2022
 --ACBrBoletoBradesco--
 [*] TK-2627 Segmento Q Adicionado Beneficiario Final

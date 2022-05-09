@@ -68,6 +68,7 @@ begin
   fpNome                          := 'Cresol';
   fpNumero                        := 133;
   fpDigito                        := 3;
+  fpCodigosMoraAceitos            := '012';
   fpNumeroCorrespondente          := 0;
   FNumeroSequencialRegistroNoLote := 0;
   fpLayoutVersaoArquivo           := 84;

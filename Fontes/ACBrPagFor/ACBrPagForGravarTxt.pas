@@ -1595,7 +1595,7 @@ begin
       Inc(FQtdeRegistros);
       Inc(FQtdeRegistrosLote);
 
-      if (FPagFor.Geral.Banco in [PagBradesco, PagBancoDoBrasil]) then
+      if (FPagFor.Geral.Banco in [pagBradesco, pagBancoDoBrasil, pagSicredi]) then
         Inc(FSequencialDeLote);
 
       wregistro := BancoToStr(FPagFor.Geral.Banco);

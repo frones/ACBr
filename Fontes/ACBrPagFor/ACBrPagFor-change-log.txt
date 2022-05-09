@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2022
+-- ACBrPagForGravarTxt --
+[*] Ajustes nos Segmentos: J e J52, segundo orientação do banco Sicredi.
+   Por: Italo Giurizzato Junior
+
 04/05/2022
 -- ACBrPagForGravarTxt --
 [*] Ajustes nos registros: 1 e 5, bem como nos segmentos:  A, B e J52 para o banco

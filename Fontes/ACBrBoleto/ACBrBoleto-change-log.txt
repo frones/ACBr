@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2022
+--ACBrBancoSicredi--
+[-] TK-2648 Correção CNAB240 Segmento R - Coluna 042-042 Ajuste na propriedade Codigo do Desconto 3
+  Por: Pandaaa
+
 09/05/2022
 --ACBrBancoCresol--
 [*] Atualização do código de Mora aceitos na inicialização da Classe

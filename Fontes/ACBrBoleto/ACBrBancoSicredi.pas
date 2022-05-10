@@ -1998,14 +1998,13 @@ begin
                'R'                                                         + // Código do segmento do registro detalhe
                ' '                                                         + // Uso exclusivo FEBRABAN/CNAB: Branco
                Ocorrencia                                                  + // 16 a 17 - Código de movimento
+
                TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 18  tipo de desconto 2
                IfThen(ValorDesconto2 = 0, '00000000', FormatDateTime('ddmmyyyy', DataDesconto2)) + // 19 - 26 Data do Desconto 2
-
                IntToStrZero(Round(ValorDesconto2 * 100), 15)               + // 27 - 41 Valor/Percentual
-               TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 42 tipo de desconto 3
 
+               TipoDescontoToString(ACBrTitulo.TipoDesconto3)              + // 42 tipo de desconto 3
                IfThen(ValorDesconto3 = 0, '00000000', FormatDateTime('ddmmyyyy', DataDesconto3)) +  // 43-50 data do desconto 3
-
                IntToStrZero(Round(ValorDesconto3 * 100), 15)               +// 51-65 Valor ou percentual a ser concedido
 
                '2'                                                         + // 66 Código da multa - 2 valor percentual

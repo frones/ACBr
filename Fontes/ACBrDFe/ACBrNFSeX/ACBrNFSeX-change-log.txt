@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/05/2022
+-- Infisc.Provider/Infisc.GravarXml --
+[*] Alterações visando resolver o problema de assinatura inválida.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXClass/WebFisco.GravarXml --
 [*] Criado o campo Anexo que é utilizado tanto pelo provedor WebFisco quanto pelo
     FGMaiss.

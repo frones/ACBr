@@ -1155,6 +1155,8 @@ end;
 procedure TNFSeW_Infisc201.Configuracao;
 begin
   inherited Configuracao;
+
+  GerarNSRps := False;
 end;
 
 procedure TNFSeW_Infisc201.DefinirIDRps;

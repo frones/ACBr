@@ -755,6 +755,8 @@ begin
     VersaoAtrib := '2.01';
   end;
 
+  SetXmlNameSpace('');
+
   with ConfigMsgDados do
   begin
     DadosCabecalho := '<cabecalho versao="2.01">' +
@@ -800,8 +802,8 @@ procedure TACBrNFSeProviderInfisc201.ValidarSchema(
 begin
   inherited ValidarSchema(Response, aMetodo);
 
-  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
-         ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
+//  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
+//         ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
 end;
 
 { TACBrNFSeXWebserviceInfisc }

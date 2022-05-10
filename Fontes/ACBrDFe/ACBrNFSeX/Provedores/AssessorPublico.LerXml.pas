@@ -75,6 +75,8 @@ begin
   if EstaVazio(xRetorno) then
     raise Exception.Create('Arquivo xml não carregado.');
 
+  xRetorno := TiraAcentos(xRetorno);
+
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();
 
@@ -144,9 +146,11 @@ begin
   if aValor = 'S' then
     NFSe.OptanteSimplesNacional := snSim;
 
+  NFSe.OutrasInformacoes:=ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSSERVICO'), tcStr);
+
   with NFSe.Servico do
   begin
-    Discriminacao     := ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSSERVICO'), tcStr);
+//    Discriminacao     := ObterConteudo(AuxNode.Childrens.FindAnyNs('OBSSERVICO'), tcStr);
     ItemListaServico  := ObterConteudo(AuxNode.Childrens.FindAnyNs('ATIVCOD'), tcStr);
     xItemListaServico := ObterConteudo(AuxNode.Childrens.FindAnyNs('ATIVDESC'), tcStr);
     CodigoMunicipio   := ObterConteudo(AuxNode.Childrens.FindAnyNs('TOMMUNICIPIOCOD'), tcStr);

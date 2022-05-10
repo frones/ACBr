@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2022
+-- ACBrNFSeXClass/WebFisco.GravarXml --
+[*] Criado o campo Anexo que é utilizado tanto pelo provedor WebFisco quanto pelo
+    FGMaiss.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[*] Varios ajustes para atender o provedor EL (layout Próprio).
+   Por: Jeanny Paiva
+-- AssessorPublico.LerXml --
+[*] A leitura da tag <OBSSERVICO> estava alimentando o campo Discriminacao
+    sendo que o correto é OutrasInformacoes.
+   Por: José Jair de Oliveira
+
 09/05/2022
 -- Diversos --
 [*] Alguns provedores que seguem a versão 1 do layout da ABRASF mas

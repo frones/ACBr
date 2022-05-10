@@ -482,8 +482,9 @@ type
     FcUF: Integer;
     Fcrc: string;
     Fcrc_estado: string;
-    FDataInicioAtividade: TDateTime;
     FValorReceitaBruta: Double;
+    FAnexo: string;
+    FDataInicioAtividade: TDateTime;
   public
     constructor Create;
     destructor Destroy; override;
@@ -500,6 +501,7 @@ type
     property crc_estado: string read Fcrc_estado write Fcrc_estado;
     // Provedor WebFisco
     property ValorReceitaBruta: Double read FValorReceitaBruta write FValorReceitaBruta;
+    property Anexo: string read FAnexo write FAnexo;
     property DataInicioAtividade: TDateTime read FDataInicioAtividade write FDataInicioAtividade;
   end;
 

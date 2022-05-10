@@ -299,11 +299,11 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'paisest', 1, 60, 1,
                                                          '', '', True, xAtrib));
 
-  NFSeNode.AppendChild(AddNode(tcDe2, '#', 'sssrecbr', 1, 12, 1,
+  NFSeNode.AppendChild(AddNode(tcDe2, '#', 'ssrecbr', 1, 12, 1,
    IIf(cSimples = True, NFSe.Prestador.ValorReceitaBruta, 0.00), '', True, xAtrib));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ssanexo', 1, 15, 1,
-                                                         '', '', True, xAtrib));
+             IIf(cSimples = True, NFSe.Prestador.Anexo, ''), '', True, xAtrib));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#', 'ssdtini', 1, 10, 1,
    IIf(cSimples = True,

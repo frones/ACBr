@@ -531,8 +531,11 @@ begin
 
   Result.AppendChild(GerarIdentificacaoRPS);
 
+  if NFSe.DataEmissaoRps = 0 then
+    NFSe.DataEmissaoRps := NFSe.DataEmissao;
+
   Result.AppendChild(AddNode(FormatoEmissao, '#4', 'DataEmissao', 19, 19, 1,
-                                                   NFSe.DataEmissao, DSC_DEMI));
+                                                NFSe.DataEmissaoRps, DSC_DEMI));
 
   Result.AppendChild(GerarStatus);
   Result.AppendChild(GerarRPSSubstituido);
@@ -790,7 +793,7 @@ begin
 
     if NFSe.Tomador.Endereco.UF = 'EX' then
       Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, NrOcorrNIFTomador,
-                                                      NFSe.Tomador.NifTomador))
+                                                       NFSe.Tomador.NifTomador))
     else
     begin
       if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or

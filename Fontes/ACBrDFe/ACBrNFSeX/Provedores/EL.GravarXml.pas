@@ -48,6 +48,8 @@ type
 
   TNFSeW_EL = class(TNFSeWClass)
   protected
+    procedure Configuracao; override;
+
     function GerarIdentificacaoRPS: TACBrXmlNode;
     function GerarDadosPrestador: TACBrXmlNode;
     function GerarIdentificaoPrestador: TACBrXmlNode;
@@ -164,12 +166,19 @@ begin
                                                    NFSe.OutrasInformacoes, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Status', 1, 1, 1,
-                                       StatusRPSToStr(NFSe.StatusRps), ''));
+                                           StatusRPSToStr(NFSe.StatusRps), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CodigoMunicipioPrestacao', 7, 7, 0,
                       OnlyNumber(NFSe.Prestador.Endereco.CodigoMunicipio), ''));
 
   Result := True;
+end;
+
+procedure TNFSeW_EL.Configuracao;
+begin
+  inherited Configuracao;
+
+  DivAliq100 := True;
 end;
 
 function TNFSeW_EL.GerarContatoPrestador: TACBrXmlNode;
@@ -210,10 +219,10 @@ begin
                                               NFSe.Prestador.NomeFantasia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IncentivadorCultural', 1, 1, 1,
-      FpAOwner.SimNaoToStr(NFSe.IncentivadorCultural), ''));
+                          FpAOwner.SimNaoToStr(NFSe.IncentivadorCultural), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'OptanteSimplesNacional', 1, 1, 1,
-    FpAOwner.SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
+                        FpAOwner.SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'NaturezaOperacao', 1, 1, 1,
                              NaturezaOperacaoToStr(NFSe.NaturezaOperacao), ''));
@@ -327,13 +336,13 @@ begin
   end
   else
     Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
-                                NFSe.Tomador.Endereco.xMunicipio, ''));
+                                         NFSe.Tomador.Endereco.xMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 1,
-                                        NFSe.Tomador.Endereco.UF, ''));
+                                                 NFSe.Tomador.Endereco.UF, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Cep', 8, 8, 0,
-                           OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
+                                    OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
 end;
 
 function TNFSeW_EL.GerarIdentificacaoRPS: TACBrXmlNode;
@@ -357,7 +366,11 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'CpfCnpj', 11, 14, 1,
                 OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'IndicacaoCpfCnpj', 1, 1, 1,
+  if Length(OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.CpfCnpj)) <= 11 then
+    Result.AppendChild(AddNode(tcStr, '#1', 'IndicacaoCpfCnpj', 1, 1, 1,
+                                                                       '1', ''))
+  else
+    Result.AppendChild(AddNode(tcStr, '#1', 'IndicacaoCpfCnpj', 1, 1, 1,
                                                                       '2', ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 15, 0,
@@ -421,6 +434,7 @@ end;
 function TNFSeW_EL.GerarServico: TACBrXmlNodeArray;
 var
   i: integer;
+  xAliquota: Double;
 begin
   Result := nil;
   SetLength(Result, NFSe.Servico.ItemServico.Count);
@@ -447,8 +461,10 @@ begin
     Result[i].AppendChild(AddNode(tcStr, '#', 'Descricao', 1, 255, 1,
                                     NFSe.Servico.ItemServico[i].Descricao, ''));
 
-    Result[i].AppendChild(AddNode(tcDe4, '#', 'Aliquota', 1, 5, 1,
-                               NFSe.Servico.ItemServico[i].Aliquota / 100, ''));
+    xAliquota := NormatizarAliquota(NFSe.Servico.ItemServico[i].Aliquota, DivAliq100);
+
+    Result[i].AppendChild(AddNode(FormatoAliq, '#', 'Aliquota', 1, 5, 1,
+                                                                xAliquota, ''));
 
     Result[i].AppendChild(AddNode(tcDe4, '#', 'ValorServico', 1, 15, 1,
                                    NFSe.Servico.ItemServico[i].ValorTotal, ''));
@@ -532,6 +548,7 @@ begin
   inherited Configuracao;
 
   FormatoAliq := tcDe2;
+
   NrOcorrInformacoesComplemetares := 0;
   NrOcorrCepTomador := 1;
   NrOcorrCodigoPaisTomador := -1;

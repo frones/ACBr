@@ -89,6 +89,7 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     CancPreencherSerieNfse := True;
+    ConsultaPorFaixaPreencherNumNfseFinal := True;
   end;
 
   with ConfigWebServices do
@@ -141,17 +142,30 @@ procedure TACBrNFSeProvideriiBrasil204.ValidarSchema(
 var
   xXml, Integridade: string;
   i: Integer;
+
+  function GetIntegridade(const aTag: string): string;
+  var
+    aXml: string;
+  begin
+    aXml := SeparaDados(Response.ArquivoEnvio, aTag, False);
+
+    Result := '<Integridade>' +
+                 TACBrNFSeX(FAOwner).GerarIntegridade(aXml) +
+              '</Integridade>';
+  end;
+
 begin
   xXml := Response.ArquivoEnvio;
 
   // Precisa verificar o que deve ser utilizado para gerar o valor da Integridade
   // para o provedor iiBrasil
-  Integridade := TACBrNFSeX(FAOwner).GerarIntegridade(xXml);
-  Integridade := '<Integridade>' + Integridade + '</Integridade>';
+//  Integridade := TACBrNFSeX(FAOwner).GerarIntegridade(xXml);
+//  Integridade := '<Integridade>' + Integridade + '</Integridade>';
 
   case aMetodo of
     tmGerar:
       begin
+        Integridade := GetIntegridade('GerarNfseEnvio');
         i := Pos('</GerarNfseEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</GerarNfseEnvio>';
@@ -160,6 +174,7 @@ begin
 
     tmConsultarNFSePorRps:
       begin
+        Integridade := GetIntegridade('ConsultarNfseRpsEnvio');
         i := Pos('</ConsultarNfseRpsEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</ConsultarNfseRpsEnvio>';
@@ -168,6 +183,7 @@ begin
 
     tmCancelarNFSe:
       begin
+        Integridade := GetIntegridade('CancelarNfseEnvio');
         i := Pos('</CancelarNfseEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</CancelarNfseEnvio>';
@@ -176,6 +192,7 @@ begin
 
     tmSubstituirNFSe:
       begin
+        Integridade := GetIntegridade('SubstituirNfseEnvio');
         i := Pos('</SubstituirNfseEnvio>', xXml);
 
         xXml := Copy(xXml, 1, i -1) + Integridade + '</SubstituirNfseEnvio>';

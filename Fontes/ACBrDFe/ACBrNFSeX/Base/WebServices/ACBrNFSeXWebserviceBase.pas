@@ -619,6 +619,9 @@ begin
 
   xRetorno := TratarXmlRetornado(ARetorno);
 
+  if xRetorno = '' then
+    Exit;
+
   if (Length(responseTag) = 0) then
   begin
     Result := xRetorno;

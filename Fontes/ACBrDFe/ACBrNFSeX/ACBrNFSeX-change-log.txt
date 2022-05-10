@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/05/2022
+-- iiBrasil.Provider/ACBrNFSeXWebserviceBase --
+[*] Alterações visando resolver o problema ao gerar a tag Integridade para o
+    provedor iiBrasil.
+   Por: Italo Giurizzato Junior
 -- Infisc.Provider/Infisc.GravarXml --
 [*] Alterações visando resolver o problema de assinatura inválida.
    Por: Italo Giurizzato Junior

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2022
+-- ACBrPagForLerTxt --
+[*] Correção para ler o retorno do Segmento A - Banco Bradesco.
+   Por: Wesley Lopes
+
 09/05/2022
 -- ACBrPagForGravarTxt --
 [*] Ajustes nos Segmentos: J e J52, segundo orientação do banco Sicredi.

@@ -375,7 +375,7 @@ begin
         end;
       end;
 
-    pagBancoDoBrasil:
+    pagBancoDoBrasil, pagBradesco:
       begin
         FPagFor.Lote.Last.SegmentoA.Last.Credito.ValorPagamento := StrToInt(Copy(FArquivoTXT.Strings[i], 120, 15)) / 100;
         FPagFor.Lote.Last.SegmentoA.Last.Credito.NossoNumero    := Copy(FArquivoTXT.Strings[i], 135, 20);

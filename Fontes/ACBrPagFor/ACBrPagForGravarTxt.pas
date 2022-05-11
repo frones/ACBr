@@ -61,13 +61,13 @@ type
     procedure GeraRegistro0;             // Registro Header de Arquivo
     procedure GeraRegistro1(I: Integer); // Registro Header de Lote
     
-	procedure GeraSegmentoA(I: Integer);                     // Registro para Pagamentos (Pagamento através de Crédito em Conta Corrente, Cheque, OP, DOC, Pagamento com Autenticação ou Pix)
+    procedure GeraSegmentoA(I: Integer);                     // Registro para Pagamentos (Pagamento através de Crédito em Conta Corrente, Cheque, OP, DOC, Pagamento com Autenticação ou Pix)
     procedure GeraSegmentoB(mSegmentoBList: TSegmentoBList); // Registro para Pagamentos (Pagamento através de Crédito em Conta Corrente, Cheque, OP, DOC, Pagamento com Autenticação ou Pix)
     procedure GeraSegmentoC(mSegmentoCList: TSegmentoCList); // Registro para Pagamentos (Pagamento através de Crédito em Conta Corrente, Cheque, OP, DOC, Pagamento com Autenticação ou Pix)
-	
+
     procedure GeraSegmentoD(mSegmentoDList: TSegmentoDList); // Registro para Custódia de Cheques
-    
-	procedure GeraSegmentoE(mSegmentoEList: TSegmentoEList); // Registro para Extrato (Extrato de Conta Corrente para Conciliação Bancária)
+
+    procedure GeraSegmentoE(mSegmentoEList: TSegmentoEList); // Registro para Extrato (Extrato de Conta Corrente para Conciliação Bancária)
     procedure GeraSegmentoF(mSegmentoFList: TSegmentoFList); // Registro para Extrato (Extrato para Gestão de Caixa)
 
     procedure GeraSegmentoJ(I: Integer);                           // Registro para Pagamentos (Pagamento de Títulos de Cobrança e QRCode Pix)

@@ -461,7 +461,6 @@ function TACBrNFSeX.GerarIntegridade(const AXML: string): string;
 var
   XML: string;
   i, j: Integer;
-  xAssinatura: TStringList;
 begin
   j := Length(AXML);
   XML := '';
@@ -472,17 +471,9 @@ begin
       XML := XML + AXML[i];
   end;
 
-//  SSL.CarregarCertificadoSeNecessario;
-
-  xAssinatura := TStringList.Create;
-  try
-    xAssinatura.Add(XML + Configuracoes.Geral.Emitente.WSChaveAcesso);
-
-    Result := string(SSL.CalcHash(xAssinatura, dgstSHA512, outHexa, False));
-    Result := lowerCase(Result);
-  finally
-    xAssinatura.Free;
-  end;
+  Result := SSL.CalcHash(XML + Configuracoes.Geral.Emitente.WSChaveAcesso,
+                         dgstSHA512, outHexa, False);
+  Result := lowerCase(Result);
 end;
 
 procedure TACBrNFSeX.ConsultarLoteRps(const AProtocolo, ANumLote: String);

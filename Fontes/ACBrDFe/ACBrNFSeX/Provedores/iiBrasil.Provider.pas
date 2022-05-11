@@ -69,13 +69,15 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+
+    procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
   end;
 
 implementation
 
 uses
   ACBrUtil.XMLHTML,
-  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, iiBrasil.GravarXml, iiBrasil.LerXml;
 
 { TACBrNFSeProvideriiBrasil204 }
@@ -137,6 +139,61 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProvideriiBrasil204.TratarRetornoEmitir(
+  Response: TNFSeEmiteResponse);
+var
+  Document: TACBrXmlDocument;
+  AErro: TNFSeEventoCollectionItem;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  ANota: TNotaFiscal;
+  NumRps: String;
+  I: Integer;
+begin
+  if Response.ModoEnvio <> meUnitario then
+  begin
+    inherited TratarRetornoEmitir(Response);
+    Exit;
+  end;
+
+  Document := TACBrXmlDocument.Create;
+  try
+    try
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count > 0);
+
+      ANode := ANode.Childrens.FindAnyNs('InformacoesNfse');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod202;
+        AErro.Descricao := Desc202;
+        Exit;
+      end;
+
+      Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNfse'), tcStr);
+      Response.SerieNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieNfse'), tcStr);
+      Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+      Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('LinkNfse'), tcStr);
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
 procedure TACBrNFSeProvideriiBrasil204.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 var
@@ -156,11 +213,6 @@ var
 
 begin
   xXml := Response.ArquivoEnvio;
-
-  // Precisa verificar o que deve ser utilizado para gerar o valor da Integridade
-  // para o provedor iiBrasil
-//  Integridade := TACBrNFSeX(FAOwner).GerarIntegridade(xXml);
-//  Integridade := '<Integridade>' + Integridade + '</Integridade>';
 
   case aMetodo of
     tmGerar:
@@ -384,6 +436,7 @@ begin
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := RemoverIdentacao(Result);
 end;
 
 end.

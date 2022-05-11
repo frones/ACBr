@@ -173,7 +173,7 @@ begin
                                            NFSe.Servico.CodigoPais, DSC_CPAIS));
 
   Result.AppendChild(AddNode(tcStr, '#35', 'ExigibilidadeISS', 1, 01, 1,
-             ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), DSC_INDISS));
+    FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), DSC_INDISS));
 
   Result.AppendChild(AddNode(tcInt, '#36', 'MunicipioIncidencia', 7, 07, NrOcorrMunIncid,
                                 NFSe.Servico.MunicipioIncidencia, DSC_MUNINCI));

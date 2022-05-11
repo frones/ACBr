@@ -298,7 +298,7 @@ begin
 
       IdentificacaoRps.Numero := INIRec.ReadString(sSecao, 'Numero', '0');
       IdentificacaoRps.Serie := INIRec.ReadString(sSecao, 'Serie', '0');
-      IdentificacaoRps.Tipo := StrToTipoRPS(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
+      IdentificacaoRps.Tipo := FProvider.StrToTipoRPS(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
 
       DataEmissao := INIRec.ReadDate(sSecao, 'DataEmissao', Now);
       Competencia := INIRec.ReadDate(sSecao, 'Competencia', Now);
@@ -317,7 +317,7 @@ begin
 
       RpsSubstituido.Numero := INIRec.ReadString(sSecao, 'Numero', '0');
       RpsSubstituido.Serie := INIRec.ReadString(sSecao, 'Serie', '0');
-      RpsSubstituido.Tipo := StrToTipoRPS(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
+      RpsSubstituido.Tipo := FProvider.StrToTipoRPS(Ok, INIRec.ReadString(sSecao, 'Tipo', '1'));
 
       sSecao := 'Prestador';
 
@@ -423,7 +423,7 @@ begin
         Discriminacao := INIRec.ReadString(sSecao, 'Discriminacao', '');
         CodigoMunicipio := INIRec.ReadString(sSecao, 'CodigoMunicipio', '');
         CodigoPais := INIRec.ReadInteger(sSecao, 'CodigoPais', 1058);
-        ExigibilidadeISS := StrToExigibilidadeISS(Ok, INIRec.ReadString(sSecao, 'ExigibilidadeISS', '1'));
+        ExigibilidadeISS := FProvider.StrToExigibilidadeISS(Ok, INIRec.ReadString(sSecao, 'ExigibilidadeISS', '1'));
         MunicipioIncidencia := INIRec.ReadInteger(sSecao, 'MunicipioIncidencia', 0);
         UFPrestacao := INIRec.ReadString(sSecao, 'UFPrestacao', '');
         ResponsavelRetencao := FProvider.StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', '1'));
@@ -610,7 +610,7 @@ begin
     GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FXmlRps));
+  WriteStrToStream(AStream, AnsiString(FXmlNfse));
   Result := True;
 end;
 

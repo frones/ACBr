@@ -76,7 +76,7 @@ procedure TNFSeW_ModernizacaoPublica202.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + OnlyNumber(NFSe.IdentificacaoRps.Numero) +
                     NFSe.IdentificacaoRps.Serie +
-                    TipoRPSToStr(NFSe.IdentificacaoRps.Tipo);
+                    FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo);
 end;
 
 end.

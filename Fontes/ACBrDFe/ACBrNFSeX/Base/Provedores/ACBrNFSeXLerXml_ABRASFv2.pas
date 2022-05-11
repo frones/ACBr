@@ -399,7 +399,7 @@ begin
     begin
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
-      Tipo   := StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
+      Tipo   := FpAOwner.StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
     end;
   end;
 end;
@@ -725,7 +725,7 @@ begin
     begin
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
-      Tipo   := StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
+      Tipo   := FpAOwner.StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
     end;
   end;
 end;
@@ -773,7 +773,7 @@ begin
       CodigoMunicipio           := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
 
       CodigoPais          := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
-      ExigibilidadeISS    := StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
+      ExigibilidadeISS    := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ExigibilidadeISS'), tcStr));
       MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('MunicipioIncidencia'), tcInt);
       NumeroProcesso      := ObterConteudo(AuxNode.Childrens.FindAnyNs('NumeroProcesso'), tcStr);
 

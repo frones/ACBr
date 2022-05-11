@@ -94,6 +94,22 @@ type
                                      const AListTag: string = '';
                                      const AMessageTag: string = 'Erro'); override;
 
+  public
+    function SimNaoToStr(const t: TnfseSimNao): string; override;
+    function StrToSimNao(out ok: boolean; const s: string): TnfseSimNao; override;
+
+    function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
+    function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
+    function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string; override;
+
+    function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao): string; override;
+    function StrToResponsavelRetencao(out ok: boolean; const s: string): TnfseResponsavelRetencao; override;
+
+    function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string; override;
+    function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS; override;
+
+    function TipoRPSToStr(const t:TTipoRPS): string; override;
+    function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS; override;
   end;
 
 implementation
@@ -183,6 +199,92 @@ begin
     AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Mensagem'), tcStr);
     AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
   end;
+end;
+
+function TACBrNFSeProviderAgili.RegimeEspecialTributacaoDescricao(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  case t of
+    retEstimativa                : Result := '2 - Estimativa';
+    retCooperativa               : Result := '4 - Cooperativa';
+    retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
+    retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderAgili.RegimeEspecialTributacaoToStr(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  result := EnumeradoToStr(t, ['', '-2', '-4', '-5', '-6'],
+            [retNenhum, retEstimativa, retCooperativa,
+             retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
+end;
+
+function TACBrNFSeProviderAgili.StrToRegimeEspecialTributacao(out ok: boolean;
+  const s: string): TnfseRegimeEspecialTributacao;
+begin
+  result := StrToEnumerado(Ok, s, ['-1', '-2', '-4', '-5', '-6'],
+               [retNenhum, retEstimativa, retCooperativa,
+                retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
+end;
+
+function TACBrNFSeProviderAgili.ResponsavelRetencaoToStr(
+  const t: TnfseResponsavelRetencao): string;
+begin
+  result := EnumeradoToStr(t, ['-1', '-2', '-3'],
+                           [rtTomador, rtIntermediario, rtPrestador]);
+end;
+
+function TACBrNFSeProviderAgili.StrToResponsavelRetencao(out ok: boolean;
+  const s: string): TnfseResponsavelRetencao;
+begin
+  result := StrToEnumerado(Ok, s, ['-1', '-2', '-3'],
+                                     [rtTomador, rtIntermediario, rtPrestador]);
+end;
+
+function TACBrNFSeProviderAgili.SimNaoToStr(const t: TnfseSimNao): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1'], [snNao, snSim]);
+end;
+
+function TACBrNFSeProviderAgili.StrToSimNao(out ok: boolean;
+  const s: string): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['0', '1'],
+                           [snNao, snSim]);
+end;
+
+function TACBrNFSeProviderAgili.ExigibilidadeISSToStr(
+  const t: TnfseExigibilidadeISS): string;
+begin
+  result := EnumeradoToStr(t, ['-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8'],
+              [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
+               exiImunidade, exiSuspensaDecisaoJudicial,
+               exiSuspensaProcessoAdministrativo, exiISSFixo]);
+end;
+
+function TACBrNFSeProviderAgili.StrToExigibilidadeISS(out ok: boolean;
+  const s: string): TnfseExigibilidadeISS;
+begin
+  result := StrToEnumerado(Ok, s, ['-1', '-2', '-3', '-4', '-5', '-6', '-7'],
+    [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
+     exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo]);
+end;
+
+function TACBrNFSeProviderAgili.StrToTipoRPS(out ok: boolean;
+  const s: string): TTipoRPS;
+begin
+  result := StrToEnumerado(ok, s, ['-2','-4','-5'],
+                           [trRPS, trNFConjugada, trCupom]);
+end;
+
+function TACBrNFSeProviderAgili.TipoRPSToStr(const t: TTipoRPS): string;
+begin
+  result := EnumeradoToStr(t, ['-2', '-4', '-5'],
+                           [trRPS, trNFConjugada, trCupom]);
 end;
 
 function TACBrNFSeProviderAgili.PrepararRpsParaLote(const aXml: string): string;

@@ -77,13 +77,6 @@ type
     function GerarListaServico: TACBrXmlNode;
     function GerarDadosServico: TACBrXmlNodeArray;
     function GerarIdentificacaoRps: TACBrXmlNode;
-
-
-    function RegEspTribToStr(const t: TnfseRegimeEspecialTributacao): String;
-    function RespRetencaoToStr(const T: TnfseResponsavelRetencao): String;
-    function ExigibISSToStr(const t: TnfseExigibilidadeISS): String;
-    function TipoRPSAgiliToStr(const t: TTipoRPS): String;
-    function SimNaoAgiliToStr(const t: TnfseSimNao): String;
   public
     function GerarXml: Boolean; override;
 
@@ -116,15 +109,6 @@ begin
 
   if FpAOwner.ConfigGeral.Params.ParamTemValor('NaoGerarTag', 'ItemLei116') then
     FpNrOcorrItemLei116 := -1;
-end;
-
-function TNFSeW_Agili.ExigibISSToStr(
-  const t: TnfseExigibilidadeISS): String;
-begin
-  result := EnumeradoToStr(t, ['-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8'],
-              [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
-               exiImunidade, exiSuspensaDecisaoJudicial,
-               exiSuspensaProcessoAdministrativo, exiISSFixo]);
 end;
 
 function TNFSeW_Agili.FormatarCnae(Codigo: string): string;
@@ -323,7 +307,7 @@ begin
   Result := CreateElement('ExigibilidadeISSQN');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Codigo', 1, 1, 1,
-                            ExigibISSToStr(NFSe.Servico.ExigibilidadeISS), ''));
+            FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Descricao', 1, 30, 0, '', ''));
 end;
@@ -368,7 +352,7 @@ begin
                                     NFSe.IdentificacaoRps.Serie, DSC_SERIERPS));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Tipo', 1, 1, 1,
-                   TipoRPSAgiliToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS));
+               FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS));
 end;
 
 function TNFSeW_Agili.GerarIdentificacaoTomador: TACBrXmlNode;
@@ -415,24 +399,24 @@ begin
     Result.AppendChild(xmlNode);
   end;
 
-  if RegEspTribToStr(NFSe.RegimeEspecialTributacao) <> '' then
+  if FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao) <> '' then
   begin
     xmlNode := GerarRegimeEspecialTributacao;
     Result.AppendChild(xmlNode);
   end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'OptanteSimplesNacional', 1, 1, 1,
-                            SimNaoAgiliToStr(NFSe.OptanteSimplesNacional), ''));
+                        FpAOwner.SimNaoToStr(NFSe.OptanteSimplesNacional), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'OptanteMEISimei', 1, 1, 1,
-                                   SimNaoAgiliToStr(NFSe.OptanteMEISimei), ''));
+                               FpAOwner.SimNaoToStr(NFSe.OptanteMEISimei), ''));
 
   if NFSe.Servico.Valores.IssRetido = stRetencao then
     Result.AppendChild(AddNode(tcStr, '#1', 'ISSQNRetido', 1, 1, 1,
-                                                   SimNaoAgiliToStr(snSim), ''))
+                                               FpAOwner.SimNaoToStr(snSim), ''))
   else
     Result.AppendChild(AddNode(tcStr, '#1', 'ISSQNRetido', 1, 1, 1,
-                                                  SimNaoAgiliToStr(snNao), ''));
+                                              FpAOwner.SimNaoToStr(snNao), ''));
 
   if NFSe.Servico.Valores.IssRetido <> stNormal then
   begin
@@ -582,7 +566,7 @@ begin
   Result := CreateElement('RegimeEspecialTributacao');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Codigo', 1, 1, 1,
-                           RegEspTribToStr(NFSe.RegimeEspecialTributacao), ''));
+    FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Descricao', 1, 30, 0, '', ''));
 end;
@@ -592,7 +576,7 @@ begin
   Result := CreateElement('ResponsavelISSQN');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Codigo', 1, 1, 1,
-                      RespRetencaoToStr(NFSe.Servico.ResponsavelRetencao), ''));
+      FpAOwner.ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Descricao', 1, 30, 0, '', ''));
 end;
@@ -608,33 +592,6 @@ begin
 
   Result.AppendChild(AddNode(tcDat, '#1', 'DataEmissao', 10, 10, 1,
                                                    NFSe.DataEmissao, DSC_DEMI));
-end;
-
-function TNFSeW_Agili.RegEspTribToStr(
-  const t: TnfseRegimeEspecialTributacao): String;
-begin
-  result := EnumeradoToStr(t, ['','-2','-4','-5','-6'],
-            [retNenhum, retEstimativa, retCooperativa,
-             retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
-end;
-
-function TNFSeW_Agili.RespRetencaoToStr(
-  const T: TnfseResponsavelRetencao): String;
-begin
-  result := EnumeradoToStr(t, ['-1', '-2', '-3'],
-                           [rtTomador, rtIntermediario, rtPrestador]);
-end;
-
-function TNFSeW_Agili.SimNaoAgiliToStr(const t: TnfseSimNao): String;
-begin
-  result := EnumeradoToStr(t, ['1', '0'],
-                           [snSim, snNao]);
-end;
-
-function TNFSeW_Agili.TipoRPSAgiliToStr(const t: TTipoRPS): String;
-begin
-  result := EnumeradoToStr(t, ['-2','-4','-5'],
-                           [trRPS, trNFConjugada, trCupom]);
 end;
 
 end.

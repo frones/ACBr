@@ -194,6 +194,13 @@ type
 
     function TipoPessoaToStr(const t: TTipoPessoa): string; virtual;
     function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa; virtual;
+
+    function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string; virtual;
+    function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS; virtual;
+    function ExigibilidadeISSDescricao(const t: TnfseExigibilidadeISS): string; virtual;
+
+    function TipoRPSToStr(const t:TTipoRPS): string; virtual;
+    function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS; virtual;
   end;
 
 implementation
@@ -201,9 +208,7 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar,
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrXmlBase, ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts;
 
@@ -1109,6 +1114,58 @@ begin
                            ['1', '2', '3', '4', '5'],
                            [tpPFNaoIdentificada, tpPF, tpPJdoMunicipio,
                             tpPJforaMunicipio, tpPJforaPais]);
+end;
+
+function TACBrNFSeXProvider.ExigibilidadeISSDescricao(
+  const t: TnfseExigibilidadeISS): string;
+begin
+  case t of
+    exiExigivel                       : Result := '1 - Exigível';
+    exiNaoIncidencia                  : Result := '2 - Não Incidência';
+    exiIsencao                        : Result := '3 - Isenção';
+    exiExportacao                     : Result := '4 - Exportação';
+    exiImunidade                      : Result := '5 - Imunidade';
+    exiSuspensaDecisaoJudicial        : Result := '6 - Suspensa Decisao Judicial';
+    exiSuspensaProcessoAdministrativo : Result := '7 - Suspensa Processo Administrativo';
+    exiISSFixo                        : Result := '8 - ISS Fixo';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeXProvider.ExigibilidadeISSToStr(
+  const t: TnfseExigibilidadeISS): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7', '8'],
+                           [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
+                            exiImunidade, exiSuspensaDecisaoJudicial,
+                            exiSuspensaProcessoAdministrativo, exiISSFixo]);
+end;
+
+function TACBrNFSeXProvider.StrToExigibilidadeISS(out ok: boolean;
+  const s: string): TnfseExigibilidadeISS;
+begin
+  Result := StrToEnumerado(ok, s,
+                          ['1', '2', '3', '4', '5', '6', '7', '8'],
+                          [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
+                           exiImunidade, exiSuspensaDecisaoJudicial,
+                           exiSuspensaProcessoAdministrativo,exiISSFixo]);
+end;
+
+function TACBrNFSeXProvider.TipoRPSToStr(const t: TTipoRPS): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '0'],
+                           [trRPS, trNFConjugada, trCupom, trNone]);
+end;
+
+function TACBrNFSeXProvider.StrToTipoRPS(out ok: boolean;
+  const s: string): TTipoRPS;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '0'],
+                           [trRPS, trNFConjugada, trCupom, trNone]);
 end;
 
 function TACBrNFSeXProvider.PrepararRpsParaLote(const aXml: string): string;

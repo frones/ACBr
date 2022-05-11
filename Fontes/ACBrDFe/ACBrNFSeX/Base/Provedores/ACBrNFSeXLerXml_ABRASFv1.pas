@@ -370,7 +370,7 @@ begin
     begin
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
-      Tipo   := StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
+      Tipo   := FpAOwner.StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
     end;
   end;
 end;
@@ -623,7 +623,7 @@ begin
     begin
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
-      Tipo   := StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
+      Tipo   := FpAOwner.StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
     end;
   end;
 end;

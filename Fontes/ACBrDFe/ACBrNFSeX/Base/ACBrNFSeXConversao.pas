@@ -200,13 +200,6 @@ function StrToStatusNFSe(out ok: boolean; const s: string): TStatusNFSe;
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao): string;
 function StrToNaturezaOperacao(out ok: boolean; const s: string): TnfseNaturezaOperacao;
 
-function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string;
-function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS;
-function ExigibilidadeISSDescricao(const t: TnfseExigibilidadeISS): string;
-
-function TipoRPSToStr(const t:TTipoRPS): string;
-function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
-
 function IndicacaoCpfCnpjToStr(const t: TIndicacaoCpfCnpj): string;
 function StrToIndicacaoCpfCnpj(out ok: boolean; const s: string): TIndicacaoCpfCnpj;
 
@@ -387,38 +380,6 @@ begin
                             no549, no551, no601, no611, no612, no613, no615, no616,
                             no621, no622, no701, no711, no712, no901, no902, no911,
                             no912, no921, no931, no951, no952, no971, no981, no991]);
-end;
-
-function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6', '7', '8'],
-                           [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
-                            exiImunidade, exiSuspensaDecisaoJudicial,
-                            exiSuspensaProcessoAdministrativo, exiISSFixo]);
-end;
-
-function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS;
-begin
-  Result := StrToEnumerado(ok, s,
-                          ['1', '2', '3', '4', '5', '6', '7', '8'],
-                          [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao,
-                           exiImunidade, exiSuspensaDecisaoJudicial,
-                           exiSuspensaProcessoAdministrativo,exiISSFixo]);
-end;
-
-function TipoRPSToStr(const t: TTipoRPS): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '3', '0'],
-                           [trRPS, trNFConjugada, trCupom, trNone]);
-end;
-
-function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '0'],
-                           [trRPS, trNFConjugada, trCupom, trNone]);
 end;
 
 function IndicacaoCpfCnpjToStr(const t: TIndicacaoCpfCnpj): string;
@@ -18048,22 +18009,6 @@ begin
     ttTributavelFixo      : Result := 'G - Tributável Fixo';
     ttTributavelSN        : Result := 'H - Tributável S.N.';
     ttMEI                 : Result := 'M - Micro Empreendedor Individual(MEI)';
-  else
-    Result := '';
-  end;
-end;
-
-function ExigibilidadeISSDescricao(const t: TnfseExigibilidadeISS): string;
-begin
-  case t of
-    exiExigivel                       : Result := '1 - Exigível';
-    exiNaoIncidencia                  : Result := '2 - Não Incidência';
-    exiIsencao                        : Result := '3 - Isenção';
-    exiExportacao                     : Result := '4 - Exportação';
-    exiImunidade                      : Result := '5 - Imunidade';
-    exiSuspensaDecisaoJudicial        : Result := '6 - Suspensa Decisao Judicial';
-    exiSuspensaProcessoAdministrativo : Result := '7 - Suspensa Processo Administrativo';
-    exiISSFixo                        : Result := '8 - ISS Fixo';
   else
     Result := '';
   end;

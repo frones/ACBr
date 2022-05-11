@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/05/2022
+-- Diversos --
+[*] As funções de conversão: ExigibilidadeISSToStr, StrToExigibilidadeISS
+    ExigibilidadeISSDescricao, TipoRPSToStr e StrToTipoRPS foram movidas da
+    unit ACBrNFSeXConversao para ACBrNFSeXProviderBase, ajustes em outras
+    units se fizeram necessário.
+   Por: Italo Giurizzato Junior
+-- Agili.LerXml --
+[*] Ajustes para ler corretamente um XML Rps e uma NFS-e.
+   Por: PlenusTech
 -- iiBrasil.Provider --
 [*] Incluido a procedure TratarRetornoEmitir, por conta do retorno ser
     totalmente diferente.

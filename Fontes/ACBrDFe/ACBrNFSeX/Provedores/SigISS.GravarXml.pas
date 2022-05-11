@@ -190,7 +190,7 @@ begin
                                               NFSe.IdentificacaoRps.Serie, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_tipo', 1, 1, 0,
-                                 TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), ''));
+                        FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_dia', 1, 2, 0,
                                  FormatDateTime('dd',NFSe.DataEmissaoRps), ''));
@@ -432,7 +432,7 @@ begin
                                               NFSe.IdentificacaoRps.Serie, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_tipo', 1, 1, 0,
-                                 TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), ''));
+                        FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'rps_dia', 1, 2, 0,
                                  FormatDateTime('dd',NFSe.DataEmissaoRps), ''));

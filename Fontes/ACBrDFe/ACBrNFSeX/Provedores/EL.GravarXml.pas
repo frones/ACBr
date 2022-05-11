@@ -356,7 +356,7 @@ begin
                                     NFSe.IdentificacaoRps.Serie, DSC_SERIERPS));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Tipo', 1, 1, 1,
-                        TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS));
+               FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS));
 end;
 
 function TNFSeW_EL.GerarIdentificaoPrestador: TACBrXmlNode;

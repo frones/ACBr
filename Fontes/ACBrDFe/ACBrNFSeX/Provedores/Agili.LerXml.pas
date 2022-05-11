@@ -55,7 +55,9 @@ type
     procedure LerRegimeEspecialTributacao(const ANode: TACBrXmlNode);
     procedure LerExigibilidadeISSQN(const ANode: TACBrXmlNode);
     procedure LerMunicipioIncidencia(const ANode: TACBrXmlNode);
-    procedure LerInfDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
+    procedure LerRpsDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
+    procedure LerNfseDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
+    procedure LerDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
     procedure LerRps(const ANode: TACBrXmlNode);
     procedure LerIdentificacaoRps(const ANode: TACBrXmlNode);
     procedure LerIdentificacaoPrestador(const ANode: TACBrXmlNode);
@@ -281,7 +283,6 @@ end;
 procedure TNFSeR_Agili.LerExigibilidadeISSQN(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
   Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ExigibilidadeISSQN');
@@ -290,11 +291,7 @@ begin
   begin
     with NFSe.Servico do
     begin
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr);
-
-      ExigibilidadeISS := StrToEnumerado(Ok, aValor, ['-1','-2','-3','-4','-5','-6','-7'],
-        [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
-         exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo]);
+      ExigibilidadeISS := FpAOwner.StrToExigibilidadeISS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr));
     end;
   end;
 end;
@@ -321,7 +318,6 @@ end;
 procedure TNFSeR_Agili.LerIdentificacaoRps(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
   Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('IdentificacaoRps');
@@ -333,9 +329,7 @@ begin
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Serie  := ObterConteudo(AuxNode.Childrens.FindAnyNs('Serie'), tcStr);
 
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr);
-
-      Tipo := StrToEnumerado(ok, aValor, ['-2','-4','-5'], [trRPS, trNFConjugada, trCupom]);
+      Tipo := FpAOwner.StrToTipoRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Tipo'), tcStr));
 
       NFSe.InfID.ID := OnlyNumber(Numero) + Serie;
     end;
@@ -381,93 +375,75 @@ begin
   end;
 end;
 
-procedure TNFSeR_Agili.LerInfDeclaracaoPrestacaoServico(
+procedure TNFSeR_Agili.LerDeclaracaoPrestacaoServico(
   const ANode: TACBrXmlNode);
 var
-  AuxNode: TACBrXmlNode;
   aValor: string;
   Ok: Boolean;
-
-  function _StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
-  begin
-    result := StrToEnumerado(ok, s,
-                             ['1','0'],
-                             [snSim, snNao]);
-  end;
-
 begin
-  AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+  LerIdentificacaoPrestador(ANode);
+  LerRps(ANode);
+  LerDadosTomador(ANode);
+  LerRegimeEspecialTributacao(ANode);
 
-  if AuxNode <> nil then
+  NFSe.OptanteSimplesNacional := FpAOwner.StrToSimNao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
+  NFSe.NfseSubstituida := ObterConteudo(ANode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
+  NFSe.OptanteMEISimei := FpAOwner.StrToSimNao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('OptanteMEISimei'), tcStr));
+
+  LerResponsavelISSQN(ANode);
+  LerExigibilidadeISSQN(ANode);
+  LerListaServico(ANode);
+
+  with NFSe.Servico do
   begin
-    LerIdentificacaoPrestador(AuxNode);
-    LerRps(AuxNode);
-    LerDadosTomador(AuxNode);
-    LerRegimeEspecialTributacao(AuxNode);
+    CodigoTributacaoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoAtividadeEconomica'), tcStr);
 
-    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr);
+    if CodigoTributacaoMunicipio = '' then
+      CodigoTributacaoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('CodigoCnaeAtividadeEconomica'), tcStr);
 
-    NFSe.OptanteSimplesNacional := _StrToSimNao(Ok, aValor);
+    if CodigoTributacaoMunicipio = '' then
+      CodigoTributacaoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('ItemLei116AtividadeEconomica'), tcStr);
 
-    NFSe.NfseSubstituida := ObterConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
+    CodigoCnae := FpcodCNAE;
+    ItemListaServico := FpCodLCServ;
 
-    aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteMEISimei'), tcStr);
-    NFSe.OptanteMEISimei := _StrToSimNao(Ok, aValor);
+    if FpAOwner.ConfigGeral.TabServicosExt then
+      xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
+    else
+      xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));
 
-    LerResponsavelISSQN(AuxNode);
-    LerExigibilidadeISSQN(AuxNode);
-    LerListaServico(AuxNode);
+    NumeroProcesso := ObterConteudo(ANode.Childrens.FindAnyNs('BeneficioProcesso'), tcStr);
 
-    with NFSe.Servico do
+    with Valores do
     begin
-      CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoAtividadeEconomica'), tcStr);
+      ValorServicos := ObterConteudo(ANode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
+      DescontoIncondicionado := ObterConteudo(ANode.Childrens.FindAnyNs('ValorDescontos'), tcDe2);
+      ValorPis := ObterConteudo(ANode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+      ValorCofins := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+      ValorInss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorInss'), tcDe2);
+      ValorIr := ObterConteudo(ANode.Childrens.FindAnyNs('ValorIrrf'), tcDe2);
+      ValorCsll := ObterConteudo(ANode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
+      valorOutrasRetencoes := ObterConteudo(ANode.Childrens.FindAnyNs('ValorOutrasRetencoes'), tcDe2);
+      BaseCalculo := ObterConteudo(ANode.Childrens.FindAnyNs('ValorBaseCalculoISSQN'), tcDe2);
+      Aliquota := ObterConteudo(ANode.Childrens.FindAnyNs('AliquotaISSQN'), tcDe3);
+      ValorIss := ObterConteudo(ANode.Childrens.FindAnyNs('ValorISSQNCalculado'), tcDe2);
 
-      if CodigoTributacaoMunicipio = '' then
-        CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoCnaeAtividadeEconomica'), tcStr);
+      aValor := ObterConteudo(ANode.Childrens.FindAnyNs('ISSQNRetido'), tcStr);
 
-      if CodigoTributacaoMunicipio = '' then
-        CodigoTributacaoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('ItemLei116AtividadeEconomica'), tcStr);
-
-      CodigoCnae := FpcodCNAE;
-      ItemListaServico := FpCodLCServ;
-
-      if FpAOwner.ConfigGeral.TabServicosExt then
-        xItemListaServico := ObterDescricaoServico(OnlyNumber(ItemListaServico))
-      else
-        xItemListaServico := CodItemServToDesc(OnlyNumber(ItemListaServico));
-
-      NumeroProcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('BeneficioProcesso'), tcStr);
-
-      with Valores do
-      begin
-        ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
-        DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorDescontos'), tcDe2);
-        ValorPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
-        ValorCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
-        ValorInss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorInss'), tcDe2);
-        ValorIr := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIrrf'), tcDe2);
-        ValorCsll := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCsll'), tcDe2);
-        valorOutrasRetencoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorOutrasRetencoes'), tcDe2);
-        BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorBaseCalculoISSQN'), tcDe2);
-        Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaISSQN'), tcDe3);
-        ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorISSQNCalculado'), tcDe2);
-
-        aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('ISSQNRetido'), tcStr);
-
-        case _StrToSimNao(Ok, aValor) of
-          snSim: ValorIssRetido := ValorIss;
-          snNao: ValorIssRetido := 0;
-        end;
-
-        ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorLiquido'), tcDe2);
+      case FpAOwner.StrToSimNao(Ok, aValor) of
+        snSim:
+          ValorIssRetido := ValorIss;
+        snNao:
+          ValorIssRetido := 0;
       end;
 
-      NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
-
+      ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('ValorLiquido'), tcDe2);
     end;
 
-    LerMunicipioIncidencia(AuxNode);
+    NFSe.OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('Observacao'), tcStr);
   end;
+
+  LerMunicipioIncidencia(ANode);
 end;
 
 procedure TNFSeR_Agili.LerListaServico(const ANode: TACBrXmlNode);
@@ -524,11 +500,21 @@ begin
   end;
 end;
 
+procedure TNFSeR_Agili.LerNfseDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
+var
+  AuxNode:TACBrXmlNode;
+begin
+
+  AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+  if Assigned(AuxNode) then
+    LerDeclaracaoPrestacaoServico(AuxNode);
+end;
+
 procedure TNFSeR_Agili.LerRegimeEspecialTributacao(
   const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
   Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('RegimeEspecialTributacao');
@@ -537,11 +523,7 @@ begin
   begin
     with NFSe do
     begin
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr);
-
-      RegimeEspecialTributacao := StrToEnumerado(Ok, aValor, ['-1','-2','-4','-5','-6'],
-                   [retNenhum, retEstimativa, retCooperativa,
-                    retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
+      RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr));
     end;
   end;
 end;
@@ -549,7 +531,6 @@ end;
 procedure TNFSeR_Agili.LerResponsavelISSQN(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  aValor: string;
   Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ResponsavelISSQN');
@@ -558,10 +539,7 @@ begin
   begin
     with NFSe.Servico do
     begin
-      aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr);
-
-      ResponsavelRetencao := StrToEnumerado(Ok, aValor, ['-1', '-2', '-3'],
-                                         [rtTomador, rtIntermediario, rtPrestador]);
+      ResponsavelRetencao := FpAOwner.StrToResponsavelRetencao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr));
     end;
   end;
 end;
@@ -580,6 +558,28 @@ begin
   end;
 end;
 
+procedure TNFSeR_Agili.LerRpsDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+
+  AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+
+  if Assigned(AuxNode) then
+  begin
+    LerDeclaracaoPrestacaoServico(AuxNode);
+    Exit();
+  end;
+
+  AuxNode := ANode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+
+  if Assigned(AuxNode) then
+  begin
+    LerDeclaracaoPrestacaoServico(AuxNode);
+    Exit();
+  end;
+end;
+
 procedure TNFSeR_Agili.LerSituacaoNfse(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
@@ -589,6 +589,7 @@ begin
   if AuxNode <> nil then
   begin
     NFSe.Situacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcInt);
+
     case NFSe.Situacao of
       -2:
         begin
@@ -650,7 +651,7 @@ begin
   LerSituacaoNfse(ANode);
   LerIdentificacaoOrgaoGerador(ANode);
   LerDadosPrestador(ANode);
-  LerInfDeclaracaoPrestacaoServico(ANode);
+  LerNfseDeclaracaoPrestacaoServico(ANode);
 end;
 
 function TNFSeR_Agili.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
@@ -659,7 +660,7 @@ begin
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  LerInfDeclaracaoPrestacaoServico(ANode);
+  LerRpsDeclaracaoPrestacaoServico(ANode);
 end;
 
 end.

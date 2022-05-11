@@ -571,7 +571,7 @@ begin
                                    NFSe.RpsSubstituido.Serie, DSC_SERIERPSSUB));
 
     Result.AppendChild(AddNode(tcStr, '#3', 'Tipo', 1, 1, 1,
-                       TipoRPSToStr(NFSe.RpsSubstituido.Tipo), DSC_TIPORPSSUB));
+              FpAOwner.TipoRPSToStr(NFSe.RpsSubstituido.Tipo), DSC_TIPORPSSUB));
   end;
 end;
 
@@ -627,7 +627,7 @@ begin
 
     Result.AppendChild(AddNode(tcInt, '#35', 'ExigibilidadeISS',
                                NrMinExigISS, NrMaxExigISS, NrOcorrExigibilidadeISS,
-    StrToInt(ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
+    StrToInt(FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
 
     Result.AppendChild(AddNode(tcInt, '#36', 'MunicipioIncidencia', 7, 7, NrOcorrMunIncid,
                                 NFSe.Servico.MunicipioIncidencia, DSC_MUNINCI));
@@ -775,7 +775,7 @@ end;
 function TNFSeW_ABRASFv2.GerarTipoRPS: TACBrXmlNode;
 begin
   Result := AddNode(tcStr, '#3', 'Tipo', 1, 1, NrOcorrTipoRPS,
-                         TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS);
+                FpAOwner.TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS);
 end;
 
 function TNFSeW_ABRASFv2.GerarTomador: TACBrXmlNode;

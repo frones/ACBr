@@ -172,7 +172,7 @@ begin
 
     Result[i].AppendChild(AddNode(tcInt, '#35', 'ExigibilidadeISS',
                                NrMinExigISS, NrMaxExigISS, NrOcorrExigibilidadeISS,
-    StrToInt(ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
+    StrToInt(FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
 
     Result[i].AppendChild(AddNode(tcInt, '#36', 'MunicipioIncidencia', 7, 07, NrOcorrMunIncid,
                                   NFSe.Servico.MunicipioIncidencia, DSC_MUNINCI));

@@ -85,6 +85,13 @@ type
 
     function TipoPessoaToStr(const t: TTipoPessoa): string;
     function StrToTipoPessoa(out ok: boolean; const s: string): TTipoPessoa;
+
+    function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): string;
+    function StrToExigibilidadeISS(out ok: boolean; const s: string): TnfseExigibilidadeISS;
+    function ExigibilidadeISSDescricao(const t: TnfseExigibilidadeISS): string;
+
+    function TipoRPSToStr(const t:TTipoRPS): string;
+    function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
   end;
 
 implementation

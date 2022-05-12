@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2022
+-- SigCorp.Provider --
+[*] Incluido o TratarRetornoCancelamento na unit do provedor e reescrito para
+    anteder as diferenças em relação ao padrão ABRASF.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRLClass/ACBrNFSeXDANFSeRLRetrato --
 [*] Alterado a forma que gera do nome do PDF quando o usuário já passa o nome e
     alterado a cor dos labels/textos de clWindowText para clBlack.

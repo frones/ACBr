@@ -891,9 +891,10 @@ function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 begin
   result := EnumeradoToStr(t, ['0 - Preço tabelado ou máximo sugerido', '1 - Lista Negativa (valor)',
    '2 - Lista Positiva (valor)', '3 - Lista Neutra (valor)',
-   '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)', '6 - Valor da Operação'],
+   '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)', '6 - Valor da Operação', ''],
     [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
-     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao]);
+     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao,
+     TpcnDeterminacaoBaseIcmsST(-1)]);
 end;
 
 function modBCSTToStr(const t: TpcnDeterminacaoBaseIcmsST): string;
@@ -905,16 +906,18 @@ begin
   // 4 - Margem Valor Agregado (%);
   // 5 - Pauta (valor);
   // 6 - Valor da Operação
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6'],
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6', ''],
     [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
-     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao]);
+     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao,
+     TpcnDeterminacaoBaseIcmsST(-1)]);
 end;
 
 function StrTomodBCST(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6'],
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', ''],
     [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
-     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao]);
+     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao,
+     TpcnDeterminacaoBaseIcmsST(-1)]);
 end;
 
 // N28 - Motivo da desoneração do ICMS ***************************
@@ -937,20 +940,24 @@ begin
     // 11 – Deficiente não Condutor (Convênio ICMS 38/12). (v3.1)
     // 12 - Orgão Fomento
     // 16 - Olimpiadas Rio 2016
-  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '16', '90'],
+  result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                               '11', '12', '16', '90', ''],
     [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
      mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
      mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
-     mdiOlimpiadaRio2016, mdiSolicitadoFisco]);
+     mdiOlimpiadaRio2016, mdiSolicitadoFisco,
+     TpcnMotivoDesoneracaoICMS(-1)]);
 end;
 
 function StrTomotDesICMS(out ok: boolean; const s: string): TpcnMotivoDesoneracaoICMS;
 begin
-  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '16', '90'],
+  result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                                   '10', '11', '12', '16', '90', ''],
     [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
      mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
      mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
-     mdiOlimpiadaRio2016, mdiSolicitadoFisco]);
+     mdiOlimpiadaRio2016, mdiSolicitadoFisco,
+     TpcnMotivoDesoneracaoICMS(-1)]);
 end;
 
 // CST IPI *********************************************************************
@@ -1764,11 +1771,13 @@ begin
 result := EnumeradoToStr(t, ['1 – Táxi', '2 – Deficiente Físico', '3 – Produtor Agropecuário',
   '4 – Frotista/Locadora', '5 – Diplomático/Consular', '6 - Utilit./Motos da Am./Áreas Livre Com.',
   '7 – SUFRAMA', '8 – Venda a Orgãos Publicos', '9 – Outros', '10 – Deficiente Condutor',
-  '11 – Deficiente não Condutor', '12 - Orgão Fomento', '16 - Olimpiadas Rio 2016', '90 - Solicitado pelo Fisco'],
+  '11 – Deficiente não Condutor', '12 - Orgão Fomento', '16 - Olimpiadas Rio 2016',
+  '90 - Solicitado pelo Fisco', ''],
   [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
    mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
    mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
-   mdiOlimpiadaRio2016, mdiSolicitadoFisco]);
+   mdiOlimpiadaRio2016, mdiSolicitadoFisco,
+   TpcnMotivoDesoneracaoICMS(-1)]);
 end;
 
 function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib): string;

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes para uma lista de serviços de provedores que seguem o layout da ABRASF.
+   Por: Italo Giurizzato Junior
 -- SigCorp.Provider --
 [*] Incluido o TratarRetornoCancelamento na unit do provedor e reescrito para
     anteder as diferenças em relação ao padrão ABRASF.

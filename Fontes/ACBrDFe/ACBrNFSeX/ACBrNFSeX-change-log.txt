@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2022
+-- ACBrNFSeXDANFSeFR --
+[*] Possível correção para o erro de compilação.
+   Por: Italo Giurizzato Junior
+
 11/05/2022
 -- Diversos --
 [*] As funções de conversão: ExigibilidadeISSToStr, StrToExigibilidadeISS

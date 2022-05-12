@@ -909,7 +909,7 @@ begin
         with Servico do
         begin
           FieldByName('CodigoMunicipio').AsString := CodIBGEToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''), 0));
-          FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
+          FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(ExigibilidadeISS);
 
           if NaturezaOperacao = no2 then
             FieldByName('MunicipioIncidencia').AsString := 'Fora do Município'
@@ -940,7 +940,7 @@ begin
 
         with Servico do
         begin
-          FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
+          FieldByName('ExigibilidadeISS').AsString := FProvider.ExigibilidadeISSDescricao(ExigibilidadeISS);
           FieldByName('TipoRecolhimento').AsString := TipoRecolhimento;
 
           if Provedor = proAdm then

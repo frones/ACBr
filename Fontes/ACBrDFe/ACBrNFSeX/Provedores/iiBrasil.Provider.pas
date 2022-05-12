@@ -76,6 +76,7 @@ type
 implementation
 
 uses
+  synacode,
   ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, iiBrasil.GravarXml, iiBrasil.LerXml;
@@ -144,11 +145,7 @@ procedure TACBrNFSeProvideriiBrasil204.TratarRetornoEmitir(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode: TACBrXmlNode;
-  ANodeArray: TACBrXmlNodeArray;
-  ANota: TNotaFiscal;
-  NumRps: String;
-  I: Integer;
+  ANode: TACBrXmlNode;
 begin
   if Response.ModoEnvio <> meUnitario then
   begin
@@ -165,7 +162,7 @@ begin
 
       ProcessarMensagemErros(ANode, Response);
 
-      Response.Sucesso := (Response.Erros.Count > 0);
+      Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := ANode.Childrens.FindAnyNs('InformacoesNfse');
 
@@ -181,6 +178,7 @@ begin
       Response.SerieNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieNfse'), tcStr);
       Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
       Response.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('LinkNfse'), tcStr);
+      Response.Link := DecodeBase64(Response.Link);
     except
       on E:Exception do
       begin

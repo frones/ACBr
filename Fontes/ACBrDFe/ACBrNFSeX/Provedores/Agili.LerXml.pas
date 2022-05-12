@@ -568,7 +568,7 @@ begin
   if Assigned(AuxNode) then
   begin
     LerDeclaracaoPrestacaoServico(AuxNode);
-    Exit();
+    Exit;
   end;
 
   AuxNode := ANode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
@@ -576,7 +576,7 @@ begin
   if Assigned(AuxNode) then
   begin
     LerDeclaracaoPrestacaoServico(AuxNode);
-    Exit();
+    Exit;
   end;
 end;
 

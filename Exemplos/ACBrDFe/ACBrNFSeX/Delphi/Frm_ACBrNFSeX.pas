@@ -574,8 +574,8 @@ begin
 
       Servico.Valores.ValorServicos := 100.35;
       Servico.Valores.ValorDeducoes := 0.00;
-      Servico.Valores.AliquotaPis := 1.00;
-      Servico.Valores.ValorPis := 1.00;
+      Servico.Valores.AliquotaPis := 0.00;
+      Servico.Valores.ValorPis := 0.00;
       Servico.Valores.AliquotaCofins := 2.00;
       Servico.Valores.ValorCofins := 2.00;
       Servico.Valores.ValorInss := 0.00;
@@ -705,7 +705,7 @@ begin
         TipoUnidade := tuQtde;
         Unidade := 'UN';
         Quantidade := 10;
-        ValorUnitario := 5;
+        ValorUnitario := 0.01;
 
         QtdeDiaria := 0;
         ValorTaxaTurismo := 0;
@@ -714,7 +714,7 @@ begin
 
         BaseCalculo := ValorTotal - ValorDeducoes - DescontoIncondicionado;
 
-        Aliquota := 4;
+        Aliquota := 0.10;
 
         ValorISS := BaseCalculo * Aliquota / 100;
 
@@ -940,7 +940,6 @@ begin
         exit;
     end;
 
-    // Provedor Conam
     if ACBrNFSeX1.Configuracoes.Geral.Provedor = proConam then
     begin
       SerNFSe := '1';
@@ -957,6 +956,13 @@ begin
 
       ValNFSe := '';
       if not (InputQuery(Titulo, 'Valor da NFSe', ValNFSe)) then
+        exit;
+    end;
+
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proAssessorPublico then
+    begin
+      NumRps := '';
+      if not (InputQuery(Titulo, 'Numero do RPS', NumRps)) then
         exit;
     end;
 
@@ -1890,9 +1896,14 @@ begin
     else
       memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArq);
 
-    memoLog.Lines.Add('Nota Numero: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
+    memoLog.Lines.Add('Nota Numero..........: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Numero);
     memoLog.Lines.Add('Código de Verificação: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
-    memoLog.Lines.Add('Data de Emissão: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));
+    memoLog.Lines.Add('Data de Emissão......: ' + DateToStr(ACBrNFSeX1.NotasFiscais.Items[0].NFSe.DataEmissao));
+    memoLog.Lines.Add('Prestador............: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Prestador.RazaoSocial);
+    memoLog.Lines.Add('Tomador..............: ' + ACBrNFSeX1.NotasFiscais.Items[0].NFSe.Tomador.RazaoSocial);
+
+    if ACBrNFSeX1.NotasFiscais.Items[0].NFSe.SituacaoNfse = ACBrNFSeXConversao.snCancelado then
+      memoLog.Lines.Add('A Nota encontra-se Cancelada.');
 
     pgRespostas.ActivePageIndex := 0;
   end;
@@ -2554,7 +2565,7 @@ begin
           end;
 
           if ACBrNFSeX1.Configuracoes.Geral.ConsultaLoteAposEnvio and
-             (Emite.Protocolo <> '') then
+             ((Emite.Protocolo <> '') or (Emite.Lote <> '')) then
           begin
             if ACBrNFSeX1.Provider.ConfigGeral.ConsultaSitLote then
             begin

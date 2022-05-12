@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2022
+-- ACBrNFSeXDANFSeRLClass/ACBrNFSeXDANFSeRLRetrato --
+[*] Alterado a forma que gera do nome do PDF quando o usuário já passa o nome e
+    alterado a cor dos labels/textos de clWindowText para clBlack.
+   Por: Luis hbr
 -- ACBrNFSeXServicos --
 [+] Incluida a cidade: Rubiataba/GO - Provedor MegaSoft.
    Por: Lucio Bittes

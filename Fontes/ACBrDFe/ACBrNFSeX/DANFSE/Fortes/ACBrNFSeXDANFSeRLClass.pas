@@ -114,7 +114,12 @@ begin
     for i := 0 to TACBrNFSeX(ACBrNFSe).NotasFiscais.Count - 1 do
     begin
       if Trim(self.NomeDocumento) <> ''  then
-        FPArquivoPDF := PathWithDelim(Self.PathPDF) + self.NomeDocumento + '-nfse.pdf'
+      begin
+        FPArquivoPDF := PathWithDelim(Self.PathPDF) + self.NomeDocumento;
+
+        if Pos('.pdf', LowerCase(FPArquivoPDF)) = 0 then
+          FPArquivoPDF := FPArquivoPDF + '.pdf';
+      end
       else
         FPArquivoPDF := PathWithDelim(Self.PathPDF) +
           TACBrNFSeX(ACBrNFSe).NumID[TACBrNFSeX(ACBrNFSe).NotasFiscais.Items[i].NFSe] + '-nfse.pdf';
@@ -125,7 +130,12 @@ begin
   else
   begin
     if Trim(self.NomeDocumento) <> ''  then
-      FPArquivoPDF := PathWithDelim(Self.PathPDF) + self.NomeDocumento + '-nfse.pdf'
+    begin
+      FPArquivoPDF := PathWithDelim(Self.PathPDF) + self.NomeDocumento;
+
+      if Pos('.pdf', LowerCase(FPArquivoPDF)) = 0 then
+        FPArquivoPDF := FPArquivoPDF + '.pdf';
+    end
     else
       FPArquivoPDF := PathWithDelim(Self.PathPDF) + TACBrNFSeX(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
 

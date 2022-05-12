@@ -142,8 +142,7 @@ implementation
 
 uses
   synautil, ACBrNFe,
-  ACBrUtil,
-  ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings,
   ACBrNFeNotasFiscais, pcnEnvEventoNFe,
   ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,

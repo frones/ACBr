@@ -83,8 +83,7 @@ implementation
 
 uses
   ACBrConsts,
-  ACBrUtil,
-  ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings,
   pcnAuxiliar, pcnConversaoNFe;
 
 { TNFeRTXT }

@@ -181,9 +181,7 @@ implementation
 
 uses
   ACBrDFeUtil, ACBrValidador,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   StrUtils;
 
 { TACBrNFeDANFEClass }

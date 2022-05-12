@@ -197,9 +197,7 @@ uses
   pcnConversao,
   ACBrDFeUtil, ACBrNFeDANFeRLClass, ACBrValidador,
   ACBrDFeReportFortes,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 {$IfNDef FPC}
   {$R *.dfm}

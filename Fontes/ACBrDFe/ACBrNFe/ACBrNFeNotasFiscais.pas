@@ -191,12 +191,8 @@ uses
   dateutils, IniFiles,
   synautil,
   ACBrNFe,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.FilesIO,
-  ACBrUtil.DateTime,
-  ACBrUtil.Math,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
+  ACBrUtil.DateTime, ACBrUtil.Math,
   ACBrDFeUtil, pcnConversaoNFe;
 
 { NotaFiscal }

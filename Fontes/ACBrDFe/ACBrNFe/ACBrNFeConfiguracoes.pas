@@ -143,8 +143,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.FilesIO,
   ACBrNFe,
   DateUtils;
 

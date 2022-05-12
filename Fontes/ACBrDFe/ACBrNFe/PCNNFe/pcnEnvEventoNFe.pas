@@ -123,10 +123,7 @@ implementation
 uses
   IniFiles,
   pcnRetEnvEventoNFe, pcnAuxiliar, pcnConversaoNFe,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFeUtil;
 
 { TEventoNFe }

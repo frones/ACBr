@@ -308,10 +308,7 @@ implementation
 uses
   StrUtils,
   RLPrinters,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.FilesIO,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.DateTime,
   ACBrDFeDANFeReport, ACBrDFeReportFortes,
   ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
 

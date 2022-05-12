@@ -110,9 +110,7 @@ implementation
 uses
   strutils, Math,
   ACBrNFe, ACBrValidador,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrDFeUtil, ACBrConsts, ACBrDFeDANFeReport,
   pcnConversao, pcnAuxiliar;
 

@@ -189,9 +189,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrValidador, ACBrDFeUtil,
   ACBrDFeReportFortes, pcnNFe, pcnConversao;
 

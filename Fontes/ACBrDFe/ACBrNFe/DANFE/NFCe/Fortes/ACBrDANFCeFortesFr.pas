@@ -326,9 +326,7 @@ uses
   StrUtils, math,
   ACBrNFe, ACBrDFeDANFeReport, ACBrDFeReportFortes,
   ACBrValidador,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrImage, ACBrDelphiZXingQRCode;
 
 {$ifdef FPC}

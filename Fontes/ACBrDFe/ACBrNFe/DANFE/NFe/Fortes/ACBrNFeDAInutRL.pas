@@ -47,9 +47,7 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnInutNFe,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
   RLReport, RLFilters, RLPDFFilter;
 

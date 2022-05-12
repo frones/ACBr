@@ -141,8 +141,7 @@ implementation
 
 uses
   ACBrNFe,
-  ACBrUtil,
-  ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings,
   ACBrValidador,
   StrUtils;
 

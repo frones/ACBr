@@ -644,13 +644,10 @@ implementation
 
 uses
   DateUtils, StrUtils, Math,
-  pcnNFe, pcnConversao, pcnConversaoNFe,
+  ACBrNFe, pcnNFe, pcnConversao, pcnConversaoNFe,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador,
   ACBrDFeDANFeReport, ACBrDFeReportFortes,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
-  ACBrNFe;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 {$IfNDef FPC}
   {$R *.dfm}

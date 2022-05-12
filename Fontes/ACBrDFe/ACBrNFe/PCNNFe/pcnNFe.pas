@@ -2027,7 +2027,7 @@ const
 implementation
 
 uses
-  ACBrUtil, pcnNFeR;
+  ACBrUtil.Base, pcnNFeR;
 
 { TNFe }
 

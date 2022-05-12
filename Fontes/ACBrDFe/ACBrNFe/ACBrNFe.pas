@@ -44,10 +44,7 @@ uses
   ACBrDFeDANFeReport,
   pcnNFe, pcnConversao, pcnConversaoNFe,
   pcnEnvEventoNFe, pcnInutNFe, 
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.Math,
-  ACBrUtil.FilesIO;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO;
 
 const
   ACBRNFE_NAMESPACE = 'http://www.portalfiscal.inf.br/nfe';

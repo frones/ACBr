@@ -128,9 +128,7 @@ implementation
 uses
   DateUtils,
   pcnConversao,
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrDFeReportFortes, ACBrNFeDANFeRLClass, ACBrValidador;
 
 {$IfNDef FPC}

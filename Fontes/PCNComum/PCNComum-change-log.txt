@@ -39,9 +39,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/05/2022
--- Diversos --
-[*] Remoção de Warnings e Hints.
-   Por: Italo Giurizzato Junior
+-- pcnConversao --
+[*] Ajuste em diversos métodos de conversão para permitir valores vazios.
+  Por: Marcelo Calvi Belanga/Italo Giurizzato Junior
 
 12/04/2022
 -- pcnAuxiliar --

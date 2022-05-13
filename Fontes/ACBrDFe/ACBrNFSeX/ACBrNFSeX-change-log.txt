@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2022
+-- IPM.Provider --
+[*] Possível solução para a leitura correta do retorno da Consulta a NFS-e por Rps.
+   Por: Italo Giurizzato Junior
+
 12/05/2022
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes para uma lista de serviços de provedores que seguem o layout da ABRASF.

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/05/2022
+-- iiBrasil.Provider --
+[*] Incluido a Procedure: TratarRetornoConsultaNFSeporRps
+   Por: Raphael BLC
 -- IPM.Provider --
 [*] Possível solução para a leitura correta do retorno da Consulta a NFS-e por Rps.
    Por: Italo Giurizzato Junior

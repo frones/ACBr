@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2022
+-- pnfsNFSeW_ABRASFv2 --
+[*] Possível correção na geração da tag Aliquota para o provedor Pronimv2.
+  Por: Italo Giurizzato Junior
+
 29/04/2022
 -- pnfsNFSeW_ISSDSF/pnfsNFSeW_Siat --
 [*] Alteração visando gerar a tag DDDTomador de forma correta

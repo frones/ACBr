@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2022
+-- pcnConversao --
+[+] Inclusão dos métodos: TipoViaTranspToDescricao e TipoIntermedioToDescricao.
+  Por: Marcelo Calvi Belanga
+
 12/05/2022
 -- pcnConversao --
 [*] Ajuste em diversos métodos de conversão para permitir valores vazios.

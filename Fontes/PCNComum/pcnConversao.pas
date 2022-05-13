@@ -379,8 +379,10 @@ function indIEDestToStr(const t: TpcnindIEDest ): string;
 function StrToindIEDest(out ok: boolean; const s: string): TpcnindIEDest;
 function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
 function StrToTipoViaTransp(out ok: boolean; const s: string): TpcnTipoViaTransp;
+function TipoViaTranspToDescricao(const t: TpcnTipoViaTransp): string;
 function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
 function StrToTipoIntermedio(out ok: boolean; const s: string): TpcnTipoIntermedio;
+function TipoIntermedioToDescricao(const t: TpcnTipoIntermedio ): string;
 function indISSRetToStr(const t: TpcnindISSRet ): string;
 function StrToindISSRet(out ok: boolean; const s: string): TpcnindISSRet;
 function indISSToStr(const t: TpcnindISS ): string;
@@ -1532,6 +1534,26 @@ begin
                                    tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
 end;
 
+function TipoViaTranspToDescricao(const t: TpcnTipoViaTransp): string;
+begin
+  result := EnumeradoToStr(t, ['01 - Marítima',
+                               '02 - Fluvial',
+                               '03 - Lacustre',
+                               '04 - Aérea',
+                               '05 - Postal',
+                               '06 - Ferroviária',
+                               '07 - Rodoviária',
+                               '08 - Conduto / Rede Transmissão',
+                               '09 - Meios Próprios',
+                               '10 - Entrada / Saída ficta',
+                               '11 - Courier',
+                               '12 - Em mãos',
+                               '13 - Por reboque'],
+                              [tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
+                               tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
+                               tvEntradaSaidaFicta, tvCourier, tvEmMaos, tvPorReboque]);
+end;
+
 function TipoIntermedioToStr(const t: TpcnTipoIntermedio ): string;
 begin
   result := EnumeradoToStr(t, ['1', '2', '3'],
@@ -1542,6 +1564,14 @@ function StrToTipoIntermedio(out ok: boolean; const s: string): TpcnTipoIntermed
 begin
   result := StrToEnumerado(ok, s, ['1', '2', '3'],
                                   [tiContaPropria, tiContaOrdem, tiEncomenda]);
+end;
+
+function TipoIntermedioToDescricao(const t: TpcnTipoIntermedio): string;
+begin
+  result := EnumeradoToStr(t, ['1 - Importação por conta própria',
+                               '2 - Importação por conta e ordem',
+                               '3 - Importação por encomenda'],
+                              [tiContaPropria, tiContaOrdem, tiEncomenda]);
 end;
 
 function indISSRetToStr(const t: TpcnindISSRet ): string;

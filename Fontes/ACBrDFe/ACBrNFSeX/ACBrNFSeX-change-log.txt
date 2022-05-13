@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/05/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Alfredo Chaves/ES trocou para o Provedor: EL.
+   Por: Italo Giurizzato Junior
 -- SystemPro.Provider --
 [*] Possível solução para a leitura correta do retorno do Emitir.
    Por: Italo Giurizzato Junior

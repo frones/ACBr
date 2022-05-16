@@ -43,7 +43,7 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2022
--- ACBrNFSeXLerXml_ABRASFv2 --
+-- ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
 [*] Possível solução para identificar se o XML da nota esta cancelado ou não.
    Por: Italo Giurizzato Junior
 -- Diversos --

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2022
+-- SystemPro.Provider --
+[*] Trocado a ordem das chamadas das funções que tratam o XML retornado.
+   Por: Italo Giurizzato Junior
+
 13/05/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Alfredo Chaves/ES trocou para o Provedor: EL.

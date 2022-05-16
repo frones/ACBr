@@ -114,7 +114,7 @@ type
 implementation
 
 Uses
-  pcnAuxiliar, ACBrUtil;
+  pcnAuxiliar, ACBrUtil.Base, ACBrUtil.Strings;
 
 { TCFeW }
 

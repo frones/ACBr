@@ -37,7 +37,8 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
   pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts, pcnCFeCanc;
 
 type

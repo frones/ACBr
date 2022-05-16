@@ -289,7 +289,7 @@ implementation
 uses
   dateutils,
   pcnCFeCancR, pcnCFeCancW,
-  ACBrUtil;
+  ACBrUtil.FilesIO;
 
 { TDest }
 

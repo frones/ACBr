@@ -137,7 +137,7 @@ type
 
 implementation
 
-uses ACBrSAT, ACBrSATClass, ACBrUtil;
+uses ACBrSAT, ACBrSATClass, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO;
 
 { TACBrSATExtratoClass }
 constructor TACBrSATExtratoClass.Create(AOwner: TComponent);

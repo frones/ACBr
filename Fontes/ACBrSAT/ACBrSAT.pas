@@ -272,7 +272,8 @@ implementation
 
 Uses
   dateutils,
-  ACBrUtil, ACBrConsts, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador,
+  ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime, ACBrUtil.Base,
+  ACBrConsts, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador,
   synautil;
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;

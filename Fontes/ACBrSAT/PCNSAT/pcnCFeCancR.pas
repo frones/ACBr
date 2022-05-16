@@ -59,7 +59,7 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil;
+  ACBrConsts, ACBrUtil.Base, ACBrUtil.Strings;
 
 { TCFeCancR }
 

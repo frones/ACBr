@@ -333,7 +333,7 @@ type
 
 implementation
 
-Uses ACBrSAT, ACBrUtil, ACBrConsts ;
+Uses ACBrSAT, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.Strings, ACBrConsts ;
 
 { TACBrSATConfigArquivos }
 

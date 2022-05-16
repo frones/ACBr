@@ -104,7 +104,7 @@ implementation
 Uses
   dateutils,
   pcnConversao,
-  ACBrUtil, ACBrSAT;
+  ACBrUtil.Strings, ACBrSAT;
 
 constructor TACBrSATMFe_integrador_XML.Create(AOwner : TComponent) ;
 begin

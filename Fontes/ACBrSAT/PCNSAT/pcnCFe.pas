@@ -710,7 +710,9 @@ implementation
 uses
   dateutils, IniFiles,
   pcnCFeR, pcnCFeW,
-  ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.XMLHTML;
 
 { TDescAcrEntr }
 

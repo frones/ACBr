@@ -3179,13 +3179,28 @@ begin
     Emitente.WSChaveAcesso  := edtChaveAcessoWeb.Text;
     Emitente.WSChaveAutoriz := edtChaveAutorizWeb.Text;
 
+    // Exemplos de valores para WSChaveAcesso para alguns provedores.
+    {
+    if Provedor in [proAgili, proElotech] then
+      Emitente.WSChaveAcesso := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
+
+    if Provedor = proISSNet then
+      Emitente.WSChaveAcesso := 'A001.B0001.C0001-1';
+
+    if Provedor = proSigep then
+      Emitente.WSChaveAcesso := 'A001.B0001.C0001';
+
+    if Provedor = proiiBrasil then
+      Emitente.WSChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
+    }
+
     {
       Para o provedor ADM, utilizar as seguintes propriedades de configurações:
       WSChaveAcesso  para o Key
       WSChaveAutoriz para o Auth
       WSUser         para o RequestId
 
-      Essas 3 propriedades são geradas pelo provedor quando o emitente se cadastra
+      O Key, Auth e RequestId são gerados pelo provedor quando o emitente se cadastra.
     }
   end;
 
@@ -3273,20 +3288,6 @@ begin
   with ACBrNFSeX1.Configuracoes.Geral do
   begin
     CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
-
-    // Exemplos de valores para WSChaveAcesso para alguns provedores.
-
-    if Provedor in [proAgili, proElotech] then
-      Emitente.WSChaveAcesso := '0aA1bB2cC3dD4eE5fF6aA7bB8cC9dDEF';
-
-    if Provedor = proISSNet then
-      Emitente.WSChaveAcesso := 'A001.B0001.C0001-1';
-
-    if Provedor = proSigep then
-      Emitente.WSChaveAcesso := 'A001.B0001.C0001';
-
-    if Provedor = proiiBrasil then
-      Emitente.WSChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
   end;
 
   lblSchemas.Caption := ACBrNFSeX1.Configuracoes.Geral.xProvedor;

@@ -333,20 +333,19 @@ end;
 function TNFSeR_GeisWeb.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
-  xRetorno: string;
 begin
   if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
-  xRetorno := TiraAcentos(Arquivo);
+  Arquivo := NormatizarXml(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();
 
   Document.Clear();
-  Document.LoadFromXml(xRetorno);
+  Document.LoadFromXml(Arquivo);
 
-  if (Pos('Nfse', xRetorno) > 0) then
+  if (Pos('Nfse', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;

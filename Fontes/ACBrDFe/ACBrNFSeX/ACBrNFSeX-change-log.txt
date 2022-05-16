@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2022
+-- Diversos --
+[*] Possível solução ao carregar um XML com vogais acentuadas.
+   Por: Italo Giurizzato Junior
 -- SigCorp.Provider --
 [*] Alterado o caracter de quebra de linha para compatibilizar com o utilizado
     no site.

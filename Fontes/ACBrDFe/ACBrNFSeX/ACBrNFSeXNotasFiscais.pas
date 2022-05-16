@@ -566,18 +566,19 @@ function TNotaFiscal.LerXML(const AXML: String): Boolean;
 var
   FProvider: IACBrNFSeXProvider;
   TipoXml: TtpXML;
+  XmlTratado: string;
 begin
   FProvider := TACBrNFSeX(FACBrNFSe).Provider;
 
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  Result := FProvider.LerXML(AXml, FNFSe, TipoXml);
+  Result := FProvider.LerXML(AXml, FNFSe, TipoXml, XmlTratado);
 
   if TipoXml = txmlNFSe then
-    FXmlNfse := AXML
+    FXmlNfse := XmlTratado
   else
-    FXmlRps := AXML;
+    FXmlRps := XmlTratado;
 end;
 
 procedure TNotaFiscal.SetXmlNfse(const Value: String);

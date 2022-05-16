@@ -148,7 +148,8 @@ type
     destructor Destroy; override;
 
     function GerarXml(const aNFSe: TNFSe; var aXml, aAlerts: string): Boolean; virtual;
-    function LerXML(const aXML: String; var aNFSe: TNFSe; var ATipo: TtpXML): Boolean; virtual;
+    function LerXML(const aXML: String; var aNFSe: TNFSe; var ATipo: TtpXML;
+      var aXmlTratado: string): Boolean; virtual;
 
     procedure GeraLote; virtual;
     procedure Emite; virtual;
@@ -922,7 +923,8 @@ begin
   end;
 end;
 
-function TACBrNFSeXProvider.LerXML(const aXML: String; var aNFSe: TNFSe; var ATipo: TtpXML): Boolean;
+function TACBrNFSeXProvider.LerXML(const aXML: String; var aNFSe: TNFSe;
+  var ATipo: TtpXML; var aXmlTratado: string): Boolean;
 var
   AReader: TNFSeRClass;
 begin
@@ -942,6 +944,7 @@ begin
 
     Result := AReader.LerXml;
     ATipo := AReader.tpXML;
+    aXmlTratado := AReader.Arquivo;
   finally
     AReader.Destroy;
   end;

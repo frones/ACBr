@@ -584,20 +584,19 @@ end;
 function TNFSeR_Infisc.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
-  xRetorno: string;
 begin
-  xRetorno := Arquivo;
-
-  if EstaVazio(xRetorno) then
+  if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
+
+  Arquivo := NormatizarXml(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();
 
   Document.Clear();
-  Document.LoadFromXml(xRetorno);
+  Document.LoadFromXml(Arquivo);
 
-  if (Pos('NFS-e', xRetorno) > 0) then
+  if (Pos('NFS-e', Arquivo) > 0) then
     tpXML := txmlNFSe
   else
     tpXML := txmlRPS;

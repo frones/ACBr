@@ -42,7 +42,8 @@ uses
 type
   IACBrNFSeXProvider = interface ['{6A71A59C-9EA1-45BF-BCAB-59BB90B62AAA}']
     function GerarXml(const ANFSe: TNFSe; var AXml, AAlerts: string): Boolean;
-    function LerXml(const AXML: String; var ANFSe: TNFSe; var ATipo: TtpXML): Boolean;
+    function LerXml(const AXML: String; var ANFSe: TNFSe; var ATipo: TtpXML;
+      var aXmlTratado: string): Boolean;
 
     procedure GeraLote;
     procedure Emite;

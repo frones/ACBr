@@ -40,7 +40,12 @@ uses
   {$IFDEF NEXTGEN}
    ACBrBase,
   {$ENDIF}
-  ACBrECFClass, ACBrDevice, ACBrDeviceSerial, ACBrUtil;
+  ACBrECFClass, ACBrDevice, ACBrDeviceSerial,
+  ACBrUtil.Math,
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime;
 
 type
 

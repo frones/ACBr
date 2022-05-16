@@ -76,7 +76,9 @@ Type
 
 Implementation
 
-Uses ACBrTER, ACBrUtil, SysUtils;
+Uses ACBrTER,
+     ACBrUtil.Strings,
+     SysUtils;
 
 { TACBrTERClass }
 

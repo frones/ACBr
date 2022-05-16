@@ -99,7 +99,8 @@ TACBrGAVClass = class
 end ;
 
 implementation
-Uses ACBrGAV, ACBrUtil,
+Uses ACBrGAV,
+     ACBrUtil.Strings,
      SysUtils,
      {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, Windows {$ENDIF} ;
 

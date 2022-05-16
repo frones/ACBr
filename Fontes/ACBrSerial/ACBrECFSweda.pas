@@ -291,7 +291,11 @@ Uses
    {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
    SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
-     ACBrECF, ACBrConsts, ACBrUtil ;
+     ACBrECF, ACBrConsts,
+     ACBrUtil.Strings,
+     ACBrUtil.Base,
+     ACBrUtil.Math,
+     ACBrUtil.FilesIO;
 
 { ----------------------------- TACBrECFSweda ------------------------------ }
 

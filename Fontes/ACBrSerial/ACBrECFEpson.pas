@@ -450,7 +450,12 @@ implementation
 Uses
   Math, SysUtils,
   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
-  ACBrECF, ACBrConsts, ACBrUtil, ACBrECFEscECF ;
+  ACBrECF, ACBrConsts,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.Base,
+  ACBrECFEscECF ;
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 begin
@@ -1914,7 +1919,7 @@ begin
          end ;
       end ;
 
-      BitS := ACBrUtil.IntToBin(EpsonResposta.StatusFiscal, 16) ;
+      BitS := ACBrUtil.Math.IntToBin(EpsonResposta.StatusFiscal, 16) ;
 
       if copy(BitS,1,2) <> '11' then  // Diferente de Modo fiscalizado ?
          exit ;

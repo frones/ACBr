@@ -99,7 +99,9 @@ TACBrDISClass = class
 end ;
 
 implementation
-Uses ACBrDIS, ACBrUtil;
+Uses ACBrDIS,
+     ACBrUtil.FilesIO,
+     ACBrUtil.Strings;
 
 { TACBrDISClass }
 

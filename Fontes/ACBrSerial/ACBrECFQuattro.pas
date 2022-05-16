@@ -189,7 +189,11 @@ TACBrECFQuattro = class( TACBrECFClass )
 
 implementation
 Uses {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
-     SysUtils, Math, ACBrConsts, ACBrUtil;
+     SysUtils, Math, ACBrConsts,
+     ACBrUtil.Strings,
+     ACBrUtil.Base,
+     ACBrUtil.Math,
+     ACBrUtil.FilesIO;
 
 { ----------------------------- TACBrECFQuattro ------------------------------ }
 

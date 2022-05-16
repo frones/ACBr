@@ -138,7 +138,8 @@ implementation
 
 uses
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
-     ACBrUtil ;
+     ACBrUtil.Strings,
+     ACBrUtil.Base;
 
 { TACBrLCB }
 

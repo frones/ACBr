@@ -86,7 +86,9 @@ implementation
 Uses
   SysUtils,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5{$ENDIF},
-  ACBrUtil, ACBrConsts, ACBrExtenso;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrConsts, ACBrExtenso;
 
 { TACBrCHQImpressoraComum }
 

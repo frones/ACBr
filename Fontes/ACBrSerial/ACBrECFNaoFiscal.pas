@@ -376,7 +376,10 @@ Function StuffMascaraItem( const Linha, MascaraItem : AnsiString; Letra : AnsiCh
        const TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
 
 implementation
-Uses ACBrUtil;
+Uses ACBrUtil.Base,
+     ACBrUtil.FilesIO,
+     ACBrUtil.Strings,
+     ACBrUtil.Math;
 
 Function StuffMascaraItem( const Linha, MascaraItem : AnsiString; Letra : AnsiChar;
    const TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;

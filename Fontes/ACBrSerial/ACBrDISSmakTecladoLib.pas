@@ -83,7 +83,8 @@ TACBrDISSmakTecladoLib = class( TACBrDISClass )
 end ;
 
 implementation
-Uses ACBrUtil,
+Uses ACBrUtil.Strings,
+     ACBrUtil.FilesIO,
      SysUtils,
      {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, Windows{$ENDIF} ;
 

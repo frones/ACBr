@@ -58,7 +58,10 @@ implementation
 Uses
   SysUtils,
   {$IFDEF COMPILER6_UP} DateUtils, {$ELSE} Windows,{$ENDIF}
-   ACBrUtil, ACBrConsts ;
+   ACBrUtil.Strings,
+   ACBrUtil.Base,
+   ACBrUtil.Math,
+   ACBrConsts ;
 
 { TACBrCHQChronos }
 

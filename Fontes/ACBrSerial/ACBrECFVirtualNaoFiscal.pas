@@ -35,7 +35,9 @@
 unit ACBrECFVirtualNaoFiscal ;
 
 interface
-uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrBase,
+uses ACBrECFVirtualPrinter, ACBrECFClass,
+     ACBrUtil.Strings,
+     ACBrBase,
      Classes, SysUtils
      {$IFNDEF NOGUI}
        {$IF DEFINED(VisualCLX)}

@@ -41,7 +41,12 @@ uses
   {$IFDEF NEXTGEN}
    ACBrBase,
   {$ENDIF}
-   ACBrECFClass, ACBrDevice, ACBrDeviceSerial, ACBrUtil, ACBrConsts ;
+   ACBrECFClass, ACBrDevice, ACBrDeviceSerial,
+   ACBrUtil.FilesIO,
+   ACBrUtil.Strings,
+   ACBrUtil.Base,
+   ACBrUtil.Math,
+   ACBrConsts ;
 
 const  SOH = #01 ;
        ENQ = #05 ;

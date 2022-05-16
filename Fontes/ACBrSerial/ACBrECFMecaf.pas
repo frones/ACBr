@@ -194,7 +194,11 @@ TACBrECFMecaf = class( TACBrECFClass )
 implementation
 Uses SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-    ACBrConsts, ACBrUtil;
+    ACBrConsts,
+    ACBrUtil.Strings,
+    ACBrUtil.DateTime,
+    ACBrUtil.Math,
+    ACBrUtil.Base;
 
 { ----------------------------- TACBrECFMecaf ------------------------------ }
 

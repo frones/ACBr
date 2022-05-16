@@ -111,7 +111,9 @@ implementation
 uses
   SysUtils, Math,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5{$ENDIF},
-  ACBrDeviceSerial, ACBrConsts, ACBrUtil;
+  ACBrDeviceSerial, ACBrConsts,
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 function PreenchimentoChequeToStr(const AValue: TPreenchimentoCheque): string;
 var

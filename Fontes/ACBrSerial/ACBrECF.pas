@@ -1192,7 +1192,11 @@ Function GetECFComponente( AECFClass: TACBrECFClass ): TACBrECF;
 implementation
 Uses {$IFDEF COMPILER6_UP} StrUtils {$ELSE}ACBrD5 ,Windows {$ENDIF},
      Math, IniFiles, TypInfo,
-     ACBrUtil, ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter,
+     ACBrUtil.Strings,
+     ACBrUtil.Math,
+     ACBrUtil.Base,
+     ACBrUtil.FilesIO,
+     ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter,
      ACBrECFMecaf, ACBrECFSweda, ACBrECFDataRegis, ACBrECFUrano, ACBrECFYanco,
      ACBrECFICash, ACBrECFQuattro, ACBrECFFiscNET, ACBrECFEpson, ACBrECFNCR,
      ACBrECFSwedaSTX, ACBrECFEscECF;

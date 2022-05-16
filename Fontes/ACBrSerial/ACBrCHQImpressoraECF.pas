@@ -59,7 +59,7 @@ type TACBrCHQImpressoraECF = class( TACBrCHQClass )
 end ;
 
 implementation
-Uses ACBrUtil, SysUtils ;
+Uses ACBrUtil.Strings, SysUtils ;
 
 { TACBrCHQImpressoraECF }
 

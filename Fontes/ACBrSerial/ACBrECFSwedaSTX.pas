@@ -324,7 +324,12 @@ Uses
    {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
    SysUtils, IniFiles, Math,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
-   ACBrECF, ACBrConsts, ACBrUtil;
+   ACBrECF, ACBrConsts,
+   ACBrUtil.Strings,
+   ACBrUtil.FilesIO,
+   ACBrUtil.Math,
+   ACBrUtil.Base,
+   ACBrUtil.DateTime;
 
 { --------------------------- TACBrECFSwedaCache ---------------------------- }
 function TACBrECFSwedaCache.AchaSecao(const Secao: String): Integer;

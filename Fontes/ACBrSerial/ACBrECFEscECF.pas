@@ -493,7 +493,11 @@ Uses
   SysUtils, Math,
   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
   synautil,
-  ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrECFDaruma, ACBrConsts, ACBrUtil;
+  ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrECFDaruma, ACBrConsts,
+  ACBrUtil.Math,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 { TACBrECFEscECFProtocoloEpsonDLL }
 

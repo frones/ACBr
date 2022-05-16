@@ -204,7 +204,10 @@ end ;
 
 
 implementation
-Uses ACBrCHQ, ACBrUtil,
+Uses ACBrCHQ,
+     ACBrUtil.Strings,
+     ACBrUtil.Base,
+     ACBrUtil.FilesIO,
      SysUtils, IniFiles ;
 
 { TACBrCHQClass }

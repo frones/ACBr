@@ -147,7 +147,8 @@ end ;
 
 
 implementation
-Uses ACBrUtil, ACBrCHQImpressoraECF, ACBrCHQImpressoraComum, ACBrCHQBematech,
+Uses ACBrUtil.Strings,
+     ACBrCHQImpressoraECF, ACBrCHQImpressoraComum, ACBrCHQBematech,
      ACBrCHQChronos, ACBrCHQSchalter, ACBrCHQPerto, ACBrCHQSotomaq,
      ACBrCHQUrano, ACBrCHQElgin, ACBrCHQMenno;
 

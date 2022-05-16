@@ -171,7 +171,12 @@ TACBrECFUrano = class( TACBrECFClass )
 implementation
 Uses {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, SysUtils, Windows{$ENDIF},
      SysUtils,  Math,
-     ACBrECF, ACBrUtil, ACBrConsts;
+     ACBrECF,
+     ACBrUtil.Strings,
+     ACBrUtil.Math,
+     ACBrUtil.FilesIO,
+     ACBrUtil.Base,
+     ACBrConsts;
 
 { ----------------------------- TACBrECFUrano ------------------------------ }
 

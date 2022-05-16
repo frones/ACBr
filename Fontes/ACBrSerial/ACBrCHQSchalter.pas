@@ -59,7 +59,8 @@ type TACBrCHQSchalter = class( TACBrCHQClass )
 end ;
 
 implementation
-Uses ACBrUtil,
+Uses ACBrUtil.Strings,
+     ACBrUtil.Base,
      SysUtils,
    {$IFDEF COMPILER6_UP} DateUtils, {$ELSE} Windows,{$ENDIF}
      ACBrDeviceSerial;

@@ -57,7 +57,8 @@ end ;
 
 implementation
 
-uses ACBrUtil, SysUtils;
+uses ACBrUtil.Strings,
+     SysUtils;
 
 { TACBrGAVImpressoraECF }
 

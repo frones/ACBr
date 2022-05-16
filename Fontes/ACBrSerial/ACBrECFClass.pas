@@ -1351,7 +1351,13 @@ TACBrECFClass = class
 end ;
 
 implementation
-Uses ACBrECF, ACBrECFVirtual, ACBrUtil, Math,
+Uses ACBrECF, ACBrECFVirtual,
+     ACBrUtil.Strings,
+     ACBrUtil.FilesIO,
+     ACBrUtil.DateTime,
+     ACBrUtil.Base,
+     ACBrUtil.Math,
+     Math,
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
      TypInfo ;
 
@@ -2931,7 +2937,7 @@ begin
       if pos('REDUÇÕES RESTANTES:', Linha) > 0 then
       begin
         CRZR := Trim(Copy(Linha, 30, 40));
-        CRZR := ACBrUtil.OnlyNumber(CRZR);
+        CRZR := ACBrUtil.Strings.OnlyNumber(CRZR);
         Break;
       end;
     end;

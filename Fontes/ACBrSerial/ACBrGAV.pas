@@ -111,7 +111,8 @@ TACBrGAVModelo = (gavNenhuma, gavSerialMenno, gavSerialGerbo, gavImpressoraECF,
 end ;
 
 implementation
-Uses ACBrUtil, ACBrGAVSerialMenno, ACBrGAVSerialGerbo, ACBrGAVImpressoraECF,
+Uses ACBrUtil.Strings,
+     ACBrGAVSerialMenno, ACBrGAVSerialGerbo, ACBrGAVImpressoraECF,
      ACBrGAVImpressoraComum, ACBrECFNaoFiscal ;
 
 { TACBrGAV }

@@ -63,7 +63,9 @@ implementation
 uses
   SysUtils
   {$IFDEF COMPILER6_UP}, DateUtils {$ENDIF},
-  ACBrUtil, ACBrConsts, ACBrDeviceSerial;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrConsts, ACBrDeviceSerial;
 
 { TACBrCHQBematech }
 

@@ -148,7 +148,8 @@ Type
 
 Implementation
 
-Uses ACBrUtil, ACBrTERWilbor,
+Uses ACBrUtil.Strings,
+     ACBrTERWilbor,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
      Math;
 

@@ -191,7 +191,9 @@ TACBrECFICash = class( TACBrECFClass )
 implementation
 Uses SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-    ACBrConsts, ACBrUtil;
+    ACBrConsts,
+    ACBrUtil.Strings,
+    ACBrUtil.Base;
 
 { ----------------------------- TACBrECFICash ------------------------------ }
 

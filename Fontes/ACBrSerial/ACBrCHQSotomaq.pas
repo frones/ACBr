@@ -58,7 +58,10 @@ implementation
 Uses
   SysUtils,
   {$IFDEF COMPILER6_UP} DateUtils, {$ELSE} Windows,{$ENDIF}
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.Base,
+  ACBrConsts;
 
 { TACBrCHQSotomaq }
 

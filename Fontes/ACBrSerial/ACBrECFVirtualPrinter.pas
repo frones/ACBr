@@ -40,7 +40,8 @@ uses
   {$IFDEF NEXTGEN}
    ACBrBase,
   {$ENDIF}
-  ACBrDevice, ACBrECFVirtualBuffer, ACBrECFClass, ACBrUtil,
+  ACBrDevice, ACBrECFVirtualBuffer, ACBrECFClass,
+  ACBrUtil.Strings,
   ACBrPosPrinter ;
 
 const

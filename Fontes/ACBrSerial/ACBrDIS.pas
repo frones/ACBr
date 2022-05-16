@@ -238,7 +238,8 @@ TACBrDISLinhas = class(TObjectList{$IfDef HAS_SYSTEM_GENERICS}<TACBrDISLinha>{$E
 end ;
 
 implementation
-Uses ACBrUtil, ACBrDISGertecSerial, ACBrDISGertecTeclado, ACBrDISKeytecTeclado,
+Uses ACBrUtil.Strings,
+     ACBrDISGertecSerial, ACBrDISGertecTeclado, ACBrDISKeytecTeclado,
      ACBrDISSmakTeclado, ACBrDISGertecTEC65lib, ACBrDISSmakTecladoLib,
      ACBrDISSmakSerial,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},

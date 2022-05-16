@@ -57,7 +57,8 @@ end ;
 
 implementation
 
-uses SysUtils, ACBrUtil
+uses SysUtils,
+     ACBrUtil.Strings
   {$IFNDEF COMPILER6_UP} ,Windows {$ENDIF} ;
 
 { TACBrGAVSerialMenno }

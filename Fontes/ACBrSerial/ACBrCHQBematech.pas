@@ -61,7 +61,9 @@ type TACBrCHQBematech = class( TACBrCHQClass )
 end ;
 
 implementation
-Uses ACBrUtil, ACBrConsts,
+Uses ACBrUtil.Strings,
+     ACBrUtil.Base,
+     ACBrConsts,
      SysUtils
     {$IFDEF COMPILER6_UP}, DateUtils {$ENDIF} ;
 

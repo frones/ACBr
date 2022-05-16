@@ -55,7 +55,9 @@ end ;
 
 
 implementation
-uses ACBrDevice, ACBrUtil,
+uses ACBrDevice,
+     ACBrUtil.Strings,
+     ACBrUtil.Base,
      SysUtils;
 
 { TACBrGAVImpressoraComum }

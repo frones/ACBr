@@ -432,7 +432,7 @@ end;
 procedure TACBrBancoDaycoval.GerarRegistroTransacao400( ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   ATipoOcorrencia, AEspecieDoc, ACodigoRemessa : String;
-  DiasProtesto, TipoSacado, ATipoAceite, AComplemento: String;
+  DiasProtesto, TipoSacado, ATipoAceite, AComplemento, ATipoCedente: String;
   wLinha: String;
 begin
   with ACBrTitulo do
@@ -479,6 +479,9 @@ begin
       TipoSacado := '03';
     end;
 
+    //Pegando Tipo de Cedente}
+    ATipoCedente := DefineTipoInscricao;
+
     // Conforme manual o aceite deve ser sempre 'N'
     ATipoAceite := 'N';
 
@@ -503,7 +506,7 @@ begin
     with ACBrBoleto do
     begin
       wLinha := '1' + // 1 - Código do registro: 1 - Transação
-        TipoSacado + // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
+        ATipoCedente + // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
         PadLeft(OnlyNumber(Cedente.CNPJCPF), 14, '0') +              // 4 a 17 - Número de inscrição
         PadRight(Cedente.CodigoCedente, 20) +                        // 18 a 37 - Código da empresa no banco
         PadRight(SeuNumero, 25) +                                    // 38 a 62 - Identificação do título na empresa

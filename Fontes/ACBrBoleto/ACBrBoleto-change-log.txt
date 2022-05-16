@@ -49,6 +49,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2022
+--ACBrBancoDaycoval--
+[*] Ajuste na validação do campo TipoCedente na remessa CNAB400 posição 02
+
+13/05/2022
+--ACBrBancoBanrisul--
+[*] Atualização dos códigos de Multa aceito no CNAB240
+  Contribuição: Eloildo Vieira
+  https://www.projetoacbr.com.br/forum/topic/67184-boleto-do-banrisul-o-c%C3%B3digo-da-multa-fixado-em-1-valor-sem-possibilidade-de-usar-o-2-percentual/
+
 10/05/2022
 --ACBrBancoSicredi--
 [-] TK-2648 Correção CNAB240 Segmento R - Coluna 042-042 Ajuste na propriedade Codigo do Desconto 3

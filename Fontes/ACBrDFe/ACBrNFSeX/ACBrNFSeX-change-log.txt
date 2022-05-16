@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2022
+-- SigCorp.Provider --
+[*] Alterado o caracter de quebra de linha para compatibilizar com o utilizado
+    no site.
+   Por: Italo Giurizzato Junior
+-- ISSDSF.Provider --
+[*] Alterado para que a tag DocTomadorEstrangeiro seja sempre gerada.
+   Por: Italo Giurizzato Junior
 -- SystemPro.Provider --
 [*] Trocado a ordem das chamadas das funções que tratam o XML retornado.
    Por: Italo Giurizzato Junior

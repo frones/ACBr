@@ -84,7 +84,11 @@ procedure TACBrNFSeProviderSigCorp203.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.UseCertificateHTTP := False;
+  with ConfigGeral do
+  begin
+    UseCertificateHTTP := False;
+    QuebradeLinha := '|';
+  end;
 
   with ConfigAssinar do
   begin

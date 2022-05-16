@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/05/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Possível solução para identificar se o XML da nota esta cancelado ou não.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Possível solução ao carregar um XML com vogais acentuadas.
    Por: Italo Giurizzato Junior

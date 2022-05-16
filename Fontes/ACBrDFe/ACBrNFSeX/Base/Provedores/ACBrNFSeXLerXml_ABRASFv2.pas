@@ -162,7 +162,7 @@ begin
     begin
       DataHora := LerDataHoraCancelamento(AuxNode);
 
-      if DataHora > 0 then
+      if (DataHora > 0) or (NFSe.StatusRps = srCancelado) then
         NFSe.SituacaoNfse := snCancelado;
     end;
   end;

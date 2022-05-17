@@ -1357,6 +1357,7 @@ Uses ACBrECF, ACBrECFVirtual,
      ACBrUtil.DateTime,
      ACBrUtil.Base,
      ACBrUtil.Math,
+     ACBrUtil.Compatibilidade,
      Math,
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
      TypInfo ;

@@ -364,6 +364,7 @@ Uses
     ACBrUtil.Math,
     ACBrUtil.DateTime,
     ACBrUtil.FilesIO,
+    ACBrUtil.Compatibilidade,
     ACBrECF, ACBrECFEscECF, ACBrConsts;
 
 { ----------------------------- TACBrECFDaruma ------------------------------ }

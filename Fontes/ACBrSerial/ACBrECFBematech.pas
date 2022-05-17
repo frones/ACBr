@@ -692,7 +692,8 @@ Uses
    ACBrUtil.Math,
    ACBrUtil.DateTime,
    ACBrUtil.Base,
-   ACBrUtil.FilesIO;
+   ACBrUtil.FilesIO,
+   ACBrUtil.Compatibilidade;
 
 function BematechTraduzirTag(const ATag : AnsiString) : AnsiString ;
 const

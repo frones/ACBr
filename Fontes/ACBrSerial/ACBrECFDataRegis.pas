@@ -284,6 +284,7 @@ Uses SysUtils, Math, IniFiles,
      ACBrUtil.Math,
      ACBrUtil.FilesIO,
      ACBrUtil.Base,
+     ACBrUtil.Compatibilidade,
      ACBrConsts;
 
 { ----------------------------- TDJECFDataRegis ------------------------------ }

@@ -638,6 +638,7 @@ Uses
   ACBrUtil.Base,
   ACBrUtil.Math,
   ACBrUtil.FilesIO,
+  ACBrUtil.Compatibilidade,
   ACBrConsts;
 
 { TACBrECFVirtualClassItemCupom }

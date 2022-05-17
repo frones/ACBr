@@ -45,6 +45,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.Base,
   ACBrUtil.FilesIO,
+  ACBrUtil.Compatibilidade,
   ACBrUtil.DateTime;
 
 type

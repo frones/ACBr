@@ -455,6 +455,7 @@ Uses
   ACBrUtil.Strings,
   ACBrUtil.Math,
   ACBrUtil.Base,
+  ACBrUtil.Compatibilidade,
   ACBrECFEscECF ;
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;

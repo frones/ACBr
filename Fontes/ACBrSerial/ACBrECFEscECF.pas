@@ -497,6 +497,7 @@ Uses
   ACBrUtil.Math,
   ACBrUtil.FilesIO,
   ACBrUtil.Strings,
+  ACBrUtil.Compatibilidade,
   ACBrUtil.Base;
 
 { TACBrECFEscECFProtocoloEpsonDLL }

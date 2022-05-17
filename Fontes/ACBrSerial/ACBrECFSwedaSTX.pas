@@ -329,6 +329,7 @@ Uses
    ACBrUtil.FilesIO,
    ACBrUtil.Math,
    ACBrUtil.Base,
+   ACBrUtil.Compatibilidade,
    ACBrUtil.DateTime;
 
 { --------------------------- TACBrECFSwedaCache ---------------------------- }

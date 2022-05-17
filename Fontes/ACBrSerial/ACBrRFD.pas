@@ -389,6 +389,7 @@ Uses ACBrECF,
       ACBrUtil.DateTime,
       ACBrUtil.Base,
       ACBrUtil.FilesIO,
+      ACBrUtil.Compatibilidade,
       ACBrUtil.Math;
 
 

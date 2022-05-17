@@ -496,6 +496,8 @@ begin
           else
             IdentificacaoRps.Serie := '8';
 
+        proSystemPro:
+          IdentificacaoRps.Serie := 'RPP';
       else
         IdentificacaoRps.Serie := '85';
       end;
@@ -643,7 +645,10 @@ begin
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
         proISSDSF, proSiat, proAgili:
           // código com 9 digitos
-          Servico.CodigoCnae := '452000200'
+          Servico.CodigoCnae := '452000200';
+
+        proSystemPro:
+          Servico.CodigoCnae := '';
       else
         // código com 7 digitos
         Servico.CodigoCnae := '6203100';
@@ -659,7 +664,7 @@ begin
         proISSSalvador:
           Servico.CodigoTributacaoMunicipio := '0901001';
 
-        proIPM:
+        proIPM, proSystemPro:
           Servico.CodigoTributacaoMunicipio := '';
       else
         Servico.CodigoTributacaoMunicipio := '63194';

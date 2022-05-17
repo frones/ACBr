@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2022
+-- ACBrNFSeXServicos --
+[*] Corrigido a URL de homologação da cidade de Canela/RS.
+   Por: C4Dev
+-- ACBrNFSeXServicos --
+[*] Incluído a cidade: Caiçara/RS - Provedor Betha.
+   Por: Dioni R
+
 16/05/2022
 -- ACBrNFSeXLerXml_ABRASFv2/ACBrNFSeXDANFSeRLRetrato --
 [*] Possível solução para identificar se o XML da nota esta cancelado ou não.

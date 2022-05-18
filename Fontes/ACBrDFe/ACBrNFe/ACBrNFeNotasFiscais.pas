@@ -1365,7 +1365,7 @@ begin
       AdicionaErro('534-Rejeição: Total do ICMS-ST difere do somatório dos itens');
 
     GravaLog('Validar: 564-Total Produto/Serviço');
-    if (NFe.Total.ICMSTot.vProd <> fsvProd) then
+    if (ComparaValor(NFe.Total.ICMSTot.vProd, fsvProd, 0.009) <> 0) then
       AdicionaErro('564-Rejeição: Total do Produto / Serviço difere do somatório dos itens');
 
     GravaLog('Validar: 535-Total Frete');
@@ -1431,7 +1431,7 @@ begin
     if not NFImportacao and
        (NFe.Total.ICMSTot.vNF <> fsvNF) then
     begin
-      if (NFe.Total.ICMSTot.vNF <> (fsvNF+fsvICMSDeson)) then
+      if (ComparaValor(NFe.Total.ICMSTot.vNF, (fsvNF + fsvICMSDeson), 0.009) <> 0) then
         AdicionaErro('610-Rejeição: Total da NF difere do somatório dos Valores compõe o valor Total da NF.');
     end;
 
@@ -3985,16 +3985,21 @@ end;
 function TNotasFiscais.ValidarRegrasdeNegocios(out Erros: String): Boolean;
 var
   i: integer;
+  msg: ShortString;
 begin
   Result := True;
   Erros := '';
+  msg := '';
 
   for i := 0 to Self.Count - 1 do
   begin
     if not Self.Items[i].ValidarRegrasdeNegocios then
     begin
       Result := False;
-      Erros := Erros + Self.Items[i].ErroRegrasdeNegocios + sLineBreak;
+      msg := Self.Items[i].ErroRegrasdeNegocios;
+
+      if Pos(msg, Erros) <= 0 then
+        Erros := Erros + Self.Items[i].ErroRegrasdeNegocios + sLineBreak;
     end;
   end;
 end;

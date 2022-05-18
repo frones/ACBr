@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/05/2022
+-- ACBrNFeNotasFiscais --
+[*] Utilização da função ComparaValor ao validar as rejeições 564 e 610.
+   Por: Vilmondes Cândido Rosa
+-- ACBrNFeNotasFiscais --
+[*] Melhorias na geração da string que contem os erros ao executar o ValidarRegrasdeNegocios
+   Por: Adilson Duarte
+
 12/05/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

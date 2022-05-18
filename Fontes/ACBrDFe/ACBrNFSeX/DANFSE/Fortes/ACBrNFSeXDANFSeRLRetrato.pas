@@ -226,6 +226,8 @@ type
     txtServicoTotal: TRLLabel;
     rllCodTributacaoMunicipio: TRLLabel;
     rlmDescCodTributacaoMunicipio: TRLMemo;
+    RLLabel69: TRLLabel;
+    rllPrestInscEstadual: TRLLabel;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -519,8 +521,9 @@ begin
 
     with IdentificacaoPrestador do
     begin
-      rllPrestCNPJ.Caption := FormatarCNPJouCPF(ifThen(CpfCnpj <> '', CpfCnpj,fpDANFSe.Prestador.CNPJ));
+      rllPrestCNPJ.Caption := FormatarCNPJouCPF(ifThen(CpfCnpj <> '', CpfCnpj, fpDANFSe.Prestador.CNPJ));
       rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.Prestador.InscricaoMunicipal);
+      rllPrestInscEstadual.Caption := IfThen(InscricaoEstadual <> '', InscricaoEstadual, fpDANFSe.Prestador.InscricaoEstadual);
     end;
 
     with Endereco do

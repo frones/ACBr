@@ -52,6 +52,7 @@ type
     FRazaoSocial: String;
     FNomeFantasia: String;
     FInscMunicipal: String;
+    FInscEstadual: String;
     FCNPJ: String;
     FEndereco: String;
     FComplemento: String;
@@ -68,6 +69,7 @@ type
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property NomeFantasia: String read FNomeFantasia write FNomeFantasia;
     property InscricaoMunicipal: String read FInscMunicipal write FInscMunicipal;
+    property InscricaoEstadual: String read FInscEstadual write FInscEstadual;
     property CNPJ: String read FCNPJ write FCNPJ;
     property Endereco: String read FEndereco write FEndereco;
     property Complemento: String read FComplemento write FComplemento;
@@ -174,6 +176,7 @@ begin
   Fone := '';
   Municipio := '';
   InscricaoMunicipal := '';
+  InscricaoEstadual := '';
   EMail := '';
   Logo := '';
   UF := '';

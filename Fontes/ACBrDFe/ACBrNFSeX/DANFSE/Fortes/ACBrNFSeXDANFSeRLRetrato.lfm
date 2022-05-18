@@ -374,7 +374,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel30: TRLLabel
-        Left = 430
+        Left = 523
         Height = 14
         Top = 35
         Width = 97
@@ -421,7 +421,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object rllPrestInscMunicipal: TRLLabel
-        Left = 534
+        Left = 627
         Height = 13
         Top = 35
         Width = 117
@@ -590,6 +590,30 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 13
         Top = 83
         Width = 73
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel69: TRLLabel
+        Left = 523
+        Height = 14
+        Top = 51
+        Width = 89
+        Caption = 'Inscrição Estadual:'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestInscEstadual: TRLLabel
+        Left = 627
+        Height = 13
+        Top = 51
+        Width = 108
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Times New Roman'
@@ -2177,7 +2201,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 112
-    Top = 56
+    Left = 120
+    Top = 72
   end
 end

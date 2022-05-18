@@ -401,7 +401,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Transparent = False
       end
       object RLLabel30: TRLLabel
-        Left = 430
+        Left = 523
         Top = 35
         Width = 97
         Height = 14
@@ -455,7 +455,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         ParentFont = False
       end
       object rllPrestInscMunicipal: TRLLabel
-        Left = 534
+        Left = 627
         Top = 35
         Width = 117
         Height = 13
@@ -641,6 +641,33 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Left = 502
         Top = 83
         Width = 73
+        Height = 13
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel69: TRLLabel
+        Left = 523
+        Top = 51
+        Width = 89
+        Height = 14
+        Caption = 'Inscri'#231#227'o Estadual:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rllPrestInscEstadual: TRLLabel
+        Left = 627
+        Top = 51
+        Width = 108
         Height = 13
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

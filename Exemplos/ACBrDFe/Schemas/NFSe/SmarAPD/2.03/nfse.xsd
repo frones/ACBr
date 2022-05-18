@@ -294,6 +294,7 @@
 			<xsd:enumeration value="15.17"/>
 			<xsd:enumeration value="15.18"/>
 			<xsd:enumeration value="16.01"/>
+			<xsd:enumeration value="16.02"/>
 			<xsd:enumeration value="17.01"/>
 			<xsd:enumeration value="17.02"/>
 			<xsd:enumeration value="17.03"/>

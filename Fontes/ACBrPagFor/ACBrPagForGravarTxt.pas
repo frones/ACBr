@@ -1015,7 +1015,12 @@ begin
             wregistro := wregistro + FormatFloat('000000000000000', Credito.Moeda.Qtde * 100000);
             wregistro := wregistro + FormatFloat('000000000000000', Credito.ValorPagamento * 100);
             wregistro := wregistro + PadRight(TiraAcentos(Credito.NossoNumero), 20);
-            wregistro := wregistro + FormatDateTime('ddmmyyyy', Credito.DataReal);
+
+            if Credito.DataReal > 0 then
+              wregistro := wregistro + FormatDateTime('ddmmyyyy', Credito.DataReal)
+            else
+              wregistro := wregistro + '00000000';
+
             wregistro := wregistro + FormatFloat('000000000000000', Credito.ValorReal * 100);
             wregistro := wregistro + PadRight(TiraAcentos(Informacao2), 40);
             wregistro := wregistro + PadRight(TiraAcentos(CodigoDOC), 2);

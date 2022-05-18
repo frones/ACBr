@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/05/2022
+-- ACBrPagForGravarTxt --
+[*] Ajuste no Segmento: A, se a DataReal for zero devemos gerar no arquivo 8 zeros. 
+   Por: Wanessa Franco
+
 11/05/2022
 -- ACBrPagForLerTxt --
 [*] Correção para ler o retorno do Segmento A - Banco Bradesco.

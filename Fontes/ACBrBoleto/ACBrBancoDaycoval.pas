@@ -506,7 +506,7 @@ begin
     with ACBrBoleto do
     begin
       wLinha := '1' + // 1 - Código do registro: 1 - Transação
-        ATipoCedente + // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
+        PadLeft(ATipoCedente, 2, '0') + // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
         PadLeft(OnlyNumber(Cedente.CNPJCPF), 14, '0') +              // 4 a 17 - Número de inscrição
         PadRight(Cedente.CodigoCedente, 20) +                        // 18 a 37 - Código da empresa no banco
         PadRight(SeuNumero, 25) +                                    // 38 a 62 - Identificação do título na empresa

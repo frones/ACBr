@@ -709,6 +709,9 @@ begin
 
     NFSe.StatusRps := StrToStatusRPS(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('Status'), tcStr));
 
+    if NFSe.StatusRps = srCancelado then
+      NFSe.SituacaoNfse := snCancelado;
+
     LerRpsSubstituido(AuxNode);
   end;
 end;

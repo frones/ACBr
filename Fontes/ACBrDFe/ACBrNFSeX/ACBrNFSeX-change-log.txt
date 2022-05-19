@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+19/05/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] O provedor SigCorp não retorna o grupo NfseCancelamento, simplemente atribui o
+    valor 2 ao campo Status, esse valor indica que a nota esta cancelada.
+    Realizado uma alteração para usar esse valor para indicar que a nota esta cancelada.
+   Por: Italo Giurizzato Junior
+
 18/05/2022
 -- ACBrNFSeXDANFSeClass/ACBrNFSeXDANFSeRLRetrato --
 [+] Incluído a propriedade de configuração: InscricaoEstadual para o DANFSE em 

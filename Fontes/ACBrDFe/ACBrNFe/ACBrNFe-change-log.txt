@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2022
+-- ACBrNFeServicos --
+[+] Inclusão das URLs de produção e homologação versão 4.00 para emissão da NFC-e - SEFAZ-CE
+   Por: Italo Giurizzato Junior
+
 18/05/2022
 -- ACBrNFeNotasFiscais --
 [*] Utilização da função ComparaValor ao validar as rejeições 564 e 610.

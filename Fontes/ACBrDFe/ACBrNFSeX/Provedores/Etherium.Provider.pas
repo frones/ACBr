@@ -150,7 +150,7 @@ begin
   Request := Request + '</RecepcionarLoteRps>';
 
   Result := Executar('http://tempuri.org/RecepcionarLoteRps', Request,
-                     ['RecepcionarLoteRpsResult', 'RecepcionarLoteRps'],
+                     ['RecepcionarLoteRpsResult', 'EnviarLoteRpsResposta'],
                      ['xmlns="http://tempuri.org/"']);
 end;
 

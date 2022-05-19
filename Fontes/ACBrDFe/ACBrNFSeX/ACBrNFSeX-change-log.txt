@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/05/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Trindade/GO - trocou de provedor agora é Centi.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] O provedor SigCorp não retorna o grupo NfseCancelamento, simplemente atribui o
     valor 2 ao campo Status, esse valor indica que a nota esta cancelada.

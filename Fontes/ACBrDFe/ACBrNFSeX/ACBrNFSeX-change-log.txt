@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 20/05/2022
+-- GeisWeb.Provider/GeisWeb.GravarXml/GeisWeb.LerXml --
+[+] Sobreescrita  as funções: RegimeEspecialTributacaoToStr, 
+    StrToRegimeEspecialTributacao e RegimeEspecialTributacaoDescricao.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.Provider --
 [*] Alterado o tipo de leitura da data para tcDatVcto pois a data é retornada
     no formato DD/MM/AAAA.

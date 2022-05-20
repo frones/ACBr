@@ -92,7 +92,10 @@ type
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = '';
                                      const AMessageTag: string = 'Msg'); override;
-
+  public
+    function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
+    function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
+    function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string; override;
   end;
 
 implementation
@@ -198,6 +201,37 @@ begin
     AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Status'), tcStr);
     AErro.Correcao := '';
   end;
+end;
+
+function TACBrNFSeProviderGeisWeb.RegimeEspecialTributacaoDescricao(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  case t of
+    retSimplesNacional           : Result := '1 - Simples Nacional';
+    retMicroempresarioIndividual : Result := '2 - Microempresário Individual (MEI)';
+    retImune                     : Result := '4 - Imune';
+    retOutros                    : Result := '6 - Outros/Sem Vinculo';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderGeisWeb.RegimeEspecialTributacaoToStr(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '4', '6'],
+                           [retSimplesNacional, retMicroempresarioIndividual,
+                            retImune, retOutros]);
+end;
+
+function TACBrNFSeProviderGeisWeb.StrToRegimeEspecialTributacao(out ok: boolean;
+  const s: string): TnfseRegimeEspecialTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                          ['1', '2', '4', '6'],
+                          [retSimplesNacional, retMicroempresarioIndividual,
+                           retImune, retOutros]);
 end;
 
 function TACBrNFSeProviderGeisWeb.PrepararRpsParaLote(

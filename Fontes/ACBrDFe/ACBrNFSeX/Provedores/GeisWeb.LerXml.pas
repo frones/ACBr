@@ -46,8 +46,6 @@ type
 
   TNFSeR_GeisWeb = class(TNFSeRClass)
   protected
-    function StrToRegime(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
-
     // Leitura da NFS-e
     procedure LerIdentificacaoNfse(const ANode: TACBrXmlNode);
     procedure LerEnderecoPrestador(const ANode: TACBrXmlNode);
@@ -82,15 +80,6 @@ uses
 //==============================================================================
 
 { TNFSeR_GeisWeb }
-
-function TNFSeR_GeisWeb.StrToRegime(out ok: boolean;
-  const s: string): TnfseRegimeEspecialTributacao;
-begin
-  Result := StrToEnumerado(ok, s,
-                          ['1', '2', '4', '6'],
-                          [retSimplesNacional, retMicroempresarioIndividual,
-                           retImune, retOutros]);
-end;
 
 procedure TNFSeR_GeisWeb.LerContatoPrestador(const ANode: TACBrXmlNode);
 var
@@ -376,7 +365,7 @@ begin
     DataEmissao := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcDatVcto);
     dhRecebimento := ObterConteudo(ANode.Childrens.FindAnyNs('DataLancamento'), tcDatVcto);
     Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('Competencia'), tcDatVcto);
-    RegimeEspecialTributacao := StrToRegime(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
+    RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('Regime'), tcStr));
 
     LerServico(ANode);
     LerPrestadorServico(ANode);

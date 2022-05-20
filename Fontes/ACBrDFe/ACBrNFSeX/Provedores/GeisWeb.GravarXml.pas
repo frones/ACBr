@@ -46,8 +46,6 @@ type
 
   TNFSeW_GeisWeb = class(TNFSeWClass)
   protected
-    function RegimeToStr(const t: TnfseRegimeEspecialTributacao): string;
-
     function GerarIdentificacaoRps: TACBrXmlNode;
     function GerarServico: TACBrXmlNode;
     function GerarValores: TACBrXmlNode;
@@ -74,15 +72,6 @@ uses
 //==============================================================================
 
 { TNFSeW_GeisWeb }
-
-function TNFSeW_GeisWeb.RegimeToStr(
-  const t: TnfseRegimeEspecialTributacao): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['1', '2', '4', '6'],
-                           [retSimplesNacional, retMicroempresarioIndividual,
-                            retImune, retOutros]);
-end;
 
 function TNFSeW_GeisWeb.GerarXml: Boolean;
 var
@@ -158,7 +147,7 @@ begin
                  NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Regime', 1, 1, 1,
-                               RegimeToStr(NFSe.RegimeEspecialTributacao), ''));
+    FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), ''));
 end;
 
 function TNFSeW_GeisWeb.GerarIdentificacaoRps: TACBrXmlNode;

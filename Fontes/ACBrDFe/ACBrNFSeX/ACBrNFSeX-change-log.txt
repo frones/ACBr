@@ -43,6 +43,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+20/05/2022
+-- ACBrNFSeXProviderABRASFv1/FISSLex.Provider --
+[*] Sobreescrita as procedures: TratarRetornoConsultaLoteRps, 
+    TratarRetornoConsultaNFSeporRps e TratarRetornoConsultaNFSe
+    na unit Provider do provedor pois este não segue o padrão.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Grajau/MA - provedor FISSLex.
+   Por: Italo Giurizzato Junior
+
 19/05/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Trindade/GO - trocou de provedor agora é Centi.

@@ -45,6 +45,9 @@ Símbolo : Significado
 
 20/05/2022
 -- ACBrNFSeXServicos --
+[*] Alteração para a cidade: Santa Maria/RS não dividir a aliquota por 100.
+   Por: PoliDados
+-- ACBrNFSeXServicos --
 [+] Incluída a cidade: Viana/ES - provedor EL.
    Por: Jonas Garcia
 -- GeisWeb.Provider/GeisWeb.GravarXml/GeisWeb.LerXml --

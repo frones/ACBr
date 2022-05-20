@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/05/2022
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Viana/ES - provedor EL.
+   Por: Jonas Garcia
 -- GeisWeb.Provider/GeisWeb.GravarXml/GeisWeb.LerXml --
 [+] Sobreescrita  as funções: RegimeEspecialTributacaoToStr, 
     StrToRegimeEspecialTributacao e RegimeEspecialTributacaoDescricao.

@@ -332,12 +332,10 @@ begin
 
           if AuxNode <> nil then
           begin
-            Response.Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
-
             with Response do
             begin
-              Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('datahora'), tcDatHor);
               Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('codrecibo'), tcStr);
+              Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('datahora'), tcDatVcto);
               xSucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
               Sucesso := not (xSucesso = 'N');
             end;

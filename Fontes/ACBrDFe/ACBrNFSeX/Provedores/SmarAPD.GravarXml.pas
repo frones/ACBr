@@ -77,8 +77,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.Strings, ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

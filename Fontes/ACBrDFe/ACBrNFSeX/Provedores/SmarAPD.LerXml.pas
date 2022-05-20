@@ -79,8 +79,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -272,7 +271,6 @@ begin
     aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('NaturezaOperacao'), tcStr);
     NaturezaOperacao := StrToNaturezaOperacao(Ok, aValor);
 
-//    Protocolo         := CodigoVerificacao;
     OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
 
     MotivoCancelamento           := '';

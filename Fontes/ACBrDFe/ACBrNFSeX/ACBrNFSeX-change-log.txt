@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 20/05/2022
+-- SmarAPD.Provider --
+[*] Alterado o tipo de leitura da data para tcDatVcto pois a data é retornada
+    no formato DD/MM/AAAA.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1/FISSLex.Provider --
 [*] Sobreescrita as procedures: TratarRetornoConsultaLoteRps, 
     TratarRetornoConsultaNFSeporRps e TratarRetornoConsultaNFSe

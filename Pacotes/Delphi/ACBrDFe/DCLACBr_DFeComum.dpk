@@ -23,16 +23,16 @@ package DCLACBr_DFeComum;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - (design-time) Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos'}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - (design-time) Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
-  designide,
-  ACBr_DFeComum;
+  rtl,  
+  ACBr_DFeComum,
+  designide;
 
 contains
   ACBrDFeRegUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas';

@@ -119,6 +119,9 @@ var
 implementation
 
 uses
+{$IFDEF DELPHIXE6_UP}
+  System.IOUtils,
+{$ENDIF}
   pcnConversao, pcnConversaoNFe;
 
 {$R *.dfm}

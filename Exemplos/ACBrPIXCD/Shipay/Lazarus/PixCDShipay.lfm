@@ -1,0 +1,1594 @@
+object frPixCDShipay: TfrPixCDShipay
+  Left = 483
+  Height = 597
+  Top = 194
+  Width = 800
+  Caption = 'frPixCDShipay'
+  ClientHeight = 597
+  ClientWidth = 800
+  OnCreate = FormCreate
+  LCLVersion = '2.2.0.4'
+  object pgPrincipal: TPageControl
+    Left = 0
+    Height = 597
+    Top = 0
+    Width = 800
+    ActivePage = tsFluxoPagto
+    Align = alClient
+    TabHeight = 30
+    TabIndex = 0
+    TabOrder = 0
+    TabWidth = 200
+    object tsFluxoPagto: TTabSheet
+      Caption = 'Fluxo Pagamento'
+      ClientHeight = 559
+      ClientWidth = 792
+      object pnFluxoPagto: TPanel
+        Left = 0
+        Height = 559
+        Top = 0
+        Width = 792
+        Align = alClient
+        BevelOuter = bvNone
+        ClientHeight = 559
+        ClientWidth = 792
+        Color = 15263976
+        Font.Name = 'Arial'
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 0
+        object gbFluxoCliente: TGroupBox
+          Left = 30
+          Height = 86
+          Top = 114
+          Width = 732
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 30
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 30
+          Caption = 'CLIENTE'
+          ClientHeight = 66
+          ClientWidth = 728
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 0
+          object lbFluxoClienteNome: TLabel
+            AnchorSideLeft.Control = edFluxoClienteNome
+            AnchorSideBottom.Control = edFluxoClienteNome
+            Left = 245
+            Height = 15
+            Top = 5
+            Width = 34
+            Anchors = [akLeft, akBottom]
+            Caption = 'Nome'
+          end
+          object edFluxoClienteNome: TEdit
+            AnchorSideLeft.Control = edFluxoClienteDoc
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edFluxoClienteDoc
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = gbFluxoCliente
+            AnchorSideRight.Side = asrBottom
+            Left = 245
+            Height = 31
+            Top = 20
+            Width = 468
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Left = 15
+            BorderSpacing.Right = 15
+            Font.Height = -20
+            Font.Name = 'Arial'
+            ParentFont = False
+            TabOrder = 0
+            Text = 'Elias Cesar Vieira'
+          end
+          object lbFluxoClienteDoc: TLabel
+            AnchorSideLeft.Control = gbFluxoCliente
+            AnchorSideTop.Control = gbFluxoCliente
+            Left = 15
+            Height = 15
+            Top = 5
+            Width = 59
+            BorderSpacing.Left = 15
+            BorderSpacing.Top = 5
+            Caption = 'CPF/CNPJ'
+          end
+          object edFluxoClienteDoc: TEdit
+            AnchorSideLeft.Control = lbFluxoClienteDoc
+            AnchorSideTop.Control = lbFluxoClienteDoc
+            AnchorSideTop.Side = asrBottom
+            Left = 15
+            Height = 31
+            Top = 20
+            Width = 215
+            BorderSpacing.Bottom = 15
+            Font.Height = -20
+            Font.Name = 'Arial'
+            ParentFont = False
+            TabOrder = 1
+            Text = '67751079002'
+          end
+        end
+        object gbFluxoItens: TGroupBox
+          Left = 30
+          Height = 170
+          Top = 210
+          Width = 732
+          Align = alTop
+          BorderSpacing.Left = 30
+          BorderSpacing.Top = 10
+          BorderSpacing.Right = 30
+          Caption = 'ITENS'
+          ClientHeight = 150
+          ClientWidth = 728
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 1
+          object pnFluxoDadosItem: TPanel
+            Left = 0
+            Height = 150
+            Top = 0
+            Width = 245
+            Align = alLeft
+            BevelOuter = bvNone
+            ClientHeight = 150
+            ClientWidth = 245
+            TabOrder = 0
+            object edFluxoItemEAN: TEdit
+              AnchorSideLeft.Control = lbFluxoItemEAN
+              AnchorSideTop.Control = lbFluxoItemEAN
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = gbFluxoItens
+              AnchorSideRight.Side = asrBottom
+              Left = 15
+              Height = 23
+              Top = 68
+              Width = 100
+              BorderSpacing.Right = 15
+              TabOrder = 0
+            end
+            object lbFluxoItemEAN: TLabel
+              AnchorSideLeft.Control = edFluxoItemDescricao
+              AnchorSideTop.Control = edFluxoItemDescricao
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 15
+              Top = 53
+              Width = 24
+              BorderSpacing.Top = 10
+              Caption = 'EAN'
+            end
+            object lbFluxoItemValor: TLabel
+              AnchorSideLeft.Control = edFluxoItemPreco
+              AnchorSideBottom.Control = edFluxoItemPreco
+              Left = 130
+              Height = 15
+              Top = 53
+              Width = 27
+              Anchors = [akLeft, akBottom]
+              Caption = 'Valor'
+            end
+            object edFluxoItemPreco: TFloatSpinEdit
+              AnchorSideLeft.Control = edFluxoItemEAN
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = edFluxoItemEAN
+              AnchorSideTop.Side = asrCenter
+              Left = 130
+              Height = 23
+              Top = 68
+              Width = 100
+              BorderSpacing.Left = 15
+              TabOrder = 1
+            end
+            object edFluxoItemDescricao: TEdit
+              AnchorSideLeft.Control = lbFluxoItemDescricao
+              AnchorSideTop.Control = lbFluxoItemDescricao
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pnFluxoDadosItem
+              AnchorSideRight.Side = asrBottom
+              Left = 15
+              Height = 23
+              Top = 20
+              Width = 215
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Right = 15
+              TabOrder = 2
+            end
+            object lbFluxoItemDescricao: TLabel
+              AnchorSideLeft.Control = pnFluxoDadosItem
+              AnchorSideTop.Control = pnFluxoDadosItem
+              Left = 15
+              Height = 15
+              Top = 5
+              Width = 56
+              BorderSpacing.Left = 15
+              BorderSpacing.Top = 5
+              Caption = 'Descrição'
+            end
+            object btFluxoItemIncluir: TBitBtn
+              AnchorSideLeft.Control = edFluxoItemEAN
+              AnchorSideTop.Control = edFluxoItemEAN
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 26
+              Top = 111
+              Width = 100
+              BorderSpacing.Top = 20
+              Caption = 'Incluir'
+              Images = ImageList1
+              ImageIndex = 31
+              OnClick = btFluxoItemIncluirClick
+              TabOrder = 3
+            end
+            object btFluxoItemExcluir: TBitBtn
+              AnchorSideLeft.Control = btFluxoItemIncluir
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = btFluxoItemIncluir
+              AnchorSideTop.Side = asrCenter
+              Left = 130
+              Height = 26
+              Top = 111
+              Width = 100
+              BorderSpacing.Left = 15
+              Caption = 'Excluir'
+              Images = ImageList1
+              ImageIndex = 32
+              OnClick = btFluxoItemExcluirClick
+              TabOrder = 4
+            end
+          end
+          object gdFluxoItens: TStringGrid
+            Left = 245
+            Height = 130
+            Top = 5
+            Width = 468
+            Align = alClient
+            BorderSpacing.Top = 5
+            BorderSpacing.Right = 15
+            BorderSpacing.Bottom = 15
+            ColCount = 3
+            FixedCols = 0
+            Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goSmoothScroll]
+            RowCount = 2
+            TabOrder = 1
+            TitleStyle = tsNative
+            ColWidths = (
+              140
+              188
+              133
+            )
+            Cells = (
+              6
+              0
+              0
+              'Ean'
+              0
+              1
+              '0123456789012'
+              1
+              0
+              'Descrição'
+              1
+              1
+              'Batata Doce'
+              2
+              0
+              'Valor'
+              2
+              1
+              '3,69'
+            )
+          end
+        end
+        object gbFluxoTotal: TGroupBox
+          AnchorSideLeft.Control = gbFluxoItens
+          AnchorSideTop.Control = gbFluxoItens
+          AnchorSideTop.Side = asrBottom
+          Left = 30
+          Height = 86
+          Top = 390
+          Width = 244
+          BorderSpacing.Top = 10
+          Caption = 'TOTAL'
+          ClientHeight = 67
+          ClientWidth = 240
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          TabOrder = 2
+          object pnFluxoTotal: TPanel
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 67
+            Top = 0
+            Width = 240
+            Align = alClient
+            BevelOuter = bvNone
+            Caption = 'R$ 999,99'
+            Font.Height = -35
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+          end
+        end
+        object gbFluxoStatus: TGroupBox
+          Left = 30
+          Height = 74
+          Top = 30
+          Width = 732
+          Align = alTop
+          BorderSpacing.Left = 30
+          BorderSpacing.Top = 30
+          BorderSpacing.Right = 30
+          Caption = 'Status'
+          ClientHeight = 54
+          ClientWidth = 728
+          TabOrder = 3
+          object pnFluxoStatus: TPanel
+            Left = 15
+            Height = 44
+            Top = 0
+            Width = 698
+            Align = alClient
+            BorderSpacing.Left = 15
+            BorderSpacing.Right = 15
+            BorderSpacing.Bottom = 10
+            BevelOuter = bvNone
+            Caption = 'VENDENDO'
+            Color = 9934592
+            Font.Color = clWhite
+            Font.Height = -24
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentColor = False
+            ParentFont = False
+            TabOrder = 0
+          end
+        end
+        object pnFluxoQRCode: TPanel
+          AnchorSideLeft.Control = gbFluxoTotal
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = gbFluxoItens
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnFluxoBotoes
+          Left = 274
+          Height = 132
+          Top = 380
+          Width = 258
+          Anchors = [akTop, akLeft, akRight]
+          BevelOuter = bvNone
+          ClientHeight = 132
+          ClientWidth = 258
+          TabOrder = 4
+          object imFluxoQRCode: TImage
+            Left = 0
+            Height = 132
+            Top = 0
+            Width = 258
+            Align = alClient
+            Center = True
+            Proportional = True
+            Stretch = True
+          end
+        end
+        object pnFluxoBotoes: TPanel
+          AnchorSideTop.Control = gbFluxoItens
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbFluxoItens
+          AnchorSideRight.Side = asrBottom
+          Left = 547
+          Height = 158
+          Top = 390
+          Width = 215
+          Anchors = [akTop, akRight]
+          AutoSize = True
+          BorderSpacing.Left = 15
+          BorderSpacing.Top = 10
+          BevelOuter = bvNone
+          ClientHeight = 158
+          ClientWidth = 215
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 5
+          object btFluxoPagar: TBitBtn
+            Left = 0
+            Height = 32
+            Top = 0
+            Width = 215
+            Align = alTop
+            BorderSpacing.Bottom = 10
+            Caption = 'PAGAR'
+            Constraints.MinWidth = 215
+            Images = ImageList1
+            ImageIndex = 33
+            OnClick = btFluxoPagarClick
+            TabOrder = 0
+          end
+          object btFluxoCancelarCobranca: TBitBtn
+            Left = 0
+            Height = 32
+            Top = 42
+            Width = 215
+            Align = alTop
+            BorderSpacing.Bottom = 10
+            Caption = 'Cancelar Cobrança'
+            Constraints.MinWidth = 215
+            Images = ImageList1
+            ImageIndex = 17
+            OnClick = btFluxoCancelarCobrancaClick
+            TabOrder = 1
+          end
+          object btFluxoReiniciar: TBitBtn
+            Left = 0
+            Height = 32
+            Top = 126
+            Width = 215
+            Align = alTop
+            Caption = 'Reiniciar Fluxo'
+            Constraints.MinWidth = 215
+            Images = ImageList1
+            ImageIndex = 22
+            OnClick = btFluxoReiniciarClick
+            TabOrder = 2
+          end
+          object btFluxoEstornarPagto: TBitBtn
+            Left = 0
+            Height = 32
+            Top = 84
+            Width = 215
+            Align = alTop
+            BorderSpacing.Bottom = 10
+            Caption = 'Estornar Pagamento'
+            Constraints.MinWidth = 215
+            Images = ImageList1
+            ImageIndex = 12
+            OnClick = btFluxoEstornarPagtoClick
+            TabOrder = 3
+          end
+        end
+        object lbFluxoMsgPagto: TLabel
+          AnchorSideLeft.Control = pnFluxoQRCode
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = pnFluxoQRCode
+          AnchorSideTop.Side = asrBottom
+          Left = 177
+          Height = 30
+          Top = 517
+          Width = 453
+          Alignment = taCenter
+          BorderSpacing.Top = 5
+          Caption = 'Ambiente de homologação: Utilize o ShipayPagador para simular um pagamento'#13#10'https://apptest-staging.shipay.com.br'
+          Font.Color = clRed
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+      end
+    end
+    object tsTestes: TTabSheet
+      Caption = 'Endpoints'
+      ClientHeight = 559
+      ClientWidth = 792
+      ImageIndex = 14
+      object pgTestes: TPageControl
+        Left = 0
+        Height = 559
+        Top = 0
+        Width = 480
+        ActivePage = tsCriarCob
+        Align = alClient
+        TabHeight = 25
+        TabIndex = 0
+        TabOrder = 0
+        TabWidth = 100
+        object tsCriarCob: TTabSheet
+          Caption = 'Criar Cobrança'
+          ClientHeight = 526
+          ClientWidth = 472
+          object gbComprador: TGroupBox
+            Left = 15
+            Height = 126
+            Top = 15
+            Width = 442
+            Align = alTop
+            AutoSize = True
+            BorderSpacing.Left = 15
+            BorderSpacing.Top = 15
+            BorderSpacing.Right = 15
+            BorderSpacing.Bottom = 10
+            Caption = 'Comprador'
+            ClientHeight = 106
+            ClientWidth = 438
+            TabOrder = 0
+            object lbCompradorNome: TLabel
+              AnchorSideLeft.Control = gbComprador
+              AnchorSideTop.Control = gbComprador
+              Left = 15
+              Height = 15
+              Top = 5
+              Width = 33
+              BorderSpacing.Left = 15
+              BorderSpacing.Top = 5
+              Caption = 'Nome'
+            end
+            object edCompradorNome: TEdit
+              AnchorSideLeft.Control = lbCompradorNome
+              AnchorSideTop.Control = lbCompradorNome
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 23
+              Top = 20
+              Width = 263
+              Anchors = [akTop, akLeft, akRight]
+              TabOrder = 0
+              Text = 'Elias Cesar Vieira'
+            end
+            object lbCompradorDoc: TLabel
+              AnchorSideLeft.Control = edCompradorDoc
+              AnchorSideBottom.Control = edCompradorDoc
+              Left = 293
+              Height = 15
+              Top = 5
+              Width = 53
+              Anchors = [akLeft, akBottom]
+              Caption = 'CPF/CNPJ'
+            end
+            object edCompradorDoc: TEdit
+              AnchorSideLeft.Control = edCompradorNome
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = edCompradorNome
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = gbComprador
+              AnchorSideRight.Side = asrBottom
+              Left = 293
+              Height = 23
+              Top = 20
+              Width = 130
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 15
+              BorderSpacing.Right = 15
+              TabOrder = 1
+              Text = '67751079002'
+            end
+            object lbCompradorEmail: TLabel
+              AnchorSideLeft.Control = edCompradorNome
+              AnchorSideTop.Control = edCompradorNome
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 15
+              Top = 53
+              Width = 34
+              BorderSpacing.Top = 10
+              Caption = 'E-mail'
+            end
+            object edCompradorEmail: TEdit
+              AnchorSideLeft.Control = lbCompradorEmail
+              AnchorSideTop.Control = lbCompradorEmail
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 23
+              Top = 68
+              Width = 263
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Bottom = 15
+              TabOrder = 2
+              Text = 'elias@projetoacbr.com.br'
+            end
+            object lbCompradorFone: TLabel
+              AnchorSideLeft.Control = edCompradorFone
+              AnchorSideBottom.Control = edCompradorFone
+              Left = 293
+              Height = 15
+              Top = 53
+              Width = 44
+              Anchors = [akLeft, akBottom]
+              Caption = 'Telefone'
+            end
+            object edCompradorFone: TEdit
+              AnchorSideLeft.Control = edCompradorEmail
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = edCompradorEmail
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = edCompradorDoc
+              AnchorSideRight.Side = asrBottom
+              Left = 293
+              Height = 23
+              Top = 68
+              Width = 130
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 15
+              TabOrder = 3
+              Text = '(15)99999-9999'
+            end
+          end
+          object gbItem: TGroupBox
+            Left = 15
+            Height = 126
+            Top = 151
+            Width = 442
+            Align = alTop
+            AutoSize = True
+            BorderSpacing.Left = 15
+            BorderSpacing.Right = 15
+            Caption = 'Exemplo de Item'
+            ClientHeight = 106
+            ClientWidth = 438
+            TabOrder = 1
+            object lbItemDescricao: TLabel
+              AnchorSideLeft.Control = gbItem
+              AnchorSideTop.Control = gbItem
+              Left = 15
+              Height = 15
+              Top = 5
+              Width = 51
+              BorderSpacing.Left = 15
+              BorderSpacing.Top = 5
+              Caption = 'Descrição'
+            end
+            object edItemDescricao: TEdit
+              AnchorSideLeft.Control = lbItemDescricao
+              AnchorSideTop.Control = lbItemDescricao
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 23
+              Top = 20
+              Width = 263
+              Anchors = [akTop, akLeft, akRight]
+              TabOrder = 0
+              Text = 'Batata Doce'
+            end
+            object lbItemEAN: TLabel
+              AnchorSideLeft.Control = edItemEAN
+              AnchorSideBottom.Control = edItemEAN
+              Left = 293
+              Height = 15
+              Top = 5
+              Width = 23
+              Anchors = [akLeft, akBottom]
+              Caption = 'EAN'
+            end
+            object edItemEAN: TEdit
+              AnchorSideLeft.Control = edItemDescricao
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = edItemDescricao
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = gbItem
+              AnchorSideRight.Side = asrBottom
+              Left = 293
+              Height = 23
+              Top = 20
+              Width = 130
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 15
+              BorderSpacing.Right = 15
+              TabOrder = 1
+              Text = '0123456789012'
+            end
+            object lbItemSKU: TLabel
+              AnchorSideLeft.Control = edItemDescricao
+              AnchorSideTop.Control = edItemDescricao
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 15
+              Top = 53
+              Width = 21
+              BorderSpacing.Top = 10
+              Caption = 'SKU'
+            end
+            object edItemSKU: TEdit
+              AnchorSideLeft.Control = lbItemSKU
+              AnchorSideTop.Control = lbItemSKU
+              AnchorSideTop.Side = asrBottom
+              Left = 15
+              Height = 23
+              Top = 68
+              Width = 119
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Bottom = 15
+              TabOrder = 2
+              Text = 'MTC-6110'
+            end
+            object lbItemPreco: TLabel
+              AnchorSideLeft.Control = edItemPreco
+              AnchorSideBottom.Control = edItemPreco
+              Left = 293
+              Height = 15
+              Top = 53
+              Width = 58
+              Anchors = [akLeft, akBottom]
+              Caption = 'Preço Unit.'
+            end
+            object lbItemQtd: TLabel
+              AnchorSideLeft.Control = edItemQtd
+              AnchorSideBottom.Control = edItemQtd
+              Left = 149
+              Height = 15
+              Top = 53
+              Width = 62
+              Anchors = [akLeft, akBottom]
+              Caption = 'Quantidade'
+            end
+            object edItemQtd: TFloatSpinEdit
+              AnchorSideLeft.Control = edItemSKU
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = edItemSKU
+              AnchorSideTop.Side = asrCenter
+              Left = 149
+              Height = 23
+              Top = 68
+              Width = 129
+              BorderSpacing.Left = 15
+              DecimalPlaces = 4
+              TabOrder = 3
+              Value = 2.1626
+            end
+            object edItemPreco: TFloatSpinEdit
+              AnchorSideLeft.Control = edItemQtd
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = edItemQtd
+              AnchorSideTop.Side = asrCenter
+              Left = 293
+              Height = 23
+              Top = 68
+              Width = 130
+              BorderSpacing.Left = 15
+              TabOrder = 4
+              Value = 3.69
+            end
+          end
+          object edOrderRef: TEdit
+            AnchorSideLeft.Control = lbOrderRef
+            AnchorSideTop.Control = lbOrderRef
+            AnchorSideTop.Side = asrBottom
+            Left = 31
+            Height = 23
+            Top = 302
+            Width = 239
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 2
+          end
+          object lbOrderRef: TLabel
+            AnchorSideLeft.Control = gbItem
+            AnchorSideTop.Control = gbItem
+            AnchorSideTop.Side = asrBottom
+            Left = 31
+            Height = 15
+            Top = 287
+            Width = 53
+            BorderSpacing.Left = 16
+            BorderSpacing.Top = 10
+            Caption = 'Order Ref.'
+          end
+          object btGerarTxID: TSpeedButton
+            AnchorSideLeft.Control = edOrderRef
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edOrderRef
+            AnchorSideTop.Side = asrCenter
+            Left = 270
+            Height = 23
+            Top = 302
+            Width = 24
+            Flat = True
+            Images = ImageList1
+            ImageIndex = 30
+            OnClick = btGerarTxIDClick
+          end
+          object btCriarCobrancaImediata1: TBitBtn
+            AnchorSideLeft.Control = btGerarTxID
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = btGerarTxID
+            AnchorSideTop.Side = asrCenter
+            Left = 309
+            Height = 26
+            Top = 300
+            Width = 130
+            BorderSpacing.Left = 15
+            Caption = 'Criar'
+            Images = ImageList1
+            ImageIndex = 4
+            OnClick = btCriarCobrancaImediata1Click
+            TabOrder = 3
+          end
+          object imgQRCriarCobranca: TImage
+            Left = 31
+            Height = 127
+            Top = 352
+            Width = 144
+            Center = True
+            Proportional = True
+            Stretch = True
+          end
+        end
+        object tsCancelarPagto: TTabSheet
+          Caption = 'Cancelar'
+          ClientHeight = 526
+          ClientWidth = 472
+          object edCancelarOrder_ID: TEdit
+            AnchorSideLeft.Control = lbCancelarOrder_ID
+            AnchorSideTop.Control = lbCancelarOrder_ID
+            AnchorSideTop.Side = asrBottom
+            Left = 30
+            Height = 23
+            Top = 45
+            Width = 266
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object lbCancelarOrder_ID: TLabel
+            AnchorSideLeft.Control = tsCancelarPagto
+            AnchorSideTop.Control = tsCancelarPagto
+            Left = 30
+            Height = 15
+            Top = 30
+            Width = 44
+            BorderSpacing.Left = 30
+            BorderSpacing.Top = 30
+            Caption = 'Order ID'
+          end
+          object btCancelarCobranca: TBitBtn
+            AnchorSideLeft.Control = edCancelarOrder_ID
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edCancelarOrder_ID
+            AnchorSideTop.Side = asrCenter
+            Left = 311
+            Height = 26
+            Top = 43
+            Width = 130
+            BorderSpacing.Left = 15
+            Caption = 'Cancelar'
+            Images = ImageList1
+            ImageIndex = 17
+            OnClick = btCancelarCobrancaClick
+            TabOrder = 1
+          end
+        end
+        object tsConsultarPagto: TTabSheet
+          Caption = 'Consultar'
+          ClientHeight = 526
+          ClientWidth = 472
+          object edConsultarOrder_ID: TEdit
+            AnchorSideLeft.Control = lbConsultarOrder_ID
+            AnchorSideTop.Control = lbConsultarOrder_ID
+            AnchorSideTop.Side = asrBottom
+            Left = 30
+            Height = 23
+            Top = 45
+            Width = 266
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object lbConsultarOrder_ID: TLabel
+            AnchorSideLeft.Control = tsConsultarPagto
+            AnchorSideTop.Control = tsConsultarPagto
+            Left = 30
+            Height = 15
+            Top = 30
+            Width = 44
+            BorderSpacing.Left = 30
+            BorderSpacing.Top = 30
+            Caption = 'Order ID'
+          end
+          object btConsultarCobranca: TBitBtn
+            AnchorSideLeft.Control = edConsultarOrder_ID
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edConsultarOrder_ID
+            AnchorSideTop.Side = asrCenter
+            Left = 311
+            Height = 26
+            Top = 43
+            Width = 130
+            BorderSpacing.Left = 15
+            Caption = 'Consultar'
+            Images = ImageList1
+            ImageIndex = 27
+            OnClick = btConsultarCobrancaClick
+            TabOrder = 1
+          end
+        end
+        object tsEstornarPagto: TTabSheet
+          Caption = 'Estornar'
+          ClientHeight = 526
+          ClientWidth = 472
+          object edEstornarOrder_ID: TEdit
+            AnchorSideLeft.Control = lbEstornarOrder_ID
+            AnchorSideTop.Control = lbEstornarOrder_ID
+            AnchorSideTop.Side = asrBottom
+            Left = 30
+            Height = 23
+            Top = 45
+            Width = 202
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object lbEstornarOrder_ID: TLabel
+            AnchorSideLeft.Control = tsEstornarPagto
+            AnchorSideTop.Control = tsEstornarPagto
+            Left = 30
+            Height = 15
+            Top = 30
+            Width = 44
+            BorderSpacing.Left = 30
+            BorderSpacing.Top = 30
+            Caption = 'Order ID'
+          end
+          object btEstornarCobranca: TBitBtn
+            AnchorSideLeft.Control = edEstornarValor
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edEstornarValor
+            AnchorSideTop.Side = asrCenter
+            Left = 355
+            Height = 26
+            Top = 43
+            Width = 90
+            BorderSpacing.Left = 15
+            Caption = 'Estornar'
+            Images = ImageList1
+            ImageIndex = 12
+            OnClick = btEstornarCobrancaClick
+            TabOrder = 1
+          end
+          object edEstornarValor: TFloatSpinEdit
+            AnchorSideLeft.Control = edEstornarOrder_ID
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edEstornarOrder_ID
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = gbItem
+            AnchorSideRight.Side = asrBottom
+            Left = 247
+            Height = 23
+            Top = 45
+            Width = 90
+            BorderSpacing.Left = 15
+            BorderSpacing.Right = 18
+            TabOrder = 2
+          end
+          object lbEstornarValor: TLabel
+            AnchorSideLeft.Control = edEstornarValor
+            AnchorSideBottom.Control = edEstornarValor
+            Left = 247
+            Height = 15
+            Top = 30
+            Width = 26
+            Anchors = [akLeft, akBottom]
+            Caption = 'Valor'
+          end
+        end
+      end
+      object pnLogs: TPanel
+        Left = 485
+        Height = 559
+        Top = 0
+        Width = 307
+        Align = alRight
+        ClientHeight = 559
+        ClientWidth = 307
+        TabOrder = 1
+        object mmLog: TMemo
+          Left = 4
+          Height = 504
+          Top = 19
+          Width = 299
+          Align = alClient
+          BorderSpacing.Around = 3
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+        object lbLog: TLabel
+          Left = 1
+          Height = 15
+          Top = 1
+          Width = 305
+          Align = alTop
+          Caption = 'Log das Operações'
+        end
+        object Panel2: TPanel
+          Left = 1
+          Height = 32
+          Top = 526
+          Width = 305
+          Align = alBottom
+          ClientHeight = 32
+          ClientWidth = 305
+          TabOrder = 1
+          object btQREAnalisar1: TBitBtn
+            Left = 216
+            Height = 26
+            Top = 1
+            Width = 83
+            Anchors = [akTop]
+            AutoSize = True
+            Caption = 'Limpar'
+            Images = ImageList1
+            ImageIndex = 18
+            TabOrder = 0
+          end
+        end
+      end
+      object Splitter1: TSplitter
+        Left = 480
+        Height = 559
+        Top = 0
+        Width = 5
+        Align = alRight
+        ResizeAnchor = akRight
+      end
+    end
+    object tsConfiguracao: TTabSheet
+      Caption = 'Configuracao'
+      ClientHeight = 559
+      ClientWidth = 792
+      ImageIndex = 2
+      object pnRodapeConfig: TPanel
+        Left = 0
+        Height = 37
+        Top = 522
+        Width = 792
+        Align = alBottom
+        BevelOuter = bvNone
+        ClientHeight = 37
+        ClientWidth = 792
+        TabOrder = 0
+        object btSalvarParametros: TBitBtn
+          AnchorSideLeft.Control = pnRodapeConfig
+          AnchorSideTop.Control = pnRodapeConfig
+          AnchorSideTop.Side = asrCenter
+          Left = 30
+          Height = 28
+          Top = 4
+          Width = 136
+          BorderSpacing.Left = 30
+          Caption = 'Salvar Parâmetros'
+          Images = ImageList1
+          ImageIndex = 10
+          OnClick = btSalvarParametrosClick
+          TabOrder = 0
+        end
+        object btLerParametros: TBitBtn
+          AnchorSideLeft.Control = btSalvarParametros
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = btSalvarParametros
+          AnchorSideTop.Side = asrCenter
+          Left = 181
+          Height = 28
+          Top = 4
+          Width = 136
+          BorderSpacing.Left = 15
+          Caption = 'Ler Parâmetros'
+          Images = ImageList1
+          ImageIndex = 11
+          OnClick = btLerParametrosClick
+          TabOrder = 1
+        end
+      end
+      object gbShipay: TGroupBox
+        AnchorSideTop.Side = asrBottom
+        Left = 30
+        Height = 164
+        Top = 15
+        Width = 732
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Left = 30
+        BorderSpacing.Top = 15
+        BorderSpacing.Right = 30
+        Caption = 'Shipay'
+        ClientHeight = 144
+        ClientWidth = 728
+        TabOrder = 1
+        object lbShipayClientID: TLabel
+          AnchorSideLeft.Control = gbShipay
+          AnchorSideTop.Control = gbShipay
+          Left = 15
+          Height = 15
+          Top = 5
+          Width = 45
+          BorderSpacing.Left = 15
+          BorderSpacing.Top = 5
+          Caption = 'Client ID'
+        end
+        object edShipayClientID: TEdit
+          AnchorSideLeft.Control = lbShipayClientID
+          AnchorSideTop.Control = lbShipayClientID
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 20
+          Width = 691
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 0
+        end
+        object lbShipaySecretKey: TLabel
+          AnchorSideLeft.Control = edShipayClientID
+          AnchorSideTop.Control = edShipayClientID
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 15
+          Top = 48
+          Width = 54
+          BorderSpacing.Top = 5
+          Caption = 'Secret Key'
+        end
+        object edShipaySecretKey: TEdit
+          AnchorSideLeft.Control = lbShipaySecretKey
+          AnchorSideTop.Control = lbShipaySecretKey
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 63
+          Width = 691
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 1
+        end
+        object lbShipayAccessKey: TLabel
+          AnchorSideLeft.Control = edShipaySecretKey
+          AnchorSideTop.Control = edShipaySecretKey
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 15
+          Top = 91
+          Width = 58
+          BorderSpacing.Top = 5
+          Caption = 'Access Key'
+        end
+        object edShipayAccessKey: TEdit
+          AnchorSideLeft.Control = lbShipayAccessKey
+          AnchorSideTop.Control = lbShipayAccessKey
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 106
+          Width = 691
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Bottom = 15
+          TabOrder = 2
+        end
+      end
+      object gbDiversos: TGroupBox
+        AnchorSideLeft.Control = gbShipay
+        AnchorSideTop.Control = gbShipay
+        AnchorSideTop.Side = asrBottom
+        Left = 30
+        Height = 131
+        Top = 189
+        Width = 415
+        BorderSpacing.Top = 10
+        Caption = 'Diversos'
+        ClientHeight = 111
+        ClientWidth = 411
+        TabOrder = 2
+        object lbCobExpiracao: TLabel
+          AnchorSideLeft.Control = seCobExpiracao
+          AnchorSideBottom.Control = seCobExpiracao
+          Left = 275
+          Height = 15
+          Top = 48
+          Width = 121
+          Anchors = [akLeft, akBottom]
+          Caption = 'Expiração da Cobrança'
+        end
+        object seCobExpiracao: TSpinEdit
+          AnchorSideLeft.Control = sbArqLog
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = sbArqLog
+          AnchorSideTop.Side = asrCenter
+          Left = 275
+          Height = 23
+          Top = 63
+          Width = 122
+          BorderSpacing.Left = 15
+          Increment = 10
+          MaxValue = 999999
+          TabOrder = 0
+          Value = 3600
+        end
+        object edLogArquivo: TEdit
+          AnchorSideLeft.Control = lbLogArquivo
+          AnchorSideTop.Control = lbLogArquivo
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 63
+          Width = 221
+          TabOrder = 1
+        end
+        object lbLogArquivo: TLabel
+          AnchorSideLeft.Control = cbAmbiente
+          AnchorSideTop.Control = cbAmbiente
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 15
+          Top = 48
+          Width = 81
+          BorderSpacing.Top = 5
+          Caption = 'Arquivo de Log'
+        end
+        object sbArqLog: TSpeedButton
+          AnchorSideLeft.Control = edLogArquivo
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edLogArquivo
+          AnchorSideTop.Side = asrCenter
+          Left = 236
+          Height = 23
+          Hint = 'Abrir Arquivo de Log'
+          Top = 63
+          Width = 24
+          Flat = True
+          Images = ImageList1
+          ImageIndex = 9
+          ShowHint = True
+          ParentFont = False
+          ParentShowHint = False
+        end
+        object edTimeOut: TSpinEdit
+          AnchorSideLeft.Control = cbAmbiente
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbAmbiente
+          AnchorSideTop.Side = asrCenter
+          Left = 275
+          Height = 23
+          Top = 20
+          Width = 122
+          BorderSpacing.Left = 15
+          Increment = 10
+          MaxValue = 999999
+          TabOrder = 2
+        end
+        object cbAmbiente: TComboBox
+          AnchorSideLeft.Control = lbAmbiente
+          AnchorSideTop.Control = lbAmbiente
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 20
+          Width = 245
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 3
+        end
+        object lbAmbiente: TLabel
+          AnchorSideLeft.Control = gbDiversos
+          AnchorSideTop.Control = gbDiversos
+          Left = 15
+          Height = 15
+          Top = 5
+          Width = 52
+          BorderSpacing.Left = 15
+          BorderSpacing.Top = 5
+          Caption = 'Ambiente'
+        end
+        object lbTimeOut: TLabel
+          AnchorSideLeft.Control = edTimeOut
+          AnchorSideBottom.Control = edTimeOut
+          Left = 275
+          Height = 15
+          Top = 5
+          Width = 44
+          Anchors = [akLeft, akBottom]
+          Caption = 'Timeout'
+        end
+      end
+      object gbProxy: TGroupBox
+        AnchorSideLeft.Control = gbDiversos
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = gbShipay
+        AnchorSideTop.Side = asrBottom
+        AnchorSideBottom.Control = gbDiversos
+        AnchorSideBottom.Side = asrBottom
+        Left = 455
+        Height = 131
+        Top = 189
+        Width = 307
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 10
+        BorderSpacing.Right = 30
+        Caption = 'Proxy'
+        ClientHeight = 111
+        ClientWidth = 303
+        TabOrder = 3
+        object lbProxyHost: TLabel
+          AnchorSideLeft.Control = gbProxy
+          AnchorSideTop.Control = gbProxy
+          Left = 15
+          Height = 15
+          Top = 5
+          Width = 25
+          BorderSpacing.Left = 15
+          BorderSpacing.Top = 5
+          Caption = 'Host'
+        end
+        object lbProxyPorta: TLabel
+          AnchorSideLeft.Control = seProxyPorta
+          AnchorSideBottom.Control = seProxyPorta
+          Left = 184
+          Height = 15
+          Top = 5
+          Width = 28
+          Anchors = [akLeft, akBottom]
+          Caption = 'Porta'
+        end
+        object lbProxyUsuario: TLabel
+          AnchorSideLeft.Control = edProxyHost
+          AnchorSideTop.Control = edProxyHost
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 15
+          Top = 48
+          Width = 40
+          BorderSpacing.Top = 5
+          Caption = 'Usuário'
+        end
+        object lbProxySenha: TLabel
+          AnchorSideLeft.Control = edProxySenha
+          AnchorSideBottom.Control = edProxySenha
+          Left = 184
+          Height = 15
+          Top = 48
+          Width = 52
+          Anchors = [akLeft, akRight, akBottom]
+          Caption = 'Senha'
+        end
+        object edProxyHost: TEdit
+          AnchorSideLeft.Control = lbProxyHost
+          AnchorSideTop.Control = lbProxyHost
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 20
+          Width = 154
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 0
+        end
+        object edProxyUsuario: TEdit
+          AnchorSideLeft.Control = lbProxyUsuario
+          AnchorSideTop.Control = lbProxyUsuario
+          AnchorSideTop.Side = asrBottom
+          Left = 15
+          Height = 23
+          Top = 63
+          Width = 154
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 1
+        end
+        object edProxySenha: TEdit
+          AnchorSideLeft.Control = edProxyUsuario
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edProxyUsuario
+          AnchorSideTop.Side = asrCenter
+          Left = 184
+          Height = 23
+          Top = 63
+          Width = 79
+          BorderSpacing.Left = 15
+          EchoMode = emPassword
+          PasswordChar = '*'
+          TabOrder = 2
+        end
+        object seProxyPorta: TSpinEdit
+          AnchorSideLeft.Control = edProxyHost
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edProxyHost
+          AnchorSideTop.Side = asrCenter
+          Left = 184
+          Height = 23
+          Top = 20
+          Width = 102
+          BorderSpacing.Left = 15
+          MaxValue = 999999
+          TabOrder = 3
+        end
+        object sbVerSenhaProxy: TSpeedButton
+          AnchorSideLeft.Control = edProxySenha
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edProxySenha
+          AnchorSideTop.Side = asrCenter
+          Left = 263
+          Height = 23
+          Top = 63
+          Width = 23
+          AllowAllUp = True
+          Flat = True
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+            333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+            0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+            07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+            07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+            0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+            33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+            B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+            3BB33773333773333773B333333B3333333B7333333733333337
+          }
+          GroupIndex = 1
+          Images = ImageList1
+          ImageIndex = 7
+          OnClick = sbVerSenhaProxyClick
+        end
+      end
+    end
+  end
+  object ImageList1: TImageList
+    Left = 424
+    Top = 472
+    Bitmap = {
+      4C7A220000001000000010000000421300000000000078DAED5D0B984FD516DF
+      E6410C86F1C8640815D7E3DE1B15D3EBD2830A296A702B72E5315D8F1A97A25C
+      440FB7324408BD48F18D2B2A3D245DE5D19B248A74739157C6B3C818E39EF5F9
+      ED6FD6ACD9FB9C7DFE43C634FBFBD637FF39FFF3DB673FD65A7BADB5D73E7FA5
+      4E5939CBA31E1E3DE851E990D82A1EADF4E83868B5477F72C456F2E84B86D5F4
+      AB47CD1CF0377AB4C180271AEE833BDBA30F3DFACAA3811ECDF0E818704B3CBA
+      CAA30F704F43812D8D3EF267D1B80DF5689147BD3CCA147DA9CFF0BD0C6D3DEC
+      D1FD1E5DE8D14F86EFA731FC0396FEBEE2514F3C4F7E375FCCF52A9FF6131FEC
+      66DF1DF1A88118830668337DFF824783D973A77A7419704437F9F04D578F6679
+      7454B4E75BCC4B5507DE5B6319CF8B1D79B0811833C25E175206FE807ECFF5A8
+      9E2AFA65B1471B1995C775E29F2ED007FCFB9A024FD75A7B9402F96D0B19EC01
+      19D80BDE688DF938CF80BFD3A334E0FB620EAFF4E81CE0D3708F0DBFC9A31FC0
+      7B7D190FF4057E2BEEC931E0BBA09DE7E0FEBBF0F7568F4A79148F3E1155F428
+      4AE0D779D411F85F19BDC5EE998E3189368C7F2DE884151E5DE0D17E8F1EC578
+      AE07F5C4787E6318FFF2681BB5BB82479D3C1AE5D1388FEE00D1333A7B946DE8
+      FF4A8C9126EAEF188FDE13F7D9F01BF1ECFE98830A0C5F01756A9D66EA3FE16F
+      F7A8B747DF03436D1E8F39A0B6CFF368B947B77954D680D7639E037C098FAE85
+      EEA3FF5FC677D4FE3A025F137DD214C5D686DAF8BF2AFB3EE614C820F1D54558
+      6B2B4680EFCFD63C1AC33E96B1B615BAF731564736EAF02B353CFA1BC69A4A49
+      51C78F589B6D85F8340BB24DCF8FC5BA95CDDA70830FBE235BD30600CBD79E63
+      B0296C8564ED67DC9BC59EABE9904797078CD938CBFAADE9138F927CEA201E4B
+      F7680FEECF417F781DB4BE9F1B3017B44EFD1563427DFEAFA18EA410FCD018F3
+      27FB726E883A2EB6D411B61DA6BE540ED90E5EC74E830E731D8F5D1E5D1FA18C
+      D731D89FA652126B5FB5089E511EBA8EECCEB5E0DF120EB87AD0B7A4AB3FC35A
+      3B093A753574BFA91ED29D4F836777C1763C17739C04F99D03B924FDDD1DFDD3
+      652C785EDBD6B44E6F11B49DDD7304EB019FDB94901467E807C94E5D6653DF22
+      78BD1DD6025BD9075F4061ADD88CB54B97AFF10C5B21BBE66EE6CFEC807ED465
+      03D6C4C28AEF047DAAC7AF83B053DA8A79D3A529782B0CF1F57F2AF47618AA23
+      7C8EF342D2A958FF0B53A90D9FA9A5C1D60CF2FF5F80BF7C146B2AE9A189CCA7
+      B095721E7DE1B38E2E015FC9521632FD8658B7B5EE38C4AEDF63B0B95E37ACFB
+      0B98FE5AC0AEAFC13AA0E77FB4A5AD19EC1919E2BB83D087F19031FE1DE9DE57
+      610FE992866B7BC5BD13989D759CD9300FC08ED22516D7B2C4BDDBA0934CB19A
+      07D0C7187C36C520B64397E718BEA3670D016559C6681AEABF0FEBC6B1003B8A
+      B76F21788DFB4FED1CF4FEAD58574B1561D98D465FC9FF7B129F5D628009E0E7
+      3D988FA5F0FF77419667E31E1BF673F85A5D857EA4CF2D203B9F1B7C2F2D47BB
+      719FB631E2858D5713F7AC11FE7734F44D57619F98FCD7AE90F5C6EC5A0A7454
+      ACC12E977E662CFCEFC7D9B58711579485F831D5707DB2476FB3FF9FC038CB62
+      6ABF82AFF0BE43FB4D7853FB4B637E9B3BE09B439EE5BDB3312F35D8B5261E5D
+      2D9EBD0676529993CC3FDAB65E83F9A578CC14F4611DDABCCF07AB4B1478E371
+      C46EDEC7E7E6863617F65237E4DA2D75C85CC4AC4A44806F0B3DFD0B62EF61E3
+      207CFF61396C0397426D1D24D6A463CCAE75B17BB603B781ED4550DCB0BA03FE
+      59F6DC7490FE7F6C00F632D16E89CFF6D987290D7DCDD7C959207E6DA1F0BD74
+      E96988D91FB7ACEBD2874944FC4DDE3B1524AFAF617A3D4AF4D1954662AE49C7
+      1C88009F893D1CF2AF9323A42A45DC072815819DD4003A7715ECCB1FA1B34733
+      DFD066FBFF8BD9E19958539731BB97786F84410F97873DAD656711745F59F8F9
+      0D996CE440A7C531FE7B986177618DB8093A88E220AD50C75E268783C17FF504
+      FFBD855833DFC3FA0CCF5BC6AEED466CA1218B3F6ABF2301711B7D6D25FAF281
+      F013CE839E1EC3DABF036BF06DA8630DFA5257E5EE61923E7C88D950A46FDF64
+      75BF8E3A12D0973A18533D7E730CFAB822EC9AE3AC1D0B301EBBD873D3037479
+      53F8051B10A3DB097B6512F667C2AC5F096857B4FA7D9538F846B1217155C14B
+      AB31FE4BC1472EB18EB3C1E7BB20C7A990B3C3F043A202F04F235E9628AEF786
+      BF7C7980BDF02DFC48935E211FF7111FFC39787617C377D4F777B08ED94A19E8
+      BB8916BF88E2CEF707F4BF1FE29A6DA173A33087D3A14383EC568A8B3C035D42
+      7192D7B007B4136DEBE52007C42F6D206BB3A123EA625C0F8A9844985212FA9F
+      78A14F847594001F1D1231D5B075F40CB96FF07B28318889C85849A223FECFE0
+      0F6963AD52C1F91E0AB694CD4E5BC7EC604DA9220E981CD2F6233BE222037E96
+      83CDA7EDE964033EDDA1AFE94518BF043AC28F9618F08D458C36880E0A3F88F4
+      D635CA7DEFA745118CDFC7405E937C28CE27E631063EEE161FD2B6AD32F87F9B
+      508769BC53556EFED93B863A92507F8AA57DFA7B6E63C719BE4FB5F4FB12F822
+      1ABF45E5DD7FD6F8DD967E6F13FB0336BC2BFFBAE08FC06F5A65889F07E18F21
+      06120DBE1821E20A41F89DC2DEA88FD8992B5EE64CB4147D90F8EAB0BF781FC9
+      66EA0B9DB1D5F05D35615F4C74E0DF2D78CE13869856B483FC24A1ADB1AAB89C
+      EE52C1E77A6BF8F4E4478E473CB9A688619B627194D3F125643D077CAC63625B
+      E1F35F8DCF19027B27E200B477321CEB5322E28994B3B71E72A97DFD0C11F7DB
+      8F7B6CF905B7A8BC7B70196CED7B0DCF4EB660AF673EB8C413DFB75727F6454D
+      FE4165F8661982D28A59B0B89CA452B680788A3734633E1EC910ED4B4F800E20
+      3FF63A9FB813F133E5AC5E81B5723B5B47B55D4A7AE053D88E26BCB64B731073
+      EB867624C2BE7D1432BACF60E76488B5D3965B561F6B5CA6CABB7F29F30BB6AA
+      FCFB73BA5C0D3FFC156603A719E47BAC45C792BE198838417431EB9E9442E348
+      7BC5B70790AD74C6BA921540B64232F2AE0ACE79B215DAF39A87CF946F3D03FC
+      65A297100B8B36E02B20669D091E36D11EC86575033EC88FD06325F3D78BF105
+      C33743FC2852BCAB1F78AAF1718815D3DEC5460BE97CAD6A3E31F44E3E32DC59
+      B99D833B93CB553EB1069792013DD02AC2352683ADD9E417D68810AF6903E62E
+      2642BC8E39CE576E79EF263CF5857271EA4680FF1F6223A542B69FF42CED3F9C
+      1FC1F8913DD521C2385B1B1FFFAEB89CFC5206311AD7F8E91522063250D9733C
+      4D741818CE2F1921F94BE6D76E31D8B036DAA2FCF3735DE864E30BDAFF3319FF
+      9872CB3DE27950FD05FFB60AC1BFAD0BB83E15765F82F224EEC5DA47B11BDA5B
+      6EA482F7E069AFFA4565CEA722BF95F6976D39FC14275AE130778B0D75509B67
+      06E0682DA2BC94BD6807EF4B53953787C6849D8638C30CF4A511C33FE8802D8F
+      F89FDE07E8C7F033546E9ECF3D42173E8FE712969FE97B9AE15FC235CA77AA88
+      D8C5016069CDE6E721354D62F8E12A6F7E1FE562FC05CF1D6A91AD7B19FE5295
+      77FFED6DD8B7830DCF3D8EB65D286202FF16F77CAFF29F61D4F4A2C1AEA3E7AD
+      74E09F15CA9E835E0DED30ED25FE0C1E0BDAFB8FC5780CC7BCCC007F343D43E2
+      1D5AFED398FCF77794FF4A01F24FF9D4F13EF2FF91C3FCBD6FA8836CC497556E
+      7ED96695F72C4836D66CBD8735C547FEBF5327CE824C411D844D870DBB85F585
+      CBFF5061678F82FD3915D80AF8CB65A1BF41FE791D23B1C6C419B036F9E7FD4D
+      67F8A92AFFD9189BFC678B368FC4E729A28E348BFC6F808FA2DBACC7A396CADD
+      A3F393FF1CD4912DC6E33B367F26F9A738E92A47F9AF64E1C1C400F97F3942F9
+      1F0A1E2BEA67FE2A301BA96588FEEAF8F14AE1EFBE85EBC98E781B05E1693D98
+      6CC1A659BE4F33C48D6C767A41F14125082FBF0F937F40F8D2F0A9F5DCB65179
+      CF8385C12717B0FDA6F1A0F5E06395FF1CE1316167F9158A07B71776FE8DAA68
+      9FF32B8A2548FF17E38B36BEB89C79F1BF7F4410FF1B20E2410B6173FEE28323
+      BBF361F8A732FE44FB3694874CFBDE4B0DFE039D5F69063B6E9D257EB71B3E6F
+      12DA473933947B7F37F6101E52B967806CF13F7AEEA768C7F9B09B29F760B558
+      DF82E28747117798A9CCE7E20B5BFCB220F8474E43FCAFB09EE54D842CB612D4
+      DC714FE4139F715B5640FD9DE3884F378C797A88F5C3B47F9B528C77C69BF2A0
+      5343E04D79D0BB1DF1BFFAF0CF8F0EF89BE1A74B3F8ECE23B57394A10443FF13
+      42C8E06443FF2787C0271BF83FF934E8928490FD368D43987E2789B890DCE7A1
+      EFAAFAC41E3E477C30DA802F051FF14365DEBBA1FDC43D2AEF5EB5E9F91407EA
+      2DB0BA6E797ECFB4AF355BB4910A9D1FA43DF6DB1DF0FD101FAB24E2D6B45FDE
+      C510179179B67F5727F284130CED9FE03047D3B10723E36F64F7642AFF5C890B
+      6083F5B1C48EC9C6596EA983F26DBE403B6D7B48B5514726FA42E341B9DBCF20
+      66FBA90A7E074325F4E5638CE90F68539A0A9753500AF34254F20CB0E14BA0EF
+      55022841E53FFB10853831F1D5C6005AAF72CFBEEB4236EE36D4413244E7477A
+      2056BB023C4BB249EF221A8739E1670B6F805C92FE78103C5086C98F3EDF4BB2
+      534FE5BE17589751D01D3A56FE9E90BF68F0C39388357DA3F2E61FBC02FF2306
+      BEC39BE8DF627C8E66D7CFC2E7A718BE0F7C9A0F609B1E02CF1DC175FD390BF7
+      D0B5CE86F8D987E0F91E90533A53D00B9FBBA913EFD75DEA13FF4B71E0939442
+      88D7E77FC638D8EE744FF1F99F7085C6A7B20A9FF3500A7ED61B9023DA7F7F5C
+      B9BD0747818F87C0DF1A80F591DE4D3B36C4DE02E513CF850F4E3EC4E808F462
+      49CC6DE908E72E116B4F9B08C7DF453E1295FDFD75FAFCE4188CA55CC7A85F4B
+      42F8CF8B44FCBFBA88CFD3E78F40F47981CABBA7B659F0008FEF6BBDABDBEEB2
+      7F613AFFE747C5F2EF5F62B1569AF6C37A29FF3D11BFF73DEA772F36F7C10F09
+      88056683874DCF1DE218FB31E15B3AC6206DF89410B1273FFC0A21AF63F03915
+      DF05E1B9BC68BC96970C073CE96A7DDE7937681BAEBDE1803FA472CF3BA782B2
+      71ED50C8FE6B1D10A6FF918E5F5BE5F6FED0C3885FCB520E7C1F943BFA90FA6D
+      F614A3E133D552C1793B72CDBE1236E37EC4AB9F5327CE98C606EC01DC029BF7
+      006CD66E6CDC7E818DDC4EE57F076F25D8AE64E3528EFB352CBE6ACA835F22FC
+      5FCDEFDD1DE39161ECCFC28827FF87FF2682F66F5CF6CBEE837F14276C9C058E
+      787AFFC22CC3F5BB2CF2C34B7DE8804E96F8CD3A1F3CF11EE583ACF4B1435BA8
+      DCDF20E27892CD49E0CB4B02F8BF9BCAFB9EE46B55EE3B6C5DFC931268C77F98
+      2F477C7FA90AF71E4CB2AF9A604FEAACDF70EDE7F97F346661F27F75FE1FE90D
+      CADF7C1763F783CACDBBF5CBFFD5F66247F0742C28017EED0EF8E6B6FCDFCD22
+      76942CE2A617A00E53FE2FF1467B87F85B17F445E6FFAE35B4CB844FC078C8FC
+      DFD70CE36BC2C7624C65FEDF7C037F99E27FB1981799FFF795CA7FBED914FFAD
+      88B995F9BF070DEBAA29FEDB11FC61CAFFDB28E2BB72FE6A803F5E54F6FC3FFD
+      3B52E5301E519897F6E08FE53E316D9DFF7710E3311FF3B216FC3153D9730779
+      5F74FEDF4C75E6E5FF9EAE42B2390CBC4CB1DB56217CFC9E989F4D982FD22347
+      213B41BAB305EC8E47995D560236C83E11A73395852CC6F714D68915E0D5EE58
+      13F7FBD001B4FF52D83683E19F8EC31A608B63E9FDD030F876F0759319DEB5FD
+      87604727605C8FE2FA3518BF91A8230EF3463EDE4F90FFF288C373FC3CA62F6D
+      F33787CD5F0AB30FB718F46210FF24ABE2F78F04D9FDE51D49FA2F37836FF63B
+      522630BACCC29CBBE65F7C246C509EE7EBB25F6A3B7FC6F3503222C097666364
+      FABD8411F011E758F06906FEEC0EB91D06FEEF1D123F59E5E6E1F788A0FDB1B0
+      357A3BF47F3A9BE3E9627FC865FC229DBF82F24F07653F6B643BD3D5E124CA4F
+      5129B6F77D92CD782B1BFF240B96F4C240831D4BFFFF938DBFCD0F1B887934BD
+      C77780035EBFFBFF98B06FEF850CD17B4746A9E0F7C7DE8398490CEAE36DA267
+      C43B8C650C64380B7584FD0D85412AF777116342E2EF419C7610B0CFE1B34BFB
+      F558E93697C0D81FC5DF7F224EE4377F832C6DCAF199BF93C13F352CE3148F36
+      FBF16F61298D60FB513EEBCFA0AF71AD910F4EEF81D0BBAB86C23FD3E7C71AE3
+      DA76D856250DD8C5CAFC5E775E48F7CD850FCFEB9808AC0B8F46A18EF1ACBFDB
+      2CCFEDA7CCE73FE2D197861897A196678D0099CA30D8D06B11A3098BA7315D03
+      5F93BFBFEC6EE899FBE1E72F62FFA78A78F3015039E1F38F062D03E9FFD3C45C
+      EC47FB2F8CA0FD4DD0FEB190ADB0F8E188CD37C45C940F397F14C7D1BF413E01
+      3C11E5C83FF330EF9C7FDF431D7EBA8DBE7B1573126B9081F168D7308C4F59CC
+      4D135CDB81E7FAC5D11B82AF346F1CC4E7312AFF6FAE17CBBFBFFCFBCDA38BFC
+      FB1517F9F72B2EF22F29ACFC4B0A2BFF7EC545FEFD8A8BFCFBCD5FB1FCDB4B65
+      D8A8F761CEE9B34BEE6255D87A265F280B7173DB6F16FD51E5FF9D66DA93DA29
+      AE6D52F97FBFB88ACAFB7E6D4D946B60FAFDA74DA21DCF89EFBF867F46E3501B
+      BE6BA6B86732DBB3E0FBFE6463D6422CEC66C4D348EEEE50F9DFAF1DAFF2EFFB
+      934C9581BD4B71AD29887BDD61E84707D42FAFD3FB3B29A7F112DC334F997F23
+      7380054FB6FBF3906BAAEB2261FF6A1A6468FF11C41BF8F8D378D6B3B4BFB281
+      5FEA81CF29E64E39197D54EEEFACF336EA58FAB306BE4961F3D70BB144F9DB60
+      9C7F4CE7877B5BF867B3818F1B19EA58AFF2BFF798EEA96F9101AA739A32E7BE
+      64A12D951CE43001FEC640CC5107F8D0F9CAFF0108E44F11
+    }
+  end
+  object ACBrPixCD1: TACBrPixCD
+    Recebedor.CodCategoriaComerciante = 0
+    Left = 288
+    Top = 472
+  end
+  object ACBrPSPShipay1: TACBrPSPShipay
+    Left = 328
+    Top = 472
+  end
+  object tmConsultarPagto: TTimer
+    Enabled = False
+    Interval = 7000
+    OnTimer = tmConsultarPagtoTimer
+    Left = 488
+    Top = 472
+  end
+end

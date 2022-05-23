@@ -140,7 +140,7 @@ implementation
 uses
   StrUtils,
   synautil,
-  ACBrUtil,
+  ACBrUtil.DateTime, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO,
   ACBrPIXUtil, ACBrPIXSchemasCob, ACBrPIXBRCode,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
@@ -298,7 +298,7 @@ begin
   WriteStrToStream(Http.Document, Body);
   Http.MimeType := CContentTypeApplicationJSon;
   Ok := AcessarEndPoint(ChttpMethodPOST, ep, ResultCode, RespostaHttp);
-  Ok := Ok and (ResultCode = HTTP_CREATED);
+  Ok := Ok and (ResultCode = HTTP_OK);
 
   if Ok then
     fOrderCreated.AsJSON := String(RespostaHttp)
@@ -378,6 +378,7 @@ begin
   PrepararHTTP;
   URLPathParams.Add(order_id);
   URLPathParams.Add(cShipayPathRefund);
+  WriteStrToStream(Http.Document, Body);
   AcessarEndPoint(ChttpMethodDELETE, cShipayEndPointOrder, ResultCode, RespostaHttp);
   Result := (ResultCode = HTTP_OK);
 
@@ -913,7 +914,7 @@ end;
 
 function TACBrPSPShipay.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
-  if (ACBrPixCD.Ambiente = ambProducao) then
+  if (Ambiente = ambProducao) then
     Result := cShipayURLProducao
   else
     Result := cShipayURLStaging;

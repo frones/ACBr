@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 24/05/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Paranatinga/MT - trocou de provedor agora é EloTech.
+   Por: Aécio Soares Ferreira
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Denise/MT - provedor Agili.
+   Por: Diego Reckziegel
 -- NFSeBrasil.Provider/NFSeBrasil.GravarXml/NFSeBrasil.LerXml --
 [*] Possível solução para o provedor NFSeBrasil no que se refere ao
     tratamento dos retornos.

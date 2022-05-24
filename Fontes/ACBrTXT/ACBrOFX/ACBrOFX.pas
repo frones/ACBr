@@ -59,8 +59,8 @@ type
     procedure Delete(iIndex: integer);
     function Add: TOFXItem;
     function InfLine(sLine: string): string;
-    function FindString(sSubString, sString: string): Boolean;
-    function FirstWord(S: String): String;
+    function FindString(const sSubString, sString: string): Boolean;
+    function FirstWord(const S: String): String;
   protected
 
   public
@@ -89,7 +89,7 @@ implementation
 
 { TACBrOFX }
 
-function TACBrOFX.FirstWord(S: String): String;
+function TACBrOFX.FirstWord(const S: String): String;
 var
   i: integer;
 begin
@@ -140,7 +140,7 @@ begin
   inherited Destroy;
 end;
 
-function TACBrOFX.FindString(sSubString, sString: string): Boolean;
+function TACBrOFX.FindString(const sSubString, sString: string): Boolean;
 begin
   Result := Pos(UpperCase(sSubString), UpperCase(sString)) > 0;
 end;

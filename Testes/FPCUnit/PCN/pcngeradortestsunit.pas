@@ -91,6 +91,10 @@ type
     procedure CampotcStrOrig_ValorSoComEspacos_OcorrenciaZero_GeraTag;
     procedure CampotcStrOrig_ValorLongo_GeraCampo_GeraAlerta;
     procedure CampotcStrOrig_ValorLongoComEspacos_GeraCampo_GeraAlerta;
+    procedure CampotcNumStr_ValorValido_GeraTag;
+    procedure CampotcNumStr_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampotcNumStr_ValorVazio_OcorrenciaZero_NaoGeraTag;
+    procedure CampotcNumStr_ValorValido_MinAdicionaZerosAEsquerda;
 
 {
 procedure CampoXXX_ValorValido_GeraTag;
@@ -100,7 +104,7 @@ procedure CampoXXX_ValorVazio_OcorrenciaZero_NaoGeraTag;
     {  TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4,
                                                           x      x         x         X
                    tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe, tcHorCFe, tcDatVcto,
-                        x           x                              x
+                        x           x          x          x        x
                    tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr, tcInt64);}
 
   end;
@@ -108,7 +112,7 @@ procedure CampoXXX_ValorVazio_OcorrenciaZero_NaoGeraTag;
 implementation
 
 uses
-  pcnconversao;
+  pcnconversao, ACBrUtil.Strings;
 
 const
   NomeArqTemp = '.\tempfile.txt';
@@ -834,6 +838,43 @@ begin
   a := UmGerador.ListaDeAlertas.Text;
   CheckNotEquals('', a, 'Deveria conter um alerta sobre o passar do tamanho máximo.');
 end;
+
+procedure pcnGeradorTest.CampotcNumStr_ValorValido_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcNumStr, '', 'Recibo', 1, 14, 1, OnlyNumber(FormatFloat('0.00', 123.45)));
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>12345</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcNumStr_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcNumStr, '', 'Recibo', 1, 14, 1, 0);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>0</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampotcNumStr_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcNumStr, '', 'Recibo', 1, 14, 0, '');
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampotcNumStr_ValorValido_MinAdicionaZerosAEsquerda;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcNumStr, '', 'Recibo', 14, 14, 1, OnlyNumber(FormatFloat('0.00', 654.32)));
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>00000000065432</Recibo>', a);
+end;
+
 
 
 initialization

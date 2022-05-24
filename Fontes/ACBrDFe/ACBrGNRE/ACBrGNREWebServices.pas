@@ -211,6 +211,17 @@ type
     FAmbiente: TpcnTipoAmbiente;
     FGNRERetorno: TTConfigUf;
     FcUF: Integer;
+    FexigeContribuinteEmitente: String;
+    FexigeDataVencimento: String;
+    FexigeDocumentoOrigem: String;
+    FexigePeriodoApuracao: String;
+    FexigeDetalhamentoReceita: String;
+    FexigeDataPagamento: String;
+    FexigePeriodoReferencia: String;
+    FexigeContribuinteDestinatario: String;
+    FexigeParcela: String;
+    FexigeProduto: String;
+    FexigeConvenio: String;
 
   protected
     procedure DefinirURL; override;
@@ -233,6 +244,18 @@ type
     property exigeUfFavorecida: String read FexigeUfFavorecida write FexigeUfFavorecida;
     property GNRERetorno: TTConfigUf read FGNRERetorno write FGNRERetorno;
     property cUF: Integer read FcUF;
+    property exigeDetalhamentoReceita : String read FexigeDetalhamentoReceita write FexigeDetalhamentoReceita;
+    property exigeContribuinteEmitente : String read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
+    property exigeProduto : String read FexigeProduto write FexigeProduto;
+    property exigePeriodoReferencia : String read FexigePeriodoReferencia write FexigePeriodoReferencia;
+    property exigePeriodoApuracao : String read FexigePeriodoApuracao write FexigePeriodoApuracao;
+    property exigeParcela : String read FexigeParcela write FexigeParcela;
+    property exigeDocumentoOrigem : String read FexigeDocumentoOrigem write FexigeDocumentoOrigem;
+    property exigeContribuinteDestinatario : String read FexigeContribuinteDestinatario write FexigeContribuinteDestinatario;
+    property exigeDataVencimento : String read FexigeDataVencimento write FexigeDataVencimento;
+    property exigeDataPagamento : String read FexigeDataPagamento write FexigeDataPagamento;
+    property exigeConvenio : String read FexigeConvenio write FexigeConvenio;
+
   end;
 
   { TGNREEnvioWebService }
@@ -293,7 +316,9 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrGNRE2,
+  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrGNRE2,
   pcnGerador, pcnLeitor;
 
 { TGNREWebService }
@@ -760,7 +785,6 @@ end;
 function TGNRERetRecepcao.SalvarTXT(AResultado: String; Item: Integer): Boolean;
 var
   SLAux: TStringList;
-   GuiasOk: Integer;
   RepresentacaoNumerica, SituacaoGuia, PathNome: String;
 begin
   SLAux := TStringList.Create;
@@ -794,7 +818,7 @@ begin
 
   finally
     FreeAndNil(SLAux);
-    Result := GuiasOk > 0;
+    Result := True;
   end;
 end;
 
@@ -978,6 +1002,17 @@ begin
   Fdescricao := '';
   FexigeReceita := '';
   FexigeUfFavorecida := '';
+  FexigeDetalhamentoReceita := '';
+  FexigeContribuinteEmitente := '';
+  FexigeDataVencimento := '';
+  FexigeDocumentoOrigem := '';
+  FexigePeriodoApuracao := '';
+  FexigeDataPagamento := '';
+  FexigePeriodoReferencia := '';
+  FexigeContribuinteDestinatario := '';
+  FexigeParcela := '';
+  FexigeProduto := '';
+  FexigeConvenio := '';
 
   if Assigned(FPConfiguracoesGNRE) then
   begin
@@ -1045,13 +1080,24 @@ begin
   FGNRERetorno.Leitor.Arquivo := ParseText(AnsiString(FPRetWS));
   FGNRERetorno.LerXML;
 
-  FAmbiente          := FGNRERetorno.Ambiente;
-  Fcodigo            := FGNRERetorno.codigo;
-  Fdescricao         := UTF8Decode(FGNRERetorno.descricao);
-  FexigeReceita      := FGNRERetorno.exigeReceita;
-  FexigeUfFavorecida := FGNRERetorno.exigeUfFavorecida;
-  FUf                := FGNRERetorno.Uf;
-  FPMsg              := UTF8Decode(FGNRERetorno.descricao);
+  FAmbiente                      := FGNRERetorno.Ambiente;
+  Fcodigo                        := FGNRERetorno.codigo;
+  Fdescricao                     := UTF8Decode(FGNRERetorno.descricao);
+  FexigeReceita                  := FGNRERetorno.exigeReceita;
+  FexigeDetalhamentoReceita      := FGNRERetorno.exigeDetalhamentoReceita;
+  FexigeContribuinteEmitente     := FGNRERetorno.exigeContribuinteEmitente;
+  FexigeDataVencimento           := FGNRERetorno.exigeDataVencimento;
+  FexigeDocumentoOrigem          := FGNRERetorno.exigeDocumentoOrigem;
+  FexigePeriodoApuracao          := FGNRERetorno.exigePeriodoApuracao;
+  FexigeDataPagamento            := FGNRERetorno.exigeDataPagamento;
+  FexigePeriodoReferencia        := FGNRERetorno.exigePeriodoReferencia;
+  FexigeContribuinteDestinatario := FGNRERetorno.exigeContribuinteDestinatario;
+  FexigeParcela                  := FGNRERetorno.exigeParcela;
+  FexigeProduto                  := FGNRERetorno.exigeProduto;
+  FexigeConvenio                 := FGNRERetorno.exigeConvenio;
+  FexigeUfFavorecida             := FGNRERetorno.exigeUfFavorecida;
+  FUf                            := FGNRERetorno.Uf;
+  FPMsg                          := UTF8Decode(FGNRERetorno.descricao);
 
   Result := (FGNRERetorno.codigo = 450); // 450 = Consulta da configuração da UF realizada com sucesso.
 end;

@@ -152,7 +152,10 @@ type
 implementation
 
 uses
-  ACBrGNRE2, ACBrUtil, pgnreConversao, synautil, IniFiles;
+  ACBrGNRE2,
+  ACBrUtil.XMLHTML, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  pgnreConversao, synautil, IniFiles;
 
 { Guia }
 

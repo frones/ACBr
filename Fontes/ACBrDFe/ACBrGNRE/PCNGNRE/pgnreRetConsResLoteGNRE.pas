@@ -226,7 +226,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.XMLHTML;
 
 { TInfoCabec }
 
@@ -451,7 +451,6 @@ begin
     i := 0; // Utilizado para a leitura Guias
     m := 0; // Utilizado para a leitura das Rejeições
 
-    m := 0;
     while Leitor.rExtrai(3, 'guia', '', i + 1) <> '' do
     begin
       resGuia.New;

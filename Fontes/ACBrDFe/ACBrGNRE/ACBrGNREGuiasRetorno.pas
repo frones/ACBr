@@ -95,7 +95,7 @@ implementation
 
 uses
   synautil,
-  ACBrGNRE2, ACBrUtil, ACBrDFeUtil;
+  ACBrGNRE2, ACBrUtil.XMLHTML, ACBrDFeUtil;
 
 { GuiaRetorno }
 

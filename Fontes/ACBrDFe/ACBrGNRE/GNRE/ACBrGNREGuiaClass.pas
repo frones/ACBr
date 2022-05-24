@@ -97,7 +97,9 @@ type
 implementation
 
 uses
-  ACBrGNRE2, ACBrUtil, ACBrDFeUtil;
+  ACBrGNRE2,
+  ACBrUtil.Base, ACBrUtil.FilesIO,
+  ACBrDFeUtil;
 
 constructor TACBrGNREGuiaClass.Create(AOwner: TComponent);
 begin

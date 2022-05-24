@@ -39,7 +39,6 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pgnreRetReceita;
 
 type
@@ -53,7 +52,18 @@ type
     Fdescricao: string;
     FexigeUfFavorecida: string;
     FexigeReceita: string;
+    FexigeDetalhamentoReceita: String;
     FInfReceita: TRetReceita;
+    FexigeContribuinteEmitente: String;
+    FexigeProduto: String;
+    FexigeDataVencimento: String;
+    FexigeDocumentoOrigem: String;
+    FexigePeriodoApuracao: String;
+    FexigeDataPagamento: String;
+    FexigePeriodoReferencia: String;
+    FexigeContribuinteDestinatario: String;
+    FexigeParcela: String;
+    FexigeConvenio: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -67,10 +77,25 @@ type
     property descricao: string read Fdescricao write Fdescricao;
     property exigeUfFavorecida: string read FexigeUfFavorecida write FexigeUfFavorecida;
     property exigeReceita: string read FexigeReceita write FexigeReceita;
+    property exigeDetalhamentoReceita : String read FexigeDetalhamentoReceita write FexigeDetalhamentoReceita;
+    property exigeContribuinteEmitente : String read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
+    property exigeProduto : String read FexigeProduto write FexigeProduto;
+    property exigePeriodoReferencia : String read FexigePeriodoReferencia write FexigePeriodoReferencia;
+    property exigePeriodoApuracao : String read FexigePeriodoApuracao write FexigePeriodoApuracao;
+    property exigeParcela : String read FexigeParcela write FexigeParcela;
+    property exigeDocumentoOrigem : String read FexigeDocumentoOrigem write FexigeDocumentoOrigem;
+    property exigeContribuinteDestinatario : String read FexigeContribuinteDestinatario write FexigeContribuinteDestinatario;
+    property exigeDataVencimento : String read FexigeDataVencimento write FexigeDataVencimento;
+    property exigeDataPagamento : String read FexigeDataPagamento write FexigeDataPagamento;
+    property exigeConvenio : String read FexigeConvenio write FexigeConvenio;
+
     property InfReceita: TRetReceita read FInfReceita write FInfReceita;
   end;
 
 implementation
+
+uses
+  ACBrUtil.XMLHTML;
 
 { TTConfigUf }
 
@@ -112,6 +137,21 @@ begin
         begin
           InfReceita.Leitor.Arquivo := Leitor.Grupo;
           InfReceita.LerXml;
+          //verificando detalhamento da receita
+          if InfReceita.Leitor.rExtrai(3,'ns1:receita') <> '' then
+          begin
+            FexigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeDetalhamentoReceita');
+            FexigeContribuinteEmitente     := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteEmitente');
+            FexigeProduto                  := SeparaDados(Leitor.Grupo, 'ns1:exigeProduto');
+            FexigePeriodoReferencia        := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoReferencia');
+            FexigePeriodoApuracao          := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoApuracao');
+            FexigeParcela                  := SeparaDados(Leitor.Grupo, 'ns1:exigeParcela');
+            FexigeDocumentoOrigem          := SeparaDados(Leitor.Grupo, 'ns1:exigeDocumentoOrigem');
+            FexigeContribuinteDestinatario := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteDestinatario');
+            FexigeDataVencimento           := SeparaDados(Leitor.Grupo, 'ns1:exigeDataVencimento');
+            FexigeDataPagamento            := SeparaDados(Leitor.Grupo, 'ns1:exigeDataPagamento');
+            FexigeConvenio                 := SeparaDados(Leitor.Grupo, 'ns1:exigeConvenio');
+          end;
         end;
       end;
 

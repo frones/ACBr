@@ -44,7 +44,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase, ACBrUtil,
+  ACBrBase,
   pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConfigUF, pgnreRetProduto,
   pgnreRetDetalhamentoReceita, pgnreRetPeriodoApuracao,
   pgnreRetTipoDocumentoOrigem, pgnreRetCampoAdicional;
@@ -109,6 +109,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil.XMLHTML;
 
 { TRetInfReceitaCollection }
 

@@ -37,9 +37,9 @@ unit ACBrGNReGuiaRLRetrato;
 interface
 
 uses
-SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter,
-   ACBrGNReGuiaRL,RLFilters,pgnreGNRERetorno,maskutils;
+  ACBrGNReGuiaRL, RLFilters, pgnreGNRERetorno, maskutils;
 
 type
 
@@ -295,7 +295,8 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 {$ifdef FPC}
  {$R *.lfm}

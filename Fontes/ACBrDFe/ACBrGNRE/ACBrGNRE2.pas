@@ -43,7 +43,7 @@ uses
   ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
   ACBrGNREGuiasRetorno, ACBrGNREGuiaClass,
   pcnConversao, pgnreConversao,
-  ACBrDFeUtil, ACBrUtil;
+  ACBrDFeUtil;
 
 const
   ACBRGNRE_NAMESPACE = 'http://www.gnre.pe.gov.br';
@@ -113,7 +113,8 @@ implementation
 
 uses
   dateutils,
-  pcnAuxiliar;
+  pcnAuxiliar,
+  ACBrUtil.Base, ACBrUtil.Strings;
 
 {$IFDEF FPC}
  {$R ACBrGNREServicos.rc}

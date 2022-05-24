@@ -432,7 +432,8 @@ end;
 procedure TACBrBancoDaycoval.GerarRegistroTransacao400( ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   ATipoOcorrencia, AEspecieDoc, ACodigoRemessa : String;
-  DiasProtesto, TipoSacado, ATipoAceite, AComplemento, ATipoCedente: String;
+  DiasProtesto, TipoSacado, ATipoAceite, AComplemento: String;
+  ATipoCedente: String;
   wLinha: String;
 begin
   with ACBrTitulo do
@@ -479,7 +480,7 @@ begin
       TipoSacado := '03';
     end;
 
-    //Pegando Tipo de Cedente}
+    //Definindo o Tipo de Cedente}
     ATipoCedente := DefineTipoInscricao;
 
     // Conforme manual o aceite deve ser sempre 'N'
@@ -505,8 +506,8 @@ begin
 
     with ACBrBoleto do
     begin
-      wLinha := '1' + // 1 - Código do registro: 1 - Transação
-        PadLeft(ATipoCedente, 2, '0') + // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
+      wLinha := '1' +                                                // 1 - Código do registro: 1 - Transação
+        PadLeft(ATipoCedente,2,'0') +                                // 2 a 3 - Tipo de inscrição da empresa: 01 = CPF; 02 = CNPJ
         PadLeft(OnlyNumber(Cedente.CNPJCPF), 14, '0') +              // 4 a 17 - Número de inscrição
         PadRight(Cedente.CodigoCedente, 20) +                        // 18 a 37 - Código da empresa no banco
         PadRight(SeuNumero, 25) +                                    // 38 a 62 - Identificação do título na empresa
@@ -549,7 +550,9 @@ begin
       wLinha := wLinha + IntToStrZero(ARemessa.Count + 1, 6);        // 395 a 400 - Número sequencial do registro
 
       ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
+
     end;
+
   end;
 
   if ACBrTitulo.ListaDadosNFe.Count > 0 then  //Informações da nota fiscal

@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2022
+-- ACBrPagForGravarTxt --
+[*] Possível solução para geração correta dos Segmentos N - Banco Sicredi.
+   Por: Italo Giurizzato Junior
+-- ACBrPagForGravarTxt --
+[*] Correção na versão do Lote - Banco Santander com exceção do segmento A os demais 
+    a versão é 030.
+   Por: Wesley Lopes
+
 18/05/2022
 -- ACBrPagForGravarTxt --
 [*] Ajuste no Segmento: A, se a DataReal for zero devemos gerar no arquivo 8 zeros. 

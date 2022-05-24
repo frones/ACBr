@@ -415,7 +415,7 @@ begin
           flTributoDARJ, flTributoGARESPICMS, flTributoGARESPDR,
           flTributoGARESPITCMD, flTributoIPVA,
           flTributoLicenciamento, flTributoDPVAT, flTributoGNRe :
-            FveRegistro1 := '010';   //Pagamento com codigo de barras  e Convenios  SEGMENTO 'J' e 'O'.
+            FveRegistro1 := '030';   //Pagamento com codigo de barras  e Convenios  SEGMENTO 'J' e 'O'.
         else
           FveRegistro1 := '031';  //Pagamento DOC / TED
         end;
@@ -1724,7 +1724,17 @@ begin
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
           wregistro := wregistro + FormatFloat('000000', Receita);
-          wregistro := wregistro + FormatFloat('00', TipoContribuinte);
+
+          if FPagFor.Geral.Banco = pagSicredi then
+          begin
+            if TipoContribuinte = tiCNPJ then
+              wregistro := wregistro + FormatFloat('00', 1)
+            else
+              wregistro := wregistro + FormatFloat('00', 2);
+          end
+          else
+            wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + '17';
           wregistro := wregistro + FormatFloat('000000', Competencia);
@@ -1817,7 +1827,17 @@ begin
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
           wregistro := wregistro + FormatFloat('000000', Receita);
-          wregistro := wregistro + TBStrZero(TpInscricaoToStr(TipoContribuinte), 2);
+
+          if FPagFor.Geral.Banco = pagSicredi then
+          begin
+            if TipoContribuinte = tiCNPJ then
+              wregistro := wregistro + FormatFloat('00', 1)
+            else
+              wregistro := wregistro + FormatFloat('00', 2);
+          end
+          else
+            wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + '16';
           wregistro := wregistro + FormatDateTime('ddmmyyyy', Periodo);
@@ -1914,7 +1934,17 @@ begin
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
           wregistro := wregistro + FormatFloat('000000', Receita);
-          wregistro := wregistro + TBStrZero(TpInscricaoToStr(TipoContribuinte), 2);
+
+          if FPagFor.Geral.Banco = pagSicredi then
+          begin
+            if TipoContribuinte = tiCNPJ then
+              wregistro := wregistro + FormatFloat('00', 1)
+            else
+              wregistro := wregistro + FormatFloat('00', 2);
+          end
+          else
+            wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + '18';
           wregistro := wregistro + FormatDateTime('ddmmyyyy', Periodo);
@@ -2006,7 +2036,17 @@ begin
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
           wregistro := wregistro + FormatFloat('000000', Receita);
-          wregistro := wregistro + TBStrZero(TpInscricaoToStr(TipoContribuinte), 2);
+
+          if FPagFor.Geral.Banco = pagSicredi then
+          begin
+            if TipoContribuinte = tiCNPJ then
+              wregistro := wregistro + FormatFloat('00', 1)
+            else
+              wregistro := wregistro + FormatFloat('00', 2);
+          end
+          else
+            wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + TpIndTributoToStr(FPagFor.Geral.idTributo);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', DataVencimento);
@@ -2124,7 +2164,17 @@ begin
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
           wregistro := wregistro + FormatFloat('000000', Receita);
-          wregistro := wregistro + TBStrZero(TpInscricaoToStr(TipoContribuinte), 2);
+
+          if FPagFor.Geral.Banco = pagSicredi then
+          begin
+            if TipoContribuinte = tiCNPJ then
+              wregistro := wregistro + FormatFloat('00', 1)
+            else
+              wregistro := wregistro + FormatFloat('00', 2);
+          end
+          else
+            wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + TpIndTributoToStr(FPagFor.Geral.idTributo);
           wregistro := wregistro + FormatFloat('0000', Exercicio);
@@ -2241,7 +2291,17 @@ begin
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
           wregistro := wregistro + FormatFloat('000000', Receita);
-          wregistro := wregistro + TBStrZero(TpInscricaoToStr(TipoContribuinte), 2);
+
+          if FPagFor.Geral.Banco = pagSicredi then
+          begin
+            if TipoContribuinte = tiCNPJ then
+              wregistro := wregistro + FormatFloat('00', 1)
+            else
+              wregistro := wregistro + FormatFloat('00', 2);
+          end
+          else
+            wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + TBStrZero(InscEst, 8);
           wregistro := wregistro + TBStrZero(Origem, 16);

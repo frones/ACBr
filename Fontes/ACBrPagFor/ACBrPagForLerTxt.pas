@@ -989,7 +989,7 @@ begin
       FPagFor.Lote.Last.SegmentoN1.Last.SegmentoN.CodMovimento := TInstrucaoMovimento(StrToInt(Copy(FArquivoTXT.Strings[i], 15, 3)));
 
       FPagFor.Lote.Last.SegmentoN1.Last.Receita                  := StrToInt(Copy(FArquivoTXT.Strings[i], 111, 6));
-      FPagFor.Lote.Last.SegmentoN1.Last.TipoContribuinte         := StrToint( Copy(FArquivoTXT.Strings[i], 117, 2));
+      FPagFor.Lote.Last.SegmentoN1.Last.TipoContribuinte         := StrToTpInscricao(mOk, Copy(FArquivoTXT.Strings[i], 117, 2));
       FPagFor.Lote.Last.SegmentoN1.Last.idContribuinte           := Copy(FArquivoTXT.Strings[i], 119, 14);
       FPagFor.Lote.Last.SegmentoN1.Last.MesAnoCompetencia        := StrToInt(Copy(FArquivoTXT.Strings[i], 135, 6));
       FPagFor.Lote.Last.SegmentoN1.Last.ValorTributo             := StrToInt(Copy(FArquivoTXT.Strings[i], 141, 14)) / 100;

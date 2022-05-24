@@ -1152,7 +1152,7 @@ type
   private
     FSegmentoN           : TSegmentoN;
     FReceita             : Integer;
-    FTipoContribuinte    : Integer;
+    FTipoContribuinte    : TTipoInscricao;
     FidContribuinte      : String; // Tamanho 14
     FCompetencia         : Integer;
     FValorTributo        : Double;
@@ -1166,7 +1166,7 @@ type
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
-    property TipoContribuinte: Integer read FTipoContribuinte write FTipoContribuinte;
+    property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
     property idContribuinte: String read FidContribuinte write FidContribuinte;
     property Competencia: Integer read FCompetencia write FCompetencia;
     property ValorTributo: Double read FValorTributo write FValorTributo;

@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/05/2022
+-- NFSeBrasil.Provider/NFSeBrasil.GravarXml/NFSeBrasil.LerXml --
+[*] Possível solução para o provedor NFSeBrasil no que se refere ao
+    tratamento dos retornos.
+   Por: Italo Giurizzato Junior
+
 20/05/2022
 -- ACBrNFSeXServicos --
 [*] Alteração para a cidade: Santa Maria/RS não dividir a aliquota por 100.

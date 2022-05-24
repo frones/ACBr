@@ -150,12 +150,13 @@ begin
     NFSe.OptanteSimplesNacional   := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('OptanteSimplesNacional'), tcStr));
     NFSe.IncentivadorCultural     := FpAOwner.StrToSimNao(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('IncentivadorCultural'), tcStr));
 
-    SCompet := Trim(AuxNode.Childrens.FindAnyNs('Competencia').Content);
-    NFSe.Competencia              := EncodeDate(StrToInt(Copy(SCompet, 1, 4)),
-                                                StrToInt(Copy(SCompet, 5, 2)),
-                                                1);
-    NFSe.NfseSubstituida          := ObterConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
-    NFSe.OutrasInformacoes        := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
+    SCompet := ObterConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcStr);
+
+    NFSe.Competencia := EncodeDate(StrToInt(Copy(SCompet, 1, 4)),
+                                   StrToInt(Copy(SCompet, 5, 2)), 1);
+
+    NFSe.NfseSubstituida := ObterConteudo(AuxNode.Childrens.FindAnyNs('NfseSubstituida'), tcStr);
+    NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('OutrasInformacoes'), tcStr);
 
     LerServico(AuxNode);
 
@@ -280,29 +281,26 @@ end;
 function TNFSeR_NFSeBrasil.LerXml: Boolean;
 var
   XmlNode: TACBrXmlNode;
-  xRetorno: string;
 begin
-  xRetorno := Arquivo;
-
-  if EstaVazio(xRetorno) then
+  if EstaVazio(Arquivo) then
     raise Exception.Create('Arquivo xml não carregado.');
 
   // Se o XML não tiver a codificação incluir ela.
-  if ObtemDeclaracaoXML(xRetorno) = '' then
-    xRetorno := CUTF8DeclaracaoXML + xRetorno;
+  if ObtemDeclaracaoXML(Arquivo) = '' then
+    Arquivo := CUTF8DeclaracaoXML + Arquivo;
 
   // Alguns provedores não retornam o XML em UTF-8
-  xRetorno := ConverteXMLtoUTF8(xRetorno);
+  Arquivo := ConverteXMLtoUTF8(Arquivo);
 
-  xRetorno := TiraAcentos(xRetorno);
+  Arquivo := NormatizarXml(Arquivo);
 
-  tpXML := TipodeXMLLeitura(xRetorno);
+  tpXML := TipodeXMLLeitura(Arquivo);
 
   if FDocument = nil then
     FDocument := TACBrXmlDocument.Create();
 
   Document.Clear();
-  Document.LoadFromXml(xRetorno);
+  Document.LoadFromXml(Arquivo);
 
   XmlNode := Document.Root;
 

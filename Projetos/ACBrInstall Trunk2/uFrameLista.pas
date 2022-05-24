@@ -39,7 +39,7 @@
 
 {
   Hierarquia de dependência dos Packages
-  • ACBrComum → Synapse
+• ACBrComum → Synapse
 • ACBrDiversos → ACBrComum
 • PCNComum → ACBrDiversos
 • ACBrOpenSSL → ACBrComum
@@ -181,6 +181,8 @@ type
     ACBr_NFSeXDanfseRL_dpk: TCheckBox;
     Label29: TLabel;
     ACBr_NFSeXDanfseFR_dpk: TCheckBox;
+    ACBr_PIXCD_dpk: TCheckBox;
+    ACBr_OFX_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

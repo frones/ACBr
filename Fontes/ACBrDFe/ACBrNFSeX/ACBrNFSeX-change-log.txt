@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/05/2022
+-- Diversos --
+[*] Implementado os provedores: CTA, SoftPlan e SSInformatica.
+    Eles ainda não estão 100%, se faz necessário varios ajustes.
+   Por: Italo Giurizzato Junior
+
 24/05/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Paranatinga/MT - trocou de provedor agora é EloTech.

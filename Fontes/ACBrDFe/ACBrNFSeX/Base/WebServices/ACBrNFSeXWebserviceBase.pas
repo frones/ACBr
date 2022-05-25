@@ -550,27 +550,25 @@ begin
 end;
 
 procedure TACBrNFSeXWebservice.LevantarExcecaoHttp;
-//var
-//  aRetorno: TACBrXmlDocument;
+var
+  aRetorno: TACBrXmlDocument;
 begin
   // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
   // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 
-  if not (HttpClient.HTTPResultCode in [200..202]) then
-    raise EACBrDFeException.Create('Erro de Conexão.');
+//  if not (HttpClient.HTTPResultCode in [200..202]) then
+//    raise EACBrDFeException.Create('Erro de Conexão.');
 
-    {
-    if not (HttpClient.HTTPResultCode in [200..202]) then
-    begin
-      aRetorno := TACBrXmlDocument.Create;
-      try
-        aRetorno.LoadFromXml(FPRetorno);
-        VerificarErroNoRetorno(aRetorno);
-      finally
-        aRetorno.Free;
-      end;
+  if not (HttpClient.HTTPResultCode in [200..202]) then
+  begin
+    aRetorno := TACBrXmlDocument.Create;
+    try
+      aRetorno.LoadFromXml(FPRetorno);
+      VerificarErroNoRetorno(aRetorno);
+    finally
+      aRetorno.Free;
     end;
-    }
+  end;
 end;
 
 procedure TACBrNFSeXWebservice.VerificarErroNoRetorno(const ADocument: TACBrXmlDocument);

@@ -105,11 +105,11 @@ type
   TnfseProvedor = (proNenhum,
                    proAbaco, proABase, proActcon, proAdm, proADPM, proAEG,
                    proAgili, proAssessorPublico, proAsten, proBetha, proBHISS,
-                   proCenti, proCIGA, proCitta, proConam, proCoplan, proDataSmart,
-                   proDBSeller, proDeISS, proDesenvolve, proDigifred, proDSF,
-                   proeGoverneISS, proEL, proEloTech, proEquiplano, proeReceita,
-                   proEtherium, proFGMaiss, profintelISS, proFiorilli, proFisco,
-                   proFISSLex, proFuturize, proGeisWeb, progeNFe, proGiap,
+                   proCenti, proCIGA, proCitta, proConam, proCoplan, proCTA,
+                   proDataSmart, proDBSeller, proDeISS, proDesenvolve, proDigifred,
+                   proDSF, proeGoverneISS, proEL, proEloTech, proEquiplano,
+                   proeReceita, proEtherium, proFGMaiss, profintelISS, proFiorilli,
+                   proFisco, proFISSLex, proFuturize, proGeisWeb, progeNFe, proGiap,
                    proGinfes, proGiss, proGovBR, proGovDigital, proGoverna,
                    proiiBrasil, proInfisc, proIPM, proISSBarueri, proISSCambe,
                    proISSCuritiba, proISSDigital, proISSDSF, proISSe, proISSFortaleza,
@@ -122,10 +122,10 @@ type
                    proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet,
                    proSiapSistemas, proSiat, proSigCorp, proSigep, proSigISS,
                    proSilTecnologia, proSimple, proSimplISS, proSintese, proSisPMJP,
-                   proSistemas4R, proSmarAPD, proSpeedGov, proSudoeste, proSystemPro,
-                   proTcheInfo, proTecnos, proThema, proTinus, proTiplan,
-                   proTributus, proVersaTecnologia, proVirtual, proWebFisco,
-                   proWebISS);
+                   proSistemas4R, proSmarAPD, proSoftPlan, proSpeedGov,
+                   proSSInformatica, proSudoeste, proSystemPro, proTcheInfo,
+                   proTecnos, proThema, proTinus, proTiplan, proTributus,
+                   proVersaTecnologia, proVirtual, proWebFisco, proWebISS);
 
   TnfseSituacaoTributaria = (stRetencao, stNormal, stSubstituicao);
 
@@ -176,7 +176,7 @@ type
                               filsSemFormatacaoSemZeroEsquerda);
 
   TSituacaoTrib = (tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta, tsImune,
-                   tsNaoTributada);
+                   tsNaoTributada, tsFixo, tsOutroMunicipio);
 
   TTipoPessoa = (tpPFNaoIdentificada, tpPF, tpPJdoMunicipio, tpPJforaMunicipio,
                  tpPJforaPais);

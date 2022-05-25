@@ -51,7 +51,8 @@ type
 
   TACBrTipoCampo = (tcStr, tcInt, tcInt64, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3,
                     tcDe4, tcDe5, tcDe6, tcDe7, tcDe8, tcDe10, tcHor, tcDatCFe,
-                    tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig, tcNumStr);
+                    tcHorCFe, tcDatVcto, tcDatHorCFe, tcBool, tcStrOrig,
+                    tcNumStr, tcDatUSA);
 
 const
   LineBreak = #13#10;
@@ -280,6 +281,14 @@ begin
       begin
         if length(ConteudoTag) > 0 then
           result := EncodeDataHora(ConteudoTag, 'DD/MM/YYYY')
+        else
+          result := 0;
+      end;
+
+    tcDatUSA:
+      begin
+        if length(ConteudoTag) > 0 then
+          result := EncodeDataHora(ConteudoTag, 'MM/DD/YYYY')
         else
           result := 0;
       end;

@@ -43,7 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+
 25/05/2022
+-- SigCorp.Provider --
+[*] Sobreescrito a procedure TratarRetornoEmitir por conta da Data de Recebimento
+    estar fora do padrão.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade: Fraiburgo/SC - trocou de provedor agora é IPM.
 [*] A cidade: Videira/SC - vai trocar a versão para 1.01 a partir de 13/06/2022

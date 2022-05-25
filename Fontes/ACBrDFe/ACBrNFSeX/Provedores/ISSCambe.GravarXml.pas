@@ -72,9 +72,13 @@ uses
 { TNFSeW_ISSCambe }
 
 procedure TNFSeW_ISSCambe.Configuracao;
+const
+  CRLF = #$D#$A;
 begin
   inherited Configuracao;
 
+  Opcoes.QuebraLinha    := CRLF;
+  Opcoes.RetirarEspacos := False;
   FormatoAliq := tcDe4;
   DivAliq100  := False;
 end;
@@ -164,7 +168,8 @@ begin
    Result.AppendChild(AddNode(FormatoAliq, '#1', 'aliquota', 1, 6, 1,
                                                                  Aliquota, ''));
 
-   Result.AppendChild(AddNode(tcInt, '#1', 'ISSDevido', 1, 1, 1, '1', ''));
+   Result.AppendChild(AddNode(tcInt, '#1', 'ISSDevido', 1, 1, 1,
+                            FpAOwner.SituacaoTribToStr(NFSe.SituacaoTrib), ''));
 
    Result.AppendChild(AddNode(tcInt, '#1', 'paisPrestacao', 1, 5, 0,
                                                   NFSe.Servico.CodigoPais, ''));

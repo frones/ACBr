@@ -284,7 +284,7 @@ begin
 
       sSecao := 'IdentificacaoRps';
 
-      SituacaoTrib := StrToSituacaoTrib(Ok, INIRec.ReadString(sSecao, 'SituacaoTrib', 'tp'));
+      SituacaoTrib := FProvider.StrToSituacaoTrib(Ok, INIRec.ReadString(sSecao, 'SituacaoTrib', 'tp'));
 
       // Provedor AssessorPublico
       Situacao := INIRec.ReadInteger(sSecao, 'Situacao', 0);

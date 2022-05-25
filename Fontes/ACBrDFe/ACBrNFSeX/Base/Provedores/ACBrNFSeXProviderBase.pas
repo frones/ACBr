@@ -202,6 +202,9 @@ type
 
     function TipoRPSToStr(const t:TTipoRPS): string; virtual;
     function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS; virtual;
+
+    function SituacaoTribToStr(const t: TSituacaoTrib): string; virtual;
+    function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib; virtual;
   end;
 
 implementation
@@ -874,6 +877,23 @@ begin
     Result := 'Sim'
   else
     Result := 'Não';
+end;
+
+function TACBrNFSeXProvider.StrToSituacaoTrib(out ok: boolean;
+  const s: string): TSituacaoTrib;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['tp', 'tt', 'is', 'im', 'nt'],
+                           [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
+                            tsImune, tsNaoTributada]);
+end;
+
+function TACBrNFSeXProvider.SituacaoTribToStr(const t: TSituacaoTrib): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['tp', 'tt', 'is', 'im', 'nt'],
+                           [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
+                            tsImune, tsNaoTributada]);
 end;
 
 function TACBrNFSeXProvider.GerarXml(const aNFSe: TNFSe; var aXml,

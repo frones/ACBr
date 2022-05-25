@@ -44,6 +44,23 @@ Símbolo : Significado
 
 
 25/05/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Fraiburgo/SC - trocou de provedor agora é IPM.
+[*] A cidade: Videira/SC - vai trocar a versão para 1.01 a partir de 13/06/2022
+   Por: Metasis Sistemas
+-- ACBrNFSeXServicos --
+[+] Incluída as cidades: Ibatiba/ES e Iuna/ES - provedor EL.
+   Por: João Antônio
+-- IPM.Provider --
+[*] Alteração para evitar erro de AV.
+   Por: Metasis Sistemas
+-- ISSCambe.Provider/ISSCambe.GravarXml/ISSCambe.LerXml --
+[*] Alteração para gerar e ler corretamente a tag IssDevido.
+   Por: Marcos Villatore/Italo Giurizzato Junior
+-- ACBrNFSeX --
+[*] Alterado a condição para extrair o numero da NFSe da Chave ao ler os parâmentros
+    para o cancelamento.
+   Por: Jorge - Netstart
 -- Diversos --
 [*] Implementado os provedores: CTA, SoftPlan e SSInformatica.
     Eles ainda não estão 100%, se faz necessário varios ajustes.

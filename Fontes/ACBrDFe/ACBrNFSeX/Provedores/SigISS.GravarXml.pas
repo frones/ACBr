@@ -124,7 +124,7 @@ begin
                                             NFSe.ConstrucaoCivil.Art, DSC_ART));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 2, 1,
-                                     SituacaoTribToStr(NFSe.SituacaoTrib), ''));
+                            FpAOwner.SituacaoTribToStr(NFSe.SituacaoTrib), ''));
 
   Result.AppendChild(AddNode(tcDe4, '#1', 'valor', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
@@ -335,7 +335,7 @@ begin
                                             NFSe.ConstrucaoCivil.Art, DSC_ART));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'situacao', 1, 2, 1,
-                                     SituacaoTribToStr(NFSe.SituacaoTrib), ''));
+                            FpAOwner.SituacaoTribToStr(NFSe.SituacaoTrib), ''));
 
   Result.AppendChild(AddNode(tcDe4, '#1', 'valor', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));

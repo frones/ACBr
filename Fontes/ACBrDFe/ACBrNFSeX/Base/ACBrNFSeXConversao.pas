@@ -271,9 +271,6 @@ function SepararDados(const Astring: string; const Chave: string;
   const MantemChave : Boolean = False;
   const PermitePrefixo: Boolean = True): string;
 
-function SituacaoTribToStr(const t: TSituacaoTrib): string;
-function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib;
-
 function tpConsultaToStr(const t: TtpConsulta): string;
 function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
 
@@ -18217,22 +18214,6 @@ begin
   end
   else
     Result := copy(Astring, PosIni, PosFim - (PosIni + 1));
-end;
-
-function SituacaoTribToStr(const t: TSituacaoTrib): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['tp', 'tt', 'is', 'im', 'nt'],
-                           [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
-                            tsImune, tsNaoTributada]);
-end;
-
-function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['tp', 'tt', 'is', 'im', 'nt'],
-                           [tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta,
-                            tsImune, tsNaoTributada]);
 end;
 
 function tpConsultaToStr(const t: TtpConsulta): string;

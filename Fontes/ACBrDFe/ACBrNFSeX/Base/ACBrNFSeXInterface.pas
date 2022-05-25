@@ -93,6 +93,9 @@ type
 
     function TipoRPSToStr(const t:TTipoRPS): string;
     function StrToTipoRPS(out ok: boolean; const s: string): TTipoRPS;
+
+    function SituacaoTribToStr(const t: TSituacaoTrib): string;
+    function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib;
   end;
 
 implementation

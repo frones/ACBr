@@ -117,8 +117,9 @@ end;
 
 procedure TNFSeR_ISSCambe.LerDemaisDados(const ANode: TACBrXmlNode);
 var
-   AuxNode: TACBrXmlNode;
-   aValor: string;
+  AuxNode: TACBrXmlNode;
+  aValor: string;
+  Ok: Boolean;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -184,10 +185,10 @@ begin
   end;
 
   NFSe.Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('municipioPrestacao'), tcStr);
-  //IssDevido;
   //paisPrestacao
   NFSe.Servico.MunicipioIncidencia := ObterConteudo(AuxNode.Childrens.FindAnyNs('municipioIncidencia'), tcStr);
   NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('outrasInformacoes'), tcStr);
+  NFSe.SituacaoTrib := FpAOwner.StrToSituacaoTrib(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ISSDevido'), tcStr));
 
   with NFSe.OrgaoGerador do
   begin

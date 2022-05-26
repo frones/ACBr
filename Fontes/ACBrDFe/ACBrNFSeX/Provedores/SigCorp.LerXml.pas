@@ -75,6 +75,9 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
 
+  if Pos('/', xDataHora) = 2 then
+    xDataHora := '0' + xDataHora;
+
   if Pos('/', xDataHora) = 3 then
   begin
     if Copy(xDataHora, 1, 2) > '12' then
@@ -93,6 +96,9 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
 
+  if Pos('/', xDataHora) = 2 then
+    xDataHora := '0' + xDataHora;
+
   if Pos('/', xDataHora) = 3 then
   begin
     if Copy(xDataHora, 1, 2) > '12' then
@@ -110,6 +116,9 @@ var
   xDataHora: string;
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcStr);
+
+  if Pos('/', xDataHora) = 2 then
+    xDataHora := '0' + xDataHora;
 
   if Pos('/', xDataHora) = 3 then
   begin

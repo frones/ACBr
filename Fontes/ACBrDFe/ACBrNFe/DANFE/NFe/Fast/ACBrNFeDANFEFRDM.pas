@@ -172,11 +172,12 @@ type
 
     procedure ImprimirDANFE(ANFE: TNFe = nil);
     procedure ImprimirDANFEResumido(ANFE: TNFe = nil);
-    procedure ImprimirDANFEPDF(ANFE: TNFe = nil);
+    procedure ImprimirDANFEPDF(ANFE: TNFe = nil; AStream: TStream = nil);
     procedure ImprimirEVENTO(ANFE: TNFe = nil);
-    procedure ImprimirEVENTOPDF(ANFE: TNFe = nil);
+    procedure ImprimirEVENTOPDF(ANFE: TNFe = nil; AStream: TStream = nil);
     procedure ImprimirINUTILIZACAO(ANFE: TNFe = nil);
-    procedure ImprimirINUTILIZACAOPDF(ANFE: TNFe = nil);
+    procedure ImprimirINUTILIZACAOPDF(ANFE: TNFe = nil; AStream: TStream = nil);
+
   end;
 
 implementation
@@ -2355,7 +2356,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeFRClass.ImprimirDANFEPDF(ANFE: TNFe);
+procedure TACBrNFeFRClass.ImprimirDANFEPDF(ANFE: TNFe = nil; AStream: TStream = nil);
 const
   TITULO_PDF = 'Nota Fiscal Eletrônica';
 var
@@ -2364,6 +2365,9 @@ var
 begin
   if PrepareReport(ANFE) then
   begin
+    if (AStream <> nil) then
+      frxPDFExport.Stream := AStream;
+
     frxPDFExport.Author        := DANFEClassOwner.Sistema;
     frxPDFExport.Creator       := DANFEClassOwner.Sistema;
     frxPDFExport.Producer      := DANFEClassOwner.Sistema;
@@ -2417,7 +2421,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeFRClass.ImprimirEVENTOPDF(ANFE: TNFe);
+procedure TACBrNFeFRClass.ImprimirEVENTOPDF(ANFE: TNFe = nil; AStream: TStream = nil);
 const
   TITULO_PDF = 'Eventos Nota Fiscal Eletrônica';
 var
@@ -2426,6 +2430,8 @@ var
 begin
   if PrepareReportEvento(ANFE) then
   begin
+    if (AStream <> nil) then
+      frxPDFExport.Stream := AStream;
     frxPDFExport.Author        := DANFEClassOwner.Sistema;
     frxPDFExport.Creator       := DANFEClassOwner.Sistema;
     frxPDFExport.Producer      := DANFEClassOwner.Sistema;
@@ -2468,7 +2474,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeFRClass.ImprimirINUTILIZACAOPDF(ANFE: TNFe);
+procedure TACBrNFeFRClass.ImprimirINUTILIZACAOPDF(ANFE: TNFe = nil; AStream: TStream = nil);
 const
   TITULO_PDF = 'Inutilização de Numeração';
 var
@@ -2477,6 +2483,8 @@ var
 begin
   if PrepareReportInutilizacao then
   begin
+    if (AStream <> nil) then
+      frxPDFExport.Stream := AStream;
     frxPDFExport.Author        := DANFEClassOwner.Sistema;
     frxPDFExport.Creator       := DANFEClassOwner.Sistema;
     frxPDFExport.Producer      := DANFEClassOwner.Sistema;

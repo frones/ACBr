@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2022
+-- ACBrNFeDANFER ACBrNFeDANFERDM --
+[+] TK-2693 ACBrNFe - Geração do DANFe em stream com FastReport
+    Por Pandaaa / renato.pavan
+
 17/05/2021
 -- ACBrNFeDANFERDM --
 [*] Impressão da tag "xPag" como descrição da forma de pagamento.

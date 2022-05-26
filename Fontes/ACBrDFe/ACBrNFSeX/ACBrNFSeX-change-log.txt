@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 
+26/05/2022
+-- Diversos --
+[*] Incluido as funções e o tipo para informar corretamente o Tipo de Lancamento no
+    provedor GeisWeb, pois estava gerando o XML sempre com o tipo "P", esse campo
+    também é utilizado pelo provedor para informar que a nota esta cancelada.
+   Por: Italo Giurizzato Junior
+
 25/05/2022
 -- SigCorp.Provider --
 [*] Sobreescrito a procedure TratarRetornoEmitir por conta da Data de Recebimento

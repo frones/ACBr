@@ -260,6 +260,7 @@ end;
 procedure TNFSeR_GeisWeb.LerServico(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('Servico');
 
@@ -275,7 +276,12 @@ begin
       CodigoTributacaoMunicipio := ItemListaServico;
       xCodigoTributacaoMunicipio := CodItemServToDesc(ItemListaServico);
       xItemListaServico := CodItemServToDesc(ItemListaServico);
-//                    <xs:element name="TipoLancamento" type="xs:string"></xs:element>
+      TipoLancamento := StrToTipoLancamento(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('TipoLancamento'), tcStr));
+
+      NFSe.SituacaoNfse := snNormal;
+
+      if TipoLancamento = tlCancelado then
+        NFSe.SituacaoNfse := snCancelado;
     end;
   end;
 end;

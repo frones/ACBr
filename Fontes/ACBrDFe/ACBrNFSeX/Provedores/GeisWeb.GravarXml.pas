@@ -219,7 +219,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'CodigoServico', 1, 4, 1,
                                 OnlyNumber(NFSe.Servico.ItemListaServico), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'TipoLancamento', 1, 1, 1, 'P', ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'TipoLancamento', 1, 1, 1,
+                         TipoLancamentoToStr(NFSe.Servico.TipoLancamento), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Discriminacao', 1, 1500, 1,
                                                NFSe.Servico.Discriminacao, ''));

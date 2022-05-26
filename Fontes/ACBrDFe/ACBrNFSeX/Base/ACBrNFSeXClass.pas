@@ -375,6 +375,8 @@ type
     FFonteCargaTributaria: string;
     // Provedor ISSBarueri
     FPrestadoEmViasPublicas: Boolean;
+    // Provedor GeisWeb
+    FTipoLancamento: TTipoLancamento;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
@@ -409,6 +411,8 @@ type
     property FonteCargaTributaria: string read FFonteCargaTributaria write FFonteCargaTributaria;
     // Provedor ISSBarueri
     property PrestadoEmViasPublicas: Boolean read FPrestadoEmViasPublicas write FPrestadoEmViasPublicas;
+    // Provedor GeisWeb
+    property TipoLancamento: TTipoLancamento read FTipoLancamento write FTipoLancamento;
   end;
 
   TIdentificacaoPrestador = class(TObject)

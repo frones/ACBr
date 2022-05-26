@@ -69,7 +69,7 @@ uses
 
 function TNFSeW_SoftPlan.GerarXml: Boolean;
 var
-  NFSeNode, xmlNode: TACBrXmlNode;
+  NFSeNode{, xmlNode}: TACBrXmlNode;
   TipoRPS, Situacao, aliquota, ISSRetido, sISSRetidoInter: String;
 begin
   Configuracao;

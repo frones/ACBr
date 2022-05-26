@@ -427,6 +427,7 @@ begin
         MunicipioIncidencia := INIRec.ReadInteger(sSecao, 'MunicipioIncidencia', 0);
         UFPrestacao := INIRec.ReadString(sSecao, 'UFPrestacao', '');
         ResponsavelRetencao := FProvider.StrToResponsavelRetencao(Ok, INIRec.ReadString(sSecao, 'ResponsavelRetencao', '1'));
+        TipoLancamento := StrToTipoLancamento(Ok, INIRec.ReadString(sSecao, 'TipoLancamento', 'P'));
 
         i := 1;
         while true do

@@ -144,7 +144,7 @@ procedure TACBrNFSeProviderSigCorp203.TratarRetornoEmitir(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode, AuxNode, AuxNode2: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   NumRps: String;
   ANota: TNotaFiscal;

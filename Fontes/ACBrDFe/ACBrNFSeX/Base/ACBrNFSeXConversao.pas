@@ -191,6 +191,9 @@ type
 
   TtpXML = (txmlRPS, txmlNFSe);
 
+  TTipoLancamento = (tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
+                     tlSimplesNacional, tlIsentoImune, tlCancelado);
+
 function StatusRPSToStr(const t: TStatusRPS): string;
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
 
@@ -280,6 +283,9 @@ function StrTotpPeriodo(out ok: boolean; const s: string): TtpPeriodo;
 function MetodoToStr(const t: TMetodo): string;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;
+
+function TipoLancamentoToStr(const t: TTipoLancamento): string;
+function StrToTipoLancamento(out ok: boolean; const s: string): TTipoLancamento;
 
 implementation
 
@@ -18270,6 +18276,20 @@ begin
                         'Gerar NFSe', 'Teste de Envio de Lote'],
                        [meAutomatico, meLoteAssincrono, meLoteSincrono,
                         meUnitario, meTeste]);
+end;
+
+function TipoLancamentoToStr(const t: TTipoLancamento): string;
+begin
+  Result := EnumeradoToStr(t, ['N', 'T', 'P', 'R', 'C'],
+                         [tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
+                          tlSimplesNacional, tlIsentoImune, tlCancelado]);
+end;
+
+function StrToTipoLancamento(out ok: boolean; const s: string): TTipoLancamento;
+begin
+  Result := StrToEnumerado(ok, s, ['N', 'T', 'P', 'R', 'C'],
+                         [tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
+                          tlSimplesNacional, tlIsentoImune, tlCancelado]);
 end;
 
 end.

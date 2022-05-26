@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 26/05/2022
+-- ISSDSF.Provider --
+[*] Alteração na procedure TratarRetornoEmitir para a leitura correta do retorno.
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Incluido as funções e o tipo para informar corretamente o Tipo de Lancamento no
     provedor GeisWeb, pois estava gerando o XML sempre com o tipo "P", esse campo

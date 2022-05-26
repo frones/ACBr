@@ -45,6 +45,11 @@ Símbolo : Significado
 
 
 26/05/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Gravatai/RS - trocou a versão para 1.01 - Provedor IPM.
+   Por: Cleomar Pacheco / Gabriel Rogelin
+[+] Incluída a cidade: Prado/BA - provedor EL.
+   Por: Eloildo Vieira
 -- SigCorp.LerXml --
 [*] Possível solução para a leitura de datas.
    Por: Italo Giurizzato Junior

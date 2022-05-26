@@ -1723,17 +1723,21 @@ begin
           wregistro := wregistro + PadRight(TiraAcentos(SegmentoN.NomeContribuinte), 30);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
-          wregistro := wregistro + FormatFloat('000000', Receita);
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
+            wregistro := wregistro + PadRight(IntToStr(Receita), 6);
+
             if TipoContribuinte = tiCNPJ then
               wregistro := wregistro + FormatFloat('00', 1)
             else
               wregistro := wregistro + FormatFloat('00', 2);
           end
           else
+          begin
+            wregistro := wregistro + FormatFloat('000000', Receita);
             wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+          end;
 
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + '17';
@@ -1830,13 +1834,18 @@ begin
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
+            wregistro := wregistro + PadRight(IntToStr(Receita), 6);
+
             if TipoContribuinte = tiCNPJ then
               wregistro := wregistro + FormatFloat('00', 1)
             else
               wregistro := wregistro + FormatFloat('00', 2);
           end
           else
+          begin
+            wregistro := wregistro + FormatFloat('000000', Receita);
             wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+          end;
 
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + '16';
@@ -1937,13 +1946,18 @@ begin
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
+            wregistro := wregistro + PadRight(IntToStr(Receita), 6);
+
             if TipoContribuinte = tiCNPJ then
               wregistro := wregistro + FormatFloat('00', 1)
             else
               wregistro := wregistro + FormatFloat('00', 2);
           end
           else
+          begin
+            wregistro := wregistro + FormatFloat('000000', Receita);
             wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+          end;
 
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + '18';
@@ -2039,13 +2053,18 @@ begin
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
+            wregistro := wregistro + PadRight(IntToStr(Receita), 6);
+
             if TipoContribuinte = tiCNPJ then
               wregistro := wregistro + FormatFloat('00', 1)
             else
               wregistro := wregistro + FormatFloat('00', 2);
           end
           else
+          begin
+            wregistro := wregistro + FormatFloat('000000', Receita);
             wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+          end;
 
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + TpIndTributoToStr(FPagFor.Geral.idTributo);
@@ -2167,13 +2186,18 @@ begin
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
+            wregistro := wregistro + PadRight(IntToStr(Receita), 6);
+
             if TipoContribuinte = tiCNPJ then
               wregistro := wregistro + FormatFloat('00', 1)
             else
               wregistro := wregistro + FormatFloat('00', 2);
           end
           else
+          begin
+            wregistro := wregistro + FormatFloat('000000', Receita);
             wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+          end;
 
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + TpIndTributoToStr(FPagFor.Geral.idTributo);
@@ -2294,13 +2318,18 @@ begin
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
+            wregistro := wregistro + PadRight(IntToStr(Receita), 6);
+
             if TipoContribuinte = tiCNPJ then
               wregistro := wregistro + FormatFloat('00', 1)
             else
               wregistro := wregistro + FormatFloat('00', 2);
           end
           else
+          begin
+            wregistro := wregistro + FormatFloat('000000', Receita);
             wregistro := wregistro + FormatFloat('00', StrToInt(TpInscricaoToStr(TipoContribuinte)));
+          end;
 
           wregistro := wregistro + TBStrZero(idContribuinte, 14);
           wregistro := wregistro + TBStrZero(InscEst, 8);

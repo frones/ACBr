@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/05/2022
+-- ACBrPagForGravarTxt --
+[*] Possível solução para geração correta dos Segmentos N (Código da Receita)- Banco Sicredi.
+   Por: Italo Giurizzato Junior
+
 24/05/2022
 -- ACBrPagForGravarTxt --
 [*] Possível solução para geração correta dos Segmentos N - Banco Sicredi.

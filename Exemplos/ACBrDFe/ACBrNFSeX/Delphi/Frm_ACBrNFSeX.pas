@@ -684,6 +684,10 @@ begin
 //      Servico.CodigoPais := 1058; // Brasil
       Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
 
+      // Provedor GeisWeb
+      // tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador, tlSimplesNacional, tlIsentoImune
+      Servico.TipoLancamento := tlSimplesNacional;
+
       // Provedores que permitem informar mais de 1 serviço:
       // Agili, AssessorPublico, EL, EloTech, Equiplano, fintelISS, Governa,
       // Infisc, IPM, ISSDSF, Simple, SmarAPD, WebFisco
@@ -788,9 +792,9 @@ begin
 
       // Para o provedor SigISS usar os valores acima de forma adquada
       Tomador.IdentificacaoTomador.Tipo := tpPJdoMunicipio;
-      Tomador.IdentificacaoTomador.CpfCnpj := '11222333000144';
-      Tomador.IdentificacaoTomador.InscricaoMunicipal := '12345678';
-      Tomador.IdentificacaoTomador.InscricaoEstadual := '12345678';
+      Tomador.IdentificacaoTomador.CpfCnpj := '06760213874';
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := '';
+      Tomador.IdentificacaoTomador.InscricaoEstadual := '';
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
 
@@ -3148,6 +3152,10 @@ var
   Ok: Boolean;
   PathMensal: String;
 begin
+  ACBrNFSeX1.Configuracoes.Certificados.ArquivoPFX  := '';
+  ACBrNFSeX1.Configuracoes.Certificados.Senha       := '';
+  ACBrNFSeX1.Configuracoes.Certificados.NumeroSerie := '';
+
   ACBrNFSeX1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFSeX1.Configuracoes.Certificados.Senha       := AnsiString(edtSenha.Text);
   ACBrNFSeX1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;

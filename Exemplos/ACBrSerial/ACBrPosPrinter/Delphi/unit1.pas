@@ -37,7 +37,11 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   strutils, ExtCtrls, Buttons, Spin, ComCtrls, ExtDlgs, ACBrPosPrinter,
-  ACBrBase, ACBrDevice, ACBrCMC7, ACBrPosPrinterElginE1Service;
+  ACBrBase, ACBrDevice, ACBrCMC7
+  // Para testar um modelo externo com Elgin E1 Service, descomente os trechos
+  // de código marcados com #ELGIN_E1
+  //, ACBrPosPrinterElginE1Service
+  ;
 
 type
 
@@ -216,7 +220,8 @@ type
     procedure FormDestroy(Sender: TObject);
   private
     { private declarations }
-    fE1Printer: TACBrPosPrinterElginE1Service;
+    // #ELGIN_E1
+    //fE1Printer: TACBrPosPrinterElginE1Service;
 
     Procedure GravarINI;
     Procedure LerINI;
@@ -258,20 +263,22 @@ begin
   btSearchPortsClick(Sender);
   PageControl1.ActivePageIndex := 0;
 
-  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  // #ELGIN_E1
+  {fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
   fE1Printer.Modelo := prnI9;
   // Usar por TXT
   fE1Printer.PastaEntradaE1 := 'c:\E1\pathIN';
   fE1Printer.PastaSaidaE1 := 'c:\E1\pathOUT';
   // Usar por TCP
-  //fE1Printer.IPePortaE1 := '192.168.56.1:89';
+  //fE1Printer.IPePortaE1 := '192.168.56.1:89'; }
 
   LerINI;
 end;
 
 procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
 begin
-  fE1Printer.Free;
+  // #ELGIN_E1
+  //fE1Printer.Free;
 end;
 
 procedure TFrPosPrinterTeste.FormClose(Sender: TObject;
@@ -635,7 +642,8 @@ end;
 procedure TFrPosPrinterTeste.cbxModeloChange(Sender: TObject);
 begin
   try
-    if cbxModelo.ItemIndex = Integer(ppExterno) then
+    // #ELGIN_E1
+    {if cbxModelo.ItemIndex = Integer(ppExterno) then
     begin
       ACBrPosPrinter1.ModeloExterno := fE1Printer;
       ACBrPosPrinter1.Modelo := ppExterno;
@@ -643,16 +651,18 @@ begin
       cbxPorta.Enabled := False;
     end
     else
-    begin
+    begin}
       ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
-      if (cbxPorta.Text = 'NULL') then
+    // #ELGIN_E1
+    {if (cbxPorta.Text = 'NULL') then
         cbxPorta.Text := '';
 
       cbxPorta.Enabled := True;
-    end;
+    end;}
   except
      cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
-     cbxPorta.Enabled := True;
+     // #ELGIN_E1
+     //cbxPorta.Enabled := True;
      raise ;
   end ;
 end;

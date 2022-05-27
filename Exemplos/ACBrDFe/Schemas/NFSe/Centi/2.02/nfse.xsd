@@ -19,6 +19,13 @@
 			<xsd:whiteSpace value="collapse" />
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="tsDescricaoCancelamento">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="tsStatusRps">
 		<xsd:restriction base="xsd:byte">
 			<xsd:pattern value="1|2" />
@@ -270,7 +277,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsCodigoCancelamentoNfse">
 		<xsd:restriction base="xsd:byte">
-			<xsd:pattern value="1|2|3|4|5" />
+			<xsd:pattern value="1|2|3|4|5|6" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="tsIdTag">
@@ -365,6 +372,7 @@
 			<xsd:element name="RazaoSocial"          type="tsRazaoSocial"	       minOccurs="0" maxOccurs="1" />
 			<xsd:element name="Endereco"             type="tcEndereco"             minOccurs="0" maxOccurs="1" />
 			<xsd:element name="Contato"              type="tcContato"              minOccurs="0" maxOccurs="1" />
+			<xsd:element name="InscricaoEstadual"    type="tsOutrasInformacoes"    minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -485,10 +493,13 @@
 
 	<xsd:complexType name="tcIdentificacaoNfse">
 		<xsd:sequence>
+			<xsd:element name="Id"                 type="tsIdTag"               minOccurs="1" maxOccurs="1" />
 			<xsd:element name="Numero"             type="tsNumeroNfse"          minOccurs="1" maxOccurs="1" />
 			<xsd:element name="CpfCnpj"            type="tcCpfCnpj"             minOccurs="1" maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"  minOccurs="0" maxOccurs="1" />
 			<xsd:element name="CodigoMunicipio"    type="tsCodigoMunicipioIbge" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="CodigoVerificacao"  type="tsCodigoVerificacao"   minOccurs="1" maxOccurs="1" />
+			<xsd:element name="DescricaoCancelamento" type="tsDescricaoCancelamento" minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -523,9 +534,8 @@
 	<xsd:complexType name="tcInfPedidoCancelamento">
 		<xsd:sequence>
 			<xsd:element name="IdentificacaoNfse"  type="tcIdentificacaoNfse"       minOccurs="1" maxOccurs="1" />
-			<xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse"	minOccurs="0" maxOccurs="1" />
+			<xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse"	minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
-		<xsd:attribute name="Id" type="tsIdTag" />
 	</xsd:complexType>
 
 	<xsd:complexType name="tcPedidoCancelamento">

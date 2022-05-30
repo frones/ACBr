@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2022
+--ACBrBancoAmazonia--
+[*] Adicionado validação para preenchimento dos campos Baixa e Devolução CNAB240
+
 16/05/2022
 --ACBrBancoDaycoval--
 [*] Ajuste na validação do campo TipoCedente na remessa CNAB400 posição 02

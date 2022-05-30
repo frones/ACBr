@@ -104,6 +104,7 @@
     <Compile Include="..\Shared\Manifesto\RspSegMDFe.cs" Link="Manifesto\RspSegMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\SeguroMDFe.cs" Link="Manifesto\SeguroMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\TipoCarroceria.cs" Link="Manifesto\TipoCarroceria.cs" />
+    <Compile Include="..\Shared\Manifesto\TipoEventoMDFe.cs" Link="Manifesto\TipoEventoMDFe.cs" />
     <Compile Include="..\Shared\Manifesto\TipoNavegacao.cs" Link="Manifesto\TipoNavegacao.cs" />
     <Compile Include="..\Shared\Manifesto\TipoRodado.cs" Link="Manifesto\TipoRodado.cs" />
     <Compile Include="..\Shared\Manifesto\TotalMDFe.cs" Link="Manifesto\TotalMDFe.cs" />
@@ -136,7 +137,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Manifesto\" />
     <Folder Include="Resposta\" />
   </ItemGroup>
 

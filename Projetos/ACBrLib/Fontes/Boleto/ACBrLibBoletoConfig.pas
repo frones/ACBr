@@ -220,7 +220,7 @@ type
     FSoftwareHouse: String;
     FAlterarEscalaPadrao: Boolean;
     FNovaEscala: Integer;
-
+    FCalcularNomeArquivoPDFIndividual: Boolean;
   public
     constructor Create;
 
@@ -239,6 +239,7 @@ type
     property SoftwareHouse: String read FSoftwareHouse write FSoftwareHouse;
     property AlterarEscalaPadrao: Boolean read FAlterarEscalaPadrao write FAlterarEscalaPadrao;
     property NovaEscala: Integer read FNovaEscala write FNovaEscala;
+    property CalcularNomeArquivoPDFIndividual: Boolean read FCalcularNomeArquivoPDFIndividual write FCalcularNomeArquivoPDFIndividual;
 
   end;
 
@@ -517,6 +518,7 @@ begin
   FSoftwareHouse:= '';
   FAlterarEscalaPadrao:= False;
   FNovaEscala:= 96;
+  FCalcularNomeArquivoPDFIndividual:= False;
 end;
 
 procedure TBoletoFCFortesConfig.LerIni(const AIni: TCustomIniFile);
@@ -533,6 +535,7 @@ begin
   SoftwareHouse:= AIni.ReadString(CSessaoBoletoFCFortesConfig, CChaveSoftwareHouse, SoftwareHouse );
   AlterarEscalaPadrao:= AIni.ReadBool(CSessaoBoletoFCFortesConfig, CChaveAlterarEscalaPadrao, AlterarEscalaPadrao );
   NovaEscala:= AIni.ReadInteger(CSessaoBoletoFCFortesConfig, CChaveNovaEscala, NovaEscala);
+  CalcularNomeArquivoPDFIndividual := AIni.ReadBool(CSessaoBoletoFCFortesConfig, CChaveCalcularNomeArquivoPDFIndividual, CalcularNomeArquivoPDFIndividual);
 
 end;
 
@@ -550,6 +553,7 @@ begin
   AIni.WriteString(CSessaoBoletoFCFortesConfig, CChaveSoftwareHouse, SoftwareHouse  );
   AIni.WriteBool(CSessaoBoletoFCFortesConfig, CChaveAlterarEscalaPadrao, AlterarEscalaPadrao);
   AIni.WriteInteger(CSessaoBoletoFCFortesConfig, CChaveNovaEscala, NovaEscala );
+  AIni.WriteBool(CSessaoBoletoFCFortesConfig, CChaveCalcularNomeArquivoPDFIndividual, CalcularNomeArquivoPDFIndividual );
 
 end;
 

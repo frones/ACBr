@@ -202,6 +202,7 @@ begin
      PrinterName := LibConfig.BoletoFCFortesConfig.PrinterName;
      AlterarEscalaPadrao := LibConfig.BoletoFCFortesConfig.AlterarEscalaPadrao;
      NovaEscala := LibConfig.BoletoFCFortesConfig.NovaEscala;
+     CalcularNomeArquivoPDFIndividual := LibConfig.BoletoFCFortesConfig.CalcularNomeArquivoPDFIndividual;
 {$IFDEF Demo}
      SoftwareHouse := Lib.Nome + ' v' + Lib.Versao;
 {$ELSE}

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2022
+--- ACBrLibDataModule, ACBrLibConsts, ACBrLibConfig --
+[+] Adicionado propriedade de configuração de Impressão: CalcularNomeArquivoPDFIndividual
+    Por: José M S Junior
+
 04/04/2022
 --- ACBrLibBoletoBase, ACBrLibBoletoMT, ACBrLibBoletoST, ACBrLibBoletoStaticImportsMT,ACBrLibBoletoStaticImports, ACBrLibBoleto.dpr --
 [+] Adicionado método Boleto_ConsultarTitulosPorPeriodo utilizado na consulta por API BB

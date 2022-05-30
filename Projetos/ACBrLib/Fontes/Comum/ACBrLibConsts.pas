@@ -112,6 +112,7 @@ const
   CChaveAlterarEscalaPadrao = 'AlterarEscalaPadrao';
   CChaveNovaEscala = 'NovaEscala';
   CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
+  CChaveCalcularNomeArquivoPDFIndividual = 'CalcularNomeArquivoPDFIndividual';
 
   CChaveExpandeLogoMarcaAltura = 'ExpandeLogoMarca.Altura';
   CChaveExpandeLogoMarcaEsquerda = 'ExpandeLogoMarca.Esquerda';

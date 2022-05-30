@@ -37,9 +37,10 @@ namespace ACBrLib.Core.DFe
             }
             else
             {
-                var sections = iniresposta.Where(x => x.Name.StartsWith("NFe"));
+                var sections = iniresposta.Where(x => x.Name.StartsWith(prefix));
+                  
                 foreach (var section in sections)
-                {
+                {               
                     var item = section.ReadFromINi<RetornoItemResposta>();
                     item.Numero = Regex.Replace(section.Name, "[^0-9]", string.Empty);
                     ret.Retorno.Items.Add(item);

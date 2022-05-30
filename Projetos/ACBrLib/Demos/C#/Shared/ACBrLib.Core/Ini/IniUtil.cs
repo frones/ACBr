@@ -97,7 +97,7 @@ namespace ACBrLib.Core
                 if (!(property.CanRead && property.CanWrite)) continue;
                 if (!IniValueWrapper.CanWrapUnwrap(property.PropertyType)) continue;
 
-                var keyName = property.HasAttribute<IniKeyAttribute>() ? property.GetAttribute<IniKeyAttribute>().Value : property.Name;
+                var keyName = (property.HasAttribute<IniKeyAttribute>() ? property.GetAttribute<IniKeyAttribute>().Value : property.Name).ToLower();
 
                 if (!section.ContainsKey(keyName)) continue;
 

@@ -194,7 +194,7 @@ namespace ACBrLib.Core
                         var idx = line.IndexOf('=', 0);
                         if (idx < 0) continue;
 
-                        var key = line.Substring(0, idx);
+                        var key = line.Substring(0, idx).ToLower();
                         var value = idx >= line.Length - 1 ? "" : line.Substring(idx + 1);
                         iniSection.Add(key, value);
                     }

@@ -106,10 +106,10 @@ namespace ACBrLib.MDFe
                         iniData.WriteToIni(modal.InfANTT.InfPag[i], $"infPag{i + 1:000}");
                         iniData.WriteToIni(modal.InfANTT.InfPag[i].InfBanco, $"infBanc{i + 1:000}");
 
-                        for (var j = 0; i < modal.InfANTT.InfPag[i].Comp.Count; j++)
+                        for (var j = 0; j < modal.InfANTT.InfPag[i].Comp.Count; j++)
                             iniData.WriteToIni(modal.InfANTT.InfPag[i].Comp[j], $"Comp{i + 1:000}{j + 1:000}");
 
-                        for (var j = 0; i < modal.InfANTT.InfPag[i].InfPrazo.Count; j++)
+                        for (var j = 0; j < modal.InfANTT.InfPag[i].InfPrazo.Count; j++)
                             iniData.WriteToIni(modal.InfANTT.InfPag[i].InfPrazo[j], $"infPrazo{i + 1:000}{j + 1:000}");
                     }
 

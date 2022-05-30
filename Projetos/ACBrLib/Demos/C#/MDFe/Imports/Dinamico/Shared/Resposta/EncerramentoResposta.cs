@@ -21,6 +21,8 @@ namespace ACBrLib.MDFe
 
         public string EmailDest { get; set; }
 
+        public string CNPJCPF { get; set; }
+
         public string XML { get; set; }
 
         public string Arquivo { get; set; }

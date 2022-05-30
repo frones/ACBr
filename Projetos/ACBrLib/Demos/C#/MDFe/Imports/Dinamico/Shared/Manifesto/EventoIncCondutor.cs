@@ -21,6 +21,8 @@ namespace ACBrLib.MDFe
 
         public string CPF { get; set; }
 
+        public string CNPJCPF { get; set; }
+
         #endregion Properties
     }
 }

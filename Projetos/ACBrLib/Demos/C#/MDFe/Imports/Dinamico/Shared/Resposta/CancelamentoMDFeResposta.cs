@@ -8,6 +8,8 @@ namespace ACBrLib.MDFe
 
         public string ChMDFe { get; set; }
 
+        public string CNPJCPF { get; set; }
+
         #endregion Properties
     }
 }

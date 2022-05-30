@@ -402,7 +402,7 @@ begin
         FieldDefs.Add('pMVAST'    , ftString, 18);
         FieldDefs.Add('pICMSST'   , ftString, 18);
         FieldDefs.Add('vICMSST'   , ftString, 18);
-        FieldDefs.Add('DescricaoProduto', ftString, 2000);
+        FieldDefs.Add('DescricaoProduto', ftString, 10000);
         FieldDefs.Add('Unidade'   , ftString, 14);
         FieldDefs.Add('Quantidade', ftString, 50);
         FieldDefs.Add('ValorUnitario'   , ftString, 50);

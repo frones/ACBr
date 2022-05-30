@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+30/05/2022
+-- ACBrNFeDANFEFRDM --
+[*] Alteração do campo 'DescricaoProduto' para suportar preenchimento das tags de ARMA.
+    Por: thi4182 
+
 19/05/2022
 -- ACBrNFeServicos --
 [+] Inclusão das URLs de produção e homologação versão 4.00 para emissão da NFC-e - SEFAZ-CE

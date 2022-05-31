@@ -1,33 +1,33 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -94,13 +94,13 @@ type
   end;
 
 const
-  DSC_USUARIO = 'login: nome do usu·rio';
-  DSC_SENHA = 'login: senha do usu·rio';
+  DSC_USUARIO = 'login: nome do usu√°rio';
+  DSC_SENHA = 'login: senha do usu√°rio';
   DSC_CODATM = 'login: codigo AT&M';
-  DSC_APLICACAO = 'Nome da AplicaÁ„o';
+  DSC_APLICACAO = 'Nome da Aplica√ß√£o';
   DSC_ASSUNTO = 'Assunto do e-mail';
   DSC_REMETENTES = 'Remetentes do e-mail';
-  DSC_DESTINATARIOS = 'Destinat·rios do e-mail';
+  DSC_DESTINATARIOS = 'Destinat√°rios do e-mail';
   DSC_CORPO = 'Corpo do e-mail';
   DSC_CHAVE = 'Chave';
   DSC_CHAVERESP = 'Chave Resposta';
@@ -129,7 +129,7 @@ begin
   Gerador.Prefixo := 'obj1:';
   versao := aVersao;
 
-  //ver de que forma pegar o tocken em caso de n„o usar certificado
+  //ver de que forma pegar o tocken em caso de n√£o usar certificado
   Gerador.wCampo(tcStr, 'AP03', 'Token', 01, 01, 0, CIOT.Integradora.Token);
   Gerador.wCampo(tcStr, 'AP04', 'Integrador', 01, 01, 0, CIOT.Integradora.Integrador);
   Gerador.wCampo(tcInt, 'AP05', 'Versao', 01, 01, 1, aversao);
@@ -381,7 +381,7 @@ begin
             Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria       ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
             Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
             Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-            Gerador.wCampo(tcDe2, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
+            Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
 
             if CIOT.AdicionarOperacao.TipoViagem <> TAC_Agregado then
             begin
@@ -439,7 +439,7 @@ begin
     Gerador.wCampo(tcDe2, 'AP63', 'SestSenat              ', 01, 01, 1, SestSenat, 'Valor destinado ao SEST / SENAT');
     Gerador.wCampo(tcDe2, 'AP64', 'INSS                   ', 01, 01, 1, INSS, 'Valor destinado ao INSS.');
     Gerador.wCampo(tcDe2, 'AP65', 'ISSQN                  ', 01, 01, 1, ISSQN, 'Valor destinado ao ISSQN.');
-    Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos         ', 01, 01, 1, OutrosImpostos, 'Valor destinado a outros impostos n„o previstos.');
+    Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos         ', 01, 01, 1, OutrosImpostos, 'Valor destinado a outros impostos n√£o previstos.');
     Gerador.wCampo(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 0, DescricaoOutrosImpostos);
     Gerador.wGrupo('/Impostos');
   end;
@@ -455,10 +455,10 @@ begin
 
   //Pagamentos registrados.
   //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
-  //- A soma dos pagamentos c/ categoria Adiantamento, dever· ter o mesmo valor apontado na
+  //- A soma dos pagamentos c/ categoria Adiantamento, dever√° ter o mesmo valor apontado na
   //     tag TotalAdiantamento da tag Viagem/Valores, e neste caso, a tag Documento do pagamento
-  //     dever· conter o mesmo valor da tag DocumentoViagem da tag Viagem .
-  //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever· ter um pagamento correspondente,
+  //     dever√° conter o mesmo valor da tag DocumentoViagem da tag Viagem .
+  //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever√° ter um pagamento correspondente,
   //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
   for i := 0 to CIOT.AdicionarOperacao.Pagamentos.Count -1 do
   begin
@@ -466,18 +466,18 @@ begin
     begin
       Gerador.wGrupo('Pagamentos', 'AP68');
       Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser· liberado para saque.');
+      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser√° liberado para saque.');
       Gerador.wCampo(tcDe2, 'AP71', 'Valor             ', 01, 01, 1, Valor, 'Valor do pagamento.');
 
       Gerador.Prefixo := 'obj:';
-      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser· usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
+      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser√° usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
       Gerador.wCampo(tcStr, 'AP73', 'Categoria    ', 01, 01, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, -Quitacao, -SemCategoria, -Frota ');
 
       Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP74', 'Documento', 01, 01, 0, Documento, 'Documento relacionado a viagem.');
 
-      // Preenchimento obrigatÛrio para o TipoPagamento TransferenciaBancaria.
-      // N„o deve ser preenchido para TipoPagamento eFRETE.
+      // Preenchimento obrigat√≥rio para o TipoPagamento TransferenciaBancaria.
+      // N√£o deve ser preenchido para TipoPagamento eFRETE.
       if TipoPagamento  = TransferenciaBancaria then
       begin
         with InformacoesBancarias do
@@ -487,9 +487,9 @@ begin
             Gerador.Prefixo := 'obj:';
             Gerador.wGrupo('InformacoesBancarias', 'AP75');
 
-            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'CÛdigo de compensaÁ„o da instituiÁ„o banc·ria que ser· realizado o pagamento. ');
-            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'AgÍncia na qual o contratado possui conta com dÌgito (se houver).');
-            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dÌgito. ');
+            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'C√≥digo de compensa√ß√£o da institui√ß√£o banc√°ria que ser√° realizado o pagamento. ');
+            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Ag√™ncia na qual o contratado possui conta com d√≠gito (se houver).');
+            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com d√≠gito. ');
             Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
 
             Gerador.wGrupo('/InformacoesBancarias');
@@ -517,9 +517,9 @@ begin
   aPrefixo := Gerador.Prefixo;
   Gerador.Prefixo := 'adic:';
 
-  //TAC ou seu Equiparado, que efetuar o transporte rodovi·rio de cargas por conta de terceiros e
-  //mediante remuneraÁ„o, indicado no cadastramento da OperaÁ„o de Transporte.
-  //Para o TipoViagem Frota o Contratado ser· a prÛpria empresa que est· declarando a operaÁ„o.
+  //TAC ou seu Equiparado, que efetuar o transporte rodovi√°rio de cargas por conta de terceiros e
+  //mediante remunera√ß√£o, indicado no cadastramento da Opera√ß√£o de Transporte.
+  //Para o TipoViagem Frota o Contratado ser√° a pr√≥pria empresa que est√° declarando a opera√ß√£o.
 
   with CIOT.AdicionarOperacao.Contratado do
   begin
@@ -542,8 +542,8 @@ begin
   aPrefixo := Gerador.Prefixo;
   Gerador.Prefixo := 'adic:';
 
-  //… o condutor do veÌculo que ir· realizar a operaÁ„o de transporte,
-  //pode ser o propriet·rio do veÌculo ou n„o.
+  //√â o condutor do ve√≠culo que ir√° realizar a opera√ß√£o de transporte,
+  //pode ser o propriet√°rio do ve√≠culo ou n√£o.
   with CIOT.AdicionarOperacao.Motorista do
   begin
     if CpfOuCnpj <> '' then
@@ -574,10 +574,10 @@ end;
 
 procedure TCIOTW_eFrete.GerarDestinatario;
 begin
-  //Destinat·rio da carga.
-  //Na emiss„o com TipoViagem Padr„o seu preenchimento È obrigatÛrio.
-  //Na emiss„o com TipoViagem TAC_Agregado o campo n„o deve ser preenchido.
-  //N„o esperado para TipoViagem Frota.
+  //Destinat√°rio da carga.
+  //Na emiss√£o com TipoViagem Padr√£o seu preenchimento √© obrigat√≥rio.
+  //Na emiss√£o com TipoViagem TAC_Agregado o campo n√£o deve ser preenchido.
+  //N√£o esperado para TipoViagem Frota.
   with CIOT.AdicionarOperacao.Destinatario do
   begin
     if Length(Trim(CpfOuCnpj)) > 0 then
@@ -641,7 +641,7 @@ begin
         end;
       end;
 
-      Gerador.wCampo(tcStr, 'AP112', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)), 'Informar se È o respons·vel pelo pagamento da OperaÁ„o de Transporte. True = Sim. False = N„o');
+      Gerador.wCampo(tcStr, 'AP112', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(ResponsavelPeloPagamento, True)), 'Informar se √© o respons√°vel pelo pagamento da Opera√ß√£o de Transporte. True = Sim. False = N√£o');
 
       Gerador.wGrupo('/Destinatario');
     end;
@@ -724,9 +724,9 @@ end;
 
 procedure TCIOTW_eFrete.GerarSubContratante;
 begin
-  //… o transportador que contratar outro transportador para realizaÁ„o do transporte de
-  //cargas para o qual fora anteriormente contratado, indicado no cadastramento da OperaÁ„o de Transporte.
-  //N„o esperado para TipoViagem Frota.
+  //√â o transportador que contratar outro transportador para realiza√ß√£o do transporte de
+  //cargas para o qual fora anteriormente contratado, indicado no cadastramento da Opera√ß√£o de Transporte.
+  //N√£o esperado para TipoViagem Frota.
 
   with CIOT.AdicionarOperacao.Subcontratante do
   begin
@@ -801,9 +801,9 @@ end;
 
 procedure TCIOTW_eFrete.GerarConsignatario;
 begin
-  //Aquele que receber· as mercadorias transportadas em consignaÁ„o,
-  //indicado no cadastramento da OperaÁ„o de Transporte ou nos respectivos documentos fiscais.
-  //N„o esperado para TipoViagem Frota.
+  //Aquele que receber√° as mercadorias transportadas em consigna√ß√£o,
+  //indicado no cadastramento da Opera√ß√£o de Transporte ou nos respectivos documentos fiscais.
+  //N√£o esperado para TipoViagem Frota.
 
   with CIOT.AdicionarOperacao.Consignatario do
   begin
@@ -878,9 +878,9 @@ end;
 
 procedure TCIOTW_eFrete.GerarTomadorServico;
 begin
-  //Pessoa (fÌsica ou jurÌdica) que contratou o frete pela transportadora.
-  //Na emiss„o com TipoViagem Padr„o seu preenchimento È obrigatÛrio.
-  //Na emiss„o com TipoViagem TAC_Agregado o campo n„o deve ser preenchido.
+  //Pessoa (f√≠sica ou jur√≠dica) que contratou o frete pela transportadora.
+  //Na emiss√£o com TipoViagem Padr√£o seu preenchimento √© obrigat√≥rio.
+  //Na emiss√£o com TipoViagem TAC_Agregado o campo n√£o deve ser preenchido.
 
   with CIOT.AdicionarOperacao.TomadorServico do
   begin
@@ -1224,7 +1224,7 @@ begin
             Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                     ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
             Gerador.Prefixo := 'adic:';
             Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-            Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
+            Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque  ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
 
             if ToleranciaDePerdaDeMercadoria.Valor > 0 then
             begin
@@ -1259,10 +1259,10 @@ begin
 
   //Pagamentos registrados.
   //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
-  //- A soma dos pagamentos c/ categoria Adiantamento, dever· ter o mesmo valor apontado na
+  //- A soma dos pagamentos c/ categoria Adiantamento, dever√° ter o mesmo valor apontado na
   //     tag TotalAdiantamento da tag Viagem/Valores, e neste caso, a tag Documento do pagamento
-  //     dever· conter o mesmo valor da tag DocumentoViagem da tag Viagem .
-  //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever· ter um pagamento correspondente,
+  //     dever√° conter o mesmo valor da tag DocumentoViagem da tag Viagem .
+  //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever√° ter um pagamento correspondente,
   //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
   Gerador.wGrupo('Pagamentos', 'AP68');
 
@@ -1272,18 +1272,18 @@ begin
     begin
       Gerador.wGrupo('Pagamento', 'AP68');
       Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser· liberado para saque.');
+      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser√° liberado para saque.');
       Gerador.wCampo(tcDe2, 'AP71', 'Valor             ', 01, 01, 1, Valor, 'Valor do pagamento.');
 
       Gerador.Prefixo := 'obj:';
-      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser· usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
+      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser√° usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
       Gerador.wCampo(tcStr, 'AP73', 'Categoria    ', 01, 01, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, -Quitacao, -SemCategoria, -Frota ');
 
       Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP74', 'Documento', 01, 01, 0, Documento, 'Documento relacionado a viagem.');
 
-      // Preenchimento obrigatÛrio para o TipoPagamento TransferenciaBancaria.
-      // N„o deve ser preenchido para TipoPagamento eFRETE.
+      // Preenchimento obrigat√≥rio para o TipoPagamento TransferenciaBancaria.
+      // N√£o deve ser preenchido para TipoPagamento eFRETE.
       if TipoPagamento  = TransferenciaBancaria then
       begin
         with InformacoesBancarias do
@@ -1293,9 +1293,9 @@ begin
             Gerador.Prefixo := 'obj:';
             Gerador.wGrupo('InformacoesBancarias', 'AP75');
 
-            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'CÛdigo de compensaÁ„o da instituiÁ„o banc·ria que ser· realizado o pagamento. ');
-            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'AgÍncia na qual o contratado possui conta com dÌgito (se houver).');
-            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dÌgito. ');
+            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'C√≥digo de compensa√ß√£o da institui√ß√£o banc√°ria que ser√° realizado o pagamento. ');
+            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Ag√™ncia na qual o contratado possui conta com d√≠gito (se houver).');
+            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com d√≠gito. ');
             Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
 
             Gerador.wGrupo('/InformacoesBancarias');
@@ -1327,10 +1327,10 @@ begin
 
   //Pagamentos registrados.
   //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
-  //- A soma dos pagamentos c/ categoria Adiantamento, dever· ter o mesmo valor apontado na
+  //- A soma dos pagamentos c/ categoria Adiantamento, dever√° ter o mesmo valor apontado na
   //     tag TotalAdiantamento da tag Viagem/Valores, e neste caso, a tag Documento do pagamento
-  //     dever· conter o mesmo valor da tag DocumentoViagem da tag Viagem .
-  //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever· ter um pagamento correspondente,
+  //     dever√° conter o mesmo valor da tag DocumentoViagem da tag Viagem .
+  //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever√° ter um pagamento correspondente,
   //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
   Gerador.wGrupo('Pagamentos', 'AP68');
 
@@ -1340,18 +1340,18 @@ begin
     begin
       Gerador.wGrupo('Pagamento', 'AP68');
       Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser· liberado para saque.');
+      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser√° liberado para saque.');
       Gerador.wCampo(tcDe2, 'AP71', 'Valor             ', 01, 01, 1, Valor, 'Valor do pagamento.');
 
       Gerador.Prefixo := 'obj:';
-      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser· usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
+      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser√° usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
       Gerador.wCampo(tcStr, 'AP73', 'Categoria    ', 01, 01, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, -Quitacao, -SemCategoria, -Frota ');
 
       Gerador.Prefixo := 'adic:';
       Gerador.wCampo(tcStr, 'AP74', 'Documento', 01, 01, 0, Documento, 'Documento relacionado a viagem.');
 
-      // Preenchimento obrigatÛrio para o TipoPagamento TransferenciaBancaria.
-      // N„o deve ser preenchido para TipoPagamento eFRETE.
+      // Preenchimento obrigat√≥rio para o TipoPagamento TransferenciaBancaria.
+      // N√£o deve ser preenchido para TipoPagamento eFRETE.
       with InformacoesBancarias do
       begin
         if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
@@ -1359,9 +1359,9 @@ begin
           Gerador.Prefixo := 'obj:';
           Gerador.wGrupo('InformacoesBancarias', 'AP75');
 
-          Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'CÛdigo de compensaÁ„o da instituiÁ„o banc·ria que ser· realizado o pagamento. ');
-          Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'AgÍncia na qual o contratado possui conta com dÌgito (se houver).');
-          Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dÌgito. ');
+          Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'C√≥digo de compensa√ß√£o da institui√ß√£o banc√°ria que ser√° realizado o pagamento. ');
+          Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Ag√™ncia na qual o contratado possui conta com d√≠gito (se houver).');
+          Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com d√≠gito. ');
           Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
 
           Gerador.wGrupo('/InformacoesBancarias');
@@ -1467,8 +1467,8 @@ begin
               Gerador.wCampo(tcStr, 'AP46', 'UnidadeDeMedidaDaMercadoria        ', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
               Gerador.wCampo(tcStr, 'AP47', 'TipoDeCalculo                      ', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
               Gerador.wCampo(tcDe4, 'AP48', 'ValorDoFretePorUnidadeDeMercadoria ', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-              Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque   ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
-              Gerador.wCampo(tcDe4, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, QuantidadeDaMercadoriaNoDesembarque);
+              Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoEmbarque   ', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
+              Gerador.wCampo(tcDe5, 'AP49', 'QuantidadeDaMercadoriaNoDesembarque', 01, 01, 1, QuantidadeDaMercadoriaNoDesembarque);
 
               if ToleranciaDePerdaDeMercadoria.Valor > 0 then
               begin
@@ -1507,10 +1507,10 @@ begin
 
     //Pagamentos registrados.
     //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
-    //- A soma dos pagamentos c/ categoria Adiantamento, dever· ter o mesmo valor apontado na
+    //- A soma dos pagamentos c/ categoria Adiantamento, dever√° ter o mesmo valor apontado na
     //     tag TotalAdiantamento da tag Viagem/Valores, e neste caso, a tag Documento do pagamento
-    //     dever· conter o mesmo valor da tag DocumentoViagem da tag Viagem .
-    //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever· ter um pagamento correspondente,
+    //     dever√° conter o mesmo valor da tag DocumentoViagem da tag Viagem .
+    //- Se a viagem possuir a tag TotalQuitacao maior que zero, dever√° ter um pagamento correspondente,
     //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
     Gerador.wGrupo('Pagamentos', 'AP68');
 
@@ -1520,12 +1520,12 @@ begin
       begin
         Gerador.wGrupo('Pagamento', 'AP68');
         Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-        Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser· liberado para saque.');
+        Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao   ', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento ser√° liberado para saque.');
         Gerador.wCampo(tcDe2, 'AP71', 'Valor             ', 01, 01, 1, Valor, 'Valor do pagamento.');
-        Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento     ', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser· usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
+        Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento     ', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que ser√° usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
 
-        // Preenchimento obrigatÛrio para o TipoPagamento TransferenciaBancaria.
-        // N„o deve ser preenchido para TipoPagamento eFRETE.
+        // Preenchimento obrigat√≥rio para o TipoPagamento TransferenciaBancaria.
+        // N√£o deve ser preenchido para TipoPagamento eFRETE.
         with InformacoesBancarias do
         begin
           if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
@@ -1533,9 +1533,9 @@ begin
             Gerador.wGrupo('InformacoesBancarias', 'AP75');
             Gerador.Prefixo := 'obj:';
 
-            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'CÛdigo de compensaÁ„o da instituiÁ„o banc·ria que ser· realizado o pagamento. ');
-            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'AgÍncia na qual o contratado possui conta com dÌgito (se houver).');
-            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com dÌgito. ');
+            Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'C√≥digo de compensa√ß√£o da institui√ß√£o banc√°ria que ser√° realizado o pagamento. ');
+            Gerador.wCampo(tcStr, 'AP77', 'Agencia            ', 01, 01, 0, Agencia, 'Ag√™ncia na qual o contratado possui conta com d√≠gito (se houver).');
+            Gerador.wCampo(tcStr, 'AP78', 'Conta              ', 01, 01, 0, Conta, 'Conta do contratado com d√≠gito. ');
             Gerador.wCampo(tcStr, 'AP79', 'TipoConta          ', 01, 15, 1, TipoContaToStr(TipoConta));
 
             Gerador.wGrupo('/InformacoesBancarias');
@@ -1567,7 +1567,7 @@ begin
       Gerador.wCampo(tcDe2, 'AP63', 'SestSenat              ', 01, 01, 1, SestSenat, 'Valor destinado ao SEST / SENAT');
       Gerador.wCampo(tcDe2, 'AP64', 'INSS                   ', 01, 01, 1, INSS, 'Valor destinado ao INSS.');
       Gerador.wCampo(tcDe2, 'AP65', 'ISSQN                  ', 01, 01, 1, ISSQN, 'Valor destinado ao ISSQN.');
-      Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos         ', 01, 01, 1, OutrosImpostos, 'Valor destinado a outros impostos n„o previstos.');
+      Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos         ', 01, 01, 1, OutrosImpostos, 'Valor destinado a outros impostos n√£o previstos.');
       Gerador.wCampo(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 0, DescricaoOutrosImpostos);
       Gerador.wGrupo('/Impostos');
     end;
@@ -1743,7 +1743,7 @@ begin
           Gerador.wCampo(tcStr, 'AP03', 'BloquearNaoEquiparado ', 01, 01, 1, LowerCase(BoolToStr(BloquearNaoEquiparado, True)));
           Gerador.wCampo(tcStr, 'AP04', 'MatrizCNPJ            ', 14, 14, 1, MatrizCNPJ);
           Gerador.wCampo(tcStr, 'AP05', 'FilialCNPJ            ', 14, 14, 0, FilialCNPJ);
-          Gerador.wCampo(tcStr, 'AP06', 'IdOperacaoCliente     ', 01, 01, 0, IdOperacaoCliente, 'Id / Chave prim·ria da operaÁ„o de transporte no sistema do Cliente.');
+          Gerador.wCampo(tcStr, 'AP06', 'IdOperacaoCliente     ', 01, 01, 0, IdOperacaoCliente, 'Id / Chave prim√°ria da opera√ß√£o de transporte no sistema do Cliente.');
 
           if TipoViagem <> TAC_Agregado then
             Gerador.wCampo(tcDat, 'AP07', 'DataInicioViagem      ', 10, 10, 1, DataInicioViagem);
@@ -1753,7 +1753,7 @@ begin
           if TipoViagem <> TAC_Agregado then
           begin
             Gerador.wCampo(tcInt, 'AP09', 'CodigoNCMNaturezaCarga', 01, 04, 1, CodigoNCMNaturezaCarga);
-            Gerador.wCampo(tcDe2, 'AP10', 'PesoCarga             ', 01, 01, 1, PesoCarga);
+            Gerador.wCampo(tcDe5, 'AP10', 'PesoCarga             ', 01, 01, 1, PesoCarga);
             Gerador.wCampo(tcStr, 'AP11', 'TipoEmbalagem         ', 01, 01, 1, TipoEmbalagemToStr(TipoEmbalagem));
           end;
 
@@ -1785,8 +1785,8 @@ begin
           GerarProprietarioCarga;
           GerarVeiculos('adic:');
 
-          //Informar um CIOT (se existente) que esteja relacionado ‡ operaÁ„o de transporte.
-          //Por exemplo: No caso da presenÁa de um Subcontratante na operaÁ„o de transporte informar
+          //Informar um CIOT (se existente) que esteja relacionado √† opera√ß√£o de transporte.
+          //Por exemplo: No caso da presen√ßa de um Subcontratante na opera√ß√£o de transporte informar
           //o CIOT onde o Subcontratante foi o Contratado.
           Gerador.wCampo(tcStr, 'AP248', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 0, CodigoIdentificacaoOperacaoPrincipal);
 
@@ -1865,11 +1865,11 @@ begin
           //Gerador.wCampo(tcDat, 'WP07', 'DataInicioViagem           ', 01, 01, 1, DataInicioViagem);
           //Gerador.wCampo(tcDat, 'WP06', 'DataFimViagem              ', 01, 01, 1, DataFimViagem);
           //Gerador.wCampo(tcInt, 'WP05', 'CodigoNCMNaturezaCarga     ', 01, 04, 1, CodigoNCMNaturezaCarga);
-          //Gerador.wCampo(tcDe4, 'WP09', 'PesoCarga                  ', 01, 01, 1, PesoCarga);
+          //Gerador.wCampo(tcDe5, 'WP09', 'PesoCarga                  ', 01, 01, 1, PesoCarga);
           //Gerador.wCampo(tcInt, 'WP04', 'CodigoMunicipioOrigem      ', 01, 07, 1, CodigoMunicipioOrigem);
           //Gerador.wCampo(tcInt, 'WP03', 'CodigoMunicipioDestino     ', 01, 07, 1, CodigoMunicipioDestino);
 
-          //Adiciona VeÌculos
+          //Adiciona Ve√≠culos
           GerarVeiculos('ret:');
 
           Gerador.wCampo(tcInt, 'AP209', 'QuantidadeSaques        ', 01, 01, 1, QuantidadeSaques);
@@ -1990,7 +1990,7 @@ begin
         with CIOT.EncerrarOperacao do
         begin
           Gerador.wCampo(tcStr, 'QP02', 'CodigoIdentificacaoOperacao', 01, 01, 0, CodigoIdentificacaoOperacao);
-          Gerador.wCampo(tcDe6, 'QP03', 'PesoCarga                  ', 01, 01, 1, PesoCarga);
+          Gerador.wCampo(tcDe5, 'QP03', 'PesoCarga                  ', 01, 01, 1, PesoCarga);
 
           GerarViagemEncerramento;
           GerarPagamentosEncerramento;

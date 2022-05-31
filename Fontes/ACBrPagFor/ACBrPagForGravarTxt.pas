@@ -1830,7 +1830,6 @@ begin
           wregistro := wregistro + PadRight(TiraAcentos(SegmentoN.NomeContribuinte), 30);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
-          wregistro := wregistro + FormatFloat('000000', Receita);
 
           if FPagFor.Geral.Banco = pagSicredi then
           begin
@@ -1942,8 +1941,7 @@ begin
           wregistro := wregistro + PadRight(TiraAcentos(SegmentoN.NomeContribuinte), 30);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
-          wregistro := wregistro + FormatFloat('000000', Receita);
-
+          
           if FPagFor.Geral.Banco = pagSicredi then
           begin
             wregistro := wregistro + PadRight(IntToStr(Receita), 6);
@@ -2049,8 +2047,7 @@ begin
           wregistro := wregistro + PadRight(TiraAcentos(SegmentoN.NomeContribuinte), 30);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
-          wregistro := wregistro + FormatFloat('000000', Receita);
-
+          
           if FPagFor.Geral.Banco = pagSicredi then
           begin
             wregistro := wregistro + PadRight(IntToStr(Receita), 6);
@@ -2182,8 +2179,7 @@ begin
           wregistro := wregistro + PadRight(TiraAcentos(SegmentoN.NomeContribuinte), 30);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
-          wregistro := wregistro + FormatFloat('000000', Receita);
-
+          
           if FPagFor.Geral.Banco = pagSicredi then
           begin
             wregistro := wregistro + PadRight(IntToStr(Receita), 6);
@@ -2314,8 +2310,7 @@ begin
           wregistro := wregistro + PadRight(TiraAcentos(SegmentoN.NomeContribuinte), 30);
           wregistro := wregistro + FormatDateTime('ddmmyyyy', SegmentoN.DataPagamento);
           wregistro := wregistro + FormatFloat('000000000000000', SegmentoN.ValorPagamento * 100);
-          wregistro := wregistro + FormatFloat('000000', Receita);
-
+          
           if FPagFor.Geral.Banco = pagSicredi then
           begin
             wregistro := wregistro + PadRight(IntToStr(Receita), 6);

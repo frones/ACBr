@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2022
+-- pcnGerador --
+[+] Inclusão do tipo tcDe5 para geração de campos decimais com 5 casas decimais.
+  Por: Centrodata Sistemas
+
 13/05/2022
 -- pcnConversao --
 [+] Inclusão dos métodos: TipoViaTranspToDescricao e TipoIntermedioToDescricao.

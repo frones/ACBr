@@ -45,6 +45,8 @@ uses
 
 type
   TACBrNFSeXWebserviceSSInformatica203 = class(TACBrNFSeXWebserviceSoap11)
+  private
+    function GetDadosUsuario: string;
   public
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
@@ -58,6 +60,8 @@ type
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
 //    function TratarXmlRetornado(const aXML: string): string; override;
+
+    property DadosUsuario: string read GetDadosUsuario;
   end;
 
   TACBrNFSeProviderSSInformatica203 = class (TACBrNFSeProviderABRASFv2)
@@ -73,7 +77,9 @@ type
 implementation
 
 uses
-  ACBrDFeException,
+  synacode, DateUtils, pcnAuxiliar,
+  ACBrDFeException, ACBrUtil.Math,
+  ACBrNFSeX,
   SSInformatica.GravarXml, SSInformatica.LerXml;
 
 { TACBrNFSeProviderSSInformatica203 }
@@ -187,6 +193,48 @@ end;
 
 { TACBrNFSeXWebserviceSSInformatica203 }
 
+function TACBrNFSeXWebserviceSSInformatica203.GetDadosUsuario: string;
+var
+  UserNameToken, Nonce, Created, PassWord: string;
+  wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
+  dhEnvio: TDateTime;
+begin
+  with TACBrNFSeX(FPDFeOwner).Configuracoes do
+  begin
+    Nonce := IntToStr(Random(99999999));
+    Nonce := EncodeBase64(Nonce);
+
+    dhEnvio := Now;
+    DecodeDateTime(dhEnvio, wAno, wMes, wDia, wHor, wMin, wSeg, wMse);
+    Created := FormatFloat('0000', wAno) + '-' + FormatFloat('00', wMes) + '-' +
+               FormatFloat('00', wDia) + 'T' + FormatFloat('00', wHor) + ':' +
+               FormatFloat('00', wMin) + ':' + FormatFloat('00', wSeg) +
+               GetUTC(WebServices.UF, dhEnvio);
+
+    PassWord := EncodeBase64(Geral.Emitente.CNPJ);
+
+    UserNameToken := EncodeBase64(SHA1(Nonce + Created + PassWord));
+
+    Result := '<wsse:Security soapenv:mustUnderstand="1" ' +
+                     'xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" ' +
+                     'xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">' +
+               '<wsse:UsernameToken wsu:Id="UsernameToken-' + UserNameToken + '">' +
+                '<wsse:Username>' + Geral.Emitente.WSUser + '</wsse:Username>' +
+                '<wsse:Password ' +
+                       'Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
+                  PassWord +
+                '</wsse:Password>' +
+                '<wsse:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' +
+                   Nonce +
+                '</wsse:Nonce>' +
+                '<wsu:Created>' +
+                   Created +
+                '</wsu:Created>' +
+               '</wsse:UsernameToken>' +
+              '</wsse:Security>';
+  end;
+end;
+
 function TACBrNFSeXWebserviceSSInformatica203.Recepcionar(ACabecalho,
   AMSG: String): string;
 var
@@ -200,6 +248,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
+                     DadosUsuario,
                      ['outputXML', 'EnviarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -217,6 +266,7 @@ begin
   Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
+                     DadosUsuario,
                      ['outputXML', 'EnviarLoteRpsSincronoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -234,6 +284,7 @@ begin
   Request := Request + '</nfse:GerarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
+                     DadosUsuario,
                      ['outputXML', 'GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -251,6 +302,7 @@ begin
   Request := Request + '</nfse:ConsultarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarLoteRps', Request,
+                     DadosUsuario,
                      ['outputXML', 'ConsultarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -268,6 +320,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
+                     DadosUsuario,
                      ['outputXML', 'ConsultarNfseFaixaResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -285,6 +338,7 @@ begin
   Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
+                     DadosUsuario,
                      ['outputXML', 'ConsultarNfseRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -302,6 +356,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
+                     DadosUsuario,
                      ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -319,6 +374,7 @@ begin
   Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
+                     DadosUsuario,
                      ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -335,6 +391,7 @@ begin
   Request := Request + '</nfse:CancelarNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
+                     DadosUsuario,
                      ['outputXML', 'CancelarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
@@ -352,6 +409,7 @@ begin
   Request := Request + '</nfse:SubstituirNfseRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
+                     DadosUsuario,
                      ['outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;

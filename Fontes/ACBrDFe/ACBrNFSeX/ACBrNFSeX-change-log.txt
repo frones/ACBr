@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+31/05/2022
+-- SSInformatica.Provider --
+[+] Incluido na geração dos soap o conteudo de Header informações tais como UserName e Password.
+   Por: Italo Giurizzato Junior
+
 26/05/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Gravatai/RS - trocou a versão para 1.01 - Provedor IPM.

@@ -63,6 +63,7 @@ begin
   inherited Configuracao;
 
   NrOcorrBaseCalc := 1;
+  DivAliq100 := True;
 end;
 
 end.

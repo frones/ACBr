@@ -569,9 +569,9 @@ begin
       begin
         with Response do
         begin
+          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
           Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
           Protocolo := Lote;
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
 
           { Verificar se mais alguma dessas informações são necessárias
           with InformacoesLote do
@@ -590,10 +590,12 @@ begin
         end;
       end;
 
-      AuxNode := ANode.Childrens.FindAnyNs('ChavesNFeRPS');
+      AuxNode := ANode.Childrens.FindAnyNs('ChavesNFSeRPS');
 
       if AuxNode <> nil then
       begin
+        AuxNode := AuxNode.Childrens.FindAnyNs('ChaveNFSeRPS');
+
         AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveRPS');
 
         if (AuxNodeChave <> nil) then

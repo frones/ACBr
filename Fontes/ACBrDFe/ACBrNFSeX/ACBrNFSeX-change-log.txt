@@ -45,6 +45,12 @@ Símbolo : Significado
 
 
 01/06/2022
+-- ISSDSF.Provider --
+[*] Alterado o TratarRetornoEmitir para uma correta leitura do retorno.
+   Por: Italo Giurizzato Junior
+-- ISSNatal.GravarXml --
+[+] Incluido na configuração o parâmetro: DivAliq100 com o valor True.
+   Por: João Antônio
 -- Centi.Provider --
 [*] Possível solução para o cancelamento.
    Por: Italo Giurizzato Junior/Robson Lopes

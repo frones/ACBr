@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 01/06/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Coronel Vivia/PR - trocou as URLs de homologação e de produção.
+   Por: Everton
 -- ISSDSF.Provider --
 [*] Alterado o TratarRetornoEmitir para uma correta leitura do retorno.
    Por: Italo Giurizzato Junior

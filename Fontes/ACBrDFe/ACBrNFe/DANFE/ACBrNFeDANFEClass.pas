@@ -267,7 +267,8 @@ begin
             Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / TotalProduto) + '%)';
         end
         else
-          Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / Prod.VProd) + '%)';
+          if NaoEstaZerado(Prod.VProd) then
+            Result := Result + ' (' + FormatFloatBr((Imposto.vTotTrib * 100) / Prod.VProd) + '%)';
       end;
     end;
   end;

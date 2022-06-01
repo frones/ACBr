@@ -40,7 +40,8 @@ uses
   SysUtils, Classes,
   ACBrXmlBase,
   ACBrNFSeXClass, ACBrNFSeXConversao, ACBrNFSeXGravarXml, ACBrNFSeXLerXml,
-  ACBrNFSeXProviderABRASFv2, ACBrNFSeXWebserviceBase;
+  ACBrNFSeXProviderABRASFv2,
+  ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeXWebserviceCenti202 = class(TACBrNFSeXWebserviceRest)
@@ -63,6 +64,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
+      Params: TNFSeParamsResponse); override;
   public
     function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
     function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
@@ -73,6 +76,7 @@ implementation
 
 uses
   ACBrDFeException,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes,
   Centi.GravarXml, Centi.LerXml;
 
 { TACBrNFSeProviderCenti202 }
@@ -85,6 +89,7 @@ begin
   begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
+    CancPreencherCodVerificacao := True;
   end;
 
   with ConfigAssinar do
@@ -134,6 +139,55 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderCenti202.GerarMsgDadosCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  InfoCanc: TInfCancelamento;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  InfoCanc := Response.InfCancelamento;
+
+  with Params do
+  begin
+    if InfoCanc.MotCancelamento <> '' then
+    begin
+      Motivo := '<DescricaoCancelamento>' +
+                   Trim(InfoCanc.MotCancelamento) +
+                 '</DescricaoCancelamento>';
+    end
+    else
+      Motivo := '';
+
+    Response.ArquivoEnvio := '<CancelarNfseEnvio' + NameSpace + '>' +
+                               '<Pedido>' +
+                                 '<InfPedidoCancelamento' + '>' +
+                                   '<IdentificacaoNfse>' +
+                                     '<Numero>' +
+                                        InfoCanc.NumeroNFSe +
+                                     '</Numero>' +
+                                     '<CpfCnpj>' +
+                                        GetCpfCnpj(Emitente.CNPJ, '') +
+                                     '</CpfCnpj>' +
+                                     GetInscMunic(Emitente.InscMun, '') +
+                                     '<CodigoMunicipio>' +
+                                        IntToStr(TACBrNFSeX(FAOwner).Configuracoes.Geral.CodigoMunicipio) +
+                                     '</CodigoMunicipio>' +
+                                     CodVerif +
+                                     Motivo +
+                                     '<Id>' +
+                                        InfoCanc.ChaveNFSe +
+                                     '</Id>' +
+                                   '</IdentificacaoNfse>' +
+                                   '<CodigoCancelamento>' +
+                                      InfoCanc.CodCancelamento +
+                                   '</CodigoCancelamento>' +
+                                 '</InfPedidoCancelamento>' +
+                               '</Pedido>' +
+                             '</CancelarNfseEnvio>';
   end;
 end;
 

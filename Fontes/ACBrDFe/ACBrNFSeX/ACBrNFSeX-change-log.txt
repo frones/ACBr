@@ -44,6 +44,18 @@ Símbolo : Significado
 
 
 
+02/06/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Nova Odessa - trocou a versão em consequentemente as URLs.
+   Por: fppp09
+-- IPM.Provider --
+[*] Possível solução para o erro de AV ao tratar o retorno do Emitir.
+   Por: Italo Giurizzato Junior
+-- Tecnos.Provider --
+[*] Alterado o tratamento das mensagens de retorno, o provedor mistura
+    as mensagens de aletas com as de erros.
+   Por: Italo Giurizzato Junior
+
 01/06/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Coronel Vivia/PR - trocou as URLs de homologação e de produção.

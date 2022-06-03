@@ -1129,7 +1129,7 @@ begin
     begin
       if ValorIss > 0 then
       begin
-        FieldByName('ValorServicos').AsFloat          := BaseCalculo;
+        FieldByName('ValorServicos').AsFloat          := ANFSe.Servico.Valores.ValorServicos;
         FieldByName('ValorIss').AsFloat               := ValorIss;
         FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
         FieldByName('Aliquota').AsFloat               := Aliquota;

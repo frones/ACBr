@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2022
+-- ACBrNFeNotasFiscais --
+[*] Adicionado tag cMunFG na seção Identificação da leitura do .INI, compatibilizando com a estrutura Sefaz, porém mantendo compatibilidade.
+   Por: José M S Junior
+
 25/05/2022
 -- ACBrXmlBase --
 [*] Incluida o enumerado tcDatUSA para ler datas no formato

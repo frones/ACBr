@@ -1608,6 +1608,7 @@ begin
       Ide.verProc  := INIRec.ReadString(  sSecao, 'verProc' ,'ACBrNFe');
       Ide.dhCont   := StringToDateTime(INIRec.ReadString( sSecao,'dhCont'  ,'0'));
       Ide.xJust    := INIRec.ReadString(  sSecao,'xJust' ,'' );
+      Ide.cMunFG   := INIRec.ReadInteger( sSecao,'cMunFG', 0);
 
       I := 1;
       while true do
@@ -1699,7 +1700,8 @@ begin
       Emit.EnderEmit.fone    := INIRec.ReadString(  sSecao,'Fone'    ,'');
 
       Ide.cUF    := INIRec.ReadInteger( sSecao,'cUF'       ,UFparaCodigo(Emit.EnderEmit.UF));
-      Ide.cMunFG := INIRec.ReadInteger( sSecao,'cMunFG' ,INIRec.ReadInteger( sSecao,'CidadeCod' ,Emit.EnderEmit.cMun));
+      if (Ide.cMunFG = 0) then
+        Ide.cMunFG := INIRec.ReadInteger( sSecao,'cMunFG' ,INIRec.ReadInteger( sSecao,'CidadeCod' ,Emit.EnderEmit.cMun));
 
       if INIRec.ReadString( 'Avulsa', 'CNPJ', '') <> '' then
       begin

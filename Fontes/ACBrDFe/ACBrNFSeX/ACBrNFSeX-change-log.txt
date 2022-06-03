@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 
+03/06/2022
+-- ISSSaoPaulo.Provider --
+[*] Possível solução para a leitura correta dos XMLs de retornos.
+   Por: Italo Giurizzato Junior
+
 02/06/2022
 -- ACBrNFSeXServicos --
 [*] A cidade: Nova Odessa - trocou a versão em consequentemente as URLs.

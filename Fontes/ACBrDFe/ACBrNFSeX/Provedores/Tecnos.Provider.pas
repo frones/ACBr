@@ -351,7 +351,7 @@ begin
         AAlerta := Response.Erros.New;
         AAlerta.Codigo := Codigo;
         AAlerta.Descricao := Mensagem;
-        AAlerta.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Correcao'), tcStr);
+        AAlerta.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
       end;
     end;
   end;

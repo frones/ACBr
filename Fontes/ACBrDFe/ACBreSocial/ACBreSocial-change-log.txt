@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/06/2022
+-- pcesS2200 --
+[*] Ajuste na leitura do arquivo .ini de eventos - seção IdeEstVinculo.
+   Por: José M S Junior
+
 30/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

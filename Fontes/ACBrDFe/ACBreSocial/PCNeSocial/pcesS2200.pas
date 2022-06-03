@@ -427,8 +427,8 @@ begin
       sSecao := 'ideEstabVinc';
       if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then
       begin
-        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.ideEstabVinc.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.ideEstabVinc.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeEstabVinc.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeEstabVinc.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
       end;
 
       I := 1;

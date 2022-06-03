@@ -131,7 +131,7 @@ begin
   lblCredito.Caption := FormatFloat('#,##0.00', Creditos);
   lblDebito.Caption := FormatFloat('#,##0.00', Debitos);
   Memo1.Lines.Clear;
-  Memo1.Lines.Add('Banco: ' + ACBrOFX1.BankName + #13#10 + 'Ag: ' + ACBrOFX1.BankID + ' - CC: ' + ACBrOFX1.AccountID + #13#10 + 'Data Inicial: ' +
+  Memo1.Lines.Add('Banco: ' +ACBrOFX1.BankID+' - ' + ACBrOFX1.BankName + #13#10 + 'Agência: ' + ACBrOFX1.BranchID + ' - CC: ' + ACBrOFX1.AccountID + #13#10 + 'Data Inicial: ' +
     ACBrOFX1.DateStart + ' Data Final: ' + ACBrOFX1.DateEnd);
 end;
 

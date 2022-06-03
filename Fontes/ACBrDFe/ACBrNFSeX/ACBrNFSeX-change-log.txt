@@ -45,6 +45,9 @@ Símbolo : Significado
 
 
 03/06/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Santa Carmen/MT - mudou para o provedor RLZ.
+   Por: Atual Sistemas Dev
 -- ISSSaoPaulo.Provider --
 [*] Possível solução para a leitura correta dos XMLs de retornos.
    Por: Italo Giurizzato Junior

@@ -744,6 +744,7 @@ type
     FAviso: Integer; // Tamanho 1
     FCodOcorrencia : String; // Tamanho 2
     FNumeroDocumento: Integer;
+    FCodigoISPB: Integer; // Tamanho 8
 
     FSegmentoB: TSegmentoBList;
     FSegmentoC: TSegmentoCList;
@@ -778,6 +779,7 @@ type
     property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
     property NumeroDocumento: Integer read FNumeroDocumento write FNumeroDocumento;
+    property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
     property SegmentoD: TSegmentoDList read FSegmentoD write SetSegmentoD;

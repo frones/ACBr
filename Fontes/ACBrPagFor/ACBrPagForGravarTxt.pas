@@ -980,7 +980,7 @@ begin
           begin
             wregistro := wregistro + 'REA';
             //CÓDIGO ISPB IDENTIFICAÇÃO DA INSTITUIÇÃO PARA O SPB
-            wregistro := wregistro + '00000000';
+            wregistro := wregistro + FormatFloat('00000000', CodigoISPB);
 
             // 9 = PIX
             if (Favorecido.Camara = 9) then

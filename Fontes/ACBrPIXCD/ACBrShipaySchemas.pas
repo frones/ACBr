@@ -54,6 +54,40 @@ uses
 
 type
 
+  TShipayOrderStatus = (
+    spsNone,
+    spsPending,         // Pedido aberto e ainda não pago ou cancelado
+    spsPendingV,        // Pedido aberto e ainda não pago ou cancelado (para pedidos com vencimento criados através do POST /orderv)
+    spsApproved,        // Pedido aprovado na carteira digital
+    spsCancelled,       // Pedido (ainda não pago) cancelado na carteira digital
+    spsExpired,         // Pedido expirado após 60 minutos com status "pending"
+    spsRefunded,        // Pagamento devolvido ao comprador
+    spsRefundPending,   // Pagamento com devolução solicitada. Status aplicável para PIX e para a carteira digital Cielo Pay pois a ação de devolução não é síncrona nestes casos. No caso de PIX a devolução deve ser efetivada em até 90 segudos após a solicitação. No caso da Cielo Pay, a devolução ocorre sempre no dia seguinte à solicitação. Em ambos os casos, quando a devolução é efetivada, o status na Shipay é alterado para "refunded"
+    spsPartial_Refunded // Pagamento Parcialmente devolvido
+  );
+
+  TShipayAmountDetailsValueModality = (svmNenhum, svmValorFixo, svmPercentual);
+
+  TShipayAmountDetailsDiscountModality = (
+    sdmNenhum,
+    sdmValorDiaCorrido,       // 3: Valor por antecipação dia corrido
+    sdmValorDiaUtil,          // 4: Valor por antecipação dia útil
+    sdmPercentualDiaCorrido,  // 5: Percentual por antecipação dia corrido
+    sdmPercentualDiaUtil      // 6: Percentual por antecipação dia útil
+  );
+
+  TShipayAmountDetailsInterestModality = (
+    simNenhum,
+    simValorDiasCorridos,          // 1: Valor (dias corridos)
+    simPercentualDiaDiasCorridos,  // 2: Percentual ao dia (dias corridos)
+    simPercentualMesDiasCorridos,  // 3: Percentual ao mês (dias corridos)
+    simPercentualAnoDiasCorridos,  // 4: Percentual ao ano (dias corridos)
+    simValorDiasUteis,             // 5: Valor (dias úteis)
+    simPercentualDiaDiasUteis,     // 6: Percentual ao dia (dias úteis)
+    simPercentualMesDiasUteis,     // 7: Percentual ao mês (dias úteis)
+    simPercentualAnoDiasUteis      // 8: Percentual ao ano (dias úteis)
+  );
+
   { TShipayWallet }
 
   TShipayWallet = class(TACBrPIXSchema)
@@ -109,6 +143,7 @@ type
   private
     fean: String;
     fitem_title: String;
+    fname: String;
     fquantity: Double;
     fsku: String;
     funit_price: Currency;
@@ -127,6 +162,7 @@ type
     property quantity: Double read fquantity write fquantity;
     property sku: String read fsku write fsku;
     property unit_price: Currency read funit_price write funit_price;
+    property name: String read fname write fname;
   end;
 
 
@@ -159,7 +195,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TShipayBuyer);
@@ -168,6 +204,25 @@ type
     property email: String read femail write Setemail;
     property name: String read fname write fname;
     property phone: String read fphone write fphone;
+  end;
+
+  { TShipayOrderError }
+
+  TShipayOrderError = class(TACBrPIXSchema)
+  private
+    fcode: Integer;
+    fmessage: String;
+  protected
+    procedure DoWriteToJSon(AJSon: TJsonObject); override;
+    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String = ''); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayOrderError);
+
+    property code: Integer read fcode write fcode;
+    property message: String read fmessage write fmessage;
   end;
 
   { TShipayOrder }
@@ -189,7 +244,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
@@ -205,17 +260,6 @@ type
     property wallet: String read fwallet write Setwallet;
   end;
 
-  TShipayOrderStatus = (
-    spsNone,
-    spsPending,      // Pedido aberto e ainda não pago ou cancelado
-    spsPendingV,     // Pedido aberto e ainda não pago ou cancelado (para pedidos com vencimento criados através do POST /orderv)
-    spsApproved,     // Pedido aprovado na carteira digital
-    spsCancelled,    // Pedido (ainda não pago) cancelado na carteira digital
-    spsExpired,      // Pedido expirado após 60 minutos com status "pending"
-    spsRefunded,     // Pagamento devolvido ao comprador
-    spsRefundPending // Pagamento com devolução solicitada. Status aplicável para PIX e para a carteira digital Cielo Pay pois a ação de devolução não é síncrona nestes casos. No caso de PIX a devolução deve ser efetivada em até 90 segudos após a solicitação. No caso da Cielo Pay, a devolução ocorre sempre no dia seguinte à solicitação. Em ambos os casos, quando a devolução é efetivada, o status na Shipay é alterado para "refunded"
-  );
-
   { TShipayOrderBase }
 
   TShipayOrderBase = class(TACBrPIXSchema)
@@ -226,7 +270,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TShipayOrderBase);
@@ -250,7 +294,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TShipayOrderCreated);
@@ -264,11 +308,11 @@ type
     property wallet: String read fwallet write fwallet;
   end;
 
-
   { TShipayOrderInfo }
 
   TShipayOrderInfo = class(TShipayOrderBase)
   private
+    fbalance: Currency;
     fcreated_at: TDateTime;
     fexpiration_date: TDateTime;
     fexternal_id: String;
@@ -285,12 +329,13 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TShipayOrderInfo);
 
+    property balance: Currency read fbalance write fbalance;
     property created_at: TDateTime read fcreated_at write fcreated_at;
     property expiration_date: TDateTime read fexpiration_date write fexpiration_date;
     property external_id: String read fexternal_id write fexternal_id;
@@ -326,7 +371,7 @@ type
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TShipayOrderData);
@@ -372,7 +417,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
@@ -384,16 +429,147 @@ type
     property total: integer read ftotal write ftotal;
   end;
 
+  { TShipayAmountDetailsValue }
+
+  TShipayAmountDetailsValue = class(TACBrPIXSchema)
+  private
+    fmodality: TShipayAmountDetailsValueModality;
+    fvalue: Double;
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String = ''); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayAmountDetailsValue);
+
+    property modality: TShipayAmountDetailsValueModality read fmodality write fmodality;
+    property value: Double read fvalue write fvalue;
+  end;
+
+  { TShipayAmountDetailsDiscount }
+
+  TShipayAmountDetailsDiscount = class(TACBrPIXSchema)
+  private
+    fmodality: TShipayAmountDetailsDiscountModality;
+    fvalue: Double;
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String = ''); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayAmountDetailsDiscount);
+
+    property modality: TShipayAmountDetailsDiscountModality read fmodality write fmodality;
+    property value: Double read fvalue write fvalue;
+  end;
+
+  { TShipayAmountDetailsInterest }
+
+  TShipayAmountDetailsInterest = class(TACBrPIXSchema)
+  private
+    fmodality: TShipayAmountDetailsInterestModality;
+    fvalue: Double;
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public
+    constructor Create(const ObjectName: String = ''); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayAmountDetailsInterest);
+
+    property modality: TShipayAmountDetailsInterestModality read fmodality write fmodality;
+    property value: Double read fvalue write fvalue;
+  end;
+
+  { TShipayAmountDetails }
+
+  TShipayAmountDetails = class(TACBrPIXSchema)
+  private
+    fdiscount: TShipayAmountDetailsDiscount;  // Descontos aplicados à cobrança
+    ffine: TShipayAmountDetailsValue;         // Multa aplicada à cobrança
+    finterest: TShipayAmountDetailsInterest;  // Juros aplicados à cobrança
+    frebate: TShipayAmountDetailsValue;       // Abatimento aplicado à cobrança
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public
+    constructor Create(const aObjectName: String = ''); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayAmountDetails);
+
+    property discount: TShipayAmountDetailsDiscount read fdiscount write fdiscount;
+    property fine: TShipayAmountDetailsValue read ffine write ffine;
+    property interest: TShipayAmountDetailsInterest read finterest write finterest;
+    property rebate: TShipayAmountDetailsValue read frebate write frebate;
+  end;
+
+  { TShipayCalendar }
+
+  TShipayCalendar = class(TACBrPIXSchema)
+  private
+    fdays_valid_after_due: Integer;
+    fdue_date: TDate;
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public
+    constructor Create(const aObjectName: String = ''); override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayCalendar);
+
+    property due_date: TDate read fdue_date write fdue_date;
+    property days_valid_after_due: Integer read fdays_valid_after_due write fdays_valid_after_due;
+  end;
+
+  { TShipayOrderDueDate }
+
+  TShipayOrderDueDate = class(TShipayOrder)
+  private
+    famount_details: TShipayAmountDetails;
+    fcalendar: TShipayCalendar;
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public                                            
+    constructor Create(const aObjectName: String = ''); override;
+    destructor Destroy; override;
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(aSource: TShipayOrderDueDate);
+
+    property amount_details: TShipayAmountDetails read famount_details write famount_details;
+    property calendar: TShipayCalendar read fcalendar write fcalendar;
+  end;
 
 
-function ShipayOrderStatusToString(AStatus: TShipayOrderStatus): String;
-function StringToShipayOrderStatus(const AString: String): TShipayOrderStatus;
+  function ShipayOrderStatusToString(AStatus: TShipayOrderStatus): String;
+  function StringToShipayOrderStatus(const AString: String): TShipayOrderStatus;
+                                                                                            
+  function ShipayValueModalityToString(aValue: TShipayAmountDetailsValueModality): String;
+  function ShipayValueModalityToDominio(aValue: TShipayAmountDetailsValueModality): Integer;
+  function DominioToShipayValueModality(aDominio: Integer): TShipayAmountDetailsValueModality;
+                                                                                                  
+  function ShipayDiscountModalityToString(aValue: TShipayAmountDetailsDiscountModality): String;
+  function ShipayDiscountModalityToDominio(aValue: TShipayAmountDetailsDiscountModality): Integer;
+  function DominioToShipayDiscountModality(aDominio: Integer): TShipayAmountDetailsDiscountModality;
+                                                                                                  
+  function ShipayInterestModalityToString(aValue: TShipayAmountDetailsInterestModality): String;
+  function ShipayInterestModalityToDominio(aValue: TShipayAmountDetailsInterestModality): Integer;
+  function DominioToShipayInterestModality(aDominio: Integer): TShipayAmountDetailsInterestModality;
 
 implementation
 
 uses
   synautil,
-  ACBrUtil, ACBrValidador;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrValidador;
 
 function ShipayOrderStatusToString(AStatus: TShipayOrderStatus): String;
 begin
@@ -405,6 +581,7 @@ begin
     spsExpired: Result := 'expired';
     spsRefunded: Result := 'refunded';
     spsRefundPending: Result := 'refund_pending';
+    spsPartial_Refunded: Result := 'partial_refunded';
   else
     Result := '';
   end;
@@ -429,8 +606,279 @@ begin
     Result := spsRefunded
   else if (s = 'refund_pending') then
     Result := spsRefundPending
+  else if (s = 'partial_refunded') then
+    Result := spsPartial_Refunded
   else
     Result := spsNone;
+end;
+
+function ShipayValueModalityToString(aValue: TShipayAmountDetailsValueModality): String;
+begin
+  case aValue of
+    svmValorFixo: Result := ACBrStr('Valor Fixo');
+    svmPercentual: Result := ACBrStr('Percentual');
+  else
+    Result := 'Nenhum';
+  end;
+end;
+
+function ShipayValueModalityToDominio(aValue: TShipayAmountDetailsValueModality): Integer;
+begin
+  case aValue of
+    svmValorFixo: Result := 1;
+    svmPercentual: Result := 2;
+  else
+    Result := 0;
+  end;
+end;
+
+function DominioToShipayValueModality(aDominio: Integer): TShipayAmountDetailsValueModality;
+begin
+  if (aDominio = 1) then
+    Result := svmValorFixo
+  else if (aDominio = 2) then
+    Result := svmPercentual
+  else
+    Result := svmNenhum;
+end;
+
+function ShipayDiscountModalityToString(aValue: TShipayAmountDetailsDiscountModality): String;
+begin
+  case aValue of
+    sdmValorDiaCorrido: Result := ACBrStr('Valor por antecipação dia corrido');
+    sdmValorDiaUtil: Result := ACBrStr('Valor por antecipação dia útil');
+    sdmPercentualDiaCorrido: Result := ACBrStr('Percentual por antecipação dia corrido');
+    sdmPercentualDiaUtil: Result := ACBrStr('Percentual por antecipação dia útil');
+  else
+    Result := 'Nenhum desconto aplicado';
+  end;
+end;
+
+function ShipayDiscountModalityToDominio(aValue: TShipayAmountDetailsDiscountModality): Integer;
+begin
+  case aValue of
+    sdmValorDiaCorrido: Result := 3;
+    sdmValorDiaUtil: Result := 4;
+    sdmPercentualDiaCorrido: Result := 5;
+    sdmPercentualDiaUtil: Result := 6;
+  else
+    Result := 0;
+  end;
+end;
+
+function DominioToShipayDiscountModality(aDominio: Integer): TShipayAmountDetailsDiscountModality;
+begin
+  if (aDominio = 3) then
+    Result := sdmValorDiaCorrido
+  else if (aDominio = 4) then
+    Result := sdmValorDiaUtil
+  else if (aDominio = 5) then
+    Result := sdmPercentualDiaCorrido
+  else if (aDominio = 6) then
+    Result := sdmPercentualDiaUtil
+  else
+    Result := sdmNenhum;
+end;
+
+function ShipayInterestModalityToString(aValue: TShipayAmountDetailsInterestModality): String;
+begin
+  case aValue of
+    simValorDiasCorridos: Result := ACBrStr('Valor (dias corridos)');
+    simPercentualDiaDiasCorridos: Result := ACBrStr('Percentual ao dia (dias corridos)');
+    simPercentualMesDiasCorridos: Result := ACBrStr('Percentual ao mês (dias corridos)');
+    simPercentualAnoDiasCorridos: Result := ACBrStr('Percentual ao ano (dias corridos)');
+    simValorDiasUteis: Result := ACBrStr('Valor (dias úteis)');
+    simPercentualDiaDiasUteis: Result := ACBrStr('Percentual ao dia (dias úteis)');
+    simPercentualMesDiasUteis: Result := ACBrStr('Percentual ao mês (dias úteis)');
+    simPercentualAnoDiasUteis: Result := ACBrStr('Percentual ao ano (dias úteis)');
+  else
+    Result := 'Nenhum juros aplicado';
+  end;
+end;
+
+function ShipayInterestModalityToDominio(aValue: TShipayAmountDetailsInterestModality): Integer;
+begin
+  case aValue of
+    simValorDiasCorridos: Result := 1;
+    simPercentualDiaDiasCorridos: Result := 2;
+    simPercentualMesDiasCorridos: Result := 3;
+    simPercentualAnoDiasCorridos: Result := 4;
+    simValorDiasUteis: Result := 5;
+    simPercentualDiaDiasUteis: Result := 6;
+    simPercentualMesDiasUteis: Result := 7;
+    simPercentualAnoDiasUteis: Result := 8;
+  else
+    Result := 0;
+  end;
+end;
+
+function DominioToShipayInterestModality(aDominio: Integer): TShipayAmountDetailsInterestModality;
+begin
+  if (aDominio = 1) then
+    Result := simValorDiasCorridos
+  else if (aDominio = 2) then
+    Result := simPercentualDiaDiasCorridos
+  else if (aDominio = 3) then
+    Result := simPercentualMesDiasCorridos
+  else if (aDominio = 4) then
+    Result := simPercentualAnoDiasCorridos
+  else if (aDominio = 5) then
+    Result := simValorDiasUteis
+  else if (aDominio = 6) then
+    Result := simPercentualDiaDiasUteis
+  else if (aDominio = 7) then
+    Result := simPercentualMesDiasUteis
+  else if (aDominio = 8) then
+    Result := simPercentualAnoDiasUteis
+  else
+    Result := simNenhum;
+end;
+
+{ TShipayOrderDueDate }
+
+constructor TShipayOrderDueDate.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  famount_details := TShipayAmountDetails.Create('amount_details');
+  fcalendar := TShipayCalendar.Create('calendar');
+end;
+
+destructor TShipayOrderDueDate.Destroy;
+begin
+  amount_details.Free;
+  calendar.Free;
+  inherited Destroy;
+end;
+
+procedure TShipayOrderDueDate.Clear;
+begin
+  if Assigned(amount_details) then
+    amount_details.Clear;
+  if Assigned(calendar) then
+    calendar.Clear;
+  inherited Clear;
+end;
+
+function TShipayOrderDueDate.IsEmpty: Boolean;
+begin
+  Result := (inherited IsEmpty) and amount_details.IsEmpty and calendar.IsEmpty;
+end;
+
+procedure TShipayOrderDueDate.Assign(aSource: TShipayOrderDueDate);
+begin
+  inherited Assign(aSource);
+  amount_details.Assign(aSource.amount_details);
+  calendar.Assign(aSource.calendar);
+end;
+
+procedure TShipayOrderDueDate.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  inherited DoWriteToJSon(aJSon);
+  amount_details.WriteToJSon(aJSon);
+  calendar.WriteToJSon(aJSon);
+end;
+
+procedure TShipayOrderDueDate.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  inherited DoReadFromJSon(aJSon);
+  amount_details.ReadFromJSon(aJSon);
+  calendar.ReadFromJSon(aJSon);
+end;
+
+{ TShipayCalendar }
+
+constructor TShipayCalendar.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  Clear;
+end;
+
+procedure TShipayCalendar.Clear;
+begin
+  due_date := 0;
+  days_valid_after_due := 0;
+end;
+
+function TShipayCalendar.IsEmpty: Boolean;
+begin
+  Result := (due_date = 0) and (days_valid_after_due = 0);
+end;
+
+procedure TShipayCalendar.Assign(aSource: TShipayCalendar);
+begin
+  due_date := aSource.due_date;
+  days_valid_after_due := aSource.days_valid_after_due;
+end;
+
+procedure TShipayCalendar.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.S['due_date'] := FormatDateTime('yyyy-mm-dd', due_date);
+   AJSon.I['days_valid_after_due'] := days_valid_after_due;
+  {$Else}
+   AJSon['due_date'].AsString := FormatDateTime('yyyy-mm-dd', due_date);
+   AJSon['days_valid_after_due'].AsInteger := days_valid_after_due;
+  {$EndIf}
+end;
+
+procedure TShipayCalendar.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   due_date := Iso8601ToDateTime(AJSon.S['due_date']);
+   days_valid_after_due := AJSon.I['days_valid_after_due'];
+  {$Else}
+   due_date := Iso8601ToDateTime(AJSon['due_date'].AsString);
+   days_valid_after_due := AJSon['days_valid_after_due'].AsInteger;
+  {$EndIf}
+end;
+
+{ TShipayAmountDetailsInterest }
+
+constructor TShipayAmountDetailsInterest.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TShipayAmountDetailsInterest.Clear;
+begin
+  fmodality := simNenhum;
+end;
+
+function TShipayAmountDetailsInterest.IsEmpty: Boolean;
+begin
+  Result := (fmodality = simNenhum) and (value = 0);
+end;
+
+procedure TShipayAmountDetailsInterest.Assign(aSource: TShipayAmountDetailsInterest);
+begin
+  fmodality := aSource.modality;
+  fvalue := aSource.value;
+end;
+
+procedure TShipayAmountDetailsInterest.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  if (modality = simNenhum) then
+    Exit;
+
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.I['modality'] := ShipayInterestModalityToDominio(modality);
+   AJSon.F['value'] := value;
+  {$Else}
+   AJSon['modality'].AsInteger := ShipayInterestModalityToDominio(modality);
+   AJSon['value'].AsNumber := value;
+  {$EndIf}
+end;
+
+procedure TShipayAmountDetailsInterest.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   modality := DominioToShipayInterestModality(AJSon.I['modality']);
+   value := AJSon.F['value'];
+  {$Else}
+   modality := DominioToShipayInterestModality(AJSon['modality'].AsInteger);
+   value := AJSon['value'].AsNumber;
+  {$EndIf}
 end;
 
 { TShipayWallet }
@@ -583,6 +1031,7 @@ begin
   fquantity := 0;
   fsku := '';
   funit_price := 0;
+  fname := '';
 end;
 
 function TShipayItem.IsEmpty: Boolean;
@@ -591,7 +1040,8 @@ begin
             (fitem_title = '') and
             (fquantity = 0) and
             (fsku = '') and
-            (funit_price = 0);
+            (funit_price = 0) and
+            (fname = '');
 end;
 
 procedure TShipayItem.Assign(Source: TShipayItem);
@@ -601,6 +1051,7 @@ begin
   fquantity := Source.quantity;
   fsku := Source.sku;
   funit_price := Source.unit_price;
+  fname := Source.name;
 end;
 
 procedure TShipayItem.AssignSchema(ASource: TACBrPIXSchema);
@@ -617,12 +1068,16 @@ begin
    AJSon.F['quantity'] := fquantity;
    AJSon.S['sku'] := fsku;
    AJSon.F['unit_price'] := funit_price;
+   if NaoEstaVazio(fname) then
+     AJSon.S['name'] := fname;
   {$Else}
    AJSon['ean'].AsString := fean;
    AJSon['item_title'].AsString := fitem_title;
    AJSon['quantity'].AsNumber := fquantity;
    AJSon['sku'].AsString := fsku;
    AJSon['unit_price'].AsNumber := funit_price;
+   if NaoEstaVazio(fname) then
+     AJSon['name'].AsString := fname;
   {$EndIf}
 end;
 
@@ -634,12 +1089,14 @@ begin
    fquantity := AJSon.F['quantity'];
    fsku := AJSon.S['sku'];
    funit_price := AJSon.F['unit_price'];
+   fname := AJSon.S['name'];
   {$Else}
    fean := AJSon['ean'].AsString;
    fitem_title := AJSon['item_title'].AsString;
    fquantity := AJSon['quantity'].AsNumber;
    fsku := AJSon['sku'].AsString;
    funit_price := AJSon['unit_price'].AsNumber;
+   fname := AJSon['name'].AsString;
   {$EndIf}
 end;
 
@@ -747,18 +1204,20 @@ end;
 procedure TShipayBuyer.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fcpf_cnpj <> '') then
+   if NaoEstaVazio(fcpf_cnpj) then
      AJSon.S['cpf_cnpj'] := fcpf_cnpj;
-   AJSon.S['email'] := femail;
+   if NaoEstaVazio(femail) then
+     AJSon.S['email'] := femail;
    AJSon.S['name'] := fname;
-   if (fphone <> '') then
+   if NaoEstaVazio(fphone) then
      AJSon.S['phone'] := fphone;
   {$Else}
-   if (fcpf_cnpj <> '') then
+   if NaoEstaVazio(fcpf_cnpj) then
      AJSon['cpf_cnpj'].AsString := fcpf_cnpj;
-   AJSon['email'].AsString := femail;
+   if NaoEstaVazio(femail) then
+     AJSon['email'].AsString := femail;
    AJSon['name'].AsString := fname;
-   if (fphone <> '') then
+   if NaoEstaVazio(fphone) then
      AJSon['phone'].AsString := fphone;
   {$EndIf}
 end;
@@ -775,6 +1234,53 @@ begin
    femail := AJSon['email'].AsString;
    fname := AJSon['name'].AsString;
    fphone := AJSon['phone'].AsString;
+  {$EndIf}
+end;
+
+{ TShipayOrderError }
+
+constructor TShipayOrderError.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TShipayOrderError.Clear;
+begin
+  fcode := 0;
+  fmessage := EmptyStr;
+end;
+
+function TShipayOrderError.IsEmpty: Boolean;
+begin
+  Result := (fcode = 0) and EstaVazio(fmessage);
+end;
+
+procedure TShipayOrderError.Assign(aSource: TShipayOrderError);
+begin
+  fcode := aSource.code;
+  fmessage := aSource.message;
+end;
+
+procedure TShipayOrderError.DoWriteToJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.I['code'] := fcode;
+   AJSon.S['message'] := fmessage;
+  {$Else}
+   AJSon['code'].AsInteger := fcode;
+   AJSon['message'].AsString := fmessage;
+  {$EndIf}
+end;
+
+procedure TShipayOrderError.DoReadFromJSon(AJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fcode := AJSon.I['code'];
+   fmessage := AJSon.S['message'];
+  {$Else}
+   fcode := AJSon['code'].AsInteger;
+   fmessage := AJSon['message'].AsString;
   {$EndIf}
 end;
 
@@ -850,25 +1356,24 @@ end;
 
 procedure TShipayOrder.DoWriteToJSon(AJSon: TJsonObject);
 begin
+  fbuyer.WriteToJSon(AJSon);
+  fitems.WriteToJSon(AJSon);
+
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fbuyer.WriteToJSon(AJSon);
    if (fcallback_url <> '') then
      AJSon.S['callback_url'] := fcallback_url;
    if (fexpiration > 0) then
      AJSon.I['expiration'] := fexpiration;
-   fitems.WriteToJSon(AJSon);
    AJSon.S['order_ref'] := forder_ref;
    if (fpix_dict_key <> '') then
      AJSon.S['pix_dict_key']:= fpix_dict_key;
-   AJSon.D['total'] := ftotal;
+   AJSon.F['total'] := ftotal;
    AJSon.S['wallet'] := fwallet;
   {$Else}
-   fbuyer.WriteToJSon(AJSon);
    if (fcallback_url <> '') then
      AJSon['callback_url'].AsString := fcallback_url;
    if (fexpiration > 0) then
      AJSon['expiration'].AsInteger := fexpiration;
-   fitems.WriteToJSon(AJSon);
    AJSon['order_ref'].AsString := forder_ref;
    if (fpix_dict_key <> '') then
      AJSon['pix_dict_key'].AsString := fpix_dict_key;
@@ -879,20 +1384,18 @@ end;
 
 procedure TShipayOrder.DoReadFromJSon(AJSon: TJsonObject);
 begin
+  fbuyer.ReadFromJSon(AJSon);
+  fitems.ReadFromJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fbuyer.ReadFromJSon(AJSon);
    fcallback_url := AJSon.S['callback_url'];
    fexpiration := AJSon.I['expiration'];
-   fitems.ReadFromJSon(AJSon);
    forder_ref:= AJSon.S['order_ref'];
    fpix_dict_key := AJSon.S['pix_dict_key'];
-   ftotal := AJSon.D['total'];
+   ftotal := AJSon.F['total'];
    fwallet := AJSon.S['wallet'];
   {$Else}
-   fbuyer.ReadFromJSon(AJSon);
    fcallback_url := AJSon['callback_url'].AsString;
    fexpiration := AJSon['expiration'].AsInteger;
-   fitems.ReadFromJSon(AJSon);
    forder_ref:= AJSon['order_ref'].AsString;
    fpix_dict_key := AJSon['pix_dict_key'].AsString;
    ftotal := AJSon['total'].AsNumber;
@@ -1031,7 +1534,7 @@ begin
    fdeep_link := AJSon.S['deep_link'];
    s := AJSon.S['expiration_date'];
    if (s <> '') then
-     fexpiration_date := Iso8601ToDateTime(s);
+     fexpiration_date := DecodeRfcDateTime(s);
    fpix_dict_key := AJSon.S['pix_dict_key'];
    fpix_psp := AJSon.S['pix_psp'];
    fqr_code := AJSon.S['qr_code'];
@@ -1041,7 +1544,7 @@ begin
    fdeep_link := AJSon['deep_link'].AsString;
    s := AJSon['expiration_date'].AsString;
    if (s <> '') then
-     fexpiration_date := Iso8601ToDateTime(s);
+     fexpiration_date := DecodeRfcDateTime(s);
    fpix_dict_key := AJSon['pix_dict_key'].AsString;
    fpix_psp := AJSon['pix_psp'].AsString;
    fqr_code := AJSon['qr_code'].AsString;
@@ -1067,6 +1570,7 @@ end;
 procedure TShipayOrderInfo.Clear;
 begin
   inherited Clear;
+  fbalance := 0;
   fcreated_at := 0;
   fexpiration_date := 0;
   fexternal_id := '';
@@ -1085,6 +1589,7 @@ function TShipayOrderInfo.IsEmpty: Boolean;
 begin
   Result := inherited IsEmpty and
             fitems.IsEmpty and
+            (fbalance = 0) and
             (fcreated_at = 0) and
             (fexpiration_date = 0) and
             (fexternal_id = '') and
@@ -1101,6 +1606,7 @@ end;
 procedure TShipayOrderInfo.Assign(Source: TShipayOrderInfo);
 begin
   inherited Assign(Source);
+  fbalance := Source.balance;
   fcreated_at := Source.created_at;
   fexpiration_date := Source.expiration_date;
   fexternal_id := Source.external_id;
@@ -1118,6 +1624,8 @@ procedure TShipayOrderInfo.DoWriteToJSon(AJSon: TJsonObject);
 begin
   inherited DoWriteToJSon(AJSon);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   if (fbalance <> 0) then
+     AJSon.F['balance'] := (fbalance*100);
    if (fcreated_at <> 0) then
      AJSon.S['created_at'] := Rfc822DateTime(fcreated_at);
    if (fexpiration_date <> 0) then
@@ -1126,13 +1634,13 @@ begin
      AJSon.S['external_id'] := fexternal_id;
    fitems.WriteToJSon(AJSon);
    if (fpaid_amount <> 0) then
-     AJSon.D['paid_amount'] := fpaid_amount;
+     AJSon.F['paid_amount'] := fpaid_amount;
    if (fpayment_date <> 0) then
      AJSon.S['payment_date'] := Rfc822DateTime(fpayment_date);
    if (fpix_psp <> '') then
      AJSon.S['pix_psp'] := fpix_psp;
    if (ftotal_order <> 0) then
-     AJSon.D['total_order'] := ftotal_order;
+     AJSon.F['total_order'] := ftotal_order;
    if (fupdated_at <> 0) then
      AJSon.S['updated_at'] := Rfc822DateTime(fupdated_at);
    AJSon.S['wallet'] := fwallet;
@@ -1141,6 +1649,8 @@ begin
    if (fmessage <> '') then
      AJSon.S['message'] := fmessage;
   {$Else}
+   if (fbalance <> 0) then
+     AJSon['balance'].AsNumber := (fbalance*100);
    if (fcreated_at <> 0) then
      AJSon['created_at'].AsString := Rfc822DateTime(fcreated_at);
    if (fexpiration_date <> 0) then
@@ -1179,13 +1689,14 @@ begin
    s := AJSon.S['expiration_date'];
    if (s <> '') then
      fexpiration_date := DecodeRfcDateTime(s);
+   fbalance := (AJSon.F['balance']/100);
    fexternal_id := AJSon.S['external_id'];
-   fpaid_amount := AJSon.D['paid_amount'];
+   fpaid_amount := AJSon.F['paid_amount'];
    s := AJSon.S['payment_date'];
    if (s <> '') then
      fpayment_date := DecodeRfcDateTime(s);
    fpix_psp := AJSon.S['pix_psp'];
-   ftotal_order := AJSon.D['total_order'];
+   ftotal_order := AJSon.F['total_order'];
    s := AJSon.S['updated_at'];
    if (s <> '') then
      fupdated_at := DecodeRfcDateTime(s);
@@ -1200,6 +1711,7 @@ begin
    s := AJSon['expiration_date'].AsString;
    if (s <> '') then
      fexpiration_date := DecodeRfcDateTime(s);
+   fbalance := (AJSon['balance'].AsNumber/100);
    fexternal_id := AJSon['external_id'].AsString;
    fpaid_amount := AJSon['paid_amount'].AsNumber;
    s := AJSon['payment_date'].AsString;
@@ -1298,7 +1810,7 @@ begin
    AJSon.S['store_name'] := fstore_name;
    AJSon.S['store_pos_id'] := fstore_pos_id;
    AJSon.S['store_pos_name'] := fstore_pos_name;
-   AJSon.D['total_order'] := ftotal_order;
+   AJSon.F['total_order'] := ftotal_order;
    AJSon.S['wallet_payment_id'] := fwallet_payment_id;
   {$Else}
    AJSon['customer_id'].AsString := fcustomer_id;
@@ -1344,7 +1856,7 @@ begin
    fstore_name := AJSon.S['store_name'];
    fstore_pos_id := AJSon.S['store_pos_id'];
    fstore_pos_name := AJSon.S['store_pos_name'];
-   ftotal_order := AJSon.D['total_order'];
+   ftotal_order := AJSon.F['total_order'];
    fwallet_payment_id := AJSon.S['wallet_payment_id'];
   {$Else}
    fcustomer_id := AJSon['customer_id'].AsString;
@@ -1469,6 +1981,164 @@ begin
    foffset := AJSon['offset'].AsInteger;
    ftotal := AJSon['total'].AsInteger;
   {$EndIf}
+end;
+
+{ TShipayAmountDetailsValue }
+
+constructor TShipayAmountDetailsValue.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TShipayAmountDetailsValue.Clear;
+begin
+  modality := svmNenhum;
+  value := 0;
+end;
+
+function TShipayAmountDetailsValue.IsEmpty: Boolean;
+begin
+  Result := (modality = svmNenhum) and (value = 0);
+end;
+
+procedure TShipayAmountDetailsValue.Assign(aSource: TShipayAmountDetailsValue);
+begin
+  modality := aSource.modality;
+  value := aSource.value;
+end;
+
+procedure TShipayAmountDetailsValue.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  if (modality = svmNenhum) then
+    Exit;
+
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.I['modality'] := ShipayValueModalityToDominio(fmodality);
+   AJSon.F['value'] := fvalue;
+  {$Else}
+   AJSon['modality'].AsInteger := ShipayValueModalityToDominio(fmodality);
+   AJSon['value'].AsNumber := fvalue;
+  {$EndIf}
+end;
+
+procedure TShipayAmountDetailsValue.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fmodality := DominioToShipayValueModality(AJSon.I['modality']);
+   fvalue := AJSon.F['value'];
+  {$Else}
+   fmodality := DominioToShipayValueModality(AJSon['modality'].AsInteger);
+   fvalue := AJSon['value'].AsNumber;
+  {$EndIf}
+end;
+
+{ TShipayAmountDetailsDiscount }
+
+constructor TShipayAmountDetailsDiscount.Create(const ObjectName: String);
+begin
+  inherited Create(ObjectName);
+  Clear;
+end;
+
+procedure TShipayAmountDetailsDiscount.Clear;
+begin
+  modality := sdmNenhum;
+  value := 0;
+end;
+
+function TShipayAmountDetailsDiscount.IsEmpty: Boolean;
+begin
+  Result := (fmodality = sdmNenhum) and (value = 0)
+end;
+
+procedure TShipayAmountDetailsDiscount.Assign(aSource: TShipayAmountDetailsDiscount);
+begin
+  fmodality := aSource.modality;
+  fvalue := aSource.value;
+end;
+
+procedure TShipayAmountDetailsDiscount.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  if (modality = sdmNenhum) then
+    Exit;
+
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   AJSon.I['modality'] := ShipayDiscountModalityToDominio(fmodality);
+   AJSon.F['value'] := fvalue;
+  {$Else}
+   AJSon['modality'].AsInteger := ShipayDiscountModalityToDominio(fmodality);
+   AJSon['value'].AsNumber := fvalue;
+  {$EndIf}
+end;
+
+procedure TShipayAmountDetailsDiscount.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fmodality := DominioToShipayDiscountModality(AJSon.I['modality']);
+   fvalue := AJSon.F['value'];
+  {$Else}
+   fmodality := DominioToShipayDiscountModality(AJSon['modality'].AsInteger);
+   fvalue := AJSon['value'].AsNumber;
+  {$EndIf}
+end;
+
+{ TShipayAmountDetails }
+
+constructor TShipayAmountDetails.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  fdiscount := TShipayAmountDetailsDiscount.Create('discount');
+  ffine := TShipayAmountDetailsValue.Create('fine');
+  finterest := TShipayAmountDetailsInterest.Create('interest');
+  frebate := TShipayAmountDetailsValue.Create('rebate');
+  Clear;
+end;
+
+destructor TShipayAmountDetails.Destroy;
+begin
+  discount.Free;
+  fine.Free;
+  interest.Free;
+  rebate.Free;
+  inherited Destroy;
+end;
+
+procedure TShipayAmountDetails.Clear;
+begin
+  discount.Clear;
+  fine.Clear;
+  interest.Clear;
+  rebate.Clear;
+end;
+
+function TShipayAmountDetails.IsEmpty: Boolean;
+begin
+  Result := discount.IsEmpty and fine.IsEmpty and interest.IsEmpty and rebate.IsEmpty;
+end;
+
+procedure TShipayAmountDetails.Assign(aSource: TShipayAmountDetails);
+begin
+  discount.Assign(aSource.discount);
+  fine.Assign(aSource.fine);
+  interest.Assign(aSource.interest);
+  rebate.Assign(aSource.rebate);
+end;
+
+procedure TShipayAmountDetails.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  discount.WriteToJSon(aJSon);
+  fine.WriteToJSon(aJSon);
+  interest.WriteToJSon(aJSon);
+  rebate.WriteToJSon(aJSon);
+end;
+
+procedure TShipayAmountDetails.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  discount.ReadFromJSon(aJSon);
+  fine.ReadFromJSon(aJSon);
+  interest.ReadFromJSon(aJSon);
+  rebate.ReadFromJSon(aJSon);
 end;
 
 end.

@@ -378,6 +378,7 @@ var
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   JsonSerializationConfig.NullConvertsToValueTypes := True;
    js := TJsonObject.Parse(AValue) as TJsonObject;
    try
      ReadFromJSon(js);
@@ -527,6 +528,7 @@ var
 begin
   Clear;
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   JsonSerializationConfig.NullConvertsToValueTypes := True;
    js := TJsonObject.Parse(AValue) as TJsonObject;
    try
      ReadFromJSon(js);

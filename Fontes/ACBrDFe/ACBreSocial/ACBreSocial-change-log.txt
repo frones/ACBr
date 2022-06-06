@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2022
+-- pcesS2200 --
+[*] Compatibilização da função LerINI do evento S2200 com as tags novas do layout simplificado e-Social.
+   Por: José M S Junior
+
 03/06/2022
 -- pcesS2200 --
 [*] Ajuste na leitura do arquivo .ini de eventos - seção IdeEstVinculo.

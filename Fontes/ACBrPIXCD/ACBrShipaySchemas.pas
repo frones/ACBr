@@ -515,7 +515,7 @@ type
   TShipayCalendar = class(TACBrPIXSchema)
   private
     fdays_valid_after_due: Integer;
-    fdue_date: TDate;
+    fdue_date: TDateTime;
   protected
     procedure DoWriteToJSon(aJSon: TJsonObject); override;
     procedure DoReadFromJSon(aJSon: TJsonObject); override;
@@ -525,7 +525,7 @@ type
     function IsEmpty: Boolean; override;
     procedure Assign(aSource: TShipayCalendar);
 
-    property due_date: TDate read fdue_date write fdue_date;
+    property due_date: TDateTime read fdue_date write fdue_date;
     property days_valid_after_due: Integer read fdays_valid_after_due write fdays_valid_after_due;
   end;
 

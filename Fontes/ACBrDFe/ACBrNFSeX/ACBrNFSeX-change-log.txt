@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/06/2022
+-- Abaco.GravarXml --
+[*] Alterado o valor do parâmetro: FormatoItemListaServico de filsSemFormatacao
+    para filsSemFormatacaoSemZeroEsquerda.
+    (Cidade de Rio Branco/AC)
+   Por: Douglas G. V.
 -- IPM.Provider --
 [*] Possível solução para o erro de UTF-8.
    Por: Italo Giurizzato Junior

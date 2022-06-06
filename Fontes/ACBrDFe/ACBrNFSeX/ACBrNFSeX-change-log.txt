@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/06/2022
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade: Iacanga/SP - Provedor Fiorilli
+   Por: Carlos Júnior
 -- Digifred.Provider --
 [*] Possível solução para o erro na consulta a nota após o seu cancelamento.
    Por: Italo Giurizzato Junior

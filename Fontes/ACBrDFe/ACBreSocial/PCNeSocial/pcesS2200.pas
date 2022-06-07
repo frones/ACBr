@@ -367,7 +367,7 @@ begin
           nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
           dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
           cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
-          sexoDep  := INIRec.ReadString(sSecao, 'sexoDep', 'F');
+          sexoDep  := INIRec.ReadString(sSecao, 'sexoDep', '');
           depIRRF  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depIRRF', 'S'));
           depSF    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'depSF', 'S'));
           incTrab  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'incTrab', 'S'));
@@ -623,7 +623,7 @@ begin
       end;
 
       sSecao := 'sucessaoVinc';
-      if INIRec.ReadString(sSecao, 'nrInsc', '') <> '' then
+      if ((INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF <= ve02_05_00)) then
       begin
         vinculo.sucessaoVinc.tpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
         vinculo.sucessaoVinc.nrInsc        := INIRec.ReadString(sSecao, 'nrInsc', '');
@@ -632,6 +632,15 @@ begin
         vinculo.sucessaoVinc.MatricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
         vinculo.sucessaoVinc.dtTransf      := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
         vinculo.sucessaoVinc.Observacao    := INIRec.ReadString(sSecao, 'observacao', '');
+      end;
+
+      if ((INIRec.ReadString(sSecao, 'tpInsc', '') <> '') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF > ve02_05_00)) then
+      begin
+        vinculo.sucessaoVinc.tpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.sucessaoVinc.nrInsc       := INIRec.ReadString(sSecao, 'nrInsc', '');
+        vinculo.sucessaoVinc.MatricAnt    := INIRec.ReadString(sSecao, 'matricAnt', '');
+        vinculo.sucessaoVinc.dtTransf     := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
+        vinculo.sucessaoVinc.Observacao   := INIRec.ReadString(sSecao, 'observacao', '');
       end;
 
       sSecao := 'transfDom';

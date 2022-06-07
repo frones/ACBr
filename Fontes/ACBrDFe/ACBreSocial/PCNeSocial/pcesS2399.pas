@@ -121,6 +121,7 @@ type
     FpercAliment: Double;
     FVrAlim: Double;
     FmudancaCPF: TMudancaCPF3;
+    FnrProcTrab: String;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -133,6 +134,7 @@ type
     property percAliment : Double read FpercAliment write FpercAliment;
     property vrAlim: Double read FVrAlim write FVrAlim;
     property pensAlim: tpPensaoAlim read FPensAlim write FPensAlim;
+    property nrProcTrab : String read FnrProcTrab write FnrProcTrab;
   end;
 
   TDmDevCollection = class(TACBrObjectList)
@@ -328,6 +330,7 @@ begin
     Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
     Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
     Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
+    Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
   end;
 
   if obj.mtvDesligTSV <> '07' then
@@ -462,6 +465,8 @@ begin
           infoTSVTermino.vrAlim      := StringToFloatDef(INIRec.ReadString(sSecao, 'vrAlim', ''), 0);
         end;
       end;
+      if  (VersaoDF > ve02_05_00) then
+        infoTSVTermino.nrProcTrab   := INIRec.ReadString(sSecao, 'nrProcTrab', EmptyStr);
 
       I := 1;
       while true do

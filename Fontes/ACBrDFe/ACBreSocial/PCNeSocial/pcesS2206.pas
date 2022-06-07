@@ -399,7 +399,8 @@ begin
   if (pInfoCeletista.TpRegJor = rjSubmetidosHorarioTrabalho) then
     GerarHorContratual(objInfoContrato.HorContratual);
 
-  GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
+  if VersaoDF < veS01_00_00 then
+     GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
   GerarAlvaraJudicial(objInfoContrato.AlvaraJudicial);
   GerarObservacoes(objInfoContrato.observacoes);
 

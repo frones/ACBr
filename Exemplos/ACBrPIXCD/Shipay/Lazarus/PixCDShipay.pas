@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   ExtCtrls, Buttons, Spin, Grids, DateTimePicker, ACBrPIXCD, ACBrPIXPSPShipay,
-  ACBrShipaySchemas, ACBrBase, ACBrPIXBase;
+  ACBrShipaySchemas, ACBrPIXBase;
 
 const
   CURL_ACBR = 'https://projetoacbr.com.br/tef/';
@@ -330,15 +330,14 @@ end;
 
 procedure TfrPixCDShipay.tmConsultarPagtoTimer(Sender: TObject);
 begin
-  if EstaVazio(FluxoDados.Order_ID) then
-  begin
-    tmConsultarPagto.Enabled := False;
-    ShowMessage('Nenhuma cobrança a ser consultada');
-    Exit;
-  end;
-
   tmConsultarPagto.Enabled := False;
-  try
+  try      
+    if EstaVazio(FluxoDados.Order_ID) then
+    begin
+      ShowMessage('Nenhuma cobrança a ser consultada');
+      Exit;
+    end;
+
     try
       ConsultarCobranca;
     except
@@ -458,8 +457,6 @@ begin
   btFluxoItemIncluir.Enabled := (FluxoDados.Status in [spsNone, spsCancelled]);
   btFluxoItemExcluir.Enabled := (FluxoDados.Status in [spsNone, spsCancelled]) and
     (gdFluxoItens.RowCount > 1) and (gdFluxoItens.Row > 0);
-
-  pnFluxoTotalStr.Caption := FormatFloatBr(FluxoDados.Total, 'R$ ,0.00');
 end;
 
 procedure TfrPixCDShipay.LimparInterfaceFluxoItem;
@@ -490,11 +487,16 @@ end;
 
 procedure TfrPixCDShipay.ConsultarCobranca;
 begin
-  ACBrPSPShipay1.GetOrderInfo(FluxoDados.Order_ID);
+  HabilitarInterface(False);
+  try
+    ACBrPSPShipay1.GetOrderInfo(FluxoDados.Order_ID);
 
-  HabilitarFluxoErroConsulta(False);
-  AtualizarStatus(ACBrPSPShipay1.OrderInfo.status);
-  AvaliarInterfaceFluxo;
+    HabilitarFluxoErroConsulta(False);
+    AtualizarStatus(ACBrPSPShipay1.OrderInfo.status);
+    AvaliarInterfaceFluxo;
+  finally
+    HabilitarInterface(True);
+  end;
 end;
 
 procedure TfrPixCDShipay.EstornarPagamento;
@@ -574,7 +576,7 @@ begin
   with aGrid do
   begin
     for I := aIndex to RowCount - 2 do
-      for J := 0 to ColCount do
+      for J := 0 to ColCount - 1 do
         Cells[J, I] := Cells[J, I+1];
 
     RowCount := RowCount - 1
@@ -677,6 +679,7 @@ begin
   for I := 1 to Pred(gdFluxoItens.RowCount) do
     fFluxoDados.Total := fFluxoDados.Total +
       StrToCurrDef(StringReplace(gdFluxoItens.Cells[2, I], '.', '', []), 0);
+  pnFluxoTotalStr.Caption := FormatFloatBr(FluxoDados.Total, 'R$ ,0.00');
 end;
 
 procedure TfrPixCDShipay.AtualizarStatus(aStatus: TShipayOrderStatus);

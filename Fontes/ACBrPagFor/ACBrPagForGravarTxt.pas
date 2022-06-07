@@ -685,14 +685,18 @@ begin
     pagBradesco:
       begin
         wregistro := wregistro + FormatFloat('000000', FQtdeRegistrosLote);
-        if (FPagFor.Lote.Items[I].Registro1.Servico.FormaLancamento in [flLiquidacaoTitulosProprioBanco, flLiquidacaoTitulosOutrosBancos,
-                                                                        flDocTed, flPIXTransferencia, flPIXQRCode, flCreditoContaCorrente] ) then
-        begin
-          wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.Valor * 100);
-          wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.QtdeMoeda * 100000); // 5 casas decimais
-          wregistro := wregistro + '000000';
-          wregistro := wregistro + Space(165);
-          wregistro := wregistro + Space(10);
+
+        case FPagFor.Lote.Items[I].Registro1.Servico.TipoServico of
+          tsAlegacaoSacado:
+            wregistro := wregistro + Space(217);
+        else
+          begin
+            wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.Valor * 100);
+            wregistro := wregistro + FormatFloat('000000000000000000', FPagFor.Lote.Items[I].Registro5.QtdeMoeda * 100000); // 5 casas decimais
+            wregistro := wregistro + '000000';
+            wregistro := wregistro + Space(165);
+            wregistro := wregistro + Space(10);
+          end;
         end;
       end;
 

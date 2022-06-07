@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2022
+-- ACBrPagForGravarTxt --
+[*] Possível solução para geração correta do Registro 5- Banco Bradesco.
+   Por: Italo Giurizzato Junior
+
 03/06/2022
 -- ACBrPagForGravarTxt/ACBrPagForClass --
 [*] Inclusão do campo CodigoISPB no Segmento A para ser utilizado pelo banco

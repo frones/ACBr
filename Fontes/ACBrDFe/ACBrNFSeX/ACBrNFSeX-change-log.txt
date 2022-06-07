@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2022
+-- Centi.GravarXml --
+[*] Alteração na configuração para não gerar algumas tags conforme consta no
+    Schema do provedor.
+   Por: Robson Lopes
+-- IPM.GravarXml/IPM.LerXml --
+[*] Alteração para gerar a tag codigo_atividade nos itens de serviço.
+   Por: Microsys Sistemas
+
 06/06/2022
 -- ACBrNFSeXServicos --
 [*] Incluída a cidade: Iacanga/SP - Provedor Fiorilli

@@ -49,6 +49,7 @@ type
   private
     FpGerarID: Boolean;
     FpNrOcorrTagsTomador: Integer;
+    FpNrOcorrCodigoAtividade: Integer;
 
   protected
     procedure Configuracao; override;
@@ -156,6 +157,7 @@ begin
 
   FpGerarID := False;
   FpNrOcorrTagsTomador := 0;
+  FpNrOcorrCodigoAtividade := -1;
 end;
 
 function TNFSeW_IPM.GerarFormaPagamento: TACBrXmlNode;
@@ -306,6 +308,9 @@ begin
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_item_lista_servico', 1, 9, 1,
                  OnlyNumber(NFSe.Servico.ItemServico[I].ItemListaServico), ''));
+
+    Result[i].AppendChild(AddNode(tcStr, '#', 'codigo_atividade', 1, 9, FpNrOcorrCodigoAtividade,
+                       OnlyNumber(NFSe.Servico.ItemServico[I].CodigoCnae), ''));
 
     Result[i].AppendChild(AddNode(tcStr, '#', 'descritivo', 1, 1000, 1,
       IfThen(NFSe.Servico.ItemServico[I].Descricao = '',
@@ -524,6 +529,7 @@ begin
 
   FpGerarID := True;
   FpNrOcorrTagsTomador := 1;
+  FpNrOcorrCodigoAtividade := 1;
 end;
 
 end.

@@ -480,8 +480,10 @@ begin
 
       sSecao := 'aso';
       exMedOcup.aso.DtAso  := StringToDateTime(INIRec.ReadString(sSecao, 'dtAso', '0'));
-      exMedOcup.tpExameOcup  := eSStrToTpExameOcup(Ok, INIRec.ReadString(sSecao, 'tpAso', '0'));
       exMedOcup.aso.ResAso := eSStrToResAso(Ok, INIRec.ReadString(sSecao, 'resAso', '1'));
+
+      sSecao := 'exMedOcup';
+      exMedOcup.tpExameOcup  := eSStrToTpExameOcup(Ok, INIRec.ReadString(sSecao, 'tpExameOcup', '0'));
 
       I := 1;
       while true do

@@ -79,18 +79,18 @@ uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
 constructor TACBrBancoUnicredES.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito                 := 8;
-   fpNome                   := 'UNICRED DO BRASIL';
-   fpNumero                 := 136;
-   fpTamanhoMaximoNossoNum  := 10;
-   fpTamanhoAgencia         := 4;
-   fpTamanhoConta           := 10;
-   fpTamanhoCarteira        := 2;
-   fpCodParametroMovimento  := '000';
-   fpCodigosMoraAceitos    := '125';
+   fpDigito                   := 8;
+   fpNome                     := 'UNICRED DO BRASIL';
+   fpNumero                   := 136;
+   fpTamanhoMaximoNossoNum    := 10;
+   fpTamanhoAgencia           := 4;
+   fpTamanhoConta             := 10;
+   fpTamanhoCarteira          := 2;
+   fpCodParametroMovimento    := '000';
+   fpCodigosMoraAceitos       := '125';
    fpModuloMultiplicadorFinal := 9;
-   fpLayoutVersaoLote := 044;
-   fpLayoutVersaoArquivo := 085;
+   fpLayoutVersaoLote         := 044;
+   fpLayoutVersaoArquivo      := 085;
 end;
 
 function TACBrBancoUnicredES.MontarCampoNossoNumero (
@@ -439,8 +439,12 @@ begin
       end;
     end;
 
+    if (ACBrBoleto.Cedente.UF = 'SC') then
+      NumeroDocumento := PadLeft(Copy(NumeroDocumento,0,10), 15, ' ');
+
 
     ListTransacao:= TStringList.Create;
+
     try
 
       //SEGMENTO P
@@ -460,6 +464,7 @@ begin
                Space(8)                                                                + // 49 a 56 - Zeros
                PadLeft(Carteira, 2, '0')                                               + // 57 a 58 - Codigo carteira  21=Cobrança Com Registro;
                Space(4)                                                                + // 59 a 62 - Brancos
+
                PadRight(NumeroDocumento, 15, ' ')                                      + // 63 a 77 - Nº do Documento
                FormatDateTime('ddmmyyyy', Vencimento)                                  + // 78 a 85 - Data de vencimento do título
                IntToStrZero( round( ValorDocumento * 100), 15)                         + // 86 a 100 - Valor nominal do título

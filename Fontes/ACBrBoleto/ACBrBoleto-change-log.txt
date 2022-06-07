@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2022
+--ACBrBancoUnicredES--
+[*] ACBrBoleto - UNICRED - Regras Numero Documento - SC
+https://www.projetoacbr.com.br/forum/topic/67300-banco-unicred-es/#comment-440518
+  Por Pandaaa
+
 06/06/2022
 --ACBrBancoCaixa--
 [*] Ajuste na leitura do retorno referente ao campo Carteira, realizado a conversão baseado na validação feita na geração da remessa para a Modalidade

@@ -108,6 +108,7 @@ type
     procedure GerarIdeEstabVinc(pIdeEstabVinc: TIdeEstabVinc);
     procedure GerarIdeTrabSubstituido(pIdeTrabSubstituido: TIdeTrabSubstituidoCollection);
     procedure GerarIdVersao(pIdEsocial: TeSocial);
+    procedure GerarIdeVinculo2206(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
     procedure GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
     procedure GerarInfoAtivDesemp(pInfoAtivDesemp: TInfoAtivDesemp);
     procedure GerarInfoDeficiencia(pInfoDeficiencia: TInfoDeficiencia; pTipo: integer = 0);
@@ -1334,7 +1335,7 @@ begin
     Gerador.wAlerta('', 'ideTrabSubstituido', 'Lista de Trabalhadores Substituido', ERR_MSG_MAIOR_MAXIMO + '9');
 end;
 
-procedure TeSocialEvento.GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
+procedure TeSocialEvento.GerarIdeVinculo2206(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
 begin
   Gerador.wGrupo('ideVinculo');
 
@@ -1351,6 +1352,30 @@ begin
 
   if (IntToTpProf(pIdeVinculo.codCateg) = ttpProfissionalEmpregado) then
           Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, pIdeVinculo.matricula);
+  
+  if not(pCessao) then
+    if (pcodCateg) then
+      Gerador.wCampo(tcInt, '', 'codCateg',  3,  3, 0, pIdeVinculo.codCateg);
+
+  Gerador.wGrupo('/ideVinculo');
+end;
+
+procedure TeSocialEvento.GerarIdeVinculo(pIdeVinculo: TIdeVinculo; pcodCateg: Boolean = True; pCessao: Boolean = False);
+begin
+  Gerador.wGrupo('ideVinculo');
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pIdeVinculo.cpfTrab);
+
+  if not(pCessao) then
+    if VersaoDF <= ve02_05_00 then
+    begin
+      if ((pIdeVinculo.codCateg = 901) or (pIdeVinculo.codCateg = 903) or (pIdeVinculo.codCateg = 904)) then
+        Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 0, pIdeVinculo.nisTrab)
+      else
+        Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pIdeVinculo.nisTrab);
+    end;
+
+  Gerador.wCampo(tcStr, '', 'matricula', 0, 30, 0, pIdeVinculo.matricula);
   
   if not(pCessao) then
     if (pcodCateg) then

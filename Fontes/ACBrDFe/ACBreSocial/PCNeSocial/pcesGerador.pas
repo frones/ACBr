@@ -1500,7 +1500,7 @@ begin
       Gerador.wCampo(tcDat, '', 'dtExercicio', 10, 10, 1, pInfoEstatutario.dtExercicio);
 
     if pInfoEstatutario.tpPlanRP <> prpNenhum then
-      Gerador.wCampo(tcInt, '', 'tpPlanRP', 0, 1, 0,  eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
+      Gerador.wCampo(tcStr, '', 'tpPlanRP', 0, 1, 0,  eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
 
     if VersaoDF <= ve02_05_00 then
       GerarInfoDecJud(pInfoEstatutario.infoDecJud)

@@ -1842,7 +1842,7 @@ type
 
 implementation
 
-Uses Forms, Math, dateutils, strutils,  ACBrBoletoWS,
+Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,ACBrUtil.XMLHTML,
      ACBrUtil.FilesIO,
      ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoAmazonia, ACBrBancoBanestes,

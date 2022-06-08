@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/06/2022
+-- ACBrNFSeXServicos --
+[*] Ajustado as URLs da cidade: Itaitinga/CE - Provedor SSInformatica
+   Por: Jarbas DSW
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade: Iguaba Grande/RJ - Provedor ISSDigital
+   Por: Bill Barsch
 -- SSInformatica.Provider --
 [+] Incluida a função TratarXmlRetornado para tratar o XML retornado pelo 
     WebServico do provedor.

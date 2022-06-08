@@ -529,7 +529,9 @@ begin
 
   FpGerarID := True;
   FpNrOcorrTagsTomador := 1;
-  FpNrOcorrCodigoAtividade := 1;
+
+  if FpAOwner.ConfigGeral.Params.ParamTemValor('GerarTag', 'codigo_atividade') then
+    FpNrOcorrCodigoAtividade := 1;
 end;
 
 end.

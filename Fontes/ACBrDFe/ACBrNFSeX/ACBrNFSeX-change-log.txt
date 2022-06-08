@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/06/2022
+-- IPM.Provider --
+[*] Incluido a função TiraAcentos no TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
 -- IPM.GravarXml --
 [*] Alterado a forma como é ajustado a geração da tag codigo_atividade.
    Por: Italo Giurizzato Junior

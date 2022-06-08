@@ -1147,6 +1147,7 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := ParseText(AnsiString(Result), True, False);
+    Result := TiraAcentos(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);
@@ -1235,6 +1236,7 @@ begin
     Result := inherited TratarXmlRetornado(aXML);
 
     Result := ParseText(AnsiString(Result), True, False);
+    Result := TiraAcentos(Result);
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverCaracteresDesnecessarios(Result);

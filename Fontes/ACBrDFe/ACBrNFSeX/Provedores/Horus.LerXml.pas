@@ -32,10 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ModeloV1.LerXml;
-{
-  Trocar todas as ocorrencias de "ModeloV1" pelo nome do provedor
-}
+unit Horus.LerXml;
 
 interface
 
@@ -44,9 +41,9 @@ uses
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
-  { TNFSeR_ModeloV1 }
+  { TNFSeR_Horus }
 
-  TNFSeR_ModeloV1 = class(TNFSeR_ABRASFv1)
+  TNFSeR_Horus = class(TNFSeR_ABRASFv1)
   protected
 
   public
@@ -57,7 +54,7 @@ implementation
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ModeloV1
+//     Horus
 //==============================================================================
 
 end.

@@ -32,32 +32,27 @@
 
 {$I ACBr.inc}
 
-unit ModeloV1.LerXml;
-{
-  Trocar todas as ocorrencias de "ModeloV1" pelo nome do provedor
-}
+unit Horus.GravarXml;
 
 interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1;
+  ACBrNFSeXGravarXml_ABRASFv1;
 
 type
-  { TNFSeR_ModeloV1 }
+  { TNFSeW_Horus }
 
-  TNFSeR_ModeloV1 = class(TNFSeR_ABRASFv1)
+  TNFSeW_Horus = class(TNFSeW_ABRASFv1)
   protected
-
-  public
 
   end;
 
 implementation
 
 //==============================================================================
-// Essa unit tem por finalidade exclusiva ler o XML do provedor:
-//     ModeloV1
+// Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
+//     Horus
 //==============================================================================
 
 end.

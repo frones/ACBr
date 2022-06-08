@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/06/2022
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Fronteira/MG - Provedor Horus.
+   Por: Italo Giurizzato Junior
+-- Diversos --
+[+] Implementado o provedor Horus para atender a cidade Fronteira/MG
+   Por: Italo Giurizzato Junior
 -- IPM.Provider --
 [*] Incluido a função TiraAcentos no TratarXmlRetornado.
    Por: Italo Giurizzato Junior

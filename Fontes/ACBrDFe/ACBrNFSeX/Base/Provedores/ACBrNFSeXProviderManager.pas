@@ -61,6 +61,7 @@ uses
   geNFe.Provider,
   Ginfes.Provider,
   GovBr.Provider,
+  Horus.Provider,
   ISSCuritiba.Provider,
   ISSFortaleza.Provider,
   ISSIntel.Provider,
@@ -299,6 +300,7 @@ begin
       proGovBr:      Result := TACBrNFSeProviderGovBr.Create(ACBrNFSe);
       proGovDigital: Result := TACBrNFSeProviderGovDigital200.Create(ACBrNFSe);
       proGoverna:    Result := TACBrNFSeProviderGoverna.Create(ACBrNFSe);
+      proHorus:      Result := TACBrNFSeProviderHorus.Create(ACBrNFSe);
       proiiBrasil:   Result := TACBrNFSeProvideriiBrasil204.Create(ACBrNFSe);
 
       proInfisc:

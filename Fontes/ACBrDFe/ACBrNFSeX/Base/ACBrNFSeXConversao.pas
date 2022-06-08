@@ -110,7 +110,7 @@ type
                    proDSF, proeGoverneISS, proEL, proEloTech, proEquiplano,
                    proeReceita, proEtherium, proFGMaiss, profintelISS, proFiorilli,
                    proFisco, proFISSLex, proFuturize, proGeisWeb, progeNFe, proGiap,
-                   proGinfes, proGiss, proGovBR, proGovDigital, proGoverna,
+                   proGinfes, proGiss, proGovBR, proGovDigital, proGoverna, proHorus,
                    proiiBrasil, proInfisc, proIPM, proISSBarueri, proISSCambe,
                    proISSCuritiba, proISSDigital, proISSDSF, proISSe, proISSFortaleza,
                    proISSGoiania, proISSIntel, proISSJoinville, proISSLencois,

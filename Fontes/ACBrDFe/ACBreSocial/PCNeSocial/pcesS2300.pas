@@ -215,7 +215,15 @@ type
     FindRemunCargo: tpSimNaoFacultativo;
     FtpRegTrab: tpTpRegTrab;
     FtpRegPrev: tpTpRegPrev;
+    FcnpjOrig: String;
+    FcategOrig: Integer;
+    FmatricOrig: String;
+    FdtExercOrig: TDateTime;
   public
+    property categOrig: Integer read FcategOrig write FcategOrig;
+    property cnpjOrig: String read FcnpjOrig write FcnpjOrig;
+    property matricOrig: String read FmatricOrig write FmatricOrig;
+    property dtExercOrig: TDateTime read FdtExercOrig write FdtExercOrig;
     property indRemunCargo: tpSimNaoFacultativo read FindRemunCargo write FindRemunCargo;
     property tpRegTrab: tpTpRegTrab read FtpRegTrab write FtpRegTrab;
     property tpRegPrev: tpTpRegPrev read FtpRegPrev write FtpRegPrev;
@@ -625,16 +633,18 @@ end;
 
 procedure TEvtTSVInicio.GerarInfoMandElet(obj: TinfoMandElet);
 begin
-  if obj.indRemunCargo <> snfNada then
+  if (self.FinfoTSVInicio.FcodCateg = 304) then
   begin
     Gerador.wGrupo('infoMandElet');
-  
-    Gerador.wCampo(tcStr, '', 'indRemunCargo',  1,  1,  0, eSSimNaoFacultativoToStr(obj.indRemunCargo));
-    Gerador.wCampo(tcStr, '', 'tpRegTrab',      1,  1,  1, eSTpRegTrabToStr(obj.tpRegTrab));
-    Gerador.wCampo(tcStr, '', 'tpRegPrev',      1,  1,  1, eSTpRegPrevToStr(obj.tpRegPrev));
-  
+    Gerador.wCampo(tcStr, '', 'categOrig',      0,  3, 1, obj.categOrig);
+    Gerador.wCampo(tcStr, '', 'cnpjOrig',      14, 14, 1, obj.cnpjOrig);
+    Gerador.wCampo(tcStr, '', 'matricOrig',     0, 30, 1, obj.matricOrig);
+    Gerador.wCampo(tcDat, '', 'dtExercOrig',   10, 10, 1, obj.dtExercOrig);
+    Gerador.wCampo(tcStr, '', 'indRemunCargo',  1,  1, 0, eSSimNaoFacultativoToStr(obj.indRemunCargo));
+    Gerador.wCampo(tcStr, '', 'tpRegTrab',      1,  1, 1, eSTpRegTrabToStr(obj.tpRegTrab));
+    Gerador.wCampo(tcStr, '', 'tpRegPrev',      1,  1, 1, eSTpRegPrevToStr(obj.tpRegPrev));
     Gerador.wGrupo('/infoMandElet');
-  end;  
+  end;
 end;
 
 function TEvtTSVInicio.GerarXML: boolean;
@@ -907,11 +917,15 @@ begin
       end;
 
       sSecao := 'infoMandElet';
-      if INIRec.ReadString(sSecao, 'tpRegTrab', '') <> '' then
+      if INIRec.ReadString( sSecao, 'categOrig', '' ) <> '' then
       begin
-        infoTSVInicio.infoComplementares.infoMandElet.indRemunCargo  := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indRemunCargo', '0'));
-        infoTSVInicio.infoComplementares.infoMandElet.tpRegTrab      := eSStrToTpRegTrab(Ok, INIRec.ReadString(sSecao, 'tpRegTrab', '0'));
-        infoTSVInicio.infoComplementares.infoMandElet.tpRegPrev      := eSStrToTpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpTpRegPrev', '0'));
+        infoTSVInicio.infoComplementares.infoMandElet.categOrig     := INIRec.ReadInteger( sSecao, 'categOrig', 1 );
+        infoTSVInicio.infoComplementares.infoMandElet.cnpjOrig      := INIRec.ReadString( sSecao, 'cnpjOrig', '' );
+        infoTSVInicio.infoComplementares.infoMandElet.matricOrig    := INIRec.ReadString( sSecao, 'matricOrig', '' );
+        infoTSVInicio.infoComplementares.infoMandElet.dtExercOrig   := StringToDateTime( INIRec.ReadString( sSecao, 'dtExercOrig', '0' ) );
+        infoTSVInicio.infoComplementares.infoMandElet.indRemunCargo := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indRemunCargo', '0'));
+        infoTSVInicio.infoComplementares.infoMandElet.tpRegTrab     := eSStrToTpRegTrab(Ok, INIRec.ReadString(sSecao, 'tpRegTrab', '0'));
+        infoTSVInicio.infoComplementares.infoMandElet.tpRegPrev     := eSStrToTpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpTpRegPrev', '0'));
       end;
 
       sSecao := 'infoEstagiario';

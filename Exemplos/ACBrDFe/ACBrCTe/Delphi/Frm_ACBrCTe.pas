@@ -1148,28 +1148,36 @@ begin
       *)
 
       {Carrega dados da CTe substituta 0-1}
-      {with infCTeSub do
+      {
+      with infCTeSub do
       begin
+        // Chave do CT-e Original
         chCte := '';
-        //Se tomador não é Contribuinte
-          tomaNaoICMS.refCteAnu := '';
 
-        //Se tomador for Contribuinte
-          case TipoDoc of //Tipo do Documento que o Tomador Emitiu para anulação de valor do Cte Anterior
-            0: tomaICMS.refNFe := '';//CTe
-            1: tomaICMS.refCte := '';//CTe
-            2://NF
-            begin
-              tomaICMS.refNF.CNPJCPF  := '';
-              tomaICMS.refNF.modelo   := '';
-              tomaICMS.refNF.serie    := 0;
-              tomaICMS.refNF.subserie := 0;
-              tomaICMS.refNF.nro      := 0;
-              tomaICMS.refNF.valor    := 0;
-              tomaICMS.refNF.dEmi     := Date;
-            end;
+        // Se tomador não é Contribuinte informar a Chave do CT-e de Anulação
+        refCteAnu := '';
+
+        // Se tomador for Contribuinte, verificar o tipo de documento emitido
+        // pelo tomador (NF-e, CT-e ou NF (comum de papel)
+
+        // Tipo do Documento que o Tomador Emitiu para anulação de valor do
+        // CT-e Anterior
+        case TipoDoc of
+          0: tomaICMS.refNFe := ''; // NF-e de Anulação de Valores
+          1: tomaICMS.refCte := ''; // CT-e de Anulação emitido por outra Transportadora
+          2: // NF (comum de papel)
+          begin
+            tomaICMS.refNF.CNPJCPF  := '';
+            tomaICMS.refNF.modelo   := '';
+            tomaICMS.refNF.serie    := 0;
+            tomaICMS.refNF.subserie := 0;
+            tomaICMS.refNF.nro      := 0;
+            tomaICMS.refNF.valor    := 0;
+            tomaICMS.refNF.dEmi     := Date;
           end;
-      end;}
+        end;
+      end;
+      }
 
       with cobr do
       begin

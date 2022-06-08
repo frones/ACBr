@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2022
+-- SSInformatica.Provider --
+[+] Incluida a função TratarXmlRetornado para tratar o XML retornado pelo 
+    WebServico do provedor.
+   Por: Italo Giurizzato Junior
+
 07/06/2022
 -- Centi.GravarXml --
 [*] Alteração na configuração para não gerar algumas tags conforme consta no

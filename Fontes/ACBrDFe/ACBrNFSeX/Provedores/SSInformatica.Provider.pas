@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -59,7 +59,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
-//    function TratarXmlRetornado(const aXML: string): string; override;
+    function TratarXmlRetornado(const aXML: string): string; override;
 
     property DadosUsuario: string read GetDadosUsuario;
   end;
@@ -71,14 +71,13 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
-
   end;
 
 implementation
 
 uses
   synacode, DateUtils, pcnAuxiliar,
-  ACBrDFeException, ACBrUtil.Math,
+  ACBrDFeException, ACBrUtil.Math, ACBrUtil.XMLHTML,
   ACBrNFSeX,
   SSInformatica.GravarXml, SSInformatica.LerXml;
 
@@ -87,34 +86,7 @@ uses
 procedure TACBrNFSeProviderSSInformatica203.Configuracao;
 begin
   inherited Configuracao;
-  (*
-  // Inicializa os parâmetros de configuração: Geral
-  with ConfigGeral do
-  begin
-    UseCertificateHTTP := True;
-    UseAuthorizationHeader := False;
-    NumMaxRpsGerar  := 1;
-    NumMaxRpsEnviar := 50;
 
-    TabServicosExt := False;
-    Identificador := 'Id';
-    QuebradeLinha := ';';
-
-    // meLoteAssincrono, meLoteSincrono ou meUnitario
-    ModoEnvio := meLoteSincrono;
-
-    ConsultaSitLote := False;
-    ConsultaLote := True;
-    ConsultaNFSe := True;
-
-    ConsultaPorFaixa := True;
-    ConsultaPorFaixaPreencherNumNfseFinal := False;
-
-    CancPreencherMotivo := False;
-    CancPreencherSerieNfse := False;
-    CancPreencherCodVerificacao := False;
-  end;
-  *)
   with ConfigAssinar do
   begin
     Rps               := True;
@@ -128,10 +100,6 @@ begin
     LoteGerarNFSe     := False;
     RpsSubstituirNFSe := False;
     SubstituirNFSe    := False;
-    AbrirSessao       := False;
-    FecharSessao      := False;
-
-//    IncluirURI := True;
   end;
 
   with ConfigWebServices do
@@ -142,21 +110,6 @@ begin
   end;
 
   ConfigMsgDados.DadosCabecalho := GetCabecalho('');
-  (*
-  // Define o NameSpace utilizado por todos os serviços disponibilizados pelo
-  // provedor
-  SetXmlNameSpace('http://www.abrasf.org.br/nfse.xsd');
-
-  // Inicializa os parâmetros de configuração: Mensagem de Dados
-  with ConfigMsgDados do
-  begin
-    // Usado na tag raiz dos XML de envio do Lote, Consultas, etc.
-    Prefixo := '';
-
-    UsarNumLoteConsLote := False;
-  end;
-
-  *)
 end;
 
 function TACBrNFSeProviderSSInformatica203.CriarGeradorXml(
@@ -285,7 +238,7 @@ begin
 
   Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
                      DadosUsuario,
-                     ['outputXML', 'GerarNfseResposta'],
+                     ['outputXML', 'nfseDadosMsg', 'GerarNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
@@ -414,13 +367,13 @@ begin
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 
-{
 function TACBrNFSeXWebserviceSSInformatica203.TratarXmlRetornado(
   const aXML: string): string;
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  // Reescrever se necessário;
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
-}
+
 end.

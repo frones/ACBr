@@ -44,6 +44,14 @@ Símbolo : Significado
 
 08/06/2022
 -- ACBrNFSeXServicos --
+[+] Incluída as cidades: Campina Verde/MG, Delfinopolis/MG e Comendador Gomes/MG
+    - Provedor Horus.
+   Por: Victor Gonzales/Italo Giurizzato Junior
+[+] Incluída a cidade: Marmeleiro/PR - Provedor IPM.
+   Por: Microsys Sistemas
+
+08/06/2022
+-- ACBrNFSeXServicos --
 [+] Incluída a cidade: Fronteira/MG - Provedor Horus.
    Por: Italo Giurizzato Junior
 -- Diversos --

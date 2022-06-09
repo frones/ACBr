@@ -602,7 +602,7 @@ type
     FValorINSS: Double;
     FNumContaPagCreditada: string;
 
-    FVencimento: TDate;
+    FVencimento: TDateTime;
     FValorDocumento: Double;
     FValorPIS: Double;
     FValorCOFINS: Double;
@@ -627,7 +627,7 @@ type
     property ValorINSS: Double read FValorINSS write FValorINSS;
     property NumContaPagCreditada: string read FNumContaPagCreditada write FNumContaPagCreditada;
 
-    property Vencimento: TDate read FVencimento write FVencimento;
+    property Vencimento: TDateTime read FVencimento write FVencimento;
     property ValorDocumento: Double read FValorDocumento write FValorDocumento;
     property ValorPIS: Double read FValorPIS write FValorPIS;
     property ValorCOFINS: Double read FValorCOFINS write FValorCOFINS;
@@ -854,7 +854,7 @@ type
   private
     FCodigoBarras: string;
     FCedente: TCedente;
-    FVencimento: TDate;
+    FVencimento: TDateTime;
     FValorTitulo: Double;
     FQtdeMoeda: Double;
     FCodigoMoeda: Integer;
@@ -869,7 +869,7 @@ type
     FDesconto1: TAcrescimosDescontos;
     FCodigoProtesto: Integer;
     FPrazoProtesto: Integer;
-    FDataLimite: TDate;
+    FDataLimite: TDateTime;
 
     FSegmentoH: TSegmentoHList;
 
@@ -880,7 +880,7 @@ type
 
     property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
     property Cedente: TCedente read FCedente write FCedente;
-    property Vencimento: TDate read FVencimento write FVencimento;
+    property Vencimento: TDateTime read FVencimento write FVencimento;
     property ValorTitulo: Double read FValorTitulo write FValorTitulo;
     property QtdeMoeda: Double read FQtdeMoeda write FQtdeMoeda;
     property CodigoMoeda: Integer read FCodigoMoeda write FCodigoMoeda;
@@ -895,7 +895,7 @@ type
     property Desconto1: TAcrescimosDescontos read FDesconto1 write FDesconto1;
     property CodigoProtesto: Integer read FCodigoProtesto write FCodigoProtesto;
     property PrazoProtesto: Integer read FPrazoProtesto write FPrazoProtesto;
-    property DataLimite: TDate read FDataLimite write FDataLimite;
+    property DataLimite: TDateTime read FDataLimite write FDataLimite;
     property SegmentoH: TSegmentoHList read FSegmentoH write SetSegmentoH;
   end;
 
@@ -1268,7 +1268,7 @@ type
     FValorPrincipal  : Double;
     FMulta           : Double;
     FJuros           : Double;
-    FDataVencimento  : TDate;
+    FDataVencimento  : TDateTime;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1283,7 +1283,7 @@ type
     property ValorPrincipal: Double read FValorPrincipal write FValorPrincipal;
     property Multa: Double read FMulta write FMulta;
     property Juros: Double read FJuros write FJuros;
-    property DataVencimento: TDate read FDataVencimento write FDataVencimento;
+    property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
   end;
 
   TSegmentoN3List = class(TObjectList)

@@ -754,7 +754,7 @@ begin
 
     Cedente.Nome := LerCampo(Linha, 78, 30, tcStr);
 
-    Vencimento := TDateTime(LerCampo(Linha, 108, 8, tcDat));
+    Vencimento := LerCampo(Linha, 108, 8, tcDat);
     ValorTitulo := LerCampo(Linha, 116, 15, tcDe2);
     QtdeMoeda := LerCampo(Linha, 131, 15, tcDe5);
     CodigoMoeda := LerCampo(Linha, 146, 2, tcInt);
@@ -778,7 +778,7 @@ begin
 
     CodigoProtesto := LerCampo(Linha, 229, 1, tcInt);
     PrazoProtesto := LerCampo(Linha, 230, 2, tcInt);
-    DataLimite := TDateTime(LerCampo(Linha, 232, 8, tcDat));
+    DataLimite := LerCampo(Linha, 232, 8, tcDat);
   end;
 
   LerSegmentoH(PagFor.Lote.Last.SegmentoG.Last.SegmentoH, I);

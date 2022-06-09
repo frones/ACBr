@@ -44,6 +44,9 @@ Símbolo : Significado
 
 09/06/2022
 -- Diversos --
+[*] Ajustes para o Lazarus.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [*] Refactoring no componente ACBrPagFor, para mais informações leia o tópico no 
     fórum:
     https://www.projetoacbr.com.br/forum/topic/67704-refactoring-no-componente-acbrpagfor/

@@ -293,7 +293,7 @@ begin
   with mSegmentoCList.Last do
   begin
     ValorCSLL := LerCampo(Linha, 15, 15, tcDe2);
-    Vencimento := TDateTime(LerCampo(Linha, 38, 8, tcDat));
+    Vencimento := LerCampo(Linha, 38, 8, tcDat);
     ValorDocumento := LerCampo(Linha, 46, 15, tcDe2);
     ValorPIS := LerCampo(Linha, 61, 15, tcDe2);
     ValorIR := LerCampo(Linha, 76, 15, tcDe2);
@@ -459,7 +459,7 @@ begin
     ValorPrincipal := LerCampo(Linha, 64, 14, tcDe2);
     Multa := LerCampo(Linha, 78, 14, tcDe2);
     Juros := LerCampo(Linha, 92, 14, tcDe2);
-    DataVencimento := TDateTime(LerCampo(Linha, 120, 8, tcDat));
+    DataVencimento := LerCampo(Linha, 120, 8, tcDat);
 
     with SegmentoN do
     begin

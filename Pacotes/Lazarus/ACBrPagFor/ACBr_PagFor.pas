@@ -4,19 +4,16 @@
 
 unit ACBr_PagFor;
 
-
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrPagForReg, ACBrPagFor, ACBrPagForArquivo, ACBrPagForArquivoClass, 
-  ACBrPagForClass, ACBrPagForConfiguracoes, ACBrPagForConversao, 
-  ACBrPagForGravarTxt, ACBrPagForLerTxt, LazarusPackageIntf;
+  LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrPagForReg', @ACBrPagForReg.Register);
 end;
 
 initialization

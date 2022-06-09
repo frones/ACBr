@@ -1,3 +1,36 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+{$I ACBr.inc}
 package ACBr_PagFor;
 
 {$R *.res}
@@ -32,7 +65,7 @@ package ACBr_PagFor;
 requires
   vcl,
   rtl,
-  ACBr_Comum,
+  ACBr_DFeComum,
   ACBr_synapse;
 
 contains
@@ -40,9 +73,40 @@ contains
   ACBrPagForArquivo in '..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivo.pas',
   ACBrPagForArquivoClass in '..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivoClass.pas',
   ACBrPagForConfiguracoes in '..\..\..\Fontes\ACBrPagFor\ACBrPagForConfiguracoes.pas',
-  ACBrPagForConversao in '..\..\..\Fontes\ACBrPagFor\ACBrPagForConversao.pas',
-  ACBrPagForClass in '..\..\..\Fontes\ACBrPagFor\ACBrPagForClass.pas',
-  ACBrPagForLerTxt in '..\..\..\Fontes\ACBrPagFor\ACBrPagForLerTxt.pas',
-  ACBrPagForGravarTxt in '..\..\..\Fontes\ACBrPagFor\ACBrPagForGravarTxt.pas';
+  ACBrPagForClass in '..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForClass.pas',
+  ACBrPagForConversao in '..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForConversao.pas',
+  ACBrPagForParametros in '..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForParametros.pas',
+  ACBrPagForGravarTxt in '..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForGravarTxt.pas',
+  ACBrPagForLerTxt in '..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForLerTxt.pas',
+  ACBrPagForInterface in '..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForInterface.pas',
+  ACBrPagForProviderBase in '..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForProviderBase.pas',
+  ACBrPagForProviderManager in '..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForProviderManager.pas',
+  CNAB240.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.GravarTxtRemessa.pas',
+  CNAB240.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.LerTxtRetorno.pas',
+  CNAB240.Provider in '..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.Provider.pas',
+  PagFor.BancoCECRED.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancoCECRED.GravarTxtRemessa.pas',
+  PagFor.BancoCECRED.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancoCECRED.LerTxtRetorno.pas',
+  PagFor.BancoCECRED.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancoCECRED.Provider.pas',
+  PagFor.BancodoBrasil.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancodoBrasil.GravarTxtRemessa.pas',
+  PagFor.BancodoBrasil.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancodoBrasil.LerTxtRetorno.pas',
+  PagFor.BancodoBrasil.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.BancodoBrasil.Provider.pas',
+  PagFor.Bradesco.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Bradesco.GravarTxtRemessa.pas',
+  PagFor.Bradesco.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Bradesco.LerTxtRetorno.pas',
+  PagFor.Bradesco.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Bradesco.Provider.pas',
+  PagFor.HSBC.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.HSBC.GravarTxtRemessa.pas',
+  PagFor.HSBC.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.HSBC.LerTxtRetorno.pas',
+  PagFor.HSBC.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.HSBC.Provider.pas',
+  PagFor.Itau.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Itau.GravarTxtRemessa.pas',
+  PagFor.Itau.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Itau.LerTxtRetorno.pas',
+  PagFor.Itau.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Itau.Provider.pas',
+  PagFor.Safra.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Safra.GravarTxtRemessa.pas',
+  PagFor.Safra.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Safra.LerTxtRetorno.pas',
+  PagFor.Safra.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Safra.Provider.pas',
+  PagFor.Santander.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.GravarTxtRemessa.pas',
+  PagFor.Santander.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.LerTxtRetorno.pas',
+  PagFor.Santander.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.Provider.pas',
+  PagFor.Sicredi.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.GravarTxtRemessa.pas',
+  PagFor.Sicredi.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.LerTxtRetorno.pas',
+  PagFor.Sicredi.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.Provider.pas';
 
 end.

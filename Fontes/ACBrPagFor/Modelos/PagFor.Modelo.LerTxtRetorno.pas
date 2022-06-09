@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,90 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit PagFor.Modelo.LerTxtRetorno;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrPagForClass, ACBrPagForConversao,
+  CNAB240.LerTxtRetorno;
 
-procedure Register;
+type
+ { TArquivoR_Modelo }
+
+  TArquivoR_Modelo = class(TArquivoR_CNAB240)
+  protected
+    {
+    procedure LerRegistro0; override;
+
+    procedure LerRegistro1(I: Integer); override;
+
+    procedure LerRegistro5(I: Integer); override;
+
+    procedure LerRegistro9(I: Integer); override;
+
+    procedure LerSegmentoA(I: Integer); override;
+
+    procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; I: Integer); override;
+
+    procedure LerSegmentoC(mSegmentoCList: TSegmentoCList; I: Integer); override;
+
+    procedure LerSegmentoE(mSegmentoEList: TSegmentoEList; I: Integer); override;
+
+    procedure LerSegmentoF(mSegmentoFList: TSegmentoFList; I: Integer); override;
+
+    procedure LerSegmentoG(I: Integer); override;
+
+    procedure LerSegmentoH(mSegmentoHList: TSegmentoHList; I: Integer); override;
+
+    procedure LerSegmentoJ(I: Integer; var LeuRegistroJ: boolean); override;
+
+    procedure LerSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List; I: Integer); override;
+
+    procedure LerSegmentoJ99(mSegmentoJ99List: TSegmentoJ99List; I: Integer); override;
+
+    procedure LerSegmentoN(mSegmentoN: TSegmentoN); override;
+
+    procedure LerSegmentoN1(I: Integer); override;
+
+    procedure LerSegmentoN2(I: Integer); override;
+
+    procedure LerSegmentoN3(I: Integer); override;
+
+    procedure LerSegmentoN4(I: Integer); override;
+
+    procedure LerSegmentoN567(I: Integer); override;
+
+    procedure LerSegmentoN8(I: Integer); override;
+
+    procedure LerSegmentoN9(I: Integer); override;
+
+    procedure LerSegmentoO(I: Integer); override;
+
+    procedure LerSegmentoW(mSegmentoWList: TSegmentoWList; I: Integer); override;
+
+    procedure LerSegmentoZ(mSegmentoZList: TSegmentoZList; I: Integer); override;
+
+    function GetOcorrencia(aOcorrencia: TOcorrencia): string; override;
+    }
+  end;
 
 implementation
 
-uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
+{ TArquivoR_Modelo }
 
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
+{
+Se as ocorrencias seguem o padrão FEBRABAN esse bloco pode ser excluido
 
-procedure Register;
+function TArquivoR_Modelo.GetOcorrencia(aOcorrencia: TOcorrencia): string;
 begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
+  case aOcorrencia of
+    to00: Result := 'Descrição da ocorrencia que é fora do padrão FEBRABAN';
+  else
+    Result := inherited GetOcorrencia(aOcorrencia);
+  end;
 end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
-
+}
 end.
+

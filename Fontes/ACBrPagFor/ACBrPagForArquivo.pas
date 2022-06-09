@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -38,31 +38,33 @@ interface
 
 uses
   Classes, Sysutils, Dialogs, Forms, Contnrs,
-  ACBrPagForClass, ACBrPagForGravarTxt, ACBrPagForLerTxt,
-  ACBrPagForConversao, ACBrPagForConfiguracoes;
+  ACBrBase,
+  ACBrPagForClass, ACBrPagForConversao, ACBrPagForConfiguracoes;
 
 type
   TRegistro = class(TObject)
   private
+    FACBrPagFor: TComponent;
     FPagFor: TPagFor;
     FPagForTXT: String;
     FNomeArq: String;
+    FAlertas: String;
 
-    function GetPagForTXT: String;
-    function CarregarArquivo(const ACaminhoArquivo: String): String;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
 
+    function GerarTxt: String;
     function Gravar(const CaminhoArquivo: String = ''): boolean;
-    function Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean): boolean;
+    function Ler(const aArquivoTXT: String): boolean;
 
-    property PagFor: TPagFor read FPagFor write FPagFor;
-    property PagForTXT: String read GetPagForTXT write FPagForTXT;
+    property PagFor: TPagFor read FPagFor;
+    property PagForTXT: String read FPagForTXT write FPagForTXT;
     property NomeArq: String read FNomeArq write FNomeArq;
+    property Alertas: String read FAlertas;
   end;
 
-  TArquivos = class(TObjectList)
+  TArquivos = class(TACBrObjectList)
   private
     FConfiguracoes: TConfiguracoes;
     FACBrPagFor: TComponent;
@@ -70,15 +72,22 @@ type
     function GetItem(Index: Integer): TRegistro;
     procedure SetItem(Index: Integer; const Value: TRegistro);
   public
-    constructor Create(AACBrPagFor: TPersistent);
+    constructor Create(AOwner: TPersistent);
 
     function New: TRegistro;
+    function Add(ARegistro: TRegistro): Integer; reintroduce;
+    Procedure Insert(Index: Integer; ARegistro: TRegistro); reintroduce;
+
     function Last: TRegistro;
 
     function GerarPagFor(const ANomeArquivo: String = ''): Boolean;
     function GetNamePath: string;
     function Gravar(const PathArquivo: string = ''): boolean;
-    procedure Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean);
+    procedure Ler(const AArquivoTXT: String);
+
+    function LoadFromFile(const aCaminhoArquivo: String): Boolean;
+    function LoadFromStream(aStream: TStringStream): Boolean;
+    function LoadFromString(aTxtString: String): Boolean;
 
     property Items[Index: Integer]: TRegistro read GetItem  write SetItem;
     property Configuracoes: TConfiguracoes read FConfiguracoes  write FConfiguracoes;
@@ -88,33 +97,18 @@ type
 implementation
 
 uses
-  ACBrPagFor,
-  ACBrUtil.Strings;
+  synautil,
+  ACBrUtil.Strings,
+  ACBrPagFor, ACBrPagForInterface;
 
 { TRegistro }
 
-function TRegistro.CarregarArquivo(const ACaminhoArquivo: String): String;
-var
-  mArquivoTXT : TStringList;
+constructor TRegistro.Create(AOwner: TComponent);
 begin
-  if (Trim(ACaminhoArquivo) = EmptyStr) or (not FileExists(ACaminhoArquivo)) then
-    raise EACBrPagForException.Create('ERRO: Arquivo não localizado.');
+  if not (AOwner is TACBrPagFor) then
+    raise EACBrPagForException.Create('AOwner deve ser do tipo TACBrPagFor');
 
-  mArquivoTXT := TStringList.Create;
-
-  try
-    FNomeArq := ExtractFileName(ACaminhoArquivo);
-    mArquivoTXT.LoadFromFile(ACaminhoArquivo);
-    Result := mArquivoTXT.Text;
-  finally
-    mArquivoTXT.Free;
-  end;
-end;
-
-constructor TRegistro.Create;
-begin
-  inherited Create;
-
+  FACBrPagFor := TACBrPagFor(AOwner);
   FPagFor := TPagFor.Create;
 end;
 
@@ -125,78 +119,73 @@ begin
   inherited;
 end;
 
-function TRegistro.GetPagForTXT: String;
+function TRegistro.GerarTxt: String;
 var
-  APagForW: TPagForW;
+  FProvider: IACBrPagForProvider;
 begin
-  APagForW := TPagForW.Create(Self.PagFor);
+  FProvider := TACBrPagFor(FACBrPagFor).Provider;
 
-  try
-    Result := APagForW.GerarTXT;
-  finally
-    APagForW.Free;
-  end;
+  if not Assigned(FProvider) then
+    raise EACBrPagForException.Create(ERR_SEM_BANCO);
+
+  FProvider.GerarTxt(PagFor, FPagForTXT, FAlertas);
+  Result := PagForTXT;
 end;
 
 function TRegistro.Gravar(const CaminhoArquivo: String): boolean;
 var
   ArquivoGerado: TStringList;
-  APagForW: TPagForW;
   LocPagForTxt: String;
 begin
-  APagForW := TPagForW.Create(PagFor);
-
+  LocPagForTxt := PagForTXT;
+  ArquivoGerado := TStringList.Create;
   try
-    LocPagForTxt := APagForW.GerarTXT;
-    ArquivoGerado := TStringList.Create;
-    try
-      ArquivoGerado.Add(LocPagForTxt);
+    ArquivoGerado.Add(LocPagForTxt);
 
-      // remove todas as linhas em branco do arquivo
-      RemoveEmptyLines(ArquivoGerado);
+    // remove todas as linhas em branco do arquivo
+    RemoveEmptyLines(ArquivoGerado);
 
-      ArquivoGerado.SaveToFile(CaminhoArquivo);
-      Result := True;
-    finally
-      ArquivoGerado.Free;
-    end;
+    ArquivoGerado.SaveToFile(CaminhoArquivo);
+    Result := True;
   finally
-    APagForW.Free;
+    ArquivoGerado.Free;
   end;
 end;
 
-function TRegistro.Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean): boolean;
+function TRegistro.Ler(const aArquivoTXT: String): boolean;
 var
-  APagForR : TPagForR;
+  FProvider: IACBrPagForProvider;
 begin
-  APagForR := TPagForR.Create( FPagFor );
+  FProvider := TACBrPagFor(FACBrPagFor).Provider;
 
-  try
-    if ACarregarArquivo then
-      Result := APagForR.LerTXT( CarregarArquivo(AArquivoTXT) )
-    else
-      Result := APagForR.LerTXT( AArquivoTXT );
-  finally
-    APagForR.Free;
-  end;
+  if not Assigned(FProvider) then
+    raise EACBrPagForException.Create(ERR_SEM_BANCO);
+
+  Result := FProvider.LerTxt(aArquivoTXT, FPagFor);
 end;
 
 { TArquivos }
 
 function TArquivos.New: TRegistro;
 begin
-  Result := TRegistro.Create;
+  Result := TRegistro.Create(FACBrPagFor);
   Add(Result);
 end;
 
-constructor TArquivos.Create(AACBrPagFor: TPersistent);
+function TArquivos.Add(ARegistro: TRegistro): Integer;
 begin
-  if not (AACBrPagFor is TACBrPagFor ) then
-    raise EACBrPagForException.Create( 'AACBrPagFor deve ser do tipo TACBrPagFor');
+  Result := inherited Add(ARegistro);
+end;
+
+constructor TArquivos.Create(AOwner: TPersistent);
+begin
+  if not (AOwner is TACBrPagFor ) then
+    raise EACBrPagForException.Create( 'AOwner deve ser do tipo TACBrPagFor');
 
   inherited Create;
 
-  FACBrPagFor := TACBrPagFor( AACBrPagFor );
+  FACBrPagFor := TACBrPagFor( AOwner );
+  FConfiguracoes := TACBrPagFor(FACBrPagFor).Configuracoes;
 end;
 
 function TArquivos.GerarPagFor(const ANomeArquivo: String): Boolean;
@@ -211,7 +200,7 @@ end;
 
 function TArquivos.GetItem(Index: Integer): TRegistro;
 begin
-  Result := TRegistro(inherited GetItem(Index));
+  Result := TRegistro(inherited Items[Index]);
 end;
 
 function TArquivos.Last: TRegistro;
@@ -242,15 +231,56 @@ begin
   end;
 end;
 
-procedure TArquivos.Ler(const AArquivoTXT: String; ACarregarArquivo: Boolean);
+procedure TArquivos.Insert(Index: Integer; ARegistro: TRegistro);
+begin
+  inherited Insert(Index, ARegistro);
+end;
+
+procedure TArquivos.Ler(const AArquivoTXT: String);
 begin
   TACBrPagFor(FACBrPagFor).Arquivos.New;
-  TACBrPagFor(FACBrPagFor).Arquivos.Last.Ler(AArquivoTXT, ACarregarArquivo);
+  TACBrPagFor(FACBrPagFor).Arquivos.Last.Ler(AArquivoTXT);
 end;
 
 procedure TArquivos.SetItem(Index: Integer; const Value: TRegistro);
 begin
-  inherited SetItem(Index, Value);
+  inherited Items[Index] := Value;
+end;
+
+function TArquivos.LoadFromFile(const aCaminhoArquivo: String): Boolean;
+var
+  aTxt: string;
+  MS: TMemoryStream;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.LoadFromFile(aCaminhoArquivo);
+    aTxt := ReadStrFromStream(MS, MS.Size);
+  finally
+    MS.Free;
+  end;
+
+  Result := LoadFromString(aTxt);
+end;
+
+function TArquivos.LoadFromStream(aStream: TStringStream): Boolean;
+var
+  aTxt: string;
+begin
+  AStream.Position := 0;
+  aTxt := string(ReadStrFromStream(aStream, aStream.Size));
+
+  Result := Self.LoadFromString(aTxt);
+end;
+
+function TArquivos.LoadFromString(aTxtString: String): Boolean;
+begin
+  with Self.New do
+  begin
+    Ler(aTxtString);
+  end;
+
+  Result := Self.Count > 0;
 end;
 
 end.

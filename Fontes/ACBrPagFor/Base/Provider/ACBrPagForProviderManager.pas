@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,69 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit ACBrPagForProviderManager;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrPagForInterface;
 
-procedure Register;
+type
+
+  TACBrPagForProviderManager = class
+  public
+    class function GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
+  end;
 
 implementation
 
 uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
+  ACBrPagFor, ACBrPagForConversao,
 
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
+  PagFor.BancoCECRED.Provider,
+  PagFor.BancodoBrasil.Provider,
+  PagFor.Bradesco.Provider,
+  PagFor.HSBC.Provider,
+  PagFor.Itau.Provider,
+  PagFor.Safra.Provider,
+  PagFor.Santander.Provider,
+  PagFor.Sicredi.Provider;
 
-procedure Register;
+  { TACBrPagForProviderManager }
+
+class function TACBrPagForProviderManager.GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
 begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
+  with TACBrPagfor(ACBrPagFor).Configuracoes.Geral do
+  begin
+    case Banco of
+      pagBancoCECRED:
+        Result := TACBrPagForProviderBancoCECRED.Create(ACBrPagFor);
 
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
+      pagBancodoBrasil:
+        Result := TACBrPagForProviderBancodoBrasil.Create(ACBrPagFor);
 
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
+      pagBradesco:
+        Result := TACBrPagForProviderBradesco.Create(ACBrPagFor);
 
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
+      pagHSBC:
+        Result := TACBrPagForProviderHSBC.Create(ACBrPagFor);
 
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
+      pagItau:
+        Result := TACBrPagForProviderItau.Create(ACBrPagFor);
 
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
+      pagSafra:
+        Result := TACBrPagForProviderSafra.Create(ACBrPagFor);
+
+      pagSantander:
+        Result := TACBrPagForProviderSantander.Create(ACBrPagFor);
+
+      pagSicredi:
+        Result := TACBrPagForProviderSicredi.Create(ACBrPagFor);
+    else
+      Result := nil;
+    end;
+  end;
 end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
 
 end.

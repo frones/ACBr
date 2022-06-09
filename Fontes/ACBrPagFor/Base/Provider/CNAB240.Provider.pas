@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,51 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit CNAB240.Provider;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrPagForProviderBase;
 
-procedure Register;
+type
+  TCNAB240Provider = class(TACBrPagForProvider)
+  private
+
+  protected
+    procedure Configuracao; override;
+
+    procedure GerarArquivo(const aNomeArq: string); override;
+  end;
 
 implementation
 
 uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
+  ACBrPagFor, ACBrPagForArquivo;
 
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
+{ TCNAB240Provider }
 
-procedure Register;
+procedure TCNAB240Provider.Configuracao;
 begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
+  inherited Configuracao;
 
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
 end;
 
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
+procedure TCNAB240Provider.GerarArquivo(const aNomeArq: string);
+var
+  I: Integer;
+  Arquivo: TRegistro;
+  ArquivoTxt: string;
+begin
+  for I := 0 to TACBrPagFor(FAOwner).Arquivos.Count -1 do
+  begin
+    Arquivo := TACBrPagFor(FAOwner).Arquivos.Items[I];
+    ArquivoTxt := Arquivo.GerarTxt;
+
+    SalvarTxt(aNomeArq, ArquivoTxt);
+  end;
+end;
 
 end.

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -40,17 +40,15 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  Controls, SysUtils, Classes, Contnrs, ACBrPagForConversao;
+  Controls, SysUtils, Classes, Contnrs,
+  ACBrPagForConversao;
 
 type
-  TLote = class;
-  TPagFor = class;
-
   TArquivoTXT = class(TObject)
   private
     FArquivoTXT: TStringList;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property ArquivoTXT: TStringList read FArquivoTXT write FArquivoTXT;
@@ -80,60 +78,60 @@ type
   TInscricao = class(TObject)
   private
     FTipo: TTipoInscricao; // Tamanho 1
-    FNumero: String; // Tamanho 14 ou 15
+    FNumero: string; // Tamanho 14 ou 15
   public
     property Tipo: TTipoInscricao read FTipo write FTipo;
-    property Numero: String read FNumero write FNumero;
+    property Numero: string read FNumero write FNumero;
   end;
 
   TAgencia = class(TObject)
   private
     FCodigo: Integer;
-    FDV: String; // Tamanho 1
+    FDV: string; // Tamanho 1
   public
     property Codigo: Integer read FCodigo write FCodigo;
-    property DV: String read FDV write FDV;
+    property DV: string read FDV write FDV;
   end;
 
   TConta = class(TObject)
   private
     FTipoConta: Integer;
-    FNumero: Integer;
-    FDV: String; // Tamanho 1
+    FNumero: Int64;
+    FDV: string; // Tamanho 1
   public
     property TipoConta: Integer read FTipoConta write FTipoConta;
-    property Numero: Integer read FNumero write FNumero;
-    property DV: String read FDV write FDV;
+    property Numero: Int64 read FNumero write FNumero;
+    property DV: string read FDV write FDV;
   end;
 
   TContaCorrente = class(TObject)
   private
     FAgencia: TAgencia;
     FConta: TConta;
-    FDV: String; // Tamanho 1
+    FDV: string; // Tamanho 1
   public
     constructor Create;
     destructor Destroy; override;
 
     property Agencia: TAgencia read FAgencia write FAgencia;
     property Conta: TConta read FConta write FConta;
-    property DV: String read FDV write FDV;
+    property DV: string read FDV write FDV;
   end;
 
   TEmpresa = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 14 ou 15
-    FConvenio: String; // Tamanho 20
+    FConvenio: string; // Tamanho 20
     FContaCorrente : TContaCorrente;
-    FNome: String; // Tamanho 30
+    FNome: string; // Tamanho 30
   public
     constructor Create;
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Convenio: String read FConvenio write FConvenio;
+    property Convenio: string read FConvenio write FConvenio;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
   end;
 
   TArquivo = class(TObject)
@@ -175,21 +173,21 @@ type
 
   TEndereco = class(TObject)
   private
-    FLogradouro: String; // Tamanho 30
-    FNumero: Integer;
-    FComplemento: String; // Tamanho 15
-    FBairro: String; // Tamanho 15
-    FCidade: String; // Tamanho 20
+    FLogradouro: string; // Tamanho 30
+    FNumero: string;
+    FComplemento: string; // Tamanho 15
+    FBairro: string; // Tamanho 15
+    FCidade: string; // Tamanho 20
     FCEP: Integer; // Tamanho 8
-    FEstado: String; // Tamanho 2
+    FEstado: string; // Tamanho 2
   public
-    property Logradouro: String read FLogradouro write FLogradouro;
-    property Numero: Integer read FNumero write FNumero;
-    property Complemento: String read FComplemento write FComplemento;
-    property Bairro: String read FBairro write FBairro;
-    property Cidade: String read FCidade write FCidade;
+    property Logradouro: string read FLogradouro write FLogradouro;
+    property Numero: string read FNumero write FNumero;
+    property Complemento: string read FComplemento write FComplemento;
+    property Bairro: string read FBairro write FBairro;
+    property Cidade: string read FCidade write FCidade;
     property CEP: Integer read FCEP write FCEP;
-    property Estado: String read FEstado write FEstado;
+    property Estado: string read FEstado write FEstado;
   end;
 
   TControleCobranca = class(TObject)
@@ -210,20 +208,22 @@ type
     property ValorTitulosCarteira: Double read FValorTitulosCarteira write FValorTitulosCarteira;
   end;
 
+  {
   TCobranca = class(TObject)
   private
     FCarteira: Integer; // Tamanho 1
     FCadastramento: Integer; // Tamanho 1
-    FTipoDocumento: String; // Tamanho 1
+    FTipoDocumento: string; // Tamanho 1
     FEmissaoBoleto: Integer; // Tamanho 1
-    FDistribuicaoBoleto: String; // Tamanho 1
+    FDistribuicaoBoleto: string; // Tamanho 1
   public
     property Carteira: Integer read FCarteira write FCarteira;
     property Cadastramento: Integer read FCadastramento write FCadastramento;
-    property TipoDocumento: String read FTipoDocumento write FTipoDocumento;
+    property TipoDocumento: string read FTipoDocumento write FTipoDocumento;
     property EmissaoBoleto: Integer read FEmissaoBoleto write FEmissaoBoleto;
-    property DistribuicaoBoleto: String read FDistribuicaoBoleto write FDistribuicaoBoleto;
+    property DistribuicaoBoleto: string read FDistribuicaoBoleto write FDistribuicaoBoleto;
   end;
+  }
 
   TAcrescimosDescontos = class(TObject)
   private
@@ -239,35 +239,35 @@ type
   TSacado = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 15
-    FNome: String; // Tamanho 40
-    FEndereco: String; // Tamanho 40
-    FBairro: String; // Tamanho 15
+    FNome: string; // Tamanho 40
+    FEndereco: string; // Tamanho 40
+    FBairro: string; // Tamanho 15
     FCEP: Integer; // Tamanho 8
-    FCidade: String; // Tamanho 15
-    FUF: String; // Tamanho 2
+    FCidade: string; // Tamanho 15
+    FUF: string; // Tamanho 2
   public
     constructor Create;
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Nome: String read FNome write FNome;
-    property Endereco: String read FEndereco write FEndereco;
-    property Bairro: String read FBairro write FBairro;
+    property Nome: string read FNome write FNome;
+    property Endereco: string read FEndereco write FEndereco;
+    property Bairro: string read FBairro write FBairro;
     property CEP: Integer read FCEP write FCEP;
-    property Cidade: String read FCidade write FCidade;
-    property UF: String read FUF write FUF;
+    property Cidade: string read FCidade write FCidade;
+    property UF: string read FUF write FUF;
   end;
 
   TAvalista = class(TObject)
   private
     FInscricao: TInscricao; // Tamanho 15
-    FNome: String; // Tamanho 40
+    FNome: string; // Tamanho 40
   public
     constructor Create;
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
   end;
 
   TCedente = class(TObject)
@@ -279,7 +279,7 @@ type
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
   end;
 
   TDebitoAutomatico = class(TObject)
@@ -299,7 +299,7 @@ type
     FCamara: Integer;
     FBanco: TBanco;
     FContaCorrente: TContaCorrente;
-    FNome: String; // Tamanho 30
+    FNome: string; // Tamanho 30
     FInscricao: TInscricao;
     FIDTipoTransferencia: string;
   public
@@ -309,9 +309,9 @@ type
     property Camara: Integer read FCamara write FCamara;
     property Banco: TBanco read FBanco write FBanco;
     property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property IDTipoTransfencia: String read FIDTipoTransferencia write FIDTipoTransferencia;
+    property IDTipoTransfencia: string read FIDTipoTransferencia write FIDTipoTransferencia;
   end;
 
   TMoeda = class(TObject)
@@ -325,42 +325,39 @@ type
 
   TCredito = class(TObject)
   private
-    FSeuNumero: String; // Tamanho 20
+    FSeuNumero: string; // Tamanho 20
     FDataPagamento: TDateTime; // DDMMAAAA
     FMoeda: TMoeda;
     FValorPagamento: Double;
-    FNossoNumero: String; // Tamanho 20
+    FNossoNumero: string; // Tamanho 20
     FDataReal: TDateTime; // DDMMAAAA
     FValorReal: Double;
   public
     constructor Create;
     destructor Destroy; override;
 
-    property SeuNumero: String read FSeuNumero write FSeuNumero;
+    property SeuNumero: string read FSeuNumero write FSeuNumero;
     property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     property Moeda: TMoeda read FMoeda write FMoeda;
     property ValorPagamento: Double read FValorPagamento write FValorPagamento;
-    property NossoNumero: String read FNossoNumero write FNossoNumero;
+    property NossoNumero: string read FNossoNumero write FNossoNumero;
     property DataReal: TDateTime read FDataReal write FDataReal;
     property ValorReal: Double read FValorReal write FValorReal;
   end;
 
-  // Estrutura do Registro 0 utilizado em todos os Arquivos
-  // Primeiro e unico no Arquivo
-
   TAviso = class(TObject)
   private
-    FCodigoRetorno: String;
-    FMensagemRetorno: String;
-    FSegmento: String;
-    FSegmentoFilho: String;
-    FSeuNumero: String;
+    FCodigoRetorno: string;
+    FMensagemRetorno: string;
+    FSegmento: string;
+    FSegmentoFilho: string;
+    FSeuNumero: string;
   public
-    property CodigoRetorno: String read FCodigoRetorno write FCodigoRetorno;
-    property MensagemRetorno: String read FMensagemRetorno write FMensagemRetorno;
-    property Segmento: String read FSegmento write FSegmento;
-    property SegmentoFilho: String read FSegmentoFilho write FSegmentoFilho;
-    property SeuNumero: String read FSeuNumero write FSeuNumero;
+    property CodigoRetorno: string read FCodigoRetorno write FCodigoRetorno;
+    property MensagemRetorno: string read FMensagemRetorno write FMensagemRetorno;
+    property Segmento: string read FSegmento write FSegmento;
+    property SegmentoFilho: string read FSegmentoFilho write FSegmentoFilho;
+    property SeuNumero: string read FSeuNumero write FSeuNumero;
   end;
 
   TAvisoList = class(TObjectList)
@@ -373,23 +370,26 @@ type
     property Items[Index: Integer]: TAviso read GetItem write SetItem; default;
   end;
 
+  // Estrutura do Registro 0 utilizado em todos os Arquivos
+  // Primeiro e unico no Arquivo
+
   TRegistro0 = class(TObject)
   private
     FEmpresa: TEmpresa; // Tamanho 14
-    FNomeBanco: String; // Tamanho 30
+    FNomeBanco: string; // Tamanho 30
     FArquivo: TArquivo;
-    FReservadoBanco: String; // Tamanho 20
-    FReservadoEmpresa: String; // Tamanho 20
+    FReservadoBanco: string; // Tamanho 20
+    FReservadoEmpresa: string; // Tamanho 20
     FAviso: TAvisoList;
   public
     constructor Create;
     destructor Destroy; override;
 
     property Empresa: TEmpresa read FEmpresa write FEmpresa;
-    property NomeBanco: String read FNomeBanco write FNomeBanco;
+    property NomeBanco: string read FNomeBanco write FNomeBanco;
     property Arquivo: TArquivo read FArquivo write FArquivo;
-    property ReservadoBanco: String read FReservadoBanco write FReservadoBanco;
-    property ReservadoEmpresa: String read FReservadoEmpresa write FReservadoEmpresa;
+    property ReservadoBanco: string read FReservadoBanco write FReservadoBanco;
+    property ReservadoEmpresa: string read FReservadoEmpresa write FReservadoEmpresa;
     property Aviso: TAvisoList read FAviso write FAviso;
   end;
 
@@ -413,22 +413,38 @@ type
   private
     FServico: TServico;
     FEmpresa: TEmpresa; // Tamanho 15
-    FInformacao1: String; // Tamanho 40
+    FInformacao1: string; // Tamanho 40
     FEndereco: TEndereco;
-    FInformacao2: String; // Tamanho 40
+    FIndFormaPag: TIndFormaPag;
+    FInformacao2: string; // Tamanho 40
     FControleCobranca: TControleCobranca;
     FDataCredito: TDateTime; // DDMMAAAA
+    // Conciliacao Bancaria
+    FData: TDateTime;
+    FValor: Double;
+    FSituacao: string;
+    FStatus: string;
+    FTipoMoeda: string;
+    FSequencia: Integer;
   public
     constructor Create;
     destructor Destroy; override;
 
     property Servico: TServico read FServico write FServico;
     property Empresa: TEmpresa read FEmpresa write FEmpresa;
-    property Informacao1: String read FInformacao1 write FInformacao1;
+    property Informacao1: string read FInformacao1 write FInformacao1;
     property Endereco: TEndereco read FEndereco write FEndereco;
-    property Informacao2: String read FInformacao2 write FInformacao2;
+    property IndFormaPag: TIndFormaPag read FIndFormaPag write FIndFormaPag;
+    property Informacao2: string read FInformacao2 write FInformacao2;
     property ControleCobranca: TControleCobranca read FControleCobranca write FControleCobranca;
     property DataCredito: TDateTime read FDataCredito write FDataCredito;
+    // Conciliacao Bancaria
+    property Data: TDateTime read FData write FData;
+    property Valor: Double read FValor write FValor;
+    property Situacao: string read FSituacao write FSituacao;
+    property Status: string read FStatus write FStatus;
+    property TipoMoeda: string read FTipoMoeda write FTipoMoeda;
+    property Sequencia: Integer read FSequencia write FSequencia;
   end;
 
   // Estrutura do Registro 5 utilizado para os Serviços
@@ -447,6 +463,18 @@ type
     FTotalOutrasEntidades: Double;
     FTotalValorAcrescimo: Double;
     FTotalValorArrecadado: Double;
+    // Conciliacao Bancaria
+    FBloqueadoAcima24h: Double;
+    FLimite: Double;
+    FBloqueadoAte24h: Double;
+    FData: TDateTime;
+    FSituacao: string;
+    FStatus: string;
+    FQtdeRegistros: Integer;
+    FValorDebitos: Double;
+    FValorCreditos: Double;
+    FCodOcorrencia: string;
+    FDescOcorrencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -463,6 +491,18 @@ type
     property TotalOutrasEntidades: Double read FTotalOutrasEntidades write FTotalOutrasEntidades;
     property TotalValorAcrescimo: Double read FTotalValorAcrescimo write FTotalValorAcrescimo;
     property TotalValorArrecadado: Double read FTotalValorArrecadado write FTotalValorArrecadado;
+    // Conciliacao Bancaria
+    property BloqueadoAcima24h: Double read FBloqueadoAcima24h write FBloqueadoAcima24h;
+    property Limite: Double read FLimite write FLimite;
+    property BloqueadoAte24h: Double read FBloqueadoAte24h write FBloqueadoAte24h;
+    property Data: TDateTime read FData write FData;
+    property Situacao: string read FSituacao write FSituacao;
+    property Status: string read FStatus write FStatus;
+    property QtdeRegistros: Integer read FQtdeRegistros write FQtdeRegistros;
+    property ValorDebitos: Double read FValorDebitos write FValorDebitos;
+    property ValorCreditos: Double read FValorCreditos write FValorCreditos;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
    // Estrutura do Segmento B (Opcional)
@@ -471,24 +511,28 @@ type
   private
     FInscricao: TInscricao; // Tamanho 14
     FEndereco: TEndereco;
+    FInformacao10: string;
+    FInformacao11: string;
+    FInformacao12: string;
+
     FDataVencimento: TDateTime; // DDMMAAAA
     FValor: Double;
     FAbatimento: Double;
     FDesconto: Double;
     FMora: Double;
     FMulta: Double;
-    FCodigoDoc: String; // Tamanho 15
+    FCodigoDoc: string; // Tamanho 15
     FAviso: Integer; // Tamanho 1
     FCodigoUG: Integer; // Tamanho 6
-    FEmail: String;
-    FTelefone: String;
+    FEmail: string;
+    FTelefone: string;
     FHonorario: Double;
     FAcrescimo: Double;
     FCodOcorrencia: string;
-    FDescOcorrencia: String;
+    FDescOcorrencia: string;
     FCodigoISPB: Integer;
     FPixTipoChave: TTipoChavePIX;
-    FPixMensagem: String;
+    FPixMensagem: string;
     FPixTXID: string;
     FPixChave: string;
   public
@@ -496,6 +540,10 @@ type
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
+    property Informacao10: string read FInformacao10 write FInformacao10;
+    property Informacao11: string read FInformacao11 write FInformacao11;
+    property Informacao12: string read FInformacao12 write FInformacao12;
+
     property Endereco: TEndereco read FEndereco write FEndereco;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property Valor: Double read FValor write FValor;
@@ -503,20 +551,20 @@ type
     property Desconto: Double read FDesconto write FDesconto;
     property Mora: Double read FMora write FMora;
     property Multa: Double read FMulta write FMulta;
-    property CodigoDoc: String read FCodigoDoc write FCodigoDoc;
+    property CodigoDoc: string read FCodigoDoc write FCodigoDoc;
     property Aviso: Integer read FAviso write FAviso;
     property CodigoUG: Integer read FCodigoUG write FCodigoUG;
-    property Email: String read FEmail write FEmail;
-    property Telefone: String read FTelefone write FTelefone;
+    property Email: string read FEmail write FEmail;
+    property Telefone: string read FTelefone write FTelefone;
     property Honorario: Double read FHonorario write FHonorario;
     property Acrescimo: Double read FAcrescimo write FAcrescimo;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
     property PixTipoChave: TTipoChavePix read FPixTipoChave write FPixTipoChave;
-    property PixMensagem: String read FPixMensagem write FPixMensagem;
-    property PixTXID: String read FPixTXID write FPixTXID;
-    property PixChave: String read FPixChave write FPixChave;
+    property PixMensagem: string read FPixMensagem write FPixMensagem;
+    property PixTXID: string read FPixTXID write FPixTXID;
+    property PixChave: string read FPixChave write FPixChave;
   end;
 
   TSegmentoBList = class(TObjectList)
@@ -532,6 +580,16 @@ type
 
   // Estrutura do Segmento C (Opcional)
 
+  TSubstituta = class(TObject)
+  private
+    FContaCorrente: TContaCorrente;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
+  end;
+
   TSegmentoC = class(TObject)
   private
     FValorCSLL: Double;
@@ -540,8 +598,10 @@ type
     FValorIOF: Double;
     FDeducoes: Double;
     FAcrescimos: Double;
-    FContaCorrente: TContaCorrente;
+    FSubstituta: TSubstituta;
     FValorINSS: Double;
+    FNumContaPagCreditada: string;
+
     FVencimento: TDate;
     FValorDocumento: Double;
     FValorPIS: Double;
@@ -549,10 +609,10 @@ type
     FDescontos: Double;
     FMora: Double;
     FMulta: Double;
-    FNumeroFaturaDocumento: String;
+    FNumeroFaturaDocumento: string;
     FAbatimentos: Double;
     FCodOcorrencia: string;
-    FDescOcorrencia: String;
+    FDescOcorrencia: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -563,8 +623,10 @@ type
     property ValorIOF: Double read FValorIOF write FValorIOF;
     property Deducoes: Double read FDeducoes write FDeducoes;
     property Acrescimos: Double read FAcrescimos write FAcrescimos;
-    property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
+    property Substituta: TSubstituta read FSubstituta write FSubstituta;
     property ValorINSS: Double read FValorINSS write FValorINSS;
+    property NumContaPagCreditada: string read FNumContaPagCreditada write FNumContaPagCreditada;
+
     property Vencimento: TDate read FVencimento write FVencimento;
     property ValorDocumento: Double read FValorDocumento write FValorDocumento;
     property ValorPIS: Double read FValorPIS write FValorPIS;
@@ -572,10 +634,10 @@ type
     property Descontos: Double read FDescontos write FDescontos;
     property Mora: Double read FMora write FMora;
     property Multa: Double read FMulta write FMulta;
-    property NumeroFaturaDocumento: String read FNumeroFaturaDocumento write FNumeroFaturaDocumento;
+    property NumeroFaturaDocumento: string read FNumeroFaturaDocumento write FNumeroFaturaDocumento;
     property Abatimentos: Double read FAbatimentos write FAbatimentos;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoCList = class(TObjectList)
@@ -589,77 +651,36 @@ type
     property Items[Index: Integer]: TSegmentoC read GetItem write SetItem; default;
   end;
 
-  // Estrutura do Segmento D (Opcional)
-
-  TSegmentoD = class(TObject)
-  private
-    FPeriodoCompetencia: Integer;
-    FCentroCusto: String;
-    FCodigoFuncionario: String;
-    FCargo: String;
-    FFeriasInicio: TDate;
-    FFeriasFim: TDate;
-    FDependentesIR: Integer;
-    FDependentesSalarioFamilia: Integer;
-    FHorasSemanais: Integer;
-    FSalarioContribuicao: Double;
-    FFGTS: Double;
-    FValorCredito: Double;
-    FValorDebito: Double;
-    FValorLiquido: Double;
-    FValorBase: Double;
-    FBaseCalculoIRRF: Double;
-    FBaseCalculoFGTS: Double;
-    FDisponibilizacao: String;
-    FCodOcorrencia: string;
-    FDescOcorrencia: String;
-  public
-
-    property PeriodoCompetencia: Integer read FPeriodoCompetencia write FPeriodoCompetencia;
-    property CentroCusto: String read FCentroCusto write FCentroCusto;
-    property CodigoFuncionario: String read FCodigoFuncionario write FCodigoFuncionario;
-    property Cargo: String read FCargo write FCargo;
-    property FeriasInicio: TDate read FFeriasInicio write FFeriasInicio;
-    property FeriasFim: TDate read FFeriasFim write FFeriasFim;
-    property DependentesIR: Integer read FDependentesIR write FDependentesIR;
-    property DependentesSalarioFamilia: Integer read FDependentesSalarioFamilia write FDependentesSalarioFamilia;
-    property HorasSemanais: Integer read FHorasSemanais write FHorasSemanais;
-    property SalarioContribuicao: Double read FSalarioContribuicao write FSalarioContribuicao;
-    property FGTS: Double read FFGTS write FFGTS;
-    property ValorCredito: Double read FValorCredito write FValorCredito;
-    property ValorDebito: Double read FValorDebito write FValorDebito;
-    property ValorLiquido: Double read FValorLiquido write FValorLiquido;
-    property ValorBase: Double read FValorBase write FValorBase;
-    property BaseCalculoIRRF: Double read FBaseCalculoIRRF write FBaseCalculoIRRF;
-    property BaseCalculoFGTS: Double read FBaseCalculoFGTS write FBaseCalculoFGTS;
-    property Disponibilizacao: String read FDisponibilizacao write FDisponibilizacao;
-    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
-  end;
-
-  TSegmentoDList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSegmentoD;
-    procedure SetItem(Index: Integer; Value: TSegmentoD);
-  public
-    function New: TSegmentoD;
-    function Last: TSegmentoD;
-    property Items[Index: Integer]: TSegmentoD read GetItem write SetItem; default;
-  end;
-
-  // Estrutura do Segmento E (Opcional)
+  // Estrutura do Segmento E (Obrigatório - Retorno)
+  // Extrato de Conta Corrente para Conciliação Bancária
 
   TSegmentoE = class(TObject)
   private
-    FInformacaoComplementar: String;
+    FTipoMovimento: TTipoMovimento;
+    FCodMovimento: TInstrucaoMovimento;
+    FConvenio: string;
+    FContaCorrente: TContaCorrente;
+    FNome: string;
+    FNaturezaLanc: TNaturezaLanc;
+    {
+    FInformacaoComplementar: string;
     FMovimento: TTipoMovimentoPagto;
     FCodOcorrencia: string;
-    FDescOcorrencia: String;
+    FDescOcorrencia: string;
+    }
   public
+    property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
+    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
+    property Convenio: string read FConvenio write FConvenio;
+    property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
+    property Nome: string read FNome write FNome;
+    property NaturezaLanc: TNaturezaLanc read FNaturezaLanc write FNaturezaLanc;
+    {
     property Movimento: TTipoMovimentoPagto read FMovimento write FMovimento;
-    property InformacaoComplementar: String read FInformacaoComplementar write FInformacaoComplementar;
+    property InformacaoComplementar: string read FInformacaoComplementar write FInformacaoComplementar;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
+    }
   end;
 
   TSegmentoEList = class(TObjectList)
@@ -672,17 +693,18 @@ type
     property Items[Index: Integer]: TSegmentoE read GetItem write SetItem; default;
   end;
 
-  // Estrutura do Segmento F (Opcional)
+  // Estrutura do Segmento F (Obrigatório - Retorno)
+  // Extrato para Gestão de Caixa
 
   TSegmentoF = class(TObject)
   private
-    FInformacaoComplementar: String;
-    FCodOcorrencia: string;
-    FDescOcorrencia: String;
+    FInformacaoComplementar: string;
+//    FCodOcorrencia: string;
+//    FDescOcorrencia: string;
   public
-    property InformacaoComplementar: String read FInformacaoComplementar write FInformacaoComplementar;
-    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property InformacaoComplementar: string read FInformacaoComplementar write FInformacaoComplementar;
+//    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+//    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoFList = class(TObjectList)
@@ -699,13 +721,13 @@ type
 
   TSegmentoZ = class(TObject)
   private
-    FAutenticacao : String; // Tamanho 64
-    FSeuNumero: String;
-    FNossoNumero: String;
+    FAutenticacao : string; // Tamanho 64
+    FSeuNumero: string;
+    FNossoNumero: string;
   public
-    property Autenticacao: String read FAutenticacao write FAutenticacao;
-    property SeuNumero: String read FSeuNumero write FSeuNumero;
-    property NossoNumero: String read FNossoNumero write FNossoNumero;
+    property Autenticacao: string read FAutenticacao write FAutenticacao;
+    property SeuNumero: string read FSeuNumero write FSeuNumero;
+    property NossoNumero: string read FNossoNumero write FNossoNumero;
   end;
 
   TSegmentoZList = class(TObjectList)
@@ -737,29 +759,27 @@ type
     FCodMovimento: TInstrucaoMovimento; // Tamanho 2
     FFavorecido: TFavorecido;
     FCredito: TCredito;
-    FInformacao2: String; // Tamanho 40
-    FCodigoDOC: String; // Tamanho 2
-    FCodigoTED: String; // Tamanho 5
-    FCodigoComp: String; // Tamanho 2
+    FInformacao2: string; // Tamanho 40
+    FCodigoDOC: string; // Tamanho 2
+    FCodigoTED: string; // Tamanho 5
+    FCodigoComp: string; // Tamanho 2
     FAviso: Integer; // Tamanho 1
-    FCodOcorrencia : String; // Tamanho 2
+    FCodOcorrencia : string; // Tamanho 2
     FNumeroDocumento: Integer;
-    FCodigoISPB: Integer; // Tamanho 8
+    FCodigoISPB: Integer;
 
     FSegmentoB: TSegmentoBList;
     FSegmentoC: TSegmentoCList;
-    FSegmentoD: TSegmentoDList;
-    FSegmentoE: TSegmentoEList;
-    FSegmentoF: TSegmentoFList;
-    FSegmentoZ: TSegmentoZList;
-    FDescOcorrencia: String;
+//    FSegmentoE: TSegmentoEList;
+//    FSegmentoF: TSegmentoFList;
+//    FSegmentoZ: TSegmentoZList;
+    FDescOcorrencia: string;
 
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoC(const Value: TSegmentoCList);
-    procedure SetSegmentoD(const Value: TSegmentoDList);
-    procedure SetSegmentoE(const Value: TSegmentoEList);
-    procedure SetSegmentoF(const Value: TSegmentoFList);
-    procedure SetSegmentoZ(const Value: TSegmentoZList);
+//    procedure SetSegmentoE(const Value: TSegmentoEList);
+//    procedure SetSegmentoF(const Value: TSegmentoFList);
+//    procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
 
   public
@@ -770,22 +790,21 @@ type
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Favorecido: TFavorecido read FFavorecido write FFavorecido;
     property Credito: TCredito read FCredito write FCredito;
-    property Informacao2: String read FInformacao2 write FInformacao2;
-    property CodigoDOC: String read FCodigoDOC write FCodigoDOC;
-    property CodigoTED: String read FCodigoTED write FCodigoTED;
-    property CodigoComp: String read FCodigoComp write FCodigoComp;
+    property Informacao2: string read FInformacao2 write FInformacao2;
+    property CodigoDOC: string read FCodigoDOC write FCodigoDOC;
+    property CodigoTED: string read FCodigoTED write FCodigoTED;
+    property CodigoComp: string read FCodigoComp write FCodigoComp;
     property Aviso: Integer read FAviso write FAviso;
-    property CodOcorrencia: String read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
     property NumeroDocumento: Integer read FNumeroDocumento write FNumeroDocumento;
     property CodigoISPB: Integer read FCodigoISPB write FCodigoISPB;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
-    property SegmentoD: TSegmentoDList read FSegmentoD write SetSegmentoD;
-    property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
-    property SegmentoF: TSegmentoFList read FSegmentoF write SetSegmentoF;
-    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
+//    property SegmentoE: TSegmentoEList read FSegmentoE write SetSegmentoE;
+//    property SegmentoF: TSegmentoFList read FSegmentoF write SetSegmentoF;
+//    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
   TSegmentoAList = class(TObjectList)
@@ -809,7 +828,7 @@ type
     FInformacao1: string;
     FInformacao2: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Avalista: TAvalista read FAvalista write FAvalista;
@@ -856,7 +875,7 @@ type
 
     procedure SetSegmentoH(const Value: TSegmentoHList);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
@@ -893,53 +912,51 @@ type
   TPagador = class(TObject)
   private
     FInscricao: TInscricao;
-    FNome: String;
+    FNome: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
   end;
 
   TBeneficiario = class(TObject)
   private
     FInscricao: TInscricao;
-    FNome: String;
+    FNome: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
   end;
 
   TSacadorAvalista = class(TObject)
   private
     FInscricao: TInscricao;
-    FNome: String;
+    FNome: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Inscricao: TInscricao read FInscricao write FInscricao;
-    property Nome: String read FNome write FNome;
+    property Nome: string read FNome write FNome;
   end;
 
   TSegmentoJ52 = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento;
-    FTipoMovimento: TTipoMovimento;
     FPagador: TPagador;
     FBeneficiario: TBeneficiario;
     FSacadorAvalista: TSacadorAvalista;
-    FChave: String;
-    FTXID: String;
+    FChave: string;
+    FTXID: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
-    property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
     property Pagador: TPagador read FPagador write FPagador;
     property Beneficiario: TBeneficiario read FBeneficiario write FBeneficiario;
@@ -966,7 +983,7 @@ type
     FDataHoraPagamento: TDateTime;
     FProtocoloPagamento: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
@@ -996,9 +1013,10 @@ type
 
   TSegmentoJ = class(TObject)
   private
+    FTipoMovimento: TTipoMovimento;
     FCodMovimento: TInstrucaoMovimento;
-    FCodigoBarras    : String;
-    FNomeCedente     : String;
+    FCodigoBarras    : string;
+    FNomeCedente     : string;
     FDataVencimento  : TDateTime;
     FValorTitulo     : Double;
     FDesconto        : Double;
@@ -1006,29 +1024,31 @@ type
     FDataPagamento   : TDateTime;
     FValorPagamento  : Double;
     FQtdeMoeda       : Double;
-    FReferenciaSacado: String;
+    FReferenciaSacado: string;
     FCodigoMoeda     : Integer;
-    FCodOcorrencia : String;
+    FCodOcorrencia : string;
     FSegmentoJ52: TSegmentoJ52List;
     FSegmentoJ99: TSegmentoJ99List;
-    FSegmentoB: TSegmentoBList;
-    FSegmentoC: TSegmentoCList;
-    FSegmentoZ: TSegmentoZList;
-    FDescOcorrencia: String;
-    FNossoNumero: String;
+//    FSegmentoB: TSegmentoBList;
+//    FSegmentoC: TSegmentoCList;
+//    FSegmentoZ: TSegmentoZList;
+    FDescOcorrencia: string;
+    FNossoNumero: string;
+
     procedure SetSegmentoJ52(const Value: TSegmentoJ52List);
     procedure SetSegmentoJ99(const Value: TSegmentoJ99List);
-    procedure SetSegmentoB(const Value: TSegmentoBList);
-    procedure SetSegmentoC(const Value: TSegmentoCList);
-    procedure SetSegmentoZ(const Value: TSegmentoZList);
+//    procedure SetSegmentoB(const Value: TSegmentoBList);
+//    procedure SetSegmentoC(const Value: TSegmentoCList);
+//    procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
 
+    property TipoMovimento: TTipoMovimento read FTipoMovimento write FTipoMovimento;
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property CodigoBarras: String read FCodigoBarras write FCodigoBarras;
-    property NomeCedente: String read FNomeCedente write FNomeCedente;
+    property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
+    property NomeCedente: string read FNomeCedente write FNomeCedente;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property ValorTitulo: Double read FValorTitulo write FValorTitulo;
     property Desconto: Double read FDesconto write FDesconto;
@@ -1036,17 +1056,17 @@ type
     property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     property ValorPagamento: Double read FValorPagamento write FValorPagamento;
     property QtdeMoeda: Double read FQtdeMoeda write FQtdeMoeda;
-    property ReferenciaSacado: String read FReferenciaSacado write FReferenciaSacado;
+    property ReferenciaSacado: string read FReferenciaSacado write FReferenciaSacado;
     property CodigoMoeda: Integer read FCodigoMoeda write FCodigoMoeda;
-    property CodOcorrencia: String read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
-    property NossoNumero: String read FNossoNumero write FNossoNumero;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
+    property NossoNumero: string read FNossoNumero write FNossoNumero;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
     property SegmentoJ52: TSegmentoJ52List read FSegmentoJ52 write SetSegmentoJ52;
     property SegmentoJ99: TSegmentoJ99List read FSegmentoJ99 write SetSegmentoJ99;
-    property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
-    property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
-    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
+//    property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
+//    property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
+//    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
   TSegmentoJList = class(TObjectList)
@@ -1066,32 +1086,36 @@ type
   TSegmentoW = class(TObject)
   private
     FComplementoRegistro: Integer;
-    FInformacoes1ou2    : String; // Tamanho 1
-    FInformacoes1       : String; // Tamanho 80
-    FInformacoes2       : String; // Tamanho 80
-    FInformacoes3       : String;
-    FInformacoes4       : String;
+    FInformacoes1ou2    : string; // Tamanho 1
+    FInformacoes1       : string; // Tamanho 80
+    FInformacoes2       : string; // Tamanho 80
+    FInformacoes3       : string;
+    FInformacoes4       : string;
     FPagFGTS            : Boolean;
-    FCodReceita         : String; // Tamanho 6
-    FTipoIdContribuinte : String; // Tamanho 2
-    FIdContribuinte     : String; // Tamanho 14
-    FIdentificador      : String; // Tamanho 16
-    FLacreConecSocial   : String; // Tamanho 9
-    FLacreDV            : String; // Tamanho 2
+    FCodReceita         : string; // Tamanho 6
+    FTipoIdContribuinte : string; // Tamanho 2
+    FIdContribuinte     : string; // Tamanho 14
+    FIdentificador      : string; // Tamanho 16
+    FLacreConecSocial   : string; // Tamanho 9
+    FLacreDV            : string; // Tamanho 2
+    FCodOcorrencia: string;
+    FDescOcorrencia: string;
   public
     property ComplementoRegistro: Integer read FComplementoRegistro write FComplementoRegistro;
-    property Informacoes1ou2: String read FInformacoes1ou2 write FInformacoes1ou2;
-    property Informacoes1: String read FInformacoes1 write FInformacoes1;
-    property Informacoes2: String read FInformacoes2 write FInformacoes2;
-    property Informacoes3: String read FInformacoes3 write FInformacoes3;
-    property Informacoes4: String read FInformacoes4 write FInformacoes4;
+    property Informacoes1ou2: string read FInformacoes1ou2 write FInformacoes1ou2;
+    property Informacoes1: string read FInformacoes1 write FInformacoes1;
+    property Informacoes2: string read FInformacoes2 write FInformacoes2;
+    property Informacoes3: string read FInformacoes3 write FInformacoes3;
+    property Informacoes4: string read FInformacoes4 write FInformacoes4;
     property PagFGTS: Boolean read FPagFGTS write FPagFGTS;
-    property CodReceita: String read FCodReceita write FCodReceita;
-    property TipoIdContribuinte: String read FTipoIdContribuinte write FTipoIdContribuinte;
-    property IdContribuinte: String read FIdContribuinte write FIdContribuinte;
-    property Identificador: String read FIdentificador write FIdentificador;
-    property LacreConecSocial: String read FLacreConecSocial write FLacreConecSocial;
-    property LacreDV: String read FLacreDV write FLacreDV;
+    property CodReceita: string read FCodReceita write FCodReceita;
+    property TipoIdContribuinte: string read FTipoIdContribuinte write FTipoIdContribuinte;
+    property IdContribuinte: string read FIdContribuinte write FIdContribuinte;
+    property Identificador: string read FIdentificador write FIdentificador;
+    property LacreConecSocial: string read FLacreConecSocial write FLacreConecSocial;
+    property LacreDV: string read FLacreDV write FLacreDV;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
   end;
 
   TSegmentoWList = class(TObjectList)
@@ -1116,35 +1140,36 @@ type
   TSegmentoN = class(TObject)
   private
     FCodMovimento    : TInstrucaoMovimento; // Tamanho 2
-    FSeuNumero       : String; // Tamanho 20
-    FNossoNumero     : String; // Tamanho 20
-    FNomeContribuinte: String; // Tamanho 30
+    FSeuNumero       : string; // Tamanho 20
+    FNossoNumero     : string; // Tamanho 20
+    FNomeContribuinte: string; // Tamanho 30
     FDataPagamento   : TDateTime; // DDMMAAAA
     FValorPagamento  : Double;
     FSegmentoB: TSegmentoBList;
     FSegmentoW: TSegmentoWList;
     FSegmentoZ: TSegmentoZList;
     FCodOcorrencia: string;
-    FDescOcorrencia: String;
+    FDescOcorrencia: string;
+
     procedure SetSegmentoB(const Value: TSegmentoBList);
     procedure SetSegmentoW(const Value: TSegmentoWList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
   public
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property SeuNumero: String read FSeuNumero write FSeuNumero;
-    property NossoNumero: String read FNossoNumero write FNossoNumero;
-    property NomeContribuinte: String read FNomeContribuinte write FNomeContribuinte;
+    property SeuNumero: string read FSeuNumero write FSeuNumero;
+    property NossoNumero: string read FNossoNumero write FNossoNumero;
+    property NomeContribuinte: string read FNomeContribuinte write FNomeContribuinte;
     property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     property ValorPagamento: Double read FValorPagamento write FValorPagamento;
     property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
     property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property PagamentoLiberado: Boolean read GetPagamentoLiberado;
   end;
 
@@ -1155,7 +1180,7 @@ type
     FSegmentoN           : TSegmentoN;
     FReceita             : Integer;
     FTipoContribuinte    : TTipoInscricao;
-    FidContribuinte      : String; // Tamanho 14
+    FidContribuinte      : string; // Tamanho 14
     FCompetencia         : Integer;
     FValorTributo        : Double;
     FValorOutrasEntidades: Double;
@@ -1163,13 +1188,13 @@ type
     FCodigoPagamento     : TCodigoPagamentoGps;
     FMesAnoCompetencia   : Integer;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
     property Competencia: Integer read FCompetencia write FCompetencia;
     property ValorTributo: Double read FValorTributo write FValorTributo;
     property ValorOutrasEntidades: Double read FValorOutrasEntidades write FValorOutrasEntidades;
@@ -1196,23 +1221,23 @@ type
     FSegmentoN       : TSegmentoN;
     FReceita         : Integer;
     FTipoContribuinte: TTipoInscricao;
-    FidContribuinte  : String; // Tamanho 14
+    FidContribuinte  : string; // Tamanho 14
     FPeriodo         : TDateTime;   // DDMMAAAA
-    FReferencia      : String; // Tamanho 17
+    FReferencia      : string; // Tamanho 17
     FValorPrincipal  : Double;
     FMulta           : Double;
     FJuros           : Double;
     FDataVencimento  : TDateTime; // DDMMAAAA
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
     property Periodo: TDateTime read FPeriodo write FPeriodo;
-    property Referencia: String read FReferencia write FReferencia;
+    property Referencia: string read FReferencia write FReferencia;
     property ValorPrincipal: Double read FValorPrincipal write FValorPrincipal;
     property Multa: Double read FMulta write FMulta;
     property Juros: Double read FJuros write FJuros;
@@ -1236,7 +1261,7 @@ type
     FSegmentoN       : TSegmentoN;
     FReceita         : Integer;
     FTipoContribuinte: TTipoInscricao;
-    FidContribuinte  : String; // Tamanho 14
+    FidContribuinte  : string; // Tamanho 14
     FPeriodo         : TDateTime;  // DDMMAAAA
     FReceitaBruta    : Double;
     FPercentual      : Double;
@@ -1245,13 +1270,13 @@ type
     FJuros           : Double;
     FDataVencimento  : TDate;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
     property Periodo: TDateTime read FPeriodo write FPeriodo;
     property ReceitaBruta: Double read FReceitaBruta write FReceitaBruta;
     property Percentual: Double read FPercentual write FPercentual;
@@ -1275,35 +1300,35 @@ type
   // Segmento N4 - GARE-SP
   // idTributo: 22 = Tributo GARE-SP ICMS
   //            23 = Tributo GARE-SP DR
-  //            24 =Tributo GARE-SP ITCMD
+  //            24 = Tributo GARE-SP ITCMD
 
   TSegmentoN4 = class(TObject)
   private
     FSegmentoN       : TSegmentoN;
     FReceita         : Integer;
     FTipoContribuinte: TTipoInscricao;
-    FidContribuinte  : String; // Tamanho 14
+    FidContribuinte  : string; // Tamanho 14
     FDataVencimento  : TDateTime; // DDMMAAAA
-    FInscEst         : String; // Tamanho 12
-    FNumEtiqueta     : String; // Tamanho 13
+    FInscEst         : string; // Tamanho 12
+    FNumEtiqueta     : string; // Tamanho 13
     FReferencia      : Integer;
-    FNumParcela      : String; // Tamanho 13
+    FNumParcela      : string; // Tamanho 13
     FValorReceita    : Double;
     FJuros           : Double;
     FMulta           : Double;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
-    property InscEst: String read FInscEst write FInscEst;
-    property NumEtiqueta: String read FNumEtiqueta write FNumEtiqueta;
+    property InscEst: string read FInscEst write FInscEst;
+    property NumEtiqueta: string read FNumEtiqueta write FNumEtiqueta;
     property Referencia: Integer read FReferencia write FReferencia;
-    property NumParcela: String read FNumParcela write FNumParcela;
+    property NumParcela: string read FNumParcela write FNumParcela;
     property ValorReceita: Double read FValorReceita write FValorReceita;
     property Juros: Double read FJuros write FJuros;
     property Multa: Double read FMulta write FMulta;
@@ -1330,36 +1355,38 @@ type
     FTributo         : TIndTributo;
     FReceita         : Integer;
     FTipoContribuinte: TTipoInscricao;
-    FidContribuinte  : String; // Tamanho 14
+    FidContribuinte  : string; // Tamanho 14
     FExercicio       : Integer;
-    FRenavam         : String; // Tamanho 9
-    FEstado          : String; // Tamanho 2
+    FRenavam         : string; // Tamanho 9
+    FEstado          : string; // Tamanho 2
     FMunicipio       : Integer;
-    FPlaca           : String; // Tamanho 7
-    FOpcaoPagamento  : String; // Tamanho 1
-    FOpcaoRetirada   : String; // Tamanho 1
+    FPlaca           : string; // Tamanho 7
+    FOpcaoPagamento  : string; // Tamanho 1
+    FOpcaoRetirada   : string; // Tamanho 1
     FValorTributo    : Double;
     FDesconto        : Double;
     FDataVencimento  : TDateTime;
+    FNovoRenavam: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Tributo: TIndTributo read FTributo write FTributo;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
     property Exercicio: Integer read FExercicio write FExercicio;
-    property Renavam: String read FRenavam write FRenavam;
-    property Estado: String read FEstado write FEstado;
+    property Renavam: string read FRenavam write FRenavam;
+    property Estado: string read FEstado write FEstado;
     property Municipio: Integer read FMunicipio write FMunicipio;
-    property Placa: String read FPlaca write FPlaca;
-    property OpcaoPagamento: String read FOpcaoPagamento write FOpcaoPagamento;
-    property OpcaoRetirada: String read FOpcaoRetirada write FOpcaoRetirada;
+    property Placa: string read FPlaca write FPlaca;
+    property OpcaoPagamento: string read FOpcaoPagamento write FOpcaoPagamento;
+    property OpcaoRetirada: string read FOpcaoRetirada write FOpcaoRetirada;
     property ValorTributo: Double read FValorTributo write FValorTributo;
     property Desconto: Double read FDesconto write FDesconto;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
+    property NovoRenavam: string read FNovoRenavam write FNovoRenavam;
   end;
 
   TSegmentoN567List = class(TObjectList)
@@ -1380,9 +1407,9 @@ type
     FSegmentoN           : TSegmentoN;
     FReceita             : Integer;
     FTipoContribuinte    : TTipoInscricao;
-    FidContribuinte      : String; // Tamanho 14
-    FInscEst             : String; // Tamanho 8
-    FOrigem              : String; // Tamanho 16
+    FidContribuinte      : string; // Tamanho 14
+    FInscEst             : string; // Tamanho 8
+    FOrigem              : string; // Tamanho 16
     FValorPrincipal      : Double;
     FAtualizacaoMonetaria: Double;
     FMora                : Double;
@@ -1390,15 +1417,15 @@ type
     FDataVencimento      : TDateTime; // DDMMAAAA
     FPeriodoParcela      :Integer;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
-    property InscEst: String read FInscEst write FInscEst;
-    property Origem: String read FOrigem write FOrigem;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
+    property InscEst: string read FInscEst write FInscEst;
+    property Origem: string read FOrigem write FOrigem;
     property ValorPrincipal: Double read FValorPrincipal write FValorPrincipal;
     property AtualizacaoMonetaria: Double read FAtualizacaoMonetaria write FAtualizacaoMonetaria;
     property Mora: Double read FMora write FMora;
@@ -1425,20 +1452,20 @@ type
     FSegmentoN        : TSegmentoN;
     FReceita          : Integer;
     FTipoContribuinte : TTipoInscricao;
-    FidContribuinte   : String;
-    FCodigoBarras     : String;
+    FidContribuinte   : string;
+    FCodigoBarras     : string;
     FIdentificador    : Integer;
     FLacre            : Integer;
     FLacreDigito: Integer;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property SegmentoN: TSegmentoN read FSegmentoN write FSegmentoN;
     property Receita: Integer read FReceita write FReceita;
     property TipoContribuinte: TTipoInscricao read FTipoContribuinte write FTipoContribuinte;
-    property idContribuinte: String read FidContribuinte write FidContribuinte;
-    property CodigoBarras: String read FCodigoBarras write FCodigoBarras;
+    property idContribuinte: string read FidContribuinte write FidContribuinte;
+    property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
     property Identificador: Integer read FIdentificador write FIdentificador;
     property Lacre: Integer read FLacre write FLacre;
     property LacreDigito: Integer read FLacreDigito write FLacreDigito;
@@ -1466,40 +1493,43 @@ type
   TSegmentoO = class(TObject)
   private
     FCodMovimento: TInstrucaoMovimento; // Tamanho 2
-    FCodigoBarras      : String; // Tamanho 44
-    FNomeConcessionaria: String; // Tamanho 30
+    FCodigoBarras      : string; // Tamanho 44
+    FNomeConcessionaria: string; // Tamanho 30
     FDataVencimento    : TDateTime; // DDMMAAAA
     FDataPagamento     : TDateTime; // DDMMAAAA
     FValorPagamento    : Double;
-    FSeuNumero         : String; // Tamanho 20
-    FNossoNumero       : String; // Tamanho 20
-    FCodOcorrencia : String;
+    FSeuNumero         : string; // Tamanho 20
+    FNossoNumero       : string; // Tamanho 20
+    FCodOcorrencia : string;
     FSegmentoW: TSegmentoWList;
     FSegmentoZ: TSegmentoZList;
+    FSegmentoB: TSegmentoBList;
     FQuantidadeMoeda: Double;
     FValorPago: Double;
     FNotaFiscal: Integer;
-    FDescOcorrencia: String;
+    FDescOcorrencia: string;
 
     procedure SetSegmentoW(const Value: TSegmentoWList);
     procedure SetSegmentoZ(const Value: TSegmentoZList);
+    procedure SetSegmentoB(const Value: TSegmentoBList);
     function GetPagamentoLiberado: Boolean;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property CodigoBarras: String read FCodigoBarras write FCodigoBarras;
-    property NomeConcessionaria: String read FNomeConcessionaria write FNomeConcessionaria;
+    property CodigoBarras: string read FCodigoBarras write FCodigoBarras;
+    property NomeConcessionaria: string read FNomeConcessionaria write FNomeConcessionaria;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property DataPagamento: TDateTime read FDataPagamento write FDataPagamento;
     property ValorPagamento: Double read FValorPagamento write FValorPagamento;
-    property SeuNumero: String read FSeuNumero write FSeuNumero;
-    property NossoNumero: String read FNossoNumero write FNossoNumero;
-    property CodOcorrencia: String read FCodOcorrencia write FCodOcorrencia;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
+    property SeuNumero: string read FSeuNumero write FSeuNumero;
+    property NossoNumero: string read FNossoNumero write FNossoNumero;
+    property CodOcorrencia: string read FCodOcorrencia write FCodOcorrencia;
+    property DescOcorrencia: string read FDescOcorrencia write FDescOcorrencia;
     property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
     property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
+    property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
     property QuantidadeMoeda: Double read FQuantidadeMoeda write FQuantidadeMoeda;
     property ValorPago: Double read FValorPago write FValorPago;
     property NotaFiscal: Integer read FNotaFiscal write FNotaFiscal;
@@ -1515,208 +1545,6 @@ type
     function First: TSegmentoO;
     function Last: TSegmentoO;
     property Items[Index: Integer]: TSegmentoO read GetItem write SetItem; default;
-  end;
-
-  // Lote: Titulos em Cobrança
-  // Serviço: 01 = Cobrança
-
-  // Segmentos Obrigatórios de Remessa: P e Q
-  // Segmentos Opcionais de Remessa: R, S e Y
-
-  // Estrutura do Segmento P (Obrigatorio)
-
-  TSegmentoP = class(TObject)
-  private
-    FCodMovimento: TInstrucaoMovimento; // Tamanho 2
-    FContaCorrente       : TContaCorrente;
-    FNossoNumero         : String; // Tamanho 20
-    FCobranca            : TCobranca;
-    FNumeroDocumento     : String; // Tamanho 15
-    FVencimento          : TDateTime; // DDMMAAAA
-    FValorTitulo         : Double;
-    FAgenciaCobradora    : Integer;
-    FDV                  : String; // Tamanho 1
-    FEspecieTitulo       : Integer;
-    FAceito              : String; // Tamanho 1
-    FDataEmissao         : TDateTime; // DDMMAAAA
-    FJuros               : TAcrescimosDescontos;
-    FDesconto            : TAcrescimosDescontos;
-    FValorIOF            : Double;
-    FValorAbatimento     : Double;
-    FUsoEmpresaCedente   : String; // Tamanho 25
-    FCodigoProtesto      : Integer; // Tamanho 1
-    FPrazoProtesto       : Integer;
-    FCodigoBaixaDevolucao: Integer; // Tamanho 1
-    FPrazoBaixaDevolucao : Integer;
-    FCodigoMoeda         : Integer;
-    FNumeroContrato      : Integer;
-  public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-
-    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property ContaCorrente: TContaCorrente read FContaCorrente write FContaCorrente;
-    property NossoNumero: String read FNossoNumero write FNossoNumero;
-    property Cobranca: TCobranca read FCobranca write FCobranca;
-    property NumeroDocumento: String read FNumeroDocumento write FNumeroDocumento;
-    property Vencimento: TDateTime read FVencimento write FVencimento;
-    property ValorTitulo: Double read FValorTitulo write FValorTitulo;
-    property AgenciaCobradora: Integer read FAgenciaCobradora write FAgenciaCobradora;
-    property DV: String read FDV write FDV;
-    property EspecieTitulo: Integer read FEspecieTitulo write FEspecieTitulo;
-    property Aceito: String read FAceito write FAceito;
-    property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
-    property Juros: TAcrescimosDescontos read FJuros write FJuros;
-    property Desconto: TAcrescimosDescontos read FDesconto write FDesconto;
-    property ValorIOF: Double read FValorIOF write FValorIOF;
-    property ValorAbatimento: Double read FValorAbatimento write FValorAbatimento;
-    property UsoEmpresaCedente: String read FUsoEmpresaCedente write FUsoEmpresaCedente;
-    property CodigoProtesto: Integer read FCodigoProtesto write FCodigoProtesto;
-    property PrazoProtesto: Integer read FPrazoProtesto write FPrazoProtesto;
-    property CodigoBaixaDevolucao: Integer read FCodigoBaixaDevolucao write FCodigoBaixaDevolucao;
-    property PrazoBaixaDevolucao: Integer read FPrazoBaixaDevolucao write FPrazoBaixaDevolucao;
-    property CodigoMoeda: Integer read FCodigoMoeda write FCodigoMoeda;
-    property NumeroContrato: Integer read FNumeroContrato write FNumeroContrato;
-  end;
-
-  TSegmentoPList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSegmentoP;
-    procedure SetItem(Index: Integer; Value: TSegmentoP);
-  public
-    function New: TSegmentoP;
-    function First: TSegmentoP;
-    function Last: TSegmentoP;
-    property Items[Index: Integer]: TSegmentoP read GetItem write SetItem; default;
-  end;
-
-  // Estrutura do Segmento Q (Obrigatorio)
-
-  TSegmentoQ = class(TObject)
-  private
-    FCodMovimento             : TInstrucaoMovimento; // Tamanho 2
-    FSacado                   : TSacado;
-    FAvalista                 : TAvalista;
-    FBancoCorrespondente      : TBanco; // Tamanho 3
-    FNossoNumeroCorrespondente: String; // Tamanho 20
-  public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-
-    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property Sacado: TSacado read FSacado write FSacado;
-    property Avalista: TAvalista read FAvalista write FAvalista;
-    property BancoCorrespondente: TBanco read FBancoCorrespondente write FBancoCorrespondente;
-    property NossoNumeroCorrespondente: String read FNossoNumeroCorrespondente write FNossoNumeroCorrespondente;
-  end;
-
-  TSegmentoQList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSegmentoQ;
-    procedure SetItem(Index: Integer; Value: TSegmentoQ);
-  public
-    function New: TSegmentoQ;
-    property Items[Index: Integer]: TSegmentoQ read GetItem write SetItem; default;
-  end;
-
-  // Estrutura do Segmento R (Opcional)
-
-  TSegmentoR = class(TObject)
-  private
-    FCodMovimento         : TInstrucaoMovimento; // Tamanho 2
-    FDesconto2            : TAcrescimosDescontos;
-    FDesconto3            : TAcrescimosDescontos;
-    FMulta                : TAcrescimosDescontos;
-    FInformacaoaoSacado   : String; // Tamanho 10
-    FInformacao3          : String; // Tamanho 40
-    FInformacao4          : String; // Tamanho 40
-    FCodOcorrSacado       : String; // Tamanho 8
-    FDebitoAutomatico     : TDebitoAutomatico;
-    FAvisoDebitoAutomatico: Integer;
-    FDescOcorrencia: String; // Tamanho 1
-  public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-
-    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property Desconto2: TAcrescimosDescontos read FDesconto2 write FDesconto2;
-    property Desconto3: TAcrescimosDescontos read FDesconto3 write FDesconto3;
-    property Multa: TAcrescimosDescontos read FMulta write FMulta;
-    property InformacaoaoSacado: String read FInformacaoaoSacado write FInformacaoaoSacado;
-    property Informacao3: String read FInformacao3 write FInformacao3;
-    property Informacao4: String read FInformacao4 write FInformacao4;
-    property CodOcorrSacado: String read FCodOcorrSacado write FCodOcorrSacado;
-    property DescOcorrencia: String read FDescOcorrencia write FDescOcorrencia;
-    property DebitoAutomatico: TDebitoAutomatico read FDebitoAutomatico write FDebitoAutomatico;
-    property AvisoDebitoAutomatico: Integer read FAvisoDebitoAutomatico write FAvisoDebitoAutomatico;
-  end;
-
-  TSegmentoRList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSegmentoR;
-    procedure SetItem(Index: Integer; Value: TSegmentoR);
-  public
-    function New: TSegmentoR;
-    property Items[Index: Integer]: TSegmentoR read GetItem write SetItem; default;
-  end;
-
-  // Estrutura do Segmento S (Opcional)
-
-  TSegmentoS = class(TObject)
-  private
-    FCodMovimento : TInstrucaoMovimento; // Tamanho 2
-    FTipoImpressao: Integer;
-    FNumerodaLinha: Integer;
-    FMensagem     : String; // Tamanho 140
-    FTipodeFonte  : Integer;
-    FInformacao5  : String; // Tamanho 40
-    FInformacao6  : String; // Tamanho 40
-    FInformacao7  : String; // Tamanho 40
-    FInformacao8  : String; // Tamanho 40
-    FInformacao9  : String; // Tamanho 40
-  public
-    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property TipoImpressao: Integer read FTipoImpressao write FTipoImpressao;
-    property NumerodaLinha: Integer read FNumerodaLinha write FNumerodaLinha;
-    property Mensagem: String read FMensagem write FMensagem;
-    property TipodeFonte: Integer read FTipodeFonte write FTipodeFonte;
-    property Informacao5: String read FInformacao5 write FInformacao5;
-    property Informacao6: String read FInformacao6 write FInformacao6;
-    property Informacao7: String read FInformacao7 write FInformacao7;
-    property Informacao8: String read FInformacao8 write FInformacao8;
-    property Informacao9: String read FInformacao9 write FInformacao9;
-  end;
-
-  TSegmentoSList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSegmentoS;
-    procedure SetItem(Index: Integer; Value: TSegmentoS);
-  public
-    function New: TSegmentoS;
-    property Items[Index: Integer]: TSegmentoS read GetItem write SetItem; default;
-  end;
-
-
-  // Estrutura do Segmento Y (Opcional)
-
-  TSegmentoY = class(TObject)
-  private
-    FCodMovimento: TInstrucaoMovimento; // Tamanho 2
-    FCodRegistro : Integer; // Tamanho 2
-
-    {Incompleto}
-  public
-    property CodMovimento: TInstrucaoMovimento read FCodMovimento write FCodMovimento;
-    property CodRegistro: Integer read FCodRegistro write FCodRegistro;
-  end;
-
-  TSegmentoYList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSegmentoY;
-    procedure SetItem(Index: Integer; Value: TSegmentoY);
-  public
-    function New: TSegmentoY;
-    property Items[Index: Integer]: TSegmentoY read GetItem write SetItem; default;
   end;
 
   // Lote
@@ -1736,12 +1564,7 @@ type
     FSegmentoN8: TSegmentoN8List;
     FSegmentoN9: TSegmentoN9List;
     FSegmentoO: TSegmentoOList;
-    FSegmentoP: TSegmentoPList;
-    FSegmentoQ: TSegmentoQList;
-    FSegmentoR: TSegmentoRList;
-    FSegmentoS: TSegmentoSList;
     FSegmentoW: TSegmentoWList;
-    FSegmentoY: TSegmentoYList;
 
     procedure SetSegmentoA(const Value: TSegmentoAList);
     procedure SetSegmentoG(const Value: TSegmentoGList);
@@ -1754,14 +1577,9 @@ type
     procedure SetSegmentoN8(const Value: TSegmentoN8List);
     procedure SetSegmentoN9(const Value: TSegmentoN9List);
     procedure SetSegmentoO(const Value: TSegmentoOList);
-    procedure SetSegmentoP(const Value: TSegmentoPList);
-    procedure SetSegmentoQ(const Value: TSegmentoQList);
-    procedure SetSegmentoR(const Value: TSegmentoRList);
-    procedure SetSegmentoS(const Value: TSegmentoSList);
     procedure SetSegmentoW(const Value: TSegmentoWList);
-    procedure SetSegmentoY(const Value: TSegmentoYList);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Registro1: TRegistro1 read FRegistro1 write FRegistro1;
@@ -1777,12 +1595,7 @@ type
     property SegmentoN8: TSegmentoN8List read FSegmentoN8 write SetSegmentoN8;
     property SegmentoN9: TSegmentoN9List read FSegmentoN9 write SetSegmentoN9;
     property SegmentoO: TSegmentoOList read FSegmentoO write SetSegmentoO;
-    property SegmentoP: TSegmentoPList read FSegmentoP write SetSegmentoP;
-    property SegmentoQ: TSegmentoQList read FSegmentoQ write SetSegmentoQ;
-    property SegmentoR: TSegmentoRList read FSegmentoR write SetSegmentoR;
-    property SegmentoS: TSegmentoSList read FSegmentoS write SetSegmentoS;
     property SegmentoW: TSegmentoWList read FSegmentoW write SetSegmentoW;
-    property SegmentoY: TSegmentoYList read FSegmentoY write SetSegmentoY;
 
     property Registro5: TRegistro5 read FRegistro5 write FRegistro5;
   end;
@@ -1797,13 +1610,14 @@ type
     property Items[Index: Integer]: TLote read GetItem write SetItem; default;
   end;
 
-  TPagFor = class(TObject)
+  TPagFor = class(TPersistent)
   private
     FAtivo: Boolean;
     FGeral: TGeral;
     FRegistro0: TRegistro0;
     FLote: TLoteList;
     FRegistro9: TRegistro9;
+    FNomeArq: string;
 
     procedure SetLote(const Value: TLoteList);
   public
@@ -1816,11 +1630,14 @@ type
     property Registro0: TRegistro0 read FRegistro0 write FRegistro0;
     property Lote: TLoteList read FLote write SetLote;
     property Registro9: TRegistro9 read FRegistro9 write FRegistro9;
+    property NomeArq: string read FNomeArq write FNomeArq;
   end;
 
 const
-  PAGAMENTO_LIBERADO_BANCO = '00 BD BDCI BDCD BDCN'; // Os códigos de aprovação de pagamento (pagamento efetuado)
-  PAGAMENTO_LIBERADO_AVISO = '00 BD';                // Os códigos que nào vai gerar aviso
+  // Os códigos de aprovação de pagamento (pagamento efetuado)
+  PAGAMENTO_LIBERADO_BANCO = '00 BD BDCI BDCD BDCN';
+  // Os códigos que não vai gerar aviso
+  PAGAMENTO_LIBERADO_AVISO = '00 BD';
 // OBS: estes dados foram pegos do manual do ITAU.
 // BD   - Pagamento Agendado.
 // BDCI - Pagamento acatado, porém o CPF/CNPJ é inválido.
@@ -1844,7 +1661,7 @@ begin
   FAgencia.Free;
   FConta.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TEmpresa }
@@ -1862,7 +1679,7 @@ begin
   FInscricao.Free;
   FContaCorrente.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSacado }
@@ -1878,7 +1695,7 @@ destructor TSacado.Destroy;
 begin
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TAvalista }
@@ -1894,7 +1711,7 @@ destructor TAvalista.Destroy;
 begin
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TDebitoAutomatico }
@@ -1910,7 +1727,7 @@ destructor TDebitoAutomatico.Destroy;
 begin
   FContaCorrente.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TFavorecido }
@@ -1928,7 +1745,7 @@ begin
   FContaCorrente.Free;
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TCredito }
@@ -1944,7 +1761,7 @@ destructor TCredito.Destroy;
 begin
   FMoeda.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TRegistro0 }
@@ -1964,7 +1781,7 @@ begin
   FArquivo.Free;
   FAviso.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TRegistro9 }
@@ -1980,7 +1797,7 @@ destructor TRegistro9.Destroy;
 begin
   FTotais.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TRegistro1 }
@@ -2002,7 +1819,7 @@ begin
   FEndereco.Free;
   FControleCobranca.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TRegistro5 }
@@ -2024,7 +1841,7 @@ begin
   FTotalCobrancaCaucionada.Free;
   FTotalCobrancaDescontada.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoA }
@@ -2037,10 +1854,9 @@ begin
 
   FSegmentoB := TSegmentoBList.Create{(Self)};
   FSegmentoC := TSegmentoCList.Create{(Self)};
-  FSegmentoD := TSegmentoDList.Create{(Self)};
-  FSegmentoE := TSegmentoEList.Create{(Self)};
-  FSegmentoF := TSegmentoFList.Create{(Self)};
-  FSegmentoZ := TSegmentoZList.Create{(Self)};
+//  FSegmentoE := TSegmentoEList.Create{(Self)};
+//  FSegmentoF := TSegmentoFList.Create{(Self)};
+//  FSegmentoZ := TSegmentoZList.Create{(Self)};
 end;
 
 destructor TSegmentoA.Destroy;
@@ -2049,12 +1865,11 @@ begin
   FCredito.Free;
   FSegmentoB.Free;
   FSegmentoC.Free;
-  FSegmentoD.Free;
-  FSegmentoE.Free;
-  FSegmentoF.Free;
-  FSegmentoZ.Free;
+//  FSegmentoE.Free;
+//  FSegmentoF.Free;
+//  FSegmentoZ.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 
@@ -2079,24 +1894,6 @@ begin
 
     if not Result then
       Exit;
-
-    for I := 0 to SegmentoD.Count - 1 do
-      if Result then
-        Result := POS(SegmentoD.Items[I].CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
-
-    if not Result then
-      Exit;
-
-    for I := 0 to SegmentoE.Count - 1 do
-      if Result then
-        Result := POS(SegmentoE.Items[I].CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
-
-    if not Result then
-      Exit;
-
-    for I := 0 to SegmentoF.Count - 1 do
-      if Result then
-        Result := POS(SegmentoF.Items[I].CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
   end;
 end;
 
@@ -2109,12 +1906,7 @@ procedure TSegmentoA.SetSegmentoC(const Value: TSegmentoCList);
 begin
   FSegmentoC := Value;
 end;
-
-procedure TSegmentoA.SetSegmentoD(const Value: TSegmentoDList);
-begin
-  FSegmentoD := Value;
-end;
-
+{
 procedure TSegmentoA.SetSegmentoE(const Value: TSegmentoEList);
 begin
   FSegmentoE := Value;
@@ -2129,7 +1921,7 @@ procedure TSegmentoA.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
 end;
-
+}
 { TSegmentoAList }
 
 function TSegmentoAList.New: TSegmentoA;
@@ -2163,8 +1955,10 @@ end;
 constructor TSegmentoB.Create;
 begin
   inherited Create;
+
   FInscricao := TInscricao.Create;
   FEndereco  := TEndereco.Create;
+
   FPixTipoChave := tcpNenhum;
 end;
 
@@ -2173,7 +1967,7 @@ begin
   FInscricao.Free;
   FEndereco.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoBList }
@@ -2209,14 +2003,15 @@ end;
 constructor TSegmentoC.Create;
 begin
   inherited Create;
-  FContaCorrente := TContaCorrente.Create;
+
+  FSubstituta := TSubstituta.Create;
 end;
 
 destructor TSegmentoC.Destroy;
 begin
-  FContaCorrente.Free;
+  FSubstituta.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoCList }
@@ -2252,30 +2047,31 @@ end;
 constructor TSegmentoJ.Create;
 begin
   inherited Create;
+
   FSegmentoJ52 := TSegmentoJ52List.Create;
   FSegmentoJ99 := TSegmentoJ99List.Create;
-  FSegmentoB := TSegmentoBList.Create;
-  FSegmentoC := TSegmentoCList.Create;
-  FSegmentoZ := TSegmentoZList.Create;
+//  FSegmentoB := TSegmentoBList.Create;
+//  FSegmentoC := TSegmentoCList.Create;
+//  FSegmentoZ := TSegmentoZList.Create;
 end;
 
 destructor TSegmentoJ.Destroy;
 begin
   FSegmentoJ52.Free;
   FSegmentoJ99.Free;
-  FSegmentoB.Free;
-  FSegmentoC.Free;
-  FSegmentoZ.Free;
+//  FSegmentoB.Free;
+//  FSegmentoC.Free;
+//  FSegmentoZ.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 function TSegmentoJ.GetPagamentoLiberado: Boolean;
-var
-  I: Integer;
+//var
+//  I: Integer;
 begin
   Result := POS(CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
-
+  {
   if Result then
   begin
     for I := 0 to SegmentoB.Count - 1 do
@@ -2289,8 +2085,9 @@ begin
       if Result then
         Result := POS(SegmentoC.Items[I].CodOcorrencia, PAGAMENTO_LIBERADO_BANCO) > 0;
   end;
+  }
 end;
-
+{
 procedure TSegmentoJ.SetSegmentoB(const Value: TSegmentoBList);
 begin
   FSegmentoB := Value;
@@ -2300,7 +2097,7 @@ procedure TSegmentoJ.SetSegmentoC(const Value: TSegmentoCList);
 begin
   FSegmentoC := Value;
 end;
-
+}
 procedure TSegmentoJ.SetSegmentoJ52(const Value: TSegmentoJ52List);
 begin
   FSegmentoJ52 := Value;
@@ -2310,12 +2107,12 @@ procedure TSegmentoJ.SetSegmentoJ99(const Value: TSegmentoJ99List);
 begin
   FSegmentoJ99 := Value;
 end;
-
+{
 procedure TSegmentoJ.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
 end;
-
+}
 { TSegmentoJList }
 
 function TSegmentoJList.New: TSegmentoJ;
@@ -2349,6 +2146,7 @@ end;
 constructor TSegmentoN1.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2356,7 +2154,7 @@ destructor TSegmentoN1.Destroy;
 begin
   FSegmentoN.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoN1List }
@@ -2392,13 +2190,15 @@ end;
 constructor TSegmentoN2.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
 destructor TSegmentoN2.Destroy;
 begin
   FSegmentoN.Free;
-  inherited;
+
+  inherited Destroy;
 end;
 
 { TSegmentoN2List }
@@ -2429,6 +2229,7 @@ end;
 constructor TSegmentoN3.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2436,7 +2237,7 @@ destructor TSegmentoN3.Destroy;
 begin
   FSegmentoN.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoN3List }
@@ -2472,13 +2273,15 @@ end;
 constructor TSegmentoN4.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
 destructor TSegmentoN4.Destroy;
 begin
   FSegmentoN.Free;
-  inherited;
+
+  inherited Destroy;
 end;
 
 { TSegmentoN4List }
@@ -2514,6 +2317,7 @@ end;
 constructor TSegmentoN567.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -2521,7 +2325,7 @@ destructor TSegmentoN567.Destroy;
 begin
   FSegmentoN.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoN567List }
@@ -2557,13 +2361,15 @@ end;
 constructor TSegmentoN8.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
 destructor TSegmentoN8.Destroy;
 begin
   FSegmentoN.Free;
-  inherited;
+
+  inherited Destroy;
 end;
 
 { TSegmentoN8List }
@@ -2602,14 +2408,16 @@ begin
 
   FSegmentoW := TSegmentoWList.Create;
   FSegmentoZ := TSegmentoZList.Create;
+  FSegmentoB := TSegmentoBList.Create;
 end;
 
 destructor TSegmentoO.Destroy;
 begin
   FSegmentoW.Free;
   FSegmentoZ.Free;
+  FSegmentoB.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 function TSegmentoO.GetPagamentoLiberado: Boolean;
@@ -2625,6 +2433,11 @@ end;
 procedure TSegmentoO.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
+end;
+
+procedure TSegmentoO.SetSegmentoB(const Value: TSegmentoBList);
+begin
+  FSegmentoB := Value;
 end;
 
 { TSegmentoOList }
@@ -2651,147 +2464,6 @@ begin
 end;
 
 procedure TSegmentoOList.SetItem(Index: Integer; Value: TSegmentoO);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TSegmentoP }
-
-constructor TSegmentoP.Create;
-begin
-  inherited;
-  FContaCorrente := TContaCorrente.Create;
-  FCobranca      := TCobranca.Create;
-  FJuros         := TAcrescimosDescontos.Create;
-  FDesconto      := TAcrescimosDescontos.Create;
-end;
-
-destructor TSegmentoP.Destroy;
-begin
-  FContaCorrente.Free;
-  FCobranca.Free;
-  FJuros.Free;
-  FDesconto.Free;
-
-  inherited;
-end;
-
-{ TSegmentoPList }
-
-function TSegmentoPList.New: TSegmentoP;
-begin
-  Result := TSegmentoP.Create;
-  Add(Result);
-end;
-
-function TSegmentoPList.First: TSegmentoP;
-begin
-  Result := TSegmentoP(inherited First);
-end;
-
-function TSegmentoPList.Last: TSegmentoP;
-begin
-  Result := TSegmentoP(inherited Last);
-end;
-
-function TSegmentoPList.GetItem(Index: Integer): TSegmentoP;
-begin
-  Result := TSegmentoP(inherited GetItem(Index));
-end;
-
-procedure TSegmentoPList.SetItem(Index: Integer; Value: TSegmentoP);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TSegmentoQ }
-
-constructor TSegmentoQ.Create;
-begin
-  inherited Create;
-  FSacado   := TSacado.Create;
-  FAvalista := TAvalista.Create;
-end;
-
-destructor TSegmentoQ.Destroy;
-begin
-  FSacado.Free;
-  FAvalista.Free;
-
-  inherited;
-end;
-
-{ TSegmentoQList }
-
-function TSegmentoQList.New: TSegmentoQ;
-begin
-  Result := TSegmentoQ.Create;
-  Add(Result);
-end;
-
-function TSegmentoQList.GetItem(Index: Integer): TSegmentoQ;
-begin
-  Result := TSegmentoQ(inherited GetItem(Index));
-end;
-
-procedure TSegmentoQList.SetItem(Index: Integer; Value: TSegmentoQ);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TSegmentoR }
-
-constructor TSegmentoR.Create;
-begin
-  inherited Create;
-  FDesconto2        := TAcrescimosDescontos.Create;
-  FDesconto3        := TAcrescimosDescontos.Create;
-  FMulta            := TAcrescimosDescontos.Create;
-  FDebitoAutomatico := TDebitoAutomatico.Create;
-end;
-
-destructor TSegmentoR.Destroy;
-begin
-  FDesconto2.Free;
-  FDesconto3.Free;
-  FMulta.Free;
-  FDebitoAutomatico.Free;
-
-  inherited;
-end;
-
-{ TSegmentoRList }
-
-function TSegmentoRList.New: TSegmentoR;
-begin
-  Result := TSegmentoR.Create;
-  Add(Result);
-end;
-
-function TSegmentoRList.GetItem(Index: Integer): TSegmentoR;
-begin
-  Result := TSegmentoR(inherited GetItem(Index));
-end;
-
-procedure TSegmentoRList.SetItem(Index: Integer; Value: TSegmentoR);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TSegmentoSList }
-
-function TSegmentoSList.New: TSegmentoS;
-begin
-  Result := TSegmentoS.Create;
-  Add(Result);
-end;
-
-function TSegmentoSList.GetItem(Index: Integer): TSegmentoS;
-begin
-  Result := TSegmentoS(inherited GetItem(Index));
-end;
-
-procedure TSegmentoSList.SetItem(Index: Integer; Value: TSegmentoS);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -2824,24 +2496,6 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TSegmentoYList }
-
-function TSegmentoYList.New: TSegmentoY;
-begin
-  Result := TSegmentoY.Create;
-  Add(Result);
-end;
-
-function TSegmentoYList.GetItem(Index: Integer): TSegmentoY;
-begin
-  Result := TSegmentoY(inherited GetItem(Index));
-end;
-
-procedure TSegmentoYList.SetItem(Index: Integer; Value: TSegmentoY);
-begin
-  inherited SetItem(Index, Value);
-end;
-
 { TSegmentoZList }
 
 function TSegmentoZList.New: TSegmentoZ;
@@ -2870,8 +2524,8 @@ end;
 constructor TPagFor.Create;
 begin
   inherited Create;
-  FGeral := TGeral.Create;
 
+  FGeral := TGeral.Create;
   FRegistro0 := TRegistro0.Create;
   FLote      := TLoteList.Create;
   FRegistro9 := TRegistro9.Create;
@@ -2880,12 +2534,11 @@ end;
 destructor TPagFor.Destroy;
 begin
   FGeral.Free;
-
   FRegistro0.Free;
   FLote.Free;
   FRegistro9.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TPagFor.SetLote(const Value: TLoteList);
@@ -2898,6 +2551,7 @@ end;
 constructor TLote.Create;
 begin
   inherited Create;
+
   FRegistro1 := TRegistro1.Create;
 
   FSegmentoA    := TSegmentoAList.Create;
@@ -2911,11 +2565,8 @@ begin
   FSegmentoN8   := TSegmentoN8List.Create;
   FSegmentoN9   := TSegmentoN9List.Create;
   FSegmentoO    := TSegmentoOList.Create;
-  FSegmentoP    := TSegmentoPList.Create;
-  FSegmentoQ    := TSegmentoQList.Create;
-  FSegmentoR    := TSegmentoRList.Create;
-  FSegmentoS    := TSegmentoSList.Create;
-  FSegmentoY    := TSegmentoYList.Create;
+  FSegmentoW    := TSegmentoWList.Create;
+
   FRegistro5    := TRegistro5.Create;
 end;
 
@@ -2934,16 +2585,11 @@ begin
   FSegmentoN8.Free;
   FSegmentoN9.Free;
   FSegmentoO.Free;
-  FSegmentoP.Free;
-  FSegmentoQ.Free;
-  FSegmentoR.Free;
-  FSegmentoS.Free;
   FSegmentoW.Free;
-  FSegmentoY.Free;
 
   FRegistro5.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TLote.SetSegmentoA(const Value: TSegmentoAList);
@@ -3001,34 +2647,9 @@ begin
   FSegmentoO := Value;
 end;
 
-procedure TLote.SetSegmentoP(const Value: TSegmentoPList);
-begin
-  FSegmentoP := Value;
-end;
-
-procedure TLote.SetSegmentoQ(const Value: TSegmentoQList);
-begin
-  FSegmentoQ := Value;
-end;
-
-procedure TLote.SetSegmentoR(const Value: TSegmentoRList);
-begin
-  FSegmentoR := Value;
-end;
-
-procedure TLote.SetSegmentoS(const Value: TSegmentoSList);
-begin
-  FSegmentoS := Value;
-end;
-
 procedure TLote.SetSegmentoW(const Value: TSegmentoWList);
 begin
   FSegmentoW := Value;
-end;
-
-procedure TLote.SetSegmentoY(const Value: TSegmentoYList);
-begin
-  FSegmentoY := Value;
 end;
 
 { TLoteList }
@@ -3050,29 +2671,6 @@ begin
 end;
 
 procedure TLoteList.SetItem(Index: Integer; Value: TLote);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TSegmentoDList }
-
-function TSegmentoDList.New: TSegmentoD;
-begin
-  Result := TSegmentoD.Create;
-  Add(Result);
-end;
-
-function TSegmentoDList.GetItem(Index: Integer): TSegmentoD;
-begin
-  Result := TSegmentoD(inherited GetItem(Index));
-end;
-
-function TSegmentoDList.Last: TSegmentoD;
-begin
-  Result := TSegmentoD(inherited Last);
-end;
-
-procedure TSegmentoDList.SetItem(Index: Integer; Value: TSegmentoD);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -3151,6 +2749,7 @@ end;
 constructor TSegmentoJ52.Create;
 begin
   inherited Create;
+
   FPagador := TPagador.Create;
   FBeneficiario := TBeneficiario.Create;
   FSacadorAvalista := TSacadorAvalista.Create;
@@ -3162,7 +2761,7 @@ begin
   FBeneficiario.Free;
   FSacadorAvalista.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TPagador }
@@ -3170,6 +2769,7 @@ end;
 constructor TPagador.Create;
 begin
   inherited Create;
+
   FInscricao := TInscricao.Create;
 end;
 
@@ -3177,7 +2777,7 @@ destructor TPagador.Destroy;
 begin
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TBeneficiario }
@@ -3185,6 +2785,7 @@ end;
 constructor TBeneficiario.Create;
 begin
   inherited Create;
+
   FInscricao := TInscricao.Create;
 end;
 
@@ -3192,7 +2793,7 @@ destructor TBeneficiario.Destroy;
 begin
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSacadorAvalista }
@@ -3200,6 +2801,7 @@ end;
 constructor TSacadorAvalista.Create;
 begin
   inherited Create;
+
   FInscricao := TInscricao.Create;
 end;
 
@@ -3207,7 +2809,7 @@ destructor TSacadorAvalista.Destroy;
 begin
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoN9 }
@@ -3215,6 +2817,7 @@ end;
 constructor TSegmentoN9.Create;
 begin
   inherited Create;
+
   FSegmentoN := TSegmentoN.Create;
 end;
 
@@ -3222,7 +2825,7 @@ destructor TSegmentoN9.Destroy;
 begin
   FSegmentoN.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoN9List }
@@ -3253,6 +2856,7 @@ end;
 constructor TArquivoTXT.Create;
 begin
   inherited Create;
+
   FArquivoTXT := TStringList.Create;
 end;
 
@@ -3260,7 +2864,7 @@ destructor TArquivoTXT.Destroy;
 begin
   FArquivoTXT.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TArquivoTXTList }
@@ -3291,6 +2895,7 @@ end;
 constructor TSegmentoN.Create;
 begin
   inherited Create;
+
   FSegmentoB := TSegmentoBList.Create;
   FSegmentoW := TSegmentoWList.Create;
   FSegmentoZ := TSegmentoZList.Create;
@@ -3302,7 +2907,7 @@ begin
   FSegmentoW.Free;
   FSegmentoZ.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 function TSegmentoN.GetPagamentoLiberado: Boolean;
@@ -3385,6 +2990,7 @@ end;
 constructor TSegmentoG.Create;
 begin
   inherited Create;
+
   FCedente := TCedente.Create;
   FDesconto1 := TAcrescimosDescontos.Create;
   FSegmentoH := TSegmentoHList.Create();
@@ -3396,7 +3002,7 @@ begin
   FDesconto1.Free;
   SegmentoH.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TSegmentoG.SetSegmentoH(const Value: TSegmentoHList);
@@ -3417,7 +3023,7 @@ destructor TCedente.Destroy;
 begin
   FInscricao.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoHList }
@@ -3448,6 +3054,7 @@ end;
 constructor TSegmentoH.Create;
 begin
   inherited Create;
+
   FAvalista := TAvalista.Create;
   FDesconto2 := TAcrescimosDescontos.Create;
   FDesconto3 := TAcrescimosDescontos.Create;
@@ -3461,7 +3068,7 @@ begin
   FDesconto3.Free;
   FMulta.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 { TSegmentoJ99List }
@@ -3492,11 +3099,29 @@ end;
 constructor TSegmentoJ99.Create;
 begin
   inherited Create;
+
 end;
 
 destructor TSegmentoJ99.Destroy;
 begin
-  inherited;
+
+  inherited Destroy;
+end;
+
+{ TSubstituta }
+
+constructor TSubstituta.Create;
+begin
+  inherited Create;
+
+  FContaCorrente := TContaCorrente.Create;
+end;
+
+destructor TSubstituta.Destroy;
+begin
+  FContaCorrente.Free;
+
+  inherited Destroy;
 end;
 
 end.

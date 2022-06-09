@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,61 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit PagFor.Modelo.GravarTxtRemessa;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrPagForClass,
+  CNAB240.GravarTxtRemessa;
 
-procedure Register;
+type
+ { TArquivoW_Modelo }
+
+  TArquivoW_Modelo = class(TArquivoW_CNAB240)
+  protected
+    {
+    procedure GeraRegistro0; override;
+
+    procedure GeraRegistro1(I: Integer); override;
+
+    procedure GeraRegistro5(I: Integer); override;
+
+    procedure GeraRegistro9; override;
+
+    procedure GeraSegmentoA(I: Integer); override;
+
+    procedure GeraSegmentoB(mSegmentoBList: TSegmentoBList); override;
+
+    procedure GeraSegmentoC(mSegmentoCList: TSegmentoCList); override;
+
+    procedure GeraSegmentoJ(I: Integer); override;
+
+    procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); override;
+
+    procedure GeraSegmentoN1(I: Integer); override;
+
+    procedure GeraSegmentoN2(I: Integer); override;
+
+    procedure GeraSegmentoN3(I: Integer); override;
+
+    procedure GeraSegmentoN4(I: Integer); override;
+
+    procedure GeraSegmentoN567(I: Integer); override;
+
+    procedure GeraSegmentoN8(I: Integer); override;
+
+    procedure GeraSegmentoN9(I: Integer); override;
+
+    procedure GeraSegmentoO(I: Integer); override;
+
+    procedure GeraSegmentoW(mSegmentoWList: TSegmentoWList); override;
+
+    procedure GeraSegmentoZ(mSegmentoZList: TSegmentoZList); override;
+    }
+  end;
 
 implementation
-
-uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
-
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
-end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
 
 end.

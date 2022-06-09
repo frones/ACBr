@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,27 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit ACBrPagForInterface;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  ACBrPagForClass, ACBrPagForParametros;
 
-procedure Register;
+type
+  IACBrPagForProvider = interface ['{6F408741-0B1E-4033-8A0F-A3F3D0990D8D}']
+
+    function GerarTxt(const aArquivo: TPagFor; var aTxt, aAlerts: string): Boolean;
+    function LerTxt(const aTxt: String; var aArquivo: TPagFor): Boolean;
+
+    procedure Gerar(const aNomeArq: string);
+    procedure Ler;
+
+    function GetConfigGeral: TConfigGeral;
+
+    property ConfigGeral: TConfigGeral read GetConfigGeral;
+  end;
 
 implementation
-
-uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
-
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
-end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
 
 end.

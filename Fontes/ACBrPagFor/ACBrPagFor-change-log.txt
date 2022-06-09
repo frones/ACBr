@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2022
+-- Diversos --
+[*] Refactoring no componente ACBrPagFor, para mais informações leia o tópico no 
+    fórum:
+    https://www.projetoacbr.com.br/forum/topic/67704-refactoring-no-componente-acbrpagfor/
+   Por: Italo Giurizzato Junior
+
 07/06/2022
 -- ACBrPagForGravarTxt --
 [*] Possível solução para geração correta do Registro 5- Banco Bradesco.

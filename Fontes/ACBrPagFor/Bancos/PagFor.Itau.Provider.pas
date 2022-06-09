@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,42 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit PagFor.Itau.Provider;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrPagForClass,
+  ACBrPagForGravarTxt, ACBrPagForLerTxt, CNAB240.Provider;
 
-procedure Register;
+type
+
+  TACBrPagForProviderItau = class (TCNAB240Provider)
+  protected
+    function CriarGeradorTxt(const aPagFor: TPagFor): TArquivoWClass; override;
+    function CriarLeitorTxt(const aPagFor: TPagFor): TArquivoRClass; override;
+  end;
 
 implementation
 
 uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
+  PagFor.Itau.GravarTxtRemessa, PagFor.Itau.LerTxtRetorno;
 
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
+{ TACBrPagForProviderItau }
 
-procedure Register;
+function TACBrPagForProviderItau.CriarGeradorTxt(
+  const aPagFor: TPagFor): TArquivoWClass;
 begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
+  Result := TArquivoW_Itau.Create(Self);
+  Result.PagFor := aPagFor;
 end;
 
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
+function TACBrPagForProviderItau.CriarLeitorTxt(
+  const aPagFor: TPagFor): TArquivoRClass;
+begin
+  Result := TArquivoR_Itau.Create(Self);
+  Result.PagFor := aPagFor;
+end;
 
 end.

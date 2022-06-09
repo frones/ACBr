@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -32,57 +32,23 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForReg;
+unit PagFor.HSBC.LerTxtRetorno;
 
 interface
 
 uses
-  SysUtils, Classes, 
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  CNAB240.LerTxtRetorno, ACBrPagForClass;
 
-procedure Register;
+type
+ { TArquivoR_HSBC }
+
+  TArquivoR_HSBC = class(TArquivoR_CNAB240)
+  protected
+
+  end;
 
 implementation
 
-uses
-  ACBrReg, ACBrPagFor, ACBrPagForConfiguracoes;
-
-{$IFNDEF FPC}
-   {$R ACBrPagFor.dcr}
-{$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrPagFor', [TACBrPagFor]);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrPagFor, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathSalvar',
-     TACBrDirProperty);
-end;
-
-{$ifdef FPC}
-initialization
-   {$I ACBrPagFor.lrs}
-{$endif}
-
 end.
+

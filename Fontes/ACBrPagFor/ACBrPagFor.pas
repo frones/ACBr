@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -39,8 +39,13 @@ interface
 uses
   Classes, SysUtils, Contnrs,
   {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
-  ACBrBase, ACBrPagForClass, ACBrPagForGravarTxt, ACBrPagForLerTxt, ACBrPagForConversao,
-  ACBrPagForArquivo, ACBrPagForArquivoClass, ACBrPagForConfiguracoes;
+  ACBrBase,
+  ACBrPagForClass, ACBrPagForConversao,
+  ACBrPagForArquivo, ACBrPagForArquivoClass, ACBrPagForConfiguracoes,
+  ACBrPagForInterface;
+
+resourcestring
+  ERR_SEM_BANCO = 'Nenhum Banco selecionado';
 
 type
   EACBrPagForException = class(Exception);
@@ -53,6 +58,7 @@ type
     FArquivo  : TACBrPagForArquivoClass;
     FArquivos : TArquivos;
     FConfiguracoes: TConfiguracoes;
+    FProvider: IACBrPagForProvider;
 
     procedure SetArquivo(const Value: TACBrPagForArquivoClass);
   protected
@@ -61,17 +67,26 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
+    procedure SetBanco(aBanco: TBanco = PagNenhum);
+    procedure SetProvider;
+
     procedure Limpar;
-    function GravarTXT(const ANomeArquivo: String = ''): Boolean;
-    function LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean = True): Boolean;
+    function GravarTxt(const ANomeArquivo: String = ''): Boolean; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método GravarTxtRemessa.' {$ENDIF};
+    function GravarTxtRemessa(const ANomeArquivo: String = ''): Boolean;
+    function LerTxt(const AArquivoTXT: String; ACarregarArquivo: Boolean = True): Boolean; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Use o método LerTxtRetorno.' {$ENDIF};
+    function LerTxtRetorno(const AArquivoTXT: String): Boolean;
 
     property Arquivo: TACBrPagForArquivoClass read FArquivo write SetArquivo;
     property Arquivos: TArquivos read FArquivos write FArquivos;
+    property Provider: IACBrPagForProvider read FProvider;
   published
     property Configuracoes: TConfiguracoes  read FConfiguracoes  write FConfiguracoes;
   end;
 
 implementation
+
+uses
+  ACBrPagForProviderManager;
 
 { TACBrPagFor }
 
@@ -79,7 +94,7 @@ constructor TACBrPagFor.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FConfiguracoes      := TConfiguracoes.Create( self );
+  FConfiguracoes := TConfiguracoes.Create( self );
   FConfiguracoes.Name := 'Configuracoes';
 
   {$IFDEF COMPILER6_UP}
@@ -94,21 +109,41 @@ destructor TACBrPagFor.Destroy;
 begin
   FConfiguracoes.Free;
   FArquivos.Free;
+
+  if Assigned(FProvider) then FProvider := nil;
+
   inherited;
 end;
 
-function TACBrPagFor.GravarTXT(const ANomeArquivo: String = ''): Boolean;
+function TACBrPagFor.GravarTxt(const ANomeArquivo: String = ''): Boolean;
+begin
+  Result := GravarTxtRemessa(ANomeArquivo);
+end;
+
+function TACBrPagFor.GravarTxtRemessa(const ANomeArquivo: String): Boolean;
 begin
   if Self.Arquivos.Count <=0 then
     raise EACBrPagForException.Create('ERRO: Nenhum arquivo adicionado.');
 
-  Result := Self.Arquivos.GerarPagFor(ANomeArquivo);
+  if not Assigned(FProvider) then
+    raise EACBrPagForException.Create(ERR_SEM_BANCO);
+
+  FProvider.Gerar(ANomeArquivo);
+
+  Result := True;
 end;
 
-function TACBrPagFor.LerTXT(const AArquivoTXT: String; ACarregarArquivo: Boolean = True): Boolean;
+function TACBrPagFor.LerTxt(const AArquivoTXT: String;
+  ACarregarArquivo: Boolean): Boolean;
 begin
-  FArquivos.Ler(AArquivoTXT, ACarregarArquivo);
-  
+  Result := LerTxtRetorno(AArquivoTXT)
+end;
+
+function TACBrPagFor.LerTxtRetorno(const AArquivoTXT: String): Boolean;
+begin
+  FArquivos.Clear;
+  FArquivos.LoadFromFile(AArquivoTXT);
+
   Result := True;
 end;
 
@@ -124,8 +159,9 @@ procedure TACBrPagFor.Notification(AComponent: TComponent;
 begin
   inherited Notification(AComponent, Operation);
 
-  if (Operation = opRemove) and (FArquivo <> nil) and (AComponent is TACBrPagForArquivoClass) then
-     FArquivo := nil;
+  if (Operation = opRemove) and (FArquivo <> nil) and
+     (AComponent is TACBrPagForArquivoClass) then
+    FArquivo := nil;
 end;
 
 procedure TACBrPagFor.SetArquivo(const Value: TACBrPagForArquivoClass);
@@ -137,7 +173,7 @@ begin
     if Assigned(FArquivo) then
       FArquivo.RemoveFreeNotification(Self);
 
-    OldValue := FArquivo;   // Usa outra variavel para evitar Loop Infinito
+    OldValue := FArquivo; // Usa outra variavel para evitar Loop Infinito
     FArquivo := Value;    // na remoção da associação dos componentes
 
     if Assigned(OldValue) then
@@ -152,74 +188,23 @@ begin
   end;
 end;
 
-(*
-Const
+procedure TACBrPagFor.SetBanco(aBanco: TBanco);
+begin
+  Configuracoes.Geral.Banco := aBanco;
 
- // Tipo de Serviço
- tsCobranca                       = 01;
- tsBoletoEletronico               = 03;
- tsConciliacaoBancaria            = 04;
- tsDebitos                        = 05;
- tsCustodiaCheques                = 06;
- tsGestaoCaixa                    = 07;
- tsConsultaMargem                 = 08;
- tsAverbacaoConsignacao           = 09;
- tsPagamentoDividendos            = 10;
- tsManutencaoConsignacao          = 11;
- tsConsignacaoParcelas            = 12;
- tsGlosaConsignacaoINSS           = 13;
- tsConsultaTributosaPagar         = 14;
- tsPagamentoFornecedor            = 20;
- tsPagamentoContaTributosImpostos = 22;
- tsCompror                        = 25;
- tsComprorRotativo                = 26;
- tsAlegacaoSacado                 = 29;
- tsPagamentoSalarios              = 30;
- tsPagamentoHonorarios            = 32;
- tsPagamentoBolsaAuxilio          = 33;
- tsPagamentoPrebenda              = 34; // Remuneração a Padres e Sacerdotes
- tsVendor                         = 40;
- tsVendoraTermo                   = 41;
- tsPagamentoSinistrosSegurados    = 50;
- tsPagamentoDespesasViajante      = 60;
- tsPagamentoAutorizado            = 70;
- tsPagamentoCredenciados          = 75;
- tsPagamentoRemuneracao           = 77;
- tsPagamentoRepresentantes        = 80;
- tsPagamentoBeneficios            = 90;
- tsPagamentosDiversos             = 98;
+  if aBanco <> pagNenhum then
+    SetProvider;
+end;
 
- // Forma de Lancamento
- flCreditoContaCorrente           = 01;
- flChequePagamentoAdministrativo  = 02;
- flDOCTED                         = 03;
- flCartaoSalario                  = 04; // requer tipo de serviço = 30
- flCreditoContaPoupanca           = 05;
- flOPaDisposicao                  = 10;
- flPagamentoContasTributoscomBar  = 11; // com Código de Barras
- flTributoDARFnormal              = 16;
- flTributoGPS                     = 17; // Guia da Previdência Social
- flTributoDARFsimples             = 18;
- flTributoIPTUprefeituras         = 19;
- flPagamentocomAutenticacao       = 20;
- flTributoDARJ                    = 21;
- flTributoGARESPicms              = 22;
- flTributoGARESPdr                = 23;
- flTributoGARESPitcmd             = 24;
- flTributoIPVA                    = 25;
- flTributoLicenciamento           = 26;
- flTributoDPVAT                   = 27;
- flPagamentoTitulosdoBanco        = 30;
- flPagamentoTitulosdeTerceiros    = 31;
- flExtratoContaCorrente           = 40;
- flTEDoutraTitularidade           = 41;
- flTEDmesmaTitularidade           = 43;
- flTEDtransferenciaContaInvest    = 44;
- flDebitoContaCorrente            = 50;
- flExtratoGestaoCaixa             = 70;
- flDepositoJudicialContaCorrente  = 71;
- flDepositoJudicialPoupanca       = 72;
- flExtratoContaInvestimento       = 73;
-*)
+procedure TACBrPagFor.SetProvider;
+begin
+  if Assigned(FProvider) then
+    FProvider := nil;
+
+  FProvider := TACBrPagForProviderManager.GetProvider(Self);
+
+  if not Assigned(FProvider) then Exit;
+end;
+
 end.
 

@@ -44,6 +44,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 09/06/2022
+-- ACBrEFDBloco_C_Class --
+[*] Alteração nos registros 180, 181, 185 e 186 para corrigir campos que possuem 6 casas decimais
+    https://www.projetoacbr.com.br/forum/topic/67373-formatacao-dos-campos-do-registro-c180-sped-fiscal
+    https://www.projetoacbr.com.br/forum/topic/67506-sped-fiscal-registro-c180-e-c186-troca-de-lfill-por-dfill/	
+    Por: simons
+	
+-- ACBrEPCBloco_F, ACBrEPCBloco_F_Importar --
+[*] Correção do tipo do campo EST_IMP no Registro F150 de inteiro para decimal
+    https://www.projetoacbr.com.br/forum/topic/66973-tipo-errado-no-bloco-f150/
+    Por: n3rv0u5
+
 Data 17/02/2020
 -- ACBrSPEDContabil --
 [*] Alterações nos registros I051 para deixar em conformidade com a versão 8. 

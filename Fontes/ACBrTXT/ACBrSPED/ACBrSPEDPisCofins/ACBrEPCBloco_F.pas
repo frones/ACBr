@@ -395,7 +395,7 @@ type
   private
     FNAT_BC_CRED            : TACBrBaseCalculoCredito;          //Texto fixo contendo "18" Código da Base de Cálculo do Crédito sobre Estoque de Abertura, conforme a Tabela indicada no item 4.3.7.
     FVL_TOT_EST             : currency;                         //Valor Total do Estoque de Abertura
-    FEST_IMP                : integer;                          //Parcela do estoque de abertura referente a bens, produtos e mercadorias importados, ou adquiridas no mercado interno sem direito ao crédito
+    FEST_IMP                : currency;                          //Parcela do estoque de abertura referente a bens, produtos e mercadorias importados, ou adquiridas no mercado interno sem direito ao crédito
     FVL_BC_EST              : currency;                         //Valor da Base de Cálculo do Crédito sobre o Estoque de Abertura (03 - 04)
     FVL_BC_MEN_EST          : currency;                         //Valor da Base de Cálculo Mensal do Crédito sobre o Estoque de Abertura (1/12 avos do campo 05)
     FCST_PIS                : TACBrCstPis;                      //Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.
@@ -409,7 +409,7 @@ type
   public
     property NAT_BC_CRED    : TACBrBaseCalculoCredito read FNAT_BC_CRED    write FNAT_BC_CRED;
     property VL_TOT_EST     : currency                read FVL_TOT_EST     write FVL_TOT_EST;
-    property EST_IMP        : integer                 read FEST_IMP        write FEST_IMP;
+    property EST_IMP        : currency                read FEST_IMP        write FEST_IMP;
     property VL_BC_EST      : currency                read FVL_BC_EST      write FVL_BC_EST;
     property VL_BC_MEN_EST  : currency                read FVL_BC_MEN_EST  write FVL_BC_MEN_EST;
     property CST_PIS        : TACBrCstPis             read FCST_PIS        write FCST_PIS;

@@ -2254,13 +2254,13 @@ begin
         begin
           Add( LFill('C180') +
                LFill( COD_RESP_RET ) +
-               LFill( QUANT_CONV,0,6 ) +
+               DFill( QUANT_CONV,6 ) +
                LFill( UNID) +
-               LFill( VL_UNIT_CONV,0,6 ) +
-               LFill( VL_UNIT_ICMS_OP_CONV,0,6 ) +
-               LFill( VL_UNIT_BC_ICMS_ST_CONV,0,6 ) +
-               LFill( VL_UNIT_ICMS_ST_CONV,0,6 ) +
-               LFill( VL_UNIT_FCP_ST_CONV,0,6 ) +
+               DFill( VL_UNIT_CONV,6 ) +
+               DFill( VL_UNIT_ICMS_OP_CONV,6 ) +
+               DFill( VL_UNIT_BC_ICMS_ST_CONV,6 ) +
+               DFill( VL_UNIT_ICMS_ST_CONV,6 ) +
+               DFill( VL_UNIT_FCP_ST_CONV,6 ) +
                LFill( COD_DA ) +
                LFill( NUM_DA ));
         end;
@@ -2304,11 +2304,10 @@ begin
                DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA,6,True ) +
                DFill( VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA,6,True ) +
                DFill( VL_UNIT_ICMS_OP_CONV_SAIDA,6,True ) +
-               VDFill( VL_UNIT_ICMS_ST_CONV_REST,6) +
-               VDFill( VL_UNIT_FCP_ST_CONV_REST,6) +
-               VDFill( VL_UNIT_ICMS_ST_CONV_COMPL,6) +
-               VDFill( VL_UNIT_FCP_ST_CONV_COMPL,6)
-             );
+               DFill( VL_UNIT_ICMS_ST_CONV_REST,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_REST) ) +
+               DFill( VL_UNIT_FCP_ST_CONV_REST,6,VarIsNull(VL_UNIT_FCP_ST_CONV_REST) ) +
+               DFill( VL_UNIT_ICMS_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ) +
+               DFill( VL_UNIT_FCP_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2337,17 +2336,16 @@ begin
                LFill( COD_MOT_REST_COMPL) +
                DFill( QUANT_CONV, 6, False ) +
                LFill( UNID ) +
-               DFill( VL_UNIT_CONV, 6, False ) +
-               DFill( VL_UNIT_ICMS_NA_OPERACAO_CONV, 6, True ) +
-               DFill( VL_UNIT_ICMS_OP_CONV, 6, True ) +
-               DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV, 6, False ) +
-               DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV, 6, False ) +
-               DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, 6, False ) +
-               VDFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
-               VDFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
-               VDFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
-               VDFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
-             );
+               DFill( VL_UNIT_CONV,6, False ) +
+               DFill( VL_UNIT_ICMS_NA_OPERACAO_CONV,6,True ) +
+               DFill( VL_UNIT_ICMS_OP_CONV,6,True ) +
+               DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,6, False ) +
+               DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,6,False ) +
+               DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,6, False ) +
+               DFill( VL_UNIT_ICMS_ST_CONV_REST,6, VarIsNull(VL_UNIT_ICMS_ST_CONV_REST) ) +
+               DFill( VL_UNIT_FCP_ST_CONV_REST,6, VarIsNull(VL_UNIT_FCP_ST_CONV_REST) ) +
+               DFill( VL_UNIT_ICMS_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ) +
+               DFill( VL_UNIT_FCP_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_FCP_ST_CONV_COMPL) ));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2372,7 +2370,7 @@ begin
                LFill( CST_ICMS )+
                LFill( CFOP )+
                LFill( COD_MOT_REST_COMPL) +
-               LFill( QUANT_CONV ,0,6 ) +
+               DFill( QUANT_CONV, 6 ) +
                LFill( UNID ) +
                LFill( COD_MOD_ENTRADA ) +
                LFill( SERIE_ENTRADA ) +
@@ -2380,11 +2378,11 @@ begin
                LFill( CHV_DFE_ENTRADA ) +
                LFill( DT_DOC_ENTRADA, 'ddmmyyyy' ) +
                LFill( NUM_ITEM_ENTRADA ) +
-               LFill( VL_UNIT_CONV_ENTRADA,0,6 ) +
-               LFill( VL_UNIT_ICMS_OP_CONV_ENTRADA,0,6 ) +
-               LFill( VL_UNIT_BC_ICMS_ST_CONV_ENTRADA,0,6 ) +
-               LFill( VL_UNIT_ICMS_ST_CONV_ENTRADA,0,6 ) +
-               LFill( VL_UNIT_FCP_ST_CONV_ENTRADA,0,6 ));
+               DFill( VL_UNIT_CONV_ENTRADA,6 ) +
+               DFill( VL_UNIT_ICMS_OP_CONV_ENTRADA,6 ) +
+               DFill( VL_UNIT_BC_ICMS_ST_CONV_ENTRADA,6 ) +
+               DFill( VL_UNIT_ICMS_ST_CONV_ENTRADA,6 ) +
+               DFill( VL_UNIT_FCP_ST_CONV_ENTRADA,6 ));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;

@@ -261,7 +261,7 @@ begin
   begin
     NAT_BC_CRED := StrToNatBcCred(Valor);
     VL_TOT_EST := ValorF;
-    EST_IMP := ValorI;
+    EST_IMP := ValorF;
     VL_BC_EST := ValorF;
     VL_BC_MEN_EST := ValorF;
     CST_PIS := StrToCstPis(Valor);

@@ -140,26 +140,26 @@ namespace ACBrLib.NFe
 
                 iniData.WriteToIni(produto, $"Produto{i + 1:000}");
 
-                for (var k = 0; i < produto.NVE.Count; i++)
+                for (var k = 0; k < produto.NVE.Count; k++)
                     iniData.WriteToIni(produto.NVE[k], $"NVE{i + 1:000}{k + 1:000}");
 
-                for (var k = 0; i < produto.DI.Count; i++)
+                for (var k = 0; k < produto.DI.Count; k++)
                 {
                     iniData.WriteToIni(produto.DI[k], $"DI{i + 1:000}{k + 1:000}");
                     for (var j = 0; j < produto.DI[k].LADI.Count; j++)
                         iniData.WriteToIni(produto.DI[k].LADI[j], $"LADI{i + 1:000}{k + 1:000}{j + 1:000}");
                 }
 
-                for (var k = 0; i < produto.DetExport.Count; i++)
+                for (var k = 0; k < produto.DetExport.Count; k++)
                     iniData.WriteToIni(produto.DetExport[k], $"detExport{i + 1:000}{k + 1:000}");
 
-                for (var k = 0; i < produto.Rastro.Count; i++)
+                for (var k = 0; k < produto.Rastro.Count; k++)
                     iniData.WriteToIni(produto.Rastro[k], $"rastro{i + 1:000}{k + 1:000}");
 
-                for (var k = 0; i < produto.Medicamento.Count; i++)
+                for (var k = 0; k < produto.Medicamento.Count; k++)
                     iniData.WriteToIni(produto.Medicamento[k], $"Medicamento{i + 1:000}{k + 1:000}");
 
-                for (var k = 0; i < produto.Arma.Count; i++)
+                for (var k = 0; k < produto.Arma.Count; k++)
                     iniData.WriteToIni(produto.Arma[k], $"Arma{i + 1:000}{k + 1:000}");
 
                 if (produto.ImpostoDevol.pDevol > 0)
@@ -219,7 +219,7 @@ namespace ACBrLib.NFe
             for (var i = 0; i < Volumes.Count; i++)
             {
                 iniData.WriteToIni(Volumes[i], $"Volume{i + 1:000}");
-                for (var k = 0; i < Volumes[i].Lacres.Count; i++)
+                for (var k = 0; k < Volumes[i].Lacres.Count; k++)
                     iniData.WriteToIni(Volumes[i].Lacres[k], $"Lacre{i + 1:000}{k + 1:000}");
             }
 

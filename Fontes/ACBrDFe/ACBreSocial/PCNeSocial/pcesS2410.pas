@@ -458,7 +458,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cpfBenef',   11, 11, 1, pBeneficiario.cpfBenef);
   Gerador.wCampo(tcStr, '', 'matricula',   0, 30, 0, pBeneficiario.matricula);
-  Gerador.wCampo(tcStr, '', 'cnpjOrigem', 14, 14, 1, pBeneficiario.cnpjOrigem);
+  Gerador.wCampo(tcStr, '', 'cnpjOrigem', 14, 14, 0, pBeneficiario.cnpjOrigem);
 
   Gerador.wGrupo('/beneficiario');
 end;

@@ -160,10 +160,10 @@ procedure TArquivoW_Bradesco.GeraSegmentoB(mSegmentoBList: TSegmentoBList);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to mSegmentoBList.Count - 1 do
   begin
+    FpLinha := '';
+
     with mSegmentoBList.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -223,10 +223,10 @@ procedure TArquivoW_Bradesco.GeraSegmentoJ52(
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to mSegmentoJ52List.Count - 1 do
   begin
+    FpLinha := '';
+
     with mSegmentoJ52List.Items[J] do
     begin
       Inc(FQtdeRegistros);

@@ -231,10 +231,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoA(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoA.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoA.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -285,10 +285,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoB(mSegmentoBList: TSegmentoBList);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to mSegmentoBList.Count - 1 do
   begin
+    FpLinha := '';
+
     with mSegmentoBList.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -331,10 +331,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoC(mSegmentoCList: TSegmentoCList);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to mSegmentoCList.Count - 1 do
   begin
+    FpLinha := '';
+
     with mSegmentoCList.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -369,10 +369,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoJ(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoJ.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoJ.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -415,10 +415,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoJ52(
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to mSegmentoJ52List.Count - 1 do
   begin
+    FpLinha := '';
+
     with mSegmentoJ52List.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -454,10 +454,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoN1(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoN1.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoN1.Items[J] do
     begin
       GerarSegmentoN(SegmentoN, I, J);
@@ -493,10 +493,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoN2(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoN2.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoN2.Items[J] do
     begin
       GerarSegmentoN(SegmentoN, I, J);
@@ -534,10 +534,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoN3(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoN3.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoN3.Items[J] do
     begin
       GerarSegmentoN(SegmentoN, I, J);
@@ -575,10 +575,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoN4(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoN4.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoN4.Items[J] do
     begin
       GerarSegmentoN(SegmentoN, I, J);
@@ -618,10 +618,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoN567(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoN567.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoN567.Items[J] do
     begin
       GerarSegmentoN(SegmentoN, I, J);
@@ -688,10 +688,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoN8(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoN8.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoN8.Items[J] do
     begin
       GerarSegmentoN(SegmentoN, I, J);
@@ -729,10 +729,10 @@ procedure TArquivoW_BancodoBrasil.GeraSegmentoO(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoO.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoO.Items[J] do
     begin
       Inc(FQtdeRegistros);

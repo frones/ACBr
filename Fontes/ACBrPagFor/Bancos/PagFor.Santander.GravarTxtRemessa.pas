@@ -210,10 +210,10 @@ procedure TArquivoW_Santander.GeraSegmentoA(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoA.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoA.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -265,10 +265,10 @@ procedure TArquivoW_Santander.GeraSegmentoB(mSegmentoBList: TSegmentoBList);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to mSegmentoBList.Count - 1 do
   begin
+    FpLinha := '';
+
     with mSegmentoBList.Items[J] do
     begin
       Inc(FQtdeRegistros);
@@ -312,10 +312,10 @@ procedure TArquivoW_Santander.GeraSegmentoJ(I: Integer);
 var
   J: Integer;
 begin
-  FpLinha := '';
-
   for J := 0 to PagFor.Lote.Items[I].SegmentoJ.Count - 1 do
   begin
+    FpLinha := '';
+
     with PagFor.Lote.Items[I].SegmentoJ.Items[J] do
     begin
       Inc(FQtdeRegistros);

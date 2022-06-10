@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2022
+-- Diversos --
+[-] Correção nos Segmentos que são uma lista, não estava inicializando a linha a
+    cada ocorrência do segmento.
+   Por: Italo Giurizzato Junior
+
 09/06/2022
 -- Diversos --
 [*] Ajustes para o Lazarus.

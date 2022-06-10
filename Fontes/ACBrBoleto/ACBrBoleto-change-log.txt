@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2022
+--ACBrBancoDaycoval--
+[*] ACBrBoleto Daycoval - Adicionar ocorrencia 01 de RegistroConfirmado
+  Por : Pandaaa / Niltonfq
+
 07/06/2022
 --ACBrBancoUnicredES--
 [*] ACBrBoleto - UNICRED - Regras Numero Documento - SC

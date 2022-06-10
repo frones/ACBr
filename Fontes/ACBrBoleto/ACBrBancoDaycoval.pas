@@ -685,6 +685,7 @@ begin
   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia), 0);
 
   case CodOcorrencia of
+    01: Result := '01 Entrada Confirmada na CIP';
     02: Result := '02 Entrada Confirmada';
     03: Result := '03 Entrada Rejeitada';
     05: Result := '05 Campo Livre Alterado';
@@ -750,6 +751,7 @@ function TACBrBancoDaycoval.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   case CodOcorrencia of
+    01: Result := toRetornoEntradaConfirmadaNaCip;
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoRegistroRecusado;
     05: Result := toRetornoAlteracaoSeuNumero;
@@ -782,6 +784,7 @@ end;
 function TACBrBancoDaycoval.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
   case TipoOcorrencia of
+    toRetornoEntradaConfirmadaNaCIP             : Result := '01';
     toRetornoRegistroConfirmado                 : Result := '02';
     toRetornoRegistroRecusado                   : Result := '03';
     toRetornoAlteracaoSeuNumero                 : Result := '05';

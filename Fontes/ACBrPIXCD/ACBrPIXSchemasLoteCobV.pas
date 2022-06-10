@@ -246,7 +246,8 @@ implementation
 
 uses
   ACBrPIXUtil,
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 { TACBrPIXLoteCobV }
 

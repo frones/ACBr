@@ -156,7 +156,8 @@ implementation
 
 uses
   math, StrUtils, TypInfo,
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 { TACBrTEFAPIClassCliSiTef }
 

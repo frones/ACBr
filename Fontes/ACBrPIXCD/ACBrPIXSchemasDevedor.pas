@@ -125,7 +125,8 @@ type
 implementation
 
 uses
-  ACBrValidador, ACBrUtil;
+  ACBrValidador,
+  ACBrUtil.Strings;
 
 { TACBrPIXDevedorRecebedorBase }
 

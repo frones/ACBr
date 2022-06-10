@@ -367,7 +367,10 @@ implementation
 
 Uses
   dateutils, TypInfo, StrUtils, Math,
-  ACBrUtil, ACBrTEFComum;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrTEFComum;
 
 {$IFNDEF FPC}
    {$R ACBrTEFD.dcr}

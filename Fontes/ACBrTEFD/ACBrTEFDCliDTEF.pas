@@ -257,7 +257,11 @@ implementation
 Uses
   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
   strutils, math, dateutils,
-  ACBrTEFD, ACBrUtil, ACBrTEFComum;
+  ACBrTEFD,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrTEFComum;
 
 { TACBrTEFDRespCliDTEF }
 

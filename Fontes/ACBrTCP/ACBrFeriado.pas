@@ -144,7 +144,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrFeriadoWSCalendario, ACBrFeriadoWSJSON;
+  ACBrUtil.Strings,
+  ACBrFeriadoWSCalendario, ACBrFeriadoWSJSON;
 
 { TACBrFeriadoEvento }
 

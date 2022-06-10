@@ -150,7 +150,10 @@ type
 implementation
 
 uses
-  ACBrPIXUtil, ACBrUtil;
+  ACBrPIXUtil,
+  ACBrUtil.DateTime,
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 { TACBrPIXHorario }
 

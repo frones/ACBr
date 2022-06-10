@@ -164,7 +164,8 @@ implementation
 
 uses
   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
-  ACBrUtil;
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings;
 
 { TACBrTEFDCappta }
 

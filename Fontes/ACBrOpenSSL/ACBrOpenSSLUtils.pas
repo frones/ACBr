@@ -217,7 +217,9 @@ implementation
 uses
   Math, TypInfo,
   synacode, synautil,
-  ACBrUtil;
+  ACBrUtil.Math,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO;
 
 procedure InitOpenSSL;
 begin

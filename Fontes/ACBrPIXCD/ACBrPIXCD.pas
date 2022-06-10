@@ -494,7 +494,11 @@ implementation
 uses
   StrUtils,
   synacode, synautil,
-  ACBrUtil, ACBrCompress, ACBrValidador,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.Base,
+  ACBrCompress, ACBrValidador,
   ACBrPIXUtil;
 
 function StreamToAnsiString(AStream: TStream): AnsiString;

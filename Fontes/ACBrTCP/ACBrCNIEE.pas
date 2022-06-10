@@ -45,7 +45,10 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrUtil, ACBrSocket;
+  ACBrBase,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrSocket;
 
 const
   CURL_Download_Tabela_CNIEE = 'http://www.fazenda.mg.gov.br/empresas/ecf/files/Tabela_CNIEE.bin' ;
@@ -345,7 +348,7 @@ begin
 
   Marca    := AnsiUpperCase(AMarca);
   Modelo   := AnsiUpperCase(AModelo);
-  VersaoSB := AnsiUpperCase(ACBrUtil.OnlyNumber(AVersaoSB));
+  VersaoSB := AnsiUpperCase(OnlyNumber(AVersaoSB));
 
   if RemoveEspacos then
   begin
@@ -359,7 +362,7 @@ begin
   begin
     MarcaAtual  := AnsiUpperCase(Cadastros[I].DescrMarca);
     ModeloAtual := AnsiUpperCase(Cadastros[I].DescrModelo);
-    VersaoAtual := AnsiUpperCase(ACBrUtil.OnlyNumber(Cadastros[I].Versao));
+    VersaoAtual := AnsiUpperCase(OnlyNumber(Cadastros[I].Versao));
 
     if RemoveEspacos then
     begin

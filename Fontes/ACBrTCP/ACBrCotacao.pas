@@ -56,7 +56,8 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrSocket, ACBrUtil;
+  ACBrBase, ACBrSocket,
+  ACBrUtil.Strings;
 
 type
   EACBrCotacao = class(Exception);

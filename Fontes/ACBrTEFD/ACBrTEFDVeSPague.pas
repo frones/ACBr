@@ -247,7 +247,11 @@ implementation
 
 Uses
   strutils, math, dateutils,
-  ACBrUtil, ACBrTEFD, ACBrTEFComum;
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrTEFD, ACBrTEFComum;
 
 { TACBrTEFDVeSPagueCmd }
 

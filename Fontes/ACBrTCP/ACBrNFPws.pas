@@ -95,7 +95,9 @@ type
 
 implementation
 
-uses ACBrUtil, strutils, ssl_openssl ;
+uses ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  strutils, ssl_openssl ;
 
 constructor TACBrNFPws.Create(AOwner : TComponent) ;
 begin
@@ -188,7 +190,7 @@ begin
               '<NomeArquivo>' + ExtractFileName(NomeArquivo) + '</NomeArquivo>'+
               '<EnvioNormal>'+IfThen(ModoTeste,'false','true')+'</EnvioNormal>'+
               '<ConteudoArquivo>' +
-                ACBrUtil.ParseText( SL.Text, False, False )+
+                ACBrUtil.XMLHTML.ParseText( SL.Text, False, False )+
               '</ConteudoArquivo>'+
               '<Observacoes>'+Trim(Observacoes)+'</Observacoes>'+
             '</Enviar>' );

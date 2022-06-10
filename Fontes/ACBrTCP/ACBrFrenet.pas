@@ -75,7 +75,8 @@ uses
   {$Else}
     Jsons,
   {$EndIf}
-  ACBrSocket, ACBrUtil;
+  ACBrSocket,
+  ACBrUtil.Strings;
 
 const
   CURL_FRENET         = 'http://api.frenet.com.br';

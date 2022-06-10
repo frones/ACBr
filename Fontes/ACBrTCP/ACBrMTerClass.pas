@@ -121,7 +121,8 @@ implementation
 
 uses
   strutils,
-  ACBrMTer, ACBrConsts, ACBrUtil;
+  ACBrMTer, ACBrConsts,
+  ACBrUtil.Strings;
 
 { TACBrMTerComando }
 

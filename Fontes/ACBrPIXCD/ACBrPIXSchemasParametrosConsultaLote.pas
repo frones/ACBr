@@ -80,7 +80,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.DateTime;
 
 { TACBrPIXParametrosConsultaLote }
 

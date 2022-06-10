@@ -62,7 +62,8 @@ type
 implementation
 
 uses
-  SysUtils, ACBrFeriado, ACBrUtil;
+  SysUtils, ACBrFeriado,
+  ACBrUtil.Strings;
 
 { TACBrFeriadoWSClass }
 

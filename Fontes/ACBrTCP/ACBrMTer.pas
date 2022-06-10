@@ -302,7 +302,10 @@ implementation
 uses
   strutils, dateutils, math, typinfo,
   ACBrMTerVT100, ACBrMTerPMTG, ACBrMTerStxEtx, ACBrMTerSB100,
-  ACBrConsts, ACBrUtil;
+  ACBrConsts,
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO;
 
 { TACBrMTerComandoEnviado }
 

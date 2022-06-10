@@ -103,7 +103,7 @@ implementation
 
 uses
   synautil,
-  ACBrUtil,
+  ACBrUtil.Strings,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
   {$Else}

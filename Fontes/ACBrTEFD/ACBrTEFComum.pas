@@ -516,7 +516,9 @@ implementation
 
 uses
   Math, strutils,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrConsts;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;
 var

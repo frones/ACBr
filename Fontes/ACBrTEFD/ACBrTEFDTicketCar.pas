@@ -166,7 +166,11 @@ implementation
 
 Uses
   strutils, math, dateutils,
-  ACBrTEFD, ACBrUtil;
+  ACBrTEFD,
+  ACBrUtil.Math,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO;
 
 { TACBrTEFDRespTicketCar }
 

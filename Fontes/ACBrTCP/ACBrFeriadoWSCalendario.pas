@@ -51,7 +51,9 @@ type
 implementation
 
 uses
-  SysUtils, ACBrFeriado, ACBrUtil;
+  SysUtils, ACBrFeriado,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML;
 
 { TACBrFeriadoWSCalendario }
 

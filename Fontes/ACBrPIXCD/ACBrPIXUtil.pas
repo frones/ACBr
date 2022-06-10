@@ -72,7 +72,11 @@ function Crc16BRCode(const AString: String): String;
 implementation
 
 uses
-  ACBrValidador, ACBrUtil, ACBrConsts;
+  ACBrValidador,
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrConsts;
 
 function DetectarTipoChave(const AChave: String): TACBrPIXTipoChave;
 var

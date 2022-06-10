@@ -427,7 +427,10 @@ implementation
 
 uses
   StrUtils, TypInfo,
-  ACBrUtil, ACBrUtil.FilesIO;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO;
 
 { TACBrTEFAPIDadosAutomacao }
 

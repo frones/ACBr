@@ -266,7 +266,9 @@ type
 implementation
 
 uses
-  ACBrPIXUtil, ACBrUtil;
+  ACBrPIXUtil,
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 { TACBrTLV }
 

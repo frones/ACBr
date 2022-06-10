@@ -96,7 +96,8 @@ implementation
 
 uses
   synautil, synacode,
-  ACBrUtil, ACBrPIXBase,
+  ACBrUtil.Strings,
+  ACBrPIXBase,
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    JsonDataObjects_ACBr
   {$Else}

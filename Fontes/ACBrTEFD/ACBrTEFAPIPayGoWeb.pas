@@ -141,7 +141,9 @@ implementation
 
 uses
   math, TypInfo,
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO;
 
 { TACBrTEFAPIClassPayGoWeb }
 

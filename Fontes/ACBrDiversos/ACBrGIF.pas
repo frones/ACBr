@@ -156,7 +156,7 @@ type
 
 implementation
 
-Uses ACBrUtil ;
+Uses ACBrUtil.Strings ;
 
 { TACBrGIF }
 constructor TACBrGIF.Create( AOwner: TComponent );

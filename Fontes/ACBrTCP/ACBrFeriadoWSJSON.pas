@@ -66,7 +66,8 @@ implementation
 
 uses
   SysUtils, StrUtils,
-  ACBrFeriado, ACBrUtil,
+  ACBrFeriado,
+  ACBrUtil.Strings,
   synautil;
 
 { TACBrFeriadoWSJSON }

@@ -313,7 +313,9 @@ implementation
 uses
   DateUtils, Math,
   ACBrPIXUtil,
-  ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings;
 
 { TACBrPIXCalendarioCobVBase }
 

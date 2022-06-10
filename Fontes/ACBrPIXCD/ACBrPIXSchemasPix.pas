@@ -190,7 +190,9 @@ implementation
 uses
   Math,
   ACBrPIXUtil,
-  ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 { TACBrPIXValor }
 

@@ -177,7 +177,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 function PIXStatusCobrancaToString(AStatus: TACBrPIXStatusCobranca): String;
 begin

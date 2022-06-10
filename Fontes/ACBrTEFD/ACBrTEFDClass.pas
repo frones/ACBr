@@ -494,7 +494,9 @@ Uses
   dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
   ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFCliSiTefComum, ACBrTEFDVeSPague,
   ACBrTEFDPayGo, ACBrTEFDPayGoWeb,
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO;
 
 { TACBrTEFDRespostasPendentes }
 

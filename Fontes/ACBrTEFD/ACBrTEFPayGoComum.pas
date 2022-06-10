@@ -315,7 +315,10 @@ implementation
 
 uses
   Math, DateUtils, StrUtils,
-  ACBrTEFPayGoRedes, ACBrConsts, ACBrUtil;
+  ACBrTEFPayGoRedes, ACBrConsts,
+  ACBrUtil.Math,
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 procedure ConteudoToPropertyPayGoWeb(AACBrTEFResp: TACBrTEFResp);
 

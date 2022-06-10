@@ -68,7 +68,8 @@ implementation
 
 uses
   math,
-  ACBrConsts, ACBrUtil;
+  ACBrConsts,
+  ACBrUtil.Base;
 
 { TACBrMTerSB100 }
 

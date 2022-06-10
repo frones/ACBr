@@ -299,7 +299,9 @@ implementation
 
 uses
   DateUtils, Math,
-  ACBrUtil, ACBrConsts, ACBrPIXUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrConsts, ACBrPIXUtil;
 
 { TACBrPIXInfoAdicional }
 

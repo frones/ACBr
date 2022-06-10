@@ -38,7 +38,10 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBase, ACBrUtil, ACBrSocket, ACBrValidador;
+  ACBrBase,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrSocket, ACBrValidador;
 
 type
   EACBrSuframa = class( Exception );
@@ -129,7 +132,7 @@ var
 begin
   FSituacao.Clear;
 
-  ErroMsg := ValidarSuframa( AnsiString( ACBrUtil.OnlyNumber( ASuframa ) ) );
+  ErroMsg := ValidarSuframa( AnsiString( OnlyNumber( ASuframa ) ) );
   if ErroMsg <> '' then
     raise EACBrSuframa.Create( 'Erro de validação: ' + sLineBreak + String( ErroMsg ) );
 
@@ -144,15 +147,15 @@ begin
   begin
     ParametrosConsulta :=
       '<con:consultarSituacaoInscsuf soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-        '<inscsuf>' + ACBrUtil.OnlyNumber( ASuframa ) + '</inscsuf>' +
+        '<inscsuf>' + OnlyNumber( ASuframa ) + '</inscsuf>' +
       '</con:consultarSituacaoInscsuf>';
   end
   else
   begin
     ParametrosConsulta :=
       '<con:consultarSituacaoInscCnpj soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
-        '<cnpj>' + ACBrUtil.OnlyNumber( ACNPJ ) + '</cnpj>' +
-        '<inscsuf>' + ACBrUtil.OnlyNumber( ASuframa ) + '</inscsuf>' +
+        '<cnpj>' + OnlyNumber( ACNPJ ) + '</cnpj>' +
+        '<inscsuf>' + OnlyNumber( ASuframa ) + '</inscsuf>' +
       '</con:consultarSituacaoInscCnpj>';
   end;
 

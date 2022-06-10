@@ -50,7 +50,12 @@ uses
   {$Else}
    Contnrs,
   {$IfEnd}
-  ACBrBase, ACBrSocket, ACBrUtil, IniFiles;
+  ACBrBase, ACBrSocket,
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  IniFiles;
 
 const
   CURL_SEDEX = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';

@@ -94,7 +94,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  ACBrValidador,
   ACBrPIXUtil;
 
 { TACBrPIXParametrosConsultaPix }

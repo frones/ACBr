@@ -92,7 +92,9 @@ implementation
 
 uses
   math, Types, strutils,
-  ACBrTEFD, ACBrTEFPayGoRedes, ACBrUtil, ACBrConsts;
+  ACBrTEFD, ACBrTEFPayGoRedes,
+  ACBrUtil.Base,
+  ACBrConsts;
 
 { TACBrTEFDRespPayGo }
 

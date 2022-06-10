@@ -38,7 +38,11 @@ interface
 
 uses
    Classes, SysUtils, strutils, ACBrConsts, ACBrBase,
-   ACBrUtil, OpenSSLExt;
+   ACBrUtil.Math,
+   ACBrUtil.Strings,
+   ACBrUtil.FilesIO,
+   ACBrUtil.XMLHTML,
+   OpenSSLExt;
 
 const
    CBufferSize = 32768;

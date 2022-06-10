@@ -794,7 +794,11 @@ implementation
 
 uses
   StrUtils, dateutils, math, typinfo,
-  ACBrConsts, ACBrUtil, ACBrValidador
+  ACBrConsts,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Math,
+  ACBrValidador
   {$IfDef ANDROID}
    ,System.IOUtils
   {$EndIf};

@@ -83,7 +83,9 @@ implementation
 
 uses
   strutils,
-  ACBrUtil, ACBrValidador,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrValidador,
   synacode, synautil, blcksock;
 
 constructor TACBrConsultaCPF.Create(AOwner: TComponent);

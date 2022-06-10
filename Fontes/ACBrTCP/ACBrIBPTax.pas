@@ -206,7 +206,7 @@ type
 implementation
 
 uses
-  StrUtils, ACBrValidador, ACBrUtil, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  StrUtils, ACBrValidador, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrUtil.DateTime, ACBrUtil.XMLHTML;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;

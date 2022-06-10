@@ -240,7 +240,10 @@ implementation
 
 uses
   strutils, Math, dateutils,
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrUtil.Math,
+  ACBrUtil.FilesIO;
 
 procedure ConteudoToPropertyCliSiTef(AACBrTEFResp: TACBrTEFResp);
 var

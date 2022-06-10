@@ -246,7 +246,9 @@ implementation
 
 uses
   math, StrUtils,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrConsts;
 
 { TACBrPOSResp }
 

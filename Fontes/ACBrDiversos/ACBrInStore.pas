@@ -35,7 +35,8 @@ unit ACBrInStore;
 interface
 
 uses
-  SysUtils, Classes, ACBrBase, ACBrUtil;
+  SysUtils, Classes, ACBrBase,
+  ACBrUtil.Base;
 
 type
   {$IFDEF RTL230_UP}
@@ -129,7 +130,7 @@ begin
   if Length(pCodigoEtiqueta) < 13 then
      raise Exception.Create('Código EAN13 inválido!');
 
-  if not ACBrUtil.EAN13Valido(pCodigoEtiqueta) then
+  if not EAN13Valido(pCodigoEtiqueta) then
      raise Exception.Create('Digito verificador do código EAN13 inválido!');
 
   // Limpa fields

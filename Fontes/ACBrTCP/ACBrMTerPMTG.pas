@@ -87,7 +87,9 @@ implementation
 
 uses
   math,
-  ACBrMTer, ACBrConsts, ACBrUtil;
+  ACBrMTer, ACBrConsts,
+  ACBrUtil.Math,
+  ACBrUtil.Strings;
 
 { TACBrMTerPMTG }
 

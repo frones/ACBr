@@ -130,7 +130,10 @@ implementation
 uses
   strutils,
   blcksock, synautil,
-  ACBrUtil, ACBrValidador;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.XMLHTML,
+  ACBrValidador;
 
 (*function TACBrConsultaCNPJ.GetCaptchaURL : String ;
 var
@@ -304,14 +307,14 @@ begin
       if trim(StrAux) = '' then
         Break;
 
-      FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
+      FCNAE2.Add(RemoverEspacosDuplos(StrAux));
 
       repeat
         StrAux := LerCampo(Resposta, StrAux);
         if trim(StrAux) = '' then
           Break;
 
-        FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
+        FCNAE2.Add(RemoverEspacosDuplos(StrAux));
       until False;
     until False;
   finally

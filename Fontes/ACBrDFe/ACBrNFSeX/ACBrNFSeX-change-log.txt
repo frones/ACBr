@@ -42,7 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-08/06/2022
+10/06/2022
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade: Barra do Garças/MT - Provedor Coplan.
+   Por: Márcio Baroni
+[+] Incluída a cidade: Corbelia/PR - Provedor IPM.
+   Por: oespiao
+
+09/06/2022
 -- ACBrNFSeXServicos --
 [+] Incluída as cidades: Campina Verde/MG, Delfinopolis/MG e Comendador Gomes/MG
     - Provedor Horus.

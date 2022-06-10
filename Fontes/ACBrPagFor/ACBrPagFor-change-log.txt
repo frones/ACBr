@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/06/2022
+-- Diversos --
+[*] Ajustes para a leitura do arquivo de retorno do banco.
+   Por: Italo Giurizzato Junior
 -- PagFor.Bradesco.GravarTxtRemessa --
 [*] Correções para atender o Banco Bradesco.
    Por: Italo Giurizzato Junior/Diego A. Folieni

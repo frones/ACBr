@@ -382,7 +382,7 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcStr);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('17', 2, tcStr);
@@ -421,7 +421,7 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcStr);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('16', 2, tcStr);
@@ -462,7 +462,7 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcStr);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('18', 2, tcStr);
@@ -503,7 +503,7 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcStr);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(TpIndTributoToStr(PagFor.Geral.idTributo), 2, tcStr);
@@ -546,7 +546,7 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcStr);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(TpIndTributoToStr(PagFor.Geral.idTributo), 2, tcStr);
@@ -616,7 +616,7 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcStr);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(InscEst, 8, tcStrZero);

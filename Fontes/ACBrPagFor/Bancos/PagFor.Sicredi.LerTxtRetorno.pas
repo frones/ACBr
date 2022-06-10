@@ -575,21 +575,21 @@ begin
   if LerCampo(Linha, 133, 2, tcInt) <> 21 then
     Exit;
 
-  PagFor.Lote.Last.SegmentoN3.New;
+  PagFor.Lote.Last.SegmentoN8.New;
 
-  with PagFor.Lote.Last.SegmentoN3.Last do
+  with PagFor.Lote.Last.SegmentoN8.Last do
   begin
     LerSegmentoN(SegmentoN);
 
     Receita := StrToIntDef(LerCampo(Linha, 111, 6, tcStr), 0);
     TipoContribuinte := StrToTpInscricao(mOk, LerCampo(Linha, 117, 2, tcStr));
     idContribuinte := LerCampo(Linha, 119, 14, tcStr);
-    Periodo := LerCampo(Linha, 135, 8, tcDat);
-    ReceitaBruta := LerCampo(Linha, 143, 15, tcDe2);
-    Percentual := LerCampo(Linha, 158, 7, tcDe2);
+//    Periodo := LerCampo(Linha, 135, 8, tcDat);
+//    ReceitaBruta := LerCampo(Linha, 143, 15, tcDe2);
+//    Percentual := LerCampo(Linha, 158, 7, tcDe2);
     ValorPrincipal := LerCampo(Linha, 165, 15, tcDe2);
     Multa := LerCampo(Linha, 180, 15, tcDe2);
-    Juros := LerCampo(Linha, 195, 15, tcDe2);
+//    Juros := LerCampo(Linha, 195, 15, tcDe2);
   end;
 
   {Adicionais segmento N}

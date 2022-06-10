@@ -99,10 +99,15 @@ begin
       begin
         if length(ConteudoCampo) > 0 then
         begin
-          ConteudoCampo := Copy(ConteudoCampo, 1, 2) + '/' +
-                           Copy(ConteudoCampo, 3, 2) + '/' +
-                           Copy(ConteudoCampo, 5, 4);
-          result := EncodeDataHora(ConteudoCampo, 'DD/MM/YYYY');
+          if ConteudoCampo <> '00000000' then
+          begin
+            ConteudoCampo := Copy(ConteudoCampo, 1, 2) + '/' +
+                             Copy(ConteudoCampo, 3, 2) + '/' +
+                             Copy(ConteudoCampo, 5, 4);
+            result := EncodeDataHora(ConteudoCampo, 'DD/MM/YYYY');
+          end
+          else
+            Result := 0;
         end
         else
           result := 0;
@@ -111,7 +116,12 @@ begin
     tcDatISO:
       begin
         if length(ConteudoCampo) > 0 then
-          result := EncodeDataHora(ConteudoCampo, 'YYYY/MM/DD')
+        begin
+          if ConteudoCampo <> '00000000' then
+            result := EncodeDataHora(ConteudoCampo, 'YYYY/MM/DD')
+          else
+            Result := 0;
+        end
         else
           result := 0;
       end;

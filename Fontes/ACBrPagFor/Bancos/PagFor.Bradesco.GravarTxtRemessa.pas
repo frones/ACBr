@@ -122,7 +122,10 @@ begin
     // Segmento A - Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente
     GravarCampo('045', 3, tcStr)
   else
-    GravarCampo('040', 3, tcStr);
+    if PagFor.Lote.Items[I].SegmentoO.Count > 0 then
+      GravarCampo('012', 3, tcStr)
+    else
+      GravarCampo('040', 3, tcStr);
 
   GravarCampo(' ', 1, tcStr);
   GravarCampo(TpInscricaoToStr(PagFor.Lote.Items[I].Registro1.Empresa.Inscricao.Tipo), 1, tcStr);
@@ -142,7 +145,7 @@ begin
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.CEP, 8, tcInt);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Estado, 2, tcStr);
 
-  if PagFor.Lote.Items[I].SegmentoA.Count > 0 then
+  if (PagFor.Lote.Items[I].SegmentoA.Count > 0) or (PagFor.Lote.Items[I].SegmentoO.Count > 0) then
   begin
     // Se for parte do Header (Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente)
     // Segmento A - Pagamentos através de cheque, OP, DOC, TED e crédito em conta corrente

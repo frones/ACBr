@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/06/2022
+-- PagFor.Bradesco.GravarTxtRemessa --
+[*] Correções para atender o Banco Bradesco.
+   Por: Italo Giurizzato Junior/Diego A. Folieni
 -- Diversos --
 [-] Correção nos Segmentos que são uma lista, não estava inicializando a linha a
     cada ocorrência do segmento.

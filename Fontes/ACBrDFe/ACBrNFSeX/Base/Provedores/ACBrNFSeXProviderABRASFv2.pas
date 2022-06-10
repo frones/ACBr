@@ -838,7 +838,7 @@ end;
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, AuxNodeConf: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: TNotaFiscal;
   NumNFSe, NumRps: String;
@@ -880,12 +880,12 @@ begin
 
       if AuxNode <> nil then
       begin
-        AuxNode := AuxNode.Childrens.FindAnyNs('Confirmacao');
+        AuxNodeConf := AuxNode.Childrens.FindAnyNs('Confirmacao');
 
-        if AuxNode = nil then
-          AuxNode := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+        if AuxNodeConf = nil then
+          AuxNodeConf := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
 
-        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataHora'), tcStr));
+        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), tcStr));
         Response.DescSituacao := '';
 
         if Response.DataCanc > 0 then

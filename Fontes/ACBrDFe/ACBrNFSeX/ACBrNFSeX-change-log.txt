@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/06/2022
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Correção na leitura das tags referente ao cancelamento da nota ao 
+    tratar o retorno do Consultar NFS-e por Rps.
+   Por: eazschornack
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs da cidade: Barra do Garças/MT - Provedor Coplan.
    Por: Márcio Baroni

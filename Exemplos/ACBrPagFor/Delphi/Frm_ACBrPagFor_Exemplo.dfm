@@ -12,7 +12,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96

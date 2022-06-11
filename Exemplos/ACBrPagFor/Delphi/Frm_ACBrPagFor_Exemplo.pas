@@ -965,10 +965,10 @@ begin
     'Arquivos TXT (*.txt)|*.txt|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrPagFor1.Configuracoes.Arquivos.PathSalvar;
 
-  NomeArquivo := OpenDialog1.FileName;
-
   if OpenDialog1.Execute then
   begin
+    NomeArquivo := OpenDialog1.FileName;
+
     ACBrPagFor1.LerTxtRetorno(NomeArquivo);
 
     LogMsg.Lines.Add('Arquivo de Retorno: ' + NomeArquivo);

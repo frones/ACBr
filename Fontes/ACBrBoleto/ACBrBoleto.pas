@@ -56,7 +56,7 @@ const
   CConta      = 'CONTA';
   CTitulo     = 'TITULO';
   CWebService = 'WEBSERVICE';
-  cACBrTipoOcorrenciaDecricao: array[0..309] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..310] of String = (
     {Ocorrências para arquivo remessa}
     'Remessa Registrar',
     'Remessa Baixar',
@@ -369,7 +369,8 @@ const
     'Retorno Sustação Solicitada',
     'Retorno Título Utilizado Como Garantia em Operação de Desconto',
     'Retorno Título Descontável Com Desistência de Garantia em Operação de Desconto',
-    'Retorno Intenção de Pagamento'
+    'Retorno Intenção de Pagamento',
+    'Retorno Entrada Confirmada na CIP'
 );
 
 type
@@ -759,7 +760,8 @@ type
     toRetornoSustacaoSolicitada,
     toRetornoTituloDescontado,
     toRetornoTituloDescontavel,
-    toRetornoIntensaoPagamento
+    toRetornoIntensaoPagamento ,
+    toRetornoEntradaConfirmadaNaCip
   );
 
   //Complemento de instrução para alterar outros dados

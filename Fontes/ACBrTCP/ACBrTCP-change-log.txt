@@ -37,6 +37,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/06/2022
+-- ACBrMTerClass --
+[-] Correção de erro de compilação
+   Por: Italo Giurizzato Junior
+
 05/05/2022
 -- ACBrNCMs --
 [-] Correção de memory leak ao carregar um arquivo Json inválido.

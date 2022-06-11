@@ -122,7 +122,7 @@ implementation
 uses
   strutils,
   ACBrMTer, ACBrConsts,
-  ACBrUtil.Strings;
+  ACBrUtil.Strings, ACBrUtil.Compatibilidade;
 
 { TACBrMTerComando }
 

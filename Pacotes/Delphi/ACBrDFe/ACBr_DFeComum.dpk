@@ -37,6 +37,11 @@ requires
   ACBr_TCP;
 
 contains
+  ACBrXmlBase in '..\..\..\Fontes\ACBrDFe\ACBrXmlBase.pas',
+  ACBrXmlDocument in '..\..\..\Fontes\ACBrDFe\ACBrXmlDocument.pas',
+  ACBrXmlReader in '..\..\..\Fontes\ACBrDFe\ACBrXmlReader.pas',
+  ACBrXmlWriter in '..\..\..\Fontes\ACBrDFe\ACBrXmlWriter.pas',
+
   ACBrDFeConfiguracoes in '..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas',
   ACBrDFeUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeUtil.pas',
   ACBrDFeWebService in '..\..\..\Fontes\ACBrDFe\ACBrDFeWebService.pas',

@@ -113,9 +113,9 @@ begin
     tpConsulta         : FPURL := FPURL + '/BoletoConsulta';
     tpConsultaDetalhe  : FPURL := FPURL + '/BoletoConsultaLista';
     tpAltera           : begin
-                           if Titulos.OcorrenciaOriginal.Tipo=TACBrTipoOcorrencia.toRemessaAlterarVencimento then
+                           if Titulos.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaAlterarVencimento then
                              FPURL := FPURL + '/BoletoProrrogacao'
-                           else if Titulos.OcorrenciaOriginal.Tipo=TACBrTipoOcorrencia.toRemessaProtestar then
+                           else if Titulos.OcorrenciaOriginal.Tipo = ACBrBoleto.toRemessaProtestar then
                              FPURL := FPURL + '/BoletoProtesto';
                          end;
     tpBaixa            : FPURL := FPURL + '/BoletoBaixa';

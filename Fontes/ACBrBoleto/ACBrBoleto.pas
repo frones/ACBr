@@ -419,7 +419,8 @@ type
     cobBancoRendimento,
 	  cobBancoInter,
     cobBancoSofisaSantander,
-    cobBS2
+    cobBS2,
+    cobPenseBankAPI
     );
 
   TACBrTitulo = class;
@@ -1056,6 +1057,8 @@ type
     FKeyUser: string;
     FScope: string;
     FIndicadorPix: boolean;
+    FIndicadorSMS: Boolean;
+    FIndicadorEmail: Boolean;
 
     procedure SetClientID(const Value: string);
     procedure SetClientSecret(const Value: string);
@@ -1071,6 +1074,9 @@ type
     property KeyUser: string read fKeyUser write setKeyUser;
     property Scope: string read fScope write setScope;
     property IndicadorPix: boolean read FIndicadorPix write SetIndicadorPix default False;
+    property IndicadorEmail: Boolean read FIndicadorEmail write FIndicadorEmail default False;
+    property IndicadorSMS: Boolean read FIndicadorSMS write FIndicadorSMS default False;
+
   end;
 
   { TACBrCedente }
@@ -1856,7 +1862,7 @@ Uses {$IFNDEF NOGUI}Forms,{$ENDIF} Math, dateutils, strutils,  ACBrBoletoWS,
      ACBrBancoCresolSCRS, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
      ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC, ACBrBancoAlfa, ACBrBancoCresol,
      ACBrBancoBradescoMoneyPlus, ACBrBancoC6, ACBrBancoRendimento, ACBrBancoInter, ACBrBancoSofisaSantander,
-     ACBrBancoBS2;
+     ACBrBancoBS2, ACBrBancoPenseBank;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -4382,6 +4388,7 @@ begin
      cobBancoInter           : fBancoClass := TACBrBancoInter.Create(Self);          {077}
      cobBancoSofisaSantander : fBancoClass := TACBrBancoSofisaSantander.Create(Self); {637}
      cobBS2                  : fBancoClass := TACBrBancoBS2.Create(Self);             {218}
+     cobPenseBankAPI         : fBancoClass := TACBrBancoPenseBank.Create(Self);
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

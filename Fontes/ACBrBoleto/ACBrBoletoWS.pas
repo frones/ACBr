@@ -376,7 +376,8 @@ implementation
 
 uses
   ACBrBoletoW_Caixa, ACBrBoletoRet_Caixa, ACBrBoletoW_BancoBrasil, ACBrBoletoRet_BancoBrasil, ACBrBoletoW_BancoBrasil_API, ACBrBoletoRet_BancoBrasil_API, ACBrBoletoW_Itau, ACBrBoletoRet_Itau,
-  ACBrBoletoW_Credisis, ACBrBoletoRet_Credisis, ACBrBoletoW_Sicredi_API, ACBrBoletoRet_Sicredi_API;
+  ACBrBoletoW_Credisis, ACBrBoletoRet_Credisis, ACBrBoletoW_Sicredi_API, ACBrBoletoRet_Sicredi_API,
+  ACBrBoletoW_PenseBank_API, ACBrBoletoRet_PenseBank_API;
 
 { TOAuth }
 
@@ -1094,6 +1095,11 @@ begin
         FRetornoBanco  := TRetornoEnvio_Credisis.Create(FBoleto);
         FBoletoWSClass.FDFeSSL.UseCertificateHTTP := False;
       end;  
+    cobPenseBankAPI:
+      begin
+        FBoletoWSClass := TBoletoW_PenseBank_API.Create(Self);
+        FRetornoBanco  := TRetornoEnvio_PenseBank_API.Create(FBoleto);
+      end;
 
   else
     FBoletoWSClass := TBoletoWSClass.Create(Self);

@@ -50,6 +50,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/06/2022
+--ACBrBancoPenseBank, ACBrBoleto, ACBrBancoBrasil, ACBrBoletoWS, ACBrBoletoW_PenseBankAPI, ACBrBoletoRet_PenseBank, ACBrBoletoConversao, ACBrBoletoRetorno--
+[+] Adicionado as Classe do PenseBank API.
+    por: Ederson Selvati
+    https://www.projetoacbr.com.br/forum/topic/67018-novo-banco-adicionado-pensebank/
+
+08/06/2022
+--ACBrBancoBanestes--
+[*] Adicionado os codigos de Mora aceitos pelo banco.
+    por: Atual Sistemas
+    https://www.projetoacbr.com.br/forum/topic/66698-ajuste-dos-c%C3%B3digos-mora-aceitos-para-banco-banestes-laytou-240-e-400/
+
+
+10/06/2022
 --ACBrBancoDaycoval--
 [*] ACBrBoleto Daycoval - Adicionar ocorrencia 01 de RegistroConfirmado
   Por : Pandaaa / Niltonfq

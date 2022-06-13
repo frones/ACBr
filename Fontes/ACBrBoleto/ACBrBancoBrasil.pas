@@ -50,9 +50,9 @@ type
    protected
      procedure EhObrigatorioContaDV; override;
      procedure EhObrigatorioAgenciaDV; override;
+     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
    private
     fQtMsg: Integer;
-    function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function NossoNumeroSemFormatacaoLerRetorno(const Convenio, Carteira, Linha: String): String;
     procedure LerRetorno400Pos6(ARetorno: TStringList);
     procedure LerRetorno400Pos7(ARetorno: TStringList);
@@ -139,11 +139,11 @@ begin
    Result := 10;
 
    if (ACBrBanco.ACBrBoleto.Cedente.Convenio = '') then
-      raise Exception.Create(ACBrStr('Banco do Brasil requer que o Convênio do Cedente '+
+      raise Exception.Create(ACBrStr(fpNome + ' requer que o Convênio do Cedente '+
                                      'seja informado.'));
 
    if (Carteira = '') then
-      raise Exception.Create(ACBrStr('Banco do Brasil requer que a carteira seja '+
+      raise Exception.Create(ACBrStr(fpNome + ' requer que a carteira seja '+
                                      'informada antes do Nosso Número.'));
 
    wCarteira:= Trim(Carteira);
@@ -357,7 +357,7 @@ begin
                PadRight(ContaDigito, 1, '0')                   + // 71 - Dígito da conta do cedente
                ' '                                             + // 72 - Dígito verificador da agência / conta
                TiraAcentos(UpperCase(PadRight(Nome, 30, ' '))) + // 73 a 102 - Nome do cedente
-               PadRight('BANCO DO BRASIL', 30, ' ')            + // 103 a 132 - Nome do banco
+               PadRight(UpperCase(fpNome), 30, ' ')            + // 103 a 132 - Nome do banco
                StringOfChar(' ', 10)                           + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
                '1'                                             + // 143 - Código de Remessa (1) / Retorno (2)
                FormatDateTime('ddmmyyyy', Now)                 + // 144 a 151 - Data do de geração do arquivo
@@ -938,7 +938,7 @@ begin
 
     wLinha:= wLinha + PadRight( Nome, 30)     + // Nome da Empresa
              IntToStrZero( Numero, 3)         + // Código do Banco
-             PadRight('BANCO DO BRASIL', 15)  + // Nome do Banco(BANCO DO BRASIL)
+             PadRight(UpperCase(fpNome), 15)  + // Nome do Banco(BANCO DO BRASIL)
              FormatDateTime('ddmmyy',Now)     + // Data de geração do arquivo
              IntToStrZero(NumeroRemessa,7);     // Numero Remessa
 

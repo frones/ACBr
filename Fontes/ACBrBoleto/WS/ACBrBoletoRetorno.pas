@@ -112,13 +112,17 @@ type
     FLinhaDig: String;
     FNossoNum: String;
     FURL: String;
+    FIDBoleto: string;
+    FURLPDF: String;
   public
     procedure Assign(DeACBrBoletoIDBoleto: TIDBoleto); reintroduce; virtual;
-
+    property IDBoleto: string  read FIDBoleto write FIDBoleto;
     property CodBarras: String read FCodBarras write FCodBarras;
     property LinhaDig: String  read FLinhaDig  write FLinhaDig;
     property NossoNum: String  read FNossoNum  write FNossoNum;
     property URL: String       read FURL       write FURL;
+    property URLPDF: String    read FURLPDF    write FURLPDF;
+
   end;
 
   { TSacadoAvalistaRet }
@@ -489,6 +493,8 @@ begin
   LinhaDig:= DeACBrBoletoIDBoleto.LinhaDig;
   NossoNum:= DeACBrBoletoIDBoleto.NossoNum;
   URL:= DeACBrBoletoIDBoleto.URL;
+  IDBoleto:= DeACBrBoletoIDBoleto.IDBoleto;
+  URLPDF:= DeACBrBoletoIDBoleto.URLPDF;
 
 end;
 

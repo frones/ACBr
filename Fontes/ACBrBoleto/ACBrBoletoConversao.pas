@@ -78,7 +78,7 @@ type
   TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar, cnCancelamento);
 
   {Definir Tipo de Operação para Registro de Cobrança via WebService}
-  TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe, tpPIXCriar, tpPIXCancelar, tpPIXConsultar);
+  TOperacao = (tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe, tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar);
 
   {Definir Tipo de Pagamento Aceito para Registro de Cobrança via WebService }
   TTipo_Pagamento = (tpAceita_Qualquer_Valor, tpAceita_Valores_entre_Minimo_Maximo,
@@ -91,7 +91,7 @@ type
   TACBrIndicadorBoletoVencido     = (ibvNenhum,ibvNao,ibvSim);
 
   {Definir Metodo HTTP}
-  TMetodoHTTP = (htPOST, htGET, htPATCH);
+  TMetodoHTTP = (htPOST, htGET, htPATCH, htPUT);
 
 
   function StrToTipoOperacao(out ok: Boolean; const s: String): TOperacao;

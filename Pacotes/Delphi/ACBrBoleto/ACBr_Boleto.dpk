@@ -94,6 +94,9 @@ contains
   ACBrBancoRendimento in '..\..\..\Fontes\ACBrBoleto\ACBrBancoRendimento.pas',
   ACBrBancoInter in '..\..\..\Fontes\ACBrBoleto\ACBrBancoInter.pas',
   ACBrBancoSofisaSantander in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSofisaSantander.pas',
-  ACBrBancoBS2 in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBS2.pas';
+  ACBrBancoBS2 in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBS2.pas',
+  ACBrBancoPenseBank in '..\..\..\Fontes\ACBrBoleto\ACBrBancoPenseBank.pas',
+  ACBrBoletoW_PenseBank_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_PenseBank_API.pas',
+  ACBrBoletoRet_PenseBank_API in '..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_PenseBank_API.pas';
 
 end.

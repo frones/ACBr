@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_Boleto"/>
     <Type Value="RunAndDesignTime"/>
@@ -21,7 +21,7 @@
     <Description Value="ACBr - Boleto - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="32">
+    <Files Count="35">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas"/>
         <UnitName Value="ACBrBoleto"/>
@@ -151,7 +151,20 @@
         <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_BancoBrasil_API.pas"/>
         <UnitName Value="ACBrBoletoRet_BancoBrasil_API"/>
       </Item32>
+      <Item33>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\ACBrBancoPenseBank.pas"/>
+        <UnitName Value="ACBrBancoPenseBank"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoW_PenseBank_API.pas"/>
+        <UnitName Value="ACBrBoletoW_PenseBank_API"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\Fontes\ACBrBoleto\WS\ACBrBoletoRet_PenseBank_API.pas"/>
+        <UnitName Value="ACBrBoletoRet_PenseBank_API"/>
+      </Item35>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

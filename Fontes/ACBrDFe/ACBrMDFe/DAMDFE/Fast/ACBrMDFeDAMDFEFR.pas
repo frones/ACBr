@@ -99,6 +99,7 @@ type
     frxSeg: TfrxDBDataset;
     frxPeri: TfrxDBDataset;
     frxContratantes: TfrxDBDataset;
+    FExibirMunicipioDescarregamento: Boolean;
 
     procedure CarregaIdentificacao;
     procedure CarregaParametros;
@@ -150,6 +151,8 @@ type
     property MDFe            : TMDFe read FMDFe write FMDFe;
     property Evento          : TEventoMDFe read FEvento write FEvento;
     property DAMDFEClassOwner: TACBrMDFeDAMDFeClass read FDAMDFEClassOwner;
+    property PreparedReport:       TfrxReport read GetPreparedReport;
+    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
   published
     property FastFile:             string read FFastFile write FFastFile;
     property FastFileEvento:       string read FFastFileEvento write FFastFileEvento;
@@ -157,8 +160,7 @@ type
     property EspessuraBorda:       Integer read FEspessuraBorda write FEspessuraBorda;
     property TamanhoCanhoto:       Extended read FTamanhoCanhoto write FTamanhoCanhoto;
     property AlturaEstampaFiscal:  Extended read FAlturaEstampaFiscal write FAlturaEstampaFiscal;
-    property PreparedReport:       TfrxReport read GetPreparedReport;
-    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
+    property ExibirMunicipioDescarregamento: Boolean read FExibirMunicipioDescarregamento write FExibirMunicipioDescarregamento;
   end;
 
 implementation
@@ -222,6 +224,7 @@ begin
   FDAMDFEClassOwner := TACBrMDFeDAMDFeClass(Self);
   FFastFile       := '';
   FEspessuraBorda := 1;
+  FExibirMunicipioDescarregamento := False;
   CriarDataSetsFrx;
 end;
 
@@ -1149,6 +1152,8 @@ begin
     CarregaContratantes;
     CarregaPeri;
   end;
+
+  frxReport.Variables['MUNDESCARGA'] := FExibirMunicipioDescarregamento;
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaParametros;
@@ -1180,6 +1185,7 @@ begin
   cdsParametros.FieldByName('Sistema').AsString := Ifthen(DAMDFEClassOwner.Sistema <> '',DAMDFEClassOwner.Sistema,'Projeto ACBr - http://acbr.sf.net');
   cdsParametros.FieldByName('Usuario').AsString := Ifthen(DAMDFEClassOwner.Usuario <> '', DAMDFEClassOwner.Usuario,'');
   cdsParametros.Post;
+
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaIdentificacao;

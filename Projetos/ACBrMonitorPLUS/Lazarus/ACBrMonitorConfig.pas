@@ -2478,7 +2478,7 @@ begin
     Versao                    := '4.00';
     VersaoCTe                 := '3.00';
     VersaoMDFe                := '3.00';
-    VersaoeSocial             := '02_04_02';
+    VersaoeSocial             := 'S01_00_00';
     VersaoReinf               := '1_03_02';
     VersaoQRCode              := '0';
     VersaoBPe                 := '1.00';

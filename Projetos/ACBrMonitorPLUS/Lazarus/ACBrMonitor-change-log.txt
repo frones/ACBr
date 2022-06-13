@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2022
+--- ACBrMoniorConfig ---
+[*] Alterado a versão do layout padrão do e-social
+
 02/05/2022
 --- ACBrMonior1 ---
 [+] Reincluída aba de NCMs, possibilitando consultar um código NCM e salvar a lista de arquivos.

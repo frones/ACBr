@@ -268,12 +268,12 @@ begin
   DFeReport.Sistema := Lib.Nome + ' v' + Lib.Versao;
   DFeReport.Email := 'sac@projetoacbr.com.br';
   DFeReport.Site := 'www.projetoacbr.com.br';
-  DFeReport.Fax := '+55 15 99790-2976';
+
 {$ELSE}
   DFeReport.Sistema := Lib.Config.Sistema.Nome;
   DFeReport.Site := Lib.Config.Emissor.WebSite;
   DFeReport.Email := Lib.Config.Emissor.Email;
-  DFeReport.Fax := Lib.Config.Emissor.Telefone;
+
 {$ENDIF}
 
   ApplyChild(DFeReport, Lib);

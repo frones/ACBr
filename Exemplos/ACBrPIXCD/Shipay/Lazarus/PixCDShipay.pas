@@ -10,6 +10,7 @@ uses
   ACBrShipaySchemas, ACBrPIXBase;
 
 const
+  cMaxConsultas = 36;
   CURL_ACBR = 'https://projetoacbr.com.br/tef/';
 
 type
@@ -21,6 +22,7 @@ type
     Status: TShipayOrderStatus;
     EmErro: Boolean;
     Order_IDCancelar: String;
+    QtdConsultas: Integer;
   end;
 
   { TfrPixCDShipay }
@@ -30,65 +32,70 @@ type
     ACBrPSPShipay1: TACBrPSPShipay;
     btCancelarOrder: TBitBtn;
     btCancelarOrderDueDate: TBitBtn;
+    btCobBacenCopiaECola: TSpeedButton;
     btConsultarOrderID: TBitBtn;
     btConsultarOrderv: TBitBtn;
     btConsultarPeriodo: TBitBtn;
     btCriarCobranca: TBitBtn;
-    btCriarCobVenc: TBitBtn;
+    btCriarCobBacen: TBitBtn;
     btEstornarOrder: TBitBtn;
     btEstornarOrderDueDate: TBitBtn;
     btFluxoCancelarCobranca: TBitBtn;
     btFluxoCancelarConsulta: TBitBtn;
+    btFluxoCopiaECola: TSpeedButton;
     btFluxoEstornarPagto: TBitBtn;
     btFluxoFecharVenda: TBitBtn;
     btFluxoItemExcluir: TBitBtn;
     btFluxoItemIncluir: TBitBtn;
-    btFluxoPagar: TBitBtn;
     btFluxoNovaVenda: TBitBtn;
+    btFluxoPagar: TBitBtn;
     btFluxoTentarNovamente: TBitBtn;
     btLerParametros: TBitBtn;
     btQREAnalisar1: TBitBtn;
     btSalvarParametros: TBitBtn;
     cbAmbiente: TComboBox;
-    cbCobVencAbatimentoModalidade: TComboBox;
-    cbCobVencMultaModalidade: TComboBox;
-    cbCobVencJurosModalidade: TComboBox;
-    cbFluxoCarteiras: TComboBox;
-    cbCobVencDescModalidade: TComboBox;
+    cbCobBacenAbatimentoModalidade: TComboBox;
+    cbCobBacenDescModalidade: TComboBox;
+    cbCobBacenJurosModalidade: TComboBox;
+    cbCobBacenMultaModalidade: TComboBox;
     cbCobCarteiras: TComboBox;
-    edCancelarOrder_ID: TEdit;
+    cbFluxoCarteiras: TComboBox;
     edCancelarOrderDueDate_ID: TEdit;
-    edCobVencAbatimentoValor: TEdit;
-    edCobVencValor: TEdit;
-    edCobVencMultaValor: TEdit;
-    edCobVencJurosValor: TEdit;
+    edCancelarOrder_ID: TEdit;
+    edCobBacenAbatimentoValor: TEdit;
+    edCobBacenCompradorDoc: TEdit;
+    edCobBacenCompradorNome: TEdit;
+    edCobBacenDescValor: TEdit;
+    edCobBacenJurosValor: TEdit;
+    edCobBacenMultaValor: TEdit;
+    edCobCopiaECola: TEdit;
+    edCobBacenCopiaECola: TEdit;
+    edCobBacenValor: TEdit;
     edCompradorDoc: TEdit;
-    edCobVencCompradorDoc: TEdit;
     edCompradorEmail: TEdit;
     edCompradorFone: TEdit;
     edCompradorNome: TEdit;
-    edCobVencCompradorNome: TEdit;
     edConsultarOrderID: TEdit;
     edConsultarOrdervID: TEdit;
     edConsultarPeriodoInicio: TDateTimePicker;
     edConsultarPeriodoFim: TDateTimePicker;
-    edCobVencimento: TDateTimePicker;
-    edEstornarOrder_ID: TEdit;
+    edCobBacenVencimento: TDateTimePicker;
     edEstornarOrderDueDate_ID: TEdit;
+    edEstornarOrder_ID: TEdit;
     edEstornarValor: TEdit;
     edFluxoClienteDoc: TEdit;
     edFluxoClienteNome: TEdit;
+    edFluxoCopiaECola: TEdit;
     edFluxoItemDescricao: TEdit;
     edFluxoItemEAN: TEdit;
     edFluxoItemValor: TEdit;
     edItemDescricao: TEdit;
     edItemEAN: TEdit;
     edItemPreco: TEdit;
-    edCobVencDescValor: TEdit;
     edItemQtd: TEdit;
     edItemSKU: TEdit;
-    edLogArquivo: TEdit;
     edCobOrderRef: TEdit;
+    edLogArquivo: TEdit;
     edProxyHost: TEdit;
     edProxySenha: TEdit;
     edProxyUsuario: TEdit;
@@ -96,64 +103,67 @@ type
     edShipayClientID: TEdit;
     edShipaySecretKey: TEdit;
     edTimeOut: TSpinEdit;
-    gbCobVencAbatimento: TGroupBox;
-    gbCobVencMulta: TGroupBox;
-    gbCobVencJuros: TGroupBox;
-    gbComprador: TGroupBox;
-    gbCobVencComprador: TGroupBox;
-    gbConsultarOrderv: TGroupBox;
-    gbDiversos: TGroupBox;
+    gbCobBacenAbatimento: TGroupBox;
+    gbCobBacenMulta: TGroupBox;
+    gbCobBacenJuros: TGroupBox;
+    gbCobComprador: TGroupBox;
+    gbCobBacenComprador: TGroupBox;
+    gbFluxoCarteira: TGroupBox;
+    gbFluxoTotal: TGroupBox;
+    gbOrdervConsultar: TGroupBox;
+    gbConfigDiversos: TGroupBox;
     gbFluxoCliente: TGroupBox;
     gbFluxoItens: TGroupBox;
     gbFluxoStatus: TGroupBox;
-    gbFluxoCarteira: TGroupBox;
-    gbFluxoTotal: TGroupBox;
-    gbItem: TGroupBox;
-    gbProxy: TGroupBox;
-    gbShipay: TGroupBox;
+    gbCobItem: TGroupBox;
+    gbConfigProxy: TGroupBox;
+    gbConfigShipay: TGroupBox;
     gdFluxoItens: TStringGrid;
     gdConsultarPeriodoList: TStringGrid;
-    gbCobVencDesconto: TGroupBox;
-    gbConsultarOrder: TGroupBox;
-    gbCancelarOrder: TGroupBox;
-    gbCancelarOrderDueDate: TGroupBox;
-    gbEstornarOrder: TGroupBox;
-    gbEstornarOrderDueDate: TGroupBox;
+    gbCobBacenDesconto: TGroupBox;
+    gbOrderConsultar: TGroupBox;
+    gbOrderCancelar: TGroupBox;
+    gbOrderDueDateCancelar: TGroupBox;
+    gbOrderEstornar: TGroupBox;
+    gbOrderDueDateEstornar: TGroupBox;
     ImageList1: TImageList;
+    imCobQRCode: TImage;
+    imCobBacenQRCode: TImage;
     imFluxoQRCode: TImage;
-    imgQRCriarCobranca: TImage;
-    imgQRCriarCobVenc: TImage;
-    lbCancelarOrder_ID: TLabel;
+    lbAmbiente: TLabel;
     lbCancelarOrderDueDate_ID: TLabel;
-    lbCobVencAbatimentoValor: TLabel;
-    lbCobVencDiasPagar: TLabel;
-    lbCobVencValor: TLabel;
-    lbCobVencMultaValor: TLabel;
-    lbCobVencJurosValor: TLabel;
+    lbCancelarOrder_ID: TLabel;
+    lbCobBacenAbatimentoModalidade: TLabel;
+    lbCobBacenAbatimentoValor: TLabel;
+    lbCobBacenDescModalidade: TLabel;
+    lbCobBacenDescValor: TLabel;
+    lbCobBacenJurosModalidade: TLabel;
+    lbCobBacenJurosValor: TLabel;
+    lbCobBacenMultaModalidade: TLabel;
+    lbCobBacenMultaValor: TLabel;
+    lbCobCopiaECola: TLabel;
+    lbCobBacenCopiaECola: TLabel;
+    lbCobBacenCompradorDoc: TLabel;
+    lbCobBacenCompradorNome: TLabel;
+    lbCobBacenDiasPagar: TLabel;
+    lbCobBacenValor: TLabel;
     lbCompradorDoc: TLabel;
-    lbCobVencCompradorDoc: TLabel;
-    lbCobVencDescValor: TLabel;
     lbCompradorEmail: TLabel;
     lbCompradorFone: TLabel;
     lbCompradorNome: TLabel;
-    lbCobVencCompradorNome: TLabel;
-    lbCobVencDescModalidade: TLabel;
     lbConsultarOrderID: TLabel;
     lbConsultarOrdervID: TLabel;
     lbConsultarPeriodoInicio: TLabel;
     lbConsultarPeriodoFim: TLabel;
-    lbAmbiente: TLabel;
-    lbCobVencimento: TLabel;
+    lbCobBacenVencimento: TLabel;
     lbConsultarPeriodoOffset: TLabel;
     lbConsultarPeriodoLimite: TLabel;
-    lbCobVencAbatimentoModalidade: TLabel;
-    lbCobVencMultaModalidade: TLabel;
-    lbCobVencJurosModalidade: TLabel;
-    lbEstornarOrder_ID: TLabel;
     lbEstornarOrderDueDate_ID: TLabel;
+    lbEstornarOrder_ID: TLabel;
     lbEstornarValor: TLabel;
     lbFluxoClienteDoc: TLabel;
     lbFluxoClienteNome: TLabel;
+    lbFluxoCopiaECola: TLabel;
     lbFluxoItemDescricao: TLabel;
     lbFluxoItemEAN: TLabel;
     lbFluxoItemValor: TLabel;
@@ -163,58 +173,79 @@ type
     lbItemPreco: TLabel;
     lbItemQtd: TLabel;
     lbItemSKU: TLabel;
-    lbLogArquivo: TLabel;
     lbCobOrderRef: TLabel;
     lbCobExpiracao: TLabel;
     lbCobCarteiras: TLabel;
-    lbResposta: TLabel;
+    lbLogArquivo: TLabel;
     lbProxyHost: TLabel;
     lbProxyPorta: TLabel;
     lbProxySenha: TLabel;
     lbProxyUsuario: TLabel;
+    lbResposta: TLabel;
     lbShipayAccessKey: TLabel;
     lbShipayClientID: TLabel;
     lbShipaySecretKey: TLabel;
     lbTimeOut: TLabel;
     mmResposta: TMemo;
     PageControl1: TPageControl;
-    pgCriarCob: TPageControl;
-    pnCriarCob: TPanel;
-    pnCriarCob1: TPanel;
-    pnFluxoBackground: TPanel;
-    pnConfiguracao: TPanel;
-    pnFluxoBotoesErroConsultar: TPanel;
-    pnFluxoDiv10: TPanel;
-    pnFluxoDiv8: TPanel;
-    pnRodapeRespostas: TPanel;
-    pgPrincipal: TPageControl;
-    pgTestes: TPageControl;
+    pnFluxoCopiaECola: TPanel;
+    pnFluxoDiv3: TPanel;
+    pnFluxoRodapeInfo2: TPanel;
+    pnFluxoRodapeInfo1: TPanel;
+    pnConfigProxy: TPanel;
+    pnConfigDiversos: TPanel;
+    pnConfigShipay: TPanel;
     pnFluxoBotoes: TPanel;
+    pnFluxoBotoesErroConsultar: TPanel;
     pnFluxoBotoesPrincipais: TPanel;
     pnFluxoBotoesRight: TPanel;
-    pnFluxoDadosItem: TPanel;
-    pnFluxoDiv1: TPanel;
-    pnFluxoDiv2: TPanel;
-    pnFluxoDiv3: TPanel;
+    pnFluxoCarteira: TPanel;
+    pnFluxoDiv10: TPanel;
     pnFluxoDiv4: TPanel;
     pnFluxoDiv5: TPanel;
     pnFluxoDiv6: TPanel;
-    pnFluxoDiv7: TPanel;
-    pnFluxoPagto: TPanel;
+    pnFluxoDiv8: TPanel;
     pnFluxoQRCode: TPanel;
-    pnFluxoRodape: TPanel;
-    pnFluxoStatus: TPanel;
     pnFluxoTotal: TPanel;
     pnFluxoTotalStr: TPanel;
+    pnOrderDueDateEstornar: TPanel;
+    pnOrderEstornar: TPanel;
+    pnOrdervConsultar: TPanel;
+    pnOrderConsultar: TPanel;
+    pnOrderDueDateCancelar: TPanel;
+    pnOrderCancelar: TPanel;
+    pnCobBacenMulta: TPanel;
+    pnCobBacenJuros: TPanel;
+    pnCobBacenDesconto: TPanel;
+    pnCobBacenAbatimento: TPanel;
+    pnCobBacenComprador: TPanel;
+    pnCobItem: TPanel;
+    pnCobComprador: TPanel;
+    pnFluxoCliente: TPanel;
+    pgCriarCob: TPageControl;
+    pnCriarCob: TPanel;
+    pnCriarCobBacen: TPanel;
+    pnFluxoBackground: TPanel;
+    pnConfiguracao: TPanel;
+    pnRodapeRespostas: TPanel;
+    pgPrincipal: TPageControl;
+    pgTestes: TPageControl;
+    pnFluxoDadosItem: TPanel;
+    pnFluxoDiv1: TPanel;
+    pnFluxoDiv2: TPanel;
+    pnFluxoPagto: TPanel;
+    pnFluxoRodape: TPanel;
+    pnFluxoStatus: TPanel;
     pnRespostas: TPanel;
     pnRodapeConfig: TPanel;
     sbArqLog: TSpeedButton;
-    sbVerSenhaProxy: TSpeedButton;
-    seProxyPorta: TSpinEdit;
     edConsultarPeriodoOffset: TSpinEdit;
     edConsultarPeriosoLimite: TSpinEdit;
-    edCobVencDiasPagar: TSpinEdit;
+    edCobBacenDiasPagar: TSpinEdit;
     edCobExpiracao: TSpinEdit;
+    btCobCopiaECola: TSpeedButton;
+    sbVerSenhaProxy: TSpeedButton;
+    seProxyPorta: TSpinEdit;
     Splitter1: TSplitter;
     tmCancelarCobPendente: TTimer;
     tsCriarOrderDueDate: TTabSheet;
@@ -226,14 +257,16 @@ type
     tsEstornarPagto: TTabSheet;
     tsConsultarPagto: TTabSheet;
     tsCriarCob: TTabSheet;
-    tsCancelarPagto: TTabSheet;
+    tsOrderCancelar: TTabSheet;
     tsConfiguracao: TTabSheet;
     tsTestes: TTabSheet;
     procedure btCancelarOrderClick(Sender: TObject);
     procedure btCancelarOrderDueDateClick(Sender: TObject);
+    procedure btCobBacenCopiaEColaClick(Sender: TObject);
+    procedure btCobCopiaEColaClick(Sender: TObject);
     procedure btConsultarOrdervClick(Sender: TObject);
     procedure btConsultarPeriodoClick(Sender: TObject);
-    procedure btCriarCobVencClick(Sender: TObject);
+    procedure btCriarCobBacenClick(Sender: TObject);
     procedure btEstornarOrderDueDateClick(Sender: TObject);
     procedure btFluxoCancelarCobrancaClick(Sender: TObject);
     procedure btFluxoCancelarConsultaClick(Sender: TObject);
@@ -241,6 +274,7 @@ type
     procedure btConsultarOrderIDClick(Sender: TObject);
     procedure btCriarCobrancaClick(Sender: TObject);
     procedure btEstornarOrderClick(Sender: TObject);
+    procedure btFluxoCopiaEColaClick(Sender: TObject);
     procedure btFluxoEstornarPagtoClick(Sender: TObject);
     procedure btFluxoFecharVendaClick(Sender: TObject);
     procedure btFluxoReiniciar1Click(Sender: TObject);
@@ -264,9 +298,9 @@ type
     procedure GravarConfiguracao;
     procedure AplicarConfiguracao;
 
+    procedure LimparInterfaceFluxo;
     procedure AvaliarInterfaceFluxo;
     procedure AvaliarInterfaceFluxoItem;
-    procedure LimparInterfaceFluxoItem;
     procedure HabilitarInterface(aLiberada: Boolean);
 
     procedure ReiniciarFluxo;
@@ -298,9 +332,12 @@ var
 implementation
 
 uses
-  IniFiles, jsonparser, jsonscanner, TypInfo, synacode, DateUtils,
+  {$IfDef FPC}
+  jsonparser, jsonscanner,
+  {$EndIf}
+  IniFiles, TypInfo, synacode, DateUtils,
   ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Base, ACBrImage,
-  ACBrUtil.Math, ACBrDelphiZXingQRCode, ACBrUtil.DateTime;
+  ACBrUtil.Math, ACBrDelphiZXingQRCode, ACBrUtil.DateTime, Clipbrd;
 
 {$R *.lfm}
 
@@ -308,10 +345,12 @@ uses
 
 procedure TfrPixCDShipay.sbVerSenhaProxyClick(Sender: TObject);
 begin
+  {$IfDef FPC}
   if sbVerSenhaProxy.Down then
     edProxySenha.EchoMode := emNormal
   else
     edProxySenha.EchoMode := emPassword;
+  {$EndIf}
 end;
 
 procedure TfrPixCDShipay.tmCancelarCobPendenteTimer(Sender: TObject);
@@ -322,7 +361,8 @@ begin
     Exit;
 
   try
-    ACBrPSPShipay1.DeleteOrder(FluxoDados.Order_IDCancelar);
+    if ACBrPSPShipay1.DeleteOrder(FluxoDados.Order_IDCancelar) then
+      ShowMessage('Pagamento cancelado/estornado com sucesso');
   except
     tmCancelarCobPendente.Enabled := True;
   end;
@@ -340,12 +380,14 @@ begin
 
     try
       ConsultarCobranca;
+      fFluxoDados.QtdConsultas := fFluxoDados.QtdConsultas + 1;
     except
       HabilitarFluxoErroConsulta(True);
     end;
   finally
     if (FluxoDados.Status in [spsPending, spsPendingV, spsRefundPending]) and
-       (not fFluxoDados.EmErro) then
+       (not fFluxoDados.EmErro) and
+       (fFluxoDados.QtdConsultas <= cMaxConsultas) then  // Consulta por 180 segundos
       tmConsultarPagto.Enabled := True;
   end;
 end;
@@ -430,6 +472,14 @@ begin
   ACBrPSPShipay1.AccessKey := edShipayAccessKey.Text;
 end;
 
+procedure TfrPixCDShipay.LimparInterfaceFluxo;
+begin
+  edFluxoItemEAN.Clear;
+  edFluxoItemValor.Clear;
+  edFluxoItemDescricao.Clear;
+  InicializarGridFluxo;
+end;
+
 procedure TfrPixCDShipay.AvaliarInterfaceFluxo;
 begin
   with FluxoDados do
@@ -446,6 +496,7 @@ begin
     btFluxoEstornarPagto.Visible := (Status = spsApproved);
     btFluxoNovaVenda.Visible := (not (Status in [spsNone, spsPending, spsPendingV]));
     lbFluxoMsgPagto.Visible := (ACBrPixCD1.Ambiente = ambTeste) and (Status in [spsPending, spsPendingV]);
+    pnFluxoCopiaECola.Visible := (Status in [spsPending, spsPendingV]);
   end;
 
   if gbFluxoItens.Enabled then
@@ -459,14 +510,6 @@ begin
     (gdFluxoItens.RowCount > 1) and (gdFluxoItens.Row > 0);
 end;
 
-procedure TfrPixCDShipay.LimparInterfaceFluxoItem;
-begin
-  edFluxoItemEAN.Clear;
-  edFluxoItemValor.Clear;
-  edFluxoItemDescricao.Clear;
-  InicializarGridFluxo;
-end;
-
 procedure TfrPixCDShipay.HabilitarInterface(aLiberada: Boolean);
 begin
   pnFluxoPagto.Enabled := aLiberada;
@@ -475,12 +518,13 @@ end;
 procedure TfrPixCDShipay.ReiniciarFluxo;
 begin
   ACBrPSPShipay1.Clear;
-  LimparInterfaceFluxoItem;
+  LimparInterfaceFluxo;
   CarregarCarteiras;
 
   AtualizarTotal;
   AtualizarStatus(spsNone);
 
+  fFluxoDados.QtdConsultas := 0;
   fFluxoDados.Order_ID := EmptyStr;
   AvaliarInterfaceFluxo;
 end;
@@ -491,7 +535,9 @@ begin
   try
     ACBrPSPShipay1.GetOrderInfo(FluxoDados.Order_ID);
 
-    HabilitarFluxoErroConsulta(False);
+    if fFluxoDados.EmErro then
+      HabilitarFluxoErroConsulta(False);
+
     AtualizarStatus(ACBrPSPShipay1.OrderInfo.status);
     AvaliarInterfaceFluxo;
   finally
@@ -620,31 +666,31 @@ begin
   for I := Low(TACBrPixCDAmbiente) to High(TACBrPixCDAmbiente) do
     cbAmbiente.Items.Add(GetEnumName(TypeInfo(TACBrPixCDAmbiente), Integer(I)));
 
-  cbCobVencDescModalidade.Items.Clear;
+  cbCobBacenDescModalidade.Items.Clear;
   for J := Low(TShipayAmountDetailsDiscountModality) to High(TShipayAmountDetailsDiscountModality) do
-    cbCobVencDescModalidade.Items.Add(IntToStr(ShipayDiscountModalityToDominio(J)) + ' - ' +
+    cbCobBacenDescModalidade.Items.Add(IntToStr(ShipayDiscountModalityToDominio(J)) + ' - ' +
       ShipayDiscountModalityToString(J));
-  cbCobVencDescModalidade.ItemIndex := 0;
+  cbCobBacenDescModalidade.ItemIndex := 0;
 
-  cbCobVencMultaModalidade.Items.Clear;
+  cbCobBacenMultaModalidade.Items.Clear;
   for K := Low(TShipayAmountDetailsValueModality) to High(TShipayAmountDetailsValueModality) do
-    cbCobVencMultaModalidade.Items.Add(IntToStr(ShipayValueModalityToDominio(K)) + ' - ' +
+    cbCobBacenMultaModalidade.Items.Add(IntToStr(ShipayValueModalityToDominio(K)) + ' - ' +
       ShipayValueModalityToString(K));
-  cbCobVencMultaModalidade.ItemIndex := 0;
+  cbCobBacenMultaModalidade.ItemIndex := 0;
 
-  cbCobVencJurosModalidade.Items.Clear;
+  cbCobBacenJurosModalidade.Items.Clear;
   for L := Low(TShipayAmountDetailsInterestModality) to High(TShipayAmountDetailsInterestModality) do
-    cbCobVencJurosModalidade.Items.Add(IntToStr(ShipayInterestModalityToDominio(L)) + ' - ' +
+    cbCobBacenJurosModalidade.Items.Add(IntToStr(ShipayInterestModalityToDominio(L)) + ' - ' +
       ShipayInterestModalityToString(L));
-  cbCobVencJurosModalidade.ItemIndex := 0;
+  cbCobBacenJurosModalidade.ItemIndex := 0;
 
-  cbCobVencAbatimentoModalidade.Items.Clear;
+  cbCobBacenAbatimentoModalidade.Items.Clear;
   for K := Low(TShipayAmountDetailsValueModality) to High(TShipayAmountDetailsValueModality) do
-    cbCobVencAbatimentoModalidade.Items.Add(IntToStr(ShipayValueModalityToDominio(K)) + ' - ' +
+    cbCobBacenAbatimentoModalidade.Items.Add(IntToStr(ShipayValueModalityToDominio(K)) + ' - ' +
       ShipayValueModalityToString(K));
-  cbCobVencAbatimentoModalidade.ItemIndex := 0;
+  cbCobBacenAbatimentoModalidade.ItemIndex := 0;
 
-  edCobVencimento.DateTime := IncDay(Today, 7);
+  edCobBacenVencimento.DateTime := IncDay(Today, 7);
 
   edConsultarPeriodoInicio.DateTime := StartOfTheDay(IncDay(Today, -1));
   edConsultarPeriodoFim.DateTime := EndOfTheDay(IncDay(Today, -1));
@@ -729,6 +775,7 @@ begin
       Add('pix_dict_key: ' + IfEmptyThen(pix_dict_key, 'null'));
       Add('pix_psp: ' + IfEmptyThen(pix_psp, 'null'));
       Add('wallet: ' + wallet);
+      Add('CopiaECola: ' + Trim(ACBrPSPShipay1.OrderCreated.qr_code_text));
     end
     else if (aOrder is TShipayOrderInfo) then
     with TShipayOrderInfo(aOrder) do
@@ -826,6 +873,7 @@ begin
     fFluxoDados.Order_ID := ACBrPSPShipay1.OrderCreated.order_id;
     fFluxoDados.QRCode := Trim(ACBrPSPShipay1.OrderCreated.qr_code_text);
     PintarQRCode(FluxoDados.QRCode, imFluxoQRCode.Picture.Bitmap, qrUTF8BOM);
+    edFluxoCopiaECola.Text := fFluxoDados.QRCode;
 
     ConsultarCobranca;
     tmConsultarPagto.Enabled := True;
@@ -855,7 +903,7 @@ begin
   wQtd   := StrToFloatDef(edItemQtd.Text, 1);
   wPreco := StrToFloatDef(edItemPreco.Text, 1);
 
-  // Preenchendo dados do iten
+  // Preenchendo dados do item
   with ACBrPSPShipay1.Order.items.New do
   begin
     quantity := wQtd;
@@ -889,7 +937,8 @@ begin
 
   MostrarRespostaEndPoint(wRotina, ACBrPSPShipay1.OrderCreated);
   wQRCode := Trim(ACBrPSPShipay1.OrderCreated.qr_code_text);
-  PintarQRCode(wQRCode, imgQRCriarCobranca.Picture.Bitmap, qrUTF8BOM);
+  PintarQRCode(wQRCode, imCobQRCode.Picture.Bitmap, qrUTF8BOM);
+  edCobCopiaECola.Text := wQRCode;
 end;
 
 procedure TfrPixCDShipay.btEstornarOrderClick(Sender: TObject);
@@ -923,6 +972,11 @@ begin
   end;
 
   MostrarRespostaEndPoint('RefundOrder', ACBrPSPShipay1.OrderInfo);
+end;
+
+procedure TfrPixCDShipay.btFluxoCopiaEColaClick(Sender: TObject);
+begin
+  Clipboard.AsText := Trim(edFluxoCopiaECola.Text);
 end;
 
 procedure TfrPixCDShipay.btFluxoEstornarPagtoClick(Sender: TObject);
@@ -998,6 +1052,16 @@ begin
   MostrarRespostaEndPoint('PatchOrderDueDate', ACBrPSPShipay1.OrderInfo);
 end;
 
+procedure TfrPixCDShipay.btCobBacenCopiaEColaClick(Sender: TObject);
+begin
+  Clipboard.AsText := Trim(edCobBacenCopiaECola.Text);
+end;
+
+procedure TfrPixCDShipay.btCobCopiaEColaClick(Sender: TObject);
+begin
+  Clipboard.AsText := Trim(edCobCopiaECola.Text);
+end;
+
 procedure TfrPixCDShipay.btConsultarOrdervClick(Sender: TObject);
 begin
   if EstaVazio(edConsultarOrdervID.Text) then
@@ -1042,7 +1106,7 @@ begin
   MostrarRespostaEndPoint('GetOrderInfo', ACBrPSPShipay1.OrderList);
 end;
 
-procedure TfrPixCDShipay.btCriarCobVencClick(Sender: TObject);
+procedure TfrPixCDShipay.btCriarCobBacenClick(Sender: TObject);
 var
   wQRCode: String;
 begin
@@ -1052,15 +1116,15 @@ begin
   // Preenchendo dados do Comprador
   with ACBrPSPShipay1.OrderDueDate.buyer do
   begin
-    name := edCobVencCompradorNome.Text;
-    cpf_cnpj := edCobVencCompradorDoc.Text;
+    name := edCobBacenCompradorNome.Text;
+    cpf_cnpj := edCobBacenCompradorDoc.Text;
   end;
 
   // Preenchendo dados do item
   with ACBrPSPShipay1.OrderDueDate.items.New do
   begin
     quantity := 1;
-    unit_price := StrToFloatDef(edCobVencValor.Text, 1);
+    unit_price := StrToFloatDef(edCobBacenValor.Text, 1);
     item_title := 'Item Teste';
     ean := '0123456789012';
     sku := 'MTC-6110';
@@ -1069,26 +1133,26 @@ begin
   with ACBrPSPShipay1.OrderDueDate do
   begin
     order_ref := FormatDateTime('yymmddhhnnss', Now);
-    total := StrToFloatDef(edCobVencValor.Text, 1);
+    total := StrToFloatDef(edCobBacenValor.Text, 1);
     wallet := 'pix';
 
     with amount_details do
     begin
-      discount.modality := DominioToShipayDiscountModality(StrToIntDef(Copy(cbCobVencDescModalidade.Text, 1, 1), 0));
-      discount.value := StrToFloatDef(edCobVencDescValor.Text, 0);
+      discount.modality := DominioToShipayDiscountModality(StrToIntDef(Copy(cbCobBacenDescModalidade.Text, 1, 1), 0));
+      discount.value := StrToFloatDef(edCobBacenDescValor.Text, 0);
 
-      fine.modality := DominioToShipayValueModality(StrToIntDef(Copy(cbCobVencMultaModalidade.Text, 1, 1), 0));
-      fine.value := StrToFloatDef(edCobVencMultaValor.Text, 0);
+      fine.modality := DominioToShipayValueModality(StrToIntDef(Copy(cbCobBacenMultaModalidade.Text, 1, 1), 0));
+      fine.value := StrToFloatDef(edCobBacenMultaValor.Text, 0);
 
-      interest.modality := DominioToShipayInterestModality(StrToIntDef(Copy(cbCobVencJurosModalidade.Text, 1, 1), 0));
-      interest.value := StrToFloatDef(edCobVencJurosValor.Text, 0);
+      interest.modality := DominioToShipayInterestModality(StrToIntDef(Copy(cbCobBacenJurosModalidade.Text, 1, 1), 0));
+      interest.value := StrToFloatDef(edCobBacenJurosValor.Text, 0);
 
-      rebate.modality := DominioToShipayValueModality(StrToIntDef(Copy(cbCobVencAbatimentoModalidade.Text, 1, 1), 0));
-      rebate.value := StrToFloatDef(edCobVencAbatimentoValor.Text, 0);
+      rebate.modality := DominioToShipayValueModality(StrToIntDef(Copy(cbCobBacenAbatimentoModalidade.Text, 1, 1), 0));
+      rebate.value := StrToFloatDef(edCobBacenAbatimentoValor.Text, 0);
     end;
 
-    calendar.due_date := edCobVencimento.DateTime;
-    calendar.days_valid_after_due := edCobVencDiasPagar.Value;
+    calendar.due_date := edCobBacenVencimento.DateTime;
+    calendar.days_valid_after_due := edCobBacenDiasPagar.Value;
   end;
 
   try
@@ -1104,7 +1168,8 @@ begin
 
   MostrarRespostaEndPoint('PostOrderDueDate', ACBrPSPShipay1.OrderCreated);
   wQRCode := Trim(ACBrPSPShipay1.OrderCreated.qr_code_text);
-  PintarQRCode(wQRCode, imgQRCriarCobVenc.Picture.Bitmap, qrUTF8BOM);
+  PintarQRCode(wQRCode, imCobBacenQRCode.Picture.Bitmap, qrUTF8BOM);
+  edCobBacenCopiaECola.Text := wQRCode;
 end;
 
 procedure TfrPixCDShipay.btEstornarOrderDueDateClick(Sender: TObject);
@@ -1135,17 +1200,17 @@ begin
   tmConsultarPagto.Enabled := False;
   HabilitarInterface(False);
   try
+    if (MessageDlg('Deseja realmente Cancelar a Cobrança?', mtConfirmation, mbYesNo, 0) = mrNo) then
+    begin
+      tmConsultarPagto.Enabled := True;
+      Exit;
+    end;
+
     ConsultarCobranca;
     if (fFluxoDados.Status = spsApproved) then
     begin
       if (MessageDlg('Cobrança já foi PAGA. Deseja ESTORNAR pagamento?', mtConfirmation, mbYesNo, 0) = mrYes) then
         EstornarPagamento;
-      Exit;
-    end;
-
-    if (MessageDlg('Deseja realmente Cancelar a Cobrança?', mtConfirmation, mbYesNo, 0) = mrNo) then
-    begin
-      tmConsultarPagto.Enabled := True;
       Exit;
     end;
 
@@ -1166,7 +1231,7 @@ end;
 
 procedure TfrPixCDShipay.btFluxoCancelarConsultaClick(Sender: TObject);
 begin
-  ShowMessage('A Cobrança será cancelada assim que a conexão for reestabelecida');
+  ShowMessage('A Cobrança será cancelada/estornada assim que a conexão for reestabelecida');
 
   HabilitarFluxoErroConsulta(False);
   fFluxoDados.Order_IDCancelar := fFluxoDados.Order_ID;
@@ -1249,7 +1314,7 @@ begin
     AtualizarTotal;
   end;
 
-  AvaliarInterfaceFluxoItem;
+  AvaliarInterfaceFluxo;
 end;
 
 procedure TfrPixCDShipay.btFluxoTentarNovamenteClick(Sender: TObject);

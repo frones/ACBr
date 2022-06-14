@@ -1,10 +1,10 @@
 object frPixCDShipay: TfrPixCDShipay
-  Left = 536
-  Height = 600
-  Top = 260
+  Left = 430
+  Height = 651
+  Top = 169
   Width = 800
   Caption = 'frPixCDShipay'
-  ClientHeight = 600
+  ClientHeight = 651
   ClientWidth = 800
   Icon.Data = {
     9E09000000000100010018180000010020008809000016000000280000001800
@@ -90,7 +90,7 @@ object frPixCDShipay: TfrPixCDShipay
   LCLVersion = '2.2.0.4'
   object pgPrincipal: TPageControl
     Left = 0
-    Height = 600
+    Height = 651
     Top = 0
     Width = 800
     ActivePage = tsFluxoPagto
@@ -101,27 +101,27 @@ object frPixCDShipay: TfrPixCDShipay
     TabWidth = 242
     object tsFluxoPagto: TTabSheet
       Caption = 'Fluxo Pagamento'
-      ClientHeight = 562
+      ClientHeight = 613
       ClientWidth = 792
       object pnFluxoBackground: TPanel
         Left = 0
-        Height = 562
+        Height = 613
         Top = 0
         Width = 792
         Align = alClient
         BevelOuter = bvNone
-        ClientHeight = 562
+        ClientHeight = 613
         ClientWidth = 792
         Color = 15263976
         ParentColor = False
         TabOrder = 0
         object pnFluxoPagto: TPanel
           Left = 30
-          Height = 547
+          Height = 601
           Top = 15
           Width = 732
           BevelOuter = bvNone
-          ClientHeight = 547
+          ClientHeight = 601
           ClientWidth = 732
           Color = 15263976
           Font.Name = 'Arial'
@@ -140,41 +140,52 @@ object frPixCDShipay: TfrPixCDShipay
             Font.Name = 'Arial'
             ParentFont = False
             TabOrder = 1
-            object lbFluxoClienteNome: TLabel
-              Left = 245
-              Height = 15
-              Top = 5
-              Width = 34
-              Caption = 'Nome'
-            end
-            object edFluxoClienteNome: TEdit
-              Left = 245
-              Height = 31
-              Top = 20
-              Width = 468
-              Font.Height = -20
-              Font.Name = 'Arial'
-              ParentFont = False
-              TabOrder = 1
-              Text = 'Elias Cesar Vieira'
-            end
-            object lbFluxoClienteDoc: TLabel
-              Left = 15
-              Height = 15
-              Top = 5
-              Width = 59
-              Caption = 'CPF/CNPJ'
-            end
-            object edFluxoClienteDoc: TEdit
-              Left = 15
-              Height = 31
-              Top = 20
-              Width = 215
-              Font.Height = -20
-              Font.Name = 'Arial'
-              ParentFont = False
+            object pnFluxoCliente: TPanel
+              Left = 0
+              Height = 60
+              Top = 0
+              Width = 728
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 60
+              ClientWidth = 728
               TabOrder = 0
-              Text = '67751079002'
+              object lbFluxoClienteNome: TLabel
+                Left = 245
+                Height = 15
+                Top = 5
+                Width = 34
+                Caption = 'Nome'
+              end
+              object edFluxoClienteNome: TEdit
+                Left = 245
+                Height = 31
+                Top = 20
+                Width = 468
+                Font.Height = -20
+                Font.Name = 'Arial'
+                ParentFont = False
+                TabOrder = 0
+                Text = 'Elias Cesar Vieira'
+              end
+              object lbFluxoClienteDoc: TLabel
+                Left = 15
+                Height = 15
+                Top = 5
+                Width = 59
+                Caption = 'CPF/CNPJ'
+              end
+              object edFluxoClienteDoc: TEdit
+                Left = 15
+                Height = 31
+                Top = 20
+                Width = 215
+                Font.Height = -20
+                Font.Name = 'Arial'
+                ParentFont = False
+                TabOrder = 1
+                Text = '67751079002'
+              end
             end
           end
           object gbFluxoItens: TGroupBox
@@ -338,298 +349,378 @@ object frPixCDShipay: TfrPixCDShipay
           end
           object pnFluxoRodape: TPanel
             Left = 0
-            Height = 183
-            Top = 356
+            Height = 239
+            Top = 351
             Width = 732
             Align = alTop
             AutoSize = True
             BevelOuter = bvNone
-            ClientHeight = 183
+            ClientHeight = 239
             ClientWidth = 732
             TabOrder = 3
-            object pnFluxoQRCode: TPanel
-              Left = 246
-              Height = 143
+            object pnFluxoRodapeInfo1: TPanel
+              Left = 0
+              Height = 160
               Top = 0
-              Width = 258
-              Align = alClient
+              Width = 732
+              Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 143
-              ClientWidth = 258
-              TabOrder = 1
-              object imFluxoQRCode: TImage
-                Left = 0
-                Height = 143
+              ClientHeight = 160
+              ClientWidth = 732
+              TabOrder = 0
+              object pnFluxoQRCode: TPanel
+                Left = 246
+                Height = 160
                 Top = 0
                 Width = 258
                 Align = alClient
-                Center = True
-                Constraints.MinHeight = 140
-                Proportional = True
-                Stretch = True
+                BevelOuter = bvNone
+                ClientHeight = 160
+                ClientWidth = 258
+                TabOrder = 0
+                object imFluxoQRCode: TImage
+                  Left = 0
+                  Height = 160
+                  Top = 0
+                  Width = 258
+                  Align = alClient
+                  Center = True
+                  Constraints.MinHeight = 140
+                  Proportional = True
+                  Stretch = True
+                end
               end
-            end
-            object pnFluxoBotoes: TPanel
-              Left = 504
-              Height = 143
-              Top = 0
-              Width = 228
-              Align = alRight
-              Anchors = [akTop, akLeft, akRight, akBottom]
-              BevelOuter = bvNone
-              ClientHeight = 143
-              ClientWidth = 228
-              Font.Height = -16
-              Font.Name = 'Arial'
-              Font.Style = [fsBold]
-              ParentFont = False
-              TabOrder = 2
-              object pnFluxoBotoesRight: TPanel
-                Left = 212
-                Height = 143
+              object pnFluxoBotoes: TPanel
+                Left = 504
+                Height = 160
                 Top = 0
-                Width = 16
+                Width = 228
                 Align = alRight
+                Anchors = [akTop, akLeft, akRight, akBottom]
                 BevelOuter = bvNone
+                ClientHeight = 160
+                ClientWidth = 228
+                Font.Height = -16
+                Font.Name = 'Arial'
+                Font.Style = [fsBold]
+                ParentFont = False
                 TabOrder = 1
-              end
-              object pnFluxoBotoesPrincipais: TPanel
-                Left = 0
-                Height = 143
-                Top = 0
-                Width = 212
-                Align = alClient
-                BevelOuter = bvNone
-                ClientHeight = 143
-                ClientWidth = 212
-                TabOrder = 0
-                object btFluxoPagar: TBitBtn
+                object pnFluxoBotoesErroConsultar: TPanel
                   Left = 0
-                  Height = 32
+                  Height = 160
                   Top = 0
                   Width = 212
-                  Align = alTop
-                  Caption = 'PAGAR'
-                  Images = ImageList1
-                  ImageIndex = 33
-                  OnClick = btFluxoPagarClick
-                  TabOrder = 0
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 160
+                  ClientWidth = 212
+                  TabOrder = 2
+                  Visible = False
+                  object btFluxoTentarNovamente: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 0
+                    Width = 212
+                    Align = alTop
+                    Caption = 'Tentar Novamente'
+                    Images = ImageList1
+                    ImageIndex = 11
+                    OnClick = btFluxoTentarNovamenteClick
+                    TabOrder = 0
+                    Visible = False
+                  end
+                  object pnFluxoDiv8: TPanel
+                    Left = 0
+                    Height = 5
+                    Top = 32
+                    Width = 212
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 1
+                    Visible = False
+                  end
+                  object btFluxoCancelarConsulta: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 37
+                    Width = 212
+                    Align = alTop
+                    Caption = 'Cancelar'
+                    Images = ImageList1
+                    ImageIndex = 17
+                    OnClick = btFluxoCancelarConsultaClick
+                    TabOrder = 2
+                    Visible = False
+                  end
+                  object btFluxoFecharVenda: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 74
+                    Width = 212
+                    Align = alTop
+                    Caption = 'Fechar Venda'
+                    Images = ImageList1
+                    ImageIndex = 16
+                    OnClick = btFluxoFecharVendaClick
+                    TabOrder = 4
+                    Visible = False
+                  end
+                  object pnFluxoDiv10: TPanel
+                    Left = 0
+                    Height = 5
+                    Top = 69
+                    Width = 212
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 3
+                    Visible = False
+                  end
                 end
-                object pnFluxoDiv4: TPanel
-                  Left = 0
-                  Height = 5
-                  Top = 32
-                  Width = 212
-                  Align = alTop
+                object pnFluxoBotoesRight: TPanel
+                  Left = 212
+                  Height = 160
+                  Top = 0
+                  Width = 16
+                  Align = alRight
                   BevelOuter = bvNone
                   TabOrder = 1
                 end
-                object btFluxoCancelarCobranca: TBitBtn
+                object pnFluxoBotoesPrincipais: TPanel
                   Left = 0
-                  Height = 32
-                  Top = 37
+                  Height = 160
+                  Top = 0
                   Width = 212
-                  Align = alTop
-                  Caption = 'Cancelar Cobrança'
-                  Images = ImageList1
-                  ImageIndex = 17
-                  OnClick = btFluxoCancelarCobrancaClick
-                  TabOrder = 2
-                end
-                object pnFluxoDiv6: TPanel
-                  Left = 0
-                  Height = 5
-                  Top = 106
-                  Width = 212
-                  Align = alTop
+                  Align = alClient
                   BevelOuter = bvNone
-                  TabOrder = 5
-                end
-                object btFluxoEstornarPagto: TBitBtn
-                  Left = 0
-                  Height = 32
-                  Top = 74
-                  Width = 212
-                  Align = alTop
-                  Caption = 'Estornar Pagamento'
-                  Images = ImageList1
-                  ImageIndex = 12
-                  OnClick = btFluxoEstornarPagtoClick
-                  TabOrder = 4
-                end
-                object pnFluxoDiv5: TPanel
-                  Left = 0
-                  Height = 5
-                  Top = 69
-                  Width = 212
-                  Align = alTop
-                  BevelOuter = bvNone
-                  TabOrder = 3
-                end
-                object btFluxoNovaVenda: TBitBtn
-                  Left = 0
-                  Height = 32
-                  Top = 111
-                  Width = 212
-                  Align = alTop
-                  Caption = 'Nova Venda'
-                  Images = ImageList1
-                  ImageIndex = 23
-                  OnClick = btFluxoNovaVendaClick
-                  TabOrder = 6
+                  ClientHeight = 160
+                  ClientWidth = 212
+                  TabOrder = 0
+                  object btFluxoPagar: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 0
+                    Width = 212
+                    Align = alTop
+                    Caption = 'PAGAR'
+                    Images = ImageList1
+                    ImageIndex = 33
+                    OnClick = btFluxoPagarClick
+                    TabOrder = 0
+                    Visible = False
+                  end
+                  object pnFluxoDiv4: TPanel
+                    Left = 0
+                    Height = 5
+                    Top = 32
+                    Width = 212
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 1
+                    Visible = False
+                  end
+                  object btFluxoCancelarCobranca: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 37
+                    Width = 212
+                    Align = alTop
+                    Caption = 'Cancelar Cobrança'
+                    Images = ImageList1
+                    ImageIndex = 17
+                    OnClick = btFluxoCancelarCobrancaClick
+                    TabOrder = 2
+                    Visible = False
+                  end
+                  object pnFluxoDiv6: TPanel
+                    Left = 0
+                    Height = 5
+                    Top = 106
+                    Width = 212
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 5
+                    Visible = False
+                  end
+                  object btFluxoEstornarPagto: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 74
+                    Width = 212
+                    Align = alTop
+                    Caption = 'Estornar Pagamento'
+                    Images = ImageList1
+                    ImageIndex = 12
+                    OnClick = btFluxoEstornarPagtoClick
+                    TabOrder = 4
+                    Visible = False
+                  end
+                  object pnFluxoDiv5: TPanel
+                    Left = 0
+                    Height = 5
+                    Top = 69
+                    Width = 212
+                    Align = alTop
+                    BevelOuter = bvNone
+                    TabOrder = 3
+                    Visible = False
+                  end
+                  object btFluxoNovaVenda: TBitBtn
+                    Left = 0
+                    Height = 32
+                    Top = 111
+                    Width = 212
+                    Align = alTop
+                    Caption = 'Nova Venda'
+                    Images = ImageList1
+                    ImageIndex = 23
+                    OnClick = btFluxoNovaVendaClick
+                    TabOrder = 6
+                    Visible = False
+                  end
                 end
               end
-              object pnFluxoBotoesErroConsultar: TPanel
+              object pnFluxoTotal: TPanel
                 Left = 0
-                Height = 143
+                Height = 160
                 Top = 0
-                Width = 212
-                Align = alClient
+                Width = 246
+                Align = alLeft
                 BevelOuter = bvNone
-                ClientHeight = 143
-                ClientWidth = 212
+                ClientHeight = 160
+                ClientWidth = 246
                 TabOrder = 2
-                Visible = False
-                object btFluxoTentarNovamente: TBitBtn
+                object gbFluxoCarteira: TGroupBox
                   Left = 0
-                  Height = 32
+                  Height = 63
                   Top = 0
-                  Width = 212
+                  Width = 246
                   Align = alTop
-                  Caption = 'Tentar Novamente'
-                  Images = ImageList1
-                  ImageIndex = 11
-                  OnClick = btFluxoTentarNovamenteClick
-                  TabOrder = 0
-                end
-                object pnFluxoDiv8: TPanel
-                  Left = 0
-                  Height = 5
-                  Top = 32
-                  Width = 212
-                  Align = alTop
-                  BevelOuter = bvNone
-                  TabOrder = 1
-                end
-                object btFluxoCancelarConsulta: TBitBtn
-                  Left = 0
-                  Height = 32
-                  Top = 37
-                  Width = 212
-                  Align = alTop
-                  Caption = 'Cancelar'
-                  Images = ImageList1
-                  ImageIndex = 17
-                  OnClick = btFluxoCancelarConsultaClick
-                  TabOrder = 2
-                end
-                object btFluxoFecharVenda: TBitBtn
-                  Left = 0
-                  Height = 32
-                  Top = 74
-                  Width = 212
-                  Align = alTop
-                  Caption = 'Fechar Venda'
-                  Images = ImageList1
-                  ImageIndex = 16
-                  OnClick = btFluxoFecharVendaClick
-                  TabOrder = 4
-                end
-                object pnFluxoDiv10: TPanel
-                  Left = 0
-                  Height = 5
-                  Top = 69
-                  Width = 212
-                  Align = alTop
-                  BevelOuter = bvNone
-                  TabOrder = 3
-                end
-              end
-            end
-            object lbFluxoMsgPagto: TLabel
-              Left = 0
-              Height = 30
-              Top = 153
-              Width = 732
-              Align = alBottom
-              Alignment = taCenter
-              Caption = 'Ambiente de homologação: Utilize o ShipayPagador para simular um pagamento'#13#10'https://apptest-staging.shipay.com.br'
-              Font.Color = clRed
-              Font.Name = 'Arial'
-              Font.Style = [fsBold]
-              ParentFont = False
-            end
-            object pnFluxoTotal: TPanel
-              Left = 0
-              Height = 143
-              Top = 0
-              Width = 246
-              Align = alLeft
-              BevelOuter = bvNone
-              ClientHeight = 143
-              ClientWidth = 246
-              TabOrder = 0
-              object gbFluxoCarteira: TGroupBox
-                Left = 0
-                Height = 63
-                Top = 0
-                Width = 246
-                Align = alTop
-                Caption = 'CARTEIRAS'
-                ClientHeight = 44
-                ClientWidth = 242
-                Font.Name = 'Tahoma'
-                ParentFont = False
-                TabOrder = 0
-                object cbFluxoCarteiras: TComboBox
-                  Left = 15
-                  Height = 26
-                  Top = 5
-                  Width = 213
-                  Font.Height = -16
-                  Font.Name = 'Arial'
-                  ItemHeight = 18
-                  ParentFont = False
-                  Style = csDropDownList
-                  TabOrder = 0
-                end
-              end
-              object gbFluxoTotal: TGroupBox
-                Left = 0
-                Height = 80
-                Top = 63
-                Width = 246
-                Align = alTop
-                Caption = 'TOTAL'
-                ClientHeight = 61
-                ClientWidth = 242
-                Font.Name = 'Tahoma'
-                ParentFont = False
-                TabOrder = 1
-                object pnFluxoTotalStr: TPanel
-                  Left = 0
-                  Height = 61
-                  Top = 0
-                  Width = 242
-                  Align = alTop
-                  BevelOuter = bvNone
-                  Caption = 'R$ 999,99'
-                  Font.Height = -35
+                  Caption = 'CARTEIRAS'
+                  ClientHeight = 44
+                  ClientWidth = 242
                   Font.Name = 'Tahoma'
+                  ParentFont = False
+                  TabOrder = 0
+                  object pnFluxoCarteira: TPanel
+                    Left = 0
+                    Height = 44
+                    Top = 0
+                    Width = 242
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 44
+                    ClientWidth = 242
+                    TabOrder = 0
+                    object cbFluxoCarteiras: TComboBox
+                      Left = 15
+                      Height = 26
+                      Top = 5
+                      Width = 213
+                      Font.Height = -16
+                      Font.Name = 'Arial'
+                      ItemHeight = 18
+                      ParentFont = False
+                      Style = csDropDownList
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object gbFluxoTotal: TGroupBox
+                  Left = 0
+                  Height = 80
+                  Top = 63
+                  Width = 246
+                  Align = alTop
+                  Caption = 'TOTAL'
+                  ClientHeight = 61
+                  ClientWidth = 242
+                  Font.Name = 'Tahoma'
+                  ParentFont = False
+                  TabOrder = 1
+                  object pnFluxoTotalStr: TPanel
+                    Left = 0
+                    Height = 61
+                    Top = 0
+                    Width = 242
+                    Align = alTop
+                    BevelOuter = bvNone
+                    Caption = 'R$ 999,99'
+                    Font.Height = -35
+                    Font.Name = 'Tahoma'
+                    Font.Style = [fsBold]
+                    ParentFont = False
+                    TabOrder = 0
+                  end
+                end
+              end
+            end
+            object pnFluxoRodapeInfo2: TPanel
+              Left = 0
+              Height = 79
+              Top = 160
+              Width = 732
+              Align = alClient
+              AutoSize = True
+              BevelOuter = bvNone
+              ClientHeight = 79
+              ClientWidth = 732
+              TabOrder = 1
+              object lbFluxoMsgPagto: TLabel
+                Left = 0
+                Height = 30
+                Top = 49
+                Width = 732
+                Align = alClient
+                Alignment = taCenter
+                Caption = 'Ambiente de homologação: Utilize o ShipayPagador para simular um pagamento'#13#10'https://apptest-staging.shipay.com.br'
+                Font.Color = clRed
+                Font.Name = 'Arial'
+                Font.Style = [fsBold]
+                ParentFont = False
+                Visible = False
+              end
+              object pnFluxoCopiaECola: TPanel
+                Left = 0
+                Height = 49
+                Top = 0
+                Width = 732
+                Align = alTop
+                BevelOuter = bvNone
+                ClientHeight = 49
+                ClientWidth = 732
+                TabOrder = 0
+                Visible = False
+                object lbFluxoCopiaECola: TLabel
+                  Left = 26
+                  Height = 15
+                  Top = 4
+                  Width = 92
+                  Caption = 'PIX Copia e Cola'
+                  Font.Name = 'Arial'
                   Font.Style = [fsBold]
                   ParentFont = False
+                end
+                object edFluxoCopiaECola: TEdit
+                  Left = 26
+                  Height = 27
+                  Top = 20
+                  Width = 664
+                  Alignment = taCenter
+                  Font.Height = -17
+                  Font.Name = 'Arial'
+                  ParentFont = False
                   TabOrder = 0
                 end
+                object btFluxoCopiaECola: TSpeedButton
+                  Left = 690
+                  Height = 27
+                  Top = 20
+                  Width = 26
+                  Images = ImageList1
+                  ImageIndex = 13
+                  OnClick = btFluxoCopiaEColaClick
+                end
               end
-            end
-            object pnFluxoDiv7: TPanel
-              Left = 0
-              Height = 10
-              Top = 143
-              Width = 732
-              Align = alBottom
-              BevelOuter = bvNone
-              TabOrder = 3
             end
           end
           object pnFluxoDiv1: TPanel
@@ -652,7 +743,7 @@ object frPixCDShipay: TfrPixCDShipay
           end
           object pnFluxoDiv3: TPanel
             Left = 0
-            Height = 15
+            Height = 10
             Top = 341
             Width = 732
             Align = alTop
@@ -664,12 +755,12 @@ object frPixCDShipay: TfrPixCDShipay
     end
     object tsTestes: TTabSheet
       Caption = 'Endpoints'
-      ClientHeight = 562
+      ClientHeight = 613
       ClientWidth = 792
       ImageIndex = 14
       object pgTestes: TPageControl
         Left = 0
-        Height = 562
+        Height = 613
         Top = 0
         Width = 480
         ActivePage = tsCriarCob
@@ -680,11 +771,11 @@ object frPixCDShipay: TfrPixCDShipay
         TabWidth = 119
         object tsCriarCob: TTabSheet
           Caption = 'Criar Cobrança'
-          ClientHeight = 529
+          ClientHeight = 580
           ClientWidth = 472
           object pgCriarCob: TPageControl
             Left = 0
-            Height = 529
+            Height = 580
             Top = 0
             Width = 472
             ActivePage = tsCriarCobImediata
@@ -694,18 +785,18 @@ object frPixCDShipay: TfrPixCDShipay
             TabWidth = 233
             object tsCriarCobImediata: TTabSheet
               Caption = 'Cobrança'
-              ClientHeight = 501
+              ClientHeight = 552
               ClientWidth = 464
               object pnCriarCob: TPanel
                 Left = 10
-                Height = 490
-                Top = 10
+                Height = 558
+                Top = 8
                 Width = 442
                 BevelOuter = bvNone
-                ClientHeight = 490
+                ClientHeight = 558
                 ClientWidth = 442
                 TabOrder = 0
-                object gbComprador: TGroupBox
+                object gbCobComprador: TGroupBox
                   Left = 0
                   Height = 121
                   Top = 0
@@ -715,68 +806,79 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 101
                   ClientWidth = 438
                   TabOrder = 0
-                  object lbCompradorNome: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobComprador: TPanel
+                    Left = 0
+                    Height = 101
                     Top = 0
-                    Width = 33
-                    Caption = 'Nome'
-                  end
-                  object edCompradorNome: TEdit
-                    Left = 15
-                    Height = 23
-                    Top = 15
-                    Width = 263
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 101
+                    ClientWidth = 438
                     TabOrder = 0
-                    Text = 'Elias Cesar Vieira'
-                  end
-                  object lbCompradorDoc: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 0
-                    Width = 53
-                    Caption = 'CPF/CNPJ'
-                  end
-                  object edCompradorDoc: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 15
-                    Width = 130
-                    TabOrder = 1
-                    Text = '67751079002'
-                  end
-                  object lbCompradorEmail: TLabel
-                    Left = 15
-                    Height = 15
-                    Top = 48
-                    Width = 34
-                    Caption = 'E-mail'
-                  end
-                  object edCompradorEmail: TEdit
-                    Left = 15
-                    Height = 23
-                    Top = 63
-                    Width = 263
-                    TabOrder = 2
-                    Text = 'elias@projetoacbr.com.br'
-                  end
-                  object lbCompradorFone: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 48
-                    Width = 44
-                    Caption = 'Telefone'
-                  end
-                  object edCompradorFone: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 63
-                    Width = 130
-                    TabOrder = 3
-                    Text = '(15)99999-9999'
+                    object lbCompradorNome: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 33
+                      Caption = 'Nome'
+                    end
+                    object edCompradorNome: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 15
+                      Width = 263
+                      TabOrder = 0
+                      Text = 'Elias Cesar Vieira'
+                    end
+                    object lbCompradorDoc: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 0
+                      Width = 53
+                      Caption = 'CPF/CNPJ'
+                    end
+                    object edCompradorDoc: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 15
+                      Width = 130
+                      TabOrder = 1
+                      Text = '67751079002'
+                    end
+                    object lbCompradorEmail: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 48
+                      Width = 34
+                      Caption = 'E-mail'
+                    end
+                    object edCompradorEmail: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 63
+                      Width = 263
+                      TabOrder = 2
+                      Text = 'elias@projetoacbr.com.br'
+                    end
+                    object lbCompradorFone: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 48
+                      Width = 44
+                      Caption = 'Telefone'
+                    end
+                    object edCompradorFone: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 63
+                      Width = 130
+                      TabOrder = 3
+                      Text = '(15)99999-9999'
+                    end
                   end
                 end
-                object gbItem: TGroupBox
+                object gbCobItem: TGroupBox
                   Left = 0
                   Height = 122
                   Top = 121
@@ -786,82 +888,93 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 102
                   ClientWidth = 438
                   TabOrder = 1
-                  object lbItemDescricao: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobItem: TPanel
+                    Left = 0
+                    Height = 102
                     Top = 0
-                    Width = 51
-                    Caption = 'Descrição'
-                  end
-                  object edItemDescricao: TEdit
-                    Left = 15
-                    Height = 23
-                    Top = 16
-                    Width = 263
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 102
+                    ClientWidth = 438
                     TabOrder = 0
-                    Text = 'Batata Doce'
-                  end
-                  object lbItemEAN: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 1
-                    Width = 23
-                    Caption = 'EAN'
-                  end
-                  object edItemEAN: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 16
-                    Width = 130
-                    TabOrder = 1
-                    Text = '0123456789012'
-                  end
-                  object lbItemSKU: TLabel
-                    Left = 15
-                    Height = 15
-                    Top = 49
-                    Width = 21
-                    Caption = 'SKU'
-                  end
-                  object edItemSKU: TEdit
-                    Left = 15
-                    Height = 23
-                    Top = 64
-                    Width = 123
-                    TabOrder = 2
-                    Text = 'MTC-6110'
-                  end
-                  object lbItemPreco: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 49
-                    Width = 58
-                    Caption = 'Preço Unit.'
-                  end
-                  object lbItemQtd: TLabel
-                    Left = 155
-                    Height = 15
-                    Top = 49
-                    Width = 62
-                    Caption = 'Quantidade'
-                  end
-                  object edItemQtd: TEdit
-                    Left = 155
-                    Height = 23
-                    Top = 64
-                    Width = 123
-                    Alignment = taRightJustify
-                    TabOrder = 3
-                    Text = '1,00'
-                  end
-                  object edItemPreco: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 64
-                    Width = 130
-                    Alignment = taRightJustify
-                    TabOrder = 4
-                    Text = '1,00'
+                    object lbItemDescricao: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 51
+                      Caption = 'Descrição'
+                    end
+                    object edItemDescricao: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 16
+                      Width = 263
+                      TabOrder = 0
+                      Text = 'Batata Doce'
+                    end
+                    object lbItemEAN: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 1
+                      Width = 23
+                      Caption = 'EAN'
+                    end
+                    object edItemEAN: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 16
+                      Width = 130
+                      TabOrder = 1
+                      Text = '0123456789012'
+                    end
+                    object lbItemSKU: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 49
+                      Width = 21
+                      Caption = 'SKU'
+                    end
+                    object edItemSKU: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 64
+                      Width = 123
+                      TabOrder = 2
+                      Text = 'MTC-6110'
+                    end
+                    object lbItemPreco: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 49
+                      Width = 58
+                      Caption = 'Preço Unit.'
+                    end
+                    object lbItemQtd: TLabel
+                      Left = 155
+                      Height = 15
+                      Top = 49
+                      Width = 62
+                      Caption = 'Quantidade'
+                    end
+                    object edItemQtd: TEdit
+                      Left = 155
+                      Height = 23
+                      Top = 64
+                      Width = 123
+                      Alignment = taRightJustify
+                      TabOrder = 3
+                      Text = '1,00'
+                    end
+                    object edItemPreco: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 64
+                      Width = 130
+                      Alignment = taRightJustify
+                      TabOrder = 4
+                      Text = '1,00'
+                    end
                   end
                 end
                 object lbCobOrderRef: TLabel
@@ -889,7 +1002,7 @@ object frPixCDShipay: TfrPixCDShipay
                   OnClick = btCriarCobrancaClick
                   TabOrder = 5
                 end
-                object imgQRCriarCobranca: TImage
+                object imCobQRCode: TImage
                   Left = 16
                   Height = 152
                   Top = 320
@@ -928,22 +1041,45 @@ object frPixCDShipay: TfrPixCDShipay
                   Width = 46
                   Caption = 'Carteiras'
                 end
+                object edCobCopiaECola: TEdit
+                  Left = 16
+                  Height = 23
+                  Top = 496
+                  Width = 380
+                  TabOrder = 6
+                end
+                object lbCobCopiaECola: TLabel
+                  Left = 16
+                  Height = 15
+                  Top = 480
+                  Width = 67
+                  Caption = 'Copia e Cola'
+                end
+                object btCobCopiaECola: TSpeedButton
+                  Left = 398
+                  Height = 26
+                  Top = 494
+                  Width = 26
+                  Images = ImageList1
+                  ImageIndex = 13
+                  OnClick = btCobCopiaEColaClick
+                end
               end
             end
             object tsCriarOrderDueDate: TTabSheet
               Caption = 'Cobrança Padrão Bacen'
-              ClientHeight = 501
+              ClientHeight = 552
               ClientWidth = 464
-              object pnCriarCob1: TPanel
-                Left = 16
-                Height = 500
-                Top = 10
+              object pnCriarCobBacen: TPanel
+                Left = 10
+                Height = 558
+                Top = 8
                 Width = 442
                 BevelOuter = bvNone
-                ClientHeight = 500
+                ClientHeight = 558
                 ClientWidth = 442
                 TabOrder = 0
-                object gbCobVencComprador: TGroupBox
+                object gbCobBacenComprador: TGroupBox
                   Left = 0
                   Height = 72
                   Top = 0
@@ -953,38 +1089,49 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 52
                   ClientWidth = 438
                   TabOrder = 0
-                  object lbCobVencCompradorNome: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobBacenComprador: TPanel
+                    Left = 0
+                    Height = 52
                     Top = 0
-                    Width = 33
-                    Caption = 'Nome'
-                  end
-                  object edCobVencCompradorNome: TEdit
-                    Left = 15
-                    Height = 23
-                    Top = 15
-                    Width = 263
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 52
+                    ClientWidth = 438
                     TabOrder = 0
-                    Text = 'Elias Cesar Vieira'
-                  end
-                  object lbCobVencCompradorDoc: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 0
-                    Width = 53
-                    Caption = 'CPF/CNPJ'
-                  end
-                  object edCobVencCompradorDoc: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 15
-                    Width = 130
-                    TabOrder = 1
-                    Text = '67751079002'
+                    object lbCobBacenCompradorNome: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 33
+                      Caption = 'Nome'
+                    end
+                    object edCobBacenCompradorNome: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 15
+                      Width = 263
+                      TabOrder = 0
+                      Text = 'Elias Cesar Vieira'
+                    end
+                    object lbCobBacenCompradorDoc: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 0
+                      Width = 53
+                      Caption = 'CPF/CNPJ'
+                    end
+                    object edCobBacenCompradorDoc: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 15
+                      Width = 130
+                      TabOrder = 1
+                      Text = '67751079002'
+                    end
                   end
                 end
-                object btCriarCobVenc: TBitBtn
+                object btCriarCobBacen: TBitBtn
                   Left = 296
                   Height = 26
                   Top = 428
@@ -992,10 +1139,10 @@ object frPixCDShipay: TfrPixCDShipay
                   Caption = 'Criar'
                   Images = ImageList1
                   ImageIndex = 4
-                  OnClick = btCriarCobVencClick
+                  OnClick = btCriarCobBacenClick
                   TabOrder = 8
                 end
-                object imgQRCriarCobVenc: TImage
+                object imCobBacenQRCode: TImage
                   Left = 15
                   Height = 104
                   Top = 368
@@ -1004,7 +1151,7 @@ object frPixCDShipay: TfrPixCDShipay
                   Proportional = True
                   Stretch = True
                 end
-                object gbCobVencDesconto: TGroupBox
+                object gbCobBacenDesconto: TGroupBox
                   Left = 0
                   Height = 72
                   Top = 144
@@ -1014,40 +1161,51 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 52
                   ClientWidth = 438
                   TabOrder = 2
-                  object lbCobVencDescModalidade: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobBacenDesconto: TPanel
+                    Left = 0
+                    Height = 52
                     Top = 0
-                    Width = 63
-                    Caption = 'Modalidade'
-                  end
-                  object lbCobVencDescValor: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 0
-                    Width = 87
-                    Caption = 'Valor/Percentual'
-                  end
-                  object edCobVencDescValor: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 15
-                    Width = 130
-                    Alignment = taRightJustify
-                    TabOrder = 1
-                    Text = '0,00'
-                  end
-                  object cbCobVencDescModalidade: TComboBox
-                    Left = 15
-                    Height = 23
-                    Top = 15
-                    Width = 263
-                    ItemHeight = 15
-                    Style = csDropDownList
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 52
+                    ClientWidth = 438
                     TabOrder = 0
+                    object lbCobBacenDescModalidade: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 63
+                      Caption = 'Modalidade'
+                    end
+                    object lbCobBacenDescValor: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 0
+                      Width = 87
+                      Caption = 'Valor/Percentual'
+                    end
+                    object edCobBacenDescValor: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 15
+                      Width = 130
+                      Alignment = taRightJustify
+                      TabOrder = 0
+                      Text = '0,00'
+                    end
+                    object cbCobBacenDescModalidade: TComboBox
+                      Left = 15
+                      Height = 23
+                      Top = 15
+                      Width = 263
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 1
+                    end
                   end
                 end
-                object gbCobVencAbatimento: TGroupBox
+                object gbCobBacenAbatimento: TGroupBox
                   Left = 0
                   Height = 72
                   Top = 72
@@ -1057,40 +1215,51 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 52
                   ClientWidth = 438
                   TabOrder = 1
-                  object lbCobVencAbatimentoModalidade: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobBacenAbatimento: TPanel
+                    Left = 0
+                    Height = 52
                     Top = 0
-                    Width = 63
-                    Caption = 'Modalidade'
-                  end
-                  object lbCobVencAbatimentoValor: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 0
-                    Width = 87
-                    Caption = 'Valor/Percentual'
-                  end
-                  object edCobVencAbatimentoValor: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 15
-                    Width = 130
-                    Alignment = taRightJustify
-                    TabOrder = 1
-                    Text = '0,00'
-                  end
-                  object cbCobVencAbatimentoModalidade: TComboBox
-                    Left = 15
-                    Height = 23
-                    Top = 15
-                    Width = 263
-                    ItemHeight = 15
-                    Style = csDropDownList
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 52
+                    ClientWidth = 438
                     TabOrder = 0
+                    object lbCobBacenAbatimentoModalidade: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 63
+                      Caption = 'Modalidade'
+                    end
+                    object lbCobBacenAbatimentoValor: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 0
+                      Width = 87
+                      Caption = 'Valor/Percentual'
+                    end
+                    object edCobBacenAbatimentoValor: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 15
+                      Width = 130
+                      Alignment = taRightJustify
+                      TabOrder = 0
+                      Text = '0,00'
+                    end
+                    object cbCobBacenAbatimentoModalidade: TComboBox
+                      Left = 15
+                      Height = 23
+                      Top = 15
+                      Width = 263
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 1
+                    end
                   end
                 end
-                object gbCobVencMulta: TGroupBox
+                object gbCobBacenMulta: TGroupBox
                   Left = 0
                   Height = 72
                   Top = 288
@@ -1100,40 +1269,51 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 52
                   ClientWidth = 438
                   TabOrder = 4
-                  object lbCobVencMultaModalidade: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobBacenMulta: TPanel
+                    Left = 0
+                    Height = 52
                     Top = 0
-                    Width = 63
-                    Caption = 'Modalidade'
-                  end
-                  object lbCobVencMultaValor: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 0
-                    Width = 87
-                    Caption = 'Valor/Percentual'
-                  end
-                  object edCobVencMultaValor: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 15
-                    Width = 130
-                    Alignment = taRightJustify
-                    TabOrder = 1
-                    Text = '0,00'
-                  end
-                  object cbCobVencMultaModalidade: TComboBox
-                    Left = 15
-                    Height = 23
-                    Top = 15
-                    Width = 263
-                    ItemHeight = 15
-                    Style = csDropDownList
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 52
+                    ClientWidth = 438
                     TabOrder = 0
+                    object lbCobBacenMultaModalidade: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 63
+                      Caption = 'Modalidade'
+                    end
+                    object lbCobBacenMultaValor: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 0
+                      Width = 87
+                      Caption = 'Valor/Percentual'
+                    end
+                    object edCobBacenMultaValor: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 15
+                      Width = 130
+                      Alignment = taRightJustify
+                      TabOrder = 0
+                      Text = '0,00'
+                    end
+                    object cbCobBacenMultaModalidade: TComboBox
+                      Left = 15
+                      Height = 23
+                      Top = 15
+                      Width = 263
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 1
+                    end
                   end
                 end
-                object gbCobVencJuros: TGroupBox
+                object gbCobBacenJuros: TGroupBox
                   Left = 0
                   Height = 72
                   Top = 216
@@ -1143,40 +1323,51 @@ object frPixCDShipay: TfrPixCDShipay
                   ClientHeight = 52
                   ClientWidth = 438
                   TabOrder = 3
-                  object lbCobVencJurosModalidade: TLabel
-                    Left = 15
-                    Height = 15
+                  object pnCobBacenJuros: TPanel
+                    Left = 0
+                    Height = 52
                     Top = 0
-                    Width = 63
-                    Caption = 'Modalidade'
-                  end
-                  object lbCobVencJurosValor: TLabel
-                    Left = 293
-                    Height = 15
-                    Top = 0
-                    Width = 87
-                    Caption = 'Valor/Percentual'
-                  end
-                  object edCobVencJurosValor: TEdit
-                    Left = 293
-                    Height = 23
-                    Top = 15
-                    Width = 130
-                    Alignment = taRightJustify
-                    TabOrder = 1
-                    Text = '0,00'
-                  end
-                  object cbCobVencJurosModalidade: TComboBox
-                    Left = 15
-                    Height = 23
-                    Top = 15
-                    Width = 263
-                    ItemHeight = 15
-                    Style = csDropDownList
+                    Width = 438
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 52
+                    ClientWidth = 438
                     TabOrder = 0
+                    object lbCobBacenJurosModalidade: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 0
+                      Width = 63
+                      Caption = 'Modalidade'
+                    end
+                    object lbCobBacenJurosValor: TLabel
+                      Left = 293
+                      Height = 15
+                      Top = 0
+                      Width = 87
+                      Caption = 'Valor/Percentual'
+                    end
+                    object edCobBacenJurosValor: TEdit
+                      Left = 293
+                      Height = 23
+                      Top = 15
+                      Width = 130
+                      Alignment = taRightJustify
+                      TabOrder = 0
+                      Text = '0,00'
+                    end
+                    object cbCobBacenJurosModalidade: TComboBox
+                      Left = 15
+                      Height = 23
+                      Top = 15
+                      Width = 263
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 1
+                    end
                   end
                 end
-                object edCobVencValor: TEdit
+                object edCobBacenValor: TEdit
                   Left = 160
                   Height = 23
                   Top = 431
@@ -1184,14 +1375,14 @@ object frPixCDShipay: TfrPixCDShipay
                   TabOrder = 7
                   Text = '0,50'
                 end
-                object lbCobVencValor: TLabel
+                object lbCobBacenValor: TLabel
                   Left = 160
                   Height = 15
                   Top = 416
                   Width = 80
                   Caption = 'Valor Cobrança'
                 end
-                object edCobVencimento: TDateTimePicker
+                object edCobBacenVencimento: TDateTimePicker
                   Left = 160
                   Height = 23
                   Top = 384
@@ -1215,14 +1406,14 @@ object frPixCDShipay: TfrPixCDShipay
                   ParentBiDiMode = False
                   MonthNames = 'Long'
                 end
-                object lbCobVencimento: TLabel
+                object lbCobBacenVencimento: TLabel
                   Left = 160
                   Height = 15
                   Top = 368
                   Width = 63
                   Caption = 'Vencimento'
                 end
-                object edCobVencDiasPagar: TSpinEdit
+                object edCobBacenDiasPagar: TSpinEdit
                   Left = 296
                   Height = 23
                   Top = 384
@@ -1230,7 +1421,7 @@ object frPixCDShipay: TfrPixCDShipay
                   TabOrder = 6
                   Value = 7
                 end
-                object lbCobVencDiasPagar: TLabel
+                object lbCobBacenDiasPagar: TLabel
                   Left = 296
                   Height = 15
                   Hint = 'Quantidade de dias corridos após a data de vencimento, em que a cobrança poderá ser paga'
@@ -1238,15 +1429,38 @@ object frPixCDShipay: TfrPixCDShipay
                   Width = 132
                   Caption = 'Dias pagar (Após vencto)'
                 end
+                object lbCobBacenCopiaECola: TLabel
+                  Left = 15
+                  Height = 15
+                  Top = 480
+                  Width = 67
+                  Caption = 'Copia e Cola'
+                end
+                object edCobBacenCopiaECola: TEdit
+                  Left = 15
+                  Height = 23
+                  Top = 496
+                  Width = 382
+                  TabOrder = 9
+                end
+                object btCobBacenCopiaECola: TSpeedButton
+                  Left = 400
+                  Height = 26
+                  Top = 493
+                  Width = 26
+                  Images = ImageList1
+                  ImageIndex = 13
+                  OnClick = btCobBacenCopiaEColaClick
+                end
               end
             end
           end
         end
-        object tsCancelarPagto: TTabSheet
+        object tsOrderCancelar: TTabSheet
           Caption = 'Cancelar'
-          ClientHeight = 529
+          ClientHeight = 580
           ClientWidth = 472
-          object gbCancelarOrder: TGroupBox
+          object gbOrderCancelar: TGroupBox
             Left = 15
             Height = 80
             Top = 24
@@ -1255,33 +1469,44 @@ object frPixCDShipay: TfrPixCDShipay
             ClientHeight = 60
             ClientWidth = 429
             TabOrder = 0
-            object lbCancelarOrder_ID: TLabel
-              Left = 15
-              Height = 15
-              Top = 5
-              Width = 44
-              Caption = 'Order ID'
-            end
-            object edCancelarOrder_ID: TEdit
-              Left = 15
-              Height = 23
-              Top = 21
-              Width = 255
+            object pnOrderCancelar: TPanel
+              Left = 0
+              Height = 60
+              Top = 0
+              Width = 429
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 60
+              ClientWidth = 429
               TabOrder = 0
-            end
-            object btCancelarOrder: TBitBtn
-              Left = 285
-              Height = 26
-              Top = 19
-              Width = 130
-              Caption = 'Cancelar'
-              Images = ImageList1
-              ImageIndex = 17
-              OnClick = btCancelarOrderClick
-              TabOrder = 1
+              object lbCancelarOrder_ID: TLabel
+                Left = 15
+                Height = 15
+                Top = 5
+                Width = 44
+                Caption = 'Order ID'
+              end
+              object edCancelarOrder_ID: TEdit
+                Left = 15
+                Height = 23
+                Top = 21
+                Width = 255
+                TabOrder = 0
+              end
+              object btCancelarOrder: TBitBtn
+                Left = 285
+                Height = 26
+                Top = 19
+                Width = 130
+                Caption = 'Cancelar'
+                Images = ImageList1
+                ImageIndex = 17
+                OnClick = btCancelarOrderClick
+                TabOrder = 1
+              end
             end
           end
-          object gbCancelarOrderDueDate: TGroupBox
+          object gbOrderDueDateCancelar: TGroupBox
             Left = 15
             Height = 80
             Top = 120
@@ -1290,40 +1515,51 @@ object frPixCDShipay: TfrPixCDShipay
             ClientHeight = 60
             ClientWidth = 429
             TabOrder = 1
-            object lbCancelarOrderDueDate_ID: TLabel
-              Left = 15
-              Height = 15
-              Top = 5
-              Width = 44
-              Caption = 'Order ID'
-            end
-            object edCancelarOrderDueDate_ID: TEdit
-              Left = 15
-              Height = 23
-              Top = 21
-              Width = 255
+            object pnOrderDueDateCancelar: TPanel
+              Left = 0
+              Height = 60
+              Top = 0
+              Width = 429
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 60
+              ClientWidth = 429
               TabOrder = 0
-            end
-            object btCancelarOrderDueDate: TBitBtn
-              Left = 285
-              Height = 26
-              Top = 19
-              Width = 130
-              Caption = 'Cancelar'
-              Images = ImageList1
-              ImageIndex = 17
-              OnClick = btCancelarOrderDueDateClick
-              TabOrder = 1
+              object lbCancelarOrderDueDate_ID: TLabel
+                Left = 15
+                Height = 15
+                Top = 5
+                Width = 44
+                Caption = 'Order ID'
+              end
+              object edCancelarOrderDueDate_ID: TEdit
+                Left = 15
+                Height = 23
+                Top = 21
+                Width = 255
+                TabOrder = 0
+              end
+              object btCancelarOrderDueDate: TBitBtn
+                Left = 285
+                Height = 26
+                Top = 19
+                Width = 130
+                Caption = 'Cancelar'
+                Images = ImageList1
+                ImageIndex = 17
+                OnClick = btCancelarOrderDueDateClick
+                TabOrder = 1
+              end
             end
           end
         end
         object tsConsultarPagto: TTabSheet
           Caption = 'Consultar'
-          ClientHeight = 529
+          ClientHeight = 580
           ClientWidth = 472
           object PageControl1: TPageControl
             Left = 0
-            Height = 529
+            Height = 580
             Top = 0
             Width = 472
             ActivePage = tbConsultarOrderID
@@ -1333,9 +1569,9 @@ object frPixCDShipay: TfrPixCDShipay
             TabWidth = 234
             object tbConsultarOrderID: TTabSheet
               Caption = 'Consultar Order_ID'
-              ClientHeight = 501
+              ClientHeight = 552
               ClientWidth = 464
-              object gbConsultarOrder: TGroupBox
+              object gbOrderConsultar: TGroupBox
                 Left = 15
                 Height = 81
                 Top = 24
@@ -1344,33 +1580,44 @@ object frPixCDShipay: TfrPixCDShipay
                 ClientHeight = 61
                 ClientWidth = 429
                 TabOrder = 0
-                object lbConsultarOrderID: TLabel
-                  Left = 15
-                  Height = 15
-                  Top = 5
-                  Width = 44
-                  Caption = 'Order ID'
-                end
-                object edConsultarOrderID: TEdit
-                  Left = 15
-                  Height = 23
-                  Top = 21
-                  Width = 255
+                object pnOrderConsultar: TPanel
+                  Left = 0
+                  Height = 61
+                  Top = 0
+                  Width = 429
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 61
+                  ClientWidth = 429
                   TabOrder = 0
-                end
-                object btConsultarOrderID: TBitBtn
-                  Left = 285
-                  Height = 26
-                  Top = 19
-                  Width = 130
-                  Caption = 'Consultar'
-                  Images = ImageList1
-                  ImageIndex = 27
-                  OnClick = btConsultarOrderIDClick
-                  TabOrder = 1
+                  object lbConsultarOrderID: TLabel
+                    Left = 15
+                    Height = 15
+                    Top = 5
+                    Width = 44
+                    Caption = 'Order ID'
+                  end
+                  object edConsultarOrderID: TEdit
+                    Left = 15
+                    Height = 23
+                    Top = 21
+                    Width = 255
+                    TabOrder = 0
+                  end
+                  object btConsultarOrderID: TBitBtn
+                    Left = 285
+                    Height = 26
+                    Top = 19
+                    Width = 130
+                    Caption = 'Consultar'
+                    Images = ImageList1
+                    ImageIndex = 27
+                    OnClick = btConsultarOrderIDClick
+                    TabOrder = 1
+                  end
                 end
               end
-              object gbConsultarOrderv: TGroupBox
+              object gbOrdervConsultar: TGroupBox
                 Left = 15
                 Height = 81
                 Top = 115
@@ -1379,36 +1626,47 @@ object frPixCDShipay: TfrPixCDShipay
                 ClientHeight = 61
                 ClientWidth = 429
                 TabOrder = 1
-                object lbConsultarOrdervID: TLabel
-                  Left = 15
-                  Height = 15
-                  Top = 5
-                  Width = 44
-                  Caption = 'Order ID'
-                end
-                object edConsultarOrdervID: TEdit
-                  Left = 15
-                  Height = 23
-                  Top = 21
-                  Width = 255
+                object pnOrdervConsultar: TPanel
+                  Left = 0
+                  Height = 61
+                  Top = 0
+                  Width = 429
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 61
+                  ClientWidth = 429
                   TabOrder = 0
-                end
-                object btConsultarOrderv: TBitBtn
-                  Left = 285
-                  Height = 26
-                  Top = 18
-                  Width = 130
-                  Caption = 'Consultar'
-                  Images = ImageList1
-                  ImageIndex = 27
-                  OnClick = btConsultarOrdervClick
-                  TabOrder = 1
+                  object lbConsultarOrdervID: TLabel
+                    Left = 15
+                    Height = 15
+                    Top = 5
+                    Width = 44
+                    Caption = 'Order ID'
+                  end
+                  object edConsultarOrdervID: TEdit
+                    Left = 15
+                    Height = 23
+                    Top = 21
+                    Width = 255
+                    TabOrder = 0
+                  end
+                  object btConsultarOrderv: TBitBtn
+                    Left = 285
+                    Height = 26
+                    Top = 18
+                    Width = 130
+                    Caption = 'Consultar'
+                    Images = ImageList1
+                    ImageIndex = 27
+                    OnClick = btConsultarOrdervClick
+                    TabOrder = 1
+                  end
                 end
               end
             end
             object tbConsultarPorPeriodo: TTabSheet
               Caption = 'Consultar Período'
-              ClientHeight = 501
+              ClientHeight = 552
               ClientWidth = 464
               object edConsultarPeriodoInicio: TDateTimePicker
                 Left = 24
@@ -1564,9 +1822,9 @@ object frPixCDShipay: TfrPixCDShipay
         end
         object tsEstornarPagto: TTabSheet
           Caption = 'Estornar'
-          ClientHeight = 529
+          ClientHeight = 580
           ClientWidth = 472
-          object gbEstornarOrder: TGroupBox
+          object gbOrderEstornar: TGroupBox
             Left = 15
             Height = 80
             Top = 24
@@ -1575,49 +1833,60 @@ object frPixCDShipay: TfrPixCDShipay
             ClientHeight = 60
             ClientWidth = 429
             TabOrder = 0
-            object edEstornarOrder_ID: TEdit
-              Left = 15
-              Height = 23
-              Top = 22
-              Width = 186
+            object pnOrderEstornar: TPanel
+              Left = 0
+              Height = 60
+              Top = 0
+              Width = 429
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 60
+              ClientWidth = 429
               TabOrder = 0
-            end
-            object lbEstornarOrder_ID: TLabel
-              Left = 15
-              Height = 15
-              Top = 5
-              Width = 44
-              Caption = 'Order ID'
-            end
-            object btEstornarOrder: TBitBtn
-              Left = 320
-              Height = 26
-              Top = 19
-              Width = 90
-              Caption = 'Estornar'
-              Images = ImageList1
-              ImageIndex = 12
-              OnClick = btEstornarOrderClick
-              TabOrder = 1
-            end
-            object lbEstornarValor: TLabel
-              Left = 216
-              Height = 15
-              Top = 7
-              Width = 26
-              Caption = 'Valor'
-            end
-            object edEstornarValor: TEdit
-              Left = 216
-              Height = 23
-              Top = 22
-              Width = 92
-              Alignment = taRightJustify
-              TabOrder = 2
-              Text = '1,00'
+              object edEstornarOrder_ID: TEdit
+                Left = 15
+                Height = 23
+                Top = 22
+                Width = 186
+                TabOrder = 0
+              end
+              object lbEstornarOrder_ID: TLabel
+                Left = 15
+                Height = 15
+                Top = 5
+                Width = 44
+                Caption = 'Order ID'
+              end
+              object btEstornarOrder: TBitBtn
+                Left = 320
+                Height = 26
+                Top = 19
+                Width = 90
+                Caption = 'Estornar'
+                Images = ImageList1
+                ImageIndex = 12
+                OnClick = btEstornarOrderClick
+                TabOrder = 1
+              end
+              object lbEstornarValor: TLabel
+                Left = 216
+                Height = 15
+                Top = 7
+                Width = 26
+                Caption = 'Valor'
+              end
+              object edEstornarValor: TEdit
+                Left = 216
+                Height = 23
+                Top = 22
+                Width = 92
+                Alignment = taRightJustify
+                TabOrder = 2
+                Text = '1,00'
+              end
             end
           end
-          object gbEstornarOrderDueDate: TGroupBox
+          object gbOrderDueDateEstornar: TGroupBox
             Left = 15
             Height = 80
             Top = 120
@@ -1626,46 +1895,57 @@ object frPixCDShipay: TfrPixCDShipay
             ClientHeight = 60
             ClientWidth = 429
             TabOrder = 1
-            object edEstornarOrderDueDate_ID: TEdit
-              Left = 15
-              Height = 23
-              Top = 22
-              Width = 293
+            object pnOrderDueDateEstornar: TPanel
+              Left = 0
+              Height = 60
+              Top = 0
+              Width = 429
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 60
+              ClientWidth = 429
               TabOrder = 0
-            end
-            object lbEstornarOrderDueDate_ID: TLabel
-              Left = 15
-              Height = 15
-              Top = 5
-              Width = 44
-              Caption = 'Order ID'
-            end
-            object btEstornarOrderDueDate: TBitBtn
-              Left = 320
-              Height = 26
-              Top = 19
-              Width = 90
-              Caption = 'Estornar'
-              Images = ImageList1
-              ImageIndex = 12
-              OnClick = btEstornarOrderDueDateClick
-              TabOrder = 1
+              object edEstornarOrderDueDate_ID: TEdit
+                Left = 15
+                Height = 23
+                Top = 22
+                Width = 293
+                TabOrder = 0
+              end
+              object lbEstornarOrderDueDate_ID: TLabel
+                Left = 15
+                Height = 15
+                Top = 5
+                Width = 44
+                Caption = 'Order ID'
+              end
+              object btEstornarOrderDueDate: TBitBtn
+                Left = 320
+                Height = 26
+                Top = 19
+                Width = 90
+                Caption = 'Estornar'
+                Images = ImageList1
+                ImageIndex = 12
+                OnClick = btEstornarOrderDueDateClick
+                TabOrder = 1
+              end
             end
           end
         end
       end
       object pnRespostas: TPanel
         Left = 485
-        Height = 562
+        Height = 613
         Top = 0
         Width = 307
         Align = alRight
-        ClientHeight = 562
+        ClientHeight = 613
         ClientWidth = 307
         TabOrder = 1
         object mmResposta: TMemo
           Left = 1
-          Height = 513
+          Height = 564
           Top = 16
           Width = 305
           Align = alClient
@@ -1684,7 +1964,7 @@ object frPixCDShipay: TfrPixCDShipay
         object pnRodapeRespostas: TPanel
           Left = 1
           Height = 32
-          Top = 529
+          Top = 580
           Width = 305
           Align = alBottom
           ClientHeight = 32
@@ -1705,7 +1985,7 @@ object frPixCDShipay: TfrPixCDShipay
       end
       object Splitter1: TSplitter
         Left = 480
-        Height = 562
+        Height = 613
         Top = 0
         Width = 5
         Align = alRight
@@ -1714,13 +1994,13 @@ object frPixCDShipay: TfrPixCDShipay
     end
     object tsConfiguracao: TTabSheet
       Caption = 'Configuracao'
-      ClientHeight = 562
+      ClientHeight = 613
       ClientWidth = 792
       ImageIndex = 2
       object pnRodapeConfig: TPanel
         Left = 0
         Height = 37
-        Top = 525
+        Top = 576
         Width = 792
         Align = alBottom
         BevelOuter = bvNone
@@ -1768,7 +2048,7 @@ object frPixCDShipay: TfrPixCDShipay
         ClientHeight = 289
         ClientWidth = 732
         TabOrder = 1
-        object gbShipay: TGroupBox
+        object gbConfigShipay: TGroupBox
           AnchorSideTop.Side = asrBottom
           Left = 0
           Height = 164
@@ -1779,50 +2059,61 @@ object frPixCDShipay: TfrPixCDShipay
           ClientHeight = 144
           ClientWidth = 728
           TabOrder = 0
-          object lbShipayClientID: TLabel
-            Left = 15
-            Height = 15
-            Top = 5
-            Width = 45
-            Caption = 'Client ID'
-          end
-          object edShipayClientID: TEdit
-            Left = 15
-            Height = 23
-            Top = 20
-            Width = 691
+          object pnConfigShipay: TPanel
+            Left = 0
+            Height = 144
+            Top = 0
+            Width = 728
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 144
+            ClientWidth = 728
             TabOrder = 0
-          end
-          object lbShipaySecretKey: TLabel
-            Left = 15
-            Height = 15
-            Top = 48
-            Width = 54
-            Caption = 'Secret Key'
-          end
-          object edShipaySecretKey: TEdit
-            Left = 15
-            Height = 23
-            Top = 63
-            Width = 691
-            TabOrder = 1
-          end
-          object lbShipayAccessKey: TLabel
-            Left = 15
-            Height = 15
-            Top = 91
-            Width = 58
-            Caption = 'Access Key'
-          end
-          object edShipayAccessKey: TEdit
-            Left = 15
-            Height = 23
-            Top = 106
-            Width = 691
-            TabOrder = 2
+            object lbShipayClientID: TLabel
+              Left = 15
+              Height = 15
+              Top = 5
+              Width = 45
+              Caption = 'Client ID'
+            end
+            object edShipayClientID: TEdit
+              Left = 15
+              Height = 23
+              Top = 20
+              Width = 691
+              TabOrder = 0
+            end
+            object lbShipaySecretKey: TLabel
+              Left = 15
+              Height = 15
+              Top = 48
+              Width = 54
+              Caption = 'Secret Key'
+            end
+            object edShipaySecretKey: TEdit
+              Left = 15
+              Height = 23
+              Top = 63
+              Width = 691
+              TabOrder = 1
+            end
+            object lbShipayAccessKey: TLabel
+              Left = 15
+              Height = 15
+              Top = 91
+              Width = 58
+              Caption = 'Access Key'
+            end
+            object edShipayAccessKey: TEdit
+              Left = 15
+              Height = 23
+              Top = 106
+              Width = 691
+              TabOrder = 2
+            end
           end
         end
-        object gbDiversos: TGroupBox
+        object gbConfigDiversos: TGroupBox
           Left = 0
           Height = 125
           Top = 164
@@ -1832,68 +2123,79 @@ object frPixCDShipay: TfrPixCDShipay
           ClientHeight = 105
           ClientWidth = 420
           TabOrder = 1
-          object edLogArquivo: TEdit
-            Left = 15
-            Height = 23
-            Top = 63
-            Width = 353
-            Anchors = [akTop]
-            TabOrder = 2
-          end
-          object lbLogArquivo: TLabel
-            Left = 15
-            Height = 15
-            Top = 48
-            Width = 81
-            Caption = 'Arquivo de Log'
-          end
-          object sbArqLog: TSpeedButton
-            Left = 373
-            Height = 23
-            Hint = 'Abrir Arquivo de Log'
-            Top = 63
-            Width = 24
-            Flat = True
-            Images = ImageList1
-            ImageIndex = 9
-            ShowHint = True
-            ParentFont = False
-            ParentShowHint = False
-          end
-          object edTimeOut: TSpinEdit
-            Left = 275
-            Height = 23
-            Top = 20
-            Width = 122
-            Increment = 10
-            MaxValue = 999999
-            TabOrder = 1
-          end
-          object cbAmbiente: TComboBox
-            Left = 15
-            Height = 23
-            Top = 20
-            Width = 245
-            ItemHeight = 15
-            Style = csDropDownList
+          object pnConfigDiversos: TPanel
+            Left = 0
+            Height = 105
+            Top = 0
+            Width = 420
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 105
+            ClientWidth = 420
             TabOrder = 0
-          end
-          object lbAmbiente: TLabel
-            Left = 15
-            Height = 15
-            Top = 5
-            Width = 52
-            Caption = 'Ambiente'
-          end
-          object lbTimeOut: TLabel
-            Left = 275
-            Height = 15
-            Top = 5
-            Width = 44
-            Caption = 'Timeout'
+            object edLogArquivo: TEdit
+              Left = 15
+              Height = 23
+              Top = 63
+              Width = 353
+              Anchors = [akTop]
+              TabOrder = 0
+            end
+            object lbLogArquivo: TLabel
+              Left = 15
+              Height = 15
+              Top = 48
+              Width = 81
+              Caption = 'Arquivo de Log'
+            end
+            object sbArqLog: TSpeedButton
+              Left = 373
+              Height = 23
+              Hint = 'Abrir Arquivo de Log'
+              Top = 63
+              Width = 24
+              Flat = True
+              Images = ImageList1
+              ImageIndex = 9
+              ShowHint = True
+              ParentFont = False
+              ParentShowHint = False
+            end
+            object edTimeOut: TSpinEdit
+              Left = 275
+              Height = 23
+              Top = 20
+              Width = 122
+              Increment = 10
+              MaxValue = 999999
+              TabOrder = 1
+            end
+            object cbAmbiente: TComboBox
+              Left = 15
+              Height = 23
+              Top = 20
+              Width = 245
+              ItemHeight = 15
+              Style = csDropDownList
+              TabOrder = 2
+            end
+            object lbAmbiente: TLabel
+              Left = 15
+              Height = 15
+              Top = 5
+              Width = 52
+              Caption = 'Ambiente'
+            end
+            object lbTimeOut: TLabel
+              Left = 275
+              Height = 15
+              Top = 5
+              Width = 44
+              Caption = 'Timeout'
+            end
           end
         end
-        object gbProxy: TGroupBox
+        object gbConfigProxy: TGroupBox
           AnchorSideLeft.Side = asrBottom
           Left = 424
           Height = 125
@@ -1904,90 +2206,101 @@ object frPixCDShipay: TfrPixCDShipay
           ClientHeight = 105
           ClientWidth = 304
           TabOrder = 2
-          object lbProxyHost: TLabel
-            Left = 15
-            Height = 15
-            Top = 5
-            Width = 25
-            Caption = 'Host'
-          end
-          object lbProxyPorta: TLabel
-            Left = 185
-            Height = 15
-            Top = 5
-            Width = 28
-            Caption = 'Porta'
-          end
-          object lbProxyUsuario: TLabel
-            Left = 15
-            Height = 15
-            Top = 48
-            Width = 40
-            Caption = 'Usuário'
-          end
-          object lbProxySenha: TLabel
-            Left = 184
-            Height = 15
-            Top = 48
-            Width = 32
-            Caption = 'Senha'
-          end
-          object edProxyHost: TEdit
-            Left = 15
-            Height = 23
-            Top = 20
-            Width = 155
+          object pnConfigProxy: TPanel
+            Left = 0
+            Height = 105
+            Top = 0
+            Width = 304
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 105
+            ClientWidth = 304
             TabOrder = 0
-          end
-          object edProxyUsuario: TEdit
-            Left = 15
-            Height = 23
-            Top = 63
-            Width = 155
-            TabOrder = 2
-          end
-          object edProxySenha: TEdit
-            Left = 184
-            Height = 23
-            Top = 63
-            Width = 79
-            EchoMode = emPassword
-            PasswordChar = '*'
-            TabOrder = 3
-          end
-          object seProxyPorta: TSpinEdit
-            Left = 184
-            Height = 23
-            Top = 20
-            Width = 102
-            MaxValue = 999999
-            TabOrder = 1
-          end
-          object sbVerSenhaProxy: TSpeedButton
-            Left = 263
-            Height = 23
-            Top = 63
-            Width = 23
-            AllowAllUp = True
-            Flat = True
-            Glyph.Data = {
-              76010000424D7601000000000000760000002800000020000000100000000100
-              04000000000000010000130B0000130B00001000000000000000000000000000
-              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-              333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-              0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-              07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-              07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-              0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-              33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-              B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-              3BB33773333773333773B333333B3333333B7333333733333337
-            }
-            GroupIndex = 1
-            Images = ImageList1
-            ImageIndex = 7
-            OnClick = sbVerSenhaProxyClick
+            object lbProxyHost: TLabel
+              Left = 15
+              Height = 15
+              Top = 5
+              Width = 25
+              Caption = 'Host'
+            end
+            object lbProxyPorta: TLabel
+              Left = 185
+              Height = 15
+              Top = 5
+              Width = 28
+              Caption = 'Porta'
+            end
+            object lbProxyUsuario: TLabel
+              Left = 15
+              Height = 15
+              Top = 48
+              Width = 40
+              Caption = 'Usuário'
+            end
+            object lbProxySenha: TLabel
+              Left = 184
+              Height = 15
+              Top = 48
+              Width = 32
+              Caption = 'Senha'
+            end
+            object edProxyHost: TEdit
+              Left = 15
+              Height = 23
+              Top = 20
+              Width = 155
+              TabOrder = 0
+            end
+            object edProxyUsuario: TEdit
+              Left = 15
+              Height = 23
+              Top = 63
+              Width = 155
+              TabOrder = 1
+            end
+            object edProxySenha: TEdit
+              Left = 184
+              Height = 23
+              Top = 63
+              Width = 79
+              EchoMode = emPassword
+              PasswordChar = '*'
+              TabOrder = 2
+            end
+            object seProxyPorta: TSpinEdit
+              Left = 184
+              Height = 23
+              Top = 20
+              Width = 102
+              MaxValue = 999999
+              TabOrder = 3
+            end
+            object sbVerSenhaProxy: TSpeedButton
+              Left = 263
+              Height = 23
+              Top = 63
+              Width = 23
+              AllowAllUp = True
+              Flat = True
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337
+              }
+              GroupIndex = 1
+              Images = ImageList1
+              ImageIndex = 7
+              OnClick = sbVerSenhaProxyClick
+            end
           end
         end
       end
@@ -1997,161 +2310,160 @@ object frPixCDShipay: TfrPixCDShipay
     Left = 368
     Top = 472
     Bitmap = {
-      4C7A220000001000000010000000421300000000000078DAED5D0B984FD516DF
-      E6410C86F1C8640815D7E3DE1B15D3EBD2830A296A702B72E5315D8F1A97A25C
-      440FB7324408BD48F18D2B2A3D245DE5D19B248A74739157C6B3C818E39EF5F9
-      ED6FD6ACD9FB9C7DFE43C634FBFBD637FF39FFF3DB673FD65A7BADB5D73E7FA5
-      4E5939CBA31E1E3DE851E990D82A1EADF4E83868B5477F72C456F2E84B86D5F4
-      AB47CD1CF0377AB4C180271AEE833BDBA30F3DFACAA3811ECDF0E818704B3CBA
-      CAA30F704F43812D8D3EF267D1B80DF5689147BD3CCA147DA9CFF0BD0C6D3DEC
-      D1FD1E5DE8D14F86EFA731FC0396FEBEE2514F3C4F7E375FCCF52A9FF6131FEC
-      66DF1DF1A88118830668337DFF824783D973A77A7419704437F9F04D578F6679
-      7454B4E75BCC4B5507DE5B6319CF8B1D79B0811833C25E175206FE807ECFF5A8
-      9E2AFA65B1471B1995C775E29F2ED007FCFB9A024FD75A7B9402F96D0B19EC01
-      19D80BDE688DF938CF80BFD3A334E0FB620EAFF4E81CE0D3708F0DBFC9A31FC0
-      7B7D190FF4057E2BEEC931E0BBA09DE7E0FEBBF0F7568F4A79148F3E1155F428
-      4AE0D779D411F85F19BDC5EE998E3189368C7F2DE884151E5DE0D17E8F1EC578
-      AE07F5C4787E6318FFF2681BB5BB82479D3C1AE5D1388FEE00D1333A7B946DE8
-      FF4A8C9126EAEF188FDE13F7D9F01BF1ECFE98830A0C5F01756A9D66EA3FE16F
-      F7A8B747DF03436D1E8F39A0B6CFF368B947B77954D680D7639E037C098FAE85
-      EEA3FF5FC677D4FE3A025F137DD214C5D686DAF8BF2AFB3EE614C820F1D54558
-      6B2B4680EFCFD63C1AC33E96B1B615BAF731564736EAF02B353CFA1BC69A4A49
-      51C78F589B6D85F8340BB24DCF8FC5BA95CDDA70830FBE235BD30600CBD79E63
-      B0296C8564ED67DC9BC59EABE9904797078CD938CBFAADE9138F927CEA201E4B
-      F7680FEECF417F781DB4BE9F1B3017B44EFD1563427DFEAFA18EA410FCD018F3
-      27FB726E883A2EB6D411B61DA6BE540ED90E5EC74E830E731D8F5D1E5D1FA18C
-      D731D89FA652126B5FB5089E511EBA8EECCEB5E0DF120EB87AD0B7A4AB3FC35A
-      3B093A753574BFA91ED29D4F836777C1763C17739C04F99D03B924FDDD1DFDD3
-      652C785EDBD6B44E6F11B49DDD7304EB019FDB94901467E807C94E5D6653DF22
-      78BD1DD6025BD9075F4061ADD88CB54B97AFF10C5B21BBE66EE6CFEC807ED465
-      03D6C4C28AEF047DAAC7AF83B053DA8A79D3A529782B0CF1F57F2AF47618AA23
-      7C8EF342D2A958FF0B53A90D9FA9A5C1D60CF2FF5F80BF7C146B2AE9A189CCA7
-      B095721E7DE1B38E2E015FC9521632FD8658B7B5EE38C4AEDF63B0B95E37ACFB
-      0B98FE5AC0AEAFC13AA0E77FB4A5AD19EC1919E2BB83D087F19031FE1DE9DE57
-      610FE992866B7BC5BD13989D759CD9300FC08ED22516D7B2C4BDDBA0934CB19A
-      07D0C7187C36C520B64397E718BEA3670D016559C6681AEABF0FEBC6B1003B8A
-      B76F21788DFB4FED1CF4FEAD58574B1561D98D465FC9FF7B129F5D628009E0E7
-      3D988FA5F0FF77419667E31E1BF673F85A5D857EA4CF2D203B9F1B7C2F2D47BB
-      719FB631E2858D5713F7AC11FE7734F44D57619F98FCD7AE90F5C6EC5A0A7454
-      ACC12E977E662CFCEFC7D9B58711579485F831D5707DB2476FB3FF9FC038CB62
-      6ABF82AFF0BE43FB4D7853FB4B637E9B3BE09B439EE5BDB3312F35D8B5261E5D
-      2D9EBD0676529993CC3FDAB65E83F9A578CC14F4611DDABCCF07AB4B1478E371
-      C46EDEC7E7E6863617F65237E4DA2D75C85CC4AC4A44806F0B3DFD0B62EF61E3
-      207CFF61396C0397426D1D24D6A463CCAE75B17BB603B781ED4550DCB0BA03FE
-      59F6DC7490FE7F6C00F632D16E89CFF6D987290D7DCDD7C959207E6DA1F0BD74
-      E96988D91FB7ACEBD2874944FC4DDE3B1524AFAF617A3D4AF4D1954662AE49C7
-      1C88009F893D1CF2AF9323A42A45DC072815819DD4003A7715ECCB1FA1B34733
-      DFD066FBFF8BD9E19958539731BB97786F84410F97873DAD656711745F59F8F9
-      0D996CE440A7C531FE7B986177618DB8093A88E220AD50C75E268783C17FF504
-      FFBD855833DFC3FA0CCF5BC6AEED466CA1218B3F6ABF2301711B7D6D25FAF281
-      F013CE839E1EC3DABF036BF06DA8630DFA5257E5EE61923E7C88D950A46FDF64
-      75BF8E3A12D0973A18533D7E730CFAB822EC9AE3AC1D0B301EBBD873D3037479
-      53F8051B10A3DB097B6512F667C2AC5F096857B4FA7D9538F846B1217155C14B
-      AB31FE4BC1472EB18EB3C1E7BB20C7A990B3C3F043A202F04F235E9628AEF786
-      BF7C7980BDF02DFC48935E211FF7111FFC39787617C377D4F777B08ED94A19E8
-      BB8916BF88E2CEF707F4BF1FE29A6DA173A33087D3A14383EC568A8B3C035D42
-      7192D7B007B4136DEBE52007C42F6D206BB3A123EA625C0F8A9844985212FA9F
-      78A14F847594001F1D1231D5B075F40CB96FF07B28318889C85849A223FECFE0
-      0F6963AD52C1F91E0AB694CD4E5BC7EC604DA9220E981CD2F6233BE222037E96
-      83CDA7EDE964033EDDA1AFE94518BF043AC28F9618F08D458C36880E0A3F88F4
-      D635CA7DEFA745118CDFC7405E937C28CE27E631063EEE161FD2B6AD32F87F9B
-      508769BC53556EFED93B863A92507F8AA57DFA7B6E63C719BE4FB5F4FB12F822
-      1ABF45E5DD7FD6F8DD967E6F13FB0336BC2BFFBAE08FC06F5A65889F07E18F21
-      06120DBE1821E20A41F89DC2DEA88FD8992B5EE64CB4147D90F8EAB0BF781FC9
-      66EA0B9DB1D5F05D35615F4C74E0DF2D78CE13869856B483FC24A1ADB1AAB89C
-      EE52C1E77A6BF8F4E4478E473CB9A688619B627194D3F125643D077CAC63625B
-      E1F35F8DCF19027B27E200B477321CEB5322E28994B3B71E72A97DFD0C11F7DB
-      8F7B6CF905B7A8BC7B70196CED7B0DCF4EB660AF673EB8C413DFB75727F6454D
-      FE4165F8661982D28A59B0B89CA452B680788A3734633E1EC910ED4B4F800E20
-      3FF63A9FB813F133E5AC5E81B5723B5B47B55D4A7AE053D88E26BCB64B731073
-      EB867624C2BE7D1432BACF60E76488B5D3965B561F6B5CA6CABB7F29F30BB6AA
-      FCFB73BA5C0D3FFC156603A719E47BAC45C792BE198838417431EB9E9442E348
-      7BC5B70790AD74C6BA921540B64232F2AE0ACE79B215DAF39A87CF946F3D03FC
-      65A297100B8B36E02B20669D091E36D11EC86575033EC88FD06325F3D78BF105
-      C33743FC2852BCAB1F78AAF1718815D3DEC5460BE97CAD6A3E31F44E3E32DC59
-      B99D833B93CB553EB1069792013DD02AC2352683ADD9E417D68810AF6903E62E
-      2642BC8E39CE576E79EF263CF5857271EA4680FF1F6223A542B69FF42CED3F9C
-      1FC1F8913DD521C2385B1B1FFFAEB89CFC5206311AD7F8E91522063250D9733C
-      4D741818CE2F1921F94BE6D76E31D8B036DAA2FCF3735DE864E30BDAFF3319FF
-      9872CB3DE27950FD05FFB60AC1BFAD0BB83E15765F82F224EEC5DA47B11BDA5B
-      6EA482F7E069AFFA4565CEA722BF95F6976D39FC14275AE130778B0D75509B67
-      06E0682DA2BC94BD6807EF4B53953787C6849D8638C30CF4A511C33FE8802D8F
-      F89FDE07E8C7F033546E9ECF3D42173E8FE712969FE97B9AE15FC235CA77AA88
-      D8C5016069CDE6E721354D62F8E12A6F7E1FE562FC05CF1D6A91AD7B19FE5295
-      77FFED6DD8B7830DCF3D8EB65D286202FF16F77CAFF29F61D4F4A2C1AEA3E7AD
-      74E09F15CA9E835E0DED30ED25FE0C1E0BDAFB8FC5780CC7BCCC007F343D43E2
-      1D5AFED398FCF77794FF4A01F24FF9D4F13EF2FF91C3FCBD6FA8836CC497556E
-      7ED96695F72C4836D66CBD8735C547FEBF5327CE824C411D844D870DBB85F585
-      CBFF5061678F82FD3915D80AF8CB65A1BF41FE791D23B1C6C419B036F9E7FD4D
-      67F8A92AFFD9189BFC678B368FC4E729A28E348BFC6F808FA2DBACC7A396CADD
-      A3F393FF1CD4912DC6E33B367F26F9A738E92A47F9AF64E1C1C400F97F3942F9
-      1F0A1E2BEA67FE2A301BA96588FEEAF8F14AE1EFBE85EBC98E781B05E1693D98
-      6CC1A659BE4F33C48D6C767A41F14125082FBF0F937F40F8D2F0A9F5DCB65179
-      CF8385C12717B0FDA6F1A0F5E06395FF1CE1316167F9158A07B71776FE8DAA68
-      9FF32B8A2548FF17E38B36BEB89C79F1BF7F4410FF1B20E2410B6173FEE28323
-      BBF361F8A732FE44FB3694874CFBDE4B0DFE039D5F69063B6E9D257EB71B3E6F
-      12DA473933947B7F37F6101E52B967806CF13F7AEEA768C7F9B09B29F760B558
-      DF82E28747117798A9CCE7E20B5BFCB220F8474E43FCAFB09EE54D842CB612D4
-      DC714FE4139F715B5640FD9DE3884F378C797A88F5C3B47F9B528C77C69BF2A0
-      5343E04D79D0BB1DF1BFFAF0CF8F0EF89BE1A74B3F8ECE23B57394A10443FF13
-      42C8E06443FF2787C0271BF83FF934E8928490FD368D43987E2789B890DCE7A1
-      EFAAFAC41E3E477C30DA802F051FF14365DEBBA1FDC43D2AEF5EB5E9F91407EA
-      2DB0BA6E797ECFB4AF355BB4910A9D1FA43DF6DB1DF0FD101FAB24E2D6B45FDE
-      C510179179B67F5727F284130CED9FE03047D3B10723E36F64F7642AFF5C890B
-      6083F5B1C48EC9C6596EA983F26DBE403B6D7B48B5514726FA42E341B9DBCF20
-      66FBA90A7E074325F4E5638CE90F68539A0A9753500AF34254F20CB0E14BA0EF
-      55022841E53FFB10853831F1D5C6005AAF72CFBEEB4236EE36D4413244E7477A
-      2056BB023C4BB249EF221A8739E1670B6F805C92FE78103C5086C98F3EDF4BB2
-      534FE5BE17589751D01D3A56FE9E90BF68F0C39388357DA3F2E61FBC02FF2306
-      BEC39BE8DF627C8E66D7CFC2E7A718BE0F7C9A0F609B1E02CF1DC175FD390BF7
-      D0B5CE86F8D987E0F91E90533A53D00B9FBBA913EFD75DEA13FF4B71E0939442
-      88D7E77FC638D8EE744FF1F99F7085C6A7B20A9FF3500A7ED61B9023DA7F7F5C
-      B9BD0747818F87C0DF1A80F591DE4D3B36C4DE02E513CF850F4E3EC4E808F462
-      49CC6DE908E72E116B4F9B08C7DF453E1295FDFD75FAFCE4188CA55CC7A85F4B
-      42F8CF8B44FCBFBA88CFD3E78F40F47981CABBA7B659F0008FEF6BBDABDBEEB2
-      7F613AFFE747C5F2EF5F62B1569AF6C37A29FF3D11BFF73DEA772F36F7C10F09
-      88056683874DCF1DE218FB31E15B3AC6206DF89410B1273FFC0A21AF63F03915
-      DF05E1B9BC68BC96970C073CE96A7DDE7937681BAEBDE1803FA472CF3BA782B2
-      71ED50C8FE6B1D10A6FF918E5F5BE5F6FED0C3885FCB520E7C1F943BFA90FA6D
-      F614A3E133D552C1793B72CDBE1236E37EC4AB9F5327CE98C606EC01DC029BF7
-      006CD66E6CDC7E818DDC4EE57F076F25D8AE64E3528EFB352CBE6ACA835F22FC
-      5FCDEFDD1DE39161ECCFC28827FF87FF2682F66F5CF6CBEE837F14276C9C058E
-      787AFFC22CC3F5BB2CF2C34B7DE8804E96F8CD3A1F3CF11EE583ACF4B1435BA8
-      DCDF20E27892CD49E0CB4B02F8BF9BCAFB9EE46B55EE3B6C5DFC931268C77F98
-      2F477C7FA90AF71E4CB2AF9A604FEAACDF70EDE7F97F346661F27F75FE1FE90D
-      CADF7C1763F783CACDBBF5CBFFD5F66247F0742C28017EED0EF8E6B6FCDFCD22
-      76942CE2A617A00E53FE2FF1467B87F85B17F445E6FFAE35B4CB844FC078C8FC
-      DFD70CE36BC2C7624C65FEDF7C037F99E27FB1981799FFF795CA7FBED914FFAD
-      88B995F9BF070DEBAA29FEDB11FC61CAFFDB28E2BB72FE6A803F5E54F6FC3FFD
-      3B52E5301E519897F6E08FE53E316D9DFF7710E3311FF3B216FC3153D9730779
-      5F74FEDF4C75E6E5FF9EAE42B2390CBC4CB1DB56217CFC9E989F4D982FD22347
-      213B41BAB305EC8E47995D560236C83E11A73395852CC6F714D68915E0D5EE58
-      13F7FBD001B4FF52D83683E19F8EC31A608B63E9FDD030F876F0759319DEB5FD
-      87604727605C8FE2FA3518BF91A8230EF3463EDE4F90FFF288C373FC3CA62F6D
-      F33787CD5F0AB30FB718F46210FF24ABE2F78F04D9FDE51D49FA2F37836FF63B
-      522630BACCC29CBBE65F7C246C509EE7EBB25F6A3B7FC6F3503222C097666364
-      FABD8411F011E758F06906FEEC0EB91D06FEEF1D123F59E5E6E1F788A0FDB1B0
-      357A3BF47F3A9BE3E9627FC865FC229DBF82F24F07653F6B643BD3D5E124CA4F
-      5129B6F77D92CD782B1BFF240B96F4C240831D4BFFFF938DBFCD0F1B887934BD
-      C77780035EBFFBFF98B06FEF850CD17B4746A9E0F7C7DE8398490CEAE36DA267
-      C43B8C650C64380B7584FD0D85412AF777116342E2EF419C7610B0CFE1B34BFB
-      F558E93697C0D81FC5DF7F224EE4377F832C6DCAF199BF93C13F352CE3148F36
-      FBF16F61298D60FB513EEBCFA0AF71AD910F4EEF81D0BBAB86C23FD3E7C71AE3
-      DA76D856250DD8C5CAFC5E775E48F7CD850FCFEB9808AC0B8F46A18EF1ACBFDB
-      2CCFEDA7CCE73FE2D197861897A196678D0099CA30D8D06B11A3098BA7315D03
-      5F93BFBFEC6EE899FBE1E72F62FFA78A78F3015039E1F38F062D03E9FFD3C45C
-      EC47FB2F8CA0FD4DD0FEB190ADB0F8E188CD37C45C940F397F14C7D1BF413E01
-      3C11E5C83FF330EF9C7FDF431D7EBA8DBE7B1573126B9081F168D7308C4F59CC
-      4D135CDB81E7FAC5D11B82AF346F1CC4E7312AFF6FAE17CBBFBFFCFBCDA38BFC
-      FB1517F9F72B2EF22F29ACFC4B0A2BFF7EC545FEFD8A8BFCFBCD5FB1FCDB4B65
-      D8A8F761CEE9B34BEE6255D87A265F280B7173DB6F16FD51E5FF9D66DA93DA29
-      AE6D52F97FBFB88ACAFB7E6D4D946B60FAFDA74DA21DCF89EFBF867F46E3501B
-      BE6BA6B86732DBB3E0FBFE6463D6422CEC66C4D348EEEE50F9DFAF1DAFF2EFFB
-      934C9581BD4B71AD29887BDD61E84707D42FAFD3FB3B29A7F112DC334F997F23
-      7380054FB6FBF3906BAAEB2261FF6A1A6468FF11C41BF8F8D378D6B3B4BFB281
-      5FEA81CF29E64E39197D54EEEFACF336EA58FAB306BE4961F3D70BB144F9DB60
-      9C7F4CE7877B5BF867B3818F1B19EA58AFF2BFF798EEA96F9101AA739A32E7BE
-      64A12D951CE43001FEC640CC5107F8D0F9CAFF0108E44F11
+      4C7A220000001000000010000000241300000000000078DAED5D0974164512EE
+      5C600804088246022A0AAEC0EE2A2A042FF0001510050DB0BA202A475CAE8445
+      0545413C5725200828AEAB44105E5C04050F445C94C31BD4082AE2EA02822091
+      4B3943D8A9C7D7EFAF54BA677AFE040D31FD5EBDCC3F335F4F1F55D555D53513
+      A58E5839C6A33E1EDDE95162486C5D8F56787408F4A9477F72C4D6F1E81386D5
+      B4D7A3560EF82B3D5A63C0138DF2C11DE7D13B1E7DE6D1308F723D3A08DC628F
+      2EF2E86DDCD34C6013D147FE2C1AB7911E2DF4A89F4705A22FA7337C3F435BF7
+      7874BB476778F4A3E1FA530C7F87A5BFCF7BD417CF93D7E68AB95EE9D37EE283
+      ADECDA3E8F9A8A31688A36D3F5673C1ACE9E3BD5A3738123BACA876F7A7934D3
+      A303A23D5F625EEA39F05EBE653CCF76E4C1A662CC087B594819F803FA3DDBA3
+      D354C52F8B3C5ACB2819E7897F7A421FF0EB0D059ECE75F02803F2DB0932D807
+      32B00DBCD101F3718A017F8347D9C00FC41C5EE0D109C067E31E1BFE3B8FBE05
+      EF0D643C3010F80DB8A7C880EF89769E80FB6FC6DF6B3DAAEA514DF489A8B647
+      B102BFDAA36EC0EF65F42ABB671AC624CE30FE2741272CF7A8B1473B3C7A00E3
+      F915A82FC6F30BC3F827A36DD4EE5A1E75F7E85E8FC67BF457103DA387478586
+      FEAFC01869A2FE8EF5E84D719F0DBF16CF1E8C39A8C5F0B550A7D669A6FE13FE
+      7A8FFA7BF40D30D4E60998036AFB1C8F9679749D47D50D783DE645C0C7787429
+      741FFD9E816BD4FE4602DF107DD214CBD68693F1BB1EBB1E7F046490F8EA2CAC
+      B5B5A3C00F666B1E8DE100CB58DB0ADDFB20ABA31075F895061EDD88B1A65245
+      D4F13DD6665B213EDD0FD9A6E72760DD2A646DB8C207DF8DAD694381E56BCF41
+      D814B642B2F633EEDDCF9EAB69B747E7058CD978CBFAADE97D8FD27CEA201ECB
+      F1E827DC5F84FEF03A687D3F31602E689DFA0BC684FAFC5F431D6921F8E14CCC
+      9FECCB8921EA38DB5247D87698FA726CC876F03A361B7498EB786CF1E8F22865
+      BC91C1FE34952A58FB8E8FE219C9D0756477AE02FFC638E04E83BE255DFD21D6
+      DAC9D0A99F42F79BEA21DDF93878760B6CC71331C76990DF172097A4BF6F42FF
+      7419079ED7B635ADD3EB056D62F7ECC37AC0E73623242519FA41B2D384D9D4D7
+      085EEF8CB5C056B6C31750582BD661EDD2E5733CC356C8AEB985F9333F403FEA
+      B2066B6279C577873ED5E3D755D8299DC4BCE9D212BC1586F8FA3F157A3B0C35
+      123EC72921E948ACFFE5A99C0C9FA99DC1D60CF2FF9F81BF7C006B2AE9A149CC
+      A7B0951A1E7DECB38E2E065FC9521D323D4FACDB5A77EC66E787186CAE970DEB
+      FE7CA6BFE6B3F3F95807F4FC3F64696B1E7B469EB8B60BFAB026648C5F23DDFB
+      22EC215DB2716E9BB87722B3B30E311BE60ED851BA24E0DC7E71EF46E82453AC
+      E60EF4311EC7A618C426E8F222C3357AD608D07ECB183D85FA6FC3BA7130C08E
+      E2ED5B005EE3FE536707BD7F2DD6D5AA155876E3D057F2FF1EC5B14B0C3005FC
+      FC13E66309FCFF2D90E559B8C786FD08BE562FA11FE9B82D64E72383EFA5E568
+      2BEED336464D61E335C43DF9C2FF8E83BEE925EC1393FFDA0BB27E263B97011D
+      9560B0CBA59F9900FFFB6176EE3EC41565217ECC349C9FE2D16BECF723186759
+      4CED57F015DE7268BF096F6A7F22E6B78D03BE0DE459DE3B0BF3D2809D6BE1D1
+      C5E2D9F9B093AA9531FF68DB3A1FF34BF19827D187D568F3761FAC2EB1E08D87
+      11BB790BC76D0C6D2EEFA549C8B55BEA90D98859C54481EF043DFD0B62EF61E3
+      207CFF61196C0397426DBD55AC4907995DEB62F76C026E0DDB8BA0B8617D07FC
+      3FD9737340FAF7B800ECB9A2DD125FE8B30F93087DCDD7C999207E6E81F0BD74
+      E96B88D91FB2ACEBD2874945FC4DDE3B1524CFE733BD1E2BFAE84A6330D7A463
+      7646812FC01E0EF9D7E95152DD0AEE03548DC24E6A0A9DBB12F6E5F7D0D90F31
+      DFD066FBFF83D9E10558539732BB97786FB4410F27C39ED6B2B310BAAF3AFCFC
+      664C368AA0D39218FFDDC7B05BB0465C051D447190F6A8631B93C3E1E0BFD304
+      FFBD8A5833DFC3FA10CF5BCACE6D456CA1198B3F6ABF2305711B7D6E05FAF2B6
+      F0134E819E1ECBDAFF03D6E0EB50473EFAD24445F630491FDEC36C28D2B7AFB0
+      BA5F461D29E84B238CA91EBF170CFAB836EC9A43AC1DF3311E5BD87373027479
+      4BF8056B10A3DB0C7B6532F667C2AC5F2968579CFA7D9524F846092171F5C04B
+      9F62FC97808F5C621DC781CFB7408E3321677BE087C406E01F47BC2C559CEF0F
+      7FF9BC007BE14BF89126BD423EEEFD3EF813F0EC9E866BD4F7D7B18ED94A35E8
+      BB4916BF88E2CEB707F47F10E29A9DA073633187D3A04383EC568A8B3C015D42
+      719297B007B4196DEBE72007C42F1D216BB3A0239A605C77899844985205FA9F
+      7861409475C4808F768B986AD83AFA86DC37F83D9478C44464AC24D511FF67F0
+      87B4B156AAE07C0F055BCA66A7AD6676B0A64C11074C0F69FB911D7196013FD3
+      C1E6D3F674BA019FE3D0D79C0A8C5F0C1DE1478B0DF833458C368876093F88F4
+      D625CA7DEFA76D058CDFC7435ED37C28C927E631163EEE7A1FD2B6AD32F87FDF
+      A10ED37867AA48FED9EB863AD2507F86A57DFA3AB7B1930CD7332DFD3E07BE88
+      C6AF57C5F79F357EABA5DF1BC5FE800DEFCABF2EF87DF09B561AE2E741F88388
+      81C4812F468BB842107EB3B0374E47ECCC152F7326DA893E487C7DD85FBC8F64
+      330D84CED860B876BCB02F2639F0EF7A3CE711434C2BCE417ED2D0D60455597E
+      EB52CBE77C07F8F4E4474E403CB9A188619B627194D3F10964BD087CAC63621B
+      E0F35F8CE33C81BD017100DA3B1985F52915F144CAD9FB0A72A97DFD3C11F7DB
+      817B6CF905D7A8E27B70796CED7B09CF4EB7602F673EB8C413DF775187F7454D
+      FEC1B1F0CDF2046557B2606529A352BD94788A37B4623E1EC910ED4B4F840E20
+      3FF6329FB813F133E5AC9E8FB572135B47B55D4A7AE003D88E26BCB64B8B1073
+      EB8D76A4C2BE7D0032BADD60E7E489B5D3965B763AD6B802557CFF52E6176C50
+      25F7E774B9187EF8F3CC06CE36C8F7388B8E257D330C7182B84AD62D9342E348
+      7BC5D70790ADF4C0BAB23F806C8564E40D159CF3642BB4E73507C7946F9D0BFE
+      32D1738885C519F0B510B32E000F9BE827C8657D033EC88FD06325F3D72BF1A5
+      C3B742FC285ABCAB1F78A4F1498815D3DEC55A0BE97CADE37D62E8DD7D64B887
+      727B0FEE682E17F9C41A5C4A1EF440FB28D7983CB666935FD8204ABCA63598BB
+      F828F13AE63857B9E5BD9BF0D417CAC5691205FE7F888D540DD97ED2B3B4FF70
+      6A14E347F654D728E36C1D7DFCBBCA52F6A51A6234AEF1D3F3450C6498B2E778
+      9A680F309C5FF242F297CCAF5D6FB0616DB45EF9E7E7BA5059E34BDBFFA319FF
+      A072CB3DE279508305FFB60FC1BF1D4AB93E95775F82F224B2B0F651EC86F696
+      9BABE03D78DAAB7E5699F3A9C86FA5FD655B0E3FC589963BCCDD22431DD4E6E9
+      01385A8B282F651BDAC1FBD25215CFA131619F429C21177D69CEF0773A609311
+      FFD3FB0083183E5745F27C86085DF82F3C97B0FC9DBEC719FE399CA37CA7DA88
+      5DEC0496D66CFE3EA4A6C90C3F4A15CFEFA35C8C0BF1DC9116D9CA62F8D6AAF8
+      FEDB6BB06F871B9E7B086D3B43C404FE2DEEF946957C8751D3B306BB8E9EB7C2
+      817F962B7B0EFAF16887692FF167F058D0DE7F02C66314E62517FCD1F2288977
+      68F9CF66F23FD851FEEB04C83FE553D7F491FF771DE6EF2D431D6423CE5091FC
+      B275AAF8BB208558B3F51ED6933EF2FFB53AFC2EC893A883B039B061D7B3BE70
+      F91F29ECEC7B617F4E05B616FE7259186C907F5EC718AC314906AC4DFE797F73
+      187EAA2AF96E8C4DFE0B459BC7E0F8495147B645FED7C047D16DD6E371928AEC
+      D1F9C97F11EA2814E3F1359B3F93FC539C74A5A3FCD7B1F0606A80FCCF8852FE
+      4782C72AFA3B7FB5988DD42E447F75FC7885F0775FC5F97447BC8D82F0B41E4C
+      B160B32DD7B30D71239B9D5E5A7C5009C2CBEB61F20F089F089F5ACF6D4755FC
+      7DB030F8F452B6DF341EB41EBCA74ABE477850D8597E85E2C15D849D7FA5AAD8
+      EFF955C412A4FF2BF1151B5F598EBEF8DFDFA388FF0D15F1A005B0397FF1C191
+      DD791FFC53197FA27D1BCA43A67DEF2506FF81DE5F69053B6EB5257EB7153E6F
+      1ADA473933947B7F0BF610EE519177806CF13F7AEE0768C7A9B09B29F7E053B1
+      BE05C50F0F20EE305D99DF8B2F6FF1CBD2E0EFFF0DE27FE5F55DDE54C8627B41
+      6D1CF744DEF719B7A5A5D4DF458EF81CC398E784583F4CFBB719957867BC290F
+      3A3304DE9407BDD511BFD7877FBE77C05F0D3F5DFA71F43E526747194A31F43F
+      25840C4E31F47F4A087CBA81FFD37F035D9212B2DFA67108D3EF34111792FB3C
+      74AD9E4FECE123C407E30CF8AAF011DF51E6BD1BDA4FFC4915DFAB363D9FE240
+      FD0556D72DDFDF33ED6BCD126DA442EF0FD21EFBF50EF841888FD511716BDA2F
+      EF69888BC83CDBBFA9C379C22986F64F7498A369D88391F137B27B0A947FAE44
+      63D860032CB163B2719659EAA07C9B8FD14EDB1ED2C9A8A3007DA1F1A0DCED27
+      10B3FD40057F83A10EFAF21EC6F45BB4295B85CB29A88A7921AA7214D8F031E8
+      7BDD004A5125DF7D88459C98F86A6D007DA522EFBEEB4236EE46D4413244EF8F
+      F441AC763978966493BE45341E73C2DF2DBC027249FAE34EF04035263FFAFD5E
+      929DD354E4BBC0BADC0BDDA163E56F0AF98B033F3C8A58D317AA78FEC1F3F03F
+      E2E13BBC82FE2DC2711C3B7F0C8E1F63F801F069DE866DBA1B3CB70FE7F5F17E
+      DC43E77A18E267EF80E7FB404EE99D827E38EEAD0E7F5F77894FFC2FC3814F32
+      CA215EBFFF33D6C176A77B2ADFFF0957687C8E55E1731EAAC2CF9A0739A2FDF7
+      8795DB777014F87804FCADA1581FE9DBB4E342EC2D503EF16CF8E0E4433C1485
+      5EAC82B94D8C72EE52B1F6748C72FC5DE42355D9BF5FA7DF9F1C8BB194EB18F5
+      6B7108FF79A188FFD717F1793A7E1744C7F355F13DB5758207787C5FEB5DDD76
+      97FD0BD3FB7F7E5429FFFE25016BA5693FAC9FF2DF13F1FBDEA3FEF6621B1FFC
+      888058602178D8F4DC118EB11F13BE9D630CD286CF08117BF2C32F17F23A16C7
+      99B81684E7F2A2F15A5EF21CF0A4ABF5FBCE5B411B716E9E037EB78ABCEF9C09
+      2AC4B9DD21FBAF754098FE473B7E9D94DBF743F7207E2D4B0DF07D50EEE83DEA
+      D7D9538C83CF74920ACEDB916BF605B01977205EFDB43AFC8E6942C01EC035B0
+      7977C266EDCDC6ED17D8C89D55C96FF0D681ED4A362EE5B85FC2E2ABA63CF8C5
+      C2FFD5FC7E93633C328CFD591EF1E4FFF0FF89A0FD1B97FDB2DBE01F25091B67
+      BE239EBEBF30D370FE668BFCF0723A7440774BFC66B50F9E788FF24156F8D8A1
+      6D55E47F10713CC9E664F0E53901FCDF5B15FF4EF2A52AF20D5B17FF2406EDF8
+      0FF3E588EF5BAB70DFC124FBAA05F6A48EF915D77E9EFF47631626FF57E7FF91
+      DEA0FCCD373076DFAA48DEAD5FFEAFB617BB81A7134029F06B7F806F6ECBFF5D
+      276247E9226EDA187598F27F8937BA38C4DF7AA22F32FF7795A15D267C0AC643
+      E6FFBE64185F133E01632AF3FFE61AF8CB14FF4BC0BCC8FCBFCF54C9F79B4DF1
+      DFDA985B99FFBBCBB0AE9AE2BFDDC01FA6FCBFB522BE2BE7AF01F8E35965CFFF
+      D3FF47AA06C62316F3D205FCB1CC27A6ADF3FF76613CE6625E56813FA62B7BEE
+      20EF8BCEFF9BAE8EBEFCDFDFAA906CDE0D5EA6D86DFB103E7E5FCCCF77982FD2
+      2307203B41BAB32DEC8E07985D16031B64BB88D399CA0216E37B0CEBC472F0EA
+      4D581377F8D04EB4BF356C9BE1F04FC7630DB0C5B1F47E68187C67F8BAE90CEF
+      DAFEDDB0A35330AE0770FE128CDF18D4918479231FEF47C87F32E2F01C3F87E9
+      4BDBFCBDC0E62F83D987EB0D7A31887FD255E5F74782ECFE644792FECBD5E09B
+      1D8E54008C2E3331E7AEF917EF0A1B94E7F9BAEC97DADE3FE379287951E013D9
+      1899FE5FC268F8882F58F0D906FEBC09727B37F8BF7F48FC1415C9C3EF1345FB
+      13606BF477E8FF3436C7D3C4FE90CBF8453B7FA5E59FAECAFEAE91ED9DAEAE65
+      283F15A5D8BEF74936E3B56CFCD32C58D20BC30C762CFDBE8B8DBFCD0F1B8679
+      347DC777A8035E7FFBFFA0B06FB32043F4DD917B55F0F763872066128FFA789B
+      E819351DC6321E32BC1F7584FD1F0AB7AAC8FF458C0F891F8238EDADC03E8D63
+      97F6EBB1D26D8EC1D81FC0DFBB1027F29BBF5B2D6D2AF299BFB2E09F069671AA
+      8936FBF16F7929CD61FB513EEBCFA0CF71AEB90F4EEF81D0B7AB46C23FD3EF8F
+      9D89739B605B5531601729F377DD7921DD371B3E3CAF6312B02E3C1A8B3A26B0
+      FE6EB43C779032BFFF51137D698671196979D66890A9DC0D1B7A15623461F134
+      A6F9F035F9F7CB6E819EB91D7EFE42F63B53C49B77826A089FFF21D05290FE9D
+      2DE66207DA7F4614ED6F81F68F836C85C58F426CBE19E62239E4FC511C47FF0F
+      F289E0895847FE998379E7FCFB26EAF0D36D74ED45CC4982410626A05D77637C
+      AA636E5AE0DC0F78AE5F1CBD19F84AF3C62E1C8F5525FFE77AA5FCFBCBBFDF3C
+      BAC8BF5F71917FBFE222FF92C2CABFA4B0F2EF575CE4DFAFB8C8BFDFFC55CA3F
+      1933870E152375F8FB4EA473E7412E36E298CE3591F7335C0C6C378AF3AC41DC
+      320B948B73BBF13BC6807D053623D95FB1384F31A9D6388EC5B5BDB83786E1B3
+      70BE85A89774C25C71AE05EECD62FDA5760D13F7F5579177C827896BC380D163
+      B546B719D71B0277838AE4BDFF915D8F056614C63657D4DF1818DDF759FA98DD
+      93CBE628CB309E53D14FBAAFB661BEB2D8FC6659E6F346C837E51E55B3E04DED
+      BF06ED4F646371AAA5FDA6F1AB87B19F817ED0DE6F5DCBF8D9E6EF5A15F9DEE9
+      85B6F90BE01F1AF7597EFC5316FC5B5AF9298DFCFE1F259A2C49
     }
   end
   object ACBrPixCD1: TACBrPixCD

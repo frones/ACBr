@@ -43,16 +43,25 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/06/2022
+-- DSF.GravarXml --
+[*] Incluido na Configuração a linha que define que a aliquota tem 2 casas
+    decimais.
+   Por: Italo Giurizzato Junior
+-- ISSGoiania.Provider --
+[*] Correção na sequencia de tags para extrair o retorno da consulta.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade: Videira/SC - Provedor IPM.
+   Por: Metasis Sistemas
 [*] Alterado as URLs da cidade: Guaranta do Norte/MT - Provedor Coplan.
    Por: Francelin
 -- Diversos --
 [*] Implementado a função CarregarXmlNfse com o objetivo de simplificar o código
     de diversos provedores.
--- BHISS --
+-- BHISS.Provider --
 [*] Nas funções que geram a requisição de envio foi trocado o CDATA pela conversão
     do XML em String.
--- ISSSaoPaulo --
+-- ISSSaoPaulo.Provider --
 [*] Implementado as funções LerChaveNFe e LerChaveRPS com o objetivo de simplificar
     o código e verificar se o componente esta carregado com o XML da NFSe ou RPS.
    Por: Italo Giurizzato Junior

@@ -61,6 +61,9 @@ type
 
 implementation
 
+uses
+  ACBrXmlBase;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     DSF
@@ -87,6 +90,7 @@ procedure TNFSeW_DSF200.Configuracao;
 begin
   inherited Configuracao;
 
+  FormatoAliq := tcDe2;
   GerarNSRps := False;
 end;
 

@@ -68,8 +68,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXNotasFiscais,
   ISSGoiania.GravarXml, ISSGoiania.LerXml;
 
@@ -89,7 +88,6 @@ begin
   with ConfigAssinar do
   begin
     LoteGerarNFSe := True;
-//    ConsultarNFSeRps := True;
     IncluirURI := False;
   end;
 
@@ -377,8 +375,7 @@ begin
   Request := Request + '</ws:ConsultarNfseRps>';
 
   Result := Executar('http://nfse.goiania.go.gov.br/ws/ConsultarNfseRps', Request,
-                     ['ConsultarNfseRpsResult', 'GerarNfseResposta'],
-//                     ['ConsultarNfseRpsResult', 'ConsultarNfseRpsResposta'],
+                     ['ConsultarNfseRpsResult', 'ConsultarNfseRpsResposta'],
                      ['xmlns:ws="http://nfse.goiania.go.gov.br/ws/"']);
 end;
 

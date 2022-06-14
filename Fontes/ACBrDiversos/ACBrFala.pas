@@ -111,6 +111,8 @@ implementation
 
 Uses
   {$IFNDEF COMPILER6_UP} ACBrD5,{$ENDIF}
+  ACBrUtil.Compatibilidade,
+  ACBrUtil.FilesIO,
   ACBrUtil.Strings,
   ACBrExtenso ;
 

@@ -141,7 +141,6 @@ type
     FLogo: String;
     FSistema: String;
     FUsuario: String;
-    FFax: String;
     FSite: String;
     FEmail: String;
     FMargemInferior: Double;
@@ -219,9 +218,6 @@ type
     {@prop Usuario - Define/retorna o nome do usuário para impressão.
      @links TACBrDFeReport.Usuario :/}
     property Usuario: String read FUsuario write FUsuario;
-    {@prop Fax - Define/retorna número de fax para impressão.
-     @links TACBrDFeReport.Fax :/}
-    property Fax: String read FFax write FFax;
     {@prop Site - Define/retorna o endereço do site para impressão.
      @links TACBrDFeReport.Site :/}
     property Site: String read FSite write FSite;
@@ -304,7 +300,6 @@ begin
   FLogo := '';
   FSistema := 'Projeto ACBr - www.projetoacbr.com.br';
   FUsuario := '';
-  FFax := '';
   FSite := '';
   FEmail := '';
   FMargemInferior := 8;

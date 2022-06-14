@@ -1043,7 +1043,6 @@ begin
       FieldDefs.Add('Imagem', ftString, 256);
       FieldDefs.Add('Sistema', ftString, 150);
       FieldDefs.Add('Usuario', ftString, 60);
-      FieldDefs.Add('Fax', ftString, 60);
       FieldDefs.Add('Site', ftString, 60);
       FieldDefs.Add('Email', ftString, 60);
       FieldDefs.Add('Desconto', ftString, 60);
@@ -1762,8 +1761,7 @@ begin
         Trim(FieldByName('XBairro').AsString) + ' - ' +
         Trim(FieldByName('XMun').AsString) + ' - ' + Trim(
         FieldByName('UF').AsString) + sLineBreak  + 'Fone: ' +
-        Trim(FieldByName('Fone').AsString) + IfThen(
-        trim(FDANFE.Fax) <> '', ' - FAX: ' + FormatarFone(trim(FDANFE.Fax)), '') +
+        Trim(FieldByName('Fone').AsString) +
         ' - CEP: ' + Trim(FieldByName('CEP').AsString);
       if trim(FDANFE.Site) <> '' then
         bdsEmitente.FieldByName('DADOS_ENDERECO').AsString :=
@@ -2227,8 +2225,7 @@ begin
 
     FieldByName('Usuario').AsString :=
       IfThen(FDANFE.Usuario <> '', ' - ' + FDANFE.Usuario, '');
-    FieldByName('Fax').AsString :=
-      IfThen(FDANFE.Fax <> '', ' - FAX ' + FDANFE.Fax, '');
+
     FieldByName('Site').AsString := FDANFE.Site;
     FieldByName('Email').AsString := FDANFE.Email;
     FieldByName('Desconto').AsString :=

@@ -499,8 +499,7 @@ begin
 
     FieldByName('Sistema').AsString := Sistema;
     FieldByName('Usuario').AsString := Ifthen(Usuario <> '', ' - ' + Usuario,'');
-    FieldByName('Fax').AsString := Ifthen(Fax <> '',' - FAX ' + Fax,'');
-
+    
     FieldByName('Site').AsString  := Site;
     FieldByName('Email').AsString := Email;
 
@@ -641,7 +640,6 @@ begin
         Add('Imagem', ftString, 256);
         Add('Sistema', ftString, 150);
         Add('Usuario', ftString, 60);
-        Add('Fax', ftString, 60);
         Add('Site', ftString, 60);
         Add('Email', ftString, 60);
         Add('Desconto', ftString, 60);

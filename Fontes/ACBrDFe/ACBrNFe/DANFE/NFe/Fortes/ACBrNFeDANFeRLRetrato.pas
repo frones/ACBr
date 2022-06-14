@@ -1197,8 +1197,7 @@ begin
       sTemp := sTemp + ' - CEP:' + FormatarCEP(CEP) + ' - ' + XMun + ' - ' + UF;
       rlmEndereco.Lines.add(sTemp);
 
-      sTemp := 'TEL: ' + FormatarFone(Fone) +
-        IfThen(NaoEstaVazio(fpDANFe.Fax), ' - FAX: ' + FormatarFone(fpDANFe.Fax), '');
+      sTemp := 'TEL: ' + FormatarFone(Fone);
       rlmEndereco.Lines.add(sTemp);
     end;
   end;

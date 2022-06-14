@@ -61,6 +61,7 @@ const
   ChttpMethodDELETE = 'DELETE';
 
   cEndPointCob = '/cob';
+  cEndPointPix = '/pix';
 
   CContentTypeUTF8 = 'charset=utf-8';
   CContentTypeTextPlain = 'text/plain';
@@ -610,7 +611,7 @@ begin
     raise EACBrPixException.Create(ACBrStr(sErroPSPNaoAtribuido));
 
   inherited Create(AOwner);
-  fpEndPoint := '/pix';
+  fpEndPoint := cEndPointPix;
 
   fPixConsultados := TACBrPIXConsultados.Create;
   fPix := TACBrPIX.Create('');
@@ -1281,15 +1282,19 @@ begin
     Result := Result + URLSemDelimitador(AEndPointPath);
 
   ConfigurarQueryParameters(Method, EndPoint);
+  p := fURLQueryParams.AsURL;
+
   if (fURLPathParams.Count > 0) then
   begin
     for i := 0 to fURLPathParams.Count-1 do
       Result := Result + '/' + URLSemDelimitador(EncodeURLElement(fURLPathParams[i]));
-  end;
 
-  p := fURLQueryParams.AsURL;
-  if (p <> '') then
-    Result := Result + '?' + p;
+    if (p <> EmptyStr) then
+      Result := Result + '?' + p;
+  end
+  else if (p <> '') then
+    Result := Result + '/?' + p;
+
   if (NivelLog > 3) then
     RegistrarLog('  '+Result);
 end;

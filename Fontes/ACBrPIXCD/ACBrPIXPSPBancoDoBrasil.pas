@@ -59,6 +59,7 @@ const
   cBBEndPointPagarPix = '/boletos-pix/pagar';
   cBBURLSandboxPagarPix = cBBURLSandbox + cBBPathSandboxPagarPix + cBBEndPointPagarPix;
   cBBKeySandboxPagarPix = '95cad3f03fd9013a9d15005056825665';
+  cBBEndPointCobHomologacao = '/cobqrcode';
 
 type
 
@@ -247,20 +248,27 @@ procedure TACBrPSPBancoDoBrasil.QuandoAcessarEndPoint(
   const AEndPoint: String; var AURL: String; var AMethod: String);
 begin
   // Banco do Brasil, não tem: POST /cob   Mudando para /PUT com "txid" vazio
-  if (UpperCase(AMethod) = ChttpMethodPOST) and (AEndPoint = cEndPointCob) then
-  begin
+  if (UpperCase(AMethod) = ChttpMethodPOST) then
     AMethod := ChttpMethodPUT;
-    AURL := StringReplace(AURL, cEndPointCob, '/cob/', [rfReplaceAll]);
-  end;
+
+  if ((UpperCase(AMethod) = ChttpMethodPOST) or
+      (UpperCase(AMethod) = ChttpMethodPUT)) and
+      (AEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
+    AURL := StringReplace(AURL, cEndPointCob, '/cobqrcode', [rfReplaceAll]);
 end;
 
 procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(const AEndPoint,
-  AURL, AMethod: String; var AResultCode: Integer; var RespostaHttp: AnsiString
-  );
+  AURL, AMethod: String; var AResultCode: Integer; var RespostaHttp: AnsiString);
 begin
-  // Banco do Brasil, responde OK a esse EndPoint, de forma diferente da espcificada
+  // Banco do Brasil, responde OK a esse EndPoint, de forma diferente da especificada
   if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_OK) then
+  begin
     AResultCode := HTTP_CREATED;
+
+    // Ajuste no Json de Resposta em Testes alterando textoImagemQRcode p/ pixCopiaECola - Icozeira
+    if (ACBrPixCD.Ambiente = ambTeste) then
+      RespostaHttp := StringReplace(RespostaHttp, 'textoImagemQRcode', 'pixCopiaECola', [rfReplaceAll]);
+  end;
 
   // Ajuste para o Método Patch do BB - Icozeira - 14/04/2022
   if (UpperCase(AMethod) = ChttpMethodPATCH) and (AEndPoint = cEndPointCob) and (AResultCode = HTTP_CREATED) then
@@ -314,7 +322,7 @@ begin
        begin
          ej := ae.O[0];
          Problema.title := ej.S['ocorrencia'];
-         Problema.status := ej.I['codigo'];
+         Problema.status := StrToIntDef(ej.S['codigo'], -1);
          Problema.detail := ej.S['mensagem'];
        end;
      finally
@@ -329,7 +337,7 @@ begin
        begin
          ej := ae[0].AsObject;
          Problema.title := ej['ocorrencia'].AsString;
-         Problema.status := ej['codigo'].AsInteger;
+         Problema.status := StrToIntDef(ej['codigo'].AsString, -1);
          Problema.detail := ej['mensagem'].AsString;
        end;
      finally

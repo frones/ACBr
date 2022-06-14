@@ -1534,7 +1534,7 @@ begin
    fdeep_link := AJSon.S['deep_link'];
    s := AJSon.S['expiration_date'];
    if (s <> '') then
-     fexpiration_date := DecodeRfcDateTime(s);
+     fexpiration_date := DecodeRfcDateTime(StringReplace(s, 'T', ' ', [rfReplaceAll]));
    fpix_dict_key := AJSon.S['pix_dict_key'];
    fpix_psp := AJSon.S['pix_psp'];
    fqr_code := AJSon.S['qr_code'];
@@ -1544,7 +1544,7 @@ begin
    fdeep_link := AJSon['deep_link'].AsString;
    s := AJSon['expiration_date'].AsString;
    if (s <> '') then
-     fexpiration_date := DecodeRfcDateTime(s);
+     fexpiration_date := DecodeRfcDateTime(StringReplace(s, 'T', ' ', [rfReplaceAll]));
    fpix_dict_key := AJSon['pix_dict_key'].AsString;
    fpix_psp := AJSon['pix_psp'].AsString;
    fqr_code := AJSon['qr_code'].AsString;

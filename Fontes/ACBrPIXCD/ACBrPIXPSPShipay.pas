@@ -905,6 +905,7 @@ begin
     Cob.txId := StringReplace(fOrderCreated.order_id, '-', '', [rfReplaceAll]);
     Cob.status := ShiPayStatusToCobStatus(fOrderCreated.status);
     Cob.pixCopiaECola := fOrderCreated.qr_code_text;
+    Cob.chave := fOrderCreated.pix_dict_key;
     with Cob.infoAdicionais.New do
     begin
       nome := 'order_id';
@@ -948,7 +949,6 @@ begin
     else
       Cob.devedor.cpf := fOrder.buyer.cpf_cnpj;
     Cob.valor.original := fOrder.total;
-    Cob.chave := fOrder.pix_dict_key;
     with Cob.infoAdicionais.New do
     begin
       nome := 'order_ref';

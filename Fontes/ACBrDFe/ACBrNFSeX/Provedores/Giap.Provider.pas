@@ -286,14 +286,7 @@ begin
         // GIAP Não retorna o XML da Nota sendo necessário imprimir a Nota já
         // gerada. Se Não der erro, passo a Nota de Envio para ser impressa já
         // que não deu erro na emissão.
-        if Assigned(ANota) then
-          ANota.XmlNfse := Response.XmlEnvio
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(Response.XmlEnvio, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
-
+        ANota := CarregarXmlNfse(ANota, Response.XmlEnvio);
         SalvarXmlNfse(ANota);
       end;
     except

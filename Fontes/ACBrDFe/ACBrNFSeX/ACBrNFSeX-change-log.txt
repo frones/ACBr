@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2022
+-- Diversos --
+[*] Implementado a função CarregarXmlNfse com o objetivo de simplificar o código
+    de diversos provedores.
+-- BHISS --
+[*] Nas funções que geram a requisição de envio foi trocado o CDATA pela conversão
+    do XML em String.
+-- ISSSaoPaulo --
+[*] Implementado as funções LerChaveNFe e LerChaveRPS com o objetivo de simplificar
+    o código e verificar se o componente esta carregado com o XML da NFSe ou RPS.
+   Por: Italo Giurizzato Junior
+
 10/06/2022
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Correção na leitura das tags referente ao cancelamento da nota ao 

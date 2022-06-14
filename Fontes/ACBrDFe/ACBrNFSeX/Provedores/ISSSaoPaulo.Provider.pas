@@ -94,6 +94,8 @@ type
                                      const AListTag: string = '';
                                      const AMessageTag: string = 'Erro'); override;
 
+    function LerChaveNFe(ANode: TACBrXmlNode): string;
+    function LerChaveRPS(ANode: TACBrXmlNode): string;
   end;
 
 implementation
@@ -289,6 +291,32 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderISSSaoPaulo.LerChaveNFe(ANode: TACBrXmlNode): string;
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if ANode = nil then
+    Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
+
+  if AuxNode <> nil then
+    Result := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
+end;
+
+function TACBrNFSeProviderISSSaoPaulo.LerChaveRPS(ANode: TACBrXmlNode): string;
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if ANode = nil then
+    Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('ChaveRPS');
+
+  if AuxNode <> nil then
+    Result := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
 end;
 
 procedure TACBrNFSeProviderISSSaoPaulo.ProcessarMensagemErros(
@@ -785,10 +813,12 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
+  NumRps, NumNFSe: String;
   ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
+  NumRps := '';
+  NumNFSe := '';
 
   try
     try
@@ -830,24 +860,17 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveRPS');
 
-        if AuxNode <> nil then
-        begin
-          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
+        NumRps := LerChaveRPS(ANode);
+        NumNFSe := LerChaveNFe(ANode);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-          if Assigned(ANota) then
-            ANota.XmlNfse := ANode.OuterXml
-          else
-          begin
-            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-          end;
+        if ANota = nil then
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
-          SalvarXmlNfse(ANota);
-        end;
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        SalvarXmlNfse(ANota);
       end;
     except
       on E:Exception do
@@ -920,10 +943,12 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
+  NumRps, NumNFSe: String;
   ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
+  NumRps := '';
+  NumNFSe := '';
 
   try
     try
@@ -965,24 +990,17 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveRPS');
 
-        if AuxNode <> nil then
-        begin
-          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
+        NumRps := LerChaveRPS(ANode);
+        NumNFSe := LerChaveNFe(ANode);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-          if Assigned(ANota) then
-            ANota.XmlNfse := ANode.OuterXml
-          else
-          begin
-            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-          end;
+        if ANota = nil then
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
-          SalvarXmlNfse(ANota);
-        end;
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        SalvarXmlNfse(ANota);
       end;
     except
       on E:Exception do
@@ -1050,10 +1068,12 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  NumRps: String;
+  NumRps, NumNFSe: String;
   ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
+  NumRps := '';
+  NumNFSe := '';
 
   try
     try
@@ -1095,24 +1115,17 @@ begin
       for i := Low(ANodeArray) to High(ANodeArray) do
       begin
         ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveRPS');
 
-        if AuxNode <> nil then
-        begin
-          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumerRPS'), tcStr);
+        NumRps := LerChaveRPS(ANode);
+        NumNFSe := LerChaveNFe(ANode);
 
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-          if Assigned(ANota) then
-            ANota.XmlNfse := ANode.OuterXml
-          else
-          begin
-            TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-            ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-          end;
+        if ANota = nil then
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
 
-          SalvarXmlNfse(ANota);
-        end;
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        SalvarXmlNfse(ANota);
       end;
     except
       on E:Exception do

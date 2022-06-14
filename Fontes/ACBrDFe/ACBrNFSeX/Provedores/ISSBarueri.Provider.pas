@@ -31,7 +31,6 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
-
 unit ISSBarueri.Provider;
 
 interface
@@ -56,7 +55,6 @@ type
     function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
-
   end;
 
   { TACBrNFSeProviderISSBarueri }
@@ -64,31 +62,22 @@ type
   TACBrNFSeProviderISSBarueri = class(TACBrNFSeProviderProprio)
   private
     function ExisteErroRegistro(const ALinha: String): Boolean;
-
   protected
     procedure Configuracao; override;
-
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
-
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
-
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse); override;
     function PrepararRpsParaLote(const aXml: string): string; override;
-
     procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
-
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
-
     function AplicarXMLtoUTF8(AXMLRps: String): String; override;
     function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; override;
-
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -107,7 +96,6 @@ type
 implementation
 
 uses
-//  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
   synacode, synautil,
   pcnAuxiliar, ACBrConsts,
   ACBrUtil.Base,
@@ -221,17 +209,14 @@ begin
   end;
  {
     S := TStringList.Create;
-
   try
     S.Delimiter := '|';
 //não é compativel com o D7    S.StrictDelimiter := True;
     S.DelimitedText := Values[ACodigo];
-
     Result := S[0];
   except
     Result := '';
   end;
-
   S.Free;
 }
 end;
@@ -247,17 +232,14 @@ begin
   end;
  {
   S := TStringList.Create;
-
   try
     S.Delimiter := '|';
 //não é compativel com o D7    S.StrictDelimiter := True;
     S.DelimitedText := Values[ACodigo];
-
     Result := S[1];
   except
     Result := '';
   end;
-
   S.Free;
   }
 end;
@@ -371,23 +353,18 @@ begin
   with ConfigMsgDados do
   begin
     Prefixo := 'nfe';
-
     LoteRps.DocElemento := 'NFeLoteEnviarArquivo';
     LoteRps.xmlns := 'http://www.barueri.sp.gov.br/nfe';
-
     ConsultarSituacao.DocElemento := 'NFeLoteStatusArquivo';
     ConsultarSituacao.xmlns := 'http://www.barueri.sp.gov.br/nfe';
-
     ConsultarLote.DocElemento := 'NFeLoteBaixarArquivo';
     ConsultarLote.xmlns := 'http://www.barueri.sp.gov.br/nfe';
-
     GerarNSLoteRps := False;
     GerarPrestadorLoteRps := False;
     UsarNumLoteConsLote := False;
   end;
 
   SetXmlNameSpace('http://www.barueri.sp.gov.br/nfe');
-
   ConfigSchemas.Validar := False;
 end;
 
@@ -422,7 +399,6 @@ var
   ANode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
-
   try
     try
       if Response.ArquivoRetorno = '' then
@@ -434,16 +410,11 @@ begin
       end;
 
       Document.LoadFromXml(Response.ArquivoRetorno);
-
       ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetorno');
-
       Response.Sucesso := (Response.Erros.Count = 0);
-
       ANode := Document.Root;
-
       Response.Data := Now;
       Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('ProtocoloRemessa'), tcStr);
-
     except
       on E:Exception do
       begin
@@ -463,7 +434,6 @@ var
   Emitente: TEmitenteConfNFSe;
 begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
-
   NumeroRps := TACBrNFSeX(FAOwner).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
 
   if (EstaVazio(NumeroRps)) then
@@ -479,7 +449,6 @@ begin
 
   Response.ArquivoEnvio := XML;
 end;
-
 function TACBrNFSeProviderISSBarueri.PrepararRpsParaLote(const aXml: string): string;
 begin
   Result := aXml;
@@ -531,10 +500,10 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetorno');
+
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root;
-
       AuxNode := ANode.Childrens.FindAnyNs('ListaNfeArquivosRPS');
 
       if (AuxNode = Nil) then
@@ -546,10 +515,8 @@ begin
       end;
 
       Response.Data := Iso8601ToDateTime(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEnvioArq'), tcStr));
-
       Response.NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoRemessa'), tcStr);
       Response.Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NomeArqRetorno'), tcStr);
-
       Response.Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('SituacaoArq'), tcStr);
 
       if (Response.Situacao = '-2') then
@@ -644,7 +611,6 @@ begin
   Nota.NFSe.StatusRps := srCancelado;
   Nota.NFSe.MotivoCancelamento := Response.InfCancelamento.MotCancelamento;
   Nota.NFSe.CodigoCancelamento := Response.InfCancelamento.CodCancelamento;
-
   Nota.GerarXML;
 
   Nota.XmlRps := AplicarXMLtoUTF8(Nota.XmlRps);
@@ -693,7 +659,6 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root;
-
       Response.Data := Now;
       Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('ProtocoloRemessa'), tcStr);
     except
@@ -750,9 +715,7 @@ var
 begin
   Document := TACBrXmlDocument.Create;
   Dados := TStringList.Create;
-
   ListaErros := TACBrNFSeProviderBarueriErros.Create;
-
   Erros := TStringList.Create;
   Erros.Delimiter := ';';
 
@@ -769,10 +732,10 @@ begin
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ProcessarMensagemErros(Document.Root, Response, 'ListaMensagemRetorno');
+
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root;
-
       ArquivoBase64 := ObterConteudoTag(ANode.Childrens.FindAnyNs('ArquivoRPSBase64'), tcStr);
 
       if (EstaVazio(ArquivoBase64) and (not ACBrUtil.Strings.StrIsBase64(ArquivoBase64))) then
@@ -817,7 +780,6 @@ begin
 
       NumRps := Trim(Copy(Dados[0], Pos('PMB002', Dados[0]), Length(Dados[0])));
       NumRps := StringReplace(NumRps, 'PMB002', '', [rfReplaceAll]);
-
       Response.NumeroRps := NumRps;
 
       //Retorno do Txt de um RPS Processado com sucesso...
@@ -863,14 +825,7 @@ begin
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-        if Assigned(ANota) then
-          ANota.XmlNfse := Dados.Text
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(Dados.Text, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
-
+        ANota := CarregarXmlNfse(ANota, Dados.Text);
         SalvarXmlNfse(ANota);
       end;
     except
@@ -900,7 +855,6 @@ begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
   if (ANode = Nil) then Exit;
-
   Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
 
   if (Codigo <> 'OK200') then
@@ -910,7 +864,6 @@ begin
     AErro.Descricao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr);
     AErro.Correcao := ObterConteudoTag(ANode.Childrens.FindAnyNs('Correcao'), tcStr);
   end;
-
   {
     As tag que contem o código, mensagem e correção do erro são diferentes do padrão
     <NFeLoteEnviarArquivoResult>
@@ -921,7 +874,6 @@ begin
         </ListaMensagemRetorno>
         <ProtocoloRemessa>ENV555318486B20220316155838</ProtocoloRemessa>
     </NFeLoteEnviarArquivoResult>
-
     <ListaMensagemRetorno>
         <Codigo>E0001</Codigo>
         <Mensagem>Certificado digital inválido ou não informado</Mensagem>
@@ -941,3 +893,4 @@ begin
 end;
 
 end.
+

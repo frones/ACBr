@@ -74,9 +74,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   BHISS.GravarXml, BHISS.LerXml;
@@ -90,8 +88,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:RecepcionarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:RecepcionarLoteRpsRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/RecepcionarLoteRps', Request,
@@ -106,8 +104,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:GerarNfseRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:GerarNfseRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/GerarNfse', Request,
@@ -122,8 +120,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:ConsultarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:ConsultarLoteRpsRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/ConsultarLoteRps', Request,
@@ -138,8 +136,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:ConsultarSituacaoLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:ConsultarSituacaoLoteRpsRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/ConsultarSituacaoLoteRps', Request,
@@ -154,8 +152,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:ConsultarNfsePorRpsRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/ConsultarNfsePorRps', Request,
@@ -170,8 +168,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:ConsultarNfsePorFaixaRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/ConsultarNfse', Request,
@@ -186,8 +184,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<ws:CancelarNfseRequest>';
-  Request := Request + '<nfseCabecMsg><![CDATA[' + ACabecalho + ']]></nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg><![CDATA[' + AMSG + ']]></nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</ws:CancelarNfseRequest>';
 
   Result := Executar('http://ws.bhiss.pbh.gov.br/CancelarNfse', Request,
@@ -314,17 +312,17 @@ begin
 
   Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarNfseFaixaEnvio' +
                                 NameSpace + '>' +
-                         '<Prestador>' +
-                           '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
-                           '<InscricaoMunicipal>' +
-                              OnlyNumber(Emitente.InscMun) +
-                           '</InscricaoMunicipal>' +
-                         '</Prestador>' +
-                         XmlConsulta +
-                         '<Pagina>' +
-                            IntToStr(Response.InfConsultaNFSe.Pagina) +
-                         '</Pagina>' +
-                       '</' + Prefixo + 'ConsultarNfseFaixaEnvio>';
+                             '<Prestador>' +
+                               '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
+                               '<InscricaoMunicipal>' +
+                                  OnlyNumber(Emitente.InscMun) +
+                               '</InscricaoMunicipal>' +
+                             '</Prestador>' +
+                             XmlConsulta +
+                             '<Pagina>' +
+                                IntToStr(Response.InfConsultaNFSe.Pagina) +
+                             '</Pagina>' +
+                           '</' + Prefixo + 'ConsultarNfseFaixaEnvio>';
 end;
 
 procedure TACBrNFSeProviderBHISS.PrepararEmitir(Response: TNFSeEmiteResponse);
@@ -416,18 +414,18 @@ begin
   ListaRps := ChangeLineBreak(ListaRps, '');
 
   Response.ArquivoEnvio := '<' + Prefixo + 'GerarNfseEnvio' + NameSpace + '>' +
-                         '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
-                           '<NumeroLote>' + Response.Lote + '</NumeroLote>' +
-                           '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
-                           '<InscricaoMunicipal>' +
-                              OnlyNumber(Emitente.InscMun) +
-                           '</InscricaoMunicipal>' +
-                           '<QuantidadeRps>' +
-                              IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
-                           '</QuantidadeRps>' +
-                           '<ListaRps>' + ListaRps + '</ListaRps>' +
-                         '</LoteRps>' +
-                       '</' + Prefixo + 'GerarNfseEnvio>';
+                             '<LoteRps' + NameSpaceLote + IdAttr  + Versao + '>' +
+                               '<NumeroLote>' + Response.Lote + '</NumeroLote>' +
+                               '<Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</Cnpj>' +
+                               '<InscricaoMunicipal>' +
+                                  OnlyNumber(Emitente.InscMun) +
+                               '</InscricaoMunicipal>' +
+                               '<QuantidadeRps>' +
+                                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
+                               '</QuantidadeRps>' +
+                               '<ListaRps>' + ListaRps + '</ListaRps>' +
+                             '</LoteRps>' +
+                           '</' + Prefixo + 'GerarNfseEnvio>';
 end;
 
 procedure TACBrNFSeProviderBHISS.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
@@ -489,14 +487,7 @@ begin
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
-        if Assigned(ANota) then
-          ANota.XmlNfse := ANode.OuterXml
-        else
-        begin
-          TACBrNFSeX(FAOwner).NotasFiscais.LoadFromString(ANode.OuterXml, False);
-          ANota := TACBrNFSeX(FAOwner).NotasFiscais.Items[TACBrNFSeX(FAOwner).NotasFiscais.Count-1];
-        end;
-
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
         SalvarXmlNfse(ANota);
       end;
 

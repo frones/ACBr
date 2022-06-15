@@ -307,7 +307,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RazaoSocialTomador', 1, 120, 1,
                                                  NFSe.Tomador.RazaoSocial, ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DocTomadorEstrangeiro', 0, 20, 1,
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DocTomadorEstrangeiro', 0, 20, 0,
                   NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'TipoLogradouroTomador', 0, 10, 1,

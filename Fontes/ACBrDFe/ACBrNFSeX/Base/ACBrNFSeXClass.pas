@@ -1139,6 +1139,15 @@ begin
   FCanhoto := tcNenhum;
 
   FLogradouroLocalPrestacaoServico := llpTomador;
+
+  FServico.FItemServico.Clear;
+  FServico.FDeducao.Clear;
+  FCondicaoPagamento.FParcelas.Clear;
+
+  FQuartos.Clear;
+  Femail.Clear;
+  FDespesa.Clear;
+  FGenericos.Clear;
 end;
 
 constructor TNFSe.Create;

@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2022
+-- ACBrNFSeXClass --
+[*] Acrescentado a limpeza de algumas classes de lista no método Clear da classe
+    NFSe
+-- ISSDSF.GravarXml --
+[*] Alterado para opcional a tag DocTomadorEstrangeiro.
+   Por: Italo Giurizzato Junior
+
 14/06/2022
 -- DSF.GravarXml --
 [*] Incluido na Configuração a linha que define que a aliquota tem 2 casas

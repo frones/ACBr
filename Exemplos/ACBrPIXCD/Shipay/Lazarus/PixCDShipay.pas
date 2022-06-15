@@ -6,8 +6,11 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
-  ExtCtrls, Buttons, Spin, Grids, DateTimePicker, ACBrPIXCD, ACBrPIXPSPShipay,
-  ACBrShipaySchemas, ACBrPIXBase;
+  ExtCtrls, Buttons, Spin, Grids, ACBrPIXCD, ACBrPIXPSPShipay,
+  ACBrShipaySchemas, ACBrPIXBase
+  {$IfDef FPC}
+  , DateTimePicker
+  {$EndIf};
 
 const
   cMaxConsultas = 36;

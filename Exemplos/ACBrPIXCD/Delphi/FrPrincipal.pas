@@ -40,7 +40,8 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
   ExtCtrls, Buttons, Spin, Grids, ACBrCEP, ACBrPIXCD, ACBrPIXPSPItau,
   ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXBase, ACBrPIXSchemasPix,
-  ACBrPIXSchemasDevolucao, ACBrPIXSchemasCob, ACBrPIXPSPShipay, ACBrOpenSSLUtils
+  ACBrPIXSchemasDevolucao, ACBrPIXSchemasCob, ACBrPIXPSPShipay, ACBrOpenSSLUtils,
+  ACBrSocket, ACBrBase
   {$IfDef FPC}
   , DateTimePicker, ACBrSocket, ACBrBase
   {$EndIf};
@@ -2028,7 +2029,7 @@ begin
   ACBrPixCD1.PSP.Clear;
   LimparInterfaceFluxoItem;
 
-  with FluxoDados do
+  with fFluxoDados do
   begin
     Total := 0;
     EmErro := False;

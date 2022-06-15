@@ -2027,7 +2027,7 @@ begin
   ACBrPixCD1.PSP.Clear;
   LimparInterfaceFluxoItem;
 
-  with FluxoDados do
+  with fFluxoDados do
   begin
     Total := 0;
     EmErro := False;

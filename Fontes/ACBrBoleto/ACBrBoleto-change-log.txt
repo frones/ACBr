@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/06/2022
+--ACBrBoletoW_BancoBrasil_API--
+[*] TK-2784 BBAPI Ajuste no tratamento de caracteres nas mensagens de envio
+  Por : Pandaaa / Aggille Sistemas de Gestão
+
 --ACBrBoletoBancoob--
 [*] TK-2791 Ajuste na Leitura Bancoob CNAB400
   Por : Leandroaoa

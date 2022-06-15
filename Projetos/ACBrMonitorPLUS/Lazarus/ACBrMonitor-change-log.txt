@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2022
+--- ACBrMonior1 ---
+[*] Remoção do campo FAX por estar em desuso.
+
 13/06/2022
 --- ACBrMoniorConfig ---
 [*] Alterado a versão do layout padrão do e-social

@@ -583,7 +583,6 @@ type
     edtEmitCNPJ: TEdit;
     edtEmitIE: TEdit;
     edtEmitIM: TEdit;
-    edtFaxEmpresa: TEdit;
     edtIDContribuinte: TEdit;
     edtIdCSRT: TEdit;
     edtIDEmpregador: TEdit;
@@ -836,7 +835,6 @@ type
     Label15: TLabel;
     Label150: TLabel;
     Label151: TLabel;
-    Label152: TLabel;
     Label153: TLabel;
     Label154: TLabel;
     Label155: TLabel;
@@ -5785,7 +5783,6 @@ begin
       rgModeloDanfe.ItemIndex             := Modelo;
       edtSiteEmpresa.Text                 := Site;
       edtEmailEmpresa.Text                := Email;
-      edtFaxEmpresa.Text                  := Fax;
       cbxImpDescPorc.Checked              := ImpDescPorc;
       cbxMostrarPreview.Checked           := MostrarPreview;
       edtNumCopia.Value                   := Copias;
@@ -5906,7 +5903,6 @@ begin
     ACBrCTe1.DACTe.Sistema          := edSH_RazaoSocial.Text;
     ACBrCTe1.DACTe.Site             := edtSiteEmpresa.Text;
     ACBrCTe1.DACTe.Email            := edtEmailEmpresa.Text;
-    ACBrCTe1.DACTe.Fax              := edtFaxEmpresa.Text;
     ACBrCTe1.DACTe.ImprimeDescPorc  := cbxImpDescPorc.Checked;
     ACBrCTe1.DACTe.MostraPreview    := cbxMostrarPreview.Checked;
     ACBrCTe1.DACTe.Impressora       := cbxImpressora.Text;
@@ -5926,7 +5922,6 @@ begin
     ACBrMDFe1.DAMDFe.Sistema           := edSH_RazaoSocial.Text;
     ACBrMDFe1.DAMDFe.Site              := edtSiteEmpresa.Text;
     ACBrMDFe1.DAMDFe.Email             := edtEmailEmpresa.Text;
-    ACBrMDFe1.DAMDFe.Fax               := edtFaxEmpresa.Text;
     ACBrMDFe1.DAMDFe.MostraPreview     := cbxMostrarPreview.Checked;
     ACBrMDFe1.DAMDFe.Impressora        := cbxImpressora.Text;
     ACBrMDFe1.DAMDFe.NumCopias         := edtNumCopia.Value;
@@ -5942,7 +5937,6 @@ begin
     ACBrGNRE1.GNREGuia.Sistema         := edSH_RazaoSocial.Text;
     ACBrGNRE1.GNREGuia.Site            := edtSiteEmpresa.Text;
     ACBrGNRE1.GNREGuia.Email           := edtEmailEmpresa.Text;
-    ACBrGNRE1.GNREGuia.Fax             := edtFaxEmpresa.Text;
     ACBrGNRE1.GNREGuia.MostrarPreview  := cbxMostrarPreview.Checked;
     ACBrGNRE1.GNREGuia.Impressora      := cbxImpressora.Text;
     ACBrGNRE1.GNREGuia.NumCopias       := edtNumCopia.Value;
@@ -5958,7 +5952,6 @@ begin
     ACBrBPe1.DABPe.Sistema           := edSH_RazaoSocial.Text;
     ACBrBPe1.DABPe.Site              := edtSiteEmpresa.Text;
     ACBrBPe1.DABPe.Email             := edtEmailEmpresa.Text;
-    ACBrBPe1.DABPe.Fax               := edtFaxEmpresa.Text;
     ACBrBPe1.DABPe.MostraPreview     := cbxMostrarPreview.Checked;
     ACBrBPe1.DABPe.Impressora        := cbxImpressora.Text;
     ACBrBPe1.DABPe.NumCopias         := edtNumCopia.Value;
@@ -6996,7 +6989,6 @@ begin
         Modelo                     := rgModeloDanfe.ItemIndex;
         Site                       := edtSiteEmpresa.Text;
         Email                      := edtEmailEmpresa.Text;
-        Fax                        := edtFaxEmpresa.Text;
         ImpDescPorc                := cbxImpDescPorc.Checked;
         MostrarPreview             := cbxMostrarPreview.Checked;
         Copias                     := edtNumCopia.Value;
@@ -10635,7 +10627,6 @@ begin
     ACBrNFe1.DANFE.TipoDANFE            := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo                 := edtLogoMarca.Text;
     ACBrNFe1.DANFE.Email                := edtEmailEmpresa.Text;
-    ACBrNFe1.DANFE.Fax                  := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.NumCopias            := edtNumCopia.Value;
     ACBrNFe1.DANFE.MargemInferior       := fspeMargemInf.Value;
     ACBrNFe1.DANFE.MargemSuperior       := fspeMargemSup.Value;
@@ -10822,7 +10813,6 @@ begin
     ACBrCTe1.DACTE.TipoDACTE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrCTe1.DACTE.Logo := edtLogoMarca.Text;
     ACBrCTe1.DACTE.Email := edtEmailEmpresa.Text;
-    ACBrCTe1.DACTE.Fax := edtFaxEmpresa.Text;
     ACBrCTe1.DACTE.ImprimeDescPorc := cbxImpDescPorc.Checked;
     ACBrCTe1.DACTE.NumCopias := edtNumCopia.Value;
     ACBrCTe1.DACTE.MargemInferior := fspeMargemInf.Value;

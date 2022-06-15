@@ -1,3 +1,4 @@
+
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
@@ -643,7 +644,8 @@ begin
    begin
       if LeCedenteRetorno then
       begin
-        Cedente.Nome          := rCedente;
+        Cedente.CodigoCedente := rCedente;
+        Cedente.Nome          := trim(Copy(ARetorno[0],47,30));
         Cedente.CNPJCPF       := rCNPJCPF;
         Cedente.Agencia       := trim(copy(ARetorno[1], 18, 4));
         Cedente.AgenciaDigito := trim(copy(ARetorno[1], 22, 1));

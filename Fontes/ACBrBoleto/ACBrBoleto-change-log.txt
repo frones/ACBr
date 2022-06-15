@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/06/2022
+--ACBrBoletoBancoob--
+[*] TK-2791 Ajuste na Leitura Bancoob CNAB400
+  Por : Leandroaoa
+
 --ACBrBoletoW_BancoBrasil_API--
 [-] TK-2794 BBAPI Copy do DigitoPagador errado.
   Por : Tiago Tecchio

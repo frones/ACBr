@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2022
+--ACBrBoletoW_BancoBrasil_API--
+[-] TK-2794 BBAPI Copy do DigitoPagador errado.
+  Por : Tiago Tecchio
+
 10/06/2022
 --ACBrBancoPenseBank, ACBrBoleto, ACBrBancoBrasil, ACBrBoletoWS, ACBrBoletoW_PenseBankAPI, ACBrBoletoRet_PenseBank, ACBrBoletoConversao, ACBrBoletoRetorno--
 [+] Adicionado as Classe do PenseBank API.

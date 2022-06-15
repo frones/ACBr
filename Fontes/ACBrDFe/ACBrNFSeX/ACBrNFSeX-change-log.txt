@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/06/2022
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade: Alta Floresta/MT - Provedor Coplan.
+   Por: Marcus Smith
+[*] Alterado as URLs da cidade: Sinop/MT - Provedor Coplan.
+   Por: Renato E
 -- ACBrNFSeXClass --
 [*] Acrescentado a limpeza de algumas classes de lista no método Clear da classe
     NFSe

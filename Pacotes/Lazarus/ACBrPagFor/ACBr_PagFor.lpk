@@ -9,9 +9,9 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="..\..\..\..\Fontes\ACBrPagFor;..\..\..\..\Fontes\ACBrPagFor\Base;..\..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\Fontes\ACBrPagFor"/>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrPagFor;..\..\..\..\Fontes\ACBrPagFor\Base;..\..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\..\Fontes\ACBrPagFor\Base\Provider;..\..\..\Fontes\ACBrPagFor;..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\Fontes\ACBrPagFor\Base;..\..\..\Fontes\ACBrPagFor\Base\Provider;..\..\..\Fontes\ACBrPagFor\Modelos"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrPagFor\$(TargetCPU)-$(TargetOS)"/>
+        <IncludeFiles Value="..\..\..\Fontes\ACBrPagFor"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrPagFor;..\..\..\Fontes\ACBrPagFor\Bancos;..\..\..\Fontes\ACBrPagFor\Base;..\..\..\Fontes\ACBrPagFor\Base\Provider;..\..\..\Fontes\ACBrPagFor\Modelos"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrPagFor\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
@@ -26,6 +26,7 @@
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForReg.pas"/>
         <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPagForReg"/>
       </Item1>
       <Item2>
         <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagFor.pas"/>

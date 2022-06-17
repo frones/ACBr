@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+17/06/2022
+-- Etherium.Provider --
+[*] Alterado para assinar o Rps também.
+   Por: Italo Giurizzato Junior
+
 15/06/2022
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs da cidade: Alta Floresta/MT - Provedor Coplan.

@@ -83,7 +83,7 @@ begin
 
   with ConfigAssinar do
   begin
-    Rps               := False;
+    Rps               := True;
     LoteRps           := True;
     ConsultarSituacao := False;
     ConsultarLote     := False;

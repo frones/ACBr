@@ -188,24 +188,19 @@ var
 begin
   if (Trim(pixCopiaECola) = '') then
     raise EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['pixCopiaECola']);
-
+    
+  js := TJsonObject.Create;
+  try
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
-   try
-     js.S['pix'] := pixCopiaECola;
-     Body := js.ToJSON();
-   finally
-     js.Free;
-   end;
+    js.S['pix'] := pixCopiaECola;
+    Body := js.ToJSON();
   {$Else}
-   js := TJsonObject.Create;
-   try
-     js['pix'].AsString := pixCopiaECola;
-     Body := js.Stringify;
-   finally
-     js.Free;
-   end;
+    js['pix'].AsString := pixCopiaECola;
+    Body := js.Stringify;
   {$EndIf}
+  finally
+    js.Free;
+  end;
 
   PrepararHTTP;
   WriteStrToStream(Http.Document, Body);

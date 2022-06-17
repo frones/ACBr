@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2022
+-- ACBrPIXPSPBancoDoBrasil --
+[-] Correção para leitura correta do Pix Copia e Cola em SimularPagamentoPIX().
+    Por: Icozeira
+
 13/06/2022
 -- ACBrPIXCD --
 [*] Inclusão da constante cEndPointPix para o endpoint '/pix';

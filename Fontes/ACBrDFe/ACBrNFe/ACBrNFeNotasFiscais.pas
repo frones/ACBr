@@ -1332,10 +1332,11 @@ begin
 
     if not UFCons then
     begin
-      GravaLog('Validar: 772-Op.Interstadual e UF igual');
+      GravaLog('Validar: 772-Op.Interestadual e UF igual');
       if (nfe.Ide.idDest = doInterestadual) and
          (NFe.Dest.EnderDest.UF = NFe.Emit.EnderEmit.UF) and
-         (NFe.Dest.CNPJCPF <> NFe.Emit.CNPJCPF) then
+         (NFe.Dest.CNPJCPF <> NFe.Emit.CNPJCPF) and
+         (NFe.Entrega.UF = NFe.Emit.EnderEmit.UF) then
         AdicionaErro('772-Rejeição: Operação Interestadual e UF de destino igual à UF do emitente');
     end;
 

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2022
+-- ACBrNFeNotasFiscais --
+[*] Ajuste na regra de validação 772 incluindo a exceção "UF entrega x UF emit".
+   Por : mscorteganha
+
 01/06/2022
 --ACBrNFeDANFEClass.pas--
 [-]TK-2725 ACBrNFe - Correção erro "divisão operação por zero"

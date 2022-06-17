@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2022
+-- PagFor.Bradesco.GravarTxtRemessa/PagFor.BancodoBrasil.GravarTxtRemessa/PagFor.Sicredi.GravarTxtRemessa --
+[*] Correção no Segmento J52, estava gerando J2 sendo que o correto é 52.
+-- PagFor.Sicredi.GravarTxtRemessa --
+[*] Correção no Segmento B e Registro 1, Endereco.Numero é numerico com zero a esquerda.
+    Informações passadas por: Suporte AT Info.
+   Por: Italo Giurizzato Junior
+
 10/06/2022
 -- Diversos --
 [*] Ajustes para a leitura do arquivo de retorno do banco.

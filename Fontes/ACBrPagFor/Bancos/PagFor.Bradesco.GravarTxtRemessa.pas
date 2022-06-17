@@ -243,7 +243,7 @@ begin
       GravarCampo('J', 1, tcStr);
       GravarCampo(' ', 1, tcStr);
       GravarCampo('00', 2, tcStr);
-      GravarCampo('J2', 2, tcStr);
+      GravarCampo('52', 2, tcStr);
       GravarCampo(TpInscricaoToStr(Pagador.Inscricao.Tipo), 1, tcStr);
       GravarCampo(Pagador.Inscricao.Numero, 15, tcStrZero);
       GravarCampo(Pagador.Nome, 40, tcStr, True);

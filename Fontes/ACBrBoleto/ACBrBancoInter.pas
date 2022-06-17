@@ -143,7 +143,7 @@ begin
   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia
             + ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito
             + '/'
-            + ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+            + ACBrTitulo.ACBrBoleto.Cedente.Conta;
 
 end;
 

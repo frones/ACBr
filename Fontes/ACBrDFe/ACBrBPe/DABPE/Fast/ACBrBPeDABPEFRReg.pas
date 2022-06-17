@@ -59,13 +59,11 @@ procedure Register;
 implementation
 
 uses
-  ACBrDFeUtil, pcnAuxiliar,frxQRCode;
+  ACBrDFeUtil, pcnAuxiliar;
 
 procedure Register;
 begin
   RegisterComponents('ACBrBPe', [TACBrBPeDABPeFR]);
-  RegisterPropertyEditor(TypeInfo(String), TACBrCTeDACTEFR, 'FastFile',
-     TACBrBPeDABPEFRFileNameProperty);
 end;
 
 { TACBrCTeDACTEFRFileNameProperty }

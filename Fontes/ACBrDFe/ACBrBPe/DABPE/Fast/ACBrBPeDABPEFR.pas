@@ -126,7 +126,6 @@ type
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
     procedure LimpaDados;
     procedure CarregaDados;
-    procedure PintarQRCode(QRCodeData: String; APict: TPicture);
 
     procedure ImprimirDABPE(BPe: TBPe = nil); override;
     procedure ImprimirDABPEPDF(BPe: TBPe = nil); override;
@@ -141,9 +140,7 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrDelphiZXingQRCode,
-  pcnAuxiliar,
-  frxQRCode;
+  ACBrDFeUtil, ACBrDelphiZXingQRCode,pcnAuxiliar,ACBrImage;
 
 { TACBrBPeDABPEFR }
 
@@ -411,7 +408,7 @@ begin
                 for I := 0 to FBPe.Pag.Count - 1 do
                 begin
                     Append;
-                    FieldByName('tPag').AsString := FormaPagamentoBPeToStr(Items[I].tPag);
+                    FieldByName('tPag').AsString := FormaPagamentoBPeToDescricao(Items[I].tPag);
                     FieldByName('vPag').AsFloat  := Items[I].vPag;
                     Post;
                 end;
@@ -741,7 +738,7 @@ begin
     begin
         Close;
         Clear;
-        Add('tPag', ftString, 20);
+        Add('tPag', ftString, 50);
         Add('vPag', ftFloat);
         CreateDataSet;
     end;
@@ -945,11 +942,7 @@ begin
             qrcode := FBPe.infBPeSupl.qrCodBPe;
 
         if Assigned(Sender) and (Sender.Name = 'ImgQrCode') then
-            PintarQRCode(qrcode, TfrxPictureView(Sender).Picture);
-
-//        CpTotTrib := frxReport.FindObject('ValorTributos');
-//        if Assigned(CpTotTrib) then
-//            CpTotTrib.Visible := cdsCalculoImposto.FieldByName('VTotTrib').AsFloat > 0;
+            PintarQRCode(qrCode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
     end;
 end;
 
@@ -1033,41 +1026,6 @@ begin
   cdsInfAdic.EmptyDataSet;
   cdsImp.EmptyDataSet;
   cdsInfBPeSupl.EmptyDataSet;
-end;
-
-procedure TACBrBPeDABPEFR.PintarQRCode(QRCodeData: String; APict: TPicture);
-var
-    QRCode: TDelphiZXingQRCode;
-    QRCodeBitmap: TBitmap;
-    Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Data      := QRCodeData;
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-        for Column := 0 to QRCode.Columns - 1 do
-        begin
-            if QRCode.IsBlack[Row, Column] then
-                QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-            else
-                QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-        end;
-    end;
-    // QRCodeBitmap.SaveToFile('c:\qrcode.bmp');
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
 end;
 
 function TACBrBPeDABPEFR.PrepareReport(BPe: TBPe): Boolean;
@@ -1157,7 +1115,6 @@ begin
     begin
       FieldByName('qrCodBPe').AsString := qrCodBPe;
       FieldByName('boardPassBPe').AsString := boardPassBPe;
-      TfrxQRCodeView(frxReport.FindObject('qrCodBPe')).Text := qrCodBPe;
     end;
     Post;
   end;

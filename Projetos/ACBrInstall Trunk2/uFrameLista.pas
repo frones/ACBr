@@ -183,6 +183,7 @@ type
     ACBr_NFSeXDanfseFR_dpk: TCheckBox;
     ACBr_PIXCD_dpk: TCheckBox;
     ACBr_OFX_dpk: TCheckBox;
+    ACBr_GTIN_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

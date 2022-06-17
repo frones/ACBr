@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2022
+--ACBrBoletoCaixa--
+[-] TK-2780 ACBrBoleto - Erro leitura do retorno CNAB240 Caixa
+  Por : Pandaaa / Innovae Brasil Engenharia
+
 15/06/2022
 --ACBrBoletoW_BancoBrasil_API--
 [*] TK-2784 BBAPI Ajuste no tratamento de caracteres nas mensagens de envio

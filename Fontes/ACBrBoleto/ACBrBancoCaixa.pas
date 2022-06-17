@@ -1286,7 +1286,7 @@ begin
               02:Sacado.Pessoa:=pJuridica;
             end;
             Sacado.CNPJCPF              := copy(Linha,134,15);
-	    Sacado.NomeSacado           := copy(Linha,149,40);
+	          Sacado.NomeSacado           := copy(Linha,149,40);
             //05 = Liquidação Sem Registro
             TempData := Copy(Linha,74,2) + '/' + Copy(Linha,76,2) + '/' + Copy(Linha,80,2);
 
@@ -1295,8 +1295,12 @@ begin
 
             ValorDocumento       := StrToFloatDef(Copy(Linha,82,15),0)/100;
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
-            NossoNumero          := Copy(Linha,42,15);              
-            Carteira             := ConverteModalidadeEmCodCarteira( StrToIntDef(Copy(Linha,40,2),0));
+            NossoNumero          := Copy(Linha,42,15);
+
+            if StrToIntDef(Copy(Linha,40,2),0) <> 0 then
+              Carteira := ConverteModalidadeEmCodCarteira( StrToIntDef(Copy(Linha,40,2),0))
+            else
+              Carteira := ''; //TK2780
 
             if (CodOcorrencia  = '06' ) or (CodOcorrencia  = '09' ) or
                (CodOcorrencia  = '17' ) then

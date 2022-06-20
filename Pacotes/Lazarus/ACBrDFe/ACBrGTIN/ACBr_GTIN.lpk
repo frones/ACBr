@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_GTIN"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Italo"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN;..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\Base;..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\Base\Servicos"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrGTIN\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Global Trade Item Number - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Version Major="1"/>
+    <Files Count="32">
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\ACBrGTINReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrGTINReg"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\ACBrGTIN.pas"/>
+        <UnitName Value="ACBrGTIN"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\ACBrGTINConfiguracoes.pas"/>
+        <UnitName Value="ACBrGTINConfiguracoes"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\ACBrGTINWebServices.pas"/>
+        <UnitName Value="ACBrGTINWebServices"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\Base\ACBrGTINConsts.pas"/>
+        <UnitName Value="ACBrGTINConsts"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\Base\ACBrGTINConversao.pas"/>
+        <UnitName Value="ACBrGTINConversao"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\Base\Servicos\ACBrGTINConsultar.pas"/>
+        <UnitName Value="ACBrGTINConsultar"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGTIN\Base\Servicos\ACBrGTINRetConsultar.pas"/>
+        <UnitName Value="ACBrGTINRetConsultar"/>
+      </Item32>
+    </Files>
+    <CompatibilityMode Value="True"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -1,31 +1,31 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {																			   }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -35,29 +35,44 @@ unit ExtensoTeste1;
 interface
 
 uses
-  SysUtils,
- {$IFDEF Delphi6_UP} Types, Variants, {$ELSE} Windows,{$ENDIF}
-  Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, ACBrBase, ACBrExtenso;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs,
+  ACBrExtenso, StdCtrls, Buttons, ExtCtrls, ACBrBase;
 
 type
+
+  { TfrExtenso }
+
   TfrExtenso = class(TForm)
-    edValor: TEdit;
-    Label1: TLabel;
-    bExtenso: TButton;
-    mExtenso: TMemo;
     ACBrExtenso1: TACBrExtenso;
+    btExtenso: TButton;
+    cbFormato: TComboBox;
+    cbIdioma: TComboBox;
     cbZeroAEsquerda: TCheckBox;
-    Label2: TLabel;
-    ComboBox1: TComboBox;
-    procedure bExtensoClick(Sender: TObject);
+    edInteiroSingular: TEdit;
+    edInteiroPlural: TEdit;
+    edDecimalSingular: TEdit;
+    edDecimalPlural: TEdit;
+    edValor: TEdit;
+    lbValor: TLabel;
+    lbFormato: TLabel;
+    lbInteiroSingular: TLabel;
+    lbIdioma: TLabel;
+    lbInteiroPlural: TLabel;
+    lbDecimalSingular: TLabel;
+    lbDecimalPlural: TLabel;
+    mExtenso: TMemo;
+    pnCabecalho: TPanel;
+    pnCustomStr: TPanel;
+    procedure btExtensoClick(Sender: TObject);
+    procedure cbFormatoChange(Sender: TObject);
+    procedure cbIdiomaChange(Sender: TObject);
     procedure edValorKeyPress(Sender: TObject; var Key: Char);
     procedure cbZeroAEsquerdaClick(Sender: TObject);
-    procedure ComboBox1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure AvaliarInterface;
+    procedure PreencherInfoDefault;
   public
-    { Public declarations }
   end;
 
 var
@@ -67,45 +82,96 @@ implementation
 
 {$R *.dfm}
 
-procedure TfrExtenso.FormCreate(Sender: TObject);
+uses
+  ACBrUtil.Base, ACBrUtil.Strings, TypInfo;
+
+
+procedure TfrExtenso.btExtensoClick(Sender: TObject);
 begin
-  ComboBox1.ItemIndex := 0 ;
+  with ACBrExtenso1 do
+  begin
+    if (Idioma = idiCustom) then
+    begin
+      StrMoeda    := edInteiroSingular.Text;
+      StrMoedas   := edInteiroPlural.Text;
+      StrCentavo  := edDecimalSingular.Text;
+      StrCentavos := edDecimalPlural.Text;
+    end;
+    
+    Valor := StringToFloat(edValor.Text);
+    mExtenso.Text := Texto;
+  end;
 end;
 
-procedure TfrExtenso.bExtensoClick(Sender: TObject);
+procedure TfrExtenso.cbFormatoChange(Sender: TObject);
 begin
-  ACBrExtenso1.Valor := StrToFloat( edValor.Text ) ;
-  mExtenso.Text := ACBrExtenso1.Texto ;
+  ACBrExtenso1.Formato := TACBrExtensoFormato(cbFormato.ItemIndex);
+  AvaliarInterface;
+end;
+
+procedure TfrExtenso.cbIdiomaChange(Sender: TObject);
+begin
+  ACBrExtenso1.Idioma := TACBrExtensoIdioma(cbIdioma.ItemIndex);
+  AvaliarInterface;
 end;
 
 procedure TfrExtenso.edValorKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not ( Key in ['0'..'9',',','.',#13,#8] ) then
-     Key := #0
-  else
-     if Key in [',','.'] then
-        Key := DecimalSeparator ;
+  if not (Key in ['0'..'9',',','.',#13,#8]) then
+    Key := #0
+  else if Key in [',','.'] then
+    Key := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator;
 end;
 
 procedure TfrExtenso.cbZeroAEsquerdaClick(Sender: TObject);
 begin
-  ACBrExtenso1.ZeroAEsquerda := cbZeroAEsquerda.Checked ;
+  ACBrExtenso1.ZeroAEsquerda := cbZeroAEsquerda.Checked;
 end;
 
-procedure TfrExtenso.ComboBox1Change(Sender: TObject);
+procedure TfrExtenso.FormCreate(Sender: TObject);
+var
+  I: TACBrExtensoIdioma;
+  J: TACBrExtensoFormato;
 begin
-  ACBrExtenso1.Formato := TACBrExtensoFormato( ComboBox1.ItemIndex ) ;
+  cbIdioma.Items.Clear;
+  for I := Low(TACBrExtensoIdioma) to High(TACBrExtensoIdioma) do
+     cbIdioma.Items.Add(GetEnumName(TypeInfo(TACBrExtensoIdioma), Integer(I)));
 
-  if ACBrExtenso1.Formato = extDolar then
-   begin
-     ACBrExtenso1.StrMoeda  := 'Dolar Americano' ;
-     ACBrExtenso1.StrMoedas := 'Dolares Americanos' ;
-   end
-  else
-   begin
-     ACBrExtenso1.StrMoeda  := 'Real' ;
-     ACBrExtenso1.StrMoedas := 'Reais' ;
-   end ;
+  cbFormato.Items.Clear;
+  for J := Low(TACBrExtensoFormato) to High(TACBrExtensoFormato) do
+     cbFormato.Items.Add(GetEnumName(TypeInfo(TACBrExtensoFormato), Integer(J)));
+
+  PreencherInfoDefault;
+  AvaliarInterface;
+end;
+
+procedure TfrExtenso.AvaliarInterface;
+begin
+  with ACBrExtenso1 do
+  begin
+    edInteiroSingular.Text := StrMoeda;
+    edInteiroPlural.Text   := StrMoedas;
+    edDecimalSingular.Text := StrCentavo;
+    edDecimalPlural.Text   := StrCentavos;
+
+    pnCustomStr.Enabled := (Idioma = idiCustom);
+    lbFormato.Enabled := (Idioma <> idiCustom);
+    cbFormato.Enabled := (Idioma <> idiCustom);
+  end;
+end;
+
+procedure TfrExtenso.PreencherInfoDefault;
+begin
+  with ACBrExtenso1 do
+  begin
+    cbIdioma.ItemIndex := Ord(Idioma);
+    cbFormato.ItemIndex := Ord(Formato);
+
+    edInteiroSingular.Text := StrMoeda;
+    edInteiroPlural.Text := StrMoedas;
+    edDecimalSingular.Text := StrCentavo;
+    edDecimalPlural.Text := StrCentavos;
+  end;
 end;
 
 end.

@@ -35,8 +35,8 @@ unit ExtensoTeste1;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  ACBrExtenso, StdCtrls, Buttons, SynEdit;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs,
+  ACBrExtenso, StdCtrls, Buttons, ExtCtrls;
 
 type
 
@@ -44,68 +44,135 @@ type
 
   TfrExtenso = class(TForm)
     ACBrExtenso1: TACBrExtenso;
-    ComboBox1: TComboBox;
-    edValor: TEdit;
-    Label1: TLabel;
-    bExtenso: TButton;
-    Label2: TLabel;
-    mExtenso: TMemo;
+    btExtenso: TButton;
+    cbFormato: TComboBox;
+    cbIdioma: TComboBox;
     cbZeroAEsquerda: TCheckBox;
-    procedure bExtensoClick(Sender: TObject);
-    procedure ComboBox1Change(Sender: TObject);
+    edInteiroSingular: TEdit;
+    edInteiroPlural: TEdit;
+    edDecimalSingular: TEdit;
+    edDecimalPlural: TEdit;
+    edValor: TEdit;
+    lbValor: TLabel;
+    lbFormato: TLabel;
+    lbInteiroSingular: TLabel;
+    lbIdioma: TLabel;
+    lbInteiroPlural: TLabel;
+    lbDecimalSingular: TLabel;
+    lbDecimalPlural: TLabel;
+    mExtenso: TMemo;
+    pnCabecalho: TPanel;
+    pnCustomStr: TPanel;
+    procedure btExtensoClick(Sender: TObject);
+    procedure cbFormatoChange(Sender: TObject);
+    procedure cbIdiomaChange(Sender: TObject);
     procedure edValorKeyPress(Sender: TObject; var Key: Char);
     procedure cbZeroAEsquerdaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-    { private declarations }
+    procedure AvaliarInterface;
+    procedure PreencherInfoDefault;
   public
-    { public declarations }
   end; 
 
 var
   frExtenso: TfrExtenso;
 
-implementation
-Uses ACBrUtil ;
+implementation 
+
+{$R *.lfm}
+
+uses
+  ACBrUtil.Base, ACBrUtil.Strings, TypInfo;
 
 
-procedure TfrExtenso.bExtensoClick(Sender: TObject);
+procedure TfrExtenso.btExtensoClick(Sender: TObject);
 begin
-  ACBrExtenso1.Valor := StringToFloat( edValor.Text ) ;
-  mExtenso.Text := ACBrExtenso1.Texto ;
+  with ACBrExtenso1 do
+  begin
+    if (Idioma = idiCustom) then
+    begin
+      StrMoeda    := edInteiroSingular.Text;
+      StrMoedas   := edInteiroPlural.Text;
+      StrCentavo  := edDecimalSingular.Text;
+      StrCentavos := edDecimalPlural.Text;
+    end;
+    
+    Valor := StringToFloat(edValor.Text);
+    mExtenso.Text := Texto;
+  end;
 end;
 
-procedure TfrExtenso.ComboBox1Change(Sender: TObject);
+procedure TfrExtenso.cbFormatoChange(Sender: TObject);
 begin
-  ACBrExtenso1.Formato := TACBrExtensoFormato( ComboBox1.ItemIndex ) ;
+  ACBrExtenso1.Formato := TACBrExtensoFormato(cbFormato.ItemIndex);
+  AvaliarInterface;
+end;
 
-  if ACBrExtenso1.Formato = extDolar then
-   begin
-     ACBrExtenso1.StrMoeda  := 'Dolar Americano' ;
-     ACBrExtenso1.StrMoedas := 'Dolares Americanos' ;
-   end
-  else
-   begin
-     ACBrExtenso1.StrMoeda  := 'Real' ;
-     ACBrExtenso1.StrMoedas := 'Reais' ;
-   end ;
+procedure TfrExtenso.cbIdiomaChange(Sender: TObject);
+begin
+  ACBrExtenso1.Idioma := TACBrExtensoIdioma(cbIdioma.ItemIndex);
+  AvaliarInterface;
 end;
 
 procedure TfrExtenso.edValorKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not ( Key in ['0'..'9',',','.',#13,#8] ) then
-     Key := #0
-  else
-     if Key in [',','.'] then
-        Key := DecimalSeparator ;
+  if not (Key in ['0'..'9',',','.',#13,#8]) then
+    Key := #0
+  else if Key in [',','.'] then
+    Key := FormatSettings.DecimalSeparator;
 end;
 
 procedure TfrExtenso.cbZeroAEsquerdaClick(Sender: TObject);
 begin
-  ACBrExtenso1.ZeroAEsquerda := cbZeroAEsquerda.Checked ;
+  ACBrExtenso1.ZeroAEsquerda := cbZeroAEsquerda.Checked;
 end;
 
-initialization
-  {$I extensoteste1.lrs}
+procedure TfrExtenso.FormCreate(Sender: TObject);
+var
+  I: TACBrExtensoIdioma;
+  J: TACBrExtensoFormato;
+begin
+  cbIdioma.Items.Clear;
+  for I := Low(TACBrExtensoIdioma) to High(TACBrExtensoIdioma) do
+     cbIdioma.Items.Add(GetEnumName(TypeInfo(TACBrExtensoIdioma), Integer(I)));
+
+  cbFormato.Items.Clear;
+  for J := Low(TACBrExtensoFormato) to High(TACBrExtensoFormato) do
+     cbFormato.Items.Add(GetEnumName(TypeInfo(TACBrExtensoFormato), Integer(J)));
+
+  PreencherInfoDefault;
+  AvaliarInterface;
+end;
+
+procedure TfrExtenso.AvaliarInterface;
+begin
+  with ACBrExtenso1 do
+  begin
+    edInteiroSingular.Text := StrMoeda;
+    edInteiroPlural.Text   := StrMoedas;
+    edDecimalSingular.Text := StrCentavo;
+    edDecimalPlural.Text   := StrCentavos;
+
+    pnCustomStr.Enabled := (Idioma = idiCustom);
+    lbFormato.Enabled := (Idioma <> idiCustom);
+    cbFormato.Enabled := (Idioma <> idiCustom);
+  end;
+end;
+
+procedure TfrExtenso.PreencherInfoDefault;
+begin
+  with ACBrExtenso1 do
+  begin
+    cbIdioma.ItemIndex := Ord(Idioma);
+    cbFormato.ItemIndex := Ord(Formato);
+
+    edInteiroSingular.Text := StrMoeda;
+    edInteiroPlural.Text := StrMoedas;
+    edDecimalSingular.Text := StrCentavo;
+    edDecimalPlural.Text := StrCentavos;
+  end;
+end;
 
 end.
 

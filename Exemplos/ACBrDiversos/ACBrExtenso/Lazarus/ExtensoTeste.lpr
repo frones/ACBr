@@ -10,7 +10,10 @@ uses
   Forms
   { add your units here }, ExtensoTeste1;
 
+{$R *.res}
+
 begin
+  Application.Title := '';
   Application.Initialize;
   Application.CreateForm(TfrExtenso, frExtenso);
   Application.Run;

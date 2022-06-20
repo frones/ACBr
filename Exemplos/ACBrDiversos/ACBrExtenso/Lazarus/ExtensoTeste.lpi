@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <LRSInOutputDirectory Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
-      <MainUnit Value="0"/>
-      <ActiveWindowIndexAtStart Value="0"/>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <Language Value=""/>
       <CharSet Value=""/>
-      <StringTable ProductVersion=""/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="default" Default="True"/>
@@ -21,15 +20,19 @@
     <PublishOptions>
       <Version Value="2"/>
       <DestinationDirectory Value="$(TestDir)\publishedproject\"/>
-      <IgnoreBinaries Value="False"/>
-      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
-      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
     </PublishOptions>
     <RunParams>
       <local>
-        <FormatVersion Value="1"/>
-        <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
+        <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T &apos;Lazarus Run Output&apos; -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T &apos;Lazarus Run Output&apos; -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="3">
       <Item1>
@@ -47,9 +50,6 @@
       <Unit0>
         <Filename Value="ExtensoTeste.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ExtensoTeste"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
         <CursorPos X="39" Y="15"/>
         <UsageCount Value="22"/>
       </Unit0>
@@ -61,32 +61,27 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ExtensoTeste1"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="34"/>
-        <CursorPos X="17" Y="40"/>
+        <CursorPos X="34" Y="59"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="extensoteste1.lfm"/>
         <TopLine Value="45"/>
         <CursorPos X="4" Y="72"/>
-        <SyntaxHighlighter Value="LFM"/>
         <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit2>
       <Unit3>
         <Filename Value="C:\lazarus\components\ACBr\Fontes\ACBrDiversos\ACBrExtenso.pas"/>
-        <UnitName Value="ACBrExtenso"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="46"/>
         <CursorPos X="55" Y="69"/>
         <UsageCount Value="11"/>
       </Unit3>
       <Unit4>
         <Filename Value="C:\lazarus\components\ACBr\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <UnitName Value="ACBrUtil"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="258"/>
         <CursorPos X="10" Y="282"/>
         <UsageCount Value="10"/>
@@ -94,16 +89,14 @@
       <Unit5>
         <Filename Value="C:\lazarus\components\lazutils\lazutf8.pas"/>
         <UnitName Value="LazUTF8"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="28"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit5>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="1">
       <Position1>
         <Filename Value="extensoteste1.pas"/>
-        <Caret Line="44" Column="1" TopLine="34"/>
+        <Caret Line="44" TopLine="34"/>
       </Position1>
     </JumpHistory>
   </ProjectOptions>
@@ -125,9 +118,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="2">
@@ -139,5 +129,4 @@
       </Item2>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>

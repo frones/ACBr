@@ -369,10 +369,17 @@ begin
   // acertar quebras de linhas e abertura e fechamento da lista de parametros
   ParamAdic := StringReplace(Trim(ParametrosAdicionais.Text), sLineBreak, ';', [rfReplaceAll]);
 
-  ParamAdic := '['+ ParamAdic + ']';
+  if (ParamAdic <> '') then
+    ParamAdic := '['+ ParamAdic + ']';
 
   if NaoEstaVazio(CNPJEstabelecimento) and NaoEstaVazio(CNPJSoftwareHouse) then
-     ParamAdic := ParamAdic + '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';
+    if (ParamAdic <> '') then
+      ParamAdic := ParamAdic + ';[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']'
+    else
+      ParamAdic := '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';
+
+  if (ParamAdic <> '') then
+    ParamAdic := '['+ ParamAdic + ']';
 
   GravaLog( '*** ConfiguraIntSiTefInterativoEx. EnderecoIP: '   +fEnderecoIP+
                                             ' CodigoLoja: '     +fCodigoLoja+

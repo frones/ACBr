@@ -1249,6 +1249,7 @@ const
   TGenericosString0_4 : array[0..4] of string = ('0','1','2','3','4' );
   TGenericosString0_5 : array[0..5] of string = ('0','1','2','3','4','5' );
   TGenericosString0_6 : array[0..6] of string = ('0','1','2','3','4','5','6' );
+  TGenericosString0_7 : array[0..7] of string = ('0','1','2','3','4','5','6', '7' );
 
   TGenericosString1   : array[0..0] of string = ('1');
   TGenericosString1_2 : array[0..1] of string = ('1','2' );
@@ -2922,7 +2923,7 @@ end;
 
 function tpCondIngToStr(const t: tpCondIng ): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString1_7 );
+  result := EnumeradoToStr2(t, TGenericosString0_7 );
 end;
 
 function StrTotpCondIng(var ok: boolean; const s: string): tpCondIng;

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2022
+-- ACBrExtenso --
+[*] Refatoração no componente para facilitar a inclusão de novos idiomas
+[+] Inclusão de novos idiomas (Inglês e Espanhol)
+[+] Inclusão de novo formato 'extQuilo' para escrita de peso em Kgs;
+    Por: Grupo FS e Elias César
+
 29/03/2022
 -- ACBrValidador --
 [*] Remoção de Warnings e Hints.

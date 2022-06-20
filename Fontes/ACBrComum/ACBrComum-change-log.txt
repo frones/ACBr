@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2022
+-- ACBrUtil.DateTime --
+[*] Incluida a função ParseDataHora com o objetivo de formatar a data/hora
+    no seguinte formato: YYYY/MM/DD HH:NN:SS-HH:NN.
+   Por: Italo Giurizzato Junior
+
 26/04/2022
 -- ACBrUtil.XMLHTML --
 [*] Incluído o parâmetro: aTodas na função RemoverDeclaracaoXML.

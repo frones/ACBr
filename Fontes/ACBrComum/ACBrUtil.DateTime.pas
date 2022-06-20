@@ -98,6 +98,7 @@ function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
 function EncodeDataHora(const DataStr: string;
   const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
+function ParseDataHora(const DataStr: string): string;
 
 implementation
 
@@ -398,13 +399,50 @@ begin
   end;
 end;
 
+function ParseDataHora(const DataStr: string): string;
+var
+  xDataHora, xData, xHora, xTZD: string;
+  p: Integer;
+begin
+   xDataHora := Trim(UpperCase(StringReplace(DataStr, 'Z', '', [rfReplaceAll])));
+
+  p := Pos('T', xDataHora);
+
+  if p = 0 then
+    p := Pos(' ', xDataHora);
+
+  if p > 0 then
+    xData := Copy(xDataHora, 1, p-1)
+  else
+    xData := xDataHora;
+
+  xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
+  xHora := '';
+  xTZD := '';
+
+  if p > 0 then
+  begin
+    xDataHora := Copy(xDataHora, p+1, Length(xDataHora) - p);
+
+    p := Pos('-', xDataHora);
+    if p > 0 then
+    begin
+      xHora := Copy(xDataHora, 1, p-1);
+      xTZD := Copy(xDataHora, p, Length(xDataHora));
+    end
+    else
+      xHora := xDataHora;
+  end;
+
+  Result := Trim(xData + ' ' + xHora + xTZD);
+end;
+
 function EncodeDataHora(const DataStr: string;
   const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
 var
   xData, xFormatoData: string;
 begin
-  xData := Trim(StringReplace(DataStr, '-', '/', [rfReplaceAll]));
-  xData := Trim(UpperCase(StringReplace(xData, 'Z', '', [rfReplaceAll])));
+  xData := ParseDataHora(DataStr);
 
   if xData = '' then
     Result := 0
@@ -423,10 +461,6 @@ begin
            xData := xData + '/01';
       8: xData := FormatMaskText('!0000\/00\/00;0;_', xData);
     end;
-
-    if (Copy(xData, 5, 1) = '/') and (Copy(xData, 11, 1) = 'T') and
-       (Copy(xData, 14, 1) = ':') then
-      xData := Copy(xData, 1, 10) + ' ' + Copy(xData, 12, Length(xData) - 11);
 
     Result := StringToDateTime(xData, xFormatoData);
   end;

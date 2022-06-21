@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/06/2022
+-- ModernizacaoPublica.GravarXml --
+[*] Comentado a linha que defini como obrigatória a tag Aliquota.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Utilizado a função LerDatas para ler a data de recebimento da resposta do
     método Emitir, pois alguns provedores não retornam a data no formato 

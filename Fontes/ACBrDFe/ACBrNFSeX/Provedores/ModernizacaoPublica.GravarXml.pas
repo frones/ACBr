@@ -67,7 +67,11 @@ procedure TNFSeW_ModernizacaoPublica202.Configuracao;
 begin
   inherited Configuracao;
 
-  NrOcorrAliquota := 1;
+  // a linha abaixo foi comentada para atender a cidade de Belford Roxo/RJ
+  // se outra cidade atendida pelo mesmo provedor exigir a presença da tag
+  // vai ser necessário mudar a forma de configurar.
+
+//  NrOcorrAliquota := 1;
 
   GerarIDRps := True;
 end;

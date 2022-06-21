@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 21/06/2022
+-- WebFisco.GravarXml --
+[+] Inclusão de novos campos ao gerar o XML do Rps.
+    Observação: esses novos campos constam no manual do provedor FGMaiss que se
+    utiliza do mesmo layout do WebFisco.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --
 [*] Possível solução para o erro de AV ao tratar o retorno do Emitir.
    Por: Italo Giurizzato Junior

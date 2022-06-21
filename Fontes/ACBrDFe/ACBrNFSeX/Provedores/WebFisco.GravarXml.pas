@@ -320,6 +320,28 @@ begin
                                                          '', '', True, xAtrib));
     NFSeNode.AppendChild(AddNode(tcStr, '#', 'itemsav' + IntToStr(i), 1, 60, 1,
                                                          '', '', True, xAtrib));
+    // A tag abaixo foi incluida para atender o provedor FGMaiss
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'itemsat' + IntToStr(i), 1, 60, 1,
+                                                         '', '', True, xAtrib));
+  end;
+
+  // A tag abaixo foi incluida para atender o provedor FGMaiss
+  NFSeNode.AppendChild(AddNode(tcStr, '#', 'sslimite', 1, 6, 1,
+                                                      'NAO', '', True, xAtrib));
+
+  // A tag abaixo foi incluida para atender o provedor FGMaiss
+  NFSeNode.AppendChild(AddNode(tcDe2, '#', 'descoutros', 1, 12, 1,
+                       NFSe.Servico.Valores.OutrosDescontos, '', True, xAtrib));
+
+  // As tag abaixo foram incluidas para atender o provedor FGMaiss
+  for i := 7 to 12 do
+  begin
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'n', 1, 15, 1,
+                                                         '', '', True, xAtrib));
+    NFSeNode.AppendChild(AddNode(tcStr, '#', 'f' + IntToStr(i) + 'd', 1, 10, 1,
+                                                         '', '', True, xAtrib));
+    NFSeNode.AppendChild(AddNode(tcDe2, '#', 'f' + IntToStr(i) + 'v', 1, 12, 1,
+                                                          0, '', True, xAtrib));
   end;
 
   Result := True;

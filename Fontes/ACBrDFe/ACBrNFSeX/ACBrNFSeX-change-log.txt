@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 21/06/2022
+-- ISSDSF.Provider --
+[*] Possível solução para o erro de AV ao tratar o retorno do Emitir.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs de diversas cidade do Provedor Coplan.
    Por: Joemil

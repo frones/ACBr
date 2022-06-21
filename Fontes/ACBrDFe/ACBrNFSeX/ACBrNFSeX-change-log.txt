@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 21/06/2022
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Utilizado a função LerDatas para ler a data de recebimento da resposta do
+    método Emitir, pois alguns provedores não retornam a data no formato 
+    definido pela ABRASF.
+   Por: Italo Giurizzato Junior
 -- WebFisco.GravarXml --
 [+] Inclusão de novos campos ao gerar o XML do Rps.
     Observação: esses novos campos constam no manual do provedor FGMaiss que se

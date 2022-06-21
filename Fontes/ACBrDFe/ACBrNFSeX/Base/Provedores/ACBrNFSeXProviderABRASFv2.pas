@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlDocument,
+  ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
@@ -112,7 +112,7 @@ implementation
 
 uses
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
-  ACBrDFeException, ACBrXmlBase,
+  ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 
@@ -425,7 +425,7 @@ begin
 
       with Response do
       begin
-        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+        Data := LerDatas(ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcStr));
         Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
       end;
 
@@ -1943,7 +1943,7 @@ begin
       end;
 
       Ret :=  Response.RetCancelamento;
-      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+      Ret.DataHora := LerDatas(ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcStr));
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador

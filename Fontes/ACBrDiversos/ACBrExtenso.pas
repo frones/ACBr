@@ -648,6 +648,8 @@ end;
 
 destructor TACBrExtenso.Destroy;
 begin
+  if Assigned(fsIdiomaObj) then
+    fsIdiomaObj.Free;
   inherited Destroy;
 end;
 

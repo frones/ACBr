@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2022
+-- ACBrExtenso --
+[-] Correção de MemoryLeak ao utilizar o ACBrExtenso
+
 20/06/2022
 -- ACBrExtenso --
 [*] Refatoração no componente para facilitar a inclusão de novos idiomas

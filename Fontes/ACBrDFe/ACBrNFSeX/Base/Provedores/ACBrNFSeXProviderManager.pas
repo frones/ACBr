@@ -311,6 +311,7 @@ begin
             ve101: Result := TACBrNFSeProviderInfisc101.Create(ACBrNFSe);
             // Layout ABRASF
             ve201: Result := TACBrNFSeProviderInfisc201.Create(ACBrNFSe);
+            ve203: Result := TACBrNFSeProviderInfisc203.Create(ACBrNFSe);
           else
             Result := nil;
           end;

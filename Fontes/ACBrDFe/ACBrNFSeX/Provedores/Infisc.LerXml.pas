@@ -86,6 +86,15 @@ type
 
   end;
 
+  { TNFSeR_Infisc203 }
+
+  TNFSeR_Infisc203 = class(TNFSeR_ABRASFv2)
+  protected
+
+  public
+
+  end;
+
 implementation
 
 uses

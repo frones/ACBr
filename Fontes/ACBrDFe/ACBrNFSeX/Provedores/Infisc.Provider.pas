@@ -119,16 +119,26 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+  end;
 
-    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
+  TACBrNFSeXWebserviceInfisc203 = class(TACBrNFSeXWebserviceInfisc201)
+  public
+
+  end;
+
+  TACBrNFSeProviderInfisc203 = class (TACBrNFSeProviderABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
+    function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
+    function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
   end;
 
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, Infisc.GravarXml, Infisc.LerXml;
@@ -210,14 +220,14 @@ begin
               ConfigWebServices.VersaoAtrib + '"';
 
     Response.ArquivoEnvio := '<envioLote' + Versao + '>' +
-                           '<CNPJ>' +
-                              OnlyNumber(Emitente.CNPJ) +
-                           '</CNPJ>' +
-                           '<dhTrans>' +
-                              FormatDateTime('yyyy-mm-dd hh:mm:ss', Now) +
-                           '</dhTrans>' +
-                            Xml +
-                         '</envioLote>';
+                               '<CNPJ>' +
+                                  OnlyNumber(Emitente.CNPJ) +
+                               '</CNPJ>' +
+                               '<dhTrans>' +
+                                  FormatDateTime('yyyy-mm-dd hh:mm:ss', Now) +
+                               '</dhTrans>' +
+                                Xml +
+                             '</envioLote>';
   end;
 end;
 
@@ -289,13 +299,13 @@ begin
             ConfigWebServices.VersaoAtrib + '"';
 
   Response.ArquivoEnvio := '<pedidoStatusLote' + Versao + '>' +
-                         '<CNPJ>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</CNPJ>' +
-                         '<cLote>' +
-                            Response.Lote +
-                         '</cLote>' +
-                       '</pedidoStatusLote>';
+                             '<CNPJ>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</CNPJ>' +
+                             '<cLote>' +
+                                Response.Lote +
+                             '</cLote>' +
+                           '</pedidoStatusLote>';
 end;
 
 procedure TACBrNFSeProviderInfisc.TratarRetornoConsultaLoteRps(
@@ -426,11 +436,11 @@ begin
             ConfigWebServices.VersaoAtrib + '"';
 
   Response.ArquivoEnvio := '<pedidoLoteNFSe' + Versao + '>' +
-                         '<CNPJ>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</CNPJ>' +
-                         xConsulta +
-                       '</pedidoLoteNFSe>';
+                             '<CNPJ>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</CNPJ>' +
+                             xConsulta +
+                           '</pedidoLoteNFSe>';
 end;
 
 procedure TACBrNFSeProviderInfisc.TratarRetornoConsultaNFSe(
@@ -540,16 +550,16 @@ begin
             ConfigWebServices.VersaoAtrib + '"';
 
   Response.ArquivoEnvio := '<pedCancelaNFSe' + Versao + '>' +
-                         '<CNPJ>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</CNPJ>' +
-                         '<chvAcessoNFS-e>' +
-                            Response.InfCancelamento.ChaveNFSe +
-                         '</chvAcessoNFS-e>' +
-                         '<motivo>' +
-                            Response.InfCancelamento.CodCancelamento +
-                         '</motivo>' +
-                       '</pedCancelaNFSe>';
+                             '<CNPJ>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</CNPJ>' +
+                             '<chvAcessoNFS-e>' +
+                                Response.InfCancelamento.ChaveNFSe +
+                             '</chvAcessoNFS-e>' +
+                             '<motivo>' +
+                                Response.InfCancelamento.CodCancelamento +
+                             '</motivo>' +
+                           '</pedCancelaNFSe>';
 end;
 
 procedure TACBrNFSeProviderInfisc.TratarRetornoCancelaNFSe(
@@ -721,8 +731,6 @@ procedure TACBrNFSeProviderInfisc201.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.DetalharServico := False;
-
   with ConfigAssinar do
   begin
     Rps := True;
@@ -781,15 +789,6 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
-end;
-
-procedure TACBrNFSeProviderInfisc201.ValidarSchema(
-  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
-begin
-  inherited ValidarSchema(Response, aMetodo);
-
-//  Response.ArquivoEnvio := StringReplace(Response.ArquivoEnvio,
-//         ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
 end;
 
 { TACBrNFSeXWebserviceInfisc }
@@ -876,7 +875,8 @@ begin
   Request := Request + '<nfseDadosMsg>' + AMSG + '</nfseDadosMsg>';
   Request := Request + '</RecepcionarLoteRps>';
 
-  Result := Executar('', Request, [], ['xmlns="http://nfse.abrasf.org.br"']);
+  Result := Executar('', Request, ['EnviarLoteRpsResposta'],
+                     ['xmlns="http://nfse.abrasf.org.br"']);
 end;
 
 function TACBrNFSeXWebserviceInfisc201.RecepcionarSincrono(ACabecalho,
@@ -1037,7 +1037,79 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := StringReplace(Result, '<Signature>)', '[Signature])', [rfReplaceAll]);
+
+  // Correção dos retornos
+  Result := StringReplace(Result,
+    '<ConsultarNfseFaixaResposta></ConsultarNfseFaixaResponse>',
+    '</ConsultarNfseFaixaResposta></ConsultarNfseFaixaResponse>', [rfReplaceAll]);
+  Result := StringReplace(Result,
+    '<ConsultarNfseServicoTomadoResposta></ConsultarNfseServicoTomadoResponse>',
+    '</ConsultarNfseServicoTomadoResposta></ConsultarNfseServicoTomadoResponse>', [rfReplaceAll]);
+end;
+
+{ TACBrNFSeProviderInfisc203 }
+
+procedure TACBrNFSeProviderInfisc203.Configuracao;
+begin
+  inherited Configuracao;
+
+  with ConfigAssinar do
+  begin
+    Rps := True;
+    LoteRps := True;
+    ConsultarLote := True;
+    ConsultarNFSeRps := True;
+    ConsultarNFSePorFaixa := True;
+    ConsultarNFSeServicoPrestado := True;
+    ConsultarNFSeServicoTomado := True;
+    CancelarNFSe := True;
+    RpsGerarNFSe := True;
+  end;
+
+  with ConfigWebServices do
+  begin
+    VersaoDados := '2.03';
+    VersaoAtrib := '2.03';
+  end;
+
+  SetXmlNameSpace('http://nfse.abrasf.org.br');
+
+  ConfigMsgDados.DadosCabecalho := GetCabecalho('');
+end;
+
+function TACBrNFSeProviderInfisc203.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
+begin
+  Result := TNFSeW_Infisc203.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderInfisc203.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
+begin
+  Result := TNFSeR_Infisc203.Create(Self);
+  Result.NFSe := ANFSe;
+end;
+
+function TACBrNFSeProviderInfisc203.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
+var
+  URL: string;
+begin
+  URL := GetWebServiceURL(AMetodo);
+
+  if URL <> '' then
+    Result := TACBrNFSeXWebserviceInfisc203.Create(FAOwner, AMetodo, URL)
+  else
+  begin
+    if ConfigGeral.Ambiente = taProducao then
+      raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
+    else
+      raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
 end;
 
 end.

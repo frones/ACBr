@@ -100,6 +100,14 @@ type
 
   end;
 
+  { TNFSeW_Infisc203 }
+
+  TNFSeW_Infisc203 = class(TNFSeW_ABRASFv2)
+  protected
+    procedure Configuracao; override;
+
+  end;
+
 implementation
 
 uses
@@ -607,8 +615,7 @@ var
 begin
   Result := CreateElement('infNFSe');
 
-//  if FPVersao = ve101 then
-    Result.SetAttribute('versao', FpAOwner.ConfigWebServices.VersaoDados);
+  Result.SetAttribute('versao', FpAOwner.ConfigWebServices.VersaoDados);
 
   xmlNode := GerarID;
   Result.AppendChild(xmlNode);
@@ -1163,6 +1170,15 @@ procedure TNFSeW_Infisc201.DefinirIDRps;
 begin
   NFSe.InfID.ID := 'rps' + NFSe.IdentificacaoRps.Numero +
                    NFSe.IdentificacaoRps.Serie;
+end;
+
+{ TNFSeW_Infisc203 }
+
+procedure TNFSeW_Infisc203.Configuracao;
+begin
+  inherited Configuracao;
+
+  GerarNSRps := True;
 end;
 
 end.

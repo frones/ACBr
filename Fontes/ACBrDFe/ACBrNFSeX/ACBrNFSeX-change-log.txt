@@ -43,6 +43,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/06/2022
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs de diversas cidade do Provedor Coplan.
+   Por: Joemil
+[+] Incluído as cidades: Guapiaçu/SP e Itajobi/SP - Provedor Fiorilli
+   Por: TBI
+[+] Incluído a cidade: Cruz das Almas/BA - Provedor Fisco
+   Por: Celso Pires
+-- Infisc.Provider/Infisc.GravarXml/Infisc.LerXml/ACBrNFSeXProviderManager --
+[+] Incluído as rotinas para atender a versão 2.03 do provedor Infisc.
+   Por: Italo Giurizzato Junior
+
 17/06/2022
 -- Etherium.Provider --
 [*] Alterado para assinar o Rps também.

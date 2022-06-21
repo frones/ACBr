@@ -102,6 +102,7 @@ begin
    fpTamanhoCarteira       := 2;
    fpLayoutVersaoArquivo   := 40;
    fpLayoutVersaoLote      := 40;
+   fpCodigosMoraAceitos    := '01239';
 end;
 
 procedure TACBrBancoBanestes.EhObrigatorioAgenciaDV;
@@ -384,12 +385,12 @@ function TACBrBancoBanestes.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): 
       Result := '4';
     end;
   end;
-  function IdentDistribuicaoToCod(IdentDistribuicao: TACBrIdentDistribuicao): string;
+  function CarteiraEnvioToCod(CarteiraEnvio: TACBrCarteiraEnvio): string;
   begin
-    if IdentDistribuicao = tbBancoDistribui then
-      Result := '1'
+    if CarteiraEnvio = tceCedente then
+      Result := '2'
     else
-      Result := '2';
+      Result := '1';
   end;
   function EspecieDocToCod(EspecieDoc: string): string;
   var
@@ -478,7 +479,7 @@ begin
     '1' +                                                                                             // Forma de cadastro do titulo no banco
     ' ' +                                                                                             // Tipo de Documento
     ResponEmissaoToCod(ACBrBanco.ACBrBoleto.Cedente.ResponEmissao) +                                  // Identificacao da emissao do boleto
-    IdentDistribuicaoToCod(ACBrBanco.ACBrBoleto.Cedente.IdentDistribuicao) +                          // Identificacao da distribuicao
+    CarteiraEnvioToCod(ACBrTitulo.CarteiraEnvio) +                                                    // Identificacao da distribuicao
     PadRight(ACBrTitulo.NumeroDocumento, 15, ' ') +                                                   // Numero do documento de cobranca
     FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento) +                                               // Data de vencimento do titulo
     IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 15) +                                        // Valor nominal do titulo

@@ -49,6 +49,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2022
+--ACBrBancoBanestes--
+[*] TK-2768- Ajuste na geracao CNAB240 pos. 42 Reg.P, alterado para usar campo CarteiraEnvio, seguindo o padrão dos demais bancos.
+    por: Atual Sistemas
+    https://www.projetoacbr.com.br/forum/topic/67698-remessa-banestes-cnab-240-segmento-p-posi%C3%A7%C3%A3o-62/
+
 17/06/2022
 --ACBrBoletoCaixa--
 [-] TK-2780 ACBrBoleto - Erro leitura do retorno CNAB240 Caixa

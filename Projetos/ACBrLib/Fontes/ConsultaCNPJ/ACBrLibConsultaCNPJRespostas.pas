@@ -56,7 +56,7 @@ type
     FCEP: String;
     FSituacao: String;
     FCNAE1: String;
-    FCNAE2: TStringList;
+    FCNAE2: String;
     FNaturezaJuridica: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
@@ -75,7 +75,7 @@ type
     property CEP: String read FCEP write FCEP;
     property Situacao: String read FSituacao write FSituacao;
     property CNAE1: String read FCNAE1 write FCNAE1;
-    property CNAE2: TStringList read FCNAE2 write FCNAE2;
+    property CNAE2: String read FCNAE2 write FCNAE2;
     property NaturezaJuridica: String read FNaturezaJuridica write FNaturezaJuridica;
 	
   end;

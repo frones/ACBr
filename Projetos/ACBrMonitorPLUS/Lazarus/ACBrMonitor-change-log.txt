@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2022
+--- DoCNPJUnit---
+[*] Ajustes de leitura do retorno usando métodos unificados da ACBrLib.
+
 15/06/2022
 --- ACBrMonior1 ---
 [*] Remoção do campo FAX por estar em desuso.

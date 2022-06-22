@@ -42,6 +42,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/06/2022
+-- Diversos --
+[*] Remoção dos parâmetros: I e J da procedure: SegmentoN, pois eles não tem utilidade.
+   Por: Italo Giurizzato Junior
+-- PagFor.Itau.GravarTxtRemessa --
+[*] Correções no Registro 1 e Segmento B (Alterado o tipo de campo de tcStr para tcStrZero) e 
+    Segmento N1 (acrescentado o Nome do Contribuinte para ser gerado na posição 166 até 195).
+   Por: Italo Giurizzato Junior/Suporte AT Info
+-- PagFor.Itau.GravarTxtRemessa --
+[*] Alterado o tipo de campo de tcInt para tcInt64, pois o numero da conta pode ter até 12 digitos.
+   Por: Rogerio Alves
+
 17/06/2022
 -- PagFor.Bradesco.GravarTxtRemessa/PagFor.BancodoBrasil.GravarTxtRemessa/PagFor.Sicredi.GravarTxtRemessa --
 [*] Correção no Segmento J52, estava gerando J2 sendo que o correto é 52.

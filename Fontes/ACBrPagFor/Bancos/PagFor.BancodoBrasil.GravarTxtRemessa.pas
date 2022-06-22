@@ -460,7 +460,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN1.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
@@ -499,7 +499,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN2.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
@@ -540,7 +540,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN3.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
@@ -581,7 +581,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN4.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
@@ -624,7 +624,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN567.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
@@ -694,7 +694,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN8.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);

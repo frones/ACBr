@@ -96,7 +96,7 @@ type
       Pagamento de Tributos
       Pagamento de Tributos sem Código de Barras
     }
-    procedure GerarSegmentoN(mSegmentoN: TSegmentoN; I, J: Integer); virtual;
+    procedure GerarSegmentoN(mSegmentoN: TSegmentoN); virtual;
     // Registros de Informações complementares do Segmento N
     // (Registro de Pagamento de Tributos e Impostos sem Código de Barras)
     procedure GeraSegmentoN1(I: Integer); virtual;
@@ -555,8 +555,7 @@ begin
   end;
 end;
 
-procedure TArquivoW_CNAB240.GerarSegmentoN(mSegmentoN: TSegmentoN; I,
-  J: Integer);
+procedure TArquivoW_CNAB240.GerarSegmentoN(mSegmentoN: TSegmentoN);
 begin
   with mSegmentoN do
   begin
@@ -584,21 +583,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN1.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
@@ -636,21 +622,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN2.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
@@ -690,21 +663,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN3.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
@@ -744,21 +704,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN4.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
@@ -800,21 +747,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN567.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
@@ -883,21 +817,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN8.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
       GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
@@ -937,21 +858,8 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN9.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN, I, J);
+      GerarSegmentoN(SegmentoN);
 
-      {
-      Inc(FQtdeRegistros);
-      Inc(FQtdeRegistrosLote);
-      Inc(FSequencialDeLote);
-
-      GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
-      GravarCampo(FQtdeLotes, 4, tcInt);
-      GravarCampo('3', 1, tcStr);
-      GravarCampo(FSequencialDeLote, 5, tcInt);
-      GravarCampo('N', 1, tcStr);
-      GravarCampo('0', 1, tcStr);
-      GravarCampo(InMovimentoToStr(SegmentoN.CodMovimento), 2, tcStr);
-      }
       GravarCampo(' ', 120, tcStr);
       GravarCampo(' ', 10, tcStr);
 

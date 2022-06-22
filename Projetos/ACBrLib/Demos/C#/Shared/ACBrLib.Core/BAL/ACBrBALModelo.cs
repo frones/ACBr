@@ -29,6 +29,13 @@
         balToledo2090N,
         balToledoBCS21,
         balPrecision,
-        balDigitron_UL
+        balDigitron_UL,
+        balLibratekWT3000IR, 
+        balToledoTi420,
+        balWeightechWT27R_ETH, 
+        balCapital, 
+        balMarte, 
+        balLenkeLK2500, 
+        balWeighTRUTest
     }
 }

@@ -43,6 +43,39 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/06/2022
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[+] Incluido algumas propriedades para definir o tipo de campo referente a data,
+    infelizmente alguns provedores não seguem os manuais da ABRASF e acabam 
+    geranda o XML com datas em um formanto totalmente diferente.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXProviderBase --
+[+] Incluido na procedure SetXmlNameSpace a configuracao da propriedade NameSpaceURI,
+    necessária quando se utiliza o componente configurado com xsMsXml em vez de xsLibXml2.
+   Por: Italo Giurizzato Junior
+-- Etherium.Provider --
+[*] Incluido na procedure Configuração as linhas para configurar os formatos das datas:
+      FpFormatoDataRecebimento := tcDatUSA; {MM/DD/AAAA}
+      FpFormatoDataEmissao := tcDatUSA;
+      FpFormatoDataHora := tcDatUSA;
+   Por: Italo Giurizzato Junior
+-- SigCorp.Provider --
+[*] Incluido na procedure Configuração a linha para configurar o formato da data:
+      FpFormatoDataRecebimento := tcDatUSA; {MM/DD/AAAA}
+   Por: Italo Giurizzato Junior
+-- Infisc.Provider --
+[*] Alterado a posição da chamada a procedure ProcessarMensagemErros.
+   Por: Italo Giurizzato Junior
+-- IPM.LerXml --
+[*] Ajustes para ler o campo DataEmissaoRps e o Tipo da Pessoal ao ler os dados do
+    Tomador.
+   Por: Maico Smaniotto
+-- ACBrNFSeXServicos --
+[*] A cidade: Santa Rosa/RS - Provedor IPM estava com a versão e URL erradas.
+   Por: Maico Smaniotto
+[+] Incluído a cidade: Julio de Castilhos/RS - Provedor Pronim
+   Por: Gabriel Bobello
+
 21/06/2022
 -- ModernizacaoPublica.GravarXml --
 [*] Comentado a linha que defini como obrigatória a tag Aliquota.

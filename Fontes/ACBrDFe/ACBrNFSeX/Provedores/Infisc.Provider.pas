@@ -354,9 +354,9 @@ begin
           Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('sit'), tcStr);
           idNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('chvAcessoNFSe'), tcStr);
         end;
-      end;
 
-      ProcessarMensagemErros(ANode, Response);
+        ProcessarMensagemErros(AuxNode, Response);
+      end;
 
       Response.Sucesso := (Response.Erros.Count = 0);
 

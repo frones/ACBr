@@ -841,6 +841,8 @@ begin
     AbrirSessao.xmlns := aNameSpace;
     FecharSessao.xmlns := aNameSpace;
   end;
+
+  TACBrNFSeX(FAOwner).SSL.NameSpaceURI := aNameSpace;
 end;
 
 function TACBrNFSeXProvider.SimNaoToStr(const t: TnfseSimNao): string;

@@ -115,8 +115,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Agili.GravarXml, Agili.LerXml;
@@ -136,8 +135,6 @@ begin
   end;
 
   SetXmlNameSpace('http://www.agili.com.br/nfse_v_1.00.xsd');
-
-  TACBrNFSeX(FAOwner).SSL.NameSpaceURI := 'http://www.agili.com.br/nfse_v_1.00.xsd';
 
   SetNomeXSD('nfse_v_1.00.xsd');
 end;

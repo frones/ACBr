@@ -44,6 +44,10 @@ uses
 type
   TACBrNFSeProviderABRASFv2 = class(TACBrNFSeXProvider)
   protected
+    FpFormatoDataRecebimento: TACBrTipoCampo;
+    FpFormatoDataEmissao: TACBrTipoCampo;
+    FpFormatoDataHora: TACBrTipoCampo;
+
     procedure Configuracao; override;
 
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
@@ -105,7 +109,7 @@ type
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); virtual;
 
-    function LerDatas(const xData: string): TDateTime;
+//    function LerDatas(const xData: string): TDateTime;
   end;
 
 implementation
@@ -118,6 +122,7 @@ uses
 
 { TACBrNFSeProviderABRASFv2 }
 
+{
 function TACBrNFSeProviderABRASFv2.LerDatas(const xData: string): TDateTime;
 begin
   if Pos('/', xData) = 3 then
@@ -128,14 +133,28 @@ begin
       result := EncodeDataHora(xData, 'MM/DD/YYYY');
   end
   else
-    result := EncodeDataHora(xData, '');
+  begin
+    if Pos('/', xData) = 2 then
+    begin
+      if Copy(xData, 3, 2) > '12' then
+        result := EncodeDataHora(xData, 'M/DD/YYYY')
+      else
+        result := EncodeDataHora(xData, 'D/MM/YYYY');
+    end
+    else
+      result := EncodeDataHora(xData, '');
+  end;
 end;
-
+}
 procedure TACBrNFSeProviderABRASFv2.Configuracao;
 const
   NameSpace = 'http://www.abrasf.org.br/nfse.xsd';
 begin
   inherited Configuracao;
+
+  FpFormatoDataRecebimento := tcDatHor;
+  FpFormatoDataEmissao := tcDatHor;
+  FpFormatoDataHora := tcDatHor;
 
   // Os provedores que seguem a versão 2 do layout da ABRASF podem ter até
   // três serviços para recepcionar o RPS: assíncrono, síncrono e unitário.
@@ -425,7 +444,8 @@ begin
 
       with Response do
       begin
-        Data := LerDatas(ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcStr));
+//        Data := LerDatas(ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcStr));
+        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
         Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
       end;
 
@@ -871,7 +891,8 @@ begin
         if AuxNodeConf = nil then
           AuxNodeConf := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
 
-        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), tcStr));
+//        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), tcStr));
+        Response.DataCanc := ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
         Response.DescSituacao := '';
 
         if Response.DataCanc > 0 then
@@ -889,7 +910,8 @@ begin
         begin
           NumeroNota := NumNFSe;
           CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          Data := LerDatas(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+//          Data := LerDatas(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcStr));
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
         end;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
@@ -1943,7 +1965,8 @@ begin
       end;
 
       Ret :=  Response.RetCancelamento;
-      Ret.DataHora := LerDatas(ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcStr));
+//      Ret.DataHora := LerDatas(ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcStr));
+      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador

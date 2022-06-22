@@ -236,6 +236,7 @@ begin
               ObterConteudo(AuxNode.Childrens.FindAnyNs('hora_emissao_recibo_provisorio'), tcStr);
 
     NFSe.DataEmissao := StrToDateTimeDef(aValor, 0);
+    NFSe.DataEmissaoRps := StrToDateTimeDef(aValor, 0);
 
     with NFSe.IdentificacaoRps do
     begin
@@ -259,19 +260,6 @@ begin
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('nome_razao_social'), tcStr);
       NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('sobrenome_nome_fantasia'), tcStr);
 
-      with IdentificacaoTomador do
-      begin
-        CpfCnpj := OnlyNumber(ObterConteudo(AuxNode.Childrens.FindAnyNs('cpfcnpj'), tcStr));
-        aValor  := ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo'), tcStr);
-
-        if ((aValor = 'J') or (aValor = '2')) then
-          CpfCnpj := PadLeft(CpfCnpj, 14, '0')
-        else
-          CpfCnpj := PadLeft(CpfCnpj, 11, '0');
-
-        InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
-      end;
-
       with Endereco do
       begin
         Endereco        := ObterConteudo(AuxNode.Childrens.FindAnyNs('logradouro'), tcStr);
@@ -280,6 +268,29 @@ begin
         Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('bairro'), tcStr);
         CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cidade'), tcStr);
         CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('cep'), tcStr);
+      end;
+
+      with IdentificacaoTomador do
+      begin
+        CpfCnpj := OnlyNumber(ObterConteudo(AuxNode.Childrens.FindAnyNs('cpfcnpj'), tcStr));
+        aValor  := ObterConteudo(AuxNode.Childrens.FindAnyNs('tipo'), tcStr);
+
+        if ((aValor = 'J') or (aValor = '2')) then
+        begin
+          CpfCnpj := PadLeft(CpfCnpj, 14, '0');
+
+          if Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
+            Tipo := tpPJdoMunicipio
+          else
+            Tipo := tpPJforaMunicipio;
+        end
+        else
+        begin
+          CpfCnpj := PadLeft(CpfCnpj, 11, '0');
+          Tipo    := tpPF;
+        end;
+
+        InscricaoEstadual := ObterConteudo(AuxNode.Childrens.FindAnyNs('ie'), tcStr);
       end;
 
       with Contato do

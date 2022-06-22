@@ -38,12 +38,16 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrXmlDocument,
+  ACBrXmlBase, ACBrXmlDocument,
   ACBrNFSeXProviderBase, ACBrNFSeXWebservicesResponse;
 
 type
   TACBrNFSeProviderABRASFv1 = class(TACBrNFSeXProvider)
   protected
+    FpFormatoDataRecebimento: TACBrTipoCampo;
+    FpFormatoDataEmissao: TACBrTipoCampo;
+    FpFormatoDataHora: TACBrTipoCampo;
+
     function PreencherNotaResposta(Node, parentNode: TACBrXmlNode): Boolean;
     procedure LerCancelamento(ANode: TACBrXmlNode; Response: TNFSeConsultaNFSeporRpsResponse);
 
@@ -94,10 +98,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrDFeException, ACBrXmlBase,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
+  ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   ACBrNFSeXConversao, ACBrNFSeXWebserviceBase;
 
@@ -108,6 +110,10 @@ const
   NameSpace = 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd';
 begin
   inherited Configuracao;
+
+  FpFormatoDataRecebimento := tcDatHor;
+  FpFormatoDataEmissao := tcDatHor;
+  FpFormatoDataHora := tcDatHor;
 
   // Todos os provedores que seguem a versão 1 do layout da ABRASF só tem
   // um serviço para recepcionar o RPS e é assíncrono.
@@ -366,7 +372,8 @@ begin
       Response.Sucesso := (Response.Erros.Count = 0);
 
       ANode := Document.Root;
-      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), tcDatHor);
+
+      Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataRecebimento'), FpFormatoDataRecebimento);
       Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Protocolo'), tcStr);
     except
       on E:Exception do
@@ -875,7 +882,7 @@ begin
           NumeroNota := NumNFSe;
           idNota := InfNfseID;
           CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), tcDatHor);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
         end;
 
         ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
@@ -1325,10 +1332,10 @@ begin
       end;
 
       Ret := Response.RetCancelamento;
-      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcDatHor);
+      Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), FpFormatoDataHora);
 
       if Ret.DataHora = 0 then
-        Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Ret.DataHora := ObterConteudoTag(ANode.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
 
       if ConfigAssinar.IncluirURI then
         IdAttr := ConfigGeral.Identificador
@@ -1356,7 +1363,7 @@ begin
       if ANodeInfCon <> nil then
       begin
         Ret.Sucesso := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('Sucesso'), tcStr);
-        Ret.DataHora := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('DataHora'), tcDatHor);
+        Ret.DataHora := ObterConteudoTag(ANodeInfCon.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
       end;
     except
       on E:Exception do
@@ -1401,7 +1408,7 @@ begin
   begin
     AuxNodeCanc := AuxNodeCanc.Childrens.FindAnyNs('Confirmacao');
 
-    Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), tcDatHor);
+    Response.DataCanc := ObterConteudoTag(AuxNodeCanc.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
     Response.DescSituacao := '';
 
     if Response.DataCanc > 0 then

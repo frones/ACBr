@@ -490,6 +490,7 @@ begin
           AInt := Linha.Informacao.AsInteger;
           Credito := (AInt = 1);
           Debito := (AInt = 2);
+          Voucher := (Aint = 4);
         end;
 
         PWINFO_CARDENTMODE:

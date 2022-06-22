@@ -353,6 +353,7 @@ type
     fpCodigoRedeAutorizada: String;     // 739-000 Índice da Rede Adquirente
     fpDebito: Boolean;      // Se True, foi usado Cartão de Débito
     fpCredito: Boolean;     // Se True, foi usado Cartão de Crédito
+    fpVoucher: Boolean;     // Se True, foi usado Cartão Voucher
     fpDigitado: Boolean;    // Se True, foi Digitado o número do Cartão de Débito
     fpParceladoPor: TACBrTEFRespParceladoPor;
     fpValorEntradaCDC: Double;
@@ -464,6 +465,7 @@ type
     property CodigoRedeAutorizada: String read fpCodigoRedeAutorizada write fpCodigoRedeAutorizada;
     property Debito: Boolean read fpDebito write fpDebito;
     property Credito: Boolean read fpCredito write fpCredito;
+    property Voucher: Boolean read fpVoucher write fpVoucher;
     property Digitado: Boolean read fpDigitado write fpDigitado;
     property ParceladoPor: TACBrTEFRespParceladoPor read fpParceladoPor write fpParceladoPor;
     property ValorEntradaCDC: Double read fpValorEntradaCDC write fpValorEntradaCDC;

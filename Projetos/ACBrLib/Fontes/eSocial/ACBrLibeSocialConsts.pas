@@ -49,8 +49,14 @@ const
   CSessaoRespConsultaTot = 'Tot';
   CSessaoRespConsultaIdentEventos = 'ConsultaIdentEventos';
   CSessaoRespConsultaIdentEventosRecibo = 'ConsultaIdentEventoRecibo';
+  CErroeSocialAbrir = 'Erro ao abrir o arquivo do eSocial';
 
-  CSessaoeSocial = 'eSocial';
+
+Resourcestring
+  SErroeSocialAbrir = 'Erro ao abrir o arquivo do eSocial: %s';
+  SMsgeSocialEventoAdicionado = 'Evento Adicionado: %s';
+  SErroeSocialConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido';
+  SInfEventosCarregados = '%d Evento(s) Carregado(s)';
 
 implementation
 

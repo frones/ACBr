@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="ACBrLibeSocial"/>
       <ResourceType Value="res"/>
     </General>
@@ -18,13 +18,13 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="32"/>
+      <BuildNr Value="33"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBreSocial - Biblioteca para envio, consulta do eSocial" InternalName="ACBrLibeSocial" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="eSocial" ProductVersion="0.0.1.30"/>
     </VersionInfo>
-    <BuildModes Count="5">
-      <Item1 Name="x86 - CDECL" Default="True"/>
-      <Item2 Name="x64 - CDECL">
+    <BuildModes Count="12">
+      <Item1 Name="Win32-i386-CDECL" Default="True"/>
+      <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -33,7 +33,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
+            <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -44,6 +44,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -65,7 +66,7 @@
           </Other>
         </CompilerOptions>
       </Item2>
-      <Item3 Name="x86 - STDCALL">
+      <Item3 Name="Win32-i386-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -74,7 +75,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
+            <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -85,6 +86,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -101,12 +103,11 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dSTDCALL
--dNOGUI"/>
+            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item3>
-      <Item4 Name="x64 - STDCALL">
+      <Item4 Name="Win64-x86_64-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -115,7 +116,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
+            <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -126,6 +127,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -142,21 +144,61 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dSTDCALL
--dNOGUI"/>
+            <CustomOptions Value="-dSTDCALL -dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item4>
-      <Item5 Name="x86 - CDECL - DEBUG">
+      <Item5 Name="Linux-x86_64">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\Testes\eSocial\bin\ACBreSocial32"/>
+            <Filename Value="bin\Linux\acbresocial64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item5>
+      <Item6 Name="Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\acbresocial32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -167,6 +209,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -174,7 +217,8 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <UseHeaptrc Value="True"/>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
@@ -182,26 +226,278 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG"/>
+            <CustomOptions Value="-dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item5>
+      </Item6>
+      <Item7 Name="i386 - CDECL - DEBUG">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="C:\ACBr\Projetos\ACBrLib\Testes\eSocial\bin\ACBreSocial32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+            </Debugging>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDEBUG -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item7>
+      <Item8 Name="Win32-i386-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Cdecl\ACBreSocial32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item8>
+      <Item9 Name="Win64-x86_64-CDECL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Cdecl\ACBreSocial64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item9>
+      <Item10 Name="Win64-x86_64-STDCALL-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\StdCall\ACBreSocial64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dSTDCALL -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item10>
+      <Item11 Name="Linux-x86_64-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Linux\acbresocial64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item11>
+      <Item12 Name="Linux-i386-MT">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\MT\Linux\acbresocial32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dMT -dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item12>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
       <local>
-        <FormatVersion Value="1"/>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\eSocial\bin\ACBrLibeSocialTest.exe"/>
+        <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
       </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
         <PackageName Value="ACBre_Social"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="13">
       <Unit0>
         <Filename Value="ACBrLibeSocial.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -230,17 +526,33 @@
         <ResourceBaseClass Value="DataModule"/>
       </Unit5>
       <Unit6>
-        <Filename Value="ACBrLibeSocialClass.pas"/>
+        <Filename Value="ACBrLibeSocialConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="ACBrLibeSocialConsts.pas"/>
+        <Filename Value="ACBrLibeSocialRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="ACBrLibeSocialRespostas.pas"/>
+        <Filename Value="ACBrLibeSocialBase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="ACBrLibeSocialMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ACBrLibeSocialST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="ACBrLibeSocialStaticImportMT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="ACBrLibeSocialStaticImportST.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -251,14 +563,30 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-      <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
+      <OtherUnitFiles Value="..\Comum"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
     <CodeGeneration>
-      <RelocatableUnit Value="True"/>
+      <SmartLinkUnit Value="True"/>
       <TargetCPU Value="i386"/>
+      <TargetOS Value="win32"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+      <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <UseLineInfoUnit Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
         <ExecutableType Value="Library"/>
       </Options>

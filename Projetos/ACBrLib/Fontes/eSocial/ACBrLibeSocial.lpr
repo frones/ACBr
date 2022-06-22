@@ -35,9 +35,13 @@
 library ACBrLibeSocial;
 
 uses
-  Interfaces, sysutils, Classes,
-  ACBrLibConfig, ACBrLibComum,
-  ACBrLibeSocialClass, ACBrLibeSocialConfig, ACBrLibeSocialDataModule;
+  Interfaces, Forms,
+  sysutils, Classes, ACBrLibeSocialDataModule,
+  {$IFDEF MT} ACBrLibeSocialMT {$ELSE} ACBrLibeSocialST{$ENDIF},
+  ACBrLibConfig,  ACBrLibResposta,
+  ACBrLibComum, ACBrLibConsts, ACBrLibDataModule,
+  ACBrLibeSocialConfig, ACBrLibeSocialBase;
+
 
 {$R *.res}
 
@@ -53,15 +57,28 @@ exports
   eSocial_Nome,
   eSocial_Versao,
   eSocial_UltimoRetorno,
+  eSocial_ConfigImportar,
+  eSocial_ConfigExportar,
   eSocial_ConfigLer,
   eSocial_ConfigGravar,
   eSocial_ConfigLerValor,
   eSocial_ConfigGravarValor,
 
   // eSocial
-  eSocial_LerArqIni,
-  eSocial_Enviar,
-  eSocial_Consultar;
+  eSocial_CriarEventoeSocial,
+  eSocial_EnviareSocial,
+  eSocial_ConsultareSocial,
+  eSocial_CriarEnviareSocial,
+  eSocial_LimpareSocial,
+  eSocial_CarregarXMLEventoeSocial,
+  eSocial_SetIDEmpregador,
+  eSocial_SetIDTransmissor,
+  eSocial_SetTipoEmpregador,
+  eSocial_SetVersaoDF,
+  eSocial_ConsultaIdentificadoresEventosEmpregador,
+  eSocial_ConsultaIdentificadoresEventosTabela,
+  eSocial_ConsultaIdentificadoresEventosTrabalhador,
+  eSocial_DownloadEventos;
 
 begin
   {$IFDEF DEBUG}
@@ -70,7 +87,8 @@ begin
    SetHeapTraceOutput( HeapTraceFile );
   {$ENDIF}
 
-  pLibClass := TACBrLibeSocial; // Ajusta a classe a ser criada
   MainThreadID := GetCurrentThreadId();
+  Application.Initialize;
+
 end.
 

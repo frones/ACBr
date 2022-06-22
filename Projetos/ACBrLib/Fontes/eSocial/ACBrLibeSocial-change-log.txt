@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/06/2022
+--- ACBrLibeSocial ---
+[+] Atualizado os fontes adicionando novos métodos e adicionando a estrutura padrão MultThread
+   Por: Antonio Carlos
+
 12/03/2018
 --- ACBrLibeSocialRespostas, ACBrLibeSocialConsts ---
 [+] Adicionado metodos de Respostas para Métodos de Consulta Eventos e Downloads

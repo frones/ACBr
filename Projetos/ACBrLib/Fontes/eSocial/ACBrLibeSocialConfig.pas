@@ -61,6 +61,10 @@ type
   { TLibeSocialConfig }
   TLibeSocialConfig = class(TLibConfig)
   private
+    FSetIDEmpregador: String;
+    FSetIDTransmissor: String;
+    FSetTipoEmpregador: Integer;
+    FSetVersaoDF: String;
     FeSocialConfig: TConfiguracoeseSocial;
 
   protected
@@ -77,13 +81,19 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
+    property SetIDEmpregador: String read FSetIDEmpregador write FSetIDEmpregador;
+    property SetIDTransmissor: String read FSetIDTransmissor write FSetIDTransmissor;
+    property SetTipoEmpregador: Integer read FSetTipoEmpregador write FSetTipoEmpregador;
+    property SetVersaoDF: String read FSetVersaoDF write FSetVersaoDF;
+
+
     property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
   end;
 
 implementation
 
 uses
-  ACBrLibeSocialClass, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibeSocialBase, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TeSocialConfig }
 {

@@ -37,7 +37,7 @@ unit ACBrLibeSocialDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBreSocial, ACBrLibConfig, syncobjs;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBreSocial;
 
 type
 
@@ -48,21 +48,25 @@ type
 
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+
   private
     FLock: TCriticalSection;
+    fpLib: TACBrLib;
 
   public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
+
+    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
   ACBrUtil,
-  ACBrLibeSocialConfig, ACBrLibComum, ACBrLibeSocialClass;
+  ACBrLibeSocialConfig, ACBrLibeSocialBase;
 
 {$R *.lfm}
 
@@ -91,7 +95,7 @@ procedure TLibeSocialDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
   if Assigned(pLib) then
-    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+    GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibeSocialDM.Travar;

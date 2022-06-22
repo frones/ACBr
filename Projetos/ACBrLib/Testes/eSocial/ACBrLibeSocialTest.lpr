@@ -3,7 +3,8 @@ program ACBrLibeSocialTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibeSocialTestCase, ACBrLibeSocialStaticImport;
+  Interfaces, Forms, ACBrLibeSocialStaticImportST, ACBrLibConsts, GuiTestRunner,
+  ACBrLibeSocialTestCase;
 
 {$R *.res}
 

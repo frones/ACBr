@@ -393,6 +393,11 @@ begin
         GravarCampo(Endereco.Cidade, 20, tcStr, True);
         GravarCampo(Endereco.CEP, 8, tcInt);
         GravarCampo(Endereco.Estado, 2, tcStr);
+        GravarCampo(Email, 100, tcStr);
+        GravarCampo(' ', 3, tcStr);
+        GravarCampo(' ', 10, tcStr);
+
+        {
         GravarCampo(DataVencimento, 8, tcDat);
         GravarCampo(Valor, 15, tcDe2);
         GravarCampo(Abatimento, 15, tcDe2);
@@ -403,6 +408,7 @@ begin
         GravarCampo(Aviso, 1, tcInt);
         GravarCampo(CodigoUG, 6, tcInt);
         GravarCampo(' ', 8, tcStr);
+        }
       end;
 
       ValidarLinha('B');

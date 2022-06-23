@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2022
+[+] Inclusão das funções 'HMACFromString()' e 'HMACFromFile()', para utilização do 
+    HMAC(Código de autenticação de mensagem baseado em HASH)
+	Por: Elias César
+
 23/01/2020
 -- ACBrEAD --
 [*] Otimização e remoção de Hints

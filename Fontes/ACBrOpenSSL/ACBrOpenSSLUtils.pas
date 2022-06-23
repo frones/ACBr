@@ -127,6 +127,11 @@ type
     function CalcHashFromFile(const AFile: String; Algorithm: TACBrOpenSSLAlgorithm;
       OutputType: TACBrOpenSSLStrType = sttHexa; Sign: Boolean = False): AnsiString;
 
+   function HMACFromString(const BinaryString: AnsiString; const aKey: AnsiString;
+      const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
+   function HMACFromFile(const aFile: String; const aKey: AnsiString;
+      const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
+
     function MD5FromFile(const AFile: String): String;
     function MD5FromString(const AString: AnsiString): String;
 
@@ -682,8 +687,8 @@ begin
 end;
 
 function TACBrOpenSSLUtils.CalcHashFromFile(const AFile: String;
-  Algorithm: TACBrOpenSSLAlgorithm; OutputType: TACBrOpenSSLStrType; Sign: Boolean
-  ): AnsiString;
+  Algorithm: TACBrOpenSSLAlgorithm; OutputType: TACBrOpenSSLStrType;
+  Sign: Boolean): AnsiString;
 Var
   fs: TFileStream ;
 begin
@@ -694,6 +699,49 @@ begin
   finally
     fs.Free ;
   end ;
+end;
+
+function TACBrOpenSSLUtils.HMACFromString(const BinaryString: AnsiString;
+  const aKey: AnsiString; const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
+var
+  ipad, opad, s, k: AnsiString;
+  n: Integer;
+begin
+  if (Length(AKey) > 64) then
+    k := CalcHashFromString(AKey, aDigest, sttBinary)
+  else
+    k := AKey;
+
+  ipad := StringOfChar(#$36, 64);
+  opad := StringOfChar(#$5C, 64);
+  for n := 1 to Length(k) do
+  begin
+    ipad[n] := AnsiChar(Byte(ipad[n]) xor Byte(k[n]));
+    opad[n] := AnsiChar(Byte(opad[n]) xor Byte(k[n]));
+  end;
+
+  s := CalcHashFromString(ipad + BinaryString, aDigest, sttBinary);
+  Result := LowerCase(CalcHashFromString(opad + s, aDigest, sttHexa));
+end;
+
+function TACBrOpenSSLUtils.HMACFromFile(const aFile: String;
+  const aKey: AnsiString; const aDigest: TACBrOpenSSLAlgorithm): AnsiString;
+var
+  wStr: AnsiString;  
+  wMS: TMemoryStream;
+begin
+  wStr := EmptyStr;
+  wMS := TMemoryStream.Create;
+  try
+    wMS.LoadFromFile(aFile);
+    wMS.Position := 0;
+    SetLength(wStr, wMS.Size);
+    wMS.ReadBuffer(PAnsiChar(wStr)^, wMS.Size);
+  finally
+    wMS.Free;
+  end;
+
+  Result := HMACFromString(wStr, aKey, aDigest);
 end;
 
 function TACBrOpenSSLUtils.MD5FromFile(const AFile: String): String;

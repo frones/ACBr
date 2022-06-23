@@ -126,7 +126,7 @@ namespace ACBr.PDV
             MensagemCaixa = "Venda em Andamento";
 
             var separador = "".PadLeft(48, '-');
-            var reg1 = new RegistroBobina(separador, "               ** CUPOM FISCAL **               ");
+            var reg1 = new RegistroBobina(separador, "           ** DOCUMENTO NÃO FISCAL **           ");
             var reg2 = new RegistroBobina(separador, "ITEM CÓDIGO         DESCRIÇÃO                   ");
             var reg3 = new RegistroBobina("QTD.     UN      VL.UNIT.(R$) ST    VL.ITEM(R$)", separador);
 
@@ -147,13 +147,13 @@ namespace ACBr.PDV
         {
             var separador = "".PadLeft(48, '-');
 
-            var reg1 = new RegistroBobina(separador, "          ** CUPOM FISCAL CANCELADO **          ");
+            var reg1 = new RegistroBobina(separador, "       ** DOCUMENTO NÃO FISCAL CANCELADO **     ");
             var reg2 = new RegistroBobina("                                                ", separador);
 
             rodapeBobina.Add(reg1);
             rodapeBobina.Add(reg2);
 
-            MensagemCaixa = "Cupom fiscal cancelado. Caixa Livre.";
+            MensagemCaixa = "Cupom NÃO fiscal cancelado. Caixa Livre.";
             Status = StatusVenda.Cancelada;
             OnAtualizarBobina.Raise(this);
         }

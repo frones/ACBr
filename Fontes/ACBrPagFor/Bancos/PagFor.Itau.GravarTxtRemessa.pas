@@ -520,7 +520,7 @@ begin
       GravarCampo('3', 1, tcStr);
       GravarCampo(FSequencialDeLote, 5, tcInt);
       GravarCampo('J', 1, tcStr);
-      GravarCampo(' ', 1, tcStr);
+      GravarCampo('0', 1, tcStr);
       GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
       GravarCampo('52', 2, tcStr);
       GravarCampo(TpInscricaoToStr(Pagador.Inscricao.Tipo), 1, tcStr);

@@ -247,12 +247,15 @@ type
 
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
   private
+    FCodVerificacao: string;
 
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Clear; override;
+
+    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
   end;
 
   TNFSeConsultaNFSeporRpsResponse = class(TNFSeWebserviceResponse)

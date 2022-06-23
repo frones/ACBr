@@ -742,12 +742,12 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
-  ANota: TNotaFiscal;
-  NumRps, NumNFSe: String;
+//  ANota: TNotaFiscal;
+//  NumRps, NumNFSe: String;
 begin
   Document := TACBrXmlDocument.Create;
-  NumRps := '';
-  NumNFSe := '';
+//  NumRps := '';
+//  NumNFSe := '';
 
   try
     try
@@ -820,6 +820,14 @@ begin
         begin
           ANode := ANodeArray[i];
 
+          with Response do
+          begin
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
+            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+            NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
+            SerieRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
+          end;
+          {
           NumRps := LerChaveRPS(ANode);
           NumNFSe := LerChaveNFe(ANode);
 
@@ -830,6 +838,7 @@ begin
 
           ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
           SalvarXmlNfse(ANota);
+          }
         end;
       end;
     except
@@ -966,24 +975,7 @@ begin
       ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaNFSeRPS');
 
       ProcessarMensagemErros(ANode, Response);
-      (*
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
 
-      if AuxNode <> nil then
-      begin
-        ProcessarMensagemErros(AuxNode, Response);
-
-        with Response do
-        begin
-          { Verificar se mais alguma dessas informações são necessárias
-          with InformacoesLote do
-          begin
-            CPFCNPJRemetente := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente'), tcStr);
-          end;
-          }
-        end;
-      end;
-      *)
       Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
 
       ANode := ANode.Childrens.Find('NotasConsultadas');
@@ -1005,7 +997,14 @@ begin
           ANode := ANodeArray[i];
 
           NumRps := LerChaveRPS(ANode);
+
+          if NumRps = '' then
+            NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
+
           NumNFSe := LerChaveNFe(ANode);
+
+          if NumNFSe = '' then
+            NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNota'), tcStr);
 
           ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 

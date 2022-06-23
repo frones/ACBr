@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/06/2022
+-- ACBrNFSeXWebservicesResponse --
+[+] Incluido o campo CodVerificacao na classe TNFSeConsultaLoteRpsResponse, pois
+    ao consultar o lote tem provedor que retorna o código de verificação.
+   Por: Italo Giurizzato Junior
+-- ISSDSF.Provider --
+[*] Possível solução para evitar incluir item na lista de notas indevidamente.
+   Por: Italo Giurizzato Junior
+
 22/06/2022
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [+] Incluido algumas propriedades para definir o tipo de campo referente a data,

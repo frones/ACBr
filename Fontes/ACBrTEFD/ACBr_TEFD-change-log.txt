@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2022
+-- ACBrTEFCliSiTefComum --
+[*] Melhoria para leitura da resposta no TEF SiTEF para voucher
+    Por: Antonio Carlos
+
 05/05/22
 -- ACBrTEFAPIComum --
 [*] Propriedade "ImprimeViaClienteReduzida: Boolean", modificada de Default "True"

@@ -261,6 +261,7 @@ begin
     ImagemComprovante2aVia.Clear;
     Debito := False;
     Credito := False;
+    Voucher := False;
     Digitado := False;
 
     for I := 0 to Conteudo.Count - 1 do
@@ -278,6 +279,7 @@ begin
           case StrToIntDef(Copy(ModalidadePagto, 1, 2), 0) of
             01: Debito := True;
             02: Credito := True;
+            03: Voucher := True;
           end;
 
           wTipoOperacao := StrToIntDef(Copy(ModalidadePagto, 3, 2), 0);

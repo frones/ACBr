@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 { Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda                   }
-{                               Igless                                         }
+{                               Igless, Odeon                                  }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -90,13 +90,24 @@ begin
     try
       if leitor.rExtrai(1, 'gerarBoletosResponse') <> '' then
       begin
-          RetornoCredisis.DadosRet.ControleNegocial.NSU := Leitor.rCampo(tcStr, 'numeroSequencial');
-          RetornoCredisis.DadosRet.IDBoleto.NossoNum    := Leitor.rCampo(tcStr, 'nossonumero');
-          RetornoCredisis.DadosRet.IDBoleto.LinhaDig    := Leitor.rCampo(tcStr, 'linhaDigitavel');
-          RetornoCredisis.DadosRet.IDBoleto.CodBarras   := Leitor.rCampo(tcStr, 'codigoBarras');
-
-          RetornoCredisis.CodRetorno       := Leitor.rCampo(tcStr, 'code');
-          RetornoCredisis.DadosRet.Excecao := Leitor.rCampo(tcStr, 'message');
+          RetornoCredisis.OriRetorno                         := Leitor.rCampo(tcStr, 'idWeb');
+          RetornoCredisis.DadosRet.ControleNegocial.NSU      := Leitor.rCampo(tcStr, 'numeroSequencial');
+          RetornoCredisis.DadosRet.IDBoleto.NossoNum         := Leitor.rCampo(tcStr, 'nossonumero');
+          RetornoCredisis.DadosRet.IDBoleto.LinhaDig         := Leitor.rCampo(tcStr, 'linhaDigitavel');
+          RetornoCredisis.DadosRet.IDBoleto.CodBarras        := Leitor.rCampo(tcStr, 'codigoBarras');
+          RetornoCredisis.DadosRet.TituloRet.DataLimitePagto := Leitor.rCampo(tcDat, 'dataLimitePagamento');
+          RetornoCredisis.CodRetorno                         := Leitor.rCampo(tcStr, 'code');
+          RetornoCredisis.DadosRet.Excecao                   := Leitor.rCampo(tcStr, 'message');
+      end else
+      begin
+        if (leitor.rExtrai(1, 'buscarBoletosResponse') <> '') and (leitor.rExtrai(2, 'item') <> '') then
+        begin
+          RetornoCredisis.OriRetorno                         := Leitor.rCampo(tcStr, 'idWeb');
+          RetornoCredisis.DadosRet.TituloRet.Sacado.CNPJCPF  := Leitor.rCampo(tcStr, 'cpfCnpj');
+          RetornoCredisis.DadosRet.IDBoleto.NossoNum         := Leitor.rCampo(tcStr, 'nossonumero');
+          RetornoCredisis.DadosRet.TituloRet.NumeroDocumento := Leitor.rCampo(tcStr, 'documento');
+          RetornoCredisis.DadosRet.TituloRet.Parcela         := Leitor.rCampo(tcInt, 'parcela');
+        end;
       end;
     except
       Result := False;

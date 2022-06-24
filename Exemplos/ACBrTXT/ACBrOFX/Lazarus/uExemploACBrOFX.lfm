@@ -1,0 +1,355 @@
+object FExemploACBrOFX: TFExemploACBrOFX
+  Left = 24
+  Height = 668
+  Top = 304
+  Width = 1455
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Demo - Leitor arquivo .ofx ACBrOFX'
+  ClientHeight = 668
+  ClientWidth = 1455
+  Color = clBtnFace
+  DesignTimePPI = 120
+  Font.Color = clWindowText
+  Font.Height = -14
+  Font.Name = 'Tahoma'
+  Position = poDesktopCenter
+  object lblCredito: TLabel
+    Left = 1082
+    Height = 23
+    Top = 104
+    Width = 116
+    Alignment = taRightJustify
+    Caption = 'Creditos: 0,00'
+    Font.Color = clGreen
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblDebito: TLabel
+    Left = 1332
+    Height = 23
+    Top = 104
+    Width = 111
+    Alignment = taRightJustify
+    Caption = 'Débitos: 0,00'
+    Font.Color = clRed
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 1132
+    Height = 17
+    Top = 84
+    Width = 66
+    Caption = 'CREDITOS'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 1388
+    Height = 17
+    Top = 84
+    Width = 56
+    Caption = 'DEBITOS'
+    ParentColor = False
+  end
+  object DBGrid1: TDBGrid
+    Cursor = crHandPoint
+    Left = 10
+    Height = 520
+    Top = 138
+    Width = 1055
+    Color = clWindow
+    Columns = <    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'INDEX'
+        Width = 56
+        FieldName = 'INDEX'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'ID'
+        Width = 449
+        FieldName = 'ID'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'DOCUMENT'
+        Width = 92
+        FieldName = 'DOCUMENT'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'MOVDATE'
+        Width = 94
+        FieldName = 'MOVDATE'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'TP'
+        Width = 31
+        FieldName = 'MOVTYPE'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'VALUE'
+        FieldName = 'VALUE'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'DESCRIPTION'
+        Width = 198
+        FieldName = 'DESCRIPTION'
+      end>
+    DataSource = dsOFX
+    TabOrder = 0
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -14
+    TitleFont.Name = 'Tahoma'
+    OnDrawColumnCell = DBGrid1DrawColumnCell
+  end
+  object Edit1: TEdit
+    Left = 10
+    Height = 25
+    Top = 94
+    Width = 265
+    TabOrder = 1
+    Text = 'c:\temp\extrato.ofx'
+  end
+  object Button1: TButton
+    Cursor = crHandPoint
+    Left = 341
+    Height = 31
+    Top = 94
+    Width = 142
+    Caption = 'Ler Arquivo'
+    OnClick = Button1Click
+    TabOrder = 2
+  end
+  object cboTipos: TComboBox
+    Cursor = crHandPoint
+    Left = 489
+    Height = 25
+    Top = 94
+    Width = 271
+    ItemHeight = 17
+    Style = csDropDownList
+    TabOrder = 3
+  end
+  object Button2: TButton
+    Cursor = crHandPoint
+    Left = 768
+    Height = 31
+    Top = 91
+    Width = 142
+    Caption = 'Filtrar'
+    OnClick = Button2Click
+    TabOrder = 4
+  end
+  object DBGrid2: TDBGrid
+    Cursor = crHandPoint
+    Left = 1069
+    Height = 520
+    Top = 138
+    Width = 372
+    Color = clWindow
+    Columns = <    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'TIPO'
+        Width = 215
+        FieldName = 'TIPO'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'TP'
+        Width = 24
+        FieldName = 'MOVTYPE'
+      end    
+      item
+        MinSize = 12
+        MaxSize = 250
+        Title.Caption = 'VALOR'
+        Width = 89
+        FieldName = 'VALOR'
+      end>
+    DataSource = dsTipos
+    TabOrder = 5
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -14
+    TitleFont.Name = 'Tahoma'
+    OnDrawColumnCell = DBGrid2DrawColumnCell
+  end
+  object Button3: TButton
+    Cursor = crHandPoint
+    Left = 918
+    Height = 31
+    Top = 91
+    Width = 142
+    Caption = 'Desfazer Filtro'
+    OnClick = Button3Click
+    TabOrder = 6
+  end
+  object Memo1: TMemo
+    Left = 10
+    Height = 75
+    Top = 2
+    Width = 1431
+    Alignment = taCenter
+    Color = 16250871
+    Lines.Strings = (
+      'Memo1'
+    )
+    ReadOnly = True
+    TabOrder = 7
+  end
+  object btnPesquisar: TButton
+    Left = 282
+    Height = 31
+    Top = 94
+    Width = 51
+    Caption = '...'
+    OnClick = btnPesquisarClick
+    TabOrder = 8
+  end
+  object dsOFX: TDataSource
+    DataSet = cdsOfx
+    Left = 200
+    Top = 360
+  end
+  object dsTipos: TDataSource
+    DataSet = cdsTipos
+    Left = 1260
+    Top = 290
+  end
+  object ACBrOFX1: TACBrOFX
+    Left = 1000
+    Top = 20
+  end
+  object dlgOpen: TOpenDialog
+    Filter = 'Open Financial Exchange|*.ofc;*.ofx'
+    Left = 910
+    Top = 290
+  end
+  object cdsOfx: TBufDataset
+    FieldDefs = <>
+    Left = 176
+    Top = 232
+    object cdsOfxINDEX: TIntegerField
+      FieldKind = fkData
+      FieldName = 'INDEX'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object cdsOfxID: TStringField
+      FieldKind = fkData
+      FieldName = 'ID'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 70
+    end
+    object cdsOfxDOCUMENT: TStringField
+      FieldKind = fkData
+      FieldName = 'DOCUMENT'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object cdsOfxMOVDATE: TDateField
+      FieldKind = fkData
+      FieldName = 'MOVDATE'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object cdsOfxMOVTYPE: TStringField
+      FieldKind = fkData
+      FieldName = 'MOVTYPE'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 8
+    end
+    object cdsOfxVALUE: TFloatField
+      FieldKind = fkData
+      FieldName = 'VALUE'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+    end
+    object cdsOfxDESCRIPTION: TStringField
+      FieldKind = fkData
+      FieldName = 'DESCRIPTION'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+  end
+  object cdsTipos: TBufDataset
+    FieldDefs = <>
+    Left = 330
+    Top = 235
+    object cdsTiposTIPO: TStringField
+      FieldKind = fkData
+      FieldName = 'TIPO'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 70
+    end
+    object cdsTiposMOVTYPE: TStringField
+      FieldKind = fkData
+      FieldName = 'MOVTYPE'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 3
+    end
+    object cdsTiposVALOR: TFloatField
+      FieldKind = fkData
+      FieldName = 'VALOR'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+    end
+  end
+end

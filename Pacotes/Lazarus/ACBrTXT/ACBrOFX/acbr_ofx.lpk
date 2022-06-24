@@ -10,17 +10,18 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrOFX"/>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrOFX"/>
-        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrOFX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - OFX - Open Financial Exchange - (http://www.projetoacbr.com.br/)"/>
     <Files>
       <Item>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrOFX\ACBrOFX.pas"/>
-        <Type Value="Include"/>
+        <UnitName Value="ACBrOFX"/>
       </Item>
       <Item>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrOFX\ACBrOFXReg.pas"/>
+        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrOFXReg"/>
       </Item>
     </Files>

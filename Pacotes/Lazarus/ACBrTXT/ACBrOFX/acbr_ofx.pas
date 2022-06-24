@@ -8,12 +8,13 @@ unit ACBr_OFX;
 interface
 
 uses
-  ACBrOFXReg, LazarusPackageIntf;
+  ACBrOFX, ACBrOFXReg, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
+  RegisterUnit('ACBrOFXReg', @ACBrOFXReg.Register);
 end;
 
 initialization

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2022
+-- ACBrUtil.DateTime --
+[*] Incluida a função AjustarData com o objetivo de detectar datas que tem
+    apenas 1 digito no dia e ou no mês e mudar para 2 digitos.
+   Por: Italo Giurizzato Junior
+
 20/06/2022
 -- ACBrUtil.DateTime --
 [*] Incluida a função ParseDataHora com o objetivo de formatar a data/hora

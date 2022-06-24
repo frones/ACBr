@@ -99,6 +99,7 @@ function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 function EncodeDataHora(const DataStr: string;
   const FormatoData: string = 'YYYY/MM/DD'): TDateTime;
 function ParseDataHora(const DataStr: string): string;
+function AjustarData(const DataStr: string): string;
 
 implementation
 
@@ -399,6 +400,59 @@ begin
   end;
 end;
 
+function AjustarData(const DataStr: string): string;
+var
+  Ano, Mes, Dia, i: Integer;
+  xData: string;
+begin
+  xData := DataStr;
+
+  i := Pos('/', xData);
+
+  if i = 0 then
+  begin
+    Result := xData;
+  end
+  else
+  begin
+    if i = 5 then
+    begin
+      Ano := StrToInt(Copy(xData, 1, 4));
+      xData := Copy(xData, 6, Length(xData));
+      i := Pos('/', xData);
+      Mes := StrToInt(Copy(xData, 1, i-1));
+      Dia := StrToInt(Copy(xData, i+1, Length(xData)));
+
+      Result := FormatFloat('0000', Ano) + '/' +
+                FormatFloat('00', Mes) + '/' +
+                FormatFloat('00', Dia);
+    end
+    else
+    begin
+      if i = 3 then
+      begin
+        Dia := StrToInt(Copy(xData, 1, 2));
+        xData := Copy(xData, 4, Length(xData));
+        i := Pos('/', xData);
+        Mes := StrToInt(Copy(xData, 1, i-1));
+        Ano := StrToInt(Copy(xData, i+1, Length(xData)));
+      end
+      else
+      begin
+        Dia := StrToInt(Copy(xData, 1, 1));
+        xData := Copy(xData, 3, Length(xData));
+        i := Pos('/', xData);
+        Mes := StrToInt(Copy(xData, 1, i-1));
+        Ano := StrToInt(Copy(xData, i+1, Length(xData)));
+      end;
+
+      Result := FormatFloat('00', Dia) + '/' +
+                FormatFloat('00', Mes) + '/' +
+                FormatFloat('0000', Ano);
+    end;
+  end;
+end;
+
 function ParseDataHora(const DataStr: string): string;
 var
   xDataHora, xData, xHora, xTZD: string;
@@ -416,7 +470,7 @@ begin
   else
     xData := xDataHora;
 
-  xData := StringReplace(xData, '-', '/', [rfReplaceAll]);
+  xData := AjustarData(StringReplace(xData, '-', '/', [rfReplaceAll]));
   xHora := '';
   xTZD := '';
 
@@ -425,6 +479,10 @@ begin
     xDataHora := Copy(xDataHora, p+1, Length(xDataHora) - p);
 
     p := Pos('-', xDataHora);
+
+    if p = 0 then
+      p := Pos(' ', xDataHora);
+
     if p > 0 then
     begin
       xHora := Copy(xDataHora, 1, p-1);

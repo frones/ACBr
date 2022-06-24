@@ -52,6 +52,7 @@ type
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderABase201 = class (TACBrNFSeProviderABRASFv2)
@@ -67,6 +68,7 @@ type
 implementation
 
 uses
+  ACBrUtil.XMLHTML,
   ACBrDFeException, ABase.GravarXml, ABase.LerXml;
 
 { TACBrNFSeXWebserviceABase201 }
@@ -200,6 +202,15 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeXWebserviceABase201.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

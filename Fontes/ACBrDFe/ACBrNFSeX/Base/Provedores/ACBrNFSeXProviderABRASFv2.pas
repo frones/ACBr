@@ -1955,7 +1955,14 @@ begin
         Exit;
       end;
 
-      ANode := ANode.Childrens.FindAnyNs('Confirmacao');
+      AuxNode := ANode.Childrens.FindAnyNs('Confirmacao');
+
+      if AuxNode = nil then
+        AuxNode := ANode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
+      if AuxNode <> nil then
+        ANode := AuxNode;
+
       if not Assigned(ANode) then
       begin
         AErro := Response.Erros.New;
@@ -1973,7 +1980,14 @@ begin
       else
         IdAttr := 'ID';
 
-      ANode := ANode.Childrens.FindAnyNs('Pedido');
+      AuxNode := ANode.Childrens.FindAnyNs('Pedido');
+
+      if AuxNode = nil then
+        AuxNode := ANode.Childrens.FindAnyNs('PedidoCancelamento');
+
+      if AuxNode <> nil then
+        ANode := AuxNode;
+
       ANode := ANode.Childrens.FindAnyNs('InfPedidoCancelamento');
 
       Ret.Pedido.InfID.ID := ObterConteudoTag(ANode.Attributes.Items[IdAttr]);

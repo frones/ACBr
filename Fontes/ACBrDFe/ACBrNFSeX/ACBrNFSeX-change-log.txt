@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 24/06/2022
+-- ACBrNFSeXProviderABRASFv2 --
+[*] Alteração no tratamento do retorno do cancelamento para correta leitura do XML de
+    retorno.
+   Por: Diogo Rodrigues
+-- ABase.Provider --
+[+] Incluída a função: TratarXmlRetornado para tratar o XML retornado do WebService.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade: Itaquaquecetuba/SP - Trocou para o provedor Ginfes.
    Por: Rogério Sales

@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/06/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Itaquaquecetuba/SP - Trocou para o provedor Ginfes.
+   Por: Rogério Sales
+[*] A cidade: Santo Antonio do Monte/MG - Trocou para o provedor IPM.
+   Por: Paula Pires
+[+] Incluída a cidade: Ceres/GO - Provedor Prodata.
+   Por: MaxData Sistema
+
 23/06/2022
 -- ACBrNFSeXWebservicesResponse --
 [+] Incluido o campo CodVerificacao na classe TNFSeConsultaLoteRpsResponse, pois

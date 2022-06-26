@@ -532,7 +532,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Font.Height = -16
                       Font.Name = 'Arial'
                       Font.Style = []
-                      ItemHeight = 18
+                      ItemHeight = 0
                       ParentFont = False
                       TabOrder = 0
                     end
@@ -583,8 +583,8 @@ object frPixCDShipay: TfrPixCDShipay
               object lbFluxoMsgPagto: TLabel
                 Left = 0
                 Top = 49
-                Width = 732
-                Height = 30
+                Width = 439
+                Height = 28
                 Align = alClient
                 Alignment = taCenter
                 Caption = 
@@ -1120,7 +1120,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Top = 15
                       Width = 130
                       Height = 21
-                      TabOrder = 0
+                      TabOrder = 1
                       Text = '0,00'
                     end
                     object cbCobBacenDescModalidade: TComboBox
@@ -1130,7 +1130,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Height = 21
                       Style = csDropDownList
                       ItemHeight = 13
-                      TabOrder = 1
+                      TabOrder = 0
                     end
                   end
                 end
@@ -1169,7 +1169,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Top = 15
                       Width = 130
                       Height = 21
-                      TabOrder = 0
+                      TabOrder = 1
                       Text = '0,00'
                     end
                     object cbCobBacenAbatimentoModalidade: TComboBox
@@ -1179,7 +1179,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Height = 21
                       Style = csDropDownList
                       ItemHeight = 13
-                      TabOrder = 1
+                      TabOrder = 0
                     end
                   end
                 end
@@ -1218,7 +1218,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Top = 15
                       Width = 130
                       Height = 21
-                      TabOrder = 0
+                      TabOrder = 1
                       Text = '0,00'
                     end
                     object cbCobBacenMultaModalidade: TComboBox
@@ -1228,7 +1228,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Height = 21
                       Style = csDropDownList
                       ItemHeight = 13
-                      TabOrder = 1
+                      TabOrder = 0
                     end
                   end
                 end
@@ -1267,7 +1267,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Top = 15
                       Width = 130
                       Height = 21
-                      TabOrder = 0
+                      TabOrder = 1
                       Text = '0,00'
                     end
                     object cbCobBacenJurosModalidade: TComboBox
@@ -1277,7 +1277,7 @@ object frPixCDShipay: TfrPixCDShipay
                       Height = 21
                       Style = csDropDownList
                       ItemHeight = 13
-                      TabOrder = 1
+                      TabOrder = 0
                     end
                   end
                 end
@@ -1918,7 +1918,7 @@ object frPixCDShipay: TfrPixCDShipay
               Width = 245
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 2
             end
           end

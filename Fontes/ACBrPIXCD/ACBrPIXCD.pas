@@ -1252,7 +1252,6 @@ function TACBrPSP.AcessarEndPoint(const Method, EndPoint: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
   AURL, AMethod: String;
-  HttpBody, vBody: AnsiString;
 begin
   if (NivelLog > 1) then
     RegistrarLog('AcessarEndPoint( '+Method+', '+EndPoint+' )');
@@ -1408,7 +1407,7 @@ function TACBrPSP.TransmitirHttp(const AMethod, AURL: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
   vMethod, vURL: String;
-  HttpBody, VarBody: AnsiString;
+  HttpBody: AnsiString;
 begin
   VerificarPIXCDAtribuido;
   if NivelLog > 1 then

@@ -98,7 +98,7 @@ type
     procedure SetBufferSize(AValue: Integer);
 
   private
-    fPassword: AnsiString;
+    //fPassword: AnsiString;
     procedure FreeKeys;
     Procedure FreePrivateKey;
     Procedure FreePublicKey;
@@ -284,6 +284,7 @@ Var
   s: AnsiString ;
 begin
   Result := '';
+  s := EmptyStr;
   SetLength(s, 1024);
   repeat
     n := BioRead(ABio, s, 1024);
@@ -410,7 +411,6 @@ function ConvertOpenSSHToPEM(const AOpenSSHKey: String): String;
 var
   s, m, e: AnsiString;
   ps, pe: Integer;
-  bio: PBIO;
   key: PEVP_PKEY;
 begin
   ps := pos(' ', AOpenSSHKey);
@@ -531,6 +531,7 @@ var
   e: LongInt;
   s: AnsiString;
 begin
+  s := EmptyStr;
   e := ErrGetError;
   SetLength(s,1024);
   ErrErrorString(e, s, 1024);

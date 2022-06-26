@@ -72,7 +72,7 @@ type
     procedure SetConsumerKey(AValue: String);
     procedure SetConsumerSecret(AValue: String);
   protected
-    function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
+    function ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
@@ -201,9 +201,9 @@ begin
   ClientSecret := AValue;
 end;
 
-function TACBrPSPSantander.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
+function TACBrPSPSantander.ObterURLAmbiente(const aAmbiente: TACBrPixCDAmbiente): String;
 begin
-  case ACBrPixCD.Ambiente of
+  case aAmbiente of
     ambProducao: Result := cSantanderURLProducao;
     ambPreProducao: Result := cSantanderURLPreProducao;
   else

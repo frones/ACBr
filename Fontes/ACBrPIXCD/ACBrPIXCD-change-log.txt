@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2022
+-- ACBrPixSchemasCobV --
+[*] Inclusão de tipos enumerados para os campos modalidades das classes de 
+    Desconto, Multa, Juros e Abatimento
+
+-- ACBrShipaySchemas -- 
+[*] Alteração das classes referentes ao Desconto, Multa, Juros e Abatimento para
+    herdarem das classes de ACBrPixSchemasCobV.
+[*] Alteração da classe referente ao Calendário para herdar de ACBrPixSchemasCobV
+    Por: Elias César
+
 17/06/2022
 -- ACBrPIXPSPBancoDoBrasil --
 [-] Correção para leitura correta do Pix Copia e Cola em SimularPagamentoPIX().

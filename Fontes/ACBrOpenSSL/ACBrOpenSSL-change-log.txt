@@ -38,7 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2022
+-- ACBrOpenSSLUtils --
+[*] Remoção de warnings.
+    Por: Elias César
+
 23/06/2022
+-- ACBrOpenSSLUtils --
 [+] Inclusão das funções 'HMACFromString()' e 'HMACFromFile()', para utilização do 
     HMAC(Código de autenticação de mensagem baseado em HASH)
 	Por: Elias César

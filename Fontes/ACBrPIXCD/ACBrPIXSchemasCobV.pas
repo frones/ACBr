@@ -58,6 +58,34 @@ resourcestring
 
 type
 
+  TACBrPIXValoresModalidade = (
+    pvmNenhum,
+    pvmValorFixo,
+    pvmPercentual
+  );
+
+  TACBrPIXDescontoModalidade = (
+    pdmNenhum,
+    pdmValorFixo,             // 1: Valor Fixo até a data informada
+    pdmPercentual,            // 2: Percentual até a data informada
+    pdmValorDiaCorrido,       // 3: Valor por antecipação dia corrido
+    pdmValorDiaUtil,          // 4: Valor por antecipação dia útil
+    pdmPercentualDiaCorrido,  // 5: Percentual por antecipação dia corrido
+    pdmPercentualDiaUtil      // 6: Percentual por antecipação dia útil
+  );
+
+  TACBrPIXJurosModalidade = (
+    pjmNenhum,
+    pjmValorDiasCorridos,          // 1: Valor (dias corridos)
+    pjmPercentualDiaDiasCorridos,  // 2: Percentual ao dia (dias corridos)
+    pjmPercentualMesDiasCorridos,  // 3: Percentual ao mês (dias corridos)
+    pjmPercentualAnoDiasCorridos,  // 4: Percentual ao ano (dias corridos)
+    pjmValorDiasUteis,             // 5: Valor (dias úteis)
+    pjmPercentualDiaDiasUteis,     // 6: Percentual ao dia (dias úteis)
+    pjmPercentualMesDiasUteis,     // 7: Percentual ao mês (dias úteis)
+    pjmPercentualAnoDiasUteis      // 8: Percentual ao ano (dias úteis)
+  );
+
   { TACBrPIXCalendarioCobVBase }
 
   TACBrPIXCalendarioCobVBase = class(TACBrPIXSchema)
@@ -101,20 +129,37 @@ type
 
   TACBrPIXModalidadeValor = class(TACBrPIXSchema)
   private
-    fMaxModalidade: Integer;
-    fmodalidade: Integer;
+    fmodalidade: TACBrPIXValoresModalidade;
     fvalorPerc: Currency;
-    procedure SetModalidade(AValue: Integer);
   protected
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String; MaxModalidade: Integer); reintroduce;
+    constructor Create(const ObjectName: String); override;
     procedure Clear; override;
-    procedure Assign(Source: TACBrPIXModalidadeValor);
+    procedure Assign(aSource: TACBrPIXModalidadeValor);
     function IsEmpty: Boolean; override;
 
-    property modalidade: Integer read fmodalidade write SetModalidade;
+    property modalidade: TACBrPIXValoresModalidade read fmodalidade write fmodalidade;
+    property valorPerc: Currency read fvalorPerc write fvalorPerc;
+  end;
+
+  { TACBrPIXJuros }
+
+  TACBrPIXJuros = class(TACBrPIXSchema)
+  private
+    fmodalidade: TACBrPIXJurosModalidade;
+    fvalorPerc: Currency;
+  protected
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+  public
+    constructor Create(const aObjectName: String); override;
+    procedure Clear; override;
+    procedure Assign(aSource: TACBrPIXJuros);
+    function IsEmpty: Boolean; override;
+
+    property modalidade: TACBrPIXJurosModalidade read fmodalidade write fmodalidade;
     property valorPerc: Currency read fvalorPerc write fvalorPerc;
   end;
 
@@ -130,7 +175,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
     procedure Assign(Source: TACBrPIXDescontoDataFixa);
     function IsEmpty: Boolean; override;
@@ -157,20 +202,25 @@ type
 
   { TACBrPIXDesconto }
 
-  TACBrPIXDesconto = class(TACBrPIXModalidadeValor)
+  TACBrPIXDesconto = class(TACBrPIXSchema)
   private
-    fdescontoDataFixa: TACBrPIXDescontosDataFixa;
+    fmodalidade: TACBrPIXDescontoModalidade;
+    fvalorPerc: Currency;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    fdescontosDataFixa: TACBrPIXDescontosDataFixa;
+
+    procedure DoWriteToJSon(aJSon: TJsonObject); override;
+    procedure DoReadFromJSon(aJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String; MaxModalidade: Integer); reintroduce;
+    constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
     procedure Clear; override;
-    procedure Assign(Source: TACBrPIXDesconto);
+    procedure Assign(aSource: TACBrPIXDesconto);
     function IsEmpty: Boolean; override;
 
-    property descontoDataFixa: TACBrPIXDescontosDataFixa read fdescontoDataFixa;
+    property modalidade: TACBrPIXDescontoModalidade read fmodalidade write fmodalidade;
+    property valorPerc: Currency read fvalorPerc write fvalorPerc;
+    property descontosDataFixa: TACBrPIXDescontosDataFixa read fdescontosDataFixa;
   end;
 
   { TACBrPIXCobVValor }
@@ -292,7 +342,6 @@ type
     property pix: TACBrPIXArray read fpix;
   end;
 
-
   { TACBrPIXCobVCompletaArray }
 
   TACBrPIXCobVCompletaArray = class(TACBrPIXSchemaArray)
@@ -308,6 +357,10 @@ type
     property Items[Index: Integer]: TACBrPIXCobVCompleta read GetItem write SetItem; default;
   end;
 
+  function ValoresModalidadeToString(aValue: TACBrPIXValoresModalidade): String;
+  function DescontoModalidadeToString(aValue: TACBrPIXDescontoModalidade): String;
+  function JurosModalidadeToString(aValue: TACBrPIXJurosModalidade): String;
+
 implementation
 
 uses
@@ -316,6 +369,97 @@ uses
   ACBrUtil.Base,
   ACBrUtil.DateTime,
   ACBrUtil.Strings;
+
+function ValoresModalidadeToString(aValue: TACBrPIXValoresModalidade): String;
+begin
+  case aValue of
+    pvmValorFixo: Result := 'Valor Fixo';
+    pvmPercentual: Result := 'Percentual';
+  else
+    Result := 'Nenhum';
+  end;
+end;
+
+function DescontoModalidadeToString(aValue: TACBrPIXDescontoModalidade): String;
+begin
+  case aValue of
+    pdmValorFixo: Result := ACBrStr('Valor Fixo até a data informada');
+    pdmPercentual: Result := ACBrStr('Percentual até a data informada');
+    pdmValorDiaCorrido: Result := ACBrStr('Valor por antecipação dia corrido');
+    pdmValorDiaUtil: Result := ACBrStr('Valor por antecipação dia útil');
+    pdmPercentualDiaCorrido: Result := ACBrStr('Percentual por antecipação dia corrido');
+    pdmPercentualDiaUtil: Result := ACBrStr('Percentual por antecipação dia útil');
+  else
+    Result := 'Nenhum desconto aplicado';
+  end;
+end;
+
+function JurosModalidadeToString(aValue: TACBrPIXJurosModalidade): String;
+begin
+  case aValue of
+    pjmValorDiasCorridos: Result := 'Valor (dias corridos)';
+    pjmPercentualDiaDiasCorridos: Result := 'Percentual ao dia (dias corridos)';
+    pjmPercentualMesDiasCorridos: Result := ACBrStr('Percentual ao mês (dias corridos)');
+    pjmPercentualAnoDiasCorridos: Result := 'Percentual ao ano (dias corridos)';
+    pjmValorDiasUteis: Result := ACBrStr('Valor (dias úteis)');
+    pjmPercentualDiaDiasUteis: Result := ACBrStr('Percentual ao dia (dias úteis)');
+    pjmPercentualMesDiasUteis: Result := ACBrStr('Percentual ao mês (dias úteis)');
+    pjmPercentualAnoDiasUteis: Result := ACBrStr('Percentual ao ano (dias úteis)');
+  else
+    Result := 'Nenhum juros aplicado';
+  end;
+end;
+
+{ TACBrPIXJuros }
+
+procedure TACBrPIXJuros.DoWriteToJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  if (fmodalidade <> pjmNenhum) then
+    aJSon.I['modalidade'] := Ord(fmodalidade);
+  if (fvalorPerc > 0) then
+    aJSon.S['valorPerc'] := FormatarValorPIX(fvalorPerc);
+  {$Else}
+  if (fmodalidade <> pjmNenhum) then
+    aJSon['modalidade'].AsInteger := Ord(fmodalidade);
+  if (fvalorPerc > 0) then
+    aJSon['valorPerc'].AsString := FormatarValorPIX(fvalorPerc);
+  {$EndIf}
+end;
+
+procedure TACBrPIXJuros.DoReadFromJSon(aJSon: TJsonObject);
+begin
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+   fmodalidade := TACBrPIXJurosModalidade(aJSon.I['modalidade']);
+   fvalorPerc := StringToFloatDef(aJSon.S['valorPerc'], 0);
+  {$Else}
+   fmodalidade := TACBrPIXJurosModalidade(aJSon['modalidade'].AsInteger);
+   fvalorPerc := StringToFloatDef(aJSon['valorPerc'].AsString, 0);
+  {$EndIf}
+end;
+
+constructor TACBrPIXJuros.Create(const aObjectName: String);
+begin
+  inherited Create(aObjectName);
+  Clear;
+end;
+
+procedure TACBrPIXJuros.Clear;
+begin
+  fmodalidade := pjmNenhum;
+  fvalorPerc := 0;
+end;
+
+procedure TACBrPIXJuros.Assign(aSource: TACBrPIXJuros);
+begin
+  fmodalidade := aSource.modalidade;
+  fvalorPerc := aSource.valorPerc;
+end;
+
+function TACBrPIXJuros.IsEmpty: Boolean;
+begin
+  Result := (fmodalidade = pjmNenhum) and (fvalorPerc = 0);
+end;
 
 { TACBrPIXCalendarioCobVBase }
 
@@ -400,60 +544,53 @@ end;
 
 { TACBrPIXModalidadeValor }
 
-constructor TACBrPIXModalidadeValor.Create(const ObjectName: String;
-  MaxModalidade: Integer);
+constructor TACBrPIXModalidadeValor.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
-  fMaxModalidade := MaxModalidade;
   Clear;
 end;
 
 procedure TACBrPIXModalidadeValor.Clear;
 begin
-  fmodalidade := 1;
+  fmodalidade := pvmNenhum;
   fvalorPerc := 0;
 end;
 
-procedure TACBrPIXModalidadeValor.Assign(Source: TACBrPIXModalidadeValor);
+procedure TACBrPIXModalidadeValor.Assign(aSource: TACBrPIXModalidadeValor);
 begin
-  fmodalidade := Source.modalidade;
-  fvalorPerc := Source.valorPerc;
+  fmodalidade := aSource.modalidade;
+  fvalorPerc := aSource.valorPerc;
 end;
 
 function TACBrPIXModalidadeValor.IsEmpty: Boolean;
 begin
-  Result := (fvalorPerc = 0);
+  Result := (fmodalidade = pvmNenhum) and (fvalorPerc = 0);
 end;
 
 procedure TACBrPIXModalidadeValor.DoWriteToJSon(AJSon: TJsonObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['modalidade'] := fmodalidade;
-   if (fvalorPerc > 0) then
-     AJSon.S['valorPerc'] := FormatarValorPIX(fvalorPerc);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT} 
+  if (fmodalidade <> pvmNenhum) then
+    AJSon.I['modalidade'] := Ord(fmodalidade);
+  if (fvalorPerc > 0) then
+    AJSon.S['valorPerc'] := FormatarValorPIX(fvalorPerc);
   {$Else}
-   AJSon['modalidade'].AsInteger := fmodalidade;
-   if (fvalorPerc > 0) then
-     AJSon['valorPerc'].AsString := FormatarValorPIX(fvalorPerc);
+  if (fmodalidade <> pvmNenhum) then
+    AJSon['modalidade'].AsInteger := Ord(fmodalidade);
+  if (fvalorPerc > 0) then
+    AJSon['valorPerc'].AsString := FormatarValorPIX(fvalorPerc);
   {$EndIf}
 end;
 
 procedure TACBrPIXModalidadeValor.DoReadFromJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fmodalidade := AJSon.I['modalidade'];
+   fmodalidade := TACBrPIXValoresModalidade(AJSon.I['modalidade']);
    fvalorPerc := StringToFloatDef(AJSon.S['valorPerc'], 0);
   {$Else}
-   fmodalidade := AJSon['modalidade'].AsInteger;
+   fmodalidade := TACBrPIXValoresModalidade(AJSon['modalidade'].AsInteger);
    fvalorPerc := StringToFloatDef(AJSon['valorPerc'].AsString, 0);
   {$EndIf}
-end;
-
-procedure TACBrPIXModalidadeValor.SetModalidade(AValue: Integer);
-begin
-  if fmodalidade = AValue then
-    Exit;
-  fmodalidade := max(min(AValue,fMaxModalidade),1);
 end;
 
 { TACBrPIXDescontoDataFixa }
@@ -520,8 +657,7 @@ end;
 
 { TACBrPIXDescontosDataFixa }
 
-function TACBrPIXDescontosDataFixa.GetItem(Index: Integer
-  ): TACBrPIXDescontoDataFixa;
+function TACBrPIXDescontosDataFixa.GetItem(Index: Integer): TACBrPIXDescontoDataFixa;
 begin
   Result := TACBrPIXDescontoDataFixa(inherited Items[Index]);
 end;
@@ -537,11 +673,10 @@ begin
   Result := New;
 end;
 
-function TACBrPIXDescontosDataFixa.Add(ADescontoDataFixa: TACBrPIXDescontoDataFixa
-  ): Integer;
+function TACBrPIXDescontosDataFixa.Add(ADescontoDataFixa: TACBrPIXDescontoDataFixa): Integer;
 begin
-   if Count >= 3 then
-     raise EACBrPixException.Create(ACBrStr(sErroDescontoDataFixaLimit));
+  if (Count >= 3) then
+    raise EACBrPixException.Create(ACBrStr(sErroDescontoDataFixaLimit));
 
   Result := inherited Add(ADescontoDataFixa);
 end;
@@ -554,53 +689,79 @@ end;
 
 function TACBrPIXDescontosDataFixa.New: TACBrPIXDescontoDataFixa;
 begin
-  Result := TACBrPIXDescontoDataFixa.Create('');
+  Result := TACBrPIXDescontoDataFixa.Create;
   Self.Add(Result);
 end;
 
 
 { TACBrPIXDesconto }
 
-constructor TACBrPIXDesconto.Create(const ObjectName: String;
-  MaxModalidade: Integer);
+constructor TACBrPIXDesconto.Create(const ObjectName: String);
 begin
-  fdescontoDataFixa := TACBrPIXDescontosDataFixa.Create('descontoDataFixa');
-  inherited Create(ObjectName, MaxModalidade);
+  inherited Create(ObjectName);
+  fdescontosDataFixa := TACBrPIXDescontosDataFixa.Create('descontoDataFixa');
 end;
 
 destructor TACBrPIXDesconto.Destroy;
 begin
-  fdescontoDataFixa.Free;
+  fdescontosDataFixa.Free;
   inherited Destroy;
 end;
 
 procedure TACBrPIXDesconto.Clear;
 begin
-  inherited Clear;
-  fdescontoDataFixa.Clear;
+  fvalorPerc := 0;         
+  fmodalidade := pdmNenhum;
+  fdescontosDataFixa.Clear;
 end;
 
-procedure TACBrPIXDesconto.Assign(Source: TACBrPIXDesconto);
+procedure TACBrPIXDesconto.Assign(aSource: TACBrPIXDesconto);
 begin
-  inherited Assign(Source);
-  fdescontoDataFixa.Assign(Source.descontoDataFixa);
+  fmodalidade := aSource.modalidade;
+  fdescontosDataFixa.Assign(aSource.descontosDataFixa);
 end;
 
 function TACBrPIXDesconto.IsEmpty: Boolean;
 begin
-  Result := inherited IsEmpty and fdescontoDataFixa.IsEmpty;
+  Result := inherited IsEmpty and fdescontosDataFixa.IsEmpty;
 end;
 
-procedure TACBrPIXDesconto.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDesconto.DoWriteToJSon(aJSon: TJsonObject);
 begin
-  inherited DoWriteToJSon(AJSon);
-  fdescontoDataFixa.WriteToJSon(AJSon);
+  if (modalidade = pdmNenhum) then
+    Exit;
+
+  { Modalidades 1 e 2 devem enviar a lista de descontosDataFixa }
+  { Modalidades 3, 4, 5 e 6 devem enviar valorPerc }
+
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  aJSon.I['modalidade'] := Ord(modalidade);
+  if (Ord(modalidade) >= 3) then
+    aJSon.S['valorPerc'] := FormatarValorPIX(valorPerc);
+  {$Else}
+  aJSon['modalidade'].AsInteger := Ord(modalidade);
+  if (Ord(modalidade) >= 3) then
+    aJSon['valorPerc'].AsString := FormatarValorPIX(valorPerc);
+  {$EndIf}
+  
+  if (Ord(modalidade) <= 2) then
+    descontosDataFixa.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXDesconto.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDesconto.DoReadFromJSon(aJSon: TJsonObject);
 begin
-  inherited DoReadFromJSon(AJSon);
-  fdescontoDataFixa.ReadFromJSon(AJSon);
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  modalidade := TACBrPIXDescontoModalidade(AJSon.I['modalidade']);
+  if (Ord(modalidade) <= 2) then
+    valorPerc := StringToFloatDef(aJSon.S['valorPerc'], 0);
+  {$Else}
+  modalidade := TACBrPIXDescontoModalidade(AJSon['modalidade'].AsInteger);
+  if (Ord(modalidade) <= 2) then
+    valorPerc := StringToFloatDef(aJSon['valorPerc'].AsString, 0);
+  {$EndIf}
+
+  if (Ord(modalidade) >= 3) then
+    descontosDataFixa.ReadFromJSon(aJSon);
 end;
 
 { TACBrPIXCobVValor }
@@ -608,10 +769,10 @@ end;
 constructor TACBrPIXCobVValor.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
-  fabatimento := TACBrPIXModalidadeValor.Create('abatimento',2);
-  fdesconto := TACBrPIXDesconto.Create('desconto',6);
-  fjuros := TACBrPIXModalidadeValor.Create('juros', 8);
-  fmulta := TACBrPIXModalidadeValor.Create('multa', 2);
+  fabatimento := TACBrPIXModalidadeValor.Create('abatimento');
+  fdesconto := TACBrPIXDesconto.Create('desconto');
+  fjuros := TACBrPIXModalidadeValor.Create('juros');
+  fmulta := TACBrPIXModalidadeValor.Create('multa');
   Clear;
 end;
 

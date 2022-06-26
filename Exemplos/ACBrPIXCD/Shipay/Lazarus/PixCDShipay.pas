@@ -338,9 +338,9 @@ uses
   {$IfDef FPC}
   jsonparser, jsonscanner,
   {$EndIf}
-  IniFiles, TypInfo, synacode, DateUtils,
-  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Base, ACBrImage,
-  ACBrUtil.Math, ACBrDelphiZXingQRCode, ACBrUtil.DateTime, Clipbrd;
+  IniFiles, TypInfo, synacode, DateUtils, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrImage, ACBrUtil.Math, ACBrDelphiZXingQRCode,
+  ACBrUtil.DateTime, ACBrPIXSchemasCobV, Clipbrd;
 
 {$R *.lfm}
 
@@ -661,36 +661,32 @@ end;
 procedure TfrPixCDShipay.InicializarComponentesDefault;
 var
   I: TACBrPixCDAmbiente;
-  J: TShipayAmountDetailsDiscountModality;
-  K: TShipayAmountDetailsValueModality;
-  L: TShipayAmountDetailsInterestModality;
+  J: TACBrPIXDescontoModalidade;
+  K: TACBrPIXValoresModalidade;
+  L: TACBrPIXJurosModalidade;
 begin
   cbAmbiente.Items.Clear;
   for I := Low(TACBrPixCDAmbiente) to High(TACBrPixCDAmbiente) do
     cbAmbiente.Items.Add(GetEnumName(TypeInfo(TACBrPixCDAmbiente), Integer(I)));
 
   cbCobBacenDescModalidade.Items.Clear;
-  for J := Low(TShipayAmountDetailsDiscountModality) to High(TShipayAmountDetailsDiscountModality) do
-    cbCobBacenDescModalidade.Items.Add(IntToStr(ShipayDiscountModalityToDominio(J)) + ' - ' +
-      ShipayDiscountModalityToString(J));
+  for J := Low(TACBrPIXDescontoModalidade) to High(TACBrPIXDescontoModalidade) do
+    cbCobBacenDescModalidade.Items.Add(IntToStr(Ord(J)) + ' - ' + DescontoModalidadeToString(J));
   cbCobBacenDescModalidade.ItemIndex := 0;
 
   cbCobBacenMultaModalidade.Items.Clear;
-  for K := Low(TShipayAmountDetailsValueModality) to High(TShipayAmountDetailsValueModality) do
-    cbCobBacenMultaModalidade.Items.Add(IntToStr(ShipayValueModalityToDominio(K)) + ' - ' +
-      ShipayValueModalityToString(K));
+  for K := Low(TACBrPIXValoresModalidade) to High(TACBrPIXValoresModalidade) do
+    cbCobBacenMultaModalidade.Items.Add(IntToStr(Ord(K)) + ' - ' + ValoresModalidadeToString(K));
   cbCobBacenMultaModalidade.ItemIndex := 0;
 
   cbCobBacenJurosModalidade.Items.Clear;
-  for L := Low(TShipayAmountDetailsInterestModality) to High(TShipayAmountDetailsInterestModality) do
-    cbCobBacenJurosModalidade.Items.Add(IntToStr(ShipayInterestModalityToDominio(L)) + ' - ' +
-      ShipayInterestModalityToString(L));
+  for L := Low(TACBrPIXJurosModalidade) to High(TACBrPIXJurosModalidade) do
+    cbCobBacenJurosModalidade.Items.Add(IntToStr(Ord(L)) + ' - ' + JurosModalidadeToString(L));
   cbCobBacenJurosModalidade.ItemIndex := 0;
 
   cbCobBacenAbatimentoModalidade.Items.Clear;
-  for K := Low(TShipayAmountDetailsValueModality) to High(TShipayAmountDetailsValueModality) do
-    cbCobBacenAbatimentoModalidade.Items.Add(IntToStr(ShipayValueModalityToDominio(K)) + ' - ' +
-      ShipayValueModalityToString(K));
+  for K := Low(TACBrPIXValoresModalidade) to High(TACBrPIXValoresModalidade) do
+    cbCobBacenAbatimentoModalidade.Items.Add(IntToStr(Ord(K)) + ' - ' + ValoresModalidadeToString(K));
   cbCobBacenAbatimentoModalidade.ItemIndex := 0;
 
   edCobBacenVencimento.DateTime := IncDay(Today, 7);
@@ -1141,21 +1137,28 @@ begin
 
     with amount_details do
     begin
-      discount.modality := DominioToShipayDiscountModality(StrToIntDef(Copy(cbCobBacenDescModalidade.Text, 1, 1), 0));
-      discount.value := StrToFloatDef(edCobBacenDescValor.Text, 0);
+      discount.modalidade := TACBrPIXDescontoModalidade(StrToIntDef(Copy(cbCobBacenDescModalidade.Text, 1, 1), 0));
+      if (Ord(discount.modalidade) >= 3) then
+        discount.valorPerc := StrToFloatDef(edCobBacenDescValor.Text, 0)
+      else
+      with discount.descontosDataFixa.New do
+      begin
+        data := IncDay(edCobBacenVencimento.DateTime, -2);
+        valorPerc := StrToFloatDef(edCobBacenDescValor.Text, 0);
+      end;
 
-      fine.modality := DominioToShipayValueModality(StrToIntDef(Copy(cbCobBacenMultaModalidade.Text, 1, 1), 0));
-      fine.value := StrToFloatDef(edCobBacenMultaValor.Text, 0);
+      fine.modalidade := TACBrPIXValoresModalidade(StrToIntDef(Copy(cbCobBacenMultaModalidade.Text, 1, 1), 0));
+      fine.valorPerc := StrToFloatDef(edCobBacenMultaValor.Text, 0);
 
-      interest.modality := DominioToShipayInterestModality(StrToIntDef(Copy(cbCobBacenJurosModalidade.Text, 1, 1), 0));
-      interest.value := StrToFloatDef(edCobBacenJurosValor.Text, 0);
+      interest.modalidade := TACBrPIXJurosModalidade(StrToIntDef(Copy(cbCobBacenJurosModalidade.Text, 1, 1), 0));
+      interest.valorPerc := StrToFloatDef(edCobBacenJurosValor.Text, 0);
 
-      rebate.modality := DominioToShipayValueModality(StrToIntDef(Copy(cbCobBacenAbatimentoModalidade.Text, 1, 1), 0));
-      rebate.value := StrToFloatDef(edCobBacenAbatimentoValor.Text, 0);
+      rebate.modalidade := TACBrPIXValoresModalidade(StrToIntDef(Copy(cbCobBacenAbatimentoModalidade.Text, 1, 1), 0));
+      rebate.valorPerc := StrToFloatDef(edCobBacenAbatimentoValor.Text, 0);
     end;
 
-    calendar.due_date := edCobBacenVencimento.DateTime;
-    calendar.days_valid_after_due := edCobBacenDiasPagar.Value;
+    calendar.dataDeVencimento := edCobBacenVencimento.DateTime;
+    calendar.validadeAposVencimento := edCobBacenDiasPagar.Value;
   end;
 
   try

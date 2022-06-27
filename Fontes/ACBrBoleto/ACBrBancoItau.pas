@@ -581,11 +581,18 @@ begin
                 ' '                                                                 + // 015 a 015 - Complemento de Registro
                 TipoOcorrenciaRemessa                                               + // 016 a 017 - Identificação da Ocorrencia
                 '0'                                                                 + // 018 a 018 - Complemento de Registro
-                '00000000'                                                          + // 019 a 026 - Data Segundo Desconto
-                StringOfChar('0',15)                                                + // 027 a 041 - Valor Segundo Desconto
+
+                IfThen(ValorDesconto2>0,FormatDateTime( 'ddmmyyyy', DataDesconto2),
+                StringOfChar('0',8))                                                + // 019 a 026 - Data Segundo Desconto
+
+                IntToStrZero(round(ValorDesconto2 * 100),15)                        + // 027 a 041 - Valor Segundo Desconto
                 '0'                                                                 + // 042 a 042 - Complemento de Registro
-                '00000000'                                                          + // 043 a 050 - Data Terceiro Desconto
-                StringOfChar('0',15)                                                + // 051 a 065 - Valor Terceiro Desconto
+
+                IfThen(ValorDesconto3>0,FormatDateTime( 'ddmmyyyy', DataDesconto3),
+                StringOfChar('0',8))                                                + // 043 a 050 - Data Terceiro Desconto
+
+                IntToStrZero(round(ValorDesconto3 * 100),15)                        + // 051 a 065 - Valor Terceiro Desconto
+
                 IfThen((PercentualMulta > 0),
                       IfThen(MultaValorFixo,'1','2'), '0')                          + // 066 a 066 1- Cobrar Multa Valor Fixo / 2- Percentual / 0-Não cobrar multa
                 IfThen((PercentualMulta > 0),
@@ -828,19 +835,34 @@ begin
                    if (Sacado.Email <> '') or (Sacado.SacadoAvalista.CNPJCPF <> '') then
                    begin
                      inc( iSequencia );
-                     wLinhaMulta:= '5'                                                          + // Tipo de registro - 5 IDENTIFICAÇÃO DO REGISTRO TRANSAÇÃO
-                                   PadRight(Sacado.Email, 120, ' ')              + // ENDEREÇO DE E-MAIL ENDEREÇO DE E-MAIL DO PAGADOR
-                                   PadLeft(ATipoSacadoAvalista, 2, '0')                                 + // CÓDIGO DE INSCRIÇÃO IDENT. DO TIPO DE INSCRIÇÃO DO SACADOR/AVALISTA
-                                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')  + // NÚMERO DE INSCRIÇÃO NÚMERO DE INSCRIÇÃO DO SACADOR AVALISTA
-                                   PadRight(Sacado.SacadoAvalista.Logradouro + ' '+
-                                   Sacado.SacadoAvalista.Numero + ' ' +
-                                   Sacado.SacadoAvalista.Complemento , 40, ' ')                 + // RUA, Nº E COMPLEMENTO DO SACADOR AVALISTA
-                                   PadRight(Sacado.SacadoAvalista.Bairro, 12, ' ')              + // BAIRRO DO SACADOR AVALISTA
-                                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CEP), 8, '0')       + // CEP DO SACADOR AVALISTA
-                                   PadRight(Sacado.SacadoAvalista.Cidade, 15, ' ')              + // CIDADE DO SACADOR AVALISTA
-                                   PadRight(Sacado.SacadoAvalista.UF, 2, ' ')                   + // UF (ESTADO) DO SACADOR AVALISTA
-                                   space(180)                                                   + // COMPLEMENTO DE REGISTRO
-                                   IntToStrZero(iSequencia , 6);                                  // Sequencial
+                     wLinhaMulta:= '5'                                                          + // 001 - 001 Tipo de registro - 5 IDENTIFICAÇÃO DO REGISTRO TRANSAÇÃO
+                                   PadRight(Sacado.Email, 120, ' ')                             + // 002 - 121 ENDEREÇO DE E-MAIL ENDEREÇO DE E-MAIL DO PAGADOR
+                                   PadLeft(ATipoSacadoAvalista, 2, '0')                         + // 122 - 123 CÓDIGO DE INSCRIÇÃO IDENT. DO TIPO DE INSCRIÇÃO DO SACADOR/AVALISTA
+                                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')  + // 124 - 137 NÚMERO DE INSCRIÇÃO NÚMERO DE INSCRIÇÃO DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.Logradouro + ' '              +
+                                   Sacado.SacadoAvalista.Numero + ' '                           +
+                                   Sacado.SacadoAvalista.Complemento , 40, ' ')                 + // 138 - 177 RUA, Nº E COMPLEMENTO DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.Bairro, 12, ' ')              + // 178 - 189 BAIRRO DO SACADOR AVALISTA
+                                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CEP), 8, '0')       + // 190 - 197 CEP DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.Cidade, 15, ' ')              + // 198 - 212 CIDADE DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.UF, 2, ' ')                   + // 213 - 214 UF (ESTADO) DO SACADOR AVALISTA
+                                   //para se operar com mais de um desconto (depende de cadastramento prévio do indicador 19.0 pelo Itaú, conforme Item 5)
+                                   IfThen(ValorDesconto2>0,                                       // Alternativamente este campo poderá ter dois outros usos  (SACADOR/AVALISTA ou 2 e 3 descontos)
+                                          space(139)                                            + // 215 - 353 Brancos
+                                          FormatDateTime('ddmmyy', DataDesconto2),                // 354 - 359 Data do 2º desconto (DDMMAA)
+                                          space(6))                                             +
+                                   IfThen(ValorDesconto2>0,
+                                          IntToStrZero(round(ValorDesconto2 * 100), 13),          // 360 - 372 Valor do 2º desconto
+                                          space(13))                                            +
+                                   IfThen(ValorDesconto3>0,
+                                          FormatDateTime('ddmmyy', DataDesconto3),                // 373 - 378 Data do 3º desconto (DDMMAA)
+                                          space(6))                                             +
+                                   IfThen(ValorDesconto3>0,
+                                          IntToStrZero(round(ValorDesconto3 * 100), 13),          // 379 - 391 Valor do 3º desconto
+                                          space(13))                                            +
+
+                                   space(3)                                                     + // 392 - 394 COMPLEMENTO DE REGISTRO
+                                   IntToStrZero(iSequencia , 6);                                  // 395 - 400 Sequencial
 
                      aRemessa.Add(UpperCase(wLinhaMulta));
                    end;

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2022
+--ACBrBancoItau--
+[*] TK-2804 ACBrBoleto - Ajuste para considerar o Desconto 2 e Desconto 3 no Itau
+  Por : Allanbrrj
+
 24/06/2022
 --ACBrBoletoRet_CrediSis--
 [*] TK-2790 Ajustes no metodo LerRetorno do banco CredSis

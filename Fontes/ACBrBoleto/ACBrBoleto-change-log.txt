@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2022
+--ACBrBancoCaixaEconomica--
+ [-] TK-2844 Leitura CNAB400 Correção de leitura de Codigo de Carteira
+ Por: Pandaaa
+
 27/06/2022
 --ACBrBancoItau--
 [*] TK-2804 ACBrBoleto - Ajuste para considerar o Desconto 2 e Desconto 3 no Itau

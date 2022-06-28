@@ -1980,7 +1980,10 @@ begin
        ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
        ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
        ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-       Carteira             := ConverteModalidadeEmCodCarteira( StrToIntDef(Copy(Linha,57,2),0));
+       if StrToIntDef(Copy(Linha,57,2),0) <> 0 then
+         Carteira := ConverteModalidadeEmCodCarteira( StrToIntDef(Copy(Linha,57,2),0))
+       else
+         Carteira := ''; //TK2844
        NossoNumero          := Copy(Linha,59,15);
        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
 

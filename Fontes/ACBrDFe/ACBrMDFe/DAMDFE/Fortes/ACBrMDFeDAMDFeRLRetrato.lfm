@@ -1,9 +1,9 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 485
-  Height = 780
+  Height = 817
   Top = 149
   Caption = 'Manifesto - Retrato'
-  ClientHeight = 780
+  ClientHeight = 817
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -1347,10 +1347,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         AfterPrint = rlbItensAfterPrint
         BeforePrint = rlbItensBeforePrint
         object rlmChave1: TRLMemo
-          Left = 3
+          Left = 0
           Height = 16
-          Top = 30
+          Top = 33
           Width = 354
+          Align = faLeftBottom
           AutoSize = False
           Behavior = [beSiteExpander]
           Color = clWhite
@@ -1364,10 +1365,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           ParentFont = False
         end
         object rlmChave2: TRLMemo
-          Left = 381
+          Left = 388
           Height = 16
-          Top = 30
+          Top = 33
           Width = 354
+          Align = faRightBottom
           AutoSize = False
           Behavior = [beSiteExpander]
           Color = clWhite
@@ -1383,9 +1385,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         object rlbMunicipio: TRLLabel
           Left = 0
           Height = 14
-          Top = 0
-          Width = 742
-          Align = faTop
+          Top = 17
+          Width = 59
+          Align = faCenterLeft
           Borders.Sides = sdCustom
           Borders.DrawLeft = False
           Borders.DrawTop = False

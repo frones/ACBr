@@ -678,6 +678,7 @@ begin
     Borders.DrawLeft   := False;
     Borders.DrawRight  := False;
     Borders.DrawBottom := False;
+    rlbMunicipio.Visible:= fPDAMDFE.ExibirMunicipioDescarregamento;
   end;
 
   rlmChave1.Lines.Clear;

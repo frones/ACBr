@@ -62,6 +62,7 @@ type
     FMDFeCancelada: Boolean;
     FMDFeEncerrado: Boolean;
     FImprimeDadosExtras: TConjuntoDadosExtrasMDFe;
+    FExibirMunicipioDescarregamento: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -84,6 +85,7 @@ type
     property Encerrado: Boolean             read FMDFeEncerrado          write FMDFeEncerrado;
 
     property ImprimeDadosExtras: TConjuntoDadosExtrasMDFe read FImprimeDadosExtras write FImprimeDadosExtras;
+    property ExibirMunicipioDescarregamento: Boolean read FExibirMunicipioDescarregamento write FExibirMunicipioDescarregamento;
   end;
 
 implementation
@@ -102,6 +104,7 @@ begin
   FMDFeCancelada := False;
   FMDFeEncerrado := False;
   FImprimeDadosExtras := [deValorTotal, deRelacaoDFe];
+  FExibirMunicipioDescarregamento := False;
 end;
 
 destructor TACBrMDFeDAMDFeClass.Destroy;

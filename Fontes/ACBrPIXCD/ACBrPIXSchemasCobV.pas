@@ -229,7 +229,7 @@ type
   private
     fabatimento: TACBrPIXModalidadeValor;
     fdesconto: TACBrPIXDesconto;
-    fjuros: TACBrPIXModalidadeValor;
+    fjuros: TACBrPIXJuros;
     fmulta: TACBrPIXModalidadeValor;
     foriginal: Currency;
   protected
@@ -244,7 +244,7 @@ type
 
     property original: Currency read foriginal write foriginal;
     property multa: TACBrPIXModalidadeValor read fmulta;
-    property juros: TACBrPIXModalidadeValor read fjuros;
+    property juros: TACBrPIXJuros read fjuros;
     property abatimento: TACBrPIXModalidadeValor read fabatimento;
     property desconto: TACBrPIXDesconto read fdesconto;
   end;
@@ -771,7 +771,7 @@ begin
   inherited Create(ObjectName);
   fabatimento := TACBrPIXModalidadeValor.Create('abatimento');
   fdesconto := TACBrPIXDesconto.Create('desconto');
-  fjuros := TACBrPIXModalidadeValor.Create('juros');
+  fjuros := TACBrPIXJuros.Create('juros');
   fmulta := TACBrPIXModalidadeValor.Create('multa');
   Clear;
 end;

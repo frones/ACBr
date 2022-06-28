@@ -78,6 +78,7 @@ type
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
     procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString;
       Problema: TACBrPIXProblema); override;
+    function CalcularEndPointPath(const aMethod, aEndPoint: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
@@ -242,14 +243,9 @@ end;
 procedure TACBrPSPBancoDoBrasil.QuandoAcessarEndPoint(
   const AEndPoint: String; var AURL: String; var AMethod: String);
 begin
-  // Banco do Brasil, não tem: POST /cob   Mudando para /PUT com "txid" vazio
+  // BB não tem: POST /cob - Mudando para /PUT com "txid" vazio
   if (UpperCase(AMethod) = ChttpMethodPOST) then
     AMethod := ChttpMethodPUT;
-
-  if ((UpperCase(AMethod) = ChttpMethodPOST) or
-      (UpperCase(AMethod) = ChttpMethodPUT)) and
-      (AEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
-    AURL := StringReplace(AURL, cEndPointCob, '/cobqrcode', [rfReplaceAll]);
 end;
 
 procedure TACBrPSPBancoDoBrasil.QuandoReceberRespostaEndPoint(const AEndPoint,
@@ -374,6 +370,22 @@ begin
   end
   else
     inherited TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
+end;
+
+function TACBrPSPBancoDoBrasil.CalcularEndPointPath(const aMethod,
+  aEndPoint: String): String;
+begin
+  Result := Trim(aEndPoint);
+  
+  // BB deve utilizar /cobqrcode em ambiente de homologação
+  if ((UpperCase(aMethod) = ChttpMethodPOST) or
+      (UpperCase(aMethod) = ChttpMethodPUT)) and
+      (aEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
+    Result := cBBEndPointCobHomologacao;
+
+  // BB não deve incluir o endpoint /pix na consulta PIX por período
+  if (UpperCase(aMethod) = ChttpMethodGET) and (aEndPoint = cEndPointPix) then
+    Result := EmptyStr;
 end;
 
 end.

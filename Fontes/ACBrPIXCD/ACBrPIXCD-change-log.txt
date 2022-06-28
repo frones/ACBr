@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2022
+-- ACBrPIXPSPBancoDoBrasil --
+[*] Ajustes para funcionamento da Consulta de Pix recebidos por período.
+    Por: Elias César
+	
+-- ACBrPixSchemasCobV, ACBrShipaySchemas --
+[-] Correções das units
+
 26/06/2022
 -- ACBrPixSchemasCobV --
 [*] Inclusão de tipos enumerados para os campos modalidades das classes de 

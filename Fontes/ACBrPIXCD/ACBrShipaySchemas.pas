@@ -415,8 +415,6 @@ type
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   end;
 
-  { TACBrPIXDescontosDataFixa }
-
   { TShipayAmountDiscountList }
 
   TShipayAmountDiscountList = class(TACBrPIXDescontosDataFixa)
@@ -1869,15 +1867,15 @@ procedure TShipayAmountDetailsDiscount.DoReadFromJSon(aJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    modalidade := TACBrPIXDescontoModalidade(AJSon.I['modality']);
-  if (Ord(modalidade) <= 2) then
-    valorPerc := aJSon.F['valorPerc'];
+  if (Ord(modalidade) >= 3) then
+    valorPerc := aJSon.F['value'];
   {$Else}
    modalidade := TACBrPIXDescontoModalidade(AJSon['modality'].AsInteger);
-  if (Ord(modalidade) <= 2) then
-    valorPerc := aJSon['valorPerc'].AsNumber;
+  if (Ord(modalidade) >= 3) then
+    valorPerc := aJSon['value'].AsNumber;
   {$EndIf}
 
-  if (Ord(modalidade) >= 3) then
+  if (Ord(modalidade) <= 2) then
     descontosDataFixa.ReadFromJSon(aJSon);
 end;
 

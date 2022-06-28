@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2022
+-- ACBrCTeConhecimentos --
+[*] Ajuste na leitura do campo CST.
+   Por: José M S Junior
+
 29/03/2022
 -- Diversos --
 [*] Remoção de Warnings e Hints.

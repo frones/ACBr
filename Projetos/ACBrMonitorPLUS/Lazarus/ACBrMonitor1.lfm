@@ -28904,6 +28904,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 0
                   end
                 end
+                object tsImpMDFe: TTabSheet
+                  Caption = 'MDF-e'
+                  ClientHeight = 318
+                  ClientWidth = 984
+                  object ckbExibirMunicipioDescarregamento: TCheckBox
+                    Left = 16
+                    Height = 21
+                    Top = 24
+                    Width = 221
+                    Caption = 'Exibir Municipio Descarregamento'
+                    TabOrder = 0
+                  end
+                end
               end
             end
             object tsDiretoriosDFe: TTabSheet
@@ -33825,6 +33838,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Cancelada = False
     Encerrado = False
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
+    ExibirMunicipioDescarregamento = False
     PrintDialog = False
     Left = 456
     Top = 488
@@ -33889,6 +33903,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoDF = veS01_00_00
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

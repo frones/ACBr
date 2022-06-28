@@ -442,6 +442,7 @@ type
     chECFDescrGrande: TCheckBox;
     chECFIgnorarTagsFormatacao: TCheckBox;
     chECFSinalGavetaInvertido: TCheckBox;
+    ckbExibirMunicipioDescarregamento: TCheckBox;
     ChkPix: TCheckBox;
     chgDescricaoPagamento: TCheckGroup;
     chkBOLRelMostraPreview: TCheckBox;
@@ -1316,6 +1317,7 @@ type
     SynXMLSyn1: TSynXMLSyn;
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
+    tsImpMDFe: TTabSheet;
     tsNCM: TTabSheet;
     tsWebBoleto: TTabSheet;
     TrayIcon1: TTrayIcon;
@@ -5831,6 +5833,11 @@ begin
       rgTamanhoPapelDacte.ItemIndex := TamanhoPapel;
     end;
 
+    with Impressao.DAMFE do
+    begin
+      ckbExibirMunicipioDescarregamento.Checked := ExibirMunicipioDescarregamento;
+    end;
+
     with Diretorios do
     begin
       cbxSalvarArqs.Checked         := Salvar;
@@ -5933,6 +5940,7 @@ begin
     ACBrMDFe1.DAMDFe.MostraStatus      := cbxMostraStatus.Checked;
     ACBrMDFe1.DAMDFe.ExpandeLogoMarca  := cbxExpandirLogo.Checked;
     ACBrMDFe1.DAMDFe.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+    ACBrMDFe1.DAMDFE.ExibirMunicipioDescarregamento:= ckbExibirMunicipioDescarregamento.Checked;
 
     ACBrGNRE1.GNREGuia.Sistema         := edSH_RazaoSocial.Text;
     ACBrGNRE1.GNREGuia.Site            := edtSiteEmpresa.Text;
@@ -7034,6 +7042,11 @@ begin
       with Impressao.DACTE do
       begin
         TamanhoPapel                   := rgTamanhoPapelDacte.ItemIndex;
+      end;
+
+      with Impressao.DAMFE do
+      begin
+        ExibirMunicipioDescarregamento := ckbExibirMunicipioDescarregamento.Checked;
       end;
 
       with Diretorios do

@@ -356,6 +356,10 @@ type
     TamanhoPapel                     : Integer;
   end;
 
+  TDAMFE = record
+    ExibirMunicipioDescarregamento   : Boolean;
+  end;
+
   TDFeDiretorios = record
     Salvar                       : Boolean;
     PastaMensal                  : Boolean;
@@ -400,6 +404,7 @@ type
     DANFE       : TDANFE;
     NFCe        : TNFCe;
     DACTE       : TDACTE;
+    DAMFE       : TDAMFe;
   end;
 
   TeSocial = record
@@ -1205,6 +1210,11 @@ begin
       Ini.WriteInteger( CSecDACTE,  CKeyDACTETamanhoPapel           , TamanhoPapel );
     end;
 
+    with DFe.Impressao.DAMFE do
+    begin
+      Ini.WriteBool( CSecDAMFE,  CKeyDAMFEExibirMunicipioDescar, ExibirMunicipioDescarregamento );
+    end;
+
     with DFe.Diretorios do
     begin
       Ini.WriteBool(CSecArquivos,    CKeyArquivosSalvar,                      Salvar                      );
@@ -1921,6 +1931,11 @@ begin
       TamanhoPapel              :=  Ini.ReadInteger( CSecDACTE,  CKeyDACTETamanhoPapel , TamanhoPapel );
     end;
 
+    with DFe.Impressao.DAMFE do
+    begin
+      ExibirMunicipioDescarregamento := Ini.ReadBool( CSecDAMFE,  CKeyDAMFEExibirMunicipioDescar, ExibirMunicipioDescarregamento );
+    end;
+
     with DFe.Diretorios do
     begin
       Salvar                     := Ini.ReadBool( CSecArquivos,    CKeyArquivosSalvar,                      Salvar                      );
@@ -2625,6 +2640,11 @@ begin
   with DFe.Impressao.DACTE do
   begin
     TamanhoPapel              :=  0;
+  end;
+
+  with DFe.Impressao.DAMFE do
+  begin
+    ExibirMunicipioDescarregamento :=  False;
   end;
 
   with DFe.Diretorios do

@@ -1096,6 +1096,9 @@ const
   CSecDACTE =                          'DACTE';
   CKeyDACTETamanhoPapel =              'TamanhoPapel';
 
+  CSecDAMFE =                          'DAMFE';
+  CKeyDAMFEExibirMunicipioDescar =     'ExibirMunicipioDescarregamento';
+
   CSecArquivos =                            'Arquivos';
   CKeyArquivosSalvar =                      'Salvar';
   CKeyArquivosPastaMensal =                 'PastaMensal';

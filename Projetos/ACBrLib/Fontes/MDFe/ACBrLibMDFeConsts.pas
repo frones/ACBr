@@ -51,6 +51,7 @@ const
   CChaveImprimeHoraSaida_Hora = 'ImprimeHoraSaida_Hora';
   CChaveProtocolo = 'Protocolo';
   CChaveTamanhoPapel = 'TamanhoPapel';
+  CChaveExibirMunicipioDescar = 'ExibirMunicipioDescarregamento';
 
   CSessaoRespEnvio = 'Envio';
   CSessaoRespStatus = 'Status';

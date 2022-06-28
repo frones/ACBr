@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/06/2022
+--- ACBrLibMDFeConfig, ACBrLibMDFeConsts---
+[+] Adicionado propriedade ExibirMunicipioDescarregamento para impressão do DAMDFe
+	Por: José M S Junior
+
 21/12/2021
 --- ACBrLibMDFeDataModule ---
 [-] Correção para herença visual em Lazarus de "TLibDataModule"

@@ -59,8 +59,7 @@ implementation
 
 uses
   ACBrXmlBase,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.Strings, ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -75,18 +74,7 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
 
-  if Pos('/', xDataHora) = 2 then
-    xDataHora := '0' + xDataHora;
-
-  if Pos('/', xDataHora) = 3 then
-  begin
-    if Copy(xDataHora, 1, 2) > '12' then
-      result := EncodeDataHora(xDataHora, 'DD/MM/YYYY')
-    else
-      result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
-  end
-  else
-    result := EncodeDataHora(xDataHora, '');
+  result := EncodeDataHora(xDataHora, 'DD/MM/YYYY');
 end;
 
 function TNFSeR_SigCorp203.LerDataEmissaoRps(
@@ -96,18 +84,7 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataEmissao'), tcStr);
 
-  if Pos('/', xDataHora) = 2 then
-    xDataHora := '0' + xDataHora;
-
-  if Pos('/', xDataHora) = 3 then
-  begin
-    if Copy(xDataHora, 1, 2) > '12' then
-      result := EncodeDataHora(xDataHora, 'DD/MM/YYYY')
-    else
-      result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
-  end
-  else
-    result := EncodeDataHora(xDataHora, '');
+  result := EncodeDataHora(xDataHora, 'DD/MM/YYYY');
 end;
 
 function TNFSeR_SigCorp203.LerDataHoraCancelamento(
@@ -117,18 +94,7 @@ var
 begin
   xDataHora := ObterConteudo(ANode.Childrens.FindAnyNs('DataHoraCancelamento'), tcStr);
 
-  if Pos('/', xDataHora) = 2 then
-    xDataHora := '0' + xDataHora;
-
-  if Pos('/', xDataHora) = 3 then
-  begin
-    if Copy(xDataHora, 1, 2) > '12' then
-      result := EncodeDataHora(xDataHora, 'DD/MM/YYYY')
-    else
-      result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
-  end
-  else
-    result := EncodeDataHora(xDataHora, '');
+  result := EncodeDataHora(xDataHora, 'MM/DD/YYYY');
 end;
 
 function TNFSeR_SigCorp203.NormatizarXml(const aXml: string): string;

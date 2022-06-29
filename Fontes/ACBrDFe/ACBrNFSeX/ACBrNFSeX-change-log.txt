@@ -44,6 +44,16 @@ Símbolo : Significado
 
 
 29/06/2022
+-- ABase.Provider --
+[*] O provedor esta retornando o XML da NFS-e fora do padrão, Sobreescrito a função:
+    TratarRetornoConsultaNFSeporRps para poder ler corretamente o XML.
+   Por: Italo Giurizzato Junior
+-- Conam.Provider --
+[*] Possível solução para o tratamento das mensagens de retorno.
+   Por: Italo Giurizzato Junior
+-- SigCorp.LerXml --
+[*] Possível solução para o problema de leitura de datas fora do formato padrão.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade: Marialva/PR - Provedor Elotech.
    Por: Willian Delan

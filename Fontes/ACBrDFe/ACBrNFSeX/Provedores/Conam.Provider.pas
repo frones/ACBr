@@ -166,6 +166,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  AAlerta: TNFSeEventoCollectionItem;
   xId: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
@@ -181,12 +182,20 @@ begin
   begin
     xId := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Id'), tcStr);
 
-    if (xId <> 'OK') and (xId <> 'EXITO') then
+    if (xId <> 'OK') and (xId <> 'EXITO') and (xId <> 'Arquivo Aceito') then
     begin
       AErro := Response.Erros.New;
       AErro.Codigo := xId;
       AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
       AErro.Correcao := '';
+    end;
+
+    if (xId = 'Arquivo Aceito') then
+    begin
+      AAlerta := Response.Erros.New;
+      AAlerta.Codigo := xId;
+      AAlerta.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
+      AAlerta.Correcao := '';
     end;
   end;
 end;

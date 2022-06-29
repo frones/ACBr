@@ -63,13 +63,15 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
   end;
 
 implementation
 
 uses
-  ACBrUtil.XMLHTML,
-  ACBrDFeException, ABase.GravarXml, ABase.LerXml;
+  ACBrUtil.XMLHTML, ACBrDFeException,
+  ACBrNFSeXConsts, ACBrNFSeX, ACBrNFSeXNotasFiscais,
+  ABase.GravarXml, ABase.LerXml;
 
 { TACBrNFSeXWebserviceABase201 }
 
@@ -201,6 +203,111 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderABase201.TratarRetornoConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  Document: TACBrXmlDocument;
+  ANode, AuxNode, AuxNodeConf: TACBrXmlNode;
+  AErro: TNFSeEventoCollectionItem;
+  ANota: TNotaFiscal;
+  NumNFSe, NumRps: String;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ProcessarMensagemErros(Document.Root, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANode := Document.Root.Childrens.FindAnyNs('ListaNfse');
+
+      if ANode = nil then
+        ANode := Document.Root.Childrens.FindAnyNs('CompNfse')
+      else
+        ANode := ANode.Childrens.FindAnyNs('CompNfse');
+
+      if not Assigned(ANode) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('NfseCancelamento');
+
+      if AuxNode <> nil then
+      begin
+        AuxNodeConf := AuxNode.Childrens.FindAnyNs('Confirmacao');
+
+        if AuxNodeConf = nil then
+          AuxNodeConf := AuxNode.Childrens.FindAnyNs('ConfirmacaoCancelamento');
+
+//        Response.DataCanc := LerDatas(ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), tcStr));
+        Response.DataCanc := ObterConteudoTag(AuxNodeConf.Childrens.FindAnyNs('DataHora'), FpFormatoDataHora);
+        Response.DescSituacao := '';
+
+        if Response.DataCanc > 0 then
+          Response.DescSituacao := 'Nota Cancelada';
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('Nfse');
+
+      if AuxNode <> nil then
+      begin
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfse');
+        NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+        with Response do
+        begin
+          NumeroNota := NumNFSe;
+          CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
+        end;
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+        if ANota = nil then
+        begin
+          AuxNode := AuxNode.Childrens.FindAnyNs('IdentificacaoRps');
+          NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
+
+          ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+        end;
+
+        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        SalvarXmlNfse(ANota);
+      end
+      else
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 

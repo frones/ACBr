@@ -380,7 +380,7 @@ type
 implementation
 
 uses
-  IniFiles, ACBrUtil, DateUtils;
+  IniFiles, ACBrUtil.Base, ACBrUtil.Strings, DateUtils;
 
 { TRRecRepADCollection }
 

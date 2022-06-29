@@ -43,7 +43,7 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase, ACBrUtil,
+  ACBrBase, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
   ACBrReinfConfiguracoes, ACBrReinfEventos, pcnConsts,
   pcnCommonReinf, pcnConversaoReinf;

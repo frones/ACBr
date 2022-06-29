@@ -38,7 +38,8 @@ interface
 
 uses
   SysUtils, Classes, synautil,
-  ACBrUtil, pcnConversaoReinf,
+  ACBrUtil.Strings, ACBrUtil.FilesIO,
+  pcnConversaoReinf,
   pcnReinfR1000, pcnReinfR1070, pcnReinfR2010, pcnReinfR2020, pcnReinfR2030,
   pcnReinfR2040, pcnReinfR2050, pcnReinfR2055, pcnReinfR2060, pcnReinfR2070,
   pcnReinfR2098, pcnReinfR2099, pcnReinfR3010, pcnReinfR9000;

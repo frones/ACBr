@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeWebService,
+  ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.Base,
+  ACBrDFe, ACBrDFeWebService,
   pcnLeitor, pcnConsts,
   ACBrReinfLoteEventos, ACBrReinfConfiguracoes,
   pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfConsulta,

@@ -57,6 +57,7 @@ type
     FnrInscTomador: String;
     FdtApur: TDateTime;
     FnrInscAdq: String;
+    FtpInscProd : String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -114,14 +115,22 @@ begin
     FtpInscEstab := '1';
   end
   else
-    FtpInscEstab := '2';
+    FtpInscEstab := '4';
 
   if Length(nrInscTomador) = 14 then
   begin
     FtpInscTomador := '1';
   end
   else
-    FtpInscTomador := '2';
+    FtpInscTomador := '4';
+
+  if Length(nrInscEstab) = 14 then
+  begin
+    FtpInscProd := '1';
+  end
+  else
+    FtpInscProd := '2';
+
 
   Gerador.Prefixo := '';
 
@@ -173,7 +182,7 @@ begin
         Gerador.wCampo(tcInt, 'C07', 'tpInscAdq    ', 01, 01, 1, FtpInscContrib, 'XXX');
         Gerador.wCampo(tcStr, 'C08', 'nrInscAdq    ', 11, 14, 1, nrInscAdq, 'XXX');
         //tipo inscrição produtor
-        Gerador.wCampo(tcStr, 'C09', 'tpInscProd   ', 01, 01, 1, FtpInscTomador, 'XXX');
+        Gerador.wCampo(tcStr, 'C09', 'tpInscProd   ', 01, 01, 1, FtpInscProd, 'XXX');
         Gerador.wCampo(tcStr, 'C10', 'nrInscProd', 11, 14, 1, nrInscEstab, 'XXX');
       end;
 

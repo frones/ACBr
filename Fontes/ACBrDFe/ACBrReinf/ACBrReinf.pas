@@ -37,7 +37,9 @@ unit ACBrReinf;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrBase,
+  Classes, SysUtils,
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrReinfConfiguracoes, ACBrReinfWebServices, ACBrReinfEventos,
   pcnConversao, pcnConversaoReinf;

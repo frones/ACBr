@@ -42,6 +42,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2022
+-- Diversos --
+[*] Remoção de Warnings e Hints.
+   Por: Italo Giurizzato Junior
+-- pcnReinfConsulta --
+[*] https://www.projetoacbr.com.br/forum/topic/67641-consulta-do-evento-r-2055-inv%C3%A1lida/
+   Por: Thiago
+
 18/11/2021
 -- ACBrReinfLoteEventos --
 [-] Trocado o StringReplace por RemoverDeclaracaoXML ao concatenar os eventos.

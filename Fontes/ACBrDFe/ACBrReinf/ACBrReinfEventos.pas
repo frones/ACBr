@@ -111,7 +111,8 @@ implementation
 
 uses
   dateutils,
-  ACBrUtil, ACBrDFeUtil, ACBrReinf;
+  ACBrUtil.Strings,
+  ACBrDFeUtil, ACBrReinf;
 
 { TGeradosCollection }
 

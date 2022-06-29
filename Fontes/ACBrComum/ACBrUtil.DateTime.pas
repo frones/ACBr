@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
@@ -458,7 +458,7 @@ var
   xDataHora, xData, xHora, xTZD: string;
   p: Integer;
 begin
-   xDataHora := Trim(UpperCase(StringReplace(DataStr, 'Z', '', [rfReplaceAll])));
+  xDataHora := Trim(UpperCase(StringReplace(DataStr, 'Z', '', [rfReplaceAll])));
 
   p := Pos('T', xDataHora);
 
@@ -469,6 +469,9 @@ begin
     xData := Copy(xDataHora, 1, p-1)
   else
     xData := xDataHora;
+
+  if Length(xData) > 10 then
+    xData := copy(xData, 1, 10);
 
   xData := AjustarData(StringReplace(xData, '-', '/', [rfReplaceAll]));
   xHora := '';

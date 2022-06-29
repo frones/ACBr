@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2022
+-- ACBrUtil.DateTime --
+[*] Possível correção para datas que estejam no formato: "2022-06-27-03:00".
+   Por: Gil Spider
+
 24/06/2022
 -- ACBrUtil.DateTime --
 [*] Incluida a função AjustarData com o objetivo de detectar datas que tem

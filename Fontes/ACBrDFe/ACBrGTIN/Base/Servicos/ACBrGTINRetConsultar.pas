@@ -91,29 +91,31 @@ var
   ANode: TACBrXmlNode;
 begin
   Document := TACBrXmlDocument.Create;
-
   try
-    Document.LoadFromXml(XmlRetorno);
+    try
+      Document.LoadFromXml(XmlRetorno);
+      ANode := Document.Root.Childrens.FindAnyNs('retConsGTIN');
 
-    ANode := Document.Root.Childrens.FindAnyNs('retConsGTIN');
+      if ANode <> nil then
+      begin
+        versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+        verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+        cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+        xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+        dhResp := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhResp'), tcDatHor);
+        GTIN := ObterConteudoTag(ANode.Childrens.FindAnyNs('GTIN'), tcStr);
+        tpGTIN := ObterConteudoTag(ANode.Childrens.FindAnyNs('tpGTIN'), tcInt);
+        xProd := ObterConteudoTag(ANode.Childrens.FindAnyNs('xProd'), tcStr);
+        NCM := ObterConteudoTag(ANode.Childrens.FindAnyNs('NCM'), tcStr);
+        CEST := ObterConteudoTag(ANode.Childrens.FindAnyNs('CEST'), tcStr);
+      end;
 
-    if ANode <> nil then
-    begin
-      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
-      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
-      dhResp := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhResp'), tcDatHor);
-      GTIN := ObterConteudoTag(ANode.Childrens.FindAnyNs('GTIN'), tcStr);
-      tpGTIN := ObterConteudoTag(ANode.Childrens.FindAnyNs('tpGTIN'), tcInt);
-      xProd := ObterConteudoTag(ANode.Childrens.FindAnyNs('xProd'), tcStr);
-      NCM := ObterConteudoTag(ANode.Childrens.FindAnyNs('NCM'), tcStr);
-      CEST := ObterConteudoTag(ANode.Childrens.FindAnyNs('CEST'), tcStr);
+      Result := True;
+    except
+      Result := False;
     end;
-
-    Result := True;
-  except
-    Result := False;
+  finally
+    Document.Free;
   end;
 end;
 

@@ -456,7 +456,9 @@ const
 implementation
 
 uses
-  ACBrUtil, ACBrEAD, Variants, ACBrValidador;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrEAD, Variants, ACBrValidador;
 
 function MD5String(const texto: string): string;
 var

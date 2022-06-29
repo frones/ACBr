@@ -168,7 +168,11 @@ implementation
 uses
   StrUtils,
   ACBrMDFe, pmdfeConversaoMDFe,
-  ACBrUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode;
 
 function CollateBr(Str: string): string;
 var

@@ -73,7 +73,9 @@ type
 
 implementation
 
-uses ACBrTXTUtils, ACBrUtil, ACBrPAF;
+uses ACBrTXTUtils,
+     ACBrUtil.Strings,
+     ACBrPAF;
 
 { TPAF_N }
 

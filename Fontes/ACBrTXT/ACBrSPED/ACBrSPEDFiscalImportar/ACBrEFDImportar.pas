@@ -40,7 +40,8 @@ uses
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
-  ACBrUtil, ACBrSpedFiscal, ACBrEFDBlocos,
+  ACBrUtil.Strings,
+  ACBrSpedFiscal, ACBrEFDBlocos,
   ACBrEFDBase,
   ACBrEFDBloco_0_Importar,
   ACBrEFDBloco_C_Importar,

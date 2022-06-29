@@ -94,7 +94,10 @@ implementation
 
 uses
   strutils, Math,
-  ACBrNF3e, ACBrValidador, ACBrUtil, ACBrDFeUtil,
+  ACBrNF3e, ACBrValidador,
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  ACBrDFeUtil,
   pcnConversao, pcnConversaoNF3e, pcnAuxiliar;
 
 { TACBrNF3eDANF3eESCPOS }

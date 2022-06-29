@@ -149,7 +149,9 @@ type
 
 implementation
 
-uses ACBrUtil, ACBrDeSTDABlocos, ACBrDeSTDABloco_G, ACBrDeSTDABloco_9;
+uses ACBrUtil.FilesIO,
+     ACBrUtil.Strings,
+     ACBrDeSTDABlocos, ACBrDeSTDABloco_G, ACBrDeSTDABloco_9;
 
 {$IFNDEF FPC}
  {$R ACBr_DeSTDA.dcr}

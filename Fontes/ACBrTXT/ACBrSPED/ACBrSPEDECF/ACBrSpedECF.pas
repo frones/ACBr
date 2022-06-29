@@ -225,7 +225,8 @@ type
 
 implementation
 
-uses ACBrUtil;
+uses ACBrUtil.Strings,
+     ACBrUtil.FilesIO;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDECF.dcr}

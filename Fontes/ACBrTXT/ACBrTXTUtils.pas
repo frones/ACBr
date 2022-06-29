@@ -34,7 +34,9 @@ unit ACBrTXTUtils;
 
 interface
 
-uses SysUtils, Variants, Classes, ACBrUtil;
+uses SysUtils, Variants, Classes,
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 const
 CstPis:    array[0..33] of String = ('01', '02', '03', '04', '05', '06', '07', '08', '09',

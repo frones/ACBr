@@ -1554,7 +1554,8 @@ type
 
 implementation
 
-uses ACBrUtil;
+uses ACBrUtil.Strings,
+     ACBrUtil.Base;
 
 { TACBrSintegra }
 

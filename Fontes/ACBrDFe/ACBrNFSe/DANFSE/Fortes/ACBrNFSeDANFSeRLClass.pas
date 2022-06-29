@@ -65,7 +65,9 @@ type
 implementation
 
 uses
-  Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeDANFSeRLRetrato;
+  Dialogs,
+  ACBrUtil.FilesIO,
+  ACBrNFSe, ACBrNFSeDANFSeRLRetrato;
 
 constructor TACBrNFSeDANFSeRL.Create(AOwner: TComponent);
 begin

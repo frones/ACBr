@@ -58,7 +58,8 @@ implementation
 
 uses
   ActiveX, ComObj,
-  ACBrUtil, ACBrDFeUtil, ACBrDFeException, ACBrDFeCapicom,
+  ACBrUtil.Strings,
+  ACBrDFeUtil, ACBrDFeException, ACBrDFeCapicom,
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB;
 
 { TDFeSSLXmlSignMsXmlCapicom }

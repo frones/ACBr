@@ -169,7 +169,13 @@ implementation
 uses
   dateutils, IniFiles,
   synautil,
-  ACBrMDFe, ACBrUtil, ACBrDFeUtil, pmdfeConversaoMDFe;
+  ACBrMDFe,
+  ACBrUtil.Base,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil, pmdfeConversaoMDFe;
 
 { Manifesto }
 

@@ -246,7 +246,8 @@ type
 
 implementation
 
-uses ACBrUtil;
+uses ACBrUtil.FilesIO,
+     ACBrUtil.Strings;
 
 (* TACBrLFD *)
 

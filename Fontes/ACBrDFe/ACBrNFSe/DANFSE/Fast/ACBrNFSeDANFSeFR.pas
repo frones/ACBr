@@ -105,7 +105,12 @@ type
 implementation
 
 uses
-  ACBrNFSe, ACBrUtil, StrUtils, ACBrDFeUtil, Math;
+  ACBrNFSe,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  StrUtils, ACBrDFeUtil, Math;
 
 constructor TACBrNFSeDANFSeFR.Create(AOwner: TComponent);
 begin

@@ -106,7 +106,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { TLCDPR }
 

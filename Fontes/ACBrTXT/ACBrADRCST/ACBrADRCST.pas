@@ -146,7 +146,9 @@ type
 implementation
 
 Uses
-  DateUtils, ACBrUtil;
+  DateUtils,
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO;
 
 {$IFNDEF FPC}
  {$R ACBrADRCST.dcr}

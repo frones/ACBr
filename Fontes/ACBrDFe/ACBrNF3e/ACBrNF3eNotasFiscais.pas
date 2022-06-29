@@ -184,7 +184,13 @@ implementation
 uses
   dateutils, IniFiles,
   synautil,
-  ACBrNF3e, ACBrUtil, ACBrDFeUtil, pcnConversaoNF3e;
+  ACBrNF3e,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil, pcnConversaoNF3e;
 
 { NotaFiscal }
 

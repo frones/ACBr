@@ -176,7 +176,9 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil, ACBrConsts,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrConsts,
   synautil, synacode,
   ACBrDFeUtil;
 

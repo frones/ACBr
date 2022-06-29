@@ -327,7 +327,9 @@ type
 implementation
 
 uses
-  IniFiles, pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
+  IniFiles, pcnAuxiliar,
+  ACBrUtil.Base,
+  pcnConversao, DateUtils;
 
 { TR5011 }
 

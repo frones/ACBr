@@ -182,7 +182,12 @@ implementation
 
 uses
   SysUtils, StrUtils,
-  ACBrNFSe, ACBrUtil, pnfsConversao, synautil;
+  ACBrNFSe,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  pnfsConversao, synautil;
 
 { NotaFiscal }
 

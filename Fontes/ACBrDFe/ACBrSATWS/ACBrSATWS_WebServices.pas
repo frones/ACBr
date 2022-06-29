@@ -39,7 +39,9 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, pcnSATConsulta, pcnSATConsultaRet, ACBrDFeWebService,
-  ACBrUtil, pcnConversao;
+  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings,
+  pcnConversao;
 
 const
   ACBRSATWS_VERSAO = '0.1';

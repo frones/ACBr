@@ -70,7 +70,9 @@ implementation
 
 uses
   typinfo,
-  ACBrUtil, ACBrDFeException;
+  ACBrUtil.Strings,
+  ACBrUtil.Math,
+  ACBrDFeException;
 
 { TDFeCapicom }
 

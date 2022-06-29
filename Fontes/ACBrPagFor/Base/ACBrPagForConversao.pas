@@ -148,8 +148,8 @@ type
                       flDepositoJudicialPoupanca, flExtratoContaInvestimento,
                       flTributoGNRe, flPIXTransferencia, flPIXQRCode, flNenhum);
 
-  TTipoMovimento = (tmInclusao, tmConsulta, tmEstorno, tmAlteracao,
-                    tmLiquidacao, tmExclusao);
+  TTipoMovimento = (tmInclusao, tmConsulta, tmSuspensao, tmEstorno, tmReativacao,
+                    tmAlteracao, tmLiquidacao, tmExclusao);
 
   TInstrucaoMovimento = (imInclusaoRegistroDetalheLiberado,
                          imInclusaoRegistroDetalheBloqueado,
@@ -731,17 +731,17 @@ end;
 
 function TpMovimentoToStr(const t: TTipoMovimento): String;
 begin
- result := EnumeradoToStr(t, ['0', '1', '2', '3', '5', '7', '9'],
-                              [tmInclusao, tmConsulta, tmEstorno, tmAlteracao,
-                               tmLiquidacao, tmExclusao]);
+ result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '7', '9'],
+                             [tmInclusao, tmConsulta, tmSuspensao, tmEstorno,
+                              tmReativacao, tmAlteracao, tmLiquidacao, tmExclusao]);
 end;
 
 function StrToTpMovimento(var ok:boolean; const s: string): TTipoMovimento;
 begin
  result := StrToEnumerado(ok, s,
-                              ['0', '1', '2', '3', '5', '7', '9'],
-                              [tmInclusao, tmConsulta, tmEstorno, tmAlteracao,
-                               tmLiquidacao, tmExclusao]);
+                              ['0', '1', '2', '3', '4', '5', '7', '9'],
+                             [tmInclusao, tmConsulta, tmSuspensao, tmEstorno,
+                              tmReativacao, tmAlteracao, tmLiquidacao, tmExclusao]);
 end;
 
 function InMovimentoToStr(const t: TInstrucaoMovimento): String;

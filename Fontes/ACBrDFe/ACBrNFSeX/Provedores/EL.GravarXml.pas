@@ -124,12 +124,8 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'LocalPrestacao', 1, 1, 1,
                                                                  LocPrest, ''));
 
-  // IssRetido no provedor EL é ao contrario (1 = normal, 2 retido)
-  // por isso não da de usar SituacaoTributariaToStr
-  if NFSe.Servico.Valores.IssRetido = stRetencao then
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'IssRetido', 1, 1, 1, '2', ''))
-  else
-    NFSeNode.AppendChild(AddNode(tcStr, '#1', 'IssRetido', 1, 1, 1, '1', ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'IssRetido', 1, 1, 1,
+         FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), ''));
 
   NFSeNode.AppendChild(AddNode(tcDatHor, '#1', 'DataEmissao', 19, 19, 1,
                                                    NFSe.DataEmissao, DSC_DEMI));

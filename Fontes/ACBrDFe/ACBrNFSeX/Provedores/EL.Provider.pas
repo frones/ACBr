@@ -109,6 +109,10 @@ type
     function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
     function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
 
+    function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
+    function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
+    function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string; override;
+
   end;
 
   TACBrNFSeXWebserviceEL204 = class(TACBrNFSeXWebserviceSoap11)
@@ -559,6 +563,32 @@ begin
                        retSociedadeProfissionais, retCooperativa,
                        retMicroempresarioIndividual, retMicroempresarioEmpresaPP
                        ]);
+end;
+
+function TACBrNFSeProviderEL.SituacaoTributariaDescricao(
+  const t: TnfseSituacaoTributaria): string;
+begin
+  case t of
+    stNormal   : Result := 'Não Retido' ;
+    stRetencao : Result := 'Retido' ;
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderEL.SituacaoTributariaToStr(
+  const t: TnfseSituacaoTributaria): string;
+begin
+  Result := EnumeradoToStr(t,['1', '2'],
+                             [stNormal, stRetencao]);
+end;
+
+function TACBrNFSeProviderEL.StrToSituacaoTributaria(out ok: boolean;
+  const s: string): TnfseSituacaoTributaria;
+begin
+  Result := StrToEnumerado(ok, s,
+                             ['1', '2'],
+                             [stNormal, stRetencao]);
 end;
 
 function TACBrNFSeProviderEL.StrToRegimeEspecialTributacao(out ok: boolean;

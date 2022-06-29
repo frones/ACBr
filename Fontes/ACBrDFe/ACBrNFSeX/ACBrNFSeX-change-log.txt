@@ -43,6 +43,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/06/2022
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Marialva/PR - Provedor Elotech.
+   Por: Willian Delan
+[*] A cidade: Chapada dos Guimaraes/MT - Trocou para o provedor Coplan.
+   Por: Podium Informatica
+[+] Incluída a cidade: Glorinha/RS - Provedor Pronim.
+   Por: MaxData Sistema
+[*] A cidade: Modelo/SC - Trocou para o provedor IPM.
+   Por: Léo Boita
+-- EL.Provider --
+[*] Incluido as funções de conversão de Situação Tributária referente ao campo
+    IssRetido.
+   Por: Jeanny Paiva
+
 24/06/2022
 -- ACBrNFSeXProviderABRASFv2 --
 [*] Alteração no tratamento do retorno do cancelamento para correta leitura do XML de

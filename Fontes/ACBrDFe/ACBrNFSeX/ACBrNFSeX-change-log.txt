@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+30/06/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Americana/SP - Trocou a versão de 1.00 para 2.03, o provedor continua o mesmo.
+   Por: Making Software Fernando
+[*] A cidade: Vitoria da Conquista/BA - Trocou para o provedor EL.
+   Por: Diogo Rodrigues
+[*] A cidade: Silvania/GO - Trocou para o provedor Centi.
+   Por: Lucio Bittes
+
 29/06/2022
 -- ABase.Provider --
 [*] O provedor esta retornando o XML da NFS-e fora do padrão, Sobreescrito a função:

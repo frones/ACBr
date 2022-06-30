@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 30/06/2022
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Incluido a procedure para ler ItensServico pois o provedor SimplISS tem esse grupo.
+   Por: Elisangela Borato/Italo Giurizzato Junior
 -- Etherium.Provider --
 [*] O provedor esta retornando o nome da tag diferente quando o Rps é processado com sucesso.
     Alterado a função TratarXmlRetornado, para contornar o problema.

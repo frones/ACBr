@@ -171,7 +171,7 @@ begin
   Request := Request + '</RecepcionarLoteRpsSincrono>';
 
   Result := Executar('http://tempuri.org/RecepcionarLoteRpsSincrono', Request,
-                     ['RecepcionarLoteRpsSincronoResult', 'EnviarLoteRpsResposta'],
+                     ['RecepcionarLoteRpsSincronoResult', 'RecepcionarLoteRpsSincrono'],
                      ['xmlns="http://tempuri.org/"']);
 end;
 
@@ -283,6 +283,12 @@ begin
 
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);
+
+  // O provedor gera o tag diferente quando o Rps é processado com sucesso
+  // A linha abaixo padroniza o retorno
+  if Pos('RecepcionarLoteRpsSincronoResult', Result) > 0 then
+    Result := StringReplace(Result, 'EnviarLoteRpsResposta',
+                                  'RecepcionarLoteRpsSincrono', [rfReplaceAll]);
 end;
 
 end.

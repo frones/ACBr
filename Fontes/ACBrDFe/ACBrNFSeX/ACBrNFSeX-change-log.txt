@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 30/06/2022
+-- Etherium.Provider --
+[*] O provedor esta retornando o nome da tag diferente quando o Rps é processado com sucesso.
+    Alterado a função TratarXmlRetornado, para contornar o problema.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade: Americana/SP - Trocou a versão de 1.00 para 2.03, o provedor continua o mesmo.
    Por: Making Software Fernando

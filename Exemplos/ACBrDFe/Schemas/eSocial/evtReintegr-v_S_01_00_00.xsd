@@ -15,6 +15,7 @@
                         <xs:documentation>REGRA:REGRA_EMPREGADO_DOMESTICO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_ENVIO_PROC_FECHAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTOS_EXTEMP</xs:documentation>
+                        <xs:documentation>REGRA:REGRA_EVENTO_POSTERIOR_CAT_OBITO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_EVENTO_DESLIGAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXTEMP_REINTEGRACAO</xs:documentation>
@@ -31,7 +32,7 @@
                             <xs:element name="infoReintegr">
                                 <xs:annotation>
                                     <xs:documentation>Informações da reintegração.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtEfetRetorno}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtEfetRetorno*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

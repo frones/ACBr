@@ -21,7 +21,7 @@
                                 <xs:annotation>
                                     <xs:documentation>Identificação do trabalhador</xs:documentation>
                                     <xs:documentation>DESCRICAO_COMPLETA:Grupo que apresenta a identificação básica do trabalhador ao qual se refere o evento de retorno.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

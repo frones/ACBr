@@ -37,7 +37,7 @@
                                 <xs:annotation>
                                     <xs:documentation>CAT</xs:documentation>
                                     <xs:documentation>DESCRICAO_COMPLETA:Comunicação de Acidente de Trabalho - CAT.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtAcid}, {hrAcid}, {tpCat}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtAcid*}, {hrAcid*}, {tpCat*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -75,7 +75,7 @@
                                         <xs:element name="hrAcid" minOccurs="0" type="TS_hora">
                                             <xs:annotation>
                                                 <xs:documentation>Hora do acidente, no formato HHMM.</xs:documentation>
-                                                <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {tpAcid}(./tpAcid) = [1]. Se informada, deve estar no intervalo entre [0000] e [2359], criticando inclusive a segunda parte do número, que indica os minutos, que deve ser menor ou igual a 59.</xs:documentation>
+                                                <xs:documentation>Validação: Preenchimento obrigatório se {tpAcid}(./tpAcid) = [1] ou se ({tpAcid}(./tpAcid) = [3] e {dtAcid}(./dtAcid) >= [2022-01-26]). Não informar se {tpAcid}(./tpAcid) = [2]. Se preenchida, deve estar no intervalo entre [0000] e [2359], criticando inclusive a segunda parte do número, que indica os minutos, que deve ser menor ou igual a 59.</xs:documentation>
                                                 <xs:documentation>Se {tpCat}(./tpCat) = [2, 3], deve ser informado valor igual ao preenchido no evento de CAT anterior, quando informado em {nrRecCatOrig}(./catOrigem_nrRecCatOrig).</xs:documentation>
                                             </xs:annotation>
                                         </xs:element>
@@ -83,7 +83,7 @@
                                             <xs:simpleType>
                                                 <xs:annotation>
                                                     <xs:documentation>Horas trabalhadas antes da ocorrência do acidente, no formato HHMM.</xs:documentation>
-                                                    <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {tpAcid}(./tpAcid) = [1]. Se informada, deve estar no intervalo entre [0000] e [9959], criticando inclusive a segunda parte do número, que indica os minutos, que deve ser menor ou igual a 59.</xs:documentation>
+                                                    <xs:documentation>Validação: Preenchimento obrigatório se {tpAcid}(./tpAcid) = [1] ou se ({tpAcid}(./tpAcid) = [3] e {dtAcid}(./dtAcid) >= [2022-07-20]). Não informar se {tpAcid}(./tpAcid) = [2]. Se preenchida, deve estar no intervalo entre [0000] e [9959], criticando inclusive a segunda parte do número, que indica os minutos, que deve ser menor ou igual a 59.</xs:documentation>
                                                 </xs:annotation>
                                                 <xs:restriction base="xs:string">
                                                     <xs:pattern value="\d{4}" />
@@ -378,7 +378,7 @@
                                                     <xs:element name="dtAtendimento" type="xs:date">
                                                         <xs:annotation>
                                                             <xs:documentation>Data do atendimento.</xs:documentation>
-                                                            <xs:documentation>Validação: Deve ser uma data válida, igual ou anterior à data atual.</xs:documentation>
+                                                            <xs:documentation>Validação: Deve ser uma data igual ou posterior a {dtAcid}(../dtAcid) e igual ou anterior à data atual.</xs:documentation>
                                                         </xs:annotation>
                                                     </xs:element>
                                                     <xs:element name="hrAtendimento" type="TS_hora">
@@ -487,7 +487,7 @@
                                                                 <xs:element name="nrOC">
                                                                     <xs:simpleType>
                                                                         <xs:annotation>
-                                                                            <xs:documentation>Número de inscrição no órgão de classe.</xs:documentation>
+                                                                            <xs:documentation>Número de inscrição no órgão de classe ou Registro do Ministério da Saúde (RMS).</xs:documentation>
                                                                         </xs:annotation>
                                                                         <xs:restriction base="xs:string">
                                                                             <xs:minLength value="1" />
@@ -496,9 +496,10 @@
                                                                         </xs:restriction>
                                                                     </xs:simpleType>
                                                                 </xs:element>
-                                                                <xs:element name="ufOC" type="TS_uf">
+                                                                <xs:element name="ufOC" type="TS_uf" minOccurs="0">
                                                                     <xs:annotation>
                                                                         <xs:documentation>Sigla da UF do órgão de classe.</xs:documentation>
+                                                                        <xs:documentation>Validação: Preenchimento obrigatório se {ideOC}(./ideOC) = [1, 2].</xs:documentation>
                                                                     </xs:annotation>
                                                                 </xs:element>
                                                             </xs:sequence>
@@ -511,7 +512,7 @@
                                             <xs:annotation>
                                                 <xs:documentation>CAT de origem</xs:documentation>
                                                 <xs:documentation>DESCRICAO_COMPLETA:Grupo que indica a CAT anterior, no caso de CAT de reabertura ou de comunicação de óbito.</xs:documentation>
-                                                <xs:documentation>CHAVE_GRUPO: {nrRecCatOrig}</xs:documentation>
+                                                <xs:documentation>CHAVE_GRUPO: {nrRecCatOrig*}</xs:documentation>
                                                 <xs:documentation>CONDICAO_GRUPO: O (se {tpCat}(../tpCat) for igual a [2, 3]); N (nos demais casos)</xs:documentation>
                                             </xs:annotation>
                                             <xs:complexType>

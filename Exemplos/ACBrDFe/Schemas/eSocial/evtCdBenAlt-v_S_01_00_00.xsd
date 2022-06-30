@@ -29,7 +29,7 @@
                             <xs:element name="infoBenAlteracao">
                                 <xs:annotation>
                                     <xs:documentation>Informações do benefício - Alteração.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtAltBeneficio}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtAltBeneficio*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

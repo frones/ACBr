@@ -29,7 +29,7 @@
                             <xs:element name="beneficiario">
                                 <xs:annotation>
                                     <xs:documentation>Informações do beneficiário.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -51,7 +51,7 @@
                                         <xs:element name="cnpjOrigem" minOccurs="0" type="TS_cnpj">
                                             <xs:annotation>
                                                 <xs:documentation>Preencher com o CNPJ do órgão público responsável pela matrícula do servidor/militar. Informação obrigatória se {cadIni}(2410_infoBenInicio_cadIni) = [N], desde que haja informação de matrícula e que o CNPJ seja diferente do CNPJ do órgão declarante.</xs:documentation>
-                                                <xs:documentation>Validação: Preenchimento obrigatório se {cadIni}(2410_infoBenInicio_cadIni) = [N] e houver informação de {matricula}(./matricula), exceto se existir vínculo (evento S-2200) para o beneficiário (indicado em {cpfBenef}(./cpfBenef) e {matricula}(./matricula)) no órgão declarante.</xs:documentation>
+                                                <xs:documentation>Validação: Preenchimento obrigatório se {cadIni}(2410_infoBenInicio_cadIni) = [N] e houver informação de {matricula}(./matricula), exceto se existir vínculo (evento S-2200) no órgão declarante para o beneficiário (indicado em {cpfBenef}(./cpfBenef) e {matricula}(./matricula)) ou, se {tpBeneficio}(2410_infoBenInicio_dadosBeneficio_tpBeneficio) pertencer ao grupo [06] da Tabela 25, para o instituidor da pensão por morte (indicado em {cpfInst}(2410_infoBenInicio_dadosBeneficio_infoPenMorte_instPenMorte_cpfInst) e {matricula}(./matricula)).</xs:documentation>
                                                 <xs:documentation>Se informado, deve ser um CNPJ válido e diferente do CNPJ do órgão público declarante, com 14 (catorze) algarismos.</xs:documentation>
                                             </xs:annotation>
                                         </xs:element>
@@ -61,7 +61,7 @@
                             <xs:element name="infoBenInicio">
                                 <xs:annotation>
                                     <xs:documentation>Informações do benefício - Início.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {nrBeneficio}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {nrBeneficio*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

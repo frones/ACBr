@@ -30,7 +30,7 @@
                             <xs:element name="infoReativ">
                                 <xs:annotation>
                                     <xs:documentation>Informações da reativação do benefício.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtEfetReativ}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtEfetReativ*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

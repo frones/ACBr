@@ -23,7 +23,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="ideEvento" type="T_ideEvento_exclusao" />
-                            <xs:element name="ideEmpregador" type="T_ideEmpregador" />
+                            <xs:element name="ideEmpregador" type="T_ideEmpregador_exclusao" />
                             <xs:element name="infoExclusao">
                                 <xs:annotation>
                                     <xs:documentation>Informação do evento que será excluído</xs:documentation>

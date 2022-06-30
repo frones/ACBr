@@ -15,6 +15,7 @@
                         <xs:documentation>CHAVE_GRUPO: {Id}</xs:documentation>
                         <xs:documentation>REGRA:REGRA_ENVIO_PROC_FECHAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTOS_EXTEMP</xs:documentation>
+                        <xs:documentation>REGRA:REGRA_EVENTO_POSTERIOR_CAT_OBITO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_GERAL_VALIDA_DADOS_TABCONTRIB</xs:documentation>                        
                         <xs:documentation>REGRA:REGRA_MESMO_PROCEMI</xs:documentation>
@@ -30,7 +31,7 @@
                             <xs:element name="infoTSVAlteracao">
                                 <xs:annotation>
                                     <xs:documentation>TSVE - Alteração Contratual.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtAlteracao}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtAlteracao*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -53,7 +54,7 @@
                                                         <xs:annotation>
                                                             <xs:documentation>Cargo/Função ocupado pelo TSVE</xs:documentation>
                                                             <xs:documentation>DESCRICAO_COMPLETA:Grupo que apresenta o cargo e/ou função ocupada pelo TSVE.</xs:documentation>
-                                                            <xs:documentation>CONDICAO_GRUPO: OC (se o código de categoria no RET for igual a [901, 903, 904]); O (nos demais casos)</xs:documentation>
+                                                            <xs:documentation>CONDICAO_GRUPO: OC (se o código de categoria no RET for igual a [901, 903, 904, 906]); O (nos demais casos)</xs:documentation>
                                                         </xs:annotation>
                                                         <xs:complexType>
                                                             <xs:sequence>
@@ -77,7 +78,7 @@
                                                     <xs:element name="remuneracao" type="T_remuneracao" minOccurs="0">
                                                         <xs:annotation>
                                                             <xs:documentation>Informações da remuneração e periodicidade de pagamento.</xs:documentation>
-                                                            <xs:documentation>CONDICAO_GRUPO: O (se o código de categoria no RET for igual a [721, 722, 771]); OC (nos demais casos)</xs:documentation>
+                                                            <xs:documentation>CONDICAO_GRUPO: O (se o código de categoria no RET for igual a [721, 722, 771, 906]); OC (nos demais casos)</xs:documentation>
                                                         </xs:annotation>
                                                     </xs:element>
                                                     <xs:element name="infoDirigenteSindical" minOccurs="0">
@@ -131,8 +132,8 @@
                                                     </xs:element>
                                                     <xs:element name="infoEstagiario" minOccurs="0" type="T_infoEstagiario">
                                                         <xs:annotation>
-                                                            <xs:documentation>Informações do estagiário.</xs:documentation>
-                                                            <xs:documentation>CONDICAO_GRUPO: O (se o código de categoria no RET for igual a [901]); N (nos demais casos)</xs:documentation>
+                                                            <xs:documentation>Informações relativas ao estagiário ou ao beneficiário do Programa Nacional de Prestação de Serviço Civil Voluntário.</xs:documentation>
+                                                            <xs:documentation>CONDICAO_GRUPO: O (se o código de categoria no RET for igual a [901, 906]); N (nos demais casos)</xs:documentation>
                                                         </xs:annotation>
                                                     </xs:element>
                                                 </xs:sequence>

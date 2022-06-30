@@ -17,6 +17,7 @@
                         <xs:documentation>REGRA:REGRA_ENVIO_PROC_FECHAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTOS_EXTEMP</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTO_EXT_SEM_IMPACTO_FOPAG</xs:documentation>
+                        <xs:documentation>REGRA:REGRA_EVENTO_POSTERIOR_CAT_OBITO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXCLUI_EVENTO_AFASTAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXTEMP_DOMESTICO</xs:documentation>
@@ -34,7 +35,7 @@
                             <xs:element name="ideVinculo">
                                 <xs:annotation>
                                     <xs:documentation>Informações de identificação do trabalhador e do vínculo.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab}, {matricula}, {codCateg}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab*}, {matricula*}, {codCateg*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -64,6 +65,7 @@
                                         <xs:element name="iniAfastamento" minOccurs="0">
                                             <xs:annotation>
                                                 <xs:documentation>Informações de início do afastamento.</xs:documentation>
+                                                <xs:documentation>CHAVE_GRUPO: {dtIniAfast*}</xs:documentation>
                                                 <xs:documentation>CONDICAO_GRUPO: O (se não for preenchido o grupo {fimAfastamento}(../fimAfastamento)); OC (nos demais casos)</xs:documentation>
                                             </xs:annotation>
                                             <xs:complexType>
@@ -231,7 +233,6 @@
                                                                 <xs:element name="cnpjMandElet" type="TS_cnpj">
                                                                     <xs:annotation>
                                                                         <xs:documentation>CNPJ do órgão no qual o trabalhador exercerá o mandato eletivo.</xs:documentation>
-                                                                        <xs:documentation>Validação: Deve ser um CNPJ diferente do CNPJ base do empregador e diferente dos informados na Tabela de Estabelecimentos (S-1005).</xs:documentation>
                                                                         <xs:documentation>REGRA:REGRA_VALIDA_CNPJ</xs:documentation>
                                                                     </xs:annotation>
                                                                 </xs:element>
@@ -325,6 +326,7 @@
                                         <xs:element name="fimAfastamento" minOccurs="0">
                                             <xs:annotation>
                                                 <xs:documentation>Informação do término do afastamento.</xs:documentation>
+                                                <xs:documentation>CHAVE_GRUPO: {dtTermAfast*}</xs:documentation>
                                                 <xs:documentation>CONDICAO_GRUPO: O (se não for preenchido o grupo {iniAfastamento}(../iniAfastamento)); OC (nos demais casos)</xs:documentation>
                                                 <xs:documentation>REGRA:REGRA_EXISTE_EVENTO_AFASTAMENTO</xs:documentation>
                                             </xs:annotation>

@@ -26,7 +26,7 @@
                             <xs:element name="ideBenef">
                                 <xs:annotation>
                                     <xs:documentation>Identificação do beneficiário.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -42,7 +42,7 @@
                             <xs:element name="alteracao">
                                 <xs:annotation>
                                     <xs:documentation>Alteração de dados do beneficiário.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtAlteracao}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtAlteracao*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

@@ -20,6 +20,7 @@
                         <xs:documentation>REGRA:REGRA_EMPREGADO_DOMESTICO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_ENVIO_PROC_FECHAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTOS_EXTEMP</xs:documentation>
+                        <xs:documentation>REGRA:REGRA_EVENTO_POSTERIOR_CAT_OBITO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVE_FOPAG_SIMPLIFICADO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_GERAL_VALIDA_DADOS_TABCONTRIB</xs:documentation>
@@ -47,7 +48,7 @@
                             <xs:element name="ideTrabalhador">
                                 <xs:annotation>
                                     <xs:documentation>Identificação do trabalhador.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

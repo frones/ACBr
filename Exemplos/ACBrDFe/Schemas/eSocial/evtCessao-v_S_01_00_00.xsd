@@ -15,6 +15,7 @@
                         <xs:documentation>REGRA:REGRA_ENVIO_PROC_FECHAMENTO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTOS_EXTEMP</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EVENTO_EXT_SEM_IMPACTO_FOPAG</xs:documentation>
+                        <xs:documentation>REGRA:REGRA_EVENTO_POSTERIOR_CAT_OBITO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXCLUI_EVENTO_CESSAO</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXISTE_INFO_EMPREGADOR</xs:documentation>
                         <xs:documentation>REGRA:REGRA_EXTEMP_REINTEGRACAO</xs:documentation>
@@ -37,7 +38,7 @@
                                             <xs:element name="iniCessao">
                                                 <xs:annotation>
                                                     <xs:documentation>Informações de início da cessão/exercício em outro órgão.</xs:documentation>
-                                                    <xs:documentation>CHAVE_GRUPO: {dtIniCessao}</xs:documentation>
+                                                    <xs:documentation>CHAVE_GRUPO: {dtIniCessao*}</xs:documentation>
                                                     <xs:documentation>CONDICAO_GRUPO: O (se não for preenchido o grupo {fimCessao}(../fimCessao)); N (nos demais casos)</xs:documentation>
                                                 </xs:annotation>
                                                 <xs:complexType>
@@ -68,7 +69,7 @@
                                             <xs:element name="fimCessao">
                                                 <xs:annotation>
                                                     <xs:documentation>Informação de término da cessão/exercício em outro órgão.</xs:documentation>
-                                                    <xs:documentation>CHAVE_GRUPO: {dtTermCessao}</xs:documentation>
+                                                    <xs:documentation>CHAVE_GRUPO: {dtTermCessao*}</xs:documentation>
                                                     <xs:documentation>CONDICAO_GRUPO: O (se não for preenchido o grupo {iniCessao}(../iniCessao)); N (nos demais casos)</xs:documentation>
                                                     <xs:documentation>REGRA:REGRA_EXISTE_EVENTO_CESSAO</xs:documentation>
                                                 </xs:annotation>

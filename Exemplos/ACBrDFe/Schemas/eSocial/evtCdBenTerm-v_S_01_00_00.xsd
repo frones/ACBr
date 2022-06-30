@@ -30,7 +30,7 @@
                             <xs:element name="infoBenTermino">
                                 <xs:annotation>
                                     <xs:documentation>Informações da cessação do benefício.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {dtTermBeneficio}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {dtTermBeneficio*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

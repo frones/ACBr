@@ -87,7 +87,7 @@
         <xs:annotation>
             <xs:documentation>Identificação do processo e validade das informações</xs:documentation>
             <xs:documentation>DESCRICAO_COMPLETA:Identificação do processo e período de validade das informações.</xs:documentation>
-            <xs:documentation>CHAVE_GRUPO: {tpProc}, {nrProc}, {iniValid}, {fimValid}</xs:documentation>
+            <xs:documentation>CHAVE_GRUPO: {tpProc*}, {nrProc*}, {iniValid*}, {fimValid*}</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="tpProc" type="TS_tpProc_1_2_4" />

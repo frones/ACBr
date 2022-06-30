@@ -86,7 +86,7 @@
         <xs:annotation>
             <xs:documentation>Identificação da lotação e validade das informações</xs:documentation>
             <xs:documentation>DESCRICAO_COMPLETA:Identificação da lotação e período de validade das informações.</xs:documentation>
-            <xs:documentation>CHAVE_GRUPO: {codLotacao}, {iniValid}, {fimValid}</xs:documentation>
+            <xs:documentation>CHAVE_GRUPO: {codLotacao*}, {iniValid*}, {fimValid*}</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="codLotacao" type="TS_codigo_esocial">
@@ -136,7 +136,7 @@
                             <xs:annotation>
                                 <xs:documentation>Informar o código combinado dos Terceiros para os quais o recolhimento está suspenso em virtude de processos judiciais. Ex.: Se o contribuinte possui decisões de processos para suspensão de recolhimentos ao SESI (0008) e ao SEBRAE (0064), deve informar o código combinado das duas entidades, ou seja, [0072].</xs:documentation>
                                 <xs:documentation>Validação: Deve ser um código consistente com a Tabela 04.</xs:documentation>
-                                <xs:documentation>Deve haver um processo em {procJudTerceiro}(1020_infoLotacao_inclusao_dadosLotacao_fpasLotacao_infoProcJudTerceiros_procJudTerceiro) para cada código de Terceiro cujo recolhimento esteja suspenso.</xs:documentation>
+                                <xs:documentation>Deve haver pelo menos um processo em {procJudTerceiro}(1020_infoLotacao_inclusao_dadosLotacao_fpasLotacao_infoProcJudTerceiros_procJudTerceiro) para cada código de Terceiro cujo recolhimento esteja suspenso.</xs:documentation>
                             </xs:annotation>
                         </xs:element>
                         <xs:element name="infoProcJudTerceiros" minOccurs="0">
@@ -198,7 +198,7 @@
                         <xs:element name="nrInscProp" type="TS_nrInsc_11_14" minOccurs="0">
                             <xs:annotation>
                                 <xs:documentation>Preencher com o número de inscrição (CNPJ/CPF) do proprietário do CNO.</xs:documentation>
-                                <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {tpInscProp}(./tpInscProp) for informado. Deve ser um número de CNPJ ou CPF válido, conforme indicado em {tpInscProp}(./tpInscProp), e constar como responsável no cadastro do CNO.</xs:documentation>
+                                <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se {tpInscProp}(./tpInscProp) for informado. Deve ser um número de CNPJ ou CPF válido, conforme indicado em {tpInscProp}(./tpInscProp).</xs:documentation>
                             </xs:annotation>
                         </xs:element>
                     </xs:sequence>

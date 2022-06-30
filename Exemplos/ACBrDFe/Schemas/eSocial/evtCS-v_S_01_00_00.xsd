@@ -121,6 +121,12 @@
                                                                         <xs:documentation>Evento de origem: S-1280.</xs:documentation>
                                                                     </xs:annotation>
                                                                 </xs:element>
+                                                                <xs:element name="percTransf" minOccurs="0" type="TS_percTransf">
+                                                                    <xs:annotation>
+                                                                        <xs:documentation>Percentual de contribuição social - Lei 11.096/2005.</xs:documentation>
+                                                                        <xs:documentation>Evento de origem: S-1280.</xs:documentation>
+                                                                    </xs:annotation>
+                                                                </xs:element>
                                                                 <xs:element name="infoAtConc" minOccurs="0">
                                                                     <xs:annotation>
                                                                         <xs:documentation>Informações de atividades concomitantes</xs:documentation>
@@ -180,6 +186,12 @@
                                                                         <xs:documentation>Evento de origem: S-1005.</xs:documentation>
                                                                     </xs:annotation>
                                                                 </xs:element>
+                                                                <xs:element name="cnpjResp" minOccurs="0" type="TS_cnpj">
+                                                                    <xs:annotation>
+                                                                        <xs:documentation>Preencher com o CNPJ responsável pela inscrição no cadastro de obras da RFB.</xs:documentation>
+                                                                        <xs:documentation>Evento de origem: S-1005.</xs:documentation>
+                                                                    </xs:annotation>
+                                                                </xs:element>
                                                                 <xs:element name="aliqRat" type="TS_aliqRat">
                                                                     <xs:annotation>
                                                                         <xs:documentation>Informar a alíquota RAT.</xs:documentation>
@@ -190,9 +202,9 @@
                                                                     <xs:annotation>
                                                                         <xs:documentation>Fator Acidentário de Prevenção - FAP.</xs:documentation>
                                                                         <xs:documentation>Validação: Informação obrigatória e exclusiva se {ideEmpregador/tpInsc}(5011_ideEmpregador_tpInsc) = [1]. Deve corresponder ao FAP estabelecido para a empresa pelo órgão governamental competente, exceto se:</xs:documentation>
-                                                                        <xs:documentation>a) {ideEstab/tpInsc}(5011_infoCS_ideEstab_tpInsc) = [4]; ou</xs:documentation>
-                                                                        <xs:documentation>b) {ideEstab/tpInsc}(5011_infoCS_ideEstab_tpInsc) = [1] e se houver informação de {procAdmJudFap}(1005_infoEstab_inclusao_dadosEstab_aliqGilrat_procAdmJudFap) em S-1005; ou</xs:documentation>
-                                                                        <xs:documentation>c) {ideEstab/tpInsc}(5011_infoCS_ideEstab_tpInsc) = [1] e o estabalecimento não for encontrado na tabela FAP referente ao ano de {perApur}(5011_ideEvento_perApur).</xs:documentation>
+                                                                        <xs:documentation>a) {ideEstab/tpInsc}(5011_infoCS_ideEstab_tpInsc) = [4] e se não existir o campo {cnpjResp}(./cnpjResp); ou</xs:documentation>
+                                                                        <xs:documentation>b) {ideEstab/tpInsc}(5011_infoCS_ideEstab_tpInsc) = [1, 4] e se houver informação de {procAdmJudFap}(1005_infoEstab_inclusao_dadosEstab_aliqGilrat_procAdmJudFap) em S-1005; ou</xs:documentation>
+                                                                        <xs:documentation>c) {ideEstab/tpInsc}(5011_infoCS_ideEstab_tpInsc) = [1, 4] e o estabelecimento ou o CNPJ responsável pela inscrição no CNO não for encontrado na tabela FAP referente ao ano de {perApur}(5011_ideEvento_perApur).</xs:documentation>
                                                                         <xs:documentation>Caso haja alguma exceção acima, retornar o FAP declarado no evento S-1005.</xs:documentation>
                                                                     </xs:annotation>
                                                                 </xs:element>
@@ -339,11 +351,13 @@
                                                                             <xs:element name="tpInscProp" type="TS_tpInsc_1_2">
                                                                                 <xs:annotation>
                                                                                     <xs:documentation>Tipo de inscrição do proprietário do CNO.</xs:documentation>
+                                                                                    <xs:documentation>Validação: Retornar {tpInscProp}(1020_infoLotacao_inclusao_dadosLotacao_infoEmprParcial_tpInscProp) de S-1020. Caso esse campo não tenha sido informado, retornar {tpInscContrat}(5011_infoCS_ideEstab_ideLotacao_infoEmprParcial_tpInscContrat).</xs:documentation>
                                                                                 </xs:annotation>
                                                                             </xs:element>
                                                                             <xs:element name="nrInscProp" type="TS_nrInsc_11_14">
                                                                                 <xs:annotation>
                                                                                     <xs:documentation>Preencher com o número de inscrição (CNPJ/CPF) do proprietário do CNO.</xs:documentation>
+                                                                                    <xs:documentation>Validação: Retornar {nrInscProp}(1020_infoLotacao_inclusao_dadosLotacao_infoEmprParcial_nrInscProp) de S-1020. Caso esse campo não tenha sido informado, retornar {nrInscContrat}(5011_infoCS_ideEstab_ideLotacao_infoEmprParcial_nrInscContrat).</xs:documentation>
                                                                                 </xs:annotation>
                                                                             </xs:element>
                                                                             <xs:element name="cnoObra">

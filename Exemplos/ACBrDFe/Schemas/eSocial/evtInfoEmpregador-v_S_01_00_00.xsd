@@ -26,7 +26,7 @@
                             <xs:element name="ideEmpregador">
                                 <xs:annotation>
                                     <xs:documentation>Informações de identificação do empregador.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {tpInsc}, {nrInsc}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {tpInsc*}, {nrInsc*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -106,7 +106,7 @@
     <xs:complexType name="T_idePeriodo">
         <xs:annotation>
             <xs:documentation>Período de validade das informações.</xs:documentation>
-            <xs:documentation>CHAVE_GRUPO: {iniValid}, {fimValid}</xs:documentation>
+            <xs:documentation>CHAVE_GRUPO: {iniValid*}, {fimValid*}</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="iniValid" type="TS_iniValid" />
@@ -220,6 +220,12 @@
                     <xs:documentation>CNPJ do Ente Federativo Responsável - EFR.</xs:documentation>
                     <xs:documentation>Validação: Preenchimento obrigatório e exclusivo se a natureza jurídica do declarante for Administração Pública (grupo [1]). Nesse caso, informar o campo com 14 (catorze) algarismos.</xs:documentation>
                     <xs:documentation>Informação validada no cadastro do CNPJ da RFB.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dtTrans11096" minOccurs="0" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Data da transformação em sociedade de fins lucrativos - Lei 11.096/2005.</xs:documentation>
+                    <xs:documentation>Validação: Não preencher se {classTrib}(./classTrib) = [21, 22].</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="dadosIsencao" minOccurs="0">

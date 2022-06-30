@@ -34,7 +34,7 @@
                             <xs:element name="infoRegPrelim">
                                 <xs:annotation>
                                     <xs:documentation>Informações do registro preliminar do trabalhador.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab}, {matricula}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfTrab*}, {matricula*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

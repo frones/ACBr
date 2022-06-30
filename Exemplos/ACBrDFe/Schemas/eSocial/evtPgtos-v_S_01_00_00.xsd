@@ -31,7 +31,7 @@
                             <xs:element name="ideBenef">
                                 <xs:annotation>
                                     <xs:documentation>Identificação do beneficiário do pagamento.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

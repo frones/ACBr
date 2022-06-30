@@ -86,7 +86,7 @@
         <xs:annotation>
             <xs:documentation>Identificação da rubrica e validade das informações</xs:documentation>
             <xs:documentation>DESCRICAO_COMPLETA:Identificação da rubrica e período de validade das informações.</xs:documentation>
-            <xs:documentation>CHAVE_GRUPO: {codRubr}, {ideTabRubr}, {iniValid}, {fimValid}</xs:documentation>
+            <xs:documentation>CHAVE_GRUPO: {codRubr*}, {ideTabRubr*}, {iniValid*}, {fimValid*}</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="codRubr" type="TS_codigo_esocial">

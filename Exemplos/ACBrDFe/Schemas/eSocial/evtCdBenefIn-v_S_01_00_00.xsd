@@ -26,7 +26,7 @@
                             <xs:element name="ideEmpregador">
                                 <xs:annotation>
                                     <xs:documentation>Informações de identificação do empregador.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {tpInsc}, {nrInsc}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {tpInsc*}, {nrInsc*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -48,7 +48,7 @@
                             <xs:element name="beneficiario">
                                 <xs:annotation>
                                     <xs:documentation>Grupo de informações do beneficiário.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

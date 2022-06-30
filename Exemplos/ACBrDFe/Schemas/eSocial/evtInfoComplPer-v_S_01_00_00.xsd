@@ -90,6 +90,22 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
+                            <xs:element name="infoPercTransf11096" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Transformação de entidade beneficente em empresa de fins lucrativos</xs:documentation>
+                                    <xs:documentation>DESCRICAO_COMPLETA:Grupo preenchido por entidade que tenha se transformado em sociedade de fins lucrativos nos termos e no prazo da Lei 11.096/2005.</xs:documentation>
+                                    <xs:documentation>CONDICAO_GRUPO: O (se {dtTrans11096}(1000_infoEmpregador_inclusao_infoCadastro_dtTrans11096) em S-1000 for informado); N (nos demais casos)</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="percTransf" type="TS_percTransf">
+                                            <xs:annotation>
+                                                <xs:documentation>Informe o percentual de contribuição social devida em caso de transformação em sociedade de fins lucrativos - Lei 11.096/2005.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                         <xs:attribute name="Id" use="required" type="TS_Id" />
                     </xs:complexType>

@@ -29,7 +29,7 @@
                             <xs:element name="ideEmpregador">
                                 <xs:annotation>
                                     <xs:documentation>Informações de identificação do empregador.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {tpInsc}, {nrInsc}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {tpInsc*}, {nrInsc*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -51,7 +51,7 @@
                                         <xs:element name="ideEstabel">
                                             <xs:annotation>
                                                 <xs:documentation>Identificação do estabelecimento que comercializou a produção.</xs:documentation>
-                                                <xs:documentation>CHAVE_GRUPO: {nrInscEstabRural}</xs:documentation>
+                                                <xs:documentation>CHAVE_GRUPO: {nrInscEstabRural*}</xs:documentation>
                                             </xs:annotation>
                                             <xs:complexType>
                                                 <xs:sequence>

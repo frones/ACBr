@@ -19,6 +19,7 @@
                             <xs:element name="ideEvento">
                                 <xs:annotation>
                                     <xs:documentation>Identificação do evento de retorno.</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {perApur*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>
@@ -41,7 +42,7 @@
                                 <xs:annotation>
                                     <xs:documentation>Identificação do beneficiário</xs:documentation>
                                     <xs:documentation>DESCRICAO_COMPLETA:Identificação do beneficiário do pagamento.</xs:documentation>
-                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef}</xs:documentation>
+                                    <xs:documentation>CHAVE_GRUPO: {cpfBenef*}</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence>

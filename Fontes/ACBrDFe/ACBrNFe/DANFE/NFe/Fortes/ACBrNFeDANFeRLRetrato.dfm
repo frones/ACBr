@@ -8500,7 +8500,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    Left = 696
+    Left = 688
     Top = 106
   end
 end

@@ -127,7 +127,7 @@ type
     property ACBrNFe: TComponent read FACBrNFe write SetACBrNFE;
     property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write SetTipoDANFE default tiRetrato;
     property QuebraLinhaEmDetalhamentos: Boolean read FQuebraLinhaEmDetalhamentos write FQuebraLinhaEmDetalhamentos default True;
-    property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido default True;
+    property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido default False;
     property ImprimeTributos: TpcnTributos read FImprimeTributos write FImprimeTributos default trbNormal;
     property ExibeICMSDesoneradoComoDesconto: Boolean Read FExibeICMSDesoneradoComoDesconto write FExibeICMSDesoneradoComoDesconto default False;
     property ExibeTotalTributosItem: Boolean read FExibeTotalTributosItem write FExibeTotalTributosItem default False;
@@ -153,7 +153,7 @@ begin
 
   FACBrNFe                    := nil;
   FTipoDANFE                  := tiRetrato;
-  FImprimeTotalLiquido        := True;
+  FImprimeTotalLiquido        := False;
   FProtocoloNFe               := '';
   FNFeCancelada               := False;
   FvTribFed                   := 0.0;

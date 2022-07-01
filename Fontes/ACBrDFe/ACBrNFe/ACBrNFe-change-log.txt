@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2022
+-- ACBrDFeDANFeReport --
+[*] Alterado o valor padrão para False da propriedade de configuração: ImprimeTotalLiquido
+    Aconselhamos a não alterar para True uma vez que no manual do DANFE não diz nada que 
+    podemos imprimir o valor liquido no lugar do valor Bruto.
+   Por: Italo Giurizzato Junior
+
 17/06/2022
 -- ACBrNFeNotasFiscais --
 [*] Ajuste na regra de validação 772 incluindo a exceção "UF entrega x UF emit".

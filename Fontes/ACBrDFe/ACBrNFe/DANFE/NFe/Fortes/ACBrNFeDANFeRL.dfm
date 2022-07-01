@@ -34,6 +34,6 @@ object frlDANFeRL: TfrlDANFeRL
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
     Left = 288
-    Top = 96
+    Top = 88
   end
 end

@@ -1942,16 +1942,8 @@ begin
       end;
     end;
 
-    if fpDANFe.ImprimeTotalLiquido then
-    begin
-      txtValorTotal.Caption := FormatFloatBr(fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom));
-      txtValorDesconto.Caption := FormatFloatBr(Prod.vProd - fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom));
-    end
-    else
-    begin
-      txtValorTotal.Caption := FormatFloatBr(Prod.vProd);
-      txtValorDesconto.Caption := FormatFloatBr(fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom));
-    end;
+    txtValorTotal.Caption := fpDANFe.ManterVprod(Prod.vProd, Prod.vDesc);
+    txtValorDesconto.Caption := FormatFloatBr(fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom));
 
     txtBaseICMS.Caption := FormatFloatBr(Imposto.ICMS.VBC);
     txtValorICMS.Caption := FormatFloatBr(Imposto.ICMS.VICMS);

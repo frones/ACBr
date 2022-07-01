@@ -71,7 +71,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Link3.GravarXml, Link3.LerXml;
 
 { TACBrNFSeProviderLink3200 }

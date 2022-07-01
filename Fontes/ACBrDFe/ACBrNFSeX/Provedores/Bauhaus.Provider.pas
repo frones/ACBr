@@ -96,7 +96,8 @@ type
 implementation
 
 uses
-  ACBrUtil, synacode,
+  synacode,
+  ACBrUtil.Base, acbrutil.Strings,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Bauhaus.GravarJson, Bauhaus.LerJson;

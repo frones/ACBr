@@ -71,7 +71,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, SisPMJP.GravarXml, SisPMJP.LerXml;
 
 { TACBrNFSeProviderSisPMJP202 }

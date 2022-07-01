@@ -74,7 +74,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Mitra.GravarXml, Mitra.LerXml;
 
 { TACBrNFSeProviderMitra200 }

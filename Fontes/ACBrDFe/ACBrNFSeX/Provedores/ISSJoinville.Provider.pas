@@ -75,7 +75,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException,
+  ACBrDFeException,
   ACBrXmlDocument, ACBrXmlReader,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   ISSJoinville.GravarXml, ISSJoinville.LerXml;

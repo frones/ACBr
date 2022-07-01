@@ -72,7 +72,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Futurize.GravarXml, Futurize.LerXml;
 
 { TACBrNFSeProviderFuturize202 }

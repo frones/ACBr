@@ -62,9 +62,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.Math;
+  ACBrUtil.Strings, ACBrUtil.Math;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:

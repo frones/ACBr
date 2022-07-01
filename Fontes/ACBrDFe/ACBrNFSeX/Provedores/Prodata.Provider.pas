@@ -71,7 +71,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Prodata.GravarXml, Prodata.LerXml;
 
 { TACBrNFSeProviderProdata201 }

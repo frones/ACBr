@@ -77,7 +77,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Fiorilli.GravarXml, Fiorilli.LerXml;
 
 { TACBrNFSeProviderFiorilli200 }

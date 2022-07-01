@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrXmlBase, ACBrUtil, ACBrDFeException,
+  ACBrXmlBase, ACBrDFeException,
   ISSCuritiba.GravarXml, ISSCuritiba.LerXml;
 
 { TACBrNFSeProviderISSCuritiba }

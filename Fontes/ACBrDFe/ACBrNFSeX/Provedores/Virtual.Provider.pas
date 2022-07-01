@@ -74,7 +74,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Virtual.GravarXml, Virtual.LerXml;
 
 { TACBrNFSeProviderVirtual202 }

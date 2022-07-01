@@ -60,6 +60,8 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
+
     property SoapAction: string read GetSoapAction;
     property NameSpace: string read GetNameSpace;
   end;
@@ -77,6 +79,7 @@ type
 implementation
 
 uses
+  ACBrUtil.XMLHTML,
   ACBrDFeException,
   Fisco.GravarXml, Fisco.LerXml;
 
@@ -295,6 +298,15 @@ begin
   Result := Executar(SoapAction + 'substituirNfse', Request,
                      ['substituirNfseResult', 'SubstituirNfseResposta'],
                      [NameSpace]);
+end;
+
+function TACBrNFSeXWebserviceFisco203.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

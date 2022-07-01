@@ -73,7 +73,7 @@ type
 implementation
 
 uses
-  ACBrXmlBase, ACBrUtil, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrXmlBase, ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Tinus.GravarXml, Tinus.LerXml;
 
 { TACBrNFSeXWebserviceTinus }

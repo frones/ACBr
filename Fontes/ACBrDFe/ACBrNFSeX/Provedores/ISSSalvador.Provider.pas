@@ -70,7 +70,6 @@ type
 implementation
 
 uses
-  ACBrUtil,
   ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrXmlBase, ACBrNFSeX, ACBrNFSeXConsts,
   ISSSalvador.GravarXml, ISSSalvador.LerXml;

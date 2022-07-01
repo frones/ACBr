@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/07/2022
+-- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[*] Alteração visando a leitura da tag InscricaoEstadual
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [*] Ao gerar a lista de Alertas estava criado de forma equivocada a lista de Erros.
    Por: Italo Giurizzato Junior

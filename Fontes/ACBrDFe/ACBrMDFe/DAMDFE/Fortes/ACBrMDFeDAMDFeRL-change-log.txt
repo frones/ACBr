@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2022
+-- ACBrMDFeDAMDFeRL --
+[*] Alterado para mostrar como defaut: Documento PDF ao executar o Salvar do Pré
+    Visualização
+   Por: Calixto J.B.
+
 28/06/2022
 --ACBrMDFeDAMDFeRLRetrato, ACBrMDFeDAMDFeClass--
 [+] Inclusão da propriedade ExibirMunicipioDescarregamento para impressão do DAMDFe

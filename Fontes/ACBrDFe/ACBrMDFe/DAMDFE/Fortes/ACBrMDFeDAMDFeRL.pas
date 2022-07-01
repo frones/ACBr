@@ -69,7 +69,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -131,7 +131,11 @@ begin
     TDFeReportFortes.AjustarMargem(Report, ADAMDFe);
 
     if ADAMDFe.MostraPreview then
+    begin
+      if Assigned(DAMDFeReport) then
+        SelectedFilter := DAMDFeReport.RLPDFFilter1;
       Report.PreviewModal
+    end
     else
       Report.Print;
   finally

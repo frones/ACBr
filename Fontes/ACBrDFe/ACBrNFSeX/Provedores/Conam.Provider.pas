@@ -192,7 +192,7 @@ begin
 
     if (xId = 'Arquivo Aceito') then
     begin
-      AAlerta := Response.Erros.New;
+      AAlerta := Response.Alertas.New;
       AAlerta.Codigo := xId;
       AAlerta.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('Description'), tcStr);
       AAlerta.Correcao := '';

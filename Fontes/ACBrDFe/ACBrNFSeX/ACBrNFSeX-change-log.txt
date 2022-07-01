@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/07/2022
+-- Diversos --
+[*] Ao gerar a lista de Alertas estava criado de forma equivocada a lista de Erros.
+   Por: Italo Giurizzato Junior
+
 30/06/2022
 -- ACBrNFSeXLerXml_ABRASFv1 --
 [*] Incluido a procedure para ler ItensServico pois o provedor SimplISS tem esse grupo.

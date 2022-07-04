@@ -1410,7 +1410,7 @@ end;
 procedure TACBrWSViaCEP.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
     ALogradouro, AUF, ABairro : String);
 var
-  Municipio, Logradouro, UF: string;
+  Municipio, Logradouro, UF, wURL: string;
 begin
   if AMunicipio = '' then
      raise EACBrCEPException.Create('Munícipio deve ser informado.');
@@ -1424,9 +1424,10 @@ begin
   UF         := LowerCase(TiraAcentos(AUF));
   Municipio  := LowerCase(TiraAcentos(AMunicipio));
   Logradouro := LowerCase(TiraAcentos(ALogradouro));
+  wURL := EncodeURL(fpURL + UF + '/' + Municipio + '/' + Logradouro + '/xml');
 
-  fOwner.HTTPGet( fpURL + UF + '/' + Municipio + '/' + Logradouro + '/xml' );
-  ProcessaResposta();
+  fOwner.HTTPGet(wURL);
+  ProcessaResposta;
 end;
 
 procedure TACBrWSViaCEP.ProcessaResposta;

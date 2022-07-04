@@ -38,6 +38,11 @@ Símbolo : Significado
 
 
 04/07/2022
+-- ACBrCEP -- 
+[-] Adicionado tratamento na URL antes da consulta no webservice ViaCEP.
+    https://www.projetoacbr.com.br/forum/topic/68021-acbr-cep-erro-http-400-bad-request-ao-consultar-cep-a-partir-do-logradouro-para-viacep/
+
+04/07/2022
 -- ACBrNCMs --
 [*] Alteração para não utilizar mais a data de modificação do arquivo para verificar
     a validade do cache. Será utilizando novo campo 'DataCache', incluído no json

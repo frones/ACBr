@@ -37,6 +37,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/07/2022
+-- ACBrNCMs --
+[*] Alteração para não utilizar mais a data de modificação do arquivo para verificar
+    a validade do cache. Será utilizando novo campo 'DataCache', incluído no json
+[+] Incluído parâmetro para possibilitar forçar o download em 'ObterNCMs()'
+[-] Correção de erro nos headers ao efetuar o download duas vezes seguidas
+
 11/06/2022
 -- ACBrMTerClass --
 [-] Correção de erro de compilação

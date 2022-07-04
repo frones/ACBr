@@ -1222,7 +1222,7 @@ begin
              LFill(DT_DOC_INI, 'ddmmyyyy') +
              LFill(DT_DOC_FIN, 'ddmmyyyy') +
              LFill(COD_ITEM)               +
-             LFill(COD_NCM,8)              +
+             LFill(COD_NCM)                +
              LFill(EX_IPI)                 +
              LFill(VL_TOT_ITEM,0,2)) ;
       end;
@@ -1338,7 +1338,7 @@ begin
              LFill(DT_REF_INI, 'ddmmyyyy') +
              LFill(DT_REF_FIN, 'ddmmyyyy') +
              LFill(COD_ITEM)               +
-             LFill(COD_NCM,8)              +
+             LFill(COD_NCM)                +
              LFill(EX_IPI)                 +
              LFill(VL_TOT_ITEM,0,2)) ;
       end;

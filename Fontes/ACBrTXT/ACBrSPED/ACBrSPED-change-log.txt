@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2022
+-- ACBrEPCBloco_C_Class --
+[*] Alteração para não preencher o campo NCM com zeros
+    https://www.projetoacbr.com.br/forum/topic/67492-envio-de-ncm-vazio-para-os-registros-c180-e-c190-sendo-preenchido-com-zeros
+    Por: Gustavohq
+
 Data 09/06/2022
 -- ACBrEFDBloco_C_Class --
 [*] Alteração nos registros 180, 181, 185 e 186 para corrigir campos que possuem 6 casas decimais

@@ -861,9 +861,11 @@ function ExtrairCNPJCPFChaveAcesso(const AChave: String): String;
 var
   AModelo: string;
   ASerie: Integer;
+  ATpEmis: Integer;
 begin
   AModelo := ExtrairModeloChaveAcesso(AChave);
   ASerie := ExtrairSerieChaveAcesso(AChave);
+  ATpEmis := ExtrairTipoEmissaoChaveAcesso(AChave);
   case StrToIntDef(AModelo, 0) of
     55, 65: begin  // NFe, NFCe
       case ASerie of
@@ -876,6 +878,14 @@ begin
           Result := Copy(AChave, 10, 11);
       else
         // Outras possíveis Séries futuras, assume CNPJ
+        Result := Copy(AChave, 7, 14);
+      end;
+    end;
+    57: begin
+      case ATpEmis of
+        3: // NFF
+          Result := Copy(AChave, 10, 11);
+      else
         Result := Copy(AChave, 7, 14);
       end;
     end;

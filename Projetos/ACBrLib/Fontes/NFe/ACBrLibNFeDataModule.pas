@@ -74,7 +74,7 @@ uses
   pcnConversao, pcnConversaoNFe,
   ACBrUtil, FileUtil, ACBrDeviceSerial, ACBrNFeDANFEClass,
   {$IFDEF Demo}ACBrNFeNotasFiscais, pcnEnvEventoNFe,{$ENDIF}
-  ACBrDeviceConfig, ACBrLibNFeConfig;
+  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrUtil.Base;
 
 {$R *.lfm}
 
@@ -335,7 +335,9 @@ procedure TLibNFeDM.ValidarIntegradorNFCe;
 
 begin
   if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe) and
-     (ACBrNFe1.Configuracoes.WebServices.UF = 'CE') then
+     (ACBrNFe1.Configuracoes.WebServices.UF = 'CE') and
+     ( NaoEstaVazio(ACBrIntegrador1.PastaInput)) and
+     ( NaoEstaVazio(ACBrIntegrador1.PastaOutput))  then
     ACBrNFe1.Integrador := ACBrIntegrador1
   else
     ACBrNFe1.Integrador := nil;

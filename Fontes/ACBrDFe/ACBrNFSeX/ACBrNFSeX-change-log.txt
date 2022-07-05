@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 05/07/2022
+-- Diversos --
+[+] Implementado a lista de Resumo que contem informações das notas retornadas pelo
+    ConsultarLoteRps
+   Por: Italo Giurizzato Junior
 -- Centi.GravarXml --
 [*] Incluido a linha para configurar o Formato do ItemListaServico para atender a cidade de
     Silvania/GO.(TK-2871)

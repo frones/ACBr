@@ -284,7 +284,7 @@ begin
         begin
           AuxNode := ANode.Childrens.FindAnyNs('Nfse');
 
-          if PreencherNotaResposta(AuxNode, ANode) then
+          if PreencherNotaResposta(AuxNode, ANode, Response) then
             Response.Situacao := '4' // Processado com sucesso pois retornou a nota
           else
           begin
@@ -303,7 +303,7 @@ begin
             ANode2 := AuxNodeArray[J];
             AuxNode := ANode2.Childrens.FindAnyNs('Nfse');
 
-            if PreencherNotaResposta(AuxNode, ANode2) then
+            if PreencherNotaResposta(AuxNode, ANode2, Response) then
               Response.Situacao := '4' // Processado com sucesso pois retornou a nota
             else
             begin

@@ -69,6 +69,31 @@ type
     property Items[Index: Integer]: TNFSeEventoCollectionItem read GetItem write SetItem; default;
   end;
 
+  TNFSeResumoCollectionItem = class
+  private
+    FNumeroNota: String;
+    FCodigoVerificacao: String;
+    FNumeroRps: string;
+    FSerieRps: string;
+  public
+    property NumeroNota: String read FNumeroNota write FNumeroNota;
+    property CodigoVerificacao: String read FCodigoVerificacao write FCodigoVerificacao;
+    property NumeroRps: string read FNumeroRps write FNumeroRps;
+    property SerieRps: string read FSerieRps write FSerieRps;
+  end;
+
+  TNFSeResumoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TNFSeResumoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TNFSeResumoCollectionItem);
+  public
+    function New: TNFSeResumoCollectionItem;
+    function Add(ANota: TNFSeResumoCollectionItem): Integer; reintroduce;
+    Procedure Insert(Index: Integer; ANota: TNFSeResumoCollectionItem); reintroduce;
+
+    property Items[Index: Integer]: TNFSeResumoCollectionItem read GetItem write SetItem; default;
+  end;
+
   TNotasCanceladasCollectionItem = class
   private
     FNumeroNota: String;
@@ -248,6 +273,7 @@ type
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
   private
     FCodVerificacao: string;
+    FResumos: TNFSeResumoCollection;
 
   public
     constructor Create;
@@ -256,6 +282,7 @@ type
     procedure Clear; override;
 
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
+    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeConsultaNFSeporRpsResponse = class(TNFSeWebserviceResponse)
@@ -693,16 +720,24 @@ begin
     for i := FAlertas.Count - 1 downto 0 do
       FAlertas.Delete(i);
   end;
+
+  if Assigned(FResumos) then
+  begin
+    for i := FResumos.Count - 1 downto 0 do
+      FResumos.Delete(i);
+  end;
 end;
 
 constructor TNFSeConsultaLoteRpsResponse.Create;
 begin
   inherited Create;
 
+  FResumos := TNFSeResumoCollection.Create;
 end;
 
 destructor TNFSeConsultaLoteRpsResponse.Destroy;
 begin
+  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -768,6 +803,37 @@ end;
 function TNFSeCancelamento.GetCancelada: Boolean;
 begin
   Result := ((FDataHora > 0) and (Trim(FMotivo) <> ''));
+end;
+
+{ TNFSeResumoCollection }
+
+function TNFSeResumoCollection.Add(ANota: TNFSeResumoCollectionItem): Integer;
+begin
+  Result := inherited Add(ANota);
+end;
+
+function TNFSeResumoCollection.GetItem(
+  Index: Integer): TNFSeResumoCollectionItem;
+begin
+  Result := TNFSeResumoCollectionItem(inherited Items[Index]);
+end;
+
+procedure TNFSeResumoCollection.Insert(Index: Integer;
+  ANota: TNFSeResumoCollectionItem);
+begin
+  inherited Insert(Index, ANota);
+end;
+
+function TNFSeResumoCollection.New: TNFSeResumoCollectionItem;
+begin
+  Result := TNFSeResumoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TNFSeResumoCollection.SetItem(Index: Integer;
+  Value: TNFSeResumoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

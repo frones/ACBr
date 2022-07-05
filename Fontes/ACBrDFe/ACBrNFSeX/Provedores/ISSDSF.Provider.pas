@@ -742,6 +742,7 @@ var
   ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   i: Integer;
+  AResumo: TNFSeResumoCollectionItem;
 //  ANota: TNotaFiscal;
 //  NumRps, NumNFSe: String;
 begin
@@ -819,6 +820,12 @@ begin
         for i := Low(ANodeArray) to High(ANodeArray) do
         begin
           ANode := ANodeArray[i];
+
+          AResumo := Response.Resumos.New;
+          AResumo.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroNFe'), tcStr);
+          AResumo.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          AResumo.NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('NumeroRPS'), tcStr);
+          AResumo.SerieRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('SerieRPS'), tcStr);
 
           with Response do
           begin

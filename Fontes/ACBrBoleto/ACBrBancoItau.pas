@@ -823,7 +823,8 @@ begin
                      wLinhaMulta:= '2'                                              + // Tipo de registro - 2 OPCIONAL – COMPLEMENTO DETALHE - MULTA
                                    IfThen(MultaValorFixo,'1','2')                   + // Cocidgo da Multa 1- Cobrar Multa Valor Fixo / 2- Percentual / 0-Não cobrar multa
                                    ifThen((DataMulta > 0),
-                                           FormatDateTime('ddmmyyyy',  DataMulta), '00000000')      + // Data da Multa 9(008)
+                                           FormatDateTime('ddmmyyyy',  DataMulta),
+                                           Poem_Zeros('',8))                        + // Data da Multa 9(008)
                                    IntToStrZero( round(PercentualMulta * 100 ), 13) + // Valor/Percentual 9(013)
                                    space(371)                                       + // Complemento
                                    IntToStrZero(iSequencia , 6);                      // Sequencial
@@ -846,9 +847,10 @@ begin
                                    PadLeft(OnlyNumber(Sacado.SacadoAvalista.CEP), 8, '0')       + // 190 - 197 CEP DO SACADOR AVALISTA
                                    PadRight(Sacado.SacadoAvalista.Cidade, 15, ' ')              + // 198 - 212 CIDADE DO SACADOR AVALISTA
                                    PadRight(Sacado.SacadoAvalista.UF, 2, ' ')                   + // 213 - 214 UF (ESTADO) DO SACADOR AVALISTA
+                                   space(139)                                                   + // 215 - 353 Brancos
                                    //para se operar com mais de um desconto (depende de cadastramento prévio do indicador 19.0 pelo Itaú, conforme Item 5)
                                    IfThen(ValorDesconto2>0,                                       // Alternativamente este campo poderá ter dois outros usos  (SACADOR/AVALISTA ou 2 e 3 descontos)
-                                          space(139)                                            + // 215 - 353 Brancos
+
                                           FormatDateTime('ddmmyy', DataDesconto2),                // 354 - 359 Data do 2º desconto (DDMMAA)
                                           space(6))                                             +
                                    IfThen(ValorDesconto2>0,

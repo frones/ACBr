@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2022
+--ACBrBancoItau--
+  [-] ACBrBoleto Itau CNAB400 Registro 2 / 5 - Layout Fora do Padrão
+  Por : Paulo C. L. Vicente
+
 28/06/2022
 --ACBrBancoCaixaEconomica--
  [-] TK-2844 Leitura CNAB400 Correção de leitura de Codigo de Carteira

@@ -66,6 +66,7 @@ begin
   FormatoEmissao := tcDatHor;
   FormatoCompetencia := tcDatHor;
   FormatoAliq := tcDe2;
+  FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
 
   NrOcorrCodTribMun_1 := 1;
 

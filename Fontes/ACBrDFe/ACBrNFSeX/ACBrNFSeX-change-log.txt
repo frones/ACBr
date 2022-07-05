@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/07/2022
+-- Centi.GravarXml --
+[*] Incluido a linha para configurar o Formato do ItemListaServico para atender a cidade de
+    Silvania/GO.(TK-2871)
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade: Mogi das Cruzes/SP - Trocou o HTTP por HTTPS das URLs, o provedor continua o mesmo.
+   Por: Renato Rubinho
+
 01/07/2022
 -- ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
 [*] Alteração visando a leitura da tag InscricaoEstadual

@@ -10,10 +10,8 @@ object frmACBrNF3e: TfrmACBrNF3e
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1499,7 +1497,7 @@ object frmACBrNF3e: TfrmACBrNF3e
       Left = 1
       Top = 1
       Width = 567
-      Height = 197
+      Height = 163
       ActivePage = tsEnvios
       Align = alTop
       TabOrder = 0
@@ -1507,8 +1505,8 @@ object frmACBrNF3e: TfrmACBrNF3e
         Caption = 'Envios'
         ImageIndex = 2
         object btnCriarEnviar: TButton
-          Left = 376
-          Top = 8
+          Left = 191
+          Top = 9
           Width = 177
           Height = 25
           Caption = 'Criar e Enviar'
@@ -1516,22 +1514,13 @@ object frmACBrNF3e: TfrmACBrNF3e
           OnClick = btnCriarEnviarClick
         end
         object btnValidarRegrasNegocio: TButton
-          Left = 9
-          Top = 71
+          Left = 7
+          Top = 40
           Width = 177
           Height = 25
           Caption = 'Validar Regras de Neg'#243'cio'
           TabOrder = 1
           OnClick = btnValidarRegrasNegocioClick
-        end
-        object btnGerarTXT: TButton
-          Left = 190
-          Top = 9
-          Width = 177
-          Height = 25
-          Caption = 'Gerar TXT'
-          TabOrder = 2
-          OnClick = btnGerarTXTClick
         end
         object btnGerarXML: TButton
           Left = 7
@@ -1539,70 +1528,70 @@ object frmACBrNF3e: TfrmACBrNF3e
           Width = 177
           Height = 25
           Caption = 'Gerar NF3e'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnGerarXMLClick
         end
         object btnValidarXML: TButton
-          Left = 192
-          Top = 71
-          Width = 177
-          Height = 25
-          Caption = 'Validar XML'
-          TabOrder = 4
-          OnClick = btnValidarXMLClick
-        end
-        object btnEnviarEmail: TButton
-          Left = 9
-          Top = 133
-          Width = 177
-          Height = 25
-          Caption = 'Enviar NF3e Email'
-          TabOrder = 5
-          OnClick = btnEnviarEmailClick
-        end
-        object btnAdicionarProtocolo: TButton
-          Left = 9
-          Top = 102
-          Width = 177
-          Height = 25
-          Caption = 'Adicionar Protocolo ao XML'
-          TabOrder = 6
-          OnClick = btnAdicionarProtocoloClick
-        end
-        object btnCarregarXMLEnviar: TButton
-          Left = 8
+          Left = 190
           Top = 40
           Width = 177
           Height = 25
-          Caption = 'Carregar XML e Enviar'
-          TabOrder = 7
-          OnClick = btnCarregarXMLEnviarClick
+          Caption = 'Validar XML'
+          TabOrder = 3
+          OnClick = btnValidarXMLClick
         end
-        object btnValidarAssinatura: TButton
-          Left = 375
+        object btnEnviarEmail: TButton
+          Left = 7
+          Top = 102
+          Width = 177
+          Height = 25
+          Caption = 'Enviar NF3e Email'
+          TabOrder = 4
+          OnClick = btnEnviarEmailClick
+        end
+        object btnAdicionarProtocolo: TButton
+          Left = 7
           Top = 71
           Width = 177
           Height = 25
+          Caption = 'Adicionar Protocolo ao XML'
+          TabOrder = 5
+          OnClick = btnAdicionarProtocoloClick
+        end
+        object btnCarregarXMLEnviar: TButton
+          Left = 374
+          Top = 9
+          Width = 177
+          Height = 25
+          Caption = 'Carregar XML e Enviar'
+          TabOrder = 6
+          OnClick = btnCarregarXMLEnviarClick
+        end
+        object btnValidarAssinatura: TButton
+          Left = 373
+          Top = 40
+          Width = 177
+          Height = 25
           Caption = 'Validar Assinatura'
-          TabOrder = 8
+          TabOrder = 7
           OnClick = btnValidarAssinaturaClick
         end
         object btnImprimirDANF3E: TButton
-          Left = 192
-          Top = 101
+          Left = 190
+          Top = 70
           Width = 177
           Height = 25
           Caption = 'Imprimir DANF3E'
-          TabOrder = 9
+          TabOrder = 8
           OnClick = btnImprimirDANF3EClick
         end
         object btnImprimirDANF3EOffline: TButton
-          Left = 375
-          Top = 101
+          Left = 373
+          Top = 70
           Width = 177
           Height = 25
           Caption = 'Imprimir DANF3E Offline'
-          TabOrder = 10
+          TabOrder = 9
           OnClick = btnImprimirDANF3EOfflineClick
         end
       end
@@ -1667,22 +1656,13 @@ object frmACBrNF3e: TfrmACBrNF3e
           TabOrder = 1
           OnClick = btnCancelarChaveClick
         end
-        object btnCartadeCorrecao: TButton
-          Left = 374
-          Top = 9
-          Width = 177
-          Height = 25
-          Caption = 'Carta de Corre'#231#227'o'
-          TabOrder = 2
-          OnClick = btnCartadeCorrecaoClick
-        end
         object btnImprimirEvento: TButton
           Left = 8
           Top = 40
           Width = 177
           Height = 25
           Caption = 'Imprimir Evento'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnImprimirEventoClick
         end
         object btnEnviarEventoEmail: TButton
@@ -1691,51 +1671,45 @@ object frmACBrNF3e: TfrmACBrNF3e
           Width = 177
           Height = 25
           Caption = 'Enviar Evento Email'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnEnviarEventoEmailClick
         end
       end
       object tsDistribuicao: TTabSheet
         Caption = 'Distribui'#231#227'o DFe'
         ImageIndex = 5
-        object btnManifDestConfirmacao: TButton
-          Left = 192
-          Top = 9
-          Width = 178
-          Height = 25
-          Caption = 'Manif. Dest. - Conf. Opera'#231#227'o'
-          TabOrder = 0
-          OnClick = btnManifDestConfirmacaoClick
-        end
         object btnDistribuicaoDFe: TButton
           Left = 8
           Top = 9
           Width = 178
           Height = 25
           Caption = 'Distribui'#231#227'o Documentos Fiscais'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDistribuicaoDFeClick
         end
       end
     end
     object pgRespostas: TPageControl
       Left = 1
-      Top = 198
+      Top = 164
       Width = 567
-      Height = 413
+      Height = 447
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
+      ExplicitTop = 198
+      ExplicitHeight = 413
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
         object MemoResp: TMemo
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 419
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitHeight = 385
         end
       end
       object TabSheet6: TTabSheet
@@ -1745,11 +1719,12 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 419
           Align = alClient
           TabOrder = 0
+          ExplicitHeight = 385
           ControlData = {
-            4C000000C6390000CA2700000000000000000000000000000000000000000000
+            4C000000C63900004E2B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1763,10 +1738,11 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 419
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitHeight = 385
         end
       end
       object TabSheet9: TTabSheet
@@ -1776,10 +1752,11 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 419
           Align = alClient
           Indent = 19
           TabOrder = 0
+          ExplicitHeight = 385
         end
       end
       object TabSheet10: TTabSheet
@@ -1789,10 +1766,11 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 419
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitHeight = 385
         end
       end
       object Dados: TTabSheet
@@ -1802,13 +1780,14 @@ object frmACBrNF3e: TfrmACBrNF3e
           Left = 0
           Top = 0
           Width = 559
-          Height = 385
+          Height = 419
           Align = alClient
           Lines.Strings = (
             '')
           ScrollBars = ssVertical
           TabOrder = 0
           WordWrap = False
+          ExplicitHeight = 385
         end
       end
     end
@@ -1825,8 +1804,8 @@ object frmACBrNF3e: TfrmACBrNF3e
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
-    Left = 441
-    Top = 287
+    Left = 433
+    Top = 295
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1837,7 +1816,7 @@ object frmACBrNF3e: TfrmACBrNF3e
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 334
-    Top = 287
+    Top = 295
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1846,7 +1825,7 @@ object frmACBrNF3e: TfrmACBrNF3e
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
     Left = 531
-    Top = 287
+    Top = 295
   end
   object ACBrNF3e1: TACBrNF3e
     MAIL = ACBrMail1
@@ -1873,6 +1852,12 @@ object frmACBrNF3e: TfrmACBrNF3e
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
     MargemDireita = 5.099999999999999000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -1884,7 +1869,7 @@ object frmACBrNF3e: TfrmACBrNF3e
     ViaConsumidor = True
     ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
-    Left = 438
+    Left = 454
     Top = 238
   end
 end

@@ -3,8 +3,10 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -36,7 +38,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrDFe, ACBrDFeReport, ACBrBase, ACBrUtil,
+  ACBrDFe, ACBrDFeReport, ACBrBase,
   ACBrPosPrinter, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS, ACBrNF3e, ACBrMail;
 
 type
@@ -195,7 +197,6 @@ type
     btnConsultarChave: TButton;
     btnConsultarRecibo: TButton;
     btnValidarRegrasNegocio: TButton;
-    btnGerarTXT: TButton;
     btnGerarXML: TButton;
     btnValidarXML: TButton;
     btnEnviarEmail: TButton;
@@ -204,11 +205,9 @@ type
     btnValidarAssinatura: TButton;
     btnCancelarXML: TButton;
     btnCancelarChave: TButton;
-    btnCartadeCorrecao: TButton;
     btnImprimirEvento: TButton;
     btnEnviarEventoEmail: TButton;
     tsDistribuicao: TTabSheet;
-    btnManifDestConfirmacao: TButton;
     btnDistribuicaoDFe: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
@@ -279,7 +278,6 @@ type
     procedure lblMouseLeave(Sender: TObject);
     procedure btnStatusServClick(Sender: TObject);
     procedure btnGerarXMLClick(Sender: TObject);
-    procedure btnGerarTXTClick(Sender: TObject);
     procedure btnCriarEnviarClick(Sender: TObject);
     procedure btnCarregarXMLEnviarClick(Sender: TObject);
     procedure btnValidarRegrasNegocioClick(Sender: TObject);
@@ -292,11 +290,9 @@ type
     procedure btnConsultarChaveClick(Sender: TObject);
     procedure btnCancelarXMLClick(Sender: TObject);
     procedure btnCancelarChaveClick(Sender: TObject);
-    procedure btnCartadeCorrecaoClick(Sender: TObject);
     procedure btnImprimirEventoClick(Sender: TObject);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnDistribuicaoDFeClick(Sender: TObject);
-    procedure btnManifDestConfirmacaoClick(Sender: TObject);
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANF3EClick(Sender: TObject);
     procedure btnImprimirDANF3EOfflineClick(Sender: TObject);
@@ -325,8 +321,12 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  pcnAuxiliar, pcnConversao, pcnConversaoNF3e,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
+  ACBrUtil.Strings,
   ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL,
+  ACBrXmlBase,
+  pcnAuxiliar, pcnConversao,
+  ACBrNF3eConversao,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
 
 const
@@ -350,17 +350,25 @@ begin
 
     // TpcnTipoAmbiente = (taProducao, taHomologacao);
     case rgTipoAmb.ItemIndex of
-      0: Ide.tpAmb := taProducao;
-      1: Ide.tpAmb := taHomologacao;
+      0: Ide.tpAmb := TACBrTipoAmbiente.taProducao;
+      1: Ide.tpAmb := TACBrTipoAmbiente.taHomologacao;
     end;
 
     Ide.modelo := 66;
     Ide.serie  := 1;
     Ide.nNF    := StrToIntDef(NumDFe, 0);
-    Ide.cNF    := GerarCodigoDFe(Ide.nNF);
+    {
+      A função GerarCodigoDFe possui 2 parâmetros:
+      sendo que o primeiro (obrigatório) é o numero do documento
+      e o segundo (opcional) é a quantidade de digitos que o código tem.
+      Os valores aceitos para o segundo parâmentros são: 7 ou 8 (padrão)
+    }
+    Ide.cNF := GerarCodigoDFe(Ide.nNF, 7);
+
     Ide.dhEmi  := Now;
     // TpcnTipoEmissao = (teNormal, teOffLine);
-    Ide.tpEmis  := teNormal;
+    Ide.tpEmis  := TACBrTipoEmissao.teNormal;
+//    Ide.nSiteAutoriz := sa0;
     Ide.cMunFG  := 3503208;
     Ide.finNF3e := fnNormal;
     Ide.verProc := '1.0.0.0'; //Versão do seu sistema
@@ -754,44 +762,6 @@ begin
   end;
 end;
 
-procedure TfrmACBrNF3e.btnCartadeCorrecaoClick(Sender: TObject);
-var
-  Chave, idLote, CNPJ, nSeqEvento, Correcao: string;
-begin
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Chave da NF-e', Chave)) then
-     exit;
-  Chave := Trim(OnlyNumber(Chave));
-  idLote := '1';
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Identificador de controle do Lote de envio do Evento', idLote)) then
-     exit;
-  CNPJ := copy(Chave,7,14);
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
-     exit;
-  nSeqEvento := '1';
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
-     exit;
-  Correcao := 'Correção a ser considerada, texto livre. A correção mais recente substitui as anteriores.';
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Correção a ser considerada', Correcao)) then
-     exit;
-
-  ACBrNF3e1.EventoNF3e.Evento.Clear;
-
-  with ACBrNF3e1.EventoNF3e.Evento.New do
-  begin
-    infEvento.chNF3e := Chave;
-    infEvento.CNPJ   := CNPJ;
-    infEvento.dhEvento := now;
-    infEvento.tpEvento := teCCe;
-    infEvento.nSeqEvento := StrToInt(nSeqEvento);
-    infEvento.detEvento.xCorrecao := Correcao;
-  end;
-
-  ACBrNF3e1.EnviarEvento(StrToInt(idLote));
-
-  MemoResp.Lines.Text := ACBrNF3e1.WebServices.EnvEvento.RetWS;
-  LoadXML(ACBrNF3e1.WebServices.EnvEvento.RetWS, WBResposta);
-end;
-
 procedure TfrmACBrNF3e.btnCNPJClick(Sender: TObject);
 begin
   ShowMessage(ACBrNF3e1.SSL.CertCNPJ);
@@ -1073,31 +1043,6 @@ begin
   end;
 end;
 
-procedure TfrmACBrNF3e.btnGerarTXTClick(Sender: TObject);
-var
-  vAux, vNumLote: String;
-begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
-    exit;
-
-  if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
-    exit;
-
-  vNumLote := OnlyNumber(vNumLote);
-
-  if Trim(vNumLote) = '' then
-  begin
-    MessageDlg('Número do Lote inválido.',mtError,[mbok],0);
-    exit;
-  end;
-
-  ACBrNF3e1.NotasFiscais.Clear;
-
-  AlimentarComponente(vAux);
-
-//  ACBrNF3e1.NotasFiscais.GravarTXT(caminho e nome do arquivo TXT);
-end;
-
 procedure TfrmACBrNF3e.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
@@ -1244,60 +1189,6 @@ begin
 
     pgRespostas.ActivePageIndex := 0;
   end;
-end;
-
-procedure TfrmACBrNF3e.btnManifDestConfirmacaoClick(Sender: TObject);
-var
-  Chave, idLote, CNPJ, lMsg: string;
-begin
-  Chave:='';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Chave da NF-e', Chave)) then
-     exit;
-  Chave := Trim(OnlyNumber(Chave));
-  idLote := '1';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Identificador de controle do Lote de envio do Evento', idLote)) then
-     exit;
-  CNPJ := '';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
-     exit;
-
-  ACBrNF3e1.EventoNF3e.Evento.Clear;
-
-  with ACBrNF3e1.EventoNF3e.Evento.New do
-  begin
-    InfEvento.cOrgao   := 91;
-    infEvento.chNF3e    := Chave;
-    infEvento.CNPJ     := CNPJ;
-    infEvento.dhEvento := now;
-    infEvento.tpEvento := teManifDestConfirmacao;
-  end;
-
-  ACBrNF3e1.EnviarEvento(StrToInt(IDLote));
-
-  with ACBrNF3e1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
-  begin
-    lMsg:=
-    'Id: ' + Id + #13 +
-    'tpAmb: ' + TpAmbToStr(tpAmb) + #13 +
-    'verAplic: ' + verAplic + #13 +
-    'cOrgao: ' + IntToStr(cOrgao) + #13 +
-    'cStat: ' + IntToStr(cStat) + #13 +
-    'xMotivo: ' + xMotivo + #13 +
-    'chNF3e: ' + chNF3e + #13 +
-    'tpEvento: ' + TpEventoToStr(tpEvento) + #13 +
-    'xEvento: ' + xEvento + #13 +
-    'nSeqEvento: ' + IntToStr(nSeqEvento) + #13 +
-    'CNPJDest: ' + CNPJDest + #13 +
-    'emailDest: ' + emailDest + #13 +
-    'dhRegEvento: ' + DateTimeToStr(dhRegEvento) + #13 +
-    'nProt: ' + nProt;
-  end;
-  ShowMessage(lMsg);
-
-  MemoResp.Lines.Text := ACBrNF3e1.WebServices.EnvEvento.RetWS;
-  memoRespWS.Lines.Text := ACBrNF3e1.WebServices.EnvEvento.RetornoWS;
-
-  LoadXML(ACBrNF3e1.WebServices.EnvEvento.RetornoWS, WBResposta);
 end;
 
 procedure TfrmACBrNF3e.btnNumSerieClick(Sender: TObject);
@@ -1929,8 +1820,8 @@ end;
 
 procedure TfrmACBrNF3e.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
+                      ConverteXMLtoUTF8(RetWS), False, False);
 
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
 

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,100 +32,86 @@
 
 {$I ACBr.inc}
 
-{$I ACBr.inc}
-
-unit pcnRetEnvNF3e;
+unit ACBrDFeConsStatServ;
 
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor;
+  SysUtils, Classes,
+  ACBrXmlBase;
 
 type
 
-  TInfREC = class
+  TConsStatServ = class
   private
-    FnRec: String;
-    FdhRecbto: TDateTime;
-    FtMed: Integer;
-  public
-    property nRec: String        read FnRec     write FnRec;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property tMed: Integer       read FtMed     write FtMed;
-  end;
-
-  TretEnvNF3e = class(TObject)
-  private
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
-    FcStat: Integer;
-    FLeitor: TLeitor;
+    FtpAmb: TACBrTipoAmbiente;
     FcUF: Integer;
-    FverAplic: String;
-    FxMotivo: String;
-    FinfRec: TInfREC;
+    FVersao: String;
+    FNameSpace: String;
+    FtagGrupoMsg: String;
+    FGerarcUF: Boolean;
   public
-    constructor Create;
+    constructor Create(const AVersao, ANameSpace, AtagGrupoMsg: String; AGerarcUF: Boolean);
     destructor Destroy; override;
-    function LerXml: Boolean;
 
-    property Leitor: TLeitor         read FLeitor   write FLeitor;
-    property versao: String          read Fversao    write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
-    property cUF: Integer            read FcUF      write FcUF;
-    property infRec: TInfREC         read FinfRec   write FinfRec;
+    function GerarXML: String;
+    function ObterNomeArquivo: string;
+
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
+    property cUF: Integer             read FcUF   write FcUF;
   end;
 
 implementation
 
-{ TretEnvNF3e }
+uses
+  pcnAuxiliar;
 
-constructor TretEnvNF3e.Create;
+{ TConsStatServ }
+
+constructor TConsStatServ.Create(const AVersao, ANameSpace, AtagGrupoMsg: String; AGerarcUF: Boolean);
 begin
   inherited Create;
 
-  FLeitor := TLeitor.Create;
-  FinfRec := TInfREC.Create
+  FVersao := AVersao;
+  FNameSpace := ANameSpace;
+  FtagGrupoMsg := AtagGrupoMsg;
+  FGerarcUF := AGerarcUF;
 end;
 
-destructor TretEnvNF3e.Destroy;
+destructor TConsStatServ.Destroy;
 begin
-  FLeitor.Free;
-  FinfRec.Free;
 
   inherited;
 end;
 
-function TretEnvNF3e.LerXml: Boolean;
+function TConsStatServ.ObterNomeArquivo: string;
 var
-  ok: Boolean;
+  DataHora: TDateTime;
+  Year, Month, Day, Hour, Min, Sec, Milli: Word;
+  AAAAMMDDTHHMMSS: string;
 begin
-  result := False;
-  try
-    Leitor.Grupo := Leitor.Arquivo;
+  Datahora:=now;
+  DecodeTime(DataHora, Hour, Min, Sec, Milli);
+  DecodeDate(DataHora, Year, Month, Day);
+  AAAAMMDDTHHMMSS := IntToStrZero(Year, 4) + IntToStrZero(Month, 2) + IntToStrZero(Day, 2) +
+    IntToStrZero(Hour, 2) + IntToStrZero(Min, 2) + IntToStrZero(Sec, 2);
+  Result := AAAAMMDDTHHMMSS + '-ped-sta.xml';
+end;
 
-    if leitor.rExtrai(1, 'retEnviNF3e') <> '' then
-    begin
-      Fversao   := Leitor.rAtributo('versao');
-      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      FcUF      := Leitor.rCampo(tcInt, 'cUF');
-      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+function TConsStatServ.GerarXML: String;
+var
+  xUF: string;
+begin
+  xUF := '';
 
-      // Grupo infRec - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
-      infRec.nRec      := Leitor.rCampo(tcStr, 'nRec');
-      infRec.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      infRec.FtMed     := Leitor.rCampo(tcInt, 'tMed');
-      
-      Result := True;
-    end;
-  except
-    result := false;
-  end;
+  if FGerarcUF then
+    xUF := '<cUF>' + IntToStr(cUF) + '</cUF>';
+
+  Result := '<consStatServ' + FtagGrupoMsg + ' ' + FNameSpace + ' versao="' + Fversao + '">' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
+              xUF +
+              '<xServ>STATUS</xServ>' +
+            '</consStatServ' + FtagGrupoMsg + '>';
 end;
 
 end.

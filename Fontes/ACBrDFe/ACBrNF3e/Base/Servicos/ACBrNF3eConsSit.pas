@@ -32,75 +32,50 @@
 
 {$I ACBr.inc}
 
-unit ACBrNF3eReg;
+unit ACBrNF3eConsSit;
 
 interface
 
 uses
-  SysUtils, Classes, ACBrNF3e,
-  {$IFDEF FPC}
-     LResources, LazarusPackageIntf, PropEdits, componenteditors
-  {$ELSE}
-     {$IFNDEF COMPILER6_UP}
-        DsgnIntf
-     {$ELSE}
-        DesignIntf,
-        DesignEditors
-     {$ENDIF}
-  {$ENDIF} ;
+  SysUtils, Classes,
+  ACBrXmlBase, ACBrNF3eConsts;
 
-procedure Register;
+type
+
+  TConsSitNF3e = class
+  private
+    FtpAmb: TACBrTipoAmbiente;
+    FchNF3e: String;
+    FVersao: String;
+  public
+    function GerarXML: String;
+    function ObterNomeArquivo: String;
+
+    property tpAmb: TACBrTipoAmbiente read FtpAmb   write FtpAmb;
+    property chNF3e: String           read FchNF3e  write FchNF3e;
+    property Versao: String           read FVersao  write FVersao;
+  end;
 
 implementation
 
 uses
-  ACBrReg, ACBrDFeRegUtil, ACBrDFeConfiguracoes, ACBrNF3eConfiguracoes;
+  ACBrUtil.Strings;
 
-{$IFNDEF FPC}
-   {$R ACBrNF3e.dcr}
-{$ENDIF}
+{ TConsSitNF3e }
 
-procedure Register;
+function TConsSitNF3e.ObterNomeArquivo: String;
 begin
-  RegisterComponents('ACBrNF3e', [TACBrNF3e]);
-
-  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrNF3e, 'Configuracoes',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TWebServicesConf, 'UF',
-     TACBrUFProperty);
-
-  RegisterPropertyEditor(TypeInfo(TGeralConfNF3e), TConfiguracoes, 'Geral',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TGeralConfNF3e, 'PathSalvar',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TArquivosConfNF3e), TConfiguracoes, 'Arquivos',
-    TClassProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNF3e, 'PathNF3e',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNF3e, 'PathEvento',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNF3e, 'PathInu',
-     TACBrDirProperty);
-
-  RegisterPropertyEditor(TypeInfo(TRespTecConf), TConfiguracoes, 'RespTec',
-     TClassProperty);
+  Result := OnlyNumber(FchNF3e) + '-ped-sit.xml';
 end;
 
-{$ifdef FPC}
-initialization
-   {$i ACBrNF3e.lrs}
-{$endif}
+function TConsSitNF3e.GerarXML: String;
+begin
+  Result := '<consSitNF3e ' + NAME_SPACE_NF3e + ' versao="' + versao + '">' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
+              '<xServ>CONSULTAR</xServ>' +
+              '<chNF3e>' + chNF3e + '</chNF3e>' +
+            '</consSitNF3e>';
+end;
 
 end.
+

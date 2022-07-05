@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnNF3eConsts;
+unit ACBrNF3eConsts;
 
 interface
 
@@ -143,6 +143,7 @@ const
   DSC_VPISEfet = 'Total do Valor Efetivo do PIS';
   DSC_URLQRCODEPIX = 'URL do QRCode do PIX';
   DSC_TPFONTEENERGIA = 'Tipo da fonte de energia utilizada';
+  DSC_NSITEAUTORIZ = 'Numero do Site de Autorização';
 
 implementation
 

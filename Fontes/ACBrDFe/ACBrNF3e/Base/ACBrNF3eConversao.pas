@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnConversaoNF3e;
+unit ACBrNF3eConversao;
 
 interface
 
@@ -122,7 +122,7 @@ type
   TmotDifTarif = (mdtDecisaoJudicial, mdtDecisaoDistribuidora, mdtDesconto,
                   mdtAlteracao);
 
-  TtpBand = (tbVerde, tbAmarela, tbVermelha1, tbVermelha2);
+  TtpBand = (tbVerde, tbAmarela, tbVermelha1, tbVermelha2, tbEscassez);
 
   TmotDifBand = (mdbDecisaoJudicial, mdbDecisaoDistribuidora, mdbDesconto,
                  mdbAlteracao);
@@ -142,7 +142,32 @@ type
   TtpFonteEnergia = (feHidraulica, feSolar, feEolica, feBiomassa, feBiogas,
                      feHibrida);
 
-function LayOutToServico(const t: TLayOut): String;
+  TSiteAutorizador = (sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9);
+
+  TIndicador = (tiSim, tiNao);
+
+  TCSTCofins = (cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09,
+                cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60,
+                cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71,
+                cof72, cof73, cof74, cof75, cof98, cof99);
+
+  TCSTPis = (pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09,
+             pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60,
+             pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71,
+             pis72, pis73, pis74, pis75, pis98, pis99);
+
+  TCSTIcms = (cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
+              cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
+              cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60); //80 e 81 apenas para CTe
+
+  TindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
+
+function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
+  const AEnumerados: array of variant): variant;
+function EnumeradoToStr(const t: variant; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+
+  function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 
 function LayOutToSchema(const t: TLayOut): TSchemaNF3e;
@@ -245,12 +270,59 @@ function StrTotpLanc(out ok: Boolean; const s: String): TtpLanc;
 function tpFonteEnergiaToStr(const t: TtpFonteEnergia): String;
 function StrTotpFonteEnergia(out ok: Boolean; const s: String): TtpFonteEnergia;
 
+function SiteAutorizadorToStr(const t: TSiteAutorizador): String;
+function StrToSiteAutorizator(out ok: Boolean; const s: String): TSiteAutorizador;
+
+function TIndicadorToStr(const t: TIndicador): string;
+function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+
+function CSTCOFINSToStrTagPosText(const t: TCSTCofins): string;
+function CSTCOFINSToStr(const t: TCSTCofins): string;
+function StrToCSTCOFINS(out ok: boolean; const s: string): TCSTCofins;
+
+function CSTPISToStrTagPosText(const t: TCSTPis): string;
+function CSTPISToStr(const t: TCSTPis): string;
+function StrToCSTPIS(out ok: boolean; const s: string): TCSTPis;
+
+function CSTICMSToStr(const t: TCSTIcms): string;
+function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
+function CSTICMSToStrTagPos(const t: TCSTIcms): string;
+function CSTICMSToStrTagPosText(const t: TCSTIcms): string;
+
+function indIEDestToStr(const t: TindIEDest ): string;
+function StrToindIEDest(out ok: boolean; const s: string): TindIEDest;
+
 function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
 
 implementation
 
 uses
   typinfo;
+
+function StrToEnumerado(out ok: boolean; const s: string; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := -1;
+  for i := Low(AString) to High(AString) do
+    if AnsiSameText(s, AString[i]) then
+      result := AEnumerados[i];
+  ok := result <> -1;
+  if not ok then
+    result := AEnumerados[0];
+end;
+
+function EnumeradoToStr(const t: variant; const AString:
+  array of string; const AEnumerados: array of variant): variant;
+var
+  i: integer;
+begin
+  result := '';
+  for i := Low(AEnumerados) to High(AEnumerados) do
+    if t = AEnumerados[i] then
+      result := AString[i];
+end;
 
 function LayOutToServico(const t: TLayOut): String;
 begin
@@ -668,14 +740,14 @@ end;
 
 function tpBandToStr(const t: TtpBand): String;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
-    [tbVerde, tbAmarela, tbVermelha1, tbVermelha2]);
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5'],
+    [tbVerde, tbAmarela, tbVermelha1, tbVermelha2, tbEscassez]);
 end;
 
 function StrTotpBand(out ok: Boolean; const s: String): TtpBand;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
-    [tbVerde, tbAmarela, tbVermelha1, tbVermelha2]);
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5'],
+    [tbVerde, tbAmarela, tbVermelha1, tbVermelha2, tbEscassez]);
 end;
 
 function motDifBandToStr(const t: TmotDifBand): String;
@@ -764,6 +836,209 @@ begin
             [feHidraulica, feSolar, feEolica, feBiomassa, feBiogas, feHibrida]);
 end;
 
+function SiteAutorizadorToStr(const t: TSiteAutorizador): String;
+begin
+  Result := EnumeradoToStr(t, ['0','1', '2', '3', '4', '5', '6', '7', '8', '9'],
+            [sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9]);
+end;
+
+function StrToSiteAutorizator(out ok: Boolean; const s: String): TSiteAutorizador;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+            [sa0, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9]);
+end;
+
+function TIndicadorToStr(const t: TIndicador): string;
+begin
+  Result := EnumeradoToStr(t, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function CSTCOFINSToStrTagPosText(const t: TCSTCofins): string;
+begin
+     result := EnumeradoToStr(t,
+          ['01 - Operação Tributável com Alíquota Básica',
+          '02 - Operação Tributável com Alíquota Diferenciada',
+          '03 - Operação Tributável com Alíquota por Unidade de Medida de Produto',
+          '04 - Operação Tributável Monofásica - Revenda a Alíquota Zero',
+          '05 - Operação Tributável por Substituição Tributária',
+          '06 - Operação Tributável a Alíquota Zero',
+          '07 - Operação Isenta da Contribuição',
+          '08 - Operação sem Incidência da Contribuição',
+          '09 - Operação com Suspensão da Contribuição',
+          '49 - Outras Operações de Saída',
+          '50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno',
+          '52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação',
+          '53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno',
+          '62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação',
+          '63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '67 - Crédito Presumido - Outras Operações',
+          '70 - Operação de Aquisição sem Direito a Crédito',
+          '71 - Operação de Aquisição com Isenção',
+          '72 - Operação de Aquisição com Suspensão',
+          '73 - Operação de Aquisição a Alíquota Zero',
+          '74 - Operação de Aquisição sem Incidência da Contribuição',
+          '75 - Operação de Aquisição por Substituição Tributária',
+          '98 - Outras Operações de Entrada',
+          '99 - Outras Operações'],
+          [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
+end;
+
+function CSTCOFINSToStr(const t: TCSTCofins): string;
+begin
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
+    [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
+end;
+
+function StrToCSTCOFINS(out ok: boolean; const s: string): TCSTCofins;
+begin
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
+    [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
+end;
+
+function CSTPISToStrTagPosText(const t: TCSTPis): string;
+begin
+     result := EnumeradoToStr(t,
+          ['01 - Operação Tributável com Alíquota Básica',
+          '02 - Operação Tributável com Alíquota Diferenciada',
+          '03 - Operação Tributável com Alíquota por Unidade de Medida de Produto',
+          '04 - Operação Tributável Monofásica - Revenda a Alíquota Zero',
+          '05 - Operação Tributável por Substituição Tributária',
+          '06 - Operação Tributável a Alíquota Zero',
+          '07 - Operação Isenta da Contribuição',
+          '08 - Operação sem Incidência da Contribuição',
+          '09 - Operação com Suspensão da Contribuição',
+          '49 - Outras Operações de Saída',
+          '50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno',
+          '52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação',
+          '53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno',
+          '62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação',
+          '63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '67 - Crédito Presumido - Outras Operações',
+          '70 - Operação de Aquisição sem Direito a Crédito',
+          '71 - Operação de Aquisição com Isenção',
+          '72 - Operação de Aquisição com Suspensão',
+          '73 - Operação de Aquisição a Alíquota Zero',
+          '74 - Operação de Aquisição sem Incidência da Contribuição',
+          '75 - Operação de Aquisição por Substituição Tributária',
+          '98 - Outras Operações de Entrada',
+          '99 - Outras Operações'],
+          [pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99]);
+end;
+
+function CSTPISToStr(const t: TCSTPIS): string;
+begin
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
+    [pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99]);
+end;
+
+function StrToCSTPIS(out ok: boolean; const s: string): TCSTPIS;
+begin
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
+    [pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99]);
+end;
+
+function CSTICMSToStr(const t: TCSTIcms): string;
+begin
+  // ID -> N02  - Tributada integralmente
+  // ID -> N03  - Tributada e com cobrança do ICMS por substituição tributária
+  // ID -> N04  - Com redução de base de cálculo
+  // ID -> N05  - Isenta ou não tributada e com cobrança do ICMS por substituição tributária
+  // ID -> N06  - Isenta
+  // ID -> N06  - Não tributada
+  // ID -> N06  - Suspensão
+  // ID -> N07  - Diferimento A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.
+  // ID -> N08  - ICMS cobrado anteriormente por substituição
+  // ID -> N09  - Com redução de base de cálculo e cobrança do ICMS por substituição tributária
+  // ID -> N10  - ICMS pagto atribuído ao tomador ou ao terceiro previsto na legislação p/ ST
+  // ID -> N10a - Operação interestadual para consumidor final com partilhado ICMS devido na operaçãoentre a UF de origem e a UF do destinatário ou a UF definida na legislação. (Ex. UF daconcessionária de entrega do veículos) (v2.0)
+  // ID -> N10b - Grupo de informação do ICMS ST devido para a UF de destino,nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário. (v2.0)
+  // ID -> N11  - ICMS devido para outras UF
+  // ID -> N12  - Outros
+  result := EnumeradoToStr(t, ['', '00', '10', '20', '30', '40', '41', '45', '50', '51',
+                               '60', '70', '80', '81', '90', '90', 'SN',
+                               '10', '90', '41', '60'],
+                              [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
+                              cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
+                              cstPart10, cstPart90, cstRep41, cstRep60]);
+end;
+
+function StrToCSTICMS(out ok: boolean; const s: string): TCSTIcms;
+begin
+  result := StrToEnumerado(ok, s, ['', '00', '10', '20', '30', '40', '41', '45', '50', '51', '60',
+                                   '70', '80', '81', '90', '91', 'SN',
+                                   '10part', '90part', '41rep', '60rep'],
+                                  [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60,
+                                   cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
+                                   cstPart10, cstPart90, cstRep41, cstRep60]);
+end;
+
+function CSTICMSToStrTagPos(const t: TCSTIcms): string;
+begin
+  result := EnumeradoToStr(t, ['02', '03', '04', '05', '06', '06', '06', '07', '08', '09', '10', '11', '12', '10a', '10a', '10b', '10b'],
+    [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstPart10 , cstPart90 , cstRep41, cstRep60]);
+end;
+
+function CSTICMSToStrTagPosText(const t: TCSTIcms): string;
+begin
+  result := EnumeradoToStr(t,
+   ['VAZIO',
+    '00 - TRIBUTAÇÃO NORMAL DO ICMS',
+    '10 - TRIBUTAÇÃO COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
+    '20 - TRIBUTAÇÃO COM REDUÇÃO DE BC DO ICMS',
+    '30 - TRIBUTAÇÃO ISENTA E COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
+    '40 - ICMS ISENÇÃO',
+    '41 - ICMS NÃO TRIBUTADO',
+    '45 - ICMS ISENTO, NÃO TRIBUTADO OU DIFERIDO',
+    '50 - ICMS SUSPENSÃO',
+    '51 - ICMS DIFERIDO',
+    '60 - ICMS COBRADO POR SUBSTITUIÇÃO TRIBUTÁRIA',
+    '70 - TRIBUTAÇÃO COM REDUÇÃO DE BC E COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
+    '80 - RESPONSABILIDADE DO RECOLHIMENTO DO ICMS ATRIBUÍDO AO TOMADOR OU 3° POR ST',
+    '81 - ICMS DEVIDO À OUTRA UF',
+    '90 - ICMS OUTROS',
+    '90 - ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
+    '90 - SIMPLES NACIONAL',
+    '10 - TRIBUTADA E COM COBRANÇA DO ICMS POR SUBSTITUIÇÃO TRIBUTÁRIA - PARTILHA',
+    '90 - OUTROS - PARTILHA',
+    '41 - NÃO TRIBUTADO - REPASSE',
+    '60 - COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA - REPASSE'
+    ],
+    [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70,
+    cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN, cstPart10, cstPart90, cstRep41, cstRep60]);
+end;
+
+function indIEDestToStr(const t: TindIEDest ): string;
+begin
+  result := EnumeradoToStr(t, ['1', '2', '9'], [inContribuinte, inIsento, inNaoContribuinte]);
+end;
+
+function StrToindIEDest(out ok: boolean; const s: string): TindIEDest;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2', '9'], [inContribuinte, inIsento, inNaoContribuinte]);
+end;
 
 function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
 begin

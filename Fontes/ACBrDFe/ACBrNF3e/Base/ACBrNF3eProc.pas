@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,22 +32,22 @@
 
 {$I ACBr.inc}
 
-unit pcnProcNF3e;
+unit ACBrNF3eProc;
 
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
+  SysUtils, Classes,
+  ACBrXmlBase;
 
 type
 
   TProcNF3e = class(TObject)
   private
-    FGerador: TGerador;
     FPathNF3e: String;
     FPathRetConsReciNF3e: String;
     FPathRetConsSitNF3e: String;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FchNF3e: String;
     FdhRecbto: TDateTime;
@@ -66,13 +66,12 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Assign(Source: TProcNF3e);
-    function GerarXML: Boolean;
+    function GerarXML: string;
 
-    property Gerador: TGerador          read FGerador;
     property PathNF3e: String           read FPathNF3e            write FPathNF3e;
     property PathRetConsReciNF3e: String read FPathRetConsReciNF3e write FPathRetConsReciNF3e;
     property PathRetConsSitNF3e: String  read FPathRetConsSitNF3e  write FPathRetConsSitNF3e;
-    property tpAmb: TpcnTipoAmbiente    read FtpAmb              write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente   read FtpAmb              write FtpAmb;
     property verAplic: String           read FverAplic           write FverAplic;
     property chNF3e: String             read FchNF3e             write FchNF3e;
     property dhRecbto: TDateTime        read FdhRecbto           write FdhRecbto;
@@ -92,7 +91,11 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnLeitor, ACBrUtil, pcnNF3eConsts;
+  ACBrUtil.Strings,
+  ACBrXmlDocument,
+  pcnAuxiliar,
+  pcnConsts,
+  ACBrNF3eConsts;
 
 { TProcNF3e }
 
@@ -100,18 +103,16 @@ constructor TProcNF3e.Create;
 begin
   inherited Create;
 
-  FGerador := TGerador.Create;
   FnProt   := '';
 end;
 
 destructor TProcNF3e.Destroy;
 begin
-  FGerador.Free;
 
   inherited;
 end;
 
-function TProcNF3e.GerarXML: Boolean;
+function TProcNF3e.GerarXML: string;
 
   function PreencherTAG(const TAG: String; Texto: String): String;
   begin
@@ -126,36 +127,36 @@ var
   xProtNF3e: String;
   nProtLoc: String;
   xUF: string;
-  LocLeitor: TLeitor;
   i: Integer;
   ProtLido: Boolean; //Protocolo lido do arquivo
+  Document: TACBrXmlDocument;
+  ANode, AnodeAux: TACBrXmlNode;
 begin
-  XMLNF3e      := TStringList.Create;
-  XMLinfProt  := TStringList.Create;
+  XMLNF3e := TStringList.Create;
+  XMLinfProt := TStringList.Create;
   XMLinfProt2 := TStringList.Create;
-  Gerador.ListaDeAlertas.Clear;
 
   try
     if (FXML_NF3e = '') and (FXML_prot = '') then
     begin
       ProtLido := False;
-      xProtNF3e    := '';
+      xProtNF3e := '';
 
       // Arquivo NF3e
       if not FileExists(FPathNF3e) then
-        Gerador.wAlerta('XR04', 'NF3e', 'NF3e', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+        raise Exception.Create(ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
       else
         XMLNF3e.LoadFromFile(FPathNF3e);
 
       FchNF3e := RetornarConteudoEntre(XMLNF3e.Text, 'Id="NF3e', '"');
 
       if trim(FchNF3e) = '' then
-        Gerador.wAlerta('XR01', 'ID/NF3e', 'Numero da chave da NF3e', ERR_MSG_VAZIO);
+        raise Exception.Create('Numero da chave da NF3e:' + ERR_MSG_VAZIO);
 
       if (FPathRetConsReciNF3e = '') and (FPathRetConsSitNF3e = '') then
       begin
         if (FchNF3e = '') and (FnProt = '') then
-          Gerador.wAlerta('XR06', 'RECIBO/SITUAÇÃO', 'RECIBO/SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+          raise Exception.Create(ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
         else
           ProtLido := True;
       end;
@@ -164,9 +165,30 @@ begin
       if (FPathRetConsReciNF3e <> '') and (FPathRetConsSitNF3e = '') and (not ProtLido) then
       begin
         if not FileExists(FPathRetConsReciNF3e) then
-          Gerador.wAlerta('XR06', 'PROTOCOLO', 'PROTOCOLO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+          raise Exception.Create(ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
         else
         begin
+          Document := TACBrXmlDocument.Create;
+
+          try
+            XMLinfProt.LoadFromFile(FPathRetConsReciNF3e);
+            FXML_prot := XMLinfProt.Text; // carregar o arquivo do disco
+            Document.LoadFromXml(FXML_prot);
+
+            ANode := Document.Root; //.Childrens.FindAnyNs('retConsSitNF3e');
+
+            if ANode <> nil then
+            begin
+              // falta implementar
+            end;
+
+            FreeAndNil(Document);
+            Result := ''; // retornar o protocolo
+          except
+            Result := '';
+          end;
+
+          {
           i := 0;
           LocLeitor := TLeitor.Create;
           try
@@ -190,6 +212,7 @@ begin
           finally
             LocLeitor.Free;
           end;
+          }
         end;
       end;
 
@@ -197,7 +220,7 @@ begin
       if (FPathRetConsReciNF3e = '') and (FPathRetConsSitNF3e <> '') and (not ProtLido) then
       begin
         if not FileExists(FPathRetConsSitNF3e) then
-          Gerador.wAlerta('XR06', 'SITUAÇÃO', 'SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+          raise Exception.Create(ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
         else
         begin
           XMLinfProt.LoadFromFile(FPathRetConsSitNF3e);
@@ -238,19 +261,21 @@ begin
           xUF := Copy(FverAplic,1,2);
 
         xProtNF3e := '<protNF3e versao="' + Versao + '">' +
-                     '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
-                      '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
-                      '<verAplic>' + FverAplic + '</verAplic>' +
-                      '<chNF3e>' + FchNF3e + '</chNF3e>' +
-                      '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'')+'</dhRecbto>'+
-                      '<nProt>' + FnProt + '</nProt>' +
-                      '<digVal>' + FdigVal + '</digVal>' +
-                      '<cStat>' + IntToStr(FcStat) + '</cStat>' +
-                      '<xMotivo>' + FxMotivo + '</xMotivo>' +
-                      '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
-                      '<xMsg>' + FxMsg + '</xMsg>' +
-                     '</infProt>' +
-                    '</protNF3e>';
+                       '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
+                         '<tpAmb>' + TipoAmbienteToStr(FtpAmb) + '</tpAmb>' +
+                         '<verAplic>' + FverAplic + '</verAplic>' +
+                         '<chNF3e>' + FchNF3e + '</chNF3e>' +
+                         '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) +
+                                        IIf(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'') +
+                         '</dhRecbto>'+
+                         '<nProt>' + FnProt + '</nProt>' +
+                         '<digVal>' + FdigVal + '</digVal>' +
+                         '<cStat>' + IntToStr(FcStat) + '</cStat>' +
+                         '<xMotivo>' + FxMotivo + '</xMotivo>' +
+                         '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
+                         '<xMsg>' + FxMsg + '</xMsg>' +
+                       '</infProt>' +
+                     '</protNF3e>';
       end;
 
       FXML_NF3e := XMLNF3e.Text;
@@ -258,18 +283,14 @@ begin
     end;
 
     // Gerar arquivo
-    if (Gerador.ListaDeAlertas.Count = 0) and
-       (FXML_NF3e <> '') and (FXML_prot <> '') then
-    begin
-      Gerador.ArquivoFormatoXML := '';
-      Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('nf3eProc versao="' + Versao + '" ' + NAME_SPACE_NF3e, '');
-      Gerador.wTexto('<NF3e xmlns' + RetornarConteudoEntre(FXML_NF3e, '<NF3e xmlns', '</NF3e>') + '</NF3e>');
-      Gerador.wTexto(FXML_prot);
-      Gerador.wGrupo('/nf3eProc');
-    end;
-
-    Result := (Gerador.ListaDeAlertas.Count = 0);
+    if (FXML_NF3e <> '') and (FXML_prot <> '') then
+      Result := '<nf3eProc ' + NAME_SPACE_NF3e + ' versao="' + versao + '">' +
+                  '<NF3e xmlns>' + RetornarConteudoEntre(FXML_NF3e, '<NF3e xmlns', '</NF3e>') +
+                  '</NF3e>' +
+                   FXML_prot +
+                '</nf3eProc>'
+    else
+      Result := '';
   finally
     XMLNF3e.Free;
     XMLinfProt.Free;
@@ -279,7 +300,6 @@ end;
 
 procedure TProcNF3e.Assign(Source: TProcNF3e);
 begin
-//  Gerador.Assign(Source.Gerador);
   PathNF3e            := Source.PathNF3e;
   PathRetConsReciNF3e := Source.PathRetConsReciNF3e;
   PathRetConsSitNF3e  := Source.PathRetConsSitNF3e;

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -38,10 +38,12 @@ interface
 
 uses
   Classes, SysUtils, synautil,
-  ACBrBase, ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrBase, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrXmlBase,
   ACBrNF3eConfiguracoes, ACBrNF3eWebServices, ACBrNF3eNotasFiscais,
   ACBrNF3eDANF3eClass,
-  pcnConversao, pcnNF3e, pcnConversaoNF3e, pcnEnvEventoNF3e;
+  pcnConversao,
+  ACBrNF3eClass, ACBrNF3eConversao, ACBrNF3eEnvEvento;
 
 const
   ACBRNF3e_NAMESPACE = 'http://www.portalfiscal.inf.br/nf3e';
@@ -104,16 +106,15 @@ type
     function AjustarVersaoQRCode( AVersaoQRCode: TpcnVersaoQrCode;
       AVersaoXML: TVersaoNF3e): TpcnVersaoQrCode;
     function GetURLConsultaNF3e(const CUF: integer;
-      const TipoAmbiente: TpcnTipoAmbiente;
+      const TipoAmbiente: TACBrTipoAmbiente;
       const Versao: Double): String;
     function GetURLQRCode(const CUF: integer;
-       const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
+       const TipoAmbiente: TACBrTipoAmbiente; const TipoEmissao: TACBrTipoEmissao;
        const AChaveNF3e: String; const Versao: Double): String;
 
     function IdentificaSchema(const AXML: String): TSchemaNF3e;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double): String;
     function GerarNomeArqSchemaEvento(ASchemaEventoNF3e: TSchemaNF3e; VersaoServico: Double): String;
-    function GerarChaveContingencia(FNF3e: TNF3e): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
@@ -130,8 +131,6 @@ type
       ANSU: String): Boolean;
     function DistribuicaoDFePorChaveNF3e(AcUFAutor: integer; const ACNPJCPF,
       AchNF3e: String): Boolean;
-    function Inutilizar(const ACNPJ, AJustificativa: String;
-      AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
@@ -149,6 +148,7 @@ implementation
 
 uses
   dateutils, math,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
   pcnAuxiliar, ACBrDFeSSL;
 
 {$IFDEF FPC}
@@ -335,78 +335,6 @@ begin
   end;
 end;
 
-function TACBrNF3e.GerarChaveContingencia(FNF3e: TNF3e): String;
-
-  function GerarDigito_Contigencia(out Digito: integer; chave: String): Boolean;
-  var
-    i, j: integer;
-  const
-    PESO = '43298765432987654329876543298765432';
-  begin
-    // Manual Integracao Contribuinte v2.02a - Página: 70 //
-    chave := OnlyNumber(chave);
-    j := 0;
-    Digito := 0;
-    Result := True;
-
-    try
-      for i := 1 to 35 do
-        j := j + StrToInt(copy(chave, i, 1)) * StrToInt(copy(PESO, i, 1));
-      Digito := 11 - (j mod 11);
-
-      if (j mod 11) < 2 then
-        Digito := 0;
-    except
-      Result := False;
-    end;
-
-    if length(chave) <> 35 then
-      Result := False;
-  end;
-
-var
-  wchave: String;
-  wicms_s, wicms_p: String;
-  Digito: integer;
-begin
-  //UF
-  if FNF3e.Dest.EnderDest.UF = 'EX' then
-    wchave := '99' //exterior
-  else
-  begin
-    wchave := copy(IntToStr(FNF3e.Dest.EnderDest.cMun), 1, 2) //saida
-  end;
-
-  if FNF3e.Ide.tpEmis in [teContingencia] then
-    wchave := wchave + TpEmisToStr(FNF3e.Ide.tpEmis)
-  else
-    wchave := wchave + '0'; //este valor caracteriza ERRO, valor tem q ser  2, 5, 6 ou 7
-
-  //CNPJ OU CPF
-  if (FNF3e.Dest.EnderDest.UF = 'EX') then
-    wchave := wchave + Poem_Zeros('0', 14)
-  else
-    wchave := wchave + Poem_Zeros(FNF3e.Dest.CNPJCPF, 14);
-
-  //VALOR DA NF
- // wchave := wchave + IntToStrZero(Round(FNF3e.Total.ICMSTot.vNF * 100), 14);
-
-  //DESTAQUE ICMS PROPRIO E ST
- // wicms_p := IfThen(NaoEstaZerado(FNF3e.Total.ICMSTot.vICMS), '1', '2');
-//  wicms_s := IfThen(NaoEstaZerado(FNF3e.Total.ICMSTot.vST), '1', '2');
-  wchave := wchave + wicms_p + wicms_s;
-
-  //DIA DA EMISSAO
-  wchave := wchave + Poem_Zeros(DayOf(FNF3e.Ide.dhEmi), 2);
-
-  //DIGITO VERIFICADOR
-  GerarDigito_Contigencia(Digito, wchave);
-  wchave := wchave + IntToStr(digito);
-
-  //RETORNA A CHAVE DE CONTINGENCIA
-  Result := wchave;
-end;
-
 function TACBrNF3e.GetConfiguracoes: TConfiguracoesNF3e;
 begin
   Result := TConfiguracoesNF3e(FPConfiguracoes);
@@ -462,7 +390,7 @@ begin
 end;
 
 function TACBrNF3e.GetURLConsultaNF3e(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
+  const TipoAmbiente: TACBrTipoAmbiente; const Versao: Double): String;
 var
   VersaoDFe: TVersaoNF3e;
   VersaoQrCode: TpcnVersaoQrCode;
@@ -471,11 +399,12 @@ begin
   VersaoDFe := DblToVersaoNF3e(ok, Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
-  Result := LerURLDeParams('NF3e', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaNF3e', VersaoQrCodeToDbl(VersaoQrCode));
+  Result := LerURLDeParams('NF3e', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
+    'URL-ConsultaNF3e', VersaoQrCodeToDbl(VersaoQrCode));
 end;
 
 function TACBrNF3e.GetURLQRCode(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
+  const TipoAmbiente: TACBrTipoAmbiente; const TipoEmissao: TACBrTipoEmissao;
   const AChaveNF3e: String; const Versao: Double): String;
 var
   idNF3e, sEntrada, urlUF, Passo2, sign: String;
@@ -486,7 +415,8 @@ begin
   VersaoDFe := DblToVersaoNF3e(Ok, Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
-  urlUF := LerURLDeParams('NF3e', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', VersaoQrCodeToDbl(VersaoQrCode));
+  urlUF := LerURLDeParams('NF3e', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
+    'URL-QRCode', VersaoQrCodeToDbl(VersaoQrCode));
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
@@ -494,10 +424,10 @@ begin
   idNF3e := AChaveNF3e;
 
   // Passo 1
-  sEntrada := 'chNF3e=' + idNF3e + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+  sEntrada := 'chNF3e=' + idNF3e + '&tpAmb=' + TipoAmbienteToStr(TipoAmbiente);
 
   // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
-  if TipoEmissao in [teDPEC, teFSDA] then
+  if TpcnTipoEmissao(TipoEmissao) = teOffLine then
   begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;
@@ -512,11 +442,11 @@ end;
 
 function TACBrNF3e.GravarStream(AStream: TStream): Boolean;
 begin
-  if EstaVazio(FEventoNF3e.Gerador.ArquivoFormatoXML) then
+  if EstaVazio(FEventoNF3e.Xml) then
     FEventoNF3e.GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FEventoNF3e.Gerador.ArquivoFormatoXML));
+  WriteStrToStream(AStream, AnsiString(FEventoNF3e.Xml));
   Result := True;
 end;
 
@@ -652,7 +582,7 @@ begin
     if EventoNF3e.Evento.Items[i].infEvento.nSeqEvento = 0 then
       EventoNF3e.Evento.Items[i].infEvento.nSeqEvento := 1;
 
-    FEventoNF3e.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+    FEventoNF3e.Evento.Items[i].InfEvento.tpAmb := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
 
     if NotasFiscais.Count > 0 then
     begin
@@ -765,13 +695,6 @@ function TACBrNF3e.DistribuicaoDFePorChaveNF3e(AcUFAutor: integer; const ACNPJCP
   AchNF3e: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchNF3e);
-end;
-
-function TACBrNF3e.Inutilizar(const ACNPJ, AJustificativa: String; AAno, ASerie,
-  ANumInicial, ANumFinal: Integer): Boolean;
-begin
-  Result := True;
-  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, ASerie, ANumInicial, ANumFinal);
 end;
 
 procedure TACBrNF3e.EnviarEmailEvento(const sPara, sAssunto: String;

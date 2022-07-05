@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -38,13 +38,10 @@ interface
 
 uses
   Classes, SysUtils, StrUtils,
-  ACBrNF3eConfiguracoes, pcnNF3e,
-  {$IfDef DFE_ACBR_LIBXML2}
-    ACBrNF3eXmlReader, ACBrNF3eXmlWriter,
-  {$Else}
-     pcnNF3eR, pcnNF3eW,
-  {$EndIf}
-   pcnConversao, pcnAuxiliar, pcnLeitor;
+  ACBrXmlBase,
+  ACBrNF3eConfiguracoes, ACBrNF3eClass,
+  ACBrNF3eXmlReader, ACBrNF3eXmlWriter,
+  pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
 
@@ -53,14 +50,8 @@ type
   NotaFiscal = class(TCollectionItem)
   private
     FNF3e: TNF3e;
-{$IfDef DFE_ACBR_LIBXML2}
     FNF3eW: TNF3eXmlWriter;
     FNF3eR: TNF3eXmlReader;
-{$Else}
-    FNF3eW: TNF3eW;
-    FNF3eR: TNF3eR;
-{$EndIf}
-
     FConfiguracoes: TConfiguracoesNF3e;
     FXMLAssinado: String;
     FXMLOriginal: String;
@@ -100,9 +91,6 @@ type
 
     function GerarXML: String;
     function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
-
-    function GerarTXT: String;
-    function GravarTXT(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
@@ -174,7 +162,6 @@ type
 
     function GerarIni: String;
     function GravarXML(const APathNomeArquivo: String = ''): Boolean;
-    function GravarTXT(const APathNomeArquivo: String = ''): Boolean;
 
     property ACBrNF3e: TComponent read FACBrNF3e;
   end;
@@ -184,13 +171,9 @@ implementation
 uses
   dateutils, IniFiles,
   synautil,
-  ACBrNF3e,
-  ACBrUtil.FilesIO,
-  ACBrUtil.Base,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
-  ACBrDFeUtil, pcnConversaoNF3e;
+  ACBrNF3e, ACBrDFeUtil, ACBrNF3eConversao;
 
 { NotaFiscal }
 
@@ -199,13 +182,8 @@ begin
   inherited Create(Collection2);
 
   FNF3e := TNF3e.Create;
-  {$IfDef DFE_ACBR_LIBXML2}
-    FNF3eW := TNF3eXmlWriter.Create(FNF3e);
-    FNF3eR := TNF3eXmlReader.Create(FNF3e);
-{$Else}
-    FNF3eW := TNF3eW.Create(FNF3e);
-    FNF3eR := TNF3eR.Create(FNF3e);
-{$EndIf}
+  FNF3eW := TNF3eXmlWriter.Create(FNF3e);
+  FNF3eR := TNF3eXmlReader.Create(FNF3e);
 
   FConfiguracoes := TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e).Configuracoes;
 
@@ -215,8 +193,8 @@ begin
 
     FNF3e.Ide.modelo  := 66;
     FNF3e.Ide.verProc := 'ACBrNF3e';
-    FNF3e.Ide.tpAmb   := Configuracoes.WebServices.Ambiente;
-    FNF3e.Ide.tpEmis  := Configuracoes.Geral.FormaEmissao;
+    FNF3e.Ide.tpAmb   := TACBrTipoAmbiente(Configuracoes.WebServices.Ambiente);
+    FNF3e.Ide.tpEmis  := TACBrTipoEmissao(Configuracoes.Geral.FormaEmissao);
   end;
 end;
 
@@ -297,8 +275,7 @@ begin
       GerarXML;
     end;
 
-    if Configuracoes.Arquivos.Salvar and
-       (not Configuracoes.Arquivos.SalvarApenasNF3eProcessadas) then
+    if Configuracoes.Arquivos.Salvar then
     begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, FXMLAssinado)
@@ -314,7 +291,7 @@ var
   NotaEhValida{, ok}: Boolean;
   ALayout: TLayOut;
   VerServ: Real;
-  cUF: Integer;
+//  cUF: Integer;
 begin
   AXML := FXMLAssinado;
   if AXML = '' then
@@ -323,7 +300,7 @@ begin
   with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
   begin
     VerServ := FNF3e.infNF3e.Versao;
-    cUF     := FNF3e.Ide.cUF;
+//    cUF     := FNF3e.Ide.cUF;
 
 //    if EhAutorizacao( DblToVersaoNF3e(ok, VerServ), Modelo, cUF) then
 //      ALayout := LayNF3eAutorizacao
@@ -392,12 +369,6 @@ const
 var
   Erros: String;
   Inicio, Agora: TDateTime;
-//  I, J: Integer;
-//  UltVencto: TDateTime;
-//  fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
-//  fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
-//  fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup : Currency;
-//  FaturamentoDireto, NFImportacao, UFCons : Boolean;
 
   procedure GravaLog(AString: String);
   begin
@@ -419,967 +390,7 @@ begin
   begin
     Erros := '';
     {
-    GravaLog('Validar: 701-versão');
-    if NF3e.infNF3e.Versao < 3.10 then
-      AdicionaErro('701-Rejeição: Versão inválida');
-
-    GravaLog('Validar 512-Chave de acesso');
-    if not ValidarConcatChave then  //A03-10
-      AdicionaErro(
-        '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
-
-    GravaLog('Validar: 897-Código do documento: ' + IntToStr(NF3e.Ide.nNF));
-    if not ValidarCodigoDFe(NF3e.Ide.cNF, NF3e.Ide.nNF) then
-      AdicionaErro('897-Rejeição: Código numérico em formato inválido ');
-
-    GravaLog('Validar 226-IF');
-    if copy(IntToStr(NF3e.Emit.EnderEmit.cMun), 1, 2) <>
-      IntToStr(Configuracoes.WebServices.UFCodigo) then //B02-10
-      AdicionaErro('226-Rejeição: Código da UF do Emitente diverge da UF autorizadora');
-
-    GravaLog('Validar: 703-Data hora');
-    if (NF3e.Ide.dEmi > Agora) then  //B09-10
-      AdicionaErro('703-Rejeição: Data-Hora de Emissão posterior ao horário de recebimento');
-
-    GravaLog('Validar: 228-Data Emissão');
-    if ((Agora - NF3e.Ide.dEmi) > 30) then  //B09-20
-      AdicionaErro('228-Rejeição: Data de Emissão muito atrasada');
-
-    //GB09.02 - Data de Emissão posterior à 31/03/2011
-    //GB09.03 - Data de Recepção posterior à 31/03/2011 e tpAmb (B24) = 2
-
-    GravaLog('Validar: 253-Digito Chave');
-    if not ValidarChave(NF3e.infNF3e.ID) then
-      AdicionaErro('253-Rejeição: Digito Verificador da chave de acesso composta inválida');
-
-    GravaLog('Validar: 270-Digito Municipio Fato Gerador');
-    if not ValidarMunicipio(NF3e.Ide.cMunFG) then //B12-10
-      AdicionaErro('270-Rejeição: Código Município do Fato Gerador: dígito inválido');
-
-    GravaLog('Validar: 271-Municipio Fato Gerador diferente');
-    if (UFparaCodigo(NF3e.Emit.EnderEmit.UF) <> StrToIntDef(
-      copy(IntToStr(NF3e.Ide.cMunFG), 1, 2), 0)) then//GB12.1
-      AdicionaErro('271-Rejeição: Código Município do Fato Gerador: difere da UF do emitente');
-
-    GravaLog('Validar: 570-Tipo de Emissão SCAN/SVC');
-    if ((NF3e.Ide.tpEmis in [teSCAN, teSVCAN, teSVCRS]) and
-      (Configuracoes.Geral.FormaEmissao = teNormal)) then  //B22-30
-      AdicionaErro(
-        '570-Rejeição: Tipo de Emissão 3, 6 ou 7 só é válido nas contingências SCAN/SVC');
-
-    GravaLog('Validar: 571-Tipo de Emissão SCAN');
-    if ((NF3e.Ide.tpEmis <> teSCAN) and (Configuracoes.Geral.FormaEmissao = teSCAN))
-    then  //B22-40
-      AdicionaErro('571-Rejeição: Tipo de Emissão informado diferente de 3 para contingência SCAN');
-
-    GravaLog('Validar: 713-Tipo de Emissão SCAN/SVCRS');
-    if ((Configuracoes.Geral.FormaEmissao in [teSVCAN, teSVCRS]) and
-      (not (NF3e.Ide.tpEmis in [teSVCAN, teSVCRS]))) then  //B22-60
-      AdicionaErro('713-Rejeição: Tipo de Emissão diferente de 6 ou 7 para contingência da SVC acessada');
-
-    //B23-10
-    GravaLog('Validar: 252-Ambiente');
-    if (NF3e.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
-      //B24-10
-      AdicionaErro('252-Rejeição: Ambiente informado diverge do Ambiente de recebimento '
-        + '(Tipo do ambiente da NF3-e difere do ambiente do Web Service)');
-
-    GravaLog('Validar: 370-Tipo de Emissão');
-    if (NF3e.Ide.procEmi in [peAvulsaFisco, peAvulsaContribuinte]) and
-      (NF3e.Ide.tpEmis <> teNormal) then //B26-30
-      AdicionaErro('370-Rejeição: Nota Fiscal Avulsa com tipo de emissão inválido');
-
-    GravaLog('Validar: 556-Justificativa Entrada');
-    if (NF3e.Ide.tpEmis = teNormal) and ((NF3e.Ide.xJust > '') or
-      (NF3e.Ide.dhCont <> 0)) then
-      //B28-10
-      AdicionaErro(
-        '556-Justificativa de entrada em contingência não deve ser informada para tipo de emissão normal');
-
-    GravaLog('Validar: 557-Justificativa Entrada');
-    if (NF3e.Ide.tpEmis in [teContingencia, teFSDA, teOffLine]) and
-      (NF3e.Ide.xJust = '') then //B28-20
-      AdicionaErro('557-A Justificativa de entrada em contingência deve ser informada');
-
-    GravaLog('Validar: 558-Data de Entrada');
-    if (NF3e.Ide.dhCont > Agora) then //B28-30
-      AdicionaErro('558-Rejeição: Data de entrada em contingência posterior a data de recebimento');
-
-    GravaLog('Validar: 569-Data Entrada contingência');
-    if (NF3e.Ide.dhCont > 0) and ((Agora - NF3e.Ide.dhCont) > 30) then //B28-40
-      AdicionaErro('569-Rejeição: Data de entrada em contingência muito atrasada');
-
-    GravaLog('Validar: 207-CNPJ emitente');
-    // adicionado CNPJ por conta do produtor rural
-    if not ValidarCNPJouCPF(NF3e.Emit.CNPJCPF) then
-      AdicionaErro('207-Rejeição: CNPJ do emitente inválido');
-
-    GravaLog('Validar: 272-Código Município');
-    if not ValidarMunicipio(NF3e.Emit.EnderEmit.cMun) then
-      AdicionaErro('272-Rejeição: Código Município do Emitente: dígito inválido');
-
-    GravaLog('Validar: 273-Código Município difere da UF');
-    if (UFparaCodigo(NF3e.Emit.EnderEmit.UF) <> StrToIntDef(
-      copy(IntToStr(NF3e.Emit.EnderEmit.cMun), 1, 2), 0)) then
-      AdicionaErro('273-Rejeição: Código Município do Emitente: difere da UF do emitente');
-
-    GravaLog('Validar: 229-IE não informada');
-    if EstaVazio(NF3e.Emit.IE) then
-      AdicionaErro('229-Rejeição: IE do emitente não informada');
-
-    GravaLog('Validar: 209-IE inválida');
-    if not ValidarIE(NF3e.Emit.IE,NF3e.Emit.EnderEmit.UF) then
-      AdicionaErro('209-Rejeição: IE do emitente inválida ');
-
-    GravaLog('Validar: 208-CNPJ destinatário');
-    if (Length(Trim(OnlyNumber(NF3e.Dest.CNPJCPF))) >= 14) and
-      not ValidarCNPJ(NF3e.Dest.CNPJCPF) then
-      AdicionaErro('208-Rejeição: CNPJ do destinatário inválido');
-
-    GravaLog('Validar: 513-EX');
-    if (NF3e.Retirada.UF = 'EX') and
-       (NF3e.Retirada.cMun <> 9999999) then
-      AdicionaErro('513-Rejeição: Código Município do Local de Retirada deve ser 9999999 para UF retirada = "EX"');
-
-    GravaLog('Validar: 276-Cod Município Retirada inválido');
-    if (NF3e.Retirada.UF <> 'EX') and
-       NaoEstaVazio(NF3e.Retirada.xMun) and
-       not ValidarMunicipio(NF3e.Retirada.cMun) then
-      AdicionaErro('276-Rejeição: Código Município do Local de Retirada: dígito inválido');
-
-    GravaLog('Validar: 277-Cod Município Retirada diferente UF');
-    if NaoEstaVazio(NF3e.Retirada.UF) and
-     (NF3e.Retirada.cMun > 0)then
-    if (UFparaCodigo(NF3e.Retirada.UF) <> StrToIntDef(
-      copy(IntToStr(NF3e.Retirada.cMun), 1, 2), 0)) then
-      AdicionaErro('277-Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada');
-
-    GravaLog('Validar: 515-Cod Município Entrega EX');
-    if (NF3e.Entrega.UF = 'EX') and
-       (NF3e.Entrega.cMun <> 9999999) then
-      AdicionaErro('515-Rejeição: Código Município do Local de Entrega deve ser 9999999 para UF entrega = "EX"');
-
-    GravaLog('Validar: 278-Cod Município Entrega inválido');
-    if (NF3e.Entrega.UF <> 'EX') and
-       NaoEstaVazio(NF3e.Entrega.xMun) and
-       not ValidarMunicipio(NF3e.Entrega.cMun) then
-      AdicionaErro('278-Rejeição: Código Município do Local de Entrega: dígito inválido');
-
-    GravaLog('Validar: 279-Cod Município Entrega diferente UF');
-    if NaoEstaVazio(NF3e.Entrega.UF)and
-      (NF3e.Entrega.cMun > 0) then
-    if (UFparaCodigo(NF3e.Entrega.UF) <> StrToIntDef(
-      copy(IntToStr(NF3e.Entrega.cMun), 1, 2), 0)) then
-      AdicionaErro('279-Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega');
-
-    GravaLog('Validar: 542-CNPJ Transportador');
-    if NaoEstaVazio(Trim(NF3e.Transp.Transporta.CNPJCPF)) and
-       (Length(Trim(OnlyNumber(NF3e.Transp.Transporta.CNPJCPF))) >= 14) and
-       not ValidarCNPJ(NF3e.Transp.Transporta.CNPJCPF) then
-      AdicionaErro('542-Rejeição: CNPJ do Transportador inválido');
-
-    GravaLog('Validar: 543-CPF Transportador');
-    if NaoEstaVazio(Trim(NF3e.Transp.Transporta.CNPJCPF)) and
-       (Length(Trim(OnlyNumber(NF3e.Transp.Transporta.CNPJCPF))) <= 11) and
-       not ValidarCPF(NF3e.Transp.Transporta.CNPJCPF) then
-      AdicionaErro('543-Rejeição: CPF do Transportador inválido');
-
-    GravaLog('Validar: 559-UF do Transportador');
-    if NaoEstaVazio(Trim(NF3e.Transp.Transporta.IE)) and
-       EstaVazio(Trim(NF3e.Transp.Transporta.UF)) then
-      AdicionaErro('559-Rejeição: UF do Transportador não informada');
-
-    GravaLog('Validar: 544-IE do Transportador');
-    if NaoEstaVazio(Trim(NF3e.Transp.Transporta.IE)) and
-       not ValidarIE(NF3e.Transp.Transporta.IE,NF3e.Transp.Transporta.UF) then
-      AdicionaErro('544-Rejeição: IE do Transportador inválida');
-
-    if (NF3e.Ide.modelo = 65) then  //Regras válidas apenas para NFC-e - 65
-    begin
-      GravaLog('Validar: 704-NFCe Data atrasada');
-      if (NF3e.Ide.dEmi < IncMinute(Agora,-10)) and
-        (NF3e.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS]) then
-        //B09-40
-        AdicionaErro('704-Rejeição: NFC-e com Data-Hora de emissão atrasada');
-
-      GravaLog('Validar: 705-NFCe Data de entrada/saida');
-      if (NF3e.Ide.dSaiEnt <> 0) then  //B10-10
-        AdicionaErro('705-Rejeição: NFC-e com data de entrada/saída');
-
-      GravaLog('Validar: 706-NFCe operação entrada');
-      if (NF3e.Ide.tpNF = tnEntrada) then  //B11-10
-        AdicionaErro('706-Rejeição: NFC-e para operação de entrada');
-
-      GravaLog('Validar: 707-NFCe operação interestadual');
-      if (NF3e.Ide.idDest <> doInterna) then  //B11-10
-        AdicionaErro('707-NFC-e para operação interestadual ou com o exterior');
-
-      GravaLog('Validar: 709-NFCe formato DANF3e');
-      if (not (NF3e.Ide.tpImp in [tiNFCe, tiMsgEletronica])) then
-        //B21-10
-        AdicionaErro('709-Rejeição: NFC-e com formato de DANF3e inválido');
-
-      GravaLog('Validar: 712-NFCe contingência off-line');
-      if (NF3e.Ide.tpEmis = teOffLine) and
-        (AnsiIndexStr(NF3e.Emit.EnderEmit.UF, ['SP']) <> -1) then  //B22-20
-        AdicionaErro('712-Rejeição: NF3-e com contingência off-line');
-
-      GravaLog('Validar: 782-NFCe e SCAN');
-      if (NF3e.Ide.tpEmis = teSCAN) then //B22-50
-        AdicionaErro('782-Rejeição: NFC-e não é autorizada pelo SCAN');
-
-      GravaLog('Validar: 783-NFCe e SVC');
-      if (NF3e.Ide.tpEmis in [teSVCAN, teSVCRS]) then  //B22-70
-        AdicionaErro('783-Rejeição: NFC-e não é autorizada pela SVC');
-
-      GravaLog('Validar: 715-NFCe finalidade');
-      if (NF3e.Ide.finNF3e <> fnNormal) then  //B25-20
-        AdicionaErro('715-Rejeição: Rejeição: NFC-e com finalidade inválida');
-
-      GravaLog('Validar: 716-NFCe operação');
-      if (NF3e.Ide.indFinal = cfNao) then //B25a-10
-        AdicionaErro('716-Rejeição: NFC-e em operação não destinada a consumidor final');
-
-      GravaLog('Validar: 717-NFCe entrega');
-      if (not (NF3e.Ide.indPres in [pcPresencial, pcEntregaDomicilio])) then
-        //B25b-20
-        AdicionaErro('717-Rejeição: NFC-e em operação não presencial');
-
-      GravaLog('Validar: 785-NFCe entrega e UF');
-      if (NF3e.Ide.indPres = pcEntregaDomicilio) and
-        (AnsiIndexStr(NF3e.Emit.EnderEmit.UF, ['XX']) <> -1) then
-        //B25b-30  Qual estado não permite entrega a domicílio?
-        AdicionaErro('785-Rejeição: NFC-e com entrega a domicílio não permitida pela UF');
-
-      GravaLog('Validar: 708-NFCe referenciada');
-      if (NF3e.Ide.NFref.Count > 0) then
-        AdicionaErro('708-Rejeição: NFC-e não pode referenciar documento fiscal');
-
-      GravaLog('Validar: 718-NFCe e IE de ST');
-      if NaoEstaVazio(Trim(NF3e.Emit.IEST)) then
-        AdicionaErro('718-Rejeição: NFC-e não deve informar IE de Substituto Tributário');
-
-      GravaLog('Validar: 787-NFCe entrega e Identificação');
-      if (NF3e.Ide.indPres = pcEntregaDomicilio) and
-        EstaVazio(Trim(NF3e.Entrega.xLgr)) and
-        EstaVazio(Trim(NF3e.Dest.EnderDest.xLgr)) then
-        AdicionaErro('787-Rejeição: NFC-e de entrega a domicílio sem a identificação do destinatário');
-
-      GravaLog('Validar: 789-NFCe e destinatário');
-      if (NF3e.Dest.indIEDest <> inNaoContribuinte) then
-        AdicionaErro('789-Rejeição: NFC-e para destinatário contribuinte de ICMS');
-
-      GravaLog('Validar: 729-NFCe IE destinatário');
-      if NaoEstaVazio(Trim(NF3e.Dest.IE)) then
-        AdicionaErro('729-Rejeição: NFC-e com informação da IE do destinatário');
-
-      GravaLog('Validar: 730-NFCe e SUFRAMA');
-      if NaoEstaVazio(Trim(NF3e.Dest.ISUF)) then
-        AdicionaErro('730-Rejeição: NFC-e com Inscrição Suframa');
-
-      GravaLog('Validar: 753-NFCe e Frete');
-      if (NF3e.Transp.modFrete <> mfSemFrete) and
-         (NF3e.Ide.indPres <> pcEntregaDomicilio)then
-        AdicionaErro('753-Rejeição: NFC-e com Frete');
-
-      GravaLog('Validar: 754-NFCe e dados Transporte');
-      if (NF3e.Ide.indPres <> pcEntregaDomicilio) and
-         ((trim(NF3e.Transp.Transporta.CNPJCPF) <> '') or
-         (trim(NF3e.Transp.Transporta.xNome) <> '') or
-         (trim(NF3e.Transp.Transporta.IE) <> '') or
-         (trim(NF3e.Transp.Transporta.xEnder) <> '') or
-         (trim(NF3e.Transp.Transporta.xMun) <> '') or
-         (trim(NF3e.Transp.Transporta.UF) <> '')) then
-        AdicionaErro('754-Rejeição: NFC-e com dados do Transportador');
-
-      GravaLog('Validar: 786-NFCe entrega domicilio e dados Transporte');
-      if (NF3e.Ide.indPres = pcEntregaDomicilio) and
-         ((trim(NF3e.Transp.Transporta.CNPJCPF) = '') or
-         (trim(NF3e.Transp.Transporta.xNome) = '')) then
-        AdicionaErro('786-Rejeição: NFC-e de entrega a domicílio sem dados do Transportador');
-
-      GravaLog('Validar: 755-NFCe retenção ICMS Transporte');
-      if (NF3e.Transp.retTransp.vServ > 0) or
-         (NF3e.Transp.retTransp.vBCRet > 0) or
-         (NF3e.Transp.retTransp.pICMSRet > 0) or
-         (NF3e.Transp.retTransp.vICMSRet > 0) or
-         (Trim(NF3e.Transp.retTransp.CFOP) <> '') or
-         (NF3e.Transp.retTransp.cMunFG > 0) then
-        AdicionaErro('755-Rejeição: NFC-e com dados de Retenção do ICMS no Transporte');
-
-      GravaLog('Validar: 756-NFCe dados veiculo Transporte');
-      if (Trim(NF3e.Transp.veicTransp.placa) <> '') or
-         (Trim(NF3e.Transp.veicTransp.UF) <> '') or
-         (Trim(NF3e.Transp.veicTransp.RNTC) <> '') then
-        AdicionaErro('756-Rejeição: NFC-e com dados do veículo de Transporte');
-
-      GravaLog('Validar: 757-NFCe dados reboque Transporte');
-      if NF3e.Transp.Reboque.Count > 0 then
-        AdicionaErro('757-Rejeição: NFC-e com dados de Reboque do veículo de Transporte');
-
-      GravaLog('Validar: 758-NFCe dados vagão Transporte');
-      if NaoEstaVazio(Trim(NF3e.Transp.vagao)) then
-        AdicionaErro('758-Rejeição: NFC-e com dados do Vagão de Transporte');
-
-      GravaLog('Validar: 759-NFCe dados Balsa Transporte');
-      if NaoEstaVazio(Trim(NF3e.Transp.balsa)) then
-        AdicionaErro('759-Rejeição: NFC-e com dados da Balsa de Transporte');
-
-      GravaLog('Validar: 760-NFCe entrega dados cobrança');
-      if (Trim(NF3e.Cobr.Fat.nFat) <> '') or
-         (NF3e.Cobr.Fat.vOrig > 0) or
-         (NF3e.Cobr.Fat.vDesc > 0) or
-         (NF3e.Cobr.Fat.vLiq > 0) or
-         (NF3e.Cobr.Dup.Count > 0) then
-        AdicionaErro('760-Rejeição: NFC-e com dados de cobrança (Fatura, Duplicata)');
-
-      GravaLog('Validar: 769-NFCe formas pagamento');
-      if NF3e.pag.Count <= 0 then
-        AdicionaErro('769-Rejeição: NFC-e deve possuir o grupo de Formas de Pagamento');
-
-      GravaLog('Validar: 762-NFCe dados de compra');
-      if Trim(NF3e.compra.xNEmp) + Trim(NF3e.compra.xPed) + Trim(NF3e.compra.xCont) <> '' then
-        AdicionaErro('762-Rejeição: NFC-e com dados de compras (Empenho, Pedido, Contrato)');
-
-      GravaLog('Validar: 763-NFCe dados cana');
-      if not(Trim(NF3e.cana.safra) = '') or not(Trim(NF3e.cana.ref) = '') or
-         (NF3e.cana.fordia.Count > 0) or (NF3e.cana.deduc.Count > 0) then
-        AdicionaErro('763-Rejeição: NFC-e com dados de aquisição de Cana');
-
-    end
-    else if (NF3e.Ide.modelo = 55) then  //Regras válidas apenas para NF3-e - 55
-    begin
-      GravaLog('Validar: 504-Saida > 30');
-      if ((NF3e.Ide.dSaiEnt - Agora) > 30) then  //B10-20  - Facultativo
-        AdicionaErro('504-Rejeição: Data de Entrada/Saída posterior ao permitido');
-
-      GravaLog('Validar: 505-Saida < 30');
-      if (NF3e.Ide.dSaiEnt <> 0) and ((Agora - NF3e.Ide.dSaiEnt) > 30) then  //B10-30  - Facultativo
-        AdicionaErro('505-Rejeição: Data de Entrada/Saída anterior ao permitido');
-
-      GravaLog('Validar: 506-Saida < Emissao');
-      if (NF3e.Ide.dSaiEnt <> 0) and (NF3e.Ide.dSaiEnt < NF3e.Ide.dEmi) then
-        //B10-40  - Facultativo
-        AdicionaErro('506-Rejeição: Data de Saída menor que a Data de Emissão');
-
-      GravaLog('Validar: 710-Formato DANF3e');
-      if (NF3e.Ide.tpImp in [tiNFCe, tiMsgEletronica]) then  //B21-20
-        AdicionaErro('710-Rejeição: NF-e com formato de DANF3e inválido');
-
-      GravaLog('Validar: 711-NF3e off-line');
-      if (NF3e.Ide.tpEmis = teOffLine) then  //B22-10
-        AdicionaErro('711-Rejeição: NF-e com contingência off-line');
-
-      GravaLog('Validar: 254-NF3e complementar sem referenciada');
-      if (NF3e.Ide.finNF3e = fnComplementar) and (NF3e.Ide.NFref.Count = 0) then  //B25-30
-        AdicionaErro('254-Rejeição: NF-e complementar não possui NF referenciada');
-
-      GravaLog('Validar: 255-NF3e complementar e muitas referenciada');
-      if (NF3e.Ide.finNF3e = fnComplementar) and (NF3e.Ide.NFref.Count > 1) then  //B25-40
-        AdicionaErro('255-Rejeição: NF-e complementar possui mais de uma NF referenciada');
-
-      GravaLog('Validar: 269-CNPJ Emitente NF3e complementar');
-      if (NF3e.Ide.finNF3e = fnComplementar) and (NF3e.Ide.NFref.Count = 1) and
-        (((NF3e.Ide.NFref.Items[0].RefNF.CNPJ > '') and
-        (NF3e.Ide.NFref.Items[0].RefNF.CNPJ <> NF3e.Emit.CNPJCPF)) or
-        ((NF3e.Ide.NFref.Items[0].RefNFP.CNPJCPF > '') and
-        (NF3e.Ide.NFref.Items[0].RefNFP.CNPJCPF <> NF3e.Emit.CNPJCPF))) then
-        //B25-50
-        AdicionaErro(
-          '269-Rejeição: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada');
-
-      GravaLog('Validar: 678-UF NF3e referenciada e complementar');
-      if (NF3e.Ide.finNF3e = fnComplementar) and (NF3e.Ide.NFref.Count = 1) and
-        //Testa pelo número para saber se TAG foi preenchida
-        (((NF3e.Ide.NFref.Items[0].RefNF.nNF > 0) and
-        (NF3e.Ide.NFref.Items[0].RefNF.cUF <> UFparaCodigo(
-        NF3e.Emit.EnderEmit.UF))) or ((NF3e.Ide.NFref.Items[0].RefNFP.nNF > 0) and
-        (NF3e.Ide.NFref.Items[0].RefNFP.cUF <> UFparaCodigo(
-        NF3e.Emit.EnderEmit.UF))))
-      then  //B25-60 - Facultativo
-        AdicionaErro('678-Rejeição: NF referenciada com UF diferente da NF-e complementar');
-
-      GravaLog('Validar: 321-NF3e devolução sem referenciada');
-      if (NF3e.Ide.finNF3e = fnDevolucao) and (NF3e.Ide.NFref.Count = 0) then
-        //B25-70
-        AdicionaErro('321-Rejeição: NF-e devolução não possui NF referenciada');
-
-      GravaLog('Validar: 794-NF3e e domicício NFCe');
-      if (NF3e.Ide.indPres = pcEntregaDomicilio) then //B25b-10
-        AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
-
-      GravaLog('Validar: 237-CPF destinatário ');
-      if (Trim(OnlyNumber(NF3e.Dest.CNPJCPF)) <> EmptyStr) and
-        (Length(Trim(OnlyNumber(NF3e.Dest.CNPJCPF))) <= 11) and
-        not ValidarCPF(NF3e.Dest.CNPJCPF) then
-        AdicionaErro('237-Rejeição: CPF do destinatário inválido');
-
-      GravaLog('Validar: 721-Op.Interstadual sem CPF/CNPJ');
-      if (NF3e.Ide.idDest = doInterestadual) and
-         (EstaVazio(Trim(NF3e.Dest.CNPJCPF))) then
-        AdicionaErro('721-Rejeição: Operação interestadual deve informar CNPJ ou CPF');
-
-      GravaLog('Validar: 723-Op.interna com idEstrangeiro');
-      if (NF3e.Ide.idDest = doInterna) and
-         (NaoEstaVazio(Trim(NF3e.Dest.idEstrangeiro))) and
-         (NF3e.Ide.indFinal <> cfConsumidorFinal)then
-        AdicionaErro('723-Rejeição: Operação interna com idEstrangeiro informado deve ser para consumidor final');
-
-      GravaLog('Validar: 724-Nome destinatário');
-      if EstaVazio(Trim(NF3e.Dest.xNome)) then
-        AdicionaErro('724-Rejeição: NF-e sem o nome do destinatário');
-
-      GravaLog('Validar: 726-Sem Endereço destinatário');
-      if EstaVazio(Trim(NF3e.Dest.EnderDest.xLgr)) then
-        AdicionaErro('726-Rejeição: NF-e sem a informação de endereço do destinatário');
-
-      GravaLog('Validar: 509-EX e município');
-      if (NF3e.Dest.EnderDest.UF <> 'EX') and
-         not ValidarMunicipio(NF3e.Dest.EnderDest.cMun) then
-        AdicionaErro('509-Rejeição: Informado código de município diferente de "9999999" para operação com o exterior');
-
-      GravaLog('Validar: 727-Op exterior e UF');
-      if (NF3e.Ide.idDest = doExterior) and
-         (NF3e.Dest.EnderDest.UF <> 'EX') then
-        AdicionaErro('727-Rejeição: Operação com Exterior e UF diferente de EX');
-
-      GravaLog('Validar: 771-Op.Interstadual e UF EX');
-      if (NF3e.Ide.idDest = doInterestadual) and
-         (NF3e.Dest.EnderDest.UF = 'EX') then
-        AdicionaErro('771-Rejeição: Operação Interestadual e UF de destino com EX');
-
-      GravaLog('Validar: 773-Op.Interna e UF diferente');
-      if (NF3e.Ide.idDest = doInterna) and
-         (NF3e.Dest.EnderDest.UF <> NF3e.Emit.EnderEmit.UF) and
-         (NF3e.Ide.indPres <> pcPresencial) then
-        AdicionaErro('773-Rejeição: Operação Interna e UF de destino difere da UF do emitente - não presencial');
-
-      GravaLog('Validar: 790-Op.Exterior e Destinatário ICMS');
-      if (NF3e.Ide.idDest = doExterior) and
-         (NF3e.Dest.indIEDest <> inNaoContribuinte) then
-        AdicionaErro('790-Rejeição: Operação com Exterior para destinatário Contribuinte de ICMS');
-
-      if NF3e.infNF3e.Versao < 4 then
-      begin
-        GravaLog('Validar: 768-NF3e < 4.0 com formas de pagamento');
-        if (NF3e.pag.Count > 0) then
-          AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
-      end
-      else
-      begin
-        GravaLog('Validar: 769-NF3e >= 4.0 sem formas pagamento');
-        if (NF3e.pag.Count <= 0) then
-          AdicionaErro('769-Rejeição: NF-e deve possuir o grupo de Formas de Pagamento');
-      end;
-
-      if NF3e.infNF3e.Versao >= 4 then
-      begin
-        GravaLog('Validar: 864-Operação presencial, fora do estabelecimento e não informada campos refNF3e');
-        if (NF3e.Ide.indPres = pcPresencialForaEstabelecimento) and
-           (NF3e.Ide.NFref.Count <= 0) then
-          AdicionaErro('864-Rejeição: NF-e com indicativo de Operação presencial, fora do estabelecimento e não informada NF referenciada');
-
-        GravaLog('Validar: 868-Se operação interestadual(idDest=2), não informar os Grupos Veiculo Transporte (id:X18; veicTransp) e Grupo Reboque (id: X22)');
-        if (NF3e.Ide.idDest = doInterestadual) and
-           (((trim(NF3e.Transp.veicTransp.placa) <> '') or
-            (trim(NF3e.Transp.veicTransp.UF) <> '') or
-            (trim(NF3e.Transp.veicTransp.RNTC) <> '')) or
-            (NF3e.Transp.Reboque.Count > 0)) then
-          AdicionaErro('868-Rejeição: Grupos Veiculo Transporte e Reboque não devem ser informados');
-
-        if NF3e.Ide.finNF3e in [fnNormal, fnComplementar] then
-        begin
-          GravaLog('Validar: 895-Valor do Desconto (vDesc, id:Y05) maior que o Valor Original da Fatura (vOrig, id:Y04)');
-          if (NF3e.Cobr.Fat.vDesc > NF3e.Cobr.Fat.vOrig) then
-            AdicionaErro('895-Rejeição: Valor do Desconto da Fatura maior que Valor Original da Fatura');
-
-          GravaLog('Validar: 896-Valor Líquido da Fatura (vLiq, id:Y06) difere do Valor Original da Fatura (vOrig; id:Y04) – Valor do Desconto (vDesc, id:Y05)');
-          if (NF3e.Cobr.Fat.vLiq <> (NF3e.Cobr.Fat.vOrig - NF3e.Cobr.Fat.vDesc)) then
-            AdicionaErro('896-Rejeição: Valor Liquido da Fatura difere do Valor Original menos o Valor do Desconto');
-
-          fsvDup := 0;
-          UltVencto := DateOf(NF3e.Ide.dEmi);
-          for I:=0 to NF3e.Cobr.Dup.Count-1 do
-          begin
-            fsvDup := fsvDup + NF3e.Cobr.Dup.Items[I].vDup;
-
-            GravaLog('Validar: 857-Se informado o Grupo Parcelas de cobrança (tag:dup, Id:Y07), Número da parcela (nDup, id:Y08) não informado ou inválido.');
-            if EstaVazio(NF3e.Cobr.Dup.Items[I].nDup) then
-              AdicionaErro('857-Rejeição: Número da parcela inválido ou não informado');
-
-            //898 - Verificar DATA de autorização
-
-            GravaLog('Validar: 894-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de Emissão (id:B09)');
-            if (NF3e.Cobr.Dup.Items[I].dVenc < DateOf(NF3e.Ide.dEmi)) then
-              AdicionaErro('894-Rejeição: Data de vencimento da parcela não informada ou menor que Data de Emissão');
-
-            GravaLog('Validar: 867-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de vencimento da parcela anterior (dVenc, id:Y09)');
-            if (NF3e.Cobr.Dup.Items[I].dVenc < UltVencto) then
-              AdicionaErro('867-Rejeição: Data de vencimento da parcela não informada ou menor que a Data de vencimento da parcela anterior');
-
-            UltVencto := NF3e.Cobr.Dup.Items[I].dVenc;
-          end;
-
-          GravaLog('Validar: 872-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e a soma do valor das parcelas (vDup, id: Y10) difere do Valor Líquido da Fatura (vLiq, id:Y06).');
-          //porque se não tiver parcela não tem valor para ser verificado
-          if (NF3e.Cobr.Dup.Count > 0) and (((NF3e.Cobr.Fat.vLiq > 0) and (fsvDup < NF3e.Cobr.Fat.vLiq)) or
-             (fsvDup < (NF3e.Cobr.Fat.vOrig-NF3e.Cobr.Fat.vDesc))) then
-            AdicionaErro('872-Rejeição: Soma do valor das parcelas difere do Valor Líquido da Fatura');
-        end;
-      end;
-    end;
-
-    for I:=0 to NF3e.autXML.Count-1 do
-    begin
-      GravaLog('Validar: 325-'+IntToStr(I)+'-CPF download');
-      if (Length(Trim(OnlyNumber(NF3e.autXML[I].CNPJCPF))) <= 11) and
-        not ValidarCPF(NF3e.autXML[I].CNPJCPF) then
-        AdicionaErro('325-Rejeição: CPF autorizado para download inválido');
-
-      GravaLog('Validar: 323-'+IntToStr(I)+'-CNPJ download');
-      if (Length(Trim(OnlyNumber(NF3e.autXML[I].CNPJCPF))) > 11) and
-        not ValidarCNPJ(NF3e.autXML[I].CNPJCPF) then
-        AdicionaErro('323-Rejeição: CNPJ autorizado para download inválido');
-    end;
-
-    fsvTotTrib := 0;
-    fsvBC      := 0;
-    fsvICMS    := 0;
-    fsvICMSDeson    := 0;
-    fsvBCST    := 0;
-    fsvST      := 0;
-    fsvProd    := 0;
-    fsvFrete   := 0;
-    fsvSeg     := 0;
-    fsvDesc    := 0;
-    fsvII      := 0;
-    fsvIPI     := 0;
-    fsvPIS     := 0;
-    fsvCOFINS  := 0;
-    fsvOutro   := 0;
-    fsvServ    := 0;
-    fsvFCP     := 0;
-    fsvFCPST   := 0;
-    fsvFCPSTRet:= 0;
-    fsvIPIDevol:= 0;
-    FaturamentoDireto := False;
-    NFImportacao := False;
-    UFCons := False;
-
-    for I:=0 to NF3e.Det.Count-1 do
-    begin
-      with NF3e.Det[I] do
-      begin
-        if Trim(Prod.NCM) <> '00' then
-        begin
-          // validar NCM completo somente quando não for serviço
-          GravaLog('Validar: 777-NCM info [nItem: '+IntToStr(Prod.nItem)+']');
-          if Length(Trim(Prod.NCM)) < 8 then
-            AdicionaErro('777-Rejeição: Obrigatória a informação do NCM completo [nItem: '+IntToStr(Prod.nItem)+']');
-        end;
-
-        if (NF3e.Ide.modelo = 65) then
-        begin
-          GravaLog('Validar: 725-NFCe CFOP invalido [nItem: '+IntToStr(Prod.nItem)+']');
-          if (pos(OnlyNumber(Prod.CFOP), 'XXXX,5101,5102,5103,5104,5115,5405,5656,5667,5933') <= 0)  then
-            AdicionaErro('725-Rejeição: NFC-e com CFOP inválido [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 774-NFCe indicador Total [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.IndTot = itNaoSomaTotalNFe) then
-            AdicionaErro('774-Rejeição: NFC-e com indicador de item não participante do total [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 736-NFCe Grupo veiculos novos [nItem: '+IntToStr(Prod.nItem)+']');
-          if (NaoEstaVazio(Prod.veicProd.chassi)) then
-            AdicionaErro('736-Rejeição: NFC-e com grupo de Veículos novos [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 737-NCM info [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.med.Count > 0) then
-            AdicionaErro('737-Rejeição: NFC-e com grupo de Medicamentos [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 738-NFCe grupo Armamentos [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.arma.Count > 0) then
-            AdicionaErro('738-Rejeição: NFC-e com grupo de Armamentos [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 348-NFCe grupo RECOPI [nItem: '+IntToStr(Prod.nItem)+']');
-          if (NaoEstaVazio(Prod.nRECOPI)) then
-            AdicionaErro('348-Rejeição: NFC-e com grupo RECOPI [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 766-NFCe CST 50 [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.ICMS.CST = cst50) then
-            AdicionaErro('766-Rejeição: NFC-e com CST 50-Suspensão [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 740-NFCe CST 51 [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.ICMS.CST = cst51) then
-            AdicionaErro('740-Rejeição: NFC-e com CST 51-Diferimento [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 741-NFCe partilha ICMS [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.ICMS.CST in [cstPart10,cstPart90]) then
-            AdicionaErro('741-Rejeição: NFC-e com Partilha de ICMS entre UF [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 742-NFCe grupo IPI [nItem: '+IntToStr(Prod.nItem)+']');
-          if ((Imposto.IPI.cEnq  <> '') or
-              (Imposto.IPI.vBC   <> 0) or
-              (Imposto.IPI.qUnid <> 0) or
-              (Imposto.IPI.vUnid <> 0) or
-              (Imposto.IPI.pIPI  <> 0) or
-              (Imposto.IPI.vIPI  <> 0)) then
-            AdicionaErro('742-Rejeição: NFC-e com grupo do IPI [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 743-NFCe grupo II [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.II.vBc > 0) or
-             (Imposto.II.vDespAdu > 0) or
-             (Imposto.II.vII > 0) or
-             (Imposto.II.vIOF > 0) or
-             (Copy(Prod.CFOP,1,1) = '3') then
-            AdicionaErro('743-Rejeição: NFC-e com grupo do II [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 746-NFCe grupo PIS-ST [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.PISST.vBc > 0) or
-             (Imposto.PISST.pPis > 0) or
-             (Imposto.PISST.qBCProd > 0) or
-             (Imposto.PISST.vAliqProd > 0) or
-             (Imposto.PISST.vPIS > 0) then
-           AdicionaErro('746-Rejeição: NFC-e com grupo do PIS-ST [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 749-NFCe grupo COFINS-ST [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Imposto.COFINSST.vBC > 0) or
-             (Imposto.COFINSST.pCOFINS > 0) or
-             (Imposto.COFINSST.qBCProd > 0) or
-             (Imposto.COFINSST.vAliqProd > 0) or
-             (Imposto.COFINSST.vCOFINS > 0) then
-            AdicionaErro('749-Rejeição: NFC-e com grupo da COFINS-ST [nItem: '+IntToStr(Prod.nItem)+']');
-        end
-        else if(NF3e.Ide.modelo = 55) then
-        begin
-          if (NF3e.infNF3e.Versao >= 4) then
-          begin
-            GravaLog('Validar: 856-Obrigatória a informação do campo vPart (id: LA03d) para produto "210203001 – GLP" (tag:cProdANP) [nItem: '+IntToStr(Prod.nItem)+']');
-            if (Prod.comb.cProdANP = 210203001) and (Prod.comb.vPart <= 0) then
-              AdicionaErro('856-Rejeição: Campo valor de partida não preenchido para produto GLP [nItem: '+IntToStr(Prod.nItem)+']');
-          end;
-        end;
-
-        GravaLog('Validar: 528-ICMS BC e Aliq [nItem: '+IntToStr(Prod.nItem)+']');
-        if (Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
-           (NF3e.Ide.finNF3e = fnNormal) and
-	       (ComparaValor(Imposto.ICMS.vICMS, Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100), 0.01) <> 0) then
-          AdicionaErro('528-Rejeição: Valor do ICMS difere do produto BC e Alíquota [nItem: '+IntToStr(Prod.nItem)+']');
-
-        GravaLog('Validar: 625-Insc.SUFRAMA [nItem: '+IntToStr(Prod.nItem)+']');
-        if (Imposto.ICMS.motDesICMS = mdiSuframa) and
-           (EstaVazio(NF3e.Dest.ISUF))then
-          AdicionaErro('625-Rejeição: Inscrição SUFRAMA deve ser informada na venda com isenção para ZFM [nItem: '+IntToStr(Prod.nItem)+']');
-
-        GravaLog('Validar: 530-ISSQN e IM [nItem: '+IntToStr(Prod.nItem)+']');
-        if EstaVazio(NF3e.Emit.IM) and
-          ((Imposto.ISSQN.vBC > 0) or
-           (Imposto.ISSQN.vAliq > 0) or
-           (Imposto.ISSQN.vISSQN > 0) or
-           (Imposto.ISSQN.cMunFG > 0) or
-           (Imposto.ISSQN.cListServ <> '')) then
-          AdicionaErro('530-Rejeição: Operação com tributação de ISSQN sem informar a Inscrição Municipal [nItem: '+IntToStr(Prod.nItem)+']');
-
-        GravaLog('Validar: 287-Cod.Município FG [nItem: '+IntToStr(Prod.nItem)+']');
-        if (Imposto.ISSQN.cMunFG > 0) and
-           not ValidarMunicipio(Imposto.ISSQN.cMunFG) then
-          AdicionaErro('287-Rejeição: Código Município do FG - ISSQN: dígito inválido [nItem: '+IntToStr(Prod.nItem)+']');
-
-        if (NF3e.infNF3e.Versao >= 4) then
-        begin
-          if (Trim(Prod.cEAN) = '') then
-          begin
-            //somente aplicavel em produção a partir de 01/12/2018
-            //GravaLog('Validar: 883-GTIN (cEAN) sem informação [nItem:' + IntToStr(I) + ']');
-            //AdicionaErro('883-Rejeição: GTIN (cEAN) sem informação [nItem:' + IntToStr(I) + ']');
-          end
-          else
-          begin
-            if (Prod.cEAN <> SEM_GTIN) then
-            begin
-              GravaLog('Validar: 611-GTIN (cEAN) inválido [nItem: '+IntToStr(Prod.nItem)+']');
-              if not ValidarGTIN(Prod.cEAN) then
-                AdicionaErro('611-Rejeição: GTIN (cEAN) inválido [nItem: '+IntToStr(Prod.nItem)+']');
-
-              GravaLog('Validar: 882-GTIN (cEAN) com prefixo inválido [nItem: '+IntToStr(Prod.nItem)+']');
-              if not ValidarPrefixoGTIN(Prod.cEAN) then
-                AdicionaErro('882-Rejeição: GTIN (cEAN) com prefixo inválido [nItem: '+IntToStr(Prod.nItem)+']');
-
-              GravaLog('Validar: 885-GTIN informado, mas não informado o GTIN da unidade tributável [nItem: '+IntToStr(Prod.nItem)+']');
-              if (Trim(Prod.cEANTrib) = '') or ((Trim(Prod.cEANTrib) = SEM_GTIN)) then
-                AdicionaErro('885-Rejeição: GTIN informado, mas não informado o GTIN da unidade tributável [nItem: '+IntToStr(Prod.nItem)+']');
-            end;
-          end;
-
-          if (Trim(Prod.cEANTrib) = '') then
-          begin
-            //somente aplicavel em produção a partir de 01/12/2018
-            //GravaLog('Validar: 888-GTIN da unidade tributável (cEANTrib) sem informação [nItem:' + IntToStr(I) + ']');
-            //AdicionaErro('888-Rejeição: GTIN da unidade tributável (cEANTrib) sem informação [nItem: '+IntToStr(Prod.nItem)+']');
-          end
-          else
-          begin
-            if (Prod.cEANTrib <> SEM_GTIN) then
-            begin
-              GravaLog('Validar: 612-GTIN da unidade tributável (cEANTrib) inválido [nItem: '+IntToStr(Prod.nItem)+']');
-              if not ValidarGTIN(Prod.cEANTrib) then
-                AdicionaErro('612-Rejeição: GTIN da unidade tributável (cEANTrib) inválido [nItem: '+IntToStr(Prod.nItem)+']');
-
-              GravaLog('Validar: 884-GTIN da unidade tributável (cEANTrib) com prefixo inválido [nItem: '+IntToStr(Prod.nItem)+']');
-              if not ValidarPrefixoGTIN(Prod.cEANTrib) then
-                AdicionaErro('884-Rejeição: GTIN da unidade tributável (cEANTrib) com prefixo inválido [nItem: '+IntToStr(Prod.nItem)+']');
-
-              GravaLog('Validar: 886-GTIN da unidade tributável informado, mas não informado o GTIN [nItem: '+IntToStr(Prod.nItem)+']');
-              if (Trim(Prod.cEAN) = '') or ((Trim(Prod.cEAN) = SEM_GTIN)) then
-                AdicionaErro('886-Rejeição: GTIN da unidade tributável informado, mas não informado o GTIN [nItem: '+IntToStr(Prod.nItem)+']');
-            end;
-          end;
-
-          GravaLog('Validação: 889-Obrigatória a informação do GTIN para o produto [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Trim(Prod.cEAN) = '') then
-            AdicionaErro('889-Rejeição: Obrigatória a informação do GTIN para o produto [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 879-Se informado indEscala=N- não relevante (id: I05d), deve ser informado CNPJ do Fabricante da Mercadoria (id: I05e) [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.indEscala = ieNaoRelevante) and
-             EstaVazio(Prod.CNPJFab) then
-            AdicionaErro('879-Rejeição: Informado item Produzido em Escala NÃO Relevante e não informado CNPJ do Fabricante [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 489-Se informado CNPJFab (id: I05e) - CNPJ inválido (DV, zeros) [nItem: '+IntToStr(Prod.nItem)+']');
-          if NaoEstaVazio(Prod.CNPJFab) and (not ValidarCNPJ(Prod.CNPJFab)) then
-            AdicionaErro('489-Rejeição: CNPJFab informado inválido (DV ou zeros) [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 854-Informado campo cProdANP (id: LA02) = 210203001 (GLP) e campo uTrib (id: I13) <> “kg” (ignorar a diferenciação entre maiúsculas e minúsculas) [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.comb.cProdANP = 210203001) and (UpperCase(Prod.uTrib) <> 'KG') then
-            AdicionaErro('854-Rejeição: Unidade Tributável (tag:uTrib) incompatível com produto informado [nItem: '+IntToStr(Prod.nItem)+']');
-
-          if not UFCons then
-            UFCons := (Prod.comb.UFcons <> '') and (Prod.comb.UFcons <> NF3e.emit.EnderEmit.UF);
-
-          for J:=0 to Prod.rastro.Count-1 do
-          begin
-            GravaLog('Validar: 877-Data de Fabricação dFab (id:I83) maior que a data de processamento [nItem: '+IntToStr(Prod.nItem)+']');
-            if (Prod.rastro.Items[J].dFab > NF3e.Ide.dEmi) then
-              AdicionaErro('877-Rejeição: Data de fabricação maior que a data de processamento [nItem: '+IntToStr(Prod.nItem)+']');
-
-            GravaLog('Validar: 870-Informada data de validade dVal(id: I84) menor que Data de Fabricação dFab (id: I83) [nItem: '+IntToStr(Prod.nItem)+']');
-            if (Prod.rastro.Items[J].dVal < Prod.rastro.Items[J].dFab) then
-              AdicionaErro('870-Rejeição: Data de validade incompatível com data de fabricação [nItem: '+IntToStr(Prod.nItem)+']');
-          end;
-
-          for J:=0 to Prod.med.Count-1 do
-          begin
-            GravaLog('Validar: 873-Se informado Grupo de Medicamentos (tag:med) obrigatório preenchimento do grupo rastro (id: I80) [nItem: '+IntToStr(Prod.nItem)+']');
-            if NaoEstaVazio(Prod.med[J].cProdANVISA) and (Prod.rastro.Count<=0) then
-              AdicionaErro('873-Rejeição: Operação com medicamentos e não informado os campos de rastreabilidade [nItem: '+IntToStr(Prod.nItem)+']');
-          end;
-
-          GravaLog('Validar: 461-Informado percentual do GLP (id: LA03a) ou percentual de Gás Natural Nacional (id: LA03b) ou percentual de Gás Natural Importado (id: LA03c) para produto diferente de "210203001 – GLP" (tag:cProdANP) [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.comb.cProdANP <> 210203001) and ((Prod.comb.pGLP > 0) or (Prod.comb.pGNn > 0) or (Prod.comb.pGNi > 0)) then
-            AdicionaErro('461-Rejeição: Informado campos de percentual de GLP e/ou GLGNn e/ou GLGNi para produto diferente de GLP [nItem: '+IntToStr(Prod.nItem)+']');
-
-          GravaLog('Validar: 855-Informado percentual do GLP (id: LA03a) ou percentual de Gás Natural Nacional (id: LA03b) ou percentual de Gás Natural Importado (id: LA03c) para produto diferente de "210203001 – GLP" (tag:cProdANP) [nItem: '+IntToStr(Prod.nItem)+']');
-          if (Prod.comb.cProdANP = 210203001) and ((Prod.comb.pGLP + Prod.comb.pGNn + Prod.comb.pGNi) <> 100) then
-            AdicionaErro('855-Rejeição: Somatório percentuais de GLP derivado do petróleo, GLGNn e GLGNi diferente de 100 [nItem: '+IntToStr(Prod.nItem)+']');
-        end;
-
-        if Prod.IndTot = itSomaTotalNFe then
-        begin
-          fsvTotTrib := fsvTotTrib + Imposto.vTotTrib;
-          fsvBC      := fsvBC + Imposto.ICMS.vBC;
-          fsvICMS    := fsvICMS + Imposto.ICMS.vICMS;
-          fsvICMSDeson := fsvICMSDeson + Imposto.ICMS.vICMSDeson;
-          fsvBCST    := fsvBCST + Imposto.ICMS.vBCST;
-          fsvST      := fsvST + Imposto.ICMS.vICMSST;
-          fsvFrete   := fsvFrete + Prod.vFrete;
-          fsvSeg     := fsvSeg + Prod.vSeg;
-          fsvDesc    := fsvDesc + Prod.vDesc;
-          fsvII      := fsvII + Imposto.II.vII;
-          fsvIPI     := fsvIPI + Imposto.IPI.vIPI;
-          fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
-          fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
-          fsvOutro   := fsvOutro + Prod.vOutro;
-          fsvServ    := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
-          fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;;
-          fsvFCPST   := fsvFCPST + Imposto.ICMS.vFCPST;;
-          fsvFCPSTRet:= fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;;
-          fsvIPIDevol:= fsvIPIDevol + vIPIDevol;
-
-          // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
-          if (Prod.NCM <> '00') or ((Prod.NCM = '00') and (NF3e.Ide.finNF3e = fnAjuste)) then
-            fsvProd := fsvProd + Prod.vProd;
-        end;
-
-        if Prod.veicProd.tpOP = toFaturamentoDireto then
-          FaturamentoDireto := True;
-
-        if Copy(Prod.CFOP,1,1) = '3' then
-          NFImportacao := True;
-      end;
-    end;
-
-    if not UFCons then
-    begin
-      GravaLog('Validar: 772-Op.Interstadual e UF igual');
-      if (NF3e.Ide.idDest = doInterestadual) and
-         (NF3e.Dest.EnderDest.UF = NF3e.Emit.EnderEmit.UF) and
-         (NF3e.Dest.CNPJCPF <> NF3e.Emit.CNPJCPF) then
-        AdicionaErro('772-Rejeição: Operação Interestadual e UF de destino igual à UF do emitente');
-    end;
-
-    if FaturamentoDireto then
-      fsvNF := (fsvProd+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ)-(fsvDesc+fsvICMSDeson)
-    else
-      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvFCPST+fsvIPIDevol)-(fsvDesc+fsvICMSDeson);
-
-    GravaLog('Validar: 531-Total BC ICMS');
-    if (NF3e.Total.ICMSTot.vBC <> fsvBC) then
-      AdicionaErro('531-Rejeição: Total da BC ICMS difere do somatório dos itens');
-
-    GravaLog('Validar: 532-Total ICMS');
-    if (NF3e.Total.ICMSTot.vICMS <> fsvICMS) then
-      AdicionaErro('532-Rejeição: Total do ICMS difere do somatório dos itens');
-
-    GravaLog('Validar: 795-Total ICMS desonerado');
-    if (NF3e.Total.ICMSTot.vICMSDeson <> fsvICMSDeson) then
-      AdicionaErro('795-Rejeição: Total do ICMS desonerado difere do somatório dos itens');
-
-    GravaLog('Validar: 533-Total BC ICMS-ST');
-    if (NF3e.Total.ICMSTot.vBCST <> fsvBCST) then
-      AdicionaErro('533-Rejeição: Total da BC ICMS-ST difere do somatório dos itens');
-
-    GravaLog('Validar: 534-Total ICMS-ST');
-    if (NF3e.Total.ICMSTot.vST <> fsvST) then
-      AdicionaErro('534-Rejeição: Total do ICMS-ST difere do somatório dos itens');
-
-    GravaLog('Validar: 564-Total Produto/Serviço');
-    if (NF3e.Total.ICMSTot.vProd <> fsvProd) then
-      AdicionaErro('564-Rejeição: Total do Produto / Serviço difere do somatório dos itens');
-
-    GravaLog('Validar: 535-Total Frete');
-    if (NF3e.Total.ICMSTot.vFrete <> fsvFrete) then
-      AdicionaErro('535-Rejeição: Total do Frete difere do somatório dos itens');
-
-    GravaLog('Validar: 536-Total Seguro');
-    if (NF3e.Total.ICMSTot.vSeg <> fsvSeg) then
-      AdicionaErro('536-Rejeição: Total do Seguro difere do somatório dos itens');
-
-    GravaLog('Validar: 537-Total Desconto');
-    if (NF3e.Total.ICMSTot.vDesc <> fsvDesc) then
-      AdicionaErro('537-Rejeição: Total do Desconto difere do somatório dos itens');
-
-    GravaLog('Validar: 601-Total II');
-    if (NF3e.Total.ICMSTot.vII <> fsvII) then
-      AdicionaErro('601-Rejeição: Total do II difere do somatório dos itens');
-
-    GravaLog('Validar: 538-Total IPI');
-    if (NF3e.Total.ICMSTot.vIPI <> fsvIPI) then
-      AdicionaErro('538-Rejeição: Total do IPI difere do somatório dos itens');
-
-    GravaLog('Validar: 602-Total PIS');
-    if (NF3e.Total.ICMSTot.vPIS <> fsvPIS) then
-      AdicionaErro('602-Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ICMS');
-
-    GravaLog('Validar: 603-Total COFINS');
-    if (NF3e.Total.ICMSTot.vCOFINS <> fsvCOFINS) then
-      AdicionaErro('603-Rejeição: Total da COFINS difere do somatório dos itens sujeitos ao ICMS');
-
-    GravaLog('Validar: 604-Total vOutro');
-    if (NF3e.Total.ICMSTot.vOutro <> fsvOutro) then
-      AdicionaErro('604-Rejeição: Total do vOutro difere do somatório dos itens');
-
-    GravaLog('Validar: 861-Total do FCP');
-    if (NF3e.Total.ICMSTot.vFCP <> fsvFCP) then
-      AdicionaErro('861-Rejeição: Total do FCP difere do somatório dos itens');
-
-    if (NF3e.Ide.modelo = 55) then  //Regras válidas apenas para NF-e - 55
-    begin
-      GravaLog('Validar: 862-Total do FCP ST');
-      if (NF3e.Total.ICMSTot.vFCPST <> fsvFCPST) then
-        AdicionaErro('862-Rejeição: Total do FCP ST difere do somatório dos itens');
-
-      GravaLog('Validar: 859-Total do FCP ST retido anteriormente');
-      if (NF3e.Total.ICMSTot.vFCPSTRet <> fsvFCPSTRet) then
-        AdicionaErro('859-Rejeição: Total do FCP retido anteriormente por Substituição Tributária difere do somatório dos itens');
-
-      GravaLog('Validar: 863-Total do IPI devolvido');
-      if (NF3e.Total.ICMSTot.vIPIDevol <> fsvIPIDevol) then
-        AdicionaErro('863-Rejeição: Total do IPI devolvido difere do somatório dos itens');
-    end;
-
-    GravaLog('Validar: 610-Total NF');
-    if not NFImportacao and
-       (NF3e.Total.ICMSTot.vNF <> fsvNF) then
-    begin
-      if (NF3e.Total.ICMSTot.vNF <> (fsvNF+fsvICMSDeson)) then
-        AdicionaErro('610-Rejeição: Total da NF difere do somatório dos Valores compõe o valor Total da NF.');
-    end;
-
-    GravaLog('Validar: 685-Total Tributos');
-    if (NF3e.Total.ICMSTot.vTotTrib <> fsvTotTrib) then
-      AdicionaErro('685-Rejeição: Total do Valor Aproximado dos Tributos difere do somatório dos itens');
-
-    if (NF3e.Ide.modelo = 65) and (NF3e.infNF3e.Versao < 4) then
-    begin
-      GravaLog('Validar: 767-NFCe soma pagamentos');
-      fsvTotPag := 0;
-      for I := 0 to NF3e.pag.Count-1 do
-      begin
-        fsvTotPag :=  fsvTotPag + NF3e.pag[I].vPag;
-      end;
-
-      if (NF3e.Total.ICMSTot.vNF <> fsvTotPag) then
-        AdicionaErro('767-Rejeição: NFC-e com somatório dos pagamentos diferente do total da Nota Fiscal');
-    end
-    else if (NF3e.infNF3e.Versao >= 4) then
-    begin
-      case NF3e.Ide.finNF3e of
-        fnNormal, fnComplementar:
-        begin
-          fsvTotPag := 0;
-          for I := 0 to NF3e.pag.Count-1 do
-          begin
-            fsvTotPag :=  fsvTotPag + NF3e.pag[I].vPag;
-          end;
-
-          if (NF3e.Ide.modelo = 65) then
-          begin
-            GravaLog('Validar: 899-NFCe sem pagamento');
-            for I := 0 to NF3e.pag.Count - 1 do
-            begin
-              if (NF3e.pag[I].tPag = fpSemPagamento) then
-              begin
-                AdicionaErro('899-Rejeição: Informado incorretamente o campo meio de pagamento');
-                Break;
-              end;
-            end;
-
-            GravaLog('Validar: 865-Total dos pagamentos NFCe');
-            if (fsvTotPag < NF3e.Total.ICMSTot.vNF) then
-              AdicionaErro('865-Rejeição: Total dos pagamentos menor que o total da nota');
-          end;
-
-          GravaLog('Validar: 866-Ausência de troco');
-          if (NF3e.pag.vTroco = 0) and (fsvTotPag > NF3e.Total.ICMSTot.vNF) then
-            AdicionaErro('866-Rejeição: Ausência de troco quando o valor dos pagamentos informados for maior que o total da nota');
-
-          GravaLog('Validar: 869-Valor do troco');
-          if (NF3e.pag.vTroco > 0) and (NF3e.Total.ICMSTot.vNF <> (fsvTotPag - NF3e.pag.vTroco)) then
-            AdicionaErro('869-Rejeição: Valor do troco incorreto');
-
-        end;
-
-        fnDevolucao:
-        begin
-          GravaLog('Validar: 871-Informações de Pagamento');
-          for I := 0 to NF3e.pag.Count-1 do
-          begin
-            if (NF3e.pag[I].tPag <> fpSemPagamento) then
-              AdicionaErro('871-Rejeição: O campo Meio de Pagamento deve ser preenchido com a opção Sem Pagamento');
-          end;
-        end;
-      end;
-    end;
-
-    //TODO: Regrar W01. Total da NF-e / ISSQN
+      Incluir as regras aqui
     }
   end;
 
@@ -1402,31 +413,10 @@ begin
 end;
 
 function NotaFiscal.LerXML(const AXML: String): Boolean;
-{$IfNDef DFE_ACBR_LIBXML2}
-var
-  XMLStr: String;
-{$EndIf}
 begin
-  XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
+  XMLOriginal := AXML;
 
-{$IfDef DFE_ACBR_LIBXML2}
   FNF3eR.Arquivo := XMLOriginal;
-{$Else}
-  { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
-    Isso é necessário, para que as propriedades fiquem com a acentuação correta }
-  XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
-
-  {
-   ****** Remoção do NameSpace do XML ******
-
-   XML baixados dos sites de algumas SEFAZ constuma ter ocorrências do
-   NameSpace em grupos diversos não previstos no MOC.
-   Essas ocorrências acabam prejudicando a leitura correta do XML.
-  }
-  XMLStr := StringReplace(XMLStr, ' xmlns="http://www.portalfiscal.inf.br/NF3e"', '', [rfReplaceAll]);
-
-  FNF3eR.Leitor.Arquivo := XMLStr;
-{$EndIf}
   FNF3eR.LerXml;
   Result := True;
 end;
@@ -1458,8 +448,8 @@ begin
       Ide.serie   := INIRec.ReadInteger( sSecao,'Serie'  ,1);
       Ide.nNF     := INIRec.ReadInteger( sSecao,'Numero' ,INIRec.ReadInteger( sSecao,'nNF' ,0));
       Ide.dhEmi   := StringToDateTime(INIRec.ReadString( sSecao,'Emissao',INIRec.ReadString( sSecao,'dhEmi',INIRec.ReadString( sSecao,'dhEmi','0'))));
-      Ide.tpEmis  := StrToTpEmis( OK,INIRec.ReadString( sSecao,'tpEmis',IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
-      Ide.tpAmb   := StrToTpAmb(  OK, INIRec.ReadString( sSecao,'tpAmb', TpAmbToStr(FConfiguracoes.WebServices.Ambiente)));
+      Ide.tpEmis  := StrToTipoEmissao( OK,INIRec.ReadString( sSecao,'tpEmis',IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
+      Ide.tpAmb   := StrToTipoAmbiente(  OK, INIRec.ReadString( sSecao,'tpAmb', TpAmbToStr(FConfiguracoes.WebServices.Ambiente)));
       Ide.finNF3e := StrToFinNF3e( OK,INIRec.ReadString( sSecao,'Finalidade',INIRec.ReadString( sSecao,'finNF3e','0')));
       Ide.verProc := INIRec.ReadString(  sSecao, 'verProc' ,'ACBrNF3e');
       Ide.dhCont  := StringToDateTime(INIRec.ReadString( sSecao,'dhCont'  ,'0'));
@@ -2445,8 +1435,8 @@ begin
       INIRec.WriteInteger('Identificacao', 'nNF', Ide.nNF);
       INIRec.WriteString('Identificacao', 'dhEmi', DateTimeToStr(Ide.dhEmi));
       INIRec.WriteInteger('Identificacao', 'cMunFG', Ide.cMunFG);
-      INIRec.WriteString('Identificacao', 'tpAmb', TpAmbToStr(Ide.tpAmb));
-      INIRec.WriteString('Identificacao', 'tpemis', TpEmisToStr(Ide.tpemis));
+      INIRec.WriteString('Identificacao', 'tpAmb', TipoAmbienteToStr(Ide.tpAmb));
+      INIRec.WriteString('Identificacao', 'tpemis', TipoEmissaoToStr(Ide.tpemis));
       INIRec.WriteString('Identificacao', 'finNF3e', FinNF3eToStr(Ide.finNF3e));
       INIRec.WriteString('Identificacao', 'verProc', Ide.verProc);
       INIRec.WriteString('Identificacao', 'dhCont', DateToStr(Ide.dhCont));
@@ -3260,17 +2250,6 @@ begin
   Result := TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e).Gravar(FNomeArq, FXMLOriginal);
 end;
 
-function NotaFiscal.GravarTXT(const NomeArquivo: String; const PathArquivo: String): Boolean;
-var
-  ATXT: String;
-begin
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  ATXT := GerarTXT;
-
-  Result := TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e).Gravar(
-    ChangeFileExt(FNomeArq, '.txt'), ATXT);
-end;
-
 function NotaFiscal.GravarStream(AStream: TStream): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
@@ -3330,21 +2309,13 @@ begin
   with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
   begin
     IdAnterior := NF3e.infNF3e.ID;
-{$IfDef DFE_ACBR_LIBXML2}
+
     FNF3eW.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNF3eW.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNF3eW.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FNF3eW.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     FNF3eW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNF3eW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
-{$Else}
-    FNF3eW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
-    FNF3eW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-    FNF3eW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FNF3eW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
-    FNF3eW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
-    FNF3eW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
-{$EndIf}
 
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
@@ -3352,62 +2323,20 @@ begin
     FNF3eW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
 
-{$IfNDef DFE_ACBR_LIBXML2}
-  FNF3eW.Opcoes.GerarTXTSimultaneamente := False;
-{$EndIf}
-
   FNF3eW.GerarXml;
   //DEBUG
   //WriteToTXT('c:\temp\Notafiscal.xml', FNF3eW.Document.Xml, False, False);
-  //WriteToTXT('c:\temp\Notafiscal.xml', FNF3eW.Gerador.ArquivoFormatoXML, False, False);
 
-{$IfDef DFE_ACBR_LIBXML2}
-  XMLOriginal := FNF3eW.Document.Xml;  // SetXMLOriginal() irá converter para UTF8
-{$Else}
-  XMLOriginal := FNF3eW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
-{$EndIf}
+  XMLOriginal := FNF3eW.Document.Xml;
 
   { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
     nome do arquivo, mantendo o PATH do arquivo carregado }
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNF3e.infNF3e.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
-{$IfDef DFE_ACBR_LIBXML2}
   FAlertas := ACBrStr( FNF3eW.ListaDeAlertas.Text );
-{$Else}
-  FAlertas := ACBrStr( FNF3eW.Gerador.ListaDeAlertas.Text );
-{$EndIf}
+
   Result := FXMLOriginal;
-end;
-
-function NotaFiscal.GerarTXT: String;
-var
-  IdAnterior : String;
-begin
-  Result := '';
-{$IfNDef DFE_ACBR_LIBXML2}
-  with TACBrNF3e(TNotasFiscais(Collection).ACBrNF3e) do
-  begin
-    IdAnterior                           := NF3e.infNF3e.ID;
-    FNF3eW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
-    FNF3eW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-    FNF3eW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FNF3eW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
-    FNF3eW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
-    FNF3eW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
-  end;
-
-  FNF3eW.Opcoes.GerarTXTSimultaneamente := True;
-
-  FNF3eW.GerarXml;
-  XMLOriginal := FNF3eW.Gerador.ArquivoFormatoXML;
-
-  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNF3e.infNF3e.ID)) then// XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
-    FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
-
-  FAlertas := FNF3eW.Gerador.ListaDeAlertas.Text;
-  Result   := FNF3eW.Gerador.ArquivoFormatoTXT;
-{$EndIf}
 end;
 
 function NotaFiscal.CalcularNomeArquivo: String;
@@ -3470,18 +2399,19 @@ var
 begin
   DecodeDate(NF3e.ide.dhEmi, wAno, wMes, wDia);
 
-  chaveNF3e := 'NF3e' + OnlyNumber(NF3e.infNF3e.ID);
+  chaveNF3e := OnlyNumber(NF3e.infNF3e.ID);
   {(*}
   Result := not
-    ((Copy(chaveNF3e, 4, 2) <> IntToStrZero(NF3e.Ide.cUF, 2)) or
-    (Copy(chaveNF3e, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-    (Copy(chaveNF3e, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(chaveNF3e, 10, 14)<> PadLeft(OnlyNumber(NF3e.Emit.CNPJ), 14, '0')) or
-    (Copy(chaveNF3e, 24, 2) <> IntToStrZero(NF3e.Ide.modelo, 2)) or
-    (Copy(chaveNF3e, 26, 3) <> IntToStrZero(NF3e.Ide.serie, 3)) or
-    (Copy(chaveNF3e, 29, 9) <> IntToStrZero(NF3e.Ide.nNF, 9)) or
-    (Copy(chaveNF3e, 38, 1) <> TpEmisToStr(NF3e.Ide.tpEmis)) or
-    (Copy(chaveNF3e, 39, 8) <> IntToStrZero(NF3e.Ide.cNF, 8)));
+    ((Copy(chaveNF3e, 1, 2) <> IntToStrZero(NF3e.Ide.cUF, 2)) or
+    (Copy(chaveNF3e, 3, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+    (Copy(chaveNF3e, 5, 2)  <> FormatFloat('00', wMes)) or
+    (Copy(chaveNF3e, 7, 14)<> PadLeft(OnlyNumber(NF3e.Emit.CNPJ), 14, '0')) or
+    (Copy(chaveNF3e, 21, 2) <> IntToStrZero(NF3e.Ide.modelo, 2)) or
+    (Copy(chaveNF3e, 23, 3) <> IntToStrZero(NF3e.Ide.serie, 3)) or
+    (Copy(chaveNF3e, 26, 9) <> IntToStrZero(NF3e.Ide.nNF, 9)) or
+    (Copy(chaveNF3e, 35, 1) <> TipoEmissaoToStr(NF3e.Ide.tpEmis)) or
+    (Copy(chaveNF3e, 36, 1) <> SiteAutorizadorToStr(NF3e.Ide.nSiteAutoriz)) or
+    (Copy(chaveNF3e, 37, 7) <> IntToStrZero(NF3e.Ide.cNF, 7)));
   {*)}
 end;
 
@@ -3801,53 +2731,6 @@ begin
     NomeArq := ExtractFileName(APathNomeArquivo);
     Result := Self.Items[i].GravarXML(NomeArq, PathArq);
     Inc(i);
-  end;
-end;
-
-function TNotasFiscais.GravarTXT(const APathNomeArquivo: String): Boolean;
-var
-  SL: TStringList;
-  ArqTXT: String;
-  PathArq : string;
-  I: integer;
-begin
-  Result := False;
-  SL := TStringList.Create;
-  try
-    SL.Clear;
-
-    for I := 0 to Self.Count - 1 do
-    begin
-      ArqTXT := Self.Items[I].GerarTXT;
-      SL.Add(ArqTXT);
-    end;
-
-    if SL.Count > 0 then
-    begin
-      // Inserindo cabeçalho //
-      SL.Insert(0, 'NOTA FISCAL|' + IntToStr(Self.Count));
-
-      // Apagando as linhas em branco //
-      i := 0;
-      while (i <= SL.Count - 1) do
-      begin
-        if SL[I] = '' then
-          SL.Delete(I)
-        else
-          Inc(i);
-      end;
-
-      PathArq := APathNomeArquivo;
-
-      if EstaVazio(PathArq) then
-        PathArq := PathWithDelim(
-          TACBrNF3e(FACBrNF3e).Configuracoes.Arquivos.PathSalvar) + 'NF3e.TXT';
-
-      SL.SaveToFile(PathArq);
-      Result := True;
-    end;
-  finally
-    SL.Free;
   end;
 end;
 

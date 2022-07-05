@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnNF3e;
+unit ACBrNF3eClass;
 
 interface
 
@@ -44,7 +44,10 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao, pcnConversaoNF3e, pcnSignature, pcnProcNF3e, pcnGerador;
+  ACBrXmlBase,
+  ACBrNF3eConversao,
+  ACBrNF3eProc,
+  pcnSignature;
 
 type
   { TinfNF3eSupl }
@@ -188,6 +191,17 @@ type
     property email: String   read Femail   write Femail;
   end;
 
+  { TgPIX }
+
+  TgPIX = class(TObject)
+  private
+    FurlQRCodePIX: String;
+  public
+    procedure Assign(Source: TgPIX);
+
+    property urlQRCodePIX: String read FurlQRCodePIX write FurlQRCodePIX;
+  end;
+
   { TgFat }
 
   TgFat = class(TObject)
@@ -202,6 +216,7 @@ type
     FcodBanco: String;
     FcodAgencia: String;
     FenderCorresp: TEndereco;
+    FgPIX: TgPIX;
   public
     constructor Create;
     destructor Destroy; override;
@@ -218,17 +233,7 @@ type
     property codBanco: String        read FcodBanco     write FcodBanco;
     property codAgencia: String      read FcodAgencia   write FcodAgencia;
     property enderCorresp: TEndereco read FenderCorresp write FenderCorresp;
-  end;
-
-  { TgPIX }
-
-  TgPIX = class(TObject)
-  private
-    FurlQRCodePIX: String;
-  public
-    procedure Assign(Source: TgPIX);
-
-    property urlQRCodePIX: String read FurlQRCodePIX write FurlQRCodePIX;
+    property gPIX: TgPIX             read FgPIX         write FgPIX;
   end;
 
   { TgGrandFatCollectionItem }
@@ -368,6 +373,15 @@ type
     FvPIS: Double;
     FvCOFINS: Double;
     FgProc: TgProcCollection;
+    FpFCP: Double;
+    FvFCP: Double;
+    FvBCST: Double;
+    FpICMSST: Double;
+    FvICMSST: Double;
+    FpFCPST: Double;
+    FvFCPST: Double;
+    FvPISEfet: Double;
+    FvCOFINSEfet: Double;
 
     procedure SetgProc(const Value: TgProcCollection);
   public
@@ -386,20 +400,29 @@ type
     property vPIS: Double             read FvPIS         write FvPIS;
     property vCOFINS: Double          read FvCOFINS      write FvCOFINS;
     property gProc: TgProcCollection  read FgProc        write SetgProc;
+    property pFCP: Double             read FpFCP         write FpFCP;
+    property vFCP: Double             read FvFCP         write FvFCP;
+    property vBCST: Double            read FvBCST        write FvBCST;
+    property pICMSST: Double          read FpICMSST      write FpICMSST;
+    property vICMSST: Double          read FvICMSST      write FvICMSST;
+    property pFCPST: Double           read FpFCPST       write FpFCPST;
+    property vFCPST: Double           read FvFCPST       write FvFCPST;
+    property vPISEfet: Double         read FvPISEfet     write FvPISEfet;
+    property vCOFINSEfet: Double      read FvCOFINSEfet  write FvCOFINSEfet;
   end;
 
   { TCOFINS }
 
   TCOFINS = class(TObject)
   private
-    FCST: TpcnCstCofins;
+    FCST: TCSTCofins;
     FvBC: Double;
     FpCOFINS: Double;
     FvCOFINS: Double;
   public
     procedure Assign(Source: TCOFINS);
 
-    property CST: TpcnCstCofins read FCST     write FCST default cof01;
+    property CST: TCSTCofins    read FCST     write FCST default cof01;
     property vBC: Double        read FvBC     write FvBC;
     property pCOFINS: Double    read FpCOFINS write FpCOFINS;
     property vCOFINS: Double    read FvCOFINS write FvCOFINS;
@@ -443,17 +466,17 @@ type
 
   TPIS = class(TObject)
   private
-    FCST: TpcnCstPis;
+    FCST: TCSTPis;
     FvBC: Double;
     FpPIS: Double;
     FvPIS: Double;
   public
     procedure Assign(Source: TPIS);
 
-    property CST: TpcnCstPis read FCST  write FCST default pis01;
-    property vBC: Double     read FvBC  write FvBC;
-    property pPIS: Double    read FpPIS write FpPIS;
-    property vPIS: Double    read FvPIS write FvPIS;
+    property CST: TCSTPis read FCST  write FCST default pis01;
+    property vBC: Double  read FvBC  write FvBC;
+    property pPIS: Double read FpPIS write FpPIS;
+    property vPIS: Double read FvPIS write FvPIS;
   end;
 
   { TPISEfet }
@@ -475,7 +498,7 @@ type
 
   TICMS = class(TObject)
   private
-    FCST: TpcnCSTIcms;
+    FCST: TCSTIcms;
     FvBC: Double;
     FpICMS: Double;
     FvICMS: Double;
@@ -492,7 +515,7 @@ type
   public
     procedure Assign(Source: TICMS);
 
-    property CST: TpcnCSTIcms   read FCST        write FCST default cst00;
+    property CST: TCSTIcms      read FCST        write FCST default cst00;
     property vBC: Double        read FvBC        write FvBC;
     property pICMS: Double      read FpICMS      write FpICMS;
     property vICMS: Double      read FvICMS      write FvICMS;
@@ -724,20 +747,32 @@ type
     FvPIS: Double;
     FvCOFINS: Double;
     FretTrib: TretTrib;
+    FvFCP: Double;
+    FvBCST: Double;
+    FvICMSST: Double;
+    FvFCPST: Double;
+    FvPISEfet: Double;
+    FvCOFINSEfet: Double;
   public
     procedure Assign(Source: TdetItemAnt);
 
-    property nItemAnt: Integer  read FnItemAnt  write FnItemAnt;
-    property vItem: Double      read FvItem     write FvItem;
-    property qFaturada: Double  read FqFaturada write FqFaturada;
-    property vProd: Double      read FvProd     write FvProd;
-    property cClass: Integer    read FcClass    write FcClass;
-    property vBC: Double        read FvBC       write FvBC;
-    property pICMS: Double      read FpICMS     write FpICMS;
-    property vICMS: Double      read FvICMS     write FvICMS;
-    property vPIS: Double       read FvPIS      write FvPIS;
-    property vCOFINS: Double    read FvCOFINS   write FvCOFINS;
-    property retTrib: TretTrib  read FretTrib   write FretTrib;
+    property nItemAnt: Integer   read FnItemAnt    write FnItemAnt;
+    property vItem: Double       read FvItem       write FvItem;
+    property qFaturada: Double   read FqFaturada   write FqFaturada;
+    property vProd: Double       read FvProd       write FvProd;
+    property cClass: Integer     read FcClass      write FcClass;
+    property vBC: Double         read FvBC         write FvBC;
+    property pICMS: Double       read FpICMS       write FpICMS;
+    property vICMS: Double       read FvICMS       write FvICMS;
+    property vPIS: Double        read FvPIS        write FvPIS;
+    property vCOFINS: Double     read FvCOFINS     write FvCOFINS;
+    property retTrib: TretTrib   read FretTrib     write FretTrib;
+    property vFCP: Double        read FvFCP        write FvFCP;
+    property vBCST: Double       read FvBCST       write FvBCST;
+    property vICMSST: Double     read FvICMSST     write FvICMSST;
+    property vFCPST: Double      read FvFCPST      write FvFCPST;
+    property vPISEfet: Double    read FvPISEfet    write FvPISEfet;
+    property vCOFINSEfet: Double read FvCOFINSEfet write FvCOFINSEfet;
   end;
 
   { TgAjusteNF3eAnt }
@@ -1031,7 +1066,7 @@ type
     FxNome: String;
     FCNPJCPF: String;
     FidOutros: String;
-    FindIEDest: TpcnindIEDest;
+    FindIEDest: TindIEDest;
     FIE: String;
     FIM: String;
     FcNIS: String;
@@ -1044,16 +1079,16 @@ type
 
     procedure Assign(Source: TDest);
 
-    property CNPJCPF: String          read FCNPJCPF        write FCNPJCPF;
-    property idOutros: String         read FidOutros       write FidOutros;
-    property xNome: String            read FxNome          write FxNome;
-    property indIEDest: TpcnindIEDest read FindIEDest      write FindIEDest;
-    property IE: String               read FIE             write FIE;
-    property cNIS: String             read FcNIS           write FcNIS;
-    property NB: String               read FNB             write FNB;
-    property IM: String               read FIM             write FIM;
-    property xNomeAdicional: String   read FxNomeAdicional write FxNomeAdicional;
-    property EnderDest: TEndereco     read FEnderDest      write FEnderDest;
+    property CNPJCPF: String        read FCNPJCPF        write FCNPJCPF;
+    property idOutros: String       read FidOutros       write FidOutros;
+    property xNome: String          read FxNome          write FxNome;
+    property indIEDest: TindIEDest  read FindIEDest      write FindIEDest;
+    property IE: String             read FIE             write FIE;
+    property cNIS: String           read FcNIS           write FcNIS;
+    property NB: String             read FNB             write FNB;
+    property IM: String             read FIM             write FIM;
+    property xNomeAdicional: String read FxNomeAdicional write FxNomeAdicional;
+    property EnderDest: TEndereco   read FEnderDest      write FEnderDest;
   end;
 
   { TEmit }
@@ -1084,11 +1119,12 @@ type
   private
     FxJust: String;
     FfinNF3e: TpcnFinalidadeNF3e;
-    FtpEmis: TpcnTipoEmissao;
+    FtpEmis: TACBrTipoEmissao;
+    FnSiteAutoriz: TSiteAutorizador;
     FdhEmi: TDateTime;
     FcMunFG: Integer;
     Fserie: Integer;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     Fmodelo: Integer;
     FcDV: Integer;
     FnNF: Integer;
@@ -1101,14 +1137,15 @@ type
     procedure Assign(Source: TIde);
 
     property cUF: Integer                read FcUF     write FcUF;
-    property tpAmb: TpcnTipoAmbiente     read FtpAmb   write FtpAmb default taHomologacao;
+    property tpAmb: TACBrTipoAmbiente    read FtpAmb   write FtpAmb default taHomologacao;
     property modelo: Integer             read Fmodelo  write Fmodelo;
     property serie: Integer              read Fserie   write Fserie;
     property nNF: Integer                read FnNF     write FnNF;
     property cNF: Integer                read FcNF     write FcNF;
     property cDV: Integer                read FcDV     write FcDV;
     property dhEmi: TDateTime            read FdhEmi   write FdhEmi;
-    property tpEmis: TpcnTipoEmissao     read FtpEmis  write FtpEmis default teNormal;
+    property tpEmis: TACBrTipoEmissao    read FtpEmis  write FtpEmis default teNormal;
+    property nSiteAutoriz: TSiteAutorizador read FnSiteAutoriz write FnSiteAutoriz default sa0;
     property cMunFG: Integer             read FcMunFG  write FcMunFG;
     property finNF3e: TpcnFinalidadeNF3e read FfinNF3e write FfinNF3e default fnNormal;
     property verProc: String             read FverProc write FverProc;
@@ -1151,7 +1188,6 @@ type
 
     FTotal: TTotal;
     FgFat: TgFat;
-    FgPIX: TgPIX;
     FgANEEL: TgANEEL;
     FautXML: TautXMLCollection;
     FinfAdic: TInfAdic;
@@ -1171,7 +1207,6 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TNF3e);
-    procedure SetXMLString(const AValue : AnsiString);
 
     property infNF3e: TinfNF3e                 read FinfNF3e     write FinfNF3e;
     property Ide: TIde                         read FIde         write FIde;
@@ -1186,7 +1221,6 @@ type
     property NFDet: TNFDetCollection           read FNFDet       write SetNFDet;
     property Total: TTotal                     read FTotal       write FTotal;
     property gFat: TgFat                       read FgFat        write FgFat;
-    property gPIX: TgPIX                       read FgPIX        write FgPIX;
     property gANEEL: TgANEEL                   read FgANEEL      write FgANEEL;
     property autXML: TautXMLCollection         read FautXML      write SetautXML;
     property infAdic: TInfAdic                 read FinfAdic     write FinfAdic;
@@ -1204,7 +1238,7 @@ const
 implementation
 
 uses
-  ACBrUtil, pcnNF3eR;
+  ACBrUtil.Base;
 
 { TinfNF3eSupl }
 
@@ -1377,6 +1411,7 @@ begin
   codAgencia   := Source.codAgencia;
 
   enderCorresp.Assign(Source.enderCorresp);
+  gPIX.Assign(Source.gPIX);
 end;
 
 constructor TgFat.Create;
@@ -1384,11 +1419,13 @@ begin
   inherited Create;
 
   FenderCorresp := TEndereco.Create;
+  FgPIX         := TgPIX.Create;
 end;
 
 destructor TgFat.Destroy;
 begin
   FenderCorresp.Free;
+  FgPIX.Free;
 
   inherited Destroy;
 end;
@@ -1484,6 +1521,16 @@ begin
   vICMS        := Source.vICMS;
   vPIS         := Source.vPIS;
   vCOFINS      := Source.vCOFINS;
+
+  pFCP        := Source.pFCP;
+  vFCP        := Source.vFCP;
+  vBCST       := Source.vBCST;
+  pICMSST     := Source.pICMSST;
+  vICMSST     := Source.vICMSST;
+  pFCPST      := Source.pFCPST;
+  vFCPST      := Source.vFCPST;
+  vPISEfet    := Source.vPISEfet;
+  vCOFINSEfet := Source.vCOFINSEfet;
 
   gProc.Assign(Source.gProc);
 end;
@@ -1784,6 +1831,13 @@ begin
   vICMS     := Source.vICMS;
   vPIS      := Source.vPIS;
   vCOFINS   := Source.vCOFINS;
+
+  vFCP        := Source.vFCP;
+  vBCST       := Source.vBCST;
+  vICMSST     := Source.vICMSST;
+  vFCPST      := Source.vFCPST;
+  vPISEfet    := Source.vPISEfet;
+  vCOFINSEfet := Source.vCOFINSEfet;
 
   retTrib.Assign(Source.retTrib);
 end;
@@ -2176,6 +2230,7 @@ begin
   verProc := Source.verProc;
   dhCont  := Source.dhCont;
   xJust   := Source.xJust;
+  nSiteAutoriz := Source.nSiteAutoriz;
 end;
 
 { TinfNF3e }
@@ -2202,9 +2257,9 @@ end;
 function TinfNF3e.GetVersaoStr: String;
 begin
   if FVersao <= 0 then
-     Result := V2_00
-  else
-     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
+    FVersao := 2;
+
+  Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
 end;
 
 { TNF3e }
@@ -2233,19 +2288,6 @@ begin
   procNF3e.Assign(Source.procNF3e);
 end;
 
-procedure TNF3e.SetXMLString(const AValue: AnsiString);
-var
- LocNF3eR : TNF3eR;
-begin
-  LocNF3eR := TNF3eR.Create(Self);
-  try
-    LocNF3eR.Leitor.Arquivo := AValue;
-    LocNF3eR.LerXml;
-  finally
-    LocNF3eR.Free
-  end;
-end;
-
 constructor TNF3e.Create;
 begin
   inherited Create;
@@ -2272,6 +2314,7 @@ begin
   FprocNF3e    := TProcNF3e.Create;
 
   FinfNF3e.Versao := 0;
+  FIde.nSiteAutoriz := sa0;
 end;
 
 destructor TNF3e.Destroy;

@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnRetConsSitNF3e;
+unit ACBrNF3eRetConsSit;
 
 interface
 
@@ -43,8 +43,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase,
-  pcnConversao, pcnLeitor, pcnProcNF3e, pcnRetEnvEventoNF3e;
+  ACBrBase, ACBrXmlBase,
+  ACbrNF3eProc, ACBrNF3eRetEnvEvento;
 
 type
 
@@ -68,9 +68,8 @@ type
 
   TRetConsSitNF3e = class(TObject)
   private
-    FLeitor: TLeitor;
     Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -81,14 +80,16 @@ type
     FprocEventoNF3e: TRetEventoNF3eCollection;
     FnRec: String;
     FXMLprotNF3e: String;
+
+    FXmlRetorno: String;
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: Boolean;
 
-    property Leitor: TLeitor                          read FLeitor         write FLeitor;
     property versao: String                           read Fversao         write Fversao;
-    property tpAmb: TpcnTipoAmbiente                  read FtpAmb          write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente                 read FtpAmb          write FtpAmb;
     property verAplic: String                         read FverAplic       write FverAplic;
     property cStat: Integer                           read FcStat          write FcStat;
     property xMotivo: String                          read FxMotivo        write FxMotivo;
@@ -99,9 +100,14 @@ type
     property procEventoNF3e: TRetEventoNF3eCollection read FprocEventoNF3e write FprocEventoNF3e;
     property nRec: String                             read FnRec           write FnRec;
     property XMLprotNF3e: String                      read FXMLprotNF3e    write FXMLprotNF3e;
+
+    property XmlRetorno: String read FXmlRetorno write FXmlRetorno;
   end;
 
 implementation
+
+uses
+  ACBrXmlDocument;
 
 { TRetEventoCollection }
 
@@ -144,13 +150,11 @@ constructor TRetConsSitNF3e.Create;
 begin
   inherited Create;
 
-  FLeitor   := TLeitor.Create;
   FprotNF3e := TProcNF3e.create;
 end;
 
 destructor TRetConsSitNF3e.Destroy;
 begin
-  FLeitor.Free;
   FprotNF3e.Free;
 
   if Assigned(procEventoNF3e) then
@@ -161,46 +165,56 @@ end;
 
 function TRetConsSitNF3e.LerXml: Boolean;
 var
+  Document: TACBrXmlDocument;
+  ANode, ANodeAux: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
   ok: Boolean;
   i: Integer;
 begin
-  Result := False;
+  Document := TACBrXmlDocument.Create;
+
   try
-    if leitor.rExtrai(1, 'retConsSitNF3e') <> '' then
+    Document.LoadFromXml(XmlRetorno);
+
+    ANode := Document.Root;
+
+    if ANode <> nil then
     begin
-      Fversao   := Leitor.rAtributo('versao');
-      FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
-      FcUF      := leitor.rCampo(tcInt, 'cUF');
-      FverAplic := leitor.rCampo(tcStr, 'verAplic');
+      versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
+      verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
+      tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+      cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
+      nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
+      cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
+      xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);
+      dhRecbto := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+      chNF3e := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNF3e'), tcStr);
 
-      FnRec     := leitor.rCampo(tcStr, 'nRec');
-
-      FcStat    := leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
-      FdhRecbto := leitor.rCampo(tcDatHor, 'dhRecbto');
-      FchNF3e   := leitor.rCampo(tcStr, 'chNF3e');
-
-      case FcStat of
+      case cStat of
         100,101,104,110,150,151,155,301,302,303:
           begin
-            if (Leitor.rExtrai(1, 'protNF3e') <> '') then
+            ANodeAux := ANode.Childrens.FindAnyNs('protNF3e');
+
+            if ANodeAux <> nil then
             begin
               // A propriedade XMLprotNF3e contem o XML que traz o resultado do
               // processamento da NF3-e.
-              XMLprotNF3e := Leitor.Grupo;
+              XMLprotNF3e := ANodeAux.OuterXml;
 
-              if Leitor.rExtrai(2, 'infProt') <> '' then
+              ANodeAux := ANodeAux.Childrens.FindAnyNs('infProt');
+
+              if ANodeAux <> nil then
               begin
-                protNF3e.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-                protNF3e.verAplic := Leitor.rCampo(tcStr, 'verAplic');
-                protNF3e.chNF3e   := Leitor.rCampo(tcStr, 'chNF3e');
-                protNF3e.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-                protNF3e.nProt    := Leitor.rCampo(tcStr, 'nProt');
-                protNF3e.digVal   := Leitor.rCampo(tcStr, 'digVal');
-                protNF3e.cStat    := Leitor.rCampo(tcInt, 'cStat');
-                protNF3e.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-                protNF3e.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
-                protNF3e.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
+                protNF3e.tpAmb := StrToTipoAmbiente(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+                protNF3e.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
+                protNF3e.chNF3e := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNF3e'), tcStr);
+                protNF3e.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
+                protNF3e.nProt := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('nProt'), tcStr);
+                protNF3e.digVal := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('digVal'), tcStr);
+                protNF3e.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
+                protNF3e.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);
+                protNF3e.cMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cMsg'), tcInt);
+                protNF3e.xMsg := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMsg'), tcStr);
               end;
             end;
           end;
@@ -210,19 +224,31 @@ begin
         procEventoNF3e.Free;
 
       procEventoNF3e := TRetEventoNF3eCollection.Create;
-      i := 0;
 
-      while Leitor.rExtrai(1, 'procEventoNF3e', '', i + 1) <> '' do
-      begin
-        procEventoNF3e.New;
-        procEventoNF3e.Items[i].RetEventoNF3e.Leitor.Arquivo := Leitor.Grupo;
-        procEventoNF3e.Items[i].RetEventoNF3e.XML            := Leitor.Grupo;
-        procEventoNF3e.Items[i].RetEventoNF3e.LerXml;
-        inc(i);
+      try
+        ANodeArray := ANode.Childrens.FindAllAnyNs('procEventoNF3e');
+
+        if Assigned(ANodeArray) then
+        begin
+          for i := Low(ANodeArray) to High(ANodeArray) do
+          begin
+            AnodeAux := ANodeArray[i];
+
+            procEventoNF3e.New;
+            procEventoNF3e.Items[i].RetEventoNF3e.Leitor.Arquivo := AnodeAux.OuterXml;
+            procEventoNF3e.Items[i].RetEventoNF3e.XML := AnodeAux.OuterXml;
+            procEventoNF3e.Items[i].RetEventoNF3e.LerXml;
+          end;
+        end;
+
+        Result := True;
+      except
+        Result := False;
       end;
-
-      Result := True;
     end;
+
+    FreeAndNil(Document);
+    Result := True;
   except
     Result := False;
   end;

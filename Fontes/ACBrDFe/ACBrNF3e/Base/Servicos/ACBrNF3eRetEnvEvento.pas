@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit pcnRetEnvEventoNF3e;
+unit ACBrNF3eRetEnvEvento;
 
 interface
 
@@ -43,8 +43,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase,
-  pcnConversao, pcnLeitor, pcnEventoNF3e, pcnSignature;
+  ACBrBase, ACBrXmlBase,
+  pcnConversao, pcnLeitor, ACBrNF3eEvento, pcnSignature;
 
 type
 
@@ -71,7 +71,7 @@ type
   private
     FidLote: Int64;
     Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FLeitor: TLeitor;
     FcStat: Integer;
@@ -89,7 +89,7 @@ type
     property idLote: Int64                      read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
     property versao: String                     read Fversao    write Fversao;
-    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente           read FtpAmb     write FtpAmb;
     property verAplic: String                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
     property cStat: Integer                     read FcStat     write FcStat;
@@ -104,7 +104,7 @@ type
 implementation
 
 uses
-  pcnConversaoNF3e;
+  ACBrNF3eConversao;
 
 { TRetInfEventoCollection }
 
@@ -166,9 +166,10 @@ end;
 function TRetEventoNF3e.LerXml: Boolean;
 var
   ok: Boolean;
-  i, j: Integer;
+  i: Integer;
 begin
   Result := False;
+
   i:=0;
   try
     if (Leitor.rExtrai(1, 'evento') <> '') then
@@ -177,44 +178,18 @@ begin
       begin
         infEvento.ID           := Leitor.rAtributo('Id');
         InfEvento.cOrgao       := Leitor.rCampo(tcInt, 'cOrgao');
-        infEvento.tpAmb        := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+        infEvento.tpAmb        := StrToTipoAmbiente(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CNPJ');
-        infEvento.chNF3e        := Leitor.rCampo(tcStr, 'chNF3e');
+        infEvento.chNF3e       := Leitor.rCampo(tcStr, 'chNF3e');
         infEvento.dhEvento     := Leitor.rCampo(tcDatHor, 'dhEvento');
         infEvento.tpEvento     := StrToTpEventoNF3e(ok,Leitor.rCampo(tcStr, 'tpEvento'));
         infEvento.nSeqEvento   := Leitor.rCampo(tcInt, 'nSeqEvento');
-        infEvento.VersaoEvento := Leitor.rCampo(tcDe2, 'verEvento');
 
         if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
         begin
           infEvento.DetEvento.descEvento := Leitor.rCampo(tcStr, 'descEvento');
-          infEvento.DetEvento.xCorrecao  := Leitor.rCampo(tcStr, 'xCorrecao');
-          infEvento.DetEvento.xCondUso   := Leitor.rCampo(tcStr, 'xCondUso');
           infEvento.DetEvento.nProt      := Leitor.rCampo(tcStr, 'nProt');
           infEvento.DetEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
-
-          InfEvento.detEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
-          infEvento.detEvento.tpAutor     := StrToTipoAutor(ok, Leitor.rCampo(tcStr, 'tpAutor'));
-          infEvento.detEvento.verAplic    := Leitor.rCampo(tcStr, 'verAplic');
-          infEvento.detEvento.dhEmi       := Leitor.rCampo(tcDatHor, 'dhEmi');
-          infEvento.detEvento.tpNF        := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
-          infEvento.detEvento.IE          := Leitor.rCampo(tcStr, 'IE');
-
-//           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
-//           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
-//           infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
-
-          if Leitor.rExtrai(4, 'dest', '', i + 1) <> '' then
-          begin
-            infEvento.detEvento.dest.UF            := Leitor.rCampo(tcStr, 'UF');
-            infEvento.detEvento.dest.CNPJCPF       := Leitor.rCampoCNPJCPF;
-            infEvento.detEvento.dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
-            infEvento.detEvento.dest.IE            := Leitor.rCampo(tcStr, 'IE');
-
-            infEvento.detEvento.vNF   := Leitor.rCampo(tcDe2, 'vNF');
-            infEvento.detEvento.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
-            infEvento.detEvento.vST   := Leitor.rCampo(tcDe2, 'vST');
-          end;
         end;
       end;
 
@@ -234,7 +209,7 @@ begin
     begin
       Fversao   := Leitor.rAtributo('versao');
       FidLote   := Leitor.rCampo(tcInt64, 'idLote');
-      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      FtpAmb    := StrToTipoAmbiente(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       FcOrgao   := Leitor.rCampo(tcInt, 'cOrgao');
       FcStat    := Leitor.rCampo(tcInt, 'cStat');
@@ -248,7 +223,7 @@ begin
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
          FretEvento.Items[i].FRetInfEvento.Id         := Leitor.rAtributo('Id');
-         FretEvento.Items[i].FRetInfEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+         FretEvento.Items[i].FRetInfEvento.tpAmb      := StrToTipoAmbiente(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          FretEvento.Items[i].FRetInfEvento.verAplic   := Leitor.rCampo(tcStr, 'verAplic');
          FretEvento.Items[i].FRetInfEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          FretEvento.Items[i].FRetInfEvento.cStat      := Leitor.rCampo(tcInt, 'cStat');
@@ -266,16 +241,6 @@ begin
          FretEvento.Items[i].FRetInfEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
          FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
          FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
-
-         j := 0;
-         while  Leitor.rExtrai(3, 'chNF3ePend', '', j + 1) <> '' do
-         begin
-           FretEvento.Items[i].FRetInfEvento.chNF3ePend.New;
-
-           FretEvento.Items[i].FRetInfEvento.chNF3ePend[j].ChavePend := Leitor.rCampo(tcStr, 'chNF3ePend');
-
-           inc(j);
-         end;
 
          inc(i);
        end;

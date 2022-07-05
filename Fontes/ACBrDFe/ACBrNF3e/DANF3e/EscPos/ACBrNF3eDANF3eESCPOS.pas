@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -38,8 +38,8 @@ interface
 
 uses
   Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
-  ACBrBase, ACBrNF3eDANF3eClass, ACBrPosPrinter,
-  pcnNF3e, pcnEnvEventoNF3e;
+  ACBrBase, ACBrPosPrinter,
+  ACBrNF3eClass, ACBrNF3eDANF3eClass, ACBrNF3eEnvEvento;
 
 type
   { TACBrNF3eDANF3eESCPOS }
@@ -94,11 +94,11 @@ implementation
 
 uses
   strutils, Math,
-  ACBrNF3e, ACBrValidador,
-  ACBrUtil.Strings,
-  ACBrUtil.Base,
+  ACBrUtil.Strings, ACBrUtil.Base,
   ACBrDFeUtil,
-  pcnConversao, pcnConversaoNF3e, pcnAuxiliar;
+  ACBrXmlBase,
+  ACBrValidador,
+  ACBrNF3e, ACBrNF3eConversao;
 
 { TACBrNF3eDANF3eESCPOS }
 
@@ -151,13 +151,13 @@ end;
 procedure TACBrNF3eDANF3eESCPOS.GerarMensagemContingencia(CaracterDestaque: Char);
 begin
   // se homologação imprimir o texto de homologação
-  if (FpNF3e.ide.tpAmb = taHomologacao) then
+  if (FpNF3e.ide.tpAmb = TACBrTipoAmbiente(taHomologacao)) then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
   end;
 
   // se diferente de normal imprimir a emissão em contingência
-  if (FpNF3e.ide.tpEmis <> teNormal) and
+  if (FpNF3e.ide.tpEmis <> TACBrTipoEmissao(teNormal)) and
      EstaVazio(FpNF3e.procNF3e.nProt) then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('</c></ce><e><n>EMITIDA EM CONTINGÊNCIA</n></e>'));
@@ -324,7 +324,7 @@ begin
                          '</n>');
 
   // protocolo de autorização
-  if (FpNF3e.Ide.tpEmis <> teOffLine) or
+  if (FpNF3e.Ide.tpEmis <> TACBrTipoEmissao(teOffLine)) or
      NaoEstaVazio(FpNF3e.procNF3e.nProt) or
      (FpNF3e.procNF3e.dhRecbto <> 0) then
   begin
@@ -636,8 +636,6 @@ begin
      DateTimeToStr(FpEvento.Evento[0].InfEvento.dhEvento) );
   FPosPrinter.Buffer.Add( PadRight('Sequencia:', TAMCOLDESCR) +
      IntToStr(FpEvento.Evento[0].InfEvento.nSeqEvento) );
-  FPosPrinter.Buffer.Add( ACBrStr( PadRight('Versão:', TAMCOLDESCR)) +
-     FpEvento.Evento[0].InfEvento.versaoEvento );
   FPosPrinter.Buffer.Add( PadRight('Status:', TAMCOLDESCR) +
      FpEvento.Evento[0].RetInfEvento.xMotivo );
   FPosPrinter.Buffer.Add( PadRight('Protocolo:', TAMCOLDESCR) +
@@ -656,14 +654,6 @@ begin
     FPosPrinter.Buffer.Add('</fn></ce><n>JUSTIFICATIVA</n>');
     FPosPrinter.Buffer.Add('</fn></ae>' +
        FpEvento.Evento[0].InfEvento.detEvento.xJust );
-  end
-
-  else if FpEvento.Evento[0].InfEvento.detEvento.xCorrecao <> '' then
-  begin
-    FPosPrinter.Buffer.Add('</linha_simples>');
-    FPosPrinter.Buffer.Add('</fn></ce><n>' + ACBrStr('CORREÇÃO') + '</n>' );
-    FPosPrinter.Buffer.Add('</fn></ae>' +
-       FpEvento.Evento[0].InfEvento.detEvento.xCorrecao );
   end;
 end;
 
@@ -689,7 +679,6 @@ begin
   AtivarPosPrinter;
   GerarCabecalhoEmitente;
   GerarDadosEvento;
-//  GerarInformacoesPassageiro;
   GerarObservacoesEvento;
   GerarInformacoesQRCode(True);
   GerarRodape;

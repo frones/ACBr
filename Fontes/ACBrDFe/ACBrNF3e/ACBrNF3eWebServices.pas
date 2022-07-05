@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -38,12 +38,14 @@ interface
 
 uses
   Classes, SysUtils, dateutils,
-  ACBrDFe, ACBrDFeWebService,
   blcksock, synacode,
-  pcnNF3e, pcnRetConsReciDFe, pcnAuxiliar, pcnConversao,
-  pcnConversaoNF3e, pcnProcNF3e, pcnEnvEventoNF3e, pcnRetEnvEventoNF3e, pcnRetConsSitNF3e,
-  pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNF3e,
-  ACBrNF3eNotasFiscais, ACBrNF3eConfiguracoes;
+  ACBrDFe, ACBrDFeWebService,
+  ACBrXmlBase,
+  ACBrNF3eNotasFiscais, ACBrNF3eConfiguracoes,
+  ACBrNF3eClass, ACBrNF3eConversao, ACBrNF3eProc, ACBrNF3eRetConsSit,
+  ACBrNF3eEnvEvento, ACBrNF3eRetEnvEvento, ACBrNF3eRetEnv,
+  pcnAuxiliar, pcnConversao,
+  pcnRetConsReciDFe, pcnDistDFeInt, pcnRetDistDFeInt;
 
 type
 
@@ -317,61 +319,6 @@ type
     property procEventoNF3e: TRetEventoNF3eCollection read FprocEventoNF3e;
   end;
 
-  { TNF3eInutilizacao }
-
-  TNF3eInutilizacao = class(TNF3eWebService)
-  private
-    FID: String;
-    FProtocolo: String;
-    FSerie: integer;
-    FCNPJ: String;
-    FAno: integer;
-    FNumeroInicial: integer;
-    FNumeroFinal: integer;
-    FJustificativa: String;
-    Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
-    FcStat: integer;
-    FxMotivo: String;
-    FcUF: integer;
-    FdhRecbto: TDateTime;
-    FNomeArquivo: String;
-
-    FXML_ProcInutNF3e: String;
-
-    procedure SetJustificativa(const AValue: String);
-    function GerarPathPorCNPJ: String;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-    function GerarPrefixoArquivo: String; override;
-  public
-    procedure Clear; override;
-
-    property ID: String read FID write FID;
-    property Protocolo: String read FProtocolo write FProtocolo;
-    property Serie: integer read FSerie write FSerie;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property Ano: integer read FAno write FAno;
-    property NumeroInicial: integer read FNumeroInicial write FNumeroInicial;
-    property NumeroFinal: integer read FNumeroFinal write FNumeroFinal;
-    property Justificativa: String read FJustificativa write SetJustificativa;
-    property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property xMotivo: String read FxMotivo;
-    property cUF: integer read FcUF;
-    property dhRecbto: TDateTime read FdhRecbto;
-    property XML_ProcInutNF3e: String read FXML_ProcInutNF3e;
-    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
-  end;
-
   { TNF3eEnvEvento }
 
   TNF3eEnvEvento = class(TNF3eWebService)
@@ -485,7 +432,6 @@ type
     FRetorno: TNF3eRetRecepcao;
     FRecibo: TNF3eRecibo;
     FConsulta: TNF3eConsulta;
-    FInutilizacao: TNF3eInutilizacao;
     FEnvEvento: TNF3eEnvEvento;
     FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TNF3eEnvioWebService;
@@ -497,8 +443,6 @@ type
       overload;
     function Envia(const ALote: String; const ASincrono: Boolean = False): Boolean;
       overload;
-    procedure Inutiliza(const ACNPJ, AJustificativa: String;
-      Ano, Serie, NumeroInicial, NumeroFinal: integer);
 
     property ACBrNF3e: TACBrDFe read FACBrNF3e write FACBrNF3e;
     property StatusServico: TNF3eStatusServico read FStatusServico write FStatusServico;
@@ -506,7 +450,6 @@ type
     property Retorno: TNF3eRetRecepcao read FRetorno write FRetorno;
     property Recibo: TNF3eRecibo read FRecibo write FRecibo;
     property Consulta: TNF3eConsulta read FConsulta write FConsulta;
-    property Inutilizacao: TNF3eInutilizacao read FInutilizacao write FInutilizacao;
     property EnvEvento: TNF3eEnvEvento read FEnvEvento write FEnvEvento;
     property DistribuicaoDFe: TDistribuicaoDFe
       read FDistribuicaoDFe write FDistribuicaoDFe;
@@ -518,11 +461,14 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrNF3e, pcnConsts, 
-  pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
-  pcnNF3eConsts, pcnConsSitNF3e, //pcnInutNF3e, pcnRetInutNF3e,
-  pcnConsReciDFe,
-  pcnLeitor, ACBrIntegrador;
+  ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrUtil.FilesIO,
+  ACBrCompress, ACBrNF3e, ACBrIntegrador,
+  ACBrNF3eConsts,
+  ACBrNF3eConsSit,
+  pcnConsts, pcnGerador, pcnLeitor,
+  ACBrDFeConsStatServ, ACBrDFeRetConsStatServ,
+  pcnConsReciDFe;
 
 { TNF3eWebService }
 
@@ -534,7 +480,7 @@ begin
   FPLayout := LayNF3eStatusServico;
 
   FPHeaderElement := ''; //'NF3eCabecMsg';
-  FPBodyElement := 'NF3eDadosMsg';
+  FPBodyElement := 'nf3eDadosMsg';
 end;
 
 procedure TNF3eWebService.Clear;
@@ -660,14 +606,10 @@ var
 begin
   ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_NF3e, 'NF3e', False);
   try
-    ConsStatServ.TpAmb := FPConfiguracoesNF3e.WebServices.Ambiente;
+    ConsStatServ.TpAmb := TACBrTipoAmbiente(FPConfiguracoesNF3e.WebServices.Ambiente);
     ConsStatServ.CUF := FPConfiguracoesNF3e.WebServices.UFCodigo;
 
-    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
-    ConsStatServ.GerarXML;
-
-    // Atribuindo o XML para propriedade interna //
-    FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsStatServ.GerarXML;
   finally
     ConsStatServ.Free;
   end;
@@ -677,7 +619,7 @@ function TNF3eStatusServico.TratarResposta: Boolean;
 var
   NF3eRetorno: TRetConsStatServ;
 begin
-  FPRetWS := SeparaDadosArray(['NF3eResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['nf3eResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
 
@@ -685,11 +627,11 @@ begin
 
   NF3eRetorno := TRetConsStatServ.Create('NF3e');
   try
-    NF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    NF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
     NF3eRetorno.LerXml;
 
     Fversao := NF3eRetorno.versao;
-    FtpAmb := NF3eRetorno.tpAmb;
+    FtpAmb := TpcnTipoAmbiente(NF3eRetorno.tpAmb);
     FverAplic := NF3eRetorno.verAplic;
     FcStat := NF3eRetorno.cStat;
     FxMotivo := NF3eRetorno.xMotivo;
@@ -836,7 +778,7 @@ begin
   begin
     FcUF := FNotasFiscais.Items[0].NF3e.Ide.cUF;
 
-    if FPConfiguracoesNF3e.WebServices.Ambiente <> FNotasFiscais.Items[0].NF3e.Ide.tpAmb then
+    if Integer(FPConfiguracoesNF3e.WebServices.Ambiente) <> Integer(FNotasFiscais.Items[0].NF3e.Ide.tpAmb) then
       raise EACBrNF3eException.Create( ACBrNF3e_CErroAmbienteDiferente );
   end
   else
@@ -942,7 +884,7 @@ var
   AProcNF3e: TProcNF3e;
   SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['NF3eResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['nf3eResultMsg'], FPRetornoWS );
 
   VerificarSemResposta;
 
@@ -959,11 +901,11 @@ begin
     else
       AXML := FPRetWS;
 
-    FNF3eRetornoSincrono.Leitor.Arquivo := ParseText(AXML);
+    FNF3eRetornoSincrono.XmlRetorno := ParseText(AXML);
     FNF3eRetornoSincrono.LerXml;
 
     Fversao := FNF3eRetornoSincrono.versao;
-    FTpAmb := FNF3eRetornoSincrono.TpAmb;
+    FTpAmb := TpcnTipoAmbiente(FNF3eRetornoSincrono.TpAmb);
     FverAplic := FNF3eRetornoSincrono.verAplic;
 
     // Consta no Retorno da NFC-e
@@ -1021,15 +963,11 @@ begin
               AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(XMLAssinado);
               AProcNF3e.XML_Prot := FNF3eRetornoSincrono.XMLprotNF3e;
               AProcNF3e.Versao := FPVersaoServico;
-              AjustarOpcoes( AProcNF3e.Gerador.Opcoes );
-              AProcNF3e.GerarXML;
-
-              XMLOriginal := AProcNF3e.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcNF3e.GerarXML;
 
               if FPConfiguracoesNF3e.Arquivos.Salvar then
               begin
-                SalvarXML := (not FPConfiguracoesNF3e.Arquivos.SalvarApenasNF3eProcessadas) or
-                             Processada;
+                SalvarXML := Processada;
 
                 // Salva o XML da NF3-e assinado e protocolado
                 if SalvarXML then
@@ -1060,7 +998,7 @@ begin
     FNF3eRetorno.LerXml;
 
     Fversao := FNF3eRetorno.versao;
-    FTpAmb := FNF3eRetorno.TpAmb;
+    FTpAmb := TpcnTipoAmbiente(FNF3eRetorno.TpAmb);
     FverAplic := FNF3eRetorno.verAplic;
     FcStat := FNF3eRetorno.cStat;
     FxMotivo := FNF3eRetorno.xMotivo;
@@ -1087,7 +1025,7 @@ begin
                            'dhRecbto: %s ' + sLineBreak +
                            'chNF3e: %s ' + LineBreak),
                      [FNF3eRetornoSincrono.versao,
-                      TpAmbToStr(FNF3eRetornoSincrono.TpAmb),
+                      TipoAmbienteToStr(FNF3eRetornoSincrono.TpAmb),
                       FNF3eRetornoSincrono.verAplic,
                       IntToStr(FNF3eRetornoSincrono.protNF3e.cStat),
                       FNF3eRetornoSincrono.protNF3e.xMotivo,
@@ -1260,7 +1198,7 @@ begin
   begin
     FcUF := FNotasFiscais.Items[0].NF3e.Ide.cUF;
 
-    if FPConfiguracoesNF3e.WebServices.Ambiente <> FNotasFiscais.Items[0].NF3e.Ide.tpAmb then
+    if Integer(FPConfiguracoesNF3e.WebServices.Ambiente) <> Integer(FNotasFiscais.Items[0].NF3e.Ide.tpAmb) then
       raise EACBrNF3eException.Create( ACBrNF3e_CErroAmbienteDiferente );
   end
   else
@@ -1332,7 +1270,7 @@ end;
 
 function TNF3eRetRecepcao.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['NF3eResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['nf3eResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
 
@@ -1389,7 +1327,7 @@ begin
 
         with FNotasFiscais.Items[J] do
         begin
-          NF3e.procNF3e.tpAmb := AInfProt.Items[I].tpAmb;
+          NF3e.procNF3e.tpAmb := TACBrTipoAmbiente(AInfProt.Items[I].tpAmb);
           NF3e.procNF3e.verAplic := AInfProt.Items[I].verAplic;
           NF3e.procNF3e.chNF3e := AInfProt.Items[I].chDFe;
           NF3e.procNF3e.dhRecbto := AInfProt.Items[I].dhRecbto;
@@ -1409,17 +1347,14 @@ begin
             AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
             AProcNF3e.XML_Prot := AInfProt.Items[I].XMLprotDFe;
             AProcNF3e.Versao := FPVersaoServico;
-            AjustarOpcoes( AProcNF3e.Gerador.Opcoes );
-            AProcNF3e.GerarXML;
 
             with FNotasFiscais.Items[J] do
             begin
-              XMLOriginal := AProcNF3e.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcNF3e.GerarXML;
 
               if FPConfiguracoesNF3e.Arquivos.Salvar then
               begin
-                SalvarXML := (not FPConfiguracoesNF3e.Arquivos.SalvarApenasNF3eProcessadas) or
-                             Processada;
+                SalvarXML := Processada;
 
                 // Salva o XML da NF3-e assinado e protocolado
                 if SalvarXML then
@@ -1600,7 +1535,7 @@ begin
   begin
     FcUF := FNotasFiscais.Items[0].NF3e.Ide.cUF;
 
-    if FPConfiguracoesNF3e.WebServices.Ambiente <> FNotasFiscais.Items[0].NF3e.Ide.tpAmb then
+    if Integer(FPConfiguracoesNF3e.WebServices.Ambiente) <> Integer(FNotasFiscais.Items[0].NF3e.Ide.tpAmb) then
       raise EACBrNF3eException.Create( ACBrNF3e_CErroAmbienteDiferente );
   end
   else
@@ -1656,7 +1591,7 @@ end;
 
 function TNF3eRecibo.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['NF3eResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['nf3eResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
 
@@ -1773,7 +1708,7 @@ begin
   VerServ := VersaoNF3eToDbl(FPConfiguracoesNF3e.Geral.VersaoDF);
 
   if FNotasFiscais.Count > 0 then
-    FTpAmb := FNotasFiscais.Items[0].NF3e.Ide.tpAmb
+    FTpAmb := TpcnTipoAmbiente(FNotasFiscais.Items[0].NF3e.Ide.tpAmb)
   else
     FTpAmb := FPConfiguracoesNF3e.WebServices.Ambiente;
 
@@ -1814,13 +1749,10 @@ var
 begin
   ConsSitNF3e := TConsSitNF3e.Create;
   try
-    ConsSitNF3e.TpAmb := FTpAmb;
+    ConsSitNF3e.TpAmb := TACBrTipoAmbiente(FTpAmb);
     ConsSitNF3e.chNF3e := FNF3eChave;
     ConsSitNF3e.Versao := FPVersaoServico;
-    AjustarOpcoes( ConsSitNF3e.Gerador.Opcoes );
-    ConsSitNF3e.GerarXML;
-
-    FPDadosMsg := ConsSitNF3e.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsSitNF3e.GerarXML;
   finally
     ConsSitNF3e.Free;
   end;
@@ -1881,13 +1813,13 @@ begin
   NF3eRetorno := TRetConsSitNF3e.Create;
 
   try
-    FPRetWS := SeparaDadosArray(['NF3eResultMsg'],FPRetornoWS );
+    FPRetWS := SeparaDadosArray(['nf3eResultMsg'],FPRetornoWS );
 
     VerificarSemResposta;
 
     RemoverNameSpace;
 
-    NF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    NF3eRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
     NF3eRetorno.LerXML;
 
     NFCancelada := False;
@@ -1896,7 +1828,7 @@ begin
     // <retConsSitNF3e> - Retorno da consulta da situação da NF3-e
     // Este é o status oficial da NF3-e
     Fversao := NF3eRetorno.versao;
-    FTpAmb := NF3eRetorno.tpAmb;
+    FTpAmb := TpcnTipoAmbiente(NF3eRetorno.tpAmb);
     FverAplic := NF3eRetorno.verAplic;
     FcStat := NF3eRetorno.cStat;
     FXMotivo := NF3eRetorno.xMotivo;
@@ -1948,9 +1880,6 @@ begin
           InfEvento.dhEvento := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.dhEvento;
           InfEvento.TpEvento := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.TpEvento;
           InfEvento.nSeqEvento := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.nSeqEvento;
-          InfEvento.VersaoEvento := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.VersaoEvento;
-          InfEvento.DetEvento.xCorrecao := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.DetEvento.xCorrecao;
-          InfEvento.DetEvento.xCondUso := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.DetEvento.xCondUso;
           InfEvento.DetEvento.nProt := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.DetEvento.nProt;
           InfEvento.DetEvento.xJust := NF3eRetorno.procEventoNF3e.Items[I].RetEventoNF3e.InfEvento.DetEvento.xJust;
 
@@ -2095,12 +2024,11 @@ begin
                     AProcNF3e.XML_NF3e := RemoverDeclaracaoXML(XMLOriginal);
                     AProcNF3e.XML_Prot := NF3eRetorno.XMLprotNF3e;
                     AProcNF3e.Versao := NF3eRetorno.protNF3e.Versao;
+
                     if AProcNF3e.Versao = '' then
                       AProcNF3e.Versao := FPVersaoServico;
-                    AjustarOpcoes( AProcNF3e.Gerador.Opcoes );
-                    AProcNF3e.GerarXML;
 
-                    XMLOriginal := AProcNF3e.Gerador.ArquivoFormatoXML;
+                    XMLOriginal := AProcNF3e.GerarXML;
                   finally
                     AProcNF3e.Free;
                   end;
@@ -2217,193 +2145,6 @@ begin
   Result := Trim(FNF3eChave);
 end;
 
-{ TNF3eInutilizacao }
-
-procedure TNF3eInutilizacao.Clear;
-begin
-  inherited Clear;
-
-  FPStatus := stNF3eInutilizacao;
-  FPLayout := LayNF3eInutilizacao;
-  FPArqEnv := 'ped-inu';
-  FPArqResp := 'inu';
-
-  FverAplic := '';
-  FcStat := 0;
-  FxMotivo := '';
-  Fversao := '';
-  FdhRecbto := 0;
-  FXML_ProcInutNF3e := '';
-
-  if Assigned(FPConfiguracoesNF3e) then
-  begin
-    FtpAmb := FPConfiguracoesNF3e.WebServices.Ambiente;
-    FcUF := FPConfiguracoesNF3e.WebServices.UFCodigo;
-  end
-end;
-
-procedure TNF3eInutilizacao.SetJustificativa(const AValue: String);
-var
-  TrimValue: String;
-begin
-  TrimValue := Trim(AValue);
-
-  if EstaVazio(TrimValue) then
-    GerarException(ACBrStr('Informar uma Justificativa para Inutilização de ' +
-      'numeração da Nota Fiscal Eletronica'));
-
-  if Length(TrimValue) < 15 then
-    GerarException(ACBrStr('A Justificativa para Inutilização de numeração da ' +
-      'Nota Fiscal Eletronica deve ter no minimo 15 caracteres'));
-
-  FJustificativa := TrimValue;
-end;
-
-function TNF3eInutilizacao.GerarPathPorCNPJ: String;
-var
-  CNPJ_Temp: String;
-begin
-  if FPConfiguracoesNF3e.Arquivos.SepararPorCNPJ then
-    CNPJ_Temp := FCNPJ
-  else
-    CNPJ_Temp := '';
-
-  Result := FPConfiguracoesNF3e.Arquivos.GetPathInu(CNPJ_Temp);
-end;
-
-procedure TNF3eInutilizacao.DefinirURL;
-var
-//  ok: Boolean;
-  VerServ: Double;
-begin
-  FPVersaoServico := '';
-  FPURL  := '';
-
-  VerServ := VersaoNF3eToDbl(FPConfiguracoesNF3e.Geral.VersaoDF);
-
-  TACBrNF3e(FPDFeOwner).LerServicoDeParams(
-    'NF3e',
-    FPConfiguracoesNF3e.WebServices.UF,
-    FPConfiguracoesNF3e.WebServices.Ambiente,
-    LayOutToServico(FPLayout),
-    VerServ,
-    FPURL,
-    FPServico,
-    FPSoapAction);
-
-  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
-end;
-
-procedure TNF3eInutilizacao.DefinirServicoEAction;
-begin
-  if EstaVazio(FPServico) then
-    FPServico := GetUrlWsd + 'NF3eInutilizacao';
-
-  if EstaVazio(FPSoapAction) then
-    FPSoapAction := FPServico + '/NF3eInutilizacaoNF';
-end;
-
-procedure TNF3eInutilizacao.DefinirDadosMsg;
-//var
-//  InutNF3e: TinutNF3e;
-begin
-{
-  InutNF3e := TinutNF3e.Create;
-  try
-    AjustarOpcoes( InutNF3e.Gerador.Opcoes );
-
-    InutNF3e.tpAmb  := FPConfiguracoesNF3e.WebServices.Ambiente;
-    InutNF3e.cUF    := FPConfiguracoesNF3e.WebServices.UFCodigo;
-    InutNF3e.ano    := FAno;
-    InutNF3e.CNPJ   := FCNPJ;
-    InutNF3e.modelo := 66;
-    InutNF3e.serie  := FSerie;
-    InutNF3e.nNFIni := FNumeroInicial;
-    InutNF3e.nNFFin := FNumeroFinal;
-    InutNF3e.xJust  := FJustificativa;
-    InutNF3e.Versao := FPVersaoServico;
-    InutNF3e.GerarXML;
-
-    AssinarXML( NativeStringToUTF8( InutNF3e.Gerador.ArquivoFormatoXML ),
-                'inutNF3e', 'infInut', 'Falha ao assinar Inutilização NF3-e ');
-
-    FID := InutNF3e.ID;
-  finally
-    InutNF3e.Free;
-  end;
-  }
-end;
-
-function TNF3eInutilizacao.TratarResposta: Boolean;
-//var
-//  NF3eRetorno: TRetInutNF3e;
-begin
-{
-  NF3eRetorno := TRetInutNF3e.Create;
-  try
-    FPRetWS := SeparaDados('NF3eResultMsg', FPRetornoWS);
-
-    VerificarSemResposta;
-
-    RemoverNameSpace;
-
-    NF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS);
-    NF3eRetorno.LerXml;
-
-    Fversao := NF3eRetorno.versao;
-    FTpAmb := NF3eRetorno.TpAmb;
-    FverAplic := NF3eRetorno.verAplic;
-    FcStat := NF3eRetorno.cStat;
-    FxMotivo := NF3eRetorno.xMotivo;
-    FcUF := NF3eRetorno.cUF;
-    FdhRecbto := NF3eRetorno.dhRecbto;
-    Fprotocolo := NF3eRetorno.nProt;
-    FPMsg := NF3eRetorno.XMotivo;
-
-    Result := (NF3eRetorno.cStat = 102);
-
-    //gerar arquivo proc de inutilizacao
-    if ((NF3eRetorno.cStat = 102) or (NF3eRetorno.cStat = 563)) then
-    begin
-      FXML_ProcInutNF3e := '<' + ENCODING_UTF8 + '>' +
-                          '<ProcInutNF3e versao="' + FPVersaoServico +
-                            '" xmlns="'+ACBRNF3e_NAMESPACE+'">' +
-                           FPDadosMsg +
-                           FPRetWS +
-                          '</ProcInutNF3e>';
-
-      FNomeArquivo := PathWithDelim(GerarPathPorCNPJ) + GerarPrefixoArquivo + '-procInutNF3e.xml';
-      if FPConfiguracoesNF3e.Arquivos.Salvar then
-        FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNF3e.xml',
-          FXML_ProcInutNF3e, GerarPathPorCNPJ);
-    end;
-  finally
-    NF3eRetorno.Free;
-  end;
-  }
-end;
-
-function TNF3eInutilizacao.GerarMsgLog: String;
-begin
-  {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak),
-                   [Fversao, TpAmbToStr(FTpAmb), FverAplic, IntToStr(FcStat),
-                    FxMotivo, CodigoParaUF(FcUF),
-                    IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto))]);
-  {*)}
-end;
-
-function TNF3eInutilizacao.GerarPrefixoArquivo: String;
-begin
-  Result := Trim(OnlyNumber(FID));
-end;
-
 { TNF3eEnvEvento }
 
 constructor TNF3eEnvEvento.Create(AOwner: TACBrDFe; AEvento: TEventoNF3e);
@@ -2463,7 +2204,7 @@ begin
   FPLayout := LayNF3eEvento;
   VerServ  := VersaoNF3eToDbl(FPConfiguracoesNF3e.Geral.VersaoDF);
   FCNPJ    := FEvento.Evento.Items[0].InfEvento.CNPJ;
-  FTpAmb   := FEvento.Evento.Items[0].InfEvento.tpAmb;
+  FTpAmb   := TpcnTipoAmbiente(FEvento.Evento.Items[0].InfEvento.tpAmb);
 
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesNF3e.Geral.FormaEmissao of
@@ -2527,14 +2268,13 @@ begin
     begin
       with EventoNF3e.Evento.New do
       begin
-        InfEvento.tpAmb := FTpAmb;
+        InfEvento.tpAmb := TACBrTipoAmbiente(FTpAmb);
         infEvento.CNPJ := FEvento.Evento[I].InfEvento.CNPJ;
         infEvento.cOrgao := FEvento.Evento[I].InfEvento.cOrgao;
         infEvento.chNF3e := FEvento.Evento[I].InfEvento.chNF3e;
         infEvento.dhEvento := FEvento.Evento[I].InfEvento.dhEvento;
         infEvento.tpEvento := FEvento.Evento[I].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[I].InfEvento.nSeqEvento;
-        infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCancelamento:
@@ -2549,13 +2289,12 @@ begin
     {*)}
 
     EventoNF3e.Versao := FPVersaoServico;
-    AjustarOpcoes( EventoNF3e.Gerador.Opcoes );
     EventoNF3e.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
-    I := Pos('<evento ', EventoNF3e.Gerador.ArquivoFormatoXML);
-    Lote := Copy(EventoNF3e.Gerador.ArquivoFormatoXML, 1, I - 1);
-    Eventos := SeparaDados(EventoNF3e.Gerador.ArquivoFormatoXML, 'envEvento');
+    I := Pos('<evento ', EventoNF3e.Xml);
+    Lote := Copy(EventoNF3e.Xml, 1, I - 1);
+    Eventos := SeparaDados(EventoNF3e.Xml, 'envEvento');
     I := Pos('<evento ', Eventos);
     Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 
@@ -2604,7 +2343,7 @@ begin
     end;
 
     // Realiza a validação de cada evento
-    Eventos := SeparaDados(EventoNF3e.Gerador.ArquivoFormatoXML, 'envEvento');
+    Eventos := SeparaDados(EventoNF3e.Xml, 'envEvento');
     I := Pos('<evento ', Eventos);
     Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 
@@ -2658,7 +2397,7 @@ var
 begin
   FEvento.idLote := idLote;
 
-  FPRetWS := SeparaDadosArray(['NF3eResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['nf3eResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
 
@@ -2670,7 +2409,7 @@ begin
   FcStat := EventoRetorno.cStat;
   FxMotivo := EventoRetorno.xMotivo;
   FPMsg := EventoRetorno.xMotivo;
-  FTpAmb := EventoRetorno.tpAmb;
+  FTpAmb := TpcnTipoAmbiente(EventoRetorno.tpAmb);
 
   Result := (FcStat = 128);
 
@@ -2754,7 +2493,7 @@ begin
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
-                 [FEventoRetorno.versao, TpAmbToStr(FEventoRetorno.tpAmb),
+                 [FEventoRetorno.versao, TipoAmbienteToStr(FEventoRetorno.tpAmb),
                   FEventoRetorno.verAplic, IntToStr(FEventoRetorno.cStat),
                   FEventoRetorno.xMotivo]);
 
@@ -2871,7 +2610,7 @@ var
   AXML, aPath: String;
 begin
   FPRetWS := SeparaDadosArray(['NF3eDistDFeInteresseResult',
-                               'NF3eResultMsg'],FPRetornoWS );
+                               'nf3eResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
 
@@ -3087,7 +2826,6 @@ begin
   FRetorno := TNF3eRetRecepcao.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).NotasFiscais);
   FRecibo := TNF3eRecibo.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).NotasFiscais);
   FConsulta := TNF3eConsulta.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).NotasFiscais);
-  FInutilizacao := TNF3eInutilizacao.Create(FACBrNF3e);
   FEnvEvento := TNF3eEnvEvento.Create(FACBrNF3e, TACBrNF3e(FACBrNF3e).EventoNF3e);
   FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrNF3e);
   FEnvioWebService := TNF3eEnvioWebService.Create(FACBrNF3e);
@@ -3100,7 +2838,6 @@ begin
   FRetorno.Free;
   FRecibo.Free;
   FConsulta.Free;
-  FInutilizacao.Free;
   FEnvEvento.Free;
   FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
@@ -3134,27 +2871,6 @@ begin
   end;
 
   Result := True;
-end;
-
-procedure TWebServices.Inutiliza(const ACNPJ, AJustificativa: String;
-  Ano, Serie, NumeroInicial, NumeroFinal: integer);
-var
-  CNPJ : string;
-begin
-  CNPJ := OnlyNumber(ACNPJ);
-
-  if not ValidarCNPJouCPF(CNPJ) then
-    raise EACBrNF3eException.Create('CNPJ: ' + CNPJ + ACBrStr(', inválido.'));
-
-  FInutilizacao.CNPJ          := CNPJ;
-  FInutilizacao.Serie         := Serie;
-  FInutilizacao.Ano           := Ano;
-  FInutilizacao.NumeroInicial := NumeroInicial;
-  FInutilizacao.NumeroFinal   := NumeroFinal;
-  FInutilizacao.Justificativa := AJustificativa;
-
-  if not FInutilizacao.Executar then
-    FInutilizacao.GerarException( FInutilizacao.Msg );
 end;
 
 end.

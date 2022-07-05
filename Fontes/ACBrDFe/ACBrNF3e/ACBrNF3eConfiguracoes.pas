@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, pcnConversaoNF3e;
+  ACBrDFeConfiguracoes, pcnConversao, ACBrNF3eConversao;
 
 type
 
@@ -73,10 +73,8 @@ type
   private
     FEmissaoPathNF3e: boolean;
     FSalvarEvento: boolean;
-    FSalvarApenasNF3eProcessadas: boolean;
     FNormatizarMunicipios: Boolean;
     FPathNF3e: String;
-    FPathInu: String;
     FPathEvento: String;
     FPathArquivoMunicipios: String;
   public
@@ -86,7 +84,6 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathInu(const CNPJ: String = ''): String;
     function GetPathNF3e(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
@@ -94,12 +91,9 @@ type
       write FEmissaoPathNF3e default False;
     property SalvarEvento: boolean read FSalvarEvento
       write FSalvarEvento default False;
-    property SalvarApenasNF3eProcessadas: boolean
-      read FSalvarApenasNF3eProcessadas write FSalvarApenasNF3eProcessadas default False;
     property NormatizarMunicipios: boolean
       read FNormatizarMunicipios write FNormatizarMunicipios default False;
     property PathNF3e: String read FPathNF3e write FPathNF3e;
-    property PathInu: String read FPathInu write FPathInu;
     property PathEvento: String read FPathEvento write FPathEvento;
     property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
   end;
@@ -129,7 +123,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base, ACBrUtil.FilesIO,
   DateUtils;
 
 { TConfiguracoesNF3e }
@@ -242,10 +236,8 @@ begin
 
   FEmissaoPathNF3e             := False;
   FSalvarEvento                := False;
-  FSalvarApenasNF3eProcessadas := False;
   FNormatizarMunicipios        := False;
   FPathNF3e                    := '';
-  FPathInu                     := '';
   FPathEvento                  := '';
   FPathArquivoMunicipios       := '';
 end;
@@ -262,10 +254,8 @@ begin
 
   EmissaoPathNF3e             := DeArquivosConfNF3e.EmissaoPathNF3e;
   SalvarEvento                := DeArquivosConfNF3e.SalvarEvento;
-  SalvarApenasNF3eProcessadas := DeArquivosConfNF3e.SalvarApenasNF3eProcessadas;
   NormatizarMunicipios        := DeArquivosConfNF3e.NormatizarMunicipios;
   PathNF3e                    := DeArquivosConfNF3e.PathNF3e;
-  PathInu                     := DeArquivosConfNF3e.PathInu;
   PathEvento                  := DeArquivosConfNF3e.PathEvento;
   PathArquivoMunicipios       := DeArquivosConfNF3e.PathArquivoMunicipios;
 end;
@@ -275,11 +265,9 @@ begin
   inherited GravarIni(AIni);
 
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
-  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasNF3eProcessadas', SalvarApenasNF3eProcessadas);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathNF3e', EmissaoPathNF3e);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathNF3e', PathNF3e);
-  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
 end;
@@ -289,11 +277,9 @@ begin
   inherited LerIni(AIni);
 
   SalvarEvento := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
-  SalvarApenasNF3eProcessadas := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasNF3eProcessadas', SalvarApenasNF3eProcessadas);
   EmissaoPathNF3e := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathNF3e', EmissaoPathNF3e);
   NormatizarMunicipios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
   PathNF3e := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathNF3e', PathNF3e);
-  PathInu := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
   PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
   PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
 end;
@@ -312,11 +298,6 @@ begin
     ForceDirectories(Dir);
 
   Result := Dir;
-end;
-
-function TArquivosConfNF3e.GetPathInu(const CNPJ: String = ''): String;
-begin
-  Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
 function TArquivosConfNF3e.GetPathNF3e(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;

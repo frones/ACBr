@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 {                                                                              }
@@ -32,70 +32,98 @@
 
 {$I ACBr.inc}
 
-unit pcnConsSitNF3e;
+unit ACBrNF3eRetEnv;
 
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts, pcnNF3eConsts;
+  SysUtils, Classes, pcnConversao, pcnLeitor;
 
 type
 
-  TConsSitNF3e = class
+  TInfREC = class
   private
-    FGerador: TGerador;
+    FnRec: String;
+    FdhRecbto: TDateTime;
+    FtMed: Integer;
+  public
+    property nRec: String        read FnRec     write FnRec;
+    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
+    property tMed: Integer       read FtMed     write FtMed;
+  end;
+
+  TretEnvNF3e = class(TObject)
+  private
+    Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
-    FchNF3e: String;
-    FVersao: String;
+    FcStat: Integer;
+    FLeitor: TLeitor;
+    FcUF: Integer;
+    FverAplic: String;
+    FxMotivo: String;
+    FinfRec: TInfREC;
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: Boolean;
-    function ObterNomeArquivo: String;
+    function LerXml: Boolean;
 
-    property Gerador: TGerador       read FGerador write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property chNF3e: String          read FchNF3e  write FchNF3e;
-    property Versao: String          read FVersao  write FVersao;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property versao: String          read Fversao    write Fversao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property infRec: TInfREC         read FinfRec   write FinfRec;
   end;
 
 implementation
 
-uses
-  ACBrUtil;
+{ TretEnvNF3e }
 
-{ TConsSitNF3e }
-
-constructor TConsSitNF3e.Create;
+constructor TretEnvNF3e.Create;
 begin
   inherited Create;
 
-  FGerador := TGerador.Create;
+  FLeitor := TLeitor.Create;
+  FinfRec := TInfREC.Create
 end;
 
-destructor TConsSitNF3e.Destroy;
+destructor TretEnvNF3e.Destroy;
 begin
-  FGerador.Free;
+  FLeitor.Free;
+  FinfRec.Free;
 
   inherited;
 end;
 
-function TConsSitNF3e.ObterNomeArquivo: String;
+function TretEnvNF3e.LerXml: Boolean;
+var
+  ok: Boolean;
 begin
-  Result := OnlyNumber(FchNF3e) + '-ped-sit.xml';
-end;
+  result := False;
+  try
+    Leitor.Grupo := Leitor.Arquivo;
 
-function TConsSitNF3e.GerarXML: Boolean;
-begin
-  Gerador.ArquivoFormatoXML := '';
+    if leitor.rExtrai(1, 'retEnviNF3e') <> '' then
+    begin
+      Fversao   := Leitor.rAtributo('versao');
+      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      FcUF      := Leitor.rCampo(tcInt, 'cUF');
+      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
+      FcStat    := Leitor.rCampo(tcInt, 'cStat');
+      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
 
-  Gerador.wGrupo('consSitNF3e ' + NAME_SPACE_NF3e + ' versao="' + Versao + '"');
-  Gerador.wCampo(tcStr, 'EP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'EP04', 'xServ', 009, 009, 1, 'CONSULTAR', DSC_XSERV);
-  Gerador.wCampo(tcEsp, 'EP05', 'chNF3e', 044, 044, 1, FchNF3e, DSC_CHNF3e);
-  Gerador.wGrupo('/consSitNF3e');
-
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+      // Grupo infRec - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
+      infRec.nRec      := Leitor.rCampo(tcStr, 'nRec');
+      infRec.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+      infRec.FtMed     := Leitor.rCampo(tcInt, 'tMed');
+      
+      Result := True;
+    end;
+  except
+    result := false;
+  end;
 end;
 
 end.

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2022
+-- ACBrDFeUtil --
+[*] Inclui um segundo parâmentro na função GerarCodigoDFe visando atender a
+    NF3e e na função GerarChaveAcesso também. 
+  Por: Italo Giurizzato Junior
+
 31/05/2022
 -- ACBrNFeNotasFiscais --
 [*] Adicionado tag cMunFG na seção Identificação da leitura do .INI, compatibilizando com a estrutura Sefaz, porém mantendo compatibilidade.

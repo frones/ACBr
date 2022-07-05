@@ -44,10 +44,11 @@ function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
 
 function GerarCodigoNumerico(numero: integer): integer;
-function GerarCodigoDFe(AnDF: Integer): integer;
+function GerarCodigoDFe(AnDF: Integer; ADigitos: Integer = 8): integer;
 
 function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ:String;
-                          ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer = 55): String;
+                          ASerie, ANumero, AtpEmi, ACodigo: Integer;
+                          AModelo: Integer = 55; ASiteAutorizador: Integer = -1): String;
 function FormatarChaveAcesso(AValue: String): String;
 
 function ValidaUFCidade(const UF, Cidade: integer): Boolean; overload;
@@ -130,21 +131,24 @@ begin
   Result := StrToInt(copy(s, 1, 8));
 end;
 
-function GerarCodigoDFe(AnDF: Integer): integer;
+function GerarCodigoDFe(AnDF: Integer; ADigitos: Integer = 8): integer;
 var
- ACodigo: Integer;
+ ACodigo, ARange: Integer;
 begin
   Repeat
-    ACodigo := Random(99999999);
-  Until ValidarCodigoDFe(ACodigo, AnDF);
+    ARange := StrToInt(ACBrUtil.Strings.PadRight('9', ADigitos, '9'));
+    ACodigo := Random(ARange);
+  Until ValidarCodigoDFe(ACodigo, AnDF, ADigitos);
 
   Result := ACodigo;
 end;
 
 function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
-                          ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer): String;
+   ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer;
+   ASiteAutorizador: Integer): String;
 var
-  vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi: String;
+  vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi,
+  vSiteAutorizador: String;
 begin
   // Se o usuario informar 0 ou -1; o código numerico sera gerado de maneira aleatória //
   if ACodigo = -1 then
@@ -165,9 +169,20 @@ begin
   vSerie       := ACBrUtil.Strings.Poem_Zeros(ASerie, 3);
   vNumero      := ACBrUtil.Strings.Poem_Zeros(ANumero, 9);
   vtpEmi       := ACBrUtil.Strings.Poem_Zeros(AtpEmi, 1);
-  vCodigo      := ACBrUtil.Strings.Poem_Zeros(ACodigo, 8);
 
-  Result := vUF + vDataEmissao + vCNPJ + vModelo + vSerie + vNumero + vtpEmi + vCodigo;
+  if ASiteAutorizador = -1 then
+  begin
+    vSiteAutorizador := '';
+    vCodigo := ACBrUtil.Strings.Poem_Zeros(ACodigo, 8);
+  end
+  else
+  begin
+    vSiteAutorizador := ACBrUtil.Strings.Poem_Zeros(ASiteAutorizador, 1);
+    vCodigo := ACBrUtil.Strings.Poem_Zeros(ACodigo, 7);
+  end;
+
+  Result := vUF + vDataEmissao + vCNPJ + vModelo + vSerie + vNumero + vtpEmi +
+            vSiteAutorizador + vCodigo;
   Result := Result + Modulo11(Result);
 end;
 

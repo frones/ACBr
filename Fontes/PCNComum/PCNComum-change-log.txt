@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2022
+-- pcnAuxiliar --
+[*] Inclui um segundo parâmentro na função ValidarCodigoDFe visando atender a
+    NF3e
+  Por: Italo Giurizzato Junior
+
 04/07/2022
 -- pcnAuxiliar --
 [-] Método "ValidarChave" falhava quando validando chave de CTe emitido pela NFF

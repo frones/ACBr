@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/07/2022
+-- WebFisco.GravarXml --
+[*] Alteração na geração do XML a pedido do provedor.
+   Por: Widson/Italo Giurizzato Junior
 -- Diversos --
 [*] Remoção de units de Uses que não são utilizadas pela Unit.
    Por: Italo Giurizzato Junior

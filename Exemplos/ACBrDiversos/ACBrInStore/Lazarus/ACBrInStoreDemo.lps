@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="ACBrInStoreDemo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="37" Y="15"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Unit2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form2"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="28"/>
+        <CursorPos X="21" Y="39"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+    </Units>
+    <JumpHistory>
+      <Position>
+        <Filename Value="ACBrInStoreDemo.lpr"/>
+        <Caret Line="15" Column="37"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
+</CONFIG>

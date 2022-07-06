@@ -752,15 +752,15 @@ procedure TACBrPIXDesconto.DoReadFromJSon(aJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
   modalidade := TACBrPIXDescontoModalidade(AJSon.I['modalidade']);
-  if (Ord(modalidade) <= 2) then
+  if (Ord(modalidade) >= 3) then
     valorPerc := StringToFloatDef(aJSon.S['valorPerc'], 0);
   {$Else}
   modalidade := TACBrPIXDescontoModalidade(AJSon['modalidade'].AsInteger);
-  if (Ord(modalidade) <= 2) then
+  if (Ord(modalidade) >= 3) then
     valorPerc := StringToFloatDef(aJSon['valorPerc'].AsString, 0);
   {$EndIf}
 
-  if (Ord(modalidade) >= 3) then
+  if (Ord(modalidade) <= 2) then
     descontosDataFixa.ReadFromJSon(aJSon);
 end;
 

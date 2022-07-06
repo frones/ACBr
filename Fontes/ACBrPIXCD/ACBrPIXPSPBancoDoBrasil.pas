@@ -75,10 +75,11 @@ type
       var AResultCode: Integer; var RespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
+    function CalcularEndPointPath(const aMethod, aEndPoint: String): String; override;
+
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
     procedure TratarRetornoComErro(ResultCode: Integer; const RespostaHttp: AnsiString;
       Problema: TACBrPIXProblema); override;
-    function CalcularEndPointPath(const aMethod, aEndPoint: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Autenticar; override;
@@ -276,6 +277,18 @@ begin
   Result := Result + cBBPathAPIPix;
 end;
 
+function TACBrPSPBancoDoBrasil.CalcularEndPointPath(const aMethod,
+  aEndPoint: String): String;
+begin
+  Result := Trim(aEndPoint);
+
+  // BB deve utilizar /cobqrcode em ambiente de homologação
+  if ((UpperCase(aMethod) = ChttpMethodPOST) or
+      (UpperCase(aMethod) = ChttpMethodPUT)) and
+      (aEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
+    Result := URLComDelimitador(cBBEndPointCobHomologacao);
+end;
+
 procedure TACBrPSPBancoDoBrasil.ConfigurarQueryParameters(const Method, EndPoint: String);
 begin
   inherited ConfigurarQueryParameters(Method, EndPoint);
@@ -370,22 +383,6 @@ begin
   end
   else
     inherited TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
-end;
-
-function TACBrPSPBancoDoBrasil.CalcularEndPointPath(const aMethod,
-  aEndPoint: String): String;
-begin
-  Result := Trim(aEndPoint);
-  
-  // BB deve utilizar /cobqrcode em ambiente de homologação
-  if ((UpperCase(aMethod) = ChttpMethodPOST) or
-      (UpperCase(aMethod) = ChttpMethodPUT)) and
-      (aEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
-    Result := cBBEndPointCobHomologacao;
-
-  // BB não deve incluir o endpoint /pix na consulta PIX por período
-  if (UpperCase(aMethod) = ChttpMethodGET) and (aEndPoint = cEndPointPix) then
-    Result := EmptyStr;
 end;
 
 end.

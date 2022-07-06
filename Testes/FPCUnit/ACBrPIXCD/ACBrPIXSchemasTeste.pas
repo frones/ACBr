@@ -1597,13 +1597,13 @@ begin
   CheckEquals(fACBrPixCobVSolicitada.devedor.cpf, '12345678909');
   CheckEquals(fACBrPixCobVSolicitada.devedor.nome, 'Francisco da Silva');
   CheckEquals(fACBrPixCobVSolicitada.valor.original, 123.45);
-  CheckEquals(fACBrPixCobVSolicitada.valor.multa.modalidade, 2);
+  CheckEquals(Ord(fACBrPixCobVSolicitada.valor.multa.modalidade), 2);
   CheckEquals(fACBrPixCobVSolicitada.valor.multa.valorPerc, 15);
-  CheckEquals(fACBrPixCobVSolicitada.valor.juros.modalidade, 2);
+  CheckEquals(Ord(fACBrPixCobVSolicitada.valor.juros.modalidade), 2);
   CheckEquals(fACBrPixCobVSolicitada.valor.juros.valorPerc, 2);
-  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.modalidade, 1);
-  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].data, EncodeDate(2020,11,30));
-  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].valorPerc, 30);
+  CheckEquals(Ord(fACBrPixCobVSolicitada.valor.desconto.modalidade), 1);
+  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontosDataFixa[0].data, EncodeDate(2020,11,30));
+  CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontosDataFixa[0].valorPerc, 30);
   CheckEquals(fACBrPixCobVSolicitada.chave, '5f84a4c5-c5cb-4599-9f13-7eb4d419dacc');
   CheckEquals(fACBrPixCobVSolicitada.solicitacaoPagador, ACBrStr('Cobrança dos serviços prestados.'));
 end;
@@ -1629,13 +1629,13 @@ begin
     CheckEquals(fACBrPixCobVSolicitada.devedor.cpf, cs.devedor.cpf);
     CheckEquals(fACBrPixCobVSolicitada.devedor.nome, cs.devedor.nome);
     CheckEquals(fACBrPixCobVSolicitada.valor.original, cs.valor.original);
-    CheckEquals(fACBrPixCobVSolicitada.valor.multa.modalidade, cs.valor.multa.modalidade);
+    CheckEquals(Ord(fACBrPixCobVSolicitada.valor.multa.modalidade), Ord(cs.valor.multa.modalidade));
     CheckEquals(fACBrPixCobVSolicitada.valor.multa.valorPerc, cs.valor.multa.valorPerc);
-    CheckEquals(fACBrPixCobVSolicitada.valor.juros.modalidade, cs.valor.juros.modalidade);
+    CheckEquals(Ord(fACBrPixCobVSolicitada.valor.juros.modalidade), Ord(cs.valor.juros.modalidade));
     CheckEquals(fACBrPixCobVSolicitada.valor.juros.valorPerc, cs.valor.juros.valorPerc);
-    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.modalidade, cs.valor.desconto.modalidade);
-    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].data, cs.valor.desconto.descontoDataFixa[0].data);
-    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontoDataFixa[0].valorPerc, cs.valor.desconto.descontoDataFixa[0].valorPerc);
+    CheckEquals(Ord(fACBrPixCobVSolicitada.valor.desconto.modalidade), Ord(cs.valor.desconto.modalidade));
+    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontosDataFixa[0].data, cs.valor.desconto.descontosDataFixa[0].data);
+    CheckEquals(fACBrPixCobVSolicitada.valor.desconto.descontosDataFixa[0].valorPerc, cs.valor.desconto.descontosDataFixa[0].valorPerc);
     CheckEquals(fACBrPixCobVSolicitada.chave, cs.chave);
     CheckEquals(fACBrPixCobVSolicitada.solicitacaoPagador, cs.solicitacaoPagador);
   finally

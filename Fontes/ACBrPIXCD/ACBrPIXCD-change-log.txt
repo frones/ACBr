@@ -47,6 +47,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2022
+-- ACBrPIXCD --
+[+] Inclusão de possibilidade dos PSP alterarem o Body antes da requisição.
+    Necessário para PSPs como a Shipay, onde o payload é diferente do padrão Bacen.
+[*] Ajuste para concatenar os parâmetros de query na URL sem delimitador. Caso o PSP
+    necessite(como o BB em homologação), deve incluí-lo em "CalcularEndPointPath()".
+	
+-- ACBrPIXPSPBancoDoBrasil --
+[*] Ajuste no retorno da função "CalcularEndPointPath()" para retornar Path com 
+    delimitador em homologação.
+	
+-- ACBrPIXPSPShipay --
+[+] Inclusão de função para converter OrderList em CobsConsultadas para que a
+    consulta de cobranças por período funcione corretamente;
+[*] Refatoração do método "QaundoAcessarEndPoint()" para que as informações da 
+    requisição sejam configuradas separadamente.
+	
+-- ACBrPIXSchemasCobV --
+[-] Correção na leitura do Json(Problema descoberto na execução dos testes unitários).
+
+-- ACBrPIXUtil --
+[*] Alteração na função "FormatarGUID()" para montar corretamente o OrderID.
+
+-- ACBrPIXSchemasTeste --
+[-] Correção dos testes unitários após alterações nos schemas
+
 28/06/2022
 -- ACBrPIXPSPBancoDoBrasil --
 [*] Ajustes para funcionamento da Consulta de Pix recebidos por período.

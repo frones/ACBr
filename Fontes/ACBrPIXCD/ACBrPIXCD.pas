@@ -74,6 +74,7 @@ const
   ChhtpHeaderAcceptEncoding = 'Accept-Encoding:';
 
   ChttpAuthorizationBearer = 'Bearer';
+  ChttpAuthorizationBasic = 'Basic';
   ChttpContentEncodingCompress: array[0..2] of String = ('gzip', 'compress', 'deflate');
 
   HTTP_CONTINUE                     = 100;
@@ -307,6 +308,7 @@ type
     procedure ConfigurarAutenticacao(const Method, EndPoint: String); virtual;
     procedure ConfigurarPathParameters(const Method, EndPoint: String); virtual;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); virtual;
+    procedure ConfigurarBody(const aMethod, aEndPoint: String; var aBody: String); virtual;
 
     procedure LimparHTTP; virtual;
     procedure PrepararHTTP; virtual;
@@ -314,6 +316,7 @@ type
       out ResultCode: Integer; out RespostaHttp: AnsiString): Boolean; virtual;
     function CalcularURLEndPoint(const Method, EndPoint: String): String; virtual;
     function CalcularEndPointPath(const Method, EndPoint: String): String; virtual;
+
     procedure ChamarEventoQuandoAcessarEndPoint(const AEndPoint: String;
       var AURL: String; var AMethod: String);
     procedure ChamarEventoQuandoReceberRespostaEndPoint( const AEndPoint, AURL,
@@ -747,6 +750,7 @@ begin
   fPSP.URLPathParams.Add(e2eid);
   fPSP.URLPathParams.Add('devolucao');
   fPSP.URLPathParams.Add(idDevolucao);
+  fPSP.ConfigurarBody(ChttpMethodPUT, EndPoint, Body);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPUT, EndPoint, ResultCode, RespostaHttp);
@@ -846,6 +850,7 @@ begin
   else
     ep := ChttpMethodPOST;
 
+  fPSP.ConfigurarBody(ep, EndPoint, Body);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ep, EndPoint, ResultCode, RespostaHttp);
@@ -875,6 +880,7 @@ begin
   Clear;
   fPSP.PrepararHTTP;
   fPSP.URLPathParams.Add(TxId);
+  fPSP.ConfigurarBody(ChttpMethodPATCH, EndPoint, Body);
   WriteStrToStream(fPSP.Http.Document, Body);
   fPSP.Http.MimeType := CContentTypeApplicationJSon;
   fPSP.AcessarEndPoint(ChttpMethodPATCH, EndPoint, ResultCode, RespostaHttp);
@@ -1248,6 +1254,12 @@ begin
   { Sobreescrever no PSP, se necessário }
 end;
 
+procedure TACBrPSP.ConfigurarBody(const aMethod, aEndPoint: String;
+  var aBody: String);
+begin
+  { Sobreescreva em PSPs que possuem payload fora do padrão da API do BC }
+end;
+
 function TACBrPSP.AcessarEndPoint(const Method, EndPoint: String; out
   ResultCode: Integer; out RespostaHttp: AnsiString): Boolean;
 var
@@ -1278,21 +1290,18 @@ begin
   AEndPointPath := CalcularEndPointPath(Method, EndPoint);
   Result := URLSemDelimitador(ObterURLAmbiente(fPixCD.Ambiente));
   if (AEndPointPath <> '') then
-    Result := Result + URLSemDelimitador(AEndPointPath);
+    Result := Result + AEndPointPath;
 
+  ConfigurarPathParameters(Method, EndPoint);
   ConfigurarQueryParameters(Method, EndPoint);
-  p := fURLQueryParams.AsURL;
 
   if (fURLPathParams.Count > 0) then
-  begin
     for i := 0 to fURLPathParams.Count-1 do
-      Result := Result + '/' + URLSemDelimitador(EncodeURLElement(fURLPathParams[i]));
+      Result := URLComDelimitador(Result) + URLSemDelimitador(EncodeURLElement(fURLPathParams[i]));
 
-    if (p <> EmptyStr) then
-      Result := Result + '?' + p;
-  end
-  else if (p <> '') then
-    Result := Result + '/?' + p;
+  p := fURLQueryParams.AsURL;
+  if (p <> '') then
+    Result := Result + '?' + p;
 
   if (NivelLog > 3) then
     RegistrarLog('  '+Result);

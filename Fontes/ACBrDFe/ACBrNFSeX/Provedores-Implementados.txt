@@ -20,7 +20,6 @@ CIGA                v1.00
 Citta               v2.03
 Conam               v1.00
 Coplan              v2.01
-CTA
 DataSmart           v2.02
 DBSeller            v1.00
 DeISS               v2.03
@@ -34,7 +33,7 @@ EL                  v2.04
 EloTech             v2.03
 Equiplano           v1.00
 eReceita            v2.02
-Etherium 
+Etherium            v2.03
 FGMaiss             v1.00
 fintelISS           v2.00
 fintelISS           v2.02
@@ -50,7 +49,7 @@ Giss                v2.04
 GovBr               v1.00
 GovDigital          v2.00
 Governa             v1.00
-Horus 
+Horus               v1.00
 iiBrasil            v2.04
 infisc              v1.00
 infisc              v1.01
@@ -113,9 +112,8 @@ Sistemas4R          v2.00
 SmarAPD             v1.00
 SmarAPD             v2.03
 SmarAPD             v2.04
-SoftPlan
 SpeedGov            v1.00
-SSInformatica 
+SSInformatica       v2.03
 Sudoeste            v2.02
 SystemPro           v2.01
 TcheInfo            v2.04

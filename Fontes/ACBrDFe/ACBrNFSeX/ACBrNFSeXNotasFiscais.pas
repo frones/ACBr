@@ -164,9 +164,7 @@ implementation
 uses
   synautil, IniFiles, StrUtilsEx,
   pcnAuxiliar,
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrDFeUtil,
   ACBrNFSeX, ACBrNFSeXInterface;
 

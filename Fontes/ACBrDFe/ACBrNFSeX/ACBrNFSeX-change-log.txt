@@ -45,6 +45,9 @@ Símbolo : Significado
 
 06/07/2022
 -- Diversos --
+[*] Remoção de units de Uses que não são utilizadas pela Unit.
+   Por: Italo Giurizzato Junior
+-- Diversos --
 [+] Implementado o Params FormatoData, pois o provedor SigCorp tem formatos diferentes
     para a data de emissão da nota, emissão do Rps, Competencia e Cancelamento entre
     as cidades atendidas pelo provedor.

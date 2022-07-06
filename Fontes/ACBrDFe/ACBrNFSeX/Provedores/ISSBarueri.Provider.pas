@@ -97,11 +97,8 @@ implementation
 
 uses
   synacode, synautil,
-  pcnAuxiliar, ACBrConsts,
-  ACBrUtil.Base,
-  ACBrUtil.DateTime,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrConsts,
+  ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSBarueri.GravarXml, ISSBarueri.LerXml;

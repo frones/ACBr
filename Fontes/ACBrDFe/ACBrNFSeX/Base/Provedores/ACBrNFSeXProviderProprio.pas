@@ -99,6 +99,11 @@ type
       Params: TNFSeParamsResponse); override;
     procedure TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse); override;
 
+    procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
+    procedure GerarMsgDadosGerarToken(Response: TNFSeGerarTokenResponse;
+      Params: TNFSeParamsResponse); override;
+    procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
+
     function AplicarXMLtoUTF8(AXMLRps: String): String; virtual;
     function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; virtual;
 
@@ -634,6 +639,28 @@ end;
 function TACBrNFSeProviderProprio.AplicarLineBreak(AXMLRps: String; const ABreak: String): String;
 begin
   Result := ChangeLineBreak(AXMLRps, ABreak);
+end;
+
+procedure TACBrNFSeProviderProprio.GerarMsgDadosGerarToken(
+  Response: TNFSeGerarTokenResponse; Params: TNFSeParamsResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderProprio.PrepararGerarToken(
+  Response: TNFSeGerarTokenResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
+  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
+procedure TACBrNFSeProviderProprio.TratarRetornoGerarToken(
+  Response: TNFSeGerarTokenResponse);
+begin
+  // Deve ser implementado para cada provedor que tem o seu próprio layout
 end;
 
 procedure TACBrNFSeProviderProprio.ProcessarMensagemErros(

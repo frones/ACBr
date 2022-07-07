@@ -49,7 +49,7 @@ type
                      stNFSeConsulta, stNFSeCancelamento, stNFSeSubstituicao,
                      stNFSeImprimir, stNFSeEmail, stNFSeAbrirSessao,
                      stNFSeFecharSessao, stNFSeAguardaProcesso,
-                     stNFSeEnvioWebService);
+                     stNFSeEnvioWebService, stNFSeGerarToken);
 
   TVersaoNFSe = (ve100, ve101, ve103,
                  ve200, ve201, ve202, ve203, ve204);
@@ -120,7 +120,7 @@ type
                    proLexsom, proLink3, proMegaSoft, proMetropolisWeb, proMitra,
                    proModernizacaoPublica, proNEAInformatica, proNFSeBrasil,
                    proNotaInteligente, proProdata, proPronim, proPublica, proRLZ,
-                   proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet,
+                   proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet, proSiappa,
                    proSiapSistemas, proSiat, proSigCorp, proSigep, proSigISS,
                    proSilTecnologia, proSimple, proSimplISS, proSintese, proSisPMJP,
                    proSistemas4R, proSmarAPD, proSoftPlan, proSpeedGov,
@@ -170,7 +170,8 @@ type
              tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
              tmConsultarNFSeServicoTomado, tmCancelarNFSe,
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
-             tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos);
+             tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
+             tmGerarToken);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -18261,13 +18262,15 @@ begin
                         'ConsultarNFSePorFaixa', 'ConsultarNFSeServicoPrestado',
                         'ConsultarNFSeServicoTomado', 'CancelarNFSe',
                         'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
-                        'AbrirSessao', 'FecharSessao', 'Teste', 'Todos'],
+                        'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
+                        'GerarToken'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
                         tmConsultarNFSeServicoTomado, tmCancelarNFSe,
                         tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
-                        tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos]);
+                        tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
+                        tmGerarToken]);
 end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;

@@ -131,6 +131,8 @@ const
   Desc121	= 'Cadastro Econômico.';
   Cod122 = 'X122';
   Desc122 = 'Data Emissão da NFSe não informada.';
+  Cod123 = 'X123';
+  Desc123 = 'Código do Serviço não informado.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';

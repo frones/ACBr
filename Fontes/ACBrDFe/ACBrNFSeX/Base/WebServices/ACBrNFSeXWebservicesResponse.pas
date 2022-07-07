@@ -357,6 +357,20 @@ type
     property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
   end;
 
+  TNFSeGerarTokenResponse = class(TNFSeWebserviceResponse)
+  private
+    FToken: string;
+    FDataExpiracao: TDateTime;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear; override;
+
+    property Token: string read FToken write FToken;
+    property DataExpiracao: TDateTime read FDataExpiracao write FDataExpiracao;
+  end;
+
   TNFSeAbreSessaoResponse = class(TNFSeWebserviceResponse)
   private
     FHashIdent: String;
@@ -803,6 +817,41 @@ end;
 function TNFSeCancelamento.GetCancelada: Boolean;
 begin
   Result := ((FDataHora > 0) and (Trim(FMotivo) <> ''));
+end;
+
+{ TNFSeGerarTokenResponse }
+
+procedure TNFSeGerarTokenResponse.Clear;
+var
+  i: Integer;
+begin
+  Token := '';
+  DataExpiracao := 0;
+
+  if Assigned(FErros) then
+  begin
+    for i := FErros.Count - 1 downto 0 do
+      FErros.Delete(i);
+  end;
+
+  if Assigned(FAlertas) then
+  begin
+    for i := FAlertas.Count - 1 downto 0 do
+      FAlertas.Delete(i);
+  end;
+end;
+
+constructor TNFSeGerarTokenResponse.Create;
+begin
+  inherited Create;
+
+  Clear;
+end;
+
+destructor TNFSeGerarTokenResponse.Destroy;
+begin
+
+  inherited Destroy;
 end;
 
 { TNFSeResumoCollection }

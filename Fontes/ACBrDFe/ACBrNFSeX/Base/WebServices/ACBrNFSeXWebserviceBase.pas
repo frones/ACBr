@@ -134,6 +134,7 @@ type
     function GerarNFSe(ACabecalho, AMSG: String): string; virtual;
     function RecepcionarSincrono(ACabecalho, AMSG: String): string; virtual;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; virtual;
+    function GerarToken(ACabecalho, AMSG: String): string; virtual;
     function AbrirSessao(ACabecalho, AMSG: String): string; virtual;
     function FecharSessao(ACabecalho, AMSG: String): string; virtual;
     function TesteEnvio(ACabecalho, AMSG: String): string; virtual;
@@ -238,6 +239,8 @@ type
    FTipo: String;
    FCadEconomico: String;
    FSerieNFSe: String;
+   FCodServ: String;
+   FCodVerificacao: String;
 
  public
    constructor Create;
@@ -262,6 +265,8 @@ type
    property Tipo: String            read FTipo          write FTipo;
    property CadEconomico: String    read FCadEconomico  write FCadEconomico;
    property SerieNFSe: String       read FSerieNFSe     write FSerieNFSe;
+   property CodServ: String         read FCodServ       write FCodServ;
+   property CodVerificacao: String  read FCodVerificacao write FCodVerificacao;
  end;
 
   TInfCancelamento = class
@@ -280,6 +285,7 @@ type
     Femail: string;
     FNumeroNFSeSubst: string;
     FSerieNFSeSubst: string;
+    FCodServ: string;
 
   public
     constructor Create;
@@ -300,6 +306,7 @@ type
     property email: string           read Femail           write Femail;
     property NumeroNFSeSubst: string read FNumeroNFSeSubst write FNumeroNFSeSubst;
     property SerieNFSeSubst: string  read FSerieNFSeSubst  write FSerieNFSeSubst;
+    property CodServ: string         read FCodServ         write FCodServ;
 
   end;
 
@@ -407,6 +414,12 @@ begin
       begin
         FPArqEnv := 'ped-sub';
         FPArqResp := 'sub';
+      end;
+
+    tmGerarToken:
+      begin
+        FPArqEnv := 'ped-token';
+        FPArqResp := 'ret-token';
       end;
 
     tmAbrirSessao:
@@ -879,6 +892,12 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeXWebservice.GerarToken(ACabecalho, AMSG: String): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
 function TACBrNFSeXWebservice.AbrirSessao(ACabecalho, AMSG: String): string;
 begin
   Result := '';
@@ -1144,6 +1163,8 @@ begin
   RazaoInter    := '';
   CadEconomico  := '';
   SerieNFSe     := '';
+  CodServ       := '';
+  CodVerificacao:= '';
   Pagina        := 1;
   Tipo          := '';
 end;
@@ -1183,6 +1204,8 @@ begin
     Tipo          := INIRec.ReadString(sSecao, 'Tipo', '');
     CadEconomico  := INIRec.ReadString(sSecao, 'CadEconomico', '');
     SerieNFSe     := INIRec.ReadString(sSecao, 'SerieNFSe', '');
+    CodServ       := INIRec.ReadString(sSecao, 'CodServ', '');
+    CodVerificacao:= INIRec.ReadString(sSecao, 'CodVerificacao', '');
 
     Pagina        := INIRec.ReadInteger(sSecao, 'Pagina', 1);
 
@@ -1210,6 +1233,7 @@ begin
   Femail := '';
   FNumeroNFSeSubst := '';
   FSerieNFSeSubst := '';
+  FCodServ := '';
 end;
 
 function TInfCancelamento.LerFromIni(const AIniString: String): Boolean;
@@ -1241,6 +1265,7 @@ begin
     email           := INIRec.ReadString(sSecao, 'email', '');
     NumeroNFSeSubst := INIRec.ReadString(sSecao, 'NumeroNFSeSubst', '');
     SerieNFSeSubst  := INIRec.ReadString(sSecao, 'SerieNFSeSubst', '');
+    CodServ         := INIRec.ReadString(sSecao, 'CodServ', '');
 
     Result := True;
   finally

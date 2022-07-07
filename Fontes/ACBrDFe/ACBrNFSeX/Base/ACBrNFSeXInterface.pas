@@ -53,6 +53,7 @@ type
     procedure ConsultaNFSe;
     procedure CancelaNFSe;
     procedure SubstituiNFSe;
+    procedure GerarToken;
 
     function GetConfigGeral: TConfigGeral;
     function GetConfigWebServices: TConfigWebServices;

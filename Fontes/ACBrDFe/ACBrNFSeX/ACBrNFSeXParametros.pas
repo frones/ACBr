@@ -186,6 +186,8 @@ type
     FTesteEnvio: string;
     // URL de homologação ou produção do SoapAction
     FSoapAction: string;
+    // URL de homologação ou produção para o serviço GerarToken
+    FGerarToken: string;
 
   public
     property LinkURL: string read FLinkURL;
@@ -207,6 +209,7 @@ type
     property FecharSessao: string read FFecharSessao;
     property TesteEnvio: string read FTesteEnvio;
     property SoapAction: string read FSoapAction;
+    property GerarToken: string read FGerarToken;
 
   end;
 
@@ -303,6 +306,8 @@ type
     FAbrirSessao: TDocElement;
     // Contem a definição dos campos TDocElement para o XML do Fechar Sessão
     FFecharSessao: TDocElement;
+    // Contem a definição dos campos TDocElement para o XML de Gerar o Token
+    FGerarToken: TDocElement;
 
     // Se True gera o namespace no Lote de Rps
     FGerarNSLoteRps: Boolean;
@@ -334,6 +339,7 @@ type
     property SubstituirNFSe: TDocElement read FSubstituirNFSe;
     property AbrirSessao: TDocElement read FAbrirSessao;
     property FecharSessao: TDocElement read FFecharSessao;
+    property GerarToken: TDocElement read FGerarToken;
 
     property GerarNSLoteRps: Boolean read FGerarNSLoteRps write FGerarNSLoteRps;
     property GerarPrestadorLoteRps: Boolean read FGerarPrestadorLoteRps write FGerarPrestadorLoteRps;
@@ -379,6 +385,8 @@ type
     FIncluirURI: boolean;
     // Se True gera uma assinatura adicional
     FAssinaturaAdicional: boolean;
+    // Se True assina a Geração do Token
+    FGerarToken: boolean;
 
   public
     property Rps: boolean read FRps write FRps;
@@ -399,6 +407,7 @@ type
     property FecharSessao: boolean read FFecharSessao write FFecharSessao;
     property IncluirURI: boolean read FIncluirURI write FIncluirURI;
     property AssinaturaAdicional: boolean read FAssinaturaAdicional write FAssinaturaAdicional;
+    property GerarToken: boolean read FGerarToken write FGerarToken;
 
   end;
 
@@ -437,6 +446,8 @@ type
     FTeste: string;
     // Se True realiza a validação do XML com os Schemas
     FValidar: boolean;
+    // Nome do arquivo XSD para validar a Geração do Token
+    FGerarToken: string;
 
   public
     property Recepcionar: string read FRecepcionar write FRecepcionar;
@@ -455,6 +466,7 @@ type
     property FecharSessao: string read FFecharSessao write FFecharSessao;
     property Teste: string read FTeste write FTeste;
     property Validar: boolean read FValidar write FValidar;
+    property GerarToken: string read FGerarToken write FGerarToken;
 
   end;
 
@@ -588,6 +600,7 @@ begin
     FSubstituirNFSe      := AINI.ReadString(ASession, 'HomSubstituirNFSe'     , FRecepcionar);
     FAbrirSessao         := AINI.ReadString(ASession, 'HomAbrirSessao'        , FRecepcionar);
     FFecharSessao        := AINI.ReadString(ASession, 'HomFecharSessao'       , FRecepcionar);
+    FGerarToken          := AINI.ReadString(ASession, 'HomGerarToken'         , FRecepcionar);
 
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'HomConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'HomConsultarNFSeServicoPrestado', FRecepcionar);
@@ -610,6 +623,7 @@ begin
     FSubstituirNFSe      := AINI.ReadString(ASession, 'ProSubstituirNFSe'     , FRecepcionar);
     FAbrirSessao         := AINI.ReadString(ASession, 'ProAbrirSessao'        , FRecepcionar);
     FFecharSessao        := AINI.ReadString(ASession, 'ProFecharSessao'       , FRecepcionar);
+    FGerarToken          := AINI.ReadString(ASession, 'ProGerarToken'         , FRecepcionar);
 
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'ProConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'ProConsultarNFSeServicoPrestado', FRecepcionar);
@@ -636,6 +650,7 @@ begin
   FSubstituirNFSe := TDocElement.Create;
   FAbrirSessao := TDocElement.Create;
   FFecharSessao := TDocElement.Create;
+  FGerarToken := TDocElement.Create;
 end;
 
 destructor TConfigMsgDados.Destroy;
@@ -655,6 +670,7 @@ begin
   FSubstituirNFSe.Free;
   FAbrirSessao.Free;
   FFecharSessao.Free;
+  FGerarToken.Free;
 
   inherited Destroy;
 end;

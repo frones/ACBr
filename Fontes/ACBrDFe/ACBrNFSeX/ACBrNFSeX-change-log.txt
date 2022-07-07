@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 07/07/2022
+-- Diversos --
+[+] Implementado o provedor Siappa
+   Por: Renato Rubinho
 -- ISSPortoVelho.Provider/ACBrNFSeXConversao --
 [*] Implementado as funções de conversão do Regime Especial de Tributação e
     os novos valores: retMovimentoMensal, retISSQNAutonomos e retISSQNSociedade.

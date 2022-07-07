@@ -170,6 +170,7 @@ uses
   ISSDSF.Provider,
   ISSLencois.Provider,
   ISSSaoPaulo.Provider,
+  Siappa.Provider,
   Siat.Provider,
   SigISS.Provider,
   Simple.Provider,
@@ -414,6 +415,7 @@ begin
       proSH3:     Result := TACBrNFSeProviderSH3200.Create(ACBrNFSe);
       proSiam:    Result := TACBrNFSeProviderSiam200.Create(ACBrNFSe);
       proSiapNet: Result := TACBrNFSeProviderSiapNet200.Create(ACBrNFSe);
+      proSiappa:  Result := TACBrNFSeProviderSiappa.Create(ACBrNFSe);
 
       proSiapSistemas:
         Result := TACBrNFSeProviderSiapSistemas203.Create(ACBrNFSe);

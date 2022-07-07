@@ -53,6 +53,7 @@ type
     FConsultaNFSe: TNFSeConsultaNFSeResponse;
     FCancelaNFSe: TNFSeCancelaNFSeResponse;
     FSubstituiNFSe: TNFSeSubstituiNFSeResponse;
+    FGerarToken: TNFSeGerarTokenResponse;
 
   public
     constructor Create;
@@ -66,6 +67,7 @@ type
     property ConsultaNFSe: TNFSeConsultaNFSeResponse read FConsultaNFSe;
     property CancelaNFSe: TNFSeCancelaNFSeResponse read FCancelaNFSe;
     property SubstituiNFSe: TNFSeSubstituiNFSeResponse read FSubstituiNFSe;
+    property GerarToken: TNFSeGerarTokenResponse read FGerarToken;
 
   end;
 
@@ -82,6 +84,7 @@ begin
   FConsultaNFSe := TNFSeConsultaNFSeResponse.Create;
   FCancelaNFSe := TNFSeCancelaNFSeResponse.Create;
   FSubstituiNFSe := TNFSeSubstituiNFSeResponse.Create;
+  FGerarToken := TNFSeGerarTokenResponse.Create;
 end;
 
 destructor TWebServices.Destroy;
@@ -94,6 +97,7 @@ begin
   FConsultaNFSe.Free;
   FCancelaNFSe.Free;
   FSubstituiNFSe.Free;
+  FGerarToken.Free;
 
   inherited Destroy;
 end;

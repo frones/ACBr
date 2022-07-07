@@ -12,7 +12,7 @@ object frmACBrNFSe: TfrmACBrNFSe
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.2.2.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 612
@@ -1970,7 +1970,7 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
       object tsConsServPrest: TTabSheet
-        Caption = 'Consultas Serviços Prestados'
+        Caption = 'Consultas Serv. Prestados'
         ClientHeight = 110
         ClientWidth = 559
         ImageIndex = 4
@@ -2012,7 +2012,7 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
       object tsConsServTom: TTabSheet
-        Caption = 'Consultas Serviços Tomados'
+        Caption = 'Consultas Serv. Tomados'
         ClientHeight = 110
         ClientWidth = 559
         ImageIndex = 5
@@ -2106,6 +2106,20 @@ object frmACBrNFSe: TfrmACBrNFSe
           ParentFont = False
           ReadOnly = True
           TabOrder = 1
+        end
+      end
+      object tsOutros: TTabSheet
+        Caption = 'Outros'
+        ClientHeight = 110
+        ClientWidth = 559
+        object btnGerarToken: TButton
+          Left = 3
+          Height = 25
+          Top = 10
+          Width = 177
+          Caption = 'Gerar Token'
+          OnClick = btnGerarTokenClick
+          TabOrder = 0
         end
       end
     end

@@ -1846,7 +1846,7 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
       object tsConsServPrest: TTabSheet
-        Caption = 'Consultas Servi'#231'os Prestados'
+        Caption = 'Consultas Serv. Prestados'
         ImageIndex = 4
         object btnConsultarNFSeServicoPrestadoPorNumero: TButton
           Left = 3
@@ -1886,7 +1886,7 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
       object tsConsServTom: TTabSheet
-        Caption = 'Consultas Servi'#231'os Tomados'
+        Caption = 'Consultas Serv. Tomados'
         ImageIndex = 5
         object btnConsultarNFSeServicoTomadoPorNumero: TButton
           Left = 3
@@ -1974,6 +1974,19 @@ object frmACBrNFSe: TfrmACBrNFSe
           ParentFont = False
           ReadOnly = True
           TabOrder = 1
+        end
+      end
+      object tsOutros: TTabSheet
+        Caption = 'Outros'
+        ImageIndex = 6
+        object btnGerarToken: TButton
+          Left = 3
+          Top = 10
+          Width = 177
+          Height = 25
+          Caption = 'Gerar Token'
+          TabOrder = 0
+          OnClick = btnGerarTokenClick
         end
       end
     end

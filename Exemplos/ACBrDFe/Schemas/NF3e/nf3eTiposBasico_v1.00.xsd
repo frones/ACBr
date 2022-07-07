@@ -23,15 +23,13 @@
 									<xs:element name="cUF" type="TCodUfIBGE">
 										<xs:annotation>
 											<xs:documentation>Código da UF do emitente da NF-3e</xs:documentation>
-											<xs:documentation>Código da UF do emitente do Documento Fiscal. Utilizar a
-Tabela do IBGE de código de unidades da federação.</xs:documentation>
+											<xs:documentation>Código da UF do emitente do Documento Fiscal. Utilizar a Tabela do IBGE de código de unidades da federação.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpAmb" type="TAmb">
 										<xs:annotation>
 											<xs:documentation>Tipo do Ambiente</xs:documentation>
-											<xs:documentation>1 - Produção; 
-2 - Homologação</xs:documentation>
+											<xs:documentation>1 - Produção; 2 - Homologação</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="mod" type="TModNF3e">
@@ -85,8 +83,7 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 									<xs:element name="tpEmis" type="TtpEmis">
 										<xs:annotation>
 											<xs:documentation>Forma de emissão do Documento Fiscal </xs:documentation>
-											<xs:documentation>1 - Normal
-; 2 - Contingência Off Line</xs:documentation>
+											<xs:documentation>1 - Normal; 2 - Contingência Off Line</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="nSiteAutoriz">
@@ -110,11 +107,7 @@ Observação: O ambiente autorizador que trabalhar com mais de um Site deverá d
 									<xs:element name="finNF3e" type="TFinNF3e">
 										<xs:annotation>
 											<xs:documentation>Finalidade de emissão da NF-3e</xs:documentation>
-											<xs:documentation>1 - NF-3e normal; 
-
-2 - NF-3e substituição; 
-
-3 - NF-3e normal com ajuste;</xs:documentation>
+											<xs:documentation>1 - NF-3e normal; 2 - NF-3e substituição; 3 - NF-3e normal com ajuste;</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="verProc">
@@ -131,8 +124,7 @@ Observação: O ambiente autorizador que trabalhar com mais de um Site deverá d
 									</xs:element>
 									<xs:sequence minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Informar apenas
-para tpEmis diferente de 1</xs:documentation>
+											<xs:documentation>Informar apenas para tpEmis diferente de 1</xs:documentation>
 										</xs:annotation>
 										<xs:element name="dhCont" type="TDateTimeUTC">
 											<xs:annotation>
@@ -223,8 +215,7 @@ para tpEmis diferente de 1</xs:documentation>
 										<xs:element name="CNPJ" type="TCnpjOpc">
 											<xs:annotation>
 												<xs:documentation>Número do CNPJ</xs:documentation>
-												<xs:documentation>Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.
-							Informar os zeros não significativos.</xs:documentation>
+												<xs:documentation>Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros. Informar os zeros não significativos.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="CPF" type="TCpf">
@@ -251,13 +242,7 @@ para tpEmis diferente de 1</xs:documentation>
 									<xs:element name="indIEDest" type="TIndIEDest">
 										<xs:annotation>
 											<xs:documentation>Indicador da IE do Destinatário/Acessante</xs:documentation>
-											<xs:documentation>1 - Contribuinte ICMS (informar a IE do destinatário); 
-
-2 - Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS;
-
- 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS. 
-
-Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag IE do destinatário com o literal ISENTO.
+											<xs:documentation>1 - Contribuinte ICMS (informar a IE do destinatário); 2 - Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS; 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS. Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag IE do destinatário com o literal ISENTO.
 </xs:documentation>
 										</xs:annotation>
 									</xs:element>
@@ -360,14 +345,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 									<xs:element name="tpAcesso" type="TAcessante">
 										<xs:annotation>
 											<xs:documentation>Tipo de Acessante</xs:documentation>
-											<xs:documentation>0 - Gerador; 1 – Cativo; 
-2 – Livre;
- 3 – Parcialmente Livre; 
-4 – Consumidor Especial;
- 5 – Parcialmente Especial;
- 6 – Comunhão; 
-7 – Suprimento; 
-8 – Distribuidora.</xs:documentation>
+											<xs:documentation>0 - Gerador; 1 – Cativo; 2 – Livre; 3 – Parcialmente Livre; 4 – Consumidor Especial; 5 – Parcialmente Especial; 6 – Comunhão; 7 – Suprimento; 8 – Distribuidora.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="xNomeUC" minOccurs="0">
@@ -384,84 +362,20 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 									<xs:element name="tpClasse" type="TClasse" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Classe de Consumo da Unidade Consumidora</xs:documentation>
-											<xs:documentation>01 - Comercial
-02 - Consumo Próprio
-03 - Iluminação Pública
-04 - Industrial
-05 - Poder Público
-06 - Residencial
-07 - Rural
-08 -Serviço Público. </xs:documentation>
+											<xs:documentation>01 - Comercial 02 - Consumo Próprio 03 - Iluminação Pública 04 - Industrial 05 - Poder Público 06 - Residencial 07 - Rural 08 -Serviço Público. </xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpSubClasse" type="TSubClasse" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Subclasse de Consumo da Unidade Consumidora</xs:documentation>
-											<xs:documentation>01 - Residencial;
-
- 02 - Residencial baixa renda;
-
- 03 - Residencial baixa renda indígena;
-
- 04 - Residencial baixa renda quilombola;
-
- 05 - Residencial baixa renda benefício de prestação continuada da assistência social;
-
-06 - Residencial baixa renda multifamiliar; 
-
-07 - Comercial; 
-
-08 - Serviços de transporte, exceto tração elétrica; 
-
-09 - Serviços de comunicação e telecomunicação;
-
- 10 - Associação e entidades filantrópicas; 
-
-11 - Templos religiosos; 
-
-12 - Administração condominial: iluminação e instalações de uso comum de prédio ou conjunto de edificações;
-
- 13 - Iluminação em rodovias solicitada por quem detenha concessão ou autorização para administração em rodovias;
-
- 14 - Semáforos, radares e câmeras de monitoramento de trânsito, solicitados por quem detenha concessão ou autorização para controle de trânsito;
-
- 15 - Outros serviços e outras atividades da classe comercial;
-16=Agropecuária rural; 
-
-17 - Agropecuária urbana;
-
- 18 - Residencial rural; 
-
-19 - Cooperativa de eletrificação rural;
-
-20 - Agroindustrial; 
-
-21 - Serviço público de irrigação rural; 
-
-22 - Escola agrotécnica;
-
- 23 - Aquicultura; 
-
-24 - Poder público Federal;
-
-25 - Poder Público Estadual ou Distrital;
-
- 26 - Poder público Municipal;
-
- 27 - Tração Elétrica;
-
-28 - Água esgoto ou saneamento;
-
- 99 - Outros.</xs:documentation>
+											<xs:documentation>01 - Residencial; 02 - Residencial baixa renda; 03 - Residencial baixa renda indígena; 04 - Residencial baixa renda quilombola; 05 - Residencial baixa renda benefício de prestação continuada da assistência social; 06 - Residencial baixa renda multifamiliar; 07 - Comercial; 08 - Serviços de transporte, exceto tração elétrica; 09 - Serviços de comunicação e telecomunicação; 10 - Associação e entidades filantrópicas; 11 - Templos religiosos; 12 - Administração condominial: iluminação e instalações de uso comum de prédio ou conjunto de edificações; 13 - Iluminação em rodovias solicitada por quem detenha concessão ou autorização para administração em rodovias; 14 - Semáforos, radares e câmeras de monitoramento de trânsito, solicitados por quem detenha concessão ou autorização para controle de trânsito; 15 - Outros serviços e outras atividades da classe comercial; 16=Agropecuária rural; 17 - Agropecuária urbana; 18 - Residencial rural; 19 - Cooperativa de eletrificação rural; 20 - Agroindustrial; 21 - Serviço público de irrigação rural; 22 - Escola agrotécnica; 23 - Aquicultura; 24 - Poder público Federal; 25 - Poder Público Estadual ou Distrital; 26 - Poder público Municipal; 27 - Tração Elétrica; 28 - Água esgoto ou saneamento; 99 - Outros.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpFase" type="TFase">
 										<xs:annotation>
 											<xs:documentation>Tipo de ligação</xs:documentation>
 											<xs:documentation>1 - Monofásico; 
-
 2 - Bifásico;
-
  3 - Trifásico;</xs:documentation>
 										</xs:annotation>
 									</xs:element>
@@ -469,7 +383,6 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 										<xs:annotation>
 											<xs:documentation>Grupo e Subgrupo de Tensão</xs:documentation>
 											<xs:documentation>01 - A1 - Alta Tensão (230kV ou mais); 
-
 02 - A2 - Alta Tensão (88 a 138kV); 
 03 - A3 - Alta Tensão (69kV); 
 04 - A3a - Alta Tensão (30kV a 44kV); 
@@ -747,10 +660,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 														<xs:documentation>1-Hidráulica, 
 2-Solar, 
 3-Eólica,
- 4-Térmica, 5 - Hibrida
-
- 
-
+4-Térmica, 5 - Hibrida
 </xs:documentation>
 													</xs:annotation>
 												</xs:element>
@@ -851,9 +761,7 @@ Nota: No caso de Contribuinte Isento de Inscrição (indIEDest=2) informar a tag
 																<xs:annotation>
 																	<xs:documentation>Tipo de ajuste a ser aplicado ao item</xs:documentation>
 																	<xs:documentation>1 - Item a ser substituído (deve informar detItemAnt); 
-
 2 - Item de substituição (nova imagem do item anterior); 
-
 3 - Item a ser eliminado (deve informar detItemAnt); 
 4 - Item a ser incluído referente a NF-3e anterior
 ;</xs:documentation>
@@ -1550,9 +1458,7 @@ Deve informar ICMS10 e não poderá informar grupo de tarifas aplicadas.
 																										<xs:element name="cBenef">
 																											<xs:annotation>
 																												<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item</xs:documentation>
-																												<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao
- item.
-</xs:documentation>
+																												<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao item.</xs:documentation>
 																											</xs:annotation>
 																											<xs:simpleType>
 																												<xs:restriction base="xs:string">
@@ -1589,8 +1495,7 @@ Deve informar ICMS10 e não poderá informar grupo de tarifas aplicadas.
 																									<xs:element name="CST">
 																										<xs:annotation>
 																											<xs:documentation>Classificação Tributária do serviço</xs:documentation>
-																											<xs:documentation>40=Isenta; 41=Não tributada;
-</xs:documentation>
+																											<xs:documentation>40=Isenta; 41=Não tributada;</xs:documentation>
 																										</xs:annotation>
 																										<xs:simpleType>
 																											<xs:restriction base="xs:string">
@@ -1612,9 +1517,7 @@ Deve informar ICMS10 e não poderá informar grupo de tarifas aplicadas.
 																										<xs:element name="cBenef">
 																											<xs:annotation>
 																												<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item</xs:documentation>
-																												<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao
-item.
-</xs:documentation>
+																												<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao item.</xs:documentation>
 																											</xs:annotation>
 																											<xs:simpleType>
 																												<xs:restriction base="xs:string">
@@ -1658,9 +1561,7 @@ item.
 																										<xs:element name="cBenef">
 																											<xs:annotation>
 																												<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item</xs:documentation>
-																												<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao
-item.
-</xs:documentation>
+																												<xs:documentation>Código de Benefício Fiscal utilizado pela UF, aplicado ao item.</xs:documentation>
 																											</xs:annotation>
 																											<xs:simpleType>
 																												<xs:restriction base="xs:string">
@@ -3196,7 +3097,6 @@ Não obrigatória, conforme item 2.3.2 da Seção 11.1 do Módulo 11 do PRODIST.
 					<xs:annotation>
 						<xs:documentation>Hash do token do código de segurança do responsável técnico</xs:documentation>
 						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)
-
 Observação: 28 caracteres são representados no schema como 20 bytes do tipo base64Binary</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>

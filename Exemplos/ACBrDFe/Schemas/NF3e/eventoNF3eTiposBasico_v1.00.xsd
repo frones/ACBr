@@ -18,9 +18,7 @@
 						</xs:element>
 						<xs:element name="tpAmb" type="TAmb">
 							<xs:annotation>
-								<xs:documentation>Identificação do Ambiente:
-1 - Produção
-2 - Homologação</xs:documentation>
+								<xs:documentation>Identificação do Ambiente: 1 - Produção 2 - Homologação</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="CNPJ" type="TCnpj">
@@ -68,8 +66,7 @@
 								<xs:sequence>
 									<xs:any processContents="skip">
 										<xs:annotation>
-											<xs:documentation>XML do evento
-Insira neste local o XML específico do tipo de evento (cancelamento, encerramento, registro de passagem).  </xs:documentation>
+											<xs:documentation>XML do evento Insira neste local o XML específico do tipo de evento (cancelamento, encerramento, registro de passagem).</xs:documentation>
 										</xs:annotation>
 									</xs:any>
 								</xs:sequence>
@@ -86,8 +83,7 @@ Insira neste local o XML específico do tipo de evento (cancelamento, encerramen
 					</xs:sequence>
 					<xs:attribute name="Id" use="required">
 						<xs:annotation>
-							<xs:documentation>Identificador da TAG a ser assinada, a regra de formação do Id é:
-“ID” + tpEvento +  chave da NF-3e + nSeqEvento</xs:documentation>
+							<xs:documentation>Identificador da TAG a ser assinada, a regra de formação do Id é: ID + tpEvento +  chave da NF-3e + nSeqEvento</xs:documentation>
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:ID">
@@ -111,9 +107,7 @@ Insira neste local o XML específico do tipo de evento (cancelamento, encerramen
 					<xs:sequence>
 						<xs:element name="tpAmb" type="TAmb">
 							<xs:annotation>
-								<xs:documentation>Identificação do Ambiente:
-1 - Produção
-2 - Homologação</xs:documentation>
+								<xs:documentation>Identificação do Ambiente: 1 - Produção 2 - Homologação</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="verAplic" type="TVerAplic">

@@ -507,7 +507,7 @@ end;
 
 procedure TNF3eWebService.RemoverNameSpace;
 begin
-  FPRetWS := StringReplace(FPRetWS, ' xmlns="http://www.portalfiscal.inf.br/NF3e"',
+  FPRetWS := StringReplace(FPRetWS, ' xmlns="http://www.portalfiscal.inf.br/nf3e"',
                                     '', [rfReplaceAll, rfIgnoreCase]);
 end;
 
@@ -901,7 +901,7 @@ begin
     else
       AXML := FPRetWS;
 
-    FNF3eRetornoSincrono.XmlRetorno := ParseText(AXML);
+    FNF3eRetornoSincrono.XmlRetorno := ParseText(AXML, True, False);
     FNF3eRetornoSincrono.LerXml;
 
     Fversao := FNF3eRetornoSincrono.versao;
@@ -994,7 +994,7 @@ begin
   end
   else
   begin
-    FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
     FNF3eRetorno.LerXml;
 
     Fversao := FNF3eRetorno.versao;
@@ -1276,7 +1276,7 @@ begin
 
   RemoverNameSpace;
 
-  FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
   FNF3eRetorno.LerXML;
 
   Fversao := FNF3eRetorno.versao;
@@ -1597,7 +1597,7 @@ begin
 
   RemoverNameSpace;
 
-  FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  FNF3eRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
   FNF3eRetorno.LerXML;
 
   Fversao := FNF3eRetorno.versao;
@@ -2403,7 +2403,7 @@ begin
 
   RemoverNameSpace;
 
-  EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS, True, False);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;
@@ -2466,7 +2466,7 @@ begin
               end;
 
               { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-              Texto := ParseText(Texto);
+              Texto := ParseText(Texto, True, False);
             end;
 
             // Se o evento for rejeitado a propriedade XML conterá uma string vazia
@@ -2667,7 +2667,7 @@ begin
   FretDistDFeInt.Free;   // Limpando a lista
   FretDistDFeInt := TRetDistDFeInt.Create('NF3e');
 
-  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS, True, False);
   FretDistDFeInt.LerXml;
 
   FPMsg := FretDistDFeInt.xMotivo;

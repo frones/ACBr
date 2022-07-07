@@ -187,7 +187,6 @@ end;
 
 destructor TNF3eXmlWriter.Destroy;
 begin
-  Opcoes.Free;
   inherited Destroy;
 end;
 
@@ -253,11 +252,11 @@ begin
   NF3e.Ide.cNF := ExtrairCodigoChaveAcesso(NF3e.infNF3e.ID);
 
   FDocument.Clear();
-  NF3eNode := FDocument.CreateElement('NF3e', 'http://www.portalfiscal.inf.br/NF3e');
+  NF3eNode := FDocument.CreateElement('NF3e', 'http://www.portalfiscal.inf.br/nf3e');
 
   if NF3e.procNF3e.nProt <> '' then
   begin
-    xmlNode := FDocument.CreateElement('NF3eProc', 'http://www.portalfiscal.inf.br/NF3e');
+    xmlNode := FDocument.CreateElement('NF3eProc', 'http://www.portalfiscal.inf.br/nf3e');
     xmlNode.SetAttribute('versao', FloatToString(NF3e.infNF3e.Versao, '.', '#0.00'));
     xmlNode.AppendChild(NF3eNode);
     FDocument.Root := xmlNode;
@@ -310,7 +309,7 @@ var
   i: integer;
 begin
   Result := FDocument.CreateElement('infNF3e');
-  Result.SetAttribute('Id', NF3e.infNF3e.ID);
+  Result.SetAttribute('Id', 'NF3e' + NF3e.infNF3e.ID);
   Result.SetAttribute('versao', FloatToString(NF3e.infNF3e.Versao, '.', '#0.00'));
 
   Result.AppendChild(Gerar_Ide);
@@ -891,7 +890,7 @@ begin
 
   for i := 0 to NF3e.NFDet.Count - 1 do
   begin
-    Result[i] := FDocument.CreateElement('NFDet');
+    Result[i] := FDocument.CreateElement('NFdet');
 
     if NF3e.NFDet[i].chNF3eAnt <> '' then
       Result[i].SetAttribute('chNF3eAnt', NF3e.NFDet[i].chNF3eAnt);

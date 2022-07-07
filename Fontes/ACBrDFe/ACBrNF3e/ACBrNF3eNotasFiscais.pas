@@ -280,7 +280,10 @@ begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, FXMLAssinado)
       else
-        Gravar(CalcularNomeArquivoCompleto(), FXMLAssinado);
+      begin
+        NomeArq := CalcularNomeArquivoCompleto();
+        Gravar(NomeArq, FXMLAssinado);
+      end;
     end;
   end;
 end;

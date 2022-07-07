@@ -1697,8 +1697,6 @@ object frmACBrNF3e: TfrmACBrNF3e
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
-      ExplicitTop = 198
-      ExplicitHeight = 413
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
         object MemoResp: TMemo
@@ -1709,7 +1707,6 @@ object frmACBrNF3e: TfrmACBrNF3e
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 385
         end
       end
       object TabSheet6: TTabSheet
@@ -1742,7 +1739,6 @@ object frmACBrNF3e: TfrmACBrNF3e
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 385
         end
       end
       object TabSheet9: TTabSheet
@@ -1756,7 +1752,6 @@ object frmACBrNF3e: TfrmACBrNF3e
           Align = alClient
           Indent = 19
           TabOrder = 0
-          ExplicitHeight = 385
         end
       end
       object TabSheet10: TTabSheet
@@ -1770,7 +1765,6 @@ object frmACBrNF3e: TfrmACBrNF3e
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 385
         end
       end
       object Dados: TTabSheet
@@ -1787,7 +1781,6 @@ object frmACBrNF3e: TfrmACBrNF3e
           ScrollBars = ssVertical
           TabOrder = 0
           WordWrap = False
-          ExplicitHeight = 385
         end
       end
     end

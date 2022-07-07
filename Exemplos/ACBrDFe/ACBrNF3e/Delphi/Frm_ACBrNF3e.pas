@@ -402,7 +402,7 @@ begin
     Dest.indIEDest := inNaoContribuinte;
     Dest.IE        := edtEmitIE.Text;
     Dest.IM        := '';
-    Dest.cNIS      := '';
+    Dest.cNIS      := '123456789012345';
 
     Dest.EnderDest.xLgr    := edtEmitLogradouro.Text;
     Dest.EnderDest.Nro     := edtEmitNumero.Text;
@@ -426,8 +426,8 @@ begin
     acessante.tpFase       := tfTrifasico;
     acessante.tpGrpTensao  := tgtA1;
     acessante.tpModTar     := tmtConvencionalMonomia;
-    acessante.latGPS       := '32.904237';
-    acessante.longGPS      := '73.620290';
+    acessante.latGPS       := '20.904346';
+    acessante.longGPS      := '18.624526';
 //    [0-9]\.[0-9]{6}|[1-8][0-9]\.[0-9]{6}|90\.[0-9]{6}
 //    acessante.longGPS      := '9.1.2.180.3';
 
@@ -899,7 +899,7 @@ begin
     LoadXML(ACBrNF3e1.WebServices.Enviar.RetWS, WBResposta);
 
     MemoDados.Lines.Add('');
-    MemoDados.Lines.Add('Envio NFCe');
+    MemoDados.Lines.Add('Envio NF3e');
     MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrNF3e1.WebServices.Enviar.TpAmb));
     MemoDados.Lines.Add('verAplic: ' + ACBrNF3e1.WebServices.Enviar.verAplic);
     MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrNF3e1.WebServices.Enviar.cStat));
@@ -1055,8 +1055,9 @@ begin
   AlimentarComponente(vAux);
 
   ACBrNF3e1.NotasFiscais.Assinar;
+  ACBrNF3e1.NotasFiscais.Validar;
 
-  ACBrNF3e1.NotasFiscais.Items[0].GravarXML();
+//  ACBrNF3e1.NotasFiscais.Items[0].GravarXML();
 
   ShowMessage('Arquivo gerado em: ' + ACBrNF3e1.NotasFiscais.Items[0].NomeArq);
   MemoDados.Lines.Add('Arquivo gerado em: ' + ACBrNF3e1.NotasFiscais.Items[0].NomeArq);
@@ -1722,12 +1723,7 @@ begin
   if cbModeloDF.ItemIndex = 0 then
     ACBrNF3e1.DANF3e := ACBrNF3eDANF3eRL1
   else
-  begin
-    if rgDANFCE.ItemIndex = 0 then
-      ACBrNF3e1.DANF3e := ACBrNF3eDANFCeFortes1
-    else
-      ACBrNF3e1.DANF3e := ACBrNF3eDANF3eESCPOS1;
-  end;
+    ACBrNF3e1.DANF3e := ACBrNF3eDANF3eESCPOS1;
   }
   ACBrNF3e1.SSL.DescarregarCertificado;
 

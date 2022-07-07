@@ -67,6 +67,10 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+  public
+    function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
+    function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
+    function RegimeEspecialTributacaoDescricao(const t: TnfseRegimeEspecialTributacao): string; override;
   end;
 
 implementation
@@ -122,6 +126,45 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderISSPortoVelho200.RegimeEspecialTributacaoDescricao(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  case t of
+    retMovimentoMensal           : Result := '1 - Movimento Mensal';
+    retEstimativa                : Result := '2 - Estimativa';
+    retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
+    retCooperativa               : Result := '4 - Cooperativa';
+    retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+    retMicroempresarioIndividual : Result := '7 - Microempresário Individual (MEI)';
+    retISSQNAutonomos            : Result := '8 - ISSQN Profissionais Autônomos';
+    retISSQNSociedade            : Result := '9 - ISSQN de Sociedade de Profissionais PJ';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderISSPortoVelho200.RegimeEspecialTributacaoToStr(
+  const t: TnfseRegimeEspecialTributacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                         ['', '1', '2', '3', '4', '6', '7', '8', '9'],
+                         [retNenhum, retMovimentoMensal, retEstimativa,
+                         retSociedadeProfissionais, retCooperativa,
+                         retMicroempresarioEmpresaPP, retMicroempresarioIndividual,
+                         retISSQNAutonomos, retISSQNSociedade]);
+end;
+
+function TACBrNFSeProviderISSPortoVelho200.StrToRegimeEspecialTributacao(
+  out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                         ['', '1', '2', '3', '4', '6', '7', '8', '9'],
+                         [retNenhum, retMovimentoMensal, retEstimativa,
+                         retSociedadeProfissionais, retCooperativa,
+                         retMicroempresarioEmpresaPP, retMicroempresarioIndividual,
+                         retISSQNAutonomos, retISSQNSociedade]);
 end;
 
 { TACBrNFSeXWebserviceISSPortoVelho200 }

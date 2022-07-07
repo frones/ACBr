@@ -84,7 +84,8 @@ type
                                    retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
                                    retLucroReal, retLucroPresumido, retSimplesNacional,
                                    retImune, retEmpresaIndividualRELI, retEmpresaPP,
-                                   retMicroEmpresario, retOutros);
+                                   retMicroEmpresario, retOutros, retMovimentoMensal,
+                                   retISSQNAutonomos, retISSQNSociedade);
 
   TnfseSimNao = (snSim, snNao);
 

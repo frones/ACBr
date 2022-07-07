@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNF3e\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -47,52 +47,52 @@
         <UnitName Value="ACBrNF3eDANF3eClass"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConsSitNF3e.pas"/>
-        <UnitName Value="pcnConsSitNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eConsSit.pas"/>
+        <UnitName Value="ACBrNF3eConsSit"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEnvEventoNF3e.pas"/>
-        <UnitName Value="pcnEnvEventoNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEnvEvento.pas"/>
+        <UnitName Value="ACBrNF3eEnvEvento"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEventoNF3e.pas"/>
-        <UnitName Value="pcnEventoNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eEvento.pas"/>
+        <UnitName Value="ACBrNF3eEvento"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3e.pas"/>
-        <UnitName Value="pcnNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eClass.pas"/>
+        <UnitName Value="ACBrNF3eClass"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eR.pas"/>
-        <UnitName Value="pcnNF3eR"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eXmlReader.pas"/>
+        <UnitName Value="ACBrNF3eXmlReader"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eW.pas"/>
-        <UnitName Value="pcnNF3eW"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eXmlWriter.pas"/>
+        <UnitName Value="ACBrNF3eXmlWriter"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnProcNF3e.pas"/>
-        <UnitName Value="pcnProcNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eProc.pas"/>
+        <UnitName Value="ACBrNF3eProc"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetConsSitNF3e.pas"/>
-        <UnitName Value="pcnRetConsSitNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetConsSit.pas"/>
+        <UnitName Value="ACBrNF3eRetConsSit"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvEventoNF3e.pas"/>
-        <UnitName Value="pcnRetEnvEventoNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetEnvEvento.pas"/>
+        <UnitName Value="ACBrNF3eRetEnvEvento"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvNF3e.pas"/>
-        <UnitName Value="pcnRetEnvNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\Servicos\ACBrNF3eRetEnv.pas"/>
+        <UnitName Value="ACBrNF3eRetEnv"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConversaoNF3e.pas"/>
-        <UnitName Value="pcnConversaoNF3e"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConversao.pas"/>
+        <UnitName Value="ACBrNF3eConversao"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eConsts.pas"/>
-        <UnitName Value="pcnNF3eConsts"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\Base\ACBrNF3eConsts.pas"/>
+        <UnitName Value="ACBrNF3eConsts"/>
       </Item18>
     </Files>
     <RequiredPkgs Count="1">

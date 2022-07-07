@@ -9,10 +9,10 @@ interface
 
 uses
   ACBrNF3e, ACBrNF3eReg, ACBrNF3eNotasFiscais, ACBrNF3eConfiguracoes, 
-  ACBrNF3eWebServices, ACBrNF3eDANF3eClass, pcnConsSitNF3e,  
-  pcnEnvEventoNF3e, pcnEventoNF3e, pcnNF3e, pcnNF3eR, pcnNF3eW, 
-  pcnProcNF3e, pcnRetConsSitNF3e, pcnRetEnvEventoNF3e, pcnRetEnvNF3e, 
-  pcnConversaoNF3e, pcnNF3eConsts, LazarusPackageIntf;
+  ACBrNF3eWebServices, ACBrNF3eDANF3eClass, ACBrNF3eConsSit, 
+  ACBrNF3eEnvEvento, ACBrNF3eEvento, ACBrNF3eClass, ACBrNF3eXmlReader, 
+  ACBrNF3eXmlWriter, ACBrNF3eProc, ACBrNF3eRetConsSit, ACBrNF3eRetEnvEvento, 
+  ACBrNF3eRetEnv, ACBrNF3eConversao, ACBrNF3eConsts, LazarusPackageIntf;
 
 implementation
 

@@ -129,6 +129,7 @@ type
     fpConfiguracoes: TConfiguracoes;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
+    destructor Destroy; override;
 
     procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
   published
@@ -274,6 +275,13 @@ begin
   FEmpresa := TEmpresaConfNFSe.Create;
 
   FUsarDadosConfig := False;
+end;
+
+destructor TGeralConf.Destroy;
+begin
+  FEmpresa.Free;
+
+  inherited;
 end;
 
 procedure TGeralConf.SetBanco(const Value: TBanco);

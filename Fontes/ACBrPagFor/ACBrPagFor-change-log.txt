@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/07/2022
+-- ACBrPagForConfiguracoes --
+[*] Correção: estava com vazamento de memória.
+   Por: Renato Pavan
+
 29/06/2022
 -- ACBrPagForConversao --
 [*] Correção no tipo TTipoMovimento e nas funções TpMovimentoToStr e StrToTpMovimento.

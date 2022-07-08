@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2022
+-- pcesGerador --
+[*] Atualização na validação para geração do grupo sucessaoVinc baseado nas tags ataus do layout simplificado.
+   Por: José M S Junior
+
 06/06/2022
 -- pcesS2200 --
 [*] Compatibilização da função LerINI do evento S2200 com as tags novas do layout simplificado e-Social.

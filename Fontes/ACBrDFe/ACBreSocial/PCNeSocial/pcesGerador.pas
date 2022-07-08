@@ -853,7 +853,7 @@ end;
 
 procedure TeSocialEvento.GerarSucessaoVinc(pSucessaoVinc: TSucessaoVinc);
 begin
-  if pSucessaoVinc.cnpjEmpregAnt <> EmptyStr then
+  if pSucessaoVinc.nrInsc <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
 

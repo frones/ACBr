@@ -35,7 +35,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="89">
+    <Files Count="90">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -366,33 +366,37 @@
         <UnitName Value="ACBrEscDatecs"/>
       </Item82>
       <Item83>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
-        <UnitName Value="ACBrSMS"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscSunmi.pas"/>
+        <UnitName Value="ACBrEscSunmi"/>
       </Item83>
       <Item84>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
-        <UnitName Value="ACBrSMSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
+        <UnitName Value="ACBrSMS"/>
       </Item84>
       <Item85>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
-        <UnitName Value="ACBrSMSDaruma"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
+        <UnitName Value="ACBrSMSClass"/>
       </Item85>
       <Item86>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
-        <UnitName Value="ACBrSMSZTE"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
+        <UnitName Value="ACBrSMSDaruma"/>
       </Item86>
       <Item87>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALCapital.pas"/>
-        <UnitName Value="ACBrBALCapital"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
+        <UnitName Value="ACBrSMSZTE"/>
       </Item87>
       <Item88>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALLenkeLK2500.pas"/>
-        <UnitName Value="ACBrBALLenkeLK2500"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALCapital.pas"/>
+        <UnitName Value="ACBrBALCapital"/>
       </Item88>
       <Item89>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALLenkeLK2500.pas"/>
+        <UnitName Value="ACBrBALLenkeLK2500"/>
+      </Item89>
+      <Item90>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQEscLabel.pas"/>
         <UnitName Value="ACBrETQEscLabel"/>
-      </Item89>
+      </Item90>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="3">

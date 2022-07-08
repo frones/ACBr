@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2022
+-- ACBrPIXCDReg --
+[+] Inclusão de novo PSP Sicredi
+    Por: sidnei_alves1
+
 06/07/2022
 -- ACBrPIXCD --
 [+] Inclusão de possibilidade dos PSP alterarem o Body antes da requisição.

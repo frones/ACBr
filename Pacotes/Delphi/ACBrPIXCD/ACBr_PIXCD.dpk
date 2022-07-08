@@ -60,6 +60,8 @@ contains
   ACBrPIXSchemasCobsVConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasCobsVConsultadas.pas',
   ACBrPIXSchemasLoteCobV in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLoteCobV.pas',
   ACBrPIXSchemasParametrosConsultaLote in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasParametrosConsultaLote.pas',
-  ACBrPIXSchemasLotesCobVConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLotesCobVConsultadas.pas';
+  ACBrPIXSchemasLotesCobVConsultadas in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXSchemasLotesCobVConsultadas.pas',
+  ACBrShipaySchemas in '..\..\..\Fontes\ACBrPIXCD\ACBrShipaySchemas.pas',
+  ACBrPIXPSPSicredi in '..\..\..\Fontes\ACBrPIXCD\ACBrPIXPSPSicredi.pas';
 
 end.

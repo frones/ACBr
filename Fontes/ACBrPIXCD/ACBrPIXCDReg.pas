@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils, ACBrPIXCD,
-  ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXPSPShipay
+  ACBrPIXPSPItau, ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander,
+  ACBrPIXPSPShipay, ACBrPIXPSPSicredi
   {$IFDEF FPC}, LResources {$ENDIF};
 
 procedure Register;
@@ -52,7 +53,8 @@ implementation
 procedure Register;
 begin
   RegisterComponents('ACBrPIXCD', [TACBrPixCD,
-    TACBrPSPItau, TACBrPSPBancoDoBrasil, TACBrPSPSantander, TACBrPSPShipay]);
+    TACBrPSPItau, TACBrPSPBancoDoBrasil, TACBrPSPSantander, TACBrPSPShipay,
+    TACBrPSPSicredi]);
 end;
 
 {$IFDEF FPC}

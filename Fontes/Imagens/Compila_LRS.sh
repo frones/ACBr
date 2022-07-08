@@ -58,7 +58,7 @@ echo "****************************************"
 echo
 
 :PIXCD
-$LAZRES ACBrPIXCD.lrs TACBrPixCD.png TACBrPSPItau.png TACBrPSPBancoDoBrasil.png TACBrPSPSantander.png TACBrPSPShipay.png
+$LAZRES ACBrPIXCD.lrs TACBrPixCD.png TACBrPSPItau.png TACBrPSPBancoDoBrasil.png TACBrPSPSantander.png TACBrPSPShipay.png TACBrPSPSicredi.png
 mv ACBrPIXCD.lrs ../ACBrPIXCD
 echo
 echo "****************************************"

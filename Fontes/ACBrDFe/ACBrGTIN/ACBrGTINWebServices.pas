@@ -353,6 +353,7 @@ begin
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'ccgConsGTINResponse');
     GTINRetorno.XmlRetorno := ParseText(FPRetWS, True, False);
+    GTINRetorno.XmlRetorno := StringReplace(GTINRetorno.XmlRetorno, '&', '&amp;', [rfReplaceAll]);
     GTINRetorno.LerXML;
 
     Fversao := GTINRetorno.versao;

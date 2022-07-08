@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2022
+-- ACBrGTINWebServices --
+[*] Alteração visando a leitura correta de produtos cuja descrição tem o caracter
+    "&".
+   Por: Datilas/Italo Giurizzato Junior
+
 Data 14/06/2022
 [+] Doação do componente ACBrGTIN para o Projeto ACBr
    Por: Italo Giurizzato Junior

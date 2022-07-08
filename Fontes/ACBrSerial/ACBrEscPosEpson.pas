@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -48,8 +48,6 @@ type
   { TACBrEscPosEpson }
 
   TACBrEscPosEpson = class(TACBrPosPrinterClass)
-  private
-    FInfo: String;
   protected
     function ComandoEsperaCheque(const SegundosEspera: Byte): AnsiString;
     procedure VerificarKeyCodes; virtual;
@@ -833,7 +831,6 @@ begin
     AddInfo(cKeyAutenticacao, BoolToChar(TestBit(B, 6)) );
   end;
 
-  FInfo  := Info;
   Result := Info;
 end;
 

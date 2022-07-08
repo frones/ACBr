@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -182,7 +182,7 @@ type
   TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
                            ppEscVox, ppEscDiebold, ppEscEpsonP2, ppCustomPos,
                            ppEscPosStar, ppEscZJiang, ppEscGPrinter, ppEscDatecs,
-                           ppExterno);
+                           ppEscSunmi, ppExterno);
 
   { TACBrPosPrinterClass }
 
@@ -652,7 +652,7 @@ uses
   synacode, synautil,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
   ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar,
-  ACBrEscZJiang, ACBrEscGPrinter, ACBrEscDatecs
+  ACBrEscZJiang, ACBrEscGPrinter, ACBrEscDatecs, ACBrEscSunmi
   {$IfDef MSWINDOWS}
   ,ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL
   {$EndIf};
@@ -1693,6 +1693,7 @@ begin
     ppEscZJiang: FPosPrinterClass := TACBrEscZJiang.Create(Self);
     ppEscGPrinter: FPosPrinterClass := TACBrEscGPrinter.Create(Self);
     ppEscDatecs: FPosPrinterClass := TACBrEscDatecs.Create(Self);
+    ppEscSunmi:  FPosPrinterClass := TACBrEscSunmi.Create(Self);
     ppExterno: FPosPrinterClass := FModeloExterno;
   else
     FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
@@ -3063,7 +3064,11 @@ begin
     if (FBuffer.Count > 0) then
     begin
       For i := 0 to FBuffer.Count-1 do
-        StrToPrint := StrToPrint + FBuffer[i] + FPosPrinterClass.Cmd.PuloDeLinha;
+      begin
+        StrToPrint := StrToPrint + FBuffer[i];
+        if (i < FBuffer.Count-1) then
+          StrToPrint := StrToPrint + FPosPrinterClass.Cmd.PuloDeLinha;
+      end;
     end;
   finally
     FBuffer.Clear;

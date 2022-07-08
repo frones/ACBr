@@ -38,6 +38,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2022
+-- ACBrPosPrinter --
+[+] Adicionado o modelo "ppEscSunmi"
+[*] Ajuste em "TACBrPosPrinter.Imprimir", para não adicionar uma quebra de Linha
+    após a última linha do relatório, pois isso pode atrapalhar a detecção de
+    Fim de relatório em alguns equipamentos
+
+-- ACBrEscSunmi --
+[+] Novo protocolo de Impressão, para a linha de impressoras da Sunmi
+
+-- ACBrUSBID.ini --
+[+] Adicionado fabricante 324f=Sunmi
+[+] Adicionada a Impressora 00d2=NT312, da Sunmi
+
+-- ACBrEscPosEpson --
+[*] Remoção de variável não utilizada "FInfo"
+
+-- ACBrEscPosStar --
+[+] Adicionado suporte ao comando de Abertura de Gaveta
+
 05/05/2022
 -- ACBrWinUSBDevice --
 [+] Adicionado o método "Purge", para limpar dados enviados e recebidos da USB

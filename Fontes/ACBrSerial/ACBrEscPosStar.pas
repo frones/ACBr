@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -51,6 +51,7 @@ type
 
   public
     constructor Create(AOwner: TACBrPosPrinter);
+    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; override;
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
@@ -60,8 +61,8 @@ type
 implementation
 
 uses
-  math,
-  ACBrConsts, ACBrUtil;
+  ACBrConsts,
+  ACBrUtil.Strings, ACBrUtil.Math;
 
 { TACBrEscPosStar }
 
@@ -77,24 +78,30 @@ begin
   end;
 end;
 
-function TACBrEscPosStar.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo
-  ): AnsiString;
-//var
-//  CmdPag: Integer;
+function TACBrEscPosStar.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
+var
+  CmdPag: Integer;
 begin
-  Result := inherited ComandoPaginaCodigo(APagCodigo);
+  Result := FS +'.' +   // Cancel Chinese character mode
+            inherited ComandoPaginaCodigo(APagCodigo);
+  {
+  //Nota: pc850, não funcinou corretamente no G800.
+  case APagCodigo of
+    pcUTF8: CmdPag := 0;
+    pc437: CmdPag := 1;
+    pc852: CmdPag := 5;
+    pc860: CmdPag := 6;
+    pc1252: CmdPag := 32;
+  else
+    CmdPag := -1;
+  end;
 
-  // pc850, não funcinou corretamente no G800.
-  //case APagCodigo of
-  //  pc437: CmdPag := 1;
-  //  pc850, pc852: CmdPag := 5;
-  //  pc860: CmdPag := 6;
-  //  pc1252: CmdPag := 32;
-  //else
-  //  CmdPag := 0;
-  //end;
-  //
-  //Result := ESC + GS + 't' + AnsiChr( CmdPag );
+  if (CmdPag < 0) then
+    Result := inherited ComandoPaginaCodigo(APagCodigo)
+  else
+    Result := FS +'.' +   // Cancel Chinese character mode
+              ESC + GS + 't' + AnsiChr( CmdPag );
+  }
 end;
 
 function TACBrEscPosStar.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
@@ -112,11 +119,26 @@ begin
   //end;
 end;
 
+function TACBrEscPosStar.ComandoGaveta(NumGaveta: Integer): AnsiString;
+var
+  CharGav: AnsiChar;
+begin
+  with fpPosPrinter.ConfigGaveta do
+  begin
+    if SinalInvertido then
+      CharGav := #1
+    else
+      CharGav := #0;
+
+    Result := DLE + DC4 + #1 + CharGav + AnsiChar(Trunc(TempoOFF/31));
+  end;
+end;
+
 function TACBrEscPosStar.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 begin
   // Gerando RasterStr, sem LF, a cada fatia
-  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight, False)
+  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight, True)
 end;
 
 end.

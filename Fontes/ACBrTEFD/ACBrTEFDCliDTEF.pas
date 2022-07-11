@@ -296,6 +296,10 @@ begin
            fpDataHoraTransacaoComprovante  := Linha.Informacao.AsTimeStampSQL;
            fpDataHoraTransacaoHost         := fpDataHoraTransacaoComprovante ;
          end;
+
+//       106 : fpIdCarteiraDigital           := LinStr;
+//       107 : fpNomeCarteiraDigital         := LinStr;
+
        121 : fpImagemComprovante1aVia.Text := StringToBinaryString( Linha.Informacao.AsString );
        122 : fpImagemComprovante2aVia.Text := StringToBinaryString( Linha.Informacao.AsString );
        //recarga celular
@@ -312,6 +316,7 @@ begin
          fpValorTotal := fpValorTotal + fpSaque ;
        end;
        131 : fpInstituicao                 := LinStr;
+       132 : fpCodigoBandeiraPadrao        := LinStr;
        133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := Linha.Informacao.AsString;
 
@@ -320,18 +325,19 @@ begin
          fpDesconto   := Linha.Informacao.AsFloat;
          fpValorTotal := fpValorTotal - fpDesconto ;
         end;
-      //CNPJ da rede Adquirente
-      140: fpNFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
 
+      140: fpNFCeSAT.CNPJCredenciadora       := Linha.Informacao.AsString;//CNPJ da rede Adquirente
 //       156 : fpRede                        := LinStr;
-//       157 : fpQRCode                      := LinStr;
-//       158 : fpIdCarteiraDigital           := LinStr;
-//       159 : fpNomeCarteiraDigital         := LinStr;
+      158 : fpCodigoRedeAutorizada           := LinStr;
+
 
        501 : fpTipoPessoa                  := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0,'J','F')[1]);
        502 : fpDocumentoPessoa             := LinStr ;
        505 : fpQtdParcelas                 := Linha.Informacao.AsInteger ;
        506 : fpDataPreDatado               := Linha.Informacao.AsDate;
+
+//       584 : fpQRCode                      := LinStr;
+
        627 : fpAgencia                     := LinStr;
        628 : fpAgenciaDC                   := LinStr;
        120 : fpAutenticacao                := LinStr;
@@ -1105,6 +1111,18 @@ begin
        txt := 'QR Code';
     end;
 
+    if copy(sDados,11,3) = 'CCD' then
+    begin
+       TipoTransacao := '06';
+       txt := 'Crediário';
+    end;
+
+    if copy(sDados,11,3) = 'CPR' then
+    begin
+       TipoTransacao := '07';
+       txt := 'Private Label';
+    end;
+
     if copy(sDados,112,2) = 'AV' then
        TipoOperacao := '00';
     if copy(sDados,112,2) = 'PD' then
@@ -1142,12 +1160,25 @@ begin
        aResposta.Add('130-000 = ' + FloatToStr(ValSaque));
     end;
 
-    //Cielo Premia - Desconto
-    ValorTemp := StrToFloat(copy(sDadosEstendido,51,12));
+    //Instituicao
+    if TipoTransacao = '06' then
+       aResposta.Add('131-000 = ' + copy(sDados, 50, 2))
+    else
+    if Pos(TipoTransacao, ';01;02;03;') > 0 then
+       aResposta.Add('131-000 = ' + copy(sDados, 60, 2));
+
+
+    aResposta.Add('132-000 = ' + Copy(sDadosEstendido,75,4)); //CodigoBandeiraPadrao
+    if TipoTransacao = '05' then
+      aResposta.Add('133-000 = ' + Copy(sDados,147,6)) //CodigoAutorizacaoTransacao
+    else
+      aResposta.Add('133-000 = ' + Copy(sDados,167,6)); //CodigoAutorizacaoTransacao
+
+    ValorTemp := StrToFloat(copy(sDadosEstendido,51,12)); //Cielo Premia - Desconto
     if ValorTemp > 0 then
       aResposta.Add('135-000 = ' + FloatToStr(ValorTemp));
-    //CNPJ da Rede Adquirente
-    aResposta.Add('140-000 = ' + Copy(sDadosEstendido,120,14));
+
+    aResposta.Add('140-000 = ' + Copy(sDadosEstendido,120,14)); //CNPJ da Rede Adquirente
 
     aRetorno.Text := aResposta.Text;
   finally

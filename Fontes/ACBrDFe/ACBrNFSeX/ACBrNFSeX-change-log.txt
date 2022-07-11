@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/07/2022
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade: Socorro/SP - Provedor iiBrasil
+   Por: Italo Giurizzato Junior
+[*] Incluída as cidade: Ronda Alta/RS - Provedor Pronim
+   Por: Maurício Sareto
+
 07/07/2022
 -- Diversos --
 [+] Implementado o provedor Siappa

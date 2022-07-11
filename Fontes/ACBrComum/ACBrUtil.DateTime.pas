@@ -370,13 +370,13 @@ begin
   TMZ := UpperCase(Trim(aTimeZone));
   Tam := Length(TMZ);
 
-  if (TMZ[Tam] = 'Z') then
+  if (Tam > 0) and (TMZ[Tam] = 'Z') then
     Exit;
 
   if (Tam > 6) then
     TMZ := RightStr(TMZ, 6);
 
-  if EstaVazio(TMZ) or (not (TMZ[1] in ['-', '+'])) then
+  if EstaVazio(TMZ) or (not (CharInSet(TMZ[1], ['-', '+']))) then
   begin
     Result := -1;
     Exit;

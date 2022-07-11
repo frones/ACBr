@@ -38,6 +38,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2022
+-- ACBrUitl.DateTime --
+[-] Correção de AV ao enviar uma string vazia para função 'TimezoneToBias()'
+[*] Remoção de warning
+
+11/07/2022
 -- ACBrUtil.DateTime --
 [+] Inclusão de funções para conversões entre a string em Timezone e Bias 
     (Bias = minutos de diferença entre UTC e o horário local)

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2022
+--ACBrBancoBRB--
+  [*] TK-2852 ACBrBoletoBRB Pemissão de Informar a versão do Layout para geração do arquivo
+  Por: Pandaaa
+
 05/07/2022
 --ACBrBancoItau--
   [-] ACBrBoleto Itau CNAB400 Registro 2 / 5 - Layout Fora do Padrão

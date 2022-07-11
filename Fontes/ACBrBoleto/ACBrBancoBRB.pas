@@ -72,6 +72,7 @@ begin
   fpTamanhoAgencia        := 3;
   fpTamanhoConta          := 6;
   fpTamanhoCarteira       := 3;
+  fpLayoutVersaoArquivo   := 075;
 end;
 
 function Modulo11(const Valor: string; Base: Integer = 9; Resto: boolean = false): string;
@@ -213,8 +214,8 @@ begin
   begin
      wLinha := 'DCB'                                             + // Literal DCB
                '001'                                             + // Versão
-               '075'                                             + // Arquivo
-               PadLeft(OnlyNumber(Agencia), 3, '0')                 + // Agência
+               PadLeft(IntToStr(fpLayoutVersaoArquivo), 3, '0')  + // Arquivo
+               PadLeft(OnlyNumber(Agencia), 3, '0')              + // Agência
                PadLeft(OnlyNumber(Conta), 6, '0') + PadLeft(ContaDigito, 1, '0')   + // Conta
                FormatDateTime('yyyymmdd', Now)                   + // Data de formatação
                FormatDateTime('hhmmss', Now)                     + // Hora da formatação

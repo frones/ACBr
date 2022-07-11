@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2022
+-- ACBrUtil.DateTime --
+[+] Inclusão de funções para conversões entre a string em Timezone e Bias 
+    (Bias = minutos de diferença entre UTC e o horário local)
+	Por: Elias César
+
 29/06/2022
 -- ACBrUtil.DateTime --
 [*] Possível correção para datas que estejam no formato: "2022-06-27-03:00".

@@ -92,6 +92,10 @@ function DTtoS( ADateTime : TDateTime) : String;
 function Iso8601ToDateTime(const AISODate: string): TDateTime;
 function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
 
+{ Bias = Diferença em minutos do horário atual com o UTC }
+function BiasToTimeZone(const aBias: Integer): String;
+function TimeZoneToBias(const aTimeZone: String): Integer;
+
 function IsWorkingDay(ADate: TDateTime): Boolean;
 function WorkingDaysBetween(StartDate, EndDate: TDateTime): Integer;
 function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
@@ -105,8 +109,7 @@ implementation
 
 uses
   MaskUtils,
-  ACBrUtil.Compatibilidade,
-  ACBrUtil.Base;
+  ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.Base;
 
 {-----------------------------------------------------------------------------
   Converte uma <ADateTime> para String, semelhante ao FormatDateTime,
@@ -320,7 +323,7 @@ begin
   h := StrToInt(Copy(AISODate, 12, 2));
   n := StrToInt(Copy(AISODate, 15, 2));
   s := StrToInt(Copy(AISODate, 18, 2));
-  z := StrToIntDef(Copy(AISODate, 21, 3), 0);
+  z := StrToIntDef(OnlyNumber(Copy(AISODate, 21, 3)), 0);
 
   Result := EncodeDateTime(y,m,d, h,n,s,z);
 end;
@@ -336,6 +339,55 @@ begin
     SetLength(Result, Length(Result) - 1);
     Result := Result + ATimeZone;
   end;
+end;
+
+function BiasToTimeZone(const aBias: Integer): String;
+const
+  cFmt: String = '%.2d:%.2d';
+var
+  wOp: Char;
+begin
+  if (aBias = 0) then
+  begin
+    Result := 'Z';
+    Exit;
+  end;
+
+  if (aBias > 0) then
+    wOp := '-'
+  else
+    wOp := '+';
+
+  Result := wOp + Format(cFmt, [Abs(aBias) div 60, Abs(aBias) mod 60]);
+end;
+
+function TimeZoneToBias(const aTimeZone: String): Integer;
+var
+  TMZ: String;
+  M, H, Tam: Integer;
+begin
+  Result := 0;
+  TMZ := UpperCase(Trim(aTimeZone));
+  Tam := Length(TMZ);
+
+  if (TMZ[Tam] = 'Z') then
+    Exit;
+
+  if (Tam > 6) then
+    TMZ := RightStr(TMZ, 6);
+
+  if EstaVazio(TMZ) or (not (TMZ[1] in ['-', '+'])) then
+  begin
+    Result := -1;
+    Exit;
+  end;
+
+  H  := StrToIntDef(Copy(TMZ, 2, 2), 0);
+  M  := StrToIntDef(Copy(TMZ, 5, 2), 0);
+  Result := ((H*60) + M);
+
+  if (TMZ[1] = '+') then
+    Result := Result*(-1);
 end;
 
 {-----------------------------------------------------------------------------

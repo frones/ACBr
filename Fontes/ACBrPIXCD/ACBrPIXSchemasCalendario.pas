@@ -62,11 +62,15 @@ type
   TACBrPIXCalendarioCobBase = class(TACBrPIXSchema)
   private
     fapresentacao: TDateTime;
+    fapresentacao_Bias: Integer;
     fcriacao: TDateTime;
+    fcriacao_Bias: Integer;
     fexpiracao: Integer;
   protected
     property criacao: TDateTime read fcriacao write fcriacao;
+    property criacao_Bias: Integer read fcriacao_Bias write fcriacao_Bias;
     property apresentacao: TDateTime read fapresentacao write fapresentacao;
+    property apresentacao_Bias: Integer read fapresentacao_Bias write fapresentacao_Bias;
     property expiracao: Integer read fexpiracao write fexpiracao;
 
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
@@ -91,6 +95,7 @@ type
   TACBrPIXCalendarioCobGerada = class(TACBrPIXCalendarioCobBase)
   public
     property criacao;
+    property criacao_Bias;
     property expiracao;
   end;
 
@@ -109,20 +114,25 @@ end;
 
 procedure TACBrPIXCalendarioCobBase.Clear;
 begin
-  fcriacao := 0;
   fapresentacao := 0;
+  fapresentacao_Bias := 0;
+  fcriacao := 0;
+  fcriacao_Bias := 0;
   fexpiracao := 0;
 end;
 
 function TACBrPIXCalendarioCobBase.IsEmpty: Boolean;
 begin
-  Result := (fcriacao = 0) and (fapresentacao = 0) and (fexpiracao = 0);
+  Result := (fcriacao = 0) and (fcriacao_Bias = 0) and (fapresentacao = 0) and
+            (fapresentacao_Bias = 0) and (fexpiracao = 0);
 end;
 
 procedure TACBrPIXCalendarioCobBase.Assign(Source: TACBrPIXCalendarioCobBase);
 begin
   fcriacao := Source.criacao;
+  fcriacao_Bias := Source.criacao_Bias;
   fapresentacao := Source.apresentacao;
+  fapresentacao_Bias := Source.apresentacao_Bias;
   fexpiracao := Source.expiracao;
 end;
 
@@ -130,16 +140,16 @@ procedure TACBrPIXCalendarioCobBase.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    if (fcriacao <> 0) then
-     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
+     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias));
    if (fapresentacao <> 0) then
-     AJSon.S['apresentacao'] := DateTimeToIso8601(fapresentacao);
+     AJSon.S['apresentacao'] := DateTimeToIso8601(fapresentacao, BiasToTimeZone(fapresentacao_Bias));
    if (fexpiracao > 0) then
      AJSon.I['expiracao'] := fexpiracao;
   {$Else}
    if (fcriacao <> 0) then
-     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao);
+     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias));
    if (fapresentacao <> 0) then
-     AJSon['apresentacao'].AsString := DateTimeToIso8601(fapresentacao);
+     AJSon['apresentacao'].AsString := DateTimeToIso8601(fapresentacao, BiasToTimeZone(fapresentacao_Bias));
    if (fexpiracao > 0) then
      AJSon['expiracao'].AsInteger := fexpiracao;
   {$EndIf}
@@ -152,18 +162,30 @@ begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
    s := AJSon.S['criacao'];
    if (s <> '') then
+   begin
      fcriacao := Iso8601ToDateTime(s);
+     fcriacao_Bias := TimeZoneToBias(s);
+   end;
    s := AJSon.S['apresentacao'];
    if (s <> '') then
+   begin
      fapresentacao := Iso8601ToDateTime(s);
+     fapresentacao_Bias := TimeZoneToBias(s);
+   end;
    fexpiracao := AJSon.I['expiracao'];
   {$Else}
    s := AJSon['criacao'].AsString;
    if (s <> '') then
+   begin
      fcriacao := Iso8601ToDateTime(s);
+     fcriacao_Bias := TimeZoneToBias(s);
+   end;
    s := AJSon['apresentacao'].AsString;
    if (s <> '') then
+   begin
      fapresentacao := Iso8601ToDateTime(s);
+     fapresentacao_Bias := TimeZoneToBias(s);
+   end;
    fexpiracao := AJSon['expiracao'].AsInteger;
   {$EndIf}
 end;

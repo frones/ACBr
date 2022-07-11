@@ -142,6 +142,7 @@ type
     fdevolucoes: TACBrPIXDevolucoes;
     fendToEndId: String;
     fhorario: TDateTime;
+    fhorario_Bias: Integer;
     finfoPagador: String;
     ftxid: String;
     fvalor: Currency;
@@ -166,6 +167,7 @@ type
     property componentesValor: TACBrPIXComponentesValor read fcomponentesValor;
     property chave: String read fchave write SetChave;
     property horario: TDateTime read fhorario write fhorario;
+    property horario_Bias: Integer read fhorario_Bias write fhorario_Bias;
     property infoPagador: String read finfoPagador write SetinfoPagador;
     property devolucoes: TACBrPIXDevolucoes read fdevolucoes;
   end;
@@ -423,6 +425,7 @@ begin
   fvalor := 0;
   fchave := '';
   fhorario := 0;
+  fhorario_Bias := 0;
   finfoPagador := '';
   ftxid := '';
   fvalor := 0;
@@ -438,6 +441,7 @@ begin
             (fvalor = 0) and
             (fchave = '') and
             (fhorario = 0) and
+            (fhorario_Bias = 0) and
             (finfoPagador = '') and
             (ftxid = '') and
             (fvalor = 0) and
@@ -458,6 +462,7 @@ begin
   fvalor := Source.valor;
   fchave := Source.chave;
   fhorario := Source.horario;
+  fhorario_Bias := Source.horario_Bias;
   finfoPagador := Source.infoPagador;
   ftxid := Source.txid;
   fvalor := Source.valor;
@@ -497,7 +502,7 @@ begin
    fcomponentesValor.WriteToJSon(AJSon);
    if (fchave <> '') then
      AJSon.S['chave'] := fchave;
-   AJSon.S['horario'] := DateTimeToIso8601(fhorario);
+   AJSon.S['horario'] := DateTimeToIso8601(fhorario, BiasToTimeZone(fhorario_Bias));
    AJSon.S['infoPagador'] := finfoPagador;
    fdevolucoes.WriteToJSon(AJSon);
   {$Else}
@@ -508,7 +513,7 @@ begin
    fcomponentesValor.WriteToJSon(AJSon);
    if (fchave <> '') then
      AJSon['chave'].AsString := fchave;
-   AJSon['horario'].AsString := DateTimeToIso8601(fhorario);
+   AJSon['horario'].AsString := DateTimeToIso8601(fhorario, BiasToTimeZone(fhorario_Bias));
    AJSon['infoPagador'].AsString := finfoPagador;
    fdevolucoes.WriteToJSon(AJSon);
   {$EndIf}
@@ -526,7 +531,10 @@ begin
    fchave := AJSon.S['chave'];
    s := AJSon.S['horario'];
    if (s <> '') then
+   begin
      fhorario := Iso8601ToDateTime(s);
+     fhorario_Bias := TimeZoneToBias(s);
+   end;
    finfoPagador := AJSon.S['infoPagador'];
    fdevolucoes.ReadFromJSon(AJSon);
   {$Else}
@@ -537,7 +545,10 @@ begin
    fchave := AJSon['chave'].AsString;
    s := AJSon['horario'].AsString;
    if (s <> '') then
+   begin
      fhorario := Iso8601ToDateTime(s);
+     fhorario_Bias := TimeZoneToBias(s);
+   end;
    finfoPagador := AJSon['infoPagador'].AsString;
    fdevolucoes.ReadFromJSon(AJSon);
   {$EndIf}

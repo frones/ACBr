@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2022
+-- ACBrPIXSchemasCalendario, ACBrPIXSchemasPix --
+[+] Inclusão de propriedades Bias, responsáveis por armazenar os minutos de diferença 
+    entre o horário local e o TimeZone informado na resposta
+    Por: Elias César
+
 08/07/2022
 -- ACBrPIXCDReg --
 [+] Inclusão de novo PSP Sicredi

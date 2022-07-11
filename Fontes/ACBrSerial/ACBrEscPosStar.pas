@@ -79,8 +79,8 @@ begin
 end;
 
 function TACBrEscPosStar.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
-var
-  CmdPag: Integer;
+//var
+//  CmdPag: Integer;
 begin
   Result := FS +'.' +   // Cancel Chinese character mode
             inherited ComandoPaginaCodigo(APagCodigo);

@@ -104,14 +104,8 @@ var
 
 begin
   Result := 0;
-  wAchouE := False;
-  wAchouO := False;
-  wPosEO := -1;
-  wResposta := EmptyStr;
-
   { Removendo caracteres especiais, caso encontre algum }
   wResposta := SanitizarRespostaPeso(aResposta);
-
   if (Trim(wResposta) = EmptyStr) then
     Exit;
 

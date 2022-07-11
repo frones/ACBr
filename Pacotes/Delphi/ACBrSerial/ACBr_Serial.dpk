@@ -1,3 +1,5 @@
+{$I ACBr.inc}
+
 package ACBr_Serial;
 
 {$R *.res}
@@ -65,6 +67,12 @@ contains
   ACBrBALPrecision in '..\..\..\Fontes\ACBrSerial\ACBrBALPrecision.pas',
   ACBrBALDigitron_UL in '..\..\..\Fontes\ACBrSerial\ACBrBALDigitron_UL.pas',
   ACBrBALCapital in '..\..\..\Fontes\ACBrSerial\ACBrBALCapital.pas',
+  ACBrBALLibratekWT3000IR in '..\..\..\Fontes\ACBrSerial\ACBrBALLibratekWT3000IR.pas',
+  ACBrBALToledoTi420 in '..\..\..\Fontes\ACBrSerial\ACBrBALToledoTi420.pas',
+  ACBrBALWeightechWT27R_ETH in '..\..\..\Fontes\ACBrSerial\ACBrBALWeightechWT27R_ETH.pas',
+  ACBrBALMarte in '..\..\..\Fontes\ACBrSerial\ACBrBALMarte.pas',
+  ACBrBALLenkeLK2500 in '..\..\..\Fontes\ACBrSerial\ACBrBALLenkeLK2500.pas',
+  ACBrBALWeighTRUTest in '..\..\..\Fontes\ACBrSerial\ACBrBALWeighTRUTest.pas',
   ACBrCHQ in '..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas',
   ACBrCHQBematech in '..\..\..\Fontes\ACBrSerial\ACBrCHQBematech.pas',
   ACBrCHQChronos in '..\..\..\Fontes\ACBrSerial\ACBrCHQChronos.pas',
@@ -76,6 +84,7 @@ contains
   ACBrCHQSotomaq in '..\..\..\Fontes\ACBrSerial\ACBrCHQSotomaq.pas',
   ACBrCHQUrano in '..\..\..\Fontes\ACBrSerial\ACBrCHQUrano.pas',
   ACBrCHQElgin in '..\..\..\Fontes\ACBrSerial\ACBrCHQElgin.pas',
+  ACBrCHQMenno in '..\..\..\Fontes\ACBrSerial\ACBrCHQMenno.pas',
   ACBrDevice in '..\..\..\Fontes\ACBrSerial\ACBrDevice.pas',
   ACBrDeviceClass in '..\..\..\Fontes\ACBrSerial\ACBrDeviceClass.pas',
   ACBrDeviceSerial in '..\..\..\Fontes\ACBrSerial\ACBrDeviceSerial.pas',
@@ -84,6 +93,9 @@ contains
   ACBrDeviceWinUSB in '..\..\..\Fontes\ACBrSerial\ACBrDeviceWinUSB.pas',
   ACBrDeviceHook in '..\..\..\Fontes\ACBrSerial\ACBrDeviceHook.pas',
   ACBrDeviceRaw in '..\..\..\Fontes\ACBrSerial\ACBrDeviceRaw.pas',
+  {$IFDEF HAS_BLUETOOTH}
+  ACBrDeviceBlueTooth in '..\..\..\Fontes\ACBrSerial\ACBrDeviceBlueTooth.pas',
+  {$ENDIF}
   ACBrDIS in '..\..\..\Fontes\ACBrSerial\ACBrDIS.pas',
   ACBrDISClass in '..\..\..\Fontes\ACBrSerial\ACBrDISClass.pas',
   ACBrDISGertecSerial in '..\..\..\Fontes\ACBrSerial\ACBrDISGertecSerial.pas',

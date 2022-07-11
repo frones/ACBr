@@ -173,7 +173,6 @@ function TACBrEscSunmi.LerInfo: String;
 var
   Ret: AnsiString;
   Info: String;
-  B: Byte;
 
   Procedure AddInfo( Titulo: String; AInfo: AnsiString);
   begin

@@ -56,7 +56,8 @@ type
 implementation
 
 uses
-  ACBrUtil.FilesIO, SysUtils;
+  ACBrUtil.FilesIO, ACBrUtil.Compatibilidade,
+  SysUtils;
 
 { TACBrSMSZTE }
 
@@ -101,7 +102,7 @@ begin
     Retorno := EmptyStr;
     for I := 0 to Length(fpUltimaResposta) -1 do
     begin
-      if not(fpUltimaResposta[I] in [#0, #5, #$18, #$C]) then
+      if not CharInSet(fpUltimaResposta[I], [#0, #5, #$18, #$C]) then
         Retorno := Retorno + fpUltimaResposta[I];
     end;
 

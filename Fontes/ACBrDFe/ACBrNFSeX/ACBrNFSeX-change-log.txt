@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/07/2022
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade: Delmiro Gouveia/AL - Provedor Tributus
+   Por: Italo Giurizzato Junior
 -- Tributus.Provider/Tributus.Gravarml --
 [*] Possível solução no que se refere ao Token
    Por: Italo Giurizzato Junior

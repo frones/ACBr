@@ -40,6 +40,10 @@ uses
   Classes, SysUtils,
   ACBrPosPrinter, ACBrEscPosEpson;
 
+const
+  cSunmiTimeout = 500;
+  cSunmiTimeoutTCP = 1000;
+
 type
 
   { TACBrEscSunmi }
@@ -55,6 +59,10 @@ type
     function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
       AHeight: Integer): AnsiString; override;
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
+    function ComandoLogo: AnsiString; override;
+    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; override;
+    function ComandoApagarLogo: AnsiString; override;
   end;
 
 implementation
@@ -76,8 +84,18 @@ begin
   with Cmd  do
   begin
     Beep := ESC + GS + BELL + '1' + #2 + #5;
+    LigaCondensado := '';
+    DesligaCondensado := '';
   end;
   {*)}
+
+  TagsNaoSuportadas.Add( cTagLigaCondensado );
+  TagsNaoSuportadas.Add( cTagDesligaCondensado );
+  TagsNaoSuportadas.Add( cTagLogotipo );
+  TagsNaoSuportadas.Add( cTagLogoKC1 );
+  TagsNaoSuportadas.Add( cTagLogoKC2 );
+  TagsNaoSuportadas.Add( cTagLogoFatorX );
+  TagsNaoSuportadas.Add( cTagLogoFatorY );
 end;
 
 procedure TACBrEscSunmi.Configurar;
@@ -130,17 +148,7 @@ begin
       Result := Result + Cmd.LigaInvertido;
   end
   else
-  begin
-    if (TipoFonte = ftCondensado) then
-    begin
-      if Ligar then
-        Result := Cmd.LigaCondensado
-      else
-        Result :=  Cmd.DesligaCondensado;
-    end
-    else
-      Result := inherited ComandoFonte(TipoFonte, Ligar);
-  end;
+    Result := inherited ComandoFonte(TipoFonte, Ligar);
 
 end;
 
@@ -169,14 +177,34 @@ begin
   end;
 end;
 
+function TACBrEscSunmi.ComandoLogo: AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrEscSunmi.ComandoGravarLogoRasterStr(const RasterStr: AnsiString;
+  AWidth: Integer; AHeight: Integer): AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrEscSunmi.ComandoApagarLogo: AnsiString;
+begin
+  Result := '';
+end;
+
 function TACBrEscSunmi.LerInfo: String;
 var
   Ret: AnsiString;
   Info: String;
+  t: Integer;
 
   Procedure AddInfo( Titulo: String; AInfo: AnsiString);
   begin
     AInfo := Trim(AInfo);
+    if (AInfo = '') then
+      Exit;
+
     if (LeftStr(AInfo,1) = '_') then
       AInfo := copy(AInfo, 2, Length(AInfo));
 
@@ -192,32 +220,33 @@ var
   end;
 
 begin
+  Info := '';
   Result := '';
 
-  // Lendo o Fabricante
-  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 500, True );
-  if (Ret = '') and (not (Self is TACBrEscPosEpson)) then   // Nem todas GPrinter`s suportam leitura de Info
-    Exit;
+  t := cSunmiTimeout;
+  if fpPosPrinter.Device.IsTCPPort then
+    t := t + cSunmiTimeoutTCP;
+  if (fpPosPrinter.Device.TimeOutMilissegundos > t) then
+    t := fpPosPrinter.Device.TimeOutMilissegundos;
 
-  Info := '';
-  AddInfo(cKeyFabricante, Ret);
-
-  // Lendo a versão do Firmware
-  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
-  AddInfo(cKeyFirmware, Ret);
-
-  // Lendo o Modelo
-  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
-  AddInfo(cKeyModelo, Ret);
-
-  // Lendo o Número Serial
-  Ret := '';
   try
-    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
+    // Lendo o Fabricante
+    Ret := fpPosPrinter.TxRx( GS + 'IB', 0, t, True );
+    AddInfo(cKeyFabricante, Ret);
+
+    // Lendo a versão do Firmware
+    Ret := fpPosPrinter.TxRx( GS + 'IA', 0, t, True );
+    AddInfo(cKeyFirmware, Ret);
+
+    // Lendo o Modelo
+    Ret := fpPosPrinter.TxRx( GS + 'IC', 0, t, True );
+    AddInfo(cKeyModelo, Ret);
+
+    // Lendo o Número Serial
+    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, t, True );
+    AddInfo('Serial', Ret);
   except
   end;
-  if (Ret <> '') then
-    AddInfo('Serial', Ret);
 
   AddInfo(cKeyGuilhotina, BoolToChar(True) );
   Result := Info;

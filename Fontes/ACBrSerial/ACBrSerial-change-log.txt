@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/07/2022
+-- ACBrEscSunmi --
+[+] Adicionada informação de Tags não suportadas pela impressora, como Impressão
+    em modo Condensado e Programação de Logotipo
+[*] Melhoria na leitura de Informações para funcionamento por TCP
+    (por: DSA)
+
 08/07/2022
 -- ACBrPosPrinter --
 [+] Adicionado o modelo "ppEscSunmi"

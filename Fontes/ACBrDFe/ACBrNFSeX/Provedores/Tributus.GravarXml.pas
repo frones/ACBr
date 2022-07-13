@@ -65,6 +65,8 @@ begin
 
   FormatoAliq := tcDe2;
 
+  NrOcorrCodigoPaisTomador := -1;
+
   TagTomador := 'TomadorServico';
 
   GerarIDRps := True;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/07/2022
+-- Tributus.Provider/Tributus.Gravarml --
+[*] Possível solução no que se refere ao Token
+   Por: Italo Giurizzato Junior
 -- Centi.Provider/Centi.LerXml --
 [*] Alterações visando a leitura do XML da NFS-e por não seguir a risca
     a versão 2 do layout da ABRASF.

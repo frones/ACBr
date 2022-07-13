@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/07/2022
+-- Centi.Provider/Centi.LerXml --
+[*] Alterações visando a leitura do XML da NFS-e por não seguir a risca
+    a versão 2 do layout da ABRASF.
+   Por: Italo Giurizzato Junior
+
 11/07/2022
 -- ACBrNFSeXServicos --
 [*] Incluída a cidade: Socorro/SP - Provedor iiBrasil

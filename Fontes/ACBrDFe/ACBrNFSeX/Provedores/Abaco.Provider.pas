@@ -222,6 +222,7 @@ begin
   with ConfigAssinar do
   begin
     LoteRps := True;
+    IncluirURI := False;
   end;
 
   with ConfigWebServices do

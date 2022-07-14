@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/07/2022
+-- Abaco.Provider --
+[*] Alterado a configuração para que seja gerado o atributo URI na assinatura
+    vazio.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeFR --
 [*] Alterado o tamanho do campo DiscriminacaoServico de 256 para 2000.
    Por: Léo

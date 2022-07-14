@@ -762,7 +762,10 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaLote');
+      if (Document.Root.Name = 'RetornoConsultaLote') then
+        ANode := Document.Root
+      else
+        ANode := Document.Root.Childrens.FindAnyNs('RetornoConsultaLote');
 
       if not Assigned(ANode) then
       begin

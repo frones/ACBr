@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 14/07/2022
+-- ISSDSF.Provider/ISSDSF.LerXml --
+[*] Ajustes para identificar o nó root corretamente ao consultar o lote de Rps e
+    incluida a linha para ler a URL (link) que permite visualizar a nota.
+   Por: Juliana G Viana
 -- SilTecnologia.GravarXml/ACBrNFSeXGravarXml_ABRASFv2 --
 [*] Ajustes para gerar o endereço quando o tomador for do exterior.
    Por: Italo Giurizzato Junior

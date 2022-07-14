@@ -361,6 +361,10 @@ begin
   if aValor <> '' then
     NFSe.IntermediarioServico.CpfCnpj := aValor;
 
+  aValor := ObterConteudo(ANode.Childrens.FindAnyNs('URLNotaFiscal'), tcStr);
+  if aValor <> '' then
+    NFSe.Link := aValor;
+
   LerDeducoes(ANode);
   LerItens(ANode);
 

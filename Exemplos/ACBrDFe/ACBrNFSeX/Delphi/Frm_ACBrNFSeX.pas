@@ -667,7 +667,7 @@ begin
           Tributavel := snNao;
 
           case ACBrNFSeX1.Configuracoes.Geral.Provedor of
-            proAgili, proISSDSF:
+            proAgili:
               // código com 9 digitos
               CodigoCnae := '452000200';
           else
@@ -739,18 +739,6 @@ begin
           // código padrão da ABRASF
           Servico.ItemListaServico := '09.01';
         end;
-
-        case ACBrNFSeX1.Configuracoes.Geral.Provedor of
-          proSiat:
-            // código com 9 digitos
-            Servico.CodigoCnae := '452000200';
-
-          proSystemPro:
-            Servico.CodigoCnae := '';
-        else
-          // código com 7 digitos
-          Servico.CodigoCnae := '6203100';
-        end;
       end;
 
       {=========================================================================
@@ -777,6 +765,18 @@ begin
           Servico.CodigoTributacaoMunicipio := '';
       else
         Servico.CodigoTributacaoMunicipio := '63194';
+      end;
+
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proSiat, proISSDSF:
+          // código com 9 digitos
+          Servico.CodigoCnae := '452000200';
+
+        proSystemPro:
+          Servico.CodigoCnae := '';
+      else
+        // código com 7 digitos
+        Servico.CodigoCnae := '6203100';
       end;
 
       // Para o provedor ISSNet em ambiente de Homologação

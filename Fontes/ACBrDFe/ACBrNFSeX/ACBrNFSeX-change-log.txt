@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/07/2022
+-- ACBrNFSeXDANFSeFR --
+[*] Alterado o tamanho do campo DiscriminacaoServico de 256 para 2000.
+   Por: Léo
 -- Agili.GravarXml --
 [*] Quando a tag OptanteMEISimei é igual snSim não deve gerar as tags 
     MunicipioIncidencia e ValorISSQNRecolher.

@@ -549,7 +549,7 @@ begin
     with FieldDefs do
     begin
       Clear;
-      Add('DiscriminacaoServico', ftString, 256);
+      Add('DiscriminacaoServico', ftString, 2000);
       Add('Quantidade', ftString, 10);
       Add('ValorUnitario', ftString, 30);
       Add('ValorTotal', ftString, 30);

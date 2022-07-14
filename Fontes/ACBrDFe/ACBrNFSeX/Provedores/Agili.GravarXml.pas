@@ -436,9 +436,11 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'BeneficioProcesso', 1, 30, 0,
                                               NFSe.Servico.NumeroProcesso, ''));
-
-  xmlNode := GerarMunicipioIncidencia;
-  Result.AppendChild(xmlNode);
+  if NFSe.OptanteMEISimei = snNao then
+  begin
+    xmlNode := GerarMunicipioIncidencia;
+    Result.AppendChild(xmlNode);
+  end;
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorServicos', 1, 15, 1,
                                        NFSe.Servico.Valores.ValorServicos, ''));
@@ -473,7 +475,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorISSQNCalculado', 1, 15, 0,
                                             NFSe.Servico.Valores.ValorIss, ''));
 
-  if NFSe.OptanteSimplesNacional = snNao then
+  if (NFSe.OptanteSimplesNacional = snNao) and (NFSe.OptanteMEISimei = snNao) then
     Result.AppendChild(AddNode(tcDe2, '#1', 'ValorISSQNRecolher', 1, 15, 0,
                                             NFSe.Servico.Valores.ValorIss, ''));
 

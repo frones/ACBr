@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 14/07/2022
+-- SilTecnologia.GravarXml/ACBrNFSeXGravarXml_ABRASFv2 --
+[*] Ajustes para gerar o endereço quando o tomador for do exterior.
+   Por: Italo Giurizzato Junior
 -- Abaco.Provider --
 [*] Alterado a configuração para que seja gerado o atributo URI na assinatura
     vazio.

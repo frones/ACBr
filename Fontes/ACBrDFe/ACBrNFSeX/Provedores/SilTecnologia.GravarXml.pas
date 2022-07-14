@@ -77,8 +77,6 @@ begin
   NrOcorrNIFTomador := 0;
   NrOcorrAliquota := 1;
   NrOcorrCodigoPaisServico := -1;
-
-  GerarEnderecoExterior := True;
 end;
 
 end.

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/07/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Andradina/SP - Trocou de provedor agora é Sistemas4R
+   Por: Antonio Paulo Mangili
+
 14/07/2022
 -- ISSDSF.Provider/ISSDSF.LerXml --
 [*] Ajustes para identificar o nó root corretamente ao consultar o lote de Rps e

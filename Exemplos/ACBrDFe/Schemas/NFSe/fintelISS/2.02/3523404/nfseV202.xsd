@@ -31,7 +31,7 @@
   </xsd:simpleType>
   <xsd:simpleType name="tsExigibilidadeISS">
     <xsd:restriction base="xsd:byte">
-      <xsd:pattern value="1|2|3|4|5|6|7" />
+      <xsd:pattern value="1|2|3|4|5|6|7|8" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="tsNumeroProcesso">

@@ -134,7 +134,7 @@
                                                       </xsd:choice>                                                    
                                                     </xsd:complexType>
                                                   </xsd:element>
-                                                  <xsd:element name="InscricaoMunicipal" type="xsd:unsignedLong" />
+                                                  <xsd:element name="InscricaoMunicipal" type="xsd:string" minOccurs="0" maxOccurs="1" />
                                                 </xsd:sequence>
                                               </xsd:complexType>
                                             </xsd:element>
@@ -144,7 +144,7 @@
                                                 <xsd:sequence>
                                                   <xsd:element name="Endereco" type="xsd:string" />
                                                   <xsd:element name="Numero" type="xsd:unsignedInt" />
-                                                  <xsd:element name="Complemento" type="xsd:string" />
+                                                  <xsd:element name="Complemento" type="xsd:string" minOccurs="0" maxOccurs="1" />
                                                   <xsd:element name="Bairro" type="xsd:string" />
                                                   <xsd:element name="CodigoMunicipio" type="xsd:unsignedLong" />
                                                   <xsd:element name="Uf" type="xsd:string" />
@@ -153,11 +153,11 @@
                                                 </xsd:sequence>
                                               </xsd:complexType>
                                             </xsd:element>
-                                            <xsd:element name="Contato">
+                                            <xsd:element name="Contato" minOccurs="0" maxOccurs="1">
                                               <xsd:complexType>
                                                 <xsd:sequence>
-                                                  <xsd:element name="Telefone" type="xsd:unsignedLong" />
-                                                  <xsd:element name="Email" />
+                                                  <xsd:element name="Telefone" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                                                  <xsd:element name="Email" type="xsd:string" minOccurs="0" maxOccurs="1" />
                                                 </xsd:sequence>
                                               </xsd:complexType>
                                             </xsd:element>

@@ -118,7 +118,7 @@
                                           </xs:choice>
                                         </xs:complexType>
                                       </xs:element>
-                                      <xs:element name="InscricaoMunicipal" type="xs:unsignedLong" />
+                                      <xs:element name="InscricaoMunicipal" type="xsd:string" minOccurs="0" maxOccurs="1" />
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
@@ -128,7 +128,7 @@
                                     <xs:sequence>
                                       <xs:element name="Endereco" type="xs:string" />
                                       <xs:element name="Numero" type="xs:unsignedInt" />
-                                      <xs:element name="Complemento" type="xs:string" />
+                                      <xs:element name="Complemento" type="xsd:string" minOccurs="0" maxOccurs="1" />
                                       <xs:element name="Bairro" type="xs:string" />
                                       <xs:element name="CodigoMunicipio" type="xs:unsignedLong" />
                                       <xs:element name="Uf" type="xs:string" />
@@ -137,11 +137,11 @@
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
-                                <xs:element name="Contato">
+                                <xs:element name="Contato" minOccurs="0" maxOccurs="1">
                                   <xs:complexType>
                                     <xs:sequence>
-                                      <xs:element name="Telefone" type="xs:unsignedLong" />
-                                      <xs:element name="Email" type="xs:string" />
+                                      <xs:element name="Telefone" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                                      <xs:element name="Email" type="xsd:string" minOccurs="0" maxOccurs="1" />
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>

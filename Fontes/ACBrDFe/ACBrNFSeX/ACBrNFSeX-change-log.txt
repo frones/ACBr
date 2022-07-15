@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 15/07/2022
+-- ACBrNFSeXServicos --
+[*] Incluída para a cidade: Avaré/SP - Os parâmetros de formatação de datas.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade: Inacio Martins/PR - Provedor Equiplano
+   Por: Arrobba
 -- Abaco.Provider/Abaco.GravarXml --
 [*] Alterações visando gerar o ID do Rps e do Lote exatamente iguais da versão antiga
     do componente.

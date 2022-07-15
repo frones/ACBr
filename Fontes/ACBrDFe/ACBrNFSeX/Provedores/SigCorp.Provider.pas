@@ -84,7 +84,24 @@ procedure TACBrNFSeProviderSigCorp203.Configuracao;
 begin
   inherited Configuracao;
 
+  // Usado na leitura do envio
   FpFormatoDataRecebimento := tcDatUSA;
+  // Usado na leitura das informações de cancelamento
+  FpFormatoDataHora := tcDatHor;
+  // Usado na leitura da data de emissão da NFS-e
+  FpFormatoDataEmissao := tcDatHor;
+
+  if ConfigGeral.Params.ParamTemValor('FormatoData', 'CancDDMMAAAA') then
+    FpFormatoDataHora := tcDatVcto;
+
+  if ConfigGeral.Params.ParamTemValor('FormatoData', 'CancMMDDAAAA') then
+    FpFormatoDataHora := tcDatUSA;
+
+  if ConfigGeral.Params.ParamTemValor('FormatoData', 'NFSeDDMMAAAA') then
+    FpFormatoDataEmissao := tcDatVcto;
+
+  if ConfigGeral.Params.ParamTemValor('FormatoData', 'NFSeMMDDAAAA') then
+    FpFormatoDataEmissao := tcDatUSA;
 
   with ConfigGeral do
   begin

@@ -242,6 +242,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure Clear; virtual;
+
     property MaxRps: Integer read FMaxRps write FMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
@@ -666,10 +668,19 @@ end;
 
 { TNFSeEmiteResponse }
 
+procedure TNFSeEmiteResponse.Clear;
+begin
+  MaxRps := 0;
+  ModoEnvio := meLoteAssincrono;
+  CodVerificacao := '';
+  NomeArq := '';
+end;
+
 constructor TNFSeEmiteResponse.Create;
 begin
   inherited Create;
 
+  Clear;
 end;
 
 destructor TNFSeEmiteResponse.Destroy;
@@ -722,6 +733,7 @@ begin
   Lote := '';
   Protocolo := '';
   Situacao := '';
+  CodVerificacao := '';
 
   if Assigned(FErros) then
   begin
@@ -762,6 +774,11 @@ procedure TNFSeConsultaNFSeporRpsResponse.Clear;
 var
   i: Integer;
 begin
+  NumRPS := '';
+  Serie := '';
+  Tipo := '';
+  CodVerificacao := '';
+
   if Assigned(FErros) then
   begin
     for i := FErros.Count - 1 downto 0 do

@@ -1428,17 +1428,17 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Left = 0
         Top = 0
         Width = 742
-        Height = 49
+        Height = 38
         Background.Height = 487
         Background.Width = 865
         AfterPrint = rlbItensAfterPrint
         BeforePrint = rlbItensBeforePrint
         object rlmChave1: TRLMemo
           Left = 0
-          Top = 33
-          Width = 354
+          Top = 14
+          Width = 361
           Height = 16
-          Align = faLeftBottom
+          Align = faLeftTop
           AutoSize = False
           Behavior = [beSiteExpander]
           Color = clWhite
@@ -1453,11 +1453,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           ParentFont = False
         end
         object rlmChave2: TRLMemo
-          Left = 388
-          Top = 33
-          Width = 354
+          Left = 377
+          Top = 14
+          Width = 365
           Height = 16
-          Align = faRightBottom
+          Align = faRightTop
           AutoSize = False
           Behavior = [beSiteExpander]
           Color = clWhite
@@ -1473,10 +1473,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         end
         object rlbMunicipio: TRLLabel
           Left = 0
-          Top = 17
-          Width = 59
+          Top = 0
+          Width = 742
           Height = 14
-          Align = faCenterLeft
+          Align = faTop
           Borders.Sides = sdCustom
           Borders.DrawLeft = False
           Borders.DrawTop = False

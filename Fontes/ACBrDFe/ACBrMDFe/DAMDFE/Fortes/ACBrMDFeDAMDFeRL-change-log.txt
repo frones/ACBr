@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2022
+-- ACBrMDFeDAMDFeRLRetrato --
+[-] Correção para não cortar a lista de Documentos quando houver mais de um município
+    na lista de municípios de descarregamento.
+    Por: Elias César
+
 01/07/2022
 -- ACBrMDFeDAMDFeRL --
 [*] Alterado para mostrar como defaut: Documento PDF ao executar o Salvar do Pré

@@ -3490,7 +3490,8 @@ begin
                      '-resEventoCTe.xml';
         *)
         schprocCTe,
-        schprocCTeOS:
+        schprocCTeOS,
+        schprocGTVe:
           FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-cte.xml';
 
         schprocEventoCTe:
@@ -3509,7 +3510,7 @@ begin
         if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoCTe]) then
           FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
 
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocCTe, schprocCTeOS]) then
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocCTe, schprocCTeOS, schprocGTVe]) then
           FPDFeOwner.Gravar(FNomeArq, AXML, aPath);
       end;
     end;
@@ -3574,7 +3575,8 @@ begin
                                                           Data);
 
     schprocCTe,
-    schprocCTeOS:
+    schprocCTeOS,
+    schprocGTVe:
       Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                         AItem.resDFe.CNPJCPF,
                                                         AItem.resDFe.IE,

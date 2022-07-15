@@ -346,10 +346,7 @@ type
 implementation
 
 uses 
-  ACBrUtil,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.FilesIO;
+  ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO;
 
 { TitensAverbadosCollection }
 
@@ -558,7 +555,8 @@ begin
           end;
 
           if (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'Proc') <> '') or
-             (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'OSProc') <> '') then
+             (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'OSProc') <> '') or
+             (oLeitorInfZip.rExtrai(1, 'GTVeProc') <> '') then
           begin
             FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
@@ -609,7 +607,7 @@ begin
               101: FdocZip.Items[i].FresDFe.FcSitDFe := snCancelado;
               110: FdocZip.Items[i].FresDFe.FcSitDFe := snDenegado;
               132: FdocZip.Items[i].FresDFe.FcSitDFe := snEncerrado;
-           end;
+            end;
           end;
 
           if (oLeitorInfZip.rExtrai(1, 'procEvento' + FtpDFe) <> '') then
@@ -701,7 +699,6 @@ begin
   except
     on e : Exception do
     begin
-//      result := False;
       Raise Exception.Create(e.Message);
     end;
   end;
@@ -713,13 +710,13 @@ var
 begin
   ArqDist := TStringList.Create;
   try
-     ArqDist.LoadFromFile(CaminhoArquivo);
+    ArqDist.LoadFromFile(CaminhoArquivo);
 
-     Self.Leitor.Arquivo := ArqDist.Text;
+    Self.Leitor.Arquivo := ArqDist.Text;
 
-     Result := LerXml;
+    Result := LerXml;
   finally
-     ArqDist.Free;
+    ArqDist.Free;
   end;
 end;
 

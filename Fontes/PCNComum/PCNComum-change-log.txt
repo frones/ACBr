@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2022
+-- pcnRetDistDFeInt --
+[*] Inclui a verificação se o documento retornado é um GTVeProc
+  Por: Douglas WF
+
 05/07/2022
 -- pcnAuxiliar --
 [*] Inclui um segundo parâmentro na função ValidarCodigoDFe visando atender a

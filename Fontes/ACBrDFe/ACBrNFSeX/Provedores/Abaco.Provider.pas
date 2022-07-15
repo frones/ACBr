@@ -79,6 +79,7 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
+    function DefinirIDLote(const ID: string): string; override;
   end;
 
   TACBrNFSeProviderAbaco101 = class(TACBrNFSeProviderAbaco)
@@ -263,6 +264,14 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderAbaco.DefinirIDLote(const ID: string): string;
+begin
+  if ConfigGeral.Identificador <> '' then
+    Result := ' ' + ConfigGeral.Identificador + '="L' + ID + '"'
+  else
+    Result := '';
 end;
 
 { TACBrNFSeProviderAbaco101 }

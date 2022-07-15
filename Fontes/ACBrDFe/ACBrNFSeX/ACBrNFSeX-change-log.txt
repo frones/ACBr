@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 15/07/2022
+-- Abaco.Provider/Abaco.GravarXml --
+[*] Alterações visando gerar o ID do Rps e do Lote exatamente iguais da versão antiga
+    do componente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade: Andradina/SP - Trocou de provedor agora é Sistemas4R
    Por: Antonio Paulo Mangili

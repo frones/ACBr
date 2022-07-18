@@ -497,7 +497,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrDCe, ACBrDCeConsts,
+  ACBrUtil.Strings, ACBrCompress, ACBrDCe, ACBrDCeConsts,
   pcnLeitor,
   pcnConsStatServ, pcnRetConsStatServ,
 //  pmdfeConsSitDCe, pmdfeConsDCeNaoEnc,

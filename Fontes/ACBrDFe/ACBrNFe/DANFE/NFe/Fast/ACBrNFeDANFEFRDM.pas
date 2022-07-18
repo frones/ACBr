@@ -185,7 +185,9 @@ implementation
 uses
   StrUtils, Math, DateUtils,
   ACBrNFe, ACBrNFeDANFEFR, ACBrDFeUtil,
-  ACBrUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrUtil.Strings, 
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
+  ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
   pcnConversaoNFe;
 
 { TACBrNFeFRClass }

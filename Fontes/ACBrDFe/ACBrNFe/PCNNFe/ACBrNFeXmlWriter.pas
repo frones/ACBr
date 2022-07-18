@@ -176,7 +176,7 @@ implementation
 uses
   variants, dateutils,
   pcnConversaoNFe, ACBrValidador, pcnAuxiliar,
-  ACBrDFeUtil, pcnConsts, ACBrUtil,
+  ACBrDFeUtil, pcnConsts, ACBrUtil.Strings,
   ACBrNFe;
 
 constructor TNFeXmlWriter.Create(AOwner: TNFe);

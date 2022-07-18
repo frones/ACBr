@@ -116,7 +116,7 @@ var
 
 implementation
 
-uses ACBrUtil, Math, ACBrConsts;
+uses ACBrUtil.Strings, Math, ACBrConsts;
 
 {$R *.dfm}
 

@@ -751,7 +751,11 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrNFSe,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrUtil.XMLHTML,
+  ACBrUtil.FilesIO,
+  ACBrNFSe,
   pcnGerador, pcnLeitor, pcnConsts, StrUtilsEx;
 
 { TNFSeWebService }

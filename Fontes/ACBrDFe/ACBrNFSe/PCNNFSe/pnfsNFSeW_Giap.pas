@@ -33,80 +33,57 @@
 {$I ACBr.inc}
 
 unit pnfsNFSeW_Giap;
-
 interface
-
 uses
 {$IFDEF FPC}
   LResources, Controls, Graphics, Dialogs,
 {$ELSE}
-
 {$ENDIF}
   SysUtils, Classes, StrUtils,
   ACBrConsts,
   pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador, pnfsNFSe, pnfsConversao;
-
 type
-
   { TNFSeW_Giap }
-
   TNFSeW_Giap = class(TNFSeWClass)
   private
   protected
-
     procedure GerarIdentificacaoRPS;
     procedure GerarRPSSubstituido;
-
     procedure GerarPrestador;
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
-
     procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
-
     procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
-
     procedure GerarTransportadora;
-
     procedure GerarXML_Giap;
-
   public
     constructor Create(ANFSeW: TNFSeW); override;
-
     function ObterNomeArquivo: String; override;
     function GerarXml: Boolean; override;
   end;
-
 implementation
-
 uses
-  ACBrUtil;
-
+  ACBrUtil.Strings;
 { TNFSeW_Giap }
-
 constructor TNFSeW_Giap.Create(ANFSeW: TNFSeW);
 begin
   inherited Create(ANFSeW);
 end;
-
 procedure TNFSeW_Giap.GerarCondicaoPagamento;
 begin
 end;
-
 procedure TNFSeW_Giap.GerarConstrucaoCivil;
 begin
 end;
-
 procedure TNFSeW_Giap.GerarIdentificacaoRPS;
 begin
 end;
-
 procedure TNFSeW_Giap.GerarIntermediarioServico;
 begin
 end;
-
 procedure TNFSeW_Giap.GerarListaServicos;
 begin
   Gerador.wGrupo('item');
@@ -117,7 +94,6 @@ begin
   Gerador.wCampo(tcDe2, '', 'valor' , 01, 015, 1, FNFSe.Servico.Valores.ValorServicos, '');
   Gerador.wGrupo('/item');
 end;
-
 procedure TNFSeW_Giap.GerarPrestador;
 begin
   Gerador.wGrupo('dadosPrestador');
@@ -126,13 +102,10 @@ begin
   Gerador.wCampo(tcStr,     '', 'numeroRps', 01, 11, 1, FNFSe.IdentificacaoRps.Numero, '');
   if Trim(FNFSe.Numero) <> EmptyStr then
     Gerador.wCampo(tcStr,     '', 'numeroNota', 01, 11, 1, FNFSe.Numero, '');
-
   if Trim(FNFSe.CodigoVerificacao) <> EmptyStr then
     Gerador.wCampo(tcStr,     '', 'codigoVerificacao', 01, 11, 1, FNFSe.CodigoVerificacao, '');
-
   if Trim(FNFSe.Link) <> EmptyStr then
     Gerador.wCampo(tcStr,     '', 'link', 01, 11, 1, FNFSe.Link, '');
-
   Gerador.wGrupo('/dadosPrestador');
   Gerador.wGrupo('dadosServico');
   Gerador.wCampo(tcStr,     '', 'bairro', 01, 25, 1, FNFSe.PrestadorServico.Endereco.Bairro, '');
@@ -145,11 +118,9 @@ begin
   Gerador.wCampo(tcStr,     '', 'uf', 01, 02, 1, FNFSe.PrestadorServico.Endereco.UF, '');
   Gerador.wGrupo('/dadosServico');
 end;
-
 procedure TNFSeW_Giap.GerarRPSSubstituido;
 begin
 end;
-
 procedure TNFSeW_Giap.GerarServicoValores;
 begin
   Gerador.wGrupo('detalheServico');
@@ -165,7 +136,6 @@ begin
   Gerador.wCampo(tcDe2, '', 'pisPasep', 01, 02, 1, FNFSe.Servico.Valores.ValorPis, '');
   Gerador.wGrupo('/detalheServico');
 end;
-
 procedure TNFSeW_Giap.GerarTomador;
 begin
   Gerador.wGrupo('dadosTomador');
@@ -190,47 +160,36 @@ begin
   Gerador.wCampo(tcStr, '', 'uf',             01,  50, 1, FNFSe.Tomador.Endereco.UF, '');
   Gerador.wGrupo('/dadosTomador');
 end;
-
 procedure TNFSeW_Giap.GerarTransportadora;
 begin
 end;
-
 procedure TNFSeW_Giap.GerarValoresServico;
 begin
 end;
-
 function TNFSeW_Giap.GerarXml: Boolean;
 //Var
 //  Gerar: boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
-
   Gerador.Prefixo := FPrefixo4;
-
   Gerador.Opcoes.DecimalChar := '.';
   Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
-
   Atributo := '';
-
   Gerador.wGrupo('notaFiscal');
   FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
   GerarXML_Giap;
   Gerador.wGrupo('/notaFiscal');
-
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
-
 procedure TNFSeW_Giap.GerarXML_Giap;
 begin
   GerarPrestador;
   GerarTomador;
   GerarServicoValores;
 end;
-
 function TNFSeW_Giap.ObterNomeArquivo: String;
 begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
-
 end.

@@ -1348,7 +1348,7 @@ const
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Base;
 
 { TMDFe }
 

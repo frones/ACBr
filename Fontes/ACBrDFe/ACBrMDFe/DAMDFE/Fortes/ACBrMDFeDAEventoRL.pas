@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 {$ifdef FPC}
  {$R *.lfm}

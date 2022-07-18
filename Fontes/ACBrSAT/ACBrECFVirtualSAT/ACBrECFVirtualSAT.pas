@@ -38,7 +38,8 @@ unit ACBrECFVirtualSAT;
 interface
 
 uses
-  ACBrBase, ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
+  ACBrBase, ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil.Strings, 
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrConsts,
   Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice
   {$IFDEF FPC}, LResources {$ENDIF};
 

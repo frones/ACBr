@@ -74,7 +74,7 @@ type
 
 implementation
 
-uses ACBrTXTUtils, ACBrUtil, ACBrValidador, StrUtils;
+uses ACBrTXTUtils, ACBrUtil.Strings, ACBrValidador, StrUtils;
 
 { TPAF_W }
 

@@ -90,7 +90,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil, ACBrDCe;
+  pcnAuxiliar, ACBrUtil.Strings, ACBrDCe;
 
 { TProcDCe }
 

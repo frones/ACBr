@@ -206,7 +206,10 @@ implementation
 
 uses
   DateUtils,
-  ACBrDFeUtil, ACBrUtil, ACBrValidador;
+  ACBrDFeUtil,
+  ACBrUtil.DateTime,
+  ACBrUtil.Strings,
+  ACBrValidador;
 
 {$ifdef FPC}
  {$R *.lfm}

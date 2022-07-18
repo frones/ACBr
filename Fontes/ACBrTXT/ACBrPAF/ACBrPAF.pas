@@ -49,7 +49,7 @@ uses
     {$IFEND}
 //    {$IFDEF CLX} QForms, {$ELSE} Forms, {$ENDIF}
    {$ENDIF}
-   ACBrTXTClass, ACBrUtil, ACBrEAD, ACBrAAC,
+   ACBrTXTClass, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrEAD, ACBrAAC,
    ACBrPAFRegistros,
    ACBrPAF_A_Class,
    ACBrPAF_B_Class,

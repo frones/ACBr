@@ -68,7 +68,7 @@ implementation
 
 uses
   strutils,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrDFeUtil, ACBrDFeException,
   ACBr_WinCrypt, ACBrDFeWinCrypt;

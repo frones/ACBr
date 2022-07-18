@@ -62,7 +62,10 @@ end;
 implementation
 
 uses
-  Dialogs, ACBrUtil, ACBrMDFe, pmdfeEnvEventoMDFe,
+  Dialogs,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrMDFe, pmdfeEnvEventoMDFe,
   ACBrMDFeDAMDFeRLRetrato, ACBrMDFeDAEventoRL, ACBrMDFeDAEventoRLRetrato;
 
 constructor TACBrMDFeDAMDFeRL.Create(AOwner: TComponent);

@@ -199,7 +199,7 @@ uses
   {$Else}
     Jsons,
   {$EndIf}
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings, ACBrConsts;
 
 { TE1Funcao }
 

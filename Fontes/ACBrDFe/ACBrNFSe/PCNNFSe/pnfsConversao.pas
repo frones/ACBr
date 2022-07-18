@@ -41,7 +41,10 @@ uses
   {$IFNDEF VER130}
     Variants,
   {$ENDIF}
-  Classes, typinfo, StrUtils, ACBrUtil, ACBrBase;
+  Classes, typinfo, StrUtils,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Strings,
+  ACBrBase;
 
 type
   TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeConsultaSituacao,

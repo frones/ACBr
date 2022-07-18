@@ -410,7 +410,7 @@ type
 
 implementation
 
-uses ACBrSpedFiscal, ACBrTXTUtils, ACBrUtil, strutils, Variants;
+uses ACBrSpedFiscal, ACBrTXTUtils, ACBrUtil.Strings, strutils, Variants;
 
 { TBloco_C }
 

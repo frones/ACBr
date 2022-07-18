@@ -251,7 +251,9 @@ var
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrUtil, pnfsNFSe,
+  StrUtils, DateUtils, ACBrUtil.Strings,
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
+  pnfsNFSe,
   ACBrValidador, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}

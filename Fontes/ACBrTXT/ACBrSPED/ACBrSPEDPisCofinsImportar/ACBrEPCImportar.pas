@@ -52,7 +52,7 @@ uses
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
-  ACBrUtil, ACBrSpedPisCofins, ACBrEPCBlocos,
+  ACBrUtil.Strings, ACBrSpedPisCofins, ACBrEPCBlocos,
   ACBrEPCBase,
   ACBrEPCBloco_0_Importar,
   ACBrEPCBloco_1_Importar,

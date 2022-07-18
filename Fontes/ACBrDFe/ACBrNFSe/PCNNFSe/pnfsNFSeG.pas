@@ -273,7 +273,10 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrUtil, ACBrValidador;
+  StrUtils, DateUtils,
+  ACBrUtil.Base,
+  ACBrUtil.Strings,
+  ACBrValidador;
 
 (*
 class function TNFSeG2.Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString;

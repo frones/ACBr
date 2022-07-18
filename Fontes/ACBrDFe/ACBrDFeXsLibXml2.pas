@@ -108,7 +108,7 @@ implementation
 
 uses
   synacode,
-  ACBrUtil,
+  ACBrUtil.Base,
   ACBrUtil.XMLHTML,
   ACBrUtil.Strings,
   ACBrDFeUtil,

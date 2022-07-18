@@ -369,7 +369,9 @@ implementation
 uses
   math, RLTypes,
   ACBrDFeUtil, ACBrDFeReport, ACBrDFeReportFortes,
-  ACBrValidador, ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrValidador, ACBrUtil.Strings, 
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
+  ACBrImage, ACBrDelphiZXingQRCode,
   RLUtils;
 
 {$ifdef FPC}

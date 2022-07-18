@@ -207,7 +207,9 @@ type
 
 implementation
 
-Uses ACBrUtil, ACBrECDBloco_9, ACBrECDBloco_I, ACBrECDBloco_K ;
+Uses ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrECDBloco_9, ACBrECDBloco_I, ACBrECDBloco_K ;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDContabil.dcr}

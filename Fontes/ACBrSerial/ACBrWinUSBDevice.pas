@@ -47,7 +47,7 @@ uses
   {$IfDef FPC}
    ,dynlibs
   {$EndIf}
-  ,ACBrUtil, ACBrBase;
+  ,ACBrUtil.Base, ACBrBase;
 
 const
   CUSBIDDataBaseResourceName = 'ACBrUSBID';

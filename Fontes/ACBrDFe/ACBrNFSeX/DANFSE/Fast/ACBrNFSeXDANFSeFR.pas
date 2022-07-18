@@ -110,7 +110,8 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrDFeUtil,
+  ACBrUtil.Strings, ACBrDFeUtil,
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
   ACBrNFSeXConversao, ACBrNFSeXInterface;
 
 constructor TACBrNFSeXDANFSeFR.Create(AOwner: TComponent);

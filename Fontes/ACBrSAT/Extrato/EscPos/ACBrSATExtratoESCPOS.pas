@@ -103,7 +103,9 @@ implementation
 
 uses
   strutils, math,
-  ACBrValidador, ACBrUtil, ACBrConsts, ACBrDFeUtil, ACBrSATClass;
+  ACBrValidador, ACBrUtil.Strings, 
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML,
+  ACBrConsts, ACBrDFeUtil, ACBrSATClass;
 
 {$IFNDEF FPC}
    {$R ACBrSATExtratoESCPOS.dcr}

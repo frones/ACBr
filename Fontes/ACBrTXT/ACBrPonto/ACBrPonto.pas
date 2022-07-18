@@ -43,7 +43,7 @@ uses
     {$ENDIF}
   {$ENDIF}
   Forms,
-  ACBrTXTClass, ACBrUtil,
+  ACBrTXTClass, ACBrUtil.Strings,
   ACBrPonto_AFD, ACBrPonto_AFD_Class,
   ACBrPonto_AFDT, ACBrPonto_AFDT_Class,
   ACBrPonto_ACJEF, ACBrPonto_ACJEF_Class;

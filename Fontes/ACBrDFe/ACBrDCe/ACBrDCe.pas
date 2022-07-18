@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, synautil,
-  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
+  ACBrUtil.Strings, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrXmlBase, ACBrDCeConfiguracoes, ACBrDCeWebServices, ACBrDCeDeclaracoes,
   ACBrDCeDACEClass, ACBrDCeClass, pcnConversao, ACBrDCeConversao; //, pmdfeEnvEventoMDFe;
 

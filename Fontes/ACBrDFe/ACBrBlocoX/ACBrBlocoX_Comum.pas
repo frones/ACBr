@@ -178,7 +178,7 @@ type
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil, ACBrCompress, pcnConversao, synacode;
+  ACBrBlocoX, ACBrUtil.Strings, ACBrCompress, pcnConversao, synacode;
 
 function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
 begin

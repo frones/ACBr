@@ -111,7 +111,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Strings,
   DateUtils;
 
 { TGeralConfGNRE }

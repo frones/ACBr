@@ -119,7 +119,7 @@ implementation
 
 uses 
   Math, LCLType,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil.Strings, ACBrConsts;
 
 {$R *.lfm}
 

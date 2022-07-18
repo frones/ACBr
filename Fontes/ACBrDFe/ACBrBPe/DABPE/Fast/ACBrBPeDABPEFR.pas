@@ -50,7 +50,7 @@ uses
   frxDBSet, 
   SysUtils, 
   ACBrValidador,
-  ACBrUtil, 
+  ACBrUtil.Strings, 
   ACBrBPe, 
   pcnConversao, 
   StrUtils, 

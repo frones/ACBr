@@ -44,7 +44,8 @@ uses
   ACBrNFSeNotasFiscais,
   ACBrNFSeWebServices,
   pnfsNFSe, pcnConversao, pnfsConversao,
-  ACBrUtil;
+  ACBrUtil.Base,
+  ACBrUtil.Strings;
 
 const
   ACBRNFSE_NAMESPACE = 'NameSpace.varia.conforme.provedor';

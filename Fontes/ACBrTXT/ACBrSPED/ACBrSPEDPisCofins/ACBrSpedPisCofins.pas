@@ -192,7 +192,8 @@ type
 
 implementation
 
-uses ACBrUtil;
+uses ACBrUtil.FilesIO,
+  ACBrUtil.Strings;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDPisCofins.dcr}

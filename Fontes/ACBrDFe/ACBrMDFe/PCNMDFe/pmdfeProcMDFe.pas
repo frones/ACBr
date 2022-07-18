@@ -88,7 +88,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil;
+  pcnAuxiliar, ACBrUtil.Strings;
 
 { TProcMDFe }
 

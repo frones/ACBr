@@ -40,7 +40,7 @@ uses
   SysUtils,
 
   ACBrEPCBase,
-  ACBrUtil, ACBrSpedPisCofins, ACBrEPCBlocos;
+  ACBrUtil.Strings, ACBrSpedPisCofins, ACBrEPCBlocos;
 
 type
   TACBrSpedPCImportar_BlocoI = class(TACBrSpedPCImportar_Base)

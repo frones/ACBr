@@ -41,7 +41,7 @@ uses
   pcnConsts,
   pcnAuxiliar,
   ACBrXmlBase, ACBrXmlDocument, ACBrXmlWriter,
-  ACBrUtil, ACBrDFeUtil, ACBrDCeClass;
+  ACBrUtil.Strings, ACBrDFeUtil, ACBrDCeClass;
 
 type
 

@@ -45,7 +45,8 @@ uses
   {$IFEND}
   ACBrBase,
   pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil;
+  pnfsConversao, pnfsNFSe, pnfsNFSeR,
+  ACBrUtil.XMLHTML;
 
 type
 

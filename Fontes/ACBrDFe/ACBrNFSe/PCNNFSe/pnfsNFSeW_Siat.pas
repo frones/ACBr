@@ -79,7 +79,8 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.Math;
 
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }

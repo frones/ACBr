@@ -123,7 +123,8 @@ type
 implementation
 
 uses
-  ACBrNFSe, ACBrUtil;
+  ACBrNFSe,
+  ACBrUtil.Strings;
 
 { TACBrNFSeDANFSeClass }
 

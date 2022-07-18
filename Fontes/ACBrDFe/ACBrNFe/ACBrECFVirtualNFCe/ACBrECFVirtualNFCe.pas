@@ -180,7 +180,7 @@ type
 implementation
 
 uses pcnConversaoNFe,
-  ACBrConsts, ACBrECFClass, ACBrUtil, ACBrNFeDANFEClass;
+  ACBrConsts, ACBrECFClass, ACBrUtil.Strings, ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrNFeDANFEClass;
 	
 { TACBrECFVirtualNFCe }
 

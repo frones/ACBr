@@ -83,7 +83,9 @@ type
 implementation
 
 uses
-  ACBrUtil, MaskUtils;
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  MaskUtils;
 
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }

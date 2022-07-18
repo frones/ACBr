@@ -132,7 +132,9 @@ type
 implementation
 
 uses
-  Math, StrUtils, DateUtils, ACBrUtil;
+  Math, StrUtils, DateUtils,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime;
 
 { TNFSeR }
 

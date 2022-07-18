@@ -169,7 +169,7 @@ implementation
 uses
   dateutils, IniFiles,
   synautil, ACBrXmlBase,
-  ACBrDCe, ACBrUtil, ACBrDFeUtil, ACBrDCeConversao;
+  ACBrDCe, ACBrUtil.Strings, ACBrDFeUtil, ACBrDCeConversao;
 
 { Declaracao }
 

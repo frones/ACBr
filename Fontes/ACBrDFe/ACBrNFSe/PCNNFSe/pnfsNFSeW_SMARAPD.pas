@@ -78,7 +78,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { TNFSeW_SMARAPD }
 

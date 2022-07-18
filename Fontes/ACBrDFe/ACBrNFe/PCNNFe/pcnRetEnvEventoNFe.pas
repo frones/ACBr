@@ -58,7 +58,7 @@ uses
   {$IfEnd}
   pcnConversao, pcnLeitor, pcnEventoNFe, pcnSignature,
   ACBrBase,
-  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrUtil.XMLHTML;
 
 type

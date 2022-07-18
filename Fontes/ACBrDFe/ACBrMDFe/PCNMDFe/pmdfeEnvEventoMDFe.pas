@@ -104,7 +104,11 @@ implementation
 uses
   IniFiles,
   pcnAuxiliar, pmdfeRetEnvEventoMDFe,  pmdfeConversaoMDFe,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil.Strings,
+  ACBrUtil.FilesIO,
+  ACBrUtil.Base,
+  ACBrUtil.DateTime,
+  ACBrDFeUtil;
 
 { TEventoMDFe }
 

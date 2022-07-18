@@ -39,7 +39,8 @@ uses
   SysUtils,
 
   ACBrEFDBase,
-  ACBrUtil, ACBrSpedFiscal, ACBrEFDBlocos;
+  ACBrUtil.Strings,
+  ACBrSpedFiscal, ACBrEFDBlocos;
 
 type
   TACBrSpedFiscalImportar_BlocoH = class(TACBrSpedFiscalImportar_Base)

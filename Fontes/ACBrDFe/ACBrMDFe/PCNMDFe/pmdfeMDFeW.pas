@@ -39,7 +39,10 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pmdfeConversaoMDFe, pmdfeMDFe, ACBrUtil, pcnConsts, pmdfeConsts, ACBrDFeUtil;
+  pmdfeConversaoMDFe, pmdfeMDFe,
+  ACBrUtil.Strings,
+  ACBrUtil.Base,
+  pcnConsts, pmdfeConsts, ACBrDFeUtil;
 
 type
   TGeradorOpcoes = class;

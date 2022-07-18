@@ -71,7 +71,9 @@ type
 
 implementation
 
-uses ACBrGNRE2, ACBrUtil, StrUtils, Dialogs, ACBrGNREGuiasRetorno;
+uses ACBrGNRE2, ACBrUtil.Strings,
+  ACBrUtil.Math, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.XMLHTML, 
+  StrUtils, Dialogs, ACBrGNREGuiasRetorno;
 
 constructor TACBrGNREGuiaFR.Create(AOwner: TComponent);
 begin

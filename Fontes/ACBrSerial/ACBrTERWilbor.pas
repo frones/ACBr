@@ -55,7 +55,7 @@ Type
 
 Implementation
 
-Uses ACBrTER, ACBrUtil, Math, 
+Uses ACBrTER, ACBrUtil.Strings, Math, 
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
      SysUtils ;
 

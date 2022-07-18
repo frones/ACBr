@@ -192,7 +192,10 @@ implementation
 uses
   StrUtils, DateUtils,
   pmdfeMDFe,
-  ACBrUtil, ACBrDFeUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
+  ACBrUtil.Strings,
+  ACBrUtil.DateTime,
+  ACBrUtil.Base,
+  ACBrDFeUtil, ACBrValidador, ACBrImage, ACBrDelphiZXingQRCode,
   ACBrDFeReportFortes;
 
 {$ifdef FPC}

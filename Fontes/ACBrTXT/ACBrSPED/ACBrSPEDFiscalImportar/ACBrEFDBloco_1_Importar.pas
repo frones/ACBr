@@ -38,7 +38,7 @@ uses
   Classes,
   SysUtils,
   ACBrEFDBase,
-  ACBrUtil,
+  ACBrUtil.Strings,
   ACBrSpedFiscal,
   ACBrEFDBlocos;
 

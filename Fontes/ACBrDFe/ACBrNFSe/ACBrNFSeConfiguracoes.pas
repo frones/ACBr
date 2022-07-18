@@ -488,7 +488,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.FilesIO,
   DateUtils;
 
 { TEmitenteConfNFSe }

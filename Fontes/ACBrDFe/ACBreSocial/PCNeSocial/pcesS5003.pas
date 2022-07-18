@@ -56,7 +56,10 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao, pcnLeitor, ACBrUtil,
+  pcnConversao, pcnLeitor,
+  ACBrUtil.Base,
+  ACBrUtil.FilesIO,
+  ACBrUtil.DateTime,
   pcesCommon, pcesConversaoeSocial;
 
 type

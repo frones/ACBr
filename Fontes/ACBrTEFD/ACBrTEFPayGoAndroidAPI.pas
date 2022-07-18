@@ -296,7 +296,7 @@ implementation
 uses
   StrUtils,
   synacode, synautil,
-  ACBrUtil, ACBrValidador;
+  ACBrUtil.Strings, ACBrValidador;
 
 
 function PWOPER_ToOperation(iOPER: Byte): String;

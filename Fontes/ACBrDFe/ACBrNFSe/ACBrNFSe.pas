@@ -45,6 +45,7 @@ uses
   ACBrNFSeWebServices,
   pnfsNFSe, pcnConversao, pnfsConversao,
   ACBrUtil.Base,
+  ACBrUtil.Compatibilidade,
   ACBrUtil.Strings;
 
 const

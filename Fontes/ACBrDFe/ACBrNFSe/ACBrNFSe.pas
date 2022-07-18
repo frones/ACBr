@@ -538,8 +538,7 @@ begin
   XML := '';
   for i := 1 to J do
   begin
-//  if (AXML[i] in ['!'..'~'])  then
-    if {$IFNDEF HAS_CHARINSET}ACBrUtil.{$ENDIF}CharInSet(AXML[i], ['!'..'~']) then
+    if {$IFNDEF HAS_CHARINSET}ACBrUtil.Compatibilidade.{$ENDIF}CharInSet(AXML[i], ['!'..'~']) then
        XML := XML + AXML[i];
   end;
 

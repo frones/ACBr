@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/07/2022
+-- BHISS.Provider --
+[*] Correção na condição que testa a quantidade de erros na lista de erros.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Incluído na procedure LerInfNfse a chamada para o LerIdentificacaoRps.
    Por: Rubens FF

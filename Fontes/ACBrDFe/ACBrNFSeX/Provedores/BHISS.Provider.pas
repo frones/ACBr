@@ -491,7 +491,7 @@ begin
         SalvarXmlNfse(ANota);
       end;
 
-      Response.Sucesso := (Response.Erros.Count > 0);
+      Response.Sucesso := (Response.Erros.Count = 0);
     except
       on E:Exception do
       begin

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/07/2022
+-- Diversos --
+[*] Correções necessárias para o envio correto em modo síncrono e assíncrono.
+   Por: Italo Giurizzato Junior
+
 06/07/2022
 -- Diversos --
 [*] Correções necessárias para validar corretamente o XML.

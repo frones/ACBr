@@ -168,7 +168,12 @@ begin
     TDFeReportFortes.AjustarReport(Report, ADANFSe);
 
     if ADANFSe.MostraPreview then
-      Report.PreviewModal
+    begin
+      if Assigned(DANFSeReport) then
+        SelectedFilter := DANFSeReport.RLPDFFilter1;
+
+      Report.PreviewModal;
+    end
     else
       Report.Print;
   finally

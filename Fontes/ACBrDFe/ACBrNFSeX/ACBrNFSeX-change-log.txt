@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/07/2022
+-- ACBrNFSeXDANFSeRL --
+[*] Ajuste para definir como padrão o filtro PDF na opção Salvar.
+   Por: Italo Giurizzato Junior
+
 15/07/2022
 -- ACBrNFSeXServicos --
 [*] Incluída para a cidade: Avaré/SP - Os parâmetros de formatação de datas.

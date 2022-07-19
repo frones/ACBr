@@ -45,6 +45,9 @@ Símbolo : Significado
 
 19/07/2022
 -- ACBrNFSeXServicos --
+[*] Incluída para a cidade: Sorocaba/SP - Link para o PDF do ambiente de produção.
+   Por: Luis Gustavo
+-- ACBrNFSeXServicos --
 [*] Incluída a cidade: Cianorte/PR - Provedor SigISS
    Por: Italo Giurizzato Junior
 [*] Incluída para a cidade: Praia Grande/SP - O parâmetro para não formatar o

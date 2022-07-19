@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/07/2022
+-- Sistemas4R.Provider --
+[*] Possível solução para a leitura correta do retorno.
+   Por: Italo Giurizzato Junior
 -- BHISS.Provider --
 [*] Correção na condição que testa a quantidade de erros na lista de erros.
    Por: Italo Giurizzato Junior

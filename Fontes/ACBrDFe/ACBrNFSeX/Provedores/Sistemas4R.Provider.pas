@@ -178,9 +178,9 @@ function TACBrNFSeXWebservice4R200.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverIdentacao(Result);
-  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProvider4R200 }

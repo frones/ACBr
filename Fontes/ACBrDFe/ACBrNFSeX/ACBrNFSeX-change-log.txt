@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/07/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Incluído na procedure LerInfNfse a chamada para o LerIdentificacaoRps.
+   Por: Rubens FF
 -- ACBrNFSeXServicos --
 [*] Incluída para a cidade: Sorocaba/SP - Link para o PDF do ambiente de produção.
    Por: Luis Gustavo

@@ -537,6 +537,7 @@ begin
 
     NFSe.ValorCredito := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);
 
+    LerIdentificacaoRps(AuxNode);
     LerServico(AuxNode);
 
     LerTomadorServico(AuxNode);

@@ -73,6 +73,9 @@ begin
 
   FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
 
+  if FpAOwner.ConfigGeral.Params.TemParametro('NaoFormatarItemServico') then
+    FormatoItemListaServico := filsNaoSeAplica;
+
   DivAliq100 := True;
 
   if FpAOwner.ConfigGeral.Params.TemParametro('NaoDividir100') then

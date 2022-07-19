@@ -44,6 +44,27 @@ Símbolo : Significado
 
 
 19/07/2022
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade: Cianorte/PR - Provedor SigISS
+   Por: Italo Giurizzato Junior
+[*] Incluída para a cidade: Praia Grande/SP - O parâmetro para não formatar o
+    ItemListaServico
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXConversao --
+[*] Acrescentado o enumerado filsNaoSeAplica, vai ser utilizado para não aplicar
+    nenhuma ação ao ItemListaServico, não vai normatizar e nem formatar ele.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXGravarXml --
+[*] Alterado a função FormatarItemServico, foi incluido a condição que defini
+    se vai normatizar ou não o ItemListaServico
+   Por: Italo Giurizzato Junior
+-- ISSNet.GravarXml --
+[*] Alterado a Configuracao para checar a existência do parâmetro:
+    NaoFormatarItemServico.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXDANFSeRL --
+[*] Ajuste para definir como padrão o filtro PDF na opção Salvar.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXDANFSeRL --
 [*] Ajuste para definir como padrão o filtro PDF na opção Salvar.
    Por: Italo Giurizzato Junior

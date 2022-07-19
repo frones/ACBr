@@ -175,7 +175,8 @@ type
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
-                              filsSemFormatacaoSemZeroEsquerda);
+                              filsSemFormatacaoSemZeroEsquerda,
+                              filsNaoSeAplica);
 
   TSituacaoTrib = (tsTributadaNoPrestador, tsTibutadaNoTomador, tsIsenta, tsImune,
                    tsNaoTributada, tsFixo, tsOutroMunicipio);

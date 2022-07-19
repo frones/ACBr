@@ -309,7 +309,10 @@ function TNFSeWClass.FormatarItemServico(const Codigo: string;
 var
   item: string;
 begin
-  item := NormatizarItemServico(Codigo);
+  item := Codigo;
+
+  if Formato <> filsNaoSeAplica then
+    item := NormatizarItemServico(item);
 
   case Formato of
     filsSemFormatacao:

@@ -190,7 +190,7 @@ implementation
 
 uses
   pcnAuxiliar,
-  ACBrUtil, ACBrLibConsts;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrLibConsts;
 
 { TDistribuicaoDFeItemResposta }
 

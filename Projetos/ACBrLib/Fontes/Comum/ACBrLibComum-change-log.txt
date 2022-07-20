@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLib Comum ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 14/06/2022
 ---DFeReportConfig---
 [-] Remoção do campo FAX da classe DFeReportConfig da lib, compatibilizando com o componente DFeReport

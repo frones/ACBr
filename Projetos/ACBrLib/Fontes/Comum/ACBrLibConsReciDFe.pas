@@ -152,7 +152,7 @@ implementation
 
 uses
   pcnAuxiliar, pcnConversao,
-  ACBrUtil, ACBrLibConsts;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrLibConsts;
 
 { TRetornoItemResposta }
 constructor TRetornoItemResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;

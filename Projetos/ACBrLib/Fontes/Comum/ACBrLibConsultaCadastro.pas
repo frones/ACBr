@@ -145,7 +145,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibConsts;
 
 { TConsultaCadastroItemResposta }

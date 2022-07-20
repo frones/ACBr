@@ -38,7 +38,7 @@ interface
  
 uses
   Classes, SysUtils,
-  ACBrDFeSSL, ACBrUtil;
+  ACBrDFeSSL, ACBrUtil.Strings, ACBrUtil.DateTime;
 
 const
   CCertFormat = '%s|%s|%s|%s|%s|%s|%s';

@@ -53,7 +53,7 @@ type
 implementation
 
 uses
-  ACBrLibPosPrinterBase, ACBrUtil;
+  ACBrLibPosPrinterBase, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TLibPosPrinterConfig }
 procedure TLibPosPrinterConfig.ClasseParaComponentes;

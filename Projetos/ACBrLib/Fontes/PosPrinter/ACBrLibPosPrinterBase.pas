@@ -101,7 +101,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig,
-  ACBrLibDeviceUtils, ACBrUtil, StrUtils;
+  ACBrLibDeviceUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, StrUtils;
 
 { TACBrLibPosPrinter }
 

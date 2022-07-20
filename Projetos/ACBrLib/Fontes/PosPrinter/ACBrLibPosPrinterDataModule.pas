@@ -32,7 +32,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDeviceSerial, ACBrLibPosPrinterConfig;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrDeviceSerial, ACBrLibPosPrinterConfig;
 
 {$R *.lfm}
 

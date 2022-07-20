@@ -83,7 +83,8 @@ type
 implementation
 
 uses
-  ACBrLibSedexBase, ACBrLibSedexConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibSedexBase, ACBrLibSedexConsts, ACBrLibConsts, ACBrLibComum,
+  ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TSedexConfig }
 

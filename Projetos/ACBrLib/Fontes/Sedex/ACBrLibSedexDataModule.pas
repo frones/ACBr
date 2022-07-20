@@ -66,7 +66,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrLibSedexConfig, ACBrLibSedexBase;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrLibSedexConfig, ACBrLibSedexBase;
 
 {$R *.lfm}
 

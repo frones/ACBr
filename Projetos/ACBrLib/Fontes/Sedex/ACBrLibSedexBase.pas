@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrUtil, ACBrLibComum, ACBrLibSedexDataModule, ACBrSedex;
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrLibComum, ACBrLibSedexDataModule, ACBrSedex;
 
 type
 

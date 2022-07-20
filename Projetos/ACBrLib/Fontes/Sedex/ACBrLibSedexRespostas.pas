@@ -99,7 +99,7 @@ type
 implementation
 
 uses
-  ACBrLibSedexConsts, ACBrUtil;
+  ACBrLibSedexConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TLibSedexConsulta }
 

@@ -58,7 +58,7 @@ type
 implementation
 
 uses
-  ACBrLibMailBase, ACBrUtil;
+  ACBrLibMailBase, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TLibMailConfig }
 

@@ -65,7 +65,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibMailConfig;
 
 {$R *.lfm}

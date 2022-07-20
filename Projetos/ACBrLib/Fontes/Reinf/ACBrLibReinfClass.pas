@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrUtil, ACBrLibComum, ACBrLibReinfDataModule, ACBrReinf;
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,
+  ACBrLibComum, ACBrLibReinfDataModule, ACBrReinf;
 
 type
 

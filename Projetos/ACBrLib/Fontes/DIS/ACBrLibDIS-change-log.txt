@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLibDis ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 21/12/2011
 --- ACBrLibDISDataModule ---
 [-] Correção para herença visual em Lazarus de "TLibDataModule"

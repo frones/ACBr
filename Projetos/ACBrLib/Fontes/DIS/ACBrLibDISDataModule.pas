@@ -54,7 +54,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrDeviceSerial,
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrDeviceSerial,
   ACBrLibDISConfig, ACBrLibComum, ACBrLibDISBase;
 
 {$R *.lfm}

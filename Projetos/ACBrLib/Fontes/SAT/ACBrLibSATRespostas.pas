@@ -238,7 +238,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrLibSATConsts;
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrLibSATConsts;
 
 { TRetornoStatusSAT }
 constructor TRetornoStatusSAT.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);

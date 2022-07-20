@@ -258,7 +258,8 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibSATConsts,
-  ACBrLibSATBase, ACBrUtil, ACBrConsts, ACBrSATExtratoFortesFr;
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrLibSATBase, ACBrConsts, ACBrSATExtratoFortesFr;
 
 { TExtratoConfig }
 constructor TExtratoConfig.Create;

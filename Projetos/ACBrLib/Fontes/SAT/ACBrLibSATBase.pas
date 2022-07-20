@@ -96,7 +96,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
+  ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibResposta, ACBrLibSATRespostas, ACBrMail, ACBrDFeSSL, ACBrValidador,
   ACBrSATExtratoESCPOS;
 

@@ -75,7 +75,8 @@ implementation
 uses
   FileUtil, pcnConversao,
   ACBrDeviceConfig, ACBrDeviceSerial, ACBrDFeSSL,
-  ACBrUtil, ACBrLibSATConfig, ACBrLibIntegradorResposta;
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrLibSATConfig, ACBrLibIntegradorResposta;
 
 {$R *.lfm}
 

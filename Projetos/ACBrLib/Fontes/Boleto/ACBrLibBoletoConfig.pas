@@ -326,7 +326,8 @@ type
 implementation
 
 uses
-  typinfo, strutils, synacode, blcksock, ACBrLibBoletoConsts, ACBrUtil,
+  typinfo, strutils, synacode, blcksock, ACBrLibBoletoConsts,
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrConsts, ACBrLibConsts, ACBrLibBoletoBase;
 
 { TBoletoConfigWS }

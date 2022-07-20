@@ -67,7 +67,7 @@ type
 implementation
 
 uses
-  ACBrUtil, FileUtil, ACBrLibBoletoConfig;
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, FileUtil, ACBrLibBoletoConfig;
 
 {$R *.lfm}
 

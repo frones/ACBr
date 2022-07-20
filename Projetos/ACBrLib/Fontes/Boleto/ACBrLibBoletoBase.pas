@@ -98,7 +98,8 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, ACBrUtil, strutils, typinfo,
+  ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, strutils, typinfo,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibResposta, ACBrBoleto, ACBrLibBoletoConfig, ACBrMail,
   ACBrLibBoletoRespostas, ACBrObjectSerializer;
   

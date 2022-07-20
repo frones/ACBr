@@ -526,7 +526,7 @@ implementation
 
 uses
   TypInfo, pcnAuxiliar, pcnConversao,
-  ACBrUtil, ACBrLibBoletoConsts;
+  ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrLibBoletoConsts;
 
 { TRetornoRejeicoesWeb }
 constructor TRetornoRejeicoesWeb.Create(const AID, AIDRej: Integer;

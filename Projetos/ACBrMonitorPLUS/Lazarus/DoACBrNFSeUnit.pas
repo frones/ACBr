@@ -36,7 +36,8 @@ unit DoACBrNFSeUnit;
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, ACBrUtil, ACBrMonitorConsts, ACBrMonitorConfig, DoACBrDFeUnit, ACBrNFSeX,
+  Classes, SysUtils, CmdUnit, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrMonitorConsts, ACBrMonitorConfig, DoACBrDFeUnit, ACBrNFSeX,
   ACBrNFSeConversao, ACBrLibResposta, ACBrLibNFSeRespostas;
 
 type

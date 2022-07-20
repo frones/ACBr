@@ -35,8 +35,8 @@ unit DoLCBUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrLCB,
-  ACBrMonitorConsts, ACBrMonitorConfig;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrLCB, ACBrMonitorConsts, ACBrMonitorConfig;
 
 type
 

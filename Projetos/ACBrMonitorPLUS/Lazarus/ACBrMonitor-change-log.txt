@@ -44,6 +44,8 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2022
+[*] Remoção de Warning @deprecated ref. ACBrUtils do ACBrLib
 
 28/06/2022
 --- ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts---

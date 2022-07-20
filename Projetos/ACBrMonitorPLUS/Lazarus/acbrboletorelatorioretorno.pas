@@ -41,7 +41,7 @@ uses
     LResources,
   {$ENDIF}
   SysUtils, Controls, Forms, Graphics, Dialogs, RLReport,
-  ACBrBoleto, ACBrUtil, FileUtil;
+  ACBrBoleto, ACBrUtil.Base, ACBrUtil.Strings, FileUtil;
 
 type
 

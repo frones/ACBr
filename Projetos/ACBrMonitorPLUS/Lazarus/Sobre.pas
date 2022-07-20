@@ -79,7 +79,7 @@ var
   frmSobre: TfrmSobre;
 
 implementation
-Uses LCLType, ACBrUtil ;
+Uses LCLType, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 {$R *.lfm}
 

@@ -34,7 +34,7 @@ unit DoACBrNFeXMLUnit;
 
 interface
 
-uses CmdUnit, ACBrNFeWebServices, pcnConversao,
+uses CmdUnit, ACBrNFeWebServices, pcnConversao, ACBrUtil.Base,
      Classes, TypInfo, SysUtils, Types;
 
 procedure DoACBrNFeXML( Cmd : TACBrCmd ) ;
@@ -46,7 +46,7 @@ function TipoEvento( XML : String ) : TpcnTpEvento;
 
 implementation
 
-Uses  ACBrMonitor1, ACBrUtil, pcnAuxiliar, pcnLeitor;
+Uses  ACBrMonitor1, pcnAuxiliar, pcnLeitor;
 
 procedure DoACBrNFeXML( Cmd : TACBrCmd ) ;
 var

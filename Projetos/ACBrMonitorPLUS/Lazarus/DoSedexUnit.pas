@@ -35,8 +35,8 @@ unit DoSedexUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrSedex,
-  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibSedexRespostas;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrSedex, ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibSedexRespostas;
 
 type
 

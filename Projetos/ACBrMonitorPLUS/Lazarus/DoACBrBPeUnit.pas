@@ -35,8 +35,8 @@ unit DoACBrBPeUnit;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrLibBPeRespostas,
-  ACBrBPe, ACBrLibResposta, ACBrMonitorConfig,
+  Classes, SysUtils, ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO, ACBrUtil.Math,
+  ACBrLibBPeRespostas, ACBrBPe, ACBrLibResposta, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
   CmdUnit;
 

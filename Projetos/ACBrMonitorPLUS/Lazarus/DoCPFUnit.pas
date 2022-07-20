@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils, ACBrConsultaCPF, ACBrMonitorConsts, ACBrMonitorConfig,
   ACBrLibResposta,  ACBrLibConsultaCPFRespostas,
-  CmdUnit, ACBrUtil;
+  CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 Const
   CCAPTCHA_CPF = 'CaptchaCPF';

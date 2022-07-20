@@ -35,7 +35,7 @@ unit ACBrMonitorConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, ACBrMonitorConsts, ACBrUtil, Graphics;
+  Classes, SysUtils, IniFiles, ACBrMonitorConsts, Graphics;
 
 type
 

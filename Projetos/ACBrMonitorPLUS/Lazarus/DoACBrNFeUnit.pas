@@ -35,8 +35,8 @@ unit DoACBrNFeUnit;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrLibNFeRespostas,
-  ACBrNFe, ACBrMonitorConfig,
+  Classes, SysUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
+  ACBrLibNFeRespostas, ACBrNFe, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
   CmdUnit, ACBrNFeDANFeRLClass, ACBrPosPrinter, ACBrNFeDANFeESCPOS,
   ACBrLibConsultaCadastro;
@@ -438,11 +438,11 @@ end;
 implementation
 
 uses
-  IniFiles, DateUtils, Forms, strutils,
+  DateUtils, Forms, strutils,
   ACBrDFeConfiguracoes, ACBrNFeDANFEClass,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   pcnConversao, pcnConversaoNFe,
-  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, pcnNFe, DoACBrUnit, ACBrDFeSSL;
+  pcnAuxiliar, pcnNFeRTXT, pcnNFe, DoACBrUnit, ACBrDFeSSL;
 
 { TACBrObjetoNFe }
 

@@ -35,8 +35,8 @@ unit DoACBrCTeUnit;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrLibCTeRespostas,
-  ACBrCTe, ACBrLibResposta, ACBrMonitorConfig,
+  Classes, SysUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
+  ACBrLibCTeRespostas, ACBrCTe, ACBrLibResposta, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
   CmdUnit, ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
   ACBrLibConsultaCadastro;
@@ -2200,7 +2200,6 @@ end;
 procedure TMetodoEnviarEvento.Executar;
 var
   AArq: String;
-  I: Integer;
   Resp: TEventoResposta;
 begin
   AArq := fpCmd.Params(0);
@@ -2232,7 +2231,6 @@ end;
 procedure TMetodoCartaCorrecao.Executar;
 var
   AArq: String;
-  I: Integer;
   Resp: TEventoResposta;
 begin
   AArq := fpCmd.Params(0);
@@ -2264,7 +2262,6 @@ end;
 procedure TMetodoXMLEnviarEvento.Executar;
 var
   AArq: String;
-  I: Integer;
   CargaDFeEvento: TACBrCarregarCTeEvento;
   Resp: TEventoResposta;
 begin

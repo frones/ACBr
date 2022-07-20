@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils, ACBrConsultaCNPJ, ACBrMonitorConsts, ACBrMonitorConfig,
   ACBrLibResposta,  ACBrLibConsultaCNPJRespostas,
-  CmdUnit, ACBrUtil;
+  CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 Const
   CCAPTCHA_CNPJ = 'CaptchaCNPJ';

@@ -34,7 +34,7 @@ unit UtilUnit;
 
 interface
 
-Uses SysUtils, IniFiles, Classes, ACBrUtil, FileInfo ;
+Uses SysUtils, IniFiles, Classes, ACBrUtil.FilesIO, FileInfo ;
 
 Function AcertaPath(APath : String): String;
 function Converte(cmd: String): String;

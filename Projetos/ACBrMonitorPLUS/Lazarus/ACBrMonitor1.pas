@@ -1964,11 +1964,12 @@ uses
   UtilUnit, pcnAuxiliar,
   {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
-  ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
+  ACBrECFNaoFiscal, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, SelecionarCertificado, ACBrSATExtratoClass,
   ACBrNFeConfiguracoes, ACBrNFeDANFEClass, ACBrCTeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
-  ACBrReinfConfiguracoes, ACBrDFeDANFeReport, ACBrBPeConfiguracoes, ACBrETQClass;
+  ACBrReinfConfiguracoes, ACBrDFeDANFeReport, ACBrBPeConfiguracoes, ACBrETQClass,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
 
 {$R *.lfm}
 

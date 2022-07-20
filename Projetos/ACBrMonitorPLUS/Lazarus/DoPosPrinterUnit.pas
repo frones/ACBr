@@ -35,8 +35,8 @@ unit DoPosPrinterUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrPosPrinter,
-  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibDeviceUtils;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrPosPrinter, ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibDeviceUtils;
 
 type
 

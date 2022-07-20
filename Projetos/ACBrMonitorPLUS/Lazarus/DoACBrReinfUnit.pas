@@ -36,7 +36,8 @@ unit DoACBrReinfUnit;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrReinf, ACBrMonitorConfig,
+  Classes, SysUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrReinf, ACBrMonitorConfig,
   ACBrMonitorConsts, CmdUnit, pcnConversaoReinf, DoACBrDFeUnit,
   ACBrLibResposta, ACBrLibReinfConsts, ACBrLibReinfRespostas,
   ACBrReinfEventos;

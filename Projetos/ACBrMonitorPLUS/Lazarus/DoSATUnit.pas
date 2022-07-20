@@ -36,6 +36,7 @@ interface
 
 uses
   Classes, SysUtils, CmdUnit, pcnConversao, strutils,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
   ACBrSAT, ACBrMonitorConfig, ACBrMonitorConsts, ACBrDFeUtil,
   ACBrLibSATRespostas, ACBrLibResposta,
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrValidador, ACBrDFeSSL;
@@ -291,7 +292,7 @@ end;
 implementation
 
 uses
-  ACBrUtil,DoACBrUnit,IniFiles, forms, pcnAuxiliar, typinfo,
+  DoACBrUnit,IniFiles, forms, pcnAuxiliar, typinfo,
   ACBrSATExtratoClass, UtilUnit;
 
 { TMetodoGerarPDFExtratoCancelamento }

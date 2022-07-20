@@ -35,7 +35,7 @@ unit DoACBrDFeUnit;
 
 interface
 
-uses Classes, SysUtils, ACBrUtil,
+uses Classes, SysUtils, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrMonitorConsts, ACBrDFeUtil, ACBrDFe;
 
 type

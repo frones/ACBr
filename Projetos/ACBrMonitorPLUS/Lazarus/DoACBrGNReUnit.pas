@@ -35,9 +35,9 @@ unit DoACBrGNReUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrGNRE2, pcnConversao,
-  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibGNReRespostas,
-  DoACBrDFeUnit, StrUtils;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrGNRE2, pcnConversao, ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibGNReRespostas,
+  DoACBrDFeUnit;
 
 type
 

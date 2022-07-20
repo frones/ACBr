@@ -37,9 +37,8 @@ unit DoCEPUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrCEP,
-  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibCEPRespostas,
-  ACBrLibCEPConsts;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrCEP, ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibCEPRespostas;
 
 type
 

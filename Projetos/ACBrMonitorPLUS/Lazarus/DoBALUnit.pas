@@ -35,8 +35,8 @@ unit DoBALUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrBAL,
-  ACBrMonitorConsts, ACBrMonitorConfig;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrBAL, ACBrMonitorConsts, ACBrMonitorConfig;
 
 // ACBrLibBALRespostas, ACBrLibResposta, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit;
 

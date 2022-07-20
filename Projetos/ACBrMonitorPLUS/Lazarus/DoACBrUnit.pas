@@ -35,7 +35,7 @@ unit DoACBrUnit ;
 
 interface
 Uses
-  Classes, TypInfo, SysUtils, CmdUnit, IniFiles, synautil, synacode, ACBrMonitorConsts, ACBrLibCertUtils,
+  Classes, TypInfo, SysUtils, CmdUnit, synautil, synacode, ACBrMonitorConsts, ACBrLibCertUtils,
   ACBrMonitorConfig;
 
 {$IFDEF MSWINDOWS}
@@ -268,7 +268,7 @@ end;
 
 
 implementation
-Uses ACBrUtil, DateUtils, pcnConversao, utilUnit,
+Uses ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Math, DateUtils, pcnConversao, utilUnit,
   {$IFDEF MSWINDOWS}sndkey32, Windows,{$ENDIF}
   {$IFNDEF NOGUI}Forms, ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF},
   FileUtil, ACBrDFeSSL;

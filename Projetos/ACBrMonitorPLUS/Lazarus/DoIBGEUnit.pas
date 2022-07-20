@@ -35,9 +35,8 @@ unit DoIBGEUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrIBGE,
-  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibIBGERespostas,
-  ACBrLibIBGEConsts, ACBrLibResposta;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrIBGE, ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibIBGERespostas, ACBrLibResposta;
 
 type
 

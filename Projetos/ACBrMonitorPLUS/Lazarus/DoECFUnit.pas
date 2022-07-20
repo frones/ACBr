@@ -1548,7 +1548,7 @@ end;
 // //
 implementation
 
-uses StrUtils, ACBrUtil, UtilUnit, DoACBrUnit;
+uses StrUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, UtilUnit, DoACBrUnit;
 
 { TMetodoReprocessarArquivo }
 

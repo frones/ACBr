@@ -35,7 +35,8 @@ unit DoACBrMDFeUnit;
 
 interface
 
-uses Classes, SysUtils, ACBrUtil, ACBrLibMDFeRespostas,
+uses Classes, SysUtils, ACBrLibMDFeRespostas,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.Math,
   ACBrMDFe, ACBrLibResposta, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
   CmdUnit;
@@ -769,7 +770,6 @@ end;
 procedure TACBrObjetoMDFe.RespostaDistribuicaoDFe;
 var
   Resp: TDistribuicaoDFeResposta;
-  sTemMais: String;
 begin
   Resp := TDistribuicaoDFeResposta.Create(TpResp, codUTF8);
   try
@@ -835,7 +835,6 @@ procedure TMetodoDistribuicaoDFePorChaveMDFe.Executar;
 var
   ACNPJ: String;
   AChave: String;
-  I: Integer;
 begin
   ACNPJ := fpCmd.Params(0);
   AChave := fpCmd.Params(1);
@@ -861,7 +860,6 @@ procedure TMetodoDistribuicaoDFePorUltNSU.Executar;
 var
   ACNPJ: String;
   AUltNSU: String;
-  I: Integer;
 begin
   ACNPJ := fpCmd.Params(0);
   AUltNSU := fpCmd.Params(1);
@@ -887,7 +885,6 @@ procedure TMetodoDistribuicaoDFePorNSU.Executar;
 var
   ACNPJ: String;
   ANSU: String;
-  I: Integer;
 begin
   ACNPJ := fpCmd.Params(0);
   ANSU := fpCmd.Params(1);
@@ -1377,7 +1374,6 @@ end;
 }
 procedure TMetodoReciboMDFe.Executar;
 var
-  I: integer;
   ARecibo: String;
 begin
   ARecibo := fpCmd.Params(0);
@@ -1402,7 +1398,6 @@ end;
 procedure TMetodoConsultaMDFeNaoEnc.Executar;
 var
   ACNPJ: String;
-  I: Integer;
 begin
   ACNPJ := fpCmd.Params(0);
 

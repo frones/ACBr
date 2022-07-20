@@ -34,7 +34,8 @@ unit DoACBreSocialUnit;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBreSocial, ACBrMonitorConfig,
+  Classes, SysUtils, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBreSocial, ACBrMonitorConfig,
   ACBrMonitorConsts, CmdUnit, pcesConversaoeSocial, DoACBrDFeUnit,
   ACBrLibResposta, ACBrLibeSocialRespostas, ACBrLibeSocialConsts,
   ACBreSocialEventos, pcesS5001, pcesS5002, pcesS5011, pcesS5012;

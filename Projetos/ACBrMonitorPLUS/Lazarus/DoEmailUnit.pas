@@ -35,8 +35,8 @@ unit DoEmailUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrMail,
-  ACBrMonitorConsts, ACBrMonitorConfig;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  ACBrMail, ACBrMonitorConsts, ACBrMonitorConfig;
 
 type
 

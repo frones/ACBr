@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLibNFe ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 05/07/2022
 --- ACBrLibNFeDataModule ---
 [*] Ajuste na validação de uso do Integrador Fiscal para não obrigar o Uso do Integrador para a UF: CE

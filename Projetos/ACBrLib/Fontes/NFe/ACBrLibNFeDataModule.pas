@@ -72,9 +72,9 @@ implementation
 
 uses
   pcnConversao, pcnConversaoNFe,
-  ACBrUtil, FileUtil, ACBrDeviceSerial, ACBrNFeDANFEClass,
+  FileUtil, ACBrDeviceSerial, ACBrNFeDANFEClass,
   {$IFDEF Demo}ACBrNFeNotasFiscais, pcnEnvEventoNFe,{$ENDIF}
-  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrUtil.Base;
+  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 {$R *.lfm}
 

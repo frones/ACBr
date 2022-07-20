@@ -139,10 +139,11 @@ type
 implementation
 
 uses
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrNFeDANFeESCPOS, ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
-  ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil, ACBrLibCertUtils,
+  ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrLibCertUtils,
   pcnConversao, pcnConversaoNFe, pcnAuxiliar, blcksock, strutils;
 
 { TACBrLibNFe }

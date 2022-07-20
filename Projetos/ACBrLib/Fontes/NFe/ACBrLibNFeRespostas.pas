@@ -512,7 +512,7 @@ implementation
 
 uses
   pcnAuxiliar, pcnConversao,
-  ACBrUtil, ACBrLibNFeConsts;
+  ACBrLibNFeConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TPathNFeResposta }
 

@@ -271,8 +271,8 @@ implementation
 uses
   typinfo, strutils, synacode, blcksock, pcnAuxiliar,
   ACBrLibNFeBase, ACBrLibNFeConsts, ACBrLibConsts,
-  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
-  ACBrUtil, ACBrDFeConfiguracoes;
+  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS, ACBrDFeConfiguracoes,
+  ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TDANFeNFeConfig }
 

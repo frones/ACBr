@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+-- ACBrFala --
+[-] Correção para que as palavras 'Real/Centavos' sejam colocadas no texto, 
+    após alterações do ACBrExtenso para alteração de idiomas
+    Por: Elias César
+
 21/06/2022
 -- ACBrExtenso --
 [-] Correção de MemoryLeak ao utilizar o ACBrExtenso

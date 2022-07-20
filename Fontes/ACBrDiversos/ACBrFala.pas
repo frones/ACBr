@@ -151,27 +151,26 @@ begin
 end;
 
 procedure TACBrFala.SetValorFalar(const Value: Double);
-Var ACBrExtenso1 : TACBrExtenso ;
+var
+  ACBrExtenso1: TACBrExtenso;
 begin
   FValorFalar  := 0;
   ACBrExtenso1 := TACBrExtenso.Create(Self);
   try
-     if not FValorDinheiro then
-      begin
-        ACBrExtenso1.StrMoeda   := '' ;
-        ACBrExtenso1.StrMoedas  := '' ;
-        ACBrExtenso1.StrCentavo := '' ;
-        ACBrExtenso1.StrCentavos:= '' ;
-      end
-     else
-        ACBrExtenso1.ZeroAEsquerda := False ;
-     
-     ACBrExtenso1.Valor := Value ;
-     StrFalar := ACBrExtenso1.Texto ;
-     FValorFalar := Value;
+    if (not FValorDinheiro) then
+      ACBrExtenso1.Idioma := idiCustom
+    else
+    begin
+      ACBrExtenso1.Idioma := idiPortuguesBr;
+      ACBrExtenso1.ZeroAEsquerda := False;
+    end;
+
+    ACBrExtenso1.Valor := Value;
+    StrFalar := ACBrExtenso1.Texto;
+    FValorFalar := Value;
   except
-     ACBrExtenso1.Free ;
-  end ;
+    ACBrExtenso1.Free;
+  end;
 end;
 
 procedure TACBrFala.SetOrigemArquivos(const Value: string);

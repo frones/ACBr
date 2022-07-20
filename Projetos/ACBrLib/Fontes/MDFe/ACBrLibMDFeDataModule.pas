@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  ACBrUtil, FileUtil,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, FileUtil,
 {$IFDEF Demo}ACBrMDFeManifestos, pmdfeEnvEventoMDFe, pcnConversao,{$ENDIF}
   ACBrLibMDFeConfig, ACBrLibMDFeBase;
 

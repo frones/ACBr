@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+20/07/2022
+--- ACBrLibMDFe ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 28/06/2022
 --- ACBrLibMDFeConfig, ACBrLibMDFeConsts---
 [+] Adicionado propriedade ExibirMunicipioDescarregamento para impressão do DAMDFe

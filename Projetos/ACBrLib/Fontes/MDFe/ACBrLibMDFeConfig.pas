@@ -100,7 +100,8 @@ implementation
 
 uses
   blcksock, pcnAuxiliar, pmdfeConversaoMDFe,
-  ACBrLibMDFeBase, ACBrLibMDFeConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibMDFeBase, ACBrLibMDFeConsts, ACBrLibConsts,
+  ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TDAMDFeConfig }
 constructor TDAMDFeConfig.Create;

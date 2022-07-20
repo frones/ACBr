@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibIBGEConfig, ACBrLibIBGEBase;
 
 {$R *.lfm}

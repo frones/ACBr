@@ -87,7 +87,7 @@ type
 implementation
 
 uses
-  ACBrLibIBGEConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil,
+  ACBrLibIBGEConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibIBGEBase;
 
 { TIBGEConfig }

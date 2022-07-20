@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLibIBGe ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 03/09/2018
 --- ACBrLibIBGE ---
 [+] Inicio do projeto.

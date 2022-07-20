@@ -104,7 +104,7 @@ implementation
 
 uses
   ACBrLibGNReBase, ACBrLibGNReConsts,
-  ACBrLibConsts, ACBrUtil;
+  ACBrLibConsts, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TGuiaConfig }
 constructor TGuiaConfig.Create;

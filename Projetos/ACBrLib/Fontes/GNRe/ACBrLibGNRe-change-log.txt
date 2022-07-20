@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLibGNRe ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 01/03/2021
 --- ACBrLiGRNeResposta ---
 [+] Adicionado classe para obter retorno e path do arquivo gerado sendo TXT ou XML

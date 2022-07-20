@@ -86,7 +86,8 @@ implementation
 uses
   ACBrLibConsts, ACBrLibGNReConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibGNReConfig, ACBrLibGNReRespostas, ACBrGNRE2, ACBrMail,
-  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil, ACBrLibCertUtils;
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
+  pcnConversao, pcnAuxiliar, blcksock, ACBrLibCertUtils;
 
 { TACBrLibGNRe }
 

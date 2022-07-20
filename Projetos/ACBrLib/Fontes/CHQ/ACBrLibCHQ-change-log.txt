@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLibCHQ ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 26/11/2020
 --- ACBrLibCHQDataModule ---
 [+] Correção do na passagem das configurações para o componente estava lendo as configurações do PosPrinter.

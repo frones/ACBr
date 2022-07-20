@@ -168,7 +168,7 @@ begin
     ACBrExtenso1.Valor := Value;
     StrFalar := ACBrExtenso1.Texto;
     FValorFalar := Value;
-  except
+  finally
     ACBrExtenso1.Free;
   end;
 end;

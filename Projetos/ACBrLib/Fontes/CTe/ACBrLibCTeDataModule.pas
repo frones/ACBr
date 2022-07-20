@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  ACBrUtil, FileUtil,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, FileUtil,
   {$IFDEF Demo}pcnConversao, ACBrCTeConhecimentos, pcteEnvEventoCTe,{$ENDIF}
   ACBrLibCTeConfig, ACBrLibCTeBase;
 

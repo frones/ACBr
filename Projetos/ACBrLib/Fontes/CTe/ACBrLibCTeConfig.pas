@@ -109,7 +109,7 @@ implementation
 uses
   blcksock, pcnAuxiliar, pcteConversaoCTe,
   ACBrLibConsts, ACBrLibCTeConsts,
-  ACBrLibCTeBase, ACBrUtil;
+  ACBrLibCTeBase, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TDACTeConfig }
 constructor TDACTeConfig.Create;

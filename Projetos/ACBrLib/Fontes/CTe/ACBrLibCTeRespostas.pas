@@ -239,7 +239,7 @@ implementation
 
 uses
   pcnConversao, pcteConversaoCTe,
-  ACBrUtil,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibCTeConsts;
 
 { TEventoItemResposta }

@@ -119,7 +119,8 @@ uses
   StrUtils, ACBrLibConsts, ACBrLibCTeConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe, ACBrLibConsultaCadastro,
   ACBrLibCTeConfig, ACBrLibCTeRespostas, ACBrCTe, ACBrMail, ACBrLibCertUtils,
-  pcnConversao, pcnAuxiliar, pcteConversaoCTe, blcksock, ACBrUtil, ACBrDFeUtil;
+  pcnConversao, pcnAuxiliar, pcteConversaoCTe, blcksock, ACBrDFeUtil,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TACBrLibCTe }
 

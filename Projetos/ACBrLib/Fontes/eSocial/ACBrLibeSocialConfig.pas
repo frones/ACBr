@@ -93,7 +93,8 @@ type
 implementation
 
 uses
-  ACBrLibeSocialBase, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibeSocialBase, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum,
+  ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TeSocialConfig }
 {

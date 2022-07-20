@@ -37,7 +37,7 @@ unit ACBrLibeSocialBase;
 interface
 
 uses
-  Classes, SysUtils, Forms, ACBrUtil,
+  Classes, SysUtils, Forms, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings,
   ACBrLibComum, ACBrLibeSocialDataModule, ACBreSocial, pcesConversaoeSocial, ACBrLibeSocialRespostas,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012;
 

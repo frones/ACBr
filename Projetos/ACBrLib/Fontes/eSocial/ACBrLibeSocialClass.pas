@@ -38,7 +38,8 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrUtil, ACBrLibComum, ACBrLibeSocialDataModule, ACBreSocial,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math,
+  ACBrLibComum, ACBrLibeSocialDataModule, ACBreSocial,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012;
 
 type

@@ -94,7 +94,7 @@ function BAL_InterpretarRespostaPesoStr(const libHandle: PLibHandle; eResposta: 
 implementation
 
 uses
-  ACBrLibConsts, ACBrUtil;
+  ACBrLibConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings, ACBrUtil.DateTime, ACBrUtil.Math;
 
 
 {%region BAL}

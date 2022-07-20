@@ -94,7 +94,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibBALConsts,
-  ACBrLibBALBase, ACBrUtil;
+  ACBrLibBALBase, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TBALConfig }
 

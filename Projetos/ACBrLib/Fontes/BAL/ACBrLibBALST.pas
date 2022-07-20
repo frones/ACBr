@@ -95,7 +95,7 @@ function BAL_InterpretarRespostaPesoStr(eResposta: PChar; sValor: PChar; var esT
 implementation
 
 uses
-  ACBrLibConsts, ACBrUtil;
+  ACBrLibConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 
 {%region BAL}

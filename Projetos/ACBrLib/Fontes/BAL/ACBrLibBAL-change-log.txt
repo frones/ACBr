@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+--- ACBrLibBAL ---
+[*] Remoção de Warning @deprecated ref. ACBrUtils
+
 07/09/2020
 --- ACBrLibBALMT, ACBrLibBALST ---
 [+] Removido o metodo BAL_ConfigImportar.

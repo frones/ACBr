@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2022
+-- ACBrShipaySchemas --
+[-] Correção de MemoryLeak ao utilizar a lista de descontos do componente Shipay
+    https://www.projetoacbr.com.br/forum/topic/68222-acbrpixcd-memory-leak/
+	Por: Elias César
+
 12/07/2022
 -- ACBrPIXPSPItau --
 [*] Ajuste para funcionamento correto em ambiente de testes. Alterado para incluir 

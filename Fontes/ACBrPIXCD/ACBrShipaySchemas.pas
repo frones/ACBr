@@ -1882,6 +1882,10 @@ end;
 constructor TShipayAmountDetailsDiscount.Create(const ObjectName: String);
 begin
   inherited Create(ObjectName);
+
+  if Assigned(fdescontosDataFixa) then
+    fdescontosDataFixa.Free;
+
   fdescontosDataFixa := TShipayAmountDiscountList.Create('fixed_date');
 end;
 

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/070/2022
+-- ACBrPIXPSPBancoDoBrasil --
+[-] Correção para incluir delimitador nas requisições do endpoint /cob
+    https://www.projetoacbr.com.br/forum/topic/68247-erro-404-resource-not-found-pixcd-psp-bco-do-brasil/
+    Por: Elias César 
+
 20/07/2022
 -- ACBrShipaySchemas --
 [-] Correção de MemoryLeak ao utilizar a lista de descontos do componente Shipay

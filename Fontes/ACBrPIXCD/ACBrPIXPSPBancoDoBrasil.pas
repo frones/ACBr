@@ -286,18 +286,19 @@ begin
   if ((UpperCase(aMethod) = ChttpMethodPOST) or
       (UpperCase(aMethod) = ChttpMethodPUT)) and
       (aEndPoint = cEndPointCob) and (ACBrPixCD.Ambiente = ambTeste) then
-    Result := URLComDelimitador(cBBEndPointCobHomologacao);
+    Result := cBBEndPointCobHomologacao;
+
+  // BB utiliza delimitador antes dos parâmetros de query
+  if (aEndPoint = cEndPointCob) then
+    Result := URLComDelimitador(Result);
 end;
 
 procedure TACBrPSPBancoDoBrasil.ConfigurarQueryParameters(const Method, EndPoint: String);
 begin
   inherited ConfigurarQueryParameters(Method, EndPoint);
 
-  with URLQueryParams do
-  begin
-    if (fDeveloperApplicationKey <> '') then
-      Values[cBBParamDevAppKey] := fDeveloperApplicationKey;
-  end;
+  if (fDeveloperApplicationKey <> '') then
+    URLQueryParams.Values[cBBParamDevAppKey] := fDeveloperApplicationKey;
 end;
 
 procedure TACBrPSPBancoDoBrasil.TratarRetornoComErro(ResultCode: Integer;

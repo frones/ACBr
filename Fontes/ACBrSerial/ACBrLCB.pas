@@ -77,6 +77,7 @@ type
     fsUltimaLeitura: AnsiString;
     fsUltimoCodigo: AnsiString;
     fsIntervalo: Integer;
+    fsPrefixoAIncluir: AnsiString;
 
     procedure SetPorta(const Value: String);
     procedure SetAtivo(const Value: Boolean);
@@ -114,24 +115,17 @@ type
     property UltimoCodigo  : AnsiString read fsUltimoCodigo ;
   published
      { Instancia do Componente ACBrDevice }
-     property Device : TACBrDevice read fsDevice ;
-     property Porta : String read GetPorta write SetPorta ;
-
-     property PrefixoAExcluir : AnsiString  read fsPrefixoAExcluir
-        write SetPrefixoAExcluir;
-     property Sufixo : AnsiString  read fsSufixo write SetSufixo ;
-     property ExcluirSufixo : Boolean read fsExcluirSufixo
-        write fsExcluirSufixo default true ;
-
-     property UsarFila : Boolean read fsUsarFila write SetUsarFila
-        default false ;
-     property FilaMaxItens : Integer read fsFilaMaxItens write fsFilaMaxItens
-        default 0 ;
-
-     property Intervalo  : Integer      read fsIntervalo
-        write SetIntervalo default 200 ;
-     property OnLeCodigo : TNotifyEvent read fsOnLeCodigo write fsOnLeCodigo ;
-     property OnLeFila   : TNotifyEvent read fsOnLeFila   write fsOnLeFila   ;
+     property Device : TACBrDevice         read fsDevice ;
+     property Porta : String               read GetPorta          write SetPorta ;
+     property PrefixoAIncluir : AnsiString read fsPrefixoAIncluir write fsPrefixoAIncluir ;
+     property PrefixoAExcluir : AnsiString read fsPrefixoAExcluir write SetPrefixoAExcluir;
+     property Sufixo : AnsiString          read fsSufixo          write SetSufixo ;
+     property ExcluirSufixo : Boolean      read fsExcluirSufixo   write fsExcluirSufixo    default true ;
+     property UsarFila : Boolean           read fsUsarFila        write SetUsarFila        default false ;
+     property FilaMaxItens : Integer       read fsFilaMaxItens    write fsFilaMaxItens     default 0 ;
+     property Intervalo  : Integer         read fsIntervalo       write SetIntervalo       default 200 ;
+     property OnLeCodigo : TNotifyEvent    read fsOnLeCodigo      write fsOnLeCodigo ;
+     property OnLeFila   : TNotifyEvent    read fsOnLeFila        write fsOnLeFila   ;
 end ;
 
 implementation
@@ -148,6 +142,7 @@ begin
   inherited create( AOwner );
 
   fsAtivo           := false ;
+  fsPrefixoAIncluir := '' ;
   fsPrefixoAExcluir := '' ;
   fs_PrefixoAExcluir:= '' ;
   fsSufixo          := '' ;
@@ -370,6 +365,15 @@ begin
            if leitura <> '' then
            begin
               fsUltimaLeitura := leitura ; {Leitura exatamente como veio do Leitor}
+
+              { Quando adicionado um Prefixo adiciona valor para o código lido e libera o Prefixo indicado }
+              {assim possibilitando controle de inclusão de multiplicadores para operação de leitura}
+
+              if (fsPrefixoAIncluir <> '') then
+              begin
+                 leitura           :=  fsPrefixoAIncluir + leitura;
+                 fsPrefixoAIncluir := '';
+              end;
 
               if UsarFila then
                  AddFila( leitura ) ;

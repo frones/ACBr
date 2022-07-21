@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2022
+--ACBrLCB--
+  [+]TK-2908 Adicionado a propriedade de prefixo
+  Por: Pedro E. Braga
+
 13/07/2022
 -- ACBrEscSunmi --
 [+] Adicionada informação de Tags não suportadas pela impressora, como Impressão

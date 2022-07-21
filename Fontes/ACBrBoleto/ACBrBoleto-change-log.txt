@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2022
+--ACBrBancoC6--
+  [-]ACBrBoleto - Ajuste  montagem código de barras para o C6
+  Por: Pandaaa / Altemar
+
 11/07/2022
 --ACBrBancoBRB--
   [*] TK-2852 ACBrBoletoBRB Pemissão de Informar a versão do Layout para geração do arquivo

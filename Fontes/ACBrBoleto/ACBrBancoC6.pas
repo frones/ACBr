@@ -87,13 +87,24 @@ end;
 //p
 function TACBrBancoC6.DefineCampoLivreCodigoBarras(
   const ACBrTitulo: TACBrTitulo): String;
+var LEmissao : char;
 begin
   with ACBrTitulo.ACBrBoleto do
   begin
-    Result := PadLeft(OnlyNumber(Cedente.Agencia), fpTamanhoAgencia, '0') +
-                      ACBrTitulo.Carteira +
-                      ACBrTitulo.NossoNumero +
-                      PadLeft(RightStr(Cedente.Conta,7),7,'0') + '0';
+
+    case ACBrTitulo.ACBrBoleto.Cedente.ResponEmissao of
+      tbBancoEmite,
+      tbBancoPreEmite,
+      tbBancoNaoReemite,
+      tbBancoReemite      : LEmissao := '3'; //3 para cobrança registrada com emissão pelo banco
+      else
+        LEmissao := '4'; //4 para cobrança direta com emissão pelo cedente
+    end;
+
+    Result := PadLeft(OnlyNumber(Cedente.CodigoCedente), 12, '0') +
+              ACBrTitulo.NossoNumero +
+              ACBrTitulo.Carteira +
+              LEmissao;
   end;
 end;
 //ok

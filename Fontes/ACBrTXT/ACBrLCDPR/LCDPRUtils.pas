@@ -34,12 +34,14 @@ unit LCDPRUtils;
 interface
 
 uses
-  SysUtils, ACBrUtil;
+  SysUtils;
 
 function formatNumeric(Value : Double; Size: Integer = 0) : String;
 function formatDate(Value : TDateTime) : String;
 
 implementation
+
+uses ACBrUtil.Strings;
 
 function formatDate(Value : TDateTime) : String;
 begin

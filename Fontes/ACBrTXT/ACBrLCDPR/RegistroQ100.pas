@@ -90,7 +90,7 @@ type
 implementation
 
 uses
-  SysUtils, ACBrUtil;
+  SysUtils, ACBrUtil.Strings;
 
 { TRegistroQ100 }
 

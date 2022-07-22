@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 const
   MASCARA_ITEM = '%s %10.3f %10s %14s %-50s %-4s %-3s %5.2f %11.2f';

@@ -59,7 +59,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil.Strings;
 
 { TContador }
 

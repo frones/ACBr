@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  SysUtils, ACBrUtil;
+  SysUtils, ACBrUtil.Strings;
 
 { TRegistro0045 }
 

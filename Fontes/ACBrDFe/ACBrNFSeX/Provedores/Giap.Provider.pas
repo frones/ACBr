@@ -359,12 +359,13 @@ begin
       begin
         Response.CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoVerificacao'), tcStr);
 
-        // Como não existe o método Nota Existe, jogo o valor da nota existente
-        // na situação, para saber se achou a nota ou não = Retorna "Sim" ou "Não"
         if ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr) = 'Sim' then
-          Response.Situacao := '200' // Encontrado
+          Response.DescSituacao := 'Nota Autorizada'
         else
-          Response.Situacao := '404'; // Não Encontado
+        if ObterConteudoTag(ANode.Childrens.FindAnyNs('notaExiste'), tcStr) = 'Cancelada' then
+          Response.DescSituacao := 'Nota Cancelada'
+        else
+          Response.DescSituacao := 'Nota não Encontrada';
 
         Response.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroNota'), tcStr);
       end;

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/07/2022
+-- IPM.LerXml --
+[*] Incluida a leitura da tag: valor_issrf
+   Por: Maico Smaniotto
 -- ISSSaoPaulo.LerXml --
 [*] Ajustes na leitura correta dos valores do servico.
    Por: FTellini

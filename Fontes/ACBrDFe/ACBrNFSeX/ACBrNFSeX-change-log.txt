@@ -45,6 +45,10 @@ Símbolo : Significado
 
 22/07/2022
 -- ACBrNFSeXServicos --
+[+] Incluída as cidades: Salto de Pirapora/SP - Provedor Fiorilli e
+    Ibiúna/SP - Provedor Sistemas4R
+   Por: Danny
+-- ACBrNFSeXServicos --
 [+] Incluída a cidade: Pinheiros/ES - Provedor EL
    Por: Joemil
 -- Governa.Provider/Governa.GravarXml --

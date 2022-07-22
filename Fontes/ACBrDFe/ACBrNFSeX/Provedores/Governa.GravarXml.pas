@@ -159,15 +159,13 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tsMesCpt', 1, 4, 1,
                                    FormatDateTime('MM', NFSe.Competencia), ''));
   end
-  else begin
+  else
+  begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tsFrmTrb', 1, 2, 1, '11', ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'tsTipRec', 1, 1, 1,
                                                     NFSe.TipoRecolhimento, ''));
   end;
-
-//  Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsRps', 8, 8, 1,
-//    StringReplace(FormatDateTime('yyyymmdd',NFSe.DataEmissao),'/', '',[rfReplaceAll]), ''));
 
 //  Result.AppendChild(AddNode(tcStr, '#1', 'tsDatEmsNFSe', 8, 8, 1, '', ''));
 
@@ -198,9 +196,6 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'tsVlrOtrRtn', 1, 16, 1,
                                 NFSe.Servico.Valores.valorOutrasRetencoes, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tsDesOtrRtn', 1, 16, 1,
-                            NFSe.Servico.Valores.DescricaoOutrasRetencoes, ''));
-
   if RegRecToStr(NFSe.RegRec) <> '' then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tsEstServ', 2, 2, 1,
@@ -212,10 +207,7 @@ begin
                                             NFSe.Servico.CodigoMunicipio), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'tsDesOtrRtn', 1, 1000, 1,
-                                                   '', ''));
-
-//    Result.AppendChild(AddNode(tcDe2, '#1', 'tsVlrRep', 1, 16, 1,
-//                                        NFSe.Servico.Valores.ValorRepasse, ''));
+                            NFSe.Servico.Valores.DescricaoOutrasRetencoes, ''));
   end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tsObs', 1, 1000, 1,

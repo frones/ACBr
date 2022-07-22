@@ -202,7 +202,7 @@ begin
                                FpVersaoArquivo +
                             '</tsVrsArq>' +
                             '<tsChvAcs>' +
-                               OnlyNumber(Emitente.WSChaveAcesso) +
+                               Emitente.WSChaveAcesso +
                             '</tsChvAcs>' +
                             Xml +
                          '</tcLoteRps>';
@@ -333,7 +333,7 @@ begin
                              FpVersaoArquivo +
                           '</tsVrsArq>' +
                           '<tsChvAcs>' +
-                             OnlyNumber(Emitente.WSChaveAcesso) +
+                             Emitente.WSChaveAcesso +
                           '</tsChvAcs>' +
                           '<tcInfConsultaRPS>' +
                             '<tsNumRPS>' + Response.NumRPS + '</tsNumRPS>' +
@@ -462,7 +462,7 @@ begin
                                FpVersaoArquivo +
                              '</tsVrsArq>' +
                              '<tsChvAcs>' +
-                               OnlyNumber(Emitente.WSChaveAcesso) +
+                               Emitente.WSChaveAcesso +
                              '</tsChvAcs>' +
                              '<tcNotCan>' +
                                '<tcInfNotCan>' +

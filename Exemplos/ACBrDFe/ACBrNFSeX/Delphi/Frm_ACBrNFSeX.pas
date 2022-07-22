@@ -2628,6 +2628,14 @@ begin
   memoLog.Lines.Clear;
   memoLog.Update;
 
+  memoLog.Lines.Add('Requisição');
+  memoLog.Lines.Add('Ambiente: ' + TpAmbToStr(ACBrNFSeX1.Configuracoes.WebServices.Ambiente));
+  memoLog.Lines.Add('Cidade  : ' + ACBrNFSeX1.Configuracoes.Geral.xMunicipio + '/' +
+                                   ACBrNFSeX1.Configuracoes.Geral.xUF);
+  memoLog.Lines.Add('Provedor: ' + ACBrNFSeX1.Configuracoes.Geral.xProvedor +
+          ' Versão: ' + VersaoNFSeToStr(ACBrNFSeX1.Configuracoes.Geral.Versao));
+  memoLog.Lines.Add(' ');
+
   with ACBrNFSeX1.WebService do
   begin
     case aMetodo of

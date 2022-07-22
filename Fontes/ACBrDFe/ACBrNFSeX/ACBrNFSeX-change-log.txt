@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/07/2022
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade: Pinheiros/ES - Provedor EL
+   Por: Joemil
 -- Governa.Provider/Governa.GravarXml --
 [*] Correções: Removido a função OnlyNumber da leitura da propriedade WSChaveAcesso e 
     alterado a posição de geração de uma tag que estava no local errado.
@@ -57,7 +60,7 @@ Símbolo : Significado
 
 20/07/2022
 -- ACBrNFSeXServicos --
-[*] Incluída a cidade: Açailandia/MA - Provedor SigISS
+[+] Incluída a cidade: Açailandia/MA - Provedor SigISS
    Por: Prime Software
 
 19/07/2022

@@ -41,7 +41,7 @@ Símbolo : Significado
 
 05/07/2022
 -- ACBrDFeUtil --
-[*] Inclui um segundo parâmentro na função GerarCodigoDFe visando atender a
+[*] Inclui um segundo parâmetro na função GerarCodigoDFe visando atender a
     NF3e e na função GerarChaveAcesso também. 
   Por: Italo Giurizzato Junior
 

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/07/2022
+-- ISSSaoPaulo.LerXml --
+[*] Ajustes na leitura correta dos valores do servico.
+   Por: FTellini
+
 20/07/2022
 -- ACBrNFSeXServicos --
 [*] Incluída a cidade: Açailandia/MA - Provedor SigISS

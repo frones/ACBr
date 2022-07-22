@@ -45,7 +45,7 @@ Símbolo : Significado
 
 05/07/2022
 -- pcnAuxiliar --
-[*] Inclui um segundo parâmentro na função ValidarCodigoDFe visando atender a
+[*] Inclui um segundo parâmetro na função ValidarCodigoDFe visando atender a
     NF3e
   Por: Italo Giurizzato Junior
 

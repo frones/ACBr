@@ -124,22 +124,22 @@ begin
     begin
       sEvento := XML.Strings[i];
 
-      if (LerTagXML(sEvento, 'event') <> '') then
+      if (SeparaDados(sEvento, 'event') <> '') then
       begin
         Evento := TACBrFeriado(fOwner).Eventos.New;
 
-        Data := StrToDateDef(LerTagXML(sEvento, 'date'), 0);
+        Data := StrToDateDef(SeparaDados(sEvento, 'date'), 0);
         DecodeDate(Data, Ano, Mes, Dia);
         Evento.Data      := Data;
         Evento.Ano       := Ano;
         Evento.Mes       := Mes;
         Evento.Dia       := Dia;
 
-        Evento.Nome      := LerTagXML(sEvento, 'name');
-        Evento.Descricao := LerTagXML(sEvento, 'description');
-        Evento.Link      := LerTagXML(sEvento, 'link');
+        Evento.Nome      := SeparaDados(sEvento, 'name');
+        Evento.Descricao := SeparaDados(sEvento, 'description');
+        Evento.Link      := SeparaDados(sEvento, 'link');
 
-        Tipo := StrToIntDef(LerTagXML(sEvento, 'type_code'), 0);
+        Tipo := StrToIntDef(SeparaDados(sEvento, 'type_code'), 0);
         case Tipo of
           1: Evento.Tipo := ftNacional;
           2: Evento.Tipo := ftEstadual;

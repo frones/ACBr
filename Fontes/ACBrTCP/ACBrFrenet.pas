@@ -112,14 +112,8 @@ type
     procedure SetQuantidade(const Value: integer);
     procedure SetSKU(const Value: string);
     procedure SetDiametro(const Value: Double);
-
-  protected
-
   public
-    { Construtor da classe }
     constructor Create;
-
-  published
     property Quantidade: integer      read FQuantidade      write SetQuantidade;
     property Peso: Double             read FPeso            write SetPeso;
     property Comprimento: Double      read FComprimento     write SetComprimento;
@@ -300,7 +294,6 @@ end;
 function TACBrFrenet.CotarFrete: boolean;
 var
   sSend: AnsiString;
-  Buffer: string;
   i: integer;
   JItem: TJsonObject;
 begin
@@ -422,8 +415,6 @@ end;
 
 function TACBrFrenet.ServicosDisponiveis: boolean;
 begin
-
-  Result := False;
 
   try
     FMsgErro := '';

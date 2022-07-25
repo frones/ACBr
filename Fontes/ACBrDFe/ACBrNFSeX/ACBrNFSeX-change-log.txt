@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/07/2022
+-- ACBrNFSeXServicos --
+[*] Acrescentado o parâmetro NaoDividir100 na cidade: Ribeirao Preto/SP - Provedor ISSNet
+   Por: Leonard Miranda
 -- Agili.LerXml --
 [*] Correções na leitura do XML da NFS-e visando a leitura correta da lista de 
     itens de serviço e da tag ISSQNRetido.

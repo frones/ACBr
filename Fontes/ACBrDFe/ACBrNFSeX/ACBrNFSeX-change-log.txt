@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/07/2022
+-- Prodata.Provider --
+[*] Sobrescrito a função TratarXmlRetornado, para tratar o XML retornado pelo
+    provedor, pois este retorna o XML identado, com declaração no meio do retorno
+    e no formato string em vez de XML.
+   Por: Italo Giurizzato Junior
+
 22/07/2022
 -- Giap.Provider --
 [*] Melhorias na obtenção do retorno da consulta a NFS-e por Rps.

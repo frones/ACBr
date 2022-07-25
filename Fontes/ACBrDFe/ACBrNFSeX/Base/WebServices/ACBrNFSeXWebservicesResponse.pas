@@ -48,13 +48,13 @@ uses
 type
   TNFSeEventoCollectionItem = class
   private
-    FCodigo: String;
-    FDescricao: String;
-    FCorrecao: String;
+    FCodigo: string;
+    FDescricao: string;
+    FCorrecao: string;
   public
-    property Codigo: String read FCodigo write FCodigo;
-    property Descricao: String read FDescricao write FDescricao;
-    property Correcao: String read FCorrecao write FCorrecao;
+    property Codigo: string read FCodigo write FCodigo;
+    property Descricao: string read FDescricao write FDescricao;
+    property Correcao: string read FCorrecao write FCorrecao;
   end;
 
   TNFSeEventoCollection = class(TACBrObjectList)
@@ -71,15 +71,19 @@ type
 
   TNFSeResumoCollectionItem = class
   private
-    FNumeroNota: String;
-    FCodigoVerificacao: String;
+    FNumeroNota: string;
+    FCodigoVerificacao: string;
     FNumeroRps: string;
     FSerieRps: string;
+    FSituacao: string;
+    FDescSituacao: string;
   public
-    property NumeroNota: String read FNumeroNota write FNumeroNota;
-    property CodigoVerificacao: String read FCodigoVerificacao write FCodigoVerificacao;
+    property NumeroNota: string read FNumeroNota write FNumeroNota;
+    property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
     property NumeroRps: string read FNumeroRps write FNumeroRps;
     property SerieRps: string read FSerieRps write FSerieRps;
+    property Situacao: string read FSituacao write FSituacao;
+    property DescSituacao: string read FDescSituacao write FDescSituacao;
   end;
 
   TNFSeResumoCollection = class(TACBrObjectList)
@@ -96,13 +100,13 @@ type
 
   TNotasCanceladasCollectionItem = class
   private
-    FNumeroNota: String;
-    FCodigoVerficacao: String;
-    FInscricaoMunicipalPrestador: String;
+    FNumeroNota: string;
+    FCodigoVerficacao: string;
+    FInscricaoMunicipalPrestador: string;
   public
-    property NumeroNota: String read FNumeroNota write FNumeroNota;
-    property CodigoVerficacao: String read FCodigoVerficacao write FCodigoVerficacao;
-    property InscricaoMunicipalPrestador: String read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
+    property NumeroNota: string read FNumeroNota write FNumeroNota;
+    property CodigoVerficacao: string read FCodigoVerficacao write FCodigoVerficacao;
+    property InscricaoMunicipalPrestador: string read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
   end;
 
   TNotasCanceladasCollection = class(TACBrObjectList)
@@ -119,12 +123,12 @@ type
 
   TRetCancelamento = class
   private
-    FNumeroLote: String;
-    FSituacao: String;
+    FNumeroLote: string;
+    FSituacao: string;
     FDataHora: TDateTime;
-    FMsgCanc: String;
-    FSucesso: String;
-    FLink: String;
+    FMsgCanc: string;
+    FSucesso: string;
+    FLink: string;
     FNumeroNota: string;
     FPedido: TPedidocancelamento;
     FNotasCanceladas: TNotasCanceladasCollection;
@@ -132,12 +136,12 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property NumeroLote: String read FNumeroLote write FNumeroLote;
-    property Situacao: String read FSituacao write FSituacao;
+    property NumeroLote: string read FNumeroLote write FNumeroLote;
+    property Situacao: string read FSituacao write FSituacao;
     property DataHora: TDateTime read FDataHora write FDataHora;
-    property MsgCanc: String read FMsgCanc write FMsgCanc;
-    property Sucesso: String read FSucesso write FSucesso;
-    property Link: String read FLink write FLink;
+    property MsgCanc: string read FMsgCanc write FMsgCanc;
+    property Sucesso: string read FSucesso write FSucesso;
+    property Link: string read FLink write FLink;
     property NumeroNota: string read FNumeroNota  write FNumeroNota;
     property Pedido: TPedidocancelamento read FPedido;
     property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas;
@@ -145,37 +149,37 @@ type
 
   TNFSeParamsResponse = class
   private
-    FXml: String;
-    FTagEnvio: String;
-    FPrefixo: String;
-    FPrefixo2: String;
-    FNameSpace: String;
-    FNameSpace2: String;
-    FIdAttr: String;
-    FVersao: String;
-    FSerie: String;
-    FMotivo: String;
-    FCodVerif: String;
+    FXml: string;
+    FTagEnvio: string;
+    FPrefixo: string;
+    FPrefixo2: string;
+    FNameSpace: string;
+    FNameSpace2: string;
+    FIdAttr: string;
+    FVersao: string;
+    FSerie: string;
+    FMotivo: string;
+    FCodVerif: string;
   public
     procedure Clear;
 
-    property Xml: String read FXml write FXml;
-    property TagEnvio: String read FTagEnvio write FTagEnvio;
-    property Prefixo: String read FPrefixo write FPrefixo;
-    property Prefixo2: String read FPrefixo2 write FPrefixo2;
-    property NameSpace: String read FNameSpace write FNameSpace;
-    property NameSpace2: String read FNameSpace2 write FNameSpace2;
-    property IdAttr: String read FIdAttr write FIdAttr;
-    property Versao: String read FVersao write FVersao;
-    property Serie: String read FSerie write FSerie;
-    property Motivo: String read FMotivo write FMotivo;
-    property CodVerif: String read FCodVerif write FCodVerif;
+    property Xml: string read FXml write FXml;
+    property TagEnvio: string read FTagEnvio write FTagEnvio;
+    property Prefixo: string read FPrefixo write FPrefixo;
+    property Prefixo2: string read FPrefixo2 write FPrefixo2;
+    property NameSpace: string read FNameSpace write FNameSpace;
+    property NameSpace2: string read FNameSpace2 write FNameSpace2;
+    property IdAttr: string read FIdAttr write FIdAttr;
+    property Versao: string read FVersao write FVersao;
+    property Serie: string read FSerie write FSerie;
+    property Motivo: string read FMotivo write FMotivo;
+    property CodVerif: string read FCodVerif write FCodVerif;
   end;
 
   TNFSeWebserviceResponse = class
   private
-    FSituacao: String;
-    FDescSituacao: String;
+    FSituacao: string;
+    FDescSituacao: string;
     FLote: string;
     FSucesso: Boolean;
     FNumeroNota: string;
@@ -183,31 +187,31 @@ type
     FData: TDateTime;
     FDataCanc: TDateTime;
     FidNota: string;
-    FLink: String;
-    FProtocolo: String;
+    FLink: string;
+    FProtocolo: string;
     FNumeroRps: string;
     FSerieRps: string;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
 
-    FEnvelopeEnvio: String;
-    FEnvelopeRetorno: String;
-    FArquivoEnvio: String;
-    FArquivoRetorno: String;
+    FEnvelopeEnvio: string;
+    FEnvelopeRetorno: string;
+    FArquivoEnvio: string;
+    FArquivoRetorno: string;
 
-    function GetXmlEnvio: String;
-    procedure SetXmlEnvio(const Value: String);
-    function GetXmlRetorno: String;
-    procedure SetXmlRetorno(const Value: String);
+    function GetXmlEnvio: string;
+    procedure SetXmlEnvio(const Value: string);
+    function GetXmlRetorno: string;
+    procedure SetXmlRetorno(const Value: string);
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Clear; virtual;
 
-    property Situacao: String read FSituacao write FSituacao;
-    property DescSituacao: String read FDescSituacao write FDescSituacao;
+    property Situacao: string read FSituacao write FSituacao;
+    property DescSituacao: string read FDescSituacao write FDescSituacao;
     property Lote: string read FLote write FLote;
     property Sucesso: Boolean read FSucesso write FSucesso;
     property NumeroNota: string read FNumeroNota write FNumeroNota;
@@ -215,21 +219,21 @@ type
     property Data: TDateTime read FData write FData;
     property DataCanc: TDateTime read FDataCanc write FDataCanc;
     property idNota: string read FidNota write FidNota;
-    property Link: String read FLink write FLink;
-    property Protocolo: String read FProtocolo write FProtocolo;
+    property Link: string read FLink write FLink;
+    property Protocolo: string read FProtocolo write FProtocolo;
     property NumeroRps: string read FNumeroRps write FNumeroRps;
     property SerieRps: string read FSerieRps write FSerieRps;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
 
-    property XmlEnvio: String read GetXmlEnvio write SetXmlEnvio;
-    property XmlRetorno: String read GetXmlRetorno write SetXmlRetorno;
+    property XmlEnvio: string read GetXmlEnvio write SetXmlEnvio;
+    property XmlRetorno: string read GetXmlRetorno write SetXmlRetorno;
 
-    property EnvelopeEnvio: String read FEnvelopeEnvio write FEnvelopeEnvio;
-    property EnvelopeRetorno: String read FEnvelopeRetorno write FEnvelopeRetorno;
-    property ArquivoEnvio: String read FArquivoEnvio write FArquivoEnvio;
-    property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
+    property EnvelopeEnvio: string read FEnvelopeEnvio write FEnvelopeEnvio;
+    property EnvelopeRetorno: string read FEnvelopeRetorno write FEnvelopeRetorno;
+    property ArquivoEnvio: string read FArquivoEnvio write FArquivoEnvio;
+    property ArquivoRetorno: string read FArquivoRetorno write FArquivoRetorno;
   end;
 
   TNFSeEmiteResponse = class(TNFSeWebserviceResponse)
@@ -238,6 +242,7 @@ type
     FModoEnvio: TmodoEnvio;
     FCodVerificacao: string;
     FNomeArq: string;
+    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -248,6 +253,7 @@ type
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property NomeArq: string read FNomeArq write FNomeArq;
+    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeConsultaSituacaoResponse = class(TNFSeWebserviceResponse)
@@ -263,13 +269,13 @@ type
   TNFSeCancelamento = class
   private
     FDataHora: TDateTime;
-    FMotivo: String;
+    FMotivo: string;
 
     function GetCancelada: Boolean;
   public
     property Cancelada: Boolean read GetCancelada;
     property DataHora: TDateTime read FDataHora write FDataHora;
-    property Motivo: String read FMotivo write FMotivo;
+    property Motivo: string read FMotivo write FMotivo;
   end;
 
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
@@ -323,16 +329,20 @@ type
 
   TNFSeCancelaNFSeResponse = class(TNFSeWebserviceResponse)
   private
+    FCodVerificacao: string;
     FInfCancelamento: TInfCancelamento;
     FRetCancelamento: TRetCancelamento;
+    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Clear; override;
 
+    property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property InfCancelamento: TInfCancelamento read FInfCancelamento write FInfCancelamento;
     property RetCancelamento: TRetCancelamento read FRetCancelamento;
+    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeSubstituiNFSeResponse = class(TNFSeCancelaNFSeResponse)
@@ -375,16 +385,16 @@ type
 
   TNFSeAbreSessaoResponse = class(TNFSeWebserviceResponse)
   private
-    FHashIdent: String;
+    FHashIdent: string;
   public
-    property HashIdent: String read FHashIdent write FHashIdent;
+    property HashIdent: string read FHashIdent write FHashIdent;
   end;
 
   TNFSeFechaSessaoResponse = class(TNFSeWebserviceResponse)
   private
-    FHashIdent: String;
+    FHashIdent: string;
   public
-    property HashIdent: String read FHashIdent write FHashIdent;
+    property HashIdent: string read FHashIdent write FHashIdent;
   end;
 
 implementation
@@ -522,22 +532,22 @@ begin
   inherited;
 end;
 
-function TNFSeWebserviceResponse.GetXmlEnvio: String;
+function TNFSeWebserviceResponse.GetXmlEnvio: string;
 begin
   Result := ArquivoEnvio;
 end;
 
-function TNFSeWebserviceResponse.GetXmlRetorno: String;
+function TNFSeWebserviceResponse.GetXmlRetorno: string;
 begin
   Result := ArquivoRetorno;
 end;
 
-procedure TNFSeWebserviceResponse.SetXmlEnvio(const Value: String);
+procedure TNFSeWebserviceResponse.SetXmlEnvio(const Value: string);
 begin
   ArquivoEnvio := Value;
 end;
 
-procedure TNFSeWebserviceResponse.SetXmlRetorno(const Value: String);
+procedure TNFSeWebserviceResponse.SetXmlRetorno(const Value: string);
 begin
   ArquivoRetorno := Value;
 end;
@@ -588,6 +598,8 @@ constructor TNFSeCancelaNFSeResponse.Create;
 begin
   inherited Create;
 
+  FResumos := TNFSeResumoCollection.Create;
+
   Clear;
 end;
 
@@ -613,6 +625,12 @@ begin
       FAlertas.Delete(i);
   end;
 
+  if Assigned(FResumos) then
+  begin
+    for i := FResumos.Count - 1 downto 0 do
+      FResumos.Delete(i);
+  end;
+
   FInfCancelamento := TInfCancelamento.Create;
   FRetCancelamento := TRetCancelamento.Create;
 end;
@@ -624,6 +642,8 @@ begin
 
   if Assigned(FRetCancelamento) then
     FRetCancelamento.Free;
+
+  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -669,22 +689,33 @@ end;
 { TNFSeEmiteResponse }
 
 procedure TNFSeEmiteResponse.Clear;
+var
+  i: Integer;
 begin
   MaxRps := 0;
   ModoEnvio := meLoteAssincrono;
   CodVerificacao := '';
   NomeArq := '';
+
+  if Assigned(FResumos) then
+  begin
+    for i := FResumos.Count - 1 downto 0 do
+      FResumos.Delete(i);
+  end;
 end;
 
 constructor TNFSeEmiteResponse.Create;
 begin
   inherited Create;
 
+  FResumos := TNFSeResumoCollection.Create;
+
   Clear;
 end;
 
 destructor TNFSeEmiteResponse.Destroy;
 begin
+  FResumos.Free;
 
   inherited Destroy;
 end;

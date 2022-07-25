@@ -52,9 +52,6 @@ uses
   {$EndIf}
   ACBrPIXBase;
 
-const
-  cCobExpiracaoDefault = 86400;
-
 type
 
   { TACBrPIXCalendarioCobBase }
@@ -86,7 +83,6 @@ type
 
   TACBrPIXCalendarioCobSolicitada = class(TACBrPIXCalendarioCobBase)
   public
-    procedure Clear; override;
     property expiracao;
   end;
 
@@ -188,14 +184,6 @@ begin
    end;
    fexpiracao := AJSon['expiracao'].AsInteger;
   {$EndIf}
-end;
-
-{ TACBrPIXCalendarioCobSolicitada }
-
-procedure TACBrPIXCalendarioCobSolicitada.Clear;
-begin
-  inherited Clear;
-  expiracao := cCobExpiracaoDefault;
 end;
 
 end.

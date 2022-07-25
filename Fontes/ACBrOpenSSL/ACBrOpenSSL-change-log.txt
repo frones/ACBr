@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2022
+-- ACBrOpenSSLUtils --
+[*] Remoção de warnings e código não utilizado
+    https://www.projetoacbr.com.br/forum/topic/68196-remoção-de-warnigs-e-hints-units-acbropenssl/
+    Por: Waldir Paim
+
 26/06/2022
 -- ACBrOpenSSLUtils --
 [*] Remoção de warnings.

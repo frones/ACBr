@@ -261,7 +261,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
@@ -307,7 +307,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
@@ -333,7 +333,7 @@ type
     procedure DoWriteToJSon(AJSon: TJsonObject); override;
     procedure DoReadFromJSon(AJSon: TJsonObject); override;
   public
-    constructor Create(const ObjectName: String); override;
+    constructor Create(const ObjectName: String = ''); override;
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
     destructor Destroy; override;
@@ -723,7 +723,7 @@ end;
 
 function TACBrPIXDesconto.IsEmpty: Boolean;
 begin
-  Result := inherited IsEmpty and fdescontosDataFixa.IsEmpty;
+  Result := (fvalorPerc = 0) and (fmodalidade = pdmNenhum) and fdescontosDataFixa.IsEmpty;
 end;
 
 procedure TACBrPIXDesconto.DoWriteToJSon(aJSon: TJsonObject);
@@ -815,9 +815,11 @@ end;
 procedure TACBrPIXCobVValor.DoWriteToJSon(AJSon: TJsonObject);
 begin
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['original'] := FormatarValorPIX(foriginal);
+  if (foriginal > 0) then
+    AJSon.S['original'] := FormatarValorPIX(foriginal);
   {$Else}
-   AJSon['original'].AsString := FormatarValorPIX(foriginal);
+  if (foriginal > 0) then
+    AJSon['original'].AsString := FormatarValorPIX(foriginal);
   {$EndIf}
   fabatimento.WriteToJSon(AJSon);
   fdesconto.WriteToJSon(AJSon);

@@ -304,7 +304,6 @@ begin
   InitOpenSSL;
   Modulus := '';
   Exponent := '';
-  Result := False;
   bio := BioNew(BioSMem);
   RsaKey := EvpPkeyGet1RSA(AKey);
   try
@@ -458,8 +457,8 @@ var
 begin
   Result := '';
   bio := BioNew(BioSMem);
+  rsa := EvpPkeyGet1RSA(APrivKey);
   try
-    rsa := EvpPkeyGet1RSA(APrivKey);
     if (Password <> '') then
       ret := PEM_write_bio_RSAPrivateKey( bio, rsa,
                                           EVP_aes_256_cbc,
@@ -1254,35 +1253,3 @@ finalization
   FreeOpenSSL;
 
 end.
-
-property KeyPassword: String read fKeyPassword write fKeyPassword;
-
-property PFXFile: String read fPFXFile write fPFXFile;
-property CertificateFile: String read fCertificateFile write fCertificateFile;
-property PrivateKeyFile: String read fPrivateKeyFile write fPrivateKeyFile;
-property PublicKeyFile: String read fPublicKeyFile write fPublicKeyFile;
-
-property PFXStr: AnsiString read fPFXStr write fPFXStr;
-property CertificateStr: AnsiString read fCertificateStr write fCertificateStr;
-property PrivateKeyStr: AnsiString read fPrivateKeyStr write fPrivateKeyStr;
-property PublicKeyStr: AnsiString read fPublicKeyStr write fPublicKeyStr;
-
-fCertificateFile: String;
-fCertificateStr: AnsiString;
-fPFXFile: String;
-fPFXStr: AnsiString;
-fPrivateKeyFile: String;
-fPrivateKeyStr: AnsiString;
-fPublicKeyFile: String;
-fPublicKeyStr: AnsiString;
-
-fKeyPassword := '';
-fCertificateFile := '';
-fCertificateStr := '';
-fPFXFile := '';
-fPFXStr := '';
-fPrivateKeyFile := '';
-fPrivateKeyStr := '';
-fPublicKeyFile := '';
-fPublicKeyStr := '';
-

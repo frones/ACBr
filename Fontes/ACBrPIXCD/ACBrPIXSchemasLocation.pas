@@ -59,13 +59,13 @@ type
   TACBrPIXLocationBase = class(TACBrPIXSchema)
   private
     fcriacao: TDateTime;
-    fid: Integer;
+    fid: Int64;
     flocation: String;
     ftipoCob: TACBrPIXTipoCobranca;
     ftxId: String;
     procedure SetTxId(AValue: String);
   protected
-    property id: Integer read fid write fid;
+    property id: Int64 read fid write fid;
     property txId: String read ftxId write SetTxId;
     property location: String read flocation write flocation;
     property criacao: TDateTime read fcriacao;
@@ -164,7 +164,7 @@ begin
      AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
   {$Else}
    if (fid <> 0) then
-     AJSon['id'].AsInteger := fid;
+     AJSon['id'].AsNumber := fid;
    if (ftxId <> '') then
      AJSon['txid'].AsString := ftxId;
    if (flocation <> '') then
@@ -189,7 +189,7 @@ begin
    if (s <> '') then
      fcriacao := Iso8601ToDateTime(s);
   {$Else}
-   fid := AJSon['id'].AsInteger;
+   fid := Trunc(AJSon['id'].AsNumber);
    ftxId := AJSon['txid'].AsString;
    flocation := AJSon['location'].AsString;
    ftipoCob := StringToPIXTipoCobranca(AJSon['tipoCob'].AsString);

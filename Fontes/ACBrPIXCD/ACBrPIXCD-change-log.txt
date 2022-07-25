@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2022
+-- ACBrPIXSchemasCobV --
+[*] Correções para envio correto do endpoint /cobv
+
+-- ACBrPIXCD --
+[+] Inclusão do endpoint /cobv
+    Por: Elias César
+	
+-- ACBrPIXPSPItau --
+[+] Inclusão de função para renovação do certificado
+[*] Alterações para incluir o certificado nas requisições em ambiente de produção
+    Por: Elias César
+
 21/070/2022
 -- ACBrPIXPSPBancoDoBrasil --
 [-] Correção para incluir delimitador nas requisições do endpoint /cob

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 25/07/2022
+-- Governa.Provider --
+[*] Melhorias no tratamento dos retornos.
+   Por: Italo Giurizzato Junior
 -- Prodata.Provider --
 [*] Sobrescrito a função TratarXmlRetornado, para tratar o XML retornado pelo
     provedor, pois este retorna o XML identado, com declaração no meio do retorno

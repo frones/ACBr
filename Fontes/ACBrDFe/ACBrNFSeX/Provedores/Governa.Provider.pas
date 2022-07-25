@@ -87,9 +87,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   Governa.GravarXml, Governa.LerXml;
@@ -157,6 +155,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Codigo: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -169,13 +168,18 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('tsFlgEtt'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('tsDesOco'), tcStr);
-    AErro.Correcao := '';
+    Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('tsFlgEtt'), tcStr);
 
-    if AErro.Descricao = '' then
-      AErro.Descricao := ANodeArray[I].AsString;
+    if Codigo <> 'V' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Codigo;
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('tsDesOco'), tcStr);
+      AErro.Correcao := '';
+
+      if AErro.Descricao = '' then
+        AErro.Descricao := ANodeArray[I].AsString;
+    end;
   end;
 end;
 
@@ -213,8 +217,10 @@ procedure TACBrNFSeProviderGoverna.TratarRetornoEmitir(Response: TNFSeEmiteRespo
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
-//  AuxNode, AuxNodeChave: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  AResumo: TNFSeResumoCollectionItem;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -235,59 +241,42 @@ begin
       ProcessarMensagemErros(ANode, Response, '', 'tcValidaLoteRps');
 
       Response.Sucesso := (Response.Erros.Count = 0);
-      {
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+
+      AuxNode := ANode.Childrens.FindAnyNs('tcRetRps');
 
       if AuxNode <> nil then
       begin
-        with Response do
+        ANodeArray := AuxNode.Childrens.FindAllAnyNs('tcInfRetRps');
+
+        if not Assigned(ANodeArray) then
         begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit;
+        end;
 
-          with InformacoesLote do
+        for i := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[i];
+
+          AResumo := Response.Resumos.New;
+          AResumo.NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumRps'), tcStr);
+          AResumo.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumNot'), tcStr);
+          AResumo.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+          AResumo.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
+          AResumo.DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
+
+          with Response do
           begin
-            NumeroLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-            InscricaoPrestador := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-
-            CPFCNPJRemetente := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('CPFCNPJRemetente'), tcStr);
-
-            DataEnvioLote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('DataEnvioLote'), tcDatHor);
-            QtdNotasProcessadas := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('QtdNotasProcessadas'), tcInt);
-            TempoProcessamento := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('TempoProcessamento'), tcInt);
-            ValorTotalServico := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('ValorTotalServico'), tcDe2);
+            NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumRps'), tcStr);
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumNot'), tcStr);
+            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+            Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
+            DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
           end;
         end;
       end;
-
-      AuxNode := ANode.Childrens.FindAnyNs('ChavesNFeRPS');
-
-      if AuxNode <> nil then
-      begin
-        AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveRPS');
-
-        if (AuxNodeChave <> nil) then
-        begin
-          with Response do
-          begin
-            InscricaoPrestador := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            SerieRPS := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('SerieRPS'), tcStr);
-            NumeroRPS := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('NumeroRPS'), tcStr);
-          end;
-        end;
-
-        AuxNodeChave := AuxNode.Childrens.FindAnyNs('ChaveNFe');
-
-        if (AuxNodeChave <> nil) then
-        begin
-          with Response do
-          begin
-            InscricaoPrestador := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('InscricaoPrestador'), tcStr);
-            Numero := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('NumeroNFe'), tcStr);
-            CodigoVerificacao := ObterConteudoTag(AuxNodeChave.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
-          end;
-        end;
-      end;
-      }
     except
       on E:Exception do
       begin
@@ -347,7 +336,7 @@ procedure TACBrNFSeProviderGoverna.TratarRetornoConsultaNFSeporRps(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode{, AuxNode}: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
 //  ANodeArray: TACBrXmlNodeArray;
 //  i: Integer;
 //  NumRps: String;
@@ -372,42 +361,25 @@ begin
       ProcessarMensagemErros(ANode, Response, '', 'tcValidaConsultaRPS');
 
       Response.Sucesso := (Response.Erros.Count = 0);
-      {
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+
+      AuxNode := ANode.Childrens.FindAnyNs('tcRetConsultaRPS');
 
       if AuxNode <> nil then
       begin
-        ProcessarMensagemErros(AuxNode, Response, 'Erros', 'Erro');
+        AuxNode := AuxNode.Childrens.FindAnyNs('tcInfRetConsultaRPS');
 
-        Response.Sucesso := (Response.Erros.Count = 0);
-
-        with Response do
+        if AuxNode <> nil then
         begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          with Response do
+          begin
+            NumeroRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsNumRps'), tcStr);
+            NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsNumNot'), tcStr);
+            CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+            Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
+            DescSituacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tsDesOco'), tcStr);
+          end;
         end;
       end;
-
-      ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
-      if not Assigned(ANodeArray) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
-        Exit;
-      end;
-
-      for i := Low(ANodeArray) to High(ANodeArray) do
-      begin
-        ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        NumRps := AuxNode.AsString;
-
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
-
-        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-        SalvarXmlNfse(ANota);
-      end;
-      }
     except
       on E:Exception do
       begin
@@ -485,7 +457,10 @@ procedure TACBrNFSeProviderGoverna.TratarRetornoCancelaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode{, AuxNode}: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  i: Integer;
+  AResumo: TNFSeResumoCollectionItem;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -506,17 +481,40 @@ begin
       ProcessarMensagemErros(ANode, Response, '', 'tcValidaLoteCancelamento');
 
       Response.Sucesso := (Response.Erros.Count = 0);
-      {
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+
+      AuxNode := ANode.Childrens.FindAnyNs('tcRetNotCan');
 
       if AuxNode <> nil then
       begin
-        with Response do
+        ANodeArray := AuxNode.Childrens.FindAllAnyNs('tcInfRetNotCan');
+
+        if not Assigned(ANodeArray) then
         begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit;
+        end;
+
+        for i := Low(ANodeArray) to High(ANodeArray) do
+        begin
+          ANode := ANodeArray[i];
+
+          AResumo := Response.Resumos.New;
+          AResumo.NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumNot'), tcStr);
+          AResumo.CodigoVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+          AResumo.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
+          AResumo.DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
+
+          with Response do
+          begin
+            NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsNumNot'), tcStr);
+            CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsCodVer'), tcStr);
+            Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsFlgRet'), tcStr);
+            DescSituacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('tsDesOco'), tcStr);
+          end;
         end;
       end;
-      }
     except
       on E:Exception do
       begin

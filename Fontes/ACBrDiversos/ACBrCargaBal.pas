@@ -202,6 +202,58 @@ type
     property Descricao3: String read FDescricao3 write FDescricao3;
   end;
 
+  TACBrCargaBalExtra1 = class
+  private
+    FCodigo: Smallint;
+    FObservacao : String;
+    FLinha2: String;
+    FLinha3: String;
+    FLinha1: String;
+    FLinha4: String;
+    FLinha5: String;
+    procedure SetLinha1(const Value: String);
+    procedure SetLinha2(const Value: String);
+    procedure SetLinha3(const Value: String);
+    procedure SetLinha4(const Value: String);
+    procedure SetLinha5(const Value: String); // 100 Bytes
+  public
+    constructor Create;
+    property Codigo:Smallint read FCodigo write FCodigo;
+    property Observacao: String read FObservacao write FObservacao;
+    property Linha1:String read FLinha1 write SetLinha1;
+    property Linha2:String read FLinha2 write SetLinha2;
+    property Linha3:String read FLinha3 write SetLinha3;
+    property Linha4:String read FLinha4 write SetLinha4;
+    property Linha5:String read FLinha5 write SetLinha5;
+  end;
+
+  TACBrCargaBalExtra2 = class
+  private
+    FObservacao: String;
+    FCodigo: Smallint;
+    FLinha2: String;
+    FLinha3: String;
+    FLinha1: String;
+    FLinha4: String;
+    FLinha5: String;
+    procedure SetCodigo(const Value: Smallint);
+    procedure SetLinha1(const Value: String);
+    procedure SetLinha2(const Value: String);
+    procedure SetLinha3(const Value: String);
+    procedure SetLinha4(const Value: String);
+    procedure SetLinha5(const Value: String);
+    procedure SetObservacao(const Value: String);
+  public
+    constructor Create;
+    property Codigo:Smallint read FCodigo write SetCodigo;
+    property Observacao:String read FObservacao write SetObservacao;
+    property Linha1:String read FLinha1 write SetLinha1;
+    property Linha2:String read FLinha2 write SetLinha2;
+    property Linha3:String read FLinha3 write SetLinha3;
+    property Linha4:String read FLinha4 write SetLinha4;
+    property Linha5:String read FLinha5 write SetLinha5;
+  end;
+
   TACBrCargaBalItem = class
   private
     FValorVenda: Currency;
@@ -217,6 +269,8 @@ type
     FFornecedor: TACBrCargaBalFornecedor;
     FFracionador: TACBrCargaBalFracionador;
     FConservacao: TACBrCargaBalConservacao;
+    FExtra1:TACBrCargaBalExtra1;
+    FExtra2:TACBrCargaBalExtra2;
     FCodigoTexto1: Integer;
     FCodigoTexto2: Integer;
     FCodigoTexto3: Integer;
@@ -230,7 +284,12 @@ type
     FEAN13Fornecedor: string;
     FInformacaoExtra: TACBrCargaBalInformacaoExtra;
     FTeclado: TAcbrCargaBalTeclado;
+    FCodigoExtra1: SmallInt;
+    FCodigoExtra2: SmallInt;
     function ObterCodigoInfoExtra(AModelo : TACBrCargaBalModelo) : Integer;
+    procedure SetCodigoExtra1(const Value: SmallInt);
+    procedure SetExtra2(const Value: TACBrCargaBalExtra2);
+    procedure SetCodigoExtra2(const Value: SmallInt);
   Public
     constructor Create;
     destructor Destroy; override;
@@ -248,6 +307,8 @@ type
     property Tara: TACBrCargaBalTaras Read FTara Write FTara;
     property Fornecedor: TACBrCargaBalFornecedor Read FFornecedor Write FFornecedor;
     property Fracionador: TACBrCargaBalFracionador Read FFracionador Write FFracionador;
+    property Extra1:TACBrCargaBalExtra1 Read FExtra1 write FExtra1;
+    property Extra2:TACBrCargaBalExtra2 read FExtra2 write SetExtra2;
     property Conservacao: TACBrCargaBalConservacao Read FConservacao Write FConservacao;
     property CodigoTexto1: Integer read FCodigoTexto1 write FCodigoTexto1;
     property CodigoTexto2: Integer read FCodigoTexto2 write FCodigoTexto2;
@@ -259,6 +320,8 @@ type
     property ImpEmbalagem: Smallint Read FImpEmbalagem Write FImpEmbalagem Default 1;
     property CodigoFracionador: Smallint Read FCodigoFracionador Write FCodigoFracionador Default 0;
     property CodigoConservacao: Smallint Read FCodigoConservacao Write FCodigoConservacao Default 0;
+    property CodigoExtra1:SmallInt read FCodigoExtra1 write SetCodigoExtra1;
+    property CodigoExtra2:SmallInt read FCodigoExtra2 write SetCodigoExtra2;
     property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
   end;
 
@@ -299,6 +362,8 @@ type
     function GetNomeArquivoFracionador: String;
     function GetNomeArquivoConservacao: String;
     function GetNomeArquivoTeclado: String;
+    function GetNomeArquivoExtra1:String;
+    function GetNomeArquivoExtra2:String;
 
     function GetNomeArquivoRelacaoProdutoNutricional: String;
     function GetNomeArquivoRelacaoProdutoReceita: String;
@@ -314,7 +379,7 @@ type
     function GetTipoValidadeProdutoUranoURF32(Tipo: TACBrCargaBalTipoValidade): string;
 
     procedure PreencherFilizola(stlArquivo, stlSetor, stlNutricional, stlReceita: TStringList);
-    procedure PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado: TStringList; Versao: Integer);
+    procedure PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado, stlExtra1, stlExtra2: TStringList; Versao: Integer);
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
     procedure PreencherUranoURF32(stlArquivo, stlNutricional, stlReceita, stlRelacaoProdutoNutricional, stlRelacaoProdutoReceita: TStringList);
@@ -404,6 +469,8 @@ begin
   FConservacao     := TACBrCargaBalConservacao.Create;
   FInformacaoExtra := TACBrCargaBalInformacaoExtra.Create;
   FTeclado         := TAcbrCargaBalTeclado.create;
+  FExtra1          := TACBrCargaBalExtra1.Create;
+  FExtra2          := TACBrCargaBalExtra2.Create;
 
   FCodigoTexto1    := 0;
   FCodigoTexto2    := 0;
@@ -423,6 +490,8 @@ begin
   FSetor.Free;
   FNutricional.Free;
   FTara.Free;
+  FExtra1.Free;
+  FExtra2.Free;
   inherited;
 end;
 
@@ -443,6 +512,21 @@ begin
     end;
   end;
  Result := FInformacaoExtra.Codigo;
+end;
+
+procedure TACBrCargaBalItem.SetCodigoExtra1(const Value: SmallInt);
+begin
+  FCodigoExtra1 := Value;
+end;
+
+procedure TACBrCargaBalItem.SetCodigoExtra2(const Value: SmallInt);
+begin
+  FCodigoExtra2 := Value;
+end;
+
+procedure TACBrCargaBalItem.SetExtra2(const Value: TACBrCargaBalExtra2);
+begin
+  FExtra2 := Value;
 end;
 
 { TACBrCargaBalItens }
@@ -690,6 +774,22 @@ begin
   end;
 end;
 
+function TACBrCargaBal.GetNomeArquivoExtra1: String;
+begin
+  case FModelo of
+    modToledoMGV5,
+    modToledoMGV6: Result := 'CAMPEXT1.TXT';
+  end;
+end;
+
+function TACBrCargaBal.GetNomeArquivoExtra2: String;
+begin
+  case FModelo of
+    modToledoMGV5,
+    modToledoMGV6: Result := 'CAMPEXT2.TXT';
+  end;
+end;
+
 function TACBrCargaBal.GetNomeArquivoTeclado: String;
 begin
   case FModelo of
@@ -881,10 +981,10 @@ begin
   end;
 end;
 
-procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado: TStringList; Versao: Integer);
+procedure TACBrCargaBal.PreencherToledo(stlArquivo, stlNutricional, stlReceita, stlTara, stlFornecedor, stlFracionador, stlConservacao, stlSetor, stlTeclado, stlExtra1, stlExtra2: TStringList; Versao: Integer);
 var
   i, Total : Integer;
-  ANutri, AReceita, ATara, AFornecedor, AFracionador, AConservacao, ASetor: string;
+  ANutri, AReceita, ATara, AFornecedor, AFracionador, AConservacao, ASetor, AExtra1, AExtra2: string;
   LTXTeclas:TStringList;
 begin
   Total := Produtos.Count;
@@ -1152,8 +1252,8 @@ begin
           LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
           //LFIll('0', 4)+ // codigo da tara
           LFIll(Produtos[i].CodigoFracionador, 4)+ // codigo da fracionador
-          LFIll('0', 4)+ // Código do Campo Extra 1
-          LFIll('0', 4)+ // Código do Campo Extra 2
+          LFIll(Produtos[i].CodigoExtra1, 4)+ // Código do Campo Extra 1
+          LFIll(Produtos[i].CodigoExtra2, 4)+ // Código do Campo Extra 2
           LFIll(Produtos[i].CodigoConservacao, 4)+ // Código da Conservação
           LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
 
@@ -1261,6 +1361,27 @@ begin
           stlConservacao.Add(AConservacao);
        end;
 
+       if (Produtos[i].Extra1.Codigo>0) then begin
+         AExtra1:=LFIll(Produtos[i].Extra1.Codigo,4)+RFill(Produtos[i].Extra1.Observacao,100)+
+                  RFill(Produtos[i].Extra1.Linha1,56)+
+                  RFill(Produtos[i].Extra1.Linha2,56)+
+                  RFill(Produtos[i].Extra1.Linha3,56)+
+                  RFill(Produtos[i].Extra1.Linha4,56)+
+                  RFill(Produtos[i].Extra1.Linha5,56);
+         if (stlExtra1.IndexOf(AExtra1)<0) then
+           stlExtra1.Add(AExtra1);
+       end;
+
+       if (Produtos[i].Extra2.Codigo>0) then begin
+         AExtra2:=LFIll(Produtos[i].Extra2.Codigo,4)+RFill(Produtos[i].Extra2.Observacao,100)+
+                  RFill(Produtos[i].Extra2.Linha1,56)+
+                  RFill(Produtos[i].Extra2.Linha2,56)+
+                  RFill(Produtos[i].Extra2.Linha3,56)+
+                  RFill(Produtos[i].Extra2.Linha4,56)+
+                  RFill(Produtos[i].Extra2.Linha5,56);
+         if (stlExtra2.IndexOf(AExtra2)<0) then
+           stlExtra2.Add(AExtra2);
+       end;
 
        if (Produtos[i].Setor.Codigo > 0) then
        begin
@@ -1524,7 +1645,7 @@ end;
 
 procedure TACBrCargaBal.GerarArquivos(const ADiretorio: String);
 var
-  Produto, Setor, Receita, Nutricional, Tara, Fornecedor, Fracionador, Conservacao: TStringList;
+  Produto, Setor, Receita, Nutricional, Tara, Fornecedor, Fracionador, Conservacao, Extra1, Extra2: TStringList;
   RelacaoProdutoNutricional, RelacaoProdutoReceita, Teclado: TStringList;
   NomeArquivo: TFileName;
   Total: integer;
@@ -1551,6 +1672,8 @@ begin
   Fracionador               := TStringList.Create;
   Conservacao               := TStringList.Create;
   Teclado                   := TStringList.Create;
+  Extra1                    := TStringList.Create;
+  Extra2                    := TStringList.Create;
   try
     Total := Self.Produtos.Count;
     Progresso(ACBrStr('Iniciando a geração dos arquivos'), 0, Total);
@@ -1558,14 +1681,14 @@ begin
     // Varre os registros gerando o arquivo em lista
     case FModelo of
       modFilizola   : PreencherFilizola(Produto, Setor, Nutricional, Receita);
-      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil, nil, nil, nil, 0);
+      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil, nil, nil, nil, nil, nil, 0);
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
-      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, Teclado, 2);
-      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, Teclado, 3);
+      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, Teclado, Extra1, Extra2, 2);
+      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, Teclado, Extra1, Extra2, 3);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
       modRamuza     : PreencherRamuza(Produto);
-      modToledoMGV5Ver1 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, nil, 1);
+      modToledoMGV5Ver1 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Fracionador, Conservacao, Setor, nil, nil, nil, 1);
     end;
 
     // Monta o nome do arquivo de produtos seguindo o padrao da balanca
@@ -1640,6 +1763,20 @@ begin
       FArquivosGerados.Add(NomeArquivo) ;
     end;
 
+    //Gerar arquivo Campext1.txt
+    if Extra1.Count>0 then begin
+      NomeArquivo:=IncludeTrailingPathDelimiter(Adiretorio)+GetNomeArquivoExtra1;
+      Extra1.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo);
+    end;
+
+    //Gerar arquivo Campext2.txt
+    if Extra2.Count>0 then begin
+      NomeArquivo:=IncludeTrailingPathDelimiter(ADiretorio)+GetNomeArquivoExtra2;
+      Extra2.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo);
+    end;
+
     //Gerar arquivo de conservacao
     if Conservacao.Count > 0 then
     begin
@@ -1668,6 +1805,8 @@ begin
     Fracionador.Free;
     Conservacao.Free;
     Teclado.Free;
+    Extra1.Free;
+    Extra2.Free;
   end;
 end;
 
@@ -1760,6 +1899,92 @@ begin
   fCodTeclado := 1; //  Padrao por causa da toledo e pensando para que os outros programadores nao precisem mandar caso nao tenham
   fPaginaTeclado := 1; // Padrao por causa da toledo
   fTecla := 0;
+end;
+
+{ TACBrCargaBalExtra1 }
+
+constructor TACBrCargaBalExtra1.Create;
+begin
+  FCodigo := 0;
+  FObservacao := EmptyStr;
+  FLinha1:=EmptyStr;
+  FLinha2:=EmptyStr;
+  FLinha3:=EmptyStr;
+  FLinha4:=EmptyStr;
+  FLinha5:=EmptyStr;
+end;
+
+procedure TACBrCargaBalExtra1.SetLinha1(const Value: String);
+begin
+  FLinha1 := Value;
+end;
+
+procedure TACBrCargaBalExtra1.SetLinha2(const Value: String);
+begin
+  FLinha2 := Value;
+end;
+
+procedure TACBrCargaBalExtra1.SetLinha3(const Value: String);
+begin
+  FLinha3 := Value;
+end;
+
+procedure TACBrCargaBalExtra1.SetLinha4(const Value: String);
+begin
+  FLinha4 := Value;
+end;
+
+procedure TACBrCargaBalExtra1.SetLinha5(const Value: String);
+begin
+  FLinha5 := Value;
+end;
+
+{ TACBrCargaBalExtra2 }
+
+constructor TACBrCargaBalExtra2.Create;
+begin
+  FCodigo:=0;
+  FObservacao:=EmptyStr;
+  FLinha1:=EmptyStr;
+  FLinha2:=EmptyStr;
+  FLinha3:=EmptyStr;
+  FLinha4:=EmptyStr;
+  FLinha5:=EmptyStr;
+end;
+
+procedure TACBrCargaBalExtra2.SetCodigo(const Value: Smallint);
+begin
+  FCodigo := Value;
+end;
+
+procedure TACBrCargaBalExtra2.SetLinha1(const Value: String);
+begin
+  FLinha1 := Value;
+end;
+
+procedure TACBrCargaBalExtra2.SetLinha2(const Value: String);
+begin
+  FLinha2 := Value;
+end;
+
+procedure TACBrCargaBalExtra2.SetLinha3(const Value: String);
+begin
+  FLinha3 := Value;
+end;
+
+procedure TACBrCargaBalExtra2.SetLinha4(const Value: String);
+begin
+  FLinha4 := Value;
+end;
+
+procedure TACBrCargaBalExtra2.SetLinha5(const Value: String);
+begin
+  FLinha5 := Value;
+end;
+
+procedure TACBrCargaBalExtra2.SetObservacao(const Value: String);
+begin
+  FObservacao := Value;
 end;
 
 end.

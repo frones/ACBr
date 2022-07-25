@@ -33,8 +33,6 @@ type
     procedure wCampoCPF_CPFFormatadoValido_Brasil_SemAlerta;
     procedure GeraGrupoComCampoString_ValorAcentuado_GeraSemAcento;
     procedure GeraGrupoComCampoString_ValorAcentuado_NaoGeraAlerta;
-    procedure CampoValorFloat2Decimais_GeraCampo;
-    procedure CampoValorFloat2Decimais_NaoGeraAlerta;
     procedure CampoString_ValorAcentuado_GeraSemAcento;
     procedure CampoString_ValorAcentuado_NaoGeraAlerta;
     procedure CampoString_ValorVazio_Ocorrencia1_GeraTag;
@@ -95,6 +93,11 @@ type
     procedure CampotcNumStr_ValorVazio_Ocorrencia1_GeraTag;
     procedure CampotcNumStr_ValorVazio_OcorrenciaZero_NaoGeraTag;
     procedure CampotcNumStr_ValorValido_MinAdicionaZerosAEsquerda;
+    procedure CampoFloat2Decimais_ValorSimples_GeraCampo;
+    procedure CampoFloat2Decimais_ValorSimples_NaoGeraAlerta;
+    procedure CampoDecimal2Casas_ValorValido_GeraTag;
+    procedure CampoDecimal2Casas_ValorVazio_Ocorrencia1_GeraTag;
+    procedure CampoDecimal2Casas_ValorVazio_OcorrenciaZero_NaoGeraTag;
 
 {
 procedure CampoXXX_ValorValido_GeraTag;
@@ -285,24 +288,6 @@ begin
   UmGerador.wGrupo('Mensagem');
   UmGerador.wCampo(tcStr, '', 'Recibo', 1, 36, 1, 'EsseTextoÉUmRecibo');
   UmGerador.wGrupo('/Mensagem');
-  a := UmGerador.ListaDeAlertas.Text;
-  CheckEquals('', a, 'Não deveria conter um alerta.');
-end;
-
-procedure pcnGeradorTest.CampoValorFloat2Decimais_GeraCampo;
-var
-  a: string;
-begin
-  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 36, 1, 1.10);
-  a := UmGerador.ArquivoFormatoXML;
-  CheckEquals('<Recibo>1.10</Recibo>', a);
-end;
-
-procedure pcnGeradorTest.CampoValorFloat2Decimais_NaoGeraAlerta;
-var
-  a: string;
-begin
-  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 36, 1, 1.10);
   a := UmGerador.ListaDeAlertas.Text;
   CheckEquals('', a, 'Não deveria conter um alerta.');
 end;
@@ -873,6 +858,53 @@ begin
   UmGerador.wCampo(tcNumStr, '', 'Recibo', 14, 14, 1, OnlyNumber(FormatFloat('0.00', 654.32)));
   a := UmGerador.ArquivoFormatoXML;
   CheckEquals('<Recibo>00000000065432</Recibo>', a);
+end;
+
+
+procedure pcnGeradorTest.CampoFloat2Decimais_ValorSimples_GeraCampo;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 36, 1, 1.10);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>1.10</Recibo>', a);
+end;
+
+procedure pcnGeradorTest.CampoFloat2Decimais_ValorSimples_NaoGeraAlerta;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 36, 1, 1.10);
+  a := UmGerador.ListaDeAlertas.Text;
+  CheckEquals('', a, 'Não deveria conter um alerta.');
+end;
+
+procedure pcnGeradorTest.CampoDecimal2Casas_ValorValido_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 14, 1, 123.45);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('<Recibo>123.45</Recibo>', a);
+
+end;
+
+procedure pcnGeradorTest.CampoDecimal2Casas_ValorVazio_Ocorrencia1_GeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 14, 0, 0.0);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
+end;
+
+procedure pcnGeradorTest.CampoDecimal2Casas_ValorVazio_OcorrenciaZero_NaoGeraTag;
+var
+  a: string;
+begin
+  UmGerador.wCampo(tcDe2, '', 'Recibo', 1, 14, 0, 0);
+  a := UmGerador.ArquivoFormatoXML;
+  CheckEquals('', a);
 end;
 
 

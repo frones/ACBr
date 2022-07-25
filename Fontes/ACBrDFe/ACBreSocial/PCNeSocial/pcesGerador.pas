@@ -175,7 +175,7 @@ type
     constructor Create(AACBreSocial: TObject); reintroduce; virtual; //->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
 
-    function  GerarXML: boolean; virtual; abstract;
+    function  GerarXML: boolean; virtual;
     procedure SaveToFile(const CaminhoArquivo: string);
     function  Assinar(const XMLEvento, NomeEvento: String): AnsiString;
     function  GerarChaveEsocial(const emissao: TDateTime;
@@ -220,7 +220,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
-  ACBreSocial, ACBrDFeSSL, ACBrDFeUtil;
+  ACBreSocial, ACBrDFeSSL, ACBrDFeUtil, ACBrDFeConfiguracoes;
 
 {TeSocialEvento}
 
@@ -2126,6 +2126,19 @@ begin
     Gerador.wCampo(tcDat, '', 'dtIniCessao',  10, 10, 1, obj.dtIniCessao);
 
     Gerador.wGrupo('/cessao');
+  end;
+end;
+
+function TeSocialEvento.GerarXML: boolean;
+begin
+  Result := False;
+  with TACBreSocial(FACBreSocial).Configuracoes.Geral do
+  begin
+    Self.VersaoDF := VersaoDF;
+    Self.Gerador.Opcoes.FormatoAlerta := FormatoAlerta;
+    Self.Gerador.Opcoes.RetirarAcentos := RetirarAcentos;
+    Self.Gerador.Opcoes.RetirarEspacos := RetirarEspacos;
+    Self.Gerador.Opcoes.IdentarXML := IdentarXML;
   end;
 end;
 

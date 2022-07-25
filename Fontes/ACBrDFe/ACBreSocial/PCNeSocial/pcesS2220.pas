@@ -415,9 +415,8 @@ end;
 
 function TevtMonit.GerarXML: boolean;
 begin
+  Result := inherited GerarXML;
   try
-    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtMonit');

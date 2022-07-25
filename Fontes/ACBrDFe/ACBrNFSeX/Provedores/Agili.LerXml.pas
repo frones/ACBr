@@ -432,9 +432,15 @@ begin
 
       case FpAOwner.StrToSimNao(Ok, aValor) of
         snSim:
-          ValorIssRetido := ValorIss;
+          begin
+            ValorIssRetido := ValorIss;
+            IssRetido := stRetencao;
+          end;
         snNao:
-          ValorIssRetido := 0;
+          begin
+            ValorIssRetido := 0;
+            IssRetido := stNormal;
+          end;
       end;
 
       ValorLiquidoNfse := ObterConteudo(ANode.Childrens.FindAnyNs('ValorLiquido'), tcDe2);
@@ -465,7 +471,8 @@ begin
       begin
         Descricao  := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Discriminacao'), tcStr);
         Quantidade := ObterConteudo(ANodes[i].Childrens.FindAnyNs('Quantidade'), tcDe6);
-        ValorTotal := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorServico'), tcDe2);
+        ValorUnitario := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorServico'), tcDe2);
+        ValorTotal := ValorUnitario * Quantidade;
 
         DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorDesconto'), tcDe2);
 

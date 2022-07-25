@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 25/07/2022
+-- Agili.LerXml --
+[*] Correções na leitura do XML da NFS-e visando a leitura correta da lista de 
+    itens de serviço e da tag ISSQNRetido.
+   Por: Diego Reckziegel
 -- Governa.Provider --
 [*] Melhorias no tratamento dos retornos.
    Por: Italo Giurizzato Junior

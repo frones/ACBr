@@ -413,7 +413,8 @@ begin
       Result.AppendChild(AddNode(tcStr, '#1', 'regimeTrib', 1, 1, 1, '2', ''));
 
     retLucroReal,
-    retLucroPresumido:
+    retLucroPresumido,
+    retNenhum:
       Result.AppendChild(AddNode(tcStr, '#1', 'regimeTrib', 1, 1, 1, '3', ''));
   else
     Result.AppendChild(AddNode(tcStr, '#1', 'regimeTrib', 1, 1, 1, '1', ''));

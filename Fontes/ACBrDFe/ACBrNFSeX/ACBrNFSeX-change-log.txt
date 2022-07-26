@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/07/2022
+-- Infisc.GravarXml --
+[*] Incluido o enumerado retNenhum para gerar a tag regimeTrib com o valor 3.
+   Por: Juliana G. Viana
+
 25/07/2022
 -- ACBrNFSeXServicos --
 [*] Acrescentado o parâmetro NaoDividir100 na cidade: Ribeirao Preto/SP - Provedor ISSNet

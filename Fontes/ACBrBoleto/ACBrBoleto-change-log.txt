@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2022
+--ACBrUniprimeNortePR--
+[*] Atualização do registro 2 de Mensagens conforme especificação do manual.
+
 21/07/2022
 --ACBrBancoC6--
   [-]ACBrBoleto - Ajuste  montagem código de barras para o C6

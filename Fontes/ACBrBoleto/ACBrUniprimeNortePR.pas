@@ -173,7 +173,7 @@ var
      begin
 
         {Primeira instrução vai no registro 1}
-        if Mensagem.Count <= 1 then
+        if Mensagem.Count < 1 then
         begin
            Result := '';
            Exit;
@@ -181,34 +181,29 @@ var
 
         Result := sLineBreak +
                   '2'               +                                    // IDENTIFICAÇÃO DO LAYOUT PARA O REGISTRO
-                  Copy(PadRight(Mensagem[1], 80, ' '), 1, 80);               // CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+                  Copy(PadRight(Mensagem[0], 80, ' '), 1, 80);               // CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+
+        if Mensagem.Count >= 2 then
+           Result := Result +
+                     Copy(PadRight(Mensagem[1], 80, ' '), 1, 80)              // CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+        else
+           Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
         if Mensagem.Count >= 3 then
            Result := Result +
-                     Copy(PadRight(Mensagem[2], 80, ' '), 1, 80)              // CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+                     Copy(PadRight(Mensagem[2], 80, ' '), 1, 80)              // CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
         if Mensagem.Count >= 4 then
            Result := Result +
-                     Copy(PadRight(Mensagem[3], 80, ' '), 1, 80)              // CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
-        else
-           Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
-
-        if Mensagem.Count >= 5 then
-           Result := Result +
-                     Copy(PadRight(Mensagem[4], 80, ' '), 1, 80)              // CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
+                     Copy(PadRight(Mensagem[3], 80, ' '), 1, 80)              // CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
 
         Result := Result                                              +
-                  space(45)                                           +  // COMPLEMENTO DO REGISTRO
-                  aCarteira                                           +
-                  aAgencia                                            +
-                  aConta                                              +
-                  Cedente.ContaDigito                                 +
-                  ANossoNumero + DigitoNossoNumero                    +
+                  space(73)                                           +  // COMPLEMENTO DO REGISTRO
                   IntToStrZero( aRemessa.Count + 2, 6);                  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
      end;
   end;

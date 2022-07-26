@@ -312,16 +312,13 @@ begin
        else
          wDiasProtesto:= IntToStrZero(DiasDeProtesto,2);
 
-       if (Trim(Instrucao1) = '00') then
+       if (Trim(Instrucao1) <> '00') then
        begin
-         Instrucao1 := '09';
-         Prazo1 := wDiasProtesto;
-       end
-       else if (Trim(Instrucao2) = '00') then
-       begin
-         Instrucao2 := '09';
-         Prazo2 := wDiasProtesto;
+         Instrucao2 := Instrucao1;
+         Prazo2     := Prazo1;
        end;
+       Instrucao1 := '09';
+       Prazo1     := wDiasProtesto;
      end;
 
      { Descontos }

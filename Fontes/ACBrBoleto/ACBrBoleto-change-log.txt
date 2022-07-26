@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2022
+--ACBrBoletoBRB--
+[*] ACBrBoleto - Ajuste remessa BRB quanto as instruções 1 e 2
+  Por : Pandaaa / JJ / JT / Igor Cibiac
+
 22/07/2022
 --ACBrUniprimeNortePR--
 [*] Atualização do registro 2 de Mensagens conforme especificação do manual.

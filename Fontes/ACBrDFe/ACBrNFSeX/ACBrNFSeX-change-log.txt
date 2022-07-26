@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 26/07/2022
+-- ACBrNFSeXServicos --
+[*] Acrescentado as URLs da cidade de Vassouras/RJ
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade Senador Canedo/GO trocou de provedor, agora é Fiorilli
+   Por: PrimeSoftware
 -- Infisc.GravarXml --
 [*] Incluido o enumerado retNenhum para gerar a tag regimeTrib com o valor 3.
    Por: Juliana G. Viana

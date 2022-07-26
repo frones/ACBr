@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/07/2022
+-- ACBrNFSeXConversao --
+[*] Acrescentado os enumerados: ttSimplesNacional e ttRetidonoMun no tipo: TTipoTributacaoRPS
+   Por: Italo Giurizzato Junior
 -- Siappa.Provider --
 [*] Sobrescrita a função AplicarLineBreak visando a quebra de linha usada pelo provedor.
    Por: Renato Rubinho

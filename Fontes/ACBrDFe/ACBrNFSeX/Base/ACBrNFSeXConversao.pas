@@ -142,7 +142,8 @@ type
 
   TTipoTributacaoRPS = (ttTribnoMun, ttTribforaMun, ttTribnoMunIsento,
                         ttTribforaMunIsento, ttTribnoMunImune, ttTribforaMunImune,
-                        ttTribnoMunSuspensa, ttTribforaMunSuspensa, ttExpServicos);
+                        ttTribnoMunSuspensa, ttTribforaMunSuspensa, ttExpServicos,
+                        ttSimplesNacional, ttRetidonoMun);
 
   TLogradouroLocalPrestacaoServico = (llpTomador, llpPrestador);
 

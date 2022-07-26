@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/07/2022
+-- SmarAPD.Provider --
+[*] Invertido a execução das funções: RemoverCaracteresDesnecessarios e ParseText.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao --
 [*] Acrescentado os enumerados: ttSimplesNacional e ttRetidonoMun no tipo: TTipoTributacaoRPS
    Por: Italo Giurizzato Junior

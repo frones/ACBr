@@ -82,6 +82,8 @@ type
     procedure PrepararGerarToken(Response: TNFSeGerarTokenResponse); override;
     procedure TratarRetornoGerarToken(Response: TNFSeGerarTokenResponse); override;
 
+    function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; override;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = '';
@@ -668,6 +670,17 @@ begin
     end;
   finally
     FreeAndNil(Document);
+  end;
+end;
+
+function TACBrNFSeProviderSiappa.AplicarLineBreak(AXMLRps: String;
+  const ABreak: String): String;
+begin
+  Result := AXMLRps;
+  if Trim(Result) <> '' then
+  begin
+    Result := ChangeLineBreak(AXMLRps, '&#10;');
+    Result := StringReplace(Result, '&amp;#10;', '&#10;', [rfReplaceAll]);
   end;
 end;
 

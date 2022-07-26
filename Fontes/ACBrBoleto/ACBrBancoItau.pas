@@ -1100,6 +1100,7 @@ begin
     46: Result := '46-Débito Mensal de Tarifas - Sustação de Protesto';
     47: Result := '47-Baixa com Transferência para Desconto';
     48: Result := '48-Custas de Sustação Judicial';
+    49: Result := '49-Alteração de dados extras';
     51: Result := '51-Tarifa Mensal Referente a Entradas Bancos Correspondentes na Carteira';
     52: Result := '52-Tarifa Mensal Baixas na Carteira';
     53: Result := '53-Tarifa Mensal Baixas em Bancos Correspondentes na Carteira';
@@ -1814,6 +1815,7 @@ begin
     37 : Result:= toRemessaAlterarVencimentoSustarProtesto; {Alteração do Vencimento e Sustar Protesto}
     38 : Result:= toRemessaCedenteDiscordaSacado;           {Cedente não Concorda com Alegação do Sacado }
     47 : Result:= toRemessaCedenteSolicitaDispensaJuros;    {Cedente Solicita Dispensa de Juros}
+    49 : Result:= toRemessaAlterarOutrosDados;              {49-Alteração de dados extras}
   else
      Result:= toRemessaRegistrar;                           {Remessa}
   end;

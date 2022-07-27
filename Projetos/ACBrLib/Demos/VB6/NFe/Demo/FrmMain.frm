@@ -2957,9 +2957,9 @@ Private Sub btnDFePorUltNSU_Click()
     
     codUF = InputBox("Codigo da UF", "WebServices: Distribuição DFe", 35)
     cnpj = InputBox("CNPJ do Autor", "WebServices: Distribuição DFe", "")
-    eNsu = InputBox("Número do último NSU", "WebServices: Distribuição DFe", "")
+    eultNsu = InputBox("Número do último NSU", "WebServices: Distribuição DFe", "")
     
-    ret = nfe.DistribuicaoDFePorNSU(codUF, cnpj, eNsu)
+    ret = nfe.DistribuicaoDFePorUltNSU(codUF, cnpj, eultNsu)
     rtbRespostas.Text = ret
     
 Erro:

@@ -103,21 +103,31 @@ end;
 procedure TACBrMDFeDAMDFeRL.ImprimirDAMDFEPDF(AMDFe: TMDFe = nil);
 var
   i: integer;
+  NomePDF: string;
 begin
   FPArquivoPDF := '';
+
   if AMDFe = nil then
   begin
     for i := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
     begin
-      FPArquivoPDF := PathWithDelim(Self.PathPDF) +
-        OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID)
-        + '-mdfe.pdf';
+      if Self.NomeDocumento = '' then
+        NomePDF := OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID)
+      else
+        NomePDF := Self.NomeDocumento;
+
+      FPArquivoPDF := PathWithDelim(Self.PathPDF) + NomePDF + '-mdfe.pdf';
       TfrlDAMDFeRLRetrato.SalvarPDF(Self, TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe, FPArquivoPDF);
     end;
   end
   else
   begin
-     FPArquivoPDF := PathWithDelim(Self.PathPDF) + OnlyNumber(AMDFe.infMDFe.ID) + '-mdfe.pdf';
+    if Self.NomeDocumento = '' then
+      NomePDF := OnlyNumber(AMDFe.infMDFe.ID)
+    else
+      NomePDF := Self.NomeDocumento;
+
+     FPArquivoPDF := PathWithDelim(Self.PathPDF) + NomePDF + '-mdfe.pdf';
      TfrlDAMDFeRLRetrato.SalvarPDF(Self, AMDFe, FPArquivoPDF);
   end;
 end;
@@ -135,7 +145,7 @@ begin
       for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
       begin
         if OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID) =
-        TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
         begin
           TfrmMDFeDAEventoRLRetrato.Imprimir(Self,
               TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
@@ -164,11 +174,16 @@ procedure TACBrMDFeDAMDFeRL.ImprimirEVENTOPDF(AMDFe: TMDFe);
 var
   Impresso: Boolean;
   I, J: Integer;
-  NumID, ArqPDF: String;
+  NumID, ArqPDF, NomePDF: String;
 
   function ImprimirEVENTOPDFTipo(EventoMDFeItem: TInfEventoCollectionItem; AMDFe: TMDFe): String;
   begin
-    Result := Self.PathPDF + OnlyNumber(EventoMDFeItem.InfEvento.id) + '-procEventoMDFe.pdf';
+    if Self.NomeDocumento = '' then
+      NomePDF := OnlyNumber(EventoMDFeItem.InfEvento.id)
+    else
+      NomePDF := Self.NomeDocumento;
+
+    Result := PathWithDelim(Self.PathPDF) + NomePDF + '-procEventoMDFe.pdf';
 
     // TipoDAMDFE ainda não está sendo utilizado no momento
     TfrmMDFeDAEventoRLRetrato.SalvarPDF(Self, EventoMDFeItem, Result, AMDFe);

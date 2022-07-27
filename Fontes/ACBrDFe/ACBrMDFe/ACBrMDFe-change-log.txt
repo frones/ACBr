@@ -47,6 +47,12 @@ Símbolo : Significado
 [*] Alterações visando atender a NT 2022/001
    Por: Italo Giurizzato Junior
 
+27/07/2022
+-- ACBrMDFeDAMDFeRLClass --
+[*] Ao gerar o PDF não estava levando em consideração a propriedade NomeDocumento,
+    onde podemos especificar um nome para o PDF diferente do padrão.
+   Por: Italo Giurizzato Junior
+
 12/08/2021
 -- pmdfeMDFeW  --
 [*] Corrigido a condição para definir se gera dou não o grupo <valePed>.

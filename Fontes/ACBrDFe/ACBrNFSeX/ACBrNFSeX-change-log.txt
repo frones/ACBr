@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/07/2022
+-- ACBrNFSeXLerXml/ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
+[+] Implementado uma função para normatizar a aliquota lida do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.Provider --
 [*] Invertido a execução das funções: RemoverCaracteresDesnecessarios e ParseText.
     Para todas as versões de WebService desse provedor.

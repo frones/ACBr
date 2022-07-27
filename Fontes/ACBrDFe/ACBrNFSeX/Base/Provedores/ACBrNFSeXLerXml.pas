@@ -58,6 +58,7 @@ type
     function ItemListaServicoDescricao(const Codigo: string): string;
     function TipodeXMLLeitura(const aArquivo: string): TtpXML; virtual;
     function NormatizarXml(const aXml: string): string; virtual;
+    function NormatizarAliquota(const Aliquota: Double): Double;
   public
     constructor Create(AOwner: IACBrNFSeXProvider);
 
@@ -98,6 +99,14 @@ function TNFSeRClass.LerXml: Boolean;
 begin
   Result := False;
   raise EACBrDFeException.Create(ClassName + '.LerXml, não implementado');
+end;
+
+function TNFSeRClass.NormatizarAliquota(const Aliquota: Double): Double;
+begin
+  if Aliquota < 1 then
+    Result := Aliquota * 100
+  else
+    Result := Aliquota;
 end;
 
 function TNFSeRClass.NormatizarItemListaServico(const Codigo: string): string;

@@ -84,8 +84,8 @@ type
     procedure Autenticar; override;
 
     function SolicitarCertificado(const TokenTemporario: String): String;
-    function RenovarCertificado(const aNovaChavePrivada: String): String;
-    function GerarCertificadoCSR(const aChavePrivada: String = ''): String;
+    function RenovarCertificado: String;
+    function GerarCertificadoCSR: String;
   published
     property APIVersion;
     property ClientID;
@@ -226,7 +226,7 @@ begin
       [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-function TACBrPSPItau.RenovarCertificado(const aNovaChavePrivada: String): String;
+function TACBrPSPItau.RenovarCertificado: String;
 var
   Body, AURL: String;
   RespostaHttp: AnsiString;
@@ -243,7 +243,7 @@ begin
     AURL := cItauURLSandbox + cItauPathCertificado + cItauPathCertificadoRenovacao;
   end;
 
-  Body := GerarCertificadoCSR(aNovaChavePrivada);
+  Body := GerarCertificadoCSR;
 
   LimparHTTP;
   PrepararHTTP;
@@ -257,18 +257,13 @@ begin
   if (ResultCode = HTTP_OK) then
     Result := StreamToAnsiString(Http.OutputStream)
   else
-    DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
-      [Http.ResultCode, ChttpMethodPOST, AURL]));
+    DispararExcecao(EACBrPixHttpException.CreateFmt(sErroHttp, [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-function TACBrPSPItau.GerarCertificadoCSR(const aChavePrivada: String): String;
+function TACBrPSPItau.GerarCertificadoCSR: String;
 begin
   VerificarPIXCDAtribuido;
-
-  if (aChavePrivada <> '') then
-    fSSLUtils.LoadPrivateKeyFromString(aChavePrivada)
-  else
-    ObterChavePrivada;
+  ObterChavePrivada;
 
   if (Trim(ClientID) = '') then
     raise EACBrPSPException.CreateFmt( ACBrStr(sErroPropriedadeNaoDefinida),

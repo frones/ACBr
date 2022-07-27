@@ -831,10 +831,10 @@ function TACBrNFSeXWebserviceSmarAPD203.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
-  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 { TACBrNFSeProviderSmarAPD204 }
@@ -1074,10 +1074,10 @@ function TACBrNFSeXWebserviceSmarAPD204.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result));
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverIdentacao(Result);
-  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

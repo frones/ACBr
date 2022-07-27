@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/07/2022
+-- SmarAPD.Provider --
+[*] Invertido a execução das funções: RemoverCaracteresDesnecessarios e ParseText.
+    Para todas as versões de WebService desse provedor.
+   Por: Italo Giurizzato Junior
+
 26/07/2022
 -- SmarAPD.Provider --
 [*] Invertido a execução das funções: RemoverCaracteresDesnecessarios e ParseText.

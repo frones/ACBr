@@ -25,7 +25,7 @@ package DCLACBr_PIXCD;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION '(design-time) ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais'}
+{$DESCRIPTION 'ACBr - (design-time) ACBrPIXCD - Package para componentes relacionados a PIX e Carteira Digitais'}
 {$DESIGNONLY}
 {$IMPLICITBUILD ON}
 

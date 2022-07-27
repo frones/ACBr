@@ -37,6 +37,13 @@ namespace ACBrLib.NFe
         #region Properties
 
         /// <summary>
+        /// Número do item (1-990)
+        /// </summary>
+        public int? nItem { get; set; }
+
+
+
+        /// <summary>
         /// Código do produto ou serviço
         /// <para>Preencher com CFOP, caso se trate de itens não
         /// relacionados com mercadorias/produtos e que o

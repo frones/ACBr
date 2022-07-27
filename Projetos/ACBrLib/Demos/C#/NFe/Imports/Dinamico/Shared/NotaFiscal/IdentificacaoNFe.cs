@@ -12,6 +12,12 @@ namespace ACBrLib.NFe
     {
         #region Properties
 
+        /// <sumary> 
+        /// Código da UF do emitente do Documento Fiscal 
+        /// </sumary>
+
+        public int cUF { get; set; }
+
         /// <summary>
         /// Código Numérico que compõe a Chave de Acesso
         /// </summary>

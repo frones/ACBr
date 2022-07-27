@@ -10,7 +10,7 @@ namespace ACBrLib.NFe
         [EnumValue("NFe")]
         NFe,
 
-        [EnumValue("NFe")]
+        [EnumValue("SAT")]
         SAT,
 
         [EnumValue("NFP")]

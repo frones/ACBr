@@ -19,7 +19,7 @@ namespace ACBrLib.NFe
             Destinatario = new DestinatarioNFe();
             Retirada = new RetiradaEntregaNFe();
             Entrega = new RetiradaEntregaNFe();
-            AutXml = new List<AutXML>(10);
+            AutXML = new List<AutXML>(10);
             Produtos = new List<ProdutoNFe>(990);
             Total = new TotalNFe();
             ISSQNtot = new ISSQNtotNFe();
@@ -64,7 +64,7 @@ namespace ACBrLib.NFe
 
         public RetiradaEntregaNFe Entrega { get; }
 
-        public List<AutXML> AutXml { get; }
+        public List<AutXML> AutXML { get; }
 
         public List<ProdutoNFe> Produtos { get; }
 
@@ -131,8 +131,8 @@ namespace ACBrLib.NFe
             if (!string.IsNullOrEmpty(Entrega.xLgr))
                 iniData.WriteToIni(Entrega, "Entrega");
 
-            for (var i = 0; i < AutXml.Count; i++)
-                iniData.WriteToIni(AutXml[i], $"autXML{i + 1:00}");
+            for (var i = 0; i < AutXML.Count; i++)
+                iniData.WriteToIni(AutXML[i], $"autXML{i + 1:00}");
 
             for (var i = 0; i < Produtos.Count; i++)
             {
@@ -301,7 +301,7 @@ namespace ACBrLib.NFe
                 autXml = iniData.ReadFromIni<AutXML>($"autXML{i:00}");
                 if (autXml == null) continue;
 
-                AutXml.Add(autXml);
+                AutXML.Add(autXml);
             } while (autXml != null);
 
             i = 0;
@@ -342,6 +342,16 @@ namespace ACBrLib.NFe
 
                     produto.DI.Add(diItem);
                 } while (diItem != null);
+
+                k = 0;
+                DetExport detExport;
+                do
+                {
+                    k++;
+                    detExport = iniData.ReadFromIni<DetExport>($"detExport{i:000}{k:000}");
+                    if (detExport == null) continue;
+                    produto.DetExport.Add(detExport);
+                } while (detExport != null);
 
                 k = 0;
                 RastroNFe rastroItem;

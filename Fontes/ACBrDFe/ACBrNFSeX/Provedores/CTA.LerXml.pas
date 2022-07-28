@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -38,23 +38,82 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv2;
+  ACBrXmlBase, ACBrXmlDocument,
+  ACBrNFSeXConversao, ACBrNFSeXLerXml;
 
 type
-  { TNFSeR_CTA203 }
+  { Provedor com layout próprio }
+  { TNFSeR_CTA200 }
 
-  TNFSeR_CTA203 = class(TNFSeR_ABRASFv2)
+  TNFSeR_CTA200 = class(TNFSeRClass)
   protected
 
   public
+    function LerXml: Boolean; override;
+    function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
+    function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 
   end;
 
 implementation
 
+uses
+  ACBrUtil.Base;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     CTA
 //==============================================================================
+
+{ TNFSeR_CTA200 }
+
+function TNFSeR_CTA200.LerXml: Boolean;
+var
+  XmlNode: TACBrXmlNode;
+begin
+  if EstaVazio(Arquivo) then
+    raise Exception.Create('Arquivo xml não carregado.');
+
+  Arquivo := NormatizarXml(Arquivo);
+
+  if FDocument = nil then
+    FDocument := TACBrXmlDocument.Create();
+
+  Document.Clear();
+  Document.LoadFromXml(Arquivo);
+
+  if (Pos('NOTA', Arquivo) > 0) then
+    tpXML := txmlNFSe
+  else
+    tpXML := txmlRPS;
+
+  XmlNode := Document.Root;
+
+  if XmlNode = nil then
+    raise Exception.Create('Arquivo xml vazio.');
+
+  if tpXML = txmlNFSe then
+    Result := LerXmlNfse(XmlNode)
+  else
+    Result := LerXmlRps(XmlNode);
+
+  FreeAndNil(FDocument);
+end;
+
+function TNFSeR_CTA200.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
+begin
+  Result := True;
+
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+end;
+
+function TNFSeR_CTA200.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
+begin
+  Result := True;
+
+  if not Assigned(ANode) or (ANode = nil) then Exit;
+
+end;
 
 end.

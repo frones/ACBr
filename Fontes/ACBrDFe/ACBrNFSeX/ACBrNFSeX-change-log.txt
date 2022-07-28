@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 28/07/2022
+-- CTA.Provider/CTA.GravarXml/CTA.LerXml --
+[*] Primeira fase da implementação do provedor CTA, a geração do XML do Rps
+    já esta pronta, falta escrever a leitura tanto do Rps quanto da NFS-e,
+    já esta pronto também a montagem do envio do Rps, falta do cancelamento,
+    testar e fazer os ajustes necessários.
+   Por: Italo Giurizzato Junior
 -- Governa.LerXml --
 [*] Correção, estava invertido o tipo de XML a ser lido.
    Por: Italo Giurizzato Junior

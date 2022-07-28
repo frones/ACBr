@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -38,151 +38,310 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXGravarXml_ABRASFv2;
+  ACBrXmlBase, ACBrXmlDocument,
+  ACBrNFSeXGravarXml;
 
 type
-  { TNFSeW_CTA203 }
+  { Provedor com layout próprio }
+  { TNFSeW_CTA200 }
 
-  TNFSeW_CTA203 = class(TNFSeW_ABRASFv2)
+  TNFSeW_CTA200 = class(TNFSeWClass)
   protected
-    procedure Configuracao; override;
+    function GerarIdentificacaoRps: TACBrXmlNode;
+    function GerarServico: TACBrXmlNodeArray;
+    function GerarValores: TACBrXmlNode;
+    function GerarInformacoes: TACBrXmlNode;
+    function GerarValoresRetencoes: TACBrXmlNode;
+    function GerarTomador: TACBrXmlNode;
+    function GerarEndereco: TACBrXmlNode;
 
+  public
+    function GerarXml: Boolean; override;
   end;
 
 implementation
+
+uses
+  ACBrUtil.Strings,
+  ACBrNFSeXConsts, ACBrNFSeXConversao,
+  pcnConsts;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     CTA
 //==============================================================================
 
-{ TNFSeW_CTA203 }
+{ TNFSeW_CTA200 }
 
-procedure TNFSeW_CTA203.Configuracao;
+function TNFSeW_CTA200.GerarIdentificacaoRps: TACBrXmlNode;
+var
+  TipoTrib: string;
 begin
-  inherited Configuracao;
-  (*
-  // Propriedades de Formatação de informações
-  // elas requerem que seja declarado em uses a unit: ACBrXmlBase
-  {
-  FormatoEmissao     := tcDat;
-  FormatoCompetencia := tcDat;
+  TipoTrib := EnumeradoToStr(NFSe.TipoTributacaoRPS,
+                      ['0', '1', '2', '2', '2', '2', '3', '3', '4', '5'],
+                      [ttTribnoMun, ttTribforaMun, ttTribnoMunIsento,
+                        ttTribforaMunIsento, ttTribnoMunImune, ttTribforaMunImune,
+                        ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                        ttSimplesNacional, ttRetidonoMun]);
 
-  FormatoAliq := tcDe4;
-  }
+  Result := CreateElement('IdentificacaoRps');
 
-  // elas requerem que seja declarado em uses a unit: ACBrNFSeXConversao
-  {
-  // filsComFormatacao, filsSemFormatacao, filsComFormatacaoSemZeroEsquerda
-  FormatoItemListaServico := filsComFormatacao;
-  }
+  Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 15, 1,
+                         OnlyNumber(NFSe.IdentificacaoRps.Numero), DSC_NUMRPS));
 
-  DivAliq100  := False;
+  Result.AppendChild(AddNode(tcDatHor, '#2', 'Competencia', 19, 19, 1,
+                                                   NFSe.Competencia, DSC_DEMI));
 
-  NrMinExigISS := 1;
-  NrMaxExigISS := 1;
+  Result.AppendChild(AddNode(tcStr, '#3', 'TipodeTributacao', 1, 1, 1,
+                                                                 TipoTrib, ''));
+end;
 
-  GerarTagServicos := True;
+function TNFSeW_CTA200.GerarServico: TACBrXmlNodeArray;
+var
+  i: integer;
+  Descricao: string;
+  Quantidade, ValorUnitario, ValorTotal: Double;
+begin
+  Result := nil;
+  SetLength(Result, 5 {NFSe.Servico.ItemServico.Count});
 
-  // Gera ou não o atributo ID no grupo <Rps> da versão 2 do layout da ABRASF.
-  GerarIDRps := False;
-  // Gera ou não o NameSpace no grupo <Rps> da versão 2 do layout da ABRASF.
-  GerarNSRps := True;
+  for i := 0 to 4 do
+  begin
+    Result[i] := CreateElement('Servico' + IntToStr(i+1));
 
-  GerarIDDeclaracao := True;
-  GerarEnderecoExterior := False;
+    if i <= NFSe.Servico.ItemServico.Count - 1 then
+    begin
+      Quantidade := NFSe.Servico.ItemServico.Items[i].Quantidade;
+      Descricao := NFSe.Servico.ItemServico.Items[i].Descricao;
+      ValorUnitario := NFSe.Servico.ItemServico.Items[i].ValorUnitario;
+      ValorTotal := Quantidade * ValorUnitario;
+    end
+    else
+    begin
+      Quantidade := 0;
+      Descricao := '';
+      ValorUnitario := 0;
+      ValorTotal := 0;
+    end;
 
-  TagTomador := 'Tomador';
-  TagIntermediario := 'Intermediario';
+    Result[i].AppendChild(AddNode(tcInt, '#1', 'QuantidadeDoItem', 1, 10, 1,
+                                                               Quantidade, ''));
 
-  // Numero de Ocorrencias Minimas de uma tag
-  // se for  0 só gera a tag se o conteudo for diferente de vazio ou zero
-  // se for  1 sempre vai gerar a tag
-  // se for -1 nunca gera a tag
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'DescritivoDoItem', 1, 60, 1,
+                                                                 Descricao, ''));
 
-  // Por padrão as tags abaixo são opcionais
-  NrOcorrRazaoSocialInterm := 0;
-  NrOcorrValorDeducoes := 0;
-  NrOcorrRegimeEspecialTributacao := 0;
-  NrOcorrValorISS := 0;
-  NrOcorrAliquota := 0;
-  NrOcorrDescIncond := 0;
-  NrOcorrDescCond := 0;
-  NrOcorrMunIncid := 0;
-  NrOcorrInscEstInter := 0;
-  NrOcorrOutrasRet := 0;
-  NrOcorrCodigoCNAE := 0;
-  NrOcorrEndereco := 0;
-  NrOcorrCodigoPaisTomador := 0;
-  NrOcorrUFTomador := 0;
-  NrOcorrCepTomador := 0;
-  NrOcorrCodTribMun_1 := 0;
-  NrOcorrNumProcesso := 0;
-  NrOcorrInscMunTomador := 0;
-  NrOcorrCodigoPaisServico := 0;
-  NrOcorrRespRetencao := 0;
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorUnitarioDoItem', 1, 15, 1,
+                                                            ValorUnitario, ''));
 
-  // Por padrão as tags abaixo são obrigatórias
-  NrOcorrIssRetido := 1;
-  NrOcorrOptanteSimplesNacional := 1;
-  NrOcorrIncentCultural := 1;
-  NrOcorrItemListaServico := 1;
-  NrOcorrCompetencia := 1;
-  NrOcorrSerieRPS := 1;
-  NrOcorrTipoRPS := 1;
-  NrOcorrDiscriminacao_1 := 1;
-  NrOcorrExigibilidadeISS := 1;
-  NrOcorrCodigoMunic_1 := 1;
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorTotalDoItem', 1, 15, 1,
+                                                               ValorTotal, ''));
+  end;
 
-  // Por padrão as tags abaixo não devem ser geradas
-  NrOcorrCodTribMun_2 := -1;
-  NrOcorrDiscriminacao_2 := -1;
-  NrOcorrNaturezaOperacao := -1;
-  NrOcorrIdCidade := -1;
-  NrOcorrValorTotalRecebido := -1;
-  NrOcorrInscEstTomador := -1;
-  NrOcorrOutrasInformacoes := -1;
-  NrOcorrTipoNota := -1;
-  NrOcorrSiglaUF := -1;
-  NrOcorrEspDoc := -1;
-  NrOcorrSerieTal := -1;
-  NrOcorrFormaPag := -1;
-  NrOcorrNumParcelas := -1;
-  NrOcorrBaseCalcCRS := -1;
-  NrOcorrIrrfInd := -1;
-  NrOcorrRazaoSocialPrest := -1;
-  NrOcorrPercCargaTrib := -1;
-  NrOcorrValorCargaTrib := -1;
-  NrOcorrPercCargaTribMun := -1;
-  NrOcorrValorCargaTribMun := -1;
-  NrOcorrPercCargaTribEst := -1;
-  NrOcorrValorCargaTribEst := -1;
-  NrOcorrInformacoesComplemetares := -1;
-  NrOcorrValTotTrib := -1;
-  NrOcorrTipoLogradouro := -1;
-  NrOcorrLogradouro := -1;
-  NrOcorrDDD := -1;
-  NrOcorrTipoTelefone := -1;
-  NrOcorrProducao := -1;
-  NrOcorrAtualizaTomador := -1;
-  NrOcorrTomadorExterior := -1;
-  NrOcorrCodigoMunic_2 := -1;
-  NrOcorrNIFTomador := -1;
-  NrOcorrID := -1;
-  NrOcorrToken := -1;
-  NrOcorrSenha := -1;
-  NrOcorrFraseSecreta := -1;
-  NrOcorrAliquotaPis := -1;
-  NrOcorrRetidoPis := -1;
-  NrOcorrAliquotaCofins := -1;
-  NrOcorrRetidoCofins := -1;
-  NrOcorrAliquotaInss := -1;
-  NrOcorrRetidoInss := -1;
-  NrOcorrAliquotaIr := -1;
-  NrOcorrRetidoIr := -1;
-  NrOcorrAliquotaCsll := -1;
-  NrOcorrRetidoCsll := -1;
-  *)
+  if NFSe.Servico.ItemServico.Count > 5 then
+    wAlerta('#1', 'Servico', '', ERR_MSG_MAIOR_MAXIMO + '5');
+end;
+
+function TNFSeW_CTA200.GerarValores: TACBrXmlNode;
+begin
+  Result := CreateElement('Valores');
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorTotalDosServicos', 1, 15, 1,
+                                       NFSe.Servico.Valores.ValorServicos, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorDeducoes', 1, 15, 1,
+                                       NFSe.Servico.Valores.ValorDeducoes, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'DescontoIncondicionado', 1, 15, 1,
+                 NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'DescontoCondicionado', 1, 15, 1,
+                     NFSe.Servico.Valores.DescontoCondicionado, DSC_VDESCCOND));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'BaseDeCalculoDoISS', 1, 15, 1,
+                                         NFSe.Servico.Valores.BaseCalculo, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'Aliquota', 1, 5, 1,
+                                     NFSe.Servico.Valores.Aliquota, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorIss', 1, 15, 1,
+                                      NFSe.Servico.Valores.ValorIss, DSC_VISS));
+end;
+
+function TNFSeW_CTA200.GerarInformacoes: TACBrXmlNode;
+var
+  item: string;
+begin
+  Result := CreateElement('Informacoes');
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'IssRetido', 1, 1, 1,
+    FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'ResponsavelRetencao', 1, 1, 1,
+   FpAOwner.ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
+
+  item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'ItemListaServico', 1, 8, NrOcorrItemListaServico,
+                                                          item, DSC_CLISTSERV));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'ClassificacaoCNAE', 1, 9, 1,
+                                OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));
+
+  Result.AppendChild(AddNode(tcStr, '#31', 'CodigoTributacaoMunicipio', 1, 20, 1,
+                     NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
+end;
+
+function TNFSeW_CTA200.GerarValoresRetencoes: TACBrXmlNode;
+begin
+  Result := CreateElement('ValoresRetencoes');
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaPIS', 1, 15, 1,
+                                  NFSe.Servico.Valores.AliquotaPis, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorPIS', 1, 15, 1,
+                                      NFSe.Servico.Valores.ValorPis, DSC_VPIS));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaCOFINS', 1, 15, 1,
+                               NFSe.Servico.Valores.AliquotaCofins, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorCOFINS', 1, 15, 1,
+                                NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaCSLL', 1, 15, 1,
+                                 NFSe.Servico.Valores.AliquotaCsll, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorCSLL', 1, 15, 1,
+                                    NFSe.Servico.Valores.ValorCsll, DSC_VCSLL));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'BaseCalculoINSS', 1, 15, 1,
+                                         NFSe.Servico.Valores.BaseCalculo, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaINSS', 1, 15, 1,
+                                 NFSe.Servico.Valores.AliquotaInss, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorINSS', 1, 15, 1,
+                                    NFSe.Servico.Valores.ValorInss, DSC_VINSS));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaIR', 1, 15, 1,
+                                   NFSe.Servico.Valores.AliquotaIr, DSC_VALIQ));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorIR', 1, 15, 1,
+                                        NFSe.Servico.Valores.ValorIr, DSC_VIR));
+end;
+
+function TNFSeW_CTA200.GerarTomador: TACBrXmlNode;
+var
+  tipo: string;
+begin
+  Result := CreateElement('Tomador');
+
+  Tipo := EnumeradoToStr(NFSe.Tomador.IdentificacaoTomador.Tipo,
+                      ['1', '1', '1', '2', ''],
+                      [tpPJdoMunicipio, tpPJforaMunicipio, tpPJforaPais,
+                       tpPF, tpPFNaoIdentificada]);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Tipo', 1, 1, 1, Tipo, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'CpfCnpj', 1, 14, 1,
+                                NFSe.Tomador.IdentificacaoTomador.CpfCnpj, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 15, 1,
+                 NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, DSC_IM));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'InscricaoEstadual', 1, 20, 1,
+                  NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, DSC_IE));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'RazaoSocial', 1, 115, 0,
+                                          NFSe.Tomador.RazaoSocial, DSC_XNOME));
+end;
+
+function TNFSeW_CTA200.GerarEndereco: TACBrXmlNode;
+begin
+  Result := CreateElement('Endereco');
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'TipoLogradouro', 1, 50, 1,
+                             NFSe.Tomador.Endereco.TipoLogradouro, DSC_XLGR));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Logradouro', 1, 125, 1,
+                                   NFSe.Tomador.Endereco.Endereco, DSC_XLGR));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 10, 1,
+                                      NFSe.Tomador.Endereco.Numero, DSC_NRO));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Complemento', 1, 60, 1,
+                                NFSe.Tomador.Endereco.Complemento, DSC_XCPL));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Bairro', 1, 60, 1,
+                                  NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'CodigoMunicipio', 7, 7, 1,
+                OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 1,
+                                           NFSe.Tomador.Endereco.UF, DSC_UF));
+
+  Result.AppendChild(AddNode(tcInt, '#1', 'CodigoPais', 4, 4, 1,
+                                NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'Cep', 8, 8, 1,
+                             OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'TelefoneContatoTomador', 1, 11, 1,
+                          OnlyNumber(NFSe.Tomador.Contato.Telefone), DSC_FONE));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'EmailTomador', 1, 80, 1,
+                                        NFSe.Tomador.Contato.Email, DSC_EMAIL));
+end;
+
+function TNFSeW_CTA200.GerarXml: Boolean;
+var
+  NFSeNode, xmlNode: TACBrXmlNode;
+  nodeArray: TACBrXmlNodeArray;
+  i: Integer;
+begin
+  Configuracao;
+
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
+  ListaDeAlertas.Clear;
+
+  FDocument.Clear();
+
+  NFSeNode := CreateElement('Rps');
+
+  FDocument.Root := NFSeNode;
+
+  xmlNode := GerarIdentificacaoRps;
+  NFSeNode.AppendChild(xmlNode);
+
+  nodeArray := GerarServico;
+  if nodeArray <> nil then
+  begin
+    for i := 0 to Length(nodeArray) - 1 do
+    begin
+      NFSeNode.AppendChild(nodeArray[i]);
+    end;
+  end;
+
+  xmlNode := GerarValores;
+  NFSeNode.AppendChild(xmlNode);
+
+  xmlNode := GerarInformacoes;
+  NFSeNode.AppendChild(xmlNode);
+
+  xmlNode := GerarValoresRetencoes;
+  NFSeNode.AppendChild(xmlNode);
+
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Observacoes', 1, 1000, 1,
+                                                   NFSe.OutrasInformacoes, ''));
+
+  xmlNode := GerarTomador;
+  NFSeNode.AppendChild(xmlNode);
+
+  xmlNode := GerarEndereco;
+  NFSeNode.AppendChild(xmlNode);
+
+  Result := True;
 end;
 
 end.

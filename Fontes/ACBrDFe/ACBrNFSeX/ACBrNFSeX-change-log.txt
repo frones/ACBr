@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 28/07/2022
+-- Tinus.GravarXml --
+[*] A tag Aliquota deve ser gerada mesmo com o valor zero se o contribuinte for
+    Optante Simples Nacional, a tag ValorIss também deve ser gerada com o valor
+    zero.
+   Por: Meinardo de Lima/Italo Giurizzato Junior
 -- CTA.Provider/CTA.GravarXml/CTA.LerXml --
 [*] Primeira fase da implementação do provedor CTA, a geração do XML do Rps
     já esta pronta, falta escrever a leitura tanto do Rps quanto da NFS-e,

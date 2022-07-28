@@ -48,6 +48,9 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
+
   end;
 
 implementation
@@ -64,6 +67,17 @@ begin
   inherited Configuracao;
 
   DivAliq100 := True;
+
+  NrOcorrAliquota := 0;
+  NrOcorrValorIss := 1;
+end;
+
+function TNFSeW_Tinus.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

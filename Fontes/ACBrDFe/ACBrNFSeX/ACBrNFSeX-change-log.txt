@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/07/2022
+-- ACBrNFSeXServicos --
+[*] A cidade Iguatama/MG trocou de provedor, agora é SimplISS.
+   Por: Luan Lima Frade
 -- Tinus.GravarXml --
 [*] A tag Aliquota deve ser gerada mesmo com o valor zero se o contribuinte for
     Optante Simples Nacional, a tag ValorIss também deve ser gerada com o valor

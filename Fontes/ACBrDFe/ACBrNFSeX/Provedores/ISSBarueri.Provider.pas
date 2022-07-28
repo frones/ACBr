@@ -64,20 +64,27 @@ type
     function ExisteErroRegistro(const ALinha: String): Boolean;
   protected
     procedure Configuracao; override;
+
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
+
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
     procedure GerarMsgDadosEmitir(Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse); override;
     function PrepararRpsParaLote(const aXml: string): string; override;
+
     procedure PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
     procedure TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse); override;
-    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
-    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+
+    procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+    procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
+
     function AplicarXMLtoUTF8(AXMLRps: String): String; override;
     function AplicarLineBreak(AXMLRps: String; const ABreak: String): String; override;
+
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
                                      const AListTag: string = 'ListaMensagemRetorno';
@@ -89,6 +96,7 @@ type
   TACBrNFSeProviderBarueriErros = class(TStringList)
   public
     constructor Create;
+
     function Causa(const ACodigo: String): String;
     function Solucao(const ACodigo: String): String;
   end;
@@ -196,49 +204,21 @@ begin
 end;
 
 function TACBrNFSeProviderBarueriErros.Causa(const ACodigo: String): String;
-//var
-//  S: TStringList;
 begin
   try
     Result := Copy(Values[ACodigo], 1, Pos('|', Values[ACodigo])-1);
   except
     Result := '';
   end;
- {
-    S := TStringList.Create;
-  try
-    S.Delimiter := '|';
-//não é compativel com o D7    S.StrictDelimiter := True;
-    S.DelimitedText := Values[ACodigo];
-    Result := S[0];
-  except
-    Result := '';
-  end;
-  S.Free;
-}
 end;
 
 function TACBrNFSeProviderBarueriErros.Solucao(const ACodigo: String): String;
-//var
-//  S: TStringList;
 begin
   try
     Result := Copy(Values[ACodigo], Pos('|', Values[ACodigo])+1, Length(Values[ACodigo]));
   except
     Result := '';
   end;
- {
-  S := TStringList.Create;
-  try
-    S.Delimiter := '|';
-//não é compativel com o D7    S.StrictDelimiter := True;
-    S.DelimitedText := Values[ACodigo];
-    Result := S[1];
-  except
-    Result := '';
-  end;
-  S.Free;
-  }
 end;
 
 { TACBrNFSeXWebserviceISSBarueri }
@@ -258,9 +238,7 @@ begin
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
     Request,
-    ['NFeLoteEnviarArquivoResult'],
-    ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']
-  );
+    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
 function TACBrNFSeXWebserviceISSBarueri.ConsultarSituacao(ACabecalho, AMSG: String): string;
@@ -278,9 +256,7 @@ begin
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteStatusArquivo',
     Request,
-    ['NFeLoteStatusArquivoResult'],
-    ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']
-  );
+    ['NFeLoteStatusArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
 function TACBrNFSeXWebserviceISSBarueri.ConsultarLote(ACabecalho, AMSG: String): string;
@@ -298,9 +274,7 @@ begin
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteBaixarArquivo',
     Request,
-    ['NFeLoteBaixarArquivoResult'],
-    ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']
-  );
+    ['NFeLoteBaixarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
 function TACBrNFSeXWebserviceISSBarueri.Cancelar(ACabecalho, AMSG: String): string;
@@ -318,9 +292,7 @@ begin
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
     Request,
-    ['NFeLoteEnviarArquivoResult'],
-    ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']
-  );
+    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
 { TACBrNFSeProviderISSBarueri }
@@ -331,8 +303,7 @@ begin
     (ALinha[1] = '1') or
     (ALinha[1] = '2') or
     (ALinha[1] = '3') or
-    (ALinha[1] = '9')
-  );
+    (ALinha[1] = '9'));
 end;
 
 procedure TACBrNFSeProviderISSBarueri.Configuracao;
@@ -552,14 +523,7 @@ begin
     AErro.Codigo := Cod108;
     AErro.Descricao := Desc108;
   end;
-  {
-  if (Response.InfCancelamento.DataEmissaoNFSe <= 0) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod122;
-    AErro.Descricao := Desc122;
-  end;
-  }
+
   if EstaVazio(Response.InfCancelamento.CodCancelamento) then
   begin
     AErro := Response.Erros.New;
@@ -852,7 +816,7 @@ begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
   if (ANode = Nil) then Exit;
-  Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
+    Codigo := ObterConteudoTag(ANode.Childrens.FindAnyNs('Codigo'), tcStr);
 
   if (Codigo <> 'OK200') then
   begin

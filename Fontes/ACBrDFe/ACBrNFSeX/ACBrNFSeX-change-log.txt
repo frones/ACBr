@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/07/2022
+-- ISSBarueri.Provider/ISSBarueri.GravarXml/ISSBarueri.LerXml --
+[*] Correção na geração do Registro Tipo 1, Correção na leitura da data de 
+    emissão e remoção de códigos comentados.
+   Por: Beckershow/Italo Giurizzato Junior
+
 27/07/2022
 -- ACBrNFSeXLerXml/ACBrNFSeXLerXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv2 --
 [+] Implementado uma função para normatizar a aliquota lida do XML da NFS-e.

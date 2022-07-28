@@ -360,7 +360,7 @@ begin
   if NaoEstaVazio(Trim(Copy(ALinha, 22, 6))) then
   begin
     NFSe.DataEmissao := EncodeDataHora(Trim(Copy(ALinha, 13, 8)), 'YYYYMMDD');
-    NFSe.DataEmissao := NFSe.DataEmissao + StrToTime(Format('%S:%S:%S', [Trim(Copy(ALinha, 22, 2)), Trim(Copy(ALinha, 24, 2)), Trim(Copy(ALinha, 26, 2))]));
+    NFSe.DataEmissao := NFSe.DataEmissao + StrToTime(Format('%S:%S:%S', [Trim(Copy(ALinha, 21, 2)), Trim(Copy(ALinha, 23, 2)), Trim(Copy(ALinha, 25, 2))]));
   end
   else
     NFSe.DataEmissao := EncodeDataHora(Trim(Copy(ALinha, 13, 8)), 'YYYYMMDD');

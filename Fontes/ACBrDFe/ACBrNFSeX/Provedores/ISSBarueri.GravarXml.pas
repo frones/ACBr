@@ -80,7 +80,7 @@ begin
     '1'+ // Tipo do Registro S Numérico 1 1 1 1
     PadRight(OnlyNumber(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal), 7, ' ')+ // Inscrição do Contribuinte S Texto 7 2 8 Inscrição do Prestador de Serviço
     'PMB002'+ // Versão do Lay-Out S Texto 6 9 14 Versão do Lay-Out "PMB002"
-    PadRight(AIdentificacaoRemessa, 11, '0') // Identificação da Remessa do Contribuinte
+    PadLeft(AIdentificacaoRemessa, 11, '0') // Identificação da Remessa do Contribuinte
   );
 end;
 

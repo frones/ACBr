@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/07/2022
+-- WebFisco.GravarXml --
+[*] Gerando as tags foram de ordem.
+   Por: Widson/Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade Iguatama/MG trocou de provedor, agora é SimplISS.
    Por: Luan Lima Frade

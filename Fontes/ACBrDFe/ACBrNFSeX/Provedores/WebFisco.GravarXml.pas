@@ -180,27 +180,31 @@ begin
   for i := 1 to 3 do
   begin
     if i <= NFSe.Servico.ItemServico.Count -1 then
-    begin
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'item' + IntToStr(i), 1, 5, 1,
-         NFSe.Servico.ItemServico.Items[i-1].ItemListaServico, '', True, xAtrib));
-
-      NFSeNode.AppendChild(AddNode(tcDe2, '#', 'aliq' + IntToStr(i), 1, 5, 1,
-               NFSe.Servico.ItemServico.Items[i-1].Aliquota, '', True, xAtrib));
-
-      NFSeNode.AppendChild(AddNode(tcDe2, '#', 'val' + IntToStr(i), 1, 12, 1,
-          NFSe.Servico.ItemServico.Items[i-1].ValorUnitario, '', True, xAtrib));
-    end
+        NFSe.Servico.ItemServico.Items[i-1].ItemListaServico, '', True, xAtrib))
     else
-    begin
       NFSeNode.AppendChild(AddNode(tcStr, '#', 'item' + IntToStr(i), 1, 5, 1,
                                                          '', '', True, xAtrib));
+  end;
 
+  for i := 1 to 3 do
+  begin
+    if i <= NFSe.Servico.ItemServico.Count -1 then
+      NFSeNode.AppendChild(AddNode(tcDe2, '#', 'aliq' + IntToStr(i), 1, 5, 1,
+                NFSe.Servico.ItemServico.Items[i-1].Aliquota, '', True, xAtrib))
+    else
       NFSeNode.AppendChild(AddNode(tcDe2, '#', 'aliq' + IntToStr(i), 1, 5, 1,
                                                           0, '', True, xAtrib));
+  end;
 
+  for i := 1 to 3 do
+  begin
+    if i <= NFSe.Servico.ItemServico.Count -1 then
+      NFSeNode.AppendChild(AddNode(tcDe2, '#', 'val' + IntToStr(i), 1, 12, 1,
+           NFSe.Servico.ItemServico.Items[i-1].ValorUnitario, '', True, xAtrib))
+    else
       NFSeNode.AppendChild(AddNode(tcDe2, '#', 'val' + IntToStr(i), 1, 12, 1,
                                                           0, '', True, xAtrib));
-    end;
   end;
 
   // Código da localidade de execução do serviço, se no local do estabelecimento

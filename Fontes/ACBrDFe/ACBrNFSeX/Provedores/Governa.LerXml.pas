@@ -108,9 +108,9 @@ begin
   Document.LoadFromXml(Arquivo);
 
   if (Pos('tcRps', Arquivo) > 0) then
-    tpXML := txmlNFSe
+    tpXML := txmlRPS
   else
-    tpXML := txmlRPS;
+    tpXML := txmlNFSe;
 
   XmlNode := Document.Root;
 

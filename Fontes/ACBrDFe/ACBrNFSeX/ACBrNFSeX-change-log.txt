@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/07/2022
+-- Governa.LerXml --
+[*] Correção, estava invertido o tipo de XML a ser lido.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.Provider/ISSBarueri.GravarXml/ISSBarueri.LerXml --
 [*] Correção na geração do Registro Tipo 1, Correção na leitura da data de 
     emissão e remoção de códigos comentados.

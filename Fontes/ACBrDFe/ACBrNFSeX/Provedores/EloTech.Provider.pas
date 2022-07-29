@@ -93,8 +93,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, EloTech.GravarXml, EloTech.LerXml;
 
@@ -452,7 +451,7 @@ begin
     Requerente := GerarRequerente(Emitente.CNPJ, Emitente.InscMun, Emitente.WSSenha);
 
     ChavedeAcesso := '<ChaveAcesso>' +
-                        Trim(InfoCanc.CodVerificacao) +
+                        Trim(InfoCanc.ChaveNFSe) +
                      '</ChaveAcesso>';
 
     Response.ArquivoEnvio := '<' + Prefixo + 'CancelarNfseEnvio' + NameSpace + '>' +

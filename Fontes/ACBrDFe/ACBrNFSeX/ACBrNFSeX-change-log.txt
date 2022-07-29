@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/07/2022
+-- ACBrNFSeXServicos --
+[*] No Envelope Soap do provedor Elotech existe uma tag que diz se o XML vai
+    ser enviado para o ambiente de homologação ou não, por isso que as URLs
+    são iguais para ambos os ambientes.
+   Por: Willian Delan
+-- EloTech.GravarXml --
+[*] Correção, ao gerar os dados para o cancelamento o correto é utilizar o
+    conteudo do campo ChaveNFSe e não CodVerificacao.
+   Por: Willian Delan
+
 28/07/2022
 -- WebFisco.GravarXml --
 [*] Gerando as tags foram de ordem.

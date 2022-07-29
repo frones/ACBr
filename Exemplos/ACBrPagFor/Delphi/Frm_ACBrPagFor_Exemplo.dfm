@@ -14,7 +14,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
   Font.Style = []
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 303

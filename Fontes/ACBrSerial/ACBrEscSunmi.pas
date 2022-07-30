@@ -38,7 +38,10 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrEscPosEpson;
+  ACBrPosPrinter, ACBrEscPosEpson
+  {$IFDEF NEXTGEN}
+  , ACBrBase
+  {$ENDIF};
 
 const
   cSunmiTimeout = 500;

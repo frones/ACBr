@@ -30,6 +30,9 @@
 
 {$I ACBr.inc}
 
+// Para testar um modelo externo com Elgin E1 Service, descomente a linha abaixo
+//{$DEFINE ELGIN_E1}
+
 unit Unit1;
 
 interface
@@ -38,9 +41,9 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   strutils, ExtCtrls, Buttons, Spin, ComCtrls, ExtDlgs, ACBrPosPrinter,
   ACBrBase, ACBrDevice, ACBrCMC7
-  // Para testar um modelo externo com Elgin E1 Service, descomente os trechos
-  // de código marcados com #ELGIN_E1
-  //, ACBrPosPrinterElginE1Service
+  {$IFDEF ELGIN_E1}
+  , ACBrPosPrinterElginE1Service
+  {$ENDIF}
   ;
 
 type
@@ -220,8 +223,9 @@ type
     procedure FormDestroy(Sender: TObject);
   private
     { private declarations }
-    // #ELGIN_E1
-    //fE1Printer: TACBrPosPrinterElginE1Service;
+    {$IFDEF ELGIN_E1}
+    fE1Printer: TACBrPosPrinterElginE1Service;
+    {$ENDIF}
 
     Procedure GravarINI;
     Procedure LerINI;
@@ -263,22 +267,24 @@ begin
   btSearchPortsClick(Sender);
   PageControl1.ActivePageIndex := 0;
 
-  // #ELGIN_E1
-  {fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
+  {$IFDEF ELGIN_E1}
+  fE1Printer := TACBrPosPrinterElginE1Service.Create(ACBrPosPrinter1);
   fE1Printer.Modelo := prnI9;
   // Usar por TXT
   fE1Printer.PastaEntradaE1 := 'c:\E1\pathIN';
   fE1Printer.PastaSaidaE1 := 'c:\E1\pathOUT';
   // Usar por TCP
-  //fE1Printer.IPePortaE1 := '192.168.56.1:89'; }
+  //fE1Printer.IPePortaE1 := '192.168.56.1:89';
+  {$ENDIF}
 
   LerINI;
 end;
 
 procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
 begin
-  // #ELGIN_E1
-  //fE1Printer.Free;
+  {$IFDEF ELGIN_E1}
+  fE1Printer.Free;
+  {$ENDIF}
 end;
 
 procedure TFrPosPrinterTeste.FormClose(Sender: TObject;
@@ -642,8 +648,8 @@ end;
 procedure TFrPosPrinterTeste.cbxModeloChange(Sender: TObject);
 begin
   try
-    // #ELGIN_E1
-    {if cbxModelo.ItemIndex = Integer(ppExterno) then
+    {$IFDEF ELGIN_E1}
+    if cbxModelo.ItemIndex = Integer(ppExterno) then
     begin
       ACBrPosPrinter1.ModeloExterno := fE1Printer;
       ACBrPosPrinter1.Modelo := ppExterno;
@@ -651,18 +657,21 @@ begin
       cbxPorta.Enabled := False;
     end
     else
-    begin}
+    begin
+    {$ENDIF}
       ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
-    // #ELGIN_E1
-    {if (cbxPorta.Text = 'NULL') then
+    {$IFDEF ELGIN_E1}
+    if (cbxPorta.Text = 'NULL') then
         cbxPorta.Text := '';
 
       cbxPorta.Enabled := True;
-    end;}
+    end;
+    {$ENDIF}
   except
      cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
-     // #ELGIN_E1
-     //cbxPorta.Enabled := True;
+     {$IFDEF ELGIN_E1}
+     cbxPorta.Enabled := True;
+     {$ENDIF}
      raise ;
   end ;
 end;

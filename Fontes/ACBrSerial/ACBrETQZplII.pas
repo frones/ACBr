@@ -552,25 +552,26 @@ end;
 function TACBrETQZplII.ComandoCarregarImagem(aStream: TStream;
   var aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 var
-  Format, Extension: String;
+  Format, Extension, wExt: String;
   ImgData: AnsiString;
   Len: Integer;
 begin
-  aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem, aTipo);
-  if (pos(aTipo,'PCX,BMP,GRF,PNG') = 0) then
+  wExt := UpperCase(OnlyAlphaNum(aTipo));
+  aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem, wExt);
+  if (pos(wExt,'PCX,BMP,GRF,PNG') = 0) then
     raise Exception.Create(ACBrStr('Formato de Imagem deve ser: PNG, BMP, GRF ou PCX e Monocromática'));
 
   aStream.Position := 0;
-  VerificarConteudoETipoImagemMono(aStream, aTipo);
+  VerificarConteudoETipoImagemMono(aStream, wExt);
 
-  if (aTipo = 'GRF') then  // BMP = GRF
+  if (wExt = 'GRF') then  // BMP = GRF
     Result := ComandoBMP2GRF(aStream, aNomeImagem)
   else
   begin
     ImgData := ReadStrFromStream(aStream, aStream.Size);
     Len := Length(ImgData);
 
-    if (aTipo = 'PNG') then
+    if (wExt = 'PNG') then
     begin
       Format := 'P';
       Extension := 'P';

@@ -38,10 +38,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2022
+-- ACBrETQZplII --
+[*] Alteração para corrigir o carregamento de imagem
+    https://www.projetoacbr.com.br/forum/topic/68234-problema-ao-carregar-imagem-no-acbretq/
+	Por: Elias César
+
 21/07/2022
---ACBrLCB--
-  [+]TK-2908 Adicionado a propriedade de prefixo
-  Por: Pedro E. Braga
+-- ACBrLCB --
+[+] TK-2908 Adicionado a propriedade de prefixo
+    Por: Pedro E. Braga
 
 13/07/2022
 -- ACBrEscSunmi --

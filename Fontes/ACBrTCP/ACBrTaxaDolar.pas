@@ -61,7 +61,7 @@ type
 
 implementation
 
-Uses ACBrUtil ;
+Uses ACBrUtil.Strings ;
 
 function TACBrTaxaDolar.Consulta: Boolean;
 var

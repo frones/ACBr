@@ -34,7 +34,7 @@ unit pediConversao;
 
 interface
 
-uses pcnConversao, SysUtils, ACBrUtil ;
+uses pcnConversao, SysUtils, ACBrUtil.Strings ;
 
 type
   {$IFNDEF FPC}

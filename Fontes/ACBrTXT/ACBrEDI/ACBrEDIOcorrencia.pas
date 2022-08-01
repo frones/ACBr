@@ -281,7 +281,7 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil ;
+uses pcnAuxiliar, ACBrUtil.Strings ;
 
 { TOcorrencias }
 

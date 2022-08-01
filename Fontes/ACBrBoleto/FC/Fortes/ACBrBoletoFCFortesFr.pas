@@ -1198,7 +1198,7 @@ var
 implementation
 
 Uses
-  strutils, ACBrUtil, ACBrImage, ACBrDelphiZXingQRCode, ACBrUtil.Strings
+  strutils, ACBrImage, ACBrDelphiZXingQRCode, ACBrUtil.Strings, ACBrUtil.Base
   {$ifndef FPC}
     ,jpeg
   {$ENDIF};

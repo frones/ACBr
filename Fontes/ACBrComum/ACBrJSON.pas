@@ -15,6 +15,7 @@ uses
   SysUtils;
 
 type
+  TACBrJSONValue = {$IfDef USE_JSONDATAOBJECTS_UNIT} TJsonDataValueHelper; {$ELSE} TJsonValue; {$ENDIF}
   TACBrJSONArray = class;
 
   TACBrJSON = class
@@ -30,6 +31,7 @@ type
 
     class function CreateJsonObject(const AJsonString: string): TJsonObject;
 
+    function GetAsValue(const AName: string): TACBrJSONValue;
     function GetAsBoolean(const AName: string): Boolean;
     function GetAsCurrency(const AName: string): Currency;
     function GetAsFloat(const AName: string): Double;
@@ -41,7 +43,8 @@ type
     function GetAsJSONObject(const AName: string): TACBrJSONObject;
     function GetAsISODate(const AName: string): TDateTime;
     function GetAsSplitResult(const AName: string): TSplitResult;
-
+    function IsNull(const AName: string): Boolean; overload;
+    function IsNull(const AValue: TACBrJSONValue): Boolean; overload;
   public
     function AddPair(const AName: string; const AValue: Boolean): TACBrJSONObject; overload;
     function AddPair(const AName, AValue: string): TACBrJSONObject; overload;
@@ -225,39 +228,62 @@ begin
 end;
 
 function TACBrJSONObject.GetAsBoolean(const AName: string): Boolean;
+var
+  LValue: TACBrJSONValue;
 begin
+  LValue := GetAsValue(AName);
+  if IsNull(LValue) then
+    Exit(False);
   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    Result := FJSON.B[AName];
+    Result := LValue.BoolValue
   {$Else}
-    Result := FJSON[AName].AsBoolean;
+    Result := LValue.AsBoolean;
   {$EndIf}
 end;
 
 function TACBrJSONObject.GetAsCurrency(const AName: string): Currency;
+var
+  LValue: TACBrJSONValue;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    Result := FJson.D[AName];
-  {$Else}
-    Result := FJson[AName].AsNumber;
-  {$EndIf}
+  LValue := GetAsValue(AName);
+  if IsNull(LValue) then
+    Exit(0);
+
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  Result := LValue.FloatValue;
+{$Else}
+  Result := LValue.AsNumber;
+{$EndIf}
 end;
 
 function TACBrJSONObject.GetAsFloat(const AName: string): Double;
+var
+  LValue: TACBrJSONValue;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    Result := FJson.D[AName];
-  {$Else}
-    Result := FJson[AName].AsNumber;
-  {$EndIf}
+  LValue := GetAsValue(AName);
+  if IsNull(LValue) then
+    Exit(0);
+
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  Result := LValue.FloatValue;
+{$Else}
+  Result := LValue.AsNumber;
+{$EndIf}
 end;
 
 function TACBrJSONObject.GetAsInteger(const AName: string): Integer;
+var
+  LValue: TACBrJSONValue;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    Result := FJson.I[AName];
-  {$Else}
-    Result := FJson[AName].AsInteger;
-  {$EndIf}
+  LValue := GetAsValue(AName);
+  if IsNull(LValue) then
+    Exit(0);
+
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  Result := LValue.IntValue;
+{$Else}
+  Result := LValue.AsInteger;
+{$EndIf}
 end;
 
 function TACBrJSONObject.GetAsISODate(const AName: string): TDateTime;
@@ -265,11 +291,7 @@ var
   LStrValue: string;
 begin
   Result := 0;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    LStrValue := FJson.S[AName];
-  {$Else}
-    LStrValue := FJson[AName].AsString;
-  {$EndIf}
+  LStrValue := GetAsString(AName);
   if LStrValue <> '' then
     Result := EncodeDataHora(LStrValue, 'yyyy-MM-dd');
 end;
@@ -279,11 +301,7 @@ var
   LStrValue: string;
 begin
   Result := 0;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    LStrValue := FJson.S[AName];
-  {$Else}
-    LStrValue := FJson[AName].AsString;
-  {$EndIf}
+  LStrValue := GetAsString(AName);
   if LStrValue <> '' then
     Result := Iso8601ToDateTime(LStrValue);
 end;
@@ -305,12 +323,17 @@ end;
 function TACBrJSONObject.GetAsJSONObject(const AName: string): TACBrJSONObject;
 var
   LJSON: TJsonObject;
+  LValue: TACBrJSONValue;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    LJSON := FJSON.O[AName];
-  {$Else}
-    LJSON := FJSON[AName].AsObject;
-  {$EndIf}
+  LValue := GetAsValue(AName);
+  if IsNull(LValue) then
+    Exit(nil);
+
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  LJSON := FJSON.O[AName];
+{$Else}
+  LJSON := LValue.AsObject;
+{$EndIf}
 
   Result := TACBrJSONObject.Create(LJSON);
   FContexts.Add(Result);
@@ -321,6 +344,8 @@ var
   LJSONArray: TACBrJSONArray;
   I: Integer;
 begin
+  if IsNull(AName) then
+    Exit;
   LJSONArray := GetAsJSONArray(AName);
   if Assigned(LJSONArray) then
   begin
@@ -331,18 +356,51 @@ begin
 end;
 
 function TACBrJSONObject.GetAsString(const AName: string): string;
-{$IfNDef USE_JSONDATAOBJECTS_UNIT}
 var
-  LValue: TJsonValue;
-{$ENDIF}
+  LValue: TACBrJSONValue;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    Result := FJson.S[AName]
-  {$Else}
-    LValue := FJson[AName];
-    if Assigned(LValue) then
-      Result := LValue.AsString;
-  {$EndIf}
+  LValue := GetAsValue(AName);
+  if IsNull(LValue) then
+    Exit('');
+
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  Result := LValue.Value;
+{$Else}
+  Result := LValue.AsString;
+{$EndIf}
+end;
+
+function TACBrJSONObject.GetAsValue(const AName: string): TACBrJSONValue;
+var
+  LIndex: Integer;
+begin
+  Result := nil;
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  LIndex := FJSON.IndexOf(AName);
+  if LIndex >= 0 then
+    Result := FJSON.Values[AName];
+{$Else}
+  LIndex := FJSON.Find(AName);
+  if LIndex >= 0 then
+    Result := FJSON.Items[LIndex].Value;
+{$EndIf}
+end;
+
+function TACBrJSONObject.IsNull(const AValue: TACBrJSONValue): Boolean;
+begin
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  Result := AValue.IsNull;
+{$Else}
+  Result := (not Assigned(AValue)) or (AValue.IsNull);
+{$EndIf}
+end;
+
+function TACBrJSONObject.IsNull(const AName: string): Boolean;
+var
+  LValue: TACBrJSONValue;
+begin
+  LValue := GetAsValue(AName);
+  Result := IsNull(LValue);
 end;
 
 function TACBrJSONObject.GetAsISOTime(const AName: string): TDateTime;
@@ -350,11 +408,7 @@ var
   LStrValue: string;
 begin
   Result := 0;
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    LStrValue := FJson.S[AName];
-  {$Else}
-    LStrValue := FJson[AName].AsString;
-  {$EndIf}
+  LStrValue := GetAsString(AName);
   if LStrValue <> '' then
     Result := StringToDateTime(Copy(LStrValue, 1, 8), 'hh:mm:ss');
 end;
@@ -391,18 +445,18 @@ end;
 
 class function TACBrJSONObject.CreateJsonObject(const AJsonString: string): TJsonObject;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonSerializationConfig.NullConvertsToValueTypes := True;
-    Result := TJsonObject.Parse(AJsonString) as TJsonObject;
-  {$Else}
-    Result := TJsonObject.Create;
-    try
-      Result.Parse(AJsonString);
-    except
-      Result.Free;
-      raise;
-    end;
-  {$EndIf}
+{$IfDef USE_JSONDATAOBJECTS_UNIT}
+  JsonSerializationConfig.NullConvertsToValueTypes := True;
+  Result := TJsonObject.Parse(AJsonString) as TJsonObject;
+{$Else}
+  Result := TJsonObject.Create;
+  try
+    Result.Parse(AJsonString);
+  except
+    Result.Free;
+    raise;
+  end;
+{$EndIf}
 end;
 
 destructor TACBrJSONObject.Destroy;
@@ -577,7 +631,8 @@ begin
   {$Else}
     Result := TJsonArray.Create;
     try
-      Result.Parse(AJSONString);
+      if AJsonString <> '' then
+        Result.Parse(AJSONString);
     except
       Result.Free;
       raise;

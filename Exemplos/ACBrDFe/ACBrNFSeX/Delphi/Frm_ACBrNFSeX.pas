@@ -587,7 +587,7 @@ begin
 
       // Provedores que permitem informar mais de 1 serviço:
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
-           proEloTech, proEquiplano, proFGMaiss, profintelISS, proGoverna, proInfisc,
+           proCTA, proEloTech, proEquiplano, proFGMaiss, profintelISS, proGoverna, proInfisc,
            proIPM, proISSDSF, proRLZ, proSimple, proSimplISS, proSmarAPD, proWebFisco]) or
          ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then

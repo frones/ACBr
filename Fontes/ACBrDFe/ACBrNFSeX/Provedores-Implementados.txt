@@ -43,7 +43,7 @@ FISSLex             v1.00
 Futurize            v2.02
 GeisWeb             v1.00
 geNFe               v1.00
-Giap                v1.00
+Giap                v1.00 02/08/2022
 Ginfes              v1.00
 Giss                v2.04
 GovBr               v1.00

@@ -70,9 +70,10 @@ namespace ACBrLibBoleto.Demo
 
         #region Methods
 
+       
         private void LoadConfig()
         {
-            boleto.ConfigLer();
+            boleto.ConfigLer();            
 
             cmbModeloImpressao.SetSelectedValue(boleto.Config.Impressao.Layout);
             chkPreview.Checked = boleto.Config.Impressao.MostrarPreview;
@@ -120,6 +121,7 @@ namespace ACBrLibBoleto.Demo
             nudPorta.Text = boleto.Config.Email.Porta;
             ckbSSL.Checked = boleto.Config.Email.SSL;
             ckbTLS.Checked = boleto.Config.Email.TLS;
+            
         }
 
         private void SaveConfig()
@@ -169,6 +171,154 @@ namespace ACBrLibBoleto.Demo
             boleto.Config.Email.SSL = ckbSSL.Checked;
             boleto.Config.Email.TLS = ckbTLS.Checked;
             boleto.ConfigGravar();
+        }
+
+        private void ConfigBoleto()
+        {
+            /*
+            * Exemplo de uso da classe Banco / Conta / Cedente para geração dos dados do Boleto  
+            * Preenchimento com os dados mínimos para geração de um Boleto
+            * Descomente as demais classes que precisar usar
+            */
+
+            var banco = new Banco();
+            banco.TipoCobranca = ACBrTipoCobranca.cobBancoDoBrasil;
+            banco.CNAB = ACBrLayoutRemessa.c240;
+            //banco.VersaoArquivo = 0;
+            //banco.VersaoLote = 0;
+
+            var conta = new Conta();
+            conta.Agencia = "1111";
+            conta.DigitoAgencia = "1";
+            conta.Numero = "99999";
+            conta.Digito = "9";
+
+            var cedente = new Cedente();
+            cedente.Nome = "Projeto ACBr";
+            cedente.CNPJCPF = "18760540000139";
+            cedente.Logradouro = "Rua Cel Aureliano Camargo ";
+            cedente.Numero = "973";
+            cedente.CEP = "18280000";
+            cedente.Cidade = "Tatui";
+            cedente.UF = "SP";
+            cedente.Complemento = "casa";
+            cedente.RespEmis = ACBrResponEmissao.tbCliEmite;
+            cedente.CodigoCedente = "123456";
+            cedente.LayoutBol = ACBrBolLayOut.lPadrao;
+            cedente.CaracTitulo = CaracTitulo.tcSimples;
+            cedente.TipoCarteira = ACBrTipoCarteira.tctRegistrada;
+            cedente.TipoDocumento = ACBrTipoDocumento.Tradicional;
+            cedente.Modalidade = "17";
+            //cedente.CodigoTransmissao = "";
+            cedente.Convenio = "123456";
+
+            BoletoInfo[] boletoInfo = new BoletoInfo[3];
+            boletoInfo[0] = banco;
+            boletoInfo[1] = conta;
+            boletoInfo[2] = cedente;
+
+            boleto.ConfigurarDados(boletoInfo);
+
+        }
+
+        private void GerarTitulo()
+        {
+            /*
+            * Exemplo de uso da classe Titulo para geração dos Titulos em ACBrBoleto  
+            * Preenchimento com os dados mínimos para geração de um Boleto
+            * Descomente as demais classes que precisar usar
+            */
+
+            Titulo[] titulo = new Titulo[1];
+            titulo[0] = new Titulo();
+
+            titulo[0].NumeroDocumento = "000001";
+            titulo[0].NossoNumero = "12345";
+            titulo[0].Carteira = "17";
+            titulo[0].ValorDocumento = 100.00M;
+            titulo[0].Vencimento = DateTime.Now.AddDays(30);
+            titulo[0].DataDocumento = DateTime.Now;
+            titulo[0].DataProcessamento = DateTime.Now;
+            //titulo[0].DataAbatimento = DateTime.Now;
+            //titulo[0].ValorAbatimento = 0;
+            titulo[0].DataDesconto = DateTime.Now.AddDays(20);
+            titulo[0].TipoDesconto = TipoDesconto.tdNaoConcederDesconto;
+            titulo[0].ValorDesconto = 0.5M;
+            titulo[0].CodigoMora = "1";
+            titulo[0].ValorMoraJuros = 0.2M;
+            titulo[0].DataMoraJuros = DateTime.Now.AddDays(30);
+            titulo[0].ValorIOF = 0;
+            titulo[0].ValorOutrasDespesas = 2.50M;
+            titulo[0].DataMulta = DateTime.Now.AddDays(30);
+            titulo[0].MultaValorFixo = true;
+            titulo[0].PercentualMulta = 5.00M;
+            titulo[0].DiasDeProtesto = 0;
+            titulo[0].DataProtesto = DateTime.Now.AddDays(60);
+            titulo[0].TipoDiasProtesto = TipoDiasIntrucao.diCorridos;
+            //titulo[0].DiasDeNegativacao = 0;
+            //titulo[0].DataNegativacao = DateTime.Now.AddDays(90);
+            titulo[0].CodigoNegativacao = CodigoNegativacao.cnNenhum;
+            titulo[0].TipoDiasNegativacao = TipoDiasIntrucao.diCorridos;
+            //titulo[0].DataBaixa = DateTime.Now.AddDays(30);
+            //titulo[0].DataLimitePagto = DateTime.Now.AddDays(30);
+            titulo[0].Especie = "DM";
+            titulo[0].EspecieMod = "R$";
+
+            titulo[0].Sacado.NomeSacado = "José da Silva";
+            titulo[0].Sacado.Pessoa = ACBrPessoa.pFisica;
+            titulo[0].Sacado.CNPJCPF = "99999999999";
+            titulo[0].Sacado.Logradouro = "Rua da Colina";
+            titulo[0].Sacado.Numero = "1111";
+            titulo[0].Sacado.Bairro = "Centro";
+            titulo[0].Sacado.Complemento = "Prédio 2";
+            titulo[0].Sacado.Cidade = "Tatui";
+            titulo[0].Sacado.UF = "SP";
+            titulo[0].Sacado.CEP = "18280-000";
+            titulo[0].Sacado.Email = "josesilva@mail.com";
+
+            titulo[0].Sacado.Avalista.NomeAvalista = "Sociedade Consultoria";
+            titulo[0].Sacado.Avalista.Pessoa = ACBrPessoa.pJuridica;
+            titulo[0].Sacado.Avalista.CNPJCPF = "99999999999999";
+            titulo[0].Sacado.Avalista.Logradouro = "Rua Frei Caneca";
+            titulo[0].Sacado.Avalista.Numero = "100";
+            titulo[0].Sacado.Avalista.Complemento = "Predio 2";
+            titulo[0].Sacado.Avalista.Bairro = "Centro";
+            titulo[0].Sacado.Avalista.Cidade = "Sao Paulo";
+            titulo[0].Sacado.Avalista.UF = "SP";
+            titulo[0].Sacado.Avalista.CEP = "18280000";
+            titulo[0].Sacado.Avalista.Email = "sconsultoria@mail.com";
+            titulo[0].Sacado.Avalista.InscricaoNr = "99999999999";
+
+            //titulo[0].Mensagem.Add("Mensagem linha 1");
+            //titulo[0].Mensagem.Add("Mensagem Linha 2");
+            //titulo[0].Informativo.Add("Informativo Boleto");
+            //titulo[0].Detalhamento.Add("Detalhamento de Fatura 1");        
+
+            titulo[0].Instrucao1 = "10";
+            titulo[0].Instrucao2 = "11";
+
+            titulo[0].Aceite = AceiteTitulo.atSim;
+            titulo[0].OcorrenciaOriginal.Tipo = TipoOcorrencia.toRemessaRegistrar;
+
+            titulo[0].SeuNumero = "000001";
+            titulo[0].TipoImpressao = TipoImpressao.tipNormal;
+            titulo[0].CarteiraEnvio = CarteiraEnvio.tceCedente;
+
+            //titulo[0].Competencia = "";
+            //titulo[0].ArquivoLogoEmp = "";
+            //titulo[0].Verso = false;
+            //titulo[0].Parcela = 1;
+            //titulo[0].TotalParcelas = 1;
+
+            /*var nfe1 = new BoletoNotaFiscal();
+            nfe1.ChaveNFe = "12345678901234567890123456789012345678901234";
+            nfe1.EmissaoNFe = DateTime.Now;
+            nfe1.NumNFe = "10001";
+            nfe1.ValorNFe = 100.00M;
+            titulo[0].NotaFiscais.Add(nfe1); */
+
+            boleto.IncluirTitulos(titulo);
+
         }
 
         #endregion Methods
@@ -404,6 +554,14 @@ namespace ACBrLibBoleto.Demo
             {
                 rtbRespostas.AppendLine(ex.Message);
             }
+        }
+
+        private void btnClasseTitulo_Click(object sender, EventArgs e)
+        {
+
+            ConfigBoleto();            
+            GerarTitulo();
+            rtbRespostas.AppendLine("Título(s) adicionado(s)." );
         }
     }
 }

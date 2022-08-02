@@ -147,6 +147,7 @@
             this.btnTamNossoNumero = new System.Windows.Forms.Button();
             this.btnMontarNossoNumero = new System.Windows.Forms.Button();
             this.btnSalvarPDF = new System.Windows.Forms.Button();
+            this.btnClasseTitulo = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpCedente.SuspendLayout();
             this.tbpLayout.SuspendLayout();
@@ -1385,11 +1386,22 @@
             this.btnSalvarPDF.UseVisualStyleBackColor = true;
             this.btnSalvarPDF.Click += new System.EventHandler(this.btnSalvarPDF_Click);
             // 
+            // btnClasseTitulo
+            // 
+            this.btnClasseTitulo.Location = new System.Drawing.Point(274, 225);
+            this.btnClasseTitulo.Name = "btnClasseTitulo";
+            this.btnClasseTitulo.Size = new System.Drawing.Size(252, 23);
+            this.btnClasseTitulo.TabIndex = 25;
+            this.btnClasseTitulo.Text = "Gerar Boleto usando as classes Titulo";
+            this.btnClasseTitulo.UseVisualStyleBackColor = true;
+            this.btnClasseTitulo.Click += new System.EventHandler(this.btnClasseTitulo_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 581);
+            this.Controls.Add(this.btnClasseTitulo);
             this.Controls.Add(this.btnSalvarPDF);
             this.Controls.Add(this.btnMontarNossoNumero);
             this.Controls.Add(this.btnTamNossoNumero);
@@ -1563,6 +1575,7 @@
         private System.Windows.Forms.Button btnTamNossoNumero;
         private System.Windows.Forms.Button btnMontarNossoNumero;
         private System.Windows.Forms.Button btnSalvarPDF;
+        private System.Windows.Forms.Button btnClasseTitulo;
     }
 }
 

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 02/08/2022
+-- fintelISS.Provider --
+[*] Alterado a configuração pois somente a versão 2.02 que tem o Detalhamento
+    dos serviços.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.Provider --
 [*] Alterado a forma de apresentar as mensagens de erros e as de solução.
    Por: Italo Giurizzato Junior

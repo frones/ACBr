@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 02/08/2022
+-- ISSGoiania.GravarXml --
+[*] Alterado a configuração, agora a aliquota vai ser gerada no XML e não será
+    dividida por 100.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] A cidade de Cubatão/SP trocou de provedor agora é SmarAPD
    Por: Antonio Leonardo C. Xavier/Italo Giurizzato Junior

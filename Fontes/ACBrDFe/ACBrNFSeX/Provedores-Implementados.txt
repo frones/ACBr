@@ -63,7 +63,7 @@ ISSDigital          v2.00
 ISSDSF              v1.00
 ISSe                v2.00
 ISSFortaleza        v1.00
-ISSGoiania          v2.00
+ISSGoiania          v2.00 02/08/2022
 ISSIntel            v1.00
 ISSJoinville        v2.04
 ISSLencois          v1.00

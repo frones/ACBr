@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2022
+-- ACBrCTeDACTeRLClass --
+[*] Alterado para ser utilizado a função DefinirNomeArqPDF nos métodos:
+    ImprimirDACTePDF, ImprimirEVENTOPDF e ImprimirINUTILIZACAOPDF
+   Por: Italo Giurizzato Junior
+
 06/04/2021
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajuste de conversão do arquivo .lfm 

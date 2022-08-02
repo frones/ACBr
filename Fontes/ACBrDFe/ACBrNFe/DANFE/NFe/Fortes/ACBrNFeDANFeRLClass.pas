@@ -142,7 +142,7 @@ implementation
 
 uses
   synautil, ACBrNFe,
-  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.FilesIO,
   ACBrNFeNotasFiscais, pcnEnvEventoNFe,
   ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
   ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
@@ -255,10 +255,10 @@ var
 
   function ImprimirDANFEPDFTipo(ANFe: TNFe): String;
   begin
-    if NaoEstaVazio(Trim(Self.NomeDocumento)) then
-      Result := Self.PathPDF + Self.NomeDocumento
-    else
-      Result := Self.PathPDF + OnlyNumber(ANFe.infNFe.ID) + '-nfe.pdf';
+    Result := DefinirNomeArqPDF(Self.PathPDF,
+                                OnlyNumber(ANFe.infNFe.ID),
+                                '-nfe.pdf',
+                                Self.NomeDocumento);
 
     case Self.TipoDANFE of
       tiPaisagem:
@@ -362,10 +362,10 @@ var
 
   function ImprimirEVENTOPDFTipo(EventoNFeItem: TInfEventoCollectionItem; ANFe: TNFe): String;
   begin
-    if NaoEstaVazio(Trim(Self.NomeDocumento)) then
-      Result := Self.PathPDF + Self.NomeDocumento
-    else
-      Result := Self.PathPDF + OnlyNumber(EventoNFeItem.InfEvento.id) + '-procEventoNFe.pdf';
+    Result := DefinirNomeArqPDF(Self.PathPDF,
+                                OnlyNumber(EventoNFeItem.InfEvento.id),
+                                '-procEventoNFe.pdf',
+                                Self.NomeDocumento);
 
     // TipoDANFE ainda não está sendo utilizado no momento
     TfrlDANFeEventoRLRetrato.SalvarPDF(Self, EventoNFeItem, Result, ANFe);
@@ -470,10 +470,11 @@ end;
 
 procedure TACBrNFeDANFeRL.ImprimirINUTILIZACAOPDF(ANFe: TNFe);
 begin
-  if NaoEstaVazio(Trim(Self.NomeDocumento)) then
-    FPArquivoPDF := Self.PathPDF + Self.NomeDocumento
-  else
-    FPArquivoPDF := Self.PathPDF + OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.ID) + '-procInutNFe.pdf';
+  FPArquivoPDF := DefinirNomeArqPDF(Self.PathPDF,
+                              OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.ID),
+                              '-procInutNFe.pdf',
+                              Self.NomeDocumento);
+
   TfrmNFeDAInutRLRetrato.SalvarPDF(Self, TACBrNFe(ACBrNFe).InutNFe, FPArquivoPDF, ANFe);
 end;
 

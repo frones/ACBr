@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2022
+-- ACBrNFeDANFeRLClass --
+[*] Alterado para ser utilizado a função DefinirNomeArqPDF nos métodos:
+    ImprimirDANFePDF, ImprimirEVENTOPDF e ImprimirINUTILIZACAOPDF
+   Por: Italo Giurizzato Junior
+
 14/04/2022
 --ACBrDANFCeFortesFrA4--
 [*] Ajuste na validação de casas decimais de qCon e vUnCon e Totalizador dos Acréscimos por item

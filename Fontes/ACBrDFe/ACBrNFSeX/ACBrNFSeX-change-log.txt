@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/08/2022
+-- ACBrNFSeXServicos --
+[*] A cidade de Cubatão/SP trocou de provedor agora é SmarAPD
+   Por: Antonio Leonardo C. Xavier/Italo Giurizzato Junior
+
 29/07/2022
 -- ACBrNFSeXServicos --
 [*] No Envelope Soap do provedor Elotech existe uma tag que diz se o XML vai

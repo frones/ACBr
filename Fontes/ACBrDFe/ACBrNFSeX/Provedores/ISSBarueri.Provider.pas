@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
@@ -47,6 +47,17 @@ uses
 
 type
 
+  TCodigoErro = (ce100, ce101, ce102, ce200, ce201, ce202, ce203, ce204, ce205,
+                 ce206, ce207, ce208, ce209, ce210, ce211, ce212, ce213, ce214,
+                 ce215, ce216, ce217, ce218, ce219, ce220, ce221, ce222, ce223,
+                 ce224, ce225, ce226, ce227, ce228, ce229, ce230, ce231, ce232,
+                 ce233, ce234, ce235, ce236, ce237, ce238, ce239, ce240, ce241,
+                 ce242, ce243, ce244, ce245, ce246, ce247, ce248, ce249, ce250,
+                 ce251, ce252, ce253, ce254, ce255, ce256, ce257, ce258, ce259,
+                 ce260, ce261, ce300, ce301, ce302, ce303, ce304, ce305, ce400,
+                 ce401, ce402, ce403, ce000, ce500, ce600, ce700, ce900, ce901,
+                 ce999);
+
   { TACBrNFSeXWebserviceISSBarueri }
 
   TACBrNFSeXWebserviceISSBarueri = class(TACBrNFSeXWebserviceSoap12)
@@ -62,6 +73,10 @@ type
   TACBrNFSeProviderISSBarueri = class(TACBrNFSeProviderProprio)
   private
     function ExisteErroRegistro(const ALinha: String): Boolean;
+
+    function StrToCodigoErro(var ok:boolean; const s: string): TCodigoErro;
+    function GetCausa(const ACodigo: TCodigoErro): String;
+    function GetSolucao(const ACodigo: TCodigoErro): String;
   protected
     procedure Configuracao; override;
 
@@ -91,16 +106,6 @@ type
                                      const AMessageTag: string = 'MensagemRetorno'); override;
   end;
 
-  { TACBrNFSeProviderBarueriErros }
-
-  TACBrNFSeProviderBarueriErros = class(TStringList)
-  public
-    constructor Create;
-
-    function Causa(const ACodigo: String): String;
-    function Solucao(const ACodigo: String): String;
-  end;
-
 implementation
 
 uses
@@ -111,191 +116,217 @@ uses
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ISSBarueri.GravarXml, ISSBarueri.LerXml;
 
-{ TACBrNFSeProviderBarueriErros }
-
-constructor TACBrNFSeProviderBarueriErros.Create;
-begin
-  Add('100=Tipo de Registro Inválido|Informar Tipo Especificado: 1');
-  Add('101=Inscrição do Prestador de Serviços não encontrada na base de dados da PMB|Informar Número Correto do Prestador de Serviços');
-  Add('102=Identificação da Remessa do Contribuinte inválida ou já informada em outro arquivo de remessa|Informar Número válido e único/exclusivo. Um número outra enviado jamais poderá ser enviado novamente');
-  Add('200=Tipo de Registro Inválido|Informar Tipo Especificado: 2');
-  Add('201=Tipo de RPS Inválido|Informar Tipo Especificado: RPS / RPS-C');
-  Add('202=Número de Série do RPS Inválida|Informar o Número de Série do RPS Válida');
-  Add('203=Número de Série da Nf-e Inválida|Informar o Número de Série da NF-e Válida');
-  Add('204=Número de RPS não Informado ou inválido. Numeração máxima permitida 0009999999|Informar o Número do RPS');
-  Add('205=Número de RPS já enviado|Informar um Número de RPS Válido');
-  Add('206=Numero do RPS enviado em Duplicidade no Arquivo|Informar o RPS apenas uma vez no arquivo, caso envie vários arquivos simultâneos enviar o RPS uma vez em apenas 1 dos arquivos.');
-  Add('207=NF-e não consta na base de dados da PMB, não pode ser cancelada/substituida|Informar NF-e Válida.');
-  Add('208=Data Inválida|A data informada deverá estar no formato AAAAMMDD, ou seja, 4 dígitos para ano seguido de 2 dígitos para o mês seguido de 2 dígitos para o dia.');
-  Add('209=Data de Emissão não poderá ser inferior a 09/09/2008|Informar uma Data Válida');
-  Add('210=Data de Emissão do RPS não pode ser superior a Data de Hoje|Informar uma Data Válida');
-  Add('211=Hora de Emissão do RPS Inválida|A hora informada deverá estar no formato HHMMSS, ou seja, 2 dígitos para hora em seguida 2 dígitos para os minutos e e 2 dígitos para os segundos.');
-  Add('212=Situação do RPS Inválida|Informar a Situação Especificada: E para RPS Enviado / C para RPS Cancelado');
-  Add('213=Código do Motivo de Cancelamento Inválido|Informar o Código Especificado: 01 para Extravio / 02 para Dados Incorretos / 03 para Substituição');
-  Add('214=Campo Descrição do Cancelamento não informado|Informar a Descrição do Cancelamento');
-  Add('215=NFe não pode ser cancelada, guia em aberto para nota fiscal correspondente|Cancelar a guia correspondente a nota fiscal');
-  Add('216=Código de Atividade não encontrada na base da PMB|Informar Código de Atividade Válido');
-  Add('217=Local da Prestação do Serviço Inválido|Informar o Local Especificado:1 para serviço prestado no Município / 2 para serviço prestado fora do Município / 3 para serviço prestado fora do País');
-  Add('218=Serviço Prestado em Vias Públicas Inválido|Informe 1 para serviço prestado em vias públicas / 2 para serviço não prestado em vias públicas.');
-  Add('219=Campo Endereco do Serviço Prestado é obrigatório|Informar Endereço');
-  Add('220=Campo Número do Logradouro do Serviço Prestado é obrigatório|Informar Número');
-  Add('221=Campo Bairro do Serviço Prestado é obrigatório|Informar Bairro');
-  Add('222=Campo Cidade do Serviço Prestado é obrigatório|Informar Cidade');
-  Add('223=Campo UF do Serviço Prestado é obrigatório|Informar UF Tomador');
-  Add('224=Campo UF do Serviço Prestado invalido|Informar UF Tomador Válida');
-  Add('225=Campo CEP do Serviço Prestado invalido|Informar CEP');
-  Add('226=Quantidade de Serviço não deverá ser inferior a zero e/ou Quantidade de Serviço deverá ser numérico|Informar um Valor Válido.');
-  Add('227=Valor do Serviço não pode ser menor que zero e/ou Valor do Serviço deverá ser numérico|Informar um Valor Válido');
-  Add('228=Reservado');
-  Add('229=Reservado');
-  Add('230=Valor Total das Retenções não deverá ser inferior a zero e/ou Valor Total das Retenções deverá ser numérico|Informar um Valor Válido.');
-  Add('231=Valor Total das Retenções não poderá ser superior ao Valor Total do serviço prestado|Informar um Valor Válido.');
-  Add('232=Valor Total dos Retenções não confere com os valores deduçoes informadas para este RPS|Informar Somatória dos Valores de Retenções informadas no registro 3 referente a este RPS');
-  Add('233=Identificador de tomodor estrangeiro inválido|Informe 1 Para Tomador Estrangeiro 2 para Tomador Brasileiro');
-  Add('234=Código do Pais de Nacionalidade do Tomador Estrangeiro inválido|Informe um código de pais válido');
-  Add('235=Identificador se Serviço Prestado é exportação inválido|Informe 1 Para Serviço exportado 2 para Serviço não exportado.');
-  Add('236=Indicador CPF/CNPJ Inválido|Informar Indicador do CPF/CNPJ Especificado:1 para CPF / 2 para CNPJ');
-  Add('237=CPNJ do Tomador Inválido|Informar o CPNJ do Tomador Válido');
-  Add('238=Campo Nome ou Razão Social do Tomador de Serviços é Obrigatório|Informar Razão Social');
-  Add('239=Campo Endereço do Tomador de Serviços é Obrigatório|Informar Endereço');
-  Add('240=Campo Número do Logradouro do Tomador de Serviços|Informar Número');
-  Add('241=Campo Bairro do Tomador de Serviços é Obrigatório|Informar Bairro');
-  Add('242=Campo Cidade do Tomador de Serviços é Obrigatório|Informar Cidade');
-  Add('243=Campo UF do Tomador de Serviços é Obrigatório|Informar UF Tomador');
-  Add('244=Campo UF do Tomador de Serviços Inválido|Informar UF Tomador Válida');
-  Add('245=Campo CEP do Tomador de Serviços Inválido|Informar CEP');
-  Add('246=Email do Tomador de Serviços Inválido|Informar e-mail Válido');
-  Add('247=Campo Fatura deverá ser numérico|Informar um conteudo válido.');
-  Add('248=Valor da Fatura não deverá ser inferior a zero e/ou Valor da Fatura deverá ser numérico|Informar um Valor Válido');
-  Add('249=Campo Forma de Pagamento não informado|Informar Forma de Pagamento');
-  Add('250=Campo Discriminação de Serviço não informado e/ou fora dos padrões estabelecidos no layout|Informar a Discriminação do Serviço');
-  Add('251=Valor Total do Serviço superior ao permitido (campo valor do serviço multiplicado pelo campo quantidade)|Informar valores validos');
-  Add('252=Data Inválida|A data informada deverá estar no formato AAAAMMDD, ou seja, 4 dígitos para ano seguido de 2 dígitos para o mês seguido de 2 dígitos para o dia.');
-  Add('253=NFe não pode ser cancelada, data de emissão superior a 90 dias|Informar NF-e valida para cancelamento/substituição');
-  Add('254=Nota Fiscal Já Cancelada|Informar NF-e valida para cancelamento/substituição');
-  Add('255=Nota Fiscal com valores zerados|O valor da nota fiscal é calculado: (quantidade do serviço x preço unitário) + valor "VN" informado no registro 3. Esse resultado pode ser zero desde que o valor do serviço ou VN seja diferente de zero.');
-  Add('256=Contribuinte com condição diferente de ativo|Artigo 3º. Os contribuintes com restrições cadastrais estão impedidos de utilizar os sistemas ora instituídos. ' +
-      '-Contribuinte com situação diferente de ativo não poderá converter RPS emitidos após a data da alteração da situação. Dúvidas entrar em contato com o Depto. Técnico de Tributos Mobiliários no Tel. 4199-8050.');
-  Add('257=Nota Fiscal enviada em Duplicidade no Arquivo|Informar a Nota Fiscal apenas uma vez no arquivo, caso envie vários arquivos simultâneos enviar a Nota uma vez em apenas 1 dos arquivos.');
-  Add('258=NFe não pode ser cancelada ou substituida competência já encerrada|Para prosseguir é necessário retificar o movimento através do menu "Retificar Serviços Prestados"');
-  Add('259=Data de Emissão do RPS refere-se a competência já encerrada|Para prosseguir é necessário retificar o movimento através do menu "Retificar Serviços Prestados"');
-  Add('260=Código de Atividade não permitido|Informar um Código de Atividade vinculado ao Perfil do Contribuinte ou um Código de Atividade tributada.');
-  Add('261=Código de Atividade Bloqueado|Informar um Código de Atividade vinculado ao Perfil do Contribuinte (Atingido o limite permitido de notas para atividade não vinculadas ao cadastro do contribuinte).');
-  Add('300=Tipo de Registro Inválido|Informar Tipo Especificado: 3');
-  Add('301=Código de Outros Valores Inválido|Informar o Código Especificado: 01 - para IRRF 02 - para PIS/PASEP 03 - para COFINS 04 - ' +
-      'para CSLL VN - para Valor não Incluso na Base de Cálculo (exceto tributos federais). Esse campo somado ao valor total dos serviços resulta no Valor total da nota.');
-  Add('302=Caso seja retenção: Valor da Retenção não poderá ser menor/igual a zero Caso seja "VN" Valor deve ser diferente de zero|Caso ' +
-      'não tenha retenção não informar o registro ou informe um valor maior que zero. Se for "VN" informar um valor diferente de zero ou simplesmente não informe esse registro');
-  Add('303=Soma do serviço prestado e valor "VN" não poderá ser inferior a zero.|Informar um Valor Válido.');
-  Add('304=Código de Outros Valores envia|Informar Código de Retenção Válido');
-  Add('305=Conforme Lei Complementar 419 / 2017, ficam revogados, a partir de 30 de dezembro de 2017, todos os regimes especiais e soluções ' +
-      'de consulta cujo resultado ermitiu redução do preço do serviço ou da base de cálculo do Imposto Sobre Serviço de Qualquer Natureza.|Não informar este tipo de dedução para RPS cuja a data base de cálculo seja superior à 29/12/2017.');
-  Add('400=Tipo de Registro Inválido|Informar Tipo Especificado: 9');
-  Add('401=Número de Linhas não confere com número de linhas do tipo 1,2,3 e 9 enviadas no arquivo|Informe o número de linhas (tipo 1,2,3 e 9)');
-  Add('402=Valor Total dos Serviços não confere os valores de serviços enviados no arquivo|Informar Somatória dos Valores Totais de Serviços Prestados (Soma dos valores dos serviços multiplicados pelas quantidades de cada serviço)');
-  Add('403=Valor Total das Retenções e Total de outros valores informados no registro 3 não confere com total informado|Informar Somatória dos Valores Totais lançados no Registro tipo 3.');
-  Add('000=Lay-Out do arquivo fora dos padrões|O arquivo enviado não é um arquivo de Remessa da NFe de Barueri. Enviar um arquivo com os Registros: 1, 2, 9 e opcionalmente o registro tipo 3');
-  Add('500=Lay-Out do arquivo fora dos padrões|Os registros válidos esperados no arquivo são tipo: 1,2,3 e 9');
-  Add('600=Lay-Out do arquivo fora dos padrões|Deve haver apenas 1 registro tipo 9 e esse deve ser o último registro do arquivo');
-  Add('700=Quantidade de RPS superior ao padrão|Enviar um arquivo com no máximo 1000 RPS');
-  Add('900=Tamanho do Registro diferente da especificação do layout|Reveja as posições/tamanho para cada registro, certifique-se que o tamanho dos registros conferem com o layout e contém o caracter de fim de linha conforme especificado no layout');
-  Add('901=Arquivo com ausência de um dos Registros: 1, 2 ou 9|Reveja os registros do arquivo, certifique-se que todos registros mencionados estão presentes em seu arquivo. ' +
-      'Também certifique-se que todos os registros do arquivo contém o caracter de fim de linha conforme especificado no layout');
-end;
-
-function TACBrNFSeProviderBarueriErros.Causa(const ACodigo: String): String;
-begin
-  try
-    Result := Copy(Values[ACodigo], 1, Pos('|', Values[ACodigo])-1);
-  except
-    Result := '';
-  end;
-end;
-
-function TACBrNFSeProviderBarueriErros.Solucao(const ACodigo: String): String;
-begin
-  try
-    Result := Copy(Values[ACodigo], Pos('|', Values[ACodigo])+1, Length(Values[ACodigo]));
-  except
-    Result := '';
-  end;
-end;
-
-{ TACBrNFSeXWebserviceISSBarueri }
-
-function TACBrNFSeXWebserviceISSBarueri.Recepcionar(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfe:NFeLoteEnviarArquivo>';
-  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
-  Request := Request + '<nfe:MensagemXML>';
-  Request := Request + IncluirCDATA(AMSG);
-  Request := Request + '</nfe:MensagemXML>';
-  Request := Request + '</nfe:NFeLoteEnviarArquivo>';
-
-  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
-    Request,
-    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
-end;
-
-function TACBrNFSeXWebserviceISSBarueri.ConsultarSituacao(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfe:NFeLoteStatusArquivo>';
-  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
-  Request := Request + '<nfe:MensagemXML>';
-  Request := Request + IncluirCDATA(AMSG);
-  Request := Request + '</nfe:MensagemXML>';
-  Request := Request + '</nfe:NFeLoteStatusArquivo>';
-
-  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteStatusArquivo',
-    Request,
-    ['NFeLoteStatusArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
-end;
-
-function TACBrNFSeXWebserviceISSBarueri.ConsultarLote(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfe:NFeLoteBaixarArquivo>';
-  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
-  Request := Request + '<nfe:MensagemXML>';
-  Request := Request + IncluirCDATA(AMSG);
-  Request := Request + '</nfe:MensagemXML>';
-  Request := Request + '</nfe:NFeLoteBaixarArquivo>';
-
-  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteBaixarArquivo',
-    Request,
-    ['NFeLoteBaixarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
-end;
-
-function TACBrNFSeXWebserviceISSBarueri.Cancelar(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfe:NFeLoteEnviarArquivo>';
-  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
-  Request := Request + '<nfe:MensagemXML>';
-  Request := Request + IncluirCDATA(AMSG);
-  Request := Request + '</nfe:MensagemXML>';
-  Request := Request + '</nfe:NFeLoteEnviarArquivo>';
-
-  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
-    Request,
-    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
-end;
-
 { TACBrNFSeProviderISSBarueri }
+
+function TACBrNFSeProviderISSBarueri.StrToCodigoErro(var ok: boolean;
+  const s: string): TCodigoErro;
+begin
+  result := StrToEnumerado(ok, s,
+                ['999',
+                 '100', '101', '102', '200', '201', '202', '203', '204', '205',
+                 '206', '207', '208', '209', '210', '211', '212', '213', '214',
+                 '215', '216', '217', '218', '219', '220', '221', '222', '223',
+                 '224', '225', '226', '227', '228', '229', '230', '231', '232',
+                 '233', '234', '235', '236', '237', '238', '239', '240', '241',
+                 '242', '243', '244', '245', '246', '247', '248', '249', '250',
+                 '251', '252', '253', '254', '255', '256', '257', '258', '259',
+                 '260', '261', '300', '301', '302', '303', '304', '305', '400',
+                 '401', '402', '403', '000', '500', '600', '700', '900', '901'],
+                [ce999,
+                 ce100, ce101, ce102, ce200, ce201, ce202, ce203, ce204, ce205,
+                 ce206, ce207, ce208, ce209, ce210, ce211, ce212, ce213, ce214,
+                 ce215, ce216, ce217, ce218, ce219, ce220, ce221, ce222, ce223,
+                 ce224, ce225, ce226, ce227, ce228, ce229, ce230, ce231, ce232,
+                 ce233, ce234, ce235, ce236, ce237, ce238, ce239, ce240, ce241,
+                 ce242, ce243, ce244, ce245, ce246, ce247, ce248, ce249, ce250,
+                 ce251, ce252, ce253, ce254, ce255, ce256, ce257, ce258, ce259,
+                 ce260, ce261, ce300, ce301, ce302, ce303, ce304, ce305, ce400,
+                 ce401, ce402, ce403, ce000, ce500, ce600, ce700, ce900, ce901]);
+end;
+
+function TACBrNFSeProviderISSBarueri.GetCausa(
+  const ACodigo: TCodigoErro): String;
+begin
+  case ACodigo of
+    ce100: Result := 'Tipo de Registro Inválido';
+    ce101: Result := 'Inscrição do Prestador de Serviços não encontrada na base de dados da PMB';
+    ce102: Result := 'Identificação da Remessa do Contribuinte inválida ou já informada em outro arquivo de remessa';
+    ce200: Result := 'Tipo de Registro Inválido';
+    ce201: Result := 'Tipo de RPS Inválido';
+    ce202: Result := 'Número de Série do RPS Inválida';
+    ce203: Result := 'Número de Série da Nf-e Inválida';
+    ce204: Result := 'Número de RPS não Informado ou inválido. Numeração máxima permitida 0009999999';
+    ce205: Result := 'Número de RPS já enviado';
+    ce206: Result := 'Numero do RPS enviado em Duplicidade no Arquivo';
+    ce207: Result := 'NF-e não consta na base de dados da PMB, não pode ser cancelada/substituida';
+    ce208: Result := 'Data Inválida';
+    ce209: Result := 'Data de Emissão não poderá ser inferior a 09/09/2008';
+    ce210: Result := 'Data de Emissão do RPS não pode ser superior a Data de Hoje';
+    ce211: Result := 'Hora de Emissão do RPS Inválida';
+    ce212: Result := 'Situação do RPS Inválida';
+    ce213: Result := 'Código do Motivo de Cancelamento Inválido';
+    ce214: Result := 'Campo Descrição do Cancelamento não informado';
+    ce215: Result := 'NFe não pode ser cancelada, guia em aberto para nota fiscal correspondente';
+    ce216: Result := 'Código de Atividade não encontrada na base da PMB';
+    ce217: Result := 'Local da Prestação do Serviço Inválido';
+    ce218: Result := 'Serviço Prestado em Vias Públicas Inválido';
+    ce219: Result := 'Campo Endereco do Serviço Prestado é obrigatório';
+    ce220: Result := 'Campo Número do Logradouro do Serviço Prestado é obrigatório';
+    ce221: Result := 'Campo Bairro do Serviço Prestado é obrigatório';
+    ce222: Result := 'Campo Cidade do Serviço Prestado é obrigatório';
+    ce223: Result := 'Campo UF do Serviço Prestado é obrigatório';
+    ce224: Result := 'Campo UF do Serviço Prestado invalido';
+    ce225: Result := 'Campo CEP do Serviço Prestado invalido';
+    ce226: Result := 'Quantidade de Serviço não deverá ser inferior a zero e/ou Quantidade de Serviço deverá ser numérico';
+    ce227: Result := 'Valor do Serviço não pode ser menor que zero e/ou Valor do Serviço deverá ser numérico';
+    ce228: Result := 'Reservado';
+    ce229: Result := 'Reservado';
+    ce230: Result := 'Valor Total das Retenções não deverá ser inferior a zero e/ou Valor Total das Retenções deverá ser numérico';
+    ce231: Result := 'Valor Total das Retenções não poderá ser superior ao Valor Total do serviço prestado';
+    ce232: Result := 'Valor Total dos Retenções não confere com os valores deduçoes informadas para este RPS';
+    ce233: Result := 'Identificador de tomodor estrangeiro inválido';
+    ce234: Result := 'Código do Pais de Nacionalidade do Tomador Estrangeiro inválido';
+    ce235: Result := 'Identificador se Serviço Prestado é exportação inválido';
+    ce236: Result := 'Indicador CPF/CNPJ Inválido';
+    ce237: Result := 'CPNJ do Tomador Inválido';
+    ce238: Result := 'Campo Nome ou Razão Social do Tomador de Serviços é Obrigatório';
+    ce239: Result := 'Campo Endereço do Tomador de Serviços é Obrigatório';
+    ce240: Result := 'Campo Número do Logradouro do Tomador de Serviços';
+    ce241: Result := 'Campo Bairro do Tomador de Serviços é Obrigatório';
+    ce242: Result := 'Campo Cidade do Tomador de Serviços é Obrigatório';
+    ce243: Result := 'Campo UF do Tomador de Serviços é Obrigatório';
+    ce244: Result := 'Campo UF do Tomador de Serviços Inválido';
+    ce245: Result := 'Campo CEP do Tomador de Serviços Inválido';
+    ce246: Result := 'Email do Tomador de Serviços Inválido';
+    ce247: Result := 'Campo Fatura deverá ser numérico';
+    ce248: Result := 'Valor da Fatura não deverá ser inferior a zero e/ou Valor da Fatura deverá ser numérico';
+    ce249: Result := 'Campo Forma de Pagamento não informado';
+    ce250: Result := 'Campo Discriminação de Serviço não informado e/ou fora dos padrões estabelecidos no layout';
+    ce251: Result := 'Valor Total do Serviço superior ao permitido (campo valor do serviço multiplicado pelo campo quantidade)';
+    ce252: Result := 'Data Inválida';
+    ce253: Result := 'NFe não pode ser cancelada, data de emissão superior a 90 dias';
+    ce254: Result := 'Nota Fiscal Já Cancelada';
+    ce255: Result := 'Nota Fiscal com valores zerados';
+    ce256: Result := 'Contribuinte com condição diferente de ativo';
+    ce257: Result := 'Nota Fiscal enviada em Duplicidade no Arquivo';
+    ce258: Result := 'NFe não pode ser cancelada ou substituida competência já encerrada';
+    ce259: Result := 'Data de Emissão do RPS refere-se a competência já encerrada';
+    ce260: Result := 'Código de Atividade não permitido';
+    ce261: Result := 'Código de Atividade Bloqueado';
+    ce300: Result := 'Tipo de Registro Inválido';
+    ce301: Result := 'Código de Outros Valores Inválido';
+    ce302: Result := 'Caso seja retenção: Valor da Retenção não poderá ser menor/igual a zero Caso seja "VN" Valor deve ser diferente de zero';
+    ce303: Result := 'Soma do serviço prestado e valor "VN" não poderá ser inferior a zero.';
+    ce304: Result := 'Código de Outros Valores envia';
+    ce305: Result := 'Conforme Lei Complementar 419 / 2017, ficam revogados, a partir de 30 de dezembro de 2017, todos os regimes especiais e soluções ' +
+                     'de consulta cujo resultado ermitiu redução do preço do serviço ou da base de cálculo do Imposto Sobre Serviço de Qualquer Natureza.';
+    ce400: Result := 'Tipo de Registro Inválido';
+    ce401: Result := 'Número de Linhas não confere com número de linhas do tipo 1,2,3 e 9 enviadas no arquivo';
+    ce402: Result := 'Valor Total dos Serviços não confere os valores de serviços enviados no arquivo';
+    ce403: Result := 'Valor Total das Retenções e Total de outros valores informados no registro 3 não confere com total informado';
+    ce000: Result := 'Lay-Out do arquivo fora dos padrões';
+    ce500: Result := 'Lay-Out do arquivo fora dos padrões';
+    ce600: Result := 'Lay-Out do arquivo fora dos padrões';
+    ce700: Result := 'Quantidade de RPS superior ao padrão';
+    ce900: Result := 'Tamanho do Registro diferente da especificação do layout';
+    ce901: Result := 'Arquivo com ausência de um dos Registros: 1, 2 ou 9';
+  else
+    Result := 'Desconhecido';
+  end;
+end;
+
+function TACBrNFSeProviderISSBarueri.GetSolucao(
+  const ACodigo: TCodigoErro): String;
+begin
+  case ACodigo of
+    ce100: Result := 'Informar Tipo Especificado: 1';
+    ce101: Result := 'Informar Número Correto do Prestador de Serviços';
+    ce102: Result := 'Informar Número válido e único/exclusivo. Um número outra enviado jamais poderá ser enviado novamente';
+    ce200: Result := 'Informar Tipo Especificado: 2';
+    ce201: Result := 'Informar Tipo Especificado: RPS / RPS-C';
+    ce202: Result := 'Informar o Número de Série do RPS Válida';
+    ce203: Result := 'Informar o Número de Série da NF-e Válida';
+    ce204: Result := 'Informar o Número do RPS';
+    ce205: Result := 'Informar um Número de RPS Válido';
+    ce206: Result := 'Informar o RPS apenas uma vez no arquivo, caso envie vários arquivos simultâneos enviar o RPS uma vez em apenas 1 dos arquivos.';
+    ce207: Result := 'Informar NF-e Válida.';
+    ce208: Result := 'A data informada deverá estar no formato AAAAMMDD, ou seja, 4 dígitos para ano seguido de 2 dígitos para o mês seguido de 2 dígitos para o dia.';
+    ce209: Result := 'Informar uma Data Válida';
+    ce210: Result := 'Informar uma Data Válida';
+    ce211: Result := 'A hora informada deverá estar no formato HHMMSS, ou seja, 2 dígitos para hora em seguida 2 dígitos para os minutos e e 2 dígitos para os segundos.';
+    ce212: Result := 'Informar a Situação Especificada: E para RPS Enviado / C para RPS Cancelado';
+    ce213: Result := 'Informar o Código Especificado: 01 para Extravio / 02 para Dados Incorretos / 03 para Substituição';
+    ce214: Result := 'Informar a Descrição do Cancelamento';
+    ce215: Result := 'Cancelar a guia correspondente a nota fiscal';
+    ce216: Result := 'Informar Código de Atividade Válido';
+    ce217: Result := 'Informar o Local Especificado:1 para serviço prestado no Município / 2 para serviço prestado fora do Município / 3 para serviço prestado fora do País';
+    ce218: Result := 'Informe 1 para serviço prestado em vias públicas / 2 para serviço não prestado em vias públicas.';
+    ce219: Result := 'Informar Endereço';
+    ce220: Result := 'Informar Número';
+    ce221: Result := 'Informar Bairro';
+    ce222: Result := 'Informar Cidade';
+    ce223: Result := 'Informar UF Tomador';
+    ce224: Result := 'Informar UF Tomador Válida';
+    ce225: Result := 'Informar CEP';
+    ce226: Result := 'Informar um Valor Válido.';
+    ce227: Result := 'Informar um Valor Válido';
+    ce228: Result := 'Reservado';
+    ce229: Result := 'Reservado';
+    ce230: Result := 'Informar um Valor Válido.';
+    ce231: Result := 'Informar um Valor Válido.';
+    ce232: Result := 'Informar Somatória dos Valores de Retenções informadas no registro 3 referente a este RPS';
+    ce233: Result := 'Informe 1 Para Tomador Estrangeiro 2 para Tomador Brasileiro';
+    ce234: Result := 'Informe um código de pais válido';
+    ce235: Result := 'Informe 1 Para Serviço exportado 2 para Serviço não exportado.';
+    ce236: Result := 'Informar Indicador do CPF/CNPJ Especificado:1 para CPF / 2 para CNPJ';
+    ce237: Result := 'Informar o CPNJ do Tomador Válido';
+    ce238: Result := 'Informar Razão Social';
+    ce239: Result := 'Informar Endereço';
+    ce240: Result := 'Informar Número';
+    ce241: Result := 'Informar Bairro';
+    ce242: Result := 'Informar Cidade';
+    ce243: Result := 'Informar UF Tomador';
+    ce244: Result := 'Informar UF Tomador Válida';
+    ce245: Result := 'Informar CEP';
+    ce246: Result := 'Informar e-mail Válido';
+    ce247: Result := 'Informar um conteudo válido.';
+    ce248: Result := 'Informar um Valor Válido';
+    ce249: Result := 'Informar Forma de Pagamento';
+    ce250: Result := 'Informar a Discriminação do Serviço';
+    ce251: Result := 'Informar valores validos';
+    ce252: Result := 'A data informada deverá estar no formato AAAAMMDD, ou seja, 4 dígitos para ano seguido de 2 dígitos para o mês seguido de 2 dígitos para o dia.';
+    ce253: Result := 'Informar NF-e valida para cancelamento/substituição';
+    ce254: Result := 'Informar NF-e valida para cancelamento/substituição';
+    ce255: Result := 'O valor da nota fiscal é calculado: (quantidade do serviço x preço unitário) + valor "VN" informado no registro 3. Esse resultado pode ser zero desde que o valor do serviço ou VN seja diferente de zero.';
+    ce256: Result := 'Artigo 3º. Os contribuintes com restrições cadastrais estão impedidos de utilizar os sistemas ora instituídos. ' +
+                     '-Contribuinte com situação diferente de ativo não poderá converter RPS emitidos após a data da alteração da situação. Dúvidas entrar em contato com o Depto. Técnico de Tributos Mobiliários no Tel. 4199-8050.';
+    ce257: Result := 'Informar a Nota Fiscal apenas uma vez no arquivo, caso envie vários arquivos simultâneos enviar a Nota uma vez em apenas 1 dos arquivos.';
+    ce258: Result := 'Para prosseguir é necessário retificar o movimento através do menu "Retificar Serviços Prestados"';
+    ce259: Result := 'Para prosseguir é necessário retificar o movimento através do menu "Retificar Serviços Prestados"';
+    ce260: Result := 'Informar um Código de Atividade vinculado ao Perfil do Contribuinte ou um Código de Atividade tributada.';
+    ce261: Result := 'Informar um Código de Atividade vinculado ao Perfil do Contribuinte (Atingido o limite permitido de notas para atividade não vinculadas ao cadastro do contribuinte).';
+    ce300: Result := 'Informar Tipo Especificado: 3';
+    ce301: Result := 'Informar o Código Especificado: 01 - para IRRF 02 - para PIS/PASEP 03 - para COFINS 04 - ' +
+                     'para CSLL VN - para Valor não Incluso na Base de Cálculo (exceto tributos federais). Esse campo somado ao valor total dos serviços resulta no Valor total da nota.';
+    ce302: Result := 'Caso não tenha retenção não informar o registro ou informe um valor maior que zero. Se for "VN" informar um valor diferente de zero ou simplesmente não informe esse registro';
+    ce303: Result := 'Informar um Valor Válido.';
+    ce304: Result := 'Informar Código de Retenção Válido';
+    ce305: Result := 'Não informar este tipo de dedução para RPS cuja a data base de cálculo seja superior à 29/12/2017.';
+    ce400: Result := 'Informar Tipo Especificado: 9';
+    ce401: Result := 'Informe o número de linhas (tipo 1,2,3 e 9)';
+    ce402: Result := 'Informar Somatória dos Valores Totais de Serviços Prestados (Soma dos valores dos serviços multiplicados pelas quantidades de cada serviço)';
+    ce403: Result := 'Informar Somatória dos Valores Totais lançados no Registro tipo 3.';
+    ce000: Result := 'O arquivo enviado não é um arquivo de Remessa da NFe de Barueri. Enviar um arquivo com os Registros: 1, 2, 9 e opcionalmente o registro tipo 3';
+    ce500: Result := 'Os registros válidos esperados no arquivo são tipo: 1,2,3 e 9';
+    ce600: Result := 'Deve haver apenas 1 registro tipo 9 e esse deve ser o último registro do arquivo';
+    ce700: Result := 'Enviar um arquivo com no máximo 1000 RPS';
+    ce900: Result := 'Reveja as posições/tamanho para cada registro, certifique-se que o tamanho dos registros conferem com o layout e contém o caracter de fim de linha conforme especificado no layout';
+    ce901: Result := 'Reveja os registros do arquivo, certifique-se que todos registros mencionados estão presentes em seu arquivo. ' +
+                     'Também certifique-se que todos os registros do arquivo contém o caracter de fim de linha conforme especificado no layout';
+  else
+    Result := 'Desconhecido';
+  end;
+end;
 
 function TACBrNFSeProviderISSBarueri.ExisteErroRegistro(const ALinha: String): Boolean;
 begin
@@ -417,6 +448,7 @@ begin
 
   Response.ArquivoEnvio := XML;
 end;
+
 function TACBrNFSeProviderISSBarueri.PrepararRpsParaLote(const aXml: string): string;
 begin
   Result := aXml;
@@ -668,15 +700,14 @@ var
   ArquivoBase64: String;
   Dados: TStringList;
   NumRps: String;
-  ListaErros: TACBrNFSeProviderBarueriErros;
   Erros: TStringList;
   ANota: TNotaFiscal;
   I, X: Integer;
   XML: string;
+  Ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
   Dados := TStringList.Create;
-  ListaErros := TACBrNFSeProviderBarueriErros.Create;
   Erros := TStringList.Create;
   Erros.Delimiter := ';';
 
@@ -730,8 +761,8 @@ begin
             begin
               AErro := Response.Erros.New;
               AErro.Codigo := Erros[X];
-              AErro.Descricao := ListaErros.Causa(Erros[X]);
-              AErro.Correcao := ListaErros.Solucao(Erros[X]);
+              AErro.Descricao := GetCausa(StrToCodigoErro(Ok, Erros[X]));
+              AErro.Correcao := GetSolucao(StrToCodigoErro(Ok, Erros[X]));
             end;
           end;
         end;
@@ -801,7 +832,6 @@ begin
     FreeAndNil(Document);
     FreeAndNil(Dados);
     FreeAndNil(Erros);
-    FreeAndNil(ListaErros);
   end;
 end;
 
@@ -851,6 +881,80 @@ end;
 function TACBrNFSeProviderISSBarueri.AplicarLineBreak(AXMLRps: String; const ABreak: String): String;
 begin
   Result := AXMLRps;
+end;
+
+{ TACBrNFSeXWebserviceISSBarueri }
+
+function TACBrNFSeXWebserviceISSBarueri.Recepcionar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfe:NFeLoteEnviarArquivo>';
+  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
+  Request := Request + '<nfe:MensagemXML>';
+  Request := Request + IncluirCDATA(AMSG);
+  Request := Request + '</nfe:MensagemXML>';
+  Request := Request + '</nfe:NFeLoteEnviarArquivo>';
+
+  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
+    Request,
+    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+end;
+
+function TACBrNFSeXWebserviceISSBarueri.ConsultarSituacao(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfe:NFeLoteStatusArquivo>';
+  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
+  Request := Request + '<nfe:MensagemXML>';
+  Request := Request + IncluirCDATA(AMSG);
+  Request := Request + '</nfe:MensagemXML>';
+  Request := Request + '</nfe:NFeLoteStatusArquivo>';
+
+  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteStatusArquivo',
+    Request,
+    ['NFeLoteStatusArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+end;
+
+function TACBrNFSeXWebserviceISSBarueri.ConsultarLote(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfe:NFeLoteBaixarArquivo>';
+  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
+  Request := Request + '<nfe:MensagemXML>';
+  Request := Request + IncluirCDATA(AMSG);
+  Request := Request + '</nfe:MensagemXML>';
+  Request := Request + '</nfe:NFeLoteBaixarArquivo>';
+
+  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteBaixarArquivo',
+    Request,
+    ['NFeLoteBaixarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+end;
+
+function TACBrNFSeXWebserviceISSBarueri.Cancelar(ACabecalho, AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfe:NFeLoteEnviarArquivo>';
+  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
+  Request := Request + '<nfe:MensagemXML>';
+  Request := Request + IncluirCDATA(AMSG);
+  Request := Request + '</nfe:MensagemXML>';
+  Request := Request + '</nfe:NFeLoteEnviarArquivo>';
+
+  Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
+    Request,
+    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
 end.

@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/08/2022
+-- ACBrPagForClass/CNAB240.LerTxtRetorno --
+[*] Alterações para que seja lido o Segmento Z do arquivo de Retorno.
+   Por: Warobert
+
 29/07/2022
 -- ACBrPagForConversao --
 [*] Implementado a função BancoToIspb que retorna o código ISPB utilizado pelo 

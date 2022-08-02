@@ -5,7 +5,7 @@
 {                                                                              }
 { Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -1031,7 +1031,7 @@ type
     FSegmentoJ99: TSegmentoJ99List;
 //    FSegmentoB: TSegmentoBList;
 //    FSegmentoC: TSegmentoCList;
-//    FSegmentoZ: TSegmentoZList;
+    FSegmentoZ: TSegmentoZList;
     FDescOcorrencia: string;
     FNossoNumero: string;
 
@@ -1039,7 +1039,7 @@ type
     procedure SetSegmentoJ99(const Value: TSegmentoJ99List);
 //    procedure SetSegmentoB(const Value: TSegmentoBList);
 //    procedure SetSegmentoC(const Value: TSegmentoCList);
-//    procedure SetSegmentoZ(const Value: TSegmentoZList);
+    procedure SetSegmentoZ(const Value: TSegmentoZList);
     function GetPagamentoLiberado: Boolean;
   public
     constructor Create;
@@ -1066,7 +1066,7 @@ type
     property SegmentoJ99: TSegmentoJ99List read FSegmentoJ99 write SetSegmentoJ99;
 //    property SegmentoB: TSegmentoBList read FSegmentoB write SetSegmentoB;
 //    property SegmentoC: TSegmentoCList read FSegmentoC write SetSegmentoC;
-//    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
+    property SegmentoZ: TSegmentoZList read FSegmentoZ write SetSegmentoZ;
   end;
 
   TSegmentoJList = class(TObjectList)
@@ -2052,7 +2052,7 @@ begin
   FSegmentoJ99 := TSegmentoJ99List.Create;
 //  FSegmentoB := TSegmentoBList.Create;
 //  FSegmentoC := TSegmentoCList.Create;
-//  FSegmentoZ := TSegmentoZList.Create;
+  FSegmentoZ := TSegmentoZList.Create;
 end;
 
 destructor TSegmentoJ.Destroy;
@@ -2061,7 +2061,7 @@ begin
   FSegmentoJ99.Free;
 //  FSegmentoB.Free;
 //  FSegmentoC.Free;
-//  FSegmentoZ.Free;
+  FSegmentoZ.Free;
 
   inherited Destroy;
 end;
@@ -2107,12 +2107,12 @@ procedure TSegmentoJ.SetSegmentoJ99(const Value: TSegmentoJ99List);
 begin
   FSegmentoJ99 := Value;
 end;
-{
+
 procedure TSegmentoJ.SetSegmentoZ(const Value: TSegmentoZList);
 begin
   FSegmentoZ := Value;
 end;
-}
+
 { TSegmentoJList }
 
 function TSegmentoJList.New: TSegmentoJ;

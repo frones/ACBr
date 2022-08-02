@@ -893,7 +893,7 @@ begin
     LerSegmentoJ99(PagFor.Lote.Last.SegmentoJ.Last.SegmentoJ99, I);
 //    LerSegmentoB(PagFor.Lote.Last.SegmentoJ.Last.SegmentoB, I);
 //    LerSegmentoC(PagFor.Lote.Last.SegmentoJ.Last.SegmentoC, I);
-//    LerSegmentoZ(PagFor.Lote.Last.SegmentoJ.Last.SegmentoZ, I);
+    LerSegmentoZ(PagFor.Lote.Last.SegmentoJ.Last.SegmentoZ, I);
 
     Linha := ArquivoTXT.Strings[I+1];
     RegSeg := LerCampo(Linha, 8, 1, tcStr) + LerCampo(Linha, 14, 1, tcStr);

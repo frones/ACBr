@@ -37,8 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2022
+-- ACBrUtil.FilesIO --
+[+] Acrescentado a função DefinirNomePDF recebendo como parâmetro:
+    Path, NomePadrao, Sufixo e NomeOpcional (opcional), se NomeOpcional for
+    informado será considerado ele em vez de NomePadrao.
+   Por: Pandaaa/Italo Giurizzato Junior
+
 11/07/2022
--- ACBrUitl.DateTime --
+-- ACBrUtil.DateTime --
 [-] Correção de AV ao enviar uma string vazia para função 'TimezoneToBias()'
 [*] Remoção de warning
 

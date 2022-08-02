@@ -150,6 +150,8 @@ function StringIsAFile(const AString: String): Boolean;
 function StringIsXML(const AString: String): Boolean;
 function StrIsIP(const AValue: String): Boolean;
 
+function DefinirNomeArqPDF(const APath, ANomePadrao, ASufixo: string; ANomeOpcional: string = ''): string;
+
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
 var xOut32 : function (wAddr: word; bOut: byte): byte; stdcall;
@@ -1395,6 +1397,21 @@ begin
     Exit;
   if ByteIsOk(TempIP) then
     Result := True;
+end;
+
+function DefinirNomeArqPDF(const APath, ANomePadrao, ASufixo: string; ANomeOpcional: string = ''): string;
+var
+  xNome: string;
+begin
+  xNome := Trim(ANomeOpcional);
+
+  if xNome <> '' then
+    xNome := ExtractFileName(xNome);
+
+  if NaoEstaVazio(xNome) then
+    Result := APath + xNome
+  else
+    Result := APath + Trim(ANomePadrao) + ASufixo;
 end;
 
 {$IFDEF MSWINDOWS}

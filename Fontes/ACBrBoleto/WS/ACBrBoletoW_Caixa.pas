@@ -412,13 +412,12 @@ begin
       Gerador.wGrupo('JUROS_MORA');
       Gerador.wCampo(tcStr, '#09', 'TIPO', 01, 20, 1, TipoJurosToStr(CodigoMoraJuros), DSC_CODIGO_MORA_JUROS);
       if (Integer(CodigoMoraJuros) <> 2) then
-      begin
         Gerador.wCampo(tcDat, '#10', 'DATA', 10, 10, 1, DataMoraJuros, DSC_DATA_MORA_JUROS);
-        if (Integer(CodigoMoraJuros) = 0)  then
-          Gerador.wCampo(tcDe2, '#11', 'VALOR     ', 01, 15, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS)
-        else
-          Gerador.wCampo(tcDe4, '#12', 'PERCENTUAL', 01, 15, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS);
-      end;
+
+      if (Integer(CodigoMoraJuros) = 1)  then
+        Gerador.wCampo(tcDe4, '#12', 'PERCENTUAL', 01, 15, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS)
+      else
+        Gerador.wCampo(tcDe2, '#11', 'VALOR     ', 01, 15, 1, ValorMoraJuros, DSC_VALOR_MORA_JUROS);
 
       Gerador.wGrupo('/JUROS_MORA');
     end;

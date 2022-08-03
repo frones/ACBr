@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2022
+--ACBrBoletoWCaixa--
+[*] Ajuste na geração das tags de Juros_Mora, seguindo especificação do manual
+   por : José M S Junior
+
 26/07/2022
 --ACBrBoletoBRB--
 [*] ACBrBoleto - Ajuste remessa BRB quanto as instruções 1 e 2

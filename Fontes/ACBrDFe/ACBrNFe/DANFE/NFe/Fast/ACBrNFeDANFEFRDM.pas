@@ -1429,6 +1429,7 @@ begin
     begin
       wObs := TACBrNFeDANFEClass(FDANFEClassOwner).ManterDocreferenciados(FNFe) +
               TACBrNFeDANFEClass(FDANFEClassOwner).ManterPagamentos(FNFe) +
+              TACBrNFeDANFEClass(FDANFEClassOwner).ManterSuframa(FNFe) +
               FDANFEClassOwner.ManterInfAdFisco(FNFe) +
               FDANFEClassOwner.ManterObsFisco(FNFe) +
               FDANFEClassOwner.ManterProcreferenciado(FNFe) +

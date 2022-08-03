@@ -79,6 +79,7 @@ type
     FExibeCampoFatura: Boolean;
     FExibeDadosISSQN: Boolean;
     FExibeDadosDocReferenciados: Boolean;
+	  FExibeDadosInscricaoSuframa:Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
@@ -123,6 +124,7 @@ type
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
     property ExibeDadosISSQN: Boolean read FExibeDadosISSQN write FExibeDadosISSQN default False;
     property ExibeDadosDocReferenciados: Boolean read FExibeDadosDocReferenciados write FExibeDadosDocReferenciados default True;
+    property ExibeDadosInscricaoSuframa: Boolean read FExibeDadosInscricaoSuframa write FExibeDadosInscricaoSuframa default True;
     property DetVeiculos: TDetVeiculos read FDetVeiculos write FDetVeiculos default [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
     property DetMedicamentos: TDetMedicamentos read FDetMedicamentos write FDetMedicamentos default [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
     property DetArmamentos: TDetArmamentos read FDetArmamentos write FDetArmamentos default [da_tpArma, da_nSerie, da_nCano, da_descr];
@@ -201,6 +203,7 @@ begin
   FExibeCampoFatura                := True;
   FExibeDadosISSQN                 := False;
   FExibeDadosDocReferenciados      := True;
+  FExibeDadosInscricaoSuframa      := True;
   FDetVeiculos                     := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
   FDetMedicamentos                 := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos                   := [da_tpArma, da_nSerie, da_nCano, da_descr];
@@ -209,7 +212,7 @@ begin
   FTributosPercentual              := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
   FExpandirDadosAdicionaisAuto     := False;
-  FExibeCampoDePagamento           := eipNunca;
+  FExibeCampoDePagamento           := eipNunca;   	
 
 end;
 
@@ -740,7 +743,7 @@ end;
 function TACBrNFeDANFEClass.ManterSuframa(aNFE: TNFe): String;
 begin
   // Inscrição Suframa
-  if NaoEstaVazio(aNFe.Dest.ISUF) then
+  if NaoEstaVazio(aNFe.Dest.ISUF) and (FExibeDadosInscricaoSuframa) then
   begin
     Result := ACBrStr('INSCRIÇÃO SUFRAMA: ') + aNFe.Dest.ISUF + ';';
   end

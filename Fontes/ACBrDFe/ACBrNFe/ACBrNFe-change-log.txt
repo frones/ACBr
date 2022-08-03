@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+--ACBrNFeDANFEClass-- --ACBrNFeDANFEFRDM--
+03/08/2022
+[*] TK-2947 ACBrNFe- Ajuste na impressão do SUFRAMA
+  Adicionado parametro para escolha para impressão e adicionado a impressão desse parametro do FR equalizando ao RL
+  Por : Pandaaa / Icozeira
+
 01/07/2022
 -- ACBrDFeDANFeReport --
 [*] Alterado o valor padrão para False da propriedade de configuração: ImprimeTotalLiquido

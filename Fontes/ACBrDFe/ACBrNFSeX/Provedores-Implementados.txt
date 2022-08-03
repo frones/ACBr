@@ -35,7 +35,7 @@ Equiplano           v1.00
 eReceita            v2.02
 Etherium            v2.03
 FGMaiss             v1.00
-fintelISS           v2.00
+fintelISS           v2.00 02/08/2022
 fintelISS           v2.02
 Fiorilli            v2.00
 Fisco               v2.03

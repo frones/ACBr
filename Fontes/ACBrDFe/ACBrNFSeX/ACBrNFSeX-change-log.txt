@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/08/2022
+-- Tributus.Provider --
+[*] Ajustes visando estabelecer uma conexão com o WebService do provedor.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade de Ipora/PR - provedor Pronim
+   Por: Juliomar Marchetti/Italo Giurizzato Junior
+
 02/08/2022
 -- fintelISS.Provider --
 [*] Alterado a configuração pois somente a versão 2.02 que tem o Detalhamento

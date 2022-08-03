@@ -120,8 +120,8 @@ var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
-  URL := URL + '?tokenAuth=' +
-    trim(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSChaveAutoriz);
+//  URL := URL + '?tokenAuth=' +
+//    trim(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSChaveAutoriz);
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceTributus204.Create(FAOwner, AMetodo, URL)
@@ -143,14 +143,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:RecepcionarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:RecepcionarLoteRpsRequest>';
+  Request := '<api:RecepcionarLoteRpsRequest>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '</api:RecepcionarLoteRpsRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/RecepcionarLoteRps', Request,
                      ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.RecepcionarSincrono(ACabecalho,
@@ -160,14 +160,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:RecepcionarLoteRpsSincronoRequest>';
+  Request := '<api:RecepcionarLoteRpsSincronoRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:RecepcionarLoteRpsSincronoRequest>';
+  Request := Request + '</api:RecepcionarLoteRpsSincronoRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/RecepcionarLoteRpsSincrono', Request,
                      ['outputXML', 'EnviarLoteRpsSincronoResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.GerarNFSe(ACabecalho,
@@ -177,14 +177,14 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:GerarNfseRequest>';
+  Request := '<api:GerarNfseRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:GerarNfseRequest>';
+  Request := Request + '</api:GerarNfseRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/GerarNfse', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/GerarNfse', Request,
                      ['outputXML', 'GerarNfseResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.ConsultarLote(ACabecalho,
@@ -194,14 +194,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:ConsultarLoteRpsRequest>';
+  Request := '<api:ConsultarLoteRpsRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:ConsultarLoteRpsRequest>';
+  Request := Request + '</api:ConsultarLoteRpsRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarLoteRps', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarLoteRps', Request,
                      ['outputXML', 'ConsultarLoteRpsResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.ConsultarNFSePorFaixa(ACabecalho,
@@ -211,14 +212,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:ConsultarNfsePorFaixaRequest>';
+  Request := '<api:ConsultarNfsePorFaixaRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:ConsultarNfsePorFaixaRequest>';
+  Request := Request + '</api:ConsultarNfsePorFaixaRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorFaixa', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfsePorFaixa', Request,
                      ['outputXML', 'ConsultarNfseFaixaResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.ConsultarNFSePorRps(ACabecalho,
@@ -228,14 +230,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:ConsultarNfsePorRpsRequest>';
+  Request := '<api:ConsultarNfsePorRpsRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:ConsultarNfsePorRpsRequest>';
+  Request := Request + '</api:ConsultarNfsePorRpsRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfsePorRps', Request,
                      ['outputXML', 'ConsultarNfseRpsResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.ConsultarNFSeServicoPrestado(ACabecalho,
@@ -245,14 +248,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:ConsultarNfseServicoPrestadoRequest>';
+  Request := '<api:ConsultarNfseServicoPrestadoRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:ConsultarNfseServicoPrestadoRequest>';
+  Request := Request + '</api:ConsultarNfseServicoPrestadoRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfseServicoPrestado', Request,
                      ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.ConsultarNFSeServicoTomado(ACabecalho,
@@ -262,14 +266,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:ConsultarNfseServicoTomadoRequest>';
+  Request := '<api:ConsultarNfseServicoTomadoRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:ConsultarNfseServicoTomadoRequest>';
+  Request := Request + '</api:ConsultarNfseServicoTomadoRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfseServicoTomado', Request,
                      ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.Cancelar(ACabecalho, AMSG: String): string;
@@ -278,14 +283,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:CancelarNfseRequest>';
+  Request := '<api:CancelarNfseRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:CancelarNfseRequest>';
+  Request := Request + '</api:CancelarNfseRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/CancelarNfse', Request,
                      ['outputXML', 'CancelarNfseResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 function TACBrNFSeXWebserviceTributus204.SubstituirNFSe(ACabecalho,
@@ -295,14 +301,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns2:SubstituirNfseRequest>';
+  Request := '<api:SubstituirNfseRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</ns2:SubstituirNfseRequest>';
+  Request := Request + '</api:SubstituirNfseRequest>';
 
-  Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
+  Result := Executar('https://tributosmunicipais.com.br/nfse/api/SubstituirNfse', Request,
                      ['outputXML', 'SubstituirNfseResposta'],
-                     ['xmlns:ns2="http://nfse.abrasf.org.br"']);
+                     ['xmlns:api="https://tributosmunicipais.com.br/nfse/api/"',
+                      'xmlns:xd="http://www.w3.org/2000/09/xmldsig#"']);
 end;
 
 end.

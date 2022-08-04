@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 04/08/2022
+-- IPM.Provider/ACBrNFSeXWebservicesReponse --
+[*] Acrescentado no provedor a carga na lista Resumos quando o provedor retornar 
+    apenas um resumo das notas.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Inclusão da cidade: Dourado/SP - provedor - Fiorilli
    Por: jvrs

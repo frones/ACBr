@@ -77,6 +77,10 @@ type
     FSerieRps: string;
     FSituacao: string;
     FDescSituacao: string;
+    FLink: string;
+    FProtocolo: string;
+    FSerieNota: string;
+    FData: TDateTime;
   public
     property NumeroNota: string read FNumeroNota write FNumeroNota;
     property CodigoVerificacao: string read FCodigoVerificacao write FCodigoVerificacao;
@@ -84,6 +88,10 @@ type
     property SerieRps: string read FSerieRps write FSerieRps;
     property Situacao: string read FSituacao write FSituacao;
     property DescSituacao: string read FDescSituacao write FDescSituacao;
+    property Link: string read FLink write FLink;
+    property Protocolo: string read FProtocolo write FProtocolo;
+    property SerieNota: string read FSerieNota write FSerieNota;
+    property Data: TDateTime read FData write FData;
   end;
 
   TNFSeResumoCollection = class(TACBrObjectList)
@@ -300,6 +308,7 @@ type
     FTipo: string;
     FCodVerificacao: string;
     FCancelamento: TNFSeCancelamento;
+    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -311,12 +320,14 @@ type
     property Tipo: string read FTipo write FTipo;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
+    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeConsultaNFSeResponse = class(TNFSeWebserviceResponse)
   private
     FMetodo: TMetodo;
     FInfConsultaNFSe: TInfConsultaNFSe;
+    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -325,6 +336,7 @@ type
 
     property Metodo: TMetodo read FMetodo write FMetodo;
     property InfConsultaNFSe: TInfConsultaNFSe read FInfConsultaNFSe write FInfConsultaNFSe;
+    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeCancelaNFSeResponse = class(TNFSeWebserviceResponse)
@@ -558,6 +570,8 @@ constructor TNFSeConsultaNFSeResponse.Create;
 begin
   inherited Create;
 
+  FResumos := TNFSeResumoCollection.Create;
+
   Clear;
 end;
 
@@ -582,12 +596,19 @@ begin
       FAlertas.Delete(i);
   end;
 
+  if Assigned(FResumos) then
+  begin
+    for i := FResumos.Count - 1 downto 0 do
+      FResumos.Delete(i);
+  end;
+
   FInfConsultaNFSe := TInfConsultaNFSe.Create;
 end;
 
 destructor TNFSeConsultaNFSeResponse.Destroy;
 begin
   FInfConsultaNFSe.Free;
+  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -822,6 +843,12 @@ begin
       FAlertas.Delete(i);
   end;
 
+  if Assigned(FResumos) then
+  begin
+    for i := FResumos.Count - 1 downto 0 do
+      FResumos.Delete(i);
+  end;
+
   if Assigned(FCancelamento) then
     FCancelamento.Free;
 
@@ -833,12 +860,15 @@ begin
   inherited Create;
 
   FCancelamento := TNFSeCancelamento.Create;
+  FResumos := TNFSeResumoCollection.Create;
 end;
 
 destructor TNFSeConsultaNFSeporRpsResponse.Destroy;
 begin
   if Assigned(FCancelamento) then
     FCancelamento.Free;
+
+  FResumos.Free;
 
   inherited Destroy;
 end;

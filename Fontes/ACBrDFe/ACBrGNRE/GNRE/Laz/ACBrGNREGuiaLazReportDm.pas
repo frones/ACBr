@@ -88,8 +88,6 @@ procedure Register;
 
 implementation
 
-uses ACBrUtil;
-
 {$R *.lfm}
 
 procedure Register;

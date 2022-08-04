@@ -116,8 +116,6 @@ type
 
 implementation
 
-Uses ACBrUtil;
-
 constructor TACBrSATEmuladorSP.Create(AOwner : TComponent) ;
 begin
   inherited Create(AOwner) ;

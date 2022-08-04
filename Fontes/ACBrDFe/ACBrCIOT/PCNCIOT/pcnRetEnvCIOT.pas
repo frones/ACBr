@@ -66,9 +66,6 @@ type
 
 implementation
 
-uses
-  ACBrUtil;
-
 { TRetornoEnvio }
 
 constructor TRetornoEnvio.Create;

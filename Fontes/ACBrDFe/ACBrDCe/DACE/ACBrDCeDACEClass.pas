@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  ACBrDCe, ACBrUtil;
+  ACBrDCe;
 
 constructor TACBrDCeDACEClass.Create(AOwner: TComponent);
 begin

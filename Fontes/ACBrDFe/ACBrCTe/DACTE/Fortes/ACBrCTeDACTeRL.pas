@@ -89,7 +89,7 @@ implementation
 
 uses
   MaskUtils, pcteConversaoCTe,
-  ACBrDFeUtil, ACBrDFeReportFortes, ACBrUtil;
+  ACBrDFeUtil, ACBrDFeReportFortes;
 
 
 {$ifdef FPC}

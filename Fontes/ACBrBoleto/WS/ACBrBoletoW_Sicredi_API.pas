@@ -40,12 +40,7 @@ interface
 uses
   Classes, SysUtils, ACBrBoletoWS, pcnConversao, ACBrBoletoConversao,
   synacode, strutils, DateUtils, ACBrDFeSSL, synautil,
-//  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-//    JsonDataObjects_ACBr,
-//  {$Else}
-    Jsons,
-//  {$EndIf}
-  ACBrUtil;
+  Jsons;
 
 type
 

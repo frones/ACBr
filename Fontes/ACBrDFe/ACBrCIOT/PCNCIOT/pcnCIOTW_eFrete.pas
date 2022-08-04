@@ -107,9 +107,6 @@ const
 
 implementation
 
-uses
-  ACBrUtil;
-
 constructor TCIOTW_eFrete.Create(ACIOTW: TCIOTW);
 begin
   inherited Create(ACIOTW);

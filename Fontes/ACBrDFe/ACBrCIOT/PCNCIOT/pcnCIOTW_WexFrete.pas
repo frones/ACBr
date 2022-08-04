@@ -107,9 +107,6 @@ const
 
 implementation
 
-uses
-  ACBrUtil;
-
 constructor TCIOTW_WexFrete.Create(ACIOTW: TCIOTW);
 begin
   inherited Create(ACIOTW);

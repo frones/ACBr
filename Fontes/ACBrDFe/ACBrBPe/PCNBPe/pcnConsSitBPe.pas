@@ -59,9 +59,6 @@ type
 
 implementation
 
-uses
-  ACBrUtil;
-
 { TConsSitBPe }
 
 constructor TConsSitBPe.Create;

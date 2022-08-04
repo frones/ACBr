@@ -53,9 +53,6 @@ type
 
 implementation
 
-uses
-  ACBrUtil;
-
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Asten

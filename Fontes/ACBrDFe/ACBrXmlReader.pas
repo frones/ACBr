@@ -67,7 +67,7 @@ type
 implementation
 
 uses
-  synautil, ACBrUtil;
+  synautil;
 
 { TACBrXmlReader }
 constructor TACBrXmlReader.Create;

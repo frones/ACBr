@@ -187,9 +187,6 @@ type
 
 implementation
 
-Uses
-  ACBrUtil;
-
 { TGNRE }
 
 constructor TGNRE.Create;

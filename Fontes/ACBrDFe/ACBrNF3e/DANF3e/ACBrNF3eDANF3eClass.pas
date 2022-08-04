@@ -87,7 +87,7 @@ type
 implementation
 
 uses
-  ACBrNF3e, ACBrUtil;
+  ACBrNF3e;
 
 { TACBrNF3eDANF3eClass }
 

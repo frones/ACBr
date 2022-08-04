@@ -91,7 +91,7 @@ type
 implementation
 
 uses
-  ACBrMDFe, ACBrUtil;
+  ACBrMDFe;
 
 constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin

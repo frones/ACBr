@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, ACBrGNREGuiaClass, pgnreGNRE, frxClass, frxExportPDF, DB,
   DBClient, frxDBSet, pcnConversao, frxBarcode, MaskUtils, pgnreGNRERetorno,
-  FmtBcd;
+  FmtBcd,ACBrUtil.Base;
 
 type
   TdmACBrGNREFR = class
@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE, ACBrUtil;
+uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE;
 
   { TdmACBrNFeFR }
 

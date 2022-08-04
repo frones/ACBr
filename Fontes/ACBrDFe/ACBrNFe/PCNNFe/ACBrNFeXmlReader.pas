@@ -92,8 +92,7 @@ type
 implementation
 
 uses
-  pcnConversao, pcnConversaoNFe,
-  ACBrUtil;
+  pcnConversao, pcnConversaoNFe;
 
 { TNFeXmlReader }
 constructor TNFeXmlReader.Create(AOwner: TNFe);

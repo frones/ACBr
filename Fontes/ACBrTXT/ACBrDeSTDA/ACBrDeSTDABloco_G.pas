@@ -35,7 +35,7 @@ unit ACBrDeSTDABloco_G;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, DateUtils, ACBrDeSTDABlocos, ACBrUtil;
+  SysUtils, Classes, Contnrs, DateUtils, ACBrDeSTDABlocos;
 
   /// BLOCO G: INFORMAÇÕES ECONÔMICO-FISCAIS
 

@@ -105,9 +105,6 @@ const
 
 implementation
 
-uses
-  ACBrUtil;
-
 constructor TCIOTW_Pamcard.Create(ACIOTW: TCIOTW);
 begin
   inherited Create(ACIOTW);

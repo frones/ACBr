@@ -113,8 +113,6 @@ type
 
 implementation
 
-Uses ACBrUtil;
-
 constructor TACBrSATDinamico_cdecl.Create(AOwner : TComponent) ;
 begin
   inherited Create(AOwner) ;

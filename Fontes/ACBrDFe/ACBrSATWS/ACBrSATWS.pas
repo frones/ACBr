@@ -38,8 +38,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrBase, ACBrDFe, ACBrDFeConfiguracoes, ACBrSATWS_WebServices,
-  ACBrUtil;
+  ACBrBase, ACBrDFe, ACBrDFeConfiguracoes, ACBrSATWS_WebServices;
 
 type
 

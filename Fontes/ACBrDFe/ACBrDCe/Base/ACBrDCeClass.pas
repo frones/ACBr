@@ -410,9 +410,6 @@ const
 
 implementation
 
-uses
-  ACBrUtil;
-
 { TDCe }
 
 constructor TDCe.Create;

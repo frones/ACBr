@@ -71,7 +71,7 @@ function StrToTipoGNRE(out ok: Boolean; const s: String): TTipoGNRE;
 implementation
 
 uses
-  typinfo, ACBrUtil;
+  typinfo;
 
 function LayOutToServico(const t: TLayOutGNRE): String;
 begin

@@ -43,8 +43,8 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  ACBrBase,
-  pcnConversao, pcnLeitor, pcnSignature, ACBrUtil;
+  ACBrBase,ACBrUtil.Strings,
+  pcnConversao, pcnLeitor, pcnSignature;
 
 type
   TSATConsultaRet = class;

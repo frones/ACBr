@@ -214,7 +214,7 @@ function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 implementation
 
 uses
-  typinfo, ACBrUtil;
+  typinfo;
 
 function LayOutToServico(const t: TLayOutCTe): String;
 begin

@@ -37,7 +37,7 @@ unit ACBrPAF_R_Class;
 interface
 
 uses SysUtils, Classes, DateUtils, ACBrTXTClass,
-     ACBrPAF_R, ACBrUtil;
+     ACBrPAF_R;
 
 type
   // TPAF_R -

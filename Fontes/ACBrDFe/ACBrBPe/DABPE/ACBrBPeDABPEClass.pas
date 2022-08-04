@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  ACBrBPe, ACBrUtil;
+  ACBrBPe;
 
 //DABPE CLASS
 constructor TACBrBPeDABPEClass.Create(AOwner: TComponent);

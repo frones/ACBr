@@ -81,8 +81,7 @@ type
 implementation
 
 uses
-  ACBrXmlBase, ACBrDCeConversao,
-  ACBrUtil;
+  ACBrXmlBase, ACBrDCeConversao;
 
 { TDCeXmlReader }
 

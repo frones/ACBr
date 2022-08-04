@@ -37,7 +37,7 @@ unit ACBrPAF_H_Class;
 interface
 
 uses SysUtils, Classes, DateUtils, ACBrTXTClass,
-     ACBrPAF_H;
+     ACBrPAF_H,ACBrUtil.Strings;
 
 type
 
@@ -67,7 +67,7 @@ type
 
 implementation
 
-uses ACBrTXTUtils, ACBrUtil;
+uses ACBrTXTUtils;
 
 { TPAF_E }
 

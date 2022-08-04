@@ -38,7 +38,7 @@ uses SysUtils, Classes, ACBrBase,
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
-    ACBrEDIClass, pediConversao, ACBrTxtClass, Contnrs ;
+    ACBrEDIClass, pediConversao, ACBrTxtClass, Contnrs, ACBrUtil.Strings ;
 
 type
 
@@ -309,7 +309,7 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil;
+uses pcnAuxiliar;
 
 { TDoctoCobranca }
 

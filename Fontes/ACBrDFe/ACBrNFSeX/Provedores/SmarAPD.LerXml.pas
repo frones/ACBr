@@ -106,6 +106,8 @@ var
 begin
   ANodes := ANode.Childrens.FindAllAnyNs('fatura');
 
+  NFSe.CondicaoPagamento.Parcelas.Clear;
+
   for i := 0 to Length(ANodes) - 1 do
   begin
     NFSe.CondicaoPagamento.Parcelas.New;
@@ -126,6 +128,8 @@ var
   aValor: string;
 begin
   ANodes := ANode.Childrens.FindAllAnyNs('ITENS');
+
+  NFSe.Servico.ItemServico.Clear;
 
   for i := 0 to Length(ANodes) - 1 do
   begin
@@ -183,6 +187,8 @@ var
   aValor: string;
 begin
   ANodes := ANode.Childrens.FindAllAnyNs('servico');
+
+  NFSe.Servico.ItemServico.Clear;
 
   for i := 0 to Length(ANodes) - 1 do
   begin

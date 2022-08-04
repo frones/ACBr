@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 04/08/2022
+-- SmarAPD.LerXml --
+[*] Possível solução para a duplicação de itens em listas que esse provedor
+    possui no XML.
+   Por: Italo Giurizzato Junior
 -- IPM.Provider/ACBrNFSeXWebservicesReponse --
 [*] Acrescentado no provedor a carga na lista Resumos quando o provedor retornar 
     apenas um resumo das notas.

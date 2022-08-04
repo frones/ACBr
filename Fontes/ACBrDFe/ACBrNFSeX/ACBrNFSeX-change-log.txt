@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/08/2022
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade: Dourado/SP - provedor - Fiorilli
+   Por: jvrs
+-- ACBrNFSeXServicos --
+[*] Inclusão das cidades: Coroados/SP - provedor - Fiorilli
+    e Penapolis/SP - Provedor AssessorPublico
+   Por: Jorge - Netstar
+
 03/08/2022
 -- Tributus.Provider --
 [*] Ajustes visando estabelecer uma conexão com o WebService do provedor.

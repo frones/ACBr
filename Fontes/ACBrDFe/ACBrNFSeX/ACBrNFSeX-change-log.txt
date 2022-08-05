@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/08/2022
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade: Terra de Areia/RS - provedor: Tecnos
+   Por: Igor Nunes
+
 04/08/2022
 -- SmarAPD.LerXml --
 [*] Possível solução para a duplicação de itens em listas que esse provedor
@@ -53,11 +58,11 @@ Símbolo : Significado
     apenas um resumo das notas.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
-[*] Inclusão da cidade: Dourado/SP - provedor - Fiorilli
+[*] Inclusão da cidade: Dourado/SP - provedor: Fiorilli
    Por: jvrs
 -- ACBrNFSeXServicos --
-[*] Inclusão das cidades: Coroados/SP - provedor - Fiorilli
-    e Penapolis/SP - Provedor AssessorPublico
+[*] Inclusão das cidades: Coroados/SP - provedor: Fiorilli
+    e Penapolis/SP - Provedor: AssessorPublico
    Por: Jorge - Netstar
 
 03/08/2022

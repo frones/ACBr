@@ -57,6 +57,7 @@ type
     fCCF: Integer;
     fVALORTOTALDARE: Currency;
     fNUMEROFABRICACAO: String;
+    fIDENTIFICACAOPEDIDO :string;
   public
     property ORIGEMDARE : String read fORIGEMDARE write fORIGEMDARE;
     property STATUSDARE : String read fSTATUSDARE write fSTATUSDARE;
@@ -64,6 +65,7 @@ type
     property DAV : String read fDAV write fDAV;
     property PREVENDA : String read fPREVENDA write fPREVENDA;
     property CCF : Integer read fCCF write fCCF;
+    property IDENTIFICACAOPEDIDO : string read fIDENTIFICACAOPEDIDO write fIDENTIFICACAOPEDIDO;
     property VALORTOTALDARE : Currency read fVALORTOTALDARE write fVALORTOTALDARE;
     property NUMEROFABRICACAO : String read fNUMEROFABRICACAO write fNUMEROFABRICACAO;
   end;

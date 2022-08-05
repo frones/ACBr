@@ -46,7 +46,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ACBrPAF, Math, ACBrEAD, ExtCtrls, ACBrPAFRegistros,
-  ComCtrls, ACBrBase, ACBrPAF_W;
+  ComCtrls, ACBrBase,  ACBrPAF_W;
 
 type
 
@@ -55,6 +55,7 @@ type
   TForm6 = class(TForm)
     Button2: TButton;
     Button3: TButton;
+    Button4: TButton;
     GroupBox1: TGroupBox;
     ACBrPAF: TACBrPAF;
     Label1: TLabel;
@@ -83,6 +84,7 @@ type
     btnRegistrosPAFNFCe: TButton;
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
     function GerarDados(Tipo: Char; Tam: integer): Variant;
@@ -206,7 +208,7 @@ begin
     LRegistroZ4 := ACBrPAF.PAF_Z.RegistroZ4.New;
 
     LRegistroZ4.CPF_CNPJ:= '000000000';
-    LRegistroZ4.VL_TOTAL:= i;
+    LRegistroZ4.VL_TOTAL_MENSAL:= i;
     LRegistroZ4.DATA_INI:= now;
     LRegistroZ4.DATA_FIM:= now;
   end;
@@ -217,6 +219,48 @@ begin
   if FileExists('RegistrosPAFNFCeZ.txt') then
   begin
     mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCeZ.txt');
+    pc1.ActivePageIndex:= 1;
+  end;
+end;
+
+procedure TForm6.Button4Click(Sender: TObject);
+var
+  i: Integer;
+  LRegistroV2: TRegistroV2;
+  LRegistroV3: TRegistroV3;
+begin
+  // Sempre altere o layout antes de preencher os registros. Isso porque
+  // ao alterar o layout, todos registros já lançados são apagados automaticamente.
+  ACBrPAF.Layout := lpPAFNFCe;
+
+  //V1
+  ACBrPAF.PAF_V.RegistroV1.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_V.RegistroV1.IE               := edtIE.Text;
+  ACBrPAF.PAF_V.RegistroV1.IM               := edtIM.Text;
+  ACBrPAF.PAF_V.RegistroV1.RAZAOSOCIAL      := edtRAZAO.Text;
+
+  //V2
+  for i := 0 to 10 do
+  begin
+    LRegistroV2 := ACBrPAF.PAF_V.RegistrosV2.New;
+    LRegistroV2.DATA := now;
+    LRegistroV2.DAV:= i;
+  end;
+  //V3
+  for i := 0 to 5 do
+  begin
+    LRegistroV3 := ACBrPAF.PAF_V.RegistrosV3.New;
+    LRegistroV3.DAV:= i;
+  end;
+
+  //V4
+  ACBrPAF.PAF_V.RegistroV4.DATA:= now;
+
+  ACBrPAF.SaveToFile_V('RegistrosPAFNFCeV.txt');
+
+  if FileExists('RegistrosPAFNFCeV.txt') then
+  begin
+    mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCeV.txt');
     pc1.ActivePageIndex:= 1;
   end;
 end;
@@ -344,7 +388,7 @@ begin
       with RegistroZ4.New do
         begin
           CPF_CNPJ := '99.999.999/9999-11';
-          VL_TOTAL := 10 * I;
+          VL_TOTAL_MENSAL := 10 * I;
           DATA_INI := Now;
           DATA_FIM := Now;
         end;
@@ -370,10 +414,10 @@ begin
         VERSAO := '1.00';
       end;
     // registro Z4
-    RegistroV4.Clear;
+    RegistrosV4.Clear;
     for I := 1 to 5 do
     begin
-      with RegistroV4.New do
+      with RegistrosV4.New do
         begin
           NUMUMEROFABRICACAO := '99.999.999/9999-1'+ IntToStr(I);
           MARCAECF := 'MARCA'+IntToStr(I);

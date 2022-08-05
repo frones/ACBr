@@ -11,10 +11,8 @@ object Form6: TForm6
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
     Left = 0
@@ -388,8 +386,8 @@ object Form6: TForm6
     OnClick = btnZClick
   end
   object Button1: TButton
-    Left = 340
-    Top = 116
+    Left = 8
+    Top = 178
     Width = 75
     Height = 25
     Caption = 'Tipo V'
@@ -397,8 +395,8 @@ object Form6: TForm6
     OnClick = Button1Click
   end
   object btnRegistrosPAFNFCe: TButton
-    Left = 340
-    Top = 147
+    Left = 331
+    Top = 115
     Width = 204
     Height = 25
     Caption = 'Registros PAF-NFC-e'
@@ -406,8 +404,8 @@ object Form6: TForm6
     OnClick = btnRegistrosPAFNFCeClick
   end
   object Button3: TButton
-    Left = 340
-    Top = 178
+    Left = 331
+    Top = 146
     Width = 204
     Height = 27
     Caption = 'Paf-NFCe Registro Z'
@@ -415,13 +413,22 @@ object Form6: TForm6
     OnClick = Button3Click
   end
   object Button2: TButton
-    Left = 340
-    Top = 210
+    Left = 331
+    Top = 178
     Width = 204
     Height = 27
     Caption = 'Paf-NFCe Registro W'
     TabOrder = 9
     OnClick = Button2Click
+  end
+  object Button4: TButton
+    Left = 331
+    Top = 211
+    Width = 204
+    Height = 27
+    Caption = 'Paf-NFCe Registro V'
+    TabOrder = 10
+    OnClick = Button4Click
   end
   object ACBrPAF: TACBrPAF
     LinesBuffer = 1000

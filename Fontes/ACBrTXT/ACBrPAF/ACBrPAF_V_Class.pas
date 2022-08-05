@@ -36,8 +36,12 @@ unit ACBrPAF_V_Class;
 
 interface
 
-uses SysUtils, Classes, ACBrTXTClass,
-     ACBrPAF_V;
+uses
+  SysUtils,
+  Classes,
+  ACBrTXTClass,
+  ACBrPAF_V,
+  ACBrPAFRegistros;
 
 type
 
@@ -47,28 +51,34 @@ type
   private
     FRegistroV1: TRegistroV1;       // FRegistroV1
     FRegistroV2: TRegistroV2;       // FRegistroV2
+    FRegistrosV2 : TRegistroV2List;       // FRegistroV2List
     FRegistroV3: TRegistroV3;       // FRegistroV3
-    FRegistroV4: TRegistroV4List;   // Lista de FRegistroV4
+    FRegistrosV3 : TRegistroV3List;       // FRegistroV3List
+    FRegistroV4: TRegistroV4;
+    FRegistrosV4: TRegistroV4List;   // Lista de FRegistroV4
     FRegistroV9: TRegistroV9;       // FRegistroV9
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
     function limpaCampo(pValor: String):String;
-    procedure WriteRegistroV2;
-    procedure WriteRegistroV3;
-    procedure WriteRegistroV4;
+    procedure WriteRegistroV2(Layout: TLayoutPAF);
+    procedure WriteRegistroV3(Layout: TLayoutPAF);
+    procedure WriteRegistroV4(Layout: TLayoutPAF);
     procedure WriteRegistroV9;
   public
     constructor Create;/// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    procedure WriteRegistroV1;
+    procedure WriteRegistroV1(Layout: TLayoutPAF);
 
     property RegistroV1: TRegistroV1 read FRegistroV1 write FRegistroV1;
     property RegistroV2: TRegistroV2 read FRegistroV2 write FRegistroV2;
+    property RegistrosV2 : TRegistroV2List read FRegistrosV2 write FRegistrosV2;
     property RegistroV3: TRegistroV3 read FRegistroV3 write FRegistroV3;
-    property RegistroV4: TRegistroV4List read FRegistroV4 write FRegistroV4;
+    property RegistrosV3 : TRegistroV3List read FRegistrosV3 write FRegistrosV3;
+    property RegistroV4: TRegistroV4 read FRegistroV4 write FRegistroV4;
+    property RegistrosV4: TRegistroV4List read FRegistrosV4 write FRegistrosV4;
     property RegistroV9: TRegistroV9 read FRegistroV9 write FRegistroV9;
   end;
 
@@ -88,8 +98,11 @@ procedure TPAF_V.CriaRegistros;
 begin
   FRegistroV1 := TRegistroV1.Create;
   FRegistroV2 := TRegistroV2.Create;
+  FRegistrosV2 := TRegistroV2List.Create;
   FRegistroV3 := TRegistroV3.Create;
-  FRegistroV4 := TRegistroV4List.Create;
+  FRegistrosV3 := TRegistroV3List.Create;
+  FRegistroV4 := TRegistroV4.Create;
+  FRegistrosV4 := TRegistroV4List.Create;
   FRegistroV9 := TRegistroV9.Create;
 
   FRegistroV9.TOT_REG := 0;
@@ -106,8 +119,11 @@ procedure TPAF_V.LiberaRegistros;
 begin
   FRegistroV1.Free;
   FRegistroV2.Free;
+  FRegistrosV2.Free;
   FRegistroV3.Free;
+  FRegistrosV3.Free;
   FRegistroV4.Free;
+  FRegistrosV4.Free;
   FRegistroV9.Free;
 end;
 
@@ -128,7 +144,7 @@ begin
   CriaRegistros;
 end;
 
-procedure TPAF_V.WriteRegistroV1;
+procedure TPAF_V.WriteRegistroV1(Layout: TLayoutPAF);
 begin
   if Assigned(FRegistroV1) then
   begin
@@ -143,63 +159,112 @@ begin
           RFill(limpaCampo(IM)          , 14) +
           RFill(TiraAcentos(RAZAOSOCIAL), 50));
     end;
-    WriteRegistroV2;
-    WriteRegistroV3;
-    WriteRegistroV4;
-    WriteRegistroV9;
+    WriteRegistroV2(Layout);
+    WriteRegistroV3(Layout);
+    WriteRegistroV4(Layout);
+    if Layout = lpPAFECF then
+      WriteRegistroV9;
   end;
 end;
 
-procedure TPAF_V.WriteRegistroV2;
+procedure TPAF_V.WriteRegistroV2(Layout: TLayoutPAF);
+var
+  intFor:integer;
 begin
-  if Assigned(FRegistroV2) then
+  if Layout = lpPAFECF then
   begin
-    with FRegistroV2 do
+    if Assigned(FRegistroV2) then
     begin
-      Check(funChecaCNPJ(CNPJ), '(V2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: O CNPJ "%s" digitado é inválido!', [CNPJ]);
-      Check(funChecaIE(IE, UF), '(V2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
-      ///
-      Add(LFill('V2') +
-          LFill(limpaCampo(CNPJ)        , 14) +
-          RFill(limpaCampo(IE)          , 14) +
-          RFill(limpaCampo(IM)          , 14) +
-          RFill(TiraAcentos(RAZAOSOCIAL), 50));
+      with FRegistroV2 do
+      begin
+        Check(funChecaCNPJ(CNPJ), '(V2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+        Check(funChecaIE(IE, UF), '(V2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
+        ///
+        Add(LFill('V2') +
+            LFill(limpaCampo(CNPJ)        , 14) +
+            RFill(limpaCampo(IE)          , 14) +
+            RFill(limpaCampo(IM)          , 14) +
+            RFill(TiraAcentos(RAZAOSOCIAL), 50));
+      end;
+    end;
+  end
+  else
+  begin
+    if Assigned(FRegistrosV2)then
+    begin
+      for intFor := 0 to FRegistrosV2.Count - 1 do
+      begin
+        with FRegistrosV2.Items[intFor] do
+        begin
+          Add( LFill('V2') +
+               LFill(DATA) +
+               LFill(DAV,13));
+        end;
+      end;
     end;
   end;
 end;
 
-procedure TPAF_V.WriteRegistroV3;
+procedure TPAF_V.WriteRegistroV3(Layout: TLayoutPAF);
+var
+  intFor:integer;
 begin
-  if Assigned(FRegistroV3) then
+  if Layout = lpPAFECF then
   begin
-    with FRegistroV3 do
+    if Assigned(FRegistroV3) then
     begin
-      Add(LFill('V3') +
-          RFill(LAUDO , 10) +
-          RFill(NOME  , 50) +
-          RFill(VERSAO, 10));
+      with FRegistroV3 do
+      begin
+        Add(LFill('V3') +
+            RFill(LAUDO , 10) +
+            RFill(NOME  , 50) +
+            RFill(VERSAO, 10));
+      end;
+    end;
+  end
+  else
+  begin
+    if Assigned(FRegistrosV3)then
+    begin
+      for intFor := 0 to FRegistrosV3.Count - 1 do
+      begin
+        with FRegistrosV3.Items[intFor] do
+        begin
+          Add( LFill('V2') +
+               LFill(DAV,13));
+        end;
+      end;
     end;
   end;
 end;
 
-procedure TPAF_V.WriteRegistroV4;
+procedure TPAF_V.WriteRegistroV4(Layout: TLayoutPAF);
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroV4) then
+  if Layout = lpPAFECF then
   begin
-    for intFor := 0 to FRegistroV4.Count - 1 do
+    if Assigned(FRegistrosV4) then
     begin
-      with FRegistroV4.Items[intFor] do
+      for intFor := 0 to FRegistrosV4.Count - 1 do
       begin
-        Add( LFill('V4') +
-             LFill(limpaCampo(NUMUMEROFABRICACAO), 20) +
-             LFill(MFADICIONAL  , 1) +
-             LFill(limpaCampo(MARCAECF) , 20) +
-             LFill(limpaCampo(MODELOECF),20));
+        with FRegistrosV4.Items[intFor] do
+        begin
+          Add( LFill('V4') +
+               LFill(limpaCampo(NUMUMEROFABRICACAO), 20) +
+               LFill(MFADICIONAL  , 1) +
+               LFill(limpaCampo(MARCAECF) , 20) +
+               LFill(limpaCampo(MODELOECF),20));
+        end;
+        FRegistroV9.TOT_REG := FRegistroV9.TOT_REG + 1;
       end;
-      FRegistroV9.TOT_REG := FRegistroV9.TOT_REG + 1;
     end;
+  end
+  else
+  begin
+    if Assigned(FRegistroV4) then
+      Add( LFill('V4') +
+        LFill(FRegistroV4.DATA));
   end;
 end;
 

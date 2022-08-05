@@ -46,7 +46,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ACBrPAF, Math, ACBrEAD, ExtCtrls, ACBrPAFRegistros,
-  ComCtrls, ACBrBase, ACBrPAF_W, Vcl.Imaging.jpeg;
+  ComCtrls, ACBrBase, ACBrPAF_W;
 
 type
   TForm6 = class(TForm)
@@ -78,6 +78,7 @@ type
     btnRegistrosPAFNFCe: TButton;
     Button3: TButton;
     Button2: TButton;
+    Button4: TButton;
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -92,6 +93,7 @@ type
     procedure btnZClick(Sender: TObject);
     procedure cbEADClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
     function QualquerNumero: Integer;
@@ -1169,6 +1171,49 @@ begin
     mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCe.txt');
     pc1.ActivePageIndex:= 1;
   end;
+end;
+
+procedure TForm6.Button4Click(Sender: TObject);
+var
+  i: Integer;
+  LRegistroV2: TRegistroV2;
+  LRegistroV3: TRegistroV3;
+begin
+  // Sempre altere o layout antes de preencher os registros. Isso porque
+  // ao alterar o layout, todos registros já lançados são apagados automaticamente.
+  ACBrPAF.Layout := lpPAFNFCe;
+
+  //V1
+  ACBrPAF.PAF_V.RegistroV1.CNPJ             := edtCNPJ.Text;
+  ACBrPAF.PAF_V.RegistroV1.IE               := edtIE.Text;
+  ACBrPAF.PAF_V.RegistroV1.IM               := edtIM.Text;
+  ACBrPAF.PAF_V.RegistroV1.RAZAOSOCIAL      := edtRAZAO.Text;
+
+  //V2
+  for i := 0 to 10 do
+  begin
+    LRegistroV2 := ACBrPAF.PAF_V.RegistrosV2.New;
+    LRegistroV2.DATA := now;
+    LRegistroV2.DAV:= i;
+  end;
+  //V3
+  for i := 0 to 5 do
+  begin
+    LRegistroV3 := ACBrPAF.PAF_V.RegistrosV3.New;
+    LRegistroV3.DAV:= i;
+  end;
+
+  //V4
+  ACBrPAF.PAF_V.RegistroV4.DATA:= now;
+
+  ACBrPAF.SaveToFile_V('RegistrosPAFNFCeV.txt');
+
+  if FileExists('RegistrosPAFNFCeV.txt') then
+  begin
+    mmArquivoGerado.Lines.LoadFromFile('RegistrosPAFNFCeV.txt');
+    pc1.ActivePageIndex:= 1;
+  end;
+
 end;
 
 end.

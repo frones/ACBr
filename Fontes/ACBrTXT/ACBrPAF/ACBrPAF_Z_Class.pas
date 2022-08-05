@@ -207,7 +207,9 @@ begin
 
         Add( LFill('Z4') +
              LFill(limpaCampo(CPF_CNPJ)      , 14) +
-             LFill(VL_TOTAL  , 14, 2) +
+             LFill(VL_TOTAL_MENSAL, 14, 2) +
+             LFill(VL_TOTAL_VENDAS, 14, 2) +
+             LFill(VL_TOTAL_OUTRAS_SAIDAS, 14, 2) +
              LFill(DATA_INI  , 'yyyymmdd') +
              LFill(DATA_FIM  , 'yyyymmdd') +
              LFill(dataAtual , 'yyyymmdd') +

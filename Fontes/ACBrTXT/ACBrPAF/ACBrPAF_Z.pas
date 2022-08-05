@@ -52,12 +52,16 @@ type
   TRegistroZ4 = Class
   private
     fCPF_CNPJ: string;         /// Número do CPF/CNPJ identificado no campo previsto no item 2 do Requsito VIII.
-    fVl_Total: Currency ;  /// Total de vendas no mês, com duas casas decimais, ao CPF/CNPJ indicado no campo 02.
+    fVL_TOTAL_MENSAL: Currency ;  /// Total de vendas no mês, com duas casas decimais, ao CPF/CNPJ indicado no campo 02.
+    fVL_TOTAL_VENDAS: Currency ;
+    fVL_TOTAL_OUTRAS_SAIDAS: Currency ;
     fData_INI: TDateTime;  /// Primeiro dia do mês a que se refere o relatório de vendas ao CPF/CNPJ identificado no campo 02
     fData_FIN: TDateTime;  /// Último dia do mês a que se refere o relatório de vendas ao CPF/CNPJ identificado no campo 02
   public
     property CPF_CNPJ: string read FCPF_CNPJ write FCPF_CNPJ;
-    property VL_TOTAL: Currency  read fVl_Total write fVl_Total;
+    property VL_TOTAL_MENSAL: Currency  read fVL_TOTAL_MENSAL write fVL_TOTAL_MENSAL;
+    property VL_TOTAL_VENDAS: Currency  read fVL_TOTAL_VENDAS write fVL_TOTAL_VENDAS;
+    property VL_TOTAL_OUTRAS_SAIDAS: Currency  read fVL_TOTAL_OUTRAS_SAIDAS write fVL_TOTAL_OUTRAS_SAIDAS;
     property DATA_INI: TDateTime read fData_INI write fData_INI;
     property DATA_FIM: TDateTime read fData_FIN write fData_FIN;
   end;

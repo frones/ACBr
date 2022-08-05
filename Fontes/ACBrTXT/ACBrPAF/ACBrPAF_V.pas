@@ -41,14 +41,58 @@ type
   TRegistroV1 = class(TRegistroX1);
 
   // REGISTRO TIPO V2 - IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF:
-  TRegistroV2 = Class(TRegistroX1);
+  TRegistroV2 = Class(TRegistroX1)
+  private
+    fDATA : TDateTime;
+    fDAV : integer;
+  public
+    property DATA : TDateTime read fDATA write fDATA;
+    property DAV : Integer read fDAV write fDAV;
+  end;
+
+  /// REGISTRO TIPO V2 – Lista
+
+  { TRegistroV2List }
+
+  TRegistroV2List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroV2;
+    procedure SetItem(Index: Integer; const Value: TRegistroV2);
+  public
+    function New: TRegistroV2;
+    property Items[Index: Integer]: TRegistroV2 read GetItem write SetItem;
+  end;
 
   // REGISTRO TIPO V3 - IDENTIFICAÇÃO DO PAF-ECF
-  TRegistroV3 = Class(TRegistroX3);
+  TRegistroV3 = Class(TRegistroX3)
+  private
+    fDATA : TDateTime;
+    fDAV : integer;
+  public
+    property DATA : TDateTime read fDATA write fDATA;
+    property DAV : Integer read fDAV write fDAV;
+  end;
+
+  /// REGISTRO TIPO V3 – Lista
+
+  { TRegistroV3List }
+
+  TRegistroV3List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroV3;
+    procedure SetItem(Index: Integer; const Value: TRegistroV3);
+  public
+    function New: TRegistroV3;
+    property Items[Index: Integer]: TRegistroV3 read GetItem write SetItem;
+  end;
 
   //REGISTRO TIPO V4 - Relação dos equipamentos ECF autorizados a funcionar com o PAF-ECF:
+
+  { TRegistroV4 }
+
   TRegistroV4 = Class
   private
+    FDATA: TDateTime;
     fMARCAECF: string;
     fMFADICIONAL: string;
     fMODELOECF: string;
@@ -58,6 +102,8 @@ type
     property MFADICIONAL : string read fMFADICIONAL write fMFADICIONAL;
     property MARCAECF : string read fMARCAECF write fMARCAECF;
     property MODELOECF : string read fMODELOECF write fMODELOECF;
+
+    property DATA: TDateTime read FDATA write FDATA;
   end;
 
   /// REGISTRO TIPO V4 – Lista
@@ -76,6 +122,42 @@ type
   // REGISTRO TIPO EAD - ASSINATURA DIGITAL
 
 implementation
+
+{ TRegistroV3List }
+
+function TRegistroV3List.GetItem(Index: Integer): TRegistroV3;
+begin
+   Result := TRegistroV3(inherited Items[Index]);
+end;
+
+procedure TRegistroV3List.SetItem(Index: Integer; const Value: TRegistroV3);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroV3List.New: TRegistroV3;
+begin
+  Result := TRegistroV3.Create;
+  Add(Result);
+end;
+
+{ TRegistroV2List }
+
+function TRegistroV2List.GetItem(Index: Integer): TRegistroV2;
+begin
+  Result := TRegistroV2(inherited Items[Index]);
+end;
+
+procedure TRegistroV2List.SetItem(Index: Integer; const Value: TRegistroV2);
+begin
+  Put(Index, Value);
+end;
+
+function TRegistroV2List.New: TRegistroV2;
+begin
+  Result := TRegistroV2.Create;
+  Add(Result);
+end;
 
 { TRegistroV4List }
 

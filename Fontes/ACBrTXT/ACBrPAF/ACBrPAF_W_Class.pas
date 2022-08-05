@@ -217,6 +217,7 @@ begin
                 LFill(CRE, 9) +
                 LFill(DAV, 13) +
                 LFill(PREVENDA, 10) +
+                LFill(IDENTIFICACAOPEDIDO,40) +
                 LFill(VALORTOTALDARE, 14, 2));
         end;
       end;

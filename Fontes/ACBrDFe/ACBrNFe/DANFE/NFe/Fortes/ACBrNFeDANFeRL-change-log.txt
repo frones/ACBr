@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2022
+-- ACBrNFeDANFeRLRetrado --
+[*] Desativado as propriedades de configuração: ImprimeDescPorPercentual e 
+    ImprimeTotalLiquido, por não constar no manual nenhuma observação que
+    o desconto possa ser em percentual e que o total possa ser liquido.
+   Por: Italo Giurizzato Junior
+
 02/08/2022
 -- ACBrNFeDANFeRLClass --
 [*] Alterado para ser utilizado a função DefinirNomeArqPDF nos métodos:

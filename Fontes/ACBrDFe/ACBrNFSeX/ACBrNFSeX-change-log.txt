@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 05/08/2022
+-- Fiorilli.Provider --
+[*] Incluido a chamada a função NativeStringToUTF8 a função TratarXmlRetornado.
+   Por: Jorge - NetStart
 -- ACBrNFSeXServicos --
 [*] Inclusão da cidade: Terra de Areia/RS - provedor: Tecnos
    Por: Igor Nunes

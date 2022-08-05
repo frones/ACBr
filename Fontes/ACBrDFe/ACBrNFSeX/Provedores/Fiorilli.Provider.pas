@@ -77,7 +77,7 @@ type
 implementation
 
 uses
-  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrDFeException, ACBrUtil.Strings, ACBrNFSeX, ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais, Fiorilli.GravarXml, Fiorilli.LerXml;
 
 { TACBrNFSeProviderFiorilli200 }
@@ -327,6 +327,7 @@ begin
   Result := inherited TratarXmlRetornado(aXML);
 
   Result := RemoverPrefixosDesnecessarios(Result);
+  Result := NativeStringToUTF8(Result);
 end;
 
 end.

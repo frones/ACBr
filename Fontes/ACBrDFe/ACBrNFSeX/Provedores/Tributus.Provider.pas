@@ -97,7 +97,11 @@ begin
     VersaoAtrib := '2.04';
   end;
 
-  ConfigMsgDados.GerarPrestadorLoteRps := True;
+  with ConfigMsgDados do
+  begin
+    DadosCabecalho := GetCabecalho('');
+    GerarPrestadorLoteRps := True;
+  end;
 end;
 
 function TACBrNFSeProviderTributus204.CriarGeradorXml(
@@ -120,8 +124,8 @@ var
   URL: string;
 begin
   URL := GetWebServiceURL(AMetodo);
-//  URL := URL + '?tokenAuth=' +
-//    trim(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSChaveAutoriz);
+  URL := URL + '?tokenAuth=' +
+    trim(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSChaveAutoriz);
 
   if URL <> '' then
     Result := TACBrNFSeXWebserviceTributus204.Create(FAOwner, AMetodo, URL)
@@ -161,8 +165,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:RecepcionarLoteRpsSincronoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:RecepcionarLoteRpsSincronoRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/RecepcionarLoteRpsSincrono', Request,
@@ -178,8 +182,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:GerarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:GerarNfseRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/GerarNfse', Request,
@@ -195,8 +199,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:ConsultarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:ConsultarLoteRpsRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarLoteRps', Request,
@@ -213,8 +217,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:ConsultarNfsePorFaixaRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:ConsultarNfsePorFaixaRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfsePorFaixa', Request,
@@ -231,8 +235,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:ConsultarNfsePorRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:ConsultarNfsePorRpsRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfsePorRps', Request,
@@ -249,8 +253,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:ConsultarNfseServicoPrestadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:ConsultarNfseServicoPrestadoRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfseServicoPrestado', Request,
@@ -267,8 +271,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:ConsultarNfseServicoTomadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:ConsultarNfseServicoTomadoRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/ConsultarNfseServicoTomado', Request,
@@ -284,8 +288,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:CancelarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:CancelarNfseRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/CancelarNfse', Request,
@@ -302,8 +306,8 @@ begin
   FPMsgOrig := AMSG;
 
   Request := '<api:SubstituirNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</api:SubstituirNfseRequest>';
 
   Result := Executar('https://tributosmunicipais.com.br/nfse/api/SubstituirNfse', Request,

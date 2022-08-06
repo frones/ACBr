@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/08/2022
+-- Tributus.Provider --
+[*] Possível solução para estabelecer a conexão com o provedor.
+   Por: Italo Giurizzato Junior
 -- SmarAPD.LerXml --
 [*] Correção quanto ao valor dos serviços que estava com valor dobrado.
    Por: Italo Giurizzato Junior

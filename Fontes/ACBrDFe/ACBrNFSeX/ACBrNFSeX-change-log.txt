@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/08/2022
+-- SmarAPD.LerXml --
+[*] Correção quanto ao valor dos serviços que estava com valor dobrado.
+   Por: Italo Giurizzato Junior
+
 05/08/2022
 -- Fiorilli.Provider --
 [*] Incluido a chamada a função NativeStringToUTF8 a função TratarXmlRetornado.

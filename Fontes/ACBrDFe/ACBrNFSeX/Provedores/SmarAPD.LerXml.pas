@@ -130,6 +130,8 @@ begin
   ANodes := ANode.Childrens.FindAllAnyNs('ITENS');
 
   NFSe.Servico.ItemServico.Clear;
+  NFSe.Servico.Discriminacao := '';
+  NFSe.Servico.Valores.ValorServicos := 0;
 
   for i := 0 to Length(ANodes) - 1 do
   begin

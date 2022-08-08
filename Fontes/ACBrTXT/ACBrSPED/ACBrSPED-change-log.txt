@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2022
+-- ACBrEFDBloco_C, ACBrEPCBloco_C_Class --
+[*] Alteração do tipo de alguns campos para Variant(Registro C185)
+    https://www.projetoacbr.com.br/forum/topic/66454-sped-fiscal-registros-c185-e-c181-campos-de-valores-unitarios-e-ultimos-4-campos-rest-e-compl-em-branco/
+    Por: simons
+
 04/07/2022
 -- ACBrEPCBloco_C_Class --
 [*] Alteração para não preencher o campo NCM com zeros

@@ -2339,9 +2339,9 @@ begin
                DFill( VL_UNIT_CONV,6, False ) +
                DFill( VL_UNIT_ICMS_NA_OPERACAO_CONV,6,True ) +
                DFill( VL_UNIT_ICMS_OP_CONV,6,True ) +
-               DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,6, False ) +
-               DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,6,False ) +
-               DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,6, False ) +
+               DFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV,6, VarIsNull(VL_UNIT_ICMS_OP_ESTOQUE_CONV) ) +
+               DFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV,6,VarIsNull(VL_UNIT_ICMS_ST_ESTOQUE_CONV) ) +
+               DFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV,6, VarIsNull(VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV) ) +
                DFill( VL_UNIT_ICMS_ST_CONV_REST,6, VarIsNull(VL_UNIT_ICMS_ST_CONV_REST) ) +
                DFill( VL_UNIT_FCP_ST_CONV_REST,6, VarIsNull(VL_UNIT_FCP_ST_CONV_REST) ) +
                DFill( VL_UNIT_ICMS_ST_CONV_COMPL,6,VarIsNull(VL_UNIT_ICMS_ST_CONV_COMPL) ) +

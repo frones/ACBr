@@ -1236,9 +1236,9 @@ type
    fVL_UNIT_CONV: Double; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
    fVL_UNIT_ICMS_NA_OPERACAO_CONV: Double; /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo “QUANT_CONV”, considerando redução da base de cálculo do ICMS ST na tributação, se houver.
    fVL_UNIT_ICMS_OP_CONV: Double; /// Valor unitário do ICMS que o contribuinte teria se creditado, ou pode se creditar, referente à operação de entrada da mercadoria, caso estivesse submetida ao regime comum de tributação, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
-   fVL_UNIT_ICMS_OP_ESTOQUE_CONV: Double; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
-   fVL_UNIT_ICMS_ST_ESTOQUE_CONV: Double; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
-   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Double; /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV: Variant; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV: Variant; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Variant; /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
    fVL_UNIT_ICMS_ST_CONV_REST: Variant; /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
    fVL_UNIT_FCP_ST_CONV_REST: Variant; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
    fVL_UNIT_ICMS_ST_CONV_COMPL: Variant; ///  Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
@@ -1254,9 +1254,9 @@ type
    property VL_UNIT_CONV: Double read fVL_UNIT_CONV write fVL_UNIT_CONV;
    property VL_UNIT_ICMS_NA_OPERACAO_CONV: Double read fVL_UNIT_ICMS_NA_OPERACAO_CONV write fVL_UNIT_ICMS_NA_OPERACAO_CONV;
    property VL_UNIT_ICMS_OP_CONV: Double read fVL_UNIT_ICMS_OP_CONV write fVL_UNIT_ICMS_OP_CONV;
-   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: Double read fVL_UNIT_ICMS_OP_ESTOQUE_CONV write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
-   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: Double read fVL_UNIT_ICMS_ST_ESTOQUE_CONV write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
-   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Double read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: Variant read fVL_UNIT_ICMS_OP_ESTOQUE_CONV write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: Variant read fVL_UNIT_ICMS_ST_ESTOQUE_CONV write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Variant read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
    property VL_UNIT_ICMS_ST_CONV_REST: Variant read fVL_UNIT_ICMS_ST_CONV_REST write fVL_UNIT_ICMS_ST_CONV_REST;
    property VL_UNIT_FCP_ST_CONV_REST: Variant read fVL_UNIT_FCP_ST_CONV_REST write fVL_UNIT_FCP_ST_CONV_REST;
    property VL_UNIT_ICMS_ST_CONV_COMPL: Variant read fVL_UNIT_ICMS_ST_CONV_COMPL write fVL_UNIT_ICMS_ST_CONV_COMPL;

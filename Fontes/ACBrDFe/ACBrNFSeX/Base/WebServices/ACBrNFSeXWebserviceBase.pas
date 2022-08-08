@@ -547,6 +547,9 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqResp + '-soap.xml';
 
+    if not XmlEhUTF8(ADadosSoap) then
+      ADadosSoap := RemoverDeclaracaoXML(ADadosSoap);
+
     FPDFeOwner.Gravar(ArqEnv, ADadosSoap);
   end;
 end;

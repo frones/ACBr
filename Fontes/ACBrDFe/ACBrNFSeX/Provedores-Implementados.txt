@@ -88,7 +88,7 @@ NotaInteligente     v2.00
 Prodata             v2.01
 Pronim              v1.00
 Pronim              v2.02
-Publica             v1.00
+Publica             v1.00 08/08/2022
 RLZ                 v1.00
 RLZ                 v2.03
 Saatri              v2.01

@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/08/2022
+-- ACBrNFSeXWebservicesResponse --
+[*] Ajustes no Clear dos métodos, pois não chamava o Clear da classe herdada.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade: Cezarina/GO - Trocou de provedor agora é: Megasoft
+   Por: Robson Lopes
+
 06/08/2022
 -- Tributus.Provider --
 [*] Possível solução para estabelecer a conexão com o provedor.

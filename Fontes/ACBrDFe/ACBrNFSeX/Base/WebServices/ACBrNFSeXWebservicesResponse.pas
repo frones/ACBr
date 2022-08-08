@@ -202,6 +202,7 @@ type
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
+    FResumos: TNFSeResumoCollection;
 
     FEnvelopeEnvio: string;
     FEnvelopeRetorno: string;
@@ -234,6 +235,7 @@ type
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;
+    property Resumos: TNFSeResumoCollection read FResumos;
 
     property XmlEnvio: string read GetXmlEnvio write SetXmlEnvio;
     property XmlRetorno: string read GetXmlRetorno write SetXmlRetorno;
@@ -250,18 +252,16 @@ type
     FModoEnvio: TmodoEnvio;
     FCodVerificacao: string;
     FNomeArq: string;
-    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
 
-    procedure Clear; virtual;
+    procedure Clear; override;
 
     property MaxRps: Integer read FMaxRps write FMaxRps;
     property ModoEnvio: TmodoEnvio read FModoEnvio write FModoEnvio;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property NomeArq: string read FNomeArq write FNomeArq;
-    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeConsultaSituacaoResponse = class(TNFSeWebserviceResponse)
@@ -289,7 +289,6 @@ type
   TNFSeConsultaLoteRpsResponse = class(TNFSeWebserviceResponse)
   private
     FCodVerificacao: string;
-    FResumos: TNFSeResumoCollection;
 
   public
     constructor Create;
@@ -298,7 +297,6 @@ type
     procedure Clear; override;
 
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
-    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeConsultaNFSeporRpsResponse = class(TNFSeWebserviceResponse)
@@ -308,7 +306,6 @@ type
     FTipo: string;
     FCodVerificacao: string;
     FCancelamento: TNFSeCancelamento;
-    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -320,14 +317,12 @@ type
     property Tipo: string read FTipo write FTipo;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
-    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeConsultaNFSeResponse = class(TNFSeWebserviceResponse)
   private
     FMetodo: TMetodo;
     FInfConsultaNFSe: TInfConsultaNFSe;
-    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -336,7 +331,6 @@ type
 
     property Metodo: TMetodo read FMetodo write FMetodo;
     property InfConsultaNFSe: TInfConsultaNFSe read FInfConsultaNFSe write FInfConsultaNFSe;
-    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeCancelaNFSeResponse = class(TNFSeWebserviceResponse)
@@ -344,7 +338,6 @@ type
     FCodVerificacao: string;
     FInfCancelamento: TInfCancelamento;
     FRetCancelamento: TRetCancelamento;
-    FResumos: TNFSeResumoCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -354,7 +347,6 @@ type
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property InfCancelamento: TInfCancelamento read FInfCancelamento write FInfCancelamento;
     property RetCancelamento: TRetCancelamento read FRetCancelamento;
-    property Resumos: TNFSeResumoCollection read FResumos;
   end;
 
   TNFSeSubstituiNFSeResponse = class(TNFSeCancelaNFSeResponse)
@@ -519,6 +511,12 @@ begin
       FAlertas.Delete(i);
   end;
 
+  if Assigned(FResumos) then
+  begin
+    for i := FResumos.Count - 1 downto 0 do
+      FResumos.Delete(i);
+  end;
+
   XmlEnvio := '';
   XmlRetorno := '';
   EnvelopeEnvio := '';
@@ -534,12 +532,14 @@ begin
   FSucesso := False;
   FAlertas := TNFSeEventoCollection.Create;
   FErros := TNFSeEventoCollection.Create;
+  FResumos := TNFSeResumoCollection.Create;
 end;
 
 destructor TNFSeWebserviceResponse.Destroy;
 begin
   FAlertas.Free;
   FErros.Free;
+  FResumos.Free;
 
   inherited;
 end;
@@ -570,37 +570,16 @@ constructor TNFSeConsultaNFSeResponse.Create;
 begin
   inherited Create;
 
-  FResumos := TNFSeResumoCollection.Create;
-
-  Clear;
 end;
 
 procedure TNFSeConsultaNFSeResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   if Assigned(FInfConsultaNFSe) then
     FInfConsultaNFSe.Free;
 
   FMetodo := tmConsultarNFSe;
-
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
-
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
-
-  if Assigned(FResumos) then
-  begin
-    for i := FResumos.Count - 1 downto 0 do
-      FResumos.Delete(i);
-  end;
 
   FInfConsultaNFSe := TInfConsultaNFSe.Create;
 end;
@@ -608,7 +587,6 @@ end;
 destructor TNFSeConsultaNFSeResponse.Destroy;
 begin
   FInfConsultaNFSe.Free;
-  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -619,38 +597,17 @@ constructor TNFSeCancelaNFSeResponse.Create;
 begin
   inherited Create;
 
-  FResumos := TNFSeResumoCollection.Create;
-
-  Clear;
 end;
 
 procedure TNFSeCancelaNFSeResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   if Assigned(FInfCancelamento) then
     FInfCancelamento.Free;
 
   if Assigned(FRetCancelamento) then
    FRetCancelamento.Free;
-
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
-
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
-
-  if Assigned(FResumos) then
-  begin
-    for i := FResumos.Count - 1 downto 0 do
-      FResumos.Delete(i);
-  end;
 
   FInfCancelamento := TInfCancelamento.Create;
   FRetCancelamento := TRetCancelamento.Create;
@@ -664,28 +621,15 @@ begin
   if Assigned(FRetCancelamento) then
     FRetCancelamento.Free;
 
-  FResumos.Free;
-
   inherited Destroy;
 end;
 
 { TNFSeSubstituiNFSeResponse }
 
 procedure TNFSeSubstituiNFSeResponse.Clear;
-var
-  i: Integer;
 begin
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
+  inherited Clear;
 
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
 end;
 
 constructor TNFSeSubstituiNFSeResponse.Create;
@@ -710,33 +654,23 @@ end;
 { TNFSeEmiteResponse }
 
 procedure TNFSeEmiteResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   MaxRps := 0;
   ModoEnvio := meLoteAssincrono;
   CodVerificacao := '';
   NomeArq := '';
-
-  if Assigned(FResumos) then
-  begin
-    for i := FResumos.Count - 1 downto 0 do
-      FResumos.Delete(i);
-  end;
 end;
 
 constructor TNFSeEmiteResponse.Create;
 begin
   inherited Create;
 
-  FResumos := TNFSeResumoCollection.Create;
-
-  Clear;
 end;
 
 destructor TNFSeEmiteResponse.Destroy;
 begin
-  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -744,24 +678,12 @@ end;
 { TNFSeConsultaSituacaoResponse }
 
 procedure TNFSeConsultaSituacaoResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   Lote := '';
   Situacao := '';
   Protocolo := '';
-
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
-
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
 end;
 
 constructor TNFSeConsultaSituacaoResponse.Create;
@@ -779,43 +701,23 @@ end;
 { TNFSeConsultaLoteRpsResponse }
 
 procedure TNFSeConsultaLoteRpsResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   Lote := '';
   Protocolo := '';
   Situacao := '';
   CodVerificacao := '';
-
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
-
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
-
-  if Assigned(FResumos) then
-  begin
-    for i := FResumos.Count - 1 downto 0 do
-      FResumos.Delete(i);
-  end;
 end;
 
 constructor TNFSeConsultaLoteRpsResponse.Create;
 begin
   inherited Create;
 
-  FResumos := TNFSeResumoCollection.Create;
 end;
 
 destructor TNFSeConsultaLoteRpsResponse.Destroy;
 begin
-  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -823,31 +725,13 @@ end;
 { TNFSeConsultaNFSeporRpsResponse }
 
 procedure TNFSeConsultaNFSeporRpsResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   NumRPS := '';
   Serie := '';
   Tipo := '';
   CodVerificacao := '';
-
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
-
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
-
-  if Assigned(FResumos) then
-  begin
-    for i := FResumos.Count - 1 downto 0 do
-      FResumos.Delete(i);
-  end;
 
   if Assigned(FCancelamento) then
     FCancelamento.Free;
@@ -860,15 +744,12 @@ begin
   inherited Create;
 
   FCancelamento := TNFSeCancelamento.Create;
-  FResumos := TNFSeResumoCollection.Create;
 end;
 
 destructor TNFSeConsultaNFSeporRpsResponse.Destroy;
 begin
   if Assigned(FCancelamento) then
     FCancelamento.Free;
-
-  FResumos.Free;
 
   inherited Destroy;
 end;
@@ -900,30 +781,17 @@ end;
 { TNFSeGerarTokenResponse }
 
 procedure TNFSeGerarTokenResponse.Clear;
-var
-  i: Integer;
 begin
+  inherited Clear;
+
   Token := '';
   DataExpiracao := 0;
-
-  if Assigned(FErros) then
-  begin
-    for i := FErros.Count - 1 downto 0 do
-      FErros.Delete(i);
-  end;
-
-  if Assigned(FAlertas) then
-  begin
-    for i := FAlertas.Count - 1 downto 0 do
-      FAlertas.Delete(i);
-  end;
 end;
 
 constructor TNFSeGerarTokenResponse.Create;
 begin
   inherited Create;
 
-  Clear;
 end;
 
 destructor TNFSeGerarTokenResponse.Destroy;

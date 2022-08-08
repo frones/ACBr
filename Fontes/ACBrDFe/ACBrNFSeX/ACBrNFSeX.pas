@@ -386,7 +386,6 @@ begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-
   FWebService.Emite.Clear;
   FWebService.Emite.Lote := aLote;
   FWebService.Emite.ModoEnvio := aModoEnvio;
@@ -494,6 +493,7 @@ procedure TACBrNFSeX.ConsultarNFSe;
 begin
   if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
+  FWebService.ConsultaNFSe.Clear;
   FProvider.ConsultaNFSe;
 end;
 
@@ -862,6 +862,7 @@ begin
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.SubstituiNFSe.Clear;
+
   with FWebService.SubstituiNFSe.InfCancelamento do
   begin
     NumeroNFSe := aNumNFSe;
@@ -878,6 +879,8 @@ end;
 procedure TACBrNFSeX.GerarToken;
 begin
   if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
+
+  FWebService.GerarToken.Clear;
 
   FProvider.GerarToken;
 end;

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 08/08/2022
+-- ACBrNFSeX --
+[*] Incluido a chamada ao Clear para limpar as propriedades de retorno
+    nos métodos: ConsultaNFSe e GerarToken  
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebservicesResponse --
 [*] Ajustes no Clear dos métodos, pois não chamava o Clear da classe herdada.
    Por: Italo Giurizzato Junior

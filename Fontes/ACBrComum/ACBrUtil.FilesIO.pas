@@ -150,7 +150,10 @@ function StringIsAFile(const AString: String): Boolean;
 function StringIsXML(const AString: String): Boolean;
 function StrIsIP(const AValue: String): Boolean;
 
-function DefinirNomeArqPDF(const APath, ANomePadrao, ASufixo: string; ANomeOpcional: string = ''): string;
+procedure ParseNomeArquivo(const ANome: string; out APath, AName, AExt: string);
+
+function DefinirNomeArquivo(const APath, ANomePadraoComponente: string;
+  const ANomePersonalizado: string = ''; const AExtensao: string = 'pdf'): string;
 
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
@@ -885,56 +888,56 @@ end ;
   ( Função encontrada na Internet - Autor desconhecido )
  -----------------------------------------------------------------------------}
 function FunctionDetect (const LibName, FuncName: String; var LibPointer: Pointer): boolean;
-Var
+var
   LibHandle: TLibHandle;
 begin
- Result := ACBrUtil.FilesIO.FunctionDetect(LibName, FuncName, LibPointer, LibHandle);
+  Result := ACBrUtil.FilesIO.FunctionDetect(LibName, FuncName, LibPointer, LibHandle);
 end;
 
 function FunctionDetect(const LibName, FuncName: String; var LibPointer: Pointer;
   var LibHandle: TLibHandle): boolean;
 begin
- Result := false;
- LibPointer := NIL;
+  Result := false;
+  LibPointer := NIL;
  {$IFDEF FPC}
-  LibHandle := dynlibs.LoadLibrary(LibName) ;
+   LibHandle := dynlibs.LoadLibrary(LibName) ;
  {$ELSE}
   if LoadLibrary(PChar(LibName)) = 0 then
-     exit;                                 { não consegiu ler a DLL }
+    exit;                                 { não consegiu ler a DLL }
 
   LibHandle := GetModuleHandle(PChar(LibName));  { Pega o handle da DLL }
  {$ENDIF}
 
- if LibHandle <> 0 then                    { Se 0 não pegou o Handle, falhou }
+  if LibHandle <> 0 then                    { Se 0 não pegou o Handle, falhou }
   begin
-     LibPointer := GetProcAddress(LibHandle, PChar(FuncName));{Procura a função}
-     if LibPointer <> NIL then
-        Result := true;
+    LibPointer := GetProcAddress(LibHandle, PChar(FuncName));{Procura a função}
+    if LibPointer <> NIL then
+      Result := true;
   end;
 end;
 
 function UnLoadLibrary(const LibName: String ): Boolean ;
 var
-  LibHandle: TLibHandle ;
+  LibHandle: TLibHandle;
 begin
- Result := True ;
+  Result := True;
 
- if LibName = '' then Exit;
+  if LibName = '' then Exit;
 
 {$IFDEF FPC}
- LibHandle := dynlibs.LoadLibrary( LibName ) ;
- if LibHandle <> 0 then
-    Result := dynlibs.FreeLibrary(LibHandle) ;
+  LibHandle := dynlibs.LoadLibrary( LibName );
+  if LibHandle <> 0 then
+    Result := dynlibs.FreeLibrary(LibHandle);
 {$ELSE}
 {$IFDEF DELPHI12_UP}
- LibHandle := GetModuleHandle( PWideChar( String( LibName ) ) );
+  LibHandle := GetModuleHandle( PWideChar( String( LibName ) ) );
  {$ELSE}
- LibHandle := GetModuleHandle( PChar( LibName ) );
+  LibHandle := GetModuleHandle( PChar( LibName ) );
  {$ENDIF}
- if LibHandle <> 0 then
+  if LibHandle <> 0 then
     Result := FreeLibrary( LibHandle )
 {$ENDIF}
-end ;
+end;
 
 
 function FlushToDisk(const sFile: string): boolean;
@@ -1038,23 +1041,23 @@ procedure DesligarMaquina(Reboot : Boolean ; Forcar : Boolean ; LogOff : Boolean
    end;
 
 
-Var
-  RebootParam : Longword ;
+var
+  RebootParam: Longword;
 begin
-    if WindowsNT then
-       ObtemPrivilegios;
+  if WindowsNT then
+    ObtemPrivilegios;
 
-    if Reboot then
-       RebootParam := EWX_REBOOT
-    else if LogOff then
-       RebootParam := EWX_LOGOFF
-    else
-       RebootParam := EWX_SHUTDOWN  ;
+  if Reboot then
+    RebootParam := EWX_REBOOT
+  else if LogOff then
+    RebootParam := EWX_LOGOFF
+  else
+    RebootParam := EWX_SHUTDOWN;
 
-    if Forcar then
-       RebootParam := RebootParam or EWX_FORCE ;
+  if Forcar then
+    RebootParam := RebootParam or EWX_FORCE;
 
-    ExitWindowsEx(RebootParam, 0);
+  ExitWindowsEx(RebootParam, 0);
 end;
 {$ELSE}
    begin
@@ -1178,9 +1181,9 @@ procedure WriteToTXT(const ArqTXT: String; const ABinaryString: AnsiString;
   const AppendIfExists: Boolean; const AddLineBreak: Boolean;
   const ForceDirectory: Boolean);
 var
-  FS : TFileStream ;
-  LineBreak : AnsiString ;
-  VDirectory : String;
+  FS: TFileStream;
+  LineBreak: AnsiString;
+  VDirectory: String;
   ArquivoExiste: Boolean;
 begin
   if EstaVazio(ArqTXT) then
@@ -1195,28 +1198,28 @@ begin
   end
   else
   begin
-     if ForceDirectory then
-     begin
-       VDirectory := ExtractFileDir(ArqTXT);
-       if NaoEstaVazio(VDirectory) and (not DirectoryExists(VDirectory)) then
-         ForceDirectories(VDirectory);
-     end;
+    if ForceDirectory then
+    begin
+      VDirectory := ExtractFileDir(ArqTXT);
+      if NaoEstaVazio(VDirectory) and (not DirectoryExists(VDirectory)) then
+        ForceDirectories(VDirectory);
+    end;
   end;
 
   FS := TFileStream.Create( ArqTXT,
-               IfThen( AppendIfExists and ArquivoExiste,
-                       Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
+          IfThen(AppendIfExists and ArquivoExiste,
+                 Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite);
   try
-     FS.Seek(0, soEnd);  // vai para EOF
-     FS.Write(Pointer(ABinaryString)^,Length(ABinaryString));
+    FS.Seek(0, soEnd);  // vai para EOF
+    FS.Write(Pointer(ABinaryString)^,Length(ABinaryString));
 
-     if AddLineBreak then
-     begin
-        LineBreak := sLineBreak;
-        FS.Write(Pointer(LineBreak)^,Length(LineBreak));
-     end ;
+    if AddLineBreak then
+    begin
+      LineBreak := sLineBreak;
+      FS.Write(Pointer(LineBreak)^,Length(LineBreak));
+    end;
   finally
-     FS.Free ;
+    FS.Free;
   end;
 end;
 
@@ -1226,55 +1229,56 @@ var
   Buf: AnsiString;
 begin
   if ArqTXT = '' then
-     exit ;
+    exit ;
 
   if Traduz then
-     Buf := AnsiString( TranslateUnprintable(ABinaryString) )
+    Buf := AnsiString(TranslateUnprintable(ABinaryString))
   else
-     Buf := ABinaryString;
+    Buf := ABinaryString;
 
   try
-     WriteToTXT(ArqTXT, Buf, True, True);
+    WriteToTXT(ArqTXT, Buf, True, True);
   except
-     //Não parar o funcionamento de quem chamou WriteLog por erros causados por ela.
-  end ;
+    //Não parar o funcionamento de quem chamou WriteLog por erros causados por ela.
+  end;
 end;
 
 function TranslateUnprintable(const ABinaryString: AnsiString): String;
-Var
-  Buf, Ch : String ;
-  I   : Integer ;
-  ASC : Byte ;
+var
+  Buf, Ch: String;
+  I: Integer;
+  ASC: Byte;
 begin
-  Buf := '' ;
-  For I := 1 to Length(ABinaryString) do
+  Buf := '';
+
+  for I := 1 to Length(ABinaryString) do
   begin
-     ASC := Ord(ABinaryString[I]) ;
+    ASC := Ord(ABinaryString[I]) ;
 
-     case ABinaryString[I] of
-        NUL   : Ch := '[NUL]' ;
-        SOH   : Ch := '[SOH]' ;
-        STX   : Ch := '[STX]' ;
-        ETX   : Ch := '[ETX]' ;
-        ENQ   : Ch := '[ENQ]' ;
-        ACK   : Ch := '[ACK]' ;
-        TAB   : Ch := '[TAB]' ;
-        BS    : Ch := '[BS]' ;
-        LF    : Ch := '[LF]' ;
-        FF    : Ch := '[FF]' ;
-        CR    : Ch := '[CR]' ;
-        WAK   : Ch := '[WAK]' ;
-        NAK   : Ch := '[NAK]' ;
-        ESC   : Ch := '[ESC]' ;
-        FS    : Ch := '[FS]' ;
-        GS    : Ch := '[GS]' ;
-        #32..#126 : Ch := String(ABinaryString[I]) ;
-     else ;
-       Ch := '['+IntToStr(ASC)+']'
-     end;
+    case ABinaryString[I] of
+       NUL   : Ch := '[NUL]';
+       SOH   : Ch := '[SOH]';
+       STX   : Ch := '[STX]';
+       ETX   : Ch := '[ETX]';
+       ENQ   : Ch := '[ENQ]';
+       ACK   : Ch := '[ACK]';
+       TAB   : Ch := '[TAB]';
+       BS    : Ch := '[BS]';
+       LF    : Ch := '[LF]';
+       FF    : Ch := '[FF]';
+       CR    : Ch := '[CR]';
+       WAK   : Ch := '[WAK]';
+       NAK   : Ch := '[NAK]';
+       ESC   : Ch := '[ESC]';
+       FS    : Ch := '[FS]';
+       GS    : Ch := '[GS]';
+       #32..#126 : Ch := String(ABinaryString[I]);
+    else ;
+      Ch := '['+IntToStr(ASC)+']'
+    end;
 
-     Buf := Buf + Ch ;
-  end ;
+    Buf := Buf + Ch;
+  end;
 
   Result := Buf;
 end;
@@ -1296,9 +1300,8 @@ end;
 
 function Zip(const ABinaryString: AnsiString): AnsiString;
 begin
- Result := ACBrCompress.ZLibCompress(ABinaryString);
+  Result := ACBrCompress.ZLibCompress(ABinaryString);
 end;
-
 
 {------------------------------------------------------------------------------
    Valida se é um arquivo válido para carregar em um MenIniFile, caso contrário
@@ -1356,7 +1359,7 @@ end;
  ------------------------------------------------------------------------------}
 function StringIsXML(const AString: String): Boolean;
 begin
-   Result :=(pos('<', AString) > 0) and (pos('>', AString) > 0);
+  Result :=(pos('<', AString) > 0) and (pos('>', AString) > 0);
 end;
 
 {-----------------------------------------------------------------------------
@@ -1366,6 +1369,7 @@ end;
 function StrIsIP(const AValue: String): Boolean;
 var
   TempIP : string;
+
   function ByteIsOk(const AValue: string): Boolean;
   var
     x: integer;
@@ -1399,19 +1403,51 @@ begin
     Result := True;
 end;
 
-function DefinirNomeArqPDF(const APath, ANomePadrao, ASufixo: string; ANomeOpcional: string = ''): string;
-var
-  xNome: string;
+procedure ParseNomeArquivo(const ANome: string; out APath, AName, AExt: string);
 begin
-  xNome := Trim(ANomeOpcional);
+  APath := ExtractFilePath(ANome);
+  AName := ExtractFileName(ANome);
+
+  if (APath <> '') then
+    APath := PathWithDelim( APath );
+
+  if (AName <> '') then
+  begin
+    AExt := ExtractFileExt(AName);
+
+    AName := StringReplace(AName, AExt, '', []);
+  end;
+end;
+
+function DefinirNomeArquivo(const APath, ANomePadraoComponente: string;
+  const ANomePersonalizado: string = ''; const AExtensao: string = 'pdf'): string;
+var
+  xPath, xNome, xPathParse, xNomeParse, xExtParse: string;
+begin
+  xPath := PathWithDelim(APath);
+  xNome := Trim(ANomePersonalizado);
 
   if xNome <> '' then
-    xNome := ExtractFileName(xNome);
-
-  if NaoEstaVazio(xNome) then
-    Result := APath + xNome
+  begin
+    ParseNomeArquivo(xNome, xPathParse, xNomeParse, xExtParse);
+  end
   else
-    Result := APath + Trim(ANomePadrao) + ASufixo;
+  begin
+    xNome := Trim(ANomePadraoComponente);
+    ParseNomeArquivo(xNome, xPathParse, xNomeParse, xExtParse);
+  end;
+
+  if xPathParse <> '' then
+    xNome := xPathParse + xNomeParse
+  else
+    xNome := xPath + xNomeParse;
+
+  if xExtParse <> '' then
+    xNome := xNome + xExtParse
+  else
+    xNome := xNome + AExtensao;
+
+  Result := xNome;
 end;
 
 {$IFDEF MSWINDOWS}
@@ -1489,6 +1525,5 @@ initialization
   xOut32 := Nil;
   xBlockInput := Nil;
 {$EndIf}
-
 
 end.

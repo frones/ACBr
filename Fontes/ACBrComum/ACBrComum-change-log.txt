@@ -38,6 +38,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/08/2022
+-- ACBrUtil.FilesIO --
+[+] Implementado a procedure ParseNomeArquivo e alterado o nome da função 
+    DefinirNomePDF para DefinirNomeArquivo e ajustado a assinatura da mesma.
+   Por: Italo Giurizzato Junior
 -- ACBrUtil.DateTime --
 [*] Correção para ler corretamente datas no formato AAAA-MM.
    Por: Cleverton Martins

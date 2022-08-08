@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 08/08/2022
+-- ACBrNFSeXDANFSeRLClass --
+[*] Alterado o método ImprimirDANFSePDF para utilizar a função DefinirNomeArquivo, que
+    tem por objetico utilizar o nome informado em NomeDocumento em vez do nome padrão
+    ao gerar o PDF.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeX --
 [*] Incluido a chamada ao Clear para limpar as propriedades de retorno
     nos métodos: ConsultaNFSe e GerarToken  

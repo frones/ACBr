@@ -472,8 +472,17 @@ begin
       Ano := StrToInt(Copy(xData, 1, 4));
       xData := Copy(xData, 6, Length(xData));
       i := Pos('/', xData);
-      Mes := StrToInt(Copy(xData, 1, i-1));
-      Dia := StrToInt(Copy(xData, i+1, Length(xData)));
+
+      if i= 0 then
+      begin
+        Mes := StrToInt(xData);
+        Dia := 1;
+      end
+      else
+      begin
+        Mes := StrToInt(Copy(xData, 1, i-1));
+        Dia := StrToInt(Copy(xData, i+1, Length(xData)));
+      end;
 
       Result := FormatFloat('0000', Ano) + '/' +
                 FormatFloat('00', Mes) + '/' +

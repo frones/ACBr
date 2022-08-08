@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2022
+-- ACBrUtil.DateTime --
+[*] Correção para ler corretamente datas no formato AAAA-MM.
+   Por: Cleverton Martins
+
 02/08/2022
 -- ACBrUtil.FilesIO --
 [+] Acrescentado a função DefinirNomePDF recebendo como parâmetro:

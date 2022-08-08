@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2022
+-- ACBrMDFeDAMDFeRLClass --
+[*] Alterado o método ImprimirDANFSePDF para utilizar a função DefinirNomeArquivo, que
+    tem por objetico utilizar o nome informado em NomeDocumento em vez do nome padrão
+    ao gerar o PDF.
+   Por: Italo Giurizzato Junior
+
 02/08/2022
 -- ACBrMDFeDAMDFeRLClass --
 [*] Alterado para ser utilizado a função DefinirNomeArqPDF nos métodos:

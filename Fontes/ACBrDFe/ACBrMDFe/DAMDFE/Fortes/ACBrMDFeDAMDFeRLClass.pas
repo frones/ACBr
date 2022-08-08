@@ -107,10 +107,9 @@ var
 
   function ImprimirDAMDFEPDFTipo(AMDFe: TMDFe): String;
   begin
-    Result := DefinirNomeArqPDF(Self.PathPDF,
-                                OnlyNumber(AMDFe.infMDFe.ID),
-                                '-mdfe.pdf',
-                                Self.NomeDocumento);
+    Result := DefinirNomeArquivo(Self.PathPDF,
+                                 OnlyNumber(AMDFe.infMDFe.ID) + '-mdfe.pdf',
+                                 Self.NomeDocumento);
 
     TfrlDAMDFeRLRetrato.SalvarPDF(Self, AMDFe, Result);
   end;
@@ -180,10 +179,9 @@ var
 
   function ImprimirEVENTOPDFTipo(EventoMDFeItem: TInfEventoCollectionItem; AMDFe: TMDFe): String;
   begin
-    Result := DefinirNomeArqPDF(Self.PathPDF,
-                                OnlyNumber(EventoMDFeItem.InfEvento.id),
-                                '-procEventoMDFe.pdf',
-                                Self.NomeDocumento);
+    Result := DefinirNomeArquivo(Self.PathPDF,
+                                 OnlyNumber(EventoMDFeItem.InfEvento.id) + '-procEventoMDFe.pdf',
+                                 Self.NomeDocumento);
 
     // TipoDAMDFE ainda não está sendo utilizado no momento
     TfrmMDFeDAEventoRLRetrato.SalvarPDF(Self, EventoMDFeItem, Result, AMDFe);

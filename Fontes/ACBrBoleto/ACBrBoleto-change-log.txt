@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2022
+--ACBrBoletoUniprimeNortePR--
+[*] TK-2948 Ajuste no campo de intrução de dias para protesto
+  Por : Pandaaa
+
 03/08/2022
 --ACBrBoletoWCaixa--
 [*] Ajuste na geração das tags de Juros_Mora, seguindo especificação do manual

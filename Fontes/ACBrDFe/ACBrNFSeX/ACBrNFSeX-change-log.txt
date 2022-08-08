@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/08/2022
+-- ACBrNFSeXProviderBase --
+[*] Alteração visando incluir o Path do XML da NFS-e na propridade NomeArq.
+   Por: Luiz Sodré
 -- ACBrNFSeXDANFSeRLClass --
 [*] Alterado o método ImprimirDANFSePDF para utilizar a função DefinirNomeArquivo, que
     tem por objetico utilizar o nome informado em NomeDocumento em vez do nome padrão

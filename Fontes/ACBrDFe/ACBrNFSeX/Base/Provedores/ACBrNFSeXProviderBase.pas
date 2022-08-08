@@ -808,11 +808,11 @@ begin
   aPath := aConfig.Arquivos.GetPathNFSe;
 
   NomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';
-  aNota.NomeArq := NomeArq;
+  aNota.NomeArq := PathWithDelim(aPath) + NomeArq;
   aNota.Confirmada := True;
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
-    TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XmlNfse, aPath);
+    TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XmlNfse);
 end;
 
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);

@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2022
+-- ACBrNFeDANFeRLClass --
+[*] Alterado o método ImprimirDANFSePDF para utilizar a função DefinirNomeArquivo, que
+    tem por objetico utilizar o nome informado em NomeDocumento em vez do nome padrão
+    ao gerar o PDF.
+   Por: Italo Giurizzato Junior
+
 05/08/2022
 -- ACBrNFeDANFeRLRetrado --
 [*] Desativado as propriedades de configuração: ImprimeDescPorPercentual e 

@@ -255,10 +255,9 @@ var
 
   function ImprimirDANFEPDFTipo(ANFe: TNFe): String;
   begin
-    Result := DefinirNomeArqPDF(Self.PathPDF,
-                                OnlyNumber(ANFe.infNFe.ID),
-                                '-nfe.pdf',
-                                Self.NomeDocumento);
+    Result := DefinirNomeArquivo(Self.PathPDF,
+                                 OnlyNumber(ANFe.infNFe.ID) + '-nfe.pdf',
+                                 Self.NomeDocumento);
 
     case Self.TipoDANFE of
       tiPaisagem:
@@ -362,10 +361,9 @@ var
 
   function ImprimirEVENTOPDFTipo(EventoNFeItem: TInfEventoCollectionItem; ANFe: TNFe): String;
   begin
-    Result := DefinirNomeArqPDF(Self.PathPDF,
-                                OnlyNumber(EventoNFeItem.InfEvento.id),
-                                '-procEventoNFe.pdf',
-                                Self.NomeDocumento);
+    Result := DefinirNomeArquivo(Self.PathPDF,
+                                 OnlyNumber(EventoNFeItem.InfEvento.id) + '-procEventoNFe.pdf',
+                                 Self.NomeDocumento);
 
     // TipoDANFE ainda não está sendo utilizado no momento
     TfrlDANFeEventoRLRetrato.SalvarPDF(Self, EventoNFeItem, Result, ANFe);
@@ -470,10 +468,9 @@ end;
 
 procedure TACBrNFeDANFeRL.ImprimirINUTILIZACAOPDF(ANFe: TNFe);
 begin
-  FPArquivoPDF := DefinirNomeArqPDF(Self.PathPDF,
-                              OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.ID),
-                              '-procInutNFe.pdf',
-                              Self.NomeDocumento);
+  FPArquivoPDF := DefinirNomeArquivo(Self.PathPDF,
+                                     OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.ID) + '-procInutNFe.pdf',
+                                     Self.NomeDocumento);
 
   TfrmNFeDAInutRLRetrato.SalvarPDF(Self, TACBrNFe(ACBrNFe).InutNFe, FPArquivoPDF, ANFe);
 end;

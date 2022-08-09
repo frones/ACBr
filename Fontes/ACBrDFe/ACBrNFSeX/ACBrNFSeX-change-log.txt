@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/08/2022
+-- ACBrNFSeXProviderBase --
+[*] Correção, pois estava sendo passado somente o nome do arquivo sem o path.
+   Por: Luiz Sodré
+[*] Alteração: incluido os parâmetros na função GetPathNFSe, para seja levando
+    em consideração o CNPJ e a IE do emitente.
+   Por: Italo Giurizzato Junior
+
 08/08/2022
 -- ACBrNFSeXProviderBase --
 [*] Alteração visando incluir o Path do XML da NFS-e na propridade NomeArq.

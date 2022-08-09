@@ -801,18 +801,20 @@ end;
 
 procedure TACBrNFSeXProvider.SalvarXmlNfse(aNota: TNotaFiscal);
 var
-  aPath, NomeArq: string;
+  aPath, aNomeArq: string;
   aConfig: TConfiguracoesNFSe;
 begin
   aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
-  aPath := aConfig.Arquivos.GetPathNFSe;
 
-  NomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';
-  aNota.NomeArq := PathWithDelim(aPath) + NomeArq;
+  aPath := aConfig.Arquivos.GetPathNFSe(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
+
+  aNomeArq := TACBrNFSeX(FAOwner).GetNumID(aNota.NFSe) + '-nfse.xml';
+  aNota.NomeArq := PathWithDelim(aPath) + aNomeArq;
   aNota.Confirmada := True;
 
   if FAOwner.Configuracoes.Arquivos.Salvar then
-    TACBrNFSeX(FAOwner).Gravar(NomeArq, aNota.XmlNfse);
+    TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aNota.XmlNfse);
 end;
 
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);

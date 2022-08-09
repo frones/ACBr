@@ -3768,6 +3768,14 @@ begin
             Sacado.SacadoAvalista.Fone          := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.Fone','');
             Sacado.SacadoAvalista.InscricaoNr   := IniBoletos.ReadString(Sessao,'Sacado.SacadoAvalista.InscricaoNr','');
 
+            TipoPagamento                       := TTipo_Pagamento( IniBoletos.ReadInteger(Sessao,'TipoPagamento',2));
+            QtdePagamentoParcial                := IniBoletos.ReadInteger(Sessao,'QtdePagamentoParcial',0);
+            QtdeParcelas                        := IniBoletos.ReadInteger(Sessao,'QtdeParcelas',0);
+            ValorMinPagamento                   := IniBoletos.ReadFloat(Sessao,'ValorMinPagamento', ValorMinPagamento);
+            ValorMaxPagamento                   := IniBoletos.ReadFloat(Sessao,'ValorMaxPagamento', ValorMaxPagamento);
+            PercentualMinPagamento              := IniBoletos.ReadFloat(Sessao,'PercentualMinPagamento', PercentualMinPagamento);
+            PercentualMaxPagamento              := IniBoletos.ReadFloat(Sessao,'PercentualMaxPagamento', PercentualMaxPagamento);
+
             //Apenas banco Pine
             if (IniBoletos.SectionExists('NFe'+IntToStr(I)) ) or (IniBoletos.SectionExists('NFe'+IntToStr(I)+'-1') ) then
             begin

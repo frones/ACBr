@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 09/08/2022
+-- CTA.Provider --
+[*] Implementado as procedures do Provider para os serviços: Emitir e Cancelar.
+    Ainda não esta 100%, pois o provedor diz que o XML não foi enviado.
+    Mensagem retornada pelo provedor:
+    "[ERRO CRÍTICO] XML NÃO RECEBIDO PELO WEBSERVICE - Verifique se o XML está sendo 
+    enviado como arquivo anexo pelo protocolo POST e Media Type = multipart/form-data"
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderBase --
 [*] Correção, pois estava sendo passado somente o nome do arquivo sem o path.
    Por: Luiz Sodré

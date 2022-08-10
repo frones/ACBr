@@ -112,6 +112,8 @@ begin
 
     aValor := ObterConteudo(ANode.Childrens.FindAnyNs('nfedata'), tcStr);
 
+    aValor:=StringReplace(aValor, '-', '/', [rfReplaceAll]);
+
     aValor := aValor + ' ' + ObterConteudo(ANode.Childrens.FindAnyNs('nfehora'), tcStr);
     DataEmissao := StrToDateTime(aValor);
 

@@ -521,6 +521,7 @@ begin
     CadEconomico := aInfConsultaNFSe.CadEconomico;
     CodServ := aInfConsultaNFSe.CodServ;
     CodVerificacao := aInfConsultaNFSe.CodVerificacao;
+    Tipo:= aInfConsultaNFSe.Tipo;
   end;
 
   ConsultarNFSe;

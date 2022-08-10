@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/08/2022
+-- ACBrNFSeX/WebFisco.GravarXml/WebFisco.LerXml --
+[*] Ajustes na gravação e leitura do XML.
+   Por: Widson
 -- ACBrNFSeXServicos --
 [*] A cidade: Castro/PR - Passou a usar a versão 1.01 do provedor IPM.
    Por: Guilherme Vaz/Italo Giurizzato Junior

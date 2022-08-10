@@ -572,6 +572,7 @@ constructor TNFSeConsultaNFSeResponse.Create;
 begin
   inherited Create;
 
+  Clear;
 end;
 
 procedure TNFSeConsultaNFSeResponse.Clear;
@@ -599,6 +600,7 @@ constructor TNFSeCancelaNFSeResponse.Create;
 begin
   inherited Create;
 
+  Clear;
 end;
 
 procedure TNFSeCancelaNFSeResponse.Clear;
@@ -716,6 +718,7 @@ constructor TNFSeConsultaLoteRpsResponse.Create;
 begin
   inherited Create;
 
+  Clear;
 end;
 
 destructor TNFSeConsultaLoteRpsResponse.Destroy;

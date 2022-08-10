@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/08/2022
+-- ACBrNFSeXWebservicesReponse --
+[*] Possível solução para o erro de propriedade estar com o valor nil.
+   Por: Gabriel Leal/Italo Giurizzato Junior
 -- Diversos --
 [*] O método GetSchemaPath passou de privado para publico, desta forma o desenvolvedor
     pode obter o Path completo do schema de um determinado provedor.

@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="..\..\..\Fontes\ACBrComum"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils;..\..\..\Fontes\Terceiros\FastStringReplace;..\..\..\Fontes\Terceiros\DelphiZXingQRCode"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils;..\..\..\Fontes\Terceiros\FastStringReplace;..\..\..\Fontes\Terceiros\DelphiZXingQRCode;..\..\..\Fontes\Terceiros\json4delphi\src"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrComum\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -33,7 +33,7 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="19">
+    <Files Count="21">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>
@@ -112,6 +112,14 @@
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.Base.pas"/>
         <UnitName Value="ACBrUtil.Base"/>
       </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas"/>
+        <UnitName Value="Jsons"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrJSON.pas"/>
+        <UnitName Value="ACBrJSON"/>
+      </Item21>
     </Files>
     <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="2">

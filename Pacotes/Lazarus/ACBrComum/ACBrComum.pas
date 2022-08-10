@@ -11,7 +11,7 @@ uses
   ACBrBase, ACBrConsts, ACBrUtil, ACBrReg, ACBrAAC, ACBrPAFClass, 
   ACBrCompress, ACBrImage, StrUtilsEx, ACBrDelphiZXingQRCode, 
   ACBrUtil.FilesIO, ACBrUtil.Math, ACBrUtil.Strings, ACBrUtil.XMLHTML, 
-  ACBrUtil.DateTime, ACBrUtil.Compatibilidade, ACBrUtil.Base, 
+  ACBrUtil.DateTime, ACBrUtil.Compatibilidade, ACBrUtil.Base, Jsons, ACBrJSON, 
   LazarusPackageIntf;
 
 implementation

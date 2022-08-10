@@ -50,7 +50,12 @@ contains
   ACBrImage in '..\..\..\Fontes\ACBrComum\ACBrImage.pas',
   ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas',
   StrUtilsEx in '..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas',
-  ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas';
+  ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas',
+  {$IfDef USE_JSONDATAOBJECTS_UNIT}
+  JsonDataObjects_ACBr in '..\..\..\Fontes\Terceiros\JsonDataObjects\Source\JsonDataObjects_ACBr.pas',
+  {$EndIf}
+  Jsons in '..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas',
+  ACBrJSON in '..\..\..\Fontes\ACBrComum\ACBrJSON.pas';
 
 //  {$IfNDef USE_ZLibExGZ}
 //   ACBrZLibExGZ,

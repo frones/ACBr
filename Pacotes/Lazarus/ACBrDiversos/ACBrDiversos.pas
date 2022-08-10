@@ -10,7 +10,7 @@ interface
 uses
   ACBrBarCode, ACBrCalculadora, ACBrCMC7, ACBrDiversosReg, ACBrEnterTab, 
   ACBrExtenso, ACBrFala, ACBrGIF, ACBrTroco, ACBrValidador, AJBarcode, Gif1, 
-  Gif3, LCalculadora, ACBrInStore, ACBrCargaBal, Jsons, LazarusPackageIntf;
+  Gif3, LCalculadora, ACBrInStore, ACBrCargaBal, LazarusPackageIntf;
 
 implementation
 

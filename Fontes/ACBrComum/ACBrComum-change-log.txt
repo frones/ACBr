@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2022
+-- ACBrJSON --
+[*] Alterações para compatibilizar unit com fpjsons(Lazarus).
+[*] Movidas units Jsons e JsonDataObjects_ACBr do pacote ACBrDiversos para ACBrComum
+[+] Inclusão da unit ACBrJSON no pacote ACBrComum.
+    Por: Elias César
+
 08/08/2022
 -- ACBrUtil.FilesIO --
 [+] Implementado a procedure ParseNomeArquivo e alterado o nome da função 

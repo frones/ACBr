@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, StrUtils, SysUtils, synacode, synautil,
-  {IniFiles,} ACBrDFeSSL, ACBrIBGE, pcnAuxiliar;
+  {IniFiles,} ACBrDFeSSL, ACBrIBGE, pcnAuxiliar, ACBrDFe;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
@@ -74,6 +74,7 @@ function CalcularHashDados(const ADados: TStream; AChave: String): string;
 function CalcularHashArquivo(const APathArquivo: String; AChave: String): string;
 
 function ObterDFeXML(const AXML, Grupo, NameSpace: String): String;
+function DataHoraTimeZoneModoDeteccao(const AComponente : TACBrDFe): TDateTime;
 
 var
   ACBrIBGE1: TACBrIBGE;
@@ -87,6 +88,7 @@ uses
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrUtil.XMLHTML,
+  ACBrUtil.DateTime,
   ACBrValidador;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
@@ -539,6 +541,28 @@ begin
 
   if not EstaVazio(Result) then
     Result := DeclaracaoXML + Result;
+end;
+
+function DataHoraTimeZoneModoDeteccao(const AComponente: TACBrDFe): TDateTime;
+var
+  Bias: Integer;
+  UTC: String;
+  DT: TDateTime;
+begin
+  DT := now;
+  Bias := 0;
+  UTC := '';
+
+  if (AComponente.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao <> tzSistema) then
+  begin
+    pcnAuxiliar.TimeZoneConf.Assign( AComponente.Configuracoes.WebServices.TimeZoneConf );
+    UTC := GetUTC( AComponente.Configuracoes.WebServices.UF, DT);
+    Bias := TimeZoneToBias(DateTimeToStr(DT) + UTC );
+    Result := IncMinute( DateTimeUniversal( GetUTCSistema , DT ), Bias *(-1)) ;
+  end
+  else
+    Result := DT;
+
 end;
 
 initialization

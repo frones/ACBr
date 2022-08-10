@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 10/08/2022
+-- ACBrNFSeXServicos --
+[*] Inclusão das cidades: São João da Urtiga/RS - provedor: Citta e
+    Ibiraiaras/RS - Provedor: Pronim
+   Por: Grupo FS
 -- ACBrNFSeX/WebFisco.GravarXml/WebFisco.LerXml --
 [*] Ajustes na gravação e leitura do XML.
    Por: Widson

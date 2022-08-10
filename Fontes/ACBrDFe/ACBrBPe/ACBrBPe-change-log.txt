@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2022
+-- ACBrBPeBilhetes --
+[*] Atualizado função ValidarRegrasdeNegocios, utilizando a função DataHoraTimeZoneModoDeteccao para validar a DataHora com TimeZone informado no XML
+   por: José M S Junior
+
 13/04/2022
 -- pcnRetEnvBPe --
 [*] Ao ler o retorno não estava considerando o status 150 - Autorizado fora do

@@ -409,7 +409,7 @@ var
   end;
 
 begin
-  Agora := Now;
+  Agora := DataHoraTimeZoneModoDeteccao( TACBrBPe(TBilhetes(Collection).ACBrBPe) );   //Converte o DateTime do Sistema para o TimeZone configurado, para evitar divergência de Fuso Horário.
   GravaLog('Inicio da Validação');
 
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do

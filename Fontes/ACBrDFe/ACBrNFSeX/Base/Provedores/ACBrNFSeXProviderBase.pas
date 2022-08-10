@@ -82,7 +82,6 @@ type
     function CarregarXmlNfse(aNota: TNotaFiscal; aXml: string): TNotaFiscal;
 
     function GetWebServiceURL(const AMetodo: TMetodo): string;
-    function GetSchemaPath: string; virtual;
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; virtual; abstract;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; virtual; abstract;
@@ -156,6 +155,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe);
     destructor Destroy; override;
+
+    function GetSchemaPath: string; virtual;
 
     function GerarXml(const aNFSe: TNFSe; var aXml, aAlerts: string): Boolean; virtual;
     function LerXML(const aXML: String; var aNFSe: TNFSe; var ATipo: TtpXML;

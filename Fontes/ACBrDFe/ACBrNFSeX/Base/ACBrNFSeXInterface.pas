@@ -60,6 +60,7 @@ type
     function GetConfigMsgDados: TConfigMsgDados;
     function GetConfigAssinar: TConfigAssinar;
     function GetConfigSchemas: TConfigSchemas;
+    function GetSchemaPath: string;
 
     property ConfigGeral: TConfigGeral read GetConfigGeral;
     property ConfigWebServices: TConfigWebServices read GetConfigWebServices;

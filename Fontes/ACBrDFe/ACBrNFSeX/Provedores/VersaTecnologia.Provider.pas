@@ -85,9 +85,10 @@ type
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
 
-    function GetSchemaPath: string; override;
     procedure GerarMsgDadosCancelaNFSe(Response: TNFSeCancelaNFSeResponse;
       Params: TNFSeParamsResponse); override;
+  public
+    function GetSchemaPath: string; override;
   end;
 
   TACBrNFSeProviderVersaTecnologia202 = class (TACBrNFSeProviderVersaTecnologia200)
@@ -96,7 +97,7 @@ type
 
     function CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass; override;
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
-
+  public
     function GetSchemaPath: string; override;
   end;
 

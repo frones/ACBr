@@ -44,11 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
---ACBrNFeDANFEClass-- --ACBrNFeDANFEFRDM--
-03/08/2022
-[*] TK-2947 ACBrNFe- Ajuste na impressão do SUFRAMA
-  Adicionado parametro para escolha para impressão e adicionado a impressão desse parametro do FR equalizando ao RL
-  Por : Pandaaa / Icozeira
+10/08/2022
+-- ACBrNFeNotasFiscais --
+[*] Atualizado função ValidarRegrasdeNegocios, utilizando a função DataHoraTimeZoneModoDeteccao para validar a DataHora com TimeZone informado no XML
+   por: José M S Junior
+
+04/08/2022
+-- ACBrNFeNotasFiscais --
+[*] Ajustes na geração da seção autXML na função GerarNFeINI.
+   Por : Emerson Teixeira
 
 01/07/2022
 -- ACBrDFeDANFeReport --

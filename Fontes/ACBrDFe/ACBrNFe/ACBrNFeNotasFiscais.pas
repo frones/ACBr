@@ -452,7 +452,7 @@ var
   end;
 
 begin
-  Inicio := Now;
+  Inicio := DataHoraTimeZoneModoDeteccao( TACBrNFe(TNotasFiscais(Collection).ACBrNFe ));   //Converte o DateTime do Sistema para o TimeZone configurado, para evitar divergência de Fuso Horário.
   Agora := IncMinute(Inicio, 5);  //Aceita uma tolerância de até 5 minutos, devido ao sincronismo de horário do servidor da Empresa e o servidor da SEFAZ.
   GravaLog('Inicio da Validação');
 
@@ -2694,14 +2694,14 @@ begin
       INIRec.WriteString('infNFe', 'ID', infNFe.ID);
       INIRec.WriteString('infNFe', 'Versao', FloatToStr(infNFe.Versao));
       INIRec.WriteInteger('Identificacao', 'cUF', Ide.cUF);
-      INIRec.WriteInteger('Identificacao', 'Codigo', Ide.cNF);
+      INIRec.WriteInteger('Identificacao', 'cNF', Ide.cNF);
       INIRec.WriteString('Identificacao', 'natOp', Ide.natOp);
       INIRec.WriteString('Identificacao', 'indPag', IndpagToStr(Ide.indPag));
       INIRec.WriteInteger('Identificacao', 'Modelo', Ide.modelo);
       INIRec.WriteInteger('Identificacao', 'Serie', Ide.serie);
       INIRec.WriteInteger('Identificacao', 'nNF', Ide.nNF);
-      INIRec.WriteString('Identificacao', 'dEmi', DateTimeToStr(Ide.dEmi));
-      INIRec.WriteString('Identificacao', 'dSaiEnt', DateTimeToStr(Ide.dSaiEnt));
+      INIRec.WriteString('Identificacao', 'dhEmi', DateTimeToStr(Ide.dEmi));
+      INIRec.WriteString('Identificacao', 'dhSaiEnt', DateTimeToStr(Ide.dSaiEnt));
       INIRec.WriteString('Identificacao', 'tpNF', tpNFToStr(Ide.tpNF));
       INIRec.WriteString('Identificacao', 'idDest',
         DestinoOperacaoToStr(TpcnDestinoOperacao(Ide.idDest)));
@@ -3376,6 +3376,15 @@ begin
       INIRec.WriteString('Transportador', 'RNTC', Transp.veicTransp.RNTC);
       INIRec.WriteString('Transportador', 'vagao', Transp.vagao);
       INIRec.WriteString('Transportador', 'balsa', Transp.balsa);
+
+      for J := 0 to autXML.Count - 1 do
+      begin
+        sSecao := 'autXML' + IntToStrZero(J + 1, 2);
+        with autXML.Items[J] do
+        begin
+          INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
+        end;
+      end;
 
       for J := 0 to Transp.Reboque.Count - 1 do
       begin

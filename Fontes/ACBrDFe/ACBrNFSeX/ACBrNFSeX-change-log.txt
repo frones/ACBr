@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/08/2022
+-- ACBrNFSeXServicos --
+[*] A cidade: Castro/PR - Passou a usar a versão 1.01 do provedor IPM.
+   Por: Guilherme Vaz/Italo Giurizzato Junior
+[*] incluido para a cidade: Cuiaba/MT o parâmetro: NaoFormatarItemServico:
+   Por: Italo Giurizzato Junior
+
 09/08/2022
 -- CTA.Provider --
 [*] Implementado as procedures do Provider para os serviços: Emitir e Cancelar.

@@ -96,6 +96,8 @@ function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): stri
 function BiasToTimeZone(const aBias: Integer): String;
 function TimeZoneToBias(const aTimeZone: String): Integer;
 
+function DateTimeUniversal(const AUTC: String = ''; const ADateTime: TDateTime = 0 ): TDateTime;
+
 function IsWorkingDay(ADate: TDateTime): Boolean;
 function WorkingDaysBetween(StartDate, EndDate: TDateTime): Integer;
 function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
@@ -108,7 +110,7 @@ function AjustarData(const DataStr: string): string;
 implementation
 
 uses
-  MaskUtils,
+  MaskUtils, synautil,
   ACBrUtil.Compatibilidade, ACBrUtil.Strings, ACBrUtil.Base;
 
 {-----------------------------------------------------------------------------
@@ -388,6 +390,54 @@ begin
 
   if (TMZ[1] = '+') then
     Result := Result*(-1);
+end;
+
+{-----------------------------------------------------------------------------
+  Retorna ADateTime com hora convertida para TimeZone Universal, baseado no
+  TimeZone passado por parâmetro ou no TimeZone Local. ex UTC: -03:00
+ -----------------------------------------------------------------------------}
+function DateTimeUniversal(const AUTC: String; const ADateTime: TDateTime ): TDateTime;
+var
+  TZ: String;
+  DT: TDateTime;
+  Bias, H, M: Integer;
+begin
+  Result := 0;
+  DT := ADateTime;
+  TZ := AUTC;
+
+  if (DT = 0) then
+    DT := Now;
+
+  if (TZ = '') then
+  begin
+    TZ := synautil.TimeZone;
+    Insert(':', TZ, 4);
+  end
+  else
+  begin
+    if (Length(TZ) <> 6)
+        or ( not CharInSet(TZ[1], ['-','+']) )
+        or ( not (TZ[4] = ':') ) then
+    begin
+      Result := 0;
+      exit;
+    end;
+
+    H := StrToIntDef(copy(TZ,2,2), -99);
+    M := StrToIntDef(copy(TZ,5,2), -99);
+    if ( (H < -11) or (H > 14) )
+        or ( (M < 0) or (M > 60) ) then
+    begin
+      Result := 0;
+      exit;
+    end;
+
+  end;
+
+  Bias := TimeZoneToBias(DateTimeToStr(DT) + TZ);
+  Result := IncMinute(DT, Bias);
+
 end;
 
 {-----------------------------------------------------------------------------

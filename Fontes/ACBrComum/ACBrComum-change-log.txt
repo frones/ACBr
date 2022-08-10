@@ -38,6 +38,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/08/2022
+-- ACBrUtil.DateTime --
+[+] Adicionado função DateTimeUniversal - Retorna ADateTime com hora convertida para TimeZone Universal, baseado no
+  TimeZone passado por parâmetro ou no TimeZone Local.
+   por: José M S Junior
+
+10/08/2022
 -- ACBrJSON --
 [*] Alterações para compatibilizar unit com fpjsons(Lazarus).
 [*] Movidas units Jsons e JsonDataObjects_ACBr do pacote ACBrDiversos para ACBrComum

@@ -849,7 +849,7 @@ end;
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse);
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode, AuxNodeConf: TACBrXmlNode;
+  ANode, AuxNode, AuxNodeConf, AuxNodeSubs: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
   ANota: TNotaFiscal;
   NumNFSe, NumRps: String;
@@ -902,6 +902,19 @@ begin
 
         if Response.DataCanc > 0 then
           Response.DescSituacao := 'Nota Cancelada';
+      end;
+
+      AuxNode := ANode.Childrens.FindAnyNs('NfseSubstituicao');
+
+      if AuxNode <> nil then
+      begin
+        AuxNodeSubs := AuxNode.Childrens.FindAnyNs('SubstituicaoNfse');
+
+        if AuxNodeSubs <> nil then
+          Response.NumNotaSubstituidora := ObterConteudoTag(AuxNodeSubs.Childrens.FindAnyNs('NfseSubstituidora'), tcStr);
+
+        if Response.NumNotaSubstituidora <> '' then
+          Response.DescSituacao := 'Nota Substituida';
       end;
 
       AuxNode := ANode.Childrens.FindAnyNs('Nfse');
@@ -2183,7 +2196,7 @@ end;
 procedure TACBrNFSeProviderABRASFv2.TratarRetornoSubstituiNFSe(Response: TNFSeSubstituiNFSeResponse);
 var
   Document: TACBrXmlDocument;
-  ANode, AuxNode: TACBrXmlNode;
+  ANode, AuxNode, ANodeSubstituida: TACBrXmlNode;
   AErro: TNFSeEventoCollectionItem;
 
   function LocalizarNFSeRetorno(const RootNode: TACBrXmlNode): string;
@@ -2262,6 +2275,25 @@ begin
       else
       begin
         Response.NumNotaSubstituida := LocalizarNFSeRetorno(AuxNode);
+
+        ANodeSubstituida := AuxNode.Childrens.FindAnyNs('CompNfse');
+        if not Assigned(ANodeSubstituida) then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := Desc203;
+          Exit;
+        end;
+
+        ANodeSubstituida := ANodeSubstituida.Childrens.FindAnyNs('Nfse');
+        ANodeSubstituida := ANodeSubstituida.Childrens.FindAnyNs('InfNfse');
+
+        with Response do
+        begin
+          CodVerificacao := ObterConteudoTag(ANodeSubstituida.Childrens.FindAnyNs('CodigoVerificacao'), tcStr);
+          Data := ObterConteudoTag(ANodeSubstituida.Childrens.FindAnyNs('DataEmissao'), FpFormatoDataEmissao);
+        end;
+
         {
         ANode := ANode.Childrens.FindAnyNs('CompNfse');
         if not Assigned(ANode) then

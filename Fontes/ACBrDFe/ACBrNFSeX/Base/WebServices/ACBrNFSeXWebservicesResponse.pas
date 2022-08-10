@@ -306,6 +306,7 @@ type
     FTipo: string;
     FCodVerificacao: string;
     FCancelamento: TNFSeCancelamento;
+    FNumNotaSubstituidora: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -317,6 +318,7 @@ type
     property Tipo: string read FTipo write FTipo;
     property CodVerificacao: string read FCodVerificacao write FCodVerificacao;
     property Cancelamento: TNFSeCancelamento read FCancelamento write FCancelamento;
+    property NumNotaSubstituidora: string read FNumNotaSubstituidora write FNumNotaSubstituidora;
   end;
 
   TNFSeConsultaNFSeResponse = class(TNFSeWebserviceResponse)
@@ -732,6 +734,7 @@ begin
   Serie := '';
   Tipo := '';
   CodVerificacao := '';
+  NumNotaSubstituidora := '';
 
   if Assigned(FCancelamento) then
     FCancelamento.Free;

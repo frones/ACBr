@@ -44,8 +44,12 @@ Símbolo : Significado
 
 
 10/08/2022
+-- ACBrNFSeXProviderABRASFv2/ACBrNFSeXWebservicesReponse --
+[*] Criado a propriedade para conter o numero da nota substituida, ajustes necessários
+    para a leitura do grupo que contem informações sobre a substituição.
+   Por: Gabriel Leal
 -- ACBrNFSeXServicos --
-[*] Inclusão das cidades: São João da Urtiga/RS - provedor: Citta e
+[+] Inclusão das cidades: São João da Urtiga/RS - provedor: Citta e
     Ibiraiaras/RS - Provedor: Pronim
    Por: Grupo FS
 -- ACBrNFSeX/WebFisco.GravarXml/WebFisco.LerXml --

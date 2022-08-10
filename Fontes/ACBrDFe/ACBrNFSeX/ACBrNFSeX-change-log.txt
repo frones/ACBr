@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 10/08/2022
+-- ACBrNFSeXServicos --
+[+] Inclusão da cidade: Ariranha - provedor: Fiorilli
+   Por: AlphaJoy
 -- ACBrNFSeXWebservicesReponse --
 [*] Possível solução para o erro de propriedade estar com o valor nil.
    Por: Gabriel Leal/Italo Giurizzato Junior

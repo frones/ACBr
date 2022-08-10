@@ -491,7 +491,7 @@ var
   end;
 
 begin
-  Agora := Now;
+  Agora := DataHoraTimeZoneModoDeteccao( TACBrCTe(TConhecimentos(Collection).ACBrCTe ));   //Converte o DateTime do Sistema para o TimeZone configurado, para evitar divergência de Fuso Horário.
   GravaLog('Inicio da Validação');
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do

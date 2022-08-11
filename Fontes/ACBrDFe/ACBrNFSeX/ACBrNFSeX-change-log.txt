@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+11/08/2022
+-- Tiplan.Provider --
+[*] Ajuste na montagem do Envelope Soap do RecepcionarLoteRps versão 2.03 
+   Por: Calos E. T. Souza/Italo Giurizzato Junior
+
 10/08/2022
 -- ACBrNFSeXServicos --
 [+] Inclusão da cidade: Ariranha - provedor: Fiorilli

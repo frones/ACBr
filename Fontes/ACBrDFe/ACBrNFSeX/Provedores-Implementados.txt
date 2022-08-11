@@ -12,6 +12,7 @@ AEG                 v2.02
 Agili               v1.00
 AssessorPublico     v1.00
 Asten               v2.02
+Bauhaus (em desenvolvimento)
 Betha               v1.00
 Betha               v2.02
 BHISS               v1.00
@@ -20,6 +21,8 @@ CIGA                v1.00
 Citta               v2.03
 Conam               v1.00
 Coplan              v2.01
+CTA                 v2.00 
+CTAConsult          v1.00
 DataSmart           v2.02
 DBSeller            v1.00
 DeISS               v2.03
@@ -65,7 +68,7 @@ ISSe                v2.00
 ISSFortaleza        v1.00
 ISSGoiania          v2.00 02/08/2022
 ISSIntel            v1.00
-ISSJoinville        v2.04
+ISSJoinville        v2.04 10/08/2022
 ISSLencois          v1.00
 ISSNatal            v1.00
 ISSNet              v1.00
@@ -113,6 +116,7 @@ Sistemas4R          v2.00
 SmarAPD             v1.00
 SmarAPD             v2.03
 SmarAPD             v2.04
+SoftPlan            v1.00
 SpeedGov            v1.00
 SSInformatica       v2.03
 Sudoeste            v2.02

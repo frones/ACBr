@@ -320,14 +320,15 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:RecepcionarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
+  Request := '<nfse:RecepcionarLoteRpsRequest xmlns="http://nfse.abrasf.org.br/">';
+  Request := Request + '<nfseCabecMsg>' + IncluirCDATA(ACabecalho) + '</nfseCabecMsg>';
+  Request := Request + '<nfseDadosMsg>' + IncluirCDATA(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
 
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
                      ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br/"']);
+                     ['xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema"']);
 end;
 
 function TACBrNFSeXWebserviceTiplan203.RecepcionarSincrono(ACabecalho,

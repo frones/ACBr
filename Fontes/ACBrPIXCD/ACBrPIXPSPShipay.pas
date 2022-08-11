@@ -158,14 +158,9 @@ type
 implementation
 
 uses
-  StrUtils, synautil, DateUtils,
+  StrUtils, synautil, DateUtils, ACBrJSON,
   ACBrUtil.DateTime, ACBrUtil.Strings, ACBrUtil.Base, ACBrUtil.FilesIO,
-  ACBrPIXUtil, ACBrPIXSchemasCob, ACBrPIXBRCode, ACBrPIXSchemasCobsConsultadas,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf};
+  ACBrPIXUtil, ACBrPIXSchemasCob, ACBrPIXBRCode, ACBrPIXSchemasCobsConsultadas;
 
 { TACBrPSPShipay }
 
@@ -285,32 +280,20 @@ var
   AURL, Body: String;
   RespostaHttp: AnsiString;
   ResultCode: Integer;
-  js: TJsonObject;
+  js: TACBrJSONObject;
 begin
   LimparHTTP;
   AURL := ObterURLAmbiente( ACBrPixCD.Ambiente ) + cShipayEndPointAuth;
 
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Create;
+   js := TACBrJSONObject.Create;
    try
-     js.S['access_key'] := AccessKey;
-     js.S['secret_key'] := SecretKey;
-     js.S['client_id'] := ClientID;
-     Body := js.ToJSON();
+     js.AddPair('access_key', AccessKey);
+     js.AddPair('secret_key', SecretKey);
+     js.AddPair('client_id', ClientID);
+     Body := js.ToJSON;
    finally
      js.Free;
    end;
-  {$Else}
-   js := TJsonObject.Create;
-   try
-     js['access_key'].AsString := AccessKey;
-     js['secret_key'].AsString := SecretKey;
-     js['client_id'].AsString := ClientID;
-     Body := js.Stringify;
-   finally
-     js.Free;
-   end;
-  {$EndIf}
 
   WriteStrToStream(Http.Document, Body);
   Http.MimeType := CContentTypeApplicationJSon;
@@ -409,7 +392,7 @@ var
   AURL, Body: String;
   RespostaHttp: AnsiString;
   ResultCode: Integer;
-  js: TJsonObject;
+  js: TACBrJSONObject;
 begin
   if (Trim(order_id) = '') then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['order_id']));
@@ -417,23 +400,13 @@ begin
   if (ValorReembolso <= 0) then
     DispararExcecao(EACBrPixException.CreateFmt(ACBrStr(sErroParametroInvalido), ['ValorReembolso']));
 
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   js := TJsonObject.Create();
-   try
-     js.F['amount'] := ValorReembolso;
-     Body := js.ToJSON();
-   finally
-     js.Free;
-   end;
-  {$Else}
-   js := TJsonObject.Create;
-   try
-     js['amount'].AsNumber := ValorReembolso;
-     Body := js.Stringify;
-   finally
-     js.Free;
-   end;
-  {$EndIf}
+  js := TACBrJSONObject.Create;
+  try
+    js.AddPair('amount', ValorReembolso);
+    Body := js.ToJSON;
+  finally
+    js.Free;
+  end;
 
   Clear;
   PrepararHTTP;
@@ -605,29 +578,18 @@ end;
 procedure TACBrPSPShipay.ProcessarAutenticacao(const AURL: String;
   ResultCode: Integer; const RespostaHttp: AnsiString);
 var
-  js: TJsonObject;
+  js: TACBrJSONObject;
 begin
   Wallets.Clear;
   if (ResultCode = HTTP_OK) then
   begin
-   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+    js := TACBrJSONObject.Parse(RespostaHttp);
     try
-      fpToken := js.S['access_token'];
-      fpRefreshToken := js.S['refresh_token'];
+      fpToken := js.AsString['access_token'];
+      fpRefreshToken := js.AsString['refresh_token'];
     finally
       js.Free;
     end;
-   {$Else}
-    js := TJsonObject.Create;
-    try
-      js.Parse(RespostaHttp);
-      fpToken := js['access_token'].AsString;
-      fpRefreshToken := js['refresh_token'].AsString;
-    finally
-      js.Free;
-    end;
-   {$EndIf}
 
     if (Trim(fpToken) = '') then
       DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
@@ -1115,32 +1077,20 @@ end;
 procedure TACBrPSPShipay.TratarRetornoComErro(ResultCode: Integer;
   const RespostaHttp: AnsiString; Problema: TACBrPIXProblema);
 var
-  js: TJsonObject;
+  js: TACBrJSONObject;
 begin
   if (pos('"message"', RespostaHttp) > 0) then   // Erro no formato próprio da ShiPay
   begin
      (* Exemplo de Retorno
        {"code":404,"message":"Order not Found"}
      *)
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-     js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
-     try
-       Problema.status := js.I['code'];
-       Problema.detail := js.S['message'];
-     finally
-       js.Free;
-     end;
-    {$Else}
-     js := TJsonObject.Create;
-     try
-       js.Parse(RespostaHttp);
-       Problema.status := js['code'].AsInteger;
-       Problema.detail := js['message'].AsString;
-     finally
-       js.Free;
-     end;
-     Problema.title := 'Error '+IntToStr(Problema.status);
-    {$EndIf}
+    js := TACBrJSONObject.Parse(RespostaHttp);
+    try
+      Problema.status := js.AsInteger['code'];
+      Problema.detail := js.AsString['message'];
+    finally
+      js.Free;
+    end;
   end
   else
     inherited TratarRetornoComErro(ResultCode, RespostaHttp, Problema);

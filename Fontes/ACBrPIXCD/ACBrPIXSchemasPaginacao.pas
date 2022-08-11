@@ -44,13 +44,7 @@ unit ACBrPIXSchemasPaginacao;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf},
-  ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrPIXBase;
 
 type
 
@@ -63,8 +57,8 @@ type
     fquantidadeDePaginas: Integer;
     fquantidadeTotalDeItens: Integer;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -111,34 +105,22 @@ begin
   fquantidadeTotalDeItens := Source.quantidadeTotalDeItens;
 end;
 
-procedure TACBrPIXPaginacao.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXPaginacao.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['itensPorPagina'] := fitensPorPagina;
-   AJSon.I['paginaAtual'] := fpaginaAtual;
-   AJSon.I['quantidadeDePaginas'] := fquantidadeDePaginas;
-   AJSon.I['quantidadeTotalDeItens'] := fquantidadeTotalDeItens;
-  {$Else}
-   AJSon['itensPorPagina'].AsInteger := fitensPorPagina;
-   AJSon['paginaAtual'].AsInteger := fpaginaAtual;
-   AJSon['quantidadeDePaginas'].AsInteger := fquantidadeDePaginas;
-   AJSon['quantidadeTotalDeItens'].AsInteger := fquantidadeTotalDeItens;
-  {$EndIf}
+  aJson
+    .AddPair('itensPorPagina', fitensPorPagina)
+    .AddPair('paginaAtual', fpaginaAtual)
+    .AddPair('quantidadeDePaginas', fquantidadeDePaginas)
+    .AddPair('quantidadeTotalDeItens', fquantidadeTotalDeItens);
 end;
 
-procedure TACBrPIXPaginacao.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXPaginacao.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fitensPorPagina := AJSon.I['itensPorPagina'];
-   fpaginaAtual := AJSon.I['paginaAtual'];
-   fquantidadeDePaginas := AJSon.I['quantidadeDePaginas'];
-   fquantidadeTotalDeItens := AJSon.I['quantidadeTotalDeItens'];
-  {$Else}
-   fitensPorPagina := AJSon['itensPorPagina'].AsInteger;
-   fpaginaAtual := AJSon['paginaAtual'].AsInteger;
-   fquantidadeDePaginas := AJSon['quantidadeDePaginas'].AsInteger;
-   fquantidadeTotalDeItens := AJSon['quantidadeTotalDeItens'].AsInteger;
-  {$EndIf}
+  AJSon
+    .Value('itensPorPagina', fitensPorPagina)
+    .Value('paginaAtual', fpaginaAtual)
+    .Value('quantidadeDePaginas', fquantidadeDePaginas)
+    .Value('quantidadeTotalDeItens', fquantidadeTotalDeItens);
 end;
 
 end.

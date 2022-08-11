@@ -44,20 +44,7 @@ unit ACBrPIXSchemasProblema;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
-   System.Generics.Collections, System.Generics.Defaults,
-  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
-   System.Contnrs,
-  {$Else}
-   Contnrs,
-  {$IfEnd}
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrBase, ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrBase, ACBrPIXBase;
 
 type
 
@@ -70,8 +57,8 @@ type
     fvalor: String;
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -109,8 +96,8 @@ type
     ftype_uri: String;
     fviolacoes: TACBrPIXViolacoes;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -161,36 +148,20 @@ begin
   fvalor := Source.valor;
 end;
 
-procedure TACBrPIXViolacao.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXViolacao.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  if (frazao <> '') then
-    AJSon.S['razao'] := frazao;
-  if (fpropriedade <> '') then
-    AJSon.S['propriedade'] := fpropriedade;
-  if (fvalor <> '') then
-    AJSon.S['valor'] := fvalor;
-  {$Else}
-  if (frazao <> '') then
-    AJSon['razao'].AsString := frazao;
-  if (fpropriedade <> '') then
-    AJSon['propriedade'].AsString := fpropriedade;
-  if (fvalor <> '') then
-    AJSon['valor'].AsString := fvalor;
-  {$EndIf}
+  AJSon
+    .AddPair('razao', frazao, False)
+    .AddPair('propriedade', fpropriedade, False)
+    .AddPair('valor', fvalor, False);
 end;
 
-procedure TACBrPIXViolacao.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXViolacao.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   frazao := AJSon.S['razao'];
-   fpropriedade := AJSon.S['propriedade'];
-   fvalor := AJSon.S['valor'];
-  {$Else}
-   frazao := AJSon['razao'].AsString;
-   fpropriedade := AJSon['propriedade'].AsString;
-   fvalor := AJSon['valor'].AsString;
-  {$EndIf}
+  AJSon
+    .Value('razao', frazao)
+    .Value('propriedade', fpropriedade)
+    .Value('valor', fvalor);
 end;
 
 { TACBrPIXViolacoes }
@@ -271,46 +242,26 @@ begin
   fviolacoes.Assign(Source.violacoes);
 end;
 
-procedure TACBrPIXProblema.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXProblema.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['type'] := ftype_uri;
-   AJSon.S['title'] := ftitle;
-   AJSon.I['status'] := fstatus;
-   if (fdetail <> '') then
-     AJSon.S['detail'] := fdetail;
-   if (fcorrelationId <> '') then
-     AJSon.S['correlationId'] := fcorrelationId;
-   fviolacoes.WriteToJSon(AJSon);
-  {$Else}
-   AJSon['type'].AsString := ftype_uri;
-   AJSon['title'].AsString := ftitle;
-   AJSon['status'].AsInteger := fstatus;
-   if (fdetail <> '') then
-     AJSon['detail'].AsString := fdetail;
-   if (fcorrelationId <> '') then
-     AJSon['correlationId'].AsString := fcorrelationId;
-   fviolacoes.WriteToJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .AddPair('type', ftype_uri)
+    .AddPair('title', ftitle)
+    .AddPair('status', fstatus)
+    .AddPair('detail', fdetail, False)
+    .AddPair('correlationId', fcorrelationId, False);
+  fviolacoes.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXProblema.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXProblema.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ftype_uri := AJSon.S['type'];
-   ftitle := AJSon.S['title'];
-   fstatus := AJSon.I['status'];
-   fdetail := AJSon.S['detail'];
-   fcorrelationId := AJSon.S['correlationId'];
-   fviolacoes.ReadFromJSon(AJSon);
-  {$Else}
-   ftype_uri := AJSon['type'].AsString;
-   ftitle := AJSon['title'].AsString;
-   fstatus := AJSon['status'].AsInteger;
-   fdetail := AJSon['detail'].AsString;
-   fcorrelationId := AJSon['correlationId'].AsString;
-   fviolacoes.ReadFromJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .Value('type', ftype_uri)
+    .Value('title', ftitle)
+    .Value('status', fstatus)
+    .Value('detail', fdetail)
+    .Value('correlationId', fcorrelationId);
+  fviolacoes.ReadFromJSon(AJSon);
 end;
 
 end.

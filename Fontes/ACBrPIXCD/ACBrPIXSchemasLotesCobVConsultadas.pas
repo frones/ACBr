@@ -44,13 +44,7 @@ unit ACBrPIXSchemasLotesCobVConsultadas;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase,
+  Classes, SysUtils, ACBrPIXBase, ACBrJSON,
   ACBrPIXSchemasParametrosConsultaLote, ACBrPIXSchemasLoteCobV;
 
 type
@@ -62,8 +56,8 @@ type
     flotes: TACBrPIXLoteCobVConsultadoArray;
     fparametros: TACBrPIXParametrosConsultaLote;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -111,13 +105,13 @@ begin
   flotes.Assign(Source.lotes);
 end;
 
-procedure TACBrPIXLotesCobVConsultados.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXLotesCobVConsultados.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   fparametros.WriteToJSon(AJSon);
   flotes.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXLotesCobVConsultados.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXLotesCobVConsultados.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
   fparametros.ReadFromJSon(AJSon);
   flotes.ReadFromJSon(AJSon);

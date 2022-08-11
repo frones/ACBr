@@ -44,13 +44,7 @@ unit ACBrPIXSchemasParametrosConsultaLote;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf},
-  ACBrPIXSchemasPaginacao, ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrPIXSchemasPaginacao, ACBrPIXBase;
 
 type
 
@@ -62,8 +56,8 @@ type
     finicio: TDateTime;
     fpaginacao: TACBrPIXPaginacao;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
 
   public
     constructor Create(const ObjectName: String); override;
@@ -78,9 +72,6 @@ type
   end;
 
 implementation
-
-uses
-  ACBrUtil.DateTime;
 
 { TACBrPIXParametrosConsultaLote }
 
@@ -119,40 +110,20 @@ begin
   fpaginacao.Assign(Source.paginacao);
 end;
 
-procedure TACBrPIXParametrosConsultaLote.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXParametrosConsultaLote.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['inicio'] := DateTimeToIso8601( finicio );
-   AJSon.S['fim'] := DateTimeToIso8601( ffim );
-   fpaginacao.WriteToJSon(AJSon);
-  {$Else}
-   AJSon['inicio'].AsString := DateTimeToIso8601( finicio );
-   AJSon['fim'].AsString := DateTimeToIso8601( ffim );
-   fpaginacao.WriteToJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .AddPairISODateTime('inicio', finicio)
+    .AddPairISODateTime('fim', ffim);
+  fpaginacao.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXParametrosConsultaLote.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TACBrPIXParametrosConsultaLote.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   s := AJSon.S['inicio'];
-   if (s <> '') then
-     finicio := Iso8601ToDateTime(s);
-   s := AJSon.S['fim'];
-   if (s <> '') then
-     ffim := Iso8601ToDateTime(s);
-   fpaginacao.ReadFromJSon(AJSon);
-  {$Else}
-   s := AJSon['inicio'].AsString;
-   if (s <> '') then
-     finicio := Iso8601ToDateTime(s);
-   s := AJSon['fim'].AsString;
-   if (s <> '') then
-     ffim := Iso8601ToDateTime(s);
-   fpaginacao.ReadFromJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .ValueISODateTime('inicio', finicio)
+    .ValueISODateTime('fim', ffim);
+  fpaginacao.ReadFromJSon(AJSon);
 end;
 
 end.

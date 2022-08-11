@@ -142,7 +142,7 @@ resourcestring
   sErroHttp = 'Erro HTTP: %d, Metodo: %s, URL: %s';
   sErroAutenticacao = 'Erro de Autenticação';
   sErroPropriedadeNaoDefinida = 'Propriedade %s não atribuida';
-
+  sErroCertificadoAmbiente = 'Rotina disponível apenas em ambiente de produção';
 
 type
 

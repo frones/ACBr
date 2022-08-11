@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2022
+-- ACBrBase, ACBrSchemas... --
+[*] Adaptações para utilizar a nova unit ACBrJSON.
+
+-- ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPItau, ACBrPIXPSPSantander, ACBrPIXPSPShipay, ACBrPIXPSPSicredi --
+[*] Adaptações para utilizar a nova unit ACBrJSON.
+    Por: Elias César
+
 27/07/2022
 -- ACBrPIXPSPItau --
 [*] Revovendo parâmetros desnecessários ao Renovar Certificado e Gerar

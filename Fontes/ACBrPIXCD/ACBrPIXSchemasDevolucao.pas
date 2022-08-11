@@ -44,20 +44,7 @@ unit ACBrPIXSchemasDevolucao;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IF DEFINED(HAS_SYSTEM_GENERICS)}
-   System.Generics.Collections, System.Generics.Defaults,
-  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
-   System.Contnrs,
-  {$Else}
-   Contnrs,
-  {$IfEnd}
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrBase, ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrBase, ACBrPIXBase;
 
 type
 
@@ -68,8 +55,8 @@ type
     fliquidacao: TDateTime;
     fsolicitacao: TDateTime;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -89,8 +76,8 @@ type
     fvalor: Currency;
     procedure SetDescricao(AValue: String);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -115,8 +102,8 @@ type
     procedure Setmotivo(AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -151,7 +138,6 @@ implementation
 
 uses
   ACBrPIXUtil,
-  ACBrUtil.DateTime,
   ACBrUtil.Base,
   ACBrUtil.Strings;
 
@@ -181,40 +167,18 @@ begin
   fliquidacao := Source.liquidacao;
 end;
 
-procedure TACBrPIXHorario.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXHorario.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fsolicitacao <> 0) then
-     AJSon.S['solicitacao'] := DateTimeToIso8601( fsolicitacao );
-   if (fliquidacao <> 0) then
-     AJSon.S['liquidacao'] := DateTimeToIso8601( fliquidacao );
-  {$Else}
-   if (fsolicitacao <> 0) then
-     AJSon['solicitacao'].AsString := DateTimeToIso8601( fsolicitacao );
-   if (fliquidacao <> 0) then
-     AJSon['liquidacao'].AsString := DateTimeToIso8601( fliquidacao );
-  {$EndIf}
+  AJSon
+    .AddPairISODateTime('solicitacao', fsolicitacao)
+    .AddPairISODateTime('liquidacao', fliquidacao);
 end;
 
-procedure TACBrPIXHorario.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TACBrPIXHorario.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   s := AJSon.S['solicitacao'];
-   if (s <> '') then
-     fsolicitacao := Iso8601ToDateTime(s);
-   s := AJSon.S['liquidacao'];
-   if (s <> '') then
-     fliquidacao := Iso8601ToDateTime(s);
-  {$Else}
-   s := AJSon['solicitacao'].AsString;
-   if (s <> '') then
-     fsolicitacao := Iso8601ToDateTime(s);
-   s := AJSon['liquidacao'].AsString;
-   if (s <> '') then
-     fliquidacao := Iso8601ToDateTime(s);
-  {$EndIf}
+  AJSon
+    .ValueISODateTime('solicitacao', fsolicitacao)
+    .ValueISODateTime('liquidacao', fliquidacao);
 end;
 
 { TACBrPIXDevolucaoSolicitada }
@@ -249,41 +213,31 @@ end;
 
 procedure TACBrPIXDevolucaoSolicitada.SetDescricao(AValue: String);
 begin
-   if fdescricao = AValue then
-     Exit;
-   fdescricao := copy(AValue, 1, 140);
+  if fdescricao = AValue then
+    Exit;
+  fdescricao := copy(AValue, 1, 140);
 end;
 
-procedure TACBrPIXDevolucaoSolicitada.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevolucaoSolicitada.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fdescricao <> '') then
-     AJSon.S['descricao'] := fdescricao;
-   if (fnatureza <> ndNENHUMA) then
-     AJSon.S['natureza'] := PIXNaturezaDevolucaoToString(fnatureza);
-   if (fvalor <> 0) then
-     AJSon.S['valor'] := FormatarValorPIX(fvalor);
-  {$Else}
-   if (fdescricao <> '') then
-     AJSon['descricao'].AsString := fdescricao;
-   if (fnatureza <> ndNENHUMA) then
-     AJSon['natureza'].AsString := PIXNaturezaDevolucaoToString(fnatureza);
-   if (fvalor <> 0) then
-     AJSon['valor'].AsString := FormatarValorPIX(fvalor);
-  {$EndIf}
+  if NaoEstaVazio(fdescricao) then
+    AJSon.AddPair('descricao', fdescricao);
+  if (fnatureza <> ndNENHUMA) then
+    AJSon.AddPair('natureza', PIXNaturezaDevolucaoToString(fnatureza));
+  if (fvalor <> 0) then
+    AJSon.AddPair('valor', FormatarValorPIX(fvalor));
 end;
 
-procedure TACBrPIXDevolucaoSolicitada.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevolucaoSolicitada.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  s: String;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fdescricao := AJSon.S['descricao'];
-   fnatureza := StringToPIXNaturezaDevolucao( AJSon.S['natureza'] );
-   fvalor := StringToFloat( AJSon.S['valor']);
-  {$Else}
-   fdescricao := AJSon['descricao'].AsString;
-   fnatureza := StringToPIXNaturezaDevolucao(AJSon['natureza'].AsString);
-   fvalor := StringToFloat(AJSon['valor'].AsString);
-  {$EndIf}
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+  AJSon
+    .Value('descricao', fdescricao)
+    .Value('natureza', s)
+    .Value('valor', fvalor);
+  fnatureza := StringToPIXNaturezaDevolucao(s);
 end;
 
 { TACBrPIXDevolucao }
@@ -337,45 +291,35 @@ begin
   fhorario.Assign(Source.horario);
 end;
 
-procedure TACBrPIXDevolucao.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevolucao.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fid <> '') then
-     AJSon.S['id'] := fid;
-   if (fmotivo <> '') then
-     AJSon.S['motivo'] := fmotivo;
-   if (frtrId <> '') then
-     AJSon.S['rtrId'] := frtrId;
-   if (fstatus <> stdNENHUM) then
-     AJSon.S['status'] := PIXStatusDevolucaoToString(fstatus);
-  {$Else}
-   if (fid <> '') then
-     AJSon['id'].AsString := fid;
-   if (fmotivo <> '') then
-     AJSon['motivo'].AsString := fmotivo;
-   if (frtrId <> '') then
-     AJSon['rtrId'].AsString := frtrId;
-   if (fstatus <> stdNENHUM) then
-     AJSon['status'].AsString := PIXStatusDevolucaoToString(fstatus);
-  {$EndIf}
+
+  if NaoEstaVazio(fid) then
+    AJSon.AddPair('id', fid);
+  if NaoEstaVazio(fmotivo) then
+    AJSon.AddPair('motivo', fmotivo);
+  if NaoEstaVazio(frtrId) then
+    AJSon.AddPair('rtrId', frtrId);
+  if (fstatus <> stdNENHUM) then
+    AJSon.AddPair('status', PIXStatusDevolucaoToString(fstatus));
   fhorario.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXDevolucao.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevolucao.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  s: String;
 begin
   inherited DoReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fid := AJSon.S['id'];
-   fmotivo := AJSon.S['motivo'];
-   frtrId := AJSon.S['rtrId'];
-   fstatus := StringToPIXStatusDevolucao( AJSon.S['status'] );
-  {$Else}
-   fid := AJSon['id'].AsString;
-   fmotivo := AJSon['motivo'].AsString;
-   frtrId := AJSon['rtrId'].AsString;
-   fstatus := StringToPIXStatusDevolucao(AJSon['status'].AsString);
-  {$EndIf}
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+
+  AJSon
+    .Value('id', fid)
+    .Value('motivo', fmotivo)
+    .Value('rtrId', frtrId)
+    .Value('status', s);
+
+  fstatus := StringToPIXStatusDevolucao(s);
   fhorario.ReadFromJSon(AJSon);
 end;
 
@@ -422,8 +366,7 @@ begin
   Result := inherited Add(ADevolucao);
 end;
 
-procedure TACBrPIXDevolucoes.Insert(Index: Integer; ADevolucao: TACBrPIXDevolucao
-  );
+procedure TACBrPIXDevolucoes.Insert(Index: Integer; ADevolucao: TACBrPIXDevolucao);
 begin
   inherited Insert(Index, ADevolucao);
 end;

@@ -44,14 +44,8 @@ unit ACBrPIXSchemasCobV;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation,
-  ACBrPIXSchemasCalendario, ACBrPIXSchemasPix;
+  Classes, SysUtils, ACBrJSON, ACBrPIXBase, ACBrPIXSchemasCob, ACBrPIXSchemasPix,
+  ACBrPIXSchemasDevedor, ACBrPIXSchemasLocation;
 
 resourcestring
   sErroDescontoDataFixaLimit = 'Limite de descontoDataFixa atingido (3)';
@@ -96,8 +90,8 @@ type
     procedure SetCriacao(AValue: TDateTime);
     procedure SetDataDeVencimento(AValue: TDateTime);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
 
     property criacao: TDateTime read fcriacao write SetCriacao;
     property dataDeVencimento: TDateTime read fdataDeVencimento write SetDataDeVencimento;
@@ -132,8 +126,8 @@ type
     fmodalidade: TACBrPIXValoresModalidade;
     fvalorPerc: Currency;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -151,8 +145,8 @@ type
     fmodalidade: TACBrPIXJurosModalidade;
     fvalorPerc: Currency;
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
     constructor Create(const aObjectName: String); override;
     procedure Clear; override;
@@ -172,8 +166,8 @@ type
     procedure SetData(AValue: TDateTime);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -209,8 +203,8 @@ type
   protected
     fdescontosDataFixa: TACBrPIXDescontosDataFixa;
 
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -233,8 +227,8 @@ type
     fmulta: TACBrPIXModalidadeValor;
     foriginal: Currency;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -258,8 +252,8 @@ type
     floc: TACBrPIXLocationCobSolicitada;
     fvalor: TACBrPIXCobVValor;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -279,8 +273,8 @@ type
   private
     fstatus: TACBrPIXStatusCobranca;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
@@ -304,8 +298,8 @@ type
     procedure SetRevisao(AValue: Integer);
     procedure SetTxId(AValue: String);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -330,8 +324,8 @@ type
     fpix: TACBrPIXArray;
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; reintroduce;
@@ -366,8 +360,6 @@ implementation
 uses
   DateUtils, Math,
   ACBrPIXUtil,
-  ACBrUtil.Base,
-  ACBrUtil.DateTime,
   ACBrUtil.Strings;
 
 function ValoresModalidadeToString(aValue: TACBrPIXValoresModalidade): String;
@@ -412,30 +404,23 @@ end;
 
 { TACBrPIXJuros }
 
-procedure TACBrPIXJuros.DoWriteToJSon(aJSon: TJsonObject);
+procedure TACBrPIXJuros.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
   if (fmodalidade <> pjmNenhum) then
-    aJSon.I['modalidade'] := Ord(fmodalidade);
+    aJSon.AddPair('modalidade', Ord(fmodalidade));
   if (fvalorPerc > 0) then
-    aJSon.S['valorPerc'] := FormatarValorPIX(fvalorPerc);
-  {$Else}
-  if (fmodalidade <> pjmNenhum) then
-    aJSon['modalidade'].AsInteger := Ord(fmodalidade);
-  if (fvalorPerc > 0) then
-    aJSon['valorPerc'].AsString := FormatarValorPIX(fvalorPerc);
-  {$EndIf}
+    aJSon.AddPair('valorPerc', FormatarValorPIX(fvalorPerc));
 end;
 
-procedure TACBrPIXJuros.DoReadFromJSon(aJSon: TJsonObject);
+procedure TACBrPIXJuros.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  i: Integer;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fmodalidade := TACBrPIXJurosModalidade(aJSon.I['modalidade']);
-   fvalorPerc := StringToFloatDef(aJSon.S['valorPerc'], 0);
-  {$Else}
-   fmodalidade := TACBrPIXJurosModalidade(aJSon['modalidade'].AsInteger);
-   fvalorPerc := StringToFloatDef(aJSon['valorPerc'].AsString, 0);
-  {$EndIf}
+  {$IfDef FPC}i := 0;{$EndIf}
+  aJSon
+    .Value('modalidade', i)
+    .Value('valorPerc', fvalorPerc);
+  fmodalidade := TACBrPIXJurosModalidade(i);
 end;
 
 constructor TACBrPIXJuros.Create(const aObjectName: String);
@@ -504,42 +489,22 @@ begin
   fcriacao := DateOf(AValue);
 end;
 
-procedure TACBrPIXCalendarioCobVBase.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioCobVBase.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fcriacao <> 0) then
-     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
-   if (fdataDeVencimento <> 0) then
-     AJSon.S['dataDeVencimento'] := FormatDateTime('yyyy-mm-dd', fdataDeVencimento);
-   if (fvalidadeAposVencimento > 0) then
-     AJSon.I['validadeAposVencimento'] := fvalidadeAposVencimento;
-  {$Else}
-   if (fcriacao <> 0) then
-     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao);
-   if (fdataDeVencimento <> 0) then
-     AJSon['dataDeVencimento'].AsString := FormatDateTime('yyyy-mm-dd', fdataDeVencimento);
-   if (fvalidadeAposVencimento > 0) then
-     AJSon['validadeAposVencimento'].AsInteger := fvalidadeAposVencimento;
-  {$EndIf}
+  AJSon
+    .AddPairISODateTime('criacao', fcriacao, False)
+    .AddPairISODate('dataDeVencimento', fdataDeVencimento, False);
+
+  if (fvalidadeAposVencimento > 0) then
+    AJSon.AddPair('validadeAposVencimento', fvalidadeAposVencimento);
 end;
 
-procedure TACBrPIXCalendarioCobVBase.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TACBrPIXCalendarioCobVBase.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   s := AJSon.S['criacao'];
-   if (s <> '') then
-     fcriacao := Iso8601ToDateTime(s);
-   fdataDeVencimento := StringToDateTimeDef(AJSon.S['dataDeVencimento'], 0, 'yyyy-mm-dd');
-   fvalidadeAposVencimento := AJSon.I['validadeAposVencimento'];
-  {$Else}
-   s := AJSon['criacao'].AsString;
-   if (s <> '') then
-     fcriacao := Iso8601ToDateTime(s);
-   fdataDeVencimento := StringToDateTimeDef(AJSon['dataDeVencimento'].AsString, 0, 'yyyy-mm-dd');
-   fvalidadeAposVencimento := AJSon['validadeAposVencimento'].AsInteger;
-  {$EndIf}
+  AJSon
+    .ValueISODateTime('criacao', fcriacao)
+    .ValueISODate('dataDeVencimento', fdataDeVencimento)
+    .Value('validadeAposVencimento', fvalidadeAposVencimento);
 end;
 
 { TACBrPIXModalidadeValor }
@@ -567,30 +532,23 @@ begin
   Result := (fmodalidade = pvmNenhum) and (fvalorPerc = 0);
 end;
 
-procedure TACBrPIXModalidadeValor.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXModalidadeValor.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT} 
   if (fmodalidade <> pvmNenhum) then
-    AJSon.I['modalidade'] := Ord(fmodalidade);
+    AJSon.AddPair('modalidade', Ord(fmodalidade));
   if (fvalorPerc > 0) then
-    AJSon.S['valorPerc'] := FormatarValorPIX(fvalorPerc);
-  {$Else}
-  if (fmodalidade <> pvmNenhum) then
-    AJSon['modalidade'].AsInteger := Ord(fmodalidade);
-  if (fvalorPerc > 0) then
-    AJSon['valorPerc'].AsString := FormatarValorPIX(fvalorPerc);
-  {$EndIf}
+    AJSon.AddPair('valorPerc', FormatarValorPIX(fvalorPerc));
 end;
 
-procedure TACBrPIXModalidadeValor.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXModalidadeValor.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  i: Integer;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fmodalidade := TACBrPIXValoresModalidade(AJSon.I['modalidade']);
-   fvalorPerc := StringToFloatDef(AJSon.S['valorPerc'], 0);
-  {$Else}
-   fmodalidade := TACBrPIXValoresModalidade(AJSon['modalidade'].AsInteger);
-   fvalorPerc := StringToFloatDef(AJSon['valorPerc'].AsString, 0);
-  {$EndIf}
+  {$IfDef FPC}i := 0;{$EndIf}
+  AJSon
+    .Value('modalidade', i)
+    .Value('valorPerc', fvalorPerc);
+   fmodalidade := TACBrPIXValoresModalidade(i);
 end;
 
 { TACBrPIXDescontoDataFixa }
@@ -631,28 +589,18 @@ begin
     Assign(TACBrPIXDescontoDataFixa(ASource));
 end;
 
-procedure TACBrPIXDescontoDataFixa.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDescontoDataFixa.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['data'] := FormatDateTime('yyyy-mm-dd', fdata);
-   if (fvalorPerc > 0) then
-     AJSon.S['valorPerc'] := FormatarValorPIX(fvalorPerc);
-  {$Else}
-   AJSon['data'].AsString := FormatDateTime('yyyy-mm-dd', fdata);
-   if (fvalorPerc > 0) then
-     AJSon['valorPerc'].AsString := FormatarValorPIX(fvalorPerc);
-  {$EndIf}
+  AJSon
+    .AddPair('data', FormatDateTime('yyyy-mm-dd', fdata))
+    .AddPair('valorPerc', FormatarValorPIX(fvalorPerc));
 end;
 
-procedure TACBrPIXDescontoDataFixa.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDescontoDataFixa.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fdata :=  StringToDateTimeDef(AJSon.S['data'], 0, 'yyyy-mm-dd');
-   fvalorPerc := StringToFloatDef(AJSon.S['valorPerc'], 0);
-  {$Else}
-   fdata :=  StringToDateTimeDef(AJSon['data'].AsString, 0, 'yyyy-mm-dd');
-   fvalorPerc := StringToFloatDef(AJSon['valorPerc'].AsString, 0);
-  {$EndIf}
+  AJSon
+    .ValueISODate('data', fdata)
+    .Value('valorPerc', fvalorPerc);
 end;
 
 { TACBrPIXDescontosDataFixa }
@@ -726,41 +674,32 @@ begin
   Result := (fvalorPerc = 0) and (fmodalidade = pdmNenhum) and fdescontosDataFixa.IsEmpty;
 end;
 
-procedure TACBrPIXDesconto.DoWriteToJSon(aJSon: TJsonObject);
+procedure TACBrPIXDesconto.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   if (modalidade = pdmNenhum) then
     Exit;
 
+  aJSon.AddPair('modalidade', Ord(modalidade));
+
   { Modalidades 1 e 2 devem enviar a lista de descontosDataFixa }
   { Modalidades 3, 4, 5 e 6 devem enviar valorPerc }
-
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  aJSon.I['modalidade'] := Ord(modalidade);
   if (Ord(modalidade) >= 3) then
-    aJSon.S['valorPerc'] := FormatarValorPIX(valorPerc);
-  {$Else}
-  aJSon['modalidade'].AsInteger := Ord(modalidade);
-  if (Ord(modalidade) >= 3) then
-    aJSon['valorPerc'].AsString := FormatarValorPIX(valorPerc);
-  {$EndIf}
-  
-  if (Ord(modalidade) <= 2) then
+    aJSon.AddPair('valorPerc', FormatarValorPIX(valorPerc))
+  else if (Ord(modalidade) <= 2) then
     descontosDataFixa.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXDesconto.DoReadFromJSon(aJSon: TJsonObject);
-begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  modalidade := TACBrPIXDescontoModalidade(AJSon.I['modalidade']);
-  if (Ord(modalidade) >= 3) then
-    valorPerc := StringToFloatDef(aJSon.S['valorPerc'], 0);
-  {$Else}
-  modalidade := TACBrPIXDescontoModalidade(AJSon['modalidade'].AsInteger);
-  if (Ord(modalidade) >= 3) then
-    valorPerc := StringToFloatDef(aJSon['valorPerc'].AsString, 0);
-  {$EndIf}
+procedure TACBrPIXDesconto.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  i: Integer;
+begin 
+  {$IfDef FPC}i := 0;{$EndIf}
+  aJSon.Value('modalidade', i);
+  modalidade := TACBrPIXDescontoModalidade(i);
 
-  if (Ord(modalidade) <= 2) then
+  if (i >= 3) then
+    aJSon.Value('valorPerc', fvalorPerc)
+  else if (i <= 2) then
     descontosDataFixa.ReadFromJSon(aJSon);
 end;
 
@@ -812,28 +751,20 @@ begin
   fmulta.Assign(Source.multa);
 end;
 
-procedure TACBrPIXCobVValor.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVValor.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-  if (foriginal > 0) then
-    AJSon.S['original'] := FormatarValorPIX(foriginal);
-  {$Else}
-  if (foriginal > 0) then
-    AJSon['original'].AsString := FormatarValorPIX(foriginal);
-  {$EndIf}
+  AJSon.AddPair('original', FormatarValorPIX(foriginal));
+
   fabatimento.WriteToJSon(AJSon);
   fdesconto.WriteToJSon(AJSon);
   fjuros.WriteToJSon(AJSon);
   fmulta.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobVValor.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVValor.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   foriginal := StringToFloatDef(AJSon.S['original'], 0);
-  {$Else}
-   foriginal := StringToFloatDef(AJSon['original'].AsString, 0);
-  {$EndIf}
+  AJSon.Value('original', foriginal);
+
   fabatimento.ReadFromJSon(AJSon);
   fdesconto.ReadFromJSon(AJSon);
   fjuros.ReadFromJSon(AJSon);
@@ -888,7 +819,7 @@ begin
   fvalor.Assign(Source.valor);
 end;
 
-procedure TACBrPIXCobVSolicitada.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVSolicitada.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
   fcalendario.WriteToJSon(AJSon);
@@ -897,7 +828,7 @@ begin
   fvalor.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobVSolicitada.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVSolicitada.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoReadFromJSon(AJSon);
   fcalendario.ReadFromJSon(AJSon);
@@ -926,26 +857,21 @@ begin
   fstatus := Source.status;
 end;
 
-procedure TACBrPIXCobVRevisada.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVRevisada.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fstatus <> stcNENHUM) then
-     AJSon.S['status'] :=  PIXStatusCobrancaToString(fstatus);
-  {$Else}
-   if (fstatus <> stcNENHUM) then
-     AJSon['status'].AsString :=  PIXStatusCobrancaToString(fstatus);
-  {$EndIf}
+  if (fstatus <> stcNENHUM) then
+    AJSon.AddPair('status', PIXStatusCobrancaToString(fstatus));
 end;
 
-procedure TACBrPIXCobVRevisada.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVRevisada.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  s: String;
 begin
   inherited DoReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fstatus := StringToPIXStatusCobranca(AJSon.S['status']);
-  {$Else}
-   fstatus := StringToPIXStatusCobranca(AJSon['status'].AsString);
-  {$EndIf}
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+  AJSon.Value('status', s);
+  fstatus := StringToPIXStatusCobranca(s);
 end;
 
 { TACBrPIXCobVGerada }
@@ -1035,52 +961,40 @@ begin
   fTxId := s;
 end;
 
-procedure TACBrPIXCobVGerada.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVGerada.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcalendario.WriteToJSon(AJSon);
-   AJSon.S['txid'] := ftxId;
-   AJSon.I['revisao'] := frevisao;
-   fdevedor.WriteToJSon(AJSon);
-   frecebedor.WriteToJSon(AJSon);
-   floc.WriteToJSon(AJSon);
-   AJSon.S['status'] := PIXStatusCobrancaToString(fstatus);
-   fvalor.WriteToJSon(AJSon);
-  {$Else}
-   fcalendario.WriteToJSon(AJSon);
-   AJSon['txid'].AsString := ftxId;
-   AJSon['revisao'].AsInteger := frevisao;
-   fdevedor.WriteToJSon(AJSon);
-   frecebedor.WriteToJSon(AJSon);
-   floc.WriteToJSon(AJSon);
-   AJSon['status'].AsString := PIXStatusCobrancaToString(fstatus);
-   fvalor.WriteToJSon(AJSon);
-  {$EndIf}
   inherited DoWriteToJSon(AJSon);
+
+  fcalendario.WriteToJSon(AJSon);
+  fdevedor.WriteToJSon(AJSon);
+  frecebedor.WriteToJSon(AJSon);
+  floc.WriteToJSon(AJSon);
+  fvalor.WriteToJSon(AJSon);
+
+  AJSon
+    .AddPair('txid', ftxId)
+    .AddPair('revisao', frevisao)
+    .AddPair('status', PIXStatusCobrancaToString(fstatus));
 end;
 
-procedure TACBrPIXCobVGerada.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVGerada.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  s: String;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcalendario.ReadFromJSon(AJSon);
-   txId := AJSon.S['txid'];
-   revisao := AJSon.I['revisao'];
-   fdevedor.ReadFromJSon(AJSon);
-   frecebedor.ReadFromJSon(AJSon);
-   floc.ReadFromJSon(AJSon);
-   fstatus := StringToPIXStatusCobranca(AJSon.S['status']);
-   fvalor.ReadFromJSon(AJSon);
-  {$Else}
-   fcalendario.ReadFromJSon(AJSon);
-   txId := AJSon['txid'].AsString;
-   revisao := AJSon['revisao'].AsInteger;
-   fdevedor.ReadFromJSon(AJSon);
-   frecebedor.ReadFromJSon(AJSon);
-   floc.ReadFromJSon(AJSon);
-   fstatus := StringToPIXStatusCobranca(AJSon['status'].AsString);
-   fvalor.ReadFromJSon(AJSon);
-  {$EndIf}
   inherited DoReadFromJSon(AJSon);
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+
+  fcalendario.ReadFromJSon(AJSon);
+  fdevedor.ReadFromJSon(AJSon);
+  frecebedor.ReadFromJSon(AJSon);
+  floc.ReadFromJSon(AJSon);
+  fvalor.ReadFromJSon(AJSon);
+
+  AJSon
+    .Value('txid', ftxId)
+    .Value('revisao', frevisao)
+    .Value('status', s);
+  fstatus := StringToPIXStatusCobranca(s);
 end;
 
 
@@ -1123,13 +1037,13 @@ begin
   fpix.Assign(Source.pix);
 end;
 
-procedure TACBrPIXCobVCompleta.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVCompleta.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
   fpix.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobVCompleta.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVCompleta.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoReadFromJSon(AJSon);
   fpix.ReadFromJSon(AJSon);

@@ -86,14 +86,8 @@ type
 implementation
 
 uses
-  synautil,
-  ACBrUtil.Strings,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf},
-  DateUtils;
+  synautil, DateUtils,
+  ACBrUtil.Strings, ACBrJSON;
 
 { TACBrPSPSantander }
 
@@ -108,7 +102,7 @@ var
   AURL, Body, client_id: String;
   RespostaHttp: AnsiString;
   ResultCode, sec: Integer;
-  js: TJsonObject;
+  js: TACBrJSONObject;
   qp: TACBrQueryParams;
 begin
   LimparHTTP;
@@ -137,32 +131,17 @@ begin
 
   if (ResultCode = HTTP_OK) then
   begin
-   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+    js := TACBrJSONObject.Parse(RespostaHttp);
     try
-      client_id := Trim(js.S['client_id']);
+      client_id := Trim(js.AsString['client_id']);
       if (client_id <> ClientID) then
         raise EACBrPixHttpException.Create(ACBrStr(sErroClienteIdDiferente));
-      fpToken := js.S['access_token'];
-      sec := js.I['expires_in'];
-      fRefreshURL := js.S['refresh_token'];
+      fpToken := js.AsString['access_token'];
+      sec := js.AsInteger['expires_in'];
+      fRefreshURL := js.AsString['refresh_token'];
     finally
       js.Free;
     end;
-   {$Else}
-    js := TJsonObject.Create;
-    try
-      js.Parse(RespostaHttp);
-      client_id := Trim(js['client_id'].AsString);
-      if (client_id <> ClientID) then
-        raise EACBrPixHttpException.Create(ACBrStr(sErroClienteIdDiferente));
-      fpToken := js['access_token'].AsString;
-      sec := js['expires_in'].AsInteger;
-      fRefreshURL := js['refresh_token'].AsString;
-    finally
-      js.Free;
-    end;
-   {$EndIf}
 
     if (Trim(fpToken) = '') then
       DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));

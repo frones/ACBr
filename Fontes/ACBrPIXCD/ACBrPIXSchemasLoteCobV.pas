@@ -44,14 +44,8 @@ unit ACBrPIXSchemasLoteCobV;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase,
-  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobV, ACBrPIXSchemasProblema;
+  Classes, SysUtils, ACBrJSON, ACBrPIXBase, ACBrPIXSchemasParametrosConsultaCob,
+  ACBrPIXSchemasCobV, ACBrPIXSchemasProblema;
 
 type
 
@@ -66,8 +60,8 @@ type
     procedure SetTxId(AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -106,8 +100,8 @@ type
     fid: Int64;
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -144,8 +138,8 @@ type
     procedure SetTxId(AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
@@ -176,8 +170,8 @@ type
     fcobsv: TACBrPIXCobVSolicitadaLoteArray;
     fdescricao: String;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -197,8 +191,8 @@ type
     procedure SetTxId(AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     procedure Clear; reintroduce;
     function IsEmpty: Boolean; override;
@@ -229,8 +223,8 @@ type
     fcobsv: TACBrPIXCobVRevisadaLoteArray;
     fdescricao: String;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     destructor Destroy; override;
@@ -311,44 +305,30 @@ begin
     Assign(TACBrPIXLoteCobV(ASource));
 end;
 
-procedure TACBrPIXLoteCobV.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobV.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (ftxId <> '') then
-     AJSon.S['txid'] := ftxId;
-   if (fstatus <> stlNENHUM) then
-     AJSon.S['status'] := PIXStatusLoteCobrancaToString(fstatus);
-   fproblema.WriteToJSon(AJSon);
-   if (fcriacao <> 0) then
-     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
-  {$Else}
-   if (ftxId <> '') then
-     AJSon['txid'].AsString := ftxId;
-   if (fstatus <> stlNENHUM) then
-     AJSon['status'].AsString := PIXStatusLoteCobrancaToString(fstatus);
-   fproblema.WriteToJSon(AJSon);
-   if (fcriacao <> 0) then
-     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao);
-  {$EndIf}
+  AJSon
+    .AddPair('txid', ftxId, False)
+    .AddPairISODateTime('criacao', fcriacao, False);
+
+  if (fstatus <> stlNENHUM) then
+    AJSon.AddPair('status', PIXStatusLoteCobrancaToString(fstatus));
+
+  fproblema.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXLoteCobV.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobV.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
   s: String;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ftxId := AJSon.S['txid'];
-   fstatus := StringToPIXStatusLoteCobranca(AJSon.S['status']);
-   fproblema.ReadFromJSon(AJSon);
-   s := AJSon.S['criacao'];
-  {$Else}
-   ftxId := AJSon['txid'].AsString;
-   fstatus := StringToPIXStatusLoteCobranca(AJSon['status'].AsString);
-   fproblema.ReadFromJSon(AJSon);
-   s := AJSon['criacao'].AsString;
-  {$EndIf}
-  if (s <> '') then
-    fcriacao := Iso8601ToDateTime(s);
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+  AJSon
+    .Value('txid', ftxId)
+    .Value('status', s)
+    .ValueISODateTime('criacao', fcriacao);
+
+  fstatus := StringToPIXStatusLoteCobranca(s);
+  fproblema.ReadFromJSon(AJSon);
 end;
 
 { TACBrPIXLoteCobVArray }
@@ -428,41 +408,21 @@ begin
      Assign(TACBrPIXLoteCobVConsultado(ASource));
 end;
 
-procedure TACBrPIXLoteCobVConsultado.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobVConsultado.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fid <> 0) then
-     AJSon.I['id'] := fid;
-   if (fdescricao <> '') then
-     AJSon.S['descricao'] := fdescricao;
-   if (fcriacao <> 0) then
-     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao);
-  {$Else}
-   if (fid <> 0) then
-     AJSon['id'].AsInteger := fid;
-   if (fdescricao <> '') then
-     AJSon['descricao'].AsString := fdescricao;
-   if (fcriacao <> 0) then
-     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao);
-  {$EndIf}
+  AJSon
+    .AddPair('id', fid, False)
+    .AddPair('descricao', fdescricao, False)
+    .AddPairISODateTime('criacao', fcriacao, False);
   fcobsv.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXLoteCobVConsultado.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TACBrPIXLoteCobVConsultado.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fid := AJSon.I['id'];
-   fdescricao := AJSon.S['descricao'];
-   s := AJSon.S['criacao'];
-  {$Else}
-   fid := AJSon['id'].AsInteger;
-   fdescricao := AJSon['descricao'].AsString;
-   s := AJSon['criacao'].AsString;
-  {$EndIf}
-  if (s <> '') then
-    fcriacao := Iso8601ToDateTime(s);
+  AJSon
+    .Value('id', fid)
+    .Value('descricao', fdescricao)
+    .ValueISODateTime('criacao', fcriacao);
   fcobsv.ReadFromJSon(AJSon);
 end;
 
@@ -543,23 +503,15 @@ begin
     Assign(TACBrPIXCobVSolicitadaLote(ASource));
 end;
 
-procedure TACBrPIXCobVSolicitadaLote.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVSolicitadaLote.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['txid'] := ftxId;
-  {$Else}
-   AJSon['txid'].AsString := ftxId;
-  {$EndIf}
+  AJSon.AddPair('txid', ftxId);
   inherited DoWriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobVSolicitadaLote.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVSolicitadaLote.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ftxId := AJSon.S['txid'];
-  {$Else}
-   ftxId := AJSon['txid'].AsString;
-  {$EndIf}
+  AJSon.Value('txid', ftxId);
   inherited DoReadFromJSon(AJSon);
 end;
 
@@ -628,25 +580,15 @@ begin
   fcobsv.Assign(Source.cobsv);
 end;
 
-procedure TACBrPIXLoteCobVBody.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobVBody.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fdescricao <> '') then
-     AJSon.S['descricao'] := fdescricao;
-  {$Else}
-   if (fdescricao <> '') then
-     AJSon['descricao'].AsString := fdescricao;
-  {$EndIf}
+  AJSon.AddPair('descricao', fdescricao, False);
   fcobsv.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXLoteCobVBody.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobVBody.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fdescricao := AJSon.S['descricao'];
-  {$Else}
-   fdescricao := AJSon['descricao'].AsString;
-  {$EndIf}
+  AJSon.Value('descricao', fdescricao);
   fcobsv.ReadFromJSon(AJSon);
 end;
 
@@ -694,23 +636,15 @@ begin
     Assign(TACBrPIXCobVRevisadaLote(ASource));
 end;
 
-procedure TACBrPIXCobVRevisadaLote.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVRevisadaLote.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['txid'] := ftxId;
-  {$Else}
-   AJSon['txid'].AsString := ftxId;
-  {$EndIf}
+  AJSon.AddPair('txid', ftxId);
   inherited DoWriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobVRevisadaLote.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobVRevisadaLote.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   ftxId := AJSon.S['txid'];
-  {$Else}
-   ftxId := AJSon['txid'].AsString;
-  {$EndIf}
+  AJSon.Value('txid', ftxId);
   inherited DoReadFromJSon(AJSon);
 end;
 
@@ -779,25 +713,15 @@ begin
   fcobsv.Assign(Source.cobsv);
 end;
 
-procedure TACBrPIXLoteCobVBodyRevisado.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobVBodyRevisado.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fdescricao <> '') then
-     AJSon.S['descricao'] := fdescricao;
-  {$Else}
-   if (fdescricao <> '') then
-     AJSon['descricao'].AsString := fdescricao;
-  {$EndIf}
+  AJSon.AddPair('descricao', fdescricao, False);
   fcobsv.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXLoteCobVBodyRevisado.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXLoteCobVBodyRevisado.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fdescricao := AJSon.S['descricao'];
-  {$Else}
-   fdescricao := AJSon['descricao'].AsString;
-  {$EndIf}
+  AJSon.Value('descricao', fdescricao);
   fcobsv.ReadFromJSon(AJSon);
 end;
 

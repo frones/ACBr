@@ -44,13 +44,7 @@ unit ACBrPIXSchemasParametrosConsultaCob;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf},
-  ACBrPIXSchemasPaginacao, ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrPIXSchemasPaginacao, ACBrPIXBase;
 
 type
 
@@ -69,8 +63,8 @@ type
     procedure SetCnpj(AValue: String);
     procedure SetCpf(AValue: String);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
 
   public
     constructor Create(const ObjectName: String); override;
@@ -91,7 +85,6 @@ type
 implementation
 
 uses
-  ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrValidador;
 
@@ -142,60 +135,28 @@ begin
   fpaginacao.Assign(Source.paginacao);
 end;
 
-procedure TACBrPIXParametrosConsultaCob.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXParametrosConsultaCob.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['inicio'] := DateTimeToIso8601( finicio );
-   AJSon.S['fim'] := DateTimeToIso8601( ffim );
-   if (fcpf <> '') then
-     AJSon.S['cpf'] := fcpf;
-   if (fcnpj <> '') then
-     AJSon.S['cnpj'] := fcnpj;
-   AJSon.B['locationPresente'] := flocationPresente;
-   AJSon.S['status'] := fstatus;
-   fpaginacao.WriteToJSon(AJSon);
-  {$Else}
-   AJSon['inicio'].AsString := DateTimeToIso8601( finicio );
-   AJSon['fim'].AsString := DateTimeToIso8601( ffim );
-   if (fcpf <> '') then
-     AJSon['cpf'].AsString := fcpf;
-   if (fcnpj <> '') then
-     AJSon['cnpj'].AsString := fcnpj;
-   AJSon['locationPresente'].AsBoolean := flocationPresente;
-   AJSon['status'].AsString := fstatus;
-   fpaginacao.WriteToJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .AddPairISODateTime('inicio', finicio)
+    .AddPairISODateTime('fim', ffim)
+    .AddPair('cpf', fcpf, False)
+    .AddPair('cnpj', fcnpj, False)
+    .AddPair('locationPresente', flocationPresente)
+    .AddPair('status', fstatus);
+  fpaginacao.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXParametrosConsultaCob.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TACBrPIXParametrosConsultaCob.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   s := AJSon.S['inicio'];
-   if (s <> '') then
-     finicio := Iso8601ToDateTime(s);
-   s := AJSon.S['fim'];
-   if (s <> '') then
-     ffim := Iso8601ToDateTime(s);
-   fcpf := AJSon.S['cpf'];
-   fcnpj := AJSon.S['cnpj'];
-   flocationPresente := AJSon.B['locationPresente'];
-   fstatus := AJSon.S['status'];
-   fpaginacao.ReadFromJSon(AJSon);
-  {$Else}
-   s := AJSon['inicio'].AsString;
-   if (s <> '') then
-     finicio := Iso8601ToDateTime(s);
-   s := AJSon['fim'].AsString;
-   if (s <> '') then
-     ffim := Iso8601ToDateTime(s);
-   fcpf := AJSon['cpf'].AsString;
-   fcnpj := AJSon['cnpj'].AsString;
-   flocationPresente := AJSon['locationPresente'].AsBoolean;
-   fstatus := AJSon['status'].AsString;
-   fpaginacao.ReadFromJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .ValueISODateTime('inicio', finicio)
+    .ValueISODateTime('fim', ffim)
+    .Value('cpf', fcpf)
+    .Value('cnpj', fcnpj)
+    .Value('locationPresente', flocationPresente)
+    .Value('status', fstatus);
+  fpaginacao.ReadFromJSon(AJSon);
 end;
 
 procedure TACBrPIXParametrosConsultaCob.SetCnpj(AValue: String);

@@ -44,14 +44,8 @@ unit ACBrPIXSchemasCobsVConsultadas;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase,
-  ACBrPIXSchemasParametrosConsultaCob, ACBrPIXSchemasCobV;
+  Classes, SysUtils, ACBrJSON, ACBrPIXBase, ACBrPIXSchemasParametrosConsultaCob,
+  ACBrPIXSchemasCobV;
 
 
 type
@@ -63,8 +57,8 @@ type
     fcobs: TACBrPIXCobVCompletaArray;
     fparametros: TACBrPIXParametrosConsultaCob;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -111,13 +105,13 @@ begin
   fparametros.Assign(Source.parametros);
 end;
 
-procedure TACBrPIXCobsVConsultadas.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobsVConsultadas.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   fparametros.WriteToJSon(AJSon);
   fcobs.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXCobsVConsultadas.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCobsVConsultadas.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
   fparametros.ReadFromJSon(AJSon);
   fcobs.ReadFromJSon(AJSon);

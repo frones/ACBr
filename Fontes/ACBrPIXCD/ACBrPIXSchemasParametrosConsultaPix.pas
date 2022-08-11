@@ -44,13 +44,7 @@ unit ACBrPIXSchemasParametrosConsultaPix;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf},
-  ACBrPIXSchemasPaginacao, ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrPIXSchemasPaginacao, ACBrPIXBase;
 
 type
 
@@ -71,8 +65,8 @@ type
     procedure SetCpf(AValue: String);
     procedure SetTxid(AValue: String);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
 
   public
     constructor Create(const ObjectName: String); override;
@@ -94,7 +88,6 @@ type
 implementation
 
 uses
-  ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrValidador,
   ACBrPIXUtil;
@@ -138,66 +131,30 @@ begin
   fpaginacao.Assign(Source.paginacao);
 end;
 
-procedure TACBrPIXParametrosConsultaPix.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXParametrosConsultaPix.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['inicio'] := DateTimeToIso8601( finicio );
-   AJSon.S['fim'] := DateTimeToIso8601( ffim );
-   if (ftxid <> '') then
-     AJSon.S['txid'] := ftxid;
-   AJSon.B['txIdPresente'] := ftxIdPresente;
-   AJSon.B['devolucaoPresente'] := fdevolucaoPresente;
-   if (fcpf <> '') then
-     AJSon.S['cpf'] := fcpf;
-   if (fcnpj <> '') then
-     AJSon.S['cnpj'] := fcnpj;
-   fpaginacao.WriteToJSon(AJSon);
-  {$Else}
-   AJSon['inicio'].AsString := DateTimeToIso8601( finicio );
-   AJSon['fim'].AsString := DateTimeToIso8601( ffim );
-   if (ftxid <> '') then
-     AJSon['txid'].AsString := ftxid;
-   AJSon['txIdPresente'].AsBoolean := ftxIdPresente;
-   AJSon['devolucaoPresente'].AsBoolean := fdevolucaoPresente;
-   if (fcpf <> '') then
-     AJSon['cpf'].AsString := fcpf;
-   if (fcnpj <> '') then
-     AJSon['cnpj'].AsString := fcnpj;
-   fpaginacao.WriteToJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .AddPairISODateTime('inicio', finicio)
+    .AddPairISODateTime('fim', ffim)
+    .AddPair('txid', ftxid, False)
+    .AddPair('txIdPresente', ftxIdPresente)
+    .AddPair('devolucaoPresente', fdevolucaoPresente)
+    .AddPair('cpf', fcpf, False)
+    .AddPair('cnpj', fcnpj, False);
+  fpaginacao.WriteToJSon(AJSon);
 end;
 
-procedure TACBrPIXParametrosConsultaPix.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TACBrPIXParametrosConsultaPix.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   s := AJSon.S['inicio'];
-   if (s <> '') then
-     finicio := Iso8601ToDateTime(s);
-   s := AJSon.S['fim'];
-   if (s <> '') then
-     ffim := Iso8601ToDateTime(s);
-   ftxid := AJSon.S['txid'];
-   ftxIdPresente := AJSon.B['txIdPresente'];
-   fdevolucaoPresente := AJSon.B['devolucaoPresente'];
-   fcpf := AJSon.S['cpf'];
-   fcnpj := AJSon.S['cnpj'];
-   fpaginacao.ReadFromJSon(AJSon);
-  {$Else}
-   s := AJSon['inicio'].AsString;
-   if (s <> '') then
-     finicio := Iso8601ToDateTime(s);
-   s := AJSon['fim'].AsString;
-   if (s <> '') then
-     ffim := Iso8601ToDateTime(s);
-   ftxid := AJSon['txid'].AsString;
-   ftxIdPresente := AJSon['txIdPresente'].AsBoolean;
-   fdevolucaoPresente := AJSon['devolucaoPresente'].AsBoolean;
-   fcpf := AJSon['cpf'].AsString;
-   fcnpj := AJSon['cnpj'].AsString;
-   fpaginacao.ReadFromJSon(AJSon);
-  {$EndIf}
+  AJSon
+    .ValueISODateTime('inicio', finicio)
+    .ValueISODateTime('fim', ffim)
+    .Value('txid', ftxid)
+    .Value('txIdPresente', ftxIdPresente)
+    .Value('devolucaoPresente', fdevolucaoPresente)
+    .Value('cpf', fcpf)
+    .Value('cnpj', fcnpj);
+  fpaginacao.ReadFromJSon(AJSon);
 end;
 
 procedure TACBrPIXParametrosConsultaPix.SetCnpj(AValue: String);

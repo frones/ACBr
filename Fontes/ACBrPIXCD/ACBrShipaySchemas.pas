@@ -44,13 +44,7 @@ unit ACBrShipaySchemas;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrPIXBase, ACBrPIXSchemasCobV,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf};
+  Classes, SysUtils, ACBrPIXBase, ACBrPIXSchemasCobV, ACBrJSON;
 
 type
 
@@ -81,8 +75,8 @@ type
     fwallet_setting_name: String;
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -127,8 +121,8 @@ type
     funit_price: Currency;
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -170,8 +164,8 @@ type
     procedure Setcpf_cnpj(AValue: String);
     procedure Setemail(AValue: String);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -191,8 +185,8 @@ type
     fcode: Integer;
     fmessage: String;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -219,8 +213,8 @@ type
     procedure Setwallet(AValue: String);
   protected
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -245,8 +239,8 @@ type
     forder_id: String;
     fstatus: TShipayOrderStatus;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -269,8 +263,8 @@ type
     fqr_code_text: String;
     fwallet: String;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     procedure Clear; override;
@@ -304,8 +298,8 @@ type
     fwallet: String;
     fwallet_payment_id: String;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -345,8 +339,8 @@ type
     ftotal_order: Currency;
     fwallet_payment_id: String;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
     procedure AssignSchema(ASource: TACBrPIXSchema); override;
   public
     constructor Create(const ObjectName: String = ''); override;
@@ -392,8 +386,8 @@ type
     foffset: integer;
     ftotal: integer;
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String = ''); override;
     destructor Destroy; override;
@@ -411,8 +405,8 @@ type
 
   TShipayAmountDiscountDate = class(TACBrPIXDescontoDataFixa)
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   end;
 
   { TShipayAmountDiscountList }
@@ -432,8 +426,8 @@ type
   private
     function GetDiscountList: TShipayAmountDiscountList;
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     property descontosDataFixa: TShipayAmountDiscountList read GetDiscountList;
@@ -443,8 +437,8 @@ type
 
   TShipayAmountDetailsValue = class(TACBrPIXModalidadeValor)
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
   end;
 
@@ -452,8 +446,8 @@ type
 
   TShipayAmountDetailsInterest = class(TACBrPIXJuros)
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   end;
 
   { TShipayAmountDetails }
@@ -465,8 +459,8 @@ type
     finterest: TShipayAmountDetailsInterest;  // Juros aplicados à cobrança
     frebate: TShipayAmountDetailsValue;       // Abatimento aplicado à cobrança
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
@@ -484,8 +478,8 @@ type
 
   TShipayCalendar = class(TACBrPIXCalendarioCobVBase)
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
     property dataDeVencimento;
     property validadeAposVencimento;
@@ -498,8 +492,8 @@ type
     famount_details: TShipayAmountDetails;
     fcalendar: TShipayCalendar;
   protected
-    procedure DoWriteToJSon(aJSon: TJsonObject); override;
-    procedure DoReadFromJSon(aJSon: TJsonObject); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public                                            
     constructor Create(const aObjectName: String = ''); override;
     destructor Destroy; override;
@@ -564,28 +558,28 @@ end;
 
 { TShipayAmountDiscountDate }
 
-procedure TShipayAmountDiscountDate.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayAmountDiscountDate.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['date'] := FormatDateTime('yyyy-mm-dd', data);
-   if (valorPerc > 0) then
-     AJSon.F['value'] := valorPerc;
-  {$Else}
-   AJSon['date'].AsString := FormatDateTime('yyyy-mm-dd', data);
-   if (valorPerc > 0) then
-     AJSon['value'].AsNumber := valorPerc;
-  {$EndIf}
+  AJSon
+    .AddPair('date', FormatDateTime('yyyy-mm-dd', data))
+    .AddPair('value', valorPerc, False);
 end;
 
-procedure TShipayAmountDiscountDate.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayAmountDiscountDate.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  d: TDateTime;
+  c: Currency;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   data :=  StringToDateTimeDef(AJSon.S['date'], 0, 'yyyy-mm-dd');
-   valorPerc := AJSon.F['value'];
-  {$Else}
-   data :=  StringToDateTimeDef(AJSon['date'].AsString, 0, 'yyyy-mm-dd');
-   valorPerc := AJSon['value'].AsNumber;
+  {$IfDef FPC}
+  d := 0;
+  c := 0;
   {$EndIf}
+
+  AJSon
+    .ValueISODate('date', d)
+    .Value('value', c);
+  data := d;
+  valorPerc := c;
 end;
 
 { TShipayAmountDiscountList }
@@ -643,14 +637,14 @@ begin
   calendar.Assign(aSource.calendar);
 end;
 
-procedure TShipayOrderDueDate.DoWriteToJSon(aJSon: TJsonObject);
+procedure TShipayOrderDueDate.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(aJSon);
   amount_details.WriteToJSon(aJSon);
   calendar.WriteToJSon(aJSon);
 end;
 
-procedure TShipayOrderDueDate.DoReadFromJSon(aJSon: TJsonObject);
+procedure TShipayOrderDueDate.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   inherited DoReadFromJSon(aJSon);
   amount_details.ReadFromJSon(aJSon);
@@ -659,53 +653,59 @@ end;
 
 { TShipayCalendar }
 
-procedure TShipayCalendar.DoWriteToJSon(aJSon: TJsonObject);
+procedure TShipayCalendar.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['due_date'] := FormatDateTime('yyyy-mm-dd', dataDeVencimento);
-   AJSon.I['days_valid_after_due'] := validadeAposVencimento;
-  {$Else}
-   AJSon['due_date'].AsString := FormatDateTime('yyyy-mm-dd', dataDeVencimento);
-   AJSon['days_valid_after_due'].AsInteger := validadeAposVencimento;
-  {$EndIf}
+  aJSon
+    .AddPair('due_date', FormatDateTime('yyyy-mm-dd', dataDeVencimento))
+    .AddPair('days_valid_after_due', validadeAposVencimento);
 end;
 
-procedure TShipayCalendar.DoReadFromJSon(aJSon: TJsonObject);
+procedure TShipayCalendar.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  s: String;
+  i: Integer;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   dataDeVencimento := Iso8601ToDateTime(AJSon.S['due_date']);
-   validadeAposVencimento := AJSon.I['days_valid_after_due'];
-  {$Else}
-   dataDeVencimento := Iso8601ToDateTime(AJSon['due_date'].AsString);
-   validadeAposVencimento := AJSon['days_valid_after_due'].AsInteger;
+  {$IfDef FPC}
+  i := 0;
+  s := EmptyStr;
   {$EndIf}
+
+  aJSon
+    .Value('due_date', s)
+    .Value('days_valid_after_due', i);
+
+  dataDeVencimento := Iso8601ToDateTime(s);
+  validadeAposVencimento := i;
 end;
 
 { TShipayAmountDetailsInterest }
 
-procedure TShipayAmountDetailsInterest.DoWriteToJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetailsInterest.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   if (modalidade = pjmNenhum) then
     Exit;
 
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['modality'] := Ord(modalidade);
-   AJSon.F['value'] := valorPerc;
-  {$Else}
-   AJSon['modality'].AsInteger := Ord(modalidade);
-   AJSon['value'].AsNumber := valorPerc;
-  {$EndIf}
+  aJSon
+    .AddPair('modality', Ord(modalidade))
+    .AddPair('value', valorPerc);
 end;
 
-procedure TShipayAmountDetailsInterest.DoReadFromJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetailsInterest.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  i: Integer;
+  c: Currency;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   modalidade := TACBrPIXJurosModalidade(AJSon.I['modality']);
-   valorPerc := AJSon.F['value'];
-  {$Else}
-   modalidade := TACBrPIXJurosModalidade(AJSon['modality'].AsInteger);
-   valorPerc := AJSon['value'].AsNumber;
+  {$IfDef FPC}
+  c := 0;
+  i := 0;
   {$EndIf}
+
+  aJSon
+    .Value('modality', i)
+    .Value('value', c);
+
+  modalidade := TACBrPIXJurosModalidade(i);
+  valorPerc := c;
 end;
 
 { TShipayWallet }
@@ -760,54 +760,32 @@ begin
     Assign(TShipayWallet(ASource));
 end;
 
-procedure TShipayWallet.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayWallet.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.B['Active'] := fActive;
-   AJSon.S['friendly_name'] := ffriendly_name;
-   AJSon.S['logo'] := flogo;
-   AJSon.F['minimum_payment'] := fminimum_payment;
-   AJSon.S['pix_dict_key'] := fpix_dict_key;
-   AJSon.S['pix_psp'] := fpix_psp;
-   AJSon.S['wallet'] := fwallet;
-   AJSon.S['wallet_setting_id'] := fwallet_setting_id;
-   AJSon.S['wallet_setting_name'] := fwallet_setting_name;
-  {$Else}
-   AJSon['Active'].AsBoolean := fActive;
-   AJSon['friendly_name'].AsString := ffriendly_name;
-   AJSon['logo'].AsString := flogo;
-   AJSon['minimum_payment'].AsNumber := fminimum_payment;
-   AJSon['pix_dict_key'].AsString := fpix_dict_key;
-   AJSon['pix_psp'].AsString := fpix_psp;
-   AJSon['wallet'].AsString := fwallet;
-   AJSon['wallet_setting_id'].AsString := fwallet_setting_id;
-   AJSon['wallet_setting_name'].AsString := fwallet_setting_name;
-  {$EndIf}
+  AJSon
+    .AddPair('Active', fActive)
+    .AddPair('friendly_name', ffriendly_name)
+    .AddPair('logo', flogo)
+    .AddPair('minimum_payment', fminimum_payment)
+    .AddPair('pix_dict_key', fpix_dict_key)
+    .AddPair('pix_psp', fpix_psp)
+    .AddPair('wallet', fwallet)
+    .AddPair('wallet_setting_id', fwallet_setting_id)
+    .AddPair('wallet_setting_name', fwallet_setting_name)
 end;
 
-procedure TShipayWallet.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayWallet.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fActive := AJSon.B['Active'];
-   ffriendly_name := AJSon.S['friendly_name'];
-   flogo := AJSon.S['logo'];
-   fminimum_payment := AJSon.F['minimum_payment'];
-   fpix_dict_key := AJSon.S['pix_dict_key'];
-   fpix_psp := AJSon.S['pix_psp'];
-   fwallet := AJSon.S['wallet'];
-   fwallet_setting_id := AJSon.S['wallet_setting_id'];
-   fwallet_setting_name := AJSon.S['wallet_setting_name'];
-  {$Else}
-   fActive := AJSon['Active'].AsBoolean;
-   ffriendly_name := AJSon['friendly_name'].AsString;
-   flogo := AJSon['logo'].AsString;
-   fminimum_payment := AJSon['minimum_payment'].AsNumber;
-   fpix_dict_key := AJSon['pix_dict_key'].AsString;
-   fpix_psp := AJSon['pix_psp'].AsString;
-   fwallet := AJSon['wallet'].AsString;
-   fwallet_setting_id := AJSon['wallet_setting_id'].AsString;
-   fwallet_setting_name := AJSon['wallet_setting_name'].AsString;
-  {$EndIf}
+  AJSon
+    .Value('Active', fActive)
+    .Value('friendly_name', ffriendly_name)
+    .Value('logo', flogo)
+    .Value('minimum_payment', fminimum_payment)
+    .Value('pix_dict_key', fpix_dict_key)
+    .Value('pix_psp', fpix_psp)
+    .Value('wallet', fwallet)
+    .Value('wallet_setting_id', fwallet_setting_id)
+    .Value('wallet_setting_name', fwallet_setting_name);
 end;
 
 { TShipayWalletArray }
@@ -887,44 +865,26 @@ begin
     Assign(TShipayItem(ASource));
 end;
 
-procedure TShipayItem.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayItem.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['ean'] := fean;
-   AJSon.S['item_title'] := fitem_title;
-   AJSon.F['quantity'] := fquantity;
-   AJSon.S['sku'] := fsku;
-   AJSon.F['unit_price'] := funit_price;
-   if NaoEstaVazio(fname) then
-     AJSon.S['name'] := fname;
-  {$Else}
-   AJSon['ean'].AsString := fean;
-   AJSon['item_title'].AsString := fitem_title;
-   AJSon['quantity'].AsNumber := fquantity;
-   AJSon['sku'].AsString := fsku;
-   AJSon['unit_price'].AsNumber := funit_price;
-   if NaoEstaVazio(fname) then
-     AJSon['name'].AsString := fname;
-  {$EndIf}
+  AJSon
+    .AddPair('ean', fean)
+    .AddPair('item_title', fitem_title)
+    .AddPair('quantity', fquantity)
+    .AddPair('sku', fsku)
+    .AddPair('unit_price', funit_price)
+    .AddPair('name', fname, False);
 end;
 
-procedure TShipayItem.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayItem.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fean := AJSon.S['ean'];
-   fitem_title := AJSon.S['item_title'];
-   fquantity := AJSon.F['quantity'];
-   fsku := AJSon.S['sku'];
-   funit_price := AJSon.F['unit_price'];
-   fname := AJSon.S['name'];
-  {$Else}
-   fean := AJSon['ean'].AsString;
-   fitem_title := AJSon['item_title'].AsString;
-   fquantity := AJSon['quantity'].AsNumber;
-   fsku := AJSon['sku'].AsString;
-   funit_price := AJSon['unit_price'].AsNumber;
-   fname := AJSon['name'].AsString;
-  {$EndIf}
+  AJSon
+    .Value('ean', fean)
+    .Value('item_title', fitem_title)
+    .Value('quantity', fquantity)
+    .Value('sku', fsku)
+    .Value('unit_price', funit_price)
+    .Value('name', fname);
 end;
 
 { TShipayItemArray }
@@ -1028,40 +988,22 @@ begin
   femail := s;
 end;
 
-procedure TShipayBuyer.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayBuyer.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if NaoEstaVazio(fcpf_cnpj) then
-     AJSon.S['cpf_cnpj'] := fcpf_cnpj;
-   if NaoEstaVazio(femail) then
-     AJSon.S['email'] := femail;
-   AJSon.S['name'] := fname;
-   if NaoEstaVazio(fphone) then
-     AJSon.S['phone'] := fphone;
-  {$Else}
-   if NaoEstaVazio(fcpf_cnpj) then
-     AJSon['cpf_cnpj'].AsString := fcpf_cnpj;
-   if NaoEstaVazio(femail) then
-     AJSon['email'].AsString := femail;
-   AJSon['name'].AsString := fname;
-   if NaoEstaVazio(fphone) then
-     AJSon['phone'].AsString := fphone;
-  {$EndIf}
+  AJSon
+    .AddPair('cpf_cnpj', fcpf_cnpj, False)
+    .AddPair('email', femail, False)
+    .AddPair('name', fname)
+    .AddPair('phone', fphone, False);
 end;
 
-procedure TShipayBuyer.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayBuyer.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcpf_cnpj := AJSon.S['cpf_cnpj'];
-   femail := AJSon.S['email'];
-   fname := AJSon.S['name'];
-   fphone := AJSon.S['phone'];
-  {$Else}
-   fcpf_cnpj := AJSon['cpf_cnpj'].AsString;
-   femail := AJSon['email'].AsString;
-   fname := AJSon['name'].AsString;
-   fphone := AJSon['phone'].AsString;
-  {$EndIf}
+  AJSon
+    .Value('cpf_cnpj', fcpf_cnpj)
+    .Value('email', femail)
+    .Value('name', fname)
+    .Value('phone', fphone);
 end;
 
 { TShipayOrderError }
@@ -1089,26 +1031,18 @@ begin
   fmessage := aSource.message;
 end;
 
-procedure TShipayOrderError.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrderError.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['code'] := fcode;
-   AJSon.S['message'] := fmessage;
-  {$Else}
-   AJSon['code'].AsInteger := fcode;
-   AJSon['message'].AsString := fmessage;
-  {$EndIf}
+  AJSon
+    .AddPair('code', fcode)
+    .AddPair('message', fmessage);
 end;
 
-procedure TShipayOrderError.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayOrderError.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcode := AJSon.I['code'];
-   fmessage := AJSon.S['message'];
-  {$Else}
-   fcode := AJSon['code'].AsInteger;
-   fmessage := AJSon['message'].AsString;
-  {$EndIf}
+  AJSon
+    .Value('code', fcode)
+    .Value('message', fmessage);
 end;
 
 { TShipayOrder }
@@ -1181,53 +1115,32 @@ begin
     Assign(TShipayOrder(ASource));
 end;
 
-procedure TShipayOrder.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrder.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   fbuyer.WriteToJSon(AJSon);
   fitems.WriteToJSon(AJSon);
 
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fcallback_url <> '') then
-     AJSon.S['callback_url'] := fcallback_url;
-   if (fexpiration > 0) then
-     AJSon.I['expiration'] := fexpiration;
-   AJSon.S['order_ref'] := forder_ref;
-   if (fpix_dict_key <> '') then
-     AJSon.S['pix_dict_key']:= fpix_dict_key;
-   AJSon.F['total'] := ftotal;
-   AJSon.S['wallet'] := fwallet;
-  {$Else}
-   if (fcallback_url <> '') then
-     AJSon['callback_url'].AsString := fcallback_url;
-   if (fexpiration > 0) then
-     AJSon['expiration'].AsInteger := fexpiration;
-   AJSon['order_ref'].AsString := forder_ref;
-   if (fpix_dict_key <> '') then
-     AJSon['pix_dict_key'].AsString := fpix_dict_key;
-   AJSon['total'].AsNumber := ftotal;
-   AJSon['wallet'].AsString := fwallet;
-  {$EndIf}
+  AJSon
+    .AddPair('callback_url', fcallback_url, False)
+    .AddPair('expiration', fexpiration, False)
+    .AddPair('order_ref', forder_ref)
+    .AddPair('pix_dict_key', fpix_dict_key, False)
+    .AddPair('total', ftotal)
+    .AddPair('wallet', fwallet);
 end;
 
-procedure TShipayOrder.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayOrder.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
   fbuyer.ReadFromJSon(AJSon);
   fitems.ReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcallback_url := AJSon.S['callback_url'];
-   fexpiration := AJSon.I['expiration'];
-   forder_ref:= AJSon.S['order_ref'];
-   fpix_dict_key := AJSon.S['pix_dict_key'];
-   ftotal := AJSon.F['total'];
-   fwallet := AJSon.S['wallet'];
-  {$Else}
-   fcallback_url := AJSon['callback_url'].AsString;
-   fexpiration := AJSon['expiration'].AsInteger;
-   forder_ref:= AJSon['order_ref'].AsString;
-   fpix_dict_key := AJSon['pix_dict_key'].AsString;
-   ftotal := AJSon['total'].AsNumber;
-   fwallet := AJSon['wallet'].AsString;
-  {$EndIf}
+
+  AJSon
+    .Value('callback_url', fcallback_url)
+    .Value('expiration', fexpiration)
+    .Value('order_ref', forder_ref)
+    .Value('pix_dict_key', fpix_dict_key)
+    .Value('total', ftotal)
+    .Value('wallet', fwallet);
 end;
 
 { TShipayOrderBase }
@@ -1256,26 +1169,23 @@ begin
   fstatus := Source.status;
 end;
 
-procedure TShipayOrderBase.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrderBase.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['order_id'] := forder_id;
-   AJSon.S['status'] := ShipayOrderStatusToString(fstatus);
-  {$Else}
-   AJSon['order_id'].AsString := forder_id;
-   AJSon['status'].AsString := ShipayOrderStatusToString(fstatus);
-  {$EndIf}
+  AJSon
+    .AddPair('order_id', forder_id)
+    .AddPair('status', ShipayOrderStatusToString(fstatus));
 end;
 
-procedure TShipayOrderBase.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayOrderBase.DoReadFromJSon(AJSon: TACBrJSONObject);
+var
+  s: String;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   forder_id := AJSon.S['order_id'];
-   fstatus := StringToShipayOrderStatus( AJSon.S['status'] );
-  {$Else}
-   forder_id := AJSon['order_id'].AsString;
-   fstatus := StringToShipayOrderStatus( AJSon['status'].AsString );
-  {$EndIf}
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+  AJSon
+    .Value('order_id', forder_id)
+    .Value('status', s);
+
+  fstatus := StringToShipayOrderStatus(s);
 end;
 
 { TShipayOrderCreated }
@@ -1322,62 +1232,38 @@ begin
   fwallet := Source.wallet;
 end;
 
-procedure TShipayOrderCreated.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrderCreated.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fdeep_link <> '') then
-     AJSon.S['deep_link'] := fdeep_link;
-   if (fexpiration_date <> 0) then
-     AJSon.S['expiration_date'] := DateTimeToIso8601(fexpiration_date);
-   if (fpix_dict_key <> '') then
-     AJSon.S['pix_dict_key'] := fpix_dict_key;
-   if (fpix_psp <> '') then
-     AJSon.S['pix_psp'] := fpix_psp;
-   AJSon.S['qr_code'] := fqr_code;
-   AJSon.S['qr_code_text'] := fqr_code_text;
-   AJSon.S['wallet'] := fwallet;
-  {$Else}
-   if (fdeep_link <> '') then
-     AJSon['deep_link'].AsString := fdeep_link;
-   if (fexpiration_date <> 0) then
-     AJSon['expiration_date'].AsString := DateTimeToIso8601(fexpiration_date);
-   if (fpix_dict_key <> '') then
-     AJSon['pix_dict_key'].AsString := fpix_dict_key;
-   if (fpix_psp <> '') then
-     AJSon['pix_psp'].AsString := fpix_psp;
-   AJSon['qr_code'].AsString := fqr_code;
-   AJSon['qr_code_text'].AsString := fqr_code_text;
-   AJSon['wallet'].AsString := fwallet;
-  {$EndIf}
+
+  AJSon
+    .AddPair('deep_link', fdeep_link, False)
+    .AddPairISODateTime('expiration_date', fexpiration_date)
+    .AddPair('pix_dict_key', fpix_dict_key, False)
+    .AddPair('pix_psp', fpix_psp, False)
+    .AddPair('qr_code', fqr_code)
+    .AddPair('qr_code_text', fqr_code_text)
+    .AddPair('wallet', fwallet);
 end;
 
-procedure TShipayOrderCreated.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayOrderCreated.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
   s: String;
 begin
   inherited DoReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fdeep_link := AJSon.S['deep_link'];
-   s := AJSon.S['expiration_date'];
-   if (s <> '') then
-     fexpiration_date := DecodeRfcDateTime(StringReplace(s, 'T', ' ', [rfReplaceAll]));
-   fpix_dict_key := AJSon.S['pix_dict_key'];
-   fpix_psp := AJSon.S['pix_psp'];
-   fqr_code := AJSon.S['qr_code'];
-   fqr_code_text := AJSon.S['qr_code_text'];
-   fwallet := AJSon.S['wallet'];
-  {$Else}
-   fdeep_link := AJSon['deep_link'].AsString;
-   s := AJSon['expiration_date'].AsString;
-   if (s <> '') then
-     fexpiration_date := DecodeRfcDateTime(StringReplace(s, 'T', ' ', [rfReplaceAll]));
-   fpix_dict_key := AJSon['pix_dict_key'].AsString;
-   fpix_psp := AJSon['pix_psp'].AsString;
-   fqr_code := AJSon['qr_code'].AsString;
-   fqr_code_text := AJSon['qr_code_text'].AsString;
-   fwallet := AJSon['wallet'].AsString;
-  {$EndIf}
+  
+  {$IfDef FPC}s := EmptyStr;{$EndIf}
+
+  AJSon
+    .Value('deep_link', fdeep_link)
+    .Value('expiration_date', s)
+    .Value('pix_dict_key', fpix_dict_key)
+    .Value('pix_psp', fpix_psp)
+    .Value('qr_code', fqr_code)
+    .Value('qr_code_text', fqr_code_text)
+    .Value('wallet', fwallet);
+
+  fexpiration_date := DecodeRfcDateTime(StringReplace(s, 'T', ' ', [rfReplaceAll]));
 end;
 
 { TShipayOrderInfo }
@@ -1447,112 +1333,67 @@ begin
   fwallet_payment_id := Source.wallet_payment_id;
 end;
 
-procedure TShipayOrderInfo.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrderInfo.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fbalance <> 0) then
-     AJSon.F['balance'] := (fbalance*100);
-   if (fcreated_at <> 0) then
-     AJSon.S['created_at'] := Rfc822DateTime(fcreated_at);
-   if (fexpiration_date <> 0) then
-     AJSon.S['expiration_date'] := Rfc822DateTime(fexpiration_date);
-   if (fexternal_id <> '') then
-     AJSon.S['external_id'] := fexternal_id;
-   fitems.WriteToJSon(AJSon);
-   if (fpaid_amount <> 0) then
-     AJSon.F['paid_amount'] := fpaid_amount;
-   if (fpayment_date <> 0) then
-     AJSon.S['payment_date'] := Rfc822DateTime(fpayment_date);
-   if (fpix_psp <> '') then
-     AJSon.S['pix_psp'] := fpix_psp;
-   if (ftotal_order <> 0) then
-     AJSon.F['total_order'] := ftotal_order;
-   if (fupdated_at <> 0) then
-     AJSon.S['updated_at'] := Rfc822DateTime(fupdated_at);
-   AJSon.S['wallet'] := fwallet;
-   if (fwallet_payment_id <> '') then
-     AJSon.S['wallet_payment_id'] := fwallet_payment_id;
-   if (fmessage <> '') then
-     AJSon.S['message'] := fmessage;
-  {$Else}
-   if (fbalance <> 0) then
-     AJSon['balance'].AsNumber := (fbalance*100);
-   if (fcreated_at <> 0) then
-     AJSon['created_at'].AsString := Rfc822DateTime(fcreated_at);
-   if (fexpiration_date <> 0) then
-     AJSon['expiration_date'].AsString := Rfc822DateTime(fexpiration_date);
-   if (fexternal_id <> '') then
-     AJSon['external_id'].AsString := fexternal_id;
-   fitems.WriteToJSon(AJSon);
-   if (fpaid_amount <> 0) then
-     AJSon['paid_amount'].AsNumber := fpaid_amount;
-   if (fpayment_date <> 0) then
-     AJSon['payment_date'].AsString := Rfc822DateTime(fpayment_date);
-   if (fpix_psp <> '') then
-     AJSon['pix_psp'].AsString := fpix_psp;
-   if (ftotal_order <> 0) then
-     AJSon['total_order'].AsNumber := ftotal_order;
-   if (fupdated_at <> 0) then
-     AJSon['updated_at'].AsString := Rfc822DateTime(fupdated_at);
-   AJSon['wallet'].AsString := fwallet;
-   if (fwallet_payment_id <> '') then
-     AJSon['wallet_payment_id'].AsString := fwallet_payment_id;
-   if (fmessage <> '') then
-     AJSon['message'].AsString := fmessage;
-  {$EndIf}
+  fitems.WriteToJSon(AJSon);
+
+  AJSon
+    .AddPair('balance', (fbalance*100), False)
+    .AddPair('external_id', fexternal_id, False)
+    .AddPair('paid_amount', fpaid_amount, False)
+    .AddPair('pix_psp', fpix_psp, False)
+    .AddPair('total_order', ftotal_order, False)
+    .AddPair('wallet', fwallet)
+    .AddPair('wallet_payment_id', fwallet_payment_id, False)
+    .AddPair('message', fmessage, False);
+
+  if (fcreated_at <> 0) then
+    AJSon.AddPair('created_at', Rfc822DateTime(fcreated_at));
+  if (fexpiration_date <> 0) then
+    AJSon.AddPair('expiration_date', Rfc822DateTime(fexpiration_date));
+  if (fpayment_date <> 0) then
+    AJSon.AddPair('payment_date', Rfc822DateTime(fpayment_date));
+  if (fupdated_at <> 0) then
+    AJSon.AddPair('updated_at', Rfc822DateTime(fupdated_at));
 end;
 
-procedure TShipayOrderInfo.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayOrderInfo.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
   s: String;
+  c: Currency;
 begin
   inherited DoReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fitems.ReadFromJSon(AJSon);
-   s := AJSon.S['created_at'];
-   if (s <> '') then
-     fcreated_at := DecodeRfcDateTime(s);
-   s := AJSon.S['expiration_date'];
-   if (s <> '') then
-     fexpiration_date := DecodeRfcDateTime(s);
-   fbalance := (AJSon.F['balance']/100);
-   fexternal_id := AJSon.S['external_id'];
-   fpaid_amount := AJSon.F['paid_amount'];
-   s := AJSon.S['payment_date'];
-   if (s <> '') then
-     fpayment_date := DecodeRfcDateTime(s);
-   fpix_psp := AJSon.S['pix_psp'];
-   ftotal_order := AJSon.F['total_order'];
-   s := AJSon.S['updated_at'];
-   if (s <> '') then
-     fupdated_at := DecodeRfcDateTime(s);
-   fwallet := AJSon.S['wallet'];
-   fwallet_payment_id := AJSon.S['wallet_payment_id'];
-   fmessage := AJSon.S['message'];
-  {$Else}
-   fitems.ReadFromJSon(AJSon);
-   s := AJSon['created_at'].AsString;
-   if (s <> '') then
-     fcreated_at := DecodeRfcDateTime(s);
-   s := AJSon['expiration_date'].AsString;
-   if (s <> '') then
-     fexpiration_date := DecodeRfcDateTime(s);
-   fbalance := (AJSon['balance'].AsNumber/100);
-   fexternal_id := AJSon['external_id'].AsString;
-   fpaid_amount := AJSon['paid_amount'].AsNumber;
-   s := AJSon['payment_date'].AsString;
-   if (s <> '') then
-     fpayment_date := DecodeRfcDateTime(s);
-   fpix_psp := AJSon['pix_psp'].AsString;
-   ftotal_order := AJSon['total_order'].AsNumber;
-   s := AJSon['updated_at'].AsString;
-   if (s <> '') then
-     fupdated_at := DecodeRfcDateTime(s);
-   fwallet := AJSon['wallet'].AsString;
-   fwallet_payment_id := AJSon['wallet_payment_id'].AsString;
-   fmessage := AJSon['message'].AsString;
+  fitems.ReadFromJSon(AJSon);
+     
+  {$IfDef FPC}
+  c := 0;
+  s := EmptyStr;
   {$EndIf}
+
+  AJSon
+    .Value('balance', c)
+    .Value('external_id', fexternal_id)
+    .Value('paid_amount', fpaid_amount)
+    .Value('pix_psp', fpix_psp)
+    .Value('total_order', ftotal_order)
+    .Value('wallet', fwallet)
+    .Value('wallet_payment_id', fwallet_payment_id)
+    .Value('message', fmessage);
+                                              
+  fbalance := (c/100);
+  AJSon.Value('created_at', s);
+  if NaoEstaVazio(s) then
+    fcreated_at := DecodeRfcDateTime(s);
+  AJSon.Value('expiration_date', s);
+  if NaoEstaVazio(s) then
+    fexpiration_date := DecodeRfcDateTime(s);
+  AJSon.Value('payment_date', s);
+  if NaoEstaVazio(s) then
+    fpayment_date := DecodeRfcDateTime(s);
+  AJSon.Value('updated_at', s);
+  if NaoEstaVazio(s) then
+    fupdated_at := DecodeRfcDateTime(s);
 end;
 
 { TShipayOrderData }
@@ -1619,94 +1460,42 @@ begin
      Assign(TShipayOrderData(ASource));
 end;
 
-procedure TShipayOrderData.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrderData.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoWriteToJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.S['customer_id'] := fcustomer_id;
-   AJSon.S['customer_name'] := fcustomer_name;
-   if (forder_created_at <> 0) then
-     AJSon.S['order_created_at'] := DateTimeToIso8601(forder_created_at);
-   if (forder_expiration_date <> 0) then
-     AJSon.S['order_expiration_date'] := DateTimeToIso8601(forder_expiration_date);
-   if (forder_payment_date <> 0) then
-     AJSon.S['order_payment_date'] := DateTimeToIso8601(forder_payment_date);
-   if (forder_updated_at <> 0) then
-     AJSon.S['order_updated_at'] := DateTimeToIso8601(forder_updated_at);
-   AJSon.S['store_id'] := fstore_id;
-   AJSon.S['store_name'] := fstore_name;
-   AJSon.S['store_pos_id'] := fstore_pos_id;
-   AJSon.S['store_pos_name'] := fstore_pos_name;
-   AJSon.F['total_order'] := ftotal_order;
-   AJSon.S['wallet_payment_id'] := fwallet_payment_id;
-  {$Else}
-   AJSon['customer_id'].AsString := fcustomer_id;
-   AJSon['customer_name'].AsString := fcustomer_name;
-   if (forder_created_at <> 0) then
-     AJSon['order_created_at'].AsString := DateTimeToIso8601(forder_created_at);
-   if (forder_expiration_date <> 0) then
-     AJSon['order_expiration_date'].AsString := DateTimeToIso8601(forder_expiration_date);
-   if (forder_payment_date <> 0) then
-     AJSon['order_payment_date'].AsString := DateTimeToIso8601(forder_payment_date);
-   if (forder_updated_at <> 0) then
-     AJSon['order_updated_at'].AsString := DateTimeToIso8601(forder_updated_at);
-   AJSon['store_id'].AsString := fstore_id;
-   AJSon['store_name'].AsString := fstore_name;
-   AJSon['store_pos_id'].AsString := fstore_pos_id;
-   AJSon['store_pos_name'].AsString := fstore_pos_name;
-   AJSon['total_order'].AsNumber := ftotal_order;
-   AJSon['wallet_payment_id'].AsString := fwallet_payment_id;
-  {$EndIf}
+
+  AJSon
+    .AddPair('customer_id', fcustomer_id)
+    .AddPair('customer_name', fcustomer_name)
+    .AddPairISODateTime('order_created_at', forder_created_at, False)
+    .AddPairISODateTime('order_expiration_date', forder_expiration_date, False)
+    .AddPairISODateTime('order_payment_date', forder_payment_date, False)
+    .AddPairISODateTime('order_updated_at', forder_updated_at, False)
+    .AddPair('store_id', fstore_id)
+    .AddPair('store_name', fstore_name)
+    .AddPair('store_pos_id', fstore_pos_id)
+    .AddPair('store_pos_name', fstore_pos_name)
+    .AddPair('total_order', ftotal_order)
+    .AddPair('wallet_payment_id', fwallet_payment_id);
 end;
 
-procedure TShipayOrderData.DoReadFromJSon(AJSon: TJsonObject);
-var
-  s: String;
+procedure TShipayOrderData.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
   inherited DoReadFromJSon(AJSon);
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcustomer_id := AJSon.S['customer_id'];
-   fcustomer_name := AJSon.S['customer_name'];
-   s := AJSon.S['order_created_at'];
-   if (s <> '') then
-     forder_created_at := Iso8601ToDateTime(s);
-   s := AJSon.S['order_expiration_date'];
-   if (s <> '') then
-     forder_expiration_date := Iso8601ToDateTime(s);
-   s := AJSon.S['order_payment_date'];
-   if (s <> '') then
-     forder_payment_date := Iso8601ToDateTime(s);
-   s := AJSon.S['order_updated_at'];
-   if (s <> '') then
-     forder_updated_at := Iso8601ToDateTime(s);
-   fstore_id := AJSon.S['store_id'];
-   fstore_name := AJSon.S['store_name'];
-   fstore_pos_id := AJSon.S['store_pos_id'];
-   fstore_pos_name := AJSon.S['store_pos_name'];
-   ftotal_order := AJSon.F['total_order'];
-   fwallet_payment_id := AJSon.S['wallet_payment_id'];
-  {$Else}
-   fcustomer_id := AJSon['customer_id'].AsString;
-   fcustomer_name := AJSon['customer_name'].AsString;
-   s := AJSon['order_created_at'].AsString;
-   if (s <> '') then
-     forder_created_at := Iso8601ToDateTime(s);
-   s := AJSon['order_expiration_date'].AsString;
-   if (s <> '') then
-     forder_expiration_date := Iso8601ToDateTime(s);
-   s := AJSon['order_payment_date'].AsString;
-   if (s <> '') then
-     forder_payment_date := Iso8601ToDateTime(s);
-   s := AJSon['order_updated_at'].AsString;
-   if (s <> '') then
-     forder_updated_at := Iso8601ToDateTime(s);
-   fstore_id := AJSon['store_id'].AsString;
-   fstore_name := AJSon['store_name'].AsString;
-   fstore_pos_id := AJSon['store_pos_id'].AsString;
-   fstore_pos_name := AJSon['store_pos_name'].AsString;
-   ftotal_order := AJSon['total_order'].AsNumber;
-   fwallet_payment_id := AJSon['wallet_payment_id'].AsString;
-  {$EndIf}
+
+  AJSon
+    .Value('customer_id', fcustomer_id)
+    .Value('customer_name', fcustomer_name)
+    .ValueISODateTime('order_created_at', forder_created_at)
+    .ValueISODateTime('order_expiration_date', forder_expiration_date)
+    .ValueISODateTime('order_payment_date', forder_payment_date)
+    .ValueISODateTime('order_updated_at', forder_updated_at)
+    .Value('store_id', fstore_id)
+    .Value('store_name', fstore_name)
+    .Value('store_pos_id', fstore_pos_id)
+    .Value('store_pos_name', fstore_pos_name)
+    .Value('total_order', ftotal_order)
+    .Value('wallet_payment_id', fwallet_payment_id);
 end;
 
 { TShipayOrderDataArray }
@@ -1780,61 +1569,52 @@ begin
   ftotal := Source.total;
 end;
 
-procedure TShipayOrdersList.DoWriteToJSon(AJSon: TJsonObject);
+procedure TShipayOrdersList.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['count'] := fcount;
-   fdata.WriteToJSon(AJSon);
-   AJSon.I['offset'] := foffset;
-   AJSon.I['total'] := ftotal;
-  {$Else}
-   AJSon['count'].AsInteger := fcount;
-   fdata.WriteToJSon(AJSon);
-   AJSon['offset'].AsInteger := foffset;
-   AJSon['total'].AsInteger := ftotal;
-  {$EndIf}
+  AJSon
+    .AddPair('count', fcount)
+    .AddPair('offset', foffset)
+    .AddPair('total', ftotal);
+  fdata.WriteToJSon(AJSon);
 end;
 
-procedure TShipayOrdersList.DoReadFromJSon(AJSon: TJsonObject);
+procedure TShipayOrdersList.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcount := AJSon.I['count'];
-   fdata.ReadFromJSon(AJSon);
-   foffset := AJSon.I['offset'];
-   ftotal := AJSon.I['total'];
-  {$Else}
-   fcount := AJSon['count'].AsInteger;
-   fdata.ReadFromJSon(AJSon);
-   foffset := AJSon['offset'].AsInteger;
-   ftotal := AJSon['total'].AsInteger;
-  {$EndIf}
+  AJSon
+    .Value('count', fcount)
+    .Value('offset', foffset)
+    .Value('total', ftotal);
+  fdata.ReadFromJSon(AJSon);
 end;
 
 { TShipayAmountDetailsValue }
 
-procedure TShipayAmountDetailsValue.DoWriteToJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetailsValue.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   if (modalidade = pvmNenhum) then
     Exit;
 
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['modality'] := Ord(modalidade);
-   AJSon.F['value'] := valorPerc;
-  {$Else}
-   AJSon['modality'].AsInteger := Ord(modalidade);
-   AJSon['value'].AsNumber := valorPerc;
-  {$EndIf}
+  aJSon
+    .AddPair('modality', Ord(modalidade))
+    .AddPair('value', valorPerc);
 end;
 
-procedure TShipayAmountDetailsValue.DoReadFromJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetailsValue.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  i: Integer;
+  c: Currency;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   modalidade := TACBrPIXValoresModalidade(AJSon.I['modality']);
-   valorPerc := AJSon.F['value'];
-  {$Else}
-   modalidade := TACBrPIXValoresModalidade(AJSon['modality'].AsInteger);
-   valorPerc := AJSon['value'].AsNumber;
+  {$IfDef FPC}
+  c := 0;
+  i := 0;
   {$EndIf}
+
+  aJSon
+    .Value('modality', i)
+    .Value('value', c);
+
+   modalidade := TACBrPIXValoresModalidade(i);
+   valorPerc := c;
 end;
 
 { TShipayAmountDetailsDiscount }
@@ -1844,38 +1624,38 @@ begin
   Result := TShipayAmountDiscountList(fdescontosDataFixa);
 end;
 
-procedure TShipayAmountDetailsDiscount.DoWriteToJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetailsDiscount.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   if (modalidade = pdmNenhum) then
     Exit;
 
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   AJSon.I['modality'] := Ord(modalidade);
-  if (Ord(modalidade) >= 3) then
-    aJSon.F['value'] := valorPerc;
-  {$Else}
-   AJSon['modality'].AsInteger := Ord(modalidade);
-  if (Ord(modalidade) >= 3) then
-    aJSon['value'].AsNumber := valorPerc;
-  {$EndIf}
+  aJSon.AddPair('modality', Ord(modalidade));
 
-  if (Ord(modalidade) <= 2) then
+  if (Ord(modalidade) >= 3) then
+    aJSon.AddPair('value', valorPerc)
+  else if (Ord(modalidade) <= 2) then
     descontosDataFixa.WriteToJSon(AJSon);
 end;
 
-procedure TShipayAmountDetailsDiscount.DoReadFromJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetailsDiscount.DoReadFromJSon(aJSon: TACBrJSONObject);
+var
+  i: Integer;
+  c: Currency;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   modalidade := TACBrPIXDescontoModalidade(AJSon.I['modality']);
-  if (Ord(modalidade) >= 3) then
-    valorPerc := aJSon.F['value'];
-  {$Else}
-   modalidade := TACBrPIXDescontoModalidade(AJSon['modality'].AsInteger);
-  if (Ord(modalidade) >= 3) then
-    valorPerc := aJSon['value'].AsNumber;
+  {$IfDef FPC}
+  c := 0;
+  i := 0;
   {$EndIf}
 
-  if (Ord(modalidade) <= 2) then
+  aJSon.Value('modality', i);
+
+  modalidade := TACBrPIXDescontoModalidade(i);
+  if (i >= 3) then
+  begin
+    aJSon.Value('value', c);
+    valorPerc := c;
+  end
+  else if (i <= 2) then
     descontosDataFixa.ReadFromJSon(aJSon);
 end;
 
@@ -1931,7 +1711,7 @@ begin
   rebate.Assign(aSource.rebate);
 end;
 
-procedure TShipayAmountDetails.DoWriteToJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetails.DoWriteToJSon(aJSon: TACBrJSONObject);
 begin
   discount.WriteToJSon(aJSon);
   fine.WriteToJSon(aJSon);
@@ -1939,7 +1719,7 @@ begin
   rebate.WriteToJSon(aJSon);
 end;
 
-procedure TShipayAmountDetails.DoReadFromJSon(aJSon: TJsonObject);
+procedure TShipayAmountDetails.DoReadFromJSon(aJSon: TACBrJSONObject);
 begin
   discount.ReadFromJSon(aJSon);
   fine.ReadFromJSon(aJSon);

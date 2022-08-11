@@ -44,13 +44,7 @@ unit ACBrPIXSchemasDevedor;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrPIXBase;
 
 type
 
@@ -77,8 +71,8 @@ type
     procedure SetNomeFantasia(AValue: String);
     procedure SetUF(AValue: String);
   protected
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
 
     property cpf: String read fcpf write SetCpf;
     property cnpj: String read fcnpj write SetCnpj;
@@ -175,72 +169,32 @@ begin
   fuf := Source.uf;
 end;
 
-procedure TACBrPIXDevedorRecebedorBase.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedorRecebedorBase.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fcnpj <> '') then
-     AJSon.S['cnpj'] := fcnpj
-   else if (fcpf <> '') then
-     AJSon.S['cpf'] := fcpf;
-   if (fnome <> '') then
-     AJSon.S['nome'] := fnome;
-   if (fnomeFantasia <> '') then
-     AJSon.S['nomeFantasia'] := fnomeFantasia;
-   if (femail <> '') then
-     AJSon.S['email'] := femail;
-   if (flogradouro <> '') then
-     AJSon.S['logradouro'] := flogradouro;
-   if (fcidade <> '') then
-     AJSon.S['cidade'] := fcidade;
-   if (fcep <> '') then
-     AJSon.S['cep'] := fcep;
-   if (fuf <> '') then
-     AJSon.S['uf'] := fuf;
-  {$Else}
-   if (fcnpj <> '') then
-     AJSon['cnpj'].AsString := fcnpj
-   else if (fcpf <> '') then
-     AJSon['cpf'].AsString := fcpf;
-   if (fnome <> '') then
-     AJSon['nome'].AsString := fnome;
-   if (fnomeFantasia <> '') then
-     AJSon['nomeFantasia'].AsString := fnomeFantasia;
-   if (femail <> '') then
-     AJSon['email'].AsString := femail;
-   if (flogradouro <> '') then
-     AJSon['logradouro'].AsString := flogradouro;
-   if (fcidade <> '') then
-     AJSon['cidade'].AsString := fcidade;
-   if (fcep <> '') then
-     AJSon['cep'].AsString := fcep;
-   if (fuf <> '') then
-     AJSon['uf'].AsString := fuf;
-  {$EndIf}
+  AJSon
+    .AddPair('cnpj', fcnpj, False)
+    .AddPair('cpf', fcpf, False)
+    .AddPair('nome', fnome, False)
+    .AddPair('nomeFantasia', fnomeFantasia, False)
+    .AddPair('email', femail, False)
+    .AddPair('logradouro', flogradouro, False)
+    .AddPair('cidade', fcidade, False)
+    .AddPair('cep', fcep, False)
+    .AddPair('uf', fuf, False);
 end;
 
-procedure TACBrPIXDevedorRecebedorBase.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXDevedorRecebedorBase.DoReadFromJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   fcnpj := AJSon.S['cnpj'];
-   fcpf  := AJSon.S['cpf'];
-   fnome := AJSon.S['nome'];
-   fnomeFantasia := AJSon.S['nomeFantasia'];
-   femail := AJSon.S['email'];
-   flogradouro := AJSon.S['logradouro'];
-   fcidade := AJSon.S['cidade'];
-   fcep := AJSon.S['cep'];
-   fuf := AJSon.S['uf'];
-  {$Else}
-   fcnpj := AJSon['cnpj'].AsString;
-   fcpf  := AJSon['cpf'].AsString;
-   fnome := AJSon['nome'].AsString;
-   fnomeFantasia := AJSon['nomeFantasia'].AsString;
-   femail := AJSon['email'].AsString;
-   flogradouro := AJSon['logradouro'].AsString;
-   fcidade := AJSon['cidade'].AsString;
-   fcep := AJSon['cep'].AsString;
-   fuf := AJSon['uf'].AsString;
-  {$EndIf}
+  AJSon
+    .Value('cnpj', fcnpj)
+    .Value('cpf', fcpf)
+    .Value('nome', fnome)
+    .Value('nomeFantasia', fnomeFantasia)
+    .Value('email', femail)
+    .Value('logradouro', flogradouro)
+    .Value('cidade', fcidade)
+    .Value('cep', fcep)
+    .Value('uf', fuf);
 end;
 
 procedure TACBrPIXDevedorRecebedorBase.SetCnpj(AValue: String);

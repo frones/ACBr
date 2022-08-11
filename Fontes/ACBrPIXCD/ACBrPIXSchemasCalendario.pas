@@ -44,13 +44,7 @@ unit ACBrPIXSchemasCalendario;
 interface
 
 uses
-  Classes, SysUtils,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr,
-  {$Else}
-   Jsons,
-  {$EndIf}
-  ACBrPIXBase;
+  Classes, SysUtils, ACBrJSON, ACBrPIXBase;
 
 type
 
@@ -70,8 +64,8 @@ type
     property apresentacao_Bias: Integer read fapresentacao_Bias write fapresentacao_Bias;
     property expiracao: Integer read fexpiracao write fexpiracao;
 
-    procedure DoWriteToJSon(AJSon: TJsonObject); override;
-    procedure DoReadFromJSon(AJSon: TJsonObject); override;
+    procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
     constructor Create(const ObjectName: String); override;
     procedure Clear; override;
@@ -98,7 +92,7 @@ type
 implementation
 
 uses
-  ACBrUtil.DateTime;
+  ACBrUtil.DateTime, ACBrUtil.Base;
 
 { TACBrPIXCalendarioCobBase }
 
@@ -132,58 +126,40 @@ begin
   fexpiracao := Source.expiracao;
 end;
 
-procedure TACBrPIXCalendarioCobBase.DoWriteToJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioCobBase.DoWriteToJSon(AJSon: TACBrJSONObject);
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   if (fcriacao <> 0) then
-     AJSon.S['criacao'] := DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias));
-   if (fapresentacao <> 0) then
-     AJSon.S['apresentacao'] := DateTimeToIso8601(fapresentacao, BiasToTimeZone(fapresentacao_Bias));
-   if (fexpiracao > 0) then
-     AJSon.I['expiracao'] := fexpiracao;
-  {$Else}
-   if (fcriacao <> 0) then
-     AJSon['criacao'].AsString := DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias));
-   if (fapresentacao <> 0) then
-     AJSon['apresentacao'].AsString := DateTimeToIso8601(fapresentacao, BiasToTimeZone(fapresentacao_Bias));
-   if (fexpiracao > 0) then
-     AJSon['expiracao'].AsInteger := fexpiracao;
-  {$EndIf}
+  if (fcriacao <> 0) then
+    AJSon.AddPair('criacao', DateTimeToIso8601(fcriacao, BiasToTimeZone(fcriacao_Bias)));
+  if (fapresentacao <> 0) then
+    AJSon.AddPair('apresentacao', DateTimeToIso8601(fapresentacao, BiasToTimeZone(fapresentacao_Bias)));
+  AJSon.AddPair('expiracao', fexpiracao, False);
 end;
 
-procedure TACBrPIXCalendarioCobBase.DoReadFromJSon(AJSon: TJsonObject);
+procedure TACBrPIXCalendarioCobBase.DoReadFromJSon(AJSon: TACBrJSONObject);
 var
-  s: String;
+  s1, s2: String;
 begin
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   s := AJSon.S['criacao'];
-   if (s <> '') then
-   begin
-     fcriacao := Iso8601ToDateTime(s);
-     fcriacao_Bias := TimeZoneToBias(s);
-   end;
-   s := AJSon.S['apresentacao'];
-   if (s <> '') then
-   begin
-     fapresentacao := Iso8601ToDateTime(s);
-     fapresentacao_Bias := TimeZoneToBias(s);
-   end;
-   fexpiracao := AJSon.I['expiracao'];
-  {$Else}
-   s := AJSon['criacao'].AsString;
-   if (s <> '') then
-   begin
-     fcriacao := Iso8601ToDateTime(s);
-     fcriacao_Bias := TimeZoneToBias(s);
-   end;
-   s := AJSon['apresentacao'].AsString;
-   if (s <> '') then
-   begin
-     fapresentacao := Iso8601ToDateTime(s);
-     fapresentacao_Bias := TimeZoneToBias(s);
-   end;
-   fexpiracao := AJSon['expiracao'].AsInteger;
+  {$IfDef FPC}
+  s1 := EmptyStr;
+  s2 := EmptyStr;
   {$EndIf}
+
+  AJSon
+    .Value('criacao', s1)
+    .Value('apresentacao', s2)
+    .Value('expiracao', fexpiracao);
+
+  if NaoEstaVazio(s1) then
+  begin
+    fcriacao := Iso8601ToDateTime(s1);
+    fcriacao_Bias := TimeZoneToBias(s1);
+  end;
+
+  if NaoEstaVazio(s2) then
+  begin
+    fapresentacao := Iso8601ToDateTime(s2);
+    fapresentacao_Bias := TimeZoneToBias(s2);
+  end;
 end;
 
 end.

@@ -98,14 +98,8 @@ type
 implementation
 
 uses
-  synautil, synacode,
-  ACBrUtil.Strings,
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-   JsonDataObjects_ACBr
-  {$Else}
-   Jsons
-  {$EndIf},
-  DateUtils;
+  synautil, synacode, DateUtils,
+  ACBrUtil.Strings, ACBrJSON;
 
 { TACBrPSPItau }
 
@@ -131,7 +125,7 @@ var
   AURL, Body, BasicAutentication: String;
   RespostaHttp: AnsiString;
   ResultCode, sec: Integer;
-  js: TJsonObject;
+  js: TACBrJSONObject;
   qp: TACBrQueryParams;
 begin
   LimparHTTP;
@@ -143,8 +137,8 @@ begin
 
   qp := TACBrQueryParams.Create;
   try
-    qp.Values['grant_type']    := 'client_credentials';
-    qp.Values['scope']         := 'cob.read cob.write pix.read pix.write';
+    qp.Values['grant_type'] := 'client_credentials';
+    qp.Values['scope'] := 'cob.read cob.write pix.read pix.write';
     Body := qp.AsURL;
     WriteStrToStream(Http.Document, Body);
     Http.MimeType := CContentTypeApplicationWwwFormUrlEncoded;
@@ -158,32 +152,20 @@ begin
 
   if (ResultCode = HTTP_OK) then
   begin
-   {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    js := TJsonObject.Parse(RespostaHttp) as TJsonObject;
+    js := TACBrJSONObject.Parse(RespostaHttp);
     try
-      fpToken        := js.S['access_token'];
-      sec            := js.I['expires_in'];
-      fpRefreshToken := '';
+      fpToken := js.AsString['access_token'];
+      sec := js.AsInteger['expires_in'];
+      fpRefreshToken := EmptyStr;
     finally
       js.Free;
     end;
-   {$Else}
-    js := TJsonObject.Create;
-    try
-      js.Parse(RespostaHttp);
-      fpToken        := js['access_token'].AsString;
-      sec            := js['expires_in'].AsInteger;
-      fpRefreshToken := '';
-    finally
-      js.Free;
-    end;
-   {$EndIf}
 
-   if (Trim(fpToken) = '') then
-     DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
+    if (Trim(fpToken) = '') then
+      DispararExcecao(EACBrPixHttpException.Create(ACBrStr(sErroAutenticacao)));
 
-   fpValidadeToken := IncSecond(Now, sec);
-   fpAutenticado := True;
+    fpValidadeToken := IncSecond(Now, sec);
+    fpAutenticado := True;
   end
   else
     DispararExcecao(EACBrPixHttpException.CreateFmt( sErroHttp,
@@ -231,5 +213,4 @@ begin
 end;
 
 end.
-
 

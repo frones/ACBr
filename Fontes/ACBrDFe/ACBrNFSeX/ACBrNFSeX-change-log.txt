@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 11/08/2022
+-- Diversos --
+[*] Primeira etapa da implementação do provedor CTAConsult utilizado pela cidade
+    de Balsas/MA
+   Por: Italo Giurizzato Junior
 -- Tiplan.Provider --
 [*] Ajuste na montagem do Envelope Soap do RecepcionarLoteRps versão 2.03 
    Por: Calos E. T. Souza/Italo Giurizzato Junior

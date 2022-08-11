@@ -558,12 +558,21 @@ type
     FInscricaoMunicipal: string;
     FIssRetido: TnfseSituacaoTributaria;
     FEMail: string;
+    FDDD: string;
+    FTelefone: string;
+    FEndereco: TEndereco;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
     property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
     property IssRetido: TnfseSituacaoTributaria read FIssRetido write FIssRetido;
     property EMail: string read FEMail write FEMail;
+    property DDD: string read FDDD write FDDD;
+    property Telefone: string read FTelefone write FTelefone;
+    property Endereco: TEndereco read FEndereco write FEndereco;
   end;
 
   TIdentificacaoOrgaoGerador = class(TObject)
@@ -1487,6 +1496,22 @@ procedure TGenericosCollection.SetItem(Index: Integer;
   Value: TGenericosCollectionItem);
 begin
   inherited Items[Index] := Value;
+end;
+
+{ TIdentificacaoIntermediarioServico }
+
+constructor TIdentificacaoIntermediarioServico.Create;
+begin
+  inherited Create;
+
+  FEndereco := TEndereco.Create;
+end;
+
+destructor TIdentificacaoIntermediarioServico.Destroy;
+begin
+  FEndereco.Free;
+
+  inherited Destroy;
 end;
 
 end.

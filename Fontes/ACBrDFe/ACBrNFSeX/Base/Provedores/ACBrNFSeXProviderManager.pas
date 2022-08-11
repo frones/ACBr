@@ -158,6 +158,7 @@ uses
   AssessorPublico.Provider,
   Conam.Provider,
   CTA.Provider,
+  CTAConsult.Provider,
   eGoverneISS.Provider,
   Equiplano.Provider,
   FGMaiss.Provider,
@@ -235,6 +236,10 @@ begin
       proConam:     Result := TACBrNFSeProviderConam.Create(ACBrNFSe);
       proCoplan:    Result := TACBrNFSeProviderCoplan201.Create(ACBrNFSe);
       proCTA:       Result := TACBrNFSeProviderCTA200.Create(ACBrNFSe);
+
+      proCTAConsult:
+        Result := TACBrNFSeProviderCTAConsult.Create(ACBrNFSe);
+
       proDataSmart: Result := TACBrNFSeProviderDataSmart202.Create(ACBrNFSe);
       proDBSeller:  Result := TACBrNFSeProviderDBSeller.Create(ACBrNFSe);
       proDeISS:     Result := TACBrNFSeProviderDeISS203.Create(ACBrNFSe);

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.ctaconsult.com/nfse" xmlns:nfse="http://www.ctaconsult.com/nfse">
+  <xs:include schemaLocation="tiposBasicosCTA_v1.00.xsd"/>
+  <xs:element name="cancelamentoNfseLote">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigoMunicipio"/>
+        <xs:element ref="nfse:dtEmissao"/>
+        <xs:element ref="nfse:autenticacao"/>
+        <xs:element ref="nfse:numeroNota"/>
+        <xs:element ref="nfse:chaveSeguranca"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoMunicipio" type="nfse:TCodMunSerpro"/>
+  <xs:element name="dtEmissao" type="nfse:TDateTimeUTC"/>
+  <xs:element name="autenticacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:token"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="token" type="nfse:TToken"/>
+  <xs:element name="numeroNota" type="nfse:TNota">
+  </xs:element>
+  <xs:element name="chaveSeguranca" type="xs:string">
+  </xs:element>
+</xs:schema>

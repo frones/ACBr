@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ctaconsult.com/nfse" targetNamespace="http://www.ctaconsult.com/nfse">
+
+  <xs:include schemaLocation="tiposBasicosCTA_v1.00.xsd"/>
+  <xs:element name="cabecalhoCancelamentoNfseLote">
+  	
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="versao"/>
+        <xs:element ref="ambiente"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="versao" type="TDec_0204v"/>
+  <xs:element name="ambiente" type="TAmb"/>
+</xs:schema>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.ctaconsult.com/nfse" xmlns:nfse="http://www.ctaconsult.com/nfse">
+
+  <xs:include schemaLocation="tiposBasicosCTA_v1.00.xsd"/>
+  <xs:element name="retornoNfseLote">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigoMunicipio"/>
+        <xs:element ref="nfse:protocolo"/>
+        <xs:element ref="nfse:autenticacao"/>
+        <xs:element ref="nfse:codigoStatus"/>
+        <xs:element ref="nfse:erros" minOccurs="0"/>
+        <xs:element ref="nfse:numeroNota" minOccurs="0"/>
+        <xs:element ref="nfse:chaveSeguranca" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoMunicipio" type="nfse:TCodMunSerpro"/>
+  <xs:element name="protocolo" type="nfse:TNumero9"/>
+  <xs:element name="autenticacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:token"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="token" type="nfse:TNumero9"/>
+  <xs:element name="codigoStatus" type="nfse:TNumero4"/>
+  <xs:element name="erros">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:erro"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="erro">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigo"/>
+        <xs:element ref="nfse:descricao"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigo" type="xs:integer"/>
+  <xs:element name="descricao" type="xs:string"/>
+  <xs:element name="numeroNota">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="chaveSeguranca">
+    <xs:complexType/>
+  </xs:element>
+</xs:schema>

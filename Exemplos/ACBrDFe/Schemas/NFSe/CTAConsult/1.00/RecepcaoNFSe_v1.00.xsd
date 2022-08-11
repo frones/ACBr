@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.ctaconsult.com/nfse" xmlns:nfse="http://www.ctaconsult.com/nfse">
+  <xs:include schemaLocation="tiposBasicosCTA_v1.00.xsd"/>
+  <xs:element name="nfseLote">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigoMunicipio"/>
+        <xs:element ref="nfse:dtEmissao"/>
+        <xs:element ref="nfse:notaIntermediada"/>
+        <xs:element ref="nfse:autenticacao"/>
+        <xs:element ref="nfse:prestador"/>
+        <xs:element ref="nfse:tomador"/>
+        <xs:element ref="nfse:intermediador" minOccurs="0"/>
+        <xs:element ref="nfse:atividadeExecutada"/>
+        <xs:element ref="nfse:deducoes" minOccurs="1"/>
+        <xs:element ref="nfse:detalhamentoNota"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoMunicipio" type="nfse:TCodMunSerpro"/>
+  <xs:element name="dtEmissao" type="nfse:TDateTimeUTC"/>
+  <xs:element name="notaIntermediada" type="nfse:TBoolean"/>
+  <xs:element name="autenticacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:token"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="token" type="nfse:TToken"/>
+  <xs:element name="prestador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:tipoPessoa"/>
+        <xs:element ref="nfse:cpf" minOccurs="0"/>
+        <xs:element ref="nfse:cnpj" minOccurs="0"/>
+        <xs:element ref="nfse:inscricaoMunicipal" minOccurs="0"/>
+        <xs:element ref="nfse:razaoSocial"/>
+        <xs:element ref="nfse:endereco"/>
+        <xs:element ref="nfse:email"/>
+        <xs:element ref="nfse:telefoneDdd"/>
+        <xs:element ref="nfse:telefoneNumero"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tomador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:tomadorIdentificado"/>
+        <xs:element ref="nfse:tipoPessoa" minOccurs="0"/>
+        <xs:element ref="nfse:cpf" minOccurs="0"/>
+        <xs:element ref="nfse:cnpj" minOccurs="0"/>
+        <xs:element ref="nfse:inscricaoMunicipal" minOccurs="0"/>
+        <xs:element ref="nfse:razaoSocial" minOccurs="0"/>
+        <xs:element ref="nfse:exterior" minOccurs="0"/>
+        <xs:element ref="nfse:endereco" minOccurs="0"/>
+        <xs:element ref="nfse:email" minOccurs="0"/>
+        <xs:element ref="nfse:telefoneDdd" minOccurs="0"/>
+        <xs:element ref="nfse:telefoneNumero" minOccurs="0"/>
+        <xs:element ref="nfse:apelido" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tomadorIdentificado" type="nfse:TBoolean"/>
+  <xs:element name="exterior" type="nfse:TBoolean"/>
+  <xs:element name="apelido" type="xs:string"/>
+  <xs:element name="intermediador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:tipoPessoa"/>
+        <xs:element ref="nfse:cpf"/>
+        <xs:element ref="nfse:cnpj"/>
+        <xs:element ref="nfse:inscricaoMunicipal"/>
+        <xs:element ref="nfse:razaoSocial"/>
+        <xs:element ref="nfse:endereco"/>
+        <xs:element ref="nfse:email"/>
+        <xs:element ref="nfse:telefoneDdd"/>
+        <xs:element ref="nfse:telefoneNumero"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="atividadeExecutada">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigoServico"/>
+        <xs:element ref="nfse:descricaoServico"/>
+        <xs:element ref="nfse:codigoAtividade"/>
+        <xs:element ref="nfse:descricaoAtividade"/>
+        <xs:element ref="nfse:localPrestacao"/>
+        <xs:element ref="nfse:tipoTributacao"/>
+        <xs:element ref="nfse:tipoRecolhimento"/>
+        <xs:element ref="nfse:aliquota"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoServico" type="nfse:TCodigoServico"/>
+  <xs:element name="descricaoServico" type="xs:string"/>
+  <xs:element name="codigoAtividade" type="nfse:TCodigoAtividade"/>
+  <xs:element name="descricaoAtividade" type="xs:string"/>
+  <xs:element name="localPrestacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigoEstado"/>
+        <xs:element ref="nfse:descricaoEstado"/>
+        <xs:element ref="nfse:codigoMunipio"/>
+        <xs:element ref="nfse:descricaoMunicipio"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tipoTributacao" type="nfse:TTipoTributacao"/>
+  <xs:element name="tipoRecolhimento" type="nfse:TTipoRecolhimento"/>
+  <xs:element name="deducoes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:tipo"/>
+        <xs:element ref="nfse:mapa" minOccurs="0"/>
+        <xs:element ref="nfse:percentual" minOccurs="0"/>
+        <xs:element ref="nfse:valor" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tipo" type="nfse:TTipoDeducao"/>
+  <xs:element name="mapa">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:itemMapa" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemMapa">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:tipoPessoa"/>
+        <xs:element ref="nfse:cpf"/>
+        <xs:element ref="nfse:cnpj"/>
+        <xs:element ref="nfse:numeroNota"/>
+        <xs:element ref="nfse:codigoTipo"/>
+        <xs:element ref="nfse:descricaoTipo"/>
+        <xs:element ref="nfse:tipoValor"/>
+        <xs:element ref="nfse:valorNota"/>
+        <xs:element ref="nfse:valorDecucao"/>
+      </xs:sequence>
+      <xs:attribute name="nItem" use="required" type="nfse:TNumero2"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="numeroNota" type="nfse:TNota">
+  </xs:element>
+  <xs:element name="codigoTipo" type="nfse:TTipoItemDeducao">
+  </xs:element>
+  <xs:element name="descricaoTipo" type="xs:string">
+  </xs:element>
+  <xs:element name="tipoValor" type="nfse:TTipoValorDeducao">
+  </xs:element>
+  <xs:element name="valorNota" type="nfse:TDec_1302">
+  </xs:element>
+  <xs:element name="valorDecucao" type="nfse:TDec_1302">
+  </xs:element>
+  <xs:element name="percentual" type="nfse:TDec_0204v">
+  </xs:element>
+  <xs:element name="valor" type="nfse:TDec_1302">
+  </xs:element>
+  <xs:element name="detalhamentoNota">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:descricaoNota"/>
+        <xs:element ref="nfse:itensServico"/>
+        <xs:element ref="nfse:totais"/>
+        <xs:element ref="nfse:impostosFederais" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="descricaoNota" type="xs:string"/>
+  <xs:element name="itensServico">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:item" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:tributavel"/>
+        <xs:element ref="nfse:descricao"/>
+        <xs:element ref="nfse:quantidade"/>
+        <xs:element ref="nfse:valorUnitario"/>
+        <xs:element ref="nfse:valorTotal"/>
+      </xs:sequence>
+      <xs:attribute name="nItem" use="required" type="nfse:TNumero2"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tributavel" type="nfse:TBoolean"/>
+  <xs:element name="descricao" type="xs:string"/>
+  <xs:element name="quantidade" type="nfse:TNumero4"/>
+  <xs:element name="valorUnitario" type="nfse:TDec_1302"/>
+  <xs:element name="valorTotal" type="nfse:TDec_1302"/>
+  <xs:element name="totais">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:valotTotalNota"/>
+        <xs:element ref="nfse:valorTotalServico"/>
+        <xs:element ref="nfse:valorTotalDeducao"/>
+        <xs:element ref="nfse:valorTotalISS"/>
+        <xs:element ref="nfse:valorReducaoBC"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="valotTotalNota" type="nfse:TDec_1302"/>
+  <xs:element name="valorTotalServico" type="nfse:TDec_1302"/>
+  <xs:element name="valorTotalDeducao" type="nfse:TDec_1302"/>
+  <xs:element name="valorTotalISS" type="nfse:TDec_1302"/>
+  <xs:element name="valorReducaoBC" type="nfse:TDec_1302"/>
+  <xs:element name="impostosFederais">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:imposto" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="imposto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:codigoImposto"/>
+        <xs:element ref="nfse:descricaoImposto"/>
+        <xs:element ref="nfse:aliquota"/>
+        <xs:element ref="nfse:valorImposto"/>
+      </xs:sequence>
+      <xs:attribute name="nItem" use="required" type="nfse:TNumero2"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codigoImposto" type="nfse:TNumero4"/>
+  <xs:element name="descricaoImposto" type="xs:string"/>
+  <xs:element name="valorImposto" type="nfse:TDec_1302">
+  </xs:element>
+  <xs:element name="tipoPessoa" type="nfse:TTipoPessoa"/>
+  <xs:element name="cpf" type="nfse:TCpf"/>
+  <xs:element name="cnpj" type="nfse:TCnpj"/>
+  <xs:element name="inscricaoMunicipal" type="nfse:TInscricaoMunicipal"/>
+  <xs:element name="razaoSocial" type="xs:string"/>
+  <xs:element name="endereco">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nfse:logradouro"/>
+        <xs:element ref="nfse:complemento"/>
+        <xs:element ref="nfse:bairro"/>
+        <xs:element ref="nfse:cep"/>
+        <xs:element ref="nfse:codigoMunipio"/>
+        <xs:element ref="nfse:descricaoMunicipio"/>
+        <xs:element ref="nfse:codigoEstado"/>
+        <xs:element ref="nfse:descricaoEstado"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="logradouro" type="xs:string"/>
+  <xs:element name="complemento" type="xs:string">
+  </xs:element>
+  <xs:element name="bairro" type="xs:string"/>
+  <xs:element name="cep" type="nfse:TCEP"/>
+  <xs:element name="email" type="xs:string"/>
+  <xs:element name="telefoneDdd" type="nfse:TNumero2"/>
+  <xs:element name="telefoneNumero" type="nfse:TNumero9"/>
+  <xs:element name="codigoEstado" type="nfse:TUf"/>
+  <xs:element name="descricaoEstado" type="xs:string"/>
+  <xs:element name="codigoMunipio" type="nfse:TCodMunSerpro"/>
+  <xs:element name="descricaoMunicipio" type="xs:string"/>
+  <xs:element name="aliquota" type="nfse:TDec_0204v"/>
+</xs:schema>

@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2022
+--ACBrBoletoCresol--
+[*] TK-2971 Cresol (133), CNAB 240, Segmento T do Nosso Número
+  Por: Farol TI
+
 09/08/2022
 --ACBrBoleto--
 [*] Adicionado campos de Pagamento Parcelado na leitura do arquivo .ini

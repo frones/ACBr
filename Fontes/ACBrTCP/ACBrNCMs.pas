@@ -39,17 +39,8 @@ uses
   Classes, SysUtils,
   {$IF DEFINED(HAS_SYSTEM_GENERICS)}
    System.Generics.Collections, System.Generics.Defaults,
-  {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
-   System.Contnrs,
-  {$Else}
-   Contnrs,
   {$IfEnd}
-  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    JsonDataObjects_ACBr,
-  {$Else}
-    {$IfDef FPC}fpjson{$Else}Jsons{$EndIf},
-  {$EndIf}
-  ACBrBase, ACBrSocket;
+  ACBrJSON, ACBrBase, ACBrSocket;
 
 const
   CNCM_ARQUIVO_CACHE = 'ACBrNCM.json';
@@ -139,7 +130,7 @@ type
     function DownloadArquivo: String;
     function CarregarCache: String;
     function RenomearCacheErro: Boolean;
-    function CriarEValidarJson(aJsonStr: String): TJsonObject;
+    function CriarEValidarJson(aJsonStr: String): TACBrJSONObject;
 
     procedure GravarCache(const aJsonStr: String);
     procedure CarregarJson(const aJsonStr: String);
@@ -460,8 +451,8 @@ end;
 procedure TACBrNCMs.CarregarJson(const aJsonStr: String);
 var
   I: Integer;
-  wJSonArr: TJsonArray;
-  wJSon, wJsonNCM: TJsonObject;
+  wJSonArr: TACBrJSONArray;
+  wJSon, wJsonNCM: TACBrJSONObject;
 begin
   if (aJsonStr = EmptyStr) then
     Exit;
@@ -470,64 +461,23 @@ begin
 
   wJSon := CriarEValidarJson(aJsonStr);
   try
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    fUltimaAtualizacao := StringToDateTime(wJSon.S['Data_Ultima_Atualizacao_NCM']);
-    wJSonArr := wJSon.A['Nomenclaturas'];
+    fUltimaAtualizacao := StringToDateTimeDef(wJson.AsString['Data_Ultima_Atualizacao_NCM'], 0, 'dd/mm/yyyy');
+    wJSonArr := wJSon.AsJSONArray['Nomenclaturas'];
 
     for I := 0 to wJSonArr.Count - 1 do
     begin
-      wJSonNCM := wJSonArr.Items[I].ObjectValue;
-
+      wJsonNCM := wJSonArr.ItemAsJSONObject[I];
       with NCMs.New do
       begin
-        CodigoNcm := OnlyNumber(wJsonNCM.S['Codigo']);
-        DescricaoNcm := LimparDescricao(wJsonNCM.S['Descricao']);
-        DataInicio := StringToDateTimeDef(wJsonNCM.S['Data_Inicio'], 0, 'dd/mm/yyyy');
-        DataFim := StringToDateTimeDef(wJsonNCM.S['Data_Fim'], 0, 'dd/mm/yyyy');
-        TipoAto := wJsonNCM.S['Tipo_Ato'];
-        NumeroAto := wJsonNCM.S['Numero_Ato'];
-        AnoAto := wJsonNCM.I['Ano_Ato'];
+        CodigoNcm := OnlyNumber(wJsonNCM.AsString['Codigo']);
+        DescricaoNcm := LimparDescricao(wJsonNCM.AsString['Descricao']);
+        DataInicio := StringToDateTimeDef(wJsonNCM.AsString['Data_Inicio'], 0, 'dd/mm/yyyy');
+        DataFim := StringToDateTimeDef(wJsonNCM.AsString['Data_Fim'], 0, 'dd/mm/yyyy');
+        TipoAto := wJsonNCM.AsString['Tipo_Ato'];
+        NumeroAto := wJsonNCM.AsString['Numero_Ato'];
+        AnoAto := wJsonNCM.AsInteger['Ano_Ato'];
       end;
     end;
-    {$Else}
-    {$IfDef FPC}
-    fUltimaAtualizacao := StringToDateTimeDef(wJson.Strings['Data_Ultima_Atualizacao_NCM'], 0, 'dd/mm/yyyy');
-    wJSonArr := wJSon.Arrays['Nomenclaturas'];
-
-    for I := 0 to wJSonArr.Count - 1 do
-    begin
-      wJsonNCM := wJSonArr.Objects[I];
-      with NCMs.New do
-      begin
-        CodigoNcm := OnlyNumber(wJsonNCM.Strings['Codigo']);
-        DescricaoNcm := LimparDescricao(wJsonNCM.Strings['Descricao']);
-        DataInicio := StringToDateTimeDef(wJsonNCM.Strings['Data_Inicio'], 0, 'dd/mm/yyyy');
-        DataFim := StringToDateTimeDef(wJsonNCM.Strings['Data_Fim'], 0, 'dd/mm/yyyy');
-        TipoAto := wJsonNCM.Strings['Tipo_Ato'];
-        NumeroAto := wJsonNCM.Strings['Numero_Ato'];
-        AnoAto := wJsonNCM.Integers['Ano_Ato'];
-      end;
-    end;
-    {$Else}
-    fUltimaAtualizacao := StringToDateTimeDef(wJson.Values['Data_Ultima_Atualizacao_NCM'].AsString, 0, 'dd/mm/yyyy');
-    wJSonArr := wJSon.Values['Nomenclaturas'].AsArray;
-
-    for I := 0 to wJSonArr.Count - 1 do
-    begin
-      wJsonNCM := wJSonArr.Items[I].AsObject;
-      with NCMs.New do
-      begin
-        CodigoNcm := OnlyNumber(wJsonNCM.Values['Codigo'].AsString);
-        DescricaoNcm := LimparDescricao(wJsonNCM.Values['Descricao'].AsString);
-        DataInicio := StringToDateTimeDef(wJsonNCM.Values['Data_Inicio'].AsString, 0, 'dd/mm/yyyy');
-        DataFim := StringToDateTimeDef(wJsonNCM.Values['Data_Fim'].AsString, 0, 'dd/mm/yyyy');
-        TipoAto := wJsonNCM.Values['Tipo_Ato'].AsString;
-        NumeroAto := wJsonNCM.Values['Numero_Ato'].AsString;
-        AnoAto := wJsonNCM.Values['Ano_Ato'].AsInteger;
-      end;
-    end;
-    {$EndIf}
-    {$EndIf}
   finally
     wJSon.Free
   end;
@@ -569,7 +519,7 @@ function TACBrNCMs.CarregarCache: String;
 var
   wArq: String;
   wSL: TStringList;
-  wJson: TJSONObject;
+  wJson: TACBrJSONObject;
   wDataCache: TDateTime;
 begin
   Clear;
@@ -586,15 +536,7 @@ begin
       wSL.LoadFromFile(wArq); 
       wJson := CriarEValidarJson(wSL.Text);
 
-      {$IfDef USE_JSONDATAOBJECTS_UNIT}
-      wDataCache := StringToDateTimeDef(wJson.S['DataCache'], 0, 'dd/mm/yyyy');
-      {$Else}
-      {$IfDef FPC}
-      wDataCache := StringToDateTimeDef(wJson.Strings['DataCache'], 0, 'dd/mm/yyyy');
-      {$Else}
-      wDataCache := StringToDateTimeDef(wJson.Values['DataCache'].AsString, 0, 'dd/mm/yyyy');
-      {$EndIf}
-      {$EndIf}
+      wDataCache := StringToDateTimeDef(wJson.AsString['DataCache'], 0, 'dd/mm/yyyy');
 
       if (CacheDiasValidade > 0) and (DaysBetween(Now, wDataCache) > CacheDiasValidade) then
       begin
@@ -623,20 +565,11 @@ begin
     RenameFile(wArq, ChangeFileExt(wArq, '.err'));
 end;
 
-function TACBrNCMs.CriarEValidarJson(aJsonStr: String): TJsonObject;
+function TACBrNCMs.CriarEValidarJson(aJsonStr: String): TACBrJSONObject;
 begin
   Result := Nil;
   try
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    Result := TJsonObject.Parse(aJSonStr) as TJsonObject;
-    {$Else}
-    {$IfDef FPC}
-    Result := GetJSON(aJsonStr) as TJSONObject;
-    {$Else}
-    Result := TJsonObject.Create;
-    Result.Parse(aJsonStr);
-    {$EndIf}
-    {$EndIf}
+    Result := TACBrJSONObject.Parse(aJsonStr);
   except
     On E: Exception do
     begin
@@ -655,7 +588,7 @@ end;
 procedure TACBrNCMs.GravarCache(const aJsonStr: String);
 var
   wArq, wJsonStr: String;
-  wJson: TJSONObject;
+  wJson: TACBrJSONObject;
 begin
   wArq := CacheArquivo;
   if (Length(wArq) = 0) or (Length(aJsonStr) = 0) then
@@ -663,18 +596,8 @@ begin
 
   wJson := CriarEValidarJson(aJsonStr);
   try
-    {$IfDef USE_JSONDATAOBJECTS_UNIT}
-    wJson.S['DataCache'] := FormatDateTime('dd/mm/yyyy', Today);
+    wJson.AddPair('DataCache', FormatDateTime('dd/mm/yyyy', Today));
     wJsonStr := wJson.ToJSON;
-    {$Else}
-    {$IfDef FPC}
-    wJson.Strings['DataCache'] := FormatDateTime('dd/mm/yyyy', Today);
-    wJsonStr := wJson.AsJSON;
-    {$Else}
-    wJson.Values['DataCache'].AsString := FormatDateTime('dd/mm/yyyy', Today);
-    wJsonStr := wJson.Stringify;
-    {$EndIf}
-    {$EndIf}
   finally
     wJson.Free
   end;

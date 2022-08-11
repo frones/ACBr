@@ -258,8 +258,7 @@ implementation
 
 uses
   Math,
-  ACBrUtil.Base,
-  ACBrUtil.FilesIO;
+  ACBrUtil.Base, ACBrUtil.FilesIO;
 
 { TCasasDecimais }
 

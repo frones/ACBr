@@ -493,7 +493,6 @@ procedure TACBrNFSeX.ConsultarNFSe;
 begin
   if not Assigned(FProvider) then raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
-  FWebService.ConsultaNFSe.Clear;
   FProvider.ConsultaNFSe;
 end;
 

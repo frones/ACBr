@@ -164,8 +164,7 @@ begin
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ws_001_in_nfse_valor_deducoes', 1, 18, 0,
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
 
-  if ( ( NFSe.Servico.Valores.IssRetido = stNormal ) or
-       ( NFSe.Tomador.Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio ) ) then
+  if NFSe.Tomador.Endereco.CodigoMunicipio = NFSe.Prestador.Endereco.CodigoMunicipio then
     issRetido := 'S'
   else
     issRetido := 'N';

@@ -15,7 +15,7 @@ Asten               v2.02
 Bauhaus (em desenvolvimento)
 Betha               v1.00
 Betha               v2.02
-BHISS               v1.00
+BHISS               v1.00 11/08/2022
 Centi               v2.02
 CIGA                v1.00
 Citta               v2.03
@@ -47,7 +47,7 @@ Futurize            v2.02
 GeisWeb             v1.00
 geNFe               v1.00
 Giap                v1.00 02/08/2022
-Ginfes              v1.00
+Ginfes              v1.00 12/08/2022
 Giss                v2.04
 GovBr               v1.00
 GovDigital          v2.00
@@ -71,7 +71,7 @@ ISSIntel            v1.00
 ISSJoinville        v2.04 10/08/2022
 ISSLencois          v1.00
 ISSNatal            v1.00
-ISSNet              v1.00
+ISSNet              v1.00 04/08/2022
 ISSPortoVelho       v2.00
 ISSRecife           v1.00
 ISSRio              v1.00
@@ -99,12 +99,12 @@ SafeWeb             v2.00
 SH3                 v2.00
 Siam                v2.00
 SiapNet             v2.00
-Siappa              v1.00  07/07/2022
+Siappa              v1.00  11/08/2022
 SiapSistemas        v2.03
 Siat                v1.00
 SigCorp             v2.03
 Sigep               v2.00
-SigISS              v1.03
+SigISS              v1.03 01/08/2022
 SilTecnologia       v1.00
 SilTecnologia       v2.03
 Simple              v1.00

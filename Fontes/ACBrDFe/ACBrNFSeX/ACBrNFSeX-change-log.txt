@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 12/08/2022
+-- ACBrNFSeXServicos --
+[*] Correção da URL de produção da cidade: Castro/PR
+   Por: Guilherme Vaz
 -- ACBrNFSeX/Siappa.GravarXml --
 [*] Correções visando o funcionamento correto do componente e geração do XML.
    Por: Renato Rubinho

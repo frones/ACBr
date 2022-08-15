@@ -73,6 +73,8 @@ type
 
     procedure SetArquivoCertificado(AValue: String);
     procedure SetArquivoChavePrivada(AValue: String);
+    procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
+      var aResultCode: Integer; var aRespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
@@ -107,6 +109,7 @@ constructor TACBrPSPSicredi.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   fSSLUtils := TACBrOpenSSLUtils.Create(Self);  // Self irá destruir ele...
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
   Clear;
 end;
 
@@ -186,6 +189,14 @@ begin
     Exit;
 
   fArquivoChavePrivada := (AValue);
+end;
+
+procedure TACBrPSPSicredi.QuandoReceberRespostaEndPoint(const aEndPoint, aURL,
+  aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
+begin
+  // Sicredi responde HTTP_OK ao método PUT do Endpoint PIX, de forma diferente da especificada
+  if (UpperCase(AMethod) = ChttpMethodPUT) and (AEndPoint = cEndPointPix) and (AResultCode = HTTP_CREATED) then
+    AResultCode := HTTP_OK;
 end;
 
 function TACBrPSPSicredi.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;

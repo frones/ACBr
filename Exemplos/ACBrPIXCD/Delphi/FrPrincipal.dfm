@@ -3894,9 +3894,196 @@ object Form1: TForm1
                   Left = 24
                   Top = 147
                   Width = 880
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 3
+                end
+              end
+            end
+            object tsSicredi: TTabSheet
+              Caption = 'Sicredi'
+              DesignSize = (
+                984
+                492)
+              object pnConfPSPSicredi: TPanel
+                Left = 56
+                Top = 80
+                Width = 860
+                Height = 324
+                Anchors = [akLeft, akRight]
+                BevelOuter = bvNone
+                TabOrder = 0
+                DesignSize = (
+                  860
+                  324)
+                object lbSicrediChavePIX: TLabel
+                  Left = 24
+                  Top = 24
+                  Width = 51
+                  Height = 13
+                  Caption = 'Chave PIX'
+                end
+                object lbSicrediTipoChave: TLabel
+                  Left = 678
+                  Top = 24
+                  Width = 55
+                  Height = 13
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                end
+                object lbSicrediClientID: TLabel
+                  Left = 24
+                  Top = 75
+                  Width = 40
+                  Height = 13
+                  Caption = 'Client ID'
+                end
+                object lbSicrediClientSecret: TLabel
+                  Left = 24
+                  Top = 132
+                  Width = 60
+                  Height = 13
+                  Caption = 'Client Secret'
+                end
+                object imSicrediErroChavePix: TImage
+                  Left = 836
+                  Top = 44
+                  Width = 16
+                  Height = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object lbSicrediArqChavePrivada: TLabel
+                  Left = 24
+                  Top = 181
+                  Width = 109
+                  Height = 13
+                  Caption = 'Arquivo Chave Privada'
+                end
+                object lbSicrediArqCertificado: TLabel
+                  Left = 24
+                  Top = 251
+                  Width = 89
+                  Height = 13
+                  Caption = 'Arquivo Certificado'
+                end
+                object sbSicrediAcharChavePrivada: TSpeedButton
+                  Left = 836
+                  Top = 197
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = sbSicrediAcharChavePrivadaClick
+                end
+                object sbSicrediAcharArqCertificado: TSpeedButton
+                  Left = 836
+                  Top = 267
+                  Width = 24
+                  Height = 23
+                  Anchors = [akTop, akRight]
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Font.Style = []
+                  ParentFont = False
+                  ParentShowHint = False
+                  ShowHint = True
+                  OnClick = sbSicrediAcharArqCertificadoClick
+                end
+                object lbSicrediErroCertificado: TLabel
+                  Left = 24
+                  Top = 294
+                  Width = 109
+                  Height = 13
+                  Caption = 'lbSicrediErroCertificado'
+                end
+                object lbSicrediErroChavePrivada: TLabel
+                  Left = 24
+                  Top = 222
+                  Width = 126
+                  Height = 13
+                  Caption = 'lbSicrediErroChavePrivada'
+                end
+                object imSicrediErroChavePrivada: TImage
+                  Left = 3
+                  Top = 200
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object imSicrediErroCertificado: TImage
+                  Left = 3
+                  Top = 271
+                  Width = 16
+                  Height = 16
+                  Visible = False
+                end
+                object edSicrediChavePIX: TEdit
+                  Left = 24
+                  Top = 40
+                  Width = 642
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 1
+                  OnChange = edSicrediChavePIXChange
+                end
+                object cbSicrediTipoChave: TComboBox
+                  Left = 675
+                  Top = 40
+                  Width = 157
+                  Height = 21
+                  Style = csDropDownList
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 0
+                  TabOrder = 0
+                  TabStop = False
+                end
+                object edSicrediClientID: TEdit
+                  Left = 24
+                  Top = 91
+                  Width = 808
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                end
+                object edSicrediClientSecret: TEdit
+                  Left = 24
+                  Top = 147
+                  Width = 808
                   Height = 21
                   Anchors = [akLeft, akTop, akRight]
                   TabOrder = 3
+                end
+                object edSicrediArqChavePrivada: TEdit
+                  Left = 24
+                  Top = 197
+                  Width = 808
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 4
+                  Text = 'SicrediChavePrivada.pem'
+                  OnChange = edSicrediArqChavePrivadaChange
+                end
+                object edSicrediArqCertificado: TEdit
+                  Left = 24
+                  Top = 267
+                  Width = 808
+                  Height = 23
+                  Anchors = [akLeft, akTop, akRight]
+                  AutoSize = False
+                  TabOrder = 5
+                  Text = 'SicrediCertificado.pem'
+                  OnChange = edSicrediArqCertificadoChange
                 end
               end
             end
@@ -5319,5 +5506,9 @@ object Form1: TForm1
     OnTimer = tmConsultarDevolucaoTimer
     Left = 536
     Top = 448
+  end
+  object ACBrPSPSicredi1: TACBrPSPSicredi
+    Left = 256
+    Top = 416
   end
 end

@@ -38,12 +38,14 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrPagForClass, CNAB240.GravarTxtRemessa;
+  ACBrPagForClass, ACBrPagForConversao, CNAB240.GravarTxtRemessa;
 
 type
  { TArquivoW_BancodoBrasil }
 
   TArquivoW_BancodoBrasil = class(TArquivoW_CNAB240)
+  private
+    function InscricaoToStr(const t: TTipoInscricao): String;
   protected
     procedure GeraRegistro0; override;
 
@@ -81,8 +83,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrPagForConversao;
+  ACBrUtil.Strings;
 
 { TArquivoW_BancodoBrasil }
 
@@ -467,8 +468,8 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('17', 2, tcStr);
       GravarCampo(Competencia, 6, tcInt);
@@ -506,8 +507,8 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('16', 2, tcStr);
       GravarCampo(Periodo, 8, tcDat);
@@ -547,13 +548,13 @@ begin
       GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
-      GravarCampo(Receita, 6, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
+      GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo('18', 2, tcStr);
       GravarCampo(Periodo, 8, tcDat);
       GravarCampo(ReceitaBruta, 15, tcDe2);
-      GravarCampo(Percentual, 6, tcDe2);
+      GravarCampo(Percentual, 7, tcDe2);
       GravarCampo(ValorPrincipal, 15, tcDe2);
       GravarCampo(Multa, 15, tcDe2);
       GravarCampo(Juros, 15, tcDe2);
@@ -589,7 +590,7 @@ begin
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(Receita, 6, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(TpIndTributoToStr(PagFor.Geral.idTributo), 2, tcStr);
       GravarCampo(DataVencimento, 8, tcDat);
@@ -632,7 +633,7 @@ begin
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(Receita, 6, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(TpIndTributoToStr(PagFor.Geral.idTributo), 2, tcStr);
       GravarCampo(Exercicio, 4, tcInt);
@@ -702,7 +703,7 @@ begin
       GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
       GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(Receita, 6, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(InscEst, 8, tcStrZero);
       GravarCampo(Origem, 16, tcStrZero);
@@ -765,6 +766,13 @@ begin
       GeraSegmentoB(SegmentoB);
     end;
   end;
+end;
+
+function TArquivoW_BancodoBrasil.InscricaoToStr(
+  const t: TTipoInscricao): String;
+begin
+ result := EnumeradoToStr(t, ['1', '2', '3', '9'],
+                             [tiCNPJ, tiCPF, tiPISPASEP, tiOutros]);
 end;
 
 end.

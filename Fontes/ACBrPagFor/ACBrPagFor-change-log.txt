@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/08/2022
+-- PagFor.Itau.GravarTxtRemessa/PagFor.BancodoBrasil.GravarTxtRemessa/PagFor.Sicredi.GravarTxtRemessa --
+[*] Correções no Segmento N.
+   Por: Suporte AT Info/Italo Giurizzato Junior
+
 02/08/2022
 -- ACBrPagForClass/CNAB240.LerTxtRetorno --
 [*] Alterações para que seja lido o Segmento Z do arquivo de Retorno.

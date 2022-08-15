@@ -643,7 +643,7 @@ begin
 
       GravarCampo(TpTributoToStr(ttDARFSimples), 2, tcStr);
       GravarCampo(Receita, 4, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(TpInscricaoToStr(TipoContribuinte), 1, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(Periodo, 8, tcDat);
       GravarCampo(ReceitaBruta, 9, tcDe2);
@@ -686,7 +686,7 @@ begin
 
       GravarCampo(TpTributoToStr(ttGareICMS), 2, tcStr);
       GravarCampo(Receita, 4, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(TpInscricaoToStr(TipoContribuinte), 1, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(InscEst, 12, tcStrZero);
       GravarCampo(NumEtiqueta, 13, tcStrZero);
@@ -741,7 +741,7 @@ begin
       end;
 
       GravarCampo(' ', 4, tcStr);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(TpInscricaoToStr(TipoContribuinte), 1, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(Exercicio, 4, tcInt);
       GravarCampo(Renavam, 9, tcStrZero);
@@ -796,7 +796,7 @@ begin
 
       GravarCampo('04', 2, tcStr); // DARJ
       GravarCampo(Receita, 4, tcInt);
-      GravarCampo(TpInscricaoToStr(TipoContribuinte), 2, tcStrZero);
+      GravarCampo(TpInscricaoToStr(TipoContribuinte), 1, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
       GravarCampo(InscEst, 8, tcStrZero);
       GravarCampo(Origem, 16, tcStrZero);

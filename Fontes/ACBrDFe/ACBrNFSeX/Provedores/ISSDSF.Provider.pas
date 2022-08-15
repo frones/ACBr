@@ -596,8 +596,7 @@ begin
         with Response do
         begin
           Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
-          Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-          Protocolo := Lote;
+          Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
 
           { Verificar se mais alguma dessas informações são necessárias
           with InformacoesLote do
@@ -728,7 +727,7 @@ begin
                                '</CPFCNPJRemetente>' +
                                '<Versao>1</Versao>' +
                                '<NumeroLote>' +
-                                 Response.Lote +
+                                 Response.Protocolo +
                                '</NumeroLote>' +
                              '</Cabecalho>' +
                            '</' + Prefixo + 'ReqConsultaLote>';
@@ -785,8 +784,7 @@ begin
 
         with Response do
         begin
-          Lote := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
-          Protocolo := Lote;
+          Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('NumeroLote'), tcStr);
           Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
 
           { Verificar se mais alguma dessas informações são necessárias

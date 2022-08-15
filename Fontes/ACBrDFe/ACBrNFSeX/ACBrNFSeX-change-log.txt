@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/08/2022
+-- ISSDSF.Provider --
+[*] Alteração para usar o numero do protocolo em vez do numero do lote
+    ao montar o XML de consulta ao lote.
+   Por: Italo Giurizzato Junior
+
 12/08/2022
 -- ACBrNFSeXServicos --
 [*] Correção da URL de produção da cidade: Castro/PR

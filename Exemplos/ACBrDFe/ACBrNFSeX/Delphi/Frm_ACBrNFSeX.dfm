@@ -2090,7 +2090,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 336
-    Top = 272
+    Top = 280
   end
   object ACBrNFSeX1: TACBrNFSeX
     MAIL = ACBrMail1

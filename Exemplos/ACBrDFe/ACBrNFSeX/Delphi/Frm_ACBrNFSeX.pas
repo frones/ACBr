@@ -955,10 +955,11 @@ procedure TfrmACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
   Titulo, NumNFSe, Codigo, Motivo, NumLote, CodVerif, SerNFSe, NumRps,
   SerRps, ValNFSe, ChNFSe, eMailTomador, vNumRPS, xCodServ,
-  xDataEmissao: String;
+  xDataEmissao, xTipo: String;
   DataEmissao: TDateTime;
   CodCanc: Integer;
   InfCancelamento: TInfCancelamento;
+  Ok: Boolean;
 begin
   Titulo := 'Cancelar NFSe';
   DataEmissao := 0;
@@ -1052,7 +1053,7 @@ begin
       proConam, proEquiplano, proFGMaiss, proGoverna, proIPM, proISSBarueri,
       proISSDSF, proISSLencois, proModernizacaoPublica, proPublica, proSiat,
       proSigISS, proSigep, proSimple, proSmarAPD, proSudoeste, proTecnos,
-      proWebFisco, proCenti] then
+      proWebFisco, proCenti, proCTA] then
     begin
       Motivo := 'Motivo do Cancelamento';
       if not (InputQuery(Titulo, 'Motivo do Cancelamento', Motivo)) then
@@ -1113,6 +1114,13 @@ begin
     AlimentarNFSe(vNumRPS, '1');
   end;
 
+  xTipo := '';
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proWebFisco] then
+  begin
+    if not(InputQuery(Titulo, 'Tipo (1 = NFSe, 2 = Rps):', xTipo)) then
+      exit;
+  end;
+
   InfCancelamento := TInfCancelamento.Create;
 
   try
@@ -1131,6 +1139,7 @@ begin
       email           := eMailTomador;
       DataEmissaoNFSe := DataEmissao;
       CodServ         := xCodServ;
+      Tipo            := StrToTipoDoc(Ok, xTipo);
     end;
 
     ACBrNFSeX1.CancelarNFSe(InfCancelamento);
@@ -1315,6 +1324,7 @@ var
   xTitulo, NumeroNFSe, SerNFSe, NumPagina, NumLote, xDataIni, xDataFin,
   xTipo, xCodServ, xCodVerif: String;
   InfConsultaNFSe: TInfConsultaNFSe;
+  Ok: Boolean;
 begin
   xTitulo := 'Consultar NFSe Por Numero';
 
@@ -1356,7 +1366,7 @@ begin
   xTipo := '';
   if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proFGMaiss, proWebFisco] then
   begin
-    if not(InputQuery(xTitulo, 'Tipo da NFSe:', xTipo)) then
+    if not(InputQuery(xTitulo, 'Tipo (1 = NFSe, 2 = Rps):', xTipo)) then
       exit;
   end;
 
@@ -1412,7 +1422,7 @@ begin
             tpConsulta := tcPorNumero;
 
             NumeroIniNFSe := NumeroNFSe;
-            Tipo := xTipo;
+            Tipo := StrToTipoDoc(Ok, xTipo);
           end;
 
           ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);

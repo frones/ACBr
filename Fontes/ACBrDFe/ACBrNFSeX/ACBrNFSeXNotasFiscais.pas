@@ -62,6 +62,7 @@ type
     FConfirmada: Boolean;
     FXmlRps: String;
     FXmlNfse: String;
+    FXmlEspelho: String;
 
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -96,6 +97,7 @@ type
 
     property XmlRps: String read FXmlRps write FXmlRps;
     property XmlNfse: String read FXmlNfse write SetXmlNfse;
+    property XmlEspelho: String read FXmlEspelho write FXmlEspelho;
 
     property Confirmada: Boolean read FConfirmada write FConfirmada;
     property Alertas: String     read FAlertas;
@@ -577,7 +579,10 @@ begin
   if TipoXml = txmlNFSe then
     FXmlNfse := XmlTratado
   else
-    FXmlRps := XmlTratado;
+    if TipoXml = txmlEspelho then
+      FXmlEspelho := XmlTratado
+    else
+      FXmlRps := XmlTratado;
 end;
 
 procedure TNotaFiscal.SetXmlNfse(const Value: String);

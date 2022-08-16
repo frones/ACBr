@@ -193,10 +193,12 @@ type
   TmodoEnvio = (meAutomatico, meLoteAssincrono, meLoteSincrono, meUnitario,
                 meTeste);
 
-  TtpXML = (txmlRPS, txmlNFSe);
+  TtpXML = (txmlRPS, txmlNFSe, txmlEspelho);
 
   TTipoLancamento = (tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
                      tlSimplesNacional, tlIsentoImune, tlCancelado);
+
+  TTipoDoc = (tdNFSe, tdRPS);
 
 function StatusRPSToStr(const t: TStatusRPS): string;
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
@@ -290,6 +292,9 @@ function ModoEnvioToStr(const t: TmodoEnvio): string;
 
 function TipoLancamentoToStr(const t: TTipoLancamento): string;
 function StrToTipoLancamento(out ok: boolean; const s: string): TTipoLancamento;
+
+function TipoDocToStr(const t: TTipoDoc): string;
+function StrToTipoDoc(out ok: boolean; const s: string): TTipoDoc;
 
 implementation
 
@@ -18296,6 +18301,16 @@ begin
   Result := StrToEnumerado(ok, s, ['N', 'T', 'P', 'R', 'C'],
                          [tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
                           tlSimplesNacional, tlIsentoImune, tlCancelado]);
+end;
+
+function TipoDocToStr(const t: TTipoDoc): string;
+begin
+  Result := EnumeradoToStr(t, ['1', '2'], [tdNFSe, tdRPS]);
+end;
+
+function StrToTipoDoc(out ok: boolean; const s: string): TTipoDoc;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '2'], [tdNFSe, tdRPS]);
 end;
 
 end.

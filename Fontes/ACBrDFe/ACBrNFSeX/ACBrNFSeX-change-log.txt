@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/08/2022
+-- ACBrNFSeXNotasFiscais/ACBrNFSeXConversao/SigISS.LerXml --
+[*] Melhorias visando a leitura de XML de NFS-e baixado do site da prefeitura.
+   Por: Digibyte
 -- ISSDSF.Provider --
 [*] Alteração no método: ProcessarMensagemErros, para não considerar grupo de 
     erros e alertas vazios.

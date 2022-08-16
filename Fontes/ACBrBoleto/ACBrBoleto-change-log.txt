@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2022
+--ACBrBoletoBradesco--
+[*] TK-2896 Bradesco Proteção na geração do segmento R, gerar somente quando desconto2 ou desconto3 <> tdNaoCondederDesconto
+  Por : Pandaaa
+
 11/08/2022
 --ACBrBoletoCresol--
 [*] TK-2971 Cresol (133), CNAB 240, Segmento T do Nosso Número

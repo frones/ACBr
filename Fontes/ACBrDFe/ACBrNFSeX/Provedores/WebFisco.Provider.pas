@@ -263,14 +263,6 @@ begin
     Exit;
   end;
 
-  if EstaVazio(Response.InfConsultaNFSe.Tipo) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod114;
-    AErro.Descricao := Desc114;
-    Exit;
-  end;
-
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.Metodo := tmConsultarNFSe;
@@ -292,7 +284,7 @@ begin
                            Response.InfConsultaNFSe.NumeroIniNFSe +
                          '</ctr>' +
                          '<tipo xsi:type="xsd:string">' +
-                           Response.InfConsultaNFSe.Tipo +
+                           TipoDocToStr(Response.InfConsultaNFSe.Tipo) +
                          '</tipo>' +
                        '</ConsultaNfe>';
 end;
@@ -422,7 +414,7 @@ begin
                            Response.InfCancelamento.NumeroNFSe +
                          '</ctr>' +
                          '<tipo xsi:type="xsd:string">' +
-                           Response.InfCancelamento.SerieNFSe +
+                           TipoDocToStr(Response.InfCancelamento.Tipo) +
                          '</tipo>' +
                          '<obs xsi:type="xsd:string">' +
                            Response.InfCancelamento.MotCancelamento +

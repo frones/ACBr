@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 16/08/2022
+-- ACBrNFSeX/ACBrNFSeXWebserviceBase/WebFisco.Provider --
+[*] Melhorias visando a leitura de XML de NFS-e baixado do site da prefeitura.
+   Por: Widson/Italo Giurizzato Junior
 -- ACBrNFSeXNotasFiscais/ACBrNFSeXConversao/SigISS.LerXml --
 [*] Melhorias visando a leitura de XML de NFS-e baixado do site da prefeitura.
    Por: Digibyte

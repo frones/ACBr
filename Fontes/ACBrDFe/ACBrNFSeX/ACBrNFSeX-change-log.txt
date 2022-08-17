@@ -44,7 +44,10 @@ Símbolo : Significado
 
 
 17/08/2022
--- Etherim.GravarXml --
+-- ACBrNFSeXServicos --
+[+] Incluido a URL de homologação para as cidades atendidas pelo provedor ISSDSF.
+   Por: Ruy
+-- Etherium.GravarXml --
 [+] Acrescentado a procedure Configuracao, visando configurar o formato do 
     ItemListaServico
    Por: Lucio Bittes

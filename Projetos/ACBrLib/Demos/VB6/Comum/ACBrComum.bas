@@ -47,6 +47,8 @@ Public Const SESSAO_MDFe                      As String = "MDFe"
 Public Const SESSAO_DAMDFe                    As String = "DAMDFe"
 Public Const SESSAO_BOLETOCONFIG              As String = "BoletoConfig"
 Public Const SESSAO_BOLETOCEDENTECONFIG       As String = "BoletoCedenteConfig"
+Public Const SESSAO_BOLETOCEDENTEWS           As String = "BoletoCedenteWS"
+Public Const SESSAO_BOLETOWEBSERVICE          As String = "BoletoWebSevice"
 Public Const SESSAO_BOLETOBANCOCONFIG         As String = "BoletoBancoConfig"
 Public Const SESSAO_BOLETODIRETORIOCONFIG     As String = "BoletoDiretorioConfig"
 Public Const SESSAO_BOLETOBANCOFCFORTESCONFIG As String = "BoletoBancoFCFortesConfig"
@@ -57,6 +59,7 @@ Public Const SESSAO_GUIA                      As String = "Guia"
 Public Const SESSAO_CEP                       As String = "CEP"
 Public Const SESSAO_IBGE                      As String = "IBGE"
 Public Const SESSAO_Sedex                     As String = "Sedex"
+Public Const SESSAO_eSocial                   As String = "eSocial"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -130,6 +133,16 @@ Public Enum ETQModelo
     etqPplb = 2
     etqZPLII = 3
     etqEpl2 = 4
+End Enum
+
+Public Enum ETQPaginaCodigo
+    pceNone = 0
+    pce437 = 1
+    pce850 = 2
+    pce852 = 3
+    pce860 = 4
+    pce1250 = 5
+    pce1252 = 6
 End Enum
 
 Public Enum ETQUnidade
@@ -468,6 +481,32 @@ Public Enum BancoBoleto
     cobBancoInter = 42
     cobBancoSofisaSantander = 43
     cobBS2 = 44
+End Enum
+
+Public Enum IndicadorPix
+    Nao = 0
+    Sim = 1
+End Enum
+
+Public Enum LogRegistro
+    Não = 0
+    Sim = 1
+End Enum
+
+Public Enum AmbienteWebServiceBoleto
+    taProducao = 0
+    taHomologacao = 1
+End Enum
+
+Public Enum Operacao
+    tpInclui = 0
+    tpAltera = 1
+    tpBaixa = 2
+    tpConsulta = 3
+    tpConsultaDetalhe = 4
+    tpPIXCriar = 5
+    tpPIXCancelar = 6
+    tpPIXConsultar = 7
 End Enum
 
 Public Enum CNABBoleto

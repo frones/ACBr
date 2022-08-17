@@ -4,13 +4,13 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibETQ Demo"
-   ClientHeight    =   3450
-   ClientLeft      =   45
-   ClientTop       =   390
-   ClientWidth     =   11205
+   ClientHeight    =   3888
+   ClientLeft      =   48
+   ClientTop       =   396
+   ClientWidth     =   11208
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8.25
+      Size            =   8.4
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -20,9 +20,25 @@ Begin VB.Form FrmMain
    Icon            =   "FrmMain.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   3450
-   ScaleWidth      =   11205
+   ScaleHeight     =   3888
+   ScaleWidth      =   11208
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton btnCarregarConfig 
+      Caption         =   "Carregar Configurações"
+      Height          =   360
+      Left            =   6840
+      TabIndex        =   34
+      Top             =   3360
+      Width           =   2052
+   End
+   Begin VB.CommandButton btnSaveConfig 
+      Caption         =   "Salvar Configurações"
+      Height          =   360
+      Left            =   9120
+      TabIndex        =   33
+      Top             =   3360
+      Width           =   1956
+   End
    Begin VB.Frame FraImpressão 
       Caption         =   "Impressão"
       Height          =   3135
@@ -68,8 +84,8 @@ Begin VB.Form FrmMain
          TabIndex        =   26
          Top             =   480
          Width           =   255
-         _ExtentX        =   450
-         _ExtentY        =   503
+         _ExtentX        =   445
+         _ExtentY        =   508
          _Version        =   393216
          Value           =   1
          AutoBuddy       =   -1  'True
@@ -155,9 +171,19 @@ Begin VB.Form FrmMain
       TabIndex        =   0
       Top             =   120
       Width           =   4095
-      Begin MSComDlg.CommonDialog CommonDialog1 
-         Left            =   2880
+      Begin VB.ComboBox cmbPagCodigo 
+         Height          =   300
+         ItemData        =   "FrmMain.frx":33B4
+         Left            =   2040
+         List            =   "FrmMain.frx":33CD
+         TabIndex        =   31
+         Text            =   "cmbPagCodigo"
          Top             =   2280
+         Width           =   1815
+      End
+      Begin MSComDlg.CommonDialog CommonDialog1 
+         Left            =   1680
+         Top             =   2640
          _ExtentX        =   847
          _ExtentY        =   847
          _Version        =   393216
@@ -176,13 +202,13 @@ Begin VB.Form FrmMain
          TabIndex        =   19
          Top             =   2280
          Width           =   255
-         _ExtentX        =   450
-         _ExtentY        =   503
+         _ExtentX        =   445
+         _ExtentY        =   508
          _Version        =   393216
          Value           =   600
          AutoBuddy       =   -1  'True
          BuddyControl    =   "txtAvanco"
-         BuddyDispid     =   196623
+         BuddyDispid     =   196624
          OrigLeft        =   1680
          OrigTop         =   2280
          OrigRight       =   1935
@@ -206,13 +232,13 @@ Begin VB.Form FrmMain
          TabIndex        =   16
          Top             =   1680
          Width           =   255
-         _ExtentX        =   450
-         _ExtentY        =   503
+         _ExtentX        =   445
+         _ExtentY        =   508
          _Version        =   393216
          Value           =   -2
          AutoBuddy       =   -1  'True
          BuddyControl    =   "txtVelocidade"
-         BuddyDispid     =   196624
+         BuddyDispid     =   196625
          OrigLeft        =   1680
          OrigTop         =   1680
          OrigRight       =   1935
@@ -237,13 +263,13 @@ Begin VB.Form FrmMain
          TabIndex        =   13
          Top             =   1080
          Width           =   255
-         _ExtentX        =   450
-         _ExtentY        =   503
+         _ExtentX        =   445
+         _ExtentY        =   508
          _Version        =   393216
          Value           =   1
          AutoBuddy       =   -1  'True
          BuddyControl    =   "txtTemperatura"
-         BuddyDispid     =   196625
+         BuddyDispid     =   196626
          OrigLeft        =   1680
          OrigTop         =   1080
          OrigRight       =   1935
@@ -286,12 +312,22 @@ Begin VB.Form FrmMain
          Width           =   1935
       End
       Begin VB.ComboBox cmbPorta 
-         Height          =   315
+         Height          =   300
          Left            =   120
          TabIndex        =   3
          Text            =   "cmbPorta"
          Top             =   480
          Width           =   1815
+      End
+      Begin VB.Label Label4 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Pag. Código"
+         Height          =   204
+         Left            =   2040
+         TabIndex        =   32
+         Top             =   2040
+         Width           =   888
       End
       Begin VB.Label lblAvançoEtiqueta 
          AutoSize        =   -1  'True
@@ -372,6 +408,13 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim etq As ACBrETQ
 
+Private Sub btnCarregarConfig_Click()
+    LoadConfig
+End Sub
+
+Private Sub btnSaveConfig_Click()
+    SaveConfig
+End Sub
 
 Private Sub cmdBlocoDe_Click()
     SaveConfig
@@ -510,7 +553,7 @@ Private Sub cmdEtiquetaSimples_Click()
 End Sub
 
 Private Sub Form_Load()
-
+    
     cmbModelo.AddItem "etqNenhum", ETQModelo.etqNenhum
     cmbModelo.AddItem "etqPpla", ETQModelo.etqPpla
     cmbModelo.AddItem "etqPplb", ETQModelo.etqPplb
@@ -546,14 +589,16 @@ Private Sub Form_Load()
     cmbBackFeed.ListIndex = 0
     
     Dim LogPath As String
+    Dim iniPath As String
     
-    LogPath = App.Path & "\Docs\"
+    LogPath = App.Path & "\Logs\"
+    iniPath = App.Path & "\ACBrLib.ini"
     
     If Not DirExists(LogPath) Then
         MkDir LogPath
     End If
     
-    Set etq = CreateETQ
+    Set etq = CreateETQ(iniPath)
     
     etq.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", "4"
     etq.ConfigGravarValor SESSAO_PRINCIPAL, "LogPath", LogPath
@@ -579,6 +624,8 @@ Private Sub LoadConfig()
     cmbBackFeed.ListIndex = CInt(etq.ConfigLerValor(SESSAO_ETQ, "BackFeed"))
     nudAvanco.value = CInt(etq.ConfigLerValor(SESSAO_ETQ, "Avanco"))
     chkLimparMemoria.value = CInt(etq.ConfigLerValor(SESSAO_ETQ, "LimparMemoria"))
+    cmbPagCodigo.ListIndex = CInt(etq.ConfigLerValor(SESSAO_ETQ, "PaginaDeCodigo"))
+    
 End Sub
 
 Private Sub SaveConfig()
@@ -590,6 +637,8 @@ Private Sub SaveConfig()
     etq.ConfigGravarValor SESSAO_ETQ, "BackFeed", CStr(cmbBackFeed.ListIndex)
     etq.ConfigGravarValor SESSAO_ETQ, "Avanco", CStr(nudAvanco.value)
     etq.ConfigGravarValor SESSAO_ETQ, "LimparMemoria", CStr(chkLimparMemoria.value)
+    etq.ConfigGravarValor SESSAO_ETQ, "PaginaDeCodigo", CStr(cmbPagCodigo.ListIndex)
+    
     etq.ConfigGravar
 End Sub
 

@@ -167,6 +167,11 @@ begin
   else
     NrOcorrRespRetencao := -1; // se não tem a retenção a tag não deve ser gerada
 
+  if NFSe.Tomador.Endereco.CodigoMunicipio = '9999999' then
+    NrOcorrCodigoPaisTomador := 1
+  else
+    NrOcorrCodigoPaisTomador := -1;
+
   Result := inherited GerarXml;
 end;
 

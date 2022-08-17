@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/08/2022
+-- Betha.Provider/Betha.GravarXml --
+[*] Ajustes no Tratamento do XML retornado e condicionar se deve ou não gerar
+    a tag referente ao código do pais.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Correção da URL de homologação da cidade: Araçatuba/SP
    Por: Antonio Paulo Mangili

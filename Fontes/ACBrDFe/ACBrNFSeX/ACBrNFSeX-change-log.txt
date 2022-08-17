@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/08/2022
+-- ACBrNFSeXServicos --
+[*] Correção da URL de homologação da cidade: Araçatuba/SP
+   Por: Antonio Paulo Mangili
+
 16/08/2022
 -- ACBrNFSeX/ACBrNFSeXWebserviceBase/WebFisco.Provider --
 [*] Melhorias visando a leitura de XML de NFS-e baixado do site da prefeitura.

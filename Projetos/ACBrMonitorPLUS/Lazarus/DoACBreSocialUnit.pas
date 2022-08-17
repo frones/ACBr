@@ -38,7 +38,7 @@ uses
   ACBreSocial, ACBrMonitorConfig,
   ACBrMonitorConsts, CmdUnit, pcesConversaoeSocial, DoACBrDFeUnit,
   ACBrLibResposta, ACBrLibeSocialRespostas, ACBrLibeSocialConsts,
-  ACBreSocialEventos, pcesS5001, pcesS5002, pcesS5011, pcesS5012;
+  ACBreSocialEventos;
 
 type
 
@@ -50,18 +50,6 @@ private
 public
   constructor Create(AConfig: TMonitorConfig; ACBreSocial: TACBreSocial); reintroduce;
   procedure Executar(ACmd: TACBrCmd); override;
-
-  procedure RespostaEnvio;
-  procedure RespostaEnvioConsulta;
-  procedure RespostaEnvioOcorrencia(ACont: Integer);
-  procedure RespostaOcorrencia(ACont: Integer);overload;
-  procedure RespostaOcorrencia(ACont, ACont2: Integer);overload;
-  procedure RespostaConsulta(ACont: Integer);
-  procedure RespostaTot(ACont, ACont2: Integer);
-  procedure RespostaConsultaIdentEventosQtd;
-  procedure RespostaConsultaIdentEventosRecibo(ACont: Integer);
-  procedure RespostaDownload(ACount: Integer);
-  procedure RespostaPadrao;
 
   property ACBreSocial: TACBreSocial read fACBreSocial;
 end;
@@ -238,7 +226,7 @@ var
   AIdEmpregador: String;
   AId: String;
   ANrRecibo: String;
-  i: Integer;
+  Resp : TConsultaEventos;
 begin
   AIdEmpregador := fpCmd.Params(0);
   AId := fpCmd.Params(1);
@@ -250,18 +238,14 @@ begin
       raise Exception.Create(ACBrStr(SErroeSocialConsulta));
 
     ACBreSocial.Eventos.Clear;
-    if ACBreSocial.DownloadEventos(AIdEmpregador,
-                       AID, ANrRecibo) then
+    if ACBreSocial.DownloadEventos(AIdEmpregador, AID, ANrRecibo) then
     begin
-      with ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt  do
-      begin
-        RespostaPadrao;
-
-        for i := 0 to arquivo.Count - 1 do
-        begin
-          RespostaDownload(i);
-        end;
-
+      Resp := TConsultaEventos.Create(TpResp, codUTF8);
+      try
+        Resp.Processar(ACBreSocial);
+        fpCmd.Resposta := Resp.Gerar;
+      finally
+        Resp.Free;
       end;
     end;
 
@@ -275,7 +259,8 @@ var
   AIdEmpregador: String;
   ACPFTrabalhador: String;
   ADataInicial, ADataFinal: TDateTime;
-  i: Integer;
+  Resp : TConsultaTotEventos;
+
 begin
   AIdEmpregador := fpCmd.Params(0);
   ACPFTrabalhador := fpCmd.Params(1);
@@ -292,16 +277,14 @@ begin
     if ACBreSocial.ConsultaIdentificadoresEventosTrabalhador(AIdEmpregador,
                        ACPFTrabalhador, ADataInicial, ADataFinal) then
     begin
-      with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt  do
-      begin
-        RespostaConsultaIdentEventosQtd;
-
-        for i := 0 to RetIdentEvts.Count - 1 do
-        begin
-          RespostaConsultaIdentEventosRecibo(i);
-        end;
-
+      Resp := TConsultaTotEventos.Create(TpResp, codUTF8);
+      try
+        Resp.Processar(ACBreSocial);
+        fpCmd.Resposta := Resp.Gerar;
+      finally
+        Resp.Free;
       end;
+
     end;
 
   end;
@@ -315,7 +298,7 @@ var
   ATpEvento: Integer;
   AChave: String;
   ADataInicial, ADataFinal: TDateTime;
-  i: Integer;
+  Resp: TConsultaTotEventos;
 begin
   AIdEmpregador := fpCmd.Params(0);
   ATpEvento := StrToIntDef(fpCmd.Params(1),0);
@@ -333,16 +316,14 @@ begin
     if ACBreSocial.ConsultaIdentificadoresEventosTabela(AIdEmpregador,
                        TTipoEvento(ATpEvento), AChave, ADataInicial, ADataFinal) then
     begin
-      with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt  do
-      begin
-        RespostaConsultaIdentEventosQtd;
-
-        for i := 0 to RetIdentEvts.Count - 1 do
-        begin
-          RespostaConsultaIdentEventosRecibo(i);
-        end;
-
+      Resp := TConsultaTotEventos.Create(TpResp, codUTF8);
+      try
+        Resp.Processar(ACBreSocial);
+        fpCmd.Resposta := Resp.Gerar;
+      finally
+        Resp.Free;
       end;
+
     end;
 
   end;
@@ -355,7 +336,7 @@ var
   AIdEmpregador: String;
   APerApur: TDateTime;
   ATpEvento: Integer;
-  i: Integer;
+  Resp: TConsultaTotEventos;
 begin
   AIdEmpregador := fpCmd.Params(0);
   ATpEvento := StrToIntDef(fpCmd.Params(1),0);
@@ -370,16 +351,14 @@ begin
     if ACBreSocial.ConsultaIdentificadoresEventosEmpregador(AIdEmpregador,
                        TTipoEvento(ATpEvento), APerApur) then
     begin
-      with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt  do
-      begin
-        RespostaConsultaIdentEventosQtd;
-
-        for i := 0 to RetIdentEvts.Count - 1 do
-        begin
-          RespostaConsultaIdentEventosRecibo(i);
-        end;
-
+      Resp := TConsultaTotEventos.Create(TpResp, codUTF8);
+      try
+        Resp.Processar(ACBreSocial);
+        fpCmd.Resposta := Resp.Gerar;
+      finally
+        Resp.Free;
       end;
+
     end;
 
   end;
@@ -447,7 +426,7 @@ end;
 procedure TMetodoConsultareSocial.Executar;
 var
   AProtocolo: String;
-  i, j: Integer;
+  Resp: TConsulta;
 begin
   AProtocolo := fpCmd.Params(0);
 
@@ -456,27 +435,12 @@ begin
     ACBreSocial.Eventos.Clear;
     if ACBreSocial.Consultar(AProtocolo) then
     begin
-      with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
-      begin
-        if Status.cdResposta in [201, 202] then
-        begin
-          RespostaEnvioConsulta;
-          for i := 0 to retEventos.Count - 1 do
-          begin
-            RespostaConsulta(i);
-            if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
-              for J := 0 to retEventos.Items[i].Processamento.Ocorrencias.Count - 1 do
-                RespostaOcorrencia(i, j);
-
-            for J := 0 to retEventos.Items[i].tot.Count - 1 do
-              RespostaTot(i, j);
-          end;
-
-        end
-        else
-          for i := 0 to Status.Ocorrencias.Count - 1 do
-            RespostaOcorrencia(i);
-
+      Resp := TConsulta.Create(TpResp, codUTF8);
+      try
+        Resp.Processar(ACBreSocial);
+        fpCmd.Resposta := Resp.Gerar;
+      finally
+        Resp.Free;
       end;
 
     end;
@@ -496,7 +460,8 @@ procedure TMetodoCriarEnviareSocial.Executar;
 var
   AIniFile, AGrupo, ArqeSocial, Resp : String;
   ASalvar : Boolean;
-  i, iEvento : Integer;
+  iEvento : Integer;
+  RespEnvio : TEnvioResposta;
 begin
   AIniFile := fpCmd.Params(0);
   AGrupo := fpCmd.Params(1);
@@ -531,15 +496,14 @@ begin
     ACBreSocial.Enviar(TeSocialGrupo( StrToIntDef(AGrupo,1) ));
     Sleep(3000);
 
-    with ACBreSocial.WebServices.EnvioLote.RetEnvioLote do
-    begin
-      if Status.cdResposta in [201, 202] then
-        RespostaEnvio
-      else
-        for i := 0 to Status.Ocorrencias.Count - 1 do
-          RespostaEnvioOcorrencia(i);
-
+    RespEnvio := TEnvioResposta.Create(TpResp, codUTF8);
+    try
+      RespEnvio.Processar(ACBreSocial);
+      fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Gerar;
+    finally
+      RespEnvio.Free;
     end;
+
     ACBreSocial.Eventos.Clear;
 
   end;
@@ -556,7 +520,7 @@ procedure TMetodoEnviareSocial.Executar;
 var
   AGrupo: String;
   AAssina: Boolean;
-  i: Integer;
+  Resp: TEnvioResposta;
 begin
   AGrupo := fpCmd.Params(0);
   AAssina := StrToBoolDef(fpCmd.Params(1), False);
@@ -572,13 +536,12 @@ begin
     ACBreSocial.Enviar(TeSocialGrupo( StrToIntDef(AGrupo,1) ));
     Sleep(3000);
 
-    with ACBreSocial.WebServices.EnvioLote.RetEnvioLote do
-    begin
-      if Status.cdResposta in [201, 202] then
-        RespostaEnvio
-      else
-        for i := 0 to Status.Ocorrencias.Count - 1 do
-          RespostaEnvioOcorrencia(i);
+    Resp := TEnvioResposta.Create(TpResp, codUTF8);
+    try
+      Resp.Processar(ACBreSocial);
+      fpCmd.Resposta := Resp.Gerar;
+    finally
+      Resp.Free;
     end;
 
     ACBreSocial.Eventos.Clear;
@@ -785,292 +748,6 @@ begin
     end;
   end;
 
-end;
-
-procedure TACBrObjetoeSocial.RespostaEnvio;
-var
-  Resp: TEnvioResposta;
-begin
-  Resp := TEnvioResposta.Create(TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.EnvioLote.RetEnvioLote do
-    begin
-      Resp.Codigo         := Status.cdResposta;
-      Resp.Mensagem       := Status.descResposta;
-      Resp.TpInscEmpreg   := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
-      Resp.NrInscEmpreg   := IdeEmpregador.NrInsc;
-      Resp.TpInscTransm   := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
-      Resp.NrInscTransm   := IdeTransmissor.NrInsc;
-      Resp.DhRecepcao     := dadosRecLote.dhRecepcao;
-      Resp.VersaoAplic    := dadosRecLote.versaoAplicRecepcao;
-      Resp.Protocolo      := dadosRecLote.Protocolo;
-
-    end;
-    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
-
-end;
-
-procedure TACBrObjetoeSocial.RespostaEnvioConsulta;
-var
-  Resp: TEnvioResposta;
-begin
-  Resp := TEnvioResposta.Create(TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
-    begin
-      Resp.Codigo         := Status.cdResposta;
-      Resp.Mensagem       := Status.descResposta;
-      Resp.TpInscEmpreg   := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
-      Resp.NrInscEmpreg   := IdeEmpregador.NrInsc;
-      Resp.TpInscTransm   := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
-      Resp.NrInscTransm   := IdeTransmissor.NrInsc;
-      Resp.DhRecepcao     := dadosRecLote.dhRecepcao;
-      Resp.VersaoAplic    := dadosRecLote.versaoAplicRecepcao;
-      Resp.Protocolo      := dadosRecLote.Protocolo;
-
-    end;
-    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoeSocial.RespostaEnvioOcorrencia(ACont: Integer);
-var
-  Resp: TOcorrenciaResposta;
-begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.EnvioLote.RetEnvioLote do
-    begin
-      Resp.Codigo         := Status.cdResposta;
-      Resp.Mensagem       := Status.descResposta;
-      Resp.CodigoOco      := Status.Ocorrencias.Items[ACont].Codigo;
-      Resp.Descricao      := Status.Ocorrencias.Items[ACont].Descricao;
-      Resp.Tipo           := Status.Ocorrencias.Items[ACont].Tipo;
-      Resp.Localizacao    := Status.Ocorrencias.Items[ACont].Localizacao;
-
-    end;
-    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoeSocial.RespostaOcorrencia(ACont: Integer);
-var
-  Resp: TOcorrenciaResposta;
-begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
-    begin
-      Resp.Codigo         := Status.cdResposta;
-      Resp.Mensagem       := Status.descResposta;
-      Resp.CodigoOco      := Status.Ocorrencias.Items[ACont].Codigo;
-      Resp.Descricao      := Status.Ocorrencias.Items[ACont].Descricao;
-      Resp.Tipo           := Status.Ocorrencias.Items[ACont].Tipo;
-      Resp.Localizacao    := Status.Ocorrencias.Items[ACont].Localizacao;
-
-    end;
-    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
-
-end;
-
-procedure TACBrObjetoeSocial.RespostaOcorrencia(ACont, ACont2: Integer);
-var
-  Resp: TOcorrenciaResposta;
-begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont2), TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.
-         Items[ACont].Processamento.Ocorrencias.Items[ACont2] do
-    begin
-      Resp.CodigoOco      := Codigo;
-      Resp.Descricao      := Descricao;
-      Resp.Tipo           := Tipo;
-      Resp.Localizacao    := Localizacao;
-
-    end;
-    fpCmd.Resposta      := fpCmd.Resposta + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoeSocial.RespostaConsulta(ACont: Integer);
-var
-  Resp : TConsultaResposta;
-begin
-  Resp := TConsultaResposta.Create(CSessaoRespConsulta+inttostr(ACont),TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
-    begin
-      resp.cdResposta      := Processamento.cdResposta;
-      resp.descResposta    := Processamento.descResposta;
-      resp.versaoAplicProcLote:= Processamento.versaoAplicProcLote;
-      resp.dhProcessamento := Processamento.dhProcessamento;
-      resp.nrRecibo        := Recibo.nrRecibo;
-      resp.hash            := Recibo.Hash;
-
-    end;
-    fpCmd.Resposta       := Resp.Gerar;
-
-  finally
-    Resp.Free;
-
-  end;
-
-end;
-
-procedure TACBrObjetoeSocial.RespostaTot(ACont, ACont2: Integer);
-var
-  Resp : TConsultaTotResposta;
-  evtS5001: TS5001;
-  evtS5002: TS5002;
-  evtS5011: TS5011;
-  evtS5012: TS5012;
-begin
-  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot+inttostr(ACont),TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos
-         .Items[ACont].tot[ACont2] do
-    begin
-      resp.Tipo          := Tipo;
-      case Evento.TipoEvento of
-        teS5001:
-          begin
-            evtS5001 := TS5001(Evento.GetEvento);
-            resp.ID  := evtS5001.EvtBasesTrab.Id;
-            resp.NrRecArqBase := evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase;
-          end;
-        teS5002:
-          begin
-            evtS5002 := TS5002(Evento.GetEvento);
-            resp.ID  := evtS5002.EvtirrfBenef.Id;
-            resp.NrRecArqBase := evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase;
-          end;
-        teS5011:
-          begin
-            evtS5011 := TS5011(Evento.GetEvento);
-            resp.ID  := evtS5011.EvtCS.Id;
-            resp.NrRecArqBase := evtS5011.EvtCS.IdeEvento.nrRecArqBase;
-          end;
-        teS5012:
-          begin
-            evtS5012 := TS5012(Evento.GetEvento);
-            resp.ID  := evtS5012.EvtIrrf.Id;
-            resp.NrRecArqBase := evtS5012.EvtIrrf.IdeEvento.nrRecArqBase;
-          end;
-
-      end;
-      fpCmd.Resposta       := fpCmd.Resposta + Resp.Gerar;
-
-    end;
-  finally
-    Resp.Free;
-
-  end;
-
-end;
-
-procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosQtd;
-var
-  Resp : TConsultaTotEventos;
-begin
-  Resp := TConsultaTotEventos.Create(CSessaoRespConsultaIdentEventos,TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
-    begin
-      resp.Codigo:= Status.cdResposta;
-      resp.Mensagem:= Status.descResposta;
-      resp.QtdeTotal:= RetIdentEvts.qtdeTotEvtsConsulta;
-      resp.DhUltimoEvento:= RetIdentEvts.dhUltimoEvtRetornado;
-
-    end;
-    fpCmd.Resposta       := Resp.Gerar;
-
-  finally
-    Resp.Free;
-
-  end;
-
-end;
-
-procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosRecibo(ACont: Integer);
-var
-  Resp : TConsultaIdentEvento;
-begin
-  Resp := TConsultaIdentEvento.Create(CSessaoRespConsultaIdentEventosRecibo+inttostr(ACont),TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt.RetIdentEvts.Items[ACont] do
-    begin
-      resp.IdEvento:= Id;
-      resp.NRecibo:= nrRec;
-
-    end;
-    fpCmd.Resposta       := Resp.Gerar;
-
-  finally
-    Resp.Free;
-
-  end;
-
-end;
-
-procedure TACBrObjetoeSocial.RespostaDownload(ACount: Integer);
-var
-  Resp : TConsultaIdentEvento;
-begin
-
-  Resp := TConsultaIdentEvento.Create(CSessaoRespConsulta,TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
-    begin
-      resp.Codigo:= arquivo.Items[ACount].Status.cdResposta;
-      resp.Mensagem:= arquivo.Items[ACount].Status.descResposta;
-      resp.IdEvento:= arquivo.Items[ACount].Id;
-      resp.NRecibo:= arquivo.Items[ACount].nrRec;
-      resp.XML:= arquivo.Items[ACount].XML;
-
-    end;
-    fpCmd.Resposta       := Resp.Gerar;
-
-  finally
-    Resp.Free;
-
-  end;
-end;
-
-procedure TACBrObjetoeSocial.RespostaPadrao;
-var
-  Resp : TPadraoeSocialResposta;
-begin
-  Resp := TPadraoeSocialResposta.Create(CSessaoRespConsulta,TpResp, codUTF8);
-  try
-    with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
-    begin
-      resp.Codigo:= Status.cdResposta;
-      resp.Mensagem:= Status.descResposta;
-
-    end;
-    fpCmd.Resposta       := Resp.Gerar;
-
-  finally
-    Resp.Free;
-
-  end;
 end;
 
 end.

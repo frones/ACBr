@@ -154,7 +154,7 @@ begin
   GravarCampo(PagFor.Lote.Items[I].Registro1.Empresa.Nome, 30, tcStr, True);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Informacao1, 40, tcStr, True);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Logradouro, 30, tcStr, True);
-  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Numero, 5, tcStr);
+  GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Numero, 5, tcStrZero);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Complemento, 15, tcStr, True);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.Cidade, 20, tcStr, True);
   GravarCampo(PagFor.Lote.Items[I].Registro1.Endereco.CEP, 8, tcInt);
@@ -283,7 +283,7 @@ begin
       GravarCampo(TpInscricaoToStr(Inscricao.Tipo), 1, tcStr);
       GravarCampo(Inscricao.Numero, 14, tcStrZero);
       GravarCampo(Endereco.Logradouro, 30, tcStr, True);
-      GravarCampo(Endereco.Numero, 5, tcStr);
+      GravarCampo(Endereco.Numero, 5, tcStrZero);
       GravarCampo(Endereco.Complemento, 15, tcStr, True);
       GravarCampo(Endereco.Bairro, 15, tcStr, True);
       GravarCampo(Endereco.Cidade, 20, tcStr, True);

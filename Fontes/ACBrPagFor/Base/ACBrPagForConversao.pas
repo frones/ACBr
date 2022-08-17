@@ -243,6 +243,7 @@ function BancoToIspb(const t: TBanco): String;
 
 function TpInscricaoToStr(const t: TTipoInscricao): String;
 function StrToTpInscricao(var ok: boolean; const s: string): TTipoInscricao;
+function InscricaoToStr_SegN(const t: TTipoInscricao): String;
 
 function TpArquivoToStr(const t: TTipoArquivo): String;
 function StrToTpArquivo(var ok: boolean; const s: String): TTipoArquivo;
@@ -699,6 +700,12 @@ function StrToTpInscricao(var ok: boolean; const s: string): TTipoInscricao;
 begin
  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '9'],
                                  [tiIsento, tiCPF, tiCNPJ, tiPISPASEP, tiOutros]);
+end;
+
+function InscricaoToStr_SegN(const t: TTipoInscricao): String;
+begin
+ result := EnumeradoToStr(t, ['1', '2', '3', '9'],
+                             [tiCNPJ, tiCPF, tiPISPASEP, tiOutros]);
 end;
 
 function TpArquivoToStr(const t: TTipoArquivo): String;

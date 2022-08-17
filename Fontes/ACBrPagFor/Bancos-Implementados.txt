@@ -1,0 +1,9 @@
+Bancos            Funcional (Data)
+Banco do Brasil
+Bradesco
+Itau
+Santander
+Safra
+Sicredi
+BancoCECRED
+HSBC

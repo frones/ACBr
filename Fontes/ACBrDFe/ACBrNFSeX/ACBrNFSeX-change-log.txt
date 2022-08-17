@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 17/08/2022
+-- Etherim.GravarXml --
+[+] Acrescentado a procedure Configuracao, visando configurar o formato do 
+    ItemListaServico
+   Por: Lucio Bittes
 -- Tiplan.Provider --
 [*] Ajustes na montagem do Envelope do EnviarLoteRps
    Por: Italo Giurizzato Junior

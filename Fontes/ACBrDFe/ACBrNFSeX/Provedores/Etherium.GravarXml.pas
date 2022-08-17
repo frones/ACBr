@@ -45,14 +45,27 @@ type
 
   TNFSeW_Etherium203 = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   end;
 
 implementation
 
+uses
+  ACBrNFSeXConversao;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Etherium
 //==============================================================================
+
+{ TNFSeW_Etherium203 }
+
+procedure TNFSeW_Etherium203.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsComFormatacao;
+end;
 
 end.

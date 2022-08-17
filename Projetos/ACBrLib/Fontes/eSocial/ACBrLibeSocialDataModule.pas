@@ -37,77 +37,39 @@ unit ACBrLibeSocialDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibConfig, syncobjs, ACBreSocial;
+  Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule, ACBrLibConfig, syncobjs, ACBreSocial;
 
 type
 
   { TLibeSocialDM }
 
-  TLibeSocialDM = class(TDataModule)
+  TLibeSocialDM = class(TLibDataModule)
     ACBreSocial1: TACBreSocial;
-
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
-
   private
-    FLock: TCriticalSection;
     fpLib: TACBrLib;
-
   public
-    procedure AplicarConfiguracoes;
-    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-    procedure Travar;
-    procedure Destravar;
+    procedure AplicarConfiguracoes; override;
 
-    property Lib: TACBrLib read fpLib write fpLib;
   end;
 
 implementation
 
 uses
   ACBrUtil.FilesIO, ACBrUtil.Strings,
-  ACBrLibeSocialConfig, ACBrLibeSocialBase;
+  ACBrLibeSocialConfig;
 
 {$R *.lfm}
 
 { TLibeSocialDM }
-
-procedure TLibeSocialDM.DataModuleCreate(Sender: TObject);
-begin
-  FLock := TCriticalSection.Create;
-end;
-
-procedure TLibeSocialDM.DataModuleDestroy(Sender: TObject);
-begin
-  FLock.Destroy;
-end;
 
 procedure TLibeSocialDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibeSocialConfig;
 begin
   ACBreSocial1.SSL.DescarregarCertificado;
-  pLibConfig := TLibeSocialConfig(TACBrLibeSocial(pLib).Config);
+  pLibConfig := TLibeSocialConfig(Lib.Config);
   ACBreSocial1.Configuracoes.Assign(pLibConfig.eSocialConfig);
-end;
 
-procedure TLibeSocialDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
-  Traduzir: Boolean);
-begin
-  if Assigned(pLib) then
-    GravarLog(AMsg, NivelLog, Traduzir);
-end;
-
-procedure TLibeSocialDM.Travar;
-begin
-  GravarLog('Travar', logParanoico);
-  FLock.Acquire;
-end;
-
-procedure TLibeSocialDM.Destravar;
-begin
-  GravarLog('Destravar', logParanoico);
-  FLock.Release;
 end;
 
 end.

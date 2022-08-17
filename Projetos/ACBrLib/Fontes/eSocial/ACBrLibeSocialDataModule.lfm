@@ -1,12 +1,9 @@
-object LibeSocialDM: TLibeSocialDM
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
-  OldCreateOrder = False
+inherited LibeSocialDM: TLibeSocialDM
   Height = 150
   HorizontalOffset = 257
   VerticalOffset = 127
   Width = 150
-  object ACBreSocial1: TACBreSocial
+  object ACBreSocial1: TACBreSocial[0]
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone

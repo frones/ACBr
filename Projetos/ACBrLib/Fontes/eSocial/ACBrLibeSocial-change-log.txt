@@ -42,6 +42,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2022
+--- ACBrLibeSocial ---
+[*] Refatoração da ACBrLibeSocial e classe de Respostas
+
 20/07/2022
 --- ACBrLibeSocial ---
 [*] Remoção de Warning @deprecated ref. ACBrUtils

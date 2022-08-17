@@ -39,26 +39,56 @@ unit ACBrLibeSocialRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibResposta, ACBrLibeSocialConsts;
+  Classes, SysUtils, contnrs, ACBrLibResposta, ACBrLibeSocialConsts, ACBreSocial,
+  pcnAuxiliar, pcesConversaoeSocial;
 
 type
 
   { TPadraoeSocialResposta }
 
-    TPadraoeSocialResposta = class(TACBrLibRespostaBase)
-    private
-      FCodigo: Integer;
-      FMensagem: String;
+  TPadraoeSocialResposta = class abstract(TACBrLibResposta<TACBreSocial>)
+  private
+    FCodigo: Integer;
+    FMensagem: String;
 
-    public
-      constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-        const AFormato: TACBrLibCodificacao); reintroduce;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
-    published
-      property Codigo: Integer read FCodigo write FCodigo;
-      property Mensagem: String read FMensagem write FMensagem;
+    procedure Processar(const Control: TACBreSocial); virtual; abstract; reintroduce;
 
-    end;
+  published
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Mensagem: String read FMensagem write FMensagem;
+
+  end;
+
+   { TOcorrenciaResposta }
+
+  TOcorrenciaResposta = class(TACBrLibRespostaBase)
+  private
+    FCodigo: Integer;
+    FMensagem: String;
+    FCodigoOco: Integer;
+    FDescricao: String;
+    FTipo: Integer;
+    FLocalizacao: String;
+
+  public
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont: Integer );
+
+  published
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Mensagem: String read FMensagem write FMensagem;
+    property CodigoOco: Integer read FCodigoOco write FCodigoOco;
+    property Descricao: String read FDescricao write FDescricao;
+    property Tipo: Integer read FTipo write FTipo;
+    property Localizacao: String read FLocalizacao write FLocalizacao;
+
+  end;
 
   { TEnvioResposta }
 
@@ -71,9 +101,13 @@ type
     FDhRecepcao: TDateTime;
     FVersaoAplic: String;
     FProtocolo: String;
+    FItemOcorrencia: TObjectList;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const ACBreSocial: TACBreSocial); override;
 
   published
     property TpInscEmpreg: String read FTpInscEmpreg write FTpInscEmpreg;
@@ -83,12 +117,13 @@ type
     property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
     property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
     property Protocolo: String read FProtocolo write FProtocolo;
+    property ItemOcorrencia: TObjectList read FItemOcorrencia;
 
   end;
 
-  { TOcorrenciaResposta }
+  {TOcorrenciaConsulta}
 
-  TOcorrenciaResposta = class(TPadraoeSocialResposta)
+  TOcorrenciaConsulta = class(TACBrLibRespostaBase)
   private
     FCodigoOco: Integer;
     FDescricao: String;
@@ -96,8 +131,10 @@ type
     FLocalizacao: String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont, AContOcor: Integer );
 
   published
     property CodigoOco: Integer read FCodigoOco write FCodigoOco;
@@ -107,42 +144,19 @@ type
 
   end;
 
-  { TConsultaResposta }
-
-  TConsultaResposta = class(TPadraoeSocialResposta)
-  private
-    FcdResposta: Integer;
-    FdescResposta: String;
-    FversaoAplicProcLote: String;
-    FdhProcessamento: TDateTime;
-    FnrRecibo: String;
-    Fhash: String;
-
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
-
-  published
-    property cdResposta: Integer read FcdResposta write FcdResposta;
-    property descResposta: String read FdescResposta write FdescResposta;
-    property versaoAplicProcLote: String read FversaoAplicProcLote write FversaoAplicProcLote;
-    property dhProcessamento: TDateTime read FdhProcessamento write FdhProcessamento;
-    property nrRecibo: String read FnrRecibo write FnrRecibo;
-    property hash: String read Fhash write Fhash;
-
-  end;
-
   { TConsultaTotResposta }
 
-  TConsultaTotResposta = class(TPadraoeSocialResposta)
+  TConsultaTotResposta = class(TACBrLibRespostaBase)
   private
     FTipo : String;
     FID : String;
     FNrRecArqBase : String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont, AContTot: Integer );
 
   published
     property Tipo: String read FTipo write FTipo;
@@ -151,34 +165,152 @@ type
 
   end;
 
+  { TConsultaResposta }
+
+  TConsultaResposta = class(TACBrLibRespostaBase)
+  private
+    FcdResposta: Integer;
+    FdescResposta: String;
+    FversaoAplicProcLote: String;
+    FdhProcessamento: TDateTime;
+    FnrRecibo: String;
+    Fhash: String;
+    FItemOcorrenciaConsulta: TObjectList;
+    FItemTotais: TObjectList;
+
+  public
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont: Integer);
+
+  published
+    property cdResposta: Integer read FcdResposta write FcdResposta;
+    property descResposta: String read FdescResposta write FdescResposta;
+    property versaoAplicProcLote: String read FversaoAplicProcLote write FversaoAplicProcLote;
+    property dhProcessamento: TDateTime read FdhProcessamento write FdhProcessamento;
+    property nrRecibo: String read FnrRecibo write FnrRecibo;
+    property hash: String read Fhash write Fhash;
+    property ItemOcorrenciaConsulta: TObjectList read FItemOcorrenciaConsulta;
+    property ItemTotais: TObjectList read FItemTotais;
+
+  end;
+
+  {TOcorrenciaConsultaLote}
+
+  TOcorrenciaConsultaLote = class(TACBrLibRespostaBase)
+  private
+    FCodigo: Integer;
+    FMensagem: String;
+    FCodigoOco: Integer;
+    FDescricao: String;
+    FTipo: Integer;
+    FLocalizacao: String;
+
+  public
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont: Integer );
+
+  published
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Mensagem: String read FMensagem write FMensagem;
+    property CodigoOco: Integer read FCodigoOco write FCodigoOco;
+    property Descricao: String read FDescricao write FDescricao;
+    property Tipo: Integer read FTipo write FTipo;
+    property Localizacao: String read FLocalizacao write FLocalizacao;
+
+  end;
+
+  { TConsultaIdentRecibo}
+
+  TConsultaIdentRecibo = class(TACBrLibRespostaBase)
+  private
+    FIdEvento : String;
+    FNRecibo : String;
+
+  public
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont: Integer );
+
+  published
+    property IdEvento: String read FIdEvento write FIdEvento;
+    property NRecibo: String read FNRecibo write FNRecibo;
+
+  end;
+
+
   { TConsultaTotEventos}
 
   TConsultaTotEventos = class(TPadraoeSocialResposta)
   private
     FQtdeTotal : Integer;
     FDhUltimoEvento : TDateTime;
+    FItemIdent: TObjectList;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial); override;
+    destructor Destroy; override;
 
   published
     property QtdeTotal: Integer read FQtdeTotal write FQtdeTotal;
     property DhUltimoEvento: TDateTime read FDhUltimoEvento write FDhUltimoEvento;
+    property ItemIdent: TObjectList read FItemIdent;
+
+  end;
+
+  { TConsulta }
+
+  TConsulta = class(TPadraoeSocialResposta)
+  private
+    FTpInscEmpreg: String;
+    FNrInscEmpreg: String;
+    FTpInscTransm: String;
+    FNrInscTransm: String;
+    FDhRecepcao: TDateTime;
+    FVersaoAplic: String;
+    FProtocolo: String;
+    FItemConsulta: TObjectList;
+    FItemOcorrencia: TObjectList;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const ACBreSocial: TACBreSocial); override;
+
+  published
+    property TpInscEmpreg: String read FTpInscEmpreg write FTpInscEmpreg;
+    property NrInscEmpreg: String read FNrInscEmpreg write FNrInscEmpreg;
+    property TpInscTransm: String read FTpInscTransm write FTpInscTransm;
+    property NrInscTransm: String read FNrInscTransm write FNrInscTransm;
+    property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
+    property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
+    property Protocolo: String read FProtocolo write FProtocolo;
+    property ItemConsulta: TObjectList read FItemConsulta;
+    property ItemOcorrencia: TObjectList read FItemOcorrencia;
 
   end;
 
   { TConsultaIdentEvento}
 
-  TConsultaIdentEvento = class(TPadraoeSocialResposta)
+  TConsultaIdentEvento = class(TACBrLibRespostaBase)
   private
     FIdEvento : String;
     FNRecibo : String;
     FXML : String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial; const ACont: Integer );
 
   published
     property IdEvento: String read FIdEvento write FIdEvento;
@@ -187,53 +319,370 @@ type
 
   end;
 
+  { TConsultaEventos}
+
+  TConsultaEventos = class(TPadraoeSocialResposta)
+  private
+    FItem: TObjectList;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const ACBreSocial: TACBreSocial); override;
+    destructor Destroy; override;
+
+  published
+    property Item: TObjectList read FItem;
+
+  end;
+
 implementation
+
+uses
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012;
+
+{ TConsultaEventos }
+
+constructor TConsultaEventos.Create(const ATipo: TACBrLibRespostaTipo;
+  const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespConsulta, ATipo, AFormato);
+  FItem := TObjectList.Create(true);
+end;
+
+procedure TConsultaEventos.Processar(const ACBreSocial: TACBreSocial);
+var
+  i: Integer;
+  Item : TConsultaIdentEvento;
+begin
+  for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.Status.Ocorrencias.Count - 1 do
+  begin
+    Item := TConsultaIdentEvento.Create(i+1, Tipo, Formato);
+    Item.Processar(ACBreSocial, i);
+    FItem.Add(Item);
+
+  end;
+
+end;
+
+destructor TConsultaEventos.Destroy;
+begin
+  FItem.Clear;
+  FItem.Destroy;
+
+  inherited Destroy;
+end;
+
+{ TConsultaIdentRecibo }
+
+constructor TConsultaIdentRecibo.Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+            const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespConsultaIdentEventosRecibo + IntToStrZero(ItemID,1), ATipo, AFormato);
+end;
+
+procedure TConsultaIdentRecibo.Processar(const ACBreSocial: TACBreSocial;
+  const ACont: Integer);
+begin
+  with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt.RetIdentEvts.Items[ACont] do
+  begin
+    IdEvento:= Id;
+    NRecibo:= nrRec;
+  end;
+
+end;
+
+{ TOcorrenciaConsultaLote }
+
+constructor TOcorrenciaConsultaLote.Create(const ItemID: Integer;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespOcorrencia + IntToStrZero(ItemID,1), ATipo, AFormato);
+end;
+
+procedure TOcorrenciaConsultaLote.Processar(const ACBreSocial: TACBreSocial;
+  const ACont: Integer);
+begin
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
+  begin
+    Codigo      := Status.cdResposta;
+    Mensagem    := Status.descResposta;
+    CodigoOco   := Status.Ocorrencias.Items[ACont].Codigo;
+    Descricao   := Status.Ocorrencias.Items[ACont].Descricao;
+    Tipo        := Status.Ocorrencias.Items[ACont].Tipo;
+    Localizacao := Status.Ocorrencias.Items[ACont].Localizacao;
+  end;
+
+end;
+
+{ TOcorrenciaConsulta }
+
+constructor TOcorrenciaConsulta.Create(const ItemID: Integer;
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespOcorrencia + IntToStrZero(ItemID,1), ATipo, AFormato);
+end;
+
+procedure TOcorrenciaConsulta.Processar(const ACBreSocial: TACBreSocial;
+  const ACont, AContOcor: Integer);
+begin
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.RetEventos.Items[ACont] do
+  begin
+    CodigoOco   := Processamento.Ocorrencias.Items[AContOcor].Codigo;
+    Descricao   := Processamento.Ocorrencias.Items[AContOcor].Descricao;
+    Tipo        := Processamento.Ocorrencias.Items[AContOcor].Tipo;
+    Localizacao := Processamento.Ocorrencias.Items[AContOcor].Localizacao;
+  end;
+
+end;
+
+{ TConsulta }
+
+constructor TConsulta.Create(const ATipo: TACBrLibRespostaTipo;
+  const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespEnvio, ATipo, AFormato);
+  FItemConsulta := TObjectList.Create(true);
+  FItemOcorrencia := TObjectList.Create(true);
+
+end;
+
+destructor TConsulta.Destroy;
+begin
+  FItemConsulta.Clear;
+  FItemConsulta.Free;
+  FItemOcorrencia.Clear;
+  FItemOcorrencia.Free;
+
+  inherited Destroy;
+end;
+
+procedure TConsulta.Processar(const ACBreSocial: TACBreSocial);
+var
+  i : integer;
+  ItemCons : TConsultaResposta;
+  ItemOcor : TOcorrenciaConsultaLote;
+begin
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote  do
+  begin
+    Codigo       := Status.cdResposta;
+    Mensagem     := Status.descResposta;
+    TpInscEmpreg := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
+    NrInscEmpreg := IdeEmpregador.NrInsc;
+    TpInscTransm := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
+    NrInscTransm := IdeTransmissor.NrInsc;
+    DhRecepcao   := dadosRecLote.dhRecepcao;
+    VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
+    Protocolo    := dadosRecLote.Protocolo;
+
+    if Status.cdResposta in [201, 202] then
+    begin
+      for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.RetEventos.Count - 1 do
+      begin
+        ItemCons := TConsultaResposta.Create(i+1, Tipo, Formato);
+        ItemCons.Processar(ACBreSocial, i);
+        FItemConsulta.Add(ItemCons);
+      end;
+    end
+    else
+    begin
+      for i := 0 to ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.Status.Ocorrencias.Count - 1 do
+      begin
+        ItemOcor := TOcorrenciaConsultaLote.Create(i+1, Tipo, Formato);
+        ItemOcor.Processar(ACBreSocial, i);
+        FItemOcorrencia.Add(ItemOcor);
+      end;
+
+    end;
+
+  end;
+
+end;
 
 { TConsultaIdentEvento }
 
-constructor TConsultaIdentEvento.Create(const ASessao: String;
+constructor TConsultaIdentEvento.Create(const ItemID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespConsulta + IntToStrZero(ItemID,1), ATipo, AFormato);
+end;
+
+procedure TConsultaIdentEvento.Processar(const ACBreSocial: TACBreSocial;
+  const ACont: Integer);
+begin
+  with ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
+  begin
+    IdEvento := Arquivo.Items[ACont].Id;
+    NRecibo := Arquivo.Items[ACont].nrRec;
+    XML := Arquivo.Items[ACont].XML;
+
+  end;
+
 end;
 
 { TConsultaTotEventos }
 
-constructor TConsultaTotEventos.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodificacao);
+constructor TConsultaTotEventos.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespConsultaIdentEventos, ATipo, AFormato);
+  FItemIdent := TObjectList.Create(true);
+end;
+
+procedure TConsultaTotEventos.Processar(const ACBreSocial: TACBreSocial);
+var
+  i : Integer;
+  itemRec : TConsultaIdentRecibo;
+begin
+  with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+  begin
+    Codigo:= Status.cdResposta;
+    Mensagem:= Status.descResposta;
+    QtdeTotal:= RetIdentEvts.qtdeTotEvtsConsulta;
+    DhUltimoEvento:= RetIdentEvts.dhUltimoEvtRetornado;
+
+    for i := 0 to RetIdentEvts.Count - 1 do
+    begin
+      ItemRec :=  TConsultaIdentRecibo.Create(i+1, Tipo, Formato);
+      ItemRec.Processar(ACBreSocial, i);
+      FItemIdent.Add(itemRec);
+    end;
+
+  end;
+
+end;
+
+destructor TConsultaTotEventos.Destroy;
+begin
+  FItemIdent.Clear;
+  FItemIdent.Free;
+  inherited Destroy;
+
 end;
 
 { TConsultaTotResposta }
 
-constructor TConsultaTotResposta.Create(const ASessao: String;
+constructor TConsultaTotResposta.Create(const ItemID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespConsultaTot + IntToStrZero(ItemID,1), ATipo, AFormato);
+
+end;
+
+procedure TConsultaTotResposta.Processar(const ACBreSocial: TACBreSocial;
+  const ACont, AContTot: Integer);
+var
+  evtS5001: TS5001;
+  evtS5002: TS5002;
+  evtS5011: TS5011;
+  evtS5012: TS5012;
+begin
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
+  begin
+    Tipo := tot[AContTot].tipo;
+    case tot[AContTot].Evento.TipoEvento of
+      teS5001:
+        begin
+          evtS5001 := TS5001(tot[AContTot].Evento.GetEvento);
+          ID  := evtS5001.EvtBasesTrab.Id;
+          NrRecArqBase := evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase;
+        end;
+      teS5002:
+        begin
+          evtS5002 := TS5002(tot[AContTot].Evento.GetEvento);
+          ID  := evtS5002.EvtirrfBenef.Id;
+          NrRecArqBase := evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase;
+        end;
+      teS5011:
+        begin
+          evtS5011 := TS5011(tot[AContTot].Evento.GetEvento);
+          ID  := evtS5011.EvtCS.Id;
+          NrRecArqBase := evtS5011.EvtCS.IdeEvento.nrRecArqBase;
+        end;
+      teS5012:
+        begin
+          evtS5012 := TS5012(tot[AContTot].Evento.GetEvento);
+          ID  := evtS5012.EvtIrrf.Id;
+          NrRecArqBase := evtS5012.EvtIrrf.IdeEvento.nrRecArqBase;
+        end;
+    end;
+  end;
+
 end;
 
 { TConsultaResposta }
 
-constructor TConsultaResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+constructor TConsultaResposta.Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create( CSessaoRespConsulta + IntToStrZero(ItemID,1), ATipo, AFormato);
+  FItemOcorrenciaConsulta := TObjectList.Create(true);
+  FItemTotais := TObjectList.Create(true);
+
 end;
 
-{ TEnvioResposta }
-
-constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+destructor TConsultaResposta.Destroy;
 begin
-  inherited Create(CSessaoRespEnvio, ATipo, AFormato);
+  FItemOcorrenciaConsulta.Clear;
+  FItemOcorrenciaConsulta.Free;
+  FItemTotais.Clear;
+  FItemTotais.Free;
+
+  inherited Destroy;
+end;
+
+procedure TConsultaResposta.Processar(const ACBreSocial: TACBreSocial; const ACont: Integer);
+var
+  i : integer;
+  Item : TOcorrenciaConsulta;
+  ItemTot : TConsultaTotResposta;
+begin
+  with ACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
+  begin
+    cdResposta      := Processamento.cdResposta;
+    descResposta    := Processamento.descResposta;
+    versaoAplicProcLote:= Processamento.versaoAplicProcLote;
+    dhProcessamento := Processamento.dhProcessamento;
+    nrRecibo        := Recibo.nrRecibo;
+    hash            := Recibo.Hash;
+
+    for i := 0 to Processamento.Ocorrencias.Count - 1 do
+    begin
+      Item := TOcorrenciaConsulta.Create(i+1, Tipo, Formato);
+      Item.Processar(ACBreSocial, ACont, i);
+      FItemOcorrenciaConsulta.Add(Item);
+    end;
+
+    for i := 0 to tot.Count - 1 do
+    begin
+      ItemTot := TConsultaTotResposta.Create(i+1, Tipo, Formato);
+      ItemTot.Processar(ACBreSocial, ACont, i);
+      FItemTotais.Add(ItemTot);
+    end;
+
+  end;
+
 end;
 
 { TOcorrenciaResposta }
 
-constructor TOcorrenciaResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+constructor TOcorrenciaResposta.Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoRespOcorrencia + IntToStrZero(ItemID,1), ATipo, AFormato);
+end;
+
+procedure TOcorrenciaResposta.Processar(const ACBreSocial: TACBreSocial; const ACont: Integer);
+begin
+  with ACBreSocial.WebServices.EnvioLote.RetEnvioLote do
+  begin
+    Codigo      := Status.cdResposta;
+    Mensagem    := Status.descResposta;
+    CodigoOco   := Status.Ocorrencias.Items[ACont].Codigo;
+    Descricao   := Status.Ocorrencias.Items[ACont].Descricao;
+    Tipo        := Status.Ocorrencias.Items[ACont].Tipo;
+    Localizacao := Status.Ocorrencias.Items[ACont].Localizacao;
+  end;
+
 end;
 
 { TPadraoeSocialResposta }
@@ -243,6 +692,51 @@ constructor TPadraoeSocialResposta.Create(const ASessao: String;
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
+
+{ TEnvioResposta }
+
+constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespEnvio, ATipo, AFormato);
+  FItemOcorrencia := TObjectList.Create(true);
+
+end;
+
+destructor TEnvioResposta.Destroy;
+begin
+  FItemOcorrencia.Clear;
+  FItemOcorrencia.Free;
+
+  inherited Destroy;
+end;
+
+procedure TEnvioResposta.Processar(const ACBreSocial: TACBreSocial);
+var
+  i : integer;
+  Item : TOcorrenciaResposta;
+begin
+  with ACBreSocial.WebServices.EnvioLote.RetEnvioLote do
+  begin
+    Codigo       := Status.cdResposta;
+    Mensagem     := Status.descResposta;
+    TpInscEmpreg := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
+    NrInscEmpreg := IdeEmpregador.NrInsc;
+    TpInscTransm := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
+    NrInscTransm := IdeTransmissor.NrInsc;
+    DhRecepcao   := dadosRecLote.dhRecepcao;
+    VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
+    Protocolo    := dadosRecLote.Protocolo;
+
+  end;
+  for i := 0 to ACBreSocial.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do
+  begin
+    Item := TOcorrenciaResposta.Create(i+1, Tipo, Formato);
+    Item.Processar(ACBreSocial, i);
+    FItemOcorrencia.Add(Item);
+  end;
+
+end;
+
 
 end.
 

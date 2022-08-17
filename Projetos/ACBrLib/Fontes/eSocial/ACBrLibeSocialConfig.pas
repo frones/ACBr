@@ -43,51 +43,25 @@ uses
 
 type
 
-  { TeSocialConfig }
-  {
-  TeSocialConfig = class
-  private
-    FeSocialConfig: TConfiguracoeseSocial;
-
-  public
-    constructor Create;
-    destructor Destroy; override;
-//    procedure LerIni(const AIni: TCustomIniFile);
-//    procedure GravarIni(const AIni: TCustomIniFile);
-
-    property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
-  end;
-  }
   { TLibeSocialConfig }
   TLibeSocialConfig = class(TLibConfig)
   private
-    FSetIDEmpregador: String;
-    FSetIDTransmissor: String;
-    FSetTipoEmpregador: Integer;
-    FSetVersaoDF: String;
     FeSocialConfig: TConfiguracoeseSocial;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
+    procedure Travar; override;
+    procedure Destravar; override;
 
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
 
-    procedure Travar; override;
-    procedure Destravar; override;
-
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    property SetIDEmpregador: String read FSetIDEmpregador write FSetIDEmpregador;
-    property SetIDTransmissor: String read FSetIDTransmissor write FSetIDTransmissor;
-    property SetTipoEmpregador: Integer read FSetTipoEmpregador write FSetTipoEmpregador;
-    property SetVersaoDF: String read FSetVersaoDF write FSetVersaoDF;
-
-
     property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
+
   end;
 
 implementation
@@ -96,33 +70,6 @@ uses
   ACBrLibeSocialBase, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum,
   ACBrUtil.FilesIO, ACBrUtil.Strings;
 
-{ TeSocialConfig }
-{
-constructor TeSocialConfig.Create;
-begin
-  FeSocialConfig := TConfiguracoeseSocial.Create(nil);
-end;
-
-destructor TeSocialConfig.Destroy;
-begin
-  FeSocialConfig.Destroy;
-
-  inherited Destroy;
-end;
-}
-{
-procedure TeSocialConfig.LerIni(const AIni: TCustomIniFile);
-begin
-  FCodContrato := AIni.ReadString(CSessaoeSocial, CChaveCodContrato, FCodContrato);
-  FSenha       := AIni.ReadString(CSessaoeSocial, CChaveSenha, FSenha);
-end;
-
-procedure TeSocialConfig.GravarIni(const AIni: TCustomIniFile);
-begin
-  AIni.WriteString(CSessaoeSocial, CChaveCodContrato, FCodContrato);
-  AIni.WriteString(CSessaoeSocial, CChaveSenha, FSenha);
-end;
-}
 { TLibeSocialConfig }
 
 constructor TLibeSocialConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
@@ -130,50 +77,42 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FeSocialConfig := TConfiguracoeseSocial.Create(nil);
+  FeSocialConfig.ChaveCryptINI := AChaveCrypt;
+
 end;
 
 destructor TLibeSocialConfig.Destroy;
 begin
-  FeSocialConfig.Free;
+  FeSocialConfig.Destroy;
 
   inherited Destroy;
-end;
-
-function TLibeSocialConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibeSocialNome, '0');
-  Result := (CompareVersions(CLibeSocialVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
 end;
 
 procedure TLibeSocialConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
-  FeSocialConfig.Arquivos.LerIni(Ini);
-  FeSocialConfig.Certificados.LerIni(Ini);
-  FeSocialConfig.Geral.LerIni(Ini);
-  FeSocialConfig.WebServices.LerIni(Ini);
+  FeSocialConfig.ChaveCryptINI := ChaveCrypt;
+  FeSocialConfig.LerIni(Ini);
+
 end;
 
 procedure TLibeSocialConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
-  Ini.WriteString(CSessaoVersao, CLibeSocialNome, CLibeSocialVersao);
+  FeSocialConfig.ChaveCryptINI := ChaveCrypt;
+  FeSocialConfig.GravarIni(Ini);
 
-  FeSocialConfig.Arquivos.GravarIni(Ini);
-  FeSocialConfig.Certificados.GravarIni(Ini);
-  FeSocialConfig.Geral.GravarIni(Ini);
-  FeSocialConfig.WebServices.GravarIni(Ini);
 end;
 
 procedure TLibeSocialConfig.ClasseParaComponentes;
 begin
+  FeSocialConfig.ChaveCryptINI := ChaveCrypt;
+
   if Assigned(Owner) then
     TACBrLibeSocial(Owner).eSocialDM.AplicarConfiguracoes;
+
 end;
 
 procedure TLibeSocialConfig.Travar;
@@ -183,6 +122,7 @@ begin
     with TACBrLibeSocial(Owner) do
       eSocialDM.Travar;
   end;
+
 end;
 
 procedure TLibeSocialConfig.Destravar;
@@ -191,7 +131,9 @@ begin
   begin
     with TACBrLibeSocial(Owner) do
       eSocialDM.Destravar;
+
   end;
+
 end;
 
 end.

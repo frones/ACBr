@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 17/08/2022
+-- Tiplan.Provider --
+[*] Ajustes na montagem do Envelope do EnviarLoteRps
+   Por: Italo Giurizzato Junior
 -- Betha.Provider/Betha.GravarXml --
 [*] Ajustes no Tratamento do XML retornado e condicionar se deve ou não gerar
     a tag referente ao código do pais.

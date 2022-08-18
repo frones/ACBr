@@ -9,6 +9,8 @@
         lReciboTopo,
         lPadraoEntrega2,
         lFaturaDetal,
-        lTermica80mm
+        lTermica80mm,
+        lPadraoPix,
+        lPrestaServ
     }
 }

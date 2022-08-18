@@ -186,6 +186,18 @@ Private Declare Function Boleto_RetornaCodigoBarras _
                                         ByVal eIndice As Long, _
                                         ByVal buffer As String, _
                                         ByRef bufferLen As Long) As Long
+                                        
+Private Declare Function Boleto_EnviarBoleto _
+                Lib "ACBrBoleto32.dll" (ByVal libHandler As Long, _
+                                        ByVal eCodigoOperacao As Long, _
+                                        ByVal buffer As String, _
+                                        ByRef bufferLen As Long) As Long
+                                        
+Private Declare Function Boleto_ConsultarTitulosPorPeriodo _
+                Lib "ACBrBoleto32.dll" (ByVal libHandler As Long, _
+                                        ByVal eArquivoIni As String, _
+                                        ByVal buffer As String, _
+                                        ByRef bufferLen As Long) As Long
                                      
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
@@ -537,6 +549,36 @@ Public Function RetornaCodigoBarras(ByVal eIndice As Long) As String
     CheckResult retorno
     
     RetornaCodigoBarras = processResult(buffer, bufferLen)
+End Function
+
+Public Function EnviarBoleto(ByVal eCodigoOperacao As Long) As String
+    Dim retorno As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = Boleto_EnviarBoleto(libHandler, eCodigoOperacao, buffer, bufferLen)
+    CheckResult (retorno)
+    
+    EnviarBoleto = processResult(buffer, bufferLen)
+End Function
+
+Public Function ConsultarTitulosPorPeriodo(ByVal eArquivoIni As String) As String
+
+    Dim retorno As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+    
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = Boleto_ConsultarTitulosPorPeriodo(libHandler, eArquivoIni, buffer, bufferLen)
+    CheckResult (retorno)
+    
+    ConsultarTitulosPorPeriodo = processResult(buffer, bufferLen)
+
 End Function
                                      
 Private Sub CheckResult(ByVal Resultado As Long)

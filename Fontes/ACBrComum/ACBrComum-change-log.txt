@@ -39,6 +39,12 @@ Símbolo : Significado
 
 18/08/2022
 -- ACBrUtil.DateTime --
+[*] Criadas funções para testar se uma String é ou possui TimeZone.
+    (Exemplos de TimeZones: 'Z', '-03:00', '+01:00')
+	Por: Elias César
+
+18/08/2022
+-- ACBrUtil.DateTime --
 [*] Alteração para remover o TimeZone do parâmetro enviado para a função 'StringToDateTime()'.
 [*] Modificada função 'ParseDataHora()' para também tratar TimeZones positivos (Exemplo: '+01:00').
     Por: Elias César

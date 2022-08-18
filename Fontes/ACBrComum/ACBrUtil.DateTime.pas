@@ -96,6 +96,9 @@ function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): stri
 function BiasToTimeZone(const aBias: Integer): String;
 function TimeZoneToBias(const aTimeZone: String): Integer;
 
+function StrIsTimeZone(const aStr: String): Boolean;
+function StrHasTimeZone(const aStr: String): Boolean;
+
 function DateTimeUniversal(const AUTC: String = ''; const ADateTime: TDateTime = 0 ): TDateTime;
 
 function IsWorkingDay(ADate: TDateTime): Boolean;
@@ -181,6 +184,9 @@ Var
   OldShortDateFormat: String ;
   {$ENDIF}
 
+  // Remove qualquer TimeZone da String. Exemplos:
+  // - '2022-02-20 02:02:55Z'      Result: '2022-02-20 02:02:55'
+  // - '2022-11-11 11:11:11-03:00' Result: '2022-11-11 11:11:11'
   function RemoverTimeZone(const aDateTimeString: String): String;
   var
     wTMZ: String;
@@ -188,14 +194,15 @@ Var
     Result := Trim(aDateTimeString);
     wTMZ := UpperCase(Result);
 
+    if (not StrHasTimeZone(aDateTimeString)) then
+      Exit;
+
     if (RightStr(wTMZ, 1) = 'Z') then
       Result := LeftStr(aDateTimeString, Length(wTMZ)-1)
-    else if (Length(wTMZ) > 10) then
+    else
     begin
       wTMZ := RightStr(wTMZ, 6);
-
-      if (CharInSet(wTMZ[1], ['-', '+'])) then
-        Result := StringReplace(aDateTimeString, wTMZ, EmptyStr, [rfReplaceAll]);
+      Result := StringReplace(aDateTimeString, wTMZ, EmptyStr, [rfReplaceAll]);
     end;
   end;
 
@@ -386,21 +393,21 @@ var
   TMZ: String;
   M, H, Tam: Integer;
 begin
-  Result := 0;
+  Result := -1;
+  if (not StrHasTimeZone(aTimeZone)) then
+    Exit;
+
   TMZ := UpperCase(Trim(aTimeZone));
   Tam := Length(TMZ);
 
-  if (Tam > 0) and (TMZ[Tam] = 'Z') then
+  if (TMZ[Tam] = 'Z') then
+  begin
+    Result := 0;
     Exit;
+  end;
 
   if (Tam > 6) then
     TMZ := RightStr(TMZ, 6);
-
-  if EstaVazio(TMZ) or (not (CharInSet(TMZ[1], ['-', '+']))) then
-  begin
-    Result := -1;
-    Exit;
-  end;
 
   H  := StrToIntDef(Copy(TMZ, 2, 2), 0);
   M  := StrToIntDef(Copy(TMZ, 5, 2), 0);
@@ -408,6 +415,30 @@ begin
 
   if (TMZ[1] = '+') then
     Result := Result*(-1);
+end;
+
+function StrIsTimeZone(const aStr: String): Boolean;
+var
+  wS: String;
+  Tam: Integer;
+begin
+  wS := UpperCase(aStr);
+  Tam := Length(aStr);
+  Result := (Tam = 1) and (wS[1] = 'Z');
+
+  if (not Result) and (Tam = 6) and CharInSet(wS[1], ['-', '+']) and (wS[4] = ':') then
+  begin
+    Delete(wS, 4, 1);
+    Delete(wS, 1, 1);
+    Result := StrIsNumber(wS);
+  end;
+end;
+
+function StrHasTimeZone(const aStr: String): Boolean;
+begin
+  Result := NaoEstaVazio(aStr) and
+    (StrIsTimeZone(aStr[Length(aStr)]) or
+     StrIsTimeZone(RightStr(aStr, 6)));
 end;
 
 {-----------------------------------------------------------------------------

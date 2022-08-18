@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/08/2022
+-- Diversos --
+[+] Implementado o banco Sicoob.
+   Por: Italo Giurizzato Junior
+
 17/08/2022
 -- Diversos --
 [*] Correções no Segmento N.

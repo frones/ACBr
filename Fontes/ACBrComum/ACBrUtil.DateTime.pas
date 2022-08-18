@@ -169,8 +169,7 @@ end;
   mas verifica se o seprador da Data é compativo com o S.O., efetuando a
   conversão se necessário. Se não for possivel converter, dispara Exception
  ---------------------------------------------------------------------------- }
-function StringToDateTime(const DateTimeString : String ; const Format : String
-   ) : TDateTime ;
+function StringToDateTime(const DateTimeString: String; const Format: String): TDateTime;
 Var
   AStr : String;
   DS, TS: Char;
@@ -182,11 +181,29 @@ Var
   OldShortDateFormat: String ;
   {$ENDIF}
 
+  function RemoverTimeZone(const aDateTimeString: String): String;
+  var
+    wTMZ: String;
+  begin
+    Result := Trim(aDateTimeString);
+    wTMZ := UpperCase(Result);
+
+    if (RightStr(wTMZ, 1) = 'Z') then
+      Result := LeftStr(aDateTimeString, Length(wTMZ)-1)
+    else if (Length(wTMZ) > 10) then
+    begin
+      wTMZ := RightStr(wTMZ, 6);
+
+      if (CharInSet(wTMZ[1], ['-', '+'])) then
+        Result := StringReplace(aDateTimeString, wTMZ, EmptyStr, [rfReplaceAll]);
+    end;
+  end;
+
   function AjustarDateTimeString(const DateTimeString: String; DS, TS: Char): String;
   var
     AStr: String;
   begin
-    AStr := Trim(DateTimeString);
+    AStr := RemoverTimeZone(DateTimeString);
     if (DS <> '.') then
       AStr := StringReplace(AStr, '.', DS, [rfReplaceAll]);
 
@@ -197,10 +214,11 @@ Var
       AStr := StringReplace(AStr, '/', DS, [rfReplaceAll]);
 
     if (TS <> ':') then
-      AStr := StringReplace(AStr, ':', TS, [rfReplaceAll]) ;
+      AStr := StringReplace(AStr, ':', TS, [rfReplaceAll]);
 
     Result := AStr;
   end;
+
 begin
   Result := 0;
   if (DateTimeString = '0') or (DateTimeString = '') then
@@ -593,11 +611,12 @@ begin
     xDataHora := Copy(xDataHora, p+1, Length(xDataHora) - p);
 
     p := Pos('-', xDataHora);
-
-    if p = 0 then
+    if (p = 0) then
+      p := Pos('+', xDataHora)
+    else if (p = 0) then
       p := Pos(' ', xDataHora);
 
-    if p > 0 then
+    if (p > 0) then
     begin
       xHora := Copy(xDataHora, 1, p-1);
       xTZD := Copy(xDataHora, p, Length(xDataHora));

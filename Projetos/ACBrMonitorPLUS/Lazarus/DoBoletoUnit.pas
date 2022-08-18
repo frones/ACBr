@@ -382,15 +382,15 @@ begin
 
     try
       ACBrBoleto.Configuracoes.WebService.Operacao:= tpConsulta;
-      ACBrBoleto.EnviarBoleto;
-      if ACBrBoleto.ListaRetornoWeb.Count > 0 then
+      ACBrBoleto.Enviar;
+      if ACBrBoleto.ListaConsultaRetornoWeb.Count > 0 then
       begin
-        SetLength(Titulos, ACBrBoleto.ListaRetornoWeb.Count);
+        SetLength(Titulos, ACBrBoleto.ListaConsultaRetornoWeb.Count);
         try
-          for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
+          for I:= 0 to ACBrBoleto.ListaConsultaRetornoWeb.Count -1 do
           begin
             Titulo := TRetornoRegistroWeb.Create(I + 1, TpResp, codUTF8);
-            Titulo.Processar(ACBrBoleto.ListaRetornoWeb[I]);
+            Titulo.Processar(ACBrBoleto.ListaConsultaRetornoWeb[I]);
             Titulos[I] := Titulo;
           end;
 
@@ -1040,12 +1040,12 @@ begin
   begin
     try
       ACBrBoleto.Configuracoes.WebService.Operacao:= TOperacao(AOperacao);
-      ACBrBoleto.EnviarBoleto;
-      if ACBrBoleto.ListaRetornoWeb.Count > 0 then
+      ACBrBoleto.Enviar;
+      if ACBrBoleto.TotalListaRetornoWeb > 0 then
       begin
-        SetLength(Titulos, ACBrBoleto.ListaRetornoWeb.Count);
+        SetLength(Titulos, ACBrBoleto.TotalListaRetornoWeb);
         try
-          for I:= 0 to ACBrBoleto.ListaRetornoWeb.Count -1 do
+          for I:= 0 to ACBrBoleto.TotalListaRetornoWeb -1 do
           begin
             Titulo := TRetornoRegistroWeb.Create(I + 1, TpResp, codUTF8);
             Titulo.Processar(ACBrBoleto.ListaRetornoWeb[I]);

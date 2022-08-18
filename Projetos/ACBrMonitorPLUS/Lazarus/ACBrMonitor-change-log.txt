@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/08/2022
+--- DoBoletoUnit ---
+[*] Atualização das chamadas de envio por API e atualização das classes resposta baseado no refactory do componente boleto
+
+17/08/2022
 ---DoACBreSocialUnit---
 [*] Refatoração das Respostas baseado na classe da ACBrLibeSocial
 

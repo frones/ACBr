@@ -105,6 +105,9 @@ contains
   PagFor.Santander.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.GravarTxtRemessa.pas',
   PagFor.Santander.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.LerTxtRetorno.pas',
   PagFor.Santander.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Santander.Provider.pas',
+  PagFor.Sicoob.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicoob.GravarTxtRemessa.pas',
+  PagFor.Sicoob.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicoob.LerTxtRetorno.pas',
+  PagFor.Sicoob.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicoob.Provider.pas',
   PagFor.Sicredi.GravarTxtRemessa in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.GravarTxtRemessa.pas',
   PagFor.Sicredi.LerTxtRetorno in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.LerTxtRetorno.pas',
   PagFor.Sicredi.Provider in '..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Sicredi.Provider.pas';

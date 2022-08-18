@@ -241,7 +241,10 @@ var
   ListTransacao: TStringList;
 
 begin
-  Fsequencia     := 3 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo);
+  if (ACBrTitulo.TipoDesconto2<>tdNaoConcederDesconto) or (ACBrTitulo.TipoDesconto3<>tdNaoConcederDesconto) then
+    Fsequencia     := 3 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)
+  else
+    Fsequencia     := 2 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo);
 
   //Caracteristica Título
   FcodCarteira := DefineCaracTitulo(ACBrTitulo);

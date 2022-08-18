@@ -735,7 +735,7 @@ var
   FiltrosAPI : TACBrBoletoWSFiltroConsulta;
   Boleto : TACBrBoleto;
   SLRetorno : TStringList;
-  Retorno : TListaRetEnvio;
+  Retorno : TListaACBrBoletoRetornoWS;
   I: Integer;
 begin
   //Exemplo utilizando como Banco do Brasil API
@@ -750,8 +750,8 @@ begin
 
   Boleto.Configuracoes.WebService.Operacao := tpConsulta;
 
-  Boleto.EnviarBoleto;
-  Retorno := Boleto.ListaRetornoWeb;
+  Boleto.Enviar;
+  Retorno := Boleto.ListaConsultaRetornoWeb;
   if Retorno.Count > 0 then
   begin
     SLRetorno := TStringList.Create;
@@ -808,14 +808,14 @@ begin
 
   //Função de Envio
   Boleto.Configuracoes.WebService.Operacao := tpInclui;
-  Boleto.EnviarBoleto; // <<< retorna como false se o httpresult code for diferente de 200,201,202
+  Boleto.Enviar; // <<< retorna como false se o httpresult code for diferente de 200,201,202
   //Verifica Lista com os retornos
 
-  if Boleto.ListaRetornoWeb.Count > 0 then
+  if Boleto.TotalListaRetornoWeb > 0 then
   begin
     SLRemessa := TStringList.Create;
     try
-      for i:= 0 to Pred(Boleto.ListaRetornoWeb.Count) do
+      for i:= 0 to Pred(Boleto.TotalListaRetornoWeb) do
       begin
         //Ler todos os campos da classe Retorno
         SLRemessa.Add('Cod_Retorno='+ Boleto.ListaRetornoWeb[i].CodRetorno + sLineBreak +

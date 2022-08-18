@@ -326,13 +326,13 @@ begin
     Result[i].AppendChild(AddNode(tcInt, '#', 'situacao_tributaria', 1, 4, 1,
                            NFSe.Servico.ItemServico[I].SituacaoTributaria, ''));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_tributavel', 1, 15, 1,
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_tributavel', 1, 15, 0,
                                    NFSe.Servico.ItemServico[I].ValorTotal, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_deducao', 1, 15, 0,
                                 NFSe.Servico.ItemServico[I].ValorDeducoes, ''));
 
-    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 0,
+    Result[i].AppendChild(AddNode(tcDe2, '#', 'valor_issrf', 1, 15, 1,
                          NFSe.Servico.ItemServico[I].ValorISSRetido, DSC_VISS));
   end;
 

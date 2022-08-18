@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+18/08/2022
+-- IPM.GravarXml --
+[*] Alteração na quantidade de ocorrencias, a tag Valor_tributavel passa a ser opcional
+    e a tag valor_issrf passa a ser obrigatória.
+   Por: Guilherme Vaz
+
 17/08/2022
 -- ACBrNFSeXServicos --
 [+] Incluido a URL de homologação para as cidades atendidas pelo provedor ISSDSF.

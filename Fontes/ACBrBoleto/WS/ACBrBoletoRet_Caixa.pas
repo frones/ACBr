@@ -38,7 +38,7 @@ interface
 
 uses
   Classes, SysUtils, ACBrBoleto,ACBrBoletoWS, ACBrBoletoRetorno,
-  pcnConversao;
+  DateUtils, pcnConversao;
 
 type
 
@@ -50,8 +50,8 @@ type
   public
     constructor Create(ABoletoWS: TACBrBoleto); override;
     destructor  Destroy; Override;
-    function LerRetorno: Boolean;override;
-    function RetornoEnvio: Boolean; override;
+    function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;override;
+    function RetornoEnvio(const AIndex: Integer): Boolean; override;
 
   end;
 
@@ -73,10 +73,10 @@ begin
   inherited Destroy;
 end;
 
-function TRetornoEnvio_Caixa.LerRetorno: Boolean;
+function TRetornoEnvio_Caixa.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
   Ok: Boolean;
-  RetornoCaixa: TRetEnvio;
+  //RetornoCaixa: TACBrBoletoRetornoWS;
   i: Integer;
   lXML: String;
 begin
@@ -86,9 +86,10 @@ begin
   Leitor.Arquivo := lXML;
   Leitor.Grupo := Leitor.Arquivo;//StringReplace(Leitor.Arquivo, 'sibar_base:"', '', [rfReplaceAll] );
 
-  RetornoCaixa:= ACBrBoleto.CriarRetornoWebNaLista;
+  //RetornoCaixa:= ACBrBoleto.CriarRetornoWebNaLista;
   try
-    with RetornoCaixa do
+    //with RetornoCaixa do
+    with ARetornoWS do
     begin
 
       CodRetorno := Leitor.rCampo(tcStr, 'COD_RETORNO');
@@ -289,13 +290,14 @@ begin
         end;
       end;
     end;
+
   except
     Result := False;
   end;
 
 end;
 
-function TRetornoEnvio_Caixa.RetornoEnvio: Boolean;
+function TRetornoEnvio_Caixa.RetornoEnvio(const AIndex: Integer): Boolean;
 var
   lRetornoWS: String;
 begin
@@ -303,7 +305,7 @@ begin
   lRetornoWS := RetWS;
   RetWS := SeparaDados(lRetornoWS, 'soapenv:Body');
 
-  Result:=inherited RetornoEnvio;
+  Result:=inherited RetornoEnvio(AIndex);
 
 end;
 

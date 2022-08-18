@@ -37,7 +37,7 @@ unit ACBrBoletoW_Caixa;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, pcnGerador, ACBrBoletoConversao;
+  Classes, SysUtils, ACBrBoletoWS, pcnConversao, pcnGerador, ACBrBoletoConversao, ACBrBoleto;
 
 type
 
@@ -237,13 +237,13 @@ begin
   begin
     Gerador.wGrupo('sib:HEADER');
     Gerador.wCampo(tcStr, '#1', 'VERSAO         ', 01, 10, 1, Boleto.Configuracoes.WebService.VersaoDF, DSC_VERSAODF);
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
       Gerador.wCampo(tcStr, '#2', 'AUTENTICACAO   ', 01, 64, 1, GerarAutenticacao(Boleto.Configuracoes.WebService.Operacao,
-                                                                                  Titulos.NossoNumero,
+                                                                                  ATitulo.NossoNumero,
                                                                                   Boleto.Cedente.CNPJCPF,
                                                                                   Boleto.Cedente.CodigoCedente,
-                                                                                  Titulos.ValorDocumento,
-                                                                                  Titulos.Vencimento), DSC_AUTENTICACAO);
+                                                                                  ATitulo.ValorDocumento,
+                                                                                  ATitulo.Vencimento), DSC_AUTENTICACAO);
     Gerador.wCampo(tcStr, '#3', 'USUARIO_SERVICO', 01, 08, 1, sUsuarioServico, DSC_USUARIO_SERVICO);
     Gerador.wCampo(tcStr, '#4', 'OPERACAO       ', 01, 50, 1, TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ), DSC_TIPO_SERVICO);
     Gerador.wCampo(tcStr, '#5', 'SISTEMA_ORIGEM ', 01, 05, 1, C_SISTEMA_ORIGEM, DSC_SISTEMA_ORIGEM);
@@ -256,8 +256,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarDados;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       Gerador.wGrupo('DADOS');
 
@@ -307,8 +307,8 @@ procedure TBoletoW_Caixa.GerarTitulo;
 var
   AEspecieDoc: string;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       //mantendo padronização de preenchimento do campo EspecieDoc entre
       //as funcionalides de REMESSA e REGISTRO ON-LINE.
@@ -406,8 +406,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarJuros;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       Gerador.wGrupo('JUROS_MORA');
       Gerador.wCampo(tcStr, '#09', 'TIPO', 01, 20, 1, TipoJurosToStr(CodigoMoraJuros), DSC_CODIGO_MORA_JUROS);
@@ -428,8 +428,8 @@ procedure TBoletoW_Caixa.GerarPos_Vencimento;
 var
   ADiasBaixaDevolucao: integer;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       Gerador.wGrupo('POS_VENCIMENTO');
       if (integer(CodigoNegativacao) in [1,2]) then
@@ -452,8 +452,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarPagador;
 begin
-  if Assigned(Titulos) then
-    with Titulos.Sacado do
+  if Assigned(ATitulo) then
+    with ATitulo.Sacado do
     begin
       Gerador.wGrupo('PAGADOR');
 
@@ -480,10 +480,10 @@ end;
 
 procedure TBoletoW_Caixa.GerarAvalista;
 begin
-  if Assigned(Titulos) then
-    with Titulos.Sacado.SacadoAvalista do
+  if Assigned(ATitulo) then
+    with ATitulo.Sacado.SacadoAvalista do
     begin
-      if NaoEstaVazio(Titulos.Sacado.SacadoAvalista.CNPJCPF) then
+      if NaoEstaVazio(ATitulo.Sacado.SacadoAvalista.CNPJCPF) then
       begin
         Gerador.wGrupo('SACADOR_AVALISTA');
         Gerador.wCampoCNPJCPF('#26', '#28', CNPJCPF);
@@ -502,8 +502,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarMulta;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       if (PercentualMulta > 0) and (DataMulta > 0) then
       begin
@@ -524,8 +524,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarDescontos;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       if (ValorDesconto > 0) then
       begin
@@ -566,8 +566,8 @@ procedure TBoletoW_Caixa.GerarFicha_Compensacao;
 var
   J: Integer;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       if (Mensagem.Count > 0) then
       begin
@@ -588,8 +588,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarRecibo_Pagador;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       if (Instrucao1 <> '') then
       begin
@@ -613,8 +613,8 @@ end;
 
 procedure TBoletoW_Caixa.GerarPagamento;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       Gerador.wGrupo('PAGAMENTO');
       Gerador.wCampo(tcInt, '#40', 'QUANTIDADE_PERMITIDA', 01, 02, 0, QtdePagamentoParcial, DSC_QTDE_PAGAMENTO_PARCIAL);

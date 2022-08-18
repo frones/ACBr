@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2021 Daniel Simoes de Almeida               }
 { Colaboradores nesse arquivo:  Victor Hugo Gonzales - Panda                   }
-{                               Igless, Odeon                                  }
+{                               Igless                                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -37,7 +37,7 @@ unit ACBrBoletoRet_Credisis;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, ACBrBoletoWS, ACBrBoletoRetorno, pcnConversao;
+  Classes, SysUtils, ACBrBoleto, ACBrBoletoWS, ACBrBoletoRetorno, DateUtils, pcnConversao;
 
 type
 
@@ -49,8 +49,8 @@ type
   public
     constructor Create(ABoletoWS: TACBrBoleto); override;
     destructor  Destroy; Override;
-    function LerRetorno: Boolean;override;
-    function RetornoEnvio: Boolean; override;
+    function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;override;
+    function RetornoEnvio(const AIndex: Integer): Boolean; override;
 
   end;
 
@@ -60,7 +60,7 @@ type
 implementation
 
 uses
-  ACBrBoletoConversao, ACBrUtil.XMLHTML;
+  ACBrUtil.XMLHTML;
 
 { TRetornoEnvio_Credisis }
 
@@ -74,9 +74,8 @@ begin
   inherited Destroy;
 end;
 
-function TRetornoEnvio_Credisis.LerRetorno: Boolean;
+function TRetornoEnvio_Credisis.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
-    RetornoCredisis: TRetEnvio;
     lXML: String;
 begin
     Result := True;
@@ -86,28 +85,16 @@ begin
     Leitor.Arquivo := lXML;
     Leitor.Grupo   := Leitor.Arquivo;
 
-    RetornoCredisis:= ACBrBoleto.CriarRetornoWebNaLista;
     try
       if leitor.rExtrai(1, 'gerarBoletosResponse') <> '' then
       begin
-          RetornoCredisis.OriRetorno                         := Leitor.rCampo(tcStr, 'idWeb');
-          RetornoCredisis.DadosRet.ControleNegocial.NSU      := Leitor.rCampo(tcStr, 'numeroSequencial');
-          RetornoCredisis.DadosRet.IDBoleto.NossoNum         := Leitor.rCampo(tcStr, 'nossonumero');
-          RetornoCredisis.DadosRet.IDBoleto.LinhaDig         := Leitor.rCampo(tcStr, 'linhaDigitavel');
-          RetornoCredisis.DadosRet.IDBoleto.CodBarras        := Leitor.rCampo(tcStr, 'codigoBarras');
-          RetornoCredisis.DadosRet.TituloRet.DataLimitePagto := Leitor.rCampo(tcDat, 'dataLimitePagamento');
-          RetornoCredisis.CodRetorno                         := Leitor.rCampo(tcStr, 'code');
-          RetornoCredisis.DadosRet.Excecao                   := Leitor.rCampo(tcStr, 'message');
-      end else
-      begin
-        if (leitor.rExtrai(1, 'buscarBoletosResponse') <> '') and (leitor.rExtrai(2, 'item') <> '') then
-        begin
-          RetornoCredisis.OriRetorno                         := Leitor.rCampo(tcStr, 'idWeb');
-          RetornoCredisis.DadosRet.TituloRet.Sacado.CNPJCPF  := Leitor.rCampo(tcStr, 'cpfCnpj');
-          RetornoCredisis.DadosRet.IDBoleto.NossoNum         := Leitor.rCampo(tcStr, 'nossonumero');
-          RetornoCredisis.DadosRet.TituloRet.NumeroDocumento := Leitor.rCampo(tcStr, 'documento');
-          RetornoCredisis.DadosRet.TituloRet.Parcela         := Leitor.rCampo(tcInt, 'parcela');
-        end;
+          ARetornoWS.DadosRet.ControleNegocial.NSU := Leitor.rCampo(tcStr, 'numeroSequencial');
+          ARetornoWS.DadosRet.IDBoleto.NossoNum    := Leitor.rCampo(tcStr, 'nossonumero');
+          ARetornoWS.DadosRet.IDBoleto.LinhaDig    := Leitor.rCampo(tcStr, 'linhaDigitavel');
+          ARetornoWS.DadosRet.IDBoleto.CodBarras   := Leitor.rCampo(tcStr, 'codigoBarras');
+
+          ARetornoWS.CodRetorno       := Leitor.rCampo(tcStr, 'code');
+          ARetornoWS.DadosRet.Excecao := Leitor.rCampo(tcStr, 'message');
       end;
     except
       Result := False;
@@ -115,7 +102,7 @@ begin
 
   end;
 
-function TRetornoEnvio_Credisis.RetornoEnvio: Boolean;
+function TRetornoEnvio_Credisis.RetornoEnvio(const AIndex: Integer): Boolean;
 var
   lRetornoWS: String;
 begin
@@ -123,7 +110,7 @@ begin
   lRetornoWS := RetWS;
   RetWS := SeparaDados(lRetornoWS, 'SOAP-ENV:Body');
 
-  Result:=inherited RetornoEnvio;
+  Result:=inherited RetornoEnvio(AIndex);
 
 end;
 

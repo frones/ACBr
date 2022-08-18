@@ -45,7 +45,7 @@ uses
 //  {$Else}
     Jsons,
 //  {$EndIf}
-  pcnConversao;
+  DateUtils, pcnConversao;
 
 type
 
@@ -57,8 +57,9 @@ type
  public
    constructor Create(ABoletoWS: TACBrBoleto); override;
    destructor  Destroy; Override;
-   function LerRetorno: Boolean; override;
-   function RetornoEnvio: Boolean; override;
+   function LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean; override;
+   function LerListaRetorno: Boolean; override;
+   function RetornoEnvio(const AIndex: Integer): Boolean; override;
 
  end;
 
@@ -90,21 +91,20 @@ begin
   inherited Destroy;
 end;
 
-function TRetornoEnvio_Sicredi_API.LerRetorno: Boolean;
+function TRetornoEnvio_Sicredi_API.LerRetorno(const ARetornoWS: TACBrBoletoRetornoWS): Boolean;
 var
-  Retorno: TRetEnvio;
+  //Retorno: TRetEnvio;
   AJson: TJson;
   AJSonObject: TJsonObject;
-  ARejeicao: TRejeicao;
+  ARejeicao: TACBrBoletoRejeicao;
   AJsonBoletos: TJsonArray;
-  I: Integer;
   TipoOperacao : TOperacao;
 begin
   Result := True;
   TipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
   if RetWS <> '' then
   begin
-    Retorno := ACBrBoleto.CriarRetornoWebNaLista;
+    //Retorno := ACBrBoleto.CriarRetornoWebNaLista;
     try
       AJSon := TJson.Create;
       try
@@ -112,54 +112,50 @@ begin
         if ( AJson.StructType = jsObject ) then
           if( AJson.Values['codigo'].asString <> '' ) then
           begin
-            ARejeicao            := Retorno.CriarRejeicaoLista;
+            ARejeicao            := ARetornoWS.CriarRejeicaoLista;
             ARejeicao.Codigo     := AJson.Values['codigo'].AsString;
             ARejeicao.Versao     := AJson.Values['parametro'].AsString;
             ARejeicao.Mensagem   := AJson.Values['mensagem'].AsString;
           end;
 
         //retorna quando tiver sucesso
-        if (Retorno.ListaRejeicao.Count = 0) then
+        if (ARetornoWS.ListaRejeicao.Count = 0) then
         begin
           if (TipoOperacao = tpInclui) then
           begin
 
-            Retorno.DadosRet.IDBoleto.CodBarras      := AJson.Values['codigoBarra'].AsString;
-            Retorno.DadosRet.IDBoleto.LinhaDig       := AJson.Values['linhaDigitavel'].AsString;
-            Retorno.DadosRet.IDBoleto.NossoNum       := AJson.Values['nossoNumero'].AsString;
+            ARetornoWS.DadosRet.IDBoleto.CodBarras      := AJson.Values['codigoBarra'].AsString;
+            ARetornoWS.DadosRet.IDBoleto.LinhaDig       := AJson.Values['linhaDigitavel'].AsString;
+            ARetornoWS.DadosRet.IDBoleto.NossoNum       := AJson.Values['nossoNumero'].AsString;
 
-            Retorno.DadosRet.TituloRet.CodBarras     := Retorno.DadosRet.IDBoleto.CodBarras;
-            Retorno.DadosRet.TituloRet.LinhaDig      := Retorno.DadosRet.IDBoleto.LinhaDig;
-            Retorno.DadosRet.TituloRet.NossoNumero   := Retorno.DadosRet.IDBoleto.NossoNum;
+            ARetornoWS.DadosRet.TituloRet.CodBarras     := ARetornoWS.DadosRet.IDBoleto.CodBarras;
+            ARetornoWS.DadosRet.TituloRet.LinhaDig      := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
+            ARetornoWS.DadosRet.TituloRet.NossoNumero   := ARetornoWS.DadosRet.IDBoleto.NossoNum;
 
           end else
-          if (TipoOperacao in [tpConsulta,tpConsultaDetalhe]) then
+          if (TipoOperacao = tpConsultaDetalhe) then
           begin
             AJsonBoletos := TJsonArray.Create;
             AJsonBoletos.Parse( AJson.Stringify );
-            for I := 0 to Pred(AJsonBoletos.Count) do
+            if (AJsonBoletos.Count > 0) then
             begin
-              if I > 0 then
-                Retorno := ACBrBoleto.CriarRetornoWebNaLista;
-                
-              AJSonObject  := AJsonBoletos[I].AsObject;
+              AJSonObject  := AJsonBoletos[0].AsObject;
 
-              Retorno.DadosRet.IDBoleto.CodBarras       := '';
-              Retorno.DadosRet.IDBoleto.LinhaDig        := '';
-              Retorno.DadosRet.IDBoleto.NossoNum        := AJSonObject.Values['nossoNumero'].AsString;
-              Retorno.indicadorContinuidade             := false;
-              Retorno.DadosRet.TituloRet.CodBarras      := Retorno.DadosRet.IDBoleto.CodBarras;
-              Retorno.DadosRet.TituloRet.LinhaDig       := Retorno.DadosRet.IDBoleto.LinhaDig;
+              ARetornoWS.DadosRet.IDBoleto.CodBarras       := '';
+              ARetornoWS.DadosRet.IDBoleto.LinhaDig        := '';
+              ARetornoWS.DadosRet.IDBoleto.NossoNum        := AJSonObject.Values['nossoNumero'].AsString;
+              ARetornoWS.indicadorContinuidade             := false;
+              ARetornoWS.DadosRet.TituloRet.CodBarras      := ARetornoWS.DadosRet.IDBoleto.CodBarras;
+              ARetornoWS.DadosRet.TituloRet.LinhaDig       := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
 
-
-              Retorno.DadosRet.TituloRet.NossoNumero                := Retorno.DadosRet.IDBoleto.NossoNum;
-              Retorno.DadosRet.TituloRet.Vencimento                 := DateSicrediToDateTime(AJSonObject.Values['dataVencimento'].AsString);
-              Retorno.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
-              Retorno.DadosRet.TituloRet.ValorAtual                 := AJSonObject.Values['valor'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.NossoNumero                := ARetornoWS.DadosRet.IDBoleto.NossoNum;
+              ARetornoWS.DadosRet.TituloRet.Vencimento                 := DateSicrediToDateTime(AJSonObject.Values['dataVencimento'].AsString);
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.ValorAtual                 := AJSonObject.Values['valor'].AsNumber;
 
               if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
                  ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
-              Retorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+              ARetornoWS.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
 
             end;
           end else
@@ -185,10 +181,79 @@ begin
 
 end;
 
-function TRetornoEnvio_Sicredi_API.RetornoEnvio: Boolean;
+function TRetornoEnvio_Sicredi_API.LerListaRetorno: Boolean;
+var
+  ListaRetorno: TACBrBoletoRetornoWS;
+  AJson: TJson;
+  AJSonObject: TJsonObject;
+  ARejeicao: TACBrBoletoRejeicao;
+  AJsonBoletos: TJsonArray;
+  I: Integer;
+begin
+  Result := True;
+  if RetWS <> '' then
+  begin
+    ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+    try
+      AJSon := TJson.Create;
+      try
+        AJSon.Parse(RetWS);
+        if ( AJson.StructType = jsObject ) then
+          if( AJson.Values['codigo'].asString <> '' ) then
+          begin
+            ARejeicao            := ListaRetorno.CriarRejeicaoLista;
+            ARejeicao.Codigo     := AJson.Values['codigo'].AsString;
+            ARejeicao.Versao     := AJson.Values['parametro'].AsString;
+            ARejeicao.Mensagem   := AJson.Values['mensagem'].AsString;
+          end;
+
+        //retorna quando tiver sucesso
+        if (ListaRetorno.ListaRejeicao.Count = 0) then
+        begin
+          AJsonBoletos := TJsonArray.Create;
+          AJsonBoletos.Parse( AJson.Stringify );
+          for I := 0 to Pred(AJsonBoletos.Count) do
+          begin
+            if I > 0 then
+              ListaRetorno := ACBrBoleto.CriarRetornoWebNaLista;
+
+            AJSonObject  := AJsonBoletos[I].AsObject;
+
+            ListaRetorno.DadosRet.IDBoleto.CodBarras       := '';
+            ListaRetorno.DadosRet.IDBoleto.LinhaDig        := '';
+            ListaRetorno.DadosRet.IDBoleto.NossoNum        := AJSonObject.Values['nossoNumero'].AsString;
+            ListaRetorno.indicadorContinuidade             := false;
+            ListaRetorno.DadosRet.TituloRet.CodBarras      := ListaRetorno.DadosRet.IDBoleto.CodBarras;
+            ListaRetorno.DadosRet.TituloRet.LinhaDig       := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
+
+
+            ListaRetorno.DadosRet.TituloRet.NossoNumero                := ListaRetorno.DadosRet.IDBoleto.NossoNum;
+            ListaRetorno.DadosRet.TituloRet.Vencimento                 := DateSicrediToDateTime(AJSonObject.Values['dataVencimento'].AsString);
+            ListaRetorno.DadosRet.TituloRet.ValorDocumento             := AJSonObject.Values['valor'].AsNumber;
+            ListaRetorno.DadosRet.TituloRet.ValorAtual                 := AJSonObject.Values['valor'].AsNumber;
+
+            if( AJSonObject.Values['situacao'].asString = C_LIQUIDADO ) or
+               ( AJSonObject.Values['situacao'].asString = C_BAIXADO_POS_SOLICITACAO ) then
+            ListaRetorno.DadosRet.TituloRet.ValorPago                  := AJSonObject.Values['valor'].AsNumber;
+
+          end;
+        end;
+
+      finally
+        AJson.free;
+      end;
+
+    except
+      Result := False;
+    end;
+
+  end;
+end;
+
+function TRetornoEnvio_Sicredi_API.RetornoEnvio(const AIndex: Integer): Boolean;
 begin
 
-  Result:=inherited RetornoEnvio;
+  Result:=inherited RetornoEnvio(AIndex);
 
 end;
 

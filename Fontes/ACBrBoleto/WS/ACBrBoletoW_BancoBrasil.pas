@@ -37,7 +37,7 @@ unit ACBrBoletoW_BancoBrasil;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoletoWS, pcnConversao, pcnGerador, ACBrBoletoConversao;
+  Classes, SysUtils, ACBrBoletoWS, pcnConversao, pcnGerador, ACBrBoletoConversao, ACBrBoleto;
 
 type
 
@@ -169,8 +169,8 @@ end;
 
 procedure TBoletoW_BancoBrasil.GerarDados;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       Gerador.wGrupo(PrefixTag('requisicao'));
 
@@ -190,7 +190,7 @@ var
   lCodMora: Integer;
   lCodigoChaveUsuario: String;
 begin
-  with Titulos do
+  with ATitulo do
   begin
     Gerador.wCampo(tcStr, '#01', PrefixTag('numeroConvenio'        ), 1, 9, 1, Boleto.Cedente.Convenio , DSC_CONVENIO);
     Gerador.wCampo(tcStr, '#02', PrefixTag('numeroCarteira'        ), 1, 4, 1, Carteira , DSC_CARTEIRA);

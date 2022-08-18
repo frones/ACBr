@@ -50,6 +50,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/08/2022
+--ACBrBoleto, ACBrBoletoWS--
+[*] Refatoração do Componente na camada de integração Web do ACBrBoleto
+  Leia em: https://www.projetoacbr.com.br/forum/topic/68560-altera%C3%A7%C3%B5es-na-transmiss%C3%A3o-de-boletos-por-webservice/
+  Por : José M S Junior
+
+17/08/2022
 --ACBrBoletoBradesco--
 [*] TK-2896 Bradesco Proteção na geração do segmento R, gerar somente quando desconto2 ou desconto3 <> tdNaoCondederDesconto
   Por : Pandaaa

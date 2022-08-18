@@ -41,9 +41,9 @@ uses
 
 type
 
-  { THeader }
+  { TACBrBoletoHeader }
 
-  THeader = class
+  TACBrBoletoHeader = class
   private
     FVersao: String;
     FAutenticacao: String;
@@ -58,7 +58,7 @@ type
     FId_Processo: String;
     FCNPJCPF_Beneficiario: String;
   public
-    procedure Assign(DeACBrBoletoHeader: THeader); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoHeader: TACBrBoletoHeader); reintroduce; virtual;
 
     property Versao: String               read FVersao               write FVersao;
     property Autenticacao: String         read FAutenticacao         write FAutenticacao;
@@ -74,16 +74,16 @@ type
     property CNPJCPF_Beneficiario: String read FCNPJCPF_Beneficiario write FCNPJCPF_Beneficiario;
   end;
 
-  { TControleNegocial }
+  { TACBrBoletoControleNegocial }
 
-  TControleNegocial = class
+  TACBrBoletoControleNegocial = class
   private
     FOriRetorno: String;
     FCodRetorno: String;
     FNSU: String;
     FRetorno: String;
   public
-    procedure Assign(DeACBrBoletoControleNegocial: TControleNegocial); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoControleNegocial: TACBrBoletoControleNegocial); reintroduce; virtual;
 
     property OriRetorno: String  read FOriRetorno write FOriRetorno;
     property CodRetorno: String  read FCodRetorno write FCodRetorno;
@@ -91,22 +91,22 @@ type
     property Retorno: String     read FRetorno    write FRetorno;
   end;
 
-  { TComprovante }
+  { TACBrBoletoComprovante }
 
-  TComprovante = class
+  TACBrBoletoComprovante = class
   private
     FHora: String;
     FData: TDateTime;
   public
-    procedure Assign(DeACBrBoletoComprovante: TComprovante); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoComprovante: TACBrBoletoComprovante); reintroduce; virtual;
 
     property Data: TDateTime read FData write FData;
     property Hora: String    read FHora write FHora;
   end;
 
-  { TIDBoleto }
+  { TACBrBoletoIDBoleto }
 
-  TIDBoleto = class
+  TACBrBoletoIDBoleto = class
   private
     FCodBarras: String;
     FLinhaDig: String;
@@ -115,7 +115,7 @@ type
     FIDBoleto: string;
     FURLPDF: String;
   public
-    procedure Assign(DeACBrBoletoIDBoleto: TIDBoleto); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoIDBoleto: TACBrBoletoIDBoleto); reintroduce; virtual;
     property IDBoleto: string  read FIDBoleto write FIDBoleto;
     property CodBarras: String read FCodBarras write FCodBarras;
     property LinhaDig: String  read FLinhaDig  write FLinhaDig;
@@ -125,16 +125,16 @@ type
 
   end;
 
-  { TSacadoAvalistaRet }
+  { TACBrBoletoSacadoAvalistaRet}
 
-  TSacadoAvalistaRet = class
+  TACBrBoletoSacadoAvalistaRet = class
   private
     FTipoPessoa: TACBrPessoa;
     FNomeAvalista: String;
     FCNPJCPF: String;
 
   public
-    procedure Assign(DeACBrBoletoSacadoAvalistaRet: TSacadoAvalistaRet); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoSacadoAvalistaRet: TACBrBoletoSacadoAvalistaRet); reintroduce; virtual;
 
     property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
     property NomeAvalista: String read FNomeAvalista write FNomeAvalista;
@@ -143,9 +143,9 @@ type
   end;
 
 
-  { TSacadoRet }
+  { TACBrBoletoSacadoRet }
 
-  TSacadoRet = class
+  TACBrBoletoSacadoRet = class
   private
     FTipoPessoa: TACBrPessoa;
     FNomeSacado: String;
@@ -160,7 +160,7 @@ type
     FEmail: String;
     FFone: String;
   public
-    procedure Assign(DeACBrBoletoSacadoRet: TSacadoRet); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoSacadoRet: TACBrBoletoSacadoRet); reintroduce; virtual;
 
     property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
     property NomeSacado: String   read FNomeSacado   write FNomeSacado;
@@ -176,9 +176,9 @@ type
     property Fone: String         read FFone         write FFone;
   end;
 
-   { TTituloRet }
+   { TACBrBoletoTituloRet }
 
-   TTituloRet = class
+   TACBrBoletoTituloRet = class
   private
     FCodBarras: String;
     FLinhaDig: String;
@@ -205,8 +205,8 @@ type
     FMensagem: TStrings;
     FInformativo: TStrings;
     FInstrucoes: TStrings;
-    FSacado: TSacadoRet;
-    FSacadoAvalista: TSacadoAvalistaRet;
+    FSacado: TACBrBoletoSacadoRet;
+    FSacadoAvalista: TACBrBoletoSacadoAvalistaRet;
     FDataCredito: TDateTime;
     FDataAbatimento: TDateTime;
     FDataDesconto: TDateTime;
@@ -257,7 +257,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure Assign(DeACBrBoletoTituloRet: TTituloRet); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoTituloRet: TACBrBoletoTituloRet); reintroduce; virtual;
 
     property CodBarras: String read FCodBarras write FCodBarras;
     property LinhaDig: String read FLinhaDig write FLinhaDig;
@@ -284,8 +284,8 @@ type
     property Mensagem: TStrings read FMensagem write FMensagem ;
     property Informativo: TStrings read FInformativo write FInformativo ;
     property Instrucoes: TStrings read FInstrucoes write FInstrucoes ;
-    property Sacado: TSacadoRet read FSacado write FSacado ;
-    property SacadoAvalista: TSacadoAvalistaRet read FSacadoAvalista write FSacadoAvalista ;
+    property Sacado: TACBrBoletoSacadoRet read FSacado write FSacado ;
+    property SacadoAvalista: TACBrBoletoSacadoAvalistaRet read FSacadoAvalista write FSacadoAvalista ;
     property DataCredito: TDateTime read FDataCredito write FDataCredito ;
     property DataAbatimento: TDateTime read FDataAbatimento write FDataAbatimento ;
     property DataDesconto: TDateTime read FDataDesconto write FDataDesconto ;
@@ -334,32 +334,32 @@ type
     property TxId: String read FtxId write FtxId;
   end;
 
-  { TDadosRet }
-  TDadosRet = class
+  { TACBrBoletoDadosRet }
+  TACBrBoletoDadosRet = class
   private
-    FControleNegocial: TControleNegocial;
-    FComprovante: TComprovante;
+    FControleNegocial: TACBrBoletoControleNegocial;
+    FComprovante: TACBrBoletoComprovante;
     FExcecao: String;
-    FIDBoleto: TIDBoleto;
-    FTituloRet: TTituloRet;
+    FIDBoleto: TACBrBoletoIDBoleto;
+    FTituloRet: TACBrBoletoTituloRet;
 
   public
     constructor Create;
     destructor Destroy; override;
 
-    procedure Assign(DeACBrBoletoDadosRet: TDadosRet); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoDadosRet: TACBrBoletoDadosRet); reintroduce; virtual;
 
-    property ControleNegocial: TControleNegocial read FControleNegocial write FControleNegocial;
-    property Comprovante: TComprovante           read FComprovante      write FComprovante;
-    property Excecao: String                     read FExcecao          write FExcecao;
-    property IDBoleto: TIDBoleto                 read FIDBoleto         write FIDBoleto;
-    property TituloRet: TTituloRet               read FTituloRet        write FTituloRet;
+    property ControleNegocial: TACBrBoletoControleNegocial read FControleNegocial write FControleNegocial;
+    property Comprovante: TACBrBoletoComprovante           read FComprovante      write FComprovante;
+    property Excecao: String                               read FExcecao          write FExcecao;
+    property IDBoleto: TACBrBoletoIDBoleto                 read FIDBoleto         write FIDBoleto;
+    property TituloRet: TACBrBoletoTituloRet               read FTituloRet        write FTituloRet;
 
   end;
 
-  { TRejeicao }
+  { TACBrBoletoRejeicao }
 
-  TRejeicao = class
+  TACBrBoletoRejeicao = class
   private
     FCampo      : String;
     FMensagem   : String;
@@ -368,7 +368,7 @@ type
     FVersao     : String;
     FOcorrencia : String;
   public
-    procedure Assign(DeACBrBoletoRejeicao: TRejeicao); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoRejeicao: TACBrBoletoRejeicao); reintroduce; virtual;
 
     property Campo      : String  read FCampo      write FCampo;
     property Mensagem   : String  read FMensagem   write FMensagem;
@@ -378,27 +378,26 @@ type
     property Ocorrencia : String  read FOcorrencia write FOcorrencia;
   end;
 
-  { TListaRejeicao }
-  TListaRejeicao = class(TObjectList)
+  { TACBrBoletoListaRejeicao }
+  TACBrBoletoListaRejeicao = class(TObjectList)
   protected
-    procedure SetObject (Index: Integer; Item: TRejeicao);
-    function  GetObject (Index: Integer): TRejeicao;
-    procedure Insert (Index: Integer; Obj: TRejeicao);
+    procedure SetObject (Index: Integer; Item: TACBrBoletoRejeicao);
+    function  GetObject (Index: Integer): TACBrBoletoRejeicao;
+    procedure Insert (Index: Integer; Obj: TACBrBoletoRejeicao);
   public
-    function Add (Obj: TRejeicao): Integer;
-    property Objects [Index: Integer]: TRejeicao read GetObject write SetObject; default;
+    function Add (Obj: TACBrBoletoRejeicao): Integer;
+    property Objects [Index: Integer]: TACBrBoletoRejeicao read GetObject write SetObject; default;
   end;
 
-
-  { TRetEnvio }
-  TRetEnvio = class
+  { TACBrBoletoRetornoWS }
+  TACBrBoletoRetornoWS = class
   private
-    FHeader: THeader;
+    FHeader: TACBrBoletoHeader;
     FCodRetorno     : String;
     FOriRetorno     : String;
     FMsgRetorno     : String;
-    FDadosRet       : TDadosRet;
-    FListaRejeicao  : TListaRejeicao;
+    FDadosRet       : TACBrBoletoDadosRet;
+    FListaRejeicao  : TACBrBoletoListaRejeicao;
     FHTTPResultCode : Integer;
     FJSON           : String;
     FIndicadorContinuidade: boolean;
@@ -407,37 +406,37 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure Assign(DeACBrBoletoRetEnvio: TRetEnvio); reintroduce; virtual;
+    procedure Assign(DeACBrBoletoRetEnvio: TACBrBoletoRetornoWS); reintroduce; virtual;
 
-    function CriarRejeicaoLista : TRejeicao;
-    property Header                : THeader        read FHeader                write FHeader;
-    property CodRetorno            : String         read FCodRetorno            write FCodRetorno;
-    property OriRetorno            : String         read FOriRetorno            write FOriRetorno;
-    property MsgRetorno            : String         read FMsgRetorno            write FMsgRetorno;
-    property HTTPResultCode        : Integer        read FHTTPResultCode        write FHTTPResultCode;
-    property JSON                  : String         read FJSON                  write FJSON;
-    property DadosRet              : TDadosRet      read FDadosRet              write FDadosRet;
-    property ListaRejeicao         : TListaRejeicao read FListaRejeicao;
-    property indicadorContinuidade : boolean        read FIndicadorContinuidade write FIndicadorContinuidade;
-    property proximoIndice         : integer        read FProximoIndice         write FProximoIndice;
+    function CriarRejeicaoLista : TACBrBoletoRejeicao;
+    property Header                : TACBrBoletoHeader        read FHeader                write FHeader;
+    property CodRetorno            : String                   read FCodRetorno            write FCodRetorno;
+    property OriRetorno            : String                   read FOriRetorno            write FOriRetorno;
+    property MsgRetorno            : String                   read FMsgRetorno            write FMsgRetorno;
+    property HTTPResultCode        : Integer                  read FHTTPResultCode        write FHTTPResultCode;
+    property JSON                  : String                   read FJSON                  write FJSON;
+    property DadosRet              : TACBrBoletoDadosRet      read FDadosRet              write FDadosRet;
+    property ListaRejeicao         : TACBrBoletoListaRejeicao read FListaRejeicao;
+    property indicadorContinuidade : boolean                  read FIndicadorContinuidade write FIndicadorContinuidade;
+    property proximoIndice         : integer                  read FProximoIndice         write FProximoIndice;
   end;
 
-  { TListaRetEnvio }
-  TListaRetEnvio = class(TObjectList)
+  { TListaACBrBoletoRetornoWS }
+  TListaACBrBoletoRetornoWS = class(TObjectList)
   protected
-    procedure SetObject (Index: Integer; Item: TRetEnvio);
-    function  GetObject (Index: Integer): TRetEnvio;
-    procedure Insert (Index: Integer; Obj: TRetEnvio);
+    procedure SetObject (Index: Integer; Item: TACBrBoletoRetornoWS);
+    function  GetObject (Index: Integer): TACBrBoletoRetornoWS;
+    procedure Insert (Index: Integer; Obj: TACBrBoletoRetornoWS);
   public
-    function Add (Obj: TRetEnvio): Integer;
-    property Objects [Index: Integer]: TRetEnvio read GetObject write SetObject; default;
+    function Add (Obj: TACBrBoletoRetornoWS): Integer;
+    property Objects [Index: Integer]: TACBrBoletoRetornoWS read GetObject write SetObject; default;
   end;
 
 implementation
 
-{ TRejeicao }
+{ TACBrBoletoRejeicao }
 
-procedure TRejeicao.Assign(DeACBrBoletoRejeicao: TRejeicao);
+procedure TACBrBoletoRejeicao.Assign(DeACBrBoletoRejeicao: TACBrBoletoRejeicao);
 begin
   Campo      := DeACBrBoletoRejeicao.Campo;
   Mensagem   := DeACBrBoletoRejeicao.Mensagem;
@@ -448,17 +447,17 @@ begin
 
 end;
 
-{ TComprovante }
+{ TACBrBoletoComprovante }
 
-procedure TComprovante.Assign(DeACBrBoletoComprovante: TComprovante);
+procedure TACBrBoletoComprovante.Assign(DeACBrBoletoComprovante: TACBrBoletoComprovante);
 begin
   Hora:= DeACBrBoletoComprovante.Hora;
   Data:= DeACBrBoletoComprovante.Data;
 end;
 
-{ TSacadoRet }
+{ TACBrBoletoSacadoRet }
 
-procedure TSacadoRet.Assign(DeACBrBoletoSacadoRet: TSacadoRet);
+procedure TACBrBoletoSacadoRet.Assign(DeACBrBoletoSacadoRet: TACBrBoletoSacadoRet);
 begin
   Pessoa:= DeACBrBoletoSacadoRet.Pessoa;
   NomeSacado:= DeACBrBoletoSacadoRet.NomeSacado;
@@ -477,7 +476,7 @@ end;
 
 { TSacadoAvalistaRet }
 
-procedure TSacadoAvalistaRet.Assign( DeACBrBoletoSacadoAvalistaRet: TSacadoAvalistaRet);
+procedure TACBrBoletoSacadoAvalistaRet.Assign( DeACBrBoletoSacadoAvalistaRet: TACBrBoletoSacadoAvalistaRet);
 begin
   Pessoa:= DeACBrBoletoSacadoAvalistaRet.Pessoa;
   NomeAvalista:= DeACBrBoletoSacadoAvalistaRet.NomeAvalista;
@@ -485,9 +484,9 @@ begin
 
 end;
 
-{ TIDBoleto }
+{ TACBrBoletoIDBoleto }
 
-procedure TIDBoleto.Assign(DeACBrBoletoIDBoleto: TIDBoleto);
+procedure TACBrBoletoIDBoleto.Assign(DeACBrBoletoIDBoleto: TACBrBoletoIDBoleto);
 begin
   CodBarras:= DeACBrBoletoIDBoleto.CodBarras;
   LinhaDig:= DeACBrBoletoIDBoleto.LinhaDig;
@@ -500,7 +499,7 @@ end;
 
 { TControleNegocial }
 
-procedure TControleNegocial.Assign( DeACBrBoletoControleNegocial: TControleNegocial);
+procedure TACBrBoletoControleNegocial.Assign( DeACBrBoletoControleNegocial: TACBrBoletoControleNegocial);
 begin
   OriRetorno:= DeACBrBoletoControleNegocial.OriRetorno;
   CodRetorno:= DeACBrBoletoControleNegocial.CodRetorno;
@@ -509,9 +508,9 @@ begin
 
 end;
 
-{ THeader }
+{ TACBrBoletoHeader }
 
-procedure THeader.Assign(DeACBrBoletoHeader: THeader);
+procedure TACBrBoletoHeader.Assign(DeACBrBoletoHeader: TACBrBoletoHeader);
 begin
   Versao:= DeACBrBoletoHeader.Versao;
   Autenticacao:= DeACBrBoletoHeader.Autenticacao;
@@ -528,40 +527,40 @@ begin
 
 end;
 
-{ TListaRejeicao }
+{ TACBrBoletoListaRejeicao }
 
-procedure TListaRejeicao.SetObject(Index: Integer; Item: TRejeicao);
+procedure TACBrBoletoListaRejeicao.SetObject(Index: Integer; Item: TACBrBoletoRejeicao);
 begin
   inherited SetItem (Index, Item) ;
 end;
 
-function TListaRejeicao.GetObject(Index: Integer): TRejeicao;
+function TACBrBoletoListaRejeicao.GetObject(Index: Integer): TACBrBoletoRejeicao;
 begin
-  Result := inherited GetItem(Index) as TRejeicao ;
+  Result := inherited GetItem(Index) as TACBrBoletoRejeicao ;
 end;
 
-procedure TListaRejeicao.Insert(Index: Integer; Obj: TRejeicao);
+procedure TACBrBoletoListaRejeicao.Insert(Index: Integer; Obj: TACBrBoletoRejeicao);
 begin
   inherited Insert(Index, Obj);
 end;
 
-function TListaRejeicao.Add(Obj: TRejeicao): Integer;
+function TACBrBoletoListaRejeicao.Add(Obj: TACBrBoletoRejeicao): Integer;
 begin
   Result := inherited Add(Obj) ;
 end;
 
 { TTituloRet }
 
-constructor TTituloRet.Create;
+constructor TACBrBoletoTituloRet.Create;
 begin
-  FSacadoAvalista := TSacadoAvalistaRet.Create;
-  FSacado := TSacadoRet.Create;
+  FSacadoAvalista := TACBrBoletoSacadoAvalistaRet.Create;
+  FSacado := TACBrBoletoSacadoRet.Create;
   FMensagem       := TStringList.Create;
   FInformativo    := TStringList.Create;
   FInstrucoes     := TStringList.Create;
 end;
 
-destructor TTituloRet.Destroy;
+destructor TACBrBoletoTituloRet.Destroy;
 begin
   FMensagem.Free;
   FInformativo.Free;
@@ -572,7 +571,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TTituloRet.Assign(DeACBrBoletoTituloRet: TTituloRet);
+procedure TACBrBoletoTituloRet.Assign(DeACBrBoletoTituloRet: TACBrBoletoTituloRet);
 begin
   CodBarras:= DeACBrBoletoTituloRet.CodBarras;
   LinhaDig:= DeACBrBoletoTituloRet.LinhaDig;
@@ -650,38 +649,38 @@ begin
 
 end;
 
-{ TListaRetEnvio }
+{ TListaACBrBoletoRetEnvio }
 
-procedure TListaRetEnvio.SetObject(Index: Integer; Item: TRetEnvio);
+procedure TListaACBrBoletoRetornoWS.SetObject(Index: Integer; Item: TACBrBoletoRetornoWS);
 begin
   inherited SetItem (Index, Item) ;
 end;
 
-function TListaRetEnvio.GetObject(Index: Integer): TRetEnvio;
+function TListaACBrBoletoRetornoWS.GetObject(Index: Integer): TACBrBoletoRetornoWS;
 begin
-  Result := inherited GetItem(Index) as TRetEnvio ;
+  Result := inherited GetItem(Index) as TACBrBoletoRetornoWS ;
 end;
 
-procedure TListaRetEnvio.Insert(Index: Integer; Obj: TRetEnvio);
+procedure TListaACBrBoletoRetornoWS.Insert(Index: Integer; Obj: TACBrBoletoRetornoWS);
 begin
    inherited Insert(Index, Obj);
 end;
 
-function TListaRetEnvio.Add(Obj: TRetEnvio): Integer;
+function TListaACBrBoletoRetornoWS.Add(Obj: TACBrBoletoRetornoWS): Integer;
 begin
   Result := inherited Add(Obj) ;
 end;
 
-{ TRetEnvio }
+{ TACBrBoletoRetornoWS }
 
-constructor TRetEnvio.Create;
+constructor TACBrBoletoRetornoWS.Create;
 begin
-  FHeader:= THeader.Create;
-  FDadosRet:= TDadosRet.Create;
-  FListaRejeicao:= TListaRejeicao.Create(true);
+  FHeader:= TACBrBoletoHeader.Create;
+  FDadosRet:= TACBrBoletoDadosRet.Create;
+  FListaRejeicao:= TACBrBoletoListaRejeicao.Create(true);
 end;
 
-destructor TRetEnvio.Destroy;
+destructor TACBrBoletoRetornoWS.Destroy;
 begin
   FListaRejeicao.Free;
   FDadosRet.Free;
@@ -690,10 +689,10 @@ begin
   inherited;
 end;
 
-procedure TRetEnvio.Assign(DeACBrBoletoRetEnvio: TRetEnvio);
+procedure TACBrBoletoRetornoWS.Assign(DeACBrBoletoRetEnvio: TACBrBoletoRetornoWS);
 var
   I: Integer;
-  Rej: TRejeicao;
+  Rej: TACBrBoletoRejeicao;
 begin
   CodRetorno:= DeACBrBoletoRetEnvio.CodRetorno;
   OriRetorno:= DeACBrBoletoRetEnvio.OriRetorno;
@@ -719,26 +718,26 @@ begin
 end;
 
 
-function TRetEnvio.CriarRejeicaoLista: TRejeicao;
+function TACBrBoletoRetornoWS.CriarRejeicaoLista: TACBrBoletoRejeicao;
 var
   I: Integer;
 begin
-   I      := FListaRejeicao.Add(TRejeicao.Create);
+   I      := FListaRejeicao.Add(TACBrBoletoRejeicao.Create);
    Result := FListaRejeicao[I];
 end;
 
 { TDadosRet }
 
-constructor TDadosRet.Create;
+constructor TACBrBoletoDadosRet.Create;
 begin
-  FControleNegocial := TControleNegocial.Create;
-  FTituloRet        := TTituloRet.Create;
-  FComprovante      := TComprovante.Create;
-  FIDBoleto         := TIDBoleto.Create;
+  FControleNegocial := TACBrBoletoControleNegocial.Create;
+  FTituloRet        := TACBrBoletoTituloRet.Create;
+  FComprovante      := TACBrBoletoComprovante.Create;
+  FIDBoleto         := TACBrBoletoIDBoleto.Create;
 
 end;
 
-destructor TDadosRet.Destroy;
+destructor TACBrBoletoDadosRet.Destroy;
 begin
   FIDBoleto.Free;
   FComprovante.Free;
@@ -748,7 +747,7 @@ begin
   inherited;
 end;
 
-procedure TDadosRet.Assign(DeACBrBoletoDadosRet: TDadosRet);
+procedure TACBrBoletoDadosRet.Assign(DeACBrBoletoDadosRet: TACBrBoletoDadosRet);
 begin
   Excecao:= DeACBrBoletoDadosRet.Excecao;
   ControleNegocial.Assign(DeACBrBoletoDadosRet.ControleNegocial);

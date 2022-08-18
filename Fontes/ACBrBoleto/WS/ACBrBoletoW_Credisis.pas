@@ -129,8 +129,8 @@ begin
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '  <' + FPSoapVersion + ':Header>';
   Texto := Texto + '    <urn:Chave>';
-  Texto := Texto + '      <token>'+ Titulos.ACBrBoleto.Cedente.CedenteWS.ClientSecret +'</token>';
-  Texto := Texto + '      <convenio>'+Titulos.ACBrBoleto.Cedente.Convenio+'</convenio>';
+  Texto := Texto + '      <token>'+ ATitulo.ACBrBoleto.Cedente.CedenteWS.ClientSecret +'</token>';
+  Texto := Texto + '      <convenio>'+ATitulo.ACBrBoleto.Cedente.Convenio+'</convenio>';
   Texto := Texto + '    </urn:Chave>';
   Texto := Texto + '  </soapenv:Header>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
@@ -153,6 +153,11 @@ begin
     FPCloseRootElement:= '';
 end;
 
+procedure TBoletoW_Credisis.GerarHeader;
+begin
+
+end;
+
 procedure TBoletoW_Credisis.DefinirURL;
 begin
     FPURL := C_CredSis_URL;
@@ -166,12 +171,12 @@ end;
 procedure TBoletoW_Credisis.GeraDesconto;
 Var iTipo : Integer;
 begin
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
     Begin
         iTipo := 0;
-        if ( Titulos.ValorDesconto > 0 ) then
+        if ( ATitulo.ValorDesconto > 0 ) then
         Begin
-            case Titulos.CodigoDesconto of
+            case ATitulo.CodigoDesconto of
                cdSemDesconto : iTipo := 3;
                cdValorFixo   : iTipo := 2;
             end;
@@ -179,14 +184,14 @@ begin
              iTipo := 1;
 
             Gerador.wGrupo('desconto1');
-            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, Titulos.ValorDesconto, DSC_VALOR_DESCONTO);
-            Gerador.wCampo(tcDat, '#02', 'data', 10, 10, 1, Titulos.DataDesconto, DSC_DATA_DESCONTO);
+            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, ATitulo.ValorDesconto, DSC_VALOR_DESCONTO);
+            Gerador.wCampo(tcDat, '#02', 'data', 10, 10, 1, ATitulo.DataDesconto, DSC_DATA_DESCONTO);
             Gerador.wCampo(tcInt, '#03', 'tipo', 01, 10, 1, iTipo, DSC_DATA_DESCONTO);
             Gerador.wGrupo('/desconto1');
         End;
-        if ( Titulos.ValorDesconto2 > 0 ) then
+        if ( ATitulo.ValorDesconto2 > 0 ) then
         Begin
-            case Titulos.CodigoDesconto of
+            case ATitulo.CodigoDesconto of
                cdSemDesconto : iTipo := 3;
                cdValorFixo   : iTipo := 2;
             end;
@@ -194,14 +199,14 @@ begin
              iTipo := 1;
 
             Gerador.wGrupo('desconto2');
-            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, Titulos.ValorDesconto2, DSC_VALOR_DESCONTO);
-            Gerador.wCampo(tcDat, '#02', 'data', 10, 10, 1, Titulos.DataDesconto2, DSC_DATA_DESCONTO);
+            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, ATitulo.ValorDesconto2, DSC_VALOR_DESCONTO);
+            Gerador.wCampo(tcDat, '#02', 'data', 10, 10, 1, ATitulo.DataDesconto2, DSC_DATA_DESCONTO);
             Gerador.wCampo(tcInt, '#03', 'tipo', 01, 10, 1, iTipo, DSC_DATA_DESCONTO);
             Gerador.wGrupo('/desconto2');
         End;
-        if ( Titulos.ValorDesconto3 > 0 ) then
+        if ( ATitulo.ValorDesconto3 > 0 ) then
         Begin
-            case Titulos.CodigoDesconto of
+            case ATitulo.CodigoDesconto of
                cdSemDesconto : iTipo := 3;
                cdValorFixo   : iTipo := 2;
             end;
@@ -209,8 +214,8 @@ begin
              iTipo := 1;
 
             Gerador.wGrupo('desconto3');
-            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, Titulos.ValorDesconto3, DSC_VALOR_DESCONTO);
-            Gerador.wCampo(tcDat, '#02', 'data', 10, 10, 1, Titulos.DataDesconto3, DSC_DATA_DESCONTO);
+            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, ATitulo.ValorDesconto3, DSC_VALOR_DESCONTO);
+            Gerador.wCampo(tcDat, '#02', 'data', 10, 10, 1, ATitulo.DataDesconto3, DSC_DATA_DESCONTO);
             Gerador.wCampo(tcInt, '#03', 'tipo', 01, 10, 1, iTipo, DSC_DATA_DESCONTO);
             Gerador.wGrupo('/desconto3');
         End;
@@ -222,13 +227,13 @@ procedure TBoletoW_Credisis.GeraJuros;
 Var iTipo : Integer;
     iDias : Integer;
 begin
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
     Begin
-        if ( Titulos.ValorMoraJuros > 0 ) and ( Titulos.DataMoraJuros > 0) then
+        if ( ATitulo.ValorMoraJuros > 0 ) and ( ATitulo.DataMoraJuros > 0) then
         Begin
             iTipo := 0;
             iDias := 0;
-            case Titulos.CodigoMoraJuros of
+            case ATitulo.CodigoMoraJuros of
                cjValorDia,
                cjValorMensal : iTipo := 1;
                cjTaxaMensal,
@@ -236,11 +241,11 @@ begin
                cjIsento      : iTipo := 3;
             end;
 
-            if Titulos.DataMoraJuros <> Titulos.Vencimento then
-             iDias := DaysBetween(Titulos.Vencimento, Titulos.DataMoraJuros);
+            if ATitulo.DataMoraJuros <> ATitulo.Vencimento then
+             iDias := DaysBetween(ATitulo.Vencimento, ATitulo.DataMoraJuros);
 
             Gerador.wGrupo('juros');
-            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, Titulos.ValorMoraJuros, DSC_VALOR_MORA_JUROS);
+            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, ATitulo.ValorMoraJuros, DSC_VALOR_MORA_JUROS);
             Gerador.wGrupo('carencia');
             Gerador.wCampo(tcInt, '#01', 'dias', 01, 10, 1, iDias, DSC_DIAS_PROTESTO);
             Gerador.wCampo(tcInt, '#02', 'tipo', 01, 10, 1, iTipo, DSC_CODIGO_MORA_JUROS);
@@ -256,24 +261,24 @@ procedure TBoletoW_Credisis.GeraMulta;
 Var iTipo : Integer;
     iDias : Integer;
 begin
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
     Begin
-        if ( Titulos.PercentualMulta > 0 ) and ( Titulos.DataMulta > 0) then
+        if ( ATitulo.PercentualMulta > 0 ) and ( ATitulo.DataMulta > 0) then
         Begin
             iTipo := 0;
             iDias := 0;
 
-            Case Titulos.CodigoMulta Of
+            Case ATitulo.CodigoMulta Of
               cmValorFixo  : iTipo := 1;
               cmPercentual : iTipo := 2;
               cmIsento     : iTipo := 3;
             End;
 
-            if Titulos.DataMulta <> Titulos.Vencimento then
-             iDias := DaysBetween(Titulos.Vencimento, Titulos.DataMulta);
+            if ATitulo.DataMulta <> ATitulo.Vencimento then
+             iDias := DaysBetween(ATitulo.Vencimento, ATitulo.DataMulta);
 
             Gerador.wGrupo('multa');
-            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, Titulos.PercentualMulta, DSC_PERCENTUAL_MULTA);
+            Gerador.wCampo(tcDe2, '#01', 'valor', 01, 15, 1, ATitulo.PercentualMulta, DSC_PERCENTUAL_MULTA);
             Gerador.wGrupo('carencia');
             Gerador.wCampo(tcInt, '#01', 'dias', 01, 10, 1, iDias, DSC_DIAS_PROTESTO);
             Gerador.wCampo(tcInt, '#02', 'tipo', 01, 10, 1, iTipo, DSC_DIAS_PROTESTO);
@@ -287,11 +292,11 @@ end;
 procedure TBoletoW_Credisis.GeraProtesto;
 Var iTipo : Integer;
 begin
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
     Begin
         iTipo := 0;
 
-        Case Titulos.CodigoNegativacao Of
+        Case ATitulo.CodigoNegativacao Of
          cnNenhum           : iTipo := 1;
          cnProtestarCorrido : iTipo := 2;
          cnProtestarUteis   : iTipo := 1;
@@ -303,25 +308,25 @@ begin
 
         Gerador.wGrupo('protesto');
         Gerador.wCampo(tcStr, '#01', 'tipo', 01, 1, 1, iTipo, DSC_DIAS_PROTESTO);
-        Gerador.wCampo(tcInt, '#02', 'dias', 01, 2, 1, Titulos.DiasDeProtesto, DSC_DIAS_PROTESTO);
+        Gerador.wCampo(tcInt, '#02', 'dias', 01, 2, 1, ATitulo.DiasDeProtesto, DSC_DIAS_PROTESTO);
         Gerador.wGrupo('/protesto');
     End;
 end;
 
 procedure TBoletoW_Credisis.GerarAvalista;
 begin
-  if Assigned(Titulos) then
+  if Assigned(ATitulo) then
   Begin
-      if NaoEstaVazio(Titulos.Sacado.SacadoAvalista.CNPJCPF) then
+      if NaoEstaVazio(ATitulo.Sacado.SacadoAvalista.CNPJCPF) then
       begin
           Gerador.wGrupo('avalista');
 
-          if (Integer(Titulos.Sacado.SacadoAvalista.Pessoa) = 0) then
-           Gerador.wCampo(tcStr, '#01', 'nome', 01, 40, 1, Titulos.Sacado.SacadoAvalista.NomeAvalista, DSC_NOME_AVALISTA)
+          if (Integer(ATitulo.Sacado.SacadoAvalista.Pessoa) = 0) then
+           Gerador.wCampo(tcStr, '#01', 'nome', 01, 40, 1, ATitulo.Sacado.SacadoAvalista.NomeAvalista, DSC_NOME_AVALISTA)
           else
-           Gerador.wCampo(tcStr, '#01', 'nome', 01, 40, 1, Titulos.Sacado.SacadoAvalista.NomeAvalista, DSC_NOME_AVALISTA);
+           Gerador.wCampo(tcStr, '#01', 'nome', 01, 40, 1, ATitulo.Sacado.SacadoAvalista.NomeAvalista, DSC_NOME_AVALISTA);
 
-          Gerador.wCampoCNPJCPF('#02', 'cpfCnpj', Titulos.Sacado.SacadoAvalista.CNPJCPF);
+          Gerador.wCampoCNPJCPF('#02', 'cpfCnpj', ATitulo.Sacado.SacadoAvalista.CNPJCPF);
 
          Gerador.wGrupo('/avalista');
       end;
@@ -330,11 +335,11 @@ end;
 
 procedure TBoletoW_Credisis.GerarDados;
 begin
-  if Assigned(Titulos) then
-    with Titulos do
+  if Assigned(ATitulo) then
+    with ATitulo do
     begin
       case Boleto.Configuracoes.WebService.Operacao of
-        tpInclui: GerarTitulo
+        tpInclui: GerarTitulo;
       else
         raise EACBrBoletoWSException.Create(ClassName + Format( S_OPERACAO_NAO_IMPLEMENTADO, [
                                                   TipoOperacaoToStr( Boleto.Configuracoes.WebService.Operacao ) ] ));
@@ -342,31 +347,27 @@ begin
     end;
 end;
 
-procedure TBoletoW_Credisis.GerarHeader;
-begin
-
-end;
 
 procedure TBoletoW_Credisis.GerarPagador;
 begin
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
     Begin
         Gerador.wGrupo('pagador');
-        Gerador.wCampo(tcStr, '#01', 'nome', 01, 60, 1, Titulos.Sacado.NomeSacado, DSC_NOME_SACADO);
-        Gerador.wCampo(tcStr, '#02', 'cpfCnpj', 01, 14, 1, Titulos.Sacado.CNPJCPF, DSC_CPF);
+        Gerador.wCampo(tcStr, '#01', 'nome', 01, 60, 1, ATitulo.Sacado.NomeSacado, DSC_NOME_SACADO);
+        Gerador.wCampo(tcStr, '#02', 'cpfCnpj', 01, 14, 1, ATitulo.Sacado.CNPJCPF, DSC_CPF);
 
         Gerador.wGrupo('endereco');
-        Gerador.wCampo(tcStr, '#03', 'endereco', 01, 40, 1, Titulos.Sacado.Logradouro, DSC_LOGRADOURO);
-        Gerador.wCampo(tcStr, '#04', 'bairro'  , 01, 15, 1, Titulos.Sacado.Bairro, DSC_BAIRRO);
-        Gerador.wCampo(tcStr, '#05', 'cep'     , 08, 08, 1, Titulos.Sacado.Cep, DSC_CEP);
-        Gerador.wCampo(tcStr, '#06', 'cidade'  , 01, 15, 1, Titulos.Sacado.Cidade, DSC_CIDADE);
-        Gerador.wCampo(tcStr, '#07', 'uf'      , 02, 02, 1, Titulos.Sacado.UF, DSC_UF);
-        Gerador.wCampo(tcStr, '#08', 'numero'  , 02, 10, 1, Titulos.Sacado.Numero, DSC_NUMERO_SACADO);
+        Gerador.wCampo(tcStr, '#03', 'endereco', 01, 40, 1, ATitulo.Sacado.Logradouro, DSC_LOGRADOURO);
+        Gerador.wCampo(tcStr, '#04', 'bairro'  , 01, 15, 1, ATitulo.Sacado.Bairro, DSC_BAIRRO);
+        Gerador.wCampo(tcStr, '#05', 'cep'     , 08, 08, 1, ATitulo.Sacado.Cep, DSC_CEP);
+        Gerador.wCampo(tcStr, '#06', 'cidade'  , 01, 15, 1, ATitulo.Sacado.Cidade, DSC_CIDADE);
+        Gerador.wCampo(tcStr, '#07', 'uf'      , 02, 02, 1, ATitulo.Sacado.UF, DSC_UF);
+        Gerador.wCampo(tcStr, '#08', 'numero'  , 02, 10, 1, ATitulo.Sacado.Numero, DSC_NUMERO_SACADO);
         Gerador.wGrupo('/endereco');
 
         Gerador.wGrupo('contatos');
         Gerador.wGrupo('item');
-        Gerador.wCampo(tcStr, '#09', 'contato'    , 02, 10, 1, Titulos.Sacado.Fone, DSC_FONE );
+        Gerador.wCampo(tcStr, '#09', 'contato'    , 02, 10, 1, ATitulo.Sacado.Fone, DSC_FONE );
         Gerador.wCampo(tcInt, '#10', 'tipoContato', 01, 10, 1, 1, DSC_FONE );
 
         Gerador.wGrupo('/item');
@@ -396,15 +397,15 @@ Var vNossoNumero:String;
     End;
 
 begin
-    if Assigned(Titulos) then
+    if Assigned(ATitulo) then
     Begin
         FCalculoDigito := TACBrCalcDigito.Create;
 
         vNossoNumero := '097'+
-                        CalcularDigitoVerificador(Titulos)+
-                        PadLeft(Titulos.ACBrBoleto.Cedente.Agencia,4,'0')+
-                        PadLeft(Titulos.ACBrBoleto.Cedente.Convenio,6,'0')+
-                        PadLeft(Titulos.NossoNumero,6,'0');
+                        CalcularDigitoVerificador(ATitulo)+
+                        PadLeft(ATitulo.ACBrBoleto.Cedente.Agencia,4,'0')+
+                        PadLeft(ATitulo.ACBrBoleto.Cedente.Convenio,6,'0')+
+                        PadLeft(ATitulo.NossoNumero,6,'0');
 
         Gerador.wGrupo('boletos');
         Gerador.wGrupo('boleto');
@@ -412,11 +413,11 @@ begin
         GerarAvalista;
         GerarPagador;
 
-        Gerador.wCampo(tcStr, '#01', 'documento', 11, 11, 1, Titulos.NumeroDocumento, DSC_NUMERO_DOCUMENTO);
-        Gerador.wCampo(tcDat, '#02', 'dataEmissao', 10, 10, 1, Titulos.DataDocumento, DSC_DATA_DOCUMENTO);
-        Gerador.wCampo(tcDat, '#03', 'dataVencimento', 10, 10, 1, Titulos.Vencimento, DSC_DATA_VENCIMENTO);
-        Gerador.wCampo(tcDat, '#04', 'dataLimitePagamento', 10, 10, 1, Titulos.DataLimitePagto, DSC_DATA_LIMITE_PAGAMENTO);
-        Gerador.wCampo(tcDe2, '#05', 'valor', 01, 15, 1, Titulos.ValorDocumento, DSC_VALOR_DOCUMENTO);
+        Gerador.wCampo(tcStr, '#01', 'documento', 11, 11, 1, ATitulo.NumeroDocumento, DSC_NUMERO_DOCUMENTO);
+        Gerador.wCampo(tcDat, '#02', 'dataEmissao', 10, 10, 1, ATitulo.DataDocumento, DSC_DATA_DOCUMENTO);
+        Gerador.wCampo(tcDat, '#03', 'dataVencimento', 10, 10, 1, ATitulo.Vencimento, DSC_DATA_VENCIMENTO);
+        Gerador.wCampo(tcDat, '#04', 'dataLimitePagamento', 10, 10, 1, ATitulo.DataLimitePagto, DSC_DATA_LIMITE_PAGAMENTO);
+        Gerador.wCampo(tcDe2, '#05', 'valor', 01, 15, 1, ATitulo.ValorDocumento, DSC_VALOR_DOCUMENTO);
         //<!--Optional:-->
         //Gerador.wCampo(tcInt, '#10', 'grupoParcela', 1, 10, 1, 1, '' );
         //<grupoParcela>?</grupoParcela>
@@ -424,9 +425,9 @@ begin
         //<!--Optional:-->
         Gerador.wCampo(tcStr, '#07', 'nossonumero', 1, 30, 1, vNossoNumero, DSC_NOSSO_NUMERO);
         //<!--Optional:-->
-        Gerador.wCampo(tcInt, '#08', 'quantidadeParcelas', 1, 1, 1, Titulos.Parcela, DSC_NNFINI );
+        Gerador.wCampo(tcInt, '#08', 'quantidadeParcelas', 1, 1, 1, ATitulo.Parcela, DSC_NNFINI );
         //<!--Optional:-->
-        Gerador.wCampo(tcInt, '#09', 'intervaloParcela', 1, 1, 1, Titulos.TotalParcelas, DSC_NNFFIN);
+        Gerador.wCampo(tcInt, '#09', 'intervaloParcela', 1, 1, 1, ATitulo.TotalParcelas, DSC_NNFFIN);
 
         //<!--Optional:-->
         //<layout>'default_'</layout>
@@ -434,19 +435,19 @@ begin
         //<!--Optional:-->
         //<formato>?</formato>
 
-        If Titulos.EspecieDoc = 'DMI' Then
+        If ATitulo.EspecieDoc = 'DMI' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '03', DSC_TIPO_ESPECIE)
-        Else If Titulos.EspecieDoc = 'DSI' Then
+        Else If ATitulo.EspecieDoc = 'DSI' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '05', DSC_TIPO_ESPECIE)
-        Else If Titulos.EspecieDoc = 'NP' Then
+        Else If ATitulo.EspecieDoc = 'NP' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '12', DSC_TIPO_ESPECIE)
-        Else If Titulos.EspecieDoc = 'RC' Then
+        Else If ATitulo.EspecieDoc = 'RC' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '17', DSC_TIPO_ESPECIE)
-        Else If Titulos.EspecieDoc = 'AP' Then
+        Else If ATitulo.EspecieDoc = 'AP' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '20', DSC_TIPO_ESPECIE)
-        Else If Titulos.EspecieDoc = 'ME' Then
+        Else If ATitulo.EspecieDoc = 'ME' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '21', DSC_TIPO_ESPECIE)
-        Else If Titulos.EspecieDoc = 'NF' Then
+        Else If ATitulo.EspecieDoc = 'NF' Then
          Gerador.wCampo(tcStr, '#12', 'codigoEspecie', 01, 15, 1, '23', DSC_TIPO_ESPECIE);
 
         GeraProtesto;
@@ -455,7 +456,7 @@ begin
         //<tipoEnvio>?</tipoEnvio>
         //<!--Optional:-->
 
-        Gerador.wCampo(tcStr, '#13', 'instrucao', 01, 100, 1, Titulos.Mensagem.Text, DSC_INSTRUCAO1);
+        Gerador.wCampo(tcStr, '#13', 'instrucao', 01, 100, 1, ATitulo.Mensagem.Text, DSC_INSTRUCAO1);
 
         GeraMulta;
         GeraJuros;

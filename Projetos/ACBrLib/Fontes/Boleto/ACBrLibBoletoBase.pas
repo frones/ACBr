@@ -1131,13 +1131,13 @@ begin
 
     try
       BoletoDM.ACBrBoleto1.Configuracoes.WebService.Operacao:= TOperacao(CodigoOperacao);
-      BoletoDM.ACBrBoleto1.EnviarBoleto;
+      BoletoDM.ACBrBoleto1.Enviar;
 
-      if BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count > 0 then
+      if BoletoDM.ACBrBoleto1.TotalListaRetornoWeb > 0 then
       begin
-        SetLength(Titulos, BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count);
+        SetLength(Titulos, BoletoDM.ACBrBoleto1.TotalListaRetornoWeb);
         try
-          for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
+          for I:= 0 to BoletoDM.ACBrBoleto1.TotalListaRetornoWeb -1 do
           begin
             Titulo := TRetornoRegistroWeb.Create(I + 1, Config.TipoResposta, Config.CodResposta);
             Titulo.Processar(BoletoDM.ACBrBoleto1.ListaRetornoWeb[I]);
@@ -1193,16 +1193,16 @@ begin
         raise EACBrLibException.Create(ErrConfigLer, Format(SErroLerArquivoEntrada, [ArquivoIni]));
 
       BoletoDM.ACBrBoleto1.Configuracoes.WebService.Operacao := tpConsulta;
-      BoletoDM.ACBrBoleto1.EnviarBoleto;
+      BoletoDM.ACBrBoleto1.Enviar;
 
-      if BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count > 0 then
+      if BoletoDM.ACBrBoleto1.ListaConsultaRetornoWeb.Count > 0 then
       begin
-        SetLength(Titulos, BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count);
+        SetLength(Titulos, BoletoDM.ACBrBoleto1.ListaConsultaRetornoWeb.Count);
         try
-          for I:= 0 to BoletoDM.ACBrBoleto1.ListaRetornoWeb.Count -1 do
+          for I:= 0 to BoletoDM.ACBrBoleto1.ListaConsultaRetornoWeb.Count -1 do
           begin
             Titulo := TRetornoRegistroWeb.Create(I + 1, Config.TipoResposta, Config.CodResposta);
-            Titulo.Processar(BoletoDM.ACBrBoleto1.ListaRetornoWeb[I]);
+            Titulo.Processar(BoletoDM.ACBrBoleto1.ListaConsultaRetornoWeb[I]);
             Titulos[I] := Titulo;
           end;
 

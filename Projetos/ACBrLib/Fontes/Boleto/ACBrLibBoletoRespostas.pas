@@ -233,7 +233,7 @@ type
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    procedure Processar(const ASacado: TSacadoRet);
+    procedure Processar(const ASacado: TACBrBoletoSacadoRet);
 
   published
     property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
@@ -260,7 +260,7 @@ type
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    procedure Processar(const ASacadoAvalista: TSacadoAvalistaRet);
+    procedure Processar(const ASacadoAvalista: TACBrBoletoSacadoAvalistaRet);
 
   published
     property Pessoa: TACBrPessoa  read FTipoPessoa   write FTipoPessoa;
@@ -341,7 +341,7 @@ type
 
   public
     constructor Create( AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    procedure Processar(const DadosRet: TDadosRet);
+    procedure Processar(const DadosRet: TACBrBoletoDadosRet);
     destructor Destroy; override;
 
   published
@@ -426,7 +426,7 @@ type
 
   public
     constructor Create( const AID: Integer; const AIDRej: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-    procedure Processar(const ARejeicao: TRejeicao);
+    procedure Processar(const ARejeicao: TACBrBoletoRejeicao);
 
   published
     property Campo : String read FCampo write FCampo;
@@ -481,7 +481,7 @@ type
   public
     constructor Create(const AID: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
-    procedure Processar(const RetEnvio: TRetEnvio);
+    procedure Processar(const RetEnvio: TACBrBoletoRetornoWS);
 
   published
     property CodRetorno: String                  read FCodRetorno                  write FCodRetorno;
@@ -542,7 +542,7 @@ begin
 
 end;
 
-procedure TRetornoRejeicoesWeb.Processar(const ARejeicao: TRejeicao);
+procedure TRetornoRejeicoesWeb.Processar(const ARejeicao: TACBrBoletoRejeicao);
 begin
   Campo := ARejeicao.Campo;
   Mensagem := ARejeicao.Mensagem;
@@ -562,7 +562,7 @@ begin
   inherited Create(AChave, ATipo, AFormato);
 end;
 
-procedure TSacadoWeb.Processar(const ASacado: TSacadoRet);
+procedure TSacadoWeb.Processar(const ASacado: TACBrBoletoSacadoRet);
 begin
   Pessoa := ASacado.Pessoa;
   NomeSacado := ASacado.NomeSacado;
@@ -588,7 +588,7 @@ begin
   inherited Create(AChave, ATipo, AFormato);
 end;
 
-procedure TSacadoAvalistaWeb.Processar(const ASacadoAvalista: TSacadoAvalistaRet);
+procedure TSacadoAvalistaWeb.Processar(const ASacadoAvalista: TACBrBoletoSacadoAvalistaRet);
 begin
   Pessoa := ASacadoAvalista.Pessoa;
   NomeAvalista := ASacadoAvalista.NomeAvalista;
@@ -617,7 +617,7 @@ begin
   FSacadoAvalista.Free;
 end;
 
-procedure TRetornoTituloWeb.Processar(const DadosRet: TDadosRet);
+procedure TRetornoTituloWeb.Processar(const DadosRet: TACBrBoletoDadosRet);
 begin
     CodBarras:= DadosRet.TituloRet.CodBarras;
     LinhaDig:= DadosRet.TituloRet.LinhaDig;
@@ -713,7 +713,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TRetornoRegistroWeb.Processar(const RetEnvio: TRetEnvio);
+procedure TRetornoRegistroWeb.Processar(const RetEnvio: TACBrBoletoRetornoWS);
 var
   J: Integer;
   Rejeicao: TRetornoRejeicoesWeb;

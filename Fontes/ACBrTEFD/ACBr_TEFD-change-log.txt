@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2022
+-- ACBrPOSPGWebPrinter --
+[-] Correção de erro na compilação. Inclusão das units ACBrUtil.Strings e ACBrUtil.XMLHTML
+    Por: Antonio Carlos
+    
 23/06/2022
 -- ACBrTEFCliSiTefComum --
 [*] Melhoria para leitura da resposta no TEF SiTEF para voucher

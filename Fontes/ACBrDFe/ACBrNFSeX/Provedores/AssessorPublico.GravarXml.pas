@@ -113,8 +113,8 @@ begin
   else
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'RETIDO', 1, 1, 1, 'N', ''));
 
-  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ATIVIDADE', 1, 1, 1,
-                                            NFSe.Servico.ItemListaServico, ''));
+  NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ATIVIDADE', 1, 10, 1,
+                                            NFSe.Servico.CodigoCnae, ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ALIQUOTAAPLICADA', 1, 5, 1,
                                             NFSe.Servico.Valores.Aliquota, ''));

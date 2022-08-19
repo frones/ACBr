@@ -91,7 +91,7 @@ NFSeBrasil           1.00
 NotaInteligente      2.00
 Prodata              2.01
 Pronim               1.00
-Pronim               2.02
+Pronim               2.02  17/08/2022
 Publica              1.00  08/08/2022
 RLZ                  1.00
 RLZ                  2.03

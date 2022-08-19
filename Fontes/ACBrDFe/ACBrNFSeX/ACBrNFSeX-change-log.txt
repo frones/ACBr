@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/08/2022
+-- AssessorPublico.GravarXml --
+[*] A tag ATIVIDADE agora é gerada com base no conteudo do campo:
+    NFSe.Servico.CodigoCnae e seu tamanho máximo é de 10 caracteres.
+   Por: Italo Giurizzato Junior
+
 18/08/2022
 -- IPM.GravarXml --
 [*] Alteração na quantidade de ocorrencias, a tag Valor_tributavel passa a ser opcional

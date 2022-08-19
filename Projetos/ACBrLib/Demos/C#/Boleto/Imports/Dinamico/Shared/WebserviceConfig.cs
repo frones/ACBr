@@ -16,9 +16,9 @@ namespace ACBrLib.Boleto
 
         #region Properties
 
-        public string LogRegistro
+        public bool LogRegistro
         {
-            get => GetProperty<string>();
+            get => GetProperty<bool>();
             set => SetProperty(value);
         }
 

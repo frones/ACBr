@@ -56,7 +56,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base;
+  ACBrUtil.Base, ACBrUtil.DateTime;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -114,8 +114,8 @@ begin
 
     aValor:=StringReplace(aValor, '-', '/', [rfReplaceAll]);
 
-    aValor := aValor + ' ' + ObterConteudo(ANode.Childrens.FindAnyNs('nfehora'), tcStr);
-    DataEmissao := StrToDateTime(aValor);
+    aValor := aValor + 'T' + ObterConteudo(ANode.Childrens.FindAnyNs('nfehora'), tcStr);
+    DataEmissao := EncodeDataHora(aValor);
 
     CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
     SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('nfestatus'), tcStr));

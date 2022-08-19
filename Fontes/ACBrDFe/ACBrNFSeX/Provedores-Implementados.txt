@@ -38,7 +38,7 @@ EloTech              2.03
 Equiplano            1.00
 eReceita             2.02
 Etherium             2.03
-FGMaiss              1.00
+FGMaiss              1.00  19/08/2022
 fintelISS            2.00  02/08/2022
 fintelISS            2.02
 Fiorilli             2.00

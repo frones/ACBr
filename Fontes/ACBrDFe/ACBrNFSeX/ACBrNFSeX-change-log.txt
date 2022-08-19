@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 19/08/2022
+-- WebFisco.LerXml --
+[*] Ajuste na leitura da data/hora.
+   Por: Italo Giurizzato Junior
 -- AssessorPublico.GravarXml --
 [*] A tag ATIVIDADE agora é gerada com base no conteudo do campo:
     NFSe.Servico.CodigoCnae e seu tamanho máximo é de 10 caracteres.

@@ -123,6 +123,9 @@ namespace ACBrLib.Boleto
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Boleto_EnviarBoleto(IntPtr handle, int eCodigoOperacao, StringBuilder buffer, ref int bufferSize);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int Boleto_ConsultarTitulosPorPeriodo(IntPtr handle, string eArquivoIni, StringBuilder buffer, ref int bufferSize);
+
         protected override void InitializeMethods()
         {
             AddMethod<Boleto_Inicializar>("Boleto_Inicializar");
@@ -164,6 +167,7 @@ namespace ACBrLib.Boleto
             AddMethod<Boleto_RetornaLinhaDigitavel>("Boleto_RetornaLinhaDigitavel");
             AddMethod<Boleto_RetornaCodigoBarras>("Boleto_RetornaCodigoBarras");
             AddMethod<Boleto_EnviarBoleto>("Boleto_EnviarBoleto");
+            AddMethod<Boleto_ConsultarTitulosPorPeriodo>("Boleto_ConsultarTitulosPorPeriodo");
         }
     }
 }

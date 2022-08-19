@@ -451,6 +451,19 @@ namespace ACBrLib.Boleto
             return RetornoWeb.LerRetorno(ProcessResult(buffer, bufferLen));
         }
 
+        public string ConsultarTitulosPorPeriodo(string eArquivoIni)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Boleto_ConsultarTitulosPorPeriodo>();
+            var ret = ExecuteMethod<int>(() => method(eArquivoIni, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         #region Private Methods
 
         protected override void FinalizeLib()

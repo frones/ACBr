@@ -304,6 +304,7 @@ type
     FsituacaoEvento: String;
     FaplicacaoRecepcao: String;
     FiniValid: String;
+    FfimValid: string;
     FnrProtocolo: String;
   public
     property id: String read FId write FId;
@@ -312,6 +313,7 @@ type
     property situacaoEvento: String read FsituacaoEvento write FsituacaoEvento;
     property aplicacaoRecepcao: String read FaplicacaoRecepcao write FaplicacaoRecepcao;
     property iniValid: String read FiniValid write FiniValid;
+    property fimValid: String read FfimValid write FfimValid;
     property nrProtocolo : string read FnrProtocolo write FnrProtocolo;
   end;
 
@@ -810,6 +812,7 @@ begin
             begin
               id                := Leitor.rAtributo('id=');
               iniValid          := leitor.rCampo(tcStr, 'iniValid');
+              fimValid          := leitor.rCampo(tcStr, 'fimValid');
               dtHoraRecebimento := leitor.rCampo(tcStr, 'dtHoraRecebimento');
               nrProtocolo       := leitor.rCampo(tcStr, 'nrProtocolo');
               nrRecibo          := leitor.rCampo(tcStr, 'nrRecibo');

@@ -680,6 +680,7 @@ begin
       begin
         sSecao := 'dadosEstab';
         infoEstab.DadosEstab.cnaePrep   := INIRec.ReadString(sSecao, 'cnaePrep', EmptyStr);
+        infoEstab.DadosEstab.cnpjResp   := INIRec.ReadString(sSecao, 'cnpjResp', EmptyStr);
 
         sSecao := 'aliqGilrat';
         infoEstab.DadosEstab.aliqGilrat.AliqRat      :=eSStrToAliqRat(Ok, INIRec.ReadString(sSecao, 'aliqRat', '1'));

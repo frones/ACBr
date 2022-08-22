@@ -49,6 +49,7 @@ public class FrmMain extends javax.swing.JFrame {
         nudAvancoEtq.setValue(Integer.parseInt(acbrETQ.configLerValor(ACBrSessao.ETQ, "Avanco")));
         chkLimparMemoria.setSelected("1".equals(acbrETQ.configLerValor(ACBrSessao.ETQ, "LimparMemoria")));
         cmbUnidadeMedida.setSelectedItem(ETQUnidade.valueOf(Integer.parseInt(acbrETQ.configLerValor(ACBrSessao.ETQ, "Unidade"))));
+        cmbPagCodigo.setSelectedItem(ETQPaginaCodigo.valueOf(Integer.parseInt(acbrETQ.configLerValor(ACBrSessao.ETQ, "PaginaDeCodigo"))));
 
     }
 
@@ -62,6 +63,7 @@ public class FrmMain extends javax.swing.JFrame {
         acbrETQ.configGravarValor(ACBrSessao.ETQ, "Avanco", (Integer) nudAvancoEtq.getValue());
         acbrETQ.configGravarValor(ACBrSessao.ETQ, "LimparMemoria", chkLimparMemoria.isSelected() ? "1" : "0");
         acbrETQ.configGravarValor(ACBrSessao.ETQ, "Unidade", ((ETQUnidade)cmbUnidadeMedida.getSelectedItem()).asInt());
+        acbrETQ.configGravarValor(ACBrSessao.ETQ, "PaginaDeCodigo", ((ETQPaginaCodigo)cmbPagCodigo.getSelectedItem()).asInt());
 
         acbrETQ.configGravar();
     }
@@ -79,7 +81,6 @@ public class FrmMain extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cmbPorta = new javax.swing.JComboBox<>();
         cmbModelo = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         nudTemperatura = new javax.swing.JSpinner();
         cmbDPi = new javax.swing.JComboBox<>();
@@ -93,6 +94,9 @@ public class FrmMain extends javax.swing.JFrame {
         chkLimparMemoria = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
         cmbUnidadeMedida = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        cmbPagCodigo = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         pnlImagem = new javax.swing.JPanel();
         txtImagem = new javax.swing.JTextField();
@@ -105,6 +109,8 @@ public class FrmMain extends javax.swing.JFrame {
         btnEtq3Colunas = new javax.swing.JButton();
         btnEtqBloco = new javax.swing.JButton();
         btnEtqImagem = new javax.swing.JButton();
+        btnSalvarConfiguracoes = new javax.swing.JButton();
+        btnCarregarConfiguracoes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibETQ Demo");
@@ -125,8 +131,6 @@ public class FrmMain extends javax.swing.JFrame {
 
         cmbModelo.setModel(new DefaultComboBoxModel<>(ETQModelo.values()));
         cmbModelo.setToolTipText("");
-
-        jLabel2.setText("Modelo");
 
         jLabel3.setText("Temperatura");
 
@@ -157,6 +161,12 @@ public class FrmMain extends javax.swing.JFrame {
         cmbUnidadeMedida.setModel(new DefaultComboBoxModel<>(ETQUnidade.values()));
         cmbUnidadeMedida.setToolTipText("");
 
+        jLabel11.setText("Modelo");
+
+        jLabel2.setText("Pag. Código");
+
+        cmbPagCodigo.setModel(new DefaultComboBoxModel<>(ETQPaginaCodigo.values()));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -179,23 +189,31 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(cmbModelo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmbDPi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmbBackFeed, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 116, Short.MAX_VALUE)
                         .addContainerGap())
                     .addComponent(cmbUnidadeMedida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(chkLimparMemoria)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(cmbPagCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(123, 123, 123)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(10, 10, 10)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,8 +247,18 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(nudAvancoEtq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(chkLimparMemoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmbPagCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkLimparMemoria)
+                .addGap(18, 18, 18))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jLabel11)
+                    .addContainerGap(324, Short.MAX_VALUE)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Carregar Imagem"));
@@ -246,7 +274,7 @@ public class FrmMain extends javax.swing.JFrame {
         );
         pnlImagemLayout.setVerticalGroup(
             pnlImagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         txtImagem.setText("ACBR");
@@ -265,24 +293,24 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtImagem)
             .addComponent(pnlImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtImagem)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(btnCarregarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCarregarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(0, 130, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(pnlImagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtImagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCarregarImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCarregarImagem)
                 .addContainerGap())
         );
 
@@ -350,27 +378,51 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(btnEtqImagem))
         );
 
+        btnSalvarConfiguracoes.setText("Salvar Configurações");
+        btnSalvarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarConfiguracoesActionPerformed(evt);
+            }
+        });
+
+        btnCarregarConfiguracoes.setText("Carregar Configurações");
+        btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarConfiguracoesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCarregarConfiguracoes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalvarConfiguracoes))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvarConfiguracoes)
+                    .addComponent(btnCarregarConfiguracoes))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -564,20 +616,40 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEtqImagemActionPerformed
 
+    private void btnCarregarConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarConfiguracoesActionPerformed
+        try {
+            loadConfig();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCarregarConfiguracoesActionPerformed
+
+    private void btnSalvarConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarConfiguracoesActionPerformed
+        try {
+            saveConfig();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarConfiguracoesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCarregarConfiguracoes;
     private javax.swing.JButton btnCarregarImagem;
     private javax.swing.JButton btnEtq3Colunas;
     private javax.swing.JButton btnEtqBloco;
     private javax.swing.JButton btnEtqImagem;
     private javax.swing.JButton btnEtqSimples;
+    private javax.swing.JButton btnSalvarConfiguracoes;
     private javax.swing.JCheckBox chkLimparMemoria;
     private javax.swing.JComboBox<ETQBackFeed> cmbBackFeed;
     private javax.swing.JComboBox<ETQDPI> cmbDPi;
     private javax.swing.JComboBox<ETQModelo> cmbModelo;
+    private javax.swing.JComboBox<ETQPaginaCodigo> cmbPagCodigo;
     private javax.swing.JComboBox<String> cmbPorta;
     private javax.swing.JComboBox<ETQUnidade> cmbUnidadeMedida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

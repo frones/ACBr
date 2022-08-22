@@ -889,10 +889,11 @@ begin
   begin
     Gerador.wGrupo('ideADC');
 
-    Gerador.wCampo(tcDat, '', 'dtAcConv',   10,  10, 1, pIdeADC[i].dtAcConv);
+    Gerador.wCampo(tcDat, '', 'dtAcConv',   10,  10, 0, pIdeADC[i].dtAcConv);
     Gerador.wCampo(tcStr, '', 'tpAcConv',    1,   1, 1, eSTpAcConvToStr(pIdeADC[i].tpAcConv));
     Gerador.wCampo(tcStr, '', 'compAcConv',  7,   7, 0, pIdeADC[i].compAcConv);
-    Gerador.wCampo(tcDat, '', 'dtEfAcConv', 10,  10, 1, pIdeADC[i].dtEfAcConv);
+    if VersaoDF <= ve02_05_00 then
+      Gerador.wCampo(tcDat, '', 'dtEfAcConv', 10,  10, 1, pIdeADC[i].dtEfAcConv);
     Gerador.wCampo(tcStr, '', 'dsc',         1, 255, 1, pIdeADC[i].dsc);
 
     GerarIdePeriodo(pIdeADC[i].idePeriodo);
@@ -1289,7 +1290,8 @@ begin
                   dtAcConv   := StringToDateTime(sFim);
                   tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
                   compAcConv := INIRec.ReadString(sSecao, 'compAcConv', EmptyStr);
-                  dtEfAcConv := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfAcConv', '0'));
+                  if VersaoDF <= ve02_05_00 then
+                    dtEfAcConv := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfAcConv', '0'));
                   dsc        := INIRec.ReadString(sSecao, 'dsc', EmptyStr);
 
                   L := 1;

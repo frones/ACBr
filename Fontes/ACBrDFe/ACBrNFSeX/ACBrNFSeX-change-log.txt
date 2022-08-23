@@ -44,6 +44,15 @@ Símbolo : Significado
 
 
 23/08/2022
+-- ACBrNFSeXServicos --
+[*] Alterado a URL de homologação da cidade de Maringa/PR
+   Por: Italo Giurizzato Junior
+[*] A cidade Tio Maria/PA trocou as URLs, mas o provedor é o mesmo.
+   Por: Joemil
+[*] A cidade Monte Carmelo/MG trocou de provedor, agora é eReceita
+   Por: Túlio de Pádua
+[*] Correção da versão de 2.02 para 1.00 da cidade de Guapore/RS
+   Por: Grupo FS
 -- eReceita.Provider --
 [*] Alterado a configuração para assinar o Rps e o Lote de Rps.
    Por: Túlio de Pádua

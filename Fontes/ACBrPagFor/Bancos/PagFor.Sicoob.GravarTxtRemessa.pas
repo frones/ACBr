@@ -188,7 +188,7 @@ begin
       GravarCampo(TpInscricaoToStr(Inscricao.Tipo), 1, tcStr);
       GravarCampo(Inscricao.Numero, 14, tcStrZero);
       GravarCampo(Endereco.Logradouro, 30, tcStr, True);
-      GravarCampo(Endereco.Numero, 5, tcStr);
+      GravarCampo(Endereco.Numero, 5, tcStrZero);
       GravarCampo(Endereco.Complemento, 15, tcStr, True);
       GravarCampo(Endereco.Bairro, 15, tcStr, True);
       GravarCampo(Endereco.Cidade, 20, tcStr, True);

@@ -43,9 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+23/08/2022
+-- PagFor.Sicoob.GravarTxtRemessa --
+[*] Correções no Segmento B (Campo Endereco.Numero é numérico).
+   Por: Suporte AT Info
+
 18/08/2022
 -- Diversos --
-[+] Implementado o banco Sicoob.
+[+] Implementado o banco Sicoob (pagBanCooB).
    Por: Italo Giurizzato Junior
 
 17/08/2022

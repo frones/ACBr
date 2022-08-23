@@ -239,6 +239,8 @@ begin
   begin
     ANodes := AuxNode.Childrens.FindAllAnyNs('SERVICO');
 
+    NFSe.Servico.ItemServico.Clear;
+
     for i := 0 to Length(ANodes) - 1 do
     begin
       NFSe.Servico.ItemServico.New;
@@ -366,6 +368,8 @@ begin
     if AuxNode <> nil then
     begin
       ANodes := AuxNode.Childrens.FindAllAnyNs('SERVICO');
+
+      Servico.ItemServico.Clear;
 
       for i := 0 to Length(ANodes) - 1 do
       begin

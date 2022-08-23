@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/08/2022
+-- AssessorPublico.LerXml --
+[*] Ajustes para não duplicar os itens de serviço ao ler o XML da nota.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alterado a URL de homologação da cidade de Maringa/PR
    Por: Italo Giurizzato Junior

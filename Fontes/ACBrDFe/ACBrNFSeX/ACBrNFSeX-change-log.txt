@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/08/2022
+-- Tiplan.Provider --
+[*] Correção na gravia da tag de envio de lote no modo assíncrono.
+   Por: Italo Giurizzato Junior
 -- AssessorPublico.LerXml --
 [*] Ajustes para não duplicar os itens de serviço ao ler o XML da nota.
    Por: Italo Giurizzato Junior

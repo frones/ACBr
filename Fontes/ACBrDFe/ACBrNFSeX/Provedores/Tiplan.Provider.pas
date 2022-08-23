@@ -309,7 +309,7 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:RecepcionarLoteRpsoRequest>';
+  Request := '<nfse:RecepcionarLoteRpsRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
   Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
@@ -476,6 +476,7 @@ function TACBrNFSeXWebserviceTiplan203.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
+  Result := RemoverCaracteresDesnecessarios(Result);
   Result := ParseText(AnsiString(Result), True, False);
 end;
 

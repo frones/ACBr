@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/08/2022
+-- ISSe.Provider/ISSe.GravarXml/ISSe.LerXml/ACBrNFSeXProviderManager --
+[*] Renomeado os nomes das classes com a versão correta do layout.
+   Por: Italo Giurizzato Junior
 -- SigISS.LerXml --
 [*] Alteração no nome da procedure para não gerar conflito.
    Por: Digibyte

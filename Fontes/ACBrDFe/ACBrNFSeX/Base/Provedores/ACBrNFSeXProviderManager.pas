@@ -344,7 +344,7 @@ begin
 
       proISSDigital: Result := TACBrNFSeProviderISSDigital200.Create(ACBrNFSe);
       proISSDSF:     Result := TACBrNFSeProviderISSDSF.Create(ACBrNFSe);
-      proISSe:       Result := TACBrNFSeProviderISSe200.Create(ACBrNFSe);
+      proISSe:       Result := TACBrNFSeProviderISSe201.Create(ACBrNFSe);
 
       proISSFortaleza:
         Result := TACBrNFSeProviderISSFortaleza.Create(ACBrNFSe);

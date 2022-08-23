@@ -42,9 +42,9 @@ uses
   ACBrNFSeXParametros, ACBrNFSeXGravarXml_ABRASFv2, ACBrNFSeXConversao;
 
 type
-  { TNFSeW_ISSe200 }
+  { TNFSeW_ISSe201 }
 
-  TNFSeW_ISSe200 = class(TNFSeW_ABRASFv2)
+  TNFSeW_ISSe201 = class(TNFSeW_ABRASFv2)
   protected
     procedure Configuracao; override;
 
@@ -57,9 +57,9 @@ implementation
 //     ISSe
 //==============================================================================
 
-{ TNFSeW_ISSe200 }
+{ TNFSeW_ISSe201 }
 
-procedure TNFSeW_ISSe200.Configuracao;
+procedure TNFSeW_ISSe201.Configuracao;
 begin
   inherited Configuracao;
 

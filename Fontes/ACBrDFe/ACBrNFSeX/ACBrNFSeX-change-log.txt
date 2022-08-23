@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/08/2022
+-- eReceita.Provider --
+[*] Alterado a configuração para assinar o Rps e o Lote de Rps.
+   Por: Túlio de Pádua
 -- ISSe.Provider/ISSe.GravarXml/ISSe.LerXml/ACBrNFSeXProviderManager --
 [*] Renomeado os nomes das classes com a versão correta do layout.
    Por: Italo Giurizzato Junior

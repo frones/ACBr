@@ -88,6 +88,8 @@ begin
 
   with ConfigAssinar do
   begin
+    Rps := True;
+    LoteRps := True;
     CancelarNFSe := True;
     RpsGerarNFSe := True;
   end;

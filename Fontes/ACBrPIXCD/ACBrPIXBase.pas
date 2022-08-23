@@ -44,7 +44,7 @@ unit ACBrPIXBase;
 interface
 
 uses
-  Classes, SysUtils, ACBrJSON, ACBrBase, jsons;
+  Classes, SysUtils, ACBrJSON, ACBrBase;
 
 resourcestring
   sErroMetodoNaoImplementado = 'Método %s não implementado para Classe %s';

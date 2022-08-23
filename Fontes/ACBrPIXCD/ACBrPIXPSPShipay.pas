@@ -45,8 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrShipaySchemas,
-  ACBrPIXBase, ACBrPIXSchemasProblema;
+  ACBrPIXCD, ACBrShipaySchemas, ACBrBase, ACBrPIXBase, ACBrPIXSchemasProblema;
 
 const
   cShipayURLStaging = 'https://api-staging.shipay.com.br';
@@ -75,7 +74,10 @@ type
   TShipayQuandoEnviarOrder = procedure(ShipayOrder: TShipayOrder) of object;
 
   { TACBrPSPShipay }
-
+  
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPShipay = class(TACBrPSP)
   private
     fAccessKey: String;

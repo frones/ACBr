@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrOpenSSLUtils;
+  ACBrPIXCD, ACBrBase, ACBrOpenSSLUtils;
 
 const
   cSicrediURLSandbox = 'https://api-pix-h.sicredi.com.br';
@@ -61,7 +61,10 @@ type
   { TACBrPSPItau }
 
   { TACBrPSPSicredi }
-
+  
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPSicredi = class(TACBrPSP)
   private
     fSandboxStatusCode: String;

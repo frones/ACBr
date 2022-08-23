@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrPIXSchemasProblema;
+  ACBrPIXCD, ACBrBase, ACBrPIXSchemasProblema;
 
 const
   cBBParamDevAppKey = 'gw-dev-app-key';
@@ -64,7 +64,10 @@ const
 type
 
   { TACBrPSPBancoDoBrasil }
-
+  
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPBancoDoBrasil = class(TACBrPSP)
   private
     fDeveloperApplicationKey: String;

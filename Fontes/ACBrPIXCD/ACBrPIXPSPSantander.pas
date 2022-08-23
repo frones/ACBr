@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD;
+  ACBrPIXCD, ACBrBase;
 
 const
   cSantanderPathApiPIX = '/api/v1';
@@ -63,7 +63,10 @@ resourcestring
 type
 
   { TACBrPSPSantander }
-
+  
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPSantander = class(TACBrPSP)
   private
     fRefreshURL: String;

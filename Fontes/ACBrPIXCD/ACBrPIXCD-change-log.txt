@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/08/2022
+-- ACBrBase --
+[*] Removida a unit 'fpjsons' do uses, pois não é mais utilizada.
+
+-- ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPItau, ACBrPIXPSPSantander, ACBrPIXPSPShipay, ACBrPIXPSPSicredi --
+[*] Alteração para possibilitar a utilização dos PSPs em todas as plataformas de compilação.
+    Por: Elias César
+
+15/08/2022
 -- ACBrPIXPSPSicredi --
 [*] Alteração para compatibilizar o retorno da API Pix Sicredi ao solicitar uma devolução
     Por: Marcelo A. Rodrigues

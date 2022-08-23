@@ -45,7 +45,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPIXCD, ACBrOpenSSLUtils;
+  ACBrPIXCD, ACBrBase, ACBrOpenSSLUtils;
 
 const
   cItauURLSandbox = 'https://devportal.itau.com.br/sandboxapi';
@@ -62,7 +62,10 @@ const
 type
 
   { TACBrPSPItau }
-
+  
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
   TACBrPSPItau = class(TACBrPSP)
   private
     fSandboxStatusCode: String;

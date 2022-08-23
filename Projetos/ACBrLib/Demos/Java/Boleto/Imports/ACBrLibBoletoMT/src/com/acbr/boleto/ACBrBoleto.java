@@ -111,6 +111,10 @@ public final class ACBrBoleto extends ACBrLibBase {
 
         int Boleto_RetornaCodigoBarras(Pointer libHandler, int eIndice, ByteBuffer buffer, IntByReference bufferSize);
         
+        int Boleto_EnviarBoleto(Pointer libHandler, int eCodigoOperacao, ByteBuffer buffer, IntByReference bufferSize);
+        
+        int Boleto_ConsultarTitulosPorPeriodo(Pointer libHandler, String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
+        
     }
     
     public ACBrBoleto() throws Exception {
@@ -388,6 +392,26 @@ public final class ACBrBoleto extends ACBrLibBase {
         
         return processResult(buffer, bufferLen);
     }    
+    
+    public String EnviarBoleto(int eCodigoOperacao) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_EnviarBoleto(getHandle(), eCodigoOperacao, buffer, bufferLen);
+        checkResult(ret);
+        
+        return processResult(buffer, bufferLen);
+    }
+    
+    public String ConsultarTitulosPorPeriodo(String eArquivoIni) throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+        
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_ConsultarTitulosPorPeriodo(getHandle(), eArquivoIni, buffer, bufferLen);
+        checkResult(ret);
+        
+        return processResult(buffer, bufferLen);
+    }
     
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {

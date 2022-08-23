@@ -63,6 +63,8 @@ type
 
     procedure GeraSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List); override;
 
+    procedure GerarSegmentoN(mSegmentoN: TSegmentoN); override;
+
     procedure GeraSegmentoN1(I: Integer); override;
 
     procedure GeraSegmentoN2(I: Integer); override;
@@ -546,6 +548,25 @@ begin
       ValidarLinha('J52');
       IncluirLinha;
     end;
+  end;
+end;
+
+procedure TArquivoW_Itau.GerarSegmentoN(mSegmentoN: TSegmentoN);
+begin
+  // Pagamento de Tributos e Impostos sem código de barras
+  with mSegmentoN do
+  begin
+    Inc(FQtdeRegistros);
+    Inc(FQtdeRegistrosLote);
+    Inc(FSequencialDeLote);
+
+    GravarCampo(BancoToStr(PagFor.Geral.Banco), 3, tcStr);
+    GravarCampo(FQtdeLotes, 4, tcInt);
+    GravarCampo('3', 1, tcStr);
+    GravarCampo(FSequencialDeLote, 5, tcInt);
+    GravarCampo('N', 1, tcStr);
+    GravarCampo('0', 1, tcStr);
+    GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
   end;
 end;
 

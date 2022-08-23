@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 23/08/2022
+-- Diversos --
+[*] Ajustes para reduzir códigos repetitivos.
+   Por: Italo Giurizzato Junior
 -- PagFor.Sicoob.GravarTxtRemessa --
 [*] Correções no Segmento B (Campo Endereco.Numero é numérico).
    Por: Suporte AT Info

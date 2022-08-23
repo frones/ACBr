@@ -398,7 +398,7 @@ begin
       GravarCampo(CodigoISPB, 8, tcInt);
       {
       GravarCampo(Endereco.Logradouro, 30, tcStr, True);
-      GravarCampo(Endereco.Numero, 5, tcStr);
+      GravarCampo(Endereco.Numero, 5, tcStrZero);
       GravarCampo(Endereco.Complemento, 15, tcStr, True);
       GravarCampo(Endereco.Bairro, 15, tcStr, True);
       GravarCampo(Endereco.Cidade, 20, tcStr, True);
@@ -557,6 +557,7 @@ end;
 
 procedure TArquivoW_CNAB240.GerarSegmentoN(mSegmentoN: TSegmentoN);
 begin
+  // Pagamento de Tributos e Impostos sem código de barras
   with mSegmentoN do
   begin
     Inc(FQtdeRegistros);
@@ -570,6 +571,11 @@ begin
     GravarCampo('N', 1, tcStr);
     GravarCampo('0', 1, tcStr);
     GravarCampo(InMovimentoToStr(CodMovimento), 2, tcStr);
+    GravarCampo(SeuNumero, 20, tcStr);
+    GravarCampo(NossoNumero, 20, tcStr);
+    GravarCampo(NomeContribuinte, 30, tcStr, True);
+    GravarCampo(DataPagamento, 8, tcDat);
+    GravarCampo(ValorPagamento, 15, tcDe2);
   end;
 end;
 
@@ -577,6 +583,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN1(I: Integer);
 var
   J: Integer;
 begin
+  // Informações complementares para pagamento da GPS
   for J := 0 to PagFor.Lote.Items[I].SegmentoN1.Count - 1 do
   begin
     FpLinha := '';
@@ -585,11 +592,6 @@ begin
     begin
       GerarSegmentoN(SegmentoN);
 
-      GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
-      GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
-      GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
@@ -616,6 +618,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN2(I: Integer);
 var
   J: Integer;
 begin
+  // Informações complementares para pagamento de DARF
   for J := 0 to PagFor.Lote.Items[I].SegmentoN2.Count - 1 do
   begin
     FpLinha := '';
@@ -624,11 +627,6 @@ begin
     begin
       GerarSegmentoN(SegmentoN);
 
-      GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
-      GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
-      GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
@@ -657,6 +655,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN3(I: Integer);
 var
   J: Integer;
 begin
+  // Informações complementares para pagamento de DARF SIMPLES
   for J := 0 to PagFor.Lote.Items[I].SegmentoN3.Count - 1 do
   begin
     FpLinha := '';
@@ -665,11 +664,6 @@ begin
     begin
       GerarSegmentoN(SegmentoN);
 
-      GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
-      GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
-      GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
@@ -698,6 +692,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN4(I: Integer);
 var
   J: Integer;
 begin
+  // Informações complementares para pagamento de GARE-SP (ICMS/DR/ITCMD)
   for J := 0 to PagFor.Lote.Items[I].SegmentoN4.Count - 1 do
   begin
     FpLinha := '';
@@ -706,11 +701,6 @@ begin
     begin
       GerarSegmentoN(SegmentoN);
 
-      GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
-      GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
-      GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
@@ -741,6 +731,9 @@ procedure TArquivoW_CNAB240.GeraSegmentoN567(I: Integer);
 var
   J: Integer;
 begin
+  // N5 - Informações complementares para pagamento de IPVA
+  // N6 - Informações complementares para pagamento de DPVAT
+  // N7 - Informações complementares para pagamento de LICENCIAMENTO
   for J := 0 to PagFor.Lote.Items[I].SegmentoN567.Count - 1 do
   begin
     FpLinha := '';
@@ -749,11 +742,6 @@ begin
     begin
       GerarSegmentoN(SegmentoN);
 
-      GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
-      GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
-      GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);
@@ -811,6 +799,7 @@ procedure TArquivoW_CNAB240.GeraSegmentoN8(I: Integer);
 var
   J: Integer;
 begin
+  // Informações complementares para pagamento de DARJ
   for J := 0 to PagFor.Lote.Items[I].SegmentoN8.Count - 1 do
   begin
     FpLinha := '';
@@ -819,11 +808,6 @@ begin
     begin
       GerarSegmentoN(SegmentoN);
 
-      GravarCampo(SegmentoN.SeuNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NossoNumero, 20, tcStr);
-      GravarCampo(SegmentoN.NomeContribuinte, 30, tcStr, True);
-      GravarCampo(SegmentoN.DataPagamento, 8, tcDat);
-      GravarCampo(SegmentoN.ValorPagamento, 15, tcDe2);
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
       GravarCampo(idContribuinte, 14, tcStrZero);

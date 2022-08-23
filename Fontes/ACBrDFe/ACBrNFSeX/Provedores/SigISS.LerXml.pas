@@ -52,7 +52,7 @@ type
     function LerXml: Boolean; override;
     function LerXmlRps(const ANode: TACBrXmlNode): Boolean;
     function LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
-    function LerXmlLista(const ANode: TACBrXmlNode): Boolean;
+    function LerXmlEspelho(const ANode: TACBrXmlNode): Boolean;
   end;
 
   { TNFSeR_SigISS103 }
@@ -230,7 +230,7 @@ begin
     Result := LerXmlNfse(XmlNode)
   else
     if tpXML = txmlEspelho then
-      Result := LerXmlLista(XmlNode)
+      Result := LerXmlEspelho(XmlNode)
     else
       Result := LerXmlRps(XmlNode);
 
@@ -362,7 +362,7 @@ begin
   end;
 end;
 
-function TNFSeR_SigISS.LerXmlLista(const ANode: TACBrXmlNode): Boolean;
+function TNFSeR_SigISS.LerXmlEspelho(const ANode: TACBrXmlNode): Boolean;
 var
   AuxNode, IdentificacaoNfseNode, DadosNfseNode: TACBrXmlNode;
   aValor: string;

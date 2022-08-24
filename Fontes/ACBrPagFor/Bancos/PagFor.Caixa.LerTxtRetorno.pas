@@ -32,77 +32,90 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForProviderManager;
+unit PagFor.Caixa.LerTxtRetorno;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrPagForInterface;
+  ACBrPagForClass, ACBrPagForConversao,
+  CNAB240.LerTxtRetorno;
 
 type
+ { TArquivoR_Caixa }
 
-  TACBrPagForProviderManager = class
-  public
-    class function GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
+  TArquivoR_Caixa = class(TArquivoR_CNAB240)
+  protected
+    {
+    procedure LerRegistro0; override;
+
+    procedure LerRegistro1(I: Integer); override;
+
+    procedure LerRegistro5(I: Integer); override;
+
+    procedure LerRegistro9(I: Integer); override;
+
+    procedure LerSegmentoA(I: Integer); override;
+
+    procedure LerSegmentoB(mSegmentoBList: TSegmentoBList; I: Integer); override;
+
+    procedure LerSegmentoC(mSegmentoCList: TSegmentoCList; I: Integer); override;
+
+    procedure LerSegmentoE(mSegmentoEList: TSegmentoEList; I: Integer); override;
+
+    procedure LerSegmentoF(mSegmentoFList: TSegmentoFList; I: Integer); override;
+
+    procedure LerSegmentoG(I: Integer); override;
+
+    procedure LerSegmentoH(mSegmentoHList: TSegmentoHList; I: Integer); override;
+
+    procedure LerSegmentoJ(I: Integer; var LeuRegistroJ: boolean); override;
+
+    procedure LerSegmentoJ52(mSegmentoJ52List: TSegmentoJ52List; I: Integer); override;
+
+    procedure LerSegmentoJ99(mSegmentoJ99List: TSegmentoJ99List; I: Integer); override;
+
+    procedure LerSegmentoN(mSegmentoN: TSegmentoN); override;
+
+    procedure LerSegmentoN1(I: Integer); override;
+
+    procedure LerSegmentoN2(I: Integer); override;
+
+    procedure LerSegmentoN3(I: Integer); override;
+
+    procedure LerSegmentoN4(I: Integer); override;
+
+    procedure LerSegmentoN567(I: Integer); override;
+
+    procedure LerSegmentoN8(I: Integer); override;
+
+    procedure LerSegmentoN9(I: Integer); override;
+
+    procedure LerSegmentoO(I: Integer); override;
+
+    procedure LerSegmentoW(mSegmentoWList: TSegmentoWList; I: Integer); override;
+
+    procedure LerSegmentoZ(mSegmentoZList: TSegmentoZList; I: Integer); override;
+
+    function GetOcorrencia(aOcorrencia: TOcorrencia): string; override;
+    }
   end;
 
 implementation
 
-uses
-  ACBrPagFor, ACBrPagForConversao,
+{ TArquivoR_Caixa }
 
-  PagFor.BancoCECRED.Provider,
-  PagFor.BancodoBrasil.Provider,
-  PagFor.Bradesco.Provider,
-  PagFor.Caixa.Provider,
-  PagFor.HSBC.Provider,
-  PagFor.Itau.Provider,
-  PagFor.Safra.Provider,
-  PagFor.Santander.Provider,
-  PagFor.Sicoob.Provider,
-  PagFor.Sicredi.Provider;
+{
+Se as ocorrencias seguem o padrão FEBRABAN esse bloco pode ser excluido
 
-  { TACBrPagForProviderManager }
-
-class function TACBrPagForProviderManager.GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
+function TArquivoR_Caixa.GetOcorrencia(aOcorrencia: TOcorrencia): string;
 begin
-  with TACBrPagfor(ACBrPagFor).Configuracoes.Geral do
-  begin
-    case Banco of
-      pagBancoCECRED:
-        Result := TACBrPagForProviderBancoCECRED.Create(ACBrPagFor);
-
-      pagBancodoBrasil:
-        Result := TACBrPagForProviderBancodoBrasil.Create(ACBrPagFor);
-
-      pagBradesco:
-        Result := TACBrPagForProviderBradesco.Create(ACBrPagFor);
-
-      pagCaixaEconomica:
-        Result := TACBrPagForProviderCaixa.Create(ACBrPagFor);
-
-      pagHSBC:
-        Result := TACBrPagForProviderHSBC.Create(ACBrPagFor);
-
-      pagItau:
-        Result := TACBrPagForProviderItau.Create(ACBrPagFor);
-
-      pagSafra:
-        Result := TACBrPagForProviderSafra.Create(ACBrPagFor);
-
-      pagSantander:
-        Result := TACBrPagForProviderSantander.Create(ACBrPagFor);
-
-      pagBanCooB:
-        Result := TACBrPagForProviderSicoob.Create(ACBrPagFor);
-
-      pagSicredi:
-        Result := TACBrPagForProviderSicredi.Create(ACBrPagFor);
-    else
-      Result := nil;
-    end;
+  case aOcorrencia of
+    to00: Result := 'Descrição da ocorrencia que é fora do padrão FEBRABAN';
+  else
+    Result := inherited GetOcorrencia(aOcorrencia);
   end;
 end;
-
+}
 end.
+

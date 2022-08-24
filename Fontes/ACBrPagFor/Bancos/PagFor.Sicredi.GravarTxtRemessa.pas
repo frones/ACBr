@@ -389,7 +389,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN1.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
@@ -423,7 +423,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN2.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
@@ -459,7 +459,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN3.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
@@ -495,7 +495,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN4.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
@@ -533,7 +533,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN567.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
@@ -598,7 +598,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN8.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr(TipoContribuinte), 2, tcStrZero);
@@ -634,7 +634,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN9.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(' ', 120, tcStr);
       GravarCampo(' ', 10, tcStr);

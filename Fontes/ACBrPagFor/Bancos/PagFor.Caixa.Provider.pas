@@ -32,77 +32,50 @@
 
 {$I ACBr.inc}
 
-unit ACBrPagForProviderManager;
+unit PagFor.Caixa.Provider;
 
 interface
 
 uses
   SysUtils, Classes,
-  ACBrPagForInterface;
+  ACBrPagForClass,
+  ACBrPagForGravarTxt, ACBrPagForLerTxt, CNAB240.Provider;
 
 type
 
-  TACBrPagForProviderManager = class
-  public
-    class function GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
+  TACBrPagForProviderCaixa = class (TCNAB240Provider)
+  protected
+    procedure Configuracao; override;
+
+    function CriarGeradorTxt(const aPagFor: TPagFor): TArquivoWClass; override;
+    function CriarLeitorTxt(const aPagFor: TPagFor): TArquivoRClass; override;
   end;
 
 implementation
 
 uses
-  ACBrPagFor, ACBrPagForConversao,
+  PagFor.Caixa.GravarTxtRemessa, PagFor.Caixa.LerTxtRetorno;
 
-  PagFor.BancoCECRED.Provider,
-  PagFor.BancodoBrasil.Provider,
-  PagFor.Bradesco.Provider,
-  PagFor.Caixa.Provider,
-  PagFor.HSBC.Provider,
-  PagFor.Itau.Provider,
-  PagFor.Safra.Provider,
-  PagFor.Santander.Provider,
-  PagFor.Sicoob.Provider,
-  PagFor.Sicredi.Provider;
+{ TACBrPagForProviderCaixa }
 
-  { TACBrPagForProviderManager }
-
-class function TACBrPagForProviderManager.GetProvider(ACBrPagFor: TComponent): IACBrPagForProvider;
+procedure TACBrPagForProviderCaixa.Configuracao;
 begin
-  with TACBrPagfor(ACBrPagFor).Configuracoes.Geral do
-  begin
-    case Banco of
-      pagBancoCECRED:
-        Result := TACBrPagForProviderBancoCECRED.Create(ACBrPagFor);
+  inherited Configuracao;
 
-      pagBancodoBrasil:
-        Result := TACBrPagForProviderBancodoBrasil.Create(ACBrPagFor);
+end;
 
-      pagBradesco:
-        Result := TACBrPagForProviderBradesco.Create(ACBrPagFor);
+function TACBrPagForProviderCaixa.CriarGeradorTxt(
+  const aPagFor: TPagFor): TArquivoWClass;
+begin
+  Result := TArquivoW_Caixa.Create(Self);
+  Result.PagFor := aPagFor;
+end;
 
-      pagCaixaEconomica:
-        Result := TACBrPagForProviderCaixa.Create(ACBrPagFor);
-
-      pagHSBC:
-        Result := TACBrPagForProviderHSBC.Create(ACBrPagFor);
-
-      pagItau:
-        Result := TACBrPagForProviderItau.Create(ACBrPagFor);
-
-      pagSafra:
-        Result := TACBrPagForProviderSafra.Create(ACBrPagFor);
-
-      pagSantander:
-        Result := TACBrPagForProviderSantander.Create(ACBrPagFor);
-
-      pagBanCooB:
-        Result := TACBrPagForProviderSicoob.Create(ACBrPagFor);
-
-      pagSicredi:
-        Result := TACBrPagForProviderSicredi.Create(ACBrPagFor);
-    else
-      Result := nil;
-    end;
-  end;
+function TACBrPagForProviderCaixa.CriarLeitorTxt(
+  const aPagFor: TPagFor): TArquivoRClass;
+begin
+  Result := TArquivoR_Caixa.Create(Self);
+  Result.PagFor := aPagFor;
 end;
 
 end.

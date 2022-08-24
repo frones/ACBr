@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/08/2022
+-- Diversos --
+[+] Implementado o banco Caixa Economica Federal (pagCaixaEconomica).
+   Por: Italo Giurizzato Junior
+
 23/08/2022
 -- Diversos --
 [*] Ajustes para reduzir códigos repetitivos.

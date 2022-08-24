@@ -96,7 +96,7 @@ type
       Pagamento de Tributos
       Pagamento de Tributos sem Código de Barras
     }
-    procedure GerarSegmentoN(mSegmentoN: TSegmentoN); virtual;
+    procedure GeraSegmentoN(mSegmentoN: TSegmentoN); virtual;
     // Registros de Informações complementares do Segmento N
     // (Registro de Pagamento de Tributos e Impostos sem Código de Barras)
     procedure GeraSegmentoN1(I: Integer); virtual;
@@ -555,7 +555,7 @@ begin
   end;
 end;
 
-procedure TArquivoW_CNAB240.GerarSegmentoN(mSegmentoN: TSegmentoN);
+procedure TArquivoW_CNAB240.GeraSegmentoN(mSegmentoN: TSegmentoN);
 begin
   // Pagamento de Tributos e Impostos sem código de barras
   with mSegmentoN do
@@ -590,7 +590,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN1.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
@@ -625,7 +625,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN2.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
@@ -662,7 +662,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN3.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
@@ -699,7 +699,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN4.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
@@ -740,7 +740,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN567.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
@@ -806,7 +806,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN8.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(FormatFloat('0000', Receita), 6, tcStr);
       GravarCampo(InscricaoToStr_SegN(TipoContribuinte), 2, tcStrZero);
@@ -842,7 +842,7 @@ begin
 
     with PagFor.Lote.Items[I].SegmentoN9.Items[J] do
     begin
-      GerarSegmentoN(SegmentoN);
+      GeraSegmentoN(SegmentoN);
 
       GravarCampo(' ', 120, tcStr);
       GravarCampo(' ', 10, tcStr);

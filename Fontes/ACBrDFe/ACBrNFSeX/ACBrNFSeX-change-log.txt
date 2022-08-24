@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/08/2022
+-- ACBrNFSeXServicos --
+[*] Alterado a URL de homologação da cidade de Videira/SC
+   Por: Willian Delan
+
 23/08/2022
 -- Tiplan.Provider --
 [*] Correção na gravia da tag de envio de lote no modo assíncrono.

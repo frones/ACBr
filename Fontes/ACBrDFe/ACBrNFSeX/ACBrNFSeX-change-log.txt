@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/08/2022
+-- Giap.Provider --
+[+] Incluido no TratarRetornoEmitir o preenchimento da lista de Resumos.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebservicesResponse/EL.Provider --
 [*] Correção de vazamento de memória.
    Por: João Antônio

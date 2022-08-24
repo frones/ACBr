@@ -231,10 +231,10 @@ procedure TACBrNFSeProviderGiap.TratarRetornoEmitir(Response: TNFSeEmiteResponse
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
+  AResumo: TNFSeResumoCollectionItem;
   ANodeArray: TACBrXmlNodeArray;
   ANode: TACBrXmlNode;
   i: Integer;
-  NumRps: String;
   ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
@@ -277,15 +277,20 @@ begin
           Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('statusEmissao'), tcStr);
           Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('link'), tcStr);
           NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroRps'), tcStr);
+
+          AResumo := Response.Resumos.New;
+          AResumo.NumeroNota := NumeroNota;
+          AResumo.CodigoVerificacao := CodVerificacao;
+          AResumo.NumeroRps := NumeroRps;
+          AResumo.Link := Link;
+          AResumo.Situacao := Situacao;
         end;
-
-        NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('numeroRps'), tcStr);
-
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
 
         // GIAP Não retorna o XML da Nota sendo necessário imprimir a Nota já
         // gerada. Se Não der erro, passo a Nota de Envio para ser impressa já
         // que não deu erro na emissão.
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroRps);
         ANota := CarregarXmlNfse(ANota, Response.XmlEnvio);
         SalvarXmlNfse(ANota);
       end;

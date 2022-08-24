@@ -136,6 +136,7 @@ object Form1: TForm1
         Align = alClient
         BevelOuter = bvNone
         Color = 15263976
+        ParentBackground = False
         TabOrder = 0
         object pnFluxoPagto: TPanel
           Left = 30
@@ -339,6 +340,7 @@ object Form1: TForm1
               Font.Height = -24
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
+              ParentBackground = False
               ParentFont = False
               TabOrder = 0
             end

@@ -599,6 +599,8 @@ end;
 constructor TNFSeCancelaNFSeResponse.Create;
 begin
   inherited Create;
+  FInfCancelamento := nil;
+  FRetCancelamento := nil;
 
   Clear;
 end;
@@ -608,10 +610,10 @@ begin
   inherited Clear;
 
   if Assigned(FInfCancelamento) then
-    FInfCancelamento.Free;
+    FreeAndNil(FInfCancelamento);
 
   if Assigned(FRetCancelamento) then
-   FRetCancelamento.Free;
+   FreeAndNil(FRetCancelamento);
 
   FInfCancelamento := TInfCancelamento.Create;
   FRetCancelamento := TRetCancelamento.Create;
@@ -620,10 +622,10 @@ end;
 destructor TNFSeCancelaNFSeResponse.Destroy;
 begin
   if Assigned(FInfCancelamento) then
-    FInfCancelamento.Free;
+    FreeAndNil(FInfCancelamento);
 
   if Assigned(FRetCancelamento) then
-    FRetCancelamento.Free;
+    FreeAndNil(FRetCancelamento);
 
   inherited Destroy;
 end;
@@ -640,17 +642,10 @@ constructor TNFSeSubstituiNFSeResponse.Create;
 begin
   inherited Create;
 
-  FInfCancelamento := TInfCancelamento.Create;
-  FRetCancelamento := TRetCancelamento.Create;
 end;
 
 destructor TNFSeSubstituiNFSeResponse.Destroy;
 begin
-  if Assigned(FInfCancelamento) then
-    FreeAndNil(FInfCancelamento);
-
-  if Assigned(FRetCancelamento) then
-    FreeAndNil(FRetCancelamento);
 
   inherited Destroy;
 end;

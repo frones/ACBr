@@ -68,8 +68,8 @@ type
     function CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass; override;
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
-    function AbreSessao(const aLote: String): TNFSeAbreSessaoResponse;
-    function FechaSessao(const aLote: String): TNFSeFechaSessaoResponse;
+    function AbreSessao(const aLote: String): Boolean;
+    function FechaSessao(const aLote: String): Boolean;
 
     function PrepararRpsParaLote(const aXml: string): string; override;
 
@@ -144,9 +144,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML,
   ACBrDFeException,
   ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, EL.GravarXml, EL.LerXml;
@@ -405,108 +403,131 @@ end;
 { TACBrNFSeProviderEL }
 
 function TACBrNFSeProviderEL.AbreSessao(
-  const aLote: String): TNFSeAbreSessaoResponse;
+  const aLote: String): Boolean;
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
+  AAbreSessao: TNFSeAbreSessaoResponse;
 begin
+  Result := False;
   TACBrNFSeX(FAOwner).SetStatus(stNFSeAbrirSessao);
 
-  Result := TNFSeAbreSessaoResponse.Create;
-  Result.Lote := aLote;
+  AAbreSessao := TNFSeAbreSessaoResponse.Create;
 
-  PrepararAbrirSessao(Result);
-  if (Result.Erros.Count > 0) then
-  begin
-    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-    Exit;
-  end;
-  AService := nil;
   try
-    try
-      TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
+    AAbreSessao.Lote := aLote;
 
-      AService := CriarServiceClient(tmAbrirSessao);
-      AService.Prefixo := Result.Lote;
-      Result.ArquivoRetorno := AService.AbrirSessao(ConfigMsgDados.DadosCabecalho, Result.ArquivoEnvio);
+    PrepararAbrirSessao(AAbreSessao);
 
-      Result.Sucesso := True;
-      Result.EnvelopeEnvio := AService.Envio;
-      Result.EnvelopeRetorno := AService.Retorno;
-    except
-      on E:Exception do
-      begin
-        AErro := EmiteResponse.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
-      end;
+    if (AAbreSessao.Erros.Count > 0) then
+    begin
+      TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+      Exit;
     end;
-  finally
-    FreeAndNil(AService);
-  end;
 
-  if not Result.Sucesso then
-  begin
+    AService := nil;
+
+    try
+      try
+        TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
+
+        AService := CriarServiceClient(tmAbrirSessao);
+        AService.Prefixo := AAbreSessao.Lote;
+        AAbreSessao.ArquivoRetorno := AService.AbrirSessao(ConfigMsgDados.DadosCabecalho, AAbreSessao.ArquivoEnvio);
+
+        AAbreSessao.Sucesso := True;
+        AAbreSessao.EnvelopeEnvio := AService.Envio;
+        AAbreSessao.EnvelopeRetorno := AService.Retorno;
+      except
+        on E:Exception do
+        begin
+          AErro := EmiteResponse.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(AService);
+    end;
+
+    if not AAbreSessao.Sucesso then
+    begin
+      TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+      Exit;
+    end;
+
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
+    TratarRetornoAbrirSessao(AAbreSessao);
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-    Exit;
-  end;
 
-  TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
-  TratarRetornoAbrirSessao(Result);
-  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Result := AAbreSessao.Sucesso;
+  finally
+    AAbreSessao.Free;
+  end;
 end;
 
-function TACBrNFSeProviderEL.FechaSessao(const aLote: String): TNFSeFechaSessaoResponse;
+function TACBrNFSeProviderEL.FechaSessao(const aLote: String): Boolean;
 var
   AService: TACBrNFSeXWebservice;
   AErro: TNFSeEventoCollectionItem;
+  AFechaSessao: TNFSeFechaSessaoResponse;
 begin
+  Result := False;
   TACBrNFSeX(FAOwner).SetStatus(stNFSeFecharSessao);
 
-  Result := TNFSeFechaSessaoResponse.Create;
-  Result.Lote := aLote;
-  Result.HashIdent := FPHash;
+  AFechaSessao := TNFSeFechaSessaoResponse.Create;
 
-  PrepararFecharSessao(Result);
-  if (Result.Erros.Count > 0) then
-  begin
-    TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-    Exit;
-  end;
-
-  AService := nil;
   try
-    try
-      TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
+    AFechaSessao.Lote := aLote;
+    AFechaSessao.HashIdent := FPHash;
 
-      AService := CriarServiceClient(tmFecharSessao);
-      AService.Prefixo := Result.Lote;
-      Result.ArquivoRetorno := AService.FecharSessao(ConfigMsgDados.DadosCabecalho, Result.ArquivoEnvio);
+    PrepararFecharSessao(AFechaSessao);
 
-      Result.Sucesso := True;
-      Result.EnvelopeEnvio := AService.Envio;
-      Result.EnvelopeRetorno := AService.Retorno;
-    except
-      on E:Exception do
-      begin
-        AErro := EmiteResponse.Erros.New;
-        AErro.Codigo := Cod999;
-        AErro.Descricao := Desc999 + E.Message;
-      end;
+    if (AFechaSessao.Erros.Count > 0) then
+    begin
+      TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+      Exit;
     end;
-  finally
-    FreeAndNil(AService);
-  end;
 
-  if not Result.Sucesso then
-  begin
+    AService := nil;
+
+    try
+      try
+        TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
+
+        AService := CriarServiceClient(tmFecharSessao);
+        AService.Prefixo := AFechaSessao.Lote;
+        AFechaSessao.ArquivoRetorno := AService.FecharSessao(ConfigMsgDados.DadosCabecalho, AFechaSessao.ArquivoEnvio);
+
+        AFechaSessao.Sucesso := True;
+        AFechaSessao.EnvelopeEnvio := AService.Envio;
+        AFechaSessao.EnvelopeRetorno := AService.Retorno;
+      except
+        on E:Exception do
+        begin
+          AErro := EmiteResponse.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(AService);
+    end;
+
+    if not AFechaSessao.Sucesso then
+    begin
+      TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+      Exit;
+    end;
+
+    TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
+    TratarRetornoFecharSessao(AFechaSessao);
     TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-    Exit;
-  end;
 
-  TACBrNFSeX(FAOwner).SetStatus(stNFSeAguardaProcesso);
-  TratarRetornoFecharSessao(Result);
-  TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
+    Result := AFechaSessao.Sucesso;
+  finally
+    AFechaSessao.Free;
+  end;
 end;
 
 procedure TACBrNFSeProviderEL.Emite;
@@ -619,13 +640,13 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<el:autenticarContribuinte>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                         '<senha>' +
-                            Emitente.WSSenha +
-                         '</senha>' +
-                       '</el:autenticarContribuinte>';
+                             '<identificacaoPrestador>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</identificacaoPrestador>' +
+                             '<senha>' +
+                                Emitente.WSSenha +
+                             '</senha>' +
+                           '</el:autenticarContribuinte>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoAbrirSessao(
@@ -670,10 +691,10 @@ procedure TACBrNFSeProviderEL.PrepararFecharSessao(
   Response: TNFSeFechaSessaoResponse);
 begin
   Response.ArquivoEnvio := '<el:finalizarSessao>' +
-                         '<hashIdentificador>' +
-                            FPHash +
-                         '</hashIdentificador>' +
-                       '</el:finalizarSessao>';
+                             '<hashIdentificador>' +
+                                FPHash +
+                             '</hashIdentificador>' +
+                           '</el:finalizarSessao>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoFecharSessao(
@@ -761,16 +782,16 @@ begin
                '</LoteRps>';
 
     Response.ArquivoEnvio := '<el:EnviarLoteRpsEnvio>' +
-                           '<identificacaoPrestador>' +
-                              OnlyNumber(Emitente.CNPJ) +
-                           '</identificacaoPrestador>' +
-                           '<hashIdentificador>' +
-                              FPHash +
-                           '</hashIdentificador>' +
-                           '<arquivo>' +
-                              IncluirCDATA(Arquivo) +
-                           '</arquivo>' +
-                         '</el:EnviarLoteRpsEnvio>';
+                               '<identificacaoPrestador>' +
+                                  OnlyNumber(Emitente.CNPJ) +
+                               '</identificacaoPrestador>' +
+                               '<hashIdentificador>' +
+                                  FPHash +
+                               '</hashIdentificador>' +
+                               '<arquivo>' +
+                                  IncluirCDATA(Arquivo) +
+                               '</arquivo>' +
+                             '</el:EnviarLoteRpsEnvio>';
   end;
 end;
 
@@ -842,13 +863,13 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<el:ConsultarSituacaoLoteRpsEnvio>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                         '<numeroProtocolo>' +
-                            Response.Protocolo +
-                         '</numeroProtocolo>' +
-                       '</el:ConsultarSituacaoLoteRpsEnvio>';
+                             '<identificacaoPrestador>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</identificacaoPrestador>' +
+                             '<numeroProtocolo>' +
+                                Response.Protocolo +
+                             '</numeroProtocolo>' +
+                           '</el:ConsultarSituacaoLoteRpsEnvio>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoConsultaSituacao(
@@ -919,13 +940,13 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<el:ConsultarLoteRpsEnvio>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                         '<numeroProtocolo>' +
-                            Response.Protocolo +
-                         '</numeroProtocolo>' +
-                       '</el:ConsultarLoteRpsEnvio>';
+                             '<identificacaoPrestador>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</identificacaoPrestador>' +
+                             '<numeroProtocolo>' +
+                                Response.Protocolo +
+                             '</numeroProtocolo>' +
+                           '</el:ConsultarLoteRpsEnvio>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoConsultaLoteRps(
@@ -1001,13 +1022,13 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<el:ConsultarNfseRpsEnvio>' +
-                         '<identificacaoRps>' +
-                            Response.NumRPS +
-                         '</identificacaoRps>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                       '</el:ConsultarNfseRpsEnvio>';
+                             '<identificacaoRps>' +
+                                Response.NumRPS +
+                             '</identificacaoRps>' +
+                             '<identificacaoPrestador>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</identificacaoPrestador>' +
+                           '</el:ConsultarNfseRpsEnvio>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoConsultaNFSeporRps(
@@ -1086,13 +1107,13 @@ begin
   Response.Metodo := tmConsultarNFSe;
 
   Response.ArquivoEnvio := '<el:ConsultarNfseEnvio>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                         '<numeroNfse>' +
-                            Response.InfConsultaNFSe.NumeroIniNFSe +
-                         '</numeroNfse>' +
-                       '</el:ConsultarNfseEnvio>';
+                             '<identificacaoPrestador>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</identificacaoPrestador>' +
+                             '<numeroNfse>' +
+                                Response.InfConsultaNFSe.NumeroIniNFSe +
+                             '</numeroNfse>' +
+                           '</el:ConsultarNfseEnvio>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoConsultaNFSe(
@@ -1166,13 +1187,13 @@ begin
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
   Response.ArquivoEnvio := '<el:CancelarNfseEnvio>' +
-                         '<identificacaoPrestador>' +
-                            OnlyNumber(Emitente.CNPJ) +
-                         '</identificacaoPrestador>' +
-                         '<numeroNfse>' +
-                            Response.InfCancelamento.NumeroNFSe +
-                         '</numeroNfse>' +
-                       '</el:CancelarNfseEnvio>';
+                             '<identificacaoPrestador>' +
+                                OnlyNumber(Emitente.CNPJ) +
+                             '</identificacaoPrestador>' +
+                             '<numeroNfse>' +
+                                Response.InfCancelamento.NumeroNFSe +
+                             '</numeroNfse>' +
+                           '</el:CancelarNfseEnvio>';
 end;
 
 procedure TACBrNFSeProviderEL.TratarRetornoCancelaNFSe(

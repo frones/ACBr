@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 24/08/2022
+-- ACBrNFSeXWebservicesResponse/EL.Provider --
+[*] Correção de vazamento de memória.
+   Por: João Antônio
 -- ACBrNFSeXServicos --
 [*] Alterado a URL de homologação da cidade de Videira/SC
    Por: Willian Delan

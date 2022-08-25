@@ -250,7 +250,7 @@ var
   Handle: THandle;
 begin
   // Lendo o arquivo INI
-  AssertEquals(ErrLibNaoInicializada, eSocial_Inicializar( '', ''));
+  AssertEquals(ErrOK, eSocial_Inicializar( '', ''));
   AssertEquals('Erro ao ler o arquivo INI', ErrOk,
   eSocial_CriarEventoeSocial( 'C:\ProjetoACBr\ACBr\Projetos\ACBrLib\Testes\eSocial\S1000.ini'));
   AssertEquals(ErrOK, eSocial_Finalizar());
@@ -357,37 +357,69 @@ end;
 
 procedure TTestACBreSocialLib.Test_eSocial_ConsultaIdentificadoresEventosEmpregador;
 var
+  Resposta: PChar;
+  Tamanho: Longint;
   Handle: THandle;
 begin
+  Resposta:= '';
+  Tamanho:= 0;
+
   AssertEquals(errOk, eSocial_Inicializar('', ''));
-  AssertEquals(errOk, eSocial_ConsultaIdentificadoresEventosEmpregador('03873484',1,20220609));
+  AssertEquals('Erro ao Consultar Evento Empregador', errOk, eSocial_ConsultaIdentificadoresEventosEmpregador('03873484',1,20220609, Resposta, Tamanho));
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(errOk, eSocial_Finalizar());
 end;
 
 procedure TTestACBreSocialLib.Test_eSocial_ConsultaIdentificadoresEventosTabela;
 var
+  Resposta: Pchar;
+  Tamanho: Longint;
   Handle: THandle;
 begin
+  Resposta:= '';
+  Tamanho:= 0;
+
   AssertEquals(errOk, eSocial_Inicializar('', ''));
-  AssertEquals(errOk, eSocial_ConsultaIdentificadoresEventosTabela('03873484',1,'1234',20220609,20220609));
+  AssertEquals('Erro ao Consultar Evento Tabela', errOk, eSocial_ConsultaIdentificadoresEventosTabela('03873484',1,'1234',20220609,20220609, Resposta, Tamanho));
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(errOk, eSocial_Finalizar());
 end;
 
 procedure TTestACBreSocialLib.Test_eSocial_ConsultaIdentificadoresEventosTrabalhador;
 var
+  Resposta: Pchar;
+  Tamanho: Longint;
   Handle: THandle;
 begin
+  Resposta:= '';
+  Tamanho:= 0;
+
   AssertEquals(errOk, eSocial_Inicializar('', ''));
-  AssertEquals(errOk, eSocial_ConsultaIdentificadoresEventosTrabalhador('03873484','73714542191',20220609,20220609));
+  AssertEquals('Erro ao Consultar Evento Trabalhador', errOk, eSocial_ConsultaIdentificadoresEventosTrabalhador('03873484','73714542191',20220609,20220609, Resposta, Tamanho));
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(errOk, eSocial_Finalizar());
 end;
 
 procedure TTestACBreSocialLib.Test_eSocial_DownloadEventos;
 var
+  Resposta: Pchar;
+  Tamanho: Longint;
   Handle: THandle;
 begin
+  Resposta:= '';
+  Tamanho:= 0;
+
   AssertEquals(errOk, eSocial_Inicializar('', ''));
-  AssertEquals(errOk, eSocial_DownloadEventos('03873484','73714542191',20220609,20220609));
+  AssertEquals('Erro ao realizar Download Eventos', errOk, eSocial_DownloadEventos('03873484','73714542191',20220609,20220609, Resposta, Tamanho));
+
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
   AssertEquals(errOk, eSocial_Finalizar());
 end;
 

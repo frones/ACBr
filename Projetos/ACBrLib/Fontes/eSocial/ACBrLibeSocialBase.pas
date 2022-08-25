@@ -66,10 +66,10 @@ type
     function SetIDTransmissor (const aIdTransmissor: PChar): longint;
     function SetTipoEmpregador (aTipoEmpregador: integer):longint;
     function SetVersaoDF (const sVersao: PChar):longint;
-    function ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime):longint;
-    function ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
-    function ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime):longint;
-    function DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+    function ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+    function ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+    function ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
+    function DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
     function SetRetornoEventoCarregados(const NumEventos: integer): integer;
 
     property eSocialDM: TLibeSocialDM read FeSocialDM;
@@ -513,7 +513,7 @@ begin
 
 end;
 
-function TACBrLibeSocial.ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime):longint;
+function TACBrLibeSocial.ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
 var
   idEmpregador: String;
   APerApur: TDateTime;
@@ -569,7 +569,7 @@ begin
 
 end;
 
-function TACBrLibeSocial.ConsultaIdentificadoresEventosTabela(const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+function TACBrLibeSocial.ConsultaIdentificadoresEventosTabela(const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
 var
   idEmpregador: String;
   tpEvento: Integer;
@@ -625,7 +625,7 @@ begin
   end;
 end;
 
-function TACBrLibeSocial.ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime):longint;
+function TACBrLibeSocial.ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
 var
   idEmpregador: String;
   CPFTrabalhador: String;
@@ -683,7 +683,7 @@ begin
 
 end;
 
-function TACBrLibeSocial.DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+function TACBrLibeSocial.DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
 var
   idEmpregador: String;
   AId: String;

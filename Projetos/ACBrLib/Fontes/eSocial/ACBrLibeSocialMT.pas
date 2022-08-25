@@ -104,16 +104,16 @@ function eSocial_ConfigGravarValor (var libHandle: PLibHandle; const eSessao, eC
  function eSocial_SetVersaoDF (var libHandle: PLibHandle; const sVersao: PChar):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function eSocial_ConsultaIdentificadoresEventosEmpregador (var libHandle: PLibHandle; const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime):longint;
+ function eSocial_ConsultaIdentificadoresEventosEmpregador (var libHandle: PLibHandle; const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function eSocial_ConsultaIdentificadoresEventosTabela (var libHandle: PLibHandle; const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+ function eSocial_ConsultaIdentificadoresEventosTabela (var libHandle: PLibHandle; const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function eSocial_ConsultaIdentificadoresEventosTrabalhador (var libHandle: PLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime):longint;
+ function eSocial_ConsultaIdentificadoresEventosTrabalhador (var libHandle: PLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
- function eSocial_DownloadEventos (var libHandle: PLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+ function eSocial_DownloadEventos (var libHandle: PLibHandle; const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -342,12 +342,12 @@ begin
   end;
 end;
 
-function eSocial_ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime):longint;
+function eSocial_ConsultaIdentificadoresEventosEmpregador (const aIdEmpregador: PChar; aTipoEvento: integer; aPeriodoApuracao: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(pLib);
-   Result := TACBrLibeSocial.ConsultaIdentificadoresEventosEmpregador(aIdEmpregador, aTipoEvento, aPeriodoApuracao);
+   Result := TACBrLibeSocial.ConsultaIdentificadoresEventosEmpregador(aIdEmpregador, aTipoEvento, aPeriodoApuracao, sResposta, esTamanho);
   except
    on E: EACBrLibException do
    Result := E.Erro;
@@ -357,12 +357,12 @@ begin
   end;
 end;
 
-function eSocial_ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+function eSocial_ConsultaIdentificadoresEventosTabela (const aIdEmpregador: PChar; aTipoEvento: integer; aChave: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(pLib);
-   Result := TACBrLibeSocial.ConsultaIdentificadoresEventosTabela(aIdEmpregador, aTipoEvento, aChave, aDataInicial, aDataFinal);
+   Result := TACBrLibeSocial.ConsultaIdentificadoresEventosTabela(aIdEmpregador, aTipoEvento, aChave, aDataInicial, aDataFinal, sResposta, esTamanho);
   except
    on E: EACBrLibException do
    Result := E.Erro;
@@ -372,12 +372,12 @@ begin
   end;
 end;
 
-function eSocial_ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime):longint;
+function eSocial_ConsultaIdentificadoresEventosTrabalhador (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial:TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(pLib);
-   Result := TACBrLibeSocial.ConsultaIdentificadoresEventosTrabalhador(aIdEmpregador, aCPFTrabalhador, aDataInicial, aDataFinal);
+   Result := TACBrLibeSocial.ConsultaIdentificadoresEventosTrabalhador(aIdEmpregador, aCPFTrabalhador, aDataInicial, aDataFinal, sResposta, esTamanho);
   except
    on E: EACBrLibException do
    Result := E.Erro;
@@ -387,12 +387,12 @@ begin
   end;
 end;
 
-function eSocial_DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime):longint;
+function eSocial_DownloadEventos (const aIdEmpregador: PChar; aCPFTrabalhador: PChar; aDataInicial: TDateTime; aDataFinal: TDateTime; const sResposta: PChar; var esTamanho: longint):longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
    VerificarLibInicializada(pLib);
-   Result := TACBrLibeSocial.DownloadEventos(aIdEmpregador, aCPFTrabalhador, aDataInicial, aDataFinal);
+   Result := TACBrLibeSocial.DownloadEventos(aIdEmpregador, aCPFTrabalhador, aDataInicial, aDataFinal, sResposta, esTamanho);
   except
    on E: EACBrLibException do
    Result := E.Erro;

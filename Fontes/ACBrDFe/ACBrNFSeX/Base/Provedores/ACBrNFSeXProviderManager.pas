@@ -161,6 +161,7 @@ uses
   CTAConsult.Provider,
   eGoverneISS.Provider,
   Equiplano.Provider,
+  Facundo.Provider,
   FGMaiss.Provider,
   GeisWeb.Provider,
   Giap.Provider,
@@ -282,6 +283,7 @@ begin
 
       proeReceita: Result := TACBrNFSeProvidereReceita202.Create(ACBrNFSe);
       proEtherium: Result := TACBrNFSeProviderEtherium203.Create(ACBrNFSe);
+      proFacundo:  Result :=TACBrNFSeProviderFacundo.Create(ACBrNFSe);
       proFGMaiss:  Result :=TACBrNFSeProviderFGMaiss.Create(ACBrNFSe);
 
       profintelISS:

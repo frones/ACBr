@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/08/2022
+-- Diversos --
+[+] Implementado o provedor Facundo.
+   Por: Italo Giurizzato Junior
+
 24/08/2022
 -- Giap.Provider --
 [+] Incluido no TratarRetornoEmitir o preenchimento da lista de Resumos.

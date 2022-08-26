@@ -136,6 +136,8 @@ type
     FNrOcorrRetidoIr: Integer;
     FNrOcorrAliquotaCsll: Integer;
     FNrOcorrRetidoCsll: Integer;
+    FNrOcorrValorTTS: Integer;
+    FNrOcorrQuantDiarias: Integer;
 
   protected
     procedure Configuracao; override;
@@ -259,6 +261,8 @@ type
     property NrOcorrRetidoIr: Integer read FNrOcorrRetidoIr write FNrOcorrRetidoIr;
     property NrOcorrAliquotaCsll: Integer read FNrOcorrAliquotaCsll write FNrOcorrAliquotaCsll;
     property NrOcorrRetidoCsll: Integer read FNrOcorrRetidoCsll write FNrOcorrRetidoCsll;
+    property NrOcorrValorTTS: Integer read FNrOcorrValorTTS write FNrOcorrValorTTS;
+    property NrOcorrQuantDiarias: Integer read FNrOcorrQuantDiarias write FNrOcorrQuantDiarias;
 
     property GerarTagServicos: Boolean  read FGerarTagServicos  write FGerarTagServicos;
     property GerarIDDeclaracao: Boolean read FGerarIDDeclaracao write FGerarIDDeclaracao;
@@ -375,6 +379,9 @@ begin
   FNrOcorrRetidoIr := -1;
   FNrOcorrAliquotaCsll := -1;
   FNrOcorrRetidoCsll := -1;
+  FNrOcorrValorTTS := -1;
+  FNrOcorrQuantDiarias := -1;
+
 
   FGerarTagServicos := True;
   FGerarIDDeclaracao := True;
@@ -722,6 +729,12 @@ begin
 
   Result.AppendChild(AddNode(tcDe2, '#21', 'ValorIss', 1, 15, NrOcorrValorISS,
                                       NFSe.Servico.Valores.ValorIss, DSC_VISS));
+
+  Result.AppendChild(AddNode(tcDe2, '#21', 'ValorTTS', 1, 15, NrOcorrValorTTS,
+                            NFSe.Servico.Valores.ValorTaxaTurismo, DSC_VTTS));
+
+  Result.AppendChild(AddNode(tcDe2, '#21', 'QuantDiarias', 1, 15, NrOcorrQuantDiarias,
+                                 NFSe.Servico.Valores.QtdeDiaria, DSC_QDiaria));
 
   Aliquota := NormatizarAliquota(NFSe.Servico.Valores.Aliquota, DivAliq100);
 

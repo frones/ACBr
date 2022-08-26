@@ -69,6 +69,9 @@ begin
   NrOcorrValorCsll := 1;
   NrOcorrValorIss := 1;
   NrOcorrAliquota := 1;
+  NrOcorrValorTTS := 0;
+  NrOcorrQuantDiarias := 0;
+
 end;
 
 end.

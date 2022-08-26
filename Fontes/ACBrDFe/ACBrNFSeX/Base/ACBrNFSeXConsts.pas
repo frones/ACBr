@@ -78,6 +78,8 @@ const
   DSC_INSCMUN = 'Inscrição Municipal';
   DSC_GENERICOSTITULO = 'Título do campo livre';
   DESC_GENERICOSDESCRICAO = 'Conteúdo do campo livre.';
+  DSC_VTTS = 'Valor Taxa Turismo';
+  DSC_QDiaria = 'Quantidade Diaria';
 
   // Códigos e Descrições das mensagens
   Cod001 = 'X001';

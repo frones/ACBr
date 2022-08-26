@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 26/08/2022
+-- Diversos --
+[+] Incluido a geração das tags ValorTTs e QuantDiarias opcionais no provedor SystemPro
+   Por: Italo Giurizzato Junior
 -- Simple.GravarXml --
 [*] Correção na geração do XML, estava atribuindo um numero para a nota de forma
     indevida.

@@ -133,6 +133,8 @@ type
     FRetidoInss: TnfseSimNao;
     FRetidoIr: TnfseSimNao;
     FRetidoCsll: TnfseSimNao;
+    FQtdeDiaria: Double;
+    FValorTaxaTurismo: Double;
   public
     property ValorServicos: Double read FValorServicos write FValorServicos;
     property ValorDeducoes: Double read FValorDeducoes write FValorDeducoes;
@@ -181,6 +183,9 @@ type
     property RetidoInss: TnfseSimNao read FRetidoInss write FRetidoInss;
     property RetidoIr: TnfseSimNao read FRetidoIr write FRetidoIr;
     property RetidoCsll: TnfseSimNao read FRetidoCsll write FRetidoCsll;
+    //Provedor SystemPro
+    property QtdeDiaria: Double read FQtdeDiaria write FQtdeDiaria;
+    property ValorTaxaTurismo: Double read FValorTaxaTurismo write FValorTaxaTurismo;
   end;
 
   TItemServicoCollectionItem = class(TObject)

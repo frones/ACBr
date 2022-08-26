@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/08/2022
+-- Simple.GravarXml --
+[*] Correção na geração do XML, estava atribuindo um numero para a nota de forma
+    indevida.
+   Por: Italo Giurizzato Junior
+
 25/08/2022
 -- Diversos --
 [+] Implementado o provedor Facundo.

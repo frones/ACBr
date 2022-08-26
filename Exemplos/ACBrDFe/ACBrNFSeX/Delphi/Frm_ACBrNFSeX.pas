@@ -696,6 +696,9 @@ begin
         Servico.Valores.ValorInss := 0.00;
         Servico.Valores.ValorIr := 0.00;
         Servico.Valores.ValorCsll := 0.00;
+        // Usado pelo provedor SystemPro
+        Servico.Valores.ValorTaxaTurismo := 0.00;
+        Servico.Valores.QtdeDiaria := 0.00;
 
         // TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
         // stRetencao = snSim

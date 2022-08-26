@@ -49,9 +49,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2022
+--ACBrBoleto.pas--
+[*] TK-3001 Ajuste SetNumCopias para aplicações ISAPI
+  por : Windsoft
+
 18/08/2022
 [*] --ACBrBoletoBradesco-- Sequencia Trailer 240 Bradesco 
-por : Pandaaa
+  por : Pandaaa
 
 17/08/2022
 --ACBrBoleto, ACBrBoletoWS--

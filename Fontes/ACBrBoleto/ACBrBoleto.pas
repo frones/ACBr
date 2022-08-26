@@ -5987,7 +5987,9 @@ end;
 
 procedure TACBrBoletoFCClass.SetNumCopias ( AValue: Integer ) ;
 begin
-  fNumCopias := max( 1, Avalue);
+  // O valor de cópias zero é utilizado por aplicações ISAPI no momento.
+  // É utilizado por causa de problemas encontrados ao usar o Fortes Report.
+  fNumCopias := max( 0, Avalue);
 end;
 
 procedure TACBrBoletoFCClass.SetPdfSenha(const Value: string);

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 26/08/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Ajustes para a leitura correta da Competência e Municipio de Prestação de Serviços
+    do XML da NFS-e gerado pelo provedor ABase
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Incluido a geração das tags ValorTTs e QuantDiarias opcionais no provedor SystemPro
    Por: Italo Giurizzato Junior

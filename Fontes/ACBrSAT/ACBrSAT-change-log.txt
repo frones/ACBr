@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2022
+-- ACBrSATExtratoFR--
+[-] TK-2881 ACBrSATExtratoFR Ajustes de Margens
+  Por: Pandaaa
+
 19/06/2022
 -- ACBrSAT, ACBrSATClass, ACBrSATDinamico_stdcall, ACBrSATDinamico_cdecl --
 [+] Implementado suporte ao método "ConsultarUltimaSessaoFiscal"

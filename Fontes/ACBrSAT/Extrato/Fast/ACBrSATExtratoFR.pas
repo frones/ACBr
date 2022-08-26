@@ -78,6 +78,7 @@ type
     FFastExtrato: string;
     FTipoImpressao : TTipoImpressao;
     FPrintMode: TfrxPrintMode;
+    FPrintOnSheet: Integer;
     function PrepareReport(ACFe: TCFe; ACFeCanc:TCFeCanc = nil): Boolean;
     function GetPreparedReport: TfrxReport;
     procedure CriarDataSetsFrx;
@@ -110,6 +111,7 @@ type
     procedure ImprimirExtratoResumido(AStream: TStream; ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(AStream: TStream; ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
     property PrintMode: TfrxPrintMode read FPrintMode write FPrintMode default pmDefault;
+    property PrintOnSheet: Integer read FPrintOnSheet write FPrintOnSheet default 0;
     property PreparedReport: TfrxReport read GetPreparedReport;
   published
     property FastExtrato: string read FFastExtrato write FFastExtrato;
@@ -268,6 +270,7 @@ begin
   frxReport.PrintOptions.ShowDialog  := MostraSetup;
   frxReport.ShowProgress             := MostraStatus;
   frxReport.PrintOptions.PrintMode   := FPrintMode; //Precisamos dessa propriedade porque impressoras não fiscais cortam o papel quando há muitos itens. O ajuste dela deve ser necessariamente após a carga do arquivo FR3 pois, antes da carga o componente é inicializado
+  frxReport.PrintOptions.PrintOnSheet := FPrintOnSheet; //Essa propriedade pode trabalhar em conjunto com a printmode
   frxReport.PreviewOptions.AllowEdit := False;
 
   // Define a impressora
@@ -295,8 +298,7 @@ begin
       Result := frxReport.PrepareReport( true );
     end;
   end;
-
-  if Assigned(ACFe) then
+  if assigned(frxReport) then
     AjustaMargensReports;
 end;
 
@@ -321,7 +323,7 @@ begin
     fiNenhum:
       Begin
         if MostraPreview then
-          frxReport.ShowReport(false)
+          frxReport.ShowPreparedReport
         else
           frxReport.Print;
       end;
@@ -885,6 +887,7 @@ begin
       Page.LeftMargin := MargemEsquerda;
     if (MargemDireita > 0) then
       Page.RightMargin := MargemDireita;
+    frxReport.PreviewPages.ModifyPage(I, Page);
   end;
 end;
 

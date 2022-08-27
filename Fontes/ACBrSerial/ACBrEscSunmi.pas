@@ -165,7 +165,7 @@ function TACBrEscSunmi.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 begin
   // Gerando RasterStr, sem LF, a cada fatia
-  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight, True)
+  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight, False)
 end;
 
 function TACBrEscSunmi.ComandoQrCode(const ACodigo: AnsiString): AnsiString;

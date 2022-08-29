@@ -7,7 +7,6 @@ uses
   ACBrJSON,
   ACBrCompress,
   ACBrUtil.Strings,
-  GZIPUtils,
   blcksock,
   synsock,
   httpsend,
@@ -115,7 +114,7 @@ begin
     mtDELETE: Result := 'DELETE';
     mtPATCH: Result := 'PATCH';
   else
-    raise ENotSupportedException.Create('Verbo Http não suportado.');
+    raise EResNotFound.Create('Verbo Http não suportado.');
   end;
 end;
 
@@ -218,8 +217,8 @@ var
   LUrl: String;
 begin
   LUrl := GetFullUrl;
-  if LUrl.EndsWith('/') then
-    LUrl := Copy(LUrl, 1, LUrl.Length - 1);
+  if LUrl[Length(LUrl)] = '/' then
+    LUrl := Copy(LUrl, 1, Length(LUrl) - 1);
   PrepareRequest;
   try
     FEnvio.URL := LUrl;
@@ -245,46 +244,14 @@ end;
 { TACBrOpenDeliveryHTTPResponseSynapse }
 
 constructor TACBrOpenDeliveryHTTPResponseSynapse.Create(AHTTPSend: THTTPSend);
-
-  function UnzipDoc: string;
-  var
-    LCT: string;
-    LResp: AnsiString;
-    LRespIsUTF8: Boolean;
-    LZT: TCompressType;
-  begin
-    if AHTTPSend.Document.Size = 0 then
-      Exit('');
-
-    LZT := DetectCompressType(AHTTPSend.Document);
-    if LZT = ctUnknown then
-    begin
-      AHTTPSend.Document.Position := 0;
-      LResp := ReadStrFromStream(AHTTPSend.Document, AHTTPSend.Document.Size);
-    end
-    else
-      LResp := DeCompress(AHTTPSend.Document);
-
-    {$IF CompilerVersion <= 34.0}
-      Exit(UTF8ToNativeString(Resp));
-    {$ENDIF}
-    LCT := LowerCase( GetHeaderValue('Content-Type:', AHTTPSend) );
-    LRespIsUTF8 := (pos('utf-8', LCT) > 0);
-    if LRespIsUTF8 then
-      Result := UTF8ToNativeString(LResp)
-    else
-      Result := String(LResp);
-  end;
-
 begin
   FStatusText := AHTTPSend.ResultString;
   FStatusCode := AHTTPSend.ResultCode;
   FHeaders := TStringList.Create;
   FHeaders.Text := AHTTPSend.Headers.Text;
 
-  try
-    FBodyText := UnzipDoc;
-  except
+  if AHTTPSend.Document <> nil then
+  begin
     AHTTPSend.Document.Position := 0;
     FBodyText := ReadStrFromStream(AHTTPSend.Document, AHTTPSend.Document.Size);
   end;

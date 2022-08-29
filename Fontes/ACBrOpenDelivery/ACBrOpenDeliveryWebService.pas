@@ -727,8 +727,8 @@ end;
 procedure TACBrOpenDeliveryPolling.Clear;
 begin
   inherited;
-  FXPollingMerchants := [];
-  FEventType := [];
+  SetLength(FXPollingMerchants, 0);
+  SetLength(FEventType, 0);
 end;
 
 constructor TACBrOpenDeliveryPolling.Create(AOwner: TACBrComponent);
@@ -1031,8 +1031,8 @@ begin
   FReason := '';
   FCode := crcSystemicIssues;
   FMode := crmAuto;
-  FInvalidItems := [];
-  FOutOfStockItems := [];
+  SetLength(FInvalidItems, 0);
+  SetLength(FOutOfStockItems, 0);
 end;
 
 procedure TACBrOpenDeliveryOrderRequestCancellation.DefinirDadosMsg;

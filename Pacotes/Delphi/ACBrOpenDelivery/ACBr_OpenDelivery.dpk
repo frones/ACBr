@@ -22,6 +22,7 @@ package ACBr_OpenDelivery;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBrOpenDelivery - Package para componentes relacionados ao OpenDelivery'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

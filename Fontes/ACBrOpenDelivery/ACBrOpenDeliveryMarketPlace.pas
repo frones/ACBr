@@ -107,7 +107,7 @@ uses
   ACBrOpenDelivery;
 
 const
-{$REGION 'OPENDELIVERY'}
+// 'OPENDELIVERY'
   CMarketPlaceDescription = 'Open Delivery';
   CEndPointAuthentication = 'oauth/token';
   CEndPointMerchantUpdate = 'merchantUpdate';
@@ -121,9 +121,8 @@ const
   CEndPointOrderRequestCancellation = 'orders/{orderId}/requestCancellation';
   CEndPointOrderAcceptCancellation = 'orders/{orderId}/acceptCancellation';
   CEndPointOrderDenyCancellation = 'orders/{orderId}/denyCancellation';
-{$ENDREGION}
 
-{$REGION 'HUBDELIVERY'}
+// 'HUBDELIVERY'
   CHubDeliveryMarketPlaceDescription = 'Hub Delivery';
   CHubDeliveryMarketBaseUrl = 'https://sandbox.myhubdelivery.io';
   CHubDeliveryEndPointAuthentication = 'license-manager/api/v1/oauth/token';
@@ -138,7 +137,6 @@ const
   CHubDeliveryEndPointOrderRequestCancellation = 'orders/api/v1/{orderId}/requestCancellation';
   CHubDeliveryEndPointOrderAcceptCancellation = 'orders/api/v1/{orderId}/acceptCancellation';
   CHubDeliveryEndPointOrderDenyCancellation = 'orders/api/v1/{orderId}/denyCancellation';
-{$ENDREGION}
 
 procedure GerarException(AOwner: TACBrComponent; const AMsg: string);
 var

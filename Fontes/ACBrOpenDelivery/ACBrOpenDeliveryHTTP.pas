@@ -115,7 +115,7 @@ type
     function AddOrSetUrlEncoded(const AName: string; const AValue: Integer): TACBrOpenDeliveryHTTPRequest; overload;
     function AddOrSetUrlEncoded(const AName: string; const AValue: Double): TACBrOpenDeliveryHTTPRequest; overload;
 
-    function Body(const AValue: TACBrJSON; AOwner: Boolean = True): TACBrOpenDeliveryHTTPRequest; overload;
+    function Body(AValue: TACBrJSON; AOwner: Boolean = True): TACBrOpenDeliveryHTTPRequest; overload;
     function Body(const AValue: string): TACBrOpenDeliveryHTTPRequest; overload;
 
     function Send: TACBrOpenDeliveryHTTPResponse; virtual; abstract;
@@ -228,7 +228,7 @@ begin
   FBody := AValue;
 end;
 
-function TACBrOpenDeliveryHTTPRequest.Body(const AValue: TACBrJSON; AOwner: Boolean): TACBrOpenDeliveryHTTPRequest;
+function TACBrOpenDeliveryHTTPRequest.Body(AValue: TACBrJSON; AOwner: Boolean): TACBrOpenDeliveryHTTPRequest;
 begin
   Result := Self;
   FBody := AValue.ToJSON;

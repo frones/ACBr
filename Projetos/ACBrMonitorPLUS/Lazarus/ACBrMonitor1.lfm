@@ -13,13 +13,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
   Font.Height = -13
+  FormStyle = fsStayOnTop
   KeyPreview = True
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.2.2.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -262,6 +263,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
       Layout = tlCenter
+      ParentColor = False
       ParentFont = False
       Transparent = False
     end
@@ -17165,6 +17167,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Width = 29
     Caption = 'CSRT'
     Font.Height = -13
+    ParentColor = False
     ParentFont = False
   end
   object pCentral: TPanel
@@ -17316,12 +17319,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1008
-        ActivePage = tsMonitor
+        ActivePage = tsSat
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 0
+        TabIndex = 17
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -17358,6 +17361,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = 'Porta Número:'
               FocusControl = edPortaTCP
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edPortaTCP: TEdit
@@ -17393,6 +17397,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = 'TimeOut:'
               FocusControl = edPortaTCP
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edTimeOutTCP: TEdit
@@ -17500,6 +17505,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Right = 5
               Caption = 'Senha:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
           end
@@ -17561,6 +17567,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = 'Arquivo:'
               FocusControl = edLogArq
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object lbLogMaxLinhas: TLabel
@@ -17578,6 +17585,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = 'Max.Linhas:'
               FocusControl = sedLogLinhas
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
               OnClick = ACBrECF1MsgPoucoPapel
             end
@@ -17654,6 +17662,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = '&Entrada:'
               FocusControl = edEntTXT
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object Label7: TLabel
@@ -17671,6 +17680,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = '&Saida: '
               FocusControl = edSaiTXT
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEntTXT: TEdit
@@ -17721,6 +17731,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = '&Intervalo'
               FocusControl = sedIntervalo
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object sedIntervalo: TSpinEdit
@@ -17883,6 +17894,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Top = 125
             Width = 106
             Caption = 'Tipo de Resposta:'
+            ParentColor = False
           end
           object imgErrComunicacao: TImage
             Left = 392
@@ -17948,6 +17960,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     BorderSpacing.Top = 2
                     Caption = 'Razão Social'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_RazaoSocial: TEdit
@@ -17972,6 +17985,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 28
                     Caption = 'COO'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_COO: TEdit
@@ -17998,6 +18012,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 81
                     Caption = 'Insc.Municipal'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_IM: TEdit
@@ -18041,6 +18056,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 74
                     Caption = 'Insc.Estadual'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_CNPJ: TEdit
@@ -18067,6 +18083,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     BorderSpacing.Top = 1
                     Caption = 'CNPJ'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label88: TLabel
@@ -18080,6 +18097,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     BorderSpacing.Top = 1
                     Caption = 'Aplicativo'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_Aplicativo: TEdit
@@ -18105,6 +18123,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 48
                     Caption = 'Número'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_NumeroAP: TEdit
@@ -18131,6 +18150,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 40
                     Caption = 'Versão'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_VersaoAP: TEdit
@@ -18157,6 +18177,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 41
                     Caption = 'Linha 2'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_Linha2: TEdit
@@ -18187,6 +18208,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     BorderSpacing.Top = 1
                     Caption = 'Linha 1'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edSH_Linha1: TEdit
@@ -18227,6 +18249,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     BorderSpacing.Top = 1
                     Caption = 'Site'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                 end
@@ -18326,6 +18349,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 74
                 Caption = 'Razão Social'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edUSURazaoSocial: TEdit
@@ -18350,6 +18374,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 29
                 Caption = 'CNPJ'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edUSUCNPJ: TEdit
@@ -18379,6 +18404,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 BorderSpacing.Top = 1
                 Caption = 'Endereço'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edUSUEndereco: TEdit
@@ -18403,6 +18429,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 74
                 Caption = 'Insc.Estadual'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edUSUIE: TEdit
@@ -18430,6 +18457,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 31
                 Caption = 'Num.'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object seUSUNumeroCadastro: TSpinEdit
@@ -18450,6 +18478,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 27
                 Caption = 'Data'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label52: TLabel
@@ -18459,6 +18488,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 29
                 Caption = 'Hora'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label53: TLabel
@@ -18468,6 +18498,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 26
                 Caption = 'CRO'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object seUSUCROCadastro: TSpinEdit
@@ -18487,6 +18518,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 75
                 Caption = 'Grande Total'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object meUSUHoraCadastro: TMaskEdit
@@ -18549,6 +18581,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Dados do Cadastrado do Usuário'
                 Font.Height = -13
                 Font.Style = [fsBold]
+                ParentColor = False
                 ParentFont = False
               end
               object bvCadastro: TBevel
@@ -18626,6 +18659,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 49
             Caption = 'Modelo:'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbECFModelo: TComboBox
@@ -18648,6 +18682,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 31
             Caption = 'Porta'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbECFPorta: TComboBox
@@ -18689,6 +18724,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 49
             Caption = 'TimeOut'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object bECFTestar: TBitBtn
@@ -18832,6 +18868,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 50
             Caption = 'Intervalo'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object sedECFIntervalo: TSpinEdit
@@ -18954,6 +18991,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Arq.Log:'
                 FocusControl = edECFLog
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edECFLog: TEdit
@@ -18988,6 +19026,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 98
                 Caption = 'MaxLinhasBuffer:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sedECFMaxLinhasBuffer: TSpinEdit
@@ -19011,6 +19050,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 108
                 Caption = 'Página de Código:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sedECFPaginaCodigo: TSpinEdit
@@ -19031,6 +19071,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 118
                 Caption = 'Linhas entre Cupons'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sedECFLinhasEntreCupons: TSpinEdit
@@ -19140,6 +19181,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Modelo'
             FocusControl = cbCHQModelo
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbCHQModelo: TComboBox
@@ -19174,6 +19216,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Porta'
             FocusControl = cbCHQPorta
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbCHQPorta: TComboBox
@@ -19272,6 +19315,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 1
               Caption = '&Favorecido'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCHQFavorecido: TEdit
@@ -19298,6 +19342,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 2
               Caption = '&Cidade'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCHQCidade: TEdit
@@ -19335,6 +19380,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 58
             Caption = 'Bemafi.INI'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
         end
@@ -19364,6 +19410,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Modelo Gaveta'
             FocusControl = cbGAVModelo
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbGAVModelo: TComboBox
@@ -19396,6 +19443,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Porta'
             FocusControl = cbGAVPorta
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbGAVPorta: TComboBox
@@ -19502,6 +19550,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Font.Color = clRed
             Font.Height = -16
             Font.Style = [fsBold]
+            ParentColor = False
             ParentFont = False
           end
           object Label21: TLabel
@@ -19511,6 +19560,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 108
             Caption = 'String de Abertura'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbGAVStrAbre: TComboBox
@@ -19538,6 +19588,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 128
             Caption = 'Espera após Abertura'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object sedGAVIntervaloAbertura: TSpinEdit
@@ -19574,6 +19625,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = 'Ação Abertura Antecipada'
             FocusControl = cbGAVAcaoAberturaAntecipada
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbGAVAcaoAberturaAntecipada: TComboBox
@@ -19613,6 +19665,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Porta'
             FocusControl = cbDISPorta
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbDISPorta: TComboBox
@@ -19646,6 +19699,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Modelo'
             FocusControl = cbDISModelo
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbDISModelo: TComboBox
@@ -19752,6 +19806,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 84
             Caption = '&Intervalo Bytes'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object seDISIntByte: TSpinEdit
@@ -19786,6 +19841,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 50
               Caption = '&Intervalo'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object seDISIntervalo: TSpinEdit
@@ -19809,6 +19865,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 40
               Caption = 'P&assos'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object seDISPassos: TSpinEdit
@@ -19945,6 +20002,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 31
             Caption = 'Porta'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label2: TLabel
@@ -19957,6 +20015,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             BorderSpacing.Top = 5
             Caption = 'Sufixo enviado pelo Leitor:'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label22: TLabel
@@ -19966,6 +20025,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 93
             Caption = 'Intervalo Leitura'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object bLCBAtivar: TBitBtn
@@ -19991,6 +20051,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             BorderSpacing.Top = 3
             Caption = 'Prefixo do Leitor a Excluir:'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edLCBPreExcluir: TEdit
@@ -20100,6 +20161,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AutoSize = False
             Caption = 'Adicionar Sufixo'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
             OnMouseEnter = AumentaTempoHint
             OnMouseLeave = DiminuiTempoHint
@@ -20255,6 +20317,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 133
                 Caption = 'Diretório arquivos RFD'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edRFDDir: TEdit
@@ -20331,6 +20394,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 37
                   Caption = 'Marca'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label44: TLabel
@@ -20340,6 +20404,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 46
                   Caption = 'Modelo'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbRFDModelo: TComboBox
@@ -20363,6 +20428,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Anchors = [akTop, akRight]
                   Caption = 'RFD ID'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object lRFDID: TLabel
@@ -20378,6 +20444,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Color = clBtnFace
                   Font.Height = -13
                   Layout = tlCenter
+                  ParentColor = False
                   ParentFont = False
                   Transparent = False
                 end
@@ -20393,6 +20460,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Color = clBtnFace
                   Font.Height = -13
                   Layout = tlCenter
+                  ParentColor = False
                   ParentFont = False
                   Transparent = False
                 end
@@ -20408,6 +20476,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   BorderSpacing.Right = 3
                   Caption = 'Data / Hora da Gravação do Software Básico:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object meRFDHoraSwBasico: TMaskEdit
@@ -20564,6 +20633,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 49
             Caption = 'Modelo:'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbBALModelo: TComboBox
@@ -20589,6 +20659,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 31
             Caption = 'Porta'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbBALPorta: TComboBox
@@ -20623,6 +20694,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 50
             Caption = 'Intervalo'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object sedBALIntervalo: TSpinEdit
@@ -20703,6 +20775,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = 'Arq.Log:'
             FocusControl = edBALLog
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edBALLog: TEdit
@@ -20803,6 +20876,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 34
               Caption = 'Porta:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object cbETQPorta: TComboBox
@@ -20836,6 +20910,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 49
               Caption = 'Modelo:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object cbETQModelo: TComboBox
@@ -20868,6 +20943,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'Temperatura:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object eTemperatura: TEdit
@@ -20900,6 +20976,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'DPI Impressora:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object lbMargem: TLabel
@@ -20913,6 +20990,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'Margem Esquerda:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object eMargemEsquerda: TEdit
@@ -20936,6 +21014,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'Velocidade:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object eVelocidade: TEdit
@@ -20968,6 +21047,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'Avanço Etq:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object lbBackFeed: TLabel
@@ -20980,6 +21060,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'BackFeed:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object cbBackFeed: TComboBox
@@ -21002,6 +21083,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'Origem:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object cbOrigem: TComboBox
@@ -21043,6 +21125,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 49
               Caption = 'Unidade'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
           end
@@ -21067,6 +21150,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akLeft, akBottom]
               Caption = 'Nº Copias'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object eCopias: TEdit
@@ -21166,6 +21250,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 49
             Caption = 'Modelo:'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object cbxTCModelo: TComboBox
@@ -21195,6 +21280,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = '&Num. Porta TCP:'
             FocusControl = edTCPort
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edTCPort: TEdit
@@ -21223,6 +21309,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Anchors = [akLeft, akBottom]
             Caption = 'Conexões Ativas'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object mTCConexoes: TMemo
@@ -21247,6 +21334,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = 'Arquivo de Preços'
             FocusControl = edTCArqPrecos
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edTCArqPrecos: TEdit
@@ -21291,6 +21379,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Caption = 'Mensagem NÃO Encontrado'
             FocusControl = edTCNaoEncontrado
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edTCNaoEncontrado: TEdit
@@ -21345,6 +21434,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft]
                 Caption = 'Nome\Razão Social'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLRazaoSocial: TEdit
@@ -21369,6 +21459,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft]
                 Caption = 'C.P.F\C.N.P.J'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLCNPJ: TMaskEdit
@@ -21409,6 +21500,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akTop, akRight]
                 Caption = 'Número'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLNumero: TEdit
@@ -21432,6 +21524,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akTop, akRight]
                 Caption = 'Bairro'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLBairro: TEdit
@@ -21518,6 +21611,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 41
                 Caption = 'Cidade'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLComplemento: TEdit
@@ -21541,6 +21635,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 BorderSpacing.Top = 3
                 Caption = 'Complemento'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxBOLF_J: TComboBox
@@ -21569,6 +21664,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 41
                 Caption = 'Pessoa'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object imgErrCNPJBoleto: TImage
@@ -21587,6 +21683,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 56
                 Width = 70
                 Caption = 'Logradouro'
+                ParentColor = False
               end
               object imgErrCEP: TImage
                 AnchorSideTop.Control = edtBOLCEP
@@ -21673,6 +21770,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 111
                 Width = 15
                 Caption = 'UF'
+                ParentColor = False
               end
               object Label109: TLabel
                 Left = 368
@@ -21681,6 +21779,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 83
                 AutoSize = False
                 Caption = 'Cód. Cidade '
+                ParentColor = False
               end
               object edtBOLCodCidade: TPanel
                 AnchorSideLeft.Control = Label109
@@ -21699,6 +21798,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 56
                 Width = 22
                 Caption = 'CEP'
+                ParentColor = False
               end
             end
             object tsContaBancaria: TTabSheet
@@ -21733,6 +21833,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 35
                 Caption = 'Banco'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLAgencia: TEdit
@@ -21767,6 +21868,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Pitch = fpVariable
                 Font.Quality = fqDraft
                 Font.Style = [fsBold]
+                ParentColor = False
                 ParentFont = False
               end
               object lblBOLAgencia: TLabel
@@ -21779,6 +21881,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft, akBottom]
                 Caption = 'Agência'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLDigitoAgencia: TEdit
@@ -21804,6 +21907,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 35
                 Caption = 'Dígito'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLConta: TEdit
@@ -21838,6 +21942,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Pitch = fpVariable
                 Font.Quality = fqDraft
                 Font.Style = [fsBold]
+                ParentColor = False
                 ParentFont = False
               end
               object lblBOLConta: TLabel
@@ -21849,6 +21954,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 34
                 Caption = 'Conta'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLDigitoConta: TEdit
@@ -21874,6 +21980,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 35
                 Caption = 'Dígito'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxBOLEmissao: TComboBox
@@ -21900,6 +22007,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 166
                 Caption = 'Responsável Emissão Boleto'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtCodCliente: TEdit
@@ -21918,6 +22026,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 164
                 Caption = 'Código do Cliente no Banco'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtModalidade: TEdit
@@ -21936,6 +22045,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 71
                 Caption = 'Modalidade'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtConvenio: TEdit
@@ -21954,6 +22064,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 76
                 Caption = 'Nr. Convênio'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLLocalPagamento: TEdit
@@ -21972,6 +22083,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 119
                 Caption = 'Local de Pagamento'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object pnLogoBanco: TPanel
@@ -22023,6 +22135,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 69
                 Caption = 'Logo Banco'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLDigitoAgConta: TEdit
@@ -22038,6 +22151,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 79
                 Width = 94
                 Caption = 'Dígito Ag/Conta'
+                ParentColor = False
               end
               object edtOperacaoBeneficiario: TEdit
                 Left = 245
@@ -22052,6 +22166,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 79
                 Width = 89
                 Caption = 'Cod. Operação'
+                ParentColor = False
               end
             end
             object tsLayoutBoleto: TTabSheet
@@ -22088,6 +22203,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 118
                 Caption = 'Diretório dos Logos'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object spBOLCopias: TSpinEdit
@@ -22110,6 +22226,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 40
                 Caption = 'Cópias'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object ckgBOLMostrar: TCheckGroup
@@ -22187,6 +22304,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 BorderSpacing.Top = 2
                 Caption = 'Layout'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label70: TLabel
@@ -22196,6 +22314,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 91
                 Caption = 'Tipo Impressão'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object deBOLDirArquivo: TDirectoryEdit
@@ -22226,6 +22345,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 BorderSpacing.Top = 2
                 Caption = 'Diretório Arquivo'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxBOLImpressora: TComboBox
@@ -22246,6 +22366,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 112
                 Caption = 'Impressora Padrão'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edNomeArquivo: TEdit
@@ -22270,6 +22391,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akTop, akLeft, akBottom]
                 Caption = 'Nome Arquivo'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
             end
@@ -22327,6 +22449,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft, akBottom]
                 Caption = 'Diretório Arquivo Remessa'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label79: TLabel
@@ -22340,6 +22463,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft, akBottom]
                 Caption = 'Diretório Arquivo Retorno'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxCNAB: TComboBox
@@ -22369,6 +22493,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft, akBottom]
                 Caption = 'Layout Arquivo Remessa'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtCodTransmissao: TEdit
@@ -22391,6 +22516,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Anchors = [akLeft, akBottom]
                 Caption = 'Cod. Transmissão'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object chkLerBeneficiarioRetorno: TCheckBox
@@ -22428,6 +22554,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 104
                 Width = 160
                 Caption = 'Prefixo Remessa (Daycoval)'
+                ParentColor = False
               end
             end
             object tsRelatorio: TTabSheet
@@ -22501,6 +22628,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 152
                   Caption = 'Diretório Arquivo Retorno'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
               end
@@ -22527,6 +22655,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 460
                   Caption = 'Para imprimir o relatório, selecione o arquivo ao lado, para carregar os titulos'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object bBoletoRelatorioRetorno: TBitBtn
@@ -22728,6 +22857,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 354
                   Caption = 'Logotipo da Empresa para emissão do relatório de retorno.'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtBOLLogoEmpresa: TEdit
@@ -22815,6 +22945,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Padrão'
                 Font.Height = -13
                 Font.Style = [fsBold]
+                ParentColor = False
                 ParentFont = False
               end
               object Label81: TLabel
@@ -22824,6 +22955,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 49
                 Caption = 'Assunto:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLEmailAssunto: TEdit
@@ -22843,6 +22975,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 68
                 Caption = 'Mensagem:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtBOLEmailMensagem: TMemo
@@ -22889,6 +23022,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 44
                   Caption = 'ClientID'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label107: TLabel
@@ -22898,6 +23032,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 75
                   Caption = 'Client Secret:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtClientID: TEdit
@@ -22940,6 +23075,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 48
                   Caption = 'KeyUser'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtScope: TEdit
@@ -22960,6 +23096,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 36
                   Caption = 'Scope'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object ChkPix: TCheckBox
@@ -22988,6 +23125,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 58
                   Caption = 'Operação'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label256: TLabel
@@ -22997,6 +23135,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 40
                   Caption = 'Versão'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtVersaoBoleto: TEdit
@@ -23016,6 +23155,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 51
                   Caption = 'HTTP Lib'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label258: TLabel
@@ -23025,6 +23165,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 51
                   Caption = 'SSL Type'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label259: TLabel
@@ -23034,6 +23175,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 47
                   Caption = 'Timeout'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtTimeoutWebServicesBoleto: TSpinEdit
@@ -23086,6 +23228,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 51
                   Caption = 'Path Log'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtPathLogBoleto: TEdit
@@ -23215,6 +23358,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 3
               Caption = 'Chave:'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCEPTestar: TEdit
@@ -23259,6 +23403,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 2
               Caption = 'CEP'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object lCEPWebService: TLabel
@@ -23269,6 +23414,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 67
               Caption = 'WebService'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
           end
@@ -23291,6 +23437,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 49
               Caption = 'Servidor'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCONProxyHost: TEdit
@@ -23313,6 +23460,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 31
               Caption = 'Porta'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCONProxyPort: TEdit
@@ -23336,6 +23484,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 10
               Caption = 'Usuário'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCONProxyUser: TEdit
@@ -23358,6 +23507,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 35
               Caption = 'Senha'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edCONProxyPass: TEdit
@@ -23396,6 +23546,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 2
               Caption = 'Codigo ou Nome'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edIBGECodNome: TEdit
@@ -23480,6 +23631,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 58
               Caption = 'Seu nome'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEmailNome: TEdit
@@ -23502,6 +23654,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 70
               Caption = 'Seu e-mail *'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEmailEndereco: TEdit
@@ -23525,6 +23678,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 45
               Caption = 'Usuário'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEmailUsuario: TEdit
@@ -23544,6 +23698,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 35
               Caption = 'Senha'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEmailSenha: TEdit
@@ -23565,6 +23720,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 73
               Caption = 'Host SMTP *'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEmailHost: TEdit
@@ -23587,6 +23743,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 40
               Caption = 'Porta *'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object edEmailPorta: TSpinEdit
@@ -23812,6 +23969,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akTop, akRight]
               Caption = 'Codificação'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object cbEmailConfirmation: TCheckBox
@@ -23851,6 +24009,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 49
               Caption = 'TimeOut'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object spnTimeOutMail: TSpinEdit
@@ -23868,6 +24027,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 52
               Caption = 'Attempts'
               Font.Height = -13
+              ParentColor = False
               ParentFont = False
             end
             object spnAttemptsMail: TSpinEdit
@@ -23987,6 +24147,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 135
             Caption = 'Nr. Contrato (opcional)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label93: TLabel
@@ -23996,6 +24157,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 97
             Caption = 'Senha (opcional)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label94: TLabel
@@ -24005,6 +24167,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 70
             Caption = 'CEP Origem'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label95: TLabel
@@ -24014,6 +24177,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 70
             Caption = 'CEP Destino'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label96: TLabel
@@ -24023,6 +24187,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 99
             Caption = 'Peso (em Quilos)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label97: TLabel
@@ -24032,6 +24197,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 42
             Caption = 'Serviço'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label98: TLabel
@@ -24041,6 +24207,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 49
             Caption = 'Formato'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label99: TLabel
@@ -24050,6 +24217,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 74
             Caption = 'Mão Própria'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label100: TLabel
@@ -24059,6 +24227,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 111
             Caption = 'Aviso Recebimento'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label101: TLabel
@@ -24068,6 +24237,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 134
             Caption = 'Comprimento (em CM)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label102: TLabel
@@ -24077,6 +24247,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 99
             Caption = 'Largura (em CM)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label103: TLabel
@@ -24086,6 +24257,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 88
             Caption = 'Altura (em CM)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label104: TLabel
@@ -24095,6 +24267,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 108
             Caption = 'Diametro (em CM)'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object Label105: TLabel
@@ -24104,6 +24277,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 94
             Caption = 'Valor Declarado'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edtSedexContrato: TEdit
@@ -24380,6 +24554,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 220
               BorderSpacing.Bottom = 2
               Caption = 'Carregando Lista de NCMs. Aguarde!'
+              ParentColor = False
             end
           end
           object gbNCMSalvarArquivo: TGroupBox
@@ -24415,6 +24590,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Left = 20
               BorderSpacing.Top = 8
               Caption = 'Dias de Validade'
+              ParentColor = False
             end
             object edNCMDiretorio: TDirectoryEdit
               AnchorSideLeft.Control = lbNCMDiretorio
@@ -24446,6 +24622,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 52
               BorderSpacing.Top = 8
               Caption = 'Diretorio'
+              ParentColor = False
             end
             object btNCMSalvarArquivo: TBitBtn
               AnchorSideLeft.Control = edNCMDiretorio
@@ -24494,12 +24671,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
             Font.Height = -13
             Images = ImageList1
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             OnChange = pgDFeChange
             object tsConfiguracaoDFe: TTabSheet
@@ -24539,6 +24716,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label112: TLabel
@@ -24558,6 +24736,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object SpeedButton1: TSpeedButton
@@ -24692,6 +24871,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtArquivoWebServicesCTe: TEdit
@@ -24716,6 +24896,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object sbArquivoWebServicesCTe: TSpeedButton
@@ -24766,6 +24947,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object sbArquivoWebServicesMDFe: TSpeedButton
@@ -24806,6 +24988,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtArquivoWebServicesGNRe: TEdit
@@ -24866,6 +25049,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object sbArquivoWebServiceseSocial: TSpeedButton
@@ -24906,6 +25090,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtArquivoWebServicesReinf: TEdit
@@ -24966,6 +25151,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object sbArquivoWebServicesBPe: TSpeedButton
@@ -25152,6 +25338,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtCNPJContador: TEdit
@@ -25226,6 +25413,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
                   Font.Style = [fsItalic]
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbSSLLib: TComboBox
@@ -25272,6 +25460,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbHttpLib: TComboBox
@@ -25306,6 +25495,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbXMLSignLib: TComboBox
@@ -25340,6 +25530,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbSSLType: TComboBox
@@ -25374,6 +25565,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object btnVersaoSSL: TBitBtn
@@ -25484,6 +25676,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtArquivoPFX: TEdit
@@ -25519,6 +25712,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtURLPFX: TEdit
@@ -25552,6 +25746,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtNumeroSerie: TEdit
@@ -25587,6 +25782,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Name = 'Segoe UI Light'
                   Font.Pitch = fpVariable
                   Font.Quality = fqDraft
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edtSenha: TEdit
@@ -25845,6 +26041,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbUF: TComboBox
@@ -25992,6 +26189,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object sbSchemaDFe: TSpeedButton
@@ -26101,6 +26299,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object edtTimeoutWebServices: TSpinEdit
@@ -26158,6 +26357,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label125: TLabel
@@ -26172,6 +26372,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label126: TLabel
@@ -26186,6 +26387,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label127: TLabel
@@ -26200,6 +26402,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object edtProxyHost: TEdit
@@ -26299,6 +26502,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label129: TLabel
@@ -26313,6 +26517,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label130: TLabel
@@ -26328,6 +26533,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbxAjustarAut: TCheckBox
@@ -26404,6 +26610,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbVersaoWS: TComboBox
@@ -26436,6 +26643,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbVersaoWSCTe: TComboBox
@@ -26466,6 +26674,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbVersaoWSMDFe: TComboBox
@@ -26496,6 +26705,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbVersaoWSBPe: TComboBox
@@ -26525,6 +26735,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbVersaoWSGNRE: TComboBox
@@ -26564,6 +26775,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Name = 'Segoe UI Light'
                     Font.Pitch = fpVariable
                     Font.Quality = fqDraft
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label132: TLabel
@@ -26578,6 +26790,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Name = 'Segoe UI Light'
                     Font.Pitch = fpVariable
                     Font.Quality = fqDraft
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edtToken: TEdit
@@ -26658,6 +26871,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Name = 'Segoe UI Light'
                     Font.Pitch = fpVariable
                     Font.Quality = fqDraft
+                    ParentColor = False
                     ParentFont = False
                   end
                   object imgErrTokenID: TImage
@@ -26719,6 +26933,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Name = 'Segoe UI Light'
                     Font.Pitch = fpVariable
                     Font.Quality = fqDraft
+                    ParentColor = False
                     ParentFont = False
                   end
                   object gbxConfeSocial: TGroupBox
@@ -26750,6 +26965,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label217: TLabel
@@ -26764,6 +26980,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label218: TLabel
@@ -26778,6 +26995,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object edtIDEmpregador: TEdit
@@ -26835,6 +27053,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Name = 'Segoe UI Light'
                     Font.Pitch = fpVariable
                     Font.Quality = fqDraft
+                    ParentColor = False
                     ParentFont = False
                   end
                   object cbVersaoWSReinf: TComboBox
@@ -26877,6 +27096,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label221: TLabel
@@ -26891,6 +27111,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label222: TLabel
@@ -26905,6 +27126,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object edtIDContribuinte: TEdit
@@ -26996,6 +27218,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label229: TLabel
@@ -27010,6 +27233,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbTagRejeicao938: TComboBox
@@ -27075,6 +27299,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label198: TLabel
@@ -27089,6 +27314,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label199: TLabel
@@ -27103,6 +27329,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbFormaEmissaoNFe: TComboBox
@@ -27185,6 +27412,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbFormaEmissaoGNRe: TComboBox
@@ -27245,6 +27473,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Name = 'Segoe UI Light'
                       Font.Pitch = fpVariable
                       Font.Quality = fqDraft
+                      ParentColor = False
                       ParentFont = False
                     end
                   end
@@ -27297,6 +27526,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Caption = 'Configurar dados do servidor de email na aba E-Mail para NFe'
                     Font.Height = -13
                     Font.Style = [fsBold]
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label165: TLabel
@@ -27306,6 +27536,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 101
                     Caption = 'Assunto do Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edtEmailAssuntoNFe: TEdit
@@ -27335,6 +27566,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 120
                     Caption = 'Mensagem do Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                 end
@@ -27365,6 +27597,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Caption = 'Configurar dados do servidor de email na aba E-Mail para CTe'
                     Font.Height = -13
                     Font.Style = [fsBold]
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label179: TLabel
@@ -27374,6 +27607,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 101
                     Caption = 'Assunto do Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edtEmailAssuntoCTe: TEdit
@@ -27393,6 +27627,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 120
                     Caption = 'Mensagem do Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object mmEmailMsgCTe: TMemo
@@ -27433,6 +27668,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Caption = 'Configurar dados do servidor de email na aba E-Mail para MDFe'
                     Font.Height = -13
                     Font.Style = [fsBold]
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label181: TLabel
@@ -27442,6 +27678,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 101
                     Caption = 'Assunto do Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object edtEmailAssuntoMDFe: TEdit
@@ -27461,6 +27698,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 120
                     Caption = 'Mensagem do Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object mmEmailMsgMDFe: TMemo
@@ -27508,6 +27746,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 112
                     Caption = 'Impressora Padrão'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label140: TLabel
@@ -27517,6 +27756,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 75
                     Caption = 'Núm. Cópias'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object rgTipoDanfe: TRadioGroup
@@ -27573,6 +27813,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 42
                       Caption = 'Inferior'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label147: TLabel
@@ -27582,6 +27823,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 50
                       Caption = 'Superior'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label148: TLabel
@@ -27591,6 +27833,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 38
                       Caption = 'Direita'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label149: TLabel
@@ -27600,6 +27843,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 55
                       Caption = 'Esquerda'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object fspeMargemInf: TFloatSpinEdit
@@ -27828,6 +28072,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 21
                     Caption = 'Site'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label151: TLabel
@@ -27837,6 +28082,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 31
                     Caption = 'Email'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object Label153: TLabel
@@ -27846,6 +28092,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 195
                     Caption = 'Logo Marca NF-e / CT-e / MDF-e'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object sbLogoMarca: TSpeedButton
@@ -27916,6 +28163,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 145
                     Caption = 'Logo Marca NFC-e / SAT'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object sbLogoMarcaNFCeSAT: TSpeedButton
@@ -27962,6 +28210,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Anchors = [akTop, akLeft, akRight]
                     Caption = 'Decimais'#13#10'Valor Unitário'
                     Font.Height = -12
+                    ParentColor = False
                     ParentFont = False
                   end
                   object spedtDecimaisVUnit: TSpinEdit
@@ -28015,6 +28264,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Altura Campos'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28042,6 +28292,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Fonte Demais Campos'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28070,6 +28321,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Fonte Endereço'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28098,6 +28350,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Fonte Rz Social'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28126,6 +28379,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Espaço entre Prod'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28153,6 +28407,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Largura Cód.Prod'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28242,6 +28497,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Anchors = [akTop, akLeft, akRight]
                     Caption = 'Decimais'#13#10'Quantidade'
                     Font.Height = -12
+                    ParentColor = False
                     ParentFont = False
                   end
                   object cbxUnComTributavel: TComboBox
@@ -28268,6 +28524,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 168
                     Caption = 'Imprimir no campo Unidade:'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object cbxImpDetEspNFe: TCheckBox
@@ -28391,6 +28648,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 447
                       Anchors = [akLeft, akBottom]
                       Caption = 'Mensagem Personalizada   (Se não informado será emitido resumo padrão)'
+                      ParentColor = False
                     end
                   end
                   object rgImprimeDescAcrescItemNFe: TRadioGroup
@@ -28468,6 +28726,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     Caption = 'Fonte Inf Complem.'
                     Font.Height = -11
+                    ParentColor = False
                     ParentFont = False
                     WordWrap = True
                   end
@@ -28651,6 +28910,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Anchors = [akTop, akRight]
                       Caption = 'Alterar Fonte Itens (Fortes) '
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object cbxExibeTotalTributosItem: TCheckBox
@@ -28729,6 +28989,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 156
                     Caption = 'Impressora Padrão(Fortes)'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                   object gbxMargem1: TGroupBox
@@ -28750,6 +29011,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 42
                       Caption = 'Inferior'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label184: TLabel
@@ -28759,6 +29021,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 50
                       Caption = 'Superior'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label185: TLabel
@@ -28768,6 +29031,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 38
                       Caption = 'Direita'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object Label186: TLabel
@@ -28777,6 +29041,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 55
                       Caption = 'Esquerda'
                       Font.Height = -13
+                      ParentColor = False
                       ParentFont = False
                     end
                     object fspeNFCeMargemInf: TFloatSpinEdit
@@ -28867,6 +29132,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 75
                     Caption = 'Núm. Cópias'
                     Font.Height = -13
+                    ParentColor = False
                     ParentFont = False
                   end
                 end
@@ -28960,6 +29226,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 118
                 Caption = 'Pasta Arquivos DFes'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label160: TLabel
@@ -28969,6 +29236,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 154
                 Caption = 'Pasta Arquivos Inutilização'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sbPathInu: TSpeedButton
@@ -29004,6 +29272,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 119
                 Caption = 'Pasta Arquivos EPEC'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sbPathDPEC: TSpeedButton
@@ -29039,6 +29308,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 140
                 Caption = 'Salvar arquivos PDF em:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sbPathPDF: TSpeedButton
@@ -29073,6 +29343,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 129
                 Caption = 'Pasta Arquivos Evento'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sbPathEvento: TSpeedButton
@@ -29286,6 +29557,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 140
                 Caption = 'Salvar arquivos TXT em:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sbPathArqTXT: TSpeedButton
@@ -29329,6 +29601,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 256
                 Caption = 'Salvar XML de Downloads (DistribuicaoDFe)'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sbPathDownload: TSpeedButton
@@ -29381,6 +29654,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 29
                 Caption = 'CSRT'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtCSRT: TEdit
@@ -29399,6 +29673,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 40
                 Caption = 'idCSRT'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtIdCSRT: TEdit
@@ -30255,11 +30530,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1000
-            ActivePage = tsDadosSAT
+            ActivePage = Impressao
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             OnChange = pgSATChange
             object tsDadosSAT: TTabSheet
@@ -30279,6 +30554,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Alignment = taRightJustify
                 Caption = 'Arq.Log:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edSATLog: TEdit
@@ -30316,6 +30592,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Alignment = taRightJustify
                 Caption = 'Nome DLL:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edNomeDLL: TEdit
@@ -30351,6 +30628,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 115
                 Caption = 'Código de Ativação'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label116: TLabel
@@ -30360,6 +30638,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 42
                 Caption = 'Cód.UF'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtCodUF: TEdit
@@ -30381,6 +30660,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 62
                 Caption = 'Num.Caixa'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object seNumeroCaixa: TSpinEdit
@@ -30432,6 +30712,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 BorderSpacing.Right = 5
                 Caption = 'Pág.Código:'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object Label119: TLabel
@@ -30441,6 +30722,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 40
                 Caption = 'Versão'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object sfeVersaoEnt: TFloatSpinEdit
@@ -30491,6 +30773,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 55
                 Caption = 'Ambiente'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxModeloSAT: TComboBox
@@ -30660,6 +30943,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 74
                   Caption = 'Path Vendas:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object SbArqLog2: TSpeedButton
@@ -30722,6 +31006,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 63
                   Caption = 'Path Canc.:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label246: TLabel
@@ -30733,6 +31018,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 63
                   Caption = 'Path Envio:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object SbArqLog3: TSpeedButton
@@ -30794,6 +31080,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 68
                   Caption = 'Prefixo CFe:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label248: TLabel
@@ -30805,6 +31092,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 78
                   Caption = 'Prefixo Canc.:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbxSATSepararPorDIA: TCheckBox
@@ -30899,6 +31187,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 62
                 Caption = 'Marca SAT'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object labelModeloDll: TLabel
@@ -30908,6 +31197,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 71
                 Caption = 'Modelo DLL'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object imgErrSAT: TImage
@@ -31019,6 +31309,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 29
                 Caption = 'CNPJ'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtEmitCNPJ: TEdit
@@ -31050,6 +31341,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 74
                 Caption = 'Insc.Estadual'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtEmitIM: TEdit
@@ -31069,6 +31361,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 81
                 Caption = 'Insc.Municipal'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxRegTributario: TComboBox
@@ -31089,6 +31382,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 104
                 Caption = 'Regime Tributario'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxRegTribISSQN: TComboBox
@@ -31109,6 +31403,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 114
                 Caption = 'Regime Trib. ISSQN'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxIndRatISSQN: TComboBox
@@ -31129,6 +31424,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 80
                 Caption = 'Ind.Rat.ISSQN'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object imgErrSATEmitente: TImage
@@ -31160,6 +31456,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 29
                 Caption = 'CNPJ'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtSwHCNPJ: TEdit
@@ -31180,6 +31477,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 217
                 Caption = 'Assinatura Sw.House (344 caracteres)'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtSwHAssinatura: TEdit
@@ -31269,6 +31567,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 45
                   Caption = 'Usuario'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeUsuario: TEdit
@@ -31287,6 +31586,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 35
                   Caption = 'Senha'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeSenha: TEdit
@@ -31318,6 +31618,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 10
                   Caption = 'IP'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeIP: TEdit
@@ -31336,6 +31637,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 31
                   Caption = 'Mask'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeMask: TEdit
@@ -31354,6 +31656,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 49
                   Caption = 'Gateway'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeGW: TEdit
@@ -31372,6 +31675,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 33
                   Caption = 'DNS1'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object lSSID6: TLabel
@@ -31381,6 +31685,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 33
                   Caption = 'DNS2'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeDNS1: TEdit
@@ -31448,6 +31753,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 29
                   Caption = 'SSID:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeSSID: TEdit
@@ -31466,6 +31772,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 25
                   Caption = 'Seg:'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbxRedeSeg: TComboBox
@@ -31494,6 +31801,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 35
                   Caption = 'Senha'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeCodigo: TEdit
@@ -31571,6 +31879,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 10
                   Caption = 'IP'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeProxyIP: TEdit
@@ -31590,6 +31899,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 31
                   Caption = 'Porta'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object lSSID11: TLabel
@@ -31599,6 +31909,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 45
                   Caption = 'Usuario'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeProxyUser: TEdit
@@ -31618,6 +31929,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 35
                   Caption = 'Senha'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object edRedeProxySenha: TEdit
@@ -31719,6 +32031,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 45
                   Caption = 'Largura'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object Label175: TLabel
@@ -31728,6 +32041,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 30
                   Caption = 'Topo'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object seMargemTopo: TSpinEdit
@@ -31747,6 +32061,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 36
                   Caption = 'Fundo'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object seMargemFundo: TSpinEdit
@@ -31766,6 +32081,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 55
                   Caption = 'Esquerda'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object seMargemEsquerda: TSpinEdit
@@ -31785,6 +32101,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 38
                   Caption = 'Direita'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object seMargemDireita: TSpinEdit
@@ -31816,6 +32133,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 111
                   Caption = 'Impressora Default'
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object cbUsarFortes: TRadioButton
@@ -31875,6 +32193,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Caption = 'Configuração na aba PosPrinter'
                   Font.Color = 4067613
                   Font.Height = -13
+                  ParentColor = False
                   ParentFont = False
                 end
                 object rdgImprimeChave1LinhaSAT: TRadioGroup
@@ -31916,28 +32235,29 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Caption = '* Não suportado por todas as impressoras'
                   Font.Height = -11
                   Font.Style = [fsItalic]
+                  ParentColor = False
                   ParentFont = False
                 end
               end
               object gbExtratoSAT: TGroupBox
-                Left = 561
+                Left = 560
                 Height = 215
                 Top = 123
-                Width = 280
+                Width = 271
                 Caption = 'Impressão Extrato'
                 ChildSizing.EnlargeHorizontal = crsHomogenousSpaceResize
                 ChildSizing.EnlargeVertical = crsHomogenousSpaceResize
                 ChildSizing.Layout = cclLeftToRightThenTopToBottom
                 ChildSizing.ControlsPerLine = 1
                 ClientHeight = 193
-                ClientWidth = 276
+                ClientWidth = 267
                 Font.Height = -13
                 ParentFont = False
                 TabOrder = 2
                 object cbxImprimirItem1LinhaSAT: TCheckBox
-                  Left = 16
+                  Left = 12
                   Height = 21
-                  Top = 15
+                  Top = 10
                   Width = 244
                   Caption = 'Imprimir itens somente em 1 linha'
                   Font.Height = -13
@@ -31945,9 +32265,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 0
                 end
                 object cbxImprimirDescAcresItemSAT: TCheckBox
-                  Left = 16
+                  Left = 12
                   Height = 21
-                  Top = 51
+                  Top = 41
                   Width = 244
                   Caption = 'Imprime desconto/acréscimo por item'
                   Font.Height = -13
@@ -31955,9 +32275,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 1
                 end
                 object cbxImprimirCodEANitemSAT: TCheckBox
-                  Left = 16
+                  Left = 12
                   Height = 21
-                  Top = 87
+                  Top = 72
                   Width = 244
                   Caption = 'Imprimir Código GTIN'
                   Font.Height = -13
@@ -31965,9 +32285,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 2
                 end
                 object cbxLogoLateral: TCheckBox
-                  Left = 16
+                  Left = 12
                   Height = 21
-                  Top = 123
+                  Top = 103
                   Width = 244
                   Caption = 'Logo Lateral'
                   Font.Height = -13
@@ -31975,14 +32295,24 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 3
                 end
                 object cbxQRCodeLateral: TCheckBox
-                  Left = 16
+                  Left = 12
                   Height = 21
-                  Top = 159
+                  Top = 134
                   Width = 244
                   Caption = 'QRCode Lateral'
                   Font.Height = -13
                   ParentFont = False
                   TabOrder = 4
+                end
+                object cbxMostrarStatusSAT: TCheckBox
+                  Left = 12
+                  Height = 21
+                  Top = 165
+                  Width = 244
+                  Caption = 'Mostrar Status'
+                  Font.Height = -13
+                  ParentFont = False
+                  TabOrder = 5
                 end
               end
               object GroupBox12: TGroupBox
@@ -32022,6 +32352,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 5
                   Width = 69
                   Caption = 'Vlr. Unitário'
+                  ParentColor = False
                 end
                 object Label242: TLabel
                   Left = 327
@@ -32029,6 +32360,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 5
                   Width = 67
                   Caption = 'Mask Qtde.'
+                  ParentColor = False
                 end
                 object Label243: TLabel
                   Left = 405
@@ -32036,6 +32368,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 5
                   Width = 84
                   Caption = 'Mask Vlr. Unit.'
+                  ParentColor = False
                 end
                 object Label240: TLabel
                   Left = 161
@@ -32043,6 +32376,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 5
                   Width = 68
                   Caption = 'Quantidade'
+                  ParentColor = False
                 end
                 object cbFormatoDecimais: TComboBox
                   Left = 9
@@ -32063,6 +32397,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Top = 3
                   Width = 49
                   Caption = 'Formato'
+                  ParentColor = False
                 end
                 object edtSATCasasMaskQtd: TEdit
                   Left = 327
@@ -32100,6 +32435,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Configurar dados do servidor de email na aba E-Mail para o SAT'
                 Font.Height = -13
                 Font.Style = [fsBold]
+                ParentColor = False
                 ParentFont = False
               end
               object bvCadastro6: TBevel
@@ -32118,6 +32454,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 101
                 Caption = 'Assunto do Email'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edtEmailAssuntoSAT: TEdit
@@ -32137,6 +32474,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 120
                 Caption = 'Mensagem do Email'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object mmEmailMsgSAT: TMemo
@@ -32166,6 +32504,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 80
             Caption = 'Pasta Entrada'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edMFEInput: TEdit
@@ -32185,6 +32524,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 89
             Caption = 'Pasta Resposta'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object edMFEOutput: TEdit
@@ -32204,6 +32544,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 47
             Caption = 'Timeout'
             Font.Height = -13
+            ParentColor = False
             ParentFont = False
           end
           object seMFETimeout: TSpinEdit
@@ -32275,6 +32616,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 8
                 Width = 40
                 Caption = 'Largura'
+                ParentColor = False
                 ParentFont = False
               end
               object lbAltura: TLabel
@@ -32283,6 +32625,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 8
                 Width = 32
                 Caption = 'Altura'
+                ParentColor = False
                 ParentFont = False
               end
               object cbHRI: TCheckBox
@@ -32343,6 +32686,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 6
                 Width = 23
                 Caption = 'Tipo'
+                ParentColor = False
                 ParentFont = False
               end
               object lbQRCodeLargMod: TLabel
@@ -32351,6 +32695,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 6
                 Width = 71
                 Caption = 'Largura Mod.'
+                ParentColor = False
                 ParentFont = False
               end
               object lbQRCodeErrorLevel: TLabel
@@ -32359,6 +32704,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 6
                 Width = 55
                 Caption = 'Error Level'
+                ParentColor = False
                 ParentFont = False
               end
             end
@@ -32419,6 +32765,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 24
                 Width = 20
                 Caption = 'KC1'
+                ParentColor = False
                 ParentFont = False
               end
               object lbLogoKC2: TLabel
@@ -32427,6 +32774,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 24
                 Width = 20
                 Caption = 'KC2'
+                ParentColor = False
                 ParentFont = False
               end
               object lbLogoFatorX: TLabel
@@ -32435,6 +32783,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 24
                 Width = 34
                 Caption = 'FatorX'
+                ParentColor = False
                 ParentFont = False
               end
               object lbLogoFatorY: TLabel
@@ -32443,6 +32792,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 24
                 Width = 34
                 Caption = 'FatorY'
+                ParentColor = False
                 ParentFont = False
               end
               object cbEscPosImprimirLogo: TCheckBox
@@ -32528,6 +32878,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 46
                 Caption = 'Modelo'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxModelo: TComboBox
@@ -32548,6 +32899,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 31
                 Caption = 'Porta'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object cbxPorta: TComboBox
@@ -32614,6 +32966,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 50
                 Caption = 'Arq. Log'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object edPosPrinterLog: TEdit
@@ -32641,6 +32994,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 103
                 Width = 43
                 Caption = 'Colunas'
+                ParentColor = False
                 ParentFont = False
               end
               object seColunas: TSpinEdit
@@ -32659,6 +33013,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 103
                 Width = 42
                 Caption = 'Espaços'
+                ParentColor = False
                 ParentFont = False
               end
               object seEspacosLinhas: TSpinEdit
@@ -32676,6 +33031,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 103
                 Width = 32
                 Caption = 'Buffer'
+                ParentColor = False
                 ParentFont = False
               end
               object seBuffer: TSpinEdit
@@ -32693,6 +33049,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 103
                 Width = 64
                 Caption = 'Linhas Pular'
+                ParentColor = False
                 ParentFont = False
               end
               object seLinhasPular: TSpinEdit
@@ -32712,6 +33069,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Pag. Código'
                 Font.Height = -13
                 Font.Name = 'Default'
+                ParentColor = False
                 ParentFont = False
               end
               object cbxPagCodigo: TComboBox
@@ -32791,6 +33149,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 64
                 Caption = 'Tempo ON'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object seGavetaTempoON: TSpinEdit
@@ -32823,6 +33182,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 66
                 Caption = 'Tempo OFF'
                 Font.Height = -13
+                ParentColor = False
                 ParentFont = False
               end
               object seGavetaTempoOFF: TSpinEdit
@@ -34170,14 +34530,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
     BaseURL = 'https://acbr.sourceforge.io/ACBrMonitor'
     AutoRegister = True
     KeywordPrefix = 'ACBrMonitor'
-    Left = 944
-    Top = 376
+    Left = 1144
+    Top = 336
   end
   object HTMLBrowserHelpViewer1: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
-    Left = 984
-    Top = 376
+    Left = 1144
+    Top = 392
   end
   object ACBrNCMs1: TACBrNCMs
     ProxyPort = '8080'

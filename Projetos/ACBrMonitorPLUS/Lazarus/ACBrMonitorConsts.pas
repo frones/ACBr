@@ -1167,6 +1167,7 @@ const
   //CKeySATHashLib =                          'Hash';
 
   CSecSATExtrato =                          'SATExtrato';
+  CKeySATExtMostrarStatus =                 'MostrarStatus';
   CKeySATExtParamsString =                  'ParamsString';
   CKeySATExtImprimeDescAcrescItem =         'ImprimeDescAcrescItem';
   CKeySATExtImprimeEmUmaLinha =             'ImprimeEmUmaLinha';

@@ -447,6 +447,7 @@ type
   end;
 
   TSATExtrato = record
+    MostrarStatus               : Boolean;
     ParamsString                : String;
     ImprimeDescAcrescItem       : Boolean;
     ImprimeEmUmaLinha           : Boolean;
@@ -1269,6 +1270,7 @@ begin
 
     with SAT.SATImpressao.SATExtrato do
     begin
+      ini.WriteBool(    CSecSATExtrato, CKeySATExtMostrarStatus           , MostrarStatus        );
       ini.WriteString(  CSecSATExtrato, CKeySATExtParamsString           , ParamsString          );
       ini.WriteBool(    CSecSATExtrato, CKeySATExtImprimeDescAcrescItem  , ImprimeDescAcrescItem );
       ini.WriteBool(    CSecSATExtrato, CKeySATExtImprimeEmUmaLinha      , ImprimeEmUmaLinha     );
@@ -2011,6 +2013,7 @@ begin
 
     with SAT.SATImpressao.SATExtrato do
     begin
+      MostrarStatus          := ini.ReadBool(  CSecSATExtrato, CKeySATExtMostrarStatus          , MostrarStatus         );
       ParamsString           := ini.ReadString(  CSecSATExtrato, CKeySATExtParamsString           , ParamsString          );
       ImprimeDescAcrescItem  := ini.ReadBool(    CSecSATExtrato, CKeySATExtImprimeDescAcrescItem  , ImprimeDescAcrescItem );
       ImprimeEmUmaLinha      := ini.ReadBool(    CSecSATExtrato, CKeySATExtImprimeEmUmaLinha      , ImprimeEmUmaLinha     );
@@ -2721,6 +2724,7 @@ begin
 
   with SAT.SATImpressao.SATExtrato do
   begin
+    MostrarStatus          := False;
     ParamsString           := '';
     ImprimeDescAcrescItem  := True;
     ImprimeEmUmaLinha      := False;

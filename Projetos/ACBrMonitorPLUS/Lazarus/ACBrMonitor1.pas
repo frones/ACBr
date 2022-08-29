@@ -385,6 +385,7 @@ type
     cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirItem1LinhaNFCe: TCheckBox;
     cbxImprimirItem1LinhaSAT: TCheckBox;
+    cbxMostrarStatusSAT: TCheckBox;
     cbxImprimirLogoLateralNFCe: TCheckBox;
     cbxImprimeItens: TCheckBox;
     cbxImprimirNomeFantasiaNFCe: TCheckBox;
@@ -7111,6 +7112,7 @@ begin
 
       with SATImpressao.SATExtrato do
       begin
+        MostrarStatus                  := cbxMostrarStatusSAT.Checked;
         ParamsString                   := ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString;
         ImprimeDescAcrescItem          := cbxImprimirDescAcresItemSAT.Checked;
         ImprimeEmUmaLinha              := cbxImprimirItem1LinhaSAT.Checked;

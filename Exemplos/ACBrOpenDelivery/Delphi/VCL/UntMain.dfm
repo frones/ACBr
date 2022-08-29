@@ -398,8 +398,8 @@ object FMain: TFMain
           object Label10: TLabel
             Left = 0
             Top = 0
-            Width = 1056
-            Height = 41
+            Width = 319
+            Height = 15
             Cursor = crHandPoint
             Align = alClient
             Caption = 'https://abrasel-nacional.github.io/docs/#tag/ordersStatus'
@@ -1233,8 +1233,8 @@ object FMain: TFMain
           object Label11: TLabel
             Left = 0
             Top = 0
-            Width = 1056
-            Height = 41
+            Width = 487
+            Height = 15
             Cursor = crHandPoint
             Align = alClient
             Caption = 

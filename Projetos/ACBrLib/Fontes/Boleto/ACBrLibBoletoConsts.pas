@@ -117,12 +117,14 @@ const
   CChaveScope= 'Scope';
   CChaveIndicadorPix= 'IndicadorPix';
 
-  CSessaoBoletoWebSevice = 'BoletoWebSevice';
+  CSessaoBoletoWebService = 'BoletoWebSevice';
   CChaveLogRegistro = 'LogRegistro';
   CChavePathGravarRegistro = 'PathGravarRegistro';
   CChaveAmbiente = 'Ambiente';
   CChaveVersaoDF = 'VersaoDF';
   CChaveUseCertificateHTTP = 'UseCertificateHTTP';
+  CChaveSSLType = 'SSLType';
+  CChaveTimeout = 'Timeout';
 
   CSessaoBolConfig = 'BoletoConfig';
   CChaveemailAssuntoBoleto= 'emailAssuntoBoleto';

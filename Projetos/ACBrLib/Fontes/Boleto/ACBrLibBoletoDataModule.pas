@@ -160,7 +160,7 @@ begin
   begin
     Arquivos.LogRegistro := LibConfig.BoletoConfigWS.LogRegistro;
     Arquivos.PathGravarRegistro := LibConfig.BoletoConfigWS.PathGravarRegistro;
-    WebService.Ambiente := LibConfig.BoletoConfigWS.Ambiente;
+    WebService.Ambiente := LibConfig.BoletoDFeConfigWS.WebServices.Ambiente;
     WebService.Operacao := LibConfig.BoletoConfigWS.Operacao;
     WebService.VersaoDF := LibConfig.BoletoConfigWS.VersaoDF;
 

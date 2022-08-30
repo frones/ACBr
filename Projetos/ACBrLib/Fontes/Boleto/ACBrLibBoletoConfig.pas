@@ -248,7 +248,6 @@ type
   private
     FLogRegistro: Boolean;
     FPathGravarRegistro: String;
-    FAmbiente: TpcnTipoAmbiente;
     FOperacao: TOperacao;
     FVersaoDF: String;
     FUseCertificateHTTP: Boolean;
@@ -261,7 +260,6 @@ type
 
     property LogRegistro: Boolean read FLogRegistro write FLogRegistro;
     property PathGravarRegistro: String read FPathGravarRegistro write FPathGravarRegistro;
-    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property Operacao: TOperacao read FOperacao write FOperacao;
     property VersaoDF: String read FVersaoDF write FVersaoDF;
     property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
@@ -336,7 +334,6 @@ constructor TBoletoConfigWS.Create;
 begin
   FLogRegistro:= True;
   FPathGravarRegistro:= '';
-  FAmbiente:= taHomologacao;
   FOperacao:= tpInclui;
   FVersaoDF:= '1.2';
   FUseCertificateHTTP:= False;
@@ -345,24 +342,20 @@ end;
 
 procedure TBoletoConfigWS.LerIni(const AIni: TCustomIniFile);
 begin
-  LogRegistro:= AIni.ReadBool(CSessaoBoletoWebSevice, CChaveLogRegistro, LogRegistro );
-  PathGravarRegistro:= AIni.ReadString(CSessaoBoletoWebSevice, CChavePathGravarRegistro, PathGravarRegistro );
-  Ambiente:= TpcnTipoAmbiente( AIni.ReadInteger(CSessaoBoletoWebSevice, CChaveAmbiente, integer(Ambiente) ) );
-  Operacao:= TOperacao( AIni.ReadInteger(CSessaoBoletoWebSevice, CChaveOperacao, integer(Operacao) ) );
-  VersaoDF:= AIni.ReadString(CSessaoBoletoWebSevice, CChaveVersaoDF, VersaoDF );
-  UseCertificateHTTP:= AIni.ReadBool(CSessaoBoletoWebSevice, CChaveUseCertificateHTTP, UseCertificateHTTP );
-
+  LogRegistro:= AIni.ReadBool(CSessaoBoletoWebService, CChaveLogRegistro, LogRegistro );
+  PathGravarRegistro:= AIni.ReadString(CSessaoBoletoWebService, CChavePathGravarRegistro, PathGravarRegistro );
+  Operacao:= TOperacao( AIni.ReadInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) ) );
+  VersaoDF:= AIni.ReadString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
+  UseCertificateHTTP:= AIni.ReadBool(CSessaoBoletoWebService, CChaveUseCertificateHTTP, UseCertificateHTTP );
 end;
 
 procedure TBoletoConfigWS.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteBool(CSessaoBoletoWebSevice, CChaveLogRegistro, LogRegistro );
-  AIni.WriteString(CSessaoBoletoWebSevice, CChavePathGravarRegistro, PathGravarRegistro );
-  AIni.WriteInteger(CSessaoBoletoWebSevice, CChaveAmbiente,integer(Ambiente) );
-  AIni.WriteInteger(CSessaoBoletoWebSevice, CChaveOperacao, integer(Operacao) );
-  AIni.WriteString(CSessaoBoletoWebSevice, CChaveVersaoDF, VersaoDF );
-  AIni.WriteBool(CSessaoBoletoWebSevice, CChaveUseCertificateHTTP, UseCertificateHTTP );
-
+  AIni.WriteBool(CSessaoBoletoWebService, CChaveLogRegistro, LogRegistro );
+  AIni.WriteString(CSessaoBoletoWebService, CChavePathGravarRegistro, PathGravarRegistro );
+  AIni.WriteInteger(CSessaoBoletoWebService, CChaveOperacao, integer(Operacao) );
+  AIni.WriteString(CSessaoBoletoWebService, CChaveVersaoDF, VersaoDF );
+  AIni.WriteBool(CSessaoBoletoWebService, CChaveUseCertificateHTTP, UseCertificateHTTP );
 end;
 
 { TBoletoCedenteWS }
@@ -465,7 +458,7 @@ begin
   FBoletoConfig := TBoletoConfig.Create;
   FBoletoCedenteWS := TBoletoCedenteWS.Create;
   FBoletoConfigWS := TBoletoConfigWS.Create;
-  FBoletoDFeConfigWS := TConfiguracoes.Create(nil);
+  FBoletoDFeConfigWS := TConfiguracoes.CreateNomearSessao(nil, CSessaoBoletoWebService);
   FBoletoDFeConfigWS.ChaveCryptINI := AChaveCrypt;
 
 end;
@@ -677,7 +670,6 @@ begin
   CasasDecimaisMoraJuros:= AIni.ReadInteger(CSessaoBoletoBancoConfig, CChaveCasasDecimaisMoraJuros, CasasDecimaisMoraJuros);
   //DensidadeGravacao:= AIni.ReadString(CSessaoBoletoBancoConfig, CChaveDensidadeGravacao, DensidadeGravacao);
   CIP:= AIni.ReadString(CSessaoBoletoBancoConfig, CChaveCIP, CIP);
-
 end;
 
 procedure TBoletoBancoConfig.GravarIni(const AIni: TCustomIniFile);

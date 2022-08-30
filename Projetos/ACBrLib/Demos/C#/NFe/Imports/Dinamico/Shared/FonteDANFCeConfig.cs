@@ -7,7 +7,7 @@ namespace ACBrLib.NFe
     {
         #region Constructors
 
-        public FonteDANFCeConfig(ACBrNFe acbrlib) : base(acbrlib, ACBrSessao.NFe)
+        public FonteDANFCeConfig(ACBrNFe acbrlib, ACBrSessao sessao) : base(acbrlib, sessao)
         {
             SubName = "FonteLinhaItem";
         }

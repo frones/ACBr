@@ -10,7 +10,7 @@ namespace ACBrLib.NFe
 
         public DANFeNFCeConfig(ACBrNFe acbrlib) : base(acbrlib, ACBrSessao.DANFENFCe)
         {
-            Fonte = new FonteDANFCeConfig(acbrlib);
+            Fonte = new FonteDANFCeConfig(acbrlib, ACBrSessao.DANFENFCe);
         }
 
         #endregion Constructors

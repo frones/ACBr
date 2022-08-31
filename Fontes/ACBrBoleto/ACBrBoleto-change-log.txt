@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2022
+--ACBrBoletoBradesco--
+[*] TK-2896 Bradesco Proteção na geração do segmento R, gerar somente quando desconto2 ou desconto3 <> tdNaoCondederDesconto e valorPercentual > 0
+  Por : Pandaaa
+
 26/08/2022
 --ACBrBoleto.pas--
 [*] TK-3001 Ajuste SetNumCopias para aplicações ISAPI

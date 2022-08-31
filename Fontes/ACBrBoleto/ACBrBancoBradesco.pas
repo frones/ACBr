@@ -241,7 +241,9 @@ var
   ListTransacao: TStringList;
 
 begin
-  if (ACBrTitulo.TipoDesconto2<>tdNaoConcederDesconto) or (ACBrTitulo.TipoDesconto3<>tdNaoConcederDesconto) then
+  if (ACBrTitulo.TipoDesconto2<>tdNaoConcederDesconto) or
+     (ACBrTitulo.TipoDesconto3<>tdNaoConcederDesconto) or
+     (ACBrTitulo.PercentualMulta > 0) then
     Fsequencia     := 3 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)
   else
     Fsequencia     := 2 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo);
@@ -374,7 +376,9 @@ begin
         PadRight('', 8, ' '));                                 // FEBRABAN/CNAB 233 240 8 - Alfa Brancos G004
 
     {SEGMENTO R OPCIONAL }
-      if (TipoDesconto2<>tdNaoConcederDesconto) or (TipoDesconto3<>tdNaoConcederDesconto) then
+      if (TipoDesconto2<>tdNaoConcederDesconto) or
+         (TipoDesconto3<>tdNaoConcederDesconto) or
+         (PercentualMulta > 0) then
       begin
         ListTransacao.Add(IntToStrZero(ACBrBanco.Numero, 3)    + //Código do Banco na Compensação 1 3 3 - Num G001
           '0001'                                               + //Lote de Serviço 4 7 4 - Num *G002

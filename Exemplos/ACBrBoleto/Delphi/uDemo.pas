@@ -228,6 +228,8 @@ type
     cbxSSLLib: TComboBox;
     Label70: TLabel;
     btnImpressaoPDFIndividual: TButton;
+    Label71: TLabel;
+    edtScope: TEdit;
     procedure btnImpressaoHTMLClick(Sender: TObject);
     procedure btnImpressaoPDFClick(Sender: TObject);
     procedure btnBoletoIndividualClick(Sender: TObject);
@@ -376,12 +378,14 @@ begin
   BeneficiarioWS.ClientID     := edtClientID.Text;
   BeneficiarioWS.ClientSecret := edtClientSecret.Text;
   BeneficiarioWS.KeyUser      := edtKeyUser.Text;
+  BeneficiarioWS.Scope        := edtScope.Text;
   WebService.Ambiente         := TpcnTipoAmbiente(Ord(ckbEmHomologacao.Checked));
   WebService.SSLHttpLib       := TSSLHttpLib(cbxSSLLib.ItemIndex);
 end;
 
 procedure TfrmDemo.AplicarConfiguracoesComponenteATela;
 var Beneficiario : TACBrCedente;
+    BeneficiarioWS : TACBrCedenteWS;
     Banco : TACBrBanco;
     Boleto : TACBrBoleto;
 begin
@@ -398,6 +402,7 @@ begin
   ckbRemoverAcentuacaoRemessa.Checked := Boleto.RemoveAcentosArqRemessa;
 
   Beneficiario := Boleto.Cedente;
+
   edtAgencia.Text           := Beneficiario.Agencia;
   edtAgenciaDV.Text         := Beneficiario.AgenciaDigito;
   edtConta.Text             := Beneficiario.Conta;
@@ -425,7 +430,11 @@ begin
   edtDensidadeGravacao.Text := Banco.DensidadeGravacao;
   edtLocalPag.Text          := Banco.LocalPagamento;
 
-
+  BeneficiarioWS := Beneficiario.CedenteWS;
+  edtClientID.Text          := BeneficiarioWS.ClientID;
+  edtClientSecret.Text      := BeneficiarioWS.ClientSecret;
+  edtKeyUser.Text           := BeneficiarioWS.KeyUser;
+  edtScope.Text             := BeneficiarioWS.Scope;
 end;
 
 procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);

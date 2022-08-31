@@ -938,8 +938,10 @@ var
 begin
   try
     if Config.Log.Nivel > logNormal then
-      GravarLog('NFe_Enviar(' + IntToStr(ALote) + ',' + BoolToStr(AImprimir, 'Imprimir', '') +
-                 BoolToStr(ASincrono, 'Sincrono', '') + BoolToStr(AZipado, 'Zipado', '') + ' )', logCompleto, True)
+      GravarLog('NFe_Enviar(' + IntToStr(ALote) +
+                 BoolToStr(AImprimir, ', Imprimir', '') +
+                 BoolToStr(ASincrono, ', Sincrono', '') +
+                 BoolToStr(AZipado, ', Zipado', '') + ' )', logCompleto, True)
     else
       GravarLog('NFe_Enviar', logNormal);
 
@@ -958,13 +960,16 @@ begin
 
         NFeDM.ValidarIntegradorNFCe;
 
+        GravarLog('NFe_Enviar, Limpando Resp', logParanoico);
         Resposta := '';
         WebServices.Enviar.Clear;
         WebServices.Retorno.Clear;
 
+        GravarLog('NFe_Enviar, Assinando', logCompleto);
         NotasFiscais.Assinar;
 
         try
+          GravarLog('NFe_Enviar, Validando', logCompleto);
           NotasFiscais.Validar;
         except
           on E: EACBrNFeException do
@@ -979,13 +984,14 @@ begin
         else
           WebServices.Enviar.Lote := IntToStr(ALote);
 
+        GravarLog('NFe_Enviar, Enviando', logCompleto);
         WebServices.Enviar.Sincrono := ASincrono;
         WebServices.Enviar.Zipado := AZipado;
         WebServices.Enviar.Executar;
 
         RespEnvio := TEnvioResposta.Create(Config.TipoResposta, Config.CodResposta);
-
         try
+          GravarLog('NFe_Enviar, Proces.Resp Enviar', logParanoico);
           RespEnvio.Processar(NFeDM.ACBrNFe1);
           Resposta := RespEnvio.Gerar;
         finally
@@ -994,12 +1000,13 @@ begin
 
         if not ASincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
         begin
+          GravarLog('NFe_Enviar, Consultando Retorno', logCompleto);
           WebServices.Retorno.Recibo := WebServices.Enviar.Recibo;
           WebServices.Retorno.Executar;
 
           RespRetorno := TRetornoResposta.Create('NFe', Config.TipoResposta, Config.CodResposta);
-
           try
+            GravarLog('NFe_Enviar, Proces.Resp Retorno', logParanoico);
             RespRetorno.Processar(WebServices.Retorno.NFeRetorno,
                                   WebServices.Retorno.Recibo,
                                   WebServices.Retorno.Msg,
@@ -1022,6 +1029,7 @@ begin
             begin
               if NotasFiscais.Items[I].Confirmada then
               begin
+                GravarLog('NFe_Enviar, Imprindo NFe['+IntToStrZero(I+1)+'], '+NotasFiscais.Items[I].NFe.infNFe.ID, logNormal);
                 NotasFiscais.Items[I].Imprimir;
                 Inc(ImpCount);
               end;
@@ -1030,8 +1038,8 @@ begin
             if ImpCount > 0 then
             begin
               ImpResp := TLibImpressaoResposta.Create(ImpCount, Config.TipoResposta, Config.CodResposta);
-
               try
+                GravarLog('NFe_Enviar, Proces.Resp Impressao', logParanoico);
                 Resposta := Resposta + sLineBreak + ImpResp.Gerar;
               finally
                 ImpResp.Free;

@@ -338,7 +338,10 @@ begin
      (ACBrNFe1.Configuracoes.WebServices.UF = 'CE') and
      ( NaoEstaVazio(ACBrIntegrador1.PastaInput)) and
      ( NaoEstaVazio(ACBrIntegrador1.PastaOutput))  then
+  begin
+    GravarLog('ValidarIntegradorNFCe - Atribuido', logParanoico);
     ACBrNFe1.Integrador := ACBrIntegrador1
+  end
   else
     ACBrNFe1.Integrador := nil;
 end;

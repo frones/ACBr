@@ -478,7 +478,7 @@
           </Other>
         </CompilerOptions>
       </Item12>
-      <Item13 Name="Linux-i3861-MT">
+      <Item13 Name="Linux-i386-MT">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>

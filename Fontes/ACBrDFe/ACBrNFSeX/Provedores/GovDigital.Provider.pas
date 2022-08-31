@@ -304,7 +304,7 @@ begin
   Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverCaracteresDesnecessarios(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
-  Result := string(NativeStringToUTF8(RemoverDeclaracaoXML(Result)));
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

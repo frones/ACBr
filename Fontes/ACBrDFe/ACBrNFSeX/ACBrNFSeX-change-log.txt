@@ -44,8 +44,12 @@ Símbolo : Significado
 
 
 31/08/2022
+-- GovDigital.Provider --
+[*] Alteração no TratarXmlRetornado, visando apresentar as vogais acentuadas da forma
+    correta.
+   Por: João Antônico
 -- SisPMJP.Provider/SisPMJP.GravarXml --
-[+] Incluido a função TratarXMLRetornado e Configuração especifica para o provedor.
+[+] Incluido a função TratarXmlRetornado e Configuração especifica para o provedor.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] Alterado as URLs da cidade de Cunha Porã/SC

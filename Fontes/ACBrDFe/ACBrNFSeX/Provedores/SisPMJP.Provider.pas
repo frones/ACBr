@@ -56,6 +56,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderSisPMJP202 = class (TACBrNFSeProviderABRASFv2)
@@ -71,8 +72,9 @@ type
 implementation
 
 uses
-  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, SisPMJP.GravarXml, SisPMJP.LerXml;
+  ACBrDFeException,
+  ACBrUtil.XMLHTML,
+  SisPMJP.GravarXml, SisPMJP.LerXml;
 
 { TACBrNFSeProviderSisPMJP202 }
 
@@ -295,6 +297,15 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
                      ['outputXML', 'SubstituirNfseResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+end;
+
+function TACBrNFSeXWebserviceSisPMJP202.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

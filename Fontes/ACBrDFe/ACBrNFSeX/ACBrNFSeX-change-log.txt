@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+31/08/2022
+-- SisPMJP.Provider/SisPMJP.GravarXml --
+[+] Incluido a função TratarXMLRetornado e Configuração especifica para o provedor.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Alterado as URLs da cidade de Cunha Porã/SC
+   Por: Joel
+
 26/08/2022
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Ajustes para a leitura correta da Competência e Municipio de Prestação de Serviços

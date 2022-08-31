@@ -45,6 +45,7 @@ type
 
   TNFSeW_SisPMJP202 = class(TNFSeW_ABRASFv2)
   protected
+    procedure Configuracao; override;
 
   end;
 
@@ -54,5 +55,15 @@ implementation
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     SisPMJP
 //==============================================================================
+
+{ TNFSeW_SisPMJP202 }
+
+procedure TNFSeW_SisPMJP202.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsSemFormatacaoSemZeroEsquerda;
+  DivAliq100 := True;
+end;
 
 end.

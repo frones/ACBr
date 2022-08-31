@@ -396,12 +396,12 @@ begin
 
     for I := 0 to sl.Count - 1 do
     begin
-      if (Pos('BEGIN', sl[I]) > 0) then
+      if (Pos('BEGIN', UpperCase(sl[I])) > 0) then
       begin
         b64 := True;
         Continue;
       end
-      else if b64 and (Pos('END', sl[I]) > 0) then
+      else if b64 and (Pos('END', UpperCase(sl[I])) > 0) then
         Break;
 
       if b64 then

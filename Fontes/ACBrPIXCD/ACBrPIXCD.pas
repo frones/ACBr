@@ -409,7 +409,6 @@ type
     fArquivoChavePrivada: String;
     fCertificado: AnsiString;
     fChavePrivada: AnsiString;
-    fAdicionarCertificados: Boolean;
 
     procedure SetArquivoCertificado(aValue: String);
     procedure SetArquivoChavePrivada(aValue: String);
@@ -418,7 +417,9 @@ type
 
   protected
     procedure ConfigurarHeaders(const Method, AURL: String); override;
-    property AdicionarCertificados: Boolean read fAdicionarCertificados write fAdicionarCertificados;
+
+    function VerificarSeIncluiCertificado(const Method, AURL: String): Boolean; virtual;
+    function VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean;  virtual;
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -823,37 +824,33 @@ procedure TACBrPSPCertificate.SetArquivoCertificado(aValue: String);
 begin
   fArquivoCertificado := Trim(aValue);
   fCertificado := EmptyStr;
-  fAdicionarCertificados := NaoEstaVazio(fArquivoCertificado);
 end;
 
 procedure TACBrPSPCertificate.SetArquivoChavePrivada(aValue: String);
 begin
   fArquivoChavePrivada := Trim(aValue);
   fChavePrivada := EmptyStr;
-  fAdicionarCertificados := NaoEstaVazio(fArquivoChavePrivada);
 end;
 
 procedure TACBrPSPCertificate.SetCertificado(aValue: AnsiString);
 begin
   fCertificado := aValue;
   fArquivoCertificado := EmptyStr;
-  fAdicionarCertificados := NaoEstaVazio(fCertificado);
 end;
 
 procedure TACBrPSPCertificate.SetChavePrivada(aValue: AnsiString);
 begin
   fChavePrivada := aValue;
   fArquivoChavePrivada := EmptyStr;
-  fAdicionarCertificados := NaoEstaVazio(fChavePrivada);
 end;
 
 procedure TACBrPSPCertificate.ConfigurarHeaders(const Method, AURL: String);
 begin
   inherited ConfigurarHeaders(Method, AURL);
-
-  if fAdicionarCertificados then
+                                      
+  // Adicionando o Certificado
+  if VerificarSeIncluiCertificado(Method, AURL) then
   begin
-    // Adicionando o Certificado
     if NaoEstaVazio(Certificado) then
     begin
       if StringIsPEM(Certificado) then
@@ -863,8 +860,11 @@ begin
     end
     else if NaoEstaVazio(ArquivoCertificado) then
       Http.Sock.SSL.CertificateFile := ArquivoCertificado;
+  end;
 
-    // Adicionando a Chave Privada
+  // Adicionando a Chave Privada
+  if VerificarSeIncluiChavePrivada(Method, AURL) then
+  begin
     if NaoEstaVazio(ChavePrivada) then
     begin
       if StringIsPEM(ChavePrivada) then
@@ -877,6 +877,18 @@ begin
   end;
 end;
 
+function TACBrPSPCertificate.VerificarSeIncluiCertificado(const Method,
+  AURL: String): Boolean;
+begin
+  Result := NaoEstaVazio(fCertificado) or NaoEstaVazio(fArquivoCertificado);
+end;
+
+function TACBrPSPCertificate.VerificarSeIncluiChavePrivada(const Method,
+  AURL: String): Boolean;
+begin
+  Result := NaoEstaVazio(fChavePrivada) or NaoEstaVazio(fArquivoChavePrivada);
+end;
+
 constructor TACBrPSPCertificate.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -885,7 +897,6 @@ begin
   fChavePrivada := EmptyStr;
   fArquivoCertificado := EmptyStr;
   fArquivoChavePrivada := EmptyStr;
-  fAdicionarCertificados := False;
 end;
 
 { TACBrPixEndPoint }

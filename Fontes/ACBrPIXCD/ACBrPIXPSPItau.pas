@@ -75,6 +75,8 @@ type
 
     function ObterChavePrivada: String;
   protected
+    function VerificarSeIncluiCertificado(const Method, AURL: String): Boolean; override;
+    function VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean; override;
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
     procedure ConfigurarHeaders(const Method, AURL: String); override;
@@ -285,6 +287,18 @@ begin
   Result := fSSLUtils.PrivateKeyAsString;
 end;
 
+function TACBrPSPItau.VerificarSeIncluiCertificado(const Method, AURL: String): Boolean;
+begin
+  Result := inherited VerificarSeIncluiCertificado(Method, AURL) and
+    (ACBrPixCD.Ambiente = ambProducao) and (Pos(cItauPathCertificadoSolicitacao, AURL) <= 0);
+end;
+
+function TACBrPSPItau.VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean;
+begin
+  Result := inherited VerificarSeIncluiChavePrivada(Method, AURL) and
+    (ACBrPixCD.Ambiente = ambProducao) and (Pos(cItauPathCertificadoSolicitacao, AURL) <= 0);
+end;
+
 function TACBrPSPItau.ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String;
 begin
   if (Ambiente = ambProducao) then
@@ -309,9 +323,6 @@ var
   guid: TGUID;
   s: String;
 begin
-  // Caso esteja solicitando um certificado, não deve incluir Certificado/ChavePrivada
-  AdicionarCertificados := (ACBrPixCD.Ambiente = ambProducao) and (Pos(cItauPathCertificadoSolicitacao, AURL) <= 0);
-
   inherited ConfigurarHeaders(Method, AURL);
 
   s := Trim(fxCorrelationID);

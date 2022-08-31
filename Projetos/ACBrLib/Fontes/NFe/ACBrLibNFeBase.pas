@@ -1029,7 +1029,7 @@ begin
             begin
               if NotasFiscais.Items[I].Confirmada then
               begin
-                GravarLog('NFe_Enviar, Imprindo NFe['+IntToStrZero(I+1)+'], '+NotasFiscais.Items[I].NFe.infNFe.ID, logNormal);
+                GravarLog('NFe_Enviar, Imprindo NFe['+IntToStr(I+1)+'], '+NotasFiscais.Items[I].NFe.infNFe.ID, logNormal);
                 NotasFiscais.Items[I].Imprimir;
                 Inc(ImpCount);
               end;

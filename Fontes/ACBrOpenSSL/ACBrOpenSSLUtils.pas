@@ -195,6 +195,9 @@ function ExtractModulusAndExponentFromKey(AKey: PEVP_PKEY;
 procedure SetModulusAndExponentToKey(AKey: PEVP_PKEY;
   const Modulus: String; const Exponent: String);
 
+function StringIsPEM(aStr: String): Boolean;
+
+function ConvertPEMToASN1(aPEM: String): AnsiString;
 function ConvertPEMToOpenSSH(APubKey: PEVP_PKEY): String;
 function ConvertOpenSSHToPEM(const AOpenSSHKey: String): String;
 
@@ -366,6 +369,49 @@ begin
   err := EvpPkeyAssign(AKey, EVP_PKEY_RSA, rsa);
   if (err < 1) then
     raise EACBrOpenSSLException.Create(sErrSettingRSAKey + sLineBreak + GetLastOpenSSLError);
+end;
+
+function StringIsPEM(aStr: String): Boolean;
+var
+  b: Integer;
+begin
+  b := Pos('BEGIN', aStr);
+  Result := (b > 0) and (PosFrom('END', aStr, b) > 0);
+end;
+
+function ConvertPEMToASN1(aPEM: String): AnsiString;
+var
+  sl: TStringList;
+  b64: Boolean;
+  I: Integer;
+begin
+  Result := EmptyStr;
+  if (not StringIsPEM(aPEM)) then
+    Exit;
+
+  sl := TStringList.Create;
+  try
+    sl.Text := aPEM;
+    b64 := False;
+
+    for I := 0 to sl.Count - 1 do
+    begin
+      if (Pos('BEGIN', sl[I]) > 0) then
+      begin
+        b64 := True;
+        Continue;
+      end
+      else if b64 and (Pos('END', sl[I]) > 0) then
+        Break;
+
+      if b64 then
+        Result := Result + sl[I];
+    end;
+
+    Result := DecodeBase64(Result);
+  finally
+    sl.Free;
+  end;
 end;
 
 // https://www.netmeister.org/blog/ssh2pkcs8.html

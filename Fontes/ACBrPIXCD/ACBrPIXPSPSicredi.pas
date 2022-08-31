@@ -65,23 +65,18 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
-  TACBrPSPSicredi = class(TACBrPSP)
+  TACBrPSPSicredi = class(TACBrPSPCertificate)
   private
     fSandboxStatusCode: String;
     fxCorrelationID: String;
     fSSLUtils: TACBrOpenSSLUtils;
-    fArquivoCertificado: String;
-    fArquivoChavePrivada: String;
     fQuandoNecessitarCredenciais: TACBrQuandoNecessitarCredencial;
 
-    procedure SetArquivoCertificado(AValue: String);
-    procedure SetArquivoChavePrivada(AValue: String);
     procedure QuandoReceberRespostaEndPoint(const aEndPoint, aURL, aMethod: String;
       var aResultCode: Integer; var aRespostaHttp: AnsiString);
   protected
     function ObterURLAmbiente(const Ambiente: TACBrPixCDAmbiente): String; override;
     procedure ConfigurarQueryParameters(const Method, EndPoint: String); override;
-    procedure ConfigurarHeaders(const Method, AURL: String); override;
   public
     constructor Create(AOwner: TComponent); override;
     procedure Clear; override;
@@ -92,8 +87,6 @@ type
     property ClientID;
     property ClientSecret;
 
-    property ArquivoChavePrivada: String read fArquivoChavePrivada write SetArquivoChavePrivada;
-    property ArquivoCertificado: String read fArquivoCertificado write SetArquivoCertificado;
     property SandboxStatusCode: String read fSandboxStatusCode write fSandboxStatusCode;
 
     property QuandoNecessitarCredenciais: TACBrQuandoNecessitarCredencial
@@ -121,8 +114,6 @@ begin
   inherited Clear;
   fxCorrelationID := '';
   fSandboxStatusCode := '';
-  fArquivoCertificado := '';
-  fArquivoChavePrivada := '';
   fQuandoNecessitarCredenciais := Nil;
 end;
 
@@ -178,22 +169,6 @@ begin
       [Http.ResultCode, ChttpMethodPOST, AURL]));
 end;
 
-procedure TACBrPSPSicredi.SetArquivoCertificado(AValue: String);
-begin
-  if (fArquivoCertificado = AValue) then
-    Exit;
-
-  fArquivoCertificado := Trim(AValue);
-end;
-
-procedure TACBrPSPSicredi.SetArquivoChavePrivada(AValue: String);
-begin
-  if (fArquivoChavePrivada = AValue) then
-    Exit;
-
-  fArquivoChavePrivada := (AValue);
-end;
-
 procedure TACBrPSPSicredi.QuandoReceberRespostaEndPoint(const aEndPoint, aURL,
   aMethod: String; var aResultCode: Integer; var aRespostaHttp: AnsiString);
 begin
@@ -210,14 +185,6 @@ begin
     Result := cSicrediURLSandbox;
 
   Result := Result + cSicrediPathAPIPix;
-end;
-
-procedure TACBrPSPSicredi.ConfigurarHeaders(const Method, AURL: String);
-begin
-  inherited ConfigurarHeaders(Method, AURL);
-
-  Http.Sock.SSL.CertificateFile := fArquivoCertificado;
-  Http.Sock.SSL.PrivateKeyFile  := fArquivoChavePrivada;
 end;
 
 procedure TACBrPSPSicredi.ConfigurarQueryParameters(const Method, EndPoint: String);

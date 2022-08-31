@@ -678,7 +678,6 @@ type
   public
     property FluxoDados: TFluxoPagtoDados read fFluxoDados;
     property NomeArquivoConfiguracao: String read GetNomeArquivoConfiguracao;
-
   end;
 
 var
@@ -874,6 +873,7 @@ procedure TForm1.btBBSimulaPagamento_ExecutarClick(Sender: TObject);
 var
   code: Integer;
   texto: String;
+  wTimerPagtoEnabled: Boolean;
 begin
   VerificarConfiguracao;
   mBBSimulaPagamento.Lines.Clear;
@@ -883,16 +883,22 @@ begin
   if (ACBrPixCD1.Ambiente <> ambTeste) then
     raise Exception.Create('Função só disponível em ambiente de Testes');
 
+  wTimerPagtoEnabled := tmConsultarPagto.Enabled;
+  tmConsultarPagto.Enabled := False;
   try
-    code := 0;
-    texto := '';
-    ACBrPSPBancoDoBrasil1.SimularPagamentoPIX(edtBBSimulaPagamento_pixCopiaECola.Text, code, texto);
-    mBBSimulaPagamento.Lines.Add('Result Code: '+IntToStr(ACBrPSPBancoDoBrasil1.Http.ResultCode));
-    mBBSimulaPagamento.Lines.Add('');
-    mBBSimulaPagamento.Lines.Add(texto);
-  except
-    On E: Exception do
-      mBBSimulaPagamento.Lines.Add(E.Message);
+    try
+      code := 0;
+      texto := '';
+      ACBrPSPBancoDoBrasil1.SimularPagamentoPIX(edtBBSimulaPagamento_pixCopiaECola.Text, code, texto);
+      mBBSimulaPagamento.Lines.Add('Result Code: '+IntToStr(ACBrPSPBancoDoBrasil1.Http.ResultCode));
+      mBBSimulaPagamento.Lines.Add('');
+      mBBSimulaPagamento.Lines.Add(texto);
+    except
+      On E: Exception do
+        mBBSimulaPagamento.Lines.Add(E.Message);
+    end;
+  finally
+    tmConsultarPagto.Enabled := wTimerPagtoEnabled;
   end;
 end;
 
@@ -2313,7 +2319,7 @@ begin
   ACBrPSPItau1.ArquivoChavePrivada := edtItauArqChavePrivada.Text;
   ACBrPSPItau1.ArquivoCertificado := edtItauArqCertificado.Text;
 
-  ACBrPSPSantander1.ChavePIX := edtItauChavePIX.Text;
+  ACBrPSPSantander1.ChavePIX := edtSantanderChavePIX.Text;
   ACBrPSPSantander1.ConsumerKey := edtSantanderConsumerKey.Text;
   ACBrPSPSantander1.ConsumerSecret := edtSantanderConsumerSecret.Text;
 
@@ -2583,7 +2589,7 @@ begin
       DevolucaoSolicitada.natureza := ndORIGINAL;
       DevolucaoSolicitada.descricao := 'Devolucao da Venda';
 
-      if SolicitarDevolucaoPix(fFluxoDados.E2E, '1234') then
+      if SolicitarDevolucaoPix(fFluxoDados.E2E, StringReplace(fFluxoDados.E2E, 'E', 'D', [rfReplaceAll])) then
       begin
         ConsultarDevolucao;
 
@@ -2623,7 +2629,7 @@ begin
     pnFluxoCopiaECola.Visible := wAguardandoPagto;
     btFluxoCancelarCobranca.Visible := wAguardandoPagto;
     btFluxoEstornarPagto.Visible := (StatusCobranca = stcCONCLUIDA) and wSemEstorno;
-    btFluxoNovaVenda.Visible := (StatusCobranca <> stcNENHUM);
+    btFluxoNovaVenda.Visible := (StatusCobranca <> stcNENHUM) or (StatusDevolucao = stdDEVOLVIDO);
   end;
 
   if gbFluxoItens.Enabled then

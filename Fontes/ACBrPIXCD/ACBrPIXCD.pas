@@ -401,6 +401,34 @@ type
       read fQuandoReceberRespostaHttp write fQuandoReceberRespostaHttp;
   end;
 
+  { TACBrPSPCertificate }
+
+  TACBrPSPCertificate = class(TACBrPSP)
+  private
+    fArquivoCertificado: String;
+    fArquivoChavePrivada: String;
+    fCertificado: AnsiString;
+    fChavePrivada: AnsiString;
+    fAdicionarCertificados: Boolean;
+
+    procedure SetArquivoCertificado(aValue: String);
+    procedure SetArquivoChavePrivada(aValue: String);
+    procedure SetCertificado(aValue: AnsiString);
+    procedure SetChavePrivada(aValue: AnsiString);
+
+  protected
+    procedure ConfigurarHeaders(const Method, AURL: String); override;
+    property AdicionarCertificados: Boolean read fAdicionarCertificados write fAdicionarCertificados;
+  public
+    constructor Create(AOwner: TComponent); override;
+
+    property ArquivoCertificado: String read fArquivoCertificado write SetArquivoCertificado;
+    property ArquivoChavePrivada: String read fArquivoChavePrivada write SetArquivoChavePrivada;
+
+    property Certificado: AnsiString read fCertificado write SetCertificado;
+    property ChavePrivada: AnsiString read fChavePrivada write SetChavePrivada;
+  end;
+
   { TACBrPixRecebedor }
 
   TACBrPixRecebedor = class(TPersistent)
@@ -787,6 +815,77 @@ begin
     fCobsVConsultadas.AsJSON := String(RespostaHttp)
   else
     fPSP.TratarRetornoComErro(ResultCode, RespostaHttp, Problema);
+end;
+
+{ TACBrPSPCertificate }
+
+procedure TACBrPSPCertificate.SetArquivoCertificado(aValue: String);
+begin
+  fArquivoCertificado := Trim(aValue);
+  fCertificado := EmptyStr;
+  fAdicionarCertificados := NaoEstaVazio(fArquivoCertificado);
+end;
+
+procedure TACBrPSPCertificate.SetArquivoChavePrivada(aValue: String);
+begin
+  fArquivoChavePrivada := Trim(aValue);
+  fChavePrivada := EmptyStr;
+  fAdicionarCertificados := NaoEstaVazio(fArquivoChavePrivada);
+end;
+
+procedure TACBrPSPCertificate.SetCertificado(aValue: AnsiString);
+begin
+  fCertificado := aValue;
+  fArquivoCertificado := EmptyStr;
+  fAdicionarCertificados := NaoEstaVazio(fCertificado);
+end;
+
+procedure TACBrPSPCertificate.SetChavePrivada(aValue: AnsiString);
+begin
+  fChavePrivada := aValue;
+  fArquivoChavePrivada := EmptyStr;
+  fAdicionarCertificados := NaoEstaVazio(fChavePrivada);
+end;
+
+procedure TACBrPSPCertificate.ConfigurarHeaders(const Method, AURL: String);
+begin
+  inherited ConfigurarHeaders(Method, AURL);
+
+  if fAdicionarCertificados then
+  begin
+    // Adicionando o Certificado
+    if NaoEstaVazio(Certificado) then
+    begin
+      if StringIsPEM(Certificado) then
+        Http.Sock.SSL.Certificate := ConvertPEMToASN1(Certificado)
+      else
+        Http.Sock.SSL.Certificate := Certificado;
+    end
+    else if NaoEstaVazio(ArquivoCertificado) then
+      Http.Sock.SSL.CertificateFile := ArquivoCertificado;
+
+    // Adicionando a Chave Privada
+    if NaoEstaVazio(ChavePrivada) then
+    begin
+      if StringIsPEM(ChavePrivada) then
+        Http.Sock.SSL.PrivateKey := ConvertPEMToASN1(ChavePrivada)
+      else
+        Http.Sock.SSL.PrivateKey := ChavePrivada;
+    end
+    else if NaoEstaVazio(ArquivoChavePrivada) then
+      Http.Sock.SSL.PrivateKeyFile := ArquivoChavePrivada;
+  end;
+end;
+
+constructor TACBrPSPCertificate.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  fCertificado := EmptyStr;
+  fChavePrivada := EmptyStr;
+  fArquivoCertificado := EmptyStr;
+  fArquivoChavePrivada := EmptyStr;
+  fAdicionarCertificados := False;
 end;
 
 { TACBrPixEndPoint }

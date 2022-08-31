@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2022
+
+
 15/08/2022
 -- ACBrBase --
 [*] Removida a unit 'fpjsons' do uses, pois não é mais utilizada.

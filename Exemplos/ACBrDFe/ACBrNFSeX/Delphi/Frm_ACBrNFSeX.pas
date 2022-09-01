@@ -440,6 +440,9 @@ begin
 
     with NotasFiscais.New.NFSe do
     begin
+      // Provedor PadraoNacional
+      verAplic := 'ACBrNFSeX-1.00';
+
       // Provedor SigISS
       {
         Situação pode ser:
@@ -739,6 +742,9 @@ begin
           proSiapSistemas:
             // código padrão ABRASF acrescido de um sub-item
             Servico.ItemListaServico := '01.05.00';
+
+          proPadraoNacional:
+            Servico.ItemListaServico := '010500';
         else
           // código padrão da ABRASF
           Servico.ItemListaServico := '09.01';
@@ -767,6 +773,9 @@ begin
 
         proIPM, proSystemPro:
           Servico.CodigoTributacaoMunicipio := '';
+
+        proPadraoNacional:
+          Servico.CodigoTributacaoMunicipio := '123';
       else
         Servico.CodigoTributacaoMunicipio := '63194';
       end;
@@ -869,16 +878,16 @@ begin
         Dados do Intermediario na prestação do serviço
       =========================================================================}
 
-      // IntermediarioServico.RazaoSocial        := 'razao';
-      // IntermediarioServico.CpfCnpj            := '00000000000';
-      // IntermediarioServico.InscricaoMunicipal := '12547478';
+//       Intermediario.RazaoSocial := 'razao';
+//       Intermediario.Identificacao.CpfCnpj := '00000000000';
+//       Intermediario.Identificacao.InscricaoMunicipal := '12547478';
 
       {=========================================================================
         Dados da Obra (quando o serviço for uma obra)
       =========================================================================}
 
-      // ConstrucaoCivil.CodigoObra := '88888';
-      // ConstrucaoCivil.Art        := '433';
+//      ConstrucaoCivil.CodigoObra := '88888';
+//      ConstrucaoCivil.Art        := '433';
 
       {=========================================================================
         Dados da Condição de Pagamento (no momento somente o provedor Betha

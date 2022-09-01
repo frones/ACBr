@@ -913,7 +913,7 @@ object Form1: TForm1
                     Top = 128
                     Width = 608
                     Align = alClient
-                    ScrollBars = ssAutoBoth
+                    ScrollBars = ssBoth
                     TabOrder = 1
                   end
                   object Panel4: TPanel
@@ -2836,7 +2836,7 @@ object Form1: TForm1
           Align = alClient
           BorderSpacing.Around = 3
           ReadOnly = True
-          ScrollBars = ssAutoBoth
+          ScrollBars = ssBoth
           TabOrder = 0
         end
         object Label2: TLabel
@@ -3150,20 +3150,6 @@ object Form1: TForm1
                   AllowAllUp = True
                   Anchors = [akTop, akRight]
                   Flat = True
-                  Glyph.Data = {
-                    76010000424D7601000000000000760000002800000020000000100000000100
-                    04000000000000010000130B0000130B00001000000000000000000000000000
-                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                    3BB33773333773333773B333333B3333333B7333333733333337
-                  }
                   GroupIndex = 1
                   Images = ImageList1
                   ImageIndex = 7
@@ -4076,19 +4062,19 @@ object Form1: TForm1
               ClientHeight = 485
               ClientWidth = 984
               object pConfPSPBB2: TPanel
-                Left = 26
-                Height = 240
-                Top = 117
-                Width = 928
+                Left = 56
+                Height = 272
+                Top = 80
+                Width = 860
                 Anchors = [akLeft, akRight]
                 BevelOuter = bvNone
-                ClientHeight = 240
-                ClientWidth = 928
+                ClientHeight = 272
+                ClientWidth = 860
                 TabOrder = 0
                 object Label30: TLabel
                   Left = 24
                   Height = 15
-                  Top = 21
+                  Top = 24
                   Width = 53
                   Caption = 'Chave PIX'
                 end
@@ -4096,24 +4082,24 @@ object Form1: TForm1
                   Left = 24
                   Height = 23
                   Top = 40
-                  Width = 710
+                  Width = 642
                   Anchors = [akTop, akLeft, akRight]
                   OnChange = edtSantanderChavePIXChange
                   TabOrder = 1
                 end
                 object Label31: TLabel
-                  Left = 746
+                  Left = 688
                   Height = 15
-                  Top = 21
+                  Top = 24
                   Width = 59
                   Anchors = [akTop, akRight]
                   Caption = 'Tipo Chave'
                 end
                 object cbxSantanderTipoChave: TComboBox
-                  Left = 746
+                  Left = 688
                   Height = 23
                   Top = 40
-                  Width = 158
+                  Width = 144
                   Anchors = [akTop, akRight]
                   ItemHeight = 15
                   ReadOnly = True
@@ -4124,7 +4110,7 @@ object Form1: TForm1
                 object Label32: TLabel
                   Left = 24
                   Height = 15
-                  Top = 72
+                  Top = 75
                   Width = 77
                   Caption = 'Consumer Key'
                 end
@@ -4132,14 +4118,14 @@ object Form1: TForm1
                   Left = 24
                   Height = 23
                   Top = 91
-                  Width = 880
+                  Width = 808
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 2
                 end
                 object Label33: TLabel
                   Left = 24
                   Height = 15
-                  Top = 128
+                  Top = 131
                   Width = 90
                   Caption = 'Consumer Secret'
                 end
@@ -4147,17 +4133,93 @@ object Form1: TForm1
                   Left = 24
                   Height = 23
                   Top = 147
-                  Width = 880
+                  Width = 808
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 3
                 end
                 object imgSantanderErroChavePIX: TImage
-                  Left = 908
+                  Left = 836
                   Height = 16
                   Top = 44
                   Width = 16
                   Anchors = [akTop, akRight]
                   Visible = False
+                end
+                object sbSantanderAcharCertificadoPFX: TSpeedButton
+                  Left = 642
+                  Height = 23
+                  Top = 197
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  OnClick = sbSantanderAcharCertificadoPFXClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edSantanderArqCertificadoPFX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 197
+                  Width = 616
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edSantanderArqCertificadoPFXChange
+                  TabOrder = 4
+                end
+                object lbSantanderArqCertificadoPFX: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 181
+                  Width = 126
+                  Caption = 'Arquivo Certificado PFX'
+                end
+                object lbSantanderErroCertificadoPFX: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 222
+                  Width = 162
+                  Caption = 'lbSantanderErroCertificadoPFX'
+                end
+                object imSantanderErroCertificadoPFX: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 200
+                  Width = 16
+                  Visible = False
+                end
+                object edSantanderSenhaCertificadoPFX: TEdit
+                  Left = 688
+                  Height = 23
+                  Top = 197
+                  Width = 144
+                  Anchors = [akTop, akLeft, akRight]
+                  EchoMode = emPassword
+                  PasswordChar = '*'
+                  TabOrder = 5
+                end
+                object lbSantanderSenhaCertificado: TLabel
+                  Left = 688
+                  Height = 15
+                  Top = 181
+                  Width = 93
+                  Caption = 'Senha Certificado'
+                end
+                object sbSantanderVerSenhaPFX: TSpeedButton
+                  Left = 836
+                  Height = 23
+                  Top = 197
+                  Width = 23
+                  AllowAllUp = True
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  GroupIndex = 1
+                  Images = ImageList1
+                  ImageIndex = 7
+                  OnClick = sbSantanderVerSenhaPFXClick
                 end
               end
             end
@@ -4183,7 +4245,7 @@ object Form1: TForm1
                   Caption = 'Chave PIX'
                 end
                 object lbSicrediTipoChave: TLabel
-                  Left = 678
+                  Left = 688
                   Height = 15
                   Top = 24
                   Width = 59
@@ -4232,6 +4294,7 @@ object Form1: TForm1
                   Top = 197
                   Width = 24
                   Anchors = [akTop, akRight]
+                  Flat = True
                   Font.Color = clWindowText
                   Font.Height = -11
                   Font.Name = 'MS Sans Serif'
@@ -4246,6 +4309,7 @@ object Form1: TForm1
                   Top = 267
                   Width = 24
                   Anchors = [akTop, akRight]
+                  Flat = True
                   Font.Color = clWindowText
                   Font.Height = -11
                   Font.Name = 'MS Sans Serif'
@@ -4292,10 +4356,10 @@ object Form1: TForm1
                   TabOrder = 1
                 end
                 object cbSicrediTipoChave: TComboBox
-                  Left = 675
+                  Left = 688
                   Height = 23
                   Top = 40
-                  Width = 157
+                  Width = 144
                   Anchors = [akTop, akRight]
                   ItemHeight = 15
                   Style = csDropDownList
@@ -4576,6 +4640,7 @@ object Form1: TForm1
   end
   object ACBrPSPBancoDoBrasil1: TACBrPSPBancoDoBrasil
     ACBrPixCD = ACBrPixCD1
+    QuandoReceberRespostaHttp = ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp
     Left = 168
     Top = 416
   end

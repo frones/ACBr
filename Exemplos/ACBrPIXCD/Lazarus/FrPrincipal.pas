@@ -30,7 +30,7 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
-//{$I ACBr.inc}
+{$I ACBr.inc}
 
 unit FrPrincipal;
 
@@ -170,6 +170,8 @@ type
     edFluxoItemEAN: TEdit;
     edFluxoItemValor: TEdit;
     edItauRenovarCertificadoArq: TEdit;
+    edSantanderArqCertificadoPFX: TEdit;
+    edSantanderSenhaCertificadoPFX: TEdit;
     edtArqLog: TEdit;
     edtProxyHost: TEdit;
     edtProxySenha: TEdit;
@@ -237,6 +239,7 @@ type
     imgQRCriarCobrancaImediata: TImage;
     imgQRE: TImage;
     imgQRD: TImage;
+    imSantanderErroCertificadoPFX: TImage;
     imSicrediErroCertificado: TImage;
     imSicrediErroChavePix: TImage;
     imSicrediErroChavePrivada: TImage;
@@ -269,6 +272,9 @@ type
     Label50: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    lbSantanderArqCertificadoPFX: TLabel;
+    lbSantanderErroCertificadoPFX: TLabel;
+    lbSantanderSenhaCertificado: TLabel;
     lbSicrediArqChavePrivada: TLabel;
     lbSicrediChavePIX: TLabel;
     lbSicrediArqCertificado: TLabel;
@@ -464,7 +470,9 @@ type
     sbItauAcharArqChavePrivada: TSpeedButton;
     sbSicrediAcharArqCertificado: TSpeedButton;
     sbSicrediAcharChavePrivada: TSpeedButton;
+    sbSantanderAcharCertificadoPFX: TSpeedButton;
     sbVerSenhaProxy: TSpeedButton;
+    sbSantanderVerSenhaPFX: TSpeedButton;
     seCobrancaExpiracao: TSpinEdit;
     seConsultarCobrancaImediata_Revisao: TSpinEdit;
     seConsultarCobrancas_ItensPagina: TSpinEdit;
@@ -533,6 +541,9 @@ type
     tsConfiguracao: TTabSheet;
     Valor: TLabel;
     procedure ACBrPixCD1QuandoGravarLog(const ALogLine: String; var Tratado: Boolean);
+    procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL: String;
+      const AMethod: String; RespHeaders: TStrings; var AResultCode: Integer;
+      var RespostaHttp: String);
     procedure btBBSimulaPagamento_ExecutarClick(Sender: TObject);
     procedure btBBSimulaPagamento_LimparClick(Sender: TObject);
     procedure btCancelarCobrancaClick(Sender: TObject);
@@ -579,6 +590,7 @@ type
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
+    procedure edSantanderArqCertificadoPFXChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
     procedure edtCriarCobrancaImediata_CPF_CNPJChange(Sender: TObject);
     procedure edtCriarCobrancaImediata_NomeDevedorChange(Sender: TObject);
@@ -604,6 +616,8 @@ type
     procedure sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
     procedure sbItauAcharArqCertificadoClick(Sender: TObject);
     procedure sbItauAcharArqChavePrivadaClick(Sender: TObject);
+    procedure sbSantanderAcharCertificadoPFXClick(Sender: TObject);
+    procedure sbSantanderVerSenhaPFXClick(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
     procedure tmConsultarDevolucaoTimer(Sender: TObject);
     procedure tmConsultarPagtoTimer(Sender: TObject);
@@ -631,6 +645,7 @@ type
     procedure LigarAlertasdeErrosDeConfiguracaoPIXCD;
     procedure LigarAlertasdeErrosDeConfiguracaoPSPItau;
     procedure LigarAlertasdeErrosDeConfiguracaoPSPSicredi;
+    procedure LigarAlertasdeErrosDeConfiguracaoPSPSantander;
 
     procedure VerificarConfiguracao;
     procedure VerificarConfiguracaoPIXCD;
@@ -639,6 +654,8 @@ type
     procedure ValidarChavePSPItau;
     procedure ValidarCertificadoPSPItau;
     procedure ValidarChavePSPSicredi;
+    procedure ValidarCertificadoPSPSicredi;
+    procedure ValidarCertificadoPSPSantander;
 
     procedure ConfigurarACBrPIXCD;
     procedure ConfigurarACBrPSPs;
@@ -692,7 +709,7 @@ uses
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
   ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil, ACBrPIXBRCode,
   ACBrPIXSchemasCobV, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.DateTime, ACBrJSON;
 
 {$R *.lfm}
 
@@ -703,11 +720,7 @@ begin
   InicializarBitmaps;
   InicializarActivePages;
   InicializarComponentesDefault;
-  {$IfDef FPC}
-  Application.OnException := @TratarException;
-  {$Else}
   Application.OnException := TratarException;
-  {$EndIf};
 
   LerConfiguracao;
   VerificarConfiguracao;
@@ -783,9 +796,31 @@ begin
   ValidarChavePSPItau;
 end;
 
+procedure TForm1.sbSantanderAcharCertificadoPFXClick(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+    edSantanderArqCertificadoPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+  ValidarCertificadoPSPSantander;
+end;
+
+procedure TForm1.sbSantanderVerSenhaPFXClick(Sender: TObject);
+begin
+  {$IfDef FPC}
+  if sbSantanderVerSenhaPFX.Down then
+    edSantanderSenhaCertificadoPFX.EchoMode := emNormal
+  else
+    edSantanderSenhaCertificadoPFX.EchoMode := emPassword;
+  {$Else}
+  if sbSantanderVerSenhaPFX.Down then
+    edSantanderSenhaCertificadoPFX.PasswordChar := #0
+  else
+    edSantanderSenhaCertificadoPFX.PasswordChar := '*';
+  {$EndIf}
+end;
+
 procedure TForm1.sbSicrediAcharArqCertificadoClick(Sender: TObject);
 begin
-  OpenDialog1.FileName := edtItauArqCertificado.Text;
+  OpenDialog1.FileName := edSicrediArqCertificado.Text;
   if OpenDialog1.Execute then
     edSicrediArqCertificado.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarChavePSPSicredi;
@@ -793,7 +828,7 @@ end;
 
 procedure TForm1.sbSicrediAcharChavePrivadaClick(Sender: TObject);
 begin
-  OpenDialog1.FileName := edtItauArqChavePrivada.Text;
+  OpenDialog1.FileName := edSicrediArqChavePrivada.Text;
   if OpenDialog1.Execute then
     edSicrediArqChavePrivada.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarChavePSPSicredi;
@@ -806,6 +841,11 @@ begin
     edtProxySenha.EchoMode := emNormal
   else
     edtProxySenha.EchoMode := emPassword;
+  {$Else}
+  if sbVerSenhaProxy.Down then
+    edtProxySenha.PasswordChar := #0
+  else
+    edtProxySenha.PasswordChar := '*';
   {$EndIf}
 end;
 
@@ -867,6 +907,52 @@ procedure TForm1.ACBrPixCD1QuandoGravarLog(const ALogLine: String; var Tratado: 
 begin
   AdicionarLinhaLog(ALogLine);
   Tratado := False;
+end;
+
+procedure TForm1.ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(
+  const AURL: String; const AMethod: String; RespHeaders: TStrings;
+  var AResultCode: Integer; var RespostaHttp: String);
+var
+  jsRet, js: TACBrJSONObject;
+  ja, jsArr: TACBrJSONArray;
+  I: Integer;
+
+  function GetDetalhesPagador(aJson: TACBrJSONObject): String;
+  var
+    jPag: TACBrJSONObject;
+  begin
+    jPag := aJson.AsJSONObject['pagador'];
+    if Assigned(jPag) then
+      Result := aJson.AsString['infoPagador'] + ' ' + jPag.AsString['cpf'] +
+        jPag.AsString['cnpj'] + ' - ' + jPag.AsString['nome'];
+  end;
+
+begin
+  if (AMethod = ChttpMethodGET) and (AResultCode = HTTP_OK) and (Pos(cEndPointPix, AURL) > 0) then
+  begin
+    jsRet := TACBrJSONObject.Parse(String(RespostaHttp));
+    jsArr :=  jsRet.AsJSONArray['pix'];
+    try
+      if Assigned(jsArr) and (jsArr.Count > 0) then
+      begin
+        ja := TACBrJSONArray.Create;
+
+        for i := 0 to jsArr.Count - 1 do
+        begin
+          js := jsArr.ItemAsJSONObject[i];
+          js.AddPair('infoPagador', GetDetalhesPagador(js));
+          ja.AddElementJSONString(js.ToJSON);
+        end;
+        jsRet.AddPair('pix', ja);
+      end
+      else
+        jsRet.AddPair('infoPagador', GetDetalhesPagador(jsRet));
+
+      RespostaHttp := jsRet.ToJSON;
+    finally
+      jsRet.Free;
+    end;
+  end;
 end;
 
 procedure TForm1.btBBSimulaPagamento_ExecutarClick(Sender: TObject);
@@ -1642,6 +1728,11 @@ begin
   imgErrPSP.Visible := (cbxPSPAtual.ItemIndex < 0);
 end;
 
+procedure TForm1.edSantanderArqCertificadoPFXChange(Sender: TObject);
+begin
+  lbSantanderErroCertificadoPFX.Caption := EmptyStr;
+end;
+
 procedure TForm1.edtRecebedorCEPExit(Sender: TObject);
 begin
   if (not imgErrCEP.Visible) and (edtRecebedorCidade.Text = '') then
@@ -1823,6 +1914,7 @@ begin
   LigarAlertasdeErrosDeConfiguracaoPIXCD;
   LigarAlertasdeErrosDeConfiguracaoPSPItau;
   LigarAlertasdeErrosDeConfiguracaoPSPSicredi;
+  LigarAlertasdeErrosDeConfiguracaoPSPSantander;
 end;
 
 procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPIXCD;
@@ -1849,6 +1941,13 @@ begin
   edSicrediArqCertificadoChange(Nil);
   edSicrediArqChavePrivadaChange(Nil);
   ValidarChavePSPSicredi;
+  ValidarCertificadoPSPSicredi;
+end;
+
+procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPSPSantander;
+begin
+  edSicrediChavePIXChange(Nil);
+  ValidarCertificadoPSPSantander;
 end;
 
 procedure TForm1.VerificarConfiguracao;
@@ -1909,7 +2008,7 @@ procedure TForm1.ValidarChavePSPSicredi;
 var
   a, e: String;
 begin
-  a := AdicionarPathAplicacao(edtItauArqChavePrivada.Text);
+  a := AdicionarPathAplicacao(edSicrediArqChavePrivada.Text);
   e := 'OK';
   if (a = '') then
     e := 'Arquivo não especificado'
@@ -1927,6 +2026,57 @@ begin
 
   lbSicrediErroChavePrivada.Caption := e;
   imSicrediErroChavePrivada.Visible := (e <> 'OK');
+end;
+
+procedure TForm1.ValidarCertificadoPSPSicredi;
+var
+  a, e: String;
+begin
+  a := AdicionarPathAplicacao(edSicrediArqCertificado.Text);
+  e := 'OK';
+  if (a = '') then
+    e := 'Arquivo não especificado'
+  else if (not FileExists(a)) then
+    e := 'Arquivo não encontrado'
+  else
+  begin
+    try
+      ACBrOpenSSLUtils1.LoadCertificateFromFile(a);  // Verifica se o arquivo de Chave é válido
+    except
+      On Ex: Exception do
+        e := Ex.Message;
+    end;
+  end;
+
+  lbSicrediErroCertificado.Caption := e;
+  imSicrediErroCertificado.Visible := (e <> 'OK');
+end;
+
+procedure TForm1.ValidarCertificadoPSPSantander;
+var
+  a, e: String;
+begin
+  a := AdicionarPathAplicacao(edSantanderArqCertificadoPFX.Text);
+  e := 'OK';
+  if (a = '') then
+    e := 'Arquivo não informado'
+  else if (not FileExists(a)) then
+    e := 'Arquivo não encontrado'
+  else if EstaVazio(edSantanderSenhaCertificadoPFX.Text) then
+    e := 'Senha do Certificado PFX não informada'
+  else
+  begin
+    try
+      // Verifica se o arquivo PFX é válido
+      ACBrOpenSSLUtils1.LoadPFXFromFile(a, edSantanderSenhaCertificadoPFX.Text);
+    except
+      On Ex: Exception do
+        e := Ex.Message;
+    end;
+  end;
+
+  lbSantanderErroCertificadoPFX.Caption := e;
+  imSantanderErroCertificadoPFX.Visible := (e <> 'OK');
 end;
 
 procedure TForm1.ValidarChavePSPItau;
@@ -2025,6 +2175,8 @@ begin
     edtSantanderChavePIX.Text := Ini.ReadString('Santander', 'ChavePIX', '');
     edtSantanderConsumerKey.Text := Ini.ReadString('Santander', 'ConsumerKey', '');
     edtSantanderConsumerSecret.Text := Ini.ReadString('Santander', 'ConsumerSecret', '');
+    edSantanderArqCertificadoPFX.Text := Ini.ReadString('Santander', 'ArqCertificadoPFX', '');
+    edSantanderSenhaCertificadoPFX.Text := Ini.ReadString('Santander', 'SenhaCertificadoPFX', '');
 
     edSicrediChavePIX.Text := Ini.ReadString('Sicredi', 'ChavePIX', '');
     edSicrediClientID.Text := Ini.ReadString('Sicredi', 'ClientID', '');
@@ -2084,6 +2236,8 @@ begin
     Ini.WriteString('Santander', 'ChavePIX', edtSantanderChavePIX.Text);
     Ini.WriteString('Santander', 'ConsumerKey', edtSantanderConsumerKey.Text);
     Ini.WriteString('Santander', 'ConsumerSecret', edtSantanderConsumerSecret.Text);
+    Ini.WriteString('Santander', 'ArqCertificadoPFX', edSantanderArqCertificadoPFX.Text);
+    Ini.WriteString('Santander', 'SenhaCertificadoPFX', edSantanderSenhaCertificadoPFX.Text);
 
     Ini.WriteString('Sicredi', 'ChavePIX', edSicrediChavePIX.Text);
     Ini.WriteString('Sicredi', 'ClientID', edSicrediClientID.Text);
@@ -2117,8 +2271,13 @@ begin
   ImageList1.GetBitmap(6, imgItauErroClientSecret.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgItauErroChavePrivada.Picture.Bitmap);
   ImageList1.GetBitmap(6, imgItauErroCertificado.Picture.Bitmap);
+                                                              
+  ImageList1.GetBitmap(6, imSicrediErroChavePix.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imSicrediErroCertificado.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imSicrediErroChavePrivada.Picture.Bitmap);
 
   ImageList1.GetBitmap(6, imgSantanderErroChavePIX.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imSantanderErroCertificadoPFX.Picture.Bitmap);
 
   ImageList1.GetBitmap(31, btFluxoItemIncluir.Glyph);
   ImageList1.GetBitmap(32, btFluxoItemExcluir.Glyph);
@@ -2168,6 +2327,8 @@ begin
 
   ImageList1.GetBitmap(8, sbConsultaCEP.Glyph);
   ImageList1.GetBitmap(9, sbArqLog.Glyph);
+  ImageList1.GetBitmap(7, sbVerSenhaProxy.Glyph);
+  ImageList1.GetBitmap(7, sbSantanderVerSenhaPFX.Glyph);
 
   ImageList1.GetBitmap(16, btItauValidarChaveCertificado.Glyph);
   ImageList1.GetBitmap(9, sbItauAcharArqChavePrivada.Glyph);
@@ -2182,6 +2343,7 @@ begin
 
   ImageList1.GetBitmap(9, sbSicrediAcharChavePrivada.Glyph);
   ImageList1.GetBitmap(9, sbSicrediAcharArqCertificado.Glyph);
+  ImageList1.GetBitmap(9, sbSantanderAcharCertificadoPFX.Glyph);
 end;
 
 procedure TForm1.InicializarActivePages;
@@ -2322,6 +2484,8 @@ begin
   ACBrPSPSantander1.ChavePIX := edtSantanderChavePIX.Text;
   ACBrPSPSantander1.ConsumerKey := edtSantanderConsumerKey.Text;
   ACBrPSPSantander1.ConsumerSecret := edtSantanderConsumerSecret.Text;
+  ACBrPSPSantander1.SenhaPFX := edSantanderSenhaCertificadoPFX.Text;
+  ACBrPSPSantander1.ArquivoPFX := edSantanderArqCertificadoPFX.Text;
 
   ACBrPSPSicredi1.ChavePIX := edSicrediChavePIX.Text;
   ACBrPSPSicredi1.ClientID := edSicrediClientID.Text;

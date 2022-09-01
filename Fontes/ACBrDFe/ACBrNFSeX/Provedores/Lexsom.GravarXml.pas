@@ -46,14 +46,25 @@ type
 
   TNFSeW_Lexsom = class(TNFSeW_ABRASFv1)
   protected
+    procedure Configuracao; override;
 
   end;
 
 implementation
 
+uses
+  ACBrNFSeXConversao;
+
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
 //     Lexsom
 //==============================================================================
+
+procedure TNFSeW_Lexsom.Configuracao;
+begin
+  inherited Configuracao;
+
+  FormatoItemListaServico := filsComFormatacaoSemZeroEsquerda;
+end;
 
 end.

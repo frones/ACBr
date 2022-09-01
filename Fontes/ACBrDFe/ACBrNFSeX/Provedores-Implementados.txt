@@ -128,7 +128,7 @@ Tecnos               2.01
 Thema                1.00
 Tinus                1.00
 Tiplan               1.00
-Tiplan               2.03
+Tiplan               2.03  30/08/2022
 Tributus             2.04
 VersaTecnologia      2.00
 VersaTecnologia      2.01

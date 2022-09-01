@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+01/09/2022
+-- Lexsom.GravarXml --
+[+] Incluido a procedure Configuração especifica para o provedor.
+   Por: Guilherme Vaz
+
 31/08/2022
 -- GovDigital.Provider --
 [*] Alteração no TratarXmlRetornado, visando apresentar as vogais acentuadas da forma

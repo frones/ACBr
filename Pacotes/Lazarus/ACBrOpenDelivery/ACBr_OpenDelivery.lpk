@@ -31,7 +31,7 @@
     <Files>
       <Item>
         <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryReg.pas"/>
-        <Type Value="Include"/>
+        <HasRegisterProc Value="True"/>
       </Item>
       <Item>
         <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDelivery.pas"/>

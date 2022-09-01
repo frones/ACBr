@@ -8,16 +8,17 @@ unit ACBr_OpenDelivery;
 interface
 
 uses
-  ACBrOpenDelivery, ACBrOpenDeliveryEvents, ACBrOpenDeliveryException, 
-  ACBrOpenDeliveryHTTP, ACBrOpenDeliveryHTTPSynapse, 
-  ACBrOpenDeliveryMarketPlace, ACBrOpenDeliverySchema, 
-  ACBrOpenDeliverySchemaClasses, ACBrOpenDeliveryWebService, pcnConversaoOD, 
-  LazarusPackageIntf;
+  ACBrOpenDeliveryReg, ACBrOpenDelivery, ACBrOpenDeliveryEvents, 
+  ACBrOpenDeliveryException, ACBrOpenDeliveryHTTP, 
+  ACBrOpenDeliveryHTTPSynapse, ACBrOpenDeliveryMarketPlace, 
+  ACBrOpenDeliverySchema, ACBrOpenDeliverySchemaClasses, 
+  ACBrOpenDeliveryWebService, pcnConversaoOD, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
+  RegisterUnit('ACBrOpenDeliveryReg', @ACBrOpenDeliveryReg.Register);
 end;
 
 initialization

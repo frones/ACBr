@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/09/2022
+-- Abaco.Provider --
+[+] Incluido a função TratarXmlRetornado.
+   Por: Italo Giurizzato Junior
 -- Lexsom.GravarXml --
 [+] Incluido a procedure Configuração especifica para o provedor.
    Por: Guilherme Vaz

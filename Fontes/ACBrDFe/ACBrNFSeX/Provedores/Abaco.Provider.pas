@@ -69,6 +69,7 @@ type
     function Cancelar(ACabecalho, AMSG: String): string; override;
     function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
 
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderAbaco = class (TACBrNFSeProviderABRASFv1)
@@ -479,6 +480,16 @@ begin
   Result := Executar('http://www.e-nfs.com.braction/AA24_SUBSTITUIRNFSE.Execute', Request,
                      ['Outputxml', 'SubstituirNfseResposta'],
                      ['xmlns:e="http://www.e-nfs.com.br"']);
+end;
+
+function TACBrNFSeXWebserviceAbaco204.TratarXmlRetornado(
+  const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := RemoverCaracteresDesnecessarios(Result);
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverIdentacao(Result);
 end;
 
 end.

@@ -60,6 +60,15 @@ echo "* Arquivo   ACBrPIXCD.lrs   gerado     *"
 echo "****************************************"
 echo.
 
+:OpenDelivery
+%1\tools\lazres.exe ACBrOpenDelivery.lrs TACBrOpenDelivery.png
+move ACBrOpenDelivery.lrs ..\ACBrOpenDelivery
+echo.
+echo "***********************************************"
+echo "* Arquivo   ACBrOpenDelivery.lrs   gerado     *"
+echo "***********************************************"
+echo.
+
 :TCP
 %1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.png TACBrCEP.png TACBrIBGE.png TACBrNFPws.png TACBrCNIEE.png TACBrSuframa.png TACBrDownload.png TACBrIBPTax.png TACBrConsultaCNPJ.png TACBrMail.png TACBrConsultaCPF.png TACBrSpedTabelas.png TACBrSedex.png TACBrNCMs.png
 move ACBrTCP.lrs ..\ACBrTCP

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_OpenDelivery"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Gabriel Baltazar"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrOpenDelivery"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <CStyleOperator Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Linking>
+        <Debugging>
+          <DebugInfoType Value="dsDwarf3"/>
+          <UseHeaptrc Value="True"/>
+          <TrashVariables Value="True"/>
+          <UseExternalDbgSyms Value="True"/>
+        </Debugging>
+      </Linking>
+    </CompilerOptions>
+    <Description Value="ACBrOpenDelivery - Package para componentes relacionados ao OpenDelivery
+(http://www.projectoacbr.com.br/)"/>
+    <Files>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryReg.pas"/>
+        <Type Value="Include"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDelivery.pas"/>
+        <UnitName Value="ACBrOpenDelivery"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryEvents.pas"/>
+        <UnitName Value="ACBrOpenDeliveryEvents"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryException.pas"/>
+        <UnitName Value="ACBrOpenDeliveryException"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryHTTP.pas"/>
+        <UnitName Value="ACBrOpenDeliveryHTTP"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryHTTPSynapse.pas"/>
+        <UnitName Value="ACBrOpenDeliveryHTTPSynapse"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryMarketPlace.pas"/>
+        <UnitName Value="ACBrOpenDeliveryMarketPlace"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliverySchema.pas"/>
+        <UnitName Value="ACBrOpenDeliverySchema"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliverySchemaClasses.pas"/>
+        <UnitName Value="ACBrOpenDeliverySchemaClasses"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\ACBrOpenDeliveryWebService.pas"/>
+        <UnitName Value="ACBrOpenDeliveryWebService"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\..\Fontes\ACBrOpenDelivery\pcnConversaoOD.pas"/>
+        <UnitName Value="pcnConversaoOD"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

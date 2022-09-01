@@ -401,12 +401,12 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'endereco_informado', 1, 1, 0,
                             Trim(NFSe.Tomador.Endereco.EnderecoInformado), ''));
 
-  if Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro) <> '' then
+  if Trim(NFSe.Tomador.IdentificacaoTomador.DocEstrangeiro) <> '' then
   begin
     Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1, 'E', ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'identificador', 1, 20, 1,
-            Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro), ''));
+                   Trim(NFSe.Tomador.IdentificacaoTomador.DocEstrangeiro), ''));
 
     Result.AppendChild(AddNode(tcStr, '#1', 'estado', 1, 100, 1,
                                                  NFSe.Tomador.Endereco.UF, ''));

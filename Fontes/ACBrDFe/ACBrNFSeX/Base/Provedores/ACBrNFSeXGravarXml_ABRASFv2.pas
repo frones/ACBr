@@ -804,9 +804,10 @@ begin
   begin
     Result := CreateElement(FTagTomador);
 
-    if (NFSe.Tomador.Endereco.UF = 'EX') and (NFSe.Tomador.NifTomador <> '') then
+    if (NFSe.Tomador.Endereco.UF = 'EX') and
+       (NFSe.Tomador.IdentificacaoTomador.Nif <> '') then
       Result.AppendChild(AddNode(tcStr, '#38', 'NifTomador', 1, 40, NrOcorrNIFTomador,
-                                                       NFSe.Tomador.NifTomador))
+                                         NFSe.Tomador.IdentificacaoTomador.Nif))
     else
     begin
       if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
@@ -932,15 +933,15 @@ function TNFSeW_ABRASFv2.GerarIntermediarioServico: TACBrXmlNode;
 begin
   Result := nil;
 
-  if (NFSe.IntermediarioServico.RazaoSocial <> '') or
-     (NFSe.IntermediarioServico.CpfCnpj <> '') then
+  if (NFSe.Intermediario.RazaoSocial <> '') or
+     (NFSe.Intermediario.Identificacao.CpfCnpj <> '') then
   begin
     Result := CreateElement(FTagIntermediario);
 
     Result.AppendChild(GerarIdentificacaoIntermediarioServico);
 
     Result.AppendChild(AddNode(tcStr, '#48', 'RazaoSocial', 1, 115, NrOcorrRazaoSocialInterm,
-                             NFSe.IntermediarioServico.RazaoSocial, DSC_XNOME));
+                                    NFSe.Intermediario.RazaoSocial, DSC_XNOME));
   end;
 end;
 
@@ -970,14 +971,14 @@ function TNFSeW_ABRASFv2.GerarIdentificacaoIntermediarioServico: TACBrXmlNode;
 begin
   Result := nil;
 
-  if (NFSe.IntermediarioServico.CpfCnpj <> '') then
+  if (NFSe.Intermediario.Identificacao.CpfCnpj <> '') then
   begin
     Result := CreateElement('IdentificacaoIntermediario');
 
-    Result.AppendChild(GerarCPFCNPJ(NFSe.IntermediarioServico.CpfCnpj));
+    Result.AppendChild(GerarCPFCNPJ(NFSe.Intermediario.Identificacao.CpfCnpj));
 
     Result.AppendChild(AddNode(tcStr, '#50', 'InscricaoMunicipal', 1, 15, NrOcorrInscEstInter,
-                         NFSe.IntermediarioServico.InscricaoMunicipal, DSC_IM));
+                  NFSe.Intermediario.Identificacao.InscricaoMunicipal, DSC_IM));
   end;
 end;
 

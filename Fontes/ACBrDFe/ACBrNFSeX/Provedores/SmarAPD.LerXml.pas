@@ -281,8 +281,8 @@ begin
 
     OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('Observacao'), tcStr);
 
-    MotivoCancelamento           := '';
-    IntermediarioServico.CpfCnpj := '';
+    MotivoCancelamento := '';
+    Intermediario.Identificacao.CpfCnpj := '';
 
     aValor := ObterConteudo(AuxNode.Childrens.FindAnyNs('SituacaoNf'), tcStr);
 

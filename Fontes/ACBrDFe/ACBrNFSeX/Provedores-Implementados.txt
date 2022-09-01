@@ -90,6 +90,7 @@ ModernizacaoPublica  2.02
 NEAInformatica       2.00
 NFSeBrasil           1.00
 NotaInteligente      2.00
+PadraoNacional       1.00
 Prodata              2.01
 Pronim               1.00
 Pronim               2.02  17/08/2022

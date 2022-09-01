@@ -306,7 +306,7 @@ begin
                                                  NFSe.Tomador.RazaoSocial, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'DocTomadorEstrangeiro', 0, 20, 0,
-                  NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, ''));
+                         NFSe.Tomador.IdentificacaoTomador.DocEstrangeiro, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'TipoLogradouroTomador', 0, 10, 1,
                                      NFSe.Tomador.Endereco.TipoLogradouro, ''));
@@ -343,7 +343,7 @@ begin
                                                NFSe.Tomador.Contato.Email, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipalObra', 1, 11, 0,
-                                 NFSe.ConstrucaoCivil.CodigoMunicipioObra, ''));
+                            NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'ServicoObra', 1, 2, 0,
                                           NFSe.ConstrucaoCivil.CodigoObra, ''));
@@ -444,7 +444,7 @@ begin
                                                   NFSE.MotivoCancelamento, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CPFCNPJIntermediario', 0, 14, 0,
-                            OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), ''));
+    OnlyNumber(NFSe.Intermediario.Identificacao.CpfCnpj), ''));
 
   xmlNode := GerarDeducoes;
   NFSeNode.AppendChild(xmlNode);

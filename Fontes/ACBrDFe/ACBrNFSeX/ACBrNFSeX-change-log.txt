@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 01/09/2022
+-- Diversos --
+[+] Inicio da implementação do provedor PadraoNacional.
+   Por: Italo Giurizzato Junior
 -- Abaco.Provider --
 [+] Incluido a função TratarXmlRetornado.
    Por: Italo Giurizzato Junior

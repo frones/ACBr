@@ -604,11 +604,11 @@ begin
 
   if AuxNode <> nil then
   begin
-    NFSe.IntermediarioServico.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('RazaoSocial'), tcStr);
+    NFSe.Intermediario.RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('RazaoSocial'), tcStr);
 
     AuxNodeCpfCnpj := AuxNode.Childrens.FindAnyNs('CpfCnpj');
 
-    with NFSe.IntermediarioServico do
+    with NFSe.Intermediario.Identificacao do
     begin
       if AuxNodeCpfCnpj <> nil then
       begin

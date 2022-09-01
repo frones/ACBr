@@ -53,6 +53,9 @@ implementation
 uses
   ACBrNFSeX, ACBrNFSeXConversao,
 
+  // Provedor utilizado pelas cidades que aderiram o Padão Nacional
+  PadraoNacional.Provider,
+
   // Provedores que seguem a versão 1 do layout da ABRASF
   BHISS.Provider,
   CIGA.Provider,
@@ -391,6 +394,9 @@ begin
 
       proNotaInteligente:
         Result := TACBrNFSeProviderNotaInteligente200.Create(ACBrNFSe);
+
+      proPadraoNacional:
+        Result := TACBrNFSeProviderPadraoNacional.Create(ACBrNFSe);
 
       proProdata: Result := TACBrNFSeProviderProdata201.Create(ACBrNFSe);
 

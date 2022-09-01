@@ -359,7 +359,7 @@ begin
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('CPFCNPJIntermediario'), tcStr);
   if aValor <> '' then
-    NFSe.IntermediarioServico.CpfCnpj := aValor;
+    NFSe.Intermediario.Identificacao.CpfCnpj := aValor;
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('URLNotaFiscal'), tcStr);
   if aValor <> '' then
@@ -470,7 +470,7 @@ begin
       begin
         InscricaoMunicipal := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipalTomador'), tcStr);
         CpfCnpj := ObterConteudo(ANode.Childrens.FindAnyNs('CPFCNPJTomador'), tcStr);
-        DocTomadorEstrangeiro := ObterConteudo(ANode.Childrens.FindAnyNs('DocTomadorEstrangeiro'), tcStr);
+        DocEstrangeiro := ObterConteudo(ANode.Childrens.FindAnyNs('DocTomadorEstrangeiro'), tcStr);
       end;
 
       RazaoSocial := ObterConteudo(ANode.Childrens.FindAnyNs('RazaoSocialTomador'), tcStr);
@@ -504,9 +504,9 @@ begin
 
     TipoRecolhimento := AnsiUpperCase(ObterConteudo(ANode.Childrens.FindAnyNs('TipoRecolhimento'), tcStr));
 
-    with ConstrucaoCivil do
+    with ConstrucaoCivil.Endereco do
     begin
-      CodigoMunicipioObra := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipalObra'), tcStr);
+      CodigoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipalObra'), tcStr);
     end;
 
     with Servico do
@@ -544,7 +544,7 @@ begin
 
     OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('DescricaoRPS'), tcStr);
     MotivoCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('MotCancelamento'), tcStr);
-    IntermediarioServico.CpfCnpj := ObterConteudo(ANode.Childrens.FindAnyNs('CPFCNPJIntermediario'), tcStr);
+    Intermediario.Identificacao.CpfCnpj := ObterConteudo(ANode.Childrens.FindAnyNs('CPFCNPJIntermediario'), tcStr);
 
     LerDeducoes(ANode);
     LerItens(ANode);

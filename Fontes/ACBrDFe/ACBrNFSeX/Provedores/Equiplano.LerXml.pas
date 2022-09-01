@@ -369,7 +369,7 @@ begin
           with IdentificacaoTomador do
           begin
             CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('nrDocumento'), tcStr);
-            DocTomadorEstrangeiro := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
+            DocEstrangeiro := ObterConteudo(AuxNode.Childrens.FindAnyNs('dsDocumentoEstrangeiro'), tcStr);
           end;
         end;
       end;

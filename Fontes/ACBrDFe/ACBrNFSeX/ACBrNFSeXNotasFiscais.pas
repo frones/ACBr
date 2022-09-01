@@ -398,10 +398,10 @@ begin
 
       sSecao := 'Intermediario';
 
-      with IntermediarioServico do
+      with Intermediario do
       begin
-        CpfCnpj := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-        InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
+        Identificacao.CpfCnpj := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+        Identificacao.InscricaoMunicipal := INIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
         RazaoSocial := INIRec.ReadString(sSecao, 'RazaoSocial', '');
       end;
 

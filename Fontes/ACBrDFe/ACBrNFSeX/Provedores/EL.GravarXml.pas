@@ -139,8 +139,8 @@ begin
   xmlNode := GerarDadosTomador;
   NFSeNode.AppendChild(xmlNode);
 
-  if (NFSe.IntermediarioServico.RazaoSocial<>'') or
-     (NFSe.IntermediarioServico.CpfCnpj <> '') then
+  if (NFSe.Intermediario.RazaoSocial<>'') or
+     (NFSe.Intermediario.Identificacao.CpfCnpj <> '') then
   begin
     xmlNode := GerarIntermediarioServico;
     NFSeNode.AppendChild(xmlNode);
@@ -399,12 +399,12 @@ begin
   Result := CreateElement('IntermediarioServico');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'RazaoSocial', 1, 115, 0,
-                                    NFSe.IntermediarioServico.RazaoSocial, ''));
+                                           NFSe.Intermediario.RazaoSocial, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'CpfCnpj', 14, 14, 1,
-                            OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), ''));
+                     OnlyNumber(NFSe.Intermediario.Identificacao.CpfCnpj), ''));
 
-  if Length(OnlyNumber(NFSe.IntermediarioServico.CpfCnpj)) <= 11 then
+  if Length(OnlyNumber(NFSe.Intermediario.Identificacao.CpfCnpj)) <= 11 then
     Result.AppendChild(AddNode(tcStr, '#1', 'IndicacaoCpfCnpj', 1, 1, 1,
                                                                        '1', ''))
   else
@@ -412,7 +412,7 @@ begin
                                                                       '2', ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'InscricaoMunicipal', 1, 15, 0,
-                             NFSe.IntermediarioServico.InscricaoMunicipal, ''));
+                      NFSe.Intermediario.Identificacao.InscricaoMunicipal, ''));
 end;
 
 function TNFSeW_EL.GerarRpsSubstituido: TACBrXmlNode;

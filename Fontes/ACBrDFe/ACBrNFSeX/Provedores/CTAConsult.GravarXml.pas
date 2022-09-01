@@ -102,7 +102,7 @@ begin
   xmlNode := GerarTomador;
   NFSeNode.AppendChild(xmlNode);
 
-  if NFSe.IntermediarioServico.CpfCnpj <> '' then
+  if NFSe.Intermediario.Identificacao.CpfCnpj <> '' then
   begin
     xmlNode := GerarIntermediador;
     NFSeNode.AppendChild(xmlNode);
@@ -283,7 +283,7 @@ begin
 
   tipoPessoa := '2';
 
-  if Length(NFSe.IntermediarioServico.CpfCnpj) < 14 then
+  if Length(NFSe.Intermediario.Identificacao.CpfCnpj) < 14 then
     tipoPessoa := '1';
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tipoPessoa', 1, 1, 1,
@@ -291,28 +291,28 @@ begin
 
   if tipoPessoa = '1' then
     Result.AppendChild(AddNode(tcStr, '#1', 'cpf', 11, 11, 1,
-                                         NFSe.IntermediarioServico.CpfCnpj, ''))
+                                  NFSe.Intermediario.Identificacao.CpfCnpj, ''))
   else
     Result.AppendChild(AddNode(tcStr, '#1', 'cnpj', 14, 14, 1,
-                                        NFSe.IntermediarioServico.CpfCnpj, ''));
+                                 NFSe.Intermediario.Identificacao.CpfCnpj, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'inscricaoMunicipal', 1, 16, 1,
-                             NFSe.IntermediarioServico.InscricaoMunicipal, ''));
+                      NFSe.Intermediario.Identificacao.InscricaoMunicipal, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'razaoSocial', 1, 60, 1,
-                                    NFSe.IntermediarioServico.RazaoSocial, ''));
+                                    NFSe.Intermediario.RazaoSocial, ''));
 
   xmlNode := GerarEnderecoIntermediador;
   Result.AppendChild(xmlNode);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'email', 1, 100, 1,
-                                          NFSe.IntermediarioServico.Email, ''));
+                                         NFSe.Intermediario.Contato.Email, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'telefoneDdd', 1, 2, 1,
-                                            NFSe.IntermediarioServico.DDD, ''));
+                                           NFSe.Intermediario.Contato.DDD, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'telefoneNumero', 1, 10, 1,
-                                       NFSe.IntermediarioServico.Telefone, ''));
+                                      NFSe.Intermediario.Contato.Telefone, ''));
 end;
 
 function TNFSeW_CTAConsult.GerarEnderecoIntermediador: TACBrXmlNode;
@@ -320,29 +320,29 @@ begin
   Result := CreateElement('endereco');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'logradouro', 1, 60, 1,
-     NFSe.IntermediarioServico.Endereco.Endereco + ', ' +
-     NFSe.IntermediarioServico.Endereco.Numero, ''));
+     NFSe.Intermediario.Endereco.Endereco + ', ' +
+     NFSe.Intermediario.Endereco.Numero, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 60, 1,
-                           NFSe.IntermediarioServico.Endereco.Complemento, ''));
+                                  NFSe.Intermediario.Endereco.Complemento, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'bairro', 1, 60, 1,
-                                NFSe.IntermediarioServico.Endereco.Bairro, ''));
+                                       NFSe.Intermediario.Endereco.Bairro, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cep', 1, 8, 1,
-                                   NFSe.IntermediarioServico.Endereco.CEP, ''));
+                                          NFSe.Intermediario.Endereco.CEP, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'codigoMunipio', 1, 5, 1,
-    CodIBGEToCodTOM(StrToInt(NFSe.IntermediarioServico.Endereco.CodigoMunicipio)), ''));
+    CodIBGEToCodTOM(StrToInt(NFSe.Intermediario.Endereco.CodigoMunicipio)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoMunicipio', 1, 60, 1,
-    CodIBGEToCidade(StrToInt(NFSe.IntermediarioServico.Endereco.CodigoMunicipio)), ''));
+    CodIBGEToCidade(StrToInt(NFSe.Intermediario.Endereco.CodigoMunicipio)), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'codigoEstado', 2, 2, 1,
-                                    NFSe.IntermediarioServico.Endereco.UF, ''));
+                                           NFSe.Intermediario.Endereco.UF, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'descricaoEstado', 2, 2, 1,
-                                    NFSe.IntermediarioServico.Endereco.UF, ''));
+                                           NFSe.Intermediario.Endereco.UF, ''));
 end;
 
 function TNFSeW_CTAConsult.GerarAtividadeExecutada: TACBrXmlNode;

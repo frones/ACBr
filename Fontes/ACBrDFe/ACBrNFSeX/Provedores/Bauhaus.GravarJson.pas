@@ -56,12 +56,9 @@ type
 implementation
 
 uses
-//  {$IfDef USE_JSONDATAOBJECTS_UNIT}
-//    JsonDataObjects_ACBr,
-//  {$Else}
-    Jsons,
-//  {$EndIf}
-  ACBrNFSeX;
+  ACBrJSON,
+  ACBrNFSeX,
+  ACBrConsts;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o Json do RPS do provedor:
@@ -72,12 +69,34 @@ uses
 
 function TNFSeW_Bauhaus.GerarXml: Boolean;
 var
-  Data: string;
-  Json: TJSONObject;
+  LJson: TACBrJSONObject;
 begin
-  Json := TJsonObject.Create;
+  Configuracao;
+
+  Opcoes.QuebraLinha := FpAOwner.ConfigGeral.QuebradeLinha;
+
+  ListaDeAlertas.Clear;
+
+  FDocument.Clear();
+
+  FConteudoTxt.Clear;
+
+  {$IFDEF FPC}
+  FConteudoTxt.LineBreak := CRLF;
+  {$ELSE}
+    {$IFDEF DELPHI2006_UP}
+    FConteudoTxt.LineBreak := CRLF;
+    {$ENDIF}
+  {$ENDIF}
+
+  LJson := TACBrJsonObject.Create;
 
   try
+    LJson
+      .AddPair('id', 1)
+      .AddPair('nome', 'Italo')
+      .AddPairISODateTime('idade', Now);
+
     {
     Json.Add('numeroConvenio').Value.AsNumber                         := StrToInt64Def(OnlyNumber(Boleto.Cedente.Convenio),0);
     Json.Add('numeroCarteira').Value.AsInteger                        := StrToIntDef(OnlyNumber(Titulos.Carteira),0);
@@ -125,8 +144,9 @@ begin
 
     FPDadosMsg := Data;
     }
+    FConteudoTxt.Text := LJson.ToJSON;
   finally
-    Json.Free;
+    LJson.Free;
   end;
 
   Result := True;

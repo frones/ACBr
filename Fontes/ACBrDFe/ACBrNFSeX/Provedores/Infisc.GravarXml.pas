@@ -194,36 +194,36 @@ begin
   Result := CreateElement('dadosDaObra');
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xLogObra', 1, 100, 1,
-                                      NFSe.ConstrucaoCivil.LogradouroObra, ''));
+                                   NFSe.ConstrucaoCivil.Endereco.Endereco, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xComplObra', 1, 100, 1,
-                                     NFSe.ConstrucaoCivil.ComplementoObra, ''));
+                                NFSe.ConstrucaoCivil.Endereco.Complemento, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'vNumeroObra', 1, 6, 1,
-                                          NFSe.ConstrucaoCivil.NumeroObra, ''));
+                                     NFSe.ConstrucaoCivil.Endereco.Numero, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xBairroObra', 1, 100, 1,
-                                          NFSe.ConstrucaoCivil.BairroObra, ''));
+                                     NFSe.ConstrucaoCivil.Endereco.Bairro, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xCepObra', 1, 8, 1,
-                                             NFSe.ConstrucaoCivil.CEPObra, ''));
+                                        NFSe.ConstrucaoCivil.Endereco.CEP, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cCidadeObra', 1, 7, 1,
-                                 NFSe.ConstrucaoCivil.CodigoMunicipioObra, ''));
+                            NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, ''));
 
-  xCidade := CodIBGEToCidade(StrToIntDef(NFSe.ConstrucaoCivil.CodigoMunicipioObra, 0));
+  xCidade := CodIBGEToCidade(StrToIntDef(NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, 0));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xCidadeObra', 1, 60, 1,
                                    Copy(xCidade, 1, Pos('/', xCidade) -1), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xUfObra', 1, 2, 1,
-                                              NFSe.ConstrucaoCivil.UFObra, ''));
+                                         NFSe.ConstrucaoCivil.Endereco.UF, ''));
 
   Result.AppendChild(AddNode(tcInt, '#1', 'cPaisObra', 1, 10, 1,
-                                      NFSe.ConstrucaoCivil.CodigoPaisObra, ''));
+                                 NFSe.ConstrucaoCivil.Endereco.CodigoPais, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xPaisObra', 1, 100, 1,
-                                           NFSe.ConstrucaoCivil.xPaisObra, ''));
+                                      NFSe.ConstrucaoCivil.Endereco.xPais, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'numeroArt', 1, 12, 0,
                                                  NFSe.ConstrucaoCivil.Art, ''));

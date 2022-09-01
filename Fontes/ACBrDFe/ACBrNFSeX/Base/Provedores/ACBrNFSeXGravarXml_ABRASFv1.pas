@@ -587,18 +587,18 @@ begin
   // Em conformidade com a versão 1 do layout da ABRASF não deve ser alterado
   Result := nil;
 
-  if (NFSe.IntermediarioServico.RazaoSocial <> '') or
-     (NFSe.IntermediarioServico.CpfCnpj <> '') then
+  if (NFSe.Intermediario.RazaoSocial <> '') or
+     (NFSe.Intermediario.Identificacao.CpfCnpj <> '') then
   begin
     Result := CreateElement('IntermediarioServico');
 
     Result.AppendChild(AddNode(tcStr, '#48', 'RazaoSocial', 1, 115, 1,
-                             NFSe.IntermediarioServico.RazaoSocial, DSC_XNOME));
+                                    NFSe.Intermediario.RazaoSocial, DSC_XNOME));
 
-    Result.AppendChild(GerarCPFCNPJ(NFSe.IntermediarioServico.CpfCnpj));
+    Result.AppendChild(GerarCPFCNPJ(NFSe.Intermediario.Identificacao.CpfCnpj));
 
     Result.AppendChild(AddNode(tcStr, '#50', 'InscricaoMunicipal', 1, 15, 0,
-                         NFSe.IntermediarioServico.InscricaoMunicipal, DSC_IM));
+                  NFSe.Intermediario.Identificacao.InscricaoMunicipal, DSC_IM));
   end;
 end;
 

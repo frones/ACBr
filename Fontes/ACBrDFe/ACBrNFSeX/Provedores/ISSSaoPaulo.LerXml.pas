@@ -117,10 +117,10 @@ begin
 
   if AuxNode <> nil then
   begin
-    NFSe.IntermediarioServico.CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
+    NFSe.Intermediario.Identificacao.CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CNPJ'), tcStr);
 
-    if NFSe.IntermediarioServico.CpfCnpj = '' then
-      NFSe.IntermediarioServico.CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPF'), tcStr);
+    if NFSe.Intermediario.Identificacao.CpfCnpj = '' then
+      NFSe.Intermediario.Identificacao.CpfCnpj := ObterConteudo(AuxNode.Childrens.FindAnyNs('CPF'), tcStr);
   end;
 end;
 
@@ -389,10 +389,10 @@ begin
     LerEnderecoTomador(ANode);
     LerCPFCNPJIntermediario(ANode);
 
-    with IntermediarioServico do
+    with Intermediario do
     begin
-      InscricaoMunicipal := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipalIntermediario'), tcStr);
-      EMail := ObterConteudo(ANode.Childrens.FindAnyNs('EmailIntermediario'), tcStr);
+      Identificacao.InscricaoMunicipal := ObterConteudo(ANode.Childrens.FindAnyNs('InscricaoMunicipalIntermediario'), tcStr);
+      Contato.EMail := ObterConteudo(ANode.Childrens.FindAnyNs('EmailIntermediario'), tcStr);
 
       aValor := ObterConteudo(ANode.Childrens.FindAnyNs('ISSRetidoIntermediario'), tcStr);
 

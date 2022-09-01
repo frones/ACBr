@@ -136,7 +136,7 @@ begin
     sTomador := sIndTomador + ACBrUtil.Strings.Poem_Zeros(sCPFCNPJTomador, 14);
 
     // Prestador Intermediario
-    sCPFCNPJInter := ACBrUtil.Strings.OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
+    sCPFCNPJInter := ACBrUtil.Strings.OnlyNumber(NFSe.Intermediario.Identificacao.CpfCnpj);
 
     if Length(sCPFCNPJInter) = 11 then
       sIndInter := '1'
@@ -146,7 +146,7 @@ begin
       else
         sIndInter := '3';
 
-    sISSRetidoInter := EnumeradoToStr(NFSe.IntermediarioServico.IssRetido,
+    sISSRetidoInter := EnumeradoToStr(NFSe.Intermediario.IssRetido,
                                       ['N', 'S'], [stNormal, stRetencao]);
 
     if sIndInter <> '3' then

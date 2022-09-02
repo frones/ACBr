@@ -2562,7 +2562,7 @@ object Form1: TForm1
                     Anchors = [akTop]
                     Caption = 'Copiar'
                     TabOrder = 0
-                    OnClick = btQREColarClick
+                    OnClick = btQRDColarClick
                   end
                   object btQRDAnalisar: TBitBtn
                     Left = 509
@@ -2572,7 +2572,7 @@ object Form1: TForm1
                     Anchors = [akTop]
                     Caption = 'Analisar'
                     TabOrder = 1
-                    OnClick = btQREAnalisarClick
+                    OnClick = btQRDAnalisarClick
                   end
                 end
               end

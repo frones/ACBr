@@ -41,7 +41,7 @@ uses
   ExtCtrls, Buttons, Spin, Grids, ACBrCEP, ACBrPIXCD, ACBrPIXPSPItau,
   ACBrPIXPSPBancoDoBrasil, ACBrPIXPSPSantander, ACBrPIXBase, ACBrPIXSchemasPix,
   ACBrPIXSchemasDevolucao, ACBrPIXSchemasCob, ACBrPIXPSPShipay, ACBrOpenSSLUtils,
-  ACBrPIXPSPSicredi, ACBrSocket, ACBrBase, ImgList
+  ACBrPIXPSPSicredi, ACBrPIXBRCode, ACBrSocket, ACBrBase, ImgList
   {$IfDef FPC}
   , DateTimePicker
   {$EndIf};
@@ -580,6 +580,8 @@ type
     procedure btLimparConsultarPixRecebidosClick(Sender: TObject);
     procedure btLimparCriarCobrancaImediataClick(Sender: TObject);
     procedure btLimparSolicitarDevolucaoPixClick(Sender: TObject);
+    procedure btQRDAnalisarClick(Sender: TObject);
+    procedure btQRDColarClick(Sender: TObject);
     procedure btQRDGerarClick(Sender: TObject);
     procedure btLogLimparClick(Sender: TObject);
     procedure btQREAnalisarClick(Sender: TObject);
@@ -663,6 +665,7 @@ type
     procedure LimparQRCodeEstatico;
     procedure PintarQRCodeEstatico;
     procedure PintarQRCodeDinamico;
+    procedure AnalisarBRCode(aBRCode: TACBrBRCode);
 
     procedure MostrarPixEmLinhas(const NomePix: String; APix: TACBrPIX; SL: TStrings);
     procedure MostrarDevolucaoEmLinhas(const NomeDev: String;
@@ -707,7 +710,7 @@ uses
    fpjson, jsonparser, jsonscanner, Jsons,
   {$EndIf}
   TypInfo, Clipbrd, IniFiles, DateUtils, synacode, synautil, pcnConversao,
-  ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil, ACBrPIXBRCode,
+  ACBrDelphiZXingQRCode, ACBrImage, ACBrValidador, ACBrPIXUtil,
   ACBrPIXSchemasCobV, ACBrUtil.FilesIO, ACBrUtil.Base, ACBrUtil.Strings,
   ACBrUtil.DateTime, ACBrJSON;
 
@@ -1634,6 +1637,25 @@ begin
   mSolicitarDevolucaoPix.Lines.Clear;
 end;
 
+procedure TForm1.btQRDAnalisarClick(Sender: TObject);
+var
+  qrd: TACBrPIXQRCodeDinamico;
+begin
+  qrd := TACBrPIXQRCodeDinamico.Create;
+  try
+    qrd.IgnoreErrors := True;
+    qrd.AsString := Trim(mQRD.Lines.Text);
+    AnalisarBRCode(qrd);
+  finally
+    qrd.Free;
+  end;
+end;
+
+procedure TForm1.btQRDColarClick(Sender: TObject);
+begin
+  mQRD.CopyToClipboard;
+end;
+
 procedure TForm1.btQRDGerarClick(Sender: TObject);
 begin
   VerificarConfiguracao;
@@ -1651,20 +1673,9 @@ var
 begin
   qre := TACBrPIXQRCodeEstatico.Create;
   try
-    AdicionarLinhaLog('----- Analise do QRCode Estático -----');
     qre.IgnoreErrors := True;
     qre.AsString := mQRE.Lines.Text;
-    AdicionarLinhaLog('');
-    AdicionarLinhaLog('NomeRecebedor: '+qre.MerchantName);
-    AdicionarLinhaLog('CidadeRecebedor: '+qre.MerchantCity);
-    AdicionarLinhaLog('CEPRecebedor: '+qre.PostalCode);
-    AdicionarLinhaLog('ChavePix: '+qre.PixKey);
-    AdicionarLinhaLog('TipoChavePix: '+GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(qre.PixKeyType)));
-    AdicionarLinhaLog('Valor: '+FormatFloat('0.00', qre.TransactionAmount));
-    AdicionarLinhaLog('infoAdicional: '+qre.AdditionalInfo);
-    AdicionarLinhaLog('TxId: '+qre.TxId);
-    AdicionarLinhaLog('pss: '+IntToStr(qre.pss));
-    //AdicionarLinhaLog('mcc: '+IntToStr(qre.MerchantCategoryCode));
+    AnalisarBRCode(qre);
   finally
     qre.Free;
   end;
@@ -2513,6 +2524,31 @@ procedure TForm1.PintarQRCodeDinamico;
 begin
   mQRD.Lines.Text := ACBrPixCD1.GerarQRCodeDinamico( edtQRDLocation.Text );
   PintarQRCode(mQRD.Lines.Text, imgQRD.Picture.Bitmap, qrUTF8BOM);
+end;
+
+procedure TForm1.AnalisarBRCode(aBRCode: TACBrBRCode);
+begin
+  AdicionarLinhaLog('');
+  if (aBRCode is TACBrPIXQRCodeEstatico) then
+  with TACBrPIXQRCodeEstatico(aBRCode) do
+  begin
+    AdicionarLinhaLog('----- Analise do QRCode Estático -----');
+    AdicionarLinhaLog('ChavePix: ' + PixKey);
+    AdicionarLinhaLog('TipoChavePix: ' + GetEnumName(TypeInfo(TACBrPIXTipoChave), Integer(PixKeyType)));
+    AdicionarLinhaLog('infoAdicional: ' + AdditionalInfo);
+    AdicionarLinhaLog('pss: ' + IntToStr(pss));
+  end
+  else if (aBRCode is TACBrPIXQRCodeDinamico) then
+  begin
+    AdicionarLinhaLog('----- Analise do QRCode Dinâmico -----');
+    AdicionarLinhaLog('URL: ' + TACBrPIXQRCodeDinamico(aBRCode).URL);
+  end;
+
+  AdicionarLinhaLog('NomeRecebedor: ' + aBRCode.MerchantName);
+  AdicionarLinhaLog('CidadeRecebedor: ' + aBRCode.MerchantCity);
+  AdicionarLinhaLog('CEPRecebedor: ' + aBRCode.PostalCode);
+  AdicionarLinhaLog('Valor: ' + FormatFloat('0.00', aBRCode.TransactionAmount));
+  AdicionarLinhaLog('TxId: ' + aBRCode.TxId);
 end;
 
 procedure TForm1.MostrarPixEmLinhas(const NomePix: String;

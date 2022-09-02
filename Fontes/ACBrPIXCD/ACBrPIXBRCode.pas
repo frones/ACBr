@@ -141,7 +141,6 @@ type
   TACBrBRCode = class(TACBrEMVList)
   private
     fIgnoreErrors: Boolean;
-    fPixKeyType: TACBrPIXTipoChave;
     fAdditionalDataField: TACBrEMVList;
     fMerchantAccountInformation: TACBrEMVList;
     fMerchantAccountOtherInformation: TACBrEMVList;
@@ -153,6 +152,7 @@ type
     function GetPointOfInformationMethod: byte;
     function GetMerchantAccountInformationCards: String;
     function GetPixKey: String;
+    function GetPixKeyType: TACBrPIXTipoChave;
     function GetAdditionalInfo: String;
     function GetPss: Integer;
     function GetURL: String;
@@ -201,7 +201,7 @@ type
       read fUnreservedTemplates;
 
     property PixKey: String read GetPixKey write SetPixKey;
-    property PixKeyType: TACBrPIXTipoChave read fPixKeyType;  // 26-01
+    property PixKeyType: TACBrPIXTipoChave read GetPixKeyType;  // 26-01
     property AdditionalInfo: String read GetAdditionalInfo write SetAdditionalInfo;  // 26-02
     property pss: Integer read GetPss write SetPss;  // 26-03 Prestador de serviço de saque
 
@@ -442,7 +442,6 @@ begin
   fMerchantAccountOtherInformation.Clear;
   fAdditionalDataField.Clear;
   fUnreservedTemplates.Clear;
-  fPixKeyType := tchNenhuma;
   AddDefaultValues;
 end;
 
@@ -458,7 +457,6 @@ end;
 procedure TACBrBRCode.Assign(Source: TACBrBRCode);
 begin
   inherited Assign(Source);
-  fPixKeyType := Source.PixKeyType;
   fIgnoreErrors := Source.IgnoreErrors;
   fMerchantAccountInformation.Assign(Source.MerchantAccountInformation);
   fMerchantAccountOtherInformation.Assign(Source.MerchantAccountOtherInformation);
@@ -498,6 +496,11 @@ end;
 function TACBrBRCode.GetPixKey: String;
 begin
   Result := fMerchantAccountInformation.ID[cID_PixKey];
+end;
+
+function TACBrBRCode.GetPixKeyType: TACBrPIXTipoChave;
+begin
+  Result := DetectarTipoChave(PixKey);
 end;
 
 function TACBrBRCode.GetAdditionalInfo: String;
@@ -542,7 +545,7 @@ end;
 
 function TACBrBRCode.GetTransactionAmount: currency;
 begin
-  Result := StrToIntDef(ID[cID_TransactionAmount], 0) / 100;
+  Result := StringToFloatDef(ID[cID_TransactionAmount], 0);
 end;
 
 function TACBrBRCode.GetCountryCode: String;
@@ -594,7 +597,6 @@ begin
     RaiseError(Format(ACBrStr(sErroChaveInvalida), [AValue]));
 
   fMerchantAccountInformation.ID[cID_PixKey] := Trim(AValue);
-  fPixKeyType := TipoChave;
 end;
 
 procedure TACBrBRCode.SetPointOfInformationMethod(AValue: byte);

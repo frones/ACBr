@@ -2797,7 +2797,7 @@ object Form1: TForm1
                     Caption = 'Copiar'
                     Images = ImageList1
                     ImageIndex = 13
-                    OnClick = btQREColarClick
+                    OnClick = btQRDColarClick
                     TabOrder = 0
                   end
                   object btQRDAnalisar: TBitBtn
@@ -2810,7 +2810,7 @@ object Form1: TForm1
                     Caption = 'Analisar'
                     Images = ImageList1
                     ImageIndex = 5
-                    OnClick = btQREAnalisarClick
+                    OnClick = btQRDAnalisarClick
                     TabOrder = 1
                   end
                 end

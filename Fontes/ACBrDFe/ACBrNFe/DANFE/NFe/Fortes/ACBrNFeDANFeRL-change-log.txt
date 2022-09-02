@@ -46,6 +46,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2022
+-- ACBrNFeDANFeRLRetrato --
+[*] Alteração para destacar corretamente no DANFE as NFes Canceladas, quando é 
+    utilizada a impressão em lote.
+    https://www.projetoacbr.com.br/forum/topic/68732-impressão-em-lote-com-nf-e-cancelada-fortes
+    por: Diego Ricardo Baptista
+
 08/08/2022
 -- ACBrNFeDANFeRLClass --
 [*] Alterado o método ImprimirDANFSePDF para utilizar a função DefinirNomeArquivo, que

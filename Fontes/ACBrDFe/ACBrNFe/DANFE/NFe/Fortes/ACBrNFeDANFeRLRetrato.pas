@@ -913,6 +913,8 @@ begin
         begin
           rllXmotivo.Caption := 'NF-e CANCELADA';
           rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+          rlbCanceladaDenegada.Visible := True;
+          RLLCanceladaDenegada.Caption := 'NF-e CANCELADA';
         end;
 
         110, 205, 301, 302:

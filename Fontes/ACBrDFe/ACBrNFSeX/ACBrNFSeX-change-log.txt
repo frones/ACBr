@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+02/09/2022
+-- ACBrNFSeXServicos --
+[+] Incluída a cidade de Marituba/PA - Provedor Actcon 
+   Por: Adriano Wolff
+
 01/09/2022
 -- Diversos --
 [+] Inicio da implementação do provedor PadraoNacional.

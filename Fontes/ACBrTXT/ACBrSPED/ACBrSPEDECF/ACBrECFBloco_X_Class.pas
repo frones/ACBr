@@ -1100,7 +1100,7 @@ begin
             VLFill(VL_JURO_PJ,19)             +
             VLFill(VL_DEMAIS_JUROS,19)        +
             VLFill(VL_DIVID_PF,19)            +
-            VLFill(VL_DIVID_PF,19));
+            VLFill(VL_DIVID_PJ,19));
       end;
 
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;

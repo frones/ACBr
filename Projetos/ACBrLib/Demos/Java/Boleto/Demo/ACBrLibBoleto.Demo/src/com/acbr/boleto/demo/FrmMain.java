@@ -12,6 +12,7 @@ import com.acbr.boleto.ModeloBoleto;
 import com.acbr.boleto.BancoBoleto;
 import com.acbr.boleto.RespEmissaoBoleto;
 import com.acbr.boleto.CNABBoleto;
+import com.acbr.boleto.Operacao;
 import com.acbr.boleto.TipoCarteiraBoleto;
 import com.acbr.boleto.TipoDocumento;
 import com.acbr.boleto.TipoInscricao;
@@ -82,6 +83,7 @@ public class FrmMain extends javax.swing.JFrame {
         btnCodigoMoraAceitos = new javax.swing.JButton();
         btnTamNossoNumero = new javax.swing.JButton();
         btnMontarNossoNumero1 = new javax.swing.JButton();
+        btnEnviarBoletoWebService = new javax.swing.JButton();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
@@ -178,7 +180,35 @@ public class FrmMain extends javax.swing.JFrame {
         txtHost = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         nudPorta = new javax.swing.JSpinner();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel47 = new javax.swing.JLabel();
+        txtClientID = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        txtClientSecret = new javax.swing.JTextField();
+        jLabel49 = new javax.swing.JLabel();
+        txtKeyUser = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        txtScope = new javax.swing.JTextField();
+        ckbIndicadorPix = new javax.swing.JCheckBox();
+        jLabel51 = new javax.swing.JLabel();
+        txtPathLog = new javax.swing.JTextField();
+        btnPathLog = new javax.swing.JButton();
+        chkGravarLog = new javax.swing.JCheckBox();
+        jPanel20 = new javax.swing.JPanel();
+        rdbHomologacao = new javax.swing.JRadioButton();
+        rdbProducao = new javax.swing.JRadioButton();
+        jLabel52 = new javax.swing.JLabel();
+        cmbSSlType = new javax.swing.JComboBox<>();
+        cmbHttp = new javax.swing.JComboBox<>();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        cmbOperacao = new javax.swing.JComboBox<>();
+        jLabel55 = new javax.swing.JLabel();
+        nudTimeOut = new javax.swing.JSpinner();
+        jLabel56 = new javax.swing.JLabel();
+        txtVersao = new javax.swing.JTextField();
         btnGravarConfig = new javax.swing.JButton();
+        btnCarregarConfiguracoes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibBoletoDemo");
@@ -205,10 +235,7 @@ public class FrmMain extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,6 +411,14 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnEnviarBoletoWebService.setText("Enviar Boleto (WebService)");
+        btnEnviarBoletoWebService.setActionCommand("Enviar Boleto (WebService)");
+        btnEnviarBoletoWebService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarBoletoWebServiceActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -396,10 +431,6 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnIncluirTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnGerarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSetDiretorioArquivos)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnMontarNossoNumero1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -425,7 +456,14 @@ public class FrmMain extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnListarOcorrenciasEx, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnTamNossoNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnTamNossoNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSetDiretorioArquivos)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMontarNossoNumero1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEnviarBoletoWebService)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -477,20 +515,14 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSetDiretorioArquivos)
                     .addComponent(btnMontarNossoNumero1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEnviarBoletoWebService)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnIncluirTitulo.getAccessibleContext().setAccessibleName("Incluir Titulos");
         btnIncluirTitulo.getAccessibleContext().setAccessibleDescription("");
-        btnSelecionaBanco.getAccessibleContext().setAccessibleName("Seleciona Banco");
-        btnListarCaracTitulos.getAccessibleContext().setAccessibleName("Listar Carac Titulos");
-        btnListarOcorrenciasEx.getAccessibleContext().setAccessibleName("Listar Ocorrencias Ex");
-        btnSetDiretorioArquivos.getAccessibleContext().setAccessibleName("Set Diretorio Arquivos");
-        btnEnviarEmailBoleto.getAccessibleContext().setAccessibleName("Enviar e-mail Boleto");
-        btnGerarHTML.getAccessibleContext().setAccessibleName("Gerar HTML");
-        btnCodigoMoraAceitos.getAccessibleContext().setAccessibleName("Codigo Mora Aceitos");
-        btnTamNossoNumero.getAccessibleContext().setAccessibleName("Tam Nosso Numero");
-        btnMontarNossoNumero1.getAccessibleContext().setAccessibleName("Montar Nosso Numero");
+        btnEnviarBoletoWebService.getAccessibleContext().setAccessibleName("Enviar Boleto (WebService)");
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel33.setText("Nome/ Rz Social");
@@ -787,7 +819,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(txtDirLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -920,9 +952,9 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(txtDigAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDigAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(jLabel19)
                     .addComponent(txtConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
@@ -937,7 +969,7 @@ public class FrmMain extends javax.swing.JFrame {
                             .addComponent(txtDigConta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel25)
                     .addComponent(txtModalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel13)
                     .addComponent(cmbRespEmissao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -997,7 +1029,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCodCedente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Conta Bancária", jPanel2);
@@ -1112,7 +1144,7 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNomeRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1220,7 +1252,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ckbSSL)
                     .addComponent(ckbTLS))
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1260,11 +1292,247 @@ public class FrmMain extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("e-mail", jPanel5);
 
+        jLabel47.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel47.setText("ClientID");
+        jLabel47.setToolTipText("");
+
+        txtClientID.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        jLabel48.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel48.setText("Client Secret");
+        jLabel48.setToolTipText("");
+
+        txtClientSecret.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        jLabel49.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel49.setText("KeyUser");
+        jLabel49.setToolTipText("");
+
+        txtKeyUser.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        jLabel50.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel50.setText("Scope");
+        jLabel50.setToolTipText("");
+
+        txtScope.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        ckbIndicadorPix.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckbIndicadorPix.setText("Indicado Pix");
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel51.setText("Path Log");
+        jLabel51.setToolTipText("");
+
+        txtPathLog.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        btnPathLog.setText("...");
+        btnPathLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPathLogActionPerformed(evt);
+            }
+        });
+
+        chkGravarLog.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkGravarLog.setText("Gravar Log");
+
+        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ambiente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel20.setToolTipText("Ambiente");
+        jPanel20.setFocusCycleRoot(true);
+        jPanel20.setName("Ambiente"); // NOI18N
+
+        rdbHomologacao.setLabel("Homologação");
+
+        rdbProducao.setText("Produção");
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rdbHomologacao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rdbProducao)
+                .addContainerGap())
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbProducao)
+                    .addComponent(rdbHomologacao))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel52.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel52.setText("SSL Type");
+
+        cmbSSlType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LT_all", "LT_SSLv2", "LT_SSLv3", "LT_TSLv1", "LT_TSLv1_1", "LT_TSLv1_2", "LT_SSHv2" }));
+
+        cmbHttp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "httpNone", "httpWinINet", "httpWinHttp", "httpOpenSSL", "httpIndy" }));
+
+        jLabel53.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel53.setText("HttpLib");
+
+        jLabel54.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel54.setText("Operação");
+
+        cmbOperacao.setEditable(true);
+        cmbOperacao.setModel(new DefaultComboBoxModel<>(Operacao.values()));
+        cmbOperacao.setSelectedItem("");
+        cmbOperacao.setToolTipText("");
+
+        jLabel55.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel55.setText("TimeOut");
+
+        nudTimeOut.setModel(new javax.swing.SpinnerNumberModel(5000, 1, null, 1));
+
+        jLabel56.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel56.setText("Versão");
+        jLabel56.setToolTipText("");
+
+        txtVersao.setPreferredSize(new java.awt.Dimension(269, 20));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel47)
+                                    .addComponent(txtClientID, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel48)
+                                    .addComponent(txtClientSecret, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel49)
+                                        .addComponent(txtKeyUser, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel50)
+                                        .addComponent(txtScope, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                            .addComponent(jLabel51)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(chkGravarLog))
+                                        .addComponent(txtPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(ckbIndicadorPix))
+                        .addGap(67, 67, 67)
+                        .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(363, 363, 363)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbOperacao, 0, 103, Short.MAX_VALUE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel56)
+                                    .addComponent(jLabel54))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel52)
+                            .addComponent(cmbSSlType, 0, 95, Short.MAX_VALUE)
+                            .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nudTimeOut))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel53)
+                            .addComponent(cmbHttp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(209, 209, 209))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel53)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbHttp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel52)
+                                    .addComponent(jLabel54))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbSSlType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel55)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nudTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel56)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel48)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtClientSecret, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel50)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtScope, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel47)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtClientID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel49)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtKeyUser, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ckbIndicadorPix)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel51)
+                            .addComponent(chkGravarLog))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtPathLog, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPathLog))))
+                .addContainerGap())
+        );
+
+        jLabel47.getAccessibleContext().setAccessibleName("ClientID");
+
+        jTabbedPane5.addTab("WebService", jPanel8);
+
         btnGravarConfig.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         btnGravarConfig.setText("Salvar Configurações");
         btnGravarConfig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGravarConfigActionPerformed(evt);
+            }
+        });
+
+        btnCarregarConfiguracoes.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        btnCarregarConfiguracoes.setText("Carregar Configurações");
+        btnCarregarConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarConfiguracoesActionPerformed(evt);
             }
         });
 
@@ -1275,12 +1543,15 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnGravarConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCarregarConfiguracoes, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGravarConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addComponent(jTabbedPane5)
+            .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1288,14 +1559,20 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnGravarConfig)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(8, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGravarConfig)
+                            .addComponent(btnCarregarConfiguracoes))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
+
+        jTabbedPane5.getAccessibleContext().setAccessibleName("WebService");
 
         getAccessibleContext().setAccessibleName("ACBrLibBoleto Demo");
 
@@ -1311,6 +1588,9 @@ public class FrmMain extends javax.swing.JFrame {
             
             if(printServices.length > 0)
                 cmbImpressora.setSelectedIndex(0);
+            
+            cmbSSlType.setSelectedIndex(0);
+            cmbHttp.setSelectedIndex(0);
                                    
             // Altera as config de log
             Path path = Paths.get(System.getProperty("user.dir"), "Logs");
@@ -1476,6 +1756,46 @@ public class FrmMain extends javax.swing.JFrame {
             ret = acbrBoleto.configLerValor(ACBrSessao.Email, "TLS");
             ckbTLS.setSelected(!"0".equals(ret));
             
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteWS, "ClientID");
+            txtClientID.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteWS, "ClientSecret");
+            txtClientSecret.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteWS, "KeyUser");
+            txtKeyUser.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteWS, "Scope");
+            txtScope.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoCedenteWS, "IndicadorPix");
+            ckbIndicadorPix.setSelected(!"0".equals(ret));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "LogRegistro");
+            chkGravarLog.setSelected(!"0".equals(ret));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "PathGravarRegistro");
+            txtPathLog.setText(ret);
+            
+            String ambiente = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "Ambiente");            
+            rdbHomologacao.setSelected("1".equals(ambiente));
+            rdbProducao.setSelected("0".equals(ambiente));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "Operacao");
+            cmbOperacao.setSelectedIndex(Integer.parseInt(ret));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "SSLType");
+            cmbSSlType.setSelectedIndex(Integer.parseInt(ret));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.DFe, "SSLHttpLib");
+            cmbHttp.setSelectedIndex(Integer.parseInt(ret));
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "VersaoDF");
+            txtVersao.setText(ret);
+            
+            ret = acbrBoleto.configLerValor(ACBrSessao.BoletoWebSevice, "Timeout");
+            nudTimeOut.setValue(Integer.parseInt(ret));
+            
         }catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1534,7 +1854,22 @@ public class FrmMain extends javax.swing.JFrame {
             acbrBoleto.configGravarValor(ACBrSessao.Email, "Servidor", txtHost.getText());
             acbrBoleto.configGravarValor(ACBrSessao.Email, "Porta", nudPorta.getValue().toString());
             acbrBoleto.configGravarValor(ACBrSessao.Email, "SSL", ckbSSL.isSelected() ? "1" : "0");
-            acbrBoleto.configGravarValor(ACBrSessao.Email, "TLS", ckbTLS.isSelected() ? "1" : "0");                                 
+            acbrBoleto.configGravarValor(ACBrSessao.Email, "TLS", ckbTLS.isSelected() ? "1" : "0");
+            
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "ClientID", txtClientID.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "ClientSecret", txtClientSecret.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "KeyUser", txtKeyUser.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "Scope", txtScope.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoCedenteWS, "IndicadorPix", ckbIndicadorPix.isSelected() ? "1" : "0") ;
+            
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "LogRegistro", chkGravarLog.isSelected() ? "1" : "0") ;
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "PathGravarRegistro", txtPathLog.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "Ambiente", rdbHomologacao.isSelected() ? "1" : "0");
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "Operacao", Integer.toString(cmbOperacao.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "SSLType", Integer.toString(cmbSSlType.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.DFe, "SSLHttpLib", Integer.toString(cmbHttp.getSelectedIndex()));
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "VersaoDF", txtVersao.getText());
+            acbrBoleto.configGravarValor(ACBrSessao.BoletoWebSevice, "Timeout", nudTimeOut.getValue().toString());
             
             acbrBoleto.configGravar(); 
             
@@ -1908,11 +2243,41 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMontarNossoNumero1ActionPerformed
 
+    private void btnCarregarConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarConfiguracoesActionPerformed
+        try {                        
+            loadConfig();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCarregarConfiguracoesActionPerformed
+
+    private void btnEnviarBoletoWebServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarBoletoWebServiceActionPerformed
+        
+        try 
+        {
+            String ret = acbrBoleto.EnviarBoleto(cmbOperacao.getSelectedIndex());
+            rtbRespostas.append(ret);
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnEnviarBoletoWebServiceActionPerformed
+
+    private void btnPathLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathLogActionPerformed
+        txtPathLog.setText(
+                selecionarDiretorio("Selecione o diretorio do Log"));
+    }//GEN-LAST:event_btnPathLogActionPerformed
+
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCarregarConfiguracoes;
     private javax.swing.JButton btnCodigoBarras;
     private javax.swing.JButton btnCodigoMoraAceitos;
     private javax.swing.JToggleButton btnDadosCedente;
+    private javax.swing.JButton btnEnviarBoletoWebService;
     private javax.swing.JToggleButton btnEnviarEmail;
     private javax.swing.JToggleButton btnEnviarEmailBoleto;
     private javax.swing.JToggleButton btnGerarHTML;
@@ -1930,22 +2295,28 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnListarOcorrencias;
     private javax.swing.JButton btnListarOcorrenciasEx;
     private javax.swing.JButton btnMontarNossoNumero1;
+    private javax.swing.JButton btnPathLog;
     private javax.swing.JButton btnSelecionaBanco;
     private javax.swing.JButton btnSetDiretorioArquivos;
     private javax.swing.JButton btnTamNossoNumero;
     private javax.swing.JButton btnTotalTitulo;
+    private javax.swing.JCheckBox chkGravarLog;
     private javax.swing.JCheckBox chkPreview;
     private javax.swing.JCheckBox chkProgresso;
     private javax.swing.JCheckBox chkSetup;
     private javax.swing.JCheckBox ckbCedenteRetorno;
     private javax.swing.JCheckBox ckbImprimirMensagemPadrao;
+    private javax.swing.JCheckBox ckbIndicadorPix;
     private javax.swing.JCheckBox ckbSSL;
     private javax.swing.JCheckBox ckbTLS;
     private javax.swing.JComboBox<BancoBoleto> cmbBanco;
+    private javax.swing.JComboBox<String> cmbHttp;
     private javax.swing.JComboBox<String> cmbImpressora;
     private javax.swing.JComboBox<CNABBoleto> cmbLayoutCNAB;
     private javax.swing.JComboBox<ModeloBoleto> cmbModeloImpressao;
+    private javax.swing.JComboBox<Operacao> cmbOperacao;
     private javax.swing.JComboBox<RespEmissaoBoleto> cmbRespEmissao;
+    private javax.swing.JComboBox<String> cmbSSlType;
     private javax.swing.JComboBox<TipoCarteiraBoleto> cmbTipoCarteira;
     private javax.swing.JComboBox<TipoDocumento> cmbTipoDocumento;
     private javax.swing.JComboBox<TipoInscricao> cmbTipoInscricao;
@@ -1991,25 +2362,42 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JSpinner nudCopias;
     private javax.swing.JSpinner nudPorta;
+    private javax.swing.JSpinner nudTimeOut;
+    private javax.swing.JRadioButton rdbHomologacao;
+    private javax.swing.JRadioButton rdbProducao;
     private javax.swing.JTextArea rtbRespostas;
     private javax.swing.JTextField txtAgencia;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCEP;
     private javax.swing.JTextField txtCNPJCPF;
     private javax.swing.JTextField txtCidade;
+    private javax.swing.JTextField txtClientID;
+    private javax.swing.JTextField txtClientSecret;
     private javax.swing.JTextField txtCodCedente;
     private javax.swing.JTextField txtCodTransmissao;
     private javax.swing.JTextField txtComplemento;
@@ -2022,6 +2410,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtDirRetorno;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHost;
+    private javax.swing.JTextField txtKeyUser;
     private javax.swing.JTextField txtLocalPagamento;
     private javax.swing.JTextField txtLogradouro;
     private javax.swing.JTextField txtModalidade;
@@ -2031,8 +2420,11 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JTextField txtNomeRes;
     private javax.swing.JTextField txtNomeRetorno;
     private javax.swing.JTextField txtNumeroRes;
+    private javax.swing.JTextField txtPathLog;
+    private javax.swing.JTextField txtScope;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtTelefone;
     private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtVersao;
     // End of variables declaration//GEN-END:variables
 }

@@ -273,7 +273,7 @@ begin
         if Length(Documento) = 11 then
         begin
           Consulta.Add('cpfPagador='+Copy(Documento,1,9));
-          Consulta.Add('digitoCPFPagador='+Copy(Documento,9,2));
+          Consulta.Add('digitoCPFPagador='+Copy(Documento,10,2));
         end;
 
         if Boleto.Configuracoes.WebService.Filtro.dataVencimento.DataInicio > 0 then

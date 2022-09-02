@@ -294,11 +294,8 @@ procedure TACBrNFSeProviderWebFisco.TratarRetornoConsultaNFSe(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode{, AuxNode}: TACBrXmlNode;
-//  ANodeArray: TACBrXmlNodeArray;
-//  i: Integer;
-//  NumRps: String;
-//  ANota: NotaFiscal;
+  ANode: TACBrXmlNode;
+  ANota: TNotaFiscal;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -316,42 +313,28 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'okk');
+//      ProcessarMensagemErros(ANode, Response, '', 'okk');
 
-      Response.Sucesso := (Response.Erros.Count = 0);
-
-      {
-      AuxNode := ANode.Childrens.FindAnyNs('okk');
-
-      if AuxNode <> nil then
+      with Response do
       begin
-        with Response do
-        begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr);
-        end;
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
+        NumeroRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfenumerorps'), tcStr);
+        NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfenumero'), tcStr);
+        Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfedata'), tcDat);
+        Data := Data + ObterConteudoTag(ANode.Childrens.FindAnyNs('nfehora'), tcHor);
+        CodVerif := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
+        Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfelink'), tcStr);
       end;
 
-      ANodeArray := ANode.Childrens.FindAllAnyNs('NFe');
-      if not Assigned(ANodeArray) then
-      begin
-        AErro := Response.Erros.New;
-        AErro.Codigo := Cod203;
-        AErro.Descricao := Desc203;
-        Exit;
-      end;
+      Response.Sucesso := (Response.Situacao = 'OK');
 
-      for i := Low(ANodeArray) to High(ANodeArray) do
-      begin
-        ANode := ANodeArray[i];
-        AuxNode := ANode.Childrens.FindAnyNs('ChaveNFe');
-        NumRps := AuxNode.AsString;
+      ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroRps);
 
-        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+      if ANota = nil then
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroNota);
 
-        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
-        SalvarXmlNfse(ANota);
-      end;
-      }
+      ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+      SalvarXmlNfse(ANota);
     except
       on E:Exception do
       begin

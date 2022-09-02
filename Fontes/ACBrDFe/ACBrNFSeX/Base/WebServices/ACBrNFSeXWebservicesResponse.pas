@@ -199,6 +199,7 @@ type
     FProtocolo: string;
     FNumeroRps: string;
     FSerieRps: string;
+    FCodVerif: string;
 
     FAlertas: TNFSeEventoCollection;
     FErros: TNFSeEventoCollection;
@@ -232,6 +233,7 @@ type
     property Protocolo: string read FProtocolo write FProtocolo;
     property NumeroRps: string read FNumeroRps write FNumeroRps;
     property SerieRps: string read FSerieRps write FSerieRps;
+    property CodVerif: string read FCodVerif write FCodVerif;
 
     property Alertas: TNFSeEventoCollection read FAlertas;
     property Erros: TNFSeEventoCollection read FErros;

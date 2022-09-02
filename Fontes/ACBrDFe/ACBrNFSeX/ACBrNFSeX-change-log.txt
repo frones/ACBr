@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/09/2022
+-- ACBrNFSeXWebservicesResponse/WebFisco.Provider
+[*] Ajustes para ler o retorno do ConsultarNFSe corretamente.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Marituba/PA - Provedor Actcon 
    Por: Adriano Wolff

@@ -420,7 +420,7 @@ begin
               '0'                                                       + //224 - Código de Baixa
               space(3)                                                  + //225 a 227 - Dias para baixa
               '09'                                                      + //228 a 229 - Código da Moeda
-              '0000000000 ';
+              '00000000000';                                              //230 a 240 zeros
     Inc(FNumeroSequencialRegistroNoLote);
 
     {SEGMENTO Q}

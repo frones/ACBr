@@ -50,6 +50,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/09/2022
+[*] TK-3020 ACBrBoleto -Ajuste remessa CNAB240 Cresol
+  por : Grupo FS
+
+03/09/2022
 --ACBrBoletoW_BancoBrasil_API--
 [*] TK-3026 ACBrBoleto - Ajuste consulta API do BB quanto campo DV cnpjPagador (CPF)
   por : ifcrus / brunocogoo

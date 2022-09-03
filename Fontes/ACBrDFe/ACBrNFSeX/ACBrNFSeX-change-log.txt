@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 02/09/2022
+-- PadraoNacional.LerXml --
+[+] Implementado a leitura do XML do DPS, falta a leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXWebservicesResponse/WebFisco.Provider
 [*] Ajustes para ler o retorno do ConsultarNFSe corretamente.
    Por: Italo Giurizzato Junior

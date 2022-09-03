@@ -71,6 +71,7 @@ type
     cdsPaymentsmethodsType: TStringField;
     cdsPaymentsmethodsChangeFor: TFloatField;
     cdsPaymentsmethodsMethodInfo: TStringField;
+    cdsPaymentsmethodsChangeValue: TCurrencyField;
     private
       { Private declarations }
     public
@@ -91,7 +92,8 @@ implementation
 
 procedure TDM.ResetClientDataSet(AClientDataSet: TClientDataSet);
 begin
-  AClientDataSet.CreateDataSet;
+  if not AClientDataSet.Active then
+    AClientDataSet.CreateDataSet;
   if not (AClientDataSet.Active) then
     AClientDataSet.Active := True;
   if not (AClientDataSet.IsEmpty) then

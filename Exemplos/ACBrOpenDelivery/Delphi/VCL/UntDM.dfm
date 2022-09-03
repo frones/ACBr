@@ -245,6 +245,9 @@ object DM: TDM
       FieldName = 'methodsMethodInfo'
       Size = 30
     end
+    object cdsPaymentsmethodsChangeValue: TCurrencyField
+      FieldName = 'methodsChangeValue'
+    end
   end
   object dtsPayments: TDataSource
     DataSet = cdsPayments

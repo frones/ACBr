@@ -892,10 +892,13 @@ function TACBrOpenDeliveryPolling.TratarResposta: Boolean;
 var
   LJSON: TACBrJSONArray;
 begin
-  LJSON := FResponse.GetJSONArray;
-  Events.Clear;
-  Events.AsJSON := LJSON.ToJSON;
   Result := True;
+  Events.Clear;
+  LJSON := FResponse.GetJSONArray;
+  if Assigned(LJSON) then
+  begin
+    Events.AsJSON := LJSON.ToJSON;
+  end;
   InvokeEvents;
 end;
 

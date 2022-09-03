@@ -3166,7 +3166,7 @@ procedure TACBrOpenDeliverySchemaAcknowledgment.DoWriteToJSon(AJSon: TACBrJSONOb
 begin
   AJSon
     .AddPair('id', FId)
-    .AddPair('orderId', FOrderId)
+    .AddPair('orderId', FOrderId, False)
     .AddPair('eventType', EventTypeToStr(FEventType));
 end;
 

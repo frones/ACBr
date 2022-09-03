@@ -414,7 +414,7 @@ end;
 
 function TACBrOpenDeliveryHTTPResponse.GetJSONArray: TACBrJSONArray;
 begin
-  if not Assigned(FJSONArray) then
+  if (not Assigned(FJSONArray)) and (GetContent <> '') then
     FJSONArray := TACBrJSONArray.Parse(GetContent);
   Result := FJSONArray;
 end;

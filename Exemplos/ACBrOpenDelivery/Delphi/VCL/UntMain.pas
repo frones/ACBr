@@ -77,7 +77,6 @@ type
     rgUpdateType: TRadioGroup;
     rgUpdateEntity: TRadioGroup;
     mmoLogRequest: TMemo;
-    mmoLogResponse: TMemo;
     Clear1: TMenuItem;
     ACBrOpenDelivery1: TACBrOpenDelivery;
     pgPolling: TPageControl;
@@ -360,7 +359,8 @@ begin
     DM.cdsPaymentsmethodsMethod.AsString := PaymentMethodToStr(ACBrOpenDelivery1.Order.payments.methods[I].method);
     DM.cdsPaymentsmethodsMethodInfo.AsString := ACBrOpenDelivery1.Order.payments.methods[I].methodInfo;
     DM.cdsPaymentsmethodsType.AsString := PaymentTypeToStr(ACBrOpenDelivery1.Order.payments.methods[I]._type);
-    DM.cdsPaymentsmethodsChangeFor.AsCurrency := ACBrOpenDelivery1.Order.payments.methods[I].value;
+    DM.cdsPaymentsmethodsChangeFor.AsCurrency := ACBrOpenDelivery1.Order.payments.methods[I].changeFor;
+    DM.cdsPaymentsmethodsChangeValue.AsCurrency := ACBrOpenDelivery1.Order.payments.methods[I].changeValue;
 
     DM.cdsPayments.Post;
   end;
@@ -404,50 +404,41 @@ end;
 procedure TFMain.btnPollingClick(Sender: TObject);
 var
   I: Integer;
-  LStrEvent: string;
 begin
+  Screen.Cursor := crHourGlass;
   try
-    Screen.Cursor := crHourGlass;
-    try
-      ConfigurarComponente;
-      ACBrOpenDelivery1.WebServices.Polling.Executar;
+    ConfigurarComponente;
+    DM.ResetClientDataSet(DM.cdsPolling);
+    ACBrOpenDelivery1.WebServices.Polling.Executar;
 
-      edtPollingAddEventId.Text := ACBrOpenDelivery1.WebServices.Polling.Events[0].EventId;
-      edtPollingOrderId.Text := ACBrOpenDelivery1.WebServices.Polling.Events[0].OrderId;
-      edtOrderOrderId.Text := ACBrOpenDelivery1.WebServices.Polling.Events[0].OrderId;
+    if ACBrOpenDelivery1.Events.Count > 0 then
+    begin
+      edtPollingAddEventId.Text := ACBrOpenDelivery1.Events[0].EventId;
+      edtPollingOrderId.Text := ACBrOpenDelivery1.Events[0].OrderId;
+      edtOrderOrderId.Text := ACBrOpenDelivery1.Events[0].OrderId;
 
-      mmoPolling.Lines.Text := ACBrOpenDelivery1.WebServices.Polling.Events.AsJSON;
+      mmoPolling.Lines.Text := ACBrOpenDelivery1.Events.AsJSON;
 
-      DM.ResetClientDataSet(DM.cdsPolling);
-
-      for I := 0 to Pred(ACBrOpenDelivery1.WebServices.Polling.Events.Count) do
+      for I := 0 to Pred(ACBrOpenDelivery1.Events.Count) do
       begin
-        LStrEvent := EventTypeToStr(ACBrOpenDelivery1.WebServices.Polling.Events[I].EventType);
-
         DM.cdsPolling.Append;
-        DM.cdsPollingeventID.AsString := ACBrOpenDelivery1.WebServices.Polling.Events[I].EventId;
-        DM.cdsPollingeventType.AsString := LStrEvent;
-        DM.cdsPollingorderID.AsString := ACBrOpenDelivery1.WebServices.Polling.Events[I].OrderId;
-        DM.cdsPollingorderURL.AsString := ACBrOpenDelivery1.WebServices.Polling.Events[I].OrderURL;
-        DM.cdsPollingcreatedAt.AsDateTime := ACBrOpenDelivery1.WebServices.Polling.Events[I].CreatedAt;
-
-        //  FormatDateTime('YYYY-MM-DD hh:mm:ss', ACBrOpenDelivery1.WebServices.Polling.Events[I].CreatedAt);
-        DM.cdsPollingsourceAppID.AsString := ACBrOpenDelivery1.WebServices.Polling.Events[I].SourceAppId;
+        DM.cdsPollingeventID.AsString := ACBrOpenDelivery1.Events[I].EventId;
+        DM.cdsPollingeventType.AsString := EventTypeToStr(ACBrOpenDelivery1.Events[I].EventType);
+        DM.cdsPollingorderID.AsString := ACBrOpenDelivery1.Events[I].OrderId;
+        DM.cdsPollingorderURL.AsString := ACBrOpenDelivery1.Events[I].OrderURL;
+        DM.cdsPollingcreatedAt.AsDateTime := ACBrOpenDelivery1.Events[I].CreatedAt;
+        DM.cdsPollingsourceAppID.AsString := ACBrOpenDelivery1.Events[I].SourceAppId;
         DM.cdsPolling.Post;
       end;
-    except
-      Screen.Cursor := crDefault;
     end;
   finally
     Screen.Cursor := crDefault;
   end;
-
 end;
 
 procedure TFMain.Clear1Click(Sender: TObject);
 begin
   mmoLogRequest.Lines.Clear;
-  mmoLogResponse.Lines.Clear;
 end;
 
 { TFMain }
@@ -484,27 +475,31 @@ end;
 
 procedure TFMain.OpenLink(ALabel: TLabel);
 begin
-  ShellExecute(Handle, 'open', PAnsiChar(ALabel.Caption), nil, nil, SW_SHOWMAXIMIZED);
+//  ShellExecute(Handle, 'open', PAnsiChar(ALabel.Caption), nil, nil, SW_SHOWMAXIMIZED);
 end;
 
 procedure TFMain.ACBrOpenDelivery1HTTPEnviar(ALogEnvio: TACBrOpenDeliveryHTTPLogEnvio);
 begin
+  mmoLogRequest.Lines.Add('------ INICIO REQUEST -------');
   mmoLogRequest.Lines.Add('Id: ' + ALogEnvio.Id);
   mmoLogRequest.Lines.Add('Start: ' + FormatDateTime('hh:mm:ss', ALogEnvio.Data));
   mmoLogRequest.Lines.Add('Url: ' + ALogEnvio.URL);
   mmoLogRequest.Lines.Add('Method: ' + ALogEnvio.Method);
   mmoLogRequest.Lines.Add('Headers: ' + ALogEnvio.Headers.Text);
   mmoLogRequest.Lines.Add('Body: ' + ALogEnvio.Body);
+  mmoLogRequest.Lines.Add('------ FIM REQUEST -------');
 end;
 
 procedure TFMain.ACBrOpenDelivery1HTTPRetornar(ALogResposta: TACBrOpenDeliveryHTTPLogResposta);
 begin
-  mmoLogResponse.Lines.Add('Id: ' + ALogResposta.Id);
-  mmoLogResponse.Lines.Add('Start: ' + FormatDateTime('hh:mm:ss', ALogResposta.Data));
-  mmoLogResponse.Lines.Add('Url: ' + ALogResposta.URL);
-  mmoLogResponse.Lines.Add('Status: ' + IntToStr(ALogResposta.Status));
-  mmoLogResponse.Lines.Add('Headers: ' + ALogResposta.Headers.Text);
-  mmoLogResponse.Lines.Add('Body: ' + ALogResposta.Body);
+  mmoLogRequest.Lines.Add('------ INICIO RESPONSE -------');
+  mmoLogRequest.Lines.Add('Id: ' + ALogResposta.Id);
+  mmoLogRequest.Lines.Add('Start: ' + FormatDateTime('hh:mm:ss', ALogResposta.Data));
+  mmoLogRequest.Lines.Add('Url: ' + ALogResposta.URL);
+  mmoLogRequest.Lines.Add('Status: ' + IntToStr(ALogResposta.Status));
+  mmoLogRequest.Lines.Add('Headers: ' + ALogResposta.Headers.Text);
+  mmoLogRequest.Lines.Add('Body: ' + ALogResposta.Body);
+  mmoLogRequest.Lines.Add('------ FIM RESPONSE -------');
 end;
 
 end.

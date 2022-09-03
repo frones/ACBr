@@ -70,7 +70,7 @@ object FMain: TFMain
       Top = 0
       Width = 1064
       Height = 679
-      ActivePage = tbiPolling
+      ActivePage = tbiMerchant
       Align = alClient
       TabOrder = 0
       object tbiPolling: TTabSheet
@@ -398,8 +398,8 @@ object FMain: TFMain
           object Label10: TLabel
             Left = 0
             Top = 0
-            Width = 319
-            Height = 15
+            Width = 1056
+            Height = 41
             Cursor = crHandPoint
             Align = alClient
             Caption = 'https://abrasel-nacional.github.io/docs/#tag/ordersStatus'
@@ -497,7 +497,7 @@ object FMain: TFMain
           Top = 384
           Width = 1056
           Height = 265
-          ActivePage = tbItems
+          ActivePage = tbPayments
           Align = alBottom
           TabOrder = 10
           object tbItems: TTabSheet
@@ -535,49 +535,41 @@ object FMain: TFMain
                 item
                   Expanded = False
                   FieldName = 'externalCode'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'Unit'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'specialInstructions'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'unitPriceValue'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'optionsPrice'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'totalPriceValue'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'totalPriceCurrency'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'unitPriceCurrency'
-                  Width = 64
                   Visible = True
                 end
                 item
@@ -617,7 +609,6 @@ object FMain: TFMain
                 item
                   Expanded = False
                   FieldName = 'externalCode'
-                  Width = 64
                   Visible = True
                 end
                 item
@@ -634,25 +625,21 @@ object FMain: TFMain
                 item
                   Expanded = False
                   FieldName = 'unitPriceValue'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'unitPriceCurrency'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'totalPriceValue'
-                  Width = 64
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'totalPriceCurrency'
-                  Width = 64
                   Visible = True
                 end
                 item
@@ -1233,8 +1220,8 @@ object FMain: TFMain
           object Label11: TLabel
             Left = 0
             Top = 0
-            Width = 487
-            Height = 15
+            Width = 1056
+            Height = 41
             Cursor = crHandPoint
             Align = alClient
             Caption = 
@@ -1317,21 +1304,11 @@ object FMain: TFMain
           Left = 0
           Top = 0
           Width = 1056
-          Height = 225
-          Align = alTop
-          PopupMenu = pmLog
-          ScrollBars = ssVertical
-          TabOrder = 0
-        end
-        object mmoLogResponse: TMemo
-          Left = 0
-          Top = 225
-          Width = 1056
-          Height = 424
+          Height = 649
           Align = alClient
           PopupMenu = pmLog
           ScrollBars = ssVertical
-          TabOrder = 1
+          TabOrder = 0
         end
       end
       object tbiConfiguracoes: TTabSheet

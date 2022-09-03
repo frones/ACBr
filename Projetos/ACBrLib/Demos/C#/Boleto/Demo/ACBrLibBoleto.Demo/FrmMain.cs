@@ -6,6 +6,7 @@ using ACBrLib;
 using ACBrLib.Boleto;
 using ACBrLib.Core;
 using ACBrLib.Core.Boleto;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLibBoleto.Demo
 {
@@ -44,6 +45,9 @@ namespace ACBrLibBoleto.Demo
             cmbBanco.EnumDataSource(ACBrTipoCobranca.cobNenhum);
             cmbRespEmissao.EnumDataSource(ACBrResponEmissao.tbCliEmite);
             cmbLayoutCNAB.EnumDataSource(ACBrLayoutRemessa.c240);
+            cmbSSlType.EnumDataSource(SSLType.LT_TLSv1_2);
+            cmbHttp.EnumDataSource(SSLHttpLib.httpOpenSSL);
+            cmbOperacao.EnumDataSource(OperacaoBoleto.tpInclui);
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
@@ -121,7 +125,26 @@ namespace ACBrLibBoleto.Demo
             nudPorta.Text = boleto.Config.Email.Porta;
             ckbSSL.Checked = boleto.Config.Email.SSL;
             ckbTLS.Checked = boleto.Config.Email.TLS;
-            
+
+            txtClientID.Text = boleto.Config.CedenteWebservice.ClientID;
+            txtClientSecret.Text = boleto.Config.CedenteWebservice.ClientSecret;
+            txtKeyUser.Text = boleto.Config.CedenteWebservice.KeyUser;
+            txtScope.Text = boleto.Config.CedenteWebservice.Scope;
+            chkIndicadorPix.Checked = boleto.Config.CedenteWebservice.IndicadorPix;
+
+            chkGravarLog.Checked = boleto.Config.Webservice.LogRegistro;
+            txtPathLog.Text = boleto.Config.Webservice.PathGravarRegistro;
+
+            var ambiente = boleto.Config.Webservice.Ambiente;
+            rdbHomologacao.Checked = ambiente == AmbienteWebservice.Homologaçao;
+            rdbProducao.Checked = ambiente == AmbienteWebservice.Producao;
+
+            cmbOperacao.SetSelectedValue(boleto.Config.Webservice.Operacao);
+            cmbSSlType.SetSelectedValue(boleto.Config.Webservice.SSLType);
+            cmbHttp.SetSelectedValue(boleto.Config.DFe.SSLHttpLib);
+            txtVersao.Text = boleto.Config.Webservice.VersaoDF;
+            nudTimeOut.Value = boleto.Config.Webservice.Timeout;
+
         }
 
         private void SaveConfig()
@@ -170,6 +193,22 @@ namespace ACBrLibBoleto.Demo
             boleto.Config.Email.Porta = nudPorta.Text;
             boleto.Config.Email.SSL = ckbSSL.Checked;
             boleto.Config.Email.TLS = ckbTLS.Checked;
+
+            boleto.Config.CedenteWebservice.ClientID = txtClientID.Text;
+            boleto.Config.CedenteWebservice.ClientSecret = txtClientSecret.Text;
+            boleto.Config.CedenteWebservice.KeyUser = txtKeyUser.Text;
+            boleto.Config.CedenteWebservice.Scope = txtScope.Text;
+            boleto.Config.CedenteWebservice.IndicadorPix = chkIndicadorPix.Checked;
+
+            boleto.Config.Webservice.LogRegistro = chkGravarLog.Checked;
+            boleto.Config.Webservice.PathGravarRegistro = txtPathLog.Text;
+            boleto.Config.Webservice.Ambiente = rdbHomologacao.Checked ? AmbienteWebservice.Homologaçao : AmbienteWebservice.Producao;
+            boleto.Config.Webservice.Operacao = cmbOperacao.GetSelectedValue<OperacaoBoleto>();
+            boleto.Config.Webservice.SSLType = cmbSSlType.GetSelectedValue<SSLType>();
+            boleto.Config.DFe.SSLHttpLib = cmbHttp.GetSelectedValue<SSLHttpLib>();
+            boleto.Config.Webservice.VersaoDF = txtVersao.Text;
+            boleto.Config.Webservice.Timeout = (int)nudTimeOut.Value;
+
             boleto.ConfigGravar();
         }
 
@@ -562,6 +601,29 @@ namespace ACBrLibBoleto.Demo
             ConfigBoleto();            
             GerarTitulo();
             rtbRespostas.AppendLine("Título(s) adicionado(s)." );
+        }
+
+        private void btnEnviarBoletoWebService_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var ret = boleto.EnviarBoleto(0);
+                rtbRespostas.AppendLine(ret.Retorno);
+            } 
+            catch (Exception ex)
+            {
+                rtbRespostas.AppendLine(ex.Message);
+            }
+        }
+
+        private void btnCarregarConfiguracoes_Click(object sender, EventArgs e)
+        {
+            LoadConfig();
+        }
+
+        private void btnPathLog_Click(object sender, EventArgs e)
+        {
+            txtPathLog.Text = Helpers.SelectFolder();
         }
     }
 }

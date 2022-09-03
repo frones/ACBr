@@ -1,5 +1,6 @@
 ﻿using ACBrLib.Core;
 using ACBrLib.Core.Boleto;
+using ACBrLib.Core.DFe;
 using ACBrLib.Core.Config;
 
 namespace ACBrLib.Boleto
@@ -34,7 +35,7 @@ namespace ACBrLib.Boleto
             set => SetProperty(value);
         }
 
-        public OperacaoBoleto Operação
+        public OperacaoBoleto Operacao
         {
             get => GetProperty<OperacaoBoleto>();
             set => SetProperty(value);
@@ -49,6 +50,18 @@ namespace ACBrLib.Boleto
         public bool UseCertificateHTTP
         {
             get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
+
+        public SSLType SSLType
+        {
+            get => GetProperty<SSLType>();
+            set => SetProperty(value);
+        } 
+
+        public int Timeout
+        {
+            get => GetProperty<int>();
             set => SetProperty(value);
         }
 

@@ -6,6 +6,6 @@
         Homologaçao,
 
         [EnumValue("0")]
-        Produção
+        Producao
     }
 }

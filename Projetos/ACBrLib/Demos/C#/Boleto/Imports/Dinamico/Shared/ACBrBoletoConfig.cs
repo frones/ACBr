@@ -23,6 +23,7 @@ namespace ACBrLib.Boleto
             Webservice = new WebserviceConfig(acbrboleto);
             CedenteWebservice = new CedenteWebserviceConfig(acbrboleto);
             Email = new EmailConfig<ACBrBoleto>(acbrboleto);
+            DFe = new DFeConfig<ACBrBoleto>(acbrboleto);
         }
 
         #endregion Constructors
@@ -67,6 +68,10 @@ namespace ACBrLib.Boleto
         /// <summary>
         /// Assunto padrão do envio de email.
         /// </summary>
+        /// 
+
+        public DFeConfig<ACBrBoleto> DFe { get; }
+
         public string EmailAssuntoBoleto
         {
             get => GetProperty<string>("emailAssuntoBoleto");

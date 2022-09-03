@@ -1,0 +1,22 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2022-09-03T12:08:13.7362325-03:00",
+	"installedModules": {
+		"github.com/hashload/horse": {
+			"name": "horse",
+			"version": "3.0.0",
+			"hash": "195e14c9c225f81a8c69d18b5118c149",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"github.com/hashload/horse-cors": {
+			"name": "horse-cors",
+			"version": "1.0.5",
+			"hash": "655dbd17159adb9d87d36f3aa56be5a5",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}

@@ -1249,6 +1249,7 @@ type
     procedure DoWriteToJSon(AJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(AJSon: TACBrJSONObject); override;
   public
+    constructor Create(const AObjectName: string = ''); override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
 
@@ -1622,6 +1623,12 @@ procedure TACBrOpenDeliverySchemaPrice.Clear;
 begin
   Fvalue := 0;
   Fcurrency := '';
+end;
+
+constructor TACBrOpenDeliverySchemaPrice.Create(const AObjectName: string);
+begin
+  inherited Create(AObjectName);
+  FCurrency := 'BRL';
 end;
 
 procedure TACBrOpenDeliverySchemaPrice.DoReadFromJSon(AJSon: TACBrJSONObject);

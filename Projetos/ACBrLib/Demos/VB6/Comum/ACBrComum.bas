@@ -489,7 +489,7 @@ Public Enum IndicadorPix
 End Enum
 
 Public Enum LogRegistro
-    Não = 0
+    Nao = 0
     Sim = 1
 End Enum
 
@@ -603,6 +603,28 @@ End Enum
 Public Enum IgnorarCaixaEAcentos
     Nao = 0
     Sim = 1
+End Enum
+
+Public Enum VersaoDFeSocial
+    ve02_04_01 = 0
+    ve02_04_02 = 1
+    ve02_05_00 = 2
+    veS01_00_00 = 3
+End Enum
+
+Public Enum TipoEmpregadoreSocial
+    tePessoaJuridica = 0
+    teOrgaoPublico = 1
+    tePessoaFisica = 2
+    teOrgaoPublicoExecutivoFederal = 3
+    teOrgaoPublicoLegislativoFederal = 4
+    teOrgaoPublicoJudiciarioFederal = 5
+    teOrgaoPublicoAutonomoFederal = 6
+End Enum
+
+Public Enum AmbienteeSocial
+    taProducao = 0
+    taProducaoRestrita = 1
 End Enum
 
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean

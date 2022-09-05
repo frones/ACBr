@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 05/09/2022
+-- PadraoNacional.LerXml --
+[+] Implementado a leitura do XML da NFS-e.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluída a cidade de Luis Antonio/SP - Provedor WebFisco
    Por: Leandro Coelho

@@ -46,6 +46,12 @@ type
 
   TNFSeR_PadraoNacional = class(TNFSeRClass)
   protected
+    procedure LerinfNFSe(const ANode: TACBrXmlNode);
+    procedure LerEmitente(const ANode: TACBrXmlNode);
+    procedure LerEnderecoEmitente(const ANode: TACBrXmlNode);
+
+    procedure LerValoresNFSe(const ANode: TACBrXmlNode);
+    procedure LerDPS(const ANode: TACBrXmlNode);
 
     procedure LerinfDPS(const ANode: TACBrXmlNode);
     procedure LerSubstituicao(const ANode: TACBrXmlNode);
@@ -271,6 +277,64 @@ begin
 
         LerFornecedor(ANodes[i].Childrens.FindAnyNs('fornec'), I);
       end;
+    end;
+  end;
+end;
+
+procedure TNFSeR_PadraoNacional.LerDPS(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('DPS');
+
+  if AuxNode <> nil then
+    LerinfDPS(AuxNode);
+end;
+
+procedure TNFSeR_PadraoNacional.LerEmitente(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('emit');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.infNFSe.emit do
+    begin
+      with Identificacao do
+      begin
+        CpfCnpj := ObterCNPJCPF(AuxNode);
+
+        InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
+      end;
+
+      RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
+      NomeFantasia := ObterConteudo(AuxNode.Childrens.FindAnyNs('xFant'), tcStr);
+
+      LerEnderecoEmitente(AuxNode);
+
+      Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
+      Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+    end;
+  end;
+end;
+
+procedure TNFSeR_PadraoNacional.LerEnderecoEmitente(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('enderNac');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.infNFSe.emit.Endereco do
+    begin
+      Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLgr'), tcStr);
+      Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('nro'), tcStr);
+      Complemento := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
+      Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
+      UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
+      CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
     end;
   end;
 end;
@@ -684,6 +748,41 @@ begin
   end;
 end;
 
+procedure TNFSeR_PadraoNacional.LerinfNFSe(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+  Ok: Boolean;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('infNFSe');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.infNFSe do
+    begin
+      ID := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
+      xLocEmi := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocEmi'), tcStr);
+      xLocPrestacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocPrestacao'), tcStr);
+      nNFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('nNFSe'), tcStr);
+      cLocIncid := ObterConteudo(AuxNode.Childrens.FindAnyNs('cLocIncid'), tcInt);
+      xLocIncid := ObterConteudo(AuxNode.Childrens.FindAnyNs('xLocIncid'), tcStr);
+      xTribNac := ObterConteudo(AuxNode.Childrens.FindAnyNs('xTribNac'), tcStr);
+      xTribMun := ObterConteudo(AuxNode.Childrens.FindAnyNs('xTribMun'), tcStr);
+      xNBS := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNBS'), tcStr);
+      verAplic := ObterConteudo(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
+      ambGer := StrToambGer(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('ambGer'), tcStr));
+      tpEmis := StrTotpEmis(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpEmis'), tcStr));
+      procEmi := StrToprocEmi(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('procEmi'), tcStr));
+      cStat := ObterConteudo(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
+      dhProc := ObterConteudo(AuxNode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+      nDFSe := ObterConteudo(AuxNode.Childrens.FindAnyNs('nDFSe'), tcStr);
+
+      LerEmitente(AuxNode);
+      LerValoresNFSe(AuxNode);
+      LerDPS(AuxNode);
+    end;
+  end;
+end;
+
 procedure TNFSeR_PadraoNacional.LerInformacoesComplementares(
   const ANode: TACBrXmlNode);
 var
@@ -1079,6 +1178,30 @@ begin
   end;
 end;
 
+procedure TNFSeR_PadraoNacional.LerValoresNFSe(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  AuxNode := ANode.Childrens.FindAnyNs('valores');
+
+  if AuxNode <> nil then
+  begin
+    with NFSe.infNFSe.valores do
+    begin
+      vCalcDR := ObterConteudo(AuxNode.Childrens.FindAnyNs('vCalcDR'), tcDe2);
+      tpBM := ObterConteudo(AuxNode.Childrens.FindAnyNs('tpBM'), tcStr);
+      vCalcBM := ObterConteudo(AuxNode.Childrens.FindAnyNs('vCalcBM'), tcDe2);
+      BaseCalculo := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBC'), tcDe2);
+      Aliquota := ObterConteudo(AuxNode.Childrens.FindAnyNs('pAliqAplic'), tcDe2);
+      ValorIss := ObterConteudo(AuxNode.Childrens.FindAnyNs('vISSQN'), tcDe2);
+      vTotalRet := ObterConteudo(AuxNode.Childrens.FindAnyNs('vTotalRet'), tcDe2);
+      ValorLiquidoNfse := ObterConteudo(AuxNode.Childrens.FindAnyNs('vLiq'), tcDe2);
+    end;
+
+    NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('xOutInf'), tcStr);
+  end;
+end;
+
 procedure TNFSeR_PadraoNacional.LerValorTotalTributos(
   const ANode: TACBrXmlNode);
 var
@@ -1133,22 +1256,12 @@ begin
 end;
 
 function TNFSeR_PadraoNacional.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
-var
-  AuxNode: TACBrXmlNode;
-//  aValor: String;
-//  ANodes: TACBrXmlNodeArray;
-//  i: integer;
 begin
   Result := True;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
-  AuxNode := ANode.Childrens.FindAnyNs('NFSe');
-
-  if AuxNode <> nil then
-  begin
-
-  end;
+  LerinfNFSe(ANode);
 end;
 
 function TNFSeR_PadraoNacional.LerXmlRps(const ANode: TACBrXmlNode): Boolean;

@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2022
+-- ACBrNFeDANFeRLRetrato --
+[*] Correção, estava duplicando o titulo das colunas Valor Total e Desconto.
+   Por: Italo Giurizzato Junior
+
 02/09/2022
 -- ACBrNFeDANFeRLRetrato --
 [*] Alteração para destacar corretamente no DANFE as NFes Canceladas, quando é 

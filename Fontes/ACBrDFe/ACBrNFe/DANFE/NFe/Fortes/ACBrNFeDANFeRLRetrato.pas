@@ -1995,7 +1995,8 @@ begin
   end;
   }
   lblPercValorDesc.Caption := 'DESCONTO';
-  lblValorTotal.Caption := 'VALOR';
+  lblPercValorDesc1.Caption := '';
+//  lblValorTotal.Caption := 'VALOR';
 end;
 
 function TfrlDANFeRLRetrato.ManterBandinfAdProd(const sInforAdicProduto: String): String;

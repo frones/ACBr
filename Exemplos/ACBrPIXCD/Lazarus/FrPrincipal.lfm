@@ -2706,14 +2706,14 @@ object Form1: TForm1
                 ClientHeight = 152
                 ClientWidth = 616
                 TabOrder = 0
-                object Label44: TLabel
+                object lbQRDLocation: TLabel
                   Left = 16
                   Height = 15
-                  Top = 24
+                  Top = 28
                   Width = 75
                   Caption = 'URL (location)'
                 end
-                object edtQRDLocation: TEdit
+                object edQRDLocation: TEdit
                   Left = 16
                   Height = 23
                   Top = 44
@@ -2733,6 +2733,22 @@ object Form1: TForm1
                   ImageIndex = 1
                   OnClick = btQRDGerarClick
                   TabOrder = 1
+                end
+                object edQRDTxID: TEdit
+                  Left = 16
+                  Height = 23
+                  Top = 100
+                  Width = 400
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = QuandoMudarDadosQRCode
+                  TabOrder = 2
+                end
+                object lbQRDTxID: TLabel
+                  Left = 16
+                  Height = 15
+                  Top = 85
+                  Width = 336
+                  Caption = 'TxId (Campo apenas informativo. TxID considerado será da URL)'
                 end
               end
               object pQREGerado1: TPanel

@@ -190,6 +190,7 @@ type
   protected
     function ComputeCRC: String;
     procedure ValidateCRC;
+    procedure ValidateTxID(const aTxID: String); virtual;
 
     property MerchantAccountInformation: TACBrEMVList  // 26
       read fMerchantAccountInformation;
@@ -245,6 +246,8 @@ type
   TACBrPIXQRCodeEstatico = class(TACBrBRCode)
   private
     function GetAsString: String; override;
+  protected
+    procedure ValidateTxID(const aTxID: String); override;
   public
     procedure AddDefaultValues; override;
     property PixKey;
@@ -258,6 +261,8 @@ type
   TACBrPIXQRCodeDinamico = class(TACBrBRCode)
   private
     function GetAsString: String; override;
+  protected
+    procedure ValidateTxID(const aTxID: String); override;
   public
     procedure AddDefaultValues; override;
     property URL;
@@ -487,6 +492,11 @@ begin
     RaiseError(sErrCRCInvalid);
 end;
 
+procedure TACBrBRCode.ValidateTxID(const aTxID: String);
+begin
+  // Validação deve ser feita pelas classes filhas
+end;
+
 procedure TACBrBRCode.RaiseError(const e: String);
 begin
   if fIgnoreErrors then Exit;
@@ -684,17 +694,14 @@ end;
 
 procedure TACBrBRCode.SetTxId(const AValue: String);
 var
-  e, s: String;
+  s: String;
 begin
   s := Trim(AValue);
   if (s = cMPMValueNotInformed) or (s = '') then
     fAdditionalDataField.ID[cID_TxId] := cMPMValueNotInformed
   else
   begin
-    e := ValidarTxId(s, 25);
-    if (e <> '') then
-      RaiseError(ACBrStr(e));
-
+    ValidateTxID(s);
     fAdditionalDataField.ID[cID_TxId] := s;
   end;
 end;
@@ -795,6 +802,15 @@ begin
   Result := inherited GetAsString;
 end;
 
+procedure TACBrPIXQRCodeEstatico.ValidateTxID(const aTxID: String);
+var
+  e: String;
+begin
+  e := ValidarTxId(aTxID, 25);
+  if NaoEstaVazio(e) then
+    RaiseError(ACBrStr(e));
+end;
+
 procedure TACBrPIXQRCodeEstatico.AddDefaultValues;
 begin
   inherited AddDefaultValues;
@@ -809,6 +825,15 @@ begin
     RaiseError(Format(ACBrStr(sErrMandatoryFieldNotInformed),['URL']));
 
   Result := inherited GetAsString;
+end;
+
+procedure TACBrPIXQRCodeDinamico.ValidateTxID(const aTxID: String);
+var
+  e: String;
+begin
+  e := ValidarTxId(aTxID, 35, 26);
+  if NaoEstaVazio(e) then
+    RaiseError(ACBrStr(e));
 end;
 
 procedure TACBrPIXQRCodeDinamico.AddDefaultValues;

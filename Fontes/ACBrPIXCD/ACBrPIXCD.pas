@@ -534,7 +534,8 @@ type
       const TxId: String = ''): String; overload;
     function GerarQRCodeEstatico(const ChavePix: String; Valor: Currency;
       const infoAdicional: String = ''; const TxId: String = ''): String; overload;
-    function GerarQRCodeDinamico(const Location: String): String;
+    function GerarQRCodeDinamico(const Location: String; const TxID: String = '';
+      const Valor: Currency = 0): String;
 
   published
     property Recebedor: TACBrPixRecebedor read fRecebedor write SetRecebedor;
@@ -2239,12 +2240,15 @@ begin
   end;
 end;
 
-function TACBrPixCD.GerarQRCodeDinamico(const Location: String): String;
+function TACBrPixCD.GerarQRCodeDinamico(const Location: String;
+  const TxID: String; const Valor: Currency): String;
 var
   Erros: String;
   QRCodeDinamico: TACBrPIXQRCodeDinamico;
 begin
-  RegistrarLog('GerarQRCodeDinamico( '+Location+' )');
+  RegistrarLog('GerarQRCodeDinamico( ' + Location +
+    IfThen(NaoEstaVazio(TxID), ', ' + TxID, EmptyStr) +
+    IfThen(Valor > 0, ', ' + FloatToString(Valor), EmptyStr) + ' )');
 
   Erros := '';
   if (fRecebedor.Nome = '') then
@@ -2263,6 +2267,11 @@ begin
     QRCodeDinamico.MerchantCity := fRecebedor.Cidade;
     QRCodeDinamico.PostalCode := fRecebedor.CEP;
     QRCodeDinamico.URL := Location;
+
+    if NaoEstaVazio(TxID) then
+      QRCodeDinamico.TxId := TxID;
+    if (Valor <> 0) then
+      QRCodeDinamico.TransactionAmount := Valor;
 
     Result := QRCodeDinamico.AsString;
     RegistrarLog('   '+Result);

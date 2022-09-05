@@ -176,6 +176,7 @@ type
     edtProxyHost: TEdit;
     edtProxySenha: TEdit;
     edtProxyUser: TEdit;
+    edQRDTxID: TEdit;
     edtRecebedorCEP: TEdit;
     edtRecebedorCidade: TEdit;
     edtRecebedorNome: TEdit;
@@ -204,7 +205,7 @@ type
     edtItauClientID: TEdit;
     edtItauClientSecret: TEdit;
     edtQREInfoAdicional: TEdit;
-    edtQRDLocation: TEdit;
+    edQRDLocation: TEdit;
     edtQRETxId: TEdit;
     edtCriarCobrancaImediata_NomeDevedor: TEdit;
     edtSolicitarDevolucaoPix_e2eid: TEdit;
@@ -266,6 +267,7 @@ type
     Label38: TLabel;
     Label39: TLabel;
     Label42: TLabel;
+    lbQRDTxID: TLabel;
     Label47: TLabel;
     Label48: TLabel;
     Label49: TLabel;
@@ -322,7 +324,7 @@ type
     Label43: TLabel;
     Label40: TLabel;
     Label41: TLabel;
-    Label44: TLabel;
+    lbQRDLocation: TLabel;
     Label6: TLabel;
     lConsultarDevolucaoPixE2eid2: TLabel;
     lConsultarDevolucaoPixE2eid3: TLabel;
@@ -2522,7 +2524,9 @@ end;
 
 procedure TForm1.PintarQRCodeDinamico;
 begin
-  mQRD.Lines.Text := ACBrPixCD1.GerarQRCodeDinamico( edtQRDLocation.Text );
+  mQRD.Lines.Text := ACBrPixCD1.GerarQRCodeDinamico(
+                       edQRDLocation.Text,
+                       edQRDTxID.Text);
   PintarQRCode(mQRD.Lines.Text, imgQRD.Picture.Bitmap, qrUTF8BOM);
 end;
 

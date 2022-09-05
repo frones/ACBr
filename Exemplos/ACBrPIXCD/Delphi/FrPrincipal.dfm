@@ -2480,14 +2480,21 @@ object Form1: TForm1
                 DesignSize = (
                   616
                   152)
-                object Label44: TLabel
+                object lbQRDLocation: TLabel
                   Left = 16
-                  Top = 24
+                  Top = 28
                   Width = 68
                   Height = 13
                   Caption = 'URL (location)'
                 end
-                object edtQRDLocation: TEdit
+                object lbQRDTxID: TLabel
+                  Left = 16
+                  Top = 85
+                  Width = 308
+                  Height = 13
+                  Caption = 'TxId (Campo apenas informativo. TxID considerado ser'#225' da URL)'
+                end
+                object edQRDLocation: TEdit
                   Left = 16
                   Top = 44
                   Width = 584
@@ -2505,6 +2512,15 @@ object Form1: TForm1
                   Caption = 'Gerar QRCode'
                   TabOrder = 1
                   OnClick = btQRDGerarClick
+                end
+                object edQRDTxID: TEdit
+                  Left = 16
+                  Top = 100
+                  Width = 409
+                  Height = 21
+                  Anchors = [akLeft, akTop, akRight]
+                  TabOrder = 2
+                  OnChange = QuandoMudarDadosQRCode
                 end
               end
               object pQREGerado1: TPanel

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2022
+-- ACBrPIXCD --
+[*] Inclusão dos parâmetros TxID e Valor na procedure "GerarQRCodeDinamico()",  para 
+    possibilitar informar esses valores à título de informação no Copia e Cola, pois 
+    os valores válidos sempre serão os da URL.
+	
+-- ACBrPIXBRCode --
+[*] Alteração para os tipos de QRCodes validarem o TxID de maneira diferente:
+    - QRCodeEstatico = Tamanho TxID até 25 caracteres;
+    - QRCodeDinamico = Tamanho TxID de 26 a 35 caracteres.
+    Por: Elias César
+
 01/09/2022
 -- ACBrPIXPSPSantander --
 [+] Inclusão de propriedades para certificado PFX e senha. 

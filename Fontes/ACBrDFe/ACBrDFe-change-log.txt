@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2022
+-- ACBrXmlBase --
+[*] Alterado a leitura de Horário, para ler corretamente HH:MM (sem os segundos)
+  Por: Italo Giurizzato Junior
+
 10/08/2022
 -- ACBrDFeUtil --
 [+] Adicionado função DataHoraTimeZoneModoDeteccao - Converte o DateTime do Sistema para o TimeZone configurado, para evitar divergência de Fuso Horário em comparação de datas de DFes.

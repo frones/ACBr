@@ -298,7 +298,7 @@ begin
         if length(ConteudoTag) > 0 then
           result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)),
                                StrToInt(copy(ConteudoTag, 4, 2)),
-                               StrToInt(copy(ConteudoTag, 7, 2)), 0)
+                               StrToIntDef(copy(ConteudoTag, 7, 2), 0), 0)
         else
           result := 0;
       end;
@@ -308,7 +308,7 @@ begin
         if length(ConteudoTag) > 0 then
           result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)),
                                StrToInt(copy(ConteudoTag, 3, 2)),
-                               StrToInt(copy(ConteudoTag, 5, 2)), 0)
+                               StrToIntDef(copy(ConteudoTag, 5, 2), 0), 0)
         else
           result := 0;
       end;

@@ -138,7 +138,7 @@ begin
 
     Link := ObterConteudo(ANode.Childrens.FindAnyNs('nfelink'), tcStr);
 
-    OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('nfeobservacoes'), tcStr);
+    MotivoCancelamento := ObterConteudo(ANode.Childrens.FindAnyNs('nfeobservacoes'), tcStr);
 
     with Tomador do
     begin

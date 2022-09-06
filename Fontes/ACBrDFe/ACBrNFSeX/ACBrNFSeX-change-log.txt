@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/09/2022
+-- WebFisco.Provider/WebFisco.LerXml --
+[*] Ajustes no tratamento do retorno e na leitura do XML da NFS-e.
+   Por: Leandro Coelho
 -- Diversos --
 [+] Implementado diversas procedures e funções visando o envio de eventos que 
     vai ser utilizado pelo provedor PadraoNacional

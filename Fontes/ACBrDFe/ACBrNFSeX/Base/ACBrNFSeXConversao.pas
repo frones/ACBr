@@ -1159,6 +1159,7 @@ var
       1504505: Cidade := 'Melgaco/PA';
       1504604: Cidade := 'Mocajuba/PA';
       1504703: Cidade := 'Moju/PA';
+      1504752: Cidade := 'Mojui dos Campos/PA';
       1504802: Cidade := 'Monte Alegre/PA';
       1504901: Cidade := 'Muana/PA';
       1504950: Cidade := 'Nova Esperanca Do Piria/PA';
@@ -1761,6 +1762,7 @@ var
       2206670: Cidade := 'Morro Do Chapeu Do Piaui/PI';
       2206696: Cidade := 'Murici Dos Portelas/PI';
       2206704: Cidade := 'Nazare Do Piaui/PI';
+      2206720: Cidade := 'Nazaria/PI';
       2206753: Cidade := 'Nossa Senhora De Nazare/PI';
       2206803: Cidade := 'Nossa Senhora Dos Remedios/PI';
       2206902: Cidade := 'Novo Oriente Do Piaui/PI';
@@ -5375,6 +5377,7 @@ var
       4202008: Cidade := 'Balneario Camboriu/SC';
       4202057: Cidade := 'Balneario Barra Do Sul/SC';
       4202073: Cidade := 'Balneario Gaivota/SC';
+      4220000: Cidade := 'Balneario Rincao/SC';
       4202081: Cidade := 'Bandeirante/SC';
       4202099: Cidade := 'Barra Bonita/SC';
       4202107: Cidade := 'Barra Velha/SC';
@@ -5538,6 +5541,7 @@ var
       4212403: Cidade := 'Pedras Grandes/SC';
       4212502: Cidade := 'Penha/SC';
       4212601: Cidade := 'Peritiba/SC';
+      4212650: Cidade := 'Pescaria Brava/SC';
       4212700: Cidade := 'Petrolandia/SC';
       4212809: Cidade := 'Balneario Picarras/SC';
       4212908: Cidade := 'Pinhalzinho/SC';
@@ -6936,6 +6940,7 @@ var
       1504505: CodTOM := '0489'; // Melgaco/PA
       1504604: CodTOM := '0491'; // Mocajuba/PA
       1504703: CodTOM := '0493'; // Moju/PA
+      1504752: CodTOM := '1190'; // Mojuí dos Campos/PA
       1504802: CodTOM := '0495'; // Monte Alegre/PA
       1504901: CodTOM := '0497'; // Muana/PA
       1504950: CodTOM := '0391'; // Nova Esperanca Do Piria/PA
@@ -7538,6 +7543,7 @@ var
       2206670: CodTOM := '0352'; // Morro Do Chapeu Do Piaui/PI
       2206696: CodTOM := '0354'; // Murici Dos Portelas/PI
       2206704: CodTOM := '1133'; // Nazare Do Piaui/PI
+      2206720: CodTOM := '1180'; // Nazária/PI
       2206753: CodTOM := '0356'; // Nossa Senhora De Nazare/PI
       2206803: CodTOM := '1135'; // Nossa Senhora Dos Remedios/PI
       2206902: CodTOM := '1137'; // Novo Oriente Do Piaui/PI
@@ -11152,6 +11158,7 @@ var
       4202008: CodTOM := '8039'; // Balneario Camboriu/SC';
       4202057: CodTOM := '5549'; // Balneario Barra Do Sul/SC';
       4202073: CodTOM := '0890'; // Balneario Gaivota/SC';
+      4220000: CodTOM := '1192'; // Balneario Rincão/SC';
       4202081: CodTOM := '0892'; // Bandeirante/SC';
       4202099: CodTOM := '0894'; // Barra Bonita/SC';
       4202107: CodTOM := '8041'; // Barra Velha/SC';
@@ -11315,6 +11322,7 @@ var
       4212403: CodTOM := '8243'; // Pedras Grandes/SC';
       4212502: CodTOM := '8245'; // Penha/SC';
       4212601: CodTOM := '8247'; // Peritiba/SC';
+      4212650: CodTOM := '1194'; // Pescaria Brava/SC;
       4212700: CodTOM := '8249'; // Petrolandia/SC';
       4212809: CodTOM := '8251'; // Balneario Picarras/SC';
       4212908: CodTOM := '8253'; // Pinhalzinho/SC';
@@ -11739,6 +11747,7 @@ var
       4314472: CodTOM := '5787'; // Pinhal Grande/RS';
       4314498: CodTOM := '5975'; // Pinheirinho Do Vale/RS';
       4314506: CodTOM := '8793'; // Pinheiro Machado/RS';
+      4314548: CodTOM := '1160'; // Pinto Bandeira/RS';
       4314555: CodTOM := '7367'; // Pirapo/RS';
       4314605: CodTOM := '8795'; // Piratini/RS';
       4314704: CodTOM := '8797'; // Planalto/RS';
@@ -12681,6 +12690,7 @@ begin
     0489: CodIBGE := 1504505; // Melgaco/PA
     0491: CodIBGE := 1504604; // Mocajuba/PA
     0493: CodIBGE := 1504703; // Moju/PA
+    1190: CodIBGE := 1504752; // Mojuí dos Campos/PA
     0495: CodIBGE := 1504802; // Monte Alegre/PA
     0497: CodIBGE := 1504901; // Muana/PA
     0391: CodIBGE := 1504950; // Nova Esperanca Do Piria/PA
@@ -13136,7 +13146,7 @@ begin
     1013: CodIBGE := 2200707; // Anisio De Abreu/PI
     1015: CodIBGE := 2200806; // Antonio Almeida/PI
     1017: CodIBGE := 2200905; // Aroazes/PI
-  //  : CodIBGE := 2200954; //  roeiras Do Itaim/PI/A
+    1188: CodIBGE := 2200954; // Aroeiras Do Itaim/PI/A
     1019: CodIBGE := 2201002; // Arraial/PI
     0270: CodIBGE := 2201051; // Assuncao Do Piaui/PI
     1021: CodIBGE := 2201101; // Avelino Lopes/PI
@@ -13259,6 +13269,7 @@ begin
     0352: CodIBGE := 2206670; // Morro Do Chapeu Do Piaui/PI
     0354: CodIBGE := 2206696; // Murici Dos Portelas/PI
     1133: CodIBGE := 2206704; // Nazare Do Piaui/PI
+    1180: CodIBGE := 2206720; // Nazária/PI
     0356: CodIBGE := 2206753; // Nossa Senhora De Nazare/PI
     1135: CodIBGE := 2206803; // Nossa Senhora Dos Remedios/PI
     1137: CodIBGE := 2206902; // Novo Oriente Do Piaui/PI
@@ -13981,7 +13992,7 @@ begin
     2403: CodIBGE := 2605202; // Escada/PE
     2405: CodIBGE := 2605301; // Exu/PE
     2407: CodIBGE := 2605400; // Feira Nova/PE
-  //    : CodIBGE := 2605459; // Fernando De Noronha/PE/F
+    3001: CodIBGE := 2605459; // Fernando De Noronha/PE
     2409: CodIBGE := 2605509; // Ferreiros/PE
     2411: CodIBGE := 2605608; // Flores/PE
     2413: CodIBGE := 2605707; // Floresta/PE
@@ -16959,6 +16970,7 @@ begin
     8243: CodIBGE := 4212403; // Pedras Grandes/SC
     8245: CodIBGE := 4212502; // Penha/SC
     8247: CodIBGE := 4212601; // Peritiba/SC
+    1194: CodIBGE := 4212650; // Pescaria Brava/SC
     8249: CodIBGE := 4212700; // Petrolandia/SC
     8251: CodIBGE := 4212809; // Balneario Picarras/SC
     8253: CodIBGE := 4212908; // Pinhalzinho/SC
@@ -17060,6 +17072,7 @@ begin
     8385: CodIBGE := 4219606; // Xavantina/SC
     8387: CodIBGE := 4219705; // Xaxim/SC
     0950: CodIBGE := 4219853; // Zortea/SC
+    1192: CodIBGE := 4220000; // Balneário Rincão/SC
     1118: CodIBGE := 4300034; // Acegua/RS
     8499: CodIBGE := 4300059; // Agua Santa/RS
     8501: CodIBGE := 4300109; // Agudo/RS
@@ -17377,6 +17390,7 @@ begin
     5787: CodIBGE := 4314472; // Pinhal Grande/RS
     5975: CodIBGE := 4314498; // Pinheirinho Do Vale/RS
     8793: CodIBGE := 4314506; // Pinheiro Machado/RS
+    1160: CodIBGE := 4314548; // Pinto Bandeira/RS
     7367: CodIBGE := 4314555; // Pirapo/RS
     8795: CodIBGE := 4314605; // Piratini/RS
     8797: CodIBGE := 4314704; // Planalto/RS
@@ -17590,7 +17604,7 @@ begin
     9073: CodIBGE := 5003702; // Dourados/MS
     9173: CodIBGE := 5003751; // Eldorado/MS
     9075: CodIBGE := 5003801; // Fatima Do Sul/MS
-  //  : CodIBGE := ;  5003900 // Figueirao/MS/F
+    1178: CodIBGE := 5003900; // Figueirao/MS
     9079: CodIBGE := 5004007; // Gloria De Dourados/MS
     9081: CodIBGE := 5004106; // Guia Lopes Da Laguna/MS
     9085: CodIBGE := 5004304; // Iguatemi/MS
@@ -17685,8 +17699,8 @@ begin
     9887: CodIBGE := 5104104; // Guaranta Do Norte/MT
     9083: CodIBGE := 5104203; // Guiratinga/MT
     9877: CodIBGE := 5104500; // Indiavai/MT
-  //    // : CodIBGE := 5104526; // Ipanga Do Norte/MTir
-  //    // : CodIBGE := 5104542; // Ithanga/MTan
+    1184: CodIBGE := 5104526; // Ipiranga Do Norte/MT
+    1186: CodIBGE := 5104542; // Itanhanga/MT
     9901: CodIBGE := 5104559; // Itauba/MT
     9091: CodIBGE := 5104609; // Itiquira/MT
     9095: CodIBGE := 5104807; // Jaciara/MT
@@ -17965,8 +17979,8 @@ begin
     9595: CodIBGE := 5217609; // Planaltina/GO
     9549: CodIBGE := 5217708; // Pontalina/GO
     9555: CodIBGE := 5218003; // Porangatu/GO
-    9557: CodIBGE := 5218052; // Porteirao/GO
-  //    : CodIBGE := 5218102; //  Portelandia/GO
+    1060: CodIBGE := 5218052; // Porteirao/GO
+    9557: CodIBGE := 5218102; // Portelandia/GO
     9561: CodIBGE := 5218300; // Posse/GO
     0051: CodIBGE := 5218391; // Professor Jamil/GO
     9563: CodIBGE := 5218508; // Quirinopolis/GO

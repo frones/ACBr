@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+06/09/2022
+-- Diversos --
+[+] Implementado diversas procedures e funções visando o envio de eventos que 
+    vai ser utilizado pelo provedor PadraoNacional
+   Por: Italo Giurizzato Junior
+
 05/09/2022
 -- PadraoNacional.LerXml --
 [+] Implementado a leitura do XML da NFS-e.

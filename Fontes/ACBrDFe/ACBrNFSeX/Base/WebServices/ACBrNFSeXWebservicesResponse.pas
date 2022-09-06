@@ -405,6 +405,22 @@ type
     property HashIdent: string read FHashIdent write FHashIdent;
   end;
 
+  TNFSeEnviarEventoResponse = class(TNFSeWebserviceResponse)
+  private
+    FToken: string;
+    FDataExpiracao: TDateTime;
+    FInfEvento: TInfEvento;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear; override;
+
+    property Token: string read FToken write FToken;
+    property DataExpiracao: TDateTime read FDataExpiracao write FDataExpiracao;
+    property InfEvento: TInfEvento read FInfEvento write FInfEvento;
+  end;
+
 implementation
 
 uses
@@ -832,6 +848,30 @@ procedure TNFSeResumoCollection.SetItem(Index: Integer;
   Value: TNFSeResumoCollectionItem);
 begin
   inherited Items[Index] := Value;
+end;
+
+{ TNFSeEnviarEventoResponse }
+
+procedure TNFSeEnviarEventoResponse.Clear;
+begin
+  inherited Clear;
+
+  Token := '';
+  DataExpiracao := 0;
+end;
+
+constructor TNFSeEnviarEventoResponse.Create;
+begin
+  inherited Create;
+
+  FInfEvento := TInfEvento.Create;
+end;
+
+destructor TNFSeEnviarEventoResponse.Destroy;
+begin
+  FInfEvento.Free;
+
+  inherited Destroy;
 end;
 
 end.

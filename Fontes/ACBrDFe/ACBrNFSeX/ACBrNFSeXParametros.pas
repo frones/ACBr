@@ -188,6 +188,7 @@ type
     FSoapAction: string;
     // URL de homologação ou produção para o serviço GerarToken
     FGerarToken: string;
+    FEnviarEvento: string;
 
   public
     property LinkURL: string read FLinkURL;
@@ -210,6 +211,7 @@ type
     property TesteEnvio: string read FTesteEnvio;
     property SoapAction: string read FSoapAction;
     property GerarToken: string read FGerarToken;
+    property EnviarEvento: string read FEnviarEvento;
 
   end;
 
@@ -315,6 +317,7 @@ type
     FGerarPrestadorLoteRps: Boolean;
     // Se True gera o grupo <NumeroLote> ao Consultar a Situação e o Lote
     FUsarNumLoteConsLote: Boolean;
+    FEnviarEvento: TDocElement;
 
   public
     constructor Create;
@@ -340,6 +343,7 @@ type
     property AbrirSessao: TDocElement read FAbrirSessao;
     property FecharSessao: TDocElement read FFecharSessao;
     property GerarToken: TDocElement read FGerarToken;
+    property EnviarEvento: TDocElement read FEnviarEvento;
 
     property GerarNSLoteRps: Boolean read FGerarNSLoteRps write FGerarNSLoteRps;
     property GerarPrestadorLoteRps: Boolean read FGerarPrestadorLoteRps write FGerarPrestadorLoteRps;
@@ -387,6 +391,7 @@ type
     FAssinaturaAdicional: boolean;
     // Se True assina a Geração do Token
     FGerarToken: boolean;
+    FEnviarEvento: boolean;
 
   public
     property Rps: boolean read FRps write FRps;
@@ -408,6 +413,7 @@ type
     property IncluirURI: boolean read FIncluirURI write FIncluirURI;
     property AssinaturaAdicional: boolean read FAssinaturaAdicional write FAssinaturaAdicional;
     property GerarToken: boolean read FGerarToken write FGerarToken;
+    property EnviarEvento: boolean read FEnviarEvento write FEnviarEvento;
 
   end;
 
@@ -448,6 +454,7 @@ type
     FValidar: boolean;
     // Nome do arquivo XSD para validar a Geração do Token
     FGerarToken: string;
+    FEnviarEvento: string;
 
   public
     property Recepcionar: string read FRecepcionar write FRecepcionar;
@@ -467,6 +474,7 @@ type
     property Teste: string read FTeste write FTeste;
     property Validar: boolean read FValidar write FValidar;
     property GerarToken: string read FGerarToken write FGerarToken;
+    property EnviarEvento: string read FEnviarEvento write FEnviarEvento;
 
   end;
 
@@ -601,6 +609,7 @@ begin
     FAbrirSessao         := AINI.ReadString(ASession, 'HomAbrirSessao'        , FRecepcionar);
     FFecharSessao        := AINI.ReadString(ASession, 'HomFecharSessao'       , FRecepcionar);
     FGerarToken          := AINI.ReadString(ASession, 'HomGerarToken'         , FRecepcionar);
+    FEnviarEvento        := AINI.ReadString(ASession, 'HomEnviarEvento'       , FRecepcionar);
 
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'HomConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'HomConsultarNFSeServicoPrestado', FRecepcionar);
@@ -624,6 +633,7 @@ begin
     FAbrirSessao         := AINI.ReadString(ASession, 'ProAbrirSessao'        , FRecepcionar);
     FFecharSessao        := AINI.ReadString(ASession, 'ProFecharSessao'       , FRecepcionar);
     FGerarToken          := AINI.ReadString(ASession, 'ProGerarToken'         , FRecepcionar);
+    FEnviarEvento        := AINI.ReadString(ASession, 'ProEnviarEvento'       , FRecepcionar);
 
     FConsultarNFSePorFaixa        := AINI.ReadString(ASession, 'ProConsultarNFSePorFaixa'       , FRecepcionar);
     FConsultarNFSeServicoPrestado := AINI.ReadString(ASession, 'ProConsultarNFSeServicoPrestado', FRecepcionar);
@@ -651,6 +661,7 @@ begin
   FAbrirSessao := TDocElement.Create;
   FFecharSessao := TDocElement.Create;
   FGerarToken := TDocElement.Create;
+  FEnviarEvento := TDocElement.Create;
 end;
 
 destructor TConfigMsgDados.Destroy;
@@ -671,6 +682,7 @@ begin
   FAbrirSessao.Free;
   FFecharSessao.Free;
   FGerarToken.Free;
+  FEnviarEvento.Free;
 
   inherited Destroy;
 end;

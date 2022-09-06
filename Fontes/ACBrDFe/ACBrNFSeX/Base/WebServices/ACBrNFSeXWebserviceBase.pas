@@ -138,6 +138,7 @@ type
     function AbrirSessao(ACabecalho, AMSG: String): string; virtual;
     function FecharSessao(ACabecalho, AMSG: String): string; virtual;
     function TesteEnvio(ACabecalho, AMSG: String): string; virtual;
+    function EnviarEvento(ACabecalho, AMSG: String): string; virtual;
 
     property URL: string read FPURL;
     property BaseURL: string read GetBaseUrl;
@@ -312,14 +313,74 @@ type
 
   end;
 
+   TpedRegEvento = class
+  private
+    FID: string;
+    FtpAmb: Integer;
+    FverAplic: string;
+    FdhEvento: TDateTime;
+    FchNFSe: string;
+    FnPedRegEvento: Integer;
+    FtpEvento: TtpEvento;
+    FcMotivo: Integer;
+    FxMotivo: string;
+    FchSubstituta: string;
+    FCPFAgTrib: string;
+    FnProcAdm: string;
+    FidEvManifRej: string;
+    FxProcAdm: string;
+    FcodEvento: TtpEvento;
+    FidBloqOfic: string;
+
+  public
+    constructor Create;
+
+    property ID: string             read FID;
+    property tpAmb: Integer         read FtpAmb         write FtpAmb;
+    property verAplic: string       read FverAplic      write FverAplic;
+    property dhEvento: TDateTime    read FdhEvento      write FdhEvento;
+    property chNFSe: string         read FchNFSe        write FchNFSe;
+    property nPedRegEvento: Integer read FnPedRegEvento write FnPedRegEvento;
+    property tpEvento: TtpEvento    read FtpEvento      write FtpEvento;
+    property cMotivo: Integer       read FcMotivo       write FcMotivo;
+    property xMotivo: string        read FxMotivo       write FxMotivo;
+    property chSubstituta: string   read FchSubstituta  write FchSubstituta;
+    property CPFAgTrib: string      read FCPFAgTrib     write FCPFAgTrib;
+    property nProcAdm: string       read FnProcAdm      write FnProcAdm;
+    property idEvManifRej: string   read FidEvManifRej  write FidEvManifRej;
+    property xProcAdm: string       read FxProcAdm      write FxProcAdm;
+    property codEvento: TtpEvento   read FcodEvento     write FcodEvento;
+    property idBloqOfic: string     read FidBloqOfic    write FidBloqOfic;
+  end;
+
+ TInfEvento = class
+  private
+    FID: string;
+    FverAplic: string;
+    FambGer: Integer;
+    FnSeqEvento: Integer;
+    FdhProc: TDateTime;
+    FnDFe: string;
+    FpedRegEvento: TpedRegEvento;
+  public
+    constructor Create;
+
+    function LerFromIni(const AIniString: String): Boolean;
+
+    property ID: string                  read FID;
+    property verAplic: string            read FverAplic     write FverAplic;
+    property ambGer: Integer             read FambGer       write FambGer;
+    property nSeqEvento: Integer         read FnSeqEvento   write FnSeqEvento;
+    property dhProc: TDateTime           read FdhProc       write FdhProc;
+    property nDFe: string                read FnDFe         write FnDFe;
+    property pedRegEvento: TpedRegEvento read FpedRegEvento write FpedRegEvento;
+  end;
+
 implementation
 
 uses
   IniFiles, StrUtils, synautil,
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.DateTime,
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
   ACBrConsts, ACBrDFeException, ACBrXmlBase,
   ACBrNFSeX, ACBrNFSeXConfiguracoes;
@@ -921,6 +982,12 @@ begin
   raise EACBrDFeException.Create(ERR_NAO_IMP);
 end;
 
+function TACBrNFSeXWebservice.EnviarEvento(ACabecalho, AMSG: String): string;
+begin
+  Result := '';
+  raise EACBrDFeException.Create(ERR_NAO_IMP);
+end;
+
 { TACBrNFSeXWebserviceSoap11 }
 
 constructor TACBrNFSeXWebserviceSoap11.Create(AOwner: TACBrDFe; AMetodo: TMetodo;
@@ -1279,6 +1346,80 @@ begin
   finally
     INIRec.Free;
   end;
+end;
+
+{ TInfEvento }
+
+constructor TInfEvento.Create;
+begin
+  FverAplic := '';
+  FambGer := 0;
+  FnSeqEvento := 0;
+  FnDFe := '';
+
+  FpedRegEvento := TpedRegEvento.Create;
+end;
+
+function TInfEvento.LerFromIni(const AIniString: String): Boolean;
+var
+  sSecao: String;
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+begin
+{$IFNDEF COMPILER23_UP}
+  Result := False;
+{$ENDIF}
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    sSecao := 'Evento';
+
+    with pedRegEvento do
+    begin
+      tpAmb := INIRec.ReadInteger(sSecao, 'tpAmb', 0);
+      verAplic := INIRec.ReadString(sSecao, 'verAplic', '');
+      dhEvento := INIRec.ReadDateTime(sSecao, 'dhEvento', 0);
+      chNFSe := INIRec.ReadString(sSecao, 'chNFSe', '');
+      nPedRegEvento := INIRec.ReadInteger(sSecao, 'nPedRegEvento', 0);
+      tpEvento := StrTotpEvento(Ok, INIRec.ReadString(sSecao, 'tpEvento', 'e101101'));
+      cMotivo := INIRec.ReadInteger(sSecao, 'cMotivo', 0);
+      xMotivo := INIRec.ReadString(sSecao, 'xMotivo', '');
+      chSubstituta := INIRec.ReadString(sSecao, 'chSubstituta', '');
+      CPFAgTrib := INIRec.ReadString(sSecao, 'CPFAgTrib', '');
+      nProcAdm := INIRec.ReadString(sSecao, 'nProcAdm', '');
+      idEvManifRej := INIRec.ReadString(sSecao, 'idEvManifRej', '');
+      xProcAdm := INIRec.ReadString(sSecao, 'xProcAdm', '');
+      codEvento := StrTotpEvento(Ok, INIRec.ReadString(sSecao, 'codEvento', 'e101101'));
+      idBloqOfic := INIRec.ReadString(sSecao, 'idBloqOfic', '');
+    end;
+
+    Result := True;
+  finally
+    INIRec.Free;
+  end;
+end;
+
+{ TpedRegEvento }
+
+constructor TpedRegEvento.Create;
+begin
+  FtpAmb := 0;
+  FverAplic := '';
+  FdhEvento := 0;
+  FchNFSe := '';
+  FnPedRegEvento := 0;
+  FtpEvento := teCancelamento;
+  FcMotivo := 0;
+  FxMotivo := '';
+  FchSubstituta := '';
+  FCPFAgTrib := '';
+  FnProcAdm := '';
+  FidEvManifRej := '';
+  FxProcAdm := '';
+  FcodEvento := teCancelamento;
+  FidBloqOfic := '';
 end;
 
 end.

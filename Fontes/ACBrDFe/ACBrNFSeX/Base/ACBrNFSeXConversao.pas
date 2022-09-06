@@ -269,6 +269,15 @@ type
 
   TprocEmi = (peWebService, peWebFisco, peAppFisco);
 
+  TtpEvento = (teCancelamento, teCancelamentoSubstituicao,
+               teAnaliseParaCancelamento, teCancelamentoDeferido,
+               teCancelamentoIndeferido, teConfirmacaoPrestador,
+               teConfirmacaoTomador, ConfirmacaoIntermediario,
+               teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
+               teRejeicaoIntermediario, AnulacaoRejeicao,
+               teCancelamentoPorOficio, teBloqueioPorOficio,
+               teDesbloqueioPorOficio);
+
 function StatusRPSToStr(const t: TStatusRPS): string;
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
 
@@ -440,14 +449,15 @@ function StrTotpEmis(out ok: Boolean; const s: String): TtpEmis;
 function procEmiToStr(const t: TprocEmi): String;
 function StrToprocEmi(out ok: Boolean; const s: String): TprocEmi;
 
+function tpEventoToStr(const t: TtpEvento): String;
+function StrTotpEvento(out ok: Boolean; const s: String): TtpEvento;
+
 function CodIBGEPaisToSiglaISO2(const t: Integer): String;
 
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrUtil.FilesIO,
+  ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.FilesIO,
   ACBrXmlBase;
 
 
@@ -18818,6 +18828,40 @@ begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [peWebService, peWebFisco, peAppFisco]);
+end;
+
+function tpEventoToStr(const t: TtpEvento): String;
+begin
+  result := EnumeradoToStr(t,
+                         ['e101101', 'e105102', 'e101103', 'e105104', 'e105105',
+                          'e202201', 'e203202', 'e204203', 'e205204', 'e202205',
+                          'e203206', 'e204207', 'e205208', 'e305101', 'e305102',
+                          'e305103'],
+                   [teCancelamento, teCancelamentoSubstituicao,
+                    teAnaliseParaCancelamento, teCancelamentoDeferido,
+                    teCancelamentoIndeferido, teConfirmacaoPrestador,
+                    teConfirmacaoTomador, ConfirmacaoIntermediario,
+                    teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
+                    teRejeicaoIntermediario, AnulacaoRejeicao,
+                    teCancelamentoPorOficio, teBloqueioPorOficio,
+                    teDesbloqueioPorOficio]);
+end;
+
+function StrTotpEvento(out ok: Boolean; const s: String): TtpEvento;
+begin
+  result := StrToEnumerado(ok, s,
+                         ['e101101', 'e105102', 'e101103', 'e105104', 'e105105',
+                          'e202201', 'e203202', 'e204203', 'e205204', 'e202205',
+                          'e203206', 'e204207', 'e205208', 'e305101', 'e305102',
+                          'e305103'],
+                   [teCancelamento, teCancelamentoSubstituicao,
+                    teAnaliseParaCancelamento, teCancelamentoDeferido,
+                    teCancelamentoIndeferido, teConfirmacaoPrestador,
+                    teConfirmacaoTomador, ConfirmacaoIntermediario,
+                    teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
+                    teRejeicaoIntermediario, AnulacaoRejeicao,
+                    teCancelamentoPorOficio, teBloqueioPorOficio,
+                    teDesbloqueioPorOficio]);
 end;
 
 function CodIBGEPaisToSiglaISO2(const t: Integer): String;

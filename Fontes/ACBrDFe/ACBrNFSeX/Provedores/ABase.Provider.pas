@@ -64,6 +64,11 @@ type
     function CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice; override;
 
     procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+
+  public
+    function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria): string; override;
+    function StrToSituacaoTributaria(out ok: boolean; const s: string): TnfseSituacaoTributaria; override;
+    function SituacaoTributariaDescricao(const t: TnfseSituacaoTributaria): string; override;
   end;
 
 implementation
@@ -204,6 +209,34 @@ begin
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
   end;
+end;
+
+function TACBrNFSeProviderABase201.SituacaoTributariaDescricao(
+  const t: TnfseSituacaoTributaria): string;
+begin
+  case t of
+    stNormal       : Result := '0 - Não' ;
+    stRetencao     : Result := '1 - Sim' ;
+    stSubstituicao : Result := '2 - Substituição' ;
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderABase201.SituacaoTributariaToStr(
+  const t: TnfseSituacaoTributaria): string;
+begin
+  Result := EnumeradoToStr(t,
+                             ['0', '1', '2'],
+                             [stNormal, stRetencao, stSubstituicao]);
+end;
+
+function TACBrNFSeProviderABase201.StrToSituacaoTributaria(out ok: boolean;
+  const s: string): TnfseSituacaoTributaria;
+begin
+  Result := StrToEnumerado(ok, s,
+                             ['0', '1', '2'],
+                             [stNormal, stRetencao, stSubstituicao]);
 end;
 
 procedure TACBrNFSeProviderABase201.TratarRetornoConsultaNFSeporRps(

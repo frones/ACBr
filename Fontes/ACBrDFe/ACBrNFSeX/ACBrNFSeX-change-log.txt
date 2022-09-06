@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 06/09/2022
+-- ABase.Provider --
+[+] Incluido as funções de conversão da Situação Tributaria, pois tem valores
+    diferentes do layout da ABRASF.
+   Por: Italo Giurizzato Junior
 -- eGoverneISS.Provider --
 [*] Ajustes no Tratamento de erros e de retorno do Emitir.
    Por: Renato Rubinho

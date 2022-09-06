@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2022
+-- ACBrMonitor1 --
+[*] Inclusão de checkbox para possibilitar atualização do cache local da lista de NCMs.
+
 17/08/2022
 --- DoBoletoUnit ---
 [*] Atualização das chamadas de envio por API e atualização das classes resposta baseado no refactory do componente boleto

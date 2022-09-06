@@ -443,6 +443,7 @@ type
     chECFDescrGrande: TCheckBox;
     chECFIgnorarTagsFormatacao: TCheckBox;
     chECFSinalGavetaInvertido: TCheckBox;
+    cbNCMForcarDownload: TCheckBox;
     ckbExibirMunicipioDescarregamento: TCheckBox;
     ChkPix: TCheckBox;
     chgDescricaoPagamento: TCheckGroup;
@@ -3410,7 +3411,7 @@ begin
     with ACBrNCMs1 do
     begin
       CacheDiasValidade := edNCMDiasValidade.Value;
-      ObterNCMs;
+      ObterNCMs(cbNCMForcarDownload.Checked);
       NCMS.SaveToFile(aDiretorio);
     end;
   finally

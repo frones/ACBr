@@ -94,7 +94,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Width = 234
           Height = 12
           Align = faLeft
-          Alignment = taRightJustify
+          Alignment = taLeftJustify
           Behavior = [beSiteExpander]
           Lines.Strings = (
             '123456789012345678901234567890123456789012345678901234')

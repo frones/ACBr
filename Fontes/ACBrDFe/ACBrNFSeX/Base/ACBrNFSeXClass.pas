@@ -88,11 +88,20 @@ type
     FAliquota: Double;
     FValorIss: Double;
     FValorLiquidoNfse: Double;
+    FvCalcDR: Double;
+    FtpBM: string;
+    FvCalcBM: Double;
+    FvTotalRet: Double;
   public
     property BaseCalculo: Double read FBaseCalculo write FBaseCalculo;
     property Aliquota: Double read FAliquota write FAliquota;
     property ValorIss: Double read FValorIss write FValorIss;
     property ValorLiquidoNfse: Double read FValorLiquidoNfse write FValorLiquidoNfse;
+    // Provedor PadraoNacional
+    property vCalcDR: Double read FvCalcDR write FvCalcDR;
+    property tpBM: string read FtpBM write FtpBM;
+    property vCalcBM: Double read FvCalcBM write FvCalcBM;
+    property vTotalRet: Double read FvTotalRet write FvTotalRet;
   end;
 
   TNFSeMun = class(TObject)
@@ -759,6 +768,26 @@ type
     property infoCompl: TinfoCompl read FinfoCompl write FinfoCompl;
   end;
 
+  TDadosPessoa = class(TObject)
+  private
+    FIdentificacao: TIdentificacao;
+
+    FRazaoSocial: string;
+    FNomeFantasia: string;
+
+    FEndereco: TEndereco;
+    FContato: TContato;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property Identificacao: TIdentificacao read FIdentificacao write FIdentificacao;
+    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
+    property NomeFantasia: string read FNomeFantasia write FNomeFantasia;
+    property Endereco: TEndereco read FEndereco write FEndereco;
+    property Contato: TContato read FContato write FContato;
+  end;
+
   TDadosPrestador = class(TObject)
   private
     FIdentificacaoPrestador: TIdentificacao;
@@ -1069,6 +1098,52 @@ type
     property xMotivo: string read FxMotivo write FxMotivo;
   end;
 
+  { TinfNFSe }
+
+  TinfNFSe = class(TObject)
+  private
+    FID: string;
+    FxLocEmi: string;
+    FxLocPrestacao: string;
+    FnNFSe: string;
+    FcLocIncid: Integer;
+    FxLocIncid: string;
+    FxTribNac: string;
+    FxTribMun: string;
+    FxNBS: string;
+    FverAplic: string;
+    FambGer: TambGer;
+    FtpEmis: TtpEmis;
+    FprocEmi: TprocEmi;
+    FcStat: Integer;
+    FdhProc: TDateTime;
+    FnDFSe: string;
+    Femit: TDadosPessoa;
+    Fvalores: TValoresNfse;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ID: string read FID write FID;
+    property xLocEmi: string read FxLocEmi write FxLocEmi;
+    property xLocPrestacao: string read FxLocPrestacao write FxLocPrestacao;
+    property nNFSe: string read FnNFSe write FnNFSe;
+    property cLocIncid: Integer read FcLocIncid write FcLocIncid;
+    property xLocIncid: string read FxLocIncid write FxLocIncid;
+    property xTribNac: string read FxTribNac write FxTribNac;
+    property xTribMun: string read FxTribMun write FxTribMun;
+    property xNBS: string read FxNBS write FxNBS;
+    property verAplic: string read FverAplic write FverAplic;
+    property ambGer: TambGer read FambGer write FambGer;
+    property tpEmis: TtpEmis read FtpEmis write FtpEmis;
+    property procEmi: TprocEmi read FprocEmi write FprocEmi;
+    property cStat: Integer read FcStat write FcStat;
+    property dhProc: TDateTime read FdhProc write FdhProc;
+    property nDFSe: string read FnDFSe write FnDFSe;
+    property emit: TDadosPessoa read Femit write Femit;
+    property valores: TValoresNfse read Fvalores write Fvalores;
+  end;
+
   TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -1164,6 +1239,8 @@ type
     FOptanteSN: TOptanteSN;
     FRegimeApuracaoSN: TRegimeApuracaoSN;
     Fsubst: TSubstituicao;
+
+    FinfNFSe: TinfNFSe;
 
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: string);
@@ -1273,6 +1350,8 @@ type
     property OptanteSN: TOptanteSN read FOptanteSN write FOptanteSN;
     property RegimeApuracaoSN: TRegimeApuracaoSN read FRegimeApuracaoSN write FRegimeApuracaoSN;
     property subst: TSubstituicao read Fsubst write Fsubst;
+
+    property infNFSe: TinfNFSe read FinfNFSe write FinfNFSe;
   end;
 
   TSubstituicaoNfse = class(TObject)
@@ -1477,6 +1556,7 @@ begin
   FDespesa := TDespesaCollection.Create;
   FGenericos := TGenericosCollection.Create;
   Fsubst := TSubstituicao.Create;
+  FinfNFSe := TinfNFSe.Create;
 
   Clear;
 end;
@@ -1504,6 +1584,7 @@ begin
   FTransportadora.Free;
   FGenericos.Free;
   Fsubst.Free;
+  FinfNFSe.Free;
 
   inherited Destroy;
 end;
@@ -1932,6 +2013,44 @@ begin
 end;
 
 destructor TInfoPessoa.Destroy;
+begin
+  FIdentificacao.Free;
+  FEndereco.Free;
+  FContato.Free;
+
+  inherited Destroy;
+end;
+
+{ TinfNFSe }
+
+constructor TinfNFSe.Create;
+begin
+  inherited Create;
+
+  Femit := TDadosPessoa.Create;
+  Fvalores := TValoresNfse.Create;
+end;
+
+destructor TinfNFSe.Destroy;
+begin
+  Femit.Free;
+  Fvalores.Free;
+
+  inherited Destroy;
+end;
+
+{ TDadosPessoa }
+
+constructor TDadosPessoa.Create;
+begin
+  inherited Create;
+
+  FIdentificacao := TIdentificacao.Create;
+  FEndereco := TEndereco.Create;
+  FContato := TContato.Create;
+end;
+
+destructor TDadosPessoa.Destroy;
 begin
   FIdentificacao.Free;
   FEndereco.Free;

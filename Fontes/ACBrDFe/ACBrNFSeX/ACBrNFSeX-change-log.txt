@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/09/2022
+-- ISSDSF.Provider --
+[*] Ajustes na geração da tag Assinatura.
+   Por: Andre Luis Guimaraes
 -- ACBrNFSeXConversao --
 [+] Incluido algumas cidades que estavam faltando nas funções que converte o
     código IBGE para TOM e vice-versa

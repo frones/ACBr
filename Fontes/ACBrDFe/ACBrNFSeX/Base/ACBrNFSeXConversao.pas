@@ -173,7 +173,7 @@ type
              tmConsultarNFSeServicoTomado, tmCancelarNFSe,
              tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
              tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
-             tmGerarToken);
+             tmGerarToken, tmEnviarEvento);
 
   TFormatoItemListaServico = (filsComFormatacao, filsSemFormatacao,
                               filsComFormatacaoSemZeroEsquerda,
@@ -262,6 +262,12 @@ type
   TtpRetPisCofins = (trpcRetido, trpcNaoRetido);
 
   TindTotTrib = (indNao, indSim);
+
+  TambGer = (agPrefeitura, agSistemaNacional);
+
+  TtpEmis = (tePadraoNacional, teProprio);
+
+  TprocEmi = (peWebService, peWebFisco, peAppFisco);
 
 function StatusRPSToStr(const t: TStatusRPS): string;
 function StrToStatusRPS(out ok: boolean; const s: string): TStatusRPS;
@@ -424,6 +430,15 @@ function StrTotpRetPisCofins(out ok: Boolean; const s: String): TtpRetPisCofins;
 
 function indTotTribToStr(const t: TindTotTrib): String;
 function StrToindTotTrib(out ok: Boolean; const s: String): TindTotTrib;
+
+function ambGerToStr(const t: TambGer): String;
+function StrToambGer(out ok: Boolean; const s: String): TambGer;
+
+function tpEmisToStr(const t: TtpEmis): String;
+function StrTotpEmis(out ok: Boolean; const s: String): TtpEmis;
+
+function procEmiToStr(const t: TprocEmi): String;
+function StrToprocEmi(out ok: Boolean; const s: String): TprocEmi;
 
 function CodIBGEPaisToSiglaISO2(const t: Integer): String;
 
@@ -18376,14 +18391,14 @@ begin
                         'ConsultarNFSeServicoTomado', 'CancelarNFSe',
                         'Gerar', 'GerarLote', 'RecepcionarSincrono', 'SubstituirNFSe',
                         'AbrirSessao', 'FecharSessao', 'Teste', 'Todos',
-                        'GerarToken'],
+                        'GerarToken', 'EnviarEvento'],
                        [tmRecepcionar, tmConsultarSituacao, tmConsultarLote,
                         tmConsultarNFSePorRps, tmConsultarNFSe,
                         tmConsultarNFSePorFaixa, tmConsultarNFSeServicoPrestado,
                         tmConsultarNFSeServicoTomado, tmCancelarNFSe,
                         tmGerar, tmGerarLote, tmRecepcionarSincrono, tmSubstituirNFSe,
                         tmAbrirSessao, tmFecharSessao, tmTeste, tmTodos,
-                        tmGerarToken]);
+                        tmGerarToken, tmEnviarEvento]);
 end;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;
@@ -18761,6 +18776,48 @@ begin
   result := StrToEnumerado(ok, s,
                            ['0'],
                            [indNao]);
+end;
+
+function ambGerToStr(const t: TambGer): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2'],
+                           [agPrefeitura, agSistemaNacional]);
+end;
+
+function StrToambGer(out ok: Boolean; const s: String): TambGer;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [agPrefeitura, agSistemaNacional]);
+end;
+
+function tpEmisToStr(const t: TtpEmis): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2'],
+                           [tePadraoNacional, teProprio]);
+end;
+
+function StrTotpEmis(out ok: Boolean; const s: String): TtpEmis;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [tePadraoNacional, teProprio]);
+end;
+
+function procEmiToStr(const t: TprocEmi): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3'],
+                           [peWebService, peWebFisco, peAppFisco]);
+end;
+
+function StrToprocEmi(out ok: Boolean; const s: String): TprocEmi;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3'],
+                           [peWebService, peWebFisco, peAppFisco]);
 end;
 
 function CodIBGEPaisToSiglaISO2(const t: Integer): String;

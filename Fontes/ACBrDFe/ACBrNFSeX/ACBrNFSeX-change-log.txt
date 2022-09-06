@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 06/09/2022
+-- eGoverneISS.Provider --
+[*] Ajustes no Tratamento de erros e de retorno do Emitir.
+   Por: Renato Rubinho
 -- ISSDSF.Provider --
 [*] Ajustes na geração da tag Assinatura.
    Por: Andre Luis Guimaraes

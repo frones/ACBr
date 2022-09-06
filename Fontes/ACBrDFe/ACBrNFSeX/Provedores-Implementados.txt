@@ -31,7 +31,7 @@ Desenvolve           2.03
 Digifred             2.00
 DSF                  1.00
 DSF                  2.00
-eGoverneISS          1.00
+eGoverneISS          1.00  06/09/2022
 EL                   1.00
 EL                   2.04
 EloTech              2.03  10/08/2022

@@ -182,7 +182,7 @@ begin
     if ((EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR)) then
       cMun := ObterCodigoMunicipio(xMun, xUF, Opcoes.FPathArquivoMunicipios)
     else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
-      xMun := ObterNomeMunicipio(xUF, cMun, Opcoes.FPathArquivoMunicipios);
+      xMun := ObterNomeMunicipio(cMun, xUF, Opcoes.FPathArquivoMunicipios);
 end;
 
 function TDCeXmlWriter.GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime;

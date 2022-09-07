@@ -3995,7 +3995,7 @@ end;
 function TNotasFiscais.ValidarRegrasdeNegocios(out Erros: String): Boolean;
 var
   i: integer;
-  msg: ShortString;
+  msg: String;
 begin
   Result := True;
   Erros := '';

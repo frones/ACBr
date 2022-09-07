@@ -65,9 +65,10 @@ function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
     const IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function EncontrarURI(const AXML: String; docElement: String = ''; IdAttr: String = ''): String;
-function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
-                              const APathArqMun: String): String;
-function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String ): Integer;
+function ObterNomeMunicipio(const AcMun: Integer; var AxUF: String;
+                            const APathArqMun: String = ''): String;
+function ObterCodigoMunicipio(const AxMun, AxUF: String;
+                              const APathArqMun: String = ''): Integer;
 
 function CalcularHashCSRT(const ACSRT, AChave: String): string;
 function CalcularHashDados(const ADados: TStream; AChave: String): string;
@@ -462,21 +463,32 @@ begin
   Result.CacheArquivo := PathWithDelim(PathArqMun) + AfileName ;
 end;
 
-function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
+function ObterNomeMunicipio(const AcMun: Integer; var AxUF: String;
   const APathArqMun: String): String;
+var
+  p: String;
 begin
   result := '';
-  if (GetACBrIBGE(APathArqMun) = Nil) then
+  AxUF := '';
+  p := IfEmptyThen(APathArqMun, ApplicationPath);
+  if (GetACBrIBGE(p) = Nil) then
     Exit;
 
   if (ACBrIBGE1.BuscarPorCodigo(AcMun) > 0) then
+  begin
+    AxUF := ACBrIBGE1.Cidades[0].UF;
     Result := ACBrIBGE1.Cidades[0].Municipio;
+  end;
 end;
 
-function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String): Integer;
+function ObterCodigoMunicipio(const AxMun, AxUF: String;
+  const APathArqMun: String): Integer;
+var
+  p: String;
 begin
   result := 0;
-  if (GetACBrIBGE(APathArqMun) = Nil) then
+  p := IfEmptyThen(APathArqMun, ApplicationPath);
+  if (GetACBrIBGE(p) = Nil) then
     Exit;
 
   if (ACBrIBGE1.BuscarPorNome(AxMun, AxUF) > 0) then

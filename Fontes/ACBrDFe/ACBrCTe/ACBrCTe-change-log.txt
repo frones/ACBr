@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/09/2022
+-- ACBrCTeConhecimentos --
+[*] Atualização da função: GerarCTeIni e LerArqIni visando o modelo GTV-e
+   por: Italo Giurizzato Junior
+
 10/08/2022
 -- ACBrCTeConhecimentos --
 [*] Atualizado função ValidarRegrasdeNegocios, utilizando a função DataHoraTimeZoneModoDeteccao para validar a DataHora com TimeZone informado no XML

@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 08/09/2022
+-- ACBrNFSeXServicos --
+[*] Inclusão da cidade Catanduvas/PR - Provedor Pronim
+   Por: Natan Bueno
 -- Diversos --
 [*] Removido a função CodIBGEToCidade da unit ACBrNFSeXConversao, agora o componente
     vai passar a usar a função: ObterNomeMunicipio que se encontra na unit ACBrDFeUnit.

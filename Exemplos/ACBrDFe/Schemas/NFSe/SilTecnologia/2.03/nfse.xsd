@@ -160,6 +160,7 @@
 			<xsd:enumeration value="01.06"/>
 			<xsd:enumeration value="01.07"/>
 			<xsd:enumeration value="01.08"/>
+			<xsd:enumeration value="01.09"/>
 			<xsd:enumeration value="02.01"/>
 			<xsd:enumeration value="03.02"/>
 			<xsd:enumeration value="03.03"/>
@@ -202,6 +203,7 @@
 			<xsd:enumeration value="06.03"/>
 			<xsd:enumeration value="06.04"/>
 			<xsd:enumeration value="06.05"/>
+			<xsd:enumeration value="06.06"/>
 			<xsd:enumeration value="07.01"/>
 			<xsd:enumeration value="07.02"/>
 			<xsd:enumeration value="07.03"/>
@@ -275,6 +277,7 @@
 			<xsd:enumeration value="14.11"/>
 			<xsd:enumeration value="14.12"/>
 			<xsd:enumeration value="14.13"/>
+			<xsd:enumeration value="14.14"/>
 			<xsd:enumeration value="15.01"/>
 			<xsd:enumeration value="15.02"/>
 			<xsd:enumeration value="15.03"/>
@@ -294,6 +297,7 @@
 			<xsd:enumeration value="15.17"/>
 			<xsd:enumeration value="15.18"/>
 			<xsd:enumeration value="16.01"/>
+			<xsd:enumeration value="16.02"/>
 			<xsd:enumeration value="17.01"/>
 			<xsd:enumeration value="17.02"/>
 			<xsd:enumeration value="17.03"/>
@@ -318,6 +322,7 @@
 			<xsd:enumeration value="17.22"/>
 			<xsd:enumeration value="17.23"/>
 			<xsd:enumeration value="17.24"/>
+			<xsd:enumeration value="17.25"/>
 			<xsd:enumeration value="18.01"/>
 			<xsd:enumeration value="19.01"/>
 			<xsd:enumeration value="20.01"/>
@@ -331,6 +336,7 @@
 			<xsd:enumeration value="25.02"/>
 			<xsd:enumeration value="25.03"/>
 			<xsd:enumeration value="25.04"/>
+			<xsd:enumeration value="25.05"/>
 			<xsd:enumeration value="26.01"/>
 			<xsd:enumeration value="27.01"/>
 			<xsd:enumeration value="28.01"/>

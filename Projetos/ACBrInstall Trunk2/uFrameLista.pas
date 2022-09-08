@@ -184,6 +184,7 @@ type
     ACBr_PIXCD_dpk: TCheckBox;
     ACBr_OFX_dpk: TCheckBox;
     ACBr_GTIN_dpk: TCheckBox;
+    ACBr_OpenDelivery_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -480,6 +481,12 @@ begin
           ACBr_GNREGuiaRL_dpk.Checked or ACBr_NFSeXDanfseRL_dpk.Checked) then
       begin
         ACBr_DFeReportRL_dpk.Checked := True;
+      end;
+
+      // Dependencias do OpenDelivery
+      if ACBr_OpenDelivery_dpk.Checked then
+      begin
+        ACBr_OpenSSL_dpk.Checked  := True;
       end;
 
     finally

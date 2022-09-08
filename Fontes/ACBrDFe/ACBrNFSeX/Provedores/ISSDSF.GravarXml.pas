@@ -62,7 +62,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings, ACBrUtil.Math;
+  ACBrUtil.Strings, ACBrUtil.Math,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -202,7 +203,8 @@ var
   sIEEmit, SerieRPS, NumeroRPS, sDataEmis,
   sTributacao, sSituacaoRPS, sTipoRecolhimento,
   sValorServico, sValorDeducao, sCodAtividade,
-  sCPFCNPJTomador, sAssinatura: String;
+  sCPFCNPJTomador, sAssinatura, xMunicipio, xUF: String;
+  CodigoIBGE: Integer;
 begin
   Configuracao;
 
@@ -223,21 +225,21 @@ begin
 
   FPSituacao := EnumeradoToStr( NFSe.StatusRps, ['N','C'], [srNormal, srCancelado]);
 
-  sIEEmit           := ACBrUtil.Strings.Poem_Zeros(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 11);
+  sIEEmit           := Poem_Zeros(NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal, 11);
   SerieRPS          := PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ');
-  NumeroRPS         := ACBrUtil.Strings.Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12);
+  NumeroRPS         := Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12);
   sDataEmis         := FormatDateTime('yyyymmdd',NFse.DataEmissaoRps);
   sTributacao       := TributacaoToStr(NFSe.Servico.Tributacao) + ' ';
   sSituacaoRPS      := FPSituacao;
   sTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido, ['N','S'], [stNormal, stRetencao]);
 
-  sValorServico   := ACBrUtil.Strings.Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
+  sValorServico   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
                                 (NFSe.Servico.Valores.ValorServicos -
                                  NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
-  sValorDeducao   := ACBrUtil.Strings.Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
-                                 NFSe.Servico.Valores.ValorDeducoes)), 15 );
-  sCodAtividade   := ACBrUtil.Strings.Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10 );
-  sCPFCNPJTomador := ACBrUtil.Strings.Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
+  sValorDeducao   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
+                                 NFSe.Servico.Valores.ValorDeducoes)), 15);
+  sCodAtividade   := Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10);
+  sCPFCNPJTomador := Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
 
 
   sAssinatura := sIEEmit + SerieRPS + NumeroRPS + sDataEmis + sTributacao +
@@ -333,8 +335,17 @@ begin
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
                                           NFSe.Tomador.Endereco.xMunicipio, ''))
   else
+  begin
+    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+
+    xMunicipio := '';
+
+    if CodigoIBGE > 0 then
+      xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
     NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CidadeTomadorDescricao', 1, 50, 1,
-     CodIBGEToCidade(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), ''));
+                                                               xMunicipio, ''));
+  end;
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'CEPTomador', 1, 8, 1,
                                     OnlyNumber(NFSe.Tomador.Endereco.CEP), ''));
@@ -368,8 +379,15 @@ begin
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacao', 1, 10, 1,
             CodIBGEToCodTOM(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
 
+  CodigoIBGE := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
+
+  xMunicipio := '';
+
+  if CodigoIBGE > 0 then
+    xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoDescricao', 1, 30, 1,
-              CodIBGEToCidade(strtoint64(NFSe.Servico.CodigoMunicipio)), ''));
+                                                               xMunicipio, ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Operacao', 1, 1, 1,
                                      OperacaoToStr(NFSe.Servico.Operacao), ''));

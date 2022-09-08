@@ -579,6 +579,22 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  if EstaVazio(Emitente.WSUser) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod119;
+    AErro.Descricao := Desc119;
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.WSSenha) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod120;
+    AErro.Descricao := Desc120;
+    Exit;
+  end;
+
   Response.Metodo := tmConsultarNFSe;
 
   Response.ArquivoEnvio := '<ConsultarNfseServicoPrestado xmlns="http://iss.londrina.pr.gov.br/ws/v1_03">' +

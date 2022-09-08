@@ -59,7 +59,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -154,6 +155,9 @@ begin
 end;
 
 function TNFSeW_Giap.GerarDadosTomador: TACBrXmlNode;
+var
+  CodigoIBGE: Integer;
+  xMunicipio, xUF: string;
 begin
   Result := CreateElement('dadosTomador');
 
@@ -167,8 +171,17 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
                                           NFSe.Tomador.Endereco.xMunicipio, ''))
   else
+  begin
+    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+
+    xMunicipio := '';
+
+    if CodigoIBGE > 0 then
+      xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
     Result.AppendChild(AddNode(tcStr, '#1', 'cidade', 1, 50, 1,
-    CodIBGEToCidade(StrToInt64Def(NFSe.Tomador.Endereco.CodigoMunicipio, 0)), ''));
+                                                               xMunicipio, ''));
+  end;
 
   Result.AppendChild(AddNode(tcStr, '#1', 'complemento', 1, 30, 0,
                                         NFSe.Tomador.Endereco.Complemento, ''));

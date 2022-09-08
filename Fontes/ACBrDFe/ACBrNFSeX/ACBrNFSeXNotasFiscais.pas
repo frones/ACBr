@@ -259,9 +259,9 @@ end;
 function TNotaFiscal.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
-  sSecao, sFim: String;
+  sSecao, sFim, xUF: String;
   Ok: Boolean;
-  i: Integer;
+  i, CodigoIBGE: Integer;
   FProvider: IACBrNFSeXProvider;
 begin
   FProvider := TACBrNFSeX(FACBrNFSe).Provider;
@@ -342,11 +342,18 @@ begin
           Numero := INIRec.ReadString(sSecao, 'Numero', '');
           Bairro := INIRec.ReadString(sSecao, 'Bairro', '');
           CodigoMunicipio := INIRec.ReadString(sSecao, 'CodigoMunicipio', '');
-          xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
           UF := INIRec.ReadString(sSecao, 'UF', '');
           CodigoPais := INIRec.ReadInteger(sSecao, 'CodigoPais', 0);
           xPais := INIRec.ReadString(sSecao, 'xPais', '');
           CEP := INIRec.ReadString(sSecao, 'CEP', '');
+
+          CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+          if CodigoIBGE > 0 then
+            xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+          if UF = '' then
+            UF := xUF;
         end;
 
         with Contato do
@@ -378,12 +385,19 @@ begin
           Complemento := INIRec.ReadString(sSecao, 'Complemento', '');
           Bairro := INIRec.ReadString(sSecao, 'Bairro', '');
           CodigoMunicipio := INIRec.ReadString(sSecao, 'CodigoMunicipio', '');
-          xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
           UF := INIRec.ReadString(sSecao, 'UF', '');
           CodigoPais := INIRec.ReadInteger(sSecao, 'CodigoPais', 0);
           CEP := INIRec.ReadString(sSecao, 'CEP', '');
           // Provedor Equiplano é obrigatório o pais e IE
           xPais := INIRec.ReadString(sSecao, 'xPais', '');
+
+          CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+          if CodigoIBGE > 0 then
+            xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+          if UF = '' then
+            UF := xUF;
         end;
 
         with Contato do

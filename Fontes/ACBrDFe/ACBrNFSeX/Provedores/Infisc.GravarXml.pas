@@ -111,7 +111,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings, ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -189,7 +189,8 @@ end;
 
 function TNFSeW_Infisc.GerarDadosdaObra: TACBrXmlNode;
 var
-  xCidade: string;
+  xCidade, xUF: string;
+  CodigoIBGE: Integer;
 begin
   Result := CreateElement('dadosDaObra');
 
@@ -211,10 +212,15 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cCidadeObra', 1, 7, 1,
                             NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, ''));
 
-  xCidade := CodIBGEToCidade(StrToIntDef(NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, 0));
+  CodigoIBGE := StrToIntDef(NFSe.ConstrucaoCivil.Endereco.CodigoMunicipio, 0);
+
+  xCidade := '';
+
+  if CodigoIBGE > 0 then
+    xCidade := ObterNomeMunicipio(CodigoIBGE, xUF);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xCidadeObra', 1, 60, 1,
-                                   Copy(xCidade, 1, Pos('/', xCidade) -1), ''));
+                                                                  xCidade, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xUfObra', 1, 2, 1,
                                          NFSe.ConstrucaoCivil.Endereco.UF, ''));
@@ -423,7 +429,8 @@ end;
 
 function TNFSeW_Infisc.GerarEnderecoEmitente: TACBrXmlNode;
 var
-  xCidade: string;
+  xCidade, xUF: string;
+  CodigoIBGE: Integer;
 begin
   Result := CreateElement('end');
 
@@ -442,10 +449,14 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 1, 7, 1,
                                   NFSe.Prestador.Endereco.CodigoMunicipio, ''));
 
-  xCidade := CodIBGEToCidade(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0));
+  CodigoIBGE := StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 1,
-                                   Copy(xCidade, 1, Pos('/', xCidade) -1), ''));
+  xCidade := '';
+
+  if CodigoIBGE > 0 then
+    xCidade := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 1, xCidade, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'UF', 1, 2, 1,
                                                NFSe.Prestador.Endereco.UF, ''));
@@ -462,7 +473,8 @@ end;
 
 function TNFSeW_Infisc.GerarEnderecoTomador: TACBrXmlNode;
 var
-  xCidade: string;
+  xCidade, xUF: string;
+  CodigoIBGE: Integer;
 begin
   Result := CreateElement('ender');
 
@@ -481,10 +493,14 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 1, 7, 0,
                                     NFSe.Tomador.Endereco.CodigoMunicipio, ''));
 
-  xCidade := CodIBGEToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
+  CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 0,
-                                   Copy(xCidade, 1, Pos('/', xCidade) -1), ''));
+  xCidade := '';
+
+  if CodigoIBGE > 0 then
+    xCidade := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xMun', 1, 60, 0, xCidade, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'UF', 1, 2, 0,
                                                  NFSe.Tomador.Endereco.UF, ''));
@@ -1016,6 +1032,7 @@ end;
 function TNFSeW_Infisc.GerarTomador: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
+  xCidade, xUF: string;
 begin
   Result := CreateElement('TomS');
 
@@ -1049,12 +1066,10 @@ begin
 
   if (FPVersao = ve100) and (NFSe.Servico.MunicipioIncidencia <> 0) then
   begin
-    if (NFSe.Servico.MunicipioIncidencia = 4303905) then
-      Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
-                                                            'Campo Bom-RS', ''))
-    else
-      Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
-                      CodIBGEToCidade(NFSe.Servico.MunicipioIncidencia), ''));
+    xCidade := ObterNomeMunicipio(NFSe.Servico.MunicipioIncidencia, xUF);
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'Praca', 1, 60, 1,
+                                                      xCidade + '-' + xUF, ''));
   end;
 end;
 

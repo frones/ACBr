@@ -730,7 +730,7 @@ begin
       ANode := Document.Root;
       ArquivoBase64 := ObterConteudoTag(ANode.Childrens.FindAnyNs('ArquivoRPSBase64'), tcStr);
 
-      if (EstaVazio(ArquivoBase64) and (not ACBrUtil.Strings.StrIsBase64(ArquivoBase64))) then
+      if (EstaVazio(ArquivoBase64) and (not StrIsBase64(ArquivoBase64))) then
       begin
         AErro := Response.Erros.New;
         AErro.Codigo := Cod201;

@@ -250,7 +250,11 @@ procedure TACBrNFSeProviderTiplan203.Configuracao;
 begin
   inherited Configuracao;
 
-  ConfigGeral.NumMaxRpsGerar := 3;
+  with ConfigGeral do
+  begin
+    NumMaxRpsGerar := 3;
+    QuebradeLinha := '\s\n';
+  end;
 
   with ConfigAssinar do
   begin

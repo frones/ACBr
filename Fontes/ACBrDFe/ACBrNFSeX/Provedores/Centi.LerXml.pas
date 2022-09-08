@@ -116,7 +116,7 @@ implementation
 
 uses
   ACBrUtil.Base, ACBrUtil.Strings,
-  ACBrConsts,
+  ACBrConsts, ACBrDFeUtil,
   ACBrNFSeXConversao;
 
 //==============================================================================
@@ -213,6 +213,8 @@ procedure TNFSeR_Centi202.LerEnderecoPrestador(const ANode: TACBrXmlNode;
   aTag: string);
 var
   AuxNode: TACBrXmlNode;
+  xUF: string;
+  CodigoIBGE: Integer;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -230,7 +232,14 @@ begin
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CodigoPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
   end;
 end;
@@ -238,6 +247,8 @@ end;
 procedure TNFSeR_Centi202.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  xUF: string;
+  CodigoIBGE: Integer;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -254,7 +265,14 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoMunicipio'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('Uf'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
   end;
 end;

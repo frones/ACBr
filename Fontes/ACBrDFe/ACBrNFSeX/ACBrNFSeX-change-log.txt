@@ -43,6 +43,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+08/09/2022
+-- Diversos --
+[*] Removido a função CodIBGEToCidade da unit ACBrNFSeXConversao, agora o componente
+    vai passar a usar a função: ObterNomeMunicipio que se encontra na unit ACBrDFeUnit.
+    Incluido a checagem das propriedades WSUser, WSSenha, WSChaveAcesso e WSChaveAutoriz
+    nos provedores que se utilizam dessas informações para poder acessar os WebServices. 
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade de Itapevi/SP - Provedor SilTecnologia esta usando a versão 2.03
+   Por: Calixto J.B.
+[*] Na cidade de Sorriso/MT - Ocorreu alteração nos valores do campo Params
+   Por: Diego Reckziegel
+
 06/09/2022
 -- ABase.Provider --
 [+] Incluido as funções de conversão da Situação Tributaria, pois tem valores

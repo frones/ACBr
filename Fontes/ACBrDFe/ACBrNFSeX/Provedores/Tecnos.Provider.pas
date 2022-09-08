@@ -233,7 +233,7 @@ function TACBrNFSeProviderTecnos201.DefinirIDCancelamento(const CNPJ: string;
   const InscMunic: string; const NumNfse: string): string;
 begin
   Result := ' ' + ConfigGeral.Identificador + '="' + CNPJ +
-            ACBrUtil.Strings.Poem_Zeros(OnlyNumber(NumNfse), 9) + '"';
+            Poem_Zeros(OnlyNumber(NumNfse), 9) + '"';
 end;
 
 function TACBrNFSeProviderTecnos201.DefinirIDLote(const ID: string): string;
@@ -245,7 +245,7 @@ begin
   Result := ' ' + ConfigGeral.Identificador + '="1' + // Tipo de operação, no caso envio
             IntToStr(YearOf(Date)) + // ano do lote enviado no formato AAAA
             OnlyNumber(Cnpj) +
-            ACBrUtil.Strings.Poem_Zeros(OnlyNumber(ID), 16) + '"';
+            Poem_Zeros(OnlyNumber(ID), 16) + '"';
 end;
 
 procedure TACBrNFSeProviderTecnos201.GerarMsgDadosCancelaNFSe(

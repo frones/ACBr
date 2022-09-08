@@ -304,6 +304,22 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  if EstaVazio(Emitente.WSUser) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod119;
+    AErro.Descricao := Desc119;
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.WSSenha) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod120;
+    AErro.Descricao := Desc120;
+    Exit;
+  end;
+
   Response.Metodo := tmConsultarNFSe;
 
   // Atenção: Neste xml apenas o "Sdt_" da tag raiz deve ter o primeiro "S" em maiúsculo
@@ -482,6 +498,22 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  if EstaVazio(Emitente.WSUser) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod119;
+    AErro.Descricao := Desc119;
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.WSSenha) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod120;
+    AErro.Descricao := Desc120;
+    Exit;
+  end;
+
   // Atenção: Neste xml apenas o "Sdt_" da tag raiz deve ter o primeiro "S" em maiúsculo
   Response.ArquivoEnvio := '<Sdt_ws_002_in_canc_nfse_token>' +
                            '<ws_002_in_prest_insc_seq>' +
@@ -588,11 +620,28 @@ end;
 procedure TACBrNFSeProviderSiappa.PrepararGerarToken(
   Response: TNFSeGerarTokenResponse);
 var
+  AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
 begin
   Response.Clear;
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  if EstaVazio(Emitente.WSUser) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod119;
+    AErro.Descricao := Desc119;
+    Exit;
+  end;
+
+  if EstaVazio(Emitente.WSSenha) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod120;
+    AErro.Descricao := Desc120;
+    Exit;
+  end;
 
   // Atenção: Neste xml todos os "Ws_" do início das tags devem ter o primeiro "W" em maiúsculo
   Response.ArquivoEnvio := '<Ws_000_in_prest_insc_seq>' +

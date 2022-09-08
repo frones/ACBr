@@ -256,8 +256,8 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrDFeUtil,
   ACBrNFSeX, ACBrNFSeXClass, ACBrNFSeXInterface,
   ACBrValidador, ACBrDFeReportFortes;
 
@@ -364,6 +364,9 @@ begin
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  CodigoIBGE: Integer;
+  xMunicipio, xUF: string;
 begin
   inherited;
 
@@ -383,9 +386,14 @@ begin
     rllNumeroRPS.Caption := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
-	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
-	// do tomador em vez do que foi informado em Serviço.
-    rllMunicipioPrestacaoServico.Caption := CodIBGEToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
+  	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
+	  // do tomador em vez do que foi informado em Serviço.
+    CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
+
+    if CodigoIBGE > 0 then
+      xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+    rllMunicipioPrestacaoServico.Caption := xMunicipio;
   end;
 end;
 

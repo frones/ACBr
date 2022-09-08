@@ -69,9 +69,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings,
-  ACBrUtil.DateTime;
+  ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -201,6 +200,8 @@ procedure TNFSeR_ISSCambe.LerDadosTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   ok: Boolean;
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -227,8 +228,15 @@ begin
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorCEP'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorUF'), tcStr);
-      xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorPais'), tcInt);
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
 
     NFSe.Servico.CodigoMunicipio := NFSe.Tomador.Endereco.CodigoMunicipio;
@@ -239,6 +247,8 @@ end;
 procedure TNFSeR_ISSCambe.LerDadosPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -263,7 +273,14 @@ begin
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorCEP'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorUF'), tcStr);
-      xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
 
     with NFSe.Prestador.Contato do

@@ -71,8 +71,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -120,7 +120,8 @@ end;
 procedure TNFSeR_GeisWeb.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  cCidade: string;
+  xUF: string;
+  CodigoIBGE: Integer;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('Endereco');
 
@@ -131,10 +132,17 @@ begin
       Endereco := ObterConteudo(AuxNode.Childrens.FindAnyNs('Rua'), tcStr);
       Numero := ObterConteudo(AuxNode.Childrens.FindAnyNs('Numero'), tcStr);
       Bairro := ObterConteudo(AuxNode.Childrens.FindAnyNs('Bairro'), tcStr);
-      cCidade := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
-      xMunicipio := CodIBGEToCidade(StrToIntDef(OnlyNumber(cCidade), 0));
+      CodigoMunicipio := OnlyNumber(ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr));
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
   end;
 end;

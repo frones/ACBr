@@ -69,9 +69,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings,
-  ACBrUtil.XMLHTML,
-  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
+  ACBrUtil.Strings, ACBrUtil.XMLHTML, ACBrUtil.Base,
+  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXConsts,
   ACBrNFSeXNotasFiscais, Sigep.GravarXml, Sigep.LerXml;
 
 { TACBrNFSeProviderSigep200 }
@@ -134,6 +133,7 @@ end;
 procedure TACBrNFSeProviderSigep200.ValidarSchema(
   Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
 var
+  AErro: TNFSeEventoCollectionItem;
   xXml, credenciais: string;
   i, j: Integer;
 begin
@@ -141,6 +141,22 @@ begin
 
   with TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente do
   begin
+    if EstaVazio(WSUser) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod119;
+      AErro.Descricao := Desc119;
+      Exit;
+    end;
+
+    if EstaVazio(WSSenha) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod120;
+      AErro.Descricao := Desc120;
+      Exit;
+    end;
+
     credenciais := '<credenciais>' +
                      '<usuario>' + WSUser + '</usuario>' +
                      '<senha>' + WSSenha + '</senha>' +

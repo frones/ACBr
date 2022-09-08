@@ -2,7 +2,7 @@ Provedor            Versão Funcional (data)
 --------            ------ ----------------
 Abaco                1.00
 Abaco                1.01
-Abaco                2.04
+Abaco                2.04  05/09/2022
 ABase                2.01
 Actcon               2.00
 Actcon               2.01
@@ -10,7 +10,7 @@ Actcon               2.02
 Adm                  2.01
 ADPM                 2.00
 AEG                  2.02
-Agili                1.00
+Agili                1.00  08/09/2022
 AssessorPublico      1.00  23/08/2022
 Asten                2.02
 Bauhaus (em desenvolvimento)

@@ -98,8 +98,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base,
-  ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -190,6 +190,8 @@ end;
 procedure TNFSeR_Infisc.LerEnderecoEmitente(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('end');
 
@@ -202,9 +204,16 @@ begin
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
-      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
 
       // versão 1.1
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
@@ -222,6 +231,8 @@ end;
 procedure TNFSeR_Infisc.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ender');
 
@@ -234,9 +245,16 @@ begin
       Complemento     := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCpl'), tcStr);
       Bairro          := ObterConteudo(AuxNode.Childrens.FindAnyNs('xBairro'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
-      xMunicipio      := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
 
       // versão 1.1
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);

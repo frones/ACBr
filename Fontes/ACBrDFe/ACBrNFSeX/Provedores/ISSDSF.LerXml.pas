@@ -60,7 +60,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -196,8 +197,9 @@ end;
 
 function TNFSeR_ISSDSF.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 var
-  aValor: string;
+  aValor, xUF: string;
   Ok :Boolean;
+  CodigoIBGE: Integer;
 begin
   Result := True;
 
@@ -227,6 +229,7 @@ begin
     NFSe.StatusRps := StrToEnumerado(ok, aValor, ['N','C'], [srNormal, srCancelado]);
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('RazaoSocialPrestador'), tcStr);
+
   if aValor <> '' then
   begin
     with NFSe.Prestador do
@@ -260,6 +263,7 @@ begin
     NFSe.SeriePrestacao := aValor;
 
   aValor := ObterConteudo(ANode.Childrens.FindAnyNs('RazaoSocialTomador'), tcStr);
+
   if aValor <> '' then
   begin
     with NFSe.Tomador do
@@ -289,11 +293,17 @@ begin
         CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEPTomador'), tcStr);
 
         aValor := ObterConteudo(ANode.Childrens.FindAnyNs('CidadeTomador'), tcStr);
+
         if aValor <> '' then
         begin
           CodigoMunicipio := CodTOMToCodIBGE(aValor);
-          xMunicipio := CodIBGEToCidade(StrToInt(CodigoMunicipio));
-          UF := CodigoParaUF(StrToInt(Copy(CodigoMunicipio, 1, 2)));
+
+          CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+          if CodigoIBGE > 0 then
+            xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+          UF := xUF;
         end;
       end;
 
@@ -415,8 +425,9 @@ end;
 
 function TNFSeR_ISSDSF.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 var
-  aValor: string;
+  aValor, xUF: string;
   Ok: Boolean;
+  CodigoIBGE: Integer;
 begin
   Result := True;
 
@@ -484,13 +495,19 @@ begin
         TipoBairro := ObterConteudo(ANode.Childrens.FindAnyNs('TipoBairroTomador'), tcStr);
         Bairro := ObterConteudo(ANode.Childrens.FindAnyNs('BairroTomador'), tcStr);
         aValor := ObterConteudo(ANode.Childrens.FindAnyNs('CidadeTomador'), tcStr);
+
         if aValor <> '' then
         begin
           CodigoMunicipio := CodTOMToCodIBGE(aValor);
-          xMunicipio := CodIBGEToCidade(StrToInt(CodigoMunicipio));
-          UF := CodigoParaUF(StrToInt(Copy(CodigoMunicipio, 1, 2)));
+
+          CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+          if CodigoIBGE > 0 then
+            xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+          UF := xUF;
         end;
-        //xMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('CidadeTomadorDescricao'), tcStr);
+
         CEP := ObterConteudo(ANode.Childrens.FindAnyNs('CEPTomador'), tcStr);
       end;
 

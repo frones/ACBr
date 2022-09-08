@@ -64,7 +64,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -210,6 +211,8 @@ end;
 function TNFSeW_GeisWeb.GerarServico: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
+  CodigoIBGE: Integer;
+  xMunicipio, xUF: string;
 begin
   Result := CreateElement('Servico');
 
@@ -225,8 +228,15 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'Discriminacao', 1, 1500, 1,
                                                NFSe.Servico.Discriminacao, ''));
 
+  CodigoIBGE := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
+
+  xMunicipio := '';
+
+  if CodigoIBGE > 0 then
+    xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
   Result.AppendChild(AddNode(tcStr, '#1', 'MunicipioPrestacaoServico', 1, 100, 1,
-          CodIBGEToCidade(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0)), ''));
+                                                               xMunicipio, ''));
 end;
 
 function TNFSeW_GeisWeb.GerarTomadorServico: TACBrXmlNode;

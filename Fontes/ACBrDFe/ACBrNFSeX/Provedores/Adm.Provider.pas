@@ -77,8 +77,8 @@ type
 implementation
 
 uses
-  ACBrDFeException,
-  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais,
+  ACBrDFeException, ACBrUtil.Base,
+  ACBrNFSeX, ACBrNFSeXConfiguracoes, ACBrNFSeXNotasFiscais, ACBrNFSeXConsts,
   Adm.GravarXml, Adm.LerXml;
 
 { TACBrNFSeXWebserviceAdm201 }
@@ -320,6 +320,7 @@ end;
 procedure TACBrNFSeProviderAdm201.ValidarSchema(Response: TNFSeWebserviceResponse;
   aMetodo: TMetodo);
 var
+  AErro: TNFSeEventoCollectionItem;
   xDados: string;
   i: Integer;
   aXml: string;
@@ -328,6 +329,30 @@ begin
 
   with TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente do
   begin
+    if EstaVazio(WSUser) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod119;
+      AErro.Descricao := Desc119;
+      Exit;
+    end;
+
+    if EstaVazio(WSChaveAcesso) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod124;
+      AErro.Descricao := Desc124;
+      Exit;
+    end;
+
+    if EstaVazio(WSChaveAutoriz) then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod125;
+      AErro.Descricao := Desc125;
+      Exit;
+    end;
+
     xDados := '<Key>' + WSChaveAcesso + '</Key>' +
               '<Auth>' + WSChaveAutoriz + '</Auth>' +
               '<RequestId>' + WSUser + '</RequestId>';

@@ -65,7 +65,8 @@ type
 implementation
 
 uses
-  ACBrUtil.Base, ACBrUtil.Strings;
+  ACBrUtil.Base, ACBrUtil.Strings,
+  ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
@@ -152,6 +153,8 @@ end;
 procedure TNFSeR_ISSSaoPaulo.LerEnderecoPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('EnderecoPrestador');
 
@@ -167,7 +170,14 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
-      xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
   end;
 end;
@@ -175,6 +185,8 @@ end;
 procedure TNFSeR_ISSSaoPaulo.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('EnderecoTomador');
 
@@ -190,7 +202,14 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
-      xMunicipio := CodIBGEToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+      CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      if UF = '' then
+        UF := xUF;
     end;
 
     NFSe.Servico.CodigoMunicipio := NFSe.Tomador.Endereco.CodigoMunicipio;

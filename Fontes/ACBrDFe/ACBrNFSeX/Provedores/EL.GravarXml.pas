@@ -82,7 +82,7 @@ type
 implementation
 
 uses
-  ACBrUtil.Strings;
+  ACBrUtil.Strings, ACBrDFeUtil;
 
 //==============================================================================
 // Essa unit tem por finalidade exclusiva gerar o XML do RPS do provedor:
@@ -257,7 +257,8 @@ end;
 
 function TNFSeW_EL.GerarEnderecoPrestador: TACBrXmlNode;
 var
-  xMun: String;
+  xMun, xUF: String;
+  CodigoIBGE: Integer;
 begin
   Result := CreateElement('Endereco');
 
@@ -281,8 +282,12 @@ begin
 
   if (Trim(NFSe.Prestador.Endereco.xMunicipio) = '') then
   begin
-    xMun := CodIBGEToCidade(StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0));
-    xMun := Copy(xMun,1,Length(xMun)-3);
+    CodigoIBGE := StrToIntDef(NFSe.Prestador.Endereco.CodigoMunicipio, 0);
+
+    xMun := '';
+
+    if CodigoIBGE > 0 then
+      xMun := ObterNomeMunicipio(CodigoIBGE, xUF);
 
     Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
                                                           UpperCase(xMun), ''));
@@ -300,7 +305,8 @@ end;
 
 function TNFSeW_EL.GerarEnderecoTomador: TACBrXmlNode;
 var
-  xMun: String;
+  xMun, xUF: String;
+  CodigoIBGE: Integer;
 begin
   Result := CreateElement('Endereco');
 
@@ -324,8 +330,12 @@ begin
 
   if (Trim(NFSe.Tomador.Endereco.xMunicipio) = '') then
   begin
-    xMun := CodIBGEToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
-    xMun := Copy(xMun,1,Length(xMun)-3);
+    CodigoIBGE := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+
+    xMun := '';
+
+    if CodigoIBGE > 0 then
+      xMun := ObterNomeMunicipio(CodigoIBGE, xUF);
 
     Result.AppendChild(AddNode(tcStr, '#1', 'Municipio', 1, 100, 0,
                                                           UpperCase(xMun), ''));

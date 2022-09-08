@@ -431,7 +431,8 @@ end;
 procedure TfrmACBrNFSe.AlimentarNFSe(NumDFe, NumLote: String);
 var
   vValorISS: Double;
-  i: Integer;
+  i, CodigoIBGE: Integer;
+  xMunicipio, xUF: string;
 begin
   with ACBrNFSeX1 do
   begin
@@ -822,7 +823,13 @@ begin
       Prestador.Endereco.Numero   := edtEmitNumero.Text;
       Prestador.Endereco.Bairro   := edtEmitBairro.Text;
       Prestador.Endereco.CodigoMunicipio := edtCodCidade.Text;
-      Prestador.Endereco.xMunicipio := CodIBGEToCidade(StrToIntDef(edtCodCidade.Text, 0));
+
+      CodigoIBGE := StrToIntDef(edtCodCidade.Text, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      Prestador.Endereco.xMunicipio := xMunicipio;
       Prestador.Endereco.UF := edtEmitUF.Text;
       Prestador.Endereco.CodigoPais := 1058;
       Prestador.Endereco.xPais := 'BRASIL';
@@ -861,7 +868,13 @@ begin
       Tomador.Endereco.TipoBairro := 'BAIRRO';
       Tomador.Endereco.Bairro := 'CENTRO';
       Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
-      Tomador.Endereco.xMunicipio := CodIBGEToCidade(StrToIntDef(edtCodCidade.Text, 0));
+
+      CodigoIBGE := StrToIntDef(edtCodCidade.Text, 0);
+
+      if CodigoIBGE > 0 then
+        xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+      Tomador.Endereco.xMunicipio := xMunicipio;
       Tomador.Endereco.UF := edtEmitUF.Text;
       Tomador.Endereco.CodigoPais := 1058; // Brasil
       Tomador.Endereco.CEP := edtEmitCEP.Text;

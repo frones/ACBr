@@ -62,8 +62,6 @@ type
           const UmasPlatform: string);
   end;
 
-  TPlataformaDestino = TACBrPlataformaInstalacaoAlvo;
-
   TListaPlataformasAlvosBase = TList<TACBrPlataformaInstalacaoAlvo>;
 
   TListaPlataformasAlvos = class(TListaPlataformasAlvosBase)

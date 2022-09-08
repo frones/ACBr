@@ -86,7 +86,7 @@ type
     FOnProgresso: TOnProgresso;
     FOnInformaSituacao: TOnInformarSituacao;
 
-    FUmaPlataformaDestino: TPlataformaDestino;
+    FUmaPlataformaDestino: TACBrPlataformaInstalacaoAlvo;
 
     FPacoteAtual: TFileName;
 
@@ -129,7 +129,7 @@ type
     procedure InstalarPacotes(const PastaACBr: string; listaPacotes: TPacotes);
     function PathArquivoLog(const NomeVersao: string): String;
 
-    procedure FazInstalacaoInicial(ListaPacotes: TPacotes; PlataformaDestino: TPlataformaDestino);
+    procedure FazInstalacaoInicial(ListaPacotes: TPacotes; UmaPlataformaDestino: TACBrPlataformaInstalacaoAlvo);
     procedure InstalarOutrosRequisitos;
     procedure FazInstalacaoDLLs(const APathBin: string);
     procedure ConfiguraMetodosCompiladores;
@@ -373,14 +373,14 @@ begin
   FindDirs(FUmaPlataformaDestino.tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes', False);
 end;
 
-procedure TACBrInstallComponentes.FazInstalacaoInicial(ListaPacotes: TPacotes; PlataformaDestino:
-   TPlataformaDestino);
+procedure TACBrInstallComponentes.FazInstalacaoInicial(ListaPacotes: TPacotes; UmaPlataformaDestino:
+   TACBrPlataformaInstalacaoAlvo);
 var
   Cabecalho: string;
   NomeVersao: string;
 begin
 
-  with FUmaPlataformaDestino do
+  with UmaPlataformaDestino do
   begin
     NomeVersao := VersionNumberToNome(InstalacaoAtual.VersionNumberStr);
 

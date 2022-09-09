@@ -353,7 +353,7 @@ begin
     NFSe.DeducaoMateriais := StrToEnumerado(Ok, aValor, ['A','B'], [snNao, snSim]);
 
     aValor := ObterConteudo(ANode.Childrens.FindAnyNs('Tributacao'), tcStr);
-    NFSe.Servico.Tributacao := StrToTributacao(Ok, aValor);
+    NFSe.Servico.Tributacao := FpAOwner.StrToTributacao(Ok, aValor);
     NFSe.NaturezaOperacao := StrToEnumerado(Ok, aValor, ['T','K'], [NFSe.NaturezaOperacao, no5]);
     NFSe.OptanteSimplesNacional := StrToEnumerado(Ok, aValor, ['T','H'], [snNao, snSim]);
     NFse.RegimeEspecialTributacao := StrToEnumerado(Ok, aValor, ['T','M'], [retNenhum, retMicroempresarioIndividual]);
@@ -535,7 +535,7 @@ begin
       aValor := ObterConteudo(ANode.Childrens.FindAnyNs('Operacao'), tcStr);
       Operacao := StrToOperacao(Ok, aValor);
       aValor := ObterConteudo(ANode.Childrens.FindAnyNs('Tributacao'), tcStr);
-      Tributacao := StrToTributacao(Ok, aValor);
+      Tributacao := FpAOwner.StrToTributacao(Ok, aValor);
 
       with Valores do
       begin

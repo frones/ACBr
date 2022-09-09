@@ -62,8 +62,14 @@ type
 
     function GerarDeducoes: TACBrXmlNode;
     function GerarDetalhamentoNota: TACBrXmlNode;
-//    function GerarServicos: TACBrXmlNode;
-//    function GerarServico: TACBrXmlNodeArray;
+
+    function GerarItensServico: TACBrXmlNode;
+    function GerarItem: TACBrXmlNodeArray;
+
+    function GerarTotais: TACBrXmlNode;
+
+    function GerarImpostosFederais: TACBrXmlNode;
+    function GerarImposto: TACBrXmlNodeArray;
   public
     function GerarXml: Boolean; override;
   end;
@@ -398,7 +404,7 @@ begin
   Result.AppendChild(xmlNode);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tipoTributacao', 1, 1, 1,
-                                 TributacaoToStr(NFSe.Servico.Tributacao), ''));
+                        FpAOwner.TributacaoToStr(NFSe.Servico.Tributacao), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tipoRecolhimento', 1, 1, 1,
                                                     NFSe.TipoRecolhimento, ''));
@@ -439,51 +445,37 @@ function TNFSeW_CTAConsult.GerarDeducoes: TACBrXmlNode;
 begin
   Result := CreateElement('deducoes');
 
+  Result.AppendChild(AddNode(tcStr, '#1', 'tipo', 1, 1, 1,
+                       TipoDeducaoToStr(NFSe.Servico.Valores.TipoDeducao), ''));
 end;
 
 function TNFSeW_CTAConsult.GerarDetalhamentoNota: TACBrXmlNode;
+var
+  xmlNode: TACBrXmlNode;
 begin
   Result := CreateElement('detalhamentoNota');
 
+  Result.AppendChild(AddNode(tcStr, '#1', 'descricaoNota', 1, 256, 1,
+                                               NFSe.Servico.Discriminacao, ''));
+
+  xmlNode := GerarItensServico;
+  Result.AppendChild(xmlNode);
+
+  xmlNode := GerarTotais;
+  Result.AppendChild(xmlNode);
+
+  xmlNode := GerarImpostosFederais;
+  Result.AppendChild(xmlNode);
 end;
 
-{
-function TNFSeW_CTAConsult.GerarServico: TACBrXmlNodeArray;
-var
-  i: integer;
-begin
-  Result := nil;
-  SetLength(Result, NFSe.Servico.ItemServico.Count);
-
-  for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
-  begin
-    Result[i] := CreateElement('SERVICO');
-
-    Result[i].AppendChild(AddNode(tcStr, '#1', 'DESCRICAO', 1, 60, 1,
-                              NFSe.Servico.ItemServico.Items[i].Descricao, ''));
-
-    Result[i].AppendChild(AddNode(tcDe2, '#1', 'VALORUNIT', 1, 15, 1,
-                          NFSe.Servico.ItemServico.Items[i].ValorUnitario, ''));
-
-    Result[i].AppendChild(AddNode(tcDe4, '#1', 'QUANTIDADE', 1, 10, 1,
-                             NFSe.Servico.ItemServico.Items[i].Quantidade, ''));
-
-    Result[i].AppendChild(AddNode(tcDe2, '#1', 'DESCONTO', 1, 10, 1,
-                 NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, ''));
-  end;
-
-  if NFSe.Servico.ItemServico.Count > 10 then
-    wAlerta('#54', 'SERVICO', '', ERR_MSG_MAIOR_MAXIMO + '10');
-end;
-
-function TNFSeW_CTAConsult.GerarServicos: TACBrXmlNode;
+function TNFSeW_CTAConsult.GerarItensServico: TACBrXmlNode;
 var
   i : integer;
   nodeArray: TACBrXmlNodeArray;
 begin
-  Result := CreateElement('SERVICOS');
+  Result := CreateElement('itensServico');
 
-  nodeArray := GerarServico;
+  nodeArray := GerarItem;
   if nodeArray <> nil then
   begin
     for i := 0 to Length(nodeArray) - 1 do
@@ -492,6 +484,108 @@ begin
     end;
   end;
 end;
-}
+
+function TNFSeW_CTAConsult.GerarItem: TACBrXmlNodeArray;
+var
+  i: integer;
+begin
+  Result := nil;
+  SetLength(Result, NFSe.Servico.ItemServico.Count);
+
+  for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
+  begin
+    Result[i] := CreateElement('item');
+    Result[i].SetAttribute('nItem', IntToStr(i+1));
+
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'tributavel', 1, 5, 1,
+       FpAOwner.SimNaoToStr(NFSe.Servico.ItemServico.Items[i].Tributavel), ''));
+
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'descricao', 1, 60, 1,
+                              NFSe.Servico.ItemServico.Items[i].Descricao, ''));
+
+    Result[i].AppendChild(AddNode(tcInt, '#1', 'quantidade', 1, 4, 1,
+                             NFSe.Servico.ItemServico.Items[i].Quantidade, ''));
+
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'valorUnitario', 1, 15, 1,
+                          NFSe.Servico.ItemServico.Items[i].ValorUnitario, ''));
+
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'valorTotal', 1, 15, 1,
+                             NFSe.Servico.ItemServico.Items[i].ValorTotal, ''));
+  end;
+
+  if NFSe.Servico.ItemServico.Count > 99 then
+    wAlerta('#', 'item', '', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+function TNFSeW_CTAConsult.GerarTotais: TACBrXmlNode;
+begin
+  Result := CreateElement('totais');
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'valotTotalNota', 1, 15, 1,
+                                    NFSe.Servico.Valores.ValorLiquidoNfse, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'valorTotalServico', 1, 15, 1,
+                                       NFSe.Servico.Valores.ValorServicos, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'valorTotalDeducao', 1, 15, 1,
+                                       NFSe.Servico.Valores.ValorDeducoes, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'valorTotalISS', 1, 15, 1,
+                                            NFSe.Servico.Valores.ValorIss, ''));
+
+  Result.AppendChild(AddNode(tcDe2, '#1', 'valorReducaoBC', 1, 15, 1,
+                                       NFSe.Servico.Valores.ValorDeducoes, ''));
+end;
+
+function TNFSeW_CTAConsult.GerarImpostosFederais: TACBrXmlNode;
+var
+  i : integer;
+  nodeArray: TACBrXmlNodeArray;
+begin
+  Result := nil;
+
+  if NFSe.Servico.Imposto.Count > 0 then
+  begin
+    Result := CreateElement('impostosFederais');
+
+    nodeArray := GerarImposto;
+    if nodeArray <> nil then
+    begin
+      for i := 0 to Length(nodeArray) - 1 do
+      begin
+        Result.AppendChild(nodeArray[i]);
+      end;
+    end;
+  end;
+end;
+
+function TNFSeW_CTAConsult.GerarImposto: TACBrXmlNodeArray;
+var
+  i: integer;
+begin
+  Result := nil;
+  SetLength(Result, NFSe.Servico.Imposto.Count);
+
+  for i := 0 to NFSe.Servico.Imposto.Count - 1 do
+  begin
+    Result[i] := CreateElement('imposto');
+    Result[i].SetAttribute('nItem', IntToStr(i+1));
+
+    Result[i].AppendChild(AddNode(tcInt, '#1', 'codigoImposto', 1, 4, 1,
+                                     NFSe.Servico.Imposto.Items[i].Codigo, ''));
+
+    Result[i].AppendChild(AddNode(tcStr, '#1', 'descricaoImposto', 1, 60, 1,
+                                  NFSe.Servico.Imposto.Items[i].Descricao, ''));
+
+    Result[i].AppendChild(AddNode(tcDe4, '#1', 'aliquota', 1, 8, 1,
+                                   NFSe.Servico.Imposto.Items[i].Aliquota, ''));
+
+    Result[i].AppendChild(AddNode(tcDe2, '#1', 'valorImposto', 1, 15, 1,
+                                      NFSe.Servico.Imposto.Items[i].Valor, ''));
+  end;
+
+  if NFSe.Servico.Imposto.Count > 99 then
+    wAlerta('#', 'imposto', '', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
 
 end.

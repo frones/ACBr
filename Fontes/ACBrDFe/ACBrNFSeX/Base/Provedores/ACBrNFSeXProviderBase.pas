@@ -228,6 +228,10 @@ type
 
     function SituacaoTribToStr(const t: TSituacaoTrib): string; virtual;
     function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib; virtual;
+
+    function TributacaoToStr(const t: TTributacao): string; virtual;
+    function StrToTributacao(out ok: boolean; const s: string): TTributacao; virtual;
+    function TributacaoDescricao(const t: TTributacao): String; virtual;
   end;
 
 implementation
@@ -1243,6 +1247,42 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '0'],
                            [trRPS, trNFConjugada, trCupom, trNone]);
+end;
+
+function TACBrNFSeXProvider.TributacaoDescricao(const t: TTributacao): String;
+begin
+  case t of
+    ttIsentaISS           : Result := 'C - Isenta de ISS';
+    ttNaoIncidencianoMunic: Result := 'E - Não Incidência no Município';
+    ttImune               : Result := 'F - Imune';
+    ttExigibilidadeSusp   : Result := 'K - Exigibilidade Susp.Dec.J/Proc.A';
+    ttNaoTributavel       : Result := 'N - Não Tributável';
+    ttTributavel          : Result := 'T - Tributável';
+    ttTributavelFixo      : Result := 'G - Tributável Fixo';
+    ttTributavelSN        : Result := 'H - Tributável S.N.';
+    ttMEI                 : Result := 'M - Micro Empreendedor Individual(MEI)';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeXProvider.TributacaoToStr(const t: TTributacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
+                           [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
+                            ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
+                            ttTributavelFixo, ttTributavelSN, ttMEI]);
+end;
+
+function TACBrNFSeXProvider.StrToTributacao(out ok: boolean;
+  const s: string): TTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
+                           [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
+                            ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
+                            ttTributavelFixo, ttTributavelSN, ttMEI]);
 end;
 
 function TACBrNFSeXProvider.PrepararRpsParaLote(const aXml: string): string;

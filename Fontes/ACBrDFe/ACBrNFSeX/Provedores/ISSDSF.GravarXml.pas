@@ -229,7 +229,7 @@ begin
   SerieRPS          := PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ');
   NumeroRPS         := Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12);
   sDataEmis         := FormatDateTime('yyyymmdd',NFse.DataEmissaoRps);
-  sTributacao       := TributacaoToStr(NFSe.Servico.Tributacao) + ' ';
+  sTributacao       := FpAOwner.TributacaoToStr(NFSe.Servico.Tributacao) + ' ';
   sSituacaoRPS      := FPSituacao;
   sTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido, ['N','S'], [stNormal, stRetencao]);
 
@@ -393,7 +393,7 @@ begin
                                      OperacaoToStr(NFSe.Servico.Operacao), ''));
 
   NFSeNode.AppendChild(AddNode(tcStr, '#1', 'Tributacao', 1, 1, 1,
-                                 TributacaoToStr(NFSe.Servico.Tributacao), ''));
+                        FpAOwner.TributacaoToStr(NFSe.Servico.Tributacao), ''));
 
   NFSeNode.AppendChild(AddNode(tcDe2, '#1', 'ValorPIS', 1, 15, 1,
                                             NFSe.Servico.Valores.ValorPis, ''));

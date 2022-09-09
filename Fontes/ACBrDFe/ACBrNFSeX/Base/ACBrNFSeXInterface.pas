@@ -99,6 +99,10 @@ type
 
     function SituacaoTribToStr(const t: TSituacaoTrib): string;
     function StrToSituacaoTrib(out ok: boolean; const s: string): TSituacaoTrib;
+
+    function TributacaoToStr(const t: TTributacao): string;
+    function StrToTributacao(out ok: boolean; const s: string): TTributacao;
+    function TributacaoDescricao(const t: TTributacao): String;
   end;
 
 implementation

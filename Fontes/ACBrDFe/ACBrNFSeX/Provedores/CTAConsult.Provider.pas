@@ -72,9 +72,13 @@ type
 
     procedure ProcessarMensagemErros(RootNode: TACBrXmlNode;
                                      Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = '';
-                                     const AMessageTag: string = 'Erro'); override;
+                                     const AListTag: string = 'erros';
+                                     const AMessageTag: string = 'erro'); override;
 
+  public
+    function TributacaoToStr(const t: TTributacao): string; override;
+    function StrToTributacao(out ok: boolean; const s: string): TTributacao; override;
+    function TributacaoDescricao(const t: TTributacao): String; override;
   end;
 
 implementation
@@ -98,6 +102,8 @@ begin
     UseCertificateHTTP := False;
     ModoEnvio := meUnitario;
     DetalharServico := True;
+    ConsultaLote := False;
+    ConsultaNFSe := False;
   end;
 
   ConfigMsgDados.UsarNumLoteConsLote := True;
@@ -174,8 +180,8 @@ begin
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
     AErro := Response.Erros.New;
-    AErro.Codigo := '';
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('ERRO'), tcStr);
+    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('codigo'), tcStr);
+    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('descricao'), tcStr);
     AErro.Correcao := '';
   end;
 end;
@@ -224,7 +230,6 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   ANode: TACBrXmlNode;
-  Inconsistencia: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -238,22 +243,19 @@ begin
         Exit
       end;
 
-      Inconsistencia := (Pos('<INCONSISTENCIA>', Response.ArquivoRetorno) > 0);
-
       Document.LoadFromXml(Response.ArquivoRetorno);
 
       ANode := Document.Root;
 
-      if Inconsistencia then
-      begin
-        ANode := ANode.Childrens.FindAnyNs('Mensagem');
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoStatus'), tcStr);
 
-        ProcessarMensagemErros(ANode, Response, 'NFSE', 'INCONSISTENCIA');
-      end
-      else
-        Response.Protocolo := Trim(ObterConteudoTag(ANode.Childrens.FindAnyNs('Mensagem'), tcStr));
+      ProcessarMensagemErros(ANode, Response);
 
       Response.Sucesso := (Response.Erros.Count = 0);
+
+      // Precisamos de um retorno sem erros para terminar a implementação da
+      // leitura do retorno
     except
       on E:Exception do
       begin
@@ -345,19 +347,17 @@ begin
 
       Document.LoadFromXml(Response.ArquivoRetorno);
 
-      ANode := Document.Root.Childrens.FindAnyNs('Mensagem');
+      ANode := Document.Root;
 
-      if ANode <> nil then
-        ANode := ANode.Childrens.FindAnyNs('NFSE')
-      else
-        ANode := Document.Root.Childrens.FindAnyNs('NFSE');
+      Response.Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('protocolo'), tcStr);
+      Response.Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoStatus'), tcStr);
 
-      if ANode <> nil then
-      begin
-        ProcessarMensagemErros(ANode, Response, '', 'INCONSISTENCIA');
+      ProcessarMensagemErros(ANode, Response);
 
-        Response.Sucesso := (Response.Erros.Count = 0);
-      end;
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      // Precisamos de um retorno sem erros para terminar a implementação da
+      // leitura do retorno
     except
       on E:Exception do
       begin
@@ -369,6 +369,46 @@ begin
   finally
     FreeAndNil(Document);
   end;
+end;
+
+function TACBrNFSeProviderCTAConsult.StrToTributacao(out ok: boolean;
+  const s: string): TTributacao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                           [ttIsentaISS, ttImune, ttExigibilidadeSusp,
+                            ttTributavel, ttNaoIncidencianoMunic,
+                            ttTributavelSN, ttTributavelFixo, ttNaoTributavel,
+                            ttMEI]);
+end;
+
+function TACBrNFSeProviderCTAConsult.TributacaoDescricao(
+  const t: TTributacao): String;
+begin
+  case t of
+    ttIsentaISS           : Result := '1 - Isenta de ISS';
+    ttImune               : Result := '2 - Imune';
+    ttExigibilidadeSusp   : Result := '3 - Exigibilidade Susp.Dec.J/Proc.A';
+    ttTributavel          : Result := '4 - Tributável';
+    ttNaoIncidencianoMunic: Result := '5 - Não Incidência no Município';
+    ttTributavelSN        : Result := '6 - Tributável S.N.';
+    ttTributavelFixo      : Result := '7 - Tributável Fixo';
+    ttNaoTributavel       : Result := '8 - Não Tributável';
+    ttMEI                 : Result := '9 - Micro Empreendedor Individual(MEI)';
+  else
+    Result := '';
+  end;
+end;
+
+function TACBrNFSeProviderCTAConsult.TributacaoToStr(
+  const t: TTributacao): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                           [ttIsentaISS, ttImune, ttExigibilidadeSusp,
+                            ttTributavel, ttNaoIncidencianoMunic,
+                            ttTributavelSN, ttTributavelFixo, ttNaoTributavel,
+                            ttMEI]);
 end;
 
 { TACBrNFSeXWebserviceCTAConsult }
@@ -385,7 +425,7 @@ begin
   Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';
   Request := Request + '</wsn:executar>';
 
-  Result := Executar('', Request, ['return'],
+  Result := Executar('', Request, ['return', 'retornoNfseLote'],
                      ['xmlns:wsn="http://wsnfselote.ctaconsult.com.br/"']);
 end;
 
@@ -402,7 +442,7 @@ begin
   Request := Request + '<arg1>' + XmlToStr(AMSG) + '</arg1>';
   Request := Request + '</wsn:executar>';
 
-  Result := Executar('', Request, ['return'],
+  Result := Executar('', Request, ['return', 'retornoCancelamentoNfseLote'],
                      ['xmlns:wsn="http://wsnfselote.ctaconsult.com.br/"']);
 end;
 
@@ -411,9 +451,11 @@ function TACBrNFSeXWebserviceCTAConsult.TratarXmlRetornado(
 begin
   Result := inherited TratarXmlRetornado(aXML);
 
-  Result := ParseText(AnsiString(Result), True, False);
+  Result := ParseText(AnsiString(Result));
+//  Result := ParseText(AnsiString(Result), True, False);
   Result := RemoverDeclaracaoXML(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := RemoverPrefixosDesnecessarios(Result);
 end;
 
 end.

@@ -370,6 +370,7 @@ type
     FtribMun: TtribMun;
     FtribNac: TtribNac;
     FtotTrib: TtotTrib;
+    FTipoDeducao: TTipoDeducao;
 
     procedure SetDocDeducao(const Value: TDocDeducaoCollection);
   public
@@ -433,6 +434,8 @@ type
     property tribMun: TtribMun read FtribMun write FtribMun;
     property tribNac: TtribNac read FtribNac write FtribNac;
     property totTrib: TtotTrib read FtotTrib write FtotTrib;
+    //provedor CTAConsult
+    property TipoDeducao: TTipoDeducao read FTipoDeducao write FTipoDeducao;
   end;
 
   TItemServicoCollectionItem = class(TObject)
@@ -571,16 +574,16 @@ type
   // classe usada no provedor IssDSF
   TDeducaoCollectionItem = class(TObject)
   private
-    FDeducaoPor: TnfseDeducaoPor;
-    FTipoDeducao: TnfseTipoDeducao;
+    FDeducaoPor: TDeducaoPor;
+    FTipoDeducao: TTipoDeducao;
     FCpfCnpjReferencia: string;
     FNumeroNFReferencia: string;
     FValorTotalReferencia: Double;
     FPercentualDeduzir: Double;
     FValorDeduzir: Double;
   public
-    property DeducaoPor: TnfseDeducaoPor read FDeducaoPor write FDeducaoPor;
-    property TipoDeducao: TnfseTipoDeducao read FTipoDeducao write FTipoDeducao;
+    property DeducaoPor: TDeducaoPor read FDeducaoPor write FDeducaoPor;
+    property TipoDeducao: TTipoDeducao read FTipoDeducao write FTipoDeducao;
     property CpfCnpjReferencia: string read FCpfCnpjReferencia write FCpfCnpjReferencia;
     property NumeroNFReferencia: string read FNumeroNFReferencia write FNumeroNFReferencia;
     property ValorTotalReferencia: Double read FValorTotalReferencia write FValorTotalReferencia;
@@ -684,6 +687,30 @@ type
     property xInfComp: string read FxInfComp write FxInfComp;
   end;
 
+  // classe usada no provedor CTAConsult
+  TImpostoCollectionItem = class(TObject)
+  private
+    FCodigo: Integer;
+    FDescricao: string;
+    FAliquota: Double;
+    FValor: Double;
+  public
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Descricao: string read FDescricao write FDescricao;
+    property Aliquota: Double read FAliquota write FAliquota;
+    property Valor: Double read FValor write FValor;
+  end;
+
+  TImpostoCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TImpostoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TImpostoCollectionItem);
+  public
+    function Add: TImpostoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TImpostoCollectionItem;
+    property Items[Index: Integer]: TImpostoCollectionItem read GetItem write SetItem; default;
+  end;
+
   TDadosServico = class(TObject)
   private
     FValores: TValores;
@@ -722,9 +749,11 @@ type
     FEvento: TEvento;
     FExplRod: TExplRod;
     FinfoCompl: TinfoCompl;
+    FImposto: TImpostoCollection;
 
     procedure SetItemServico(Value: TItemServicoCollection);
     procedure SetDeducao(const Value: TDeducaoCollection);
+    procedure SetImposto(const Value: TImpostoCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -766,6 +795,8 @@ type
     property Evento: TEvento read FEvento write FEvento;
     property ExplRod: TExplRod read FExplRod write FExplRod;
     property infoCompl: TinfoCompl read FinfoCompl write FinfoCompl;
+    // Provedor CTAConsult
+    property Imposto: TImpostoCollection read FImposto write SetImposto;
   end;
 
   TDadosPessoa = class(TObject)
@@ -1409,6 +1440,7 @@ begin
   FEvento := TEvento.Create;
   FExplRod := TExplRod.Create;
   FinfoCompl := TinfoCompl.Create;
+  FImposto := TImpostoCollection.Create;
 
   FDescricao := '';
   FPrestadoEmViasPublicas := False;
@@ -1424,6 +1456,7 @@ begin
   FEvento.Free;
   FExplRod.Free;
   FinfoCompl.Free;
+  FImposto.Free;
 
   inherited Destroy;
 end;
@@ -1431,6 +1464,11 @@ end;
 procedure TDadosServico.SetDeducao(const Value: TDeducaoCollection);
 begin
   FDeducao := Value;
+end;
+
+procedure TDadosServico.SetImposto(const Value: TImpostoCollection);
+begin
+  FImposto := Value;
 end;
 
 procedure TDadosServico.SetItemServico(Value: TItemServicoCollection);
@@ -2057,6 +2095,30 @@ begin
   FContato.Free;
 
   inherited Destroy;
+end;
+
+{ TImpostoCollection }
+
+function TImpostoCollection.Add: TImpostoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TImpostoCollection.GetItem(Index: Integer): TImpostoCollectionItem;
+begin
+  Result := TImpostoCollectionItem(inherited Items[Index]);
+end;
+
+function TImpostoCollection.New: TImpostoCollectionItem;
+begin
+  Result := TImpostoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TImpostoCollection.SetItem(Index: Integer;
+  Value: TImpostoCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

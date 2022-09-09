@@ -99,9 +99,10 @@ type
   TSituacaoLoteRPS = (sLoteNaoRecibo, sLoteNaoProcessado, sLoteProcessadoErro,
                       sLoteProcessadoSucesso, sLoteProcessadoAviso);
 
-  TnfseDeducaoPor = (dpNenhum, dpPercentual, dpValor);
+  TDeducaoPor = (dpNenhum, dpPercentual, dpValor);
 
-  TnfseTipoDeducao = (tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao);
+  TTipoDeducao = (tdNenhum, tdMateriais, tdSubEmpreitada, tdValor, tdVeiculacao,
+                  tdPercentual, tdPercMateriais, tdIntermediacao);
 
   TnfseProvedor = (proNenhum,
                    proPadraoNacional,
@@ -346,10 +347,6 @@ function OperacaoToStr(const t: TOperacao): string;
 function StrToOperacao(out ok: boolean; const s: string): TOperacao;
 function OperacaoDescricao(const t: TOperacao): String;
 
-function TributacaoToStr(const t: TTributacao): string;
-function StrToTributacao(out ok: boolean; const s: string): TTributacao;
-function TributacaoDescricao(const t: TTributacao): String;
-
 function UnidadeToStr(const t: TUnidade): string;
 function StrToUnidade(out ok: boolean; const s: string): TUnidade;
 
@@ -450,6 +447,9 @@ function StrToprocEmi(out ok: Boolean; const s: String): TprocEmi;
 
 function tpEventoToStr(const t: TtpEvento): String;
 function StrTotpEvento(out ok: Boolean; const s: String): TtpEvento;
+
+function TipoDeducaoToStr(const t: TTipoDeducao): String;
+function StrToTipoDeducao(out ok: Boolean; const s: String): TTipoDeducao;
 
 function CodIBGEPaisToSiglaISO2(const t: Integer): String;
 
@@ -12395,23 +12395,6 @@ begin
   end;
 end;
 
-function TributacaoDescricao(const t: TTributacao): String;
-begin
-  case t of
-    ttIsentaISS           : Result := 'C - Isenta de ISS';
-    ttNaoIncidencianoMunic: Result := 'E - Não Incidência no Município';
-    ttImune               : Result := 'F - Imune';
-    ttExigibilidadeSusp   : Result := 'K - Exigibilidade Susp.Dec.J/Proc.A';
-    ttNaoTributavel       : Result := 'N - Não Tributável';
-    ttTributavel          : Result := 'T - Tributável';
-    ttTributavelFixo      : Result := 'G - Tributável Fixo';
-    ttTributavelSN        : Result := 'H - Tributável S.N.';
-    ttMEI                 : Result := 'M - Micro Empreendedor Individual(MEI)';
-  else
-    Result := '';
-  end;
-end;
-
 function TipoFreteToStr(const t: TnfseFrete): string;
 begin
   Result := EnumeradoToStr(t,
@@ -12512,24 +12495,6 @@ begin
                            ['A', 'B', 'C', 'D', 'J'],
                            [toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
                             toDevolucaoSimplesRemessa, toIntermediacao]);
-end;
-
-function TributacaoToStr(const t: TTributacao): string;
-begin
-  Result := EnumeradoToStr(t,
-                           ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
-                           [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
-                            ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
-                            ttTributavelFixo, ttTributavelSN, ttMEI]);
-end;
-
-function StrToTributacao(out ok: boolean; const s: string): TTributacao;
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
-                           [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
-                            ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
-                            ttTributavelFixo, ttTributavelSN, ttMEI]);
 end;
 
 function UnidadeToStr(const t: TUnidade): string;
@@ -13092,6 +13057,22 @@ begin
                     teRejeicaoIntermediario, AnulacaoRejeicao,
                     teCancelamentoPorOficio, teBloqueioPorOficio,
                     teDesbloqueioPorOficio]);
+end;
+
+function TipoDeducaoToStr(const t: TTipoDeducao): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                 [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
+                  tdVeiculacao, tdIntermediacao]);
+end;
+
+function StrToTipoDeducao(out ok: Boolean; const s: String): TTipoDeducao;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5', '6', '7'],
+                 [tdNenhum, tdMateriais, tdPercentual, tdValor, tdPercMateriais,
+                  tdVeiculacao, tdIntermediacao]);
 end;
 
 function CodIBGEPaisToSiglaISO2(const t: Integer): String;

@@ -1093,7 +1093,7 @@ begin
       FieldByName('NumeroProcesso').AsString := NumeroProcesso;
       FieldByName('Descricao').AsString := Descricao;
       FieldByName('ResponsavelRetencao').AsString := FProvider.ResponsavelRetencaoToStr(ResponsavelRetencao);
-      FieldByName('Tributacao').AsString := TributacaoToStr(Tributacao);
+      FieldByName('Tributacao').AsString := FProvider.TributacaoToStr(Tributacao);
 
       with Valores do
       begin

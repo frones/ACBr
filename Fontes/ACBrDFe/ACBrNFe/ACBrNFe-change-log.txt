@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2022
+-- ACBrNFeServicos --
+[*] Remoção das URLs de Consulta ao Cadastro da SEFAZ-ES, pois agora ela usa as
+    URLs da SVRS
+   Por: Douglas Miiller
+
 10/08/2022
 -- ACBrNFeNotasFiscais --
 [*] Atualizado função ValidarRegrasdeNegocios, utilizando a função DataHoraTimeZoneModoDeteccao para validar a DataHora com TimeZone informado no XML

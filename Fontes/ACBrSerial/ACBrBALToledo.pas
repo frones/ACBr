@@ -66,18 +66,23 @@ type
     procedure LeSerial( MillisecTimeOut : Integer = 500) ; override;
 
     function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
+    function EnviarPrecoKg(const aValor: Currency; aMillisecTimeOut: Integer = 3000): Boolean; override;
   end;
 
 implementation
 
 uses
-  SysUtils,
-  ACBrConsts, ACBrUtil.Compatibilidade, ACBrUtil.Math, ACBrUtil.Strings,
   {$IFDEF COMPILER6_UP}
-   DateUtils, StrUtils
+  DateUtils, StrUtils,
   {$ELSE}
-   ACBrD5, Windows
-  {$ENDIF};
+  ACBrD5, Windows,
+  {$ENDIF}
+  SysUtils,
+  ACBrConsts,
+  ACBrUtil.Compatibilidade,
+  ACBrUtil.Math,
+  ACBrUtil.Strings,
+  ACBrUtil.Base;
 
 { TACBrBALToledo }
 
@@ -386,6 +391,23 @@ begin
       Result := 0;
     end;
   end;
+end;
+
+function TACBrBALToledo.EnviarPrecoKg(const aValor: Currency;
+  aMillisecTimeOut: Integer): Boolean;
+var
+  s, cmd: String;
+begin
+  s := PadLeft(FloatToIntStr(aValor), 6, '0');
+  cmd := STX + s + ETX;
+
+  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + cmd);
+
+  fpDevice.Limpar;
+  fpDevice.EnviaString(cmd);
+  Sleep(200);
+
+  Result := (fpDevice.LeString(aMillisecTimeOut) = ACK);
 end;
 
 end.

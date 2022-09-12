@@ -114,7 +114,8 @@ TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
     procedure Ativar ;
     procedure Desativar ;
 
-    function LePeso( MillisecTimeOut: Integer = 3000): Double;
+    function LePeso(MillisecTimeOut: Integer = 3000): Double;
+    function EnviarPrecoKg(aValor: Currency; aMillisecTimeOut: Integer): Boolean;
 
     procedure SolicitarPeso;
     function InterpretarRepostaPeso(const aResposta: AnsiString): Double; virtual;
@@ -343,6 +344,23 @@ begin
      MonitorarBalanca := Monitorando ; 
   end ;
 end;
+
+function TACBrBAL.EnviarPrecoKg(aValor: Currency; aMillisecTimeOut: Integer): Boolean;
+var
+  Ativado: Boolean;
+begin
+  Ativado := Ativo;
+
+  try
+    if (not Ativado) then  // Ativa, caso esteja desativado
+      Ativar;
+
+    Result := fsBAL.EnviarPrecoKg(aValor, aMillisecTimeOut);
+  finally
+    Ativo  := Ativado;
+  end;
+end;
+
 
 procedure TACBrBAL.SolicitarPeso;
 begin

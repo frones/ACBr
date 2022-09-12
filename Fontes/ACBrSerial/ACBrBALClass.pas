@@ -83,6 +83,7 @@ TACBrBALClass = class
 
     function LePeso(MillisecTimeOut: Integer = 3000): Double; virtual;
     function InterpretarRepostaPeso(const aResposta: AnsiString): Double; virtual;
+    function EnviarPrecoKg(const aValor: Currency; aMillisecTimeOut: Integer = 3000): Boolean; virtual;
 
     property ModeloStr: String  read fpModeloStr;
     property Ativo    : Boolean read fpAtivo  write SetAtivo;
@@ -238,6 +239,13 @@ begin
 
   LeSerial(MillisecTimeOut);
   Result := fpUltimoPesoLido;
+end;
+
+function TACBrBALClass.EnviarPrecoKg(const aValor: Currency;
+  aMillisecTimeOut: Integer): Boolean;
+begin
+  { Classes filhas devem reescrever caso suportem essa funcionalidade }
+  raise Exception.Create(ACBrStr('Modelo ' + ModeloStr + ' não possui essa funcionalidade'));
 end;
 
 function TACBrBALClass.InterpretarRepostaPeso(const aResposta: AnsiString): Double;

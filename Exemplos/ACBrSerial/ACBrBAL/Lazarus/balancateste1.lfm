@@ -1,22 +1,33 @@
 object Form1: TForm1
-  Left = 270
+  Left = 605
   Height = 336
-  Top = 172
-  Width = 452
+  Top = 174
+  Width = 459
   ActiveControl = btnConectar
   Caption = 'Form1'
   ClientHeight = 336
-  ClientWidth = 452
+  ClientWidth = 459
   OnClose = FormClose
   OnCreate = FormCreate
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.2.0.4'
+  object btnDesconectar: TButton
+    Left = 203
+    Height = 25
+    Top = 16
+    Width = 110
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Desativar'
+    Enabled = False
+    OnClick = btnDesconectarClick
+    TabOrder = 1
+    Visible = False
+  end
   object Label2: TLabel
     Left = 208
     Height = 15
     Top = 135
     Width = 85
     Caption = 'Ultima Resposta'
-    ParentColor = False
   end
   object Label3: TLabel
     Left = 208
@@ -24,15 +35,13 @@ object Form1: TForm1
     Top = 90
     Width = 93
     Caption = 'Ultimo Peso Lido:'
-    ParentColor = False
   end
   object Label9: TLabel
     Left = 208
     Height = 15
     Top = 288
-    Width = 47
+    Width = 46
     Caption = 'TimeOut'
-    ParentColor = False
   end
   object Label10: TLabel
     Left = 208
@@ -40,34 +49,22 @@ object Form1: TForm1
     Top = 188
     Width = 59
     Caption = 'Mensagem'
-    ParentColor = False
   end
   object btnConectar: TButton
     Left = 203
     Height = 25
     Top = 16
-    Width = 105
+    Width = 110
     BorderSpacing.InnerBorder = 4
     Caption = 'Ativar'
     OnClick = btnConectarClick
     TabOrder = 0
   end
-  object btnDesconectar: TButton
-    Left = 331
-    Height = 25
-    Top = 16
-    Width = 105
-    BorderSpacing.InnerBorder = 4
-    Caption = 'Desativar'
-    Enabled = False
-    OnClick = btnDesconectarClick
-    TabOrder = 1
-  end
   object btnLerPeso: TButton
-    Left = 256
+    Left = 203
     Height = 25
-    Top = 56
-    Width = 129
+    Top = 48
+    Width = 110
     BorderSpacing.InnerBorder = 4
     Caption = 'Ler Peso'
     Enabled = False
@@ -134,7 +131,6 @@ object Form1: TForm1
       Top = 6
       Width = 41
       Caption = 'Balanca'
-      ParentColor = False
     end
     object Label4: TLabel
       Left = 16
@@ -142,7 +138,6 @@ object Form1: TForm1
       Top = 49
       Width = 59
       Caption = 'Porta Serial'
-      ParentColor = False
     end
     object Label5: TLabel
       Left = 16
@@ -150,7 +145,6 @@ object Form1: TForm1
       Top = 92
       Width = 50
       Caption = 'Baud rate'
-      ParentColor = False
     end
     object Label6: TLabel
       Left = 16
@@ -158,7 +152,6 @@ object Form1: TForm1
       Top = 137
       Width = 46
       Caption = 'Data Bits'
-      ParentColor = False
     end
     object Label7: TLabel
       Left = 16
@@ -166,7 +159,6 @@ object Form1: TForm1
       Top = 181
       Width = 30
       Caption = 'Parity'
-      ParentColor = False
     end
     object Label8: TLabel
       Left = 16
@@ -174,7 +166,6 @@ object Form1: TForm1
       Top = 271
       Width = 70
       Caption = 'Handshaking'
-      ParentColor = False
     end
     object Label11: TLabel
       Left = 16
@@ -182,7 +173,6 @@ object Form1: TForm1
       Top = 224
       Width = 46
       Caption = 'Stop Bits'
-      ParentColor = False
     end
     object cmbBalanca: TComboBox
       Left = 16
@@ -322,7 +312,6 @@ object Form1: TForm1
     Width = 45
     Alignment = taRightJustify
     Caption = 'Arq.Log:'
-    ParentColor = False
   end
   object edLog: TEdit
     Cursor = crIBeam
@@ -341,12 +330,32 @@ object Form1: TForm1
     Caption = '...'
     OnClick = SbArqLogClick
   end
+  object edPrecoKg: TEdit
+    Left = 331
+    Height = 23
+    Top = 18
+    Width = 110
+    Alignment = taRightJustify
+    Enabled = False
+    TabOrder = 10
+    Text = '9,99'
+  end
+  object btEnviarPrecoKg: TButton
+    Left = 331
+    Height = 25
+    Top = 48
+    Width = 110
+    Caption = 'Enviar Preço/Kg'
+    Enabled = False
+    OnClick = btEnviarPrecoKgClick
+    TabOrder = 11
+  end
   object ACBrBAL1: TACBrBAL
     Modelo = balMagna
     Porta = 'COM1'
     ArqLOG = 'c:\temp\bal.txt'
     OnLePeso = ACBrBAL1LePeso
-    left = 416
-    top = 56
+    Left = 400
+    Top = 96
   end
 end

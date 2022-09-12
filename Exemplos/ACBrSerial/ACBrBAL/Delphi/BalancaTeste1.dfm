@@ -70,29 +70,30 @@ object Form1: TForm1
     Caption = '...'
     OnClick = SbArqLogClick
   end
+  object btnDesconectar: TButton
+    Left = 203
+    Top = 16
+    Width = 110
+    Height = 25
+    Caption = 'Desativar'
+    Enabled = False
+    TabOrder = 1
+    Visible = False
+    OnClick = btnDesconectarClick
+  end
   object btnConectar: TButton
     Left = 203
     Top = 16
-    Width = 105
+    Width = 110
     Height = 25
     Caption = 'Ativar'
     TabOrder = 0
     OnClick = btnConectarClick
   end
-  object btnDesconectar: TButton
-    Left = 331
-    Top = 16
-    Width = 105
-    Height = 25
-    Caption = 'Desativar'
-    Enabled = False
-    TabOrder = 1
-    OnClick = btnDesconectarClick
-  end
   object btnLerPeso: TButton
-    Left = 256
-    Top = 56
-    Width = 129
+    Left = 203
+    Top = 48
+    Width = 110
     Height = 25
     Caption = 'Ler Peso'
     Enabled = False
@@ -348,6 +349,25 @@ object Form1: TForm1
     Cursor = crIBeam
     TabOrder = 9
     Text = 'BalLog.txt'
+  end
+  object edPrecoKg: TEdit
+    Left = 331
+    Top = 16
+    Width = 110
+    Height = 21
+    Enabled = False
+    TabOrder = 10
+    Text = '9,99'
+  end
+  object btEnviarPrecoKg: TButton
+    Left = 331
+    Top = 48
+    Width = 110
+    Height = 25
+    Caption = 'Enviar Pre'#231'o/Kg'
+    Enabled = False
+    TabOrder = 11
+    OnClick = btEnviarPrecoKgClick
   end
   object ACBrBAL1: TACBrBAL
     Porta = 'COM1'

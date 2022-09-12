@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2022
+-- ACBrBAL, ACBrBALClass, ACBrBALToledo --
+[+] Inclusão de função para envio do preço/kg para balança.
+    (Utilizado para mostrar no visor da balança o Total do Produto pesado)
+    Por: Athos Desenvolvimento
+
 01/08/2022
 -- ACBrETQZplII --
 [*] Alteração para corrigir o carregamento de imagem

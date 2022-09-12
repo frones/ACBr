@@ -1209,7 +1209,7 @@ begin
   except
     on E: Exception do
     begin
-      if ( ( FBoletoWSClass.RetornoBanco.CodRetorno = 0 ) and
+      if not (Assigned(FBoletoWSClass.RetornoBanco)) or ( ( FBoletoWSClass.RetornoBanco.CodRetorno = 0 ) and
              ( Trim( FBoletoWSClass.RetornoBanco.Msg ) = '' ) ) then
         DoLog('Falha Envio: ' + ACBrStr(E.Message))
       else

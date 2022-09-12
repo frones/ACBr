@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2022
+--ACBrBoletoWS.pas--
+[-] ACBrBoleto SCOPE Vazio (AV)
+  Por : Pandaaa
+
 03/09/2022
 [*] TK-3020 ACBrBoleto -Ajuste remessa CNAB240 Cresol
   por : Grupo FS

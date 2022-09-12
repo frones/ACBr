@@ -175,6 +175,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnSalvarPDF = new System.Windows.Forms.Button();
             this.btnGerarChave = new System.Windows.Forms.Button();
             this.btnLimparLista = new System.Windows.Forms.Button();
             this.btnImprimirPDF = new System.Windows.Forms.Button();
@@ -210,7 +211,7 @@
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
             this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
-            this.btnSalvarPDF = new System.Windows.Forms.Button();
+            this.btnClasseAltoNivel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1864,6 +1865,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.btnClasseAltoNivel);
             this.tabPage5.Controls.Add(this.btnSalvarPDF);
             this.tabPage5.Controls.Add(this.btnGerarChave);
             this.tabPage5.Controls.Add(this.btnLimparLista);
@@ -1884,6 +1886,16 @@
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Envio";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // btnSalvarPDF
+            // 
+            this.btnSalvarPDF.Location = new System.Drawing.Point(130, 93);
+            this.btnSalvarPDF.Name = "btnSalvarPDF";
+            this.btnSalvarPDF.Size = new System.Drawing.Size(118, 23);
+            this.btnSalvarPDF.TabIndex = 27;
+            this.btnSalvarPDF.Text = "Salvar PDF (Stream)";
+            this.btnSalvarPDF.UseVisualStyleBackColor = true;
+            this.btnSalvarPDF.Click += new System.EventHandler(this.btnSalvarPDF_ClickAsync);
             // 
             // btnGerarChave
             // 
@@ -2251,15 +2263,15 @@
             this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
             this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
             // 
-            // btnSalvarPDF
+            // btnClasseAltoNivel
             // 
-            this.btnSalvarPDF.Location = new System.Drawing.Point(130, 93);
-            this.btnSalvarPDF.Name = "btnSalvarPDF";
-            this.btnSalvarPDF.Size = new System.Drawing.Size(118, 23);
-            this.btnSalvarPDF.TabIndex = 27;
-            this.btnSalvarPDF.Text = "Salvar PDF (Stream)";
-            this.btnSalvarPDF.UseVisualStyleBackColor = true;
-            this.btnSalvarPDF.Click += new System.EventHandler(this.btnSalvarPDF_ClickAsync);
+            this.btnClasseAltoNivel.Location = new System.Drawing.Point(254, 154);
+            this.btnClasseAltoNivel.Name = "btnClasseAltoNivel";
+            this.btnClasseAltoNivel.Size = new System.Drawing.Size(118, 23);
+            this.btnClasseAltoNivel.TabIndex = 28;
+            this.btnClasseAltoNivel.Text = "Classe Alto Nivel";
+            this.btnClasseAltoNivel.UseVisualStyleBackColor = true;
+            this.btnClasseAltoNivel.Click += new System.EventHandler(this.btnClasseAltoNivel_Click);
             // 
             // FrmMain
             // 
@@ -2514,6 +2526,7 @@
         private System.Windows.Forms.Button btnCarregarConfiguracoes;
         private System.Windows.Forms.Button btnGerarChave;
         private System.Windows.Forms.Button btnSalvarPDF;
+        private System.Windows.Forms.Button btnClasseAltoNivel;
     }
 }
 

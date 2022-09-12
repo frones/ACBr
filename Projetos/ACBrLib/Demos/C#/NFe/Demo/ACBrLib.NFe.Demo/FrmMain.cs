@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
+using ACBrLib.Core.Extensions;
 using ACBrLib.Core.NFe;
 using ACBrLib.Core.PosPrinter;
 
@@ -90,6 +91,108 @@ namespace ACBrLib.NFe.Demo
         #endregion Constructors
 
         #region Methods
+
+        private string AlimentarDados()
+        {
+
+            var notaFiscal = new NotaFiscal();
+
+            //infNFe
+            notaFiscal.InfNFe.Versao = "4.0";
+
+            //Identificação
+            notaFiscal.Identificacao.cNF = 1;
+            notaFiscal.Identificacao.natOp = "Venda de Mercadoria";
+            notaFiscal.Identificacao.indPag = IndicadorPagamento.ipVista;
+            notaFiscal.Identificacao.mod = cmbModeloDocumento.GetSelectedValue<ModeloNFe>();
+            notaFiscal.Identificacao.Serie = "1";
+            notaFiscal.Identificacao.nNF = 000001401;
+            notaFiscal.Identificacao.dhEmi = DateTime.Now;
+            notaFiscal.Identificacao.dhSaiEnt = DateTime.Now;
+            notaFiscal.Identificacao.tpNF = TipoNFe.tnSaida;
+            notaFiscal.Identificacao.idDest = DestinoOperacao.doInterna;
+            notaFiscal.Identificacao.tpAmb = rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao;
+            notaFiscal.Identificacao.tpImp = TipoDANFE.tiRetrato;
+            notaFiscal.Identificacao.tpEmis = cmbFormaEmissao.GetSelectedValue<TipoEmissao>();
+            notaFiscal.Identificacao.finNFe = FinalidadeNFe.fnNormal;
+            notaFiscal.Identificacao.indFinal = ConsumidorFinal.cfNao;
+            notaFiscal.Identificacao.indPres = PresencaComprador.pcOutros;
+            notaFiscal.Identificacao.procEmi = ProcessoEmissao.peAplicativoContribuinte;
+            notaFiscal.Identificacao.indIntermed = IndIntermed.iiSemOperacao;
+            notaFiscal.Identificacao.verProc = "ACBrNFe";
+            notaFiscal.Identificacao.dhCont = DateTime.Now;
+            notaFiscal.Identificacao.xJust = "";
+
+            //Emitente
+            notaFiscal.Emitente.CRT = CRT.crtSimplesNacional;
+            notaFiscal.Emitente.CNPJCPF = "99999999999999";
+            notaFiscal.Emitente.xNome = "PROJETO ACBR";
+            notaFiscal.Emitente.xFant = "PROJETO ACBR";
+            notaFiscal.Emitente.IE = "99999999999";
+            notaFiscal.Emitente.IEST = "";
+            notaFiscal.Emitente.IM = "";
+            notaFiscal.Emitente.CNAE = "";
+            notaFiscal.Emitente.xLgr = "Rua Cel Aureliano Camargo";
+            notaFiscal.Emitente.nro = "973";
+            notaFiscal.Emitente.xCpl = "";
+            notaFiscal.Emitente.xBairro = "Centro";
+            notaFiscal.Emitente.cMun = 3554003;
+            notaFiscal.Emitente.xMun = "Tatui";
+            notaFiscal.Emitente.cUF = "35";
+            notaFiscal.Emitente.UF = "SP";
+            notaFiscal.Emitente.CEP = "18270000";
+            notaFiscal.Emitente.cPais = 1058;
+            notaFiscal.Emitente.xPais = "BRASIL";
+            notaFiscal.Emitente.Fone = "(11)9999-9999";
+
+            //Destinatario
+            notaFiscal.Destinatario.idEstrangeiro = "";
+            notaFiscal.Destinatario.CNPJCPF = "99999999999999";
+            notaFiscal.Destinatario.xNome = "PROJETO ACBR";
+            notaFiscal.Destinatario.indIEDest = IndicadorIE.inContribuinte;
+            notaFiscal.Destinatario.IE = "999999999999";
+            notaFiscal.Destinatario.ISUF = "";
+            notaFiscal.Destinatario.Email = "acbr@projetoacbr.com.br";
+            notaFiscal.Destinatario.xLgr = "Rua das Flores";
+            notaFiscal.Destinatario.nro = "973";
+            notaFiscal.Destinatario.xCpl = "";
+            notaFiscal.Destinatario.xBairro = "Centro";
+            notaFiscal.Destinatario.cMun = 3550308;
+            notaFiscal.Destinatario.xMun = "São Paulo";
+            notaFiscal.Destinatario.UF = "SP";
+            notaFiscal.Destinatario.CEP = "04615000";
+            notaFiscal.Destinatario.cPais = 1058;
+            notaFiscal.Destinatario.xPais = "BRASIL";
+            notaFiscal.Destinatario.Fone = "(11)9999-9999";
+
+            //Produto
+            var produto = new ProdutoNFe();
+
+            produto.nItem = 1;
+            produto.cProd = "123456";
+            produto.cEAN = "7896523206646";
+            produto.xProd = "Camisa Polo ACBr";
+            produto.NCM = "61051000";
+            produto.EXTIPI = "";
+            produto.CFOP = "5101";
+            produto.uCom = "UN";
+            produto.qCom = 1;
+            produto.vUnCom = 100;
+            produto.vProd = 100;
+            produto.cEANTrib = "7896523206646";
+            produto.uTrib = "UN";
+            produto.qTrib = 1;
+            produto.vUnTrib = 100;
+            produto.vOutro = 0;
+            produto.vFrete = 0;
+            produto.vSeg = 0;
+            produto.vDesc = 0;
+            produto.infAdProd = "Informacao Adicional do Produto";
+
+            notaFiscal.Produtos.Add(produto);
+
+            return notaFiscal.ToString();
+        }
 
         private void SalvarConfig()
         {
@@ -937,6 +1040,51 @@ namespace ACBrLib.NFe.Demo
             {
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnClasseAltoNivel_Click(object sender, EventArgs e)
+        {
+            var nfe = AlimentarDados();
+
+            ACBrNFe.LimparLista();
+            ACBrNFe.CarregarINI(nfe);
+
+            try
+            {
+                var aLote = 1;
+                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
+
+                var ret = ACBrNFe.Enviar(aLote);
+
+                rtbRespostas.AppendLine("[ENVIO]");
+                rtbRespostas.AppendLine("cUF=" + Convert.ToString(ret.Envio.CUF));
+                rtbRespostas.AppendLine("tpAmb=" + ret.Envio.tpAmb.GetEnumValueOrInt());
+                rtbRespostas.AppendLine("cStat=" + Convert.ToString(ret.Envio.CStat));
+                rtbRespostas.AppendLine("cMsg=" + Convert.ToString(ret.Envio.Msg));
+                rtbRespostas.AppendLine("xMotivo=" + ret.Envio.XMotivo);
+                rtbRespostas.AppendLine("nRec=" + Convert.ToString(ret.Envio.NRec));
+                rtbRespostas.AppendLine("Protocolo=" + ret.Envio.NProt);
+                rtbRespostas.AppendLine("Versao=" + ret.Envio.Versao);
+                rtbRespostas.AppendLine("DhRec=" + Convert.ToString(ret.Envio.DhRecbto));
+
+                rtbRespostas.AppendLine("[RETORNO]");
+                rtbRespostas.AppendLine("cUF=" + Convert.ToString(ret.Retorno.CUF));
+                rtbRespostas.AppendLine("tpAmb=" + ret.Retorno.tpAmb.GetEnumValueOrInt());
+                rtbRespostas.AppendLine("cStat=" + Convert.ToString(ret.Retorno.CStat));
+                rtbRespostas.AppendLine("cMsg=" + Convert.ToString(ret.Retorno.cMsg));
+                rtbRespostas.AppendLine("xMsg=" + ret.Retorno.xMsg);
+                rtbRespostas.AppendLine("xMotivo=" + ret.Retorno.XMotivo);
+                rtbRespostas.AppendLine("nRec=" + Convert.ToString(ret.Retorno.nRec));
+                rtbRespostas.AppendLine("Protocolo=" + ret.Retorno.Protocolo);
+                rtbRespostas.AppendLine("ChaveMDFe=" + ret.Retorno.ChaveDFe);
+                rtbRespostas.AppendLine("DhRec=" + Convert.ToString(ret.Retorno.DhRecbto));
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

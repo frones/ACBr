@@ -613,7 +613,7 @@ begin
 
   if AuxNode <> nil then
   begin
-    NFSe.Situacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcInt);
+    NFSe.Situacao := StrToIntDef(ObterConteudo(AuxNode.Childrens.FindAnyNs('Codigo'), tcStr), 0);
 
     case NFSe.Situacao of
       -2:

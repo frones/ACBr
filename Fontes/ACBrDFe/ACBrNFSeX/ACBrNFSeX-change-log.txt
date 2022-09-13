@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 13/09/2022
+-- Agili.LerXml --
+[*] Ajustes para ler o campo: Codigo que é inteiro e tem valor negativo.
+   Por: Plenustech
 -- ACBrNFSeXServicos --
 [*] Revertido a alteração na URL da cidade Rondonopolis/MT - Provedor Coplan
    Por: Rafael Vivan

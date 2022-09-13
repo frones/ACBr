@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2022
+--ACBrBoletoWS.pas--
+[-] TK-3054 ACBrBoleto Geração de LOG Forcando gerar diretório mesmo inativo
+  Por : Pandaaa
+
 12/09/2022
 --ACBrBoletoWS.pas--
 [-] ACBrBoleto SCOPE Vazio (AV)

@@ -303,7 +303,7 @@ function CodTOMToCodIBGE(const ACodigo: string): string;
 
 function TipoEmissaoToStr(const t: TTipoEmissao): string;
 function StrToTipoEmissao(out ok: boolean; const s: string): TTipoEmissao;
-function TipoEmissaoDescricao(const t: TTipoEmissao): String;
+function TipoEmissaoDescricao(const t: TTipoEmissao): string;
 
 function EmpreitadaGlobalToStr(const t: TEmpreitadaGlobal): string;
 function StrToEmpreitadaGlobal(out ok: boolean; const s: string): TEmpreitadaGlobal;
@@ -345,12 +345,12 @@ function StrToFrmRec(out ok: boolean; const s: string): TFrmRec; //Governa
 
 function OperacaoToStr(const t: TOperacao): string;
 function StrToOperacao(out ok: boolean; const s: string): TOperacao;
-function OperacaoDescricao(const t: TOperacao): String;
+function OperacaoDescricao(const t: TOperacao): string;
 
 function UnidadeToStr(const t: TUnidade): string;
 function StrToUnidade(out ok: boolean; const s: string): TUnidade;
 
-function SepararDados(const Astring: string; const Chave: string;
+function SepararDados(const AString: string; const Chave: string;
   const MantemChave : Boolean = False;
   const PermitePrefixo: Boolean = True): string;
 
@@ -370,88 +370,137 @@ function StrToTipoLancamento(out ok: boolean; const s: string): TTipoLancamento;
 function TipoDocToStr(const t: TTipoDoc): string;
 function StrToTipoDoc(out ok: boolean; const s: string): TTipoDoc;
 
-function tpEmitToStr(const t: TtpEmit): String;
-function StrTotpEmit(out ok: Boolean; const s: String): TtpEmit;
+function tpEmitToStr(const t: TtpEmit): string;
+function StrTotpEmit(out ok: Boolean; const s: string): TtpEmit;
 
-function OptanteSNToStr(const t: TOptanteSN): String;
-function StrToOptanteSN(out ok: Boolean; const s: String): TOptanteSN;
+function OptanteSNToStr(const t: TOptanteSN): string;
+function StrToOptanteSN(out ok: Boolean; const s: string): TOptanteSN;
 
-function RegimeApuracaoSNToStr(const t: TRegimeApuracaoSN): String;
-function StrToRegimeApuracaoSN(out ok: Boolean; const s: String): TRegimeApuracaoSN;
+function RegimeApuracaoSNToStr(const t: TRegimeApuracaoSN): string;
+function StrToRegimeApuracaoSN(out ok: Boolean; const s: string): TRegimeApuracaoSN;
 
-function cMotivoToStr(const t: TcMotivo): String;
-function StrTocMotivo(out ok: Boolean; const s: String): TcMotivo;
+function cMotivoToStr(const t: TcMotivo): string;
+function StrTocMotivo(out ok: Boolean; const s: string): TcMotivo;
 
-function mdPrestacaoToStr(const t: TmdPrestacao): String;
-function StrTomdPrestacao(out ok: Boolean; const s: String): TmdPrestacao;
+function mdPrestacaoToStr(const t: TmdPrestacao): string;
+function StrTomdPrestacao(out ok: Boolean; const s: string): TmdPrestacao;
 
-function vincPrestToStr(const t: TvincPrest): String;
-function StrTovincPrest(out ok: Boolean; const s: String): TvincPrest;
+function vincPrestToStr(const t: TvincPrest): string;
+function StrTovincPrest(out ok: Boolean; const s: string): TvincPrest;
 
-function mecAFComexPToStr(const t: TmecAFComexP): String;
-function StrTomecAFComexP(out ok: Boolean; const s: String): TmecAFComexP;
+function mecAFComexPToStr(const t: TmecAFComexP): string;
+function StrTomecAFComexP(out ok: Boolean; const s: string): TmecAFComexP;
 
-function mecAFComexTToStr(const t: TmecAFComexT): String;
-function StrTomecAFComexT(out ok: Boolean; const s: String): TmecAFComexT;
+function mecAFComexTToStr(const t: TmecAFComexT): string;
+function StrTomecAFComexT(out ok: Boolean; const s: string): TmecAFComexT;
 
-function MovTempBensToStr(const t: TMovTempBens): String;
-function StrToMovTempBens(out ok: Boolean; const s: String): TMovTempBens;
+function MovTempBensToStr(const t: TMovTempBens): string;
+function StrToMovTempBens(out ok: Boolean; const s: string): TMovTempBens;
 
-function categToStr(const t: Tcateg): String;
-function StrTocateg(out ok: Boolean; const s: String): Tcateg;
+function categToStr(const t: Tcateg): string;
+function StrTocateg(out ok: Boolean; const s: string): Tcateg;
 
-function objetoToStr(const t: Tobjeto): String;
-function StrToobjeto(out ok: Boolean; const s: String): Tobjeto;
+function objetoToStr(const t: Tobjeto): string;
+function StrToobjeto(out ok: Boolean; const s: string): Tobjeto;
 
-function categVeicToStr(const t: TcategVeic): String;
-function StrTocategVeic(out ok: Boolean; const s: String): TcategVeic;
+function categVeicToStr(const t: TcategVeic): string;
+function StrTocategVeic(out ok: Boolean; const s: string): TcategVeic;
 
-function rodagemToStr(const t: Trodagem): String;
-function StrTorodagem(out ok: Boolean; const s: String): Trodagem;
+function rodagemToStr(const t: Trodagem): string;
+function StrTorodagem(out ok: Boolean; const s: string): Trodagem;
 
-function tpDedRedToStr(const t: TtpDedRed): String;
-function StrTotpDedRed(out ok: Boolean; const s: String): TtpDedRed;
+function tpDedRedToStr(const t: TtpDedRed): string;
+function StrTotpDedRed(out ok: Boolean; const s: string): TtpDedRed;
 
-function tribISSQNToStr(const t: TtribISSQN): String;
-function StrTotribISSQN(out ok: Boolean; const s: String): TtribISSQN;
+function tribISSQNToStr(const t: TtribISSQN): string;
+function StrTotribISSQN(out ok: Boolean; const s: string): TtribISSQN;
 
-function tpImunidadeToStr(const t: TtpImunidade): String;
-function StrTotpImunidade(out ok: Boolean; const s: String): TtpImunidade;
+function tpImunidadeToStr(const t: TtpImunidade): string;
+function StrTotpImunidade(out ok: Boolean; const s: string): TtpImunidade;
 
-function tpRetISSQNToStr(const t: TtpRetISSQN): String;
-function StrTotpRetISSQN(out ok: Boolean; const s: String): TtpRetISSQN;
+function tpRetISSQNToStr(const t: TtpRetISSQN): string;
+function StrTotpRetISSQN(out ok: Boolean; const s: string): TtpRetISSQN;
 
-function tpBMToStr(const t: TtpBM): String;
-function StrTotpBM(out ok: Boolean; const s: String): TtpBM;
+function tpBMToStr(const t: TtpBM): string;
+function StrTotpBM(out ok: Boolean; const s: string): TtpBM;
 
-function tpSuspToStr(const t: TtpSusp): String;
-function StrTotpSusp(out ok: Boolean; const s: String): TtpSusp;
+function tpSuspToStr(const t: TtpSusp): string;
+function StrTotpSusp(out ok: Boolean; const s: string): TtpSusp;
 
-function CSTToStr(const t: TCST): String;
-function StrToCST(out ok: Boolean; const s: String): TCST;
+function CSTToStr(const t: TCST): string;
+function StrToCST(out ok: Boolean; const s: string): TCST;
 
-function tpRetPisCofinsToStr(const t: TtpRetPisCofins): String;
-function StrTotpRetPisCofins(out ok: Boolean; const s: String): TtpRetPisCofins;
+function tpRetPisCofinsToStr(const t: TtpRetPisCofins): string;
+function StrTotpRetPisCofins(out ok: Boolean; const s: string): TtpRetPisCofins;
 
-function indTotTribToStr(const t: TindTotTrib): String;
-function StrToindTotTrib(out ok: Boolean; const s: String): TindTotTrib;
+function indTotTribToStr(const t: TindTotTrib): string;
+function StrToindTotTrib(out ok: Boolean; const s: string): TindTotTrib;
 
-function ambGerToStr(const t: TambGer): String;
-function StrToambGer(out ok: Boolean; const s: String): TambGer;
+function ambGerToStr(const t: TambGer): string;
+function StrToambGer(out ok: Boolean; const s: string): TambGer;
 
-function tpEmisToStr(const t: TtpEmis): String;
-function StrTotpEmis(out ok: Boolean; const s: String): TtpEmis;
+function tpEmisToStr(const t: TtpEmis): string;
+function StrTotpEmis(out ok: Boolean; const s: string): TtpEmis;
 
-function procEmiToStr(const t: TprocEmi): String;
-function StrToprocEmi(out ok: Boolean; const s: String): TprocEmi;
+function procEmiToStr(const t: TprocEmi): string;
+function StrToprocEmi(out ok: Boolean; const s: string): TprocEmi;
 
-function tpEventoToStr(const t: TtpEvento): String;
-function StrTotpEvento(out ok: Boolean; const s: String): TtpEvento;
+function tpEventoToStr(const t: TtpEvento): string;
+function StrTotpEvento(out ok: Boolean; const s: string): TtpEvento;
 
-function TipoDeducaoToStr(const t: TTipoDeducao): String;
-function StrToTipoDeducao(out ok: Boolean; const s: String): TTipoDeducao;
+function TipoDeducaoToStr(const t: TTipoDeducao): string;
+function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
 
-function CodIBGEPaisToSiglaISO2(const t: Integer): String;
+function CodIBGEPaisToSiglaISO2(t: Integer): string;
+function SiglaISO2ToCodIBGEPais(const t: string): Integer;
+
+const
+
+  SiglaISO2Pais: array[0..247] of string = ('AF', 'AL', 'CW', 'DE', 'BF', 'AD',
+        'AO', 'AI', 'AQ', 'AG', 'SA', 'DZ', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ',
+        'BS', 'BH', 'BD', 'BB', 'BY', 'BE', 'BZ', 'BM', 'MM', 'BO', 'BQ', 'BA',
+        'BW', 'BV', 'BR', 'BN', 'BG', 'BI', 'BT', 'CV', 'KY', 'KH', 'CM', 'CA',
+        'KZ', 'QA', 'CL', 'CN', 'TW', 'CY', 'CC', 'CO', 'KM', 'CG', 'CK', 'KP',
+        'KR', 'CI', 'HR', 'CR', 'KW', 'CU', 'BJ', 'DK', 'DM', 'EC', 'EG', 'ER',
+        'AE', 'ES', 'SI', 'SK', 'US', 'EE', 'ET', 'FK', 'FO', 'PH', 'FI', 'FR',
+        'GA', 'GM', 'GH', 'GE', 'GS', 'GI', 'GD', 'GR', 'GL', 'GP', 'GU', 'GT',
+        'GG', 'GF', 'GN', 'GQ', 'GW', 'GY', 'HT', 'HM', 'HN', 'HK', 'HU', 'YE',
+        'IM', 'IN', 'ID', 'IQ', 'IR', 'IE', 'IS', 'IL', 'IT', 'JM', 'JE', 'JP',
+        'JO', 'KI', 'LA', 'LS', 'LV', 'LB', 'LR', 'LY', 'LI', 'LT', 'LU', 'MO',
+        'MK', 'MG', 'MY', 'MW', 'MV', 'ML', 'MT', 'MP', 'MA', 'MH', 'MQ', 'MU',
+        'MR', 'YT', 'MX', 'MD', 'MC', 'MN', 'ME', 'FM', 'MS', 'MZ', 'NA', 'NR',
+        'CX', 'NP', 'NI', 'NE', 'NG', 'NU', 'NF', 'NO', 'NC', 'PG', 'NZ', 'VU',
+        'OM', 'UM', 'NL', 'PW', 'PK', 'PS', 'PA', 'PY', 'PE', 'PN', 'PF', 'PL',
+        'PT', 'PR', 'KE', 'KG', 'GB', 'CF', 'DO', 'RE', 'ZW', 'RO', 'RW', 'RU',
+        'SB', 'EH', 'SV', 'WS', 'AS', 'BL', 'KN', 'SX', 'SM', 'MF', 'PM', 'VC',
+        'SH', 'LC', 'ST', 'SN', 'SC', 'SL', 'RS', 'SG', 'SY', 'SO', 'LK', 'SZ',
+        'SJ', 'ZA', 'SD', 'SS', 'SE', 'CH', 'SR', 'TJ', 'TH', 'TZ', 'TF', 'IO',
+        'DJ', 'TD', 'CZ', 'TL', 'TG', 'TK', 'TO', 'TT', 'TN', 'TC', 'TM', 'TR',
+        'TV', 'UA', 'UG', 'UY', 'UZ', 'VA', 'VE', 'VN', 'VG', 'VI', 'WF', 'FJ',
+        'CD', 'ZM');
+
+  CodigoIBGEPais: array[0..247] of Integer = (0132, 0175, 0200, 0230, 0310,
+    0370, 0400, 0418, 0420, 0434, 0531, 0590, 0639, 0647, 0655, 0698, 0728,
+    0736, 0779, 0809, 0817, 0833, 0850, 0876, 0884, 0906, 0930, 0973, 0990,
+    0981, 1015, 1023, 1058, 1082, 1112, 1155, 1198, 1279, 1376, 1414, 1457,
+    1490, 1538, 1546, 1589, 1600, 1619, 1635, 1651, 1694, 1732, 1775, 1830,
+    1872, 1902, 1937, 1953, 1961, 1988, 1996, 2291, 2321, 2356, 2399, 2402,
+    2437, 2445, 2453, 2461, 2470, 2496, 2518, 2534, 2550, 2593, 2674, 2712,
+    2755, 2810, 2852, 2895, 2917, 2925, 2933, 2976, 3018, 3050, 3093, 3131,
+    3174, 3212, 3255, 3298, 3310, 3344, 3379, 3417, 3433, 3450, 3514, 3557,
+    3573, 3595, 3611, 3654, 3697, 3727, 3751, 3794, 3832, 3867, 3913, 3930,
+    3999, 4030, 4111, 4200, 4260, 4278, 4316, 4340, 4383, 4405, 4421, 4456,
+    4472, 4499, 4502, 4553, 4588, 4618, 4642, 4677, 4723, 4740, 4766, 4774,
+    4855, 4880, 4898, 4936, 4944, 4952, 4979, 4985, 4995, 5010, 5053, 5070,
+    5088, 5118, 5177, 5215, 5258, 5282, 5312, 5355, 5380, 5428, 5452, 5487,
+    5517, 5568, 5665, 5738, 5754, 5762, 5780, 5800, 5860, 5894, 5932, 5991,
+    6033, 6076, 6114, 6238, 6254, 6289, 6408, 6475, 6602, 6653, 6700, 6750,
+    6769, 6777, 6858, 6874, 6904, 6912, 6939, 6955, 6980, 6971, 6998, 7005,
+    7056, 7102, 7153, 7200, 7285, 7315, 7358, 7370, 7412, 7447, 7480, 7501,
+    7544, 7552, 7560, 7595, 7600, 7641, 7676, 7706, 7722, 7765, 7803, 7811,
+    7820, 7838, 7889, 7919, 7951, 8001, 8052, 8109, 8150, 8206, 8230, 8249,
+    8273, 8281, 8311, 8338, 8451, 8478, 8486, 8508, 8583, 8630, 8664, 8753,
+    8702, 8885, 8907);
 
 implementation
 
@@ -12374,7 +12423,7 @@ begin
                                ve200, ve201, ve202, ve203, ve204]);
 end;
 
-function OperacaoDescricao(const t: TOperacao): String;
+function OperacaoDescricao(const t: TOperacao): string;
 begin
   case t of
     toSemDeducao             : Result := 'A - Sem Dedução';
@@ -12387,7 +12436,7 @@ begin
   end;
 end;
 
-function TipoEmissaoDescricao(const t: TTipoEmissao): String;
+function TipoEmissaoDescricao(const t: TTipoEmissao): string;
 begin
   case t of
     teNormalNFSe     : Result := 'N - Normal';
@@ -12511,7 +12560,7 @@ begin
                            [tuHora, tuQtde]);
 end;
 
-function SepararDados(const Astring: string; const Chave: string; const MantemChave: Boolean = False;
+function SepararDados(const AString: string; const Chave: string; const MantemChave: Boolean = False;
   const PermitePrefixo: Boolean = True): string;
 var
   PosIni, PosFim: Integer;
@@ -12519,7 +12568,7 @@ var
   Prefixo: string;
 begin
   Result := '';
-  UTexto := Astring;
+  UTexto := AString;
   UChave := Chave;
   PosFim := 0;
   Prefixo := '';
@@ -12639,59 +12688,59 @@ begin
   Result := StrToEnumerado(ok, s, ['1', '2'], [tdNFSe, tdRPS]);
 end;
 
-function tpEmitToStr(const t: TtpEmit): String;
+function tpEmitToStr(const t: TtpEmit): string;
 begin
   Result := EnumeradoToStr(t, ['1', '2', '3'],
                            [tePrestador, teTomador, teIntermediario]);
 end;
 
-function StrTotpEmit(out ok: Boolean; const s: String): TtpEmit;
+function StrTotpEmit(out ok: Boolean; const s: string): TtpEmit;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3'],
                            [tePrestador, teTomador, teIntermediario]);
 end;
 
-function OptanteSNToStr(const t: TOptanteSN): String;
+function OptanteSNToStr(const t: TOptanteSN): string;
 begin
   Result := EnumeradoToStr(t, ['1', '2', '3'],
                            [osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP]);
 end;
 
-function StrToOptanteSN(out ok: Boolean; const s: String): TOptanteSN;
+function StrToOptanteSN(out ok: Boolean; const s: string): TOptanteSN;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3'],
                            [osnNaoOptante, osnOptanteMEI, osnOptanteMEEPP]);
 end;
 
-function RegimeApuracaoSNToStr(const t: TRegimeApuracaoSN): String;
+function RegimeApuracaoSNToStr(const t: TRegimeApuracaoSN): string;
 begin
   Result := EnumeradoToStr(t, ['1', '2', '3'],
                            [raFederaisMunicipalpeloSN, raFederaisSN,
                             raFederaisMunicipalforaSN]);
 end;
 
-function StrToRegimeApuracaoSN(out ok: Boolean; const s: String): TRegimeApuracaoSN;
+function StrToRegimeApuracaoSN(out ok: Boolean; const s: string): TRegimeApuracaoSN;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3'],
                            [raFederaisMunicipalpeloSN, raFederaisSN,
                             raFederaisMunicipalforaSN]);
 end;
 
-function cMotivoToStr(const t: TcMotivo): String;
+function cMotivoToStr(const t: TcMotivo): string;
 begin
   Result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '99'],
                            [cmDesenquadramento, cmEnquadramento, cmInclusao,
                             cmExclusao, cmRejeicao, cmOutros]);
 end;
 
-function StrTocMotivo(out ok: Boolean; const s: String): TcMotivo;
+function StrTocMotivo(out ok: Boolean; const s: string): TcMotivo;
 begin
   Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '99'],
                            [cmDesenquadramento, cmEnquadramento, cmInclusao,
                             cmExclusao, cmRejeicao, cmOutros]);
 end;
 
-function mdPrestacaoToStr(const t: TmdPrestacao): String;
+function mdPrestacaoToStr(const t: TmdPrestacao): string;
 begin
   result := EnumeradoToStr(t,
                            ['0', '1', '2', '3', '4'],
@@ -12699,7 +12748,7 @@ begin
                    mpPresencaComercialExterior, mpMovimentoTempPessoasFisicas]);
 end;
 
-function StrTomdPrestacao(out ok: Boolean; const s: String): TmdPrestacao;
+function StrTomdPrestacao(out ok: Boolean; const s: string): TmdPrestacao;
 begin
   result := StrToEnumerado(ok, s,
                            ['0', '1', '2', '3', '4'],
@@ -12707,7 +12756,7 @@ begin
                    mpPresencaComercialExterior, mpMovimentoTempPessoasFisicas]);
 end;
 
-function vincPrestToStr(const t: TvincPrest): String;
+function vincPrestToStr(const t: TvincPrest): string;
 begin
   result := EnumeradoToStr(t,
                            ['0', '1', '2', '3', '4', '5', '6'],
@@ -12715,7 +12764,7 @@ begin
                             vpColigada, vpMatriz, vpFilial, vpOutro]);
 end;
 
-function StrTovincPrest(out ok: Boolean; const s: String): TvincPrest;
+function StrTovincPrest(out ok: Boolean; const s: string): TvincPrest;
 begin
   result := StrToEnumerado(ok, s,
                            ['0', '1', '2', '3', '4', '5', '6'],
@@ -12723,7 +12772,7 @@ begin
                             vpColigada, vpMatriz, vpFilial, vpOutro]);
 end;
 
-function mecAFComexPToStr(const t: TmecAFComexP): String;
+function mecAFComexPToStr(const t: TmecAFComexP): string;
 begin
   result := EnumeradoToStr(t,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08'],
@@ -12732,7 +12781,7 @@ begin
                             mapsPROEXFinanc]);
 end;
 
-function StrTomecAFComexP(out ok: Boolean; const s: String): TmecAFComexP;
+function StrTomecAFComexP(out ok: Boolean; const s: string): TmecAFComexP;
 begin
   result := StrToEnumerado(ok, s,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08'],
@@ -12741,7 +12790,7 @@ begin
                             mapsPROEXFinanc]);
 end;
 
-function mecAFComexTToStr(const t: TmecAFComexT): String;
+function mecAFComexTToStr(const t: TmecAFComexT): string;
 begin
   result := EnumeradoToStr(t,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -12756,7 +12805,7 @@ begin
      matsZPE]);
 end;
 
-function StrTomecAFComexT(out ok: Boolean; const s: String): TmecAFComexT;
+function StrTomecAFComexT(out ok: Boolean; const s: string): TmecAFComexT;
 begin
   result := StrToEnumerado(ok, s,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -12771,7 +12820,7 @@ begin
      matsZPE]);
 end;
 
-function MovTempBensToStr(const t: TMovTempBens): String;
+function MovTempBensToStr(const t: TMovTempBens): string;
 begin
   result := EnumeradoToStr(t,
                            ['0', '1', '2', '3'],
@@ -12779,7 +12828,7 @@ begin
                             mtVincDeclExport]);
 end;
 
-function StrToMovTempBens(out ok: Boolean; const s: String): TMovTempBens;
+function StrToMovTempBens(out ok: Boolean; const s: string): TMovTempBens;
 begin
   result := StrToEnumerado(ok, s,
                            ['0', '1', '2', '3'],
@@ -12787,7 +12836,7 @@ begin
                             mtVincDeclExport]);
 end;
 
-function categToStr(const t: Tcateg): String;
+function categToStr(const t: Tcateg): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5'],
@@ -12795,7 +12844,7 @@ begin
                             cDireitoPassagem, cPermissao]);
 end;
 
-function StrTocateg(out ok: Boolean; const s: String): Tcateg;
+function StrTocateg(out ok: Boolean; const s: string): Tcateg;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5'],
@@ -12803,7 +12852,7 @@ begin
                             cDireitoPassagem, cPermissao]);
 end;
 
-function objetoToStr(const t: Tobjeto): String;
+function objetoToStr(const t: Tobjeto): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6'],
@@ -12811,7 +12860,7 @@ begin
                             oCondutos]);
 end;
 
-function StrToobjeto(out ok: Boolean; const s: String): Tobjeto;
+function StrToobjeto(out ok: Boolean; const s: string): Tobjeto;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6'],
@@ -12819,7 +12868,7 @@ begin
                             oCondutos]);
 end;
 
-function categVeicToStr(const t: TcategVeic): String;
+function categVeicToStr(const t: TcategVeic): string;
 begin
   result := EnumeradoToStr(t,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -12829,7 +12878,7 @@ begin
      cvCaminhaoComReboque, cvMotocicleta, cvVeiculoEspecial, cvVeiculoIsento]);
 end;
 
-function StrTocategVeic(out ok: Boolean; const s: String): TcategVeic;
+function StrTocategVeic(out ok: Boolean; const s: string): TcategVeic;
 begin
   result := StrToEnumerado(ok, s,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -12839,21 +12888,21 @@ begin
      cvCaminhaoComReboque, cvMotocicleta, cvVeiculoEspecial, cvVeiculoIsento]);
 end;
 
-function rodagemToStr(const t: Trodagem): String;
+function rodagemToStr(const t: Trodagem): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
                            [trSimples, trDupla]);
 end;
 
-function StrTorodagem(out ok: Boolean; const s: String): Trodagem;
+function StrTorodagem(out ok: Boolean; const s: string): Trodagem;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [trSimples, trDupla]);
 end;
 
-function tpDedRedToStr(const t: TtpDedRed): String;
+function tpDedRedToStr(const t: TtpDedRed): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6', '7', '8', '99'],
@@ -12861,7 +12910,7 @@ begin
      drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes]);
 end;
 
-function StrTotpDedRed(out ok: Boolean; const s: String): TtpDedRed;
+function StrTotpDedRed(out ok: Boolean; const s: string): TtpDedRed;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6', '7', '8', '99'],
@@ -12869,21 +12918,21 @@ begin
      drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes]);
 end;
 
-function tribISSQNToStr(const t: TtribISSQN): String;
+function tribISSQNToStr(const t: TtribISSQN): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4'],
             [tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade]);
 end;
 
-function StrTotribISSQN(out ok: Boolean; const s: String): TtribISSQN;
+function StrTotribISSQN(out ok: Boolean; const s: string): TtribISSQN;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],
             [tiOperacaoTributavel, tiExportacao, tiNaoIncidencia, tiImunidade]);
 end;
 
-function tpImunidadeToStr(const t: TtpImunidade): String;
+function tpImunidadeToStr(const t: TtpImunidade): string;
 begin
   result := EnumeradoToStr(t,
                            ['0', '1', '2', '3', '4', '5'],
@@ -12891,7 +12940,7 @@ begin
                  timLivros, timFonogramas]);
 end;
 
-function StrTotpImunidade(out ok: Boolean; const s: String): TtpImunidade;
+function StrTotpImunidade(out ok: Boolean; const s: string): TtpImunidade;
 begin
   result := StrToEnumerado(ok, s,
                            ['0', '1', '2', '3', '4', '5'],
@@ -12899,133 +12948,133 @@ begin
                  timLivros, timFonogramas]);
 end;
 
-function tpRetISSQNToStr(const t: TtpRetISSQN): String;
+function tpRetISSQNToStr(const t: TtpRetISSQN): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                  [trNaoRetido, trRetidoPeloTomador, trRetidoPeloIntermediario]);
 end;
 
-function StrTotpRetISSQN(out ok: Boolean; const s: String): TtpRetISSQN;
+function StrTotpRetISSQN(out ok: Boolean; const s: string): TtpRetISSQN;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                  [trNaoRetido, trRetidoPeloTomador, trRetidoPeloIntermediario]);
 end;
 
-function tpBMToStr(const t: TtpBM): String;
+function tpBMToStr(const t: TtpBM): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                            [tbAliquota, tbReducaoBC, tbIsencao]);
 end;
 
-function StrTotpBM(out ok: Boolean; const s: String): TtpBM;
+function StrTotpBM(out ok: Boolean; const s: string): TtpBM;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [tbAliquota, tbReducaoBC, tbIsencao]);
 end;
 
-function tpSuspToStr(const t: TtpSusp): String;
+function tpSuspToStr(const t: TtpSusp): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
                            [tsDecisaoJudicial, tsProcessoAdm]);
 end;
 
-function StrTotpSusp(out ok: Boolean; const s: String): TtpSusp;
+function StrTotpSusp(out ok: Boolean; const s: string): TtpSusp;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [tsDecisaoJudicial, tsProcessoAdm]);
 end;
 
-function CSTToStr(const t: TCST): String;
+function CSTToStr(const t: TCST): string;
 begin
   result := EnumeradoToStr(t,
         ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09'],
         [cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07, cst08, cst09]);
 end;
 
-function StrToCST(out ok: Boolean; const s: String): TCST;
+function StrToCST(out ok: Boolean; const s: string): TCST;
 begin
   result := StrToEnumerado(ok, s,
         ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09'],
         [cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07, cst08, cst09]);
 end;
 
-function tpRetPisCofinsToStr(const t: TtpRetPisCofins): String;
+function tpRetPisCofinsToStr(const t: TtpRetPisCofins): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
                            [trpcRetido, trpcNaoRetido]);
 end;
 
-function StrTotpRetPisCofins(out ok: Boolean; const s: String): TtpRetPisCofins;
+function StrTotpRetPisCofins(out ok: Boolean; const s: string): TtpRetPisCofins;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [trpcRetido, trpcNaoRetido]);
 end;
 
-function indTotTribToStr(const t: TindTotTrib): String;
+function indTotTribToStr(const t: TindTotTrib): string;
 begin
   result := EnumeradoToStr(t,
                            ['0'],
                            [indNao]);
 end;
 
-function StrToindTotTrib(out ok: Boolean; const s: String): TindTotTrib;
+function StrToindTotTrib(out ok: Boolean; const s: string): TindTotTrib;
 begin
   result := StrToEnumerado(ok, s,
                            ['0'],
                            [indNao]);
 end;
 
-function ambGerToStr(const t: TambGer): String;
+function ambGerToStr(const t: TambGer): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
                            [agPrefeitura, agSistemaNacional]);
 end;
 
-function StrToambGer(out ok: Boolean; const s: String): TambGer;
+function StrToambGer(out ok: Boolean; const s: string): TambGer;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [agPrefeitura, agSistemaNacional]);
 end;
 
-function tpEmisToStr(const t: TtpEmis): String;
+function tpEmisToStr(const t: TtpEmis): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
                            [tePadraoNacional, teProprio]);
 end;
 
-function StrTotpEmis(out ok: Boolean; const s: String): TtpEmis;
+function StrTotpEmis(out ok: Boolean; const s: string): TtpEmis;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [tePadraoNacional, teProprio]);
 end;
 
-function procEmiToStr(const t: TprocEmi): String;
+function procEmiToStr(const t: TprocEmi): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                            [peWebService, peWebFisco, peAppFisco]);
 end;
 
-function StrToprocEmi(out ok: Boolean; const s: String): TprocEmi;
+function StrToprocEmi(out ok: Boolean; const s: string): TprocEmi;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [peWebService, peWebFisco, peAppFisco]);
 end;
 
-function tpEventoToStr(const t: TtpEvento): String;
+function tpEventoToStr(const t: TtpEvento): string;
 begin
   result := EnumeradoToStr(t,
                          ['e101101', 'e105102', 'e101103', 'e105104', 'e105105',
@@ -13042,7 +13091,7 @@ begin
                     teDesbloqueioPorOficio]);
 end;
 
-function StrTotpEvento(out ok: Boolean; const s: String): TtpEvento;
+function StrTotpEvento(out ok: Boolean; const s: string): TtpEvento;
 begin
   result := StrToEnumerado(ok, s,
                          ['e101101', 'e105102', 'e101103', 'e105104', 'e105105',
@@ -13059,7 +13108,7 @@ begin
                     teDesbloqueioPorOficio]);
 end;
 
-function TipoDeducaoToStr(const t: TTipoDeducao): String;
+function TipoDeducaoToStr(const t: TTipoDeducao): string;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6', '7'],
@@ -13067,7 +13116,7 @@ begin
                   tdVeiculacao, tdIntermediacao]);
 end;
 
-function StrToTipoDeducao(out ok: Boolean; const s: String): TTipoDeducao;
+function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6', '7'],
@@ -13075,264 +13124,36 @@ begin
                   tdVeiculacao, tdIntermediacao]);
 end;
 
-function CodIBGEPaisToSiglaISO2(const t: Integer): String;
+function CodIBGEPaisToSiglaISO2(t: Integer): string;
+var
+  i: Integer;
 begin
-  case t of
-    132: Result := 'AF';
-    175: Result := 'AL';
-    230: Result := 'DE';
-    310: Result := 'BF';
-    370: Result := 'AD';
-    400: Result := 'AO';
-    418: Result := 'AI';
-    420: Result := 'AQ';
-    434: Result := 'AG';
-    531: Result := 'SA';
-    590: Result := 'DZ';
-    639: Result := 'AR';
-    647: Result := 'AM';
-    655: Result := 'AW';
-    698: Result := 'AU';
-    728: Result := 'AT';
-    736: Result := 'AZ';
-    779: Result := 'BS';
-    809: Result := 'BH';
-    817: Result := 'BD';
-    833: Result := 'BB';
-    850: Result := 'BY';
-    876: Result := 'BE';
-    884: Result := 'BZ';
-    906: Result := 'BM';
-    973: Result := 'BO';
-    990: Result := 'BQ';
-    981: Result := 'BA';
-    1015: Result := 'BW';
-    1023: Result := 'BV';
-    1058: Result := 'BR';
-    1082: Result := 'BN';
-    1112: Result := 'BG';
-    1155: Result := 'BI';
-    1198: Result := 'BT';
+  Result := 'ZZ';
 
-    2291: Result := 'BJ';
-    7560: Result := 'ZA';
-  else
-    Result := 'ZZ';
+  for i := Low(CodigoIBGEPais) to High(CodigoIBGEPais) do
+  begin
+    if CodigoIBGEPais[i] = t then
+    begin
+      Result := SiglaISO2Pais[i];
+      exit;
+    end;
   end;
 end;
-{
-AE	Emirados Árabes Unidos
-AS	Samoa Americana
-AX	Aland, Ilhas
-BL	São Bartolomeu
-CA	Canadá
-CC	Cocos(Keeling), Ilhas
-CD	Congo, República Democrática do
-CF	República Centro-Africana
-CG	Congo
-CH	Suíça
-CI	Costa do Marfim
-CK	Cook, Ilhas
-CL	Chile
-CM	Camarões
-CN	China, República Popular
-CO	Colômbia
-CR	Costa Rica
-CU	Cuba
-CV	Cabo Verde, República de
-CW	Curaçao
-CX	Christmas, Ilha
-CY	Chipre
-CZ	Tcheca, República
-DJ	Djibuti
-DK	Dinamarca
-DM	Dominica, Ilha
-DO	República Dominicana
-EC	Equador
-EE	Estônia, República da
-EG	Egito
-EH	Saara Ocidental
-ER	Eritreia
-ES	Espanha
-ET	Etiópia
-FI	Finlândia
-FJ	Fiji
-FK	Falkland (Ilhas Malvinas)
-FM	Micronésia
-FO	Feroe, Ilhas
-FR	França
-GA	Gabão
-GB	Reino Unido
-GD	Granada
-GE	Geórgia, República da
-GF	Guiana Francesa
-GG	Guernsey
-GH	Gana
-GI	Gibraltar
-GL	Groenlândia
-GM	Gambia
-GN	Guiné
-GP	Guadalupe
-GQ	Guiné-Equatorial
-GR	Grécia
-GS	Ilhas Geórgia do Sul e Sandwich do Sul
-GT	Guatemala
-GU	Guam
-GW	Guiné-Bissau
-GY	Guiana
-HK	Hong Kong
-HM	Ilha Heard e Ilhas McDonald
-HN	Honduras
-HR	Croácia, República da
-HT	Haiti
-HU	Hungria, República da
-ID	Indonésia
-IE	Irlanda
-IL	Israel
-IM	Man, Ilha de
-IN	Índia
-IO	Território Britânico no Oceano Índico
-IQ	Iraque
-IR	Irã, República Islâmica do
-IS	Islândia
-IT	Itália
-JE	Jersey
-JM	Jamaica
-JO	Jordânia
-JP	Japão
-KE	Quênia
-KG	Quirguiz, República da
-KH	Camboja
-KI	Kiribati
-KM	Comores, Ilhas
-KN	São Cristóvão e Neves, Ilhas
-KP	Coréia (do Norte), Rep. Pop. Democrática da
-KR	Coréia (do Sul), República da
-KW	Kuwait
-KY	Cayman, Ilhas
-KZ	Cazaquistão, República do
-LA	Laos, Rep. Pop. Democrática do
-LB	Líbano
-LC	Santa Lúcia
-LI	Liechtenstein
-LK	Sri Lanka
-LR	Libéria
-LS	Lesoto
-LT	Lituânia, República da
-LU	Luxemburgo
-LV	Letônia, República da
-LY	Líbia
-MA	Marrocos
-MC	Mônaco
-MD	Moldávia, República da
-ME	Montenegro
-MF	São Martinho (Parte Francesa)
-MG	Madagascar
-MH	Marshall, Ilhas
-MK	Macedônia, Ant. Rep. Iugoslava
-ML	Mali
-MM	Myanmar (Birmânia)
-MN	Mongólia
-MO	Macau
-MP	Marianas do Norte
-MQ	Martinica
-MR	Mauritânia
-MS	Montserrat, Ilhas
-MT	Malta
-MU	Maurício
-MV	Maldivas
-MW	Malavi
-MX	México
-MY	Malásia
-MZ	Moçambique
-NA	Namíbia
-NC	Nova Caledônia
-NE	Níger
-NF	Norfolk, Ilha
-NG	Nigéria
-NI	Nicarágua
-NL	Países Baixos (Holanda)
-NO	Noruega
-NP	Nepal
-NR	Nauru
-NU	Niue, Ilha
-NZ	Nova Zelândia
-OM	Omã
-PA	Panamá
-PE	Peru
-PF	Polinésia Francesa
-PG	Papua Nova Guiné
-PH	Filipinas
-PK	Paquistão
-PL	Polônia, República da
-PM	São Pedro e Miquelon
-PN	Pitcairn, Ilha De
-PR	Porto Rico
-PS	Palestina
-PT	Portugal
-PW	Palau
-PY	Paraguai
-QA	Catar
-RE	Reunião, Ilha
-RO	Romênia
-RS	Servia
-RU	Rússia, Federação da
-RW	Ruanda
-SB	Salomão, Ilhas
-SC	Seychelles
-SD	Sudão
-SE	Suécia
-SG	Cingapura
-SH	Santa Helena
-SI	Eslovênia, República da
-SJ	Svalbard e Jan Mayen
-SK	Eslovaca, República
-SL	Serra Leoa
-SM	San Marino
-SN	Senegal
-SO	Somália
-SR	Suriname
-SS	Sudão do Sul
-ST	São Tomé e Príncipe, Ilhas
-SV	El Salvador
-SX	São Martinho (Parte Holandesa)
-SY	Síria, República Árabe da
-SZ	Suazilândia
-TC	Turcas e Caicos, Ilhas
-TD	Chade
-TF	Terras Austrais e Antárticas Francesas
-TG	Togo
-TH	Tailândia
-TJ	Tadjiquistão, República do
-TK	Toquelau, Ilhas
-TL	Timor Leste
-TM	Turcomenistão, República do
-TN	Tunísia
-TO	Tonga
-TR	Turquia
-TT	Trinidad e Tobago
-TV	Tuvalu
-TW	Formosa (Taiwan)
-TZ	Tanzânia, Rep. Unida da
-UA	Ucrânia
-UG	Uganda
-UM	Pacífico, Ilhas do (Possessão dos EUA)
-US	Estados Unidos
-UY	Uruguai
-UZ	Uzbequistão, República do
-VA	Vaticano, Est. da Cidade do
-VC	São Vicente e Granadinas
-VE	Venezuela
-VG	Virgens, Ilhas (Britânicas)
-VI	Virgens, Ilhas (E.U.A.)
-VN	Vietnã
-VU	Vanuatu
-WF	Wallis e Futuna, Ilhas
-WS	Samoa
-YE	Iêmen
-YT	Mayotte
-ZM	Zâmbia
-ZW	Zimbábue
-ZZ	Município não possui a informação no sistema próprio;
-}
+
+function SiglaISO2ToCodIBGEPais(const t: string): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+
+  for i := Low(SiglaISO2Pais) to High(SiglaISO2Pais) do
+  begin
+    if SiglaISO2Pais[i] = t then
+    begin
+      Result := CodigoIBGEPais[i];
+      exit;
+    end;
+  end;
+end;
+
 end.

@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 13/09/2022
+-- ACBrNFSeXConversao/PadraoNacional.LerXml --
+[+] Implementado as funções de conversão: CodIBGEPaisToSiglaISO2 e SiglaISO2ToCodIBGEPais,
+    essas funções são utilizadas pelo provedor PadraoNacional.
+   Por: Italo Giurizzato Junior
 -- Agili.LerXml --
 [*] Ajustes para ler o campo: Codigo que é inteiro e tem valor negativo.
    Por: Plenustech

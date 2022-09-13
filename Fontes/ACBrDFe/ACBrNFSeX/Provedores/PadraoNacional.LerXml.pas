@@ -383,7 +383,6 @@ procedure TNFSeR_PadraoNacional.LerEnderecoExteriorFornecedr(
   const ANode: TACBrXmlNode; Item: Integer);
 var
   AuxNode: TACBrXmlNode;
-//  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('endExt');
 
@@ -391,7 +390,7 @@ begin
   begin
     with NFSe.Servico.Valores.DocDeducao.Items[Item].fornec.Endereco do
     begin
-//      CodigoPais := SiglaISO2ToCodIBGEPais(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
+      CodigoPais := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cEndPost'), tcStr);
       xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEstProvReg'), tcStr);
@@ -403,7 +402,6 @@ procedure TNFSeR_PadraoNacional.LerEnderecoExteriorIntermediario(
   const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-//  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('endExt');
 
@@ -411,7 +409,7 @@ begin
   begin
     with NFSe.Intermediario.Endereco do
     begin
-//      CodigoPais := SiglaISO2ToCodIBGEPais(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
+      CodigoPais := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cEndPost'), tcStr);
       xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEstProvReg'), tcStr);
@@ -441,7 +439,6 @@ procedure TNFSeR_PadraoNacional.LerEnderecoExteriorPrestador(
   const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-//  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('endExt');
 
@@ -449,7 +446,7 @@ begin
   begin
     with NFSe.Prestador.Endereco do
     begin
-//      CodigoPais := SiglaISO2ToCodIBGEPais(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
+      CodigoPais := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cEndPost'), tcStr);
       xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEstProvReg'), tcStr);
@@ -461,7 +458,6 @@ procedure TNFSeR_PadraoNacional.LerEnderecoExteriorTomador(
   const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-//  Ok: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('endExt');
 
@@ -469,7 +465,7 @@ begin
   begin
     with NFSe.Tomador.Endereco do
     begin
-//      CodigoPais := SiglaISO2ToCodIBGEPais(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
+      CodigoPais := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcStr));
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('cEndPost'), tcStr);
       xMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('xCidade'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('xEstProvReg'), tcStr);
@@ -863,7 +859,7 @@ begin
     with NFSe.Servico do
     begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cLocPrestacao'), tcStr);
-//      CodigoPais := SiglaISO2ToCodIBGEPais(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisPrestacao'), tcStr));
+      CodigoPais := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisPrestacao'), tcStr));
     end;
   end;
 end;
@@ -1108,7 +1104,7 @@ begin
     with NFSe.Servico.Valores.tribMun do
     begin
       tribISSQN := ObterConteudo(AuxNode.Childrens.FindAnyNs('tribISSQN'), tcStr);
-//      cPaisResult := SiglaISO2ToCodIBGEPais(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisResult'), tcStr));
+      cPaisResult := SiglaISO2ToCodIBGEPais(ObterConteudo(AuxNode.Childrens.FindAnyNs('cPaisResult'), tcStr));
 
       LerBeneficioMunicipal(AuxNode);
       LerExigibilidadeSuspensa(AuxNode);

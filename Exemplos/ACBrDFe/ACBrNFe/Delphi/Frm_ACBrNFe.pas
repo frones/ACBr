@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
-{																			   }
+{																			                                         }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
@@ -366,10 +366,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  ACBrUtil,
-  ACBrUtil.FilesIO,
-  ACBrUtil.DateTime,
-  ACBrUtil.Strings,
+  ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.DateTime, ACBrUtil.Strings,
   ACBrUtil.XMLHTML,
   pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
@@ -2288,14 +2285,15 @@ end;
 procedure TfrmACBrNFe.btnDistrDFePorUltNSUClick(Sender: TObject);
 var
   xTitulo, cUFAutor, CNPJ, ultNSU: string;
+  i: Integer;
 begin
   xTitulo := 'Distribuição DF-e por último NSU';
 
-  cUFAutor := '';
+  cUFAutor := IntToStr(ACBrNFe1.Configuracoes.WebServices.UFCodigo);
   if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
      exit;
 
-  CNPJ := '';
+  CNPJ := edtEmitCNPJ.Text;
   if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
      exit;
 
@@ -2304,6 +2302,38 @@ begin
      exit;
 
   ACBrNFe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU);
+
+  with ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt do
+  begin
+    MemoDados.Lines.Add('Qtde Documentos Retornados: ' + IntToStr(docZip.Count));
+    MemoDados.Lines.Add('Status....: ' + IntToStr(cStat));
+    MemoDados.Lines.Add('Motivo....: ' + xMotivo);
+    MemoDados.Lines.Add('Último NSU: ' + ultNSU);
+    MemoDados.Lines.Add('Máximo NSU: ' + maxNSU);
+    MemoDados.Lines.Add(' ');
+    MemoDados.Lines.Add('Documentos Retornados:');
+
+    for i := 0 to docZip.Count -1 do
+    begin
+      case docZip[i].schema of
+        schresNFe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Resumo Nota) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schprocNFe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Nota Completa) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schresEvento:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Resumo Evento) Chave: ' + docZip[i].resEvento.chDFe);
+
+        schprocEventoNFe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Evento Completo) Chave: ' + docZip[i].procEvento.chDFe);
+      end;
+    end;
+  end;
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;

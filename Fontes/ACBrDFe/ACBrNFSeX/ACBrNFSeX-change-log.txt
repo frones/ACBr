@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/09/2022
+-- ACBrNFSeXServicos --
+[*] Revertido a alteração na URL da cidade Rondonopolis/MT - Provedor Coplan
+   Por: Rafael Vivan
+
 09/09/2022
 -- Diversos --
 [+] Implementado a geração do XML, a emissão e o cancelamento de nota para o provedor

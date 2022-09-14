@@ -1088,8 +1088,11 @@ end;
 function TNaoPeriodicos.LoadFromString(const AXMLString: String): Boolean;
 var
  Ok: Boolean;
+ typVersaoDF : TVersaoeSocial;
 begin
-  case StringXMLToTipoEvento(Ok, AXMLString) of
+  typVersaoDF := TACBreSocial(Self.Owner).Configuracoes.Geral.VersaoDF;
+
+  case StringXMLToTipoEvento(Ok, AXMLString, typVersaoDF) of
     teS2190: Self.S2190.New.EvtAdmPrelim.XML := AXMLString;
     teS2200: Self.S2200.New.EvtAdmissao.XML := AXMLString;
     teS2205: Self.S2205.New.EvtAltCadastral.XML := AXMLString;
@@ -1144,8 +1147,11 @@ end;
 function TNaoPeriodicos.LoadFromIni(const AIniString: String): Boolean;
 var
   Ok: Boolean;
+  typVersaoDF : TVersaoeSocial;
 begin
-  case StringINIToTipoEvento(Ok, AIniString) of
+  typVersaoDF := TACBreSocial(Self.Owner).Configuracoes.Geral.VersaoDF;
+
+  case StringINIToTipoEvento(Ok, AIniString, typVersaoDF) of
     teS2190: Self.S2190.New.EvtAdmPrelim.LerArqIni(AIniString);
     teS2200: Self.S2200.New.EvtAdmissao.LerArqIni(AIniString);
     teS2205: Self.S2205.New.EvtAltCadastral.LerArqIni(AIniString);

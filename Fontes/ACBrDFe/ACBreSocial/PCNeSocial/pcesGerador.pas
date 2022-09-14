@@ -310,29 +310,30 @@ begin
   end;
 end;
 
-//procedure TeSocialEvento.SetXML(const Value: AnsiString);
 procedure TeSocialEvento.SetXML(const Value: String);
 var
   NomeEvento: String;
   Ok: Boolean;
   Leitor: TLeitor;
+  typVersaoeSocial: TVersaoeSocial;
 begin
-  FXML := Value;
+  typVersaoeSocial := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+  FXML             := Value;
 
   if not XmlEstaAssinado(FXML) then
   begin
-    NomeEvento := TipoEventoToStrEvento(StringXMLToTipoEvento(Ok, FXML));
-    FXML := Assinar(FXML, NomeEvento);
+    NomeEvento := TipoEventoToStrEvento(StringXMLToTipoEvento(Ok, FXML, typVersaoeSocial), typVersaoeSocial);
+    FXML       := Assinar(FXML, NomeEvento);
 
     Leitor := TLeitor.Create;
     try
       Leitor.Grupo := FXML;
-      Self.Id := Leitor.rAtributo('Id=');
+      Self.Id      := Leitor.rAtributo('Id=');
     finally
       Leitor.Free;
     end;
 
-    Validar(TipoEventiToSchemaReinf(StringXMLToTipoEvento(Ok, FXML)));
+    Validar(TipoEventoToSchemaeSocial(StringXMLToTipoEvento(Ok, FXML, typVersaoeSocial), typVersaoeSocial));
   end;
 end;
 

@@ -208,9 +208,12 @@ end;
 
 function TIniciais.LoadFromString(const AXMLString: String): Boolean;
 var
-  Ok: Boolean;
+  Ok : Boolean;
+  typVersaoDF : TVersaoeSocial;
 begin
-  case StringXMLToTipoEvento(Ok, AXMLString) of
+  typVersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+
+  case StringXMLToTipoEvento(Ok, AXMLString, typVersaoDF) of
     teS1000: Self.S1000.New.evtInfoEmpregador.XML := AXMLString;
     teS1005: Self.S1005.New.evtTabEstab.XML := AXMLString;
   end;
@@ -221,8 +224,11 @@ end;
 function TIniciais.LoadFromIni(const AIniString: String): Boolean;
 var
   Ok: Boolean;
+  typVersaoDF : TVersaoeSocial;
 begin
-  case StringINIToTipoEvento(Ok, AIniString) of
+  typVersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+
+  case StringINIToTipoEvento(Ok, AIniString, typVersaoDF) of
     teS1000: Self.S1000.New.evtInfoEmpregador.LerArqIni(AIniString);
     teS1005: Self.S1005.New.evtTabEstab.LerArqIni(AIniString);
   end;

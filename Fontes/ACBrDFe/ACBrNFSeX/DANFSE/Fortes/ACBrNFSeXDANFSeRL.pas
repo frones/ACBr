@@ -55,10 +55,10 @@ type
   TfrlXDANFSeRL = class(TForm)
     RLPDFFilter1: TRLPDFFilter;
     RLNFSe: TRLReport;
+
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);
-
   private
     { Private declarations }
     FMoreData: Boolean;
@@ -77,6 +77,7 @@ type
     class procedure Imprimir(ADANFSe: TACBrNFSeXDANFSeRL; ANotas: array of TNFSe);
     class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AFile: String); overload;
     class procedure SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AStream: TStream); overload;
+    class procedure QuebradeLinha(const sQuebradeLinha: String); virtual;
   end;
 
 var
@@ -187,6 +188,11 @@ begin
       ReportArray := nil;
     end;
   end;
+end;
+
+class procedure TfrlXDANFSeRL.QuebradeLinha(const sQuebradeLinha: String);
+begin
+  // Reescrever
 end;
 
 class procedure TfrlXDANFSeRL.SalvarPDF(ADANFSe: TACBrNFSeXDANFSeRL; ANFSe: TNFSe; AFile: String);

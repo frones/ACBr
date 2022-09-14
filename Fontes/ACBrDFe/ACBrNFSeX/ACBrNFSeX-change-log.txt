@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+14/09/2022
+-- Diversos --
+[+] DANFSE especifico para o provedor SimplISS, alterações no componente para 
+    detectar o provedor, caso não seja o SimplISS usar o DANFSE padrão.
+    Essas alterações foram realizadas somente no Fortes Report.
+   Por: Elisângela Borato / Italo Giurizzato Junior
+
 13/09/2022
 -- ACBrNFSeXConversao/PadraoNacional.LerXml --
 [+] Implementado as funções de conversão: CodIBGEPaisToSiglaISO2 e SiglaISO2ToCodIBGEPais,

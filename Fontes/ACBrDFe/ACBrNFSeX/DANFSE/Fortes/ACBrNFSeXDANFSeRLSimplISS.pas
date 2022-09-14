@@ -32,7 +32,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFSeXDANFSeRLRetrato;
+unit ACBrNFSeXDANFSeRLSimplISS;
 
 interface
 
@@ -44,190 +44,206 @@ uses
 
 type
 
-  { TfrlXDANFSeRLRetrato }
+  { TfrlXDANFSeRLSimplISS }
 
-  TfrlXDANFSeRLRetrato = class(TfrlXDANFSeRL)
+  TfrlXDANFSeRLSimplISS = class(TfrlXDANFSeRL)
     rlbCabecalho: TRLBand;
-    RLDraw10: TRLDraw;
     RLDraw2: TRLDraw;
     RLDraw3: TRLDraw;
     RLDraw70: TRLDraw;
-    RLDraw8: TRLDraw;
-    RLDraw9: TRLDraw;
     rllNumNF0: TRLLabel;
     RLLabel13: TRLLabel;
-    RLLabel12: TRLLabel;
     rliLogo: TRLImage;
     rllEmissao: TRLLabel;
-    RLLabel8: TRLLabel;
     rllCodVerificacao: TRLLabel;
-    RLLabel7: TRLLabel;
-    rllCompetencia: TRLLabel;
-    RLLabel18: TRLLabel;
-    rllNumeroRps: TRLLabel;
-    RLLabel20: TRLLabel;
-    rllNumNFSeSubstituida: TRLLabel;
     rlmPrefeitura: TRLMemo;
     rlbPrestador: TRLBand;
-    RLLabel29: TRLLabel;
-    RLLabel30: TRLLabel;
-    RLLabel31: TRLLabel;
-    RLLabel32: TRLLabel;
     rllPrestMunicipio: TRLLabel;
     rllPrestInscMunicipal: TRLLabel;
     rllPrestEndereco: TRLLabel;
     rllPrestCNPJ: TRLLabel;
-    rliPrestLogo: TRLImage;
-    RLLabel2: TRLLabel;
-    RLLabel1: TRLLabel;
     rllPrestNome: TRLLabel;
-    RLLabel9: TRLLabel;
     rllPrestUF: TRLLabel;
-    RLLabel22: TRLLabel;
     rllPrestComplemento: TRLLabel;
-    RLLabel23: TRLLabel;
     rllPrestTelefone: TRLLabel;
-    RLLabel24: TRLLabel;
     rllPrestEmail: TRLLabel;
     rlbTomador: TRLBand;
-    RLLabel4: TRLLabel;
-    RLLabel5: TRLLabel;
     rllTomaCNPJ: TRLLabel;
-    RLLabel11: TRLLabel;
     rllTomaInscMunicipal: TRLLabel;
-    RLLabel15: TRLLabel;
     rllTomaNome: TRLLabel;
-    RLLabel17: TRLLabel;
     rllTomaEndereco: TRLLabel;
-    RLLabel19: TRLLabel;
     rllTomaMunicipio: TRLLabel;
-    RLLabel21: TRLLabel;
     rllTomaUF: TRLLabel;
-    RLLabel10: TRLLabel;
     rllTomaEmail: TRLLabel;
-    RLLabel25: TRLLabel;
     rllTomaComplemento: TRLLabel;
-    RLLabel27: TRLLabel;
     rllTomaTelefone: TRLLabel;
     rlbHeaderItens: TRLBand;
-    RLLabel14: TRLLabel;
     rlbItens: TRLBand;
     rlbISSQN: TRLBand;
-    RLDraw52: TRLDraw;
-    RLDraw53: TRLDraw;
-    RLDraw54: TRLDraw;
-    RLDraw55: TRLDraw;
-    RLLabel137: TRLLabel;
-    RLLabel138: TRLLabel;
-    RLLabel139: TRLLabel;
-    rllBaseCalc: TRLLabel;
-    rllValorISS: TRLLabel;
-    RLDraw4: TRLDraw;
-    rllValorTotal: TRLLabel;
-    RLLabel16: TRLLabel;
-    rlmCodServico: TRLMemo;
-    RLLabel3: TRLLabel;
-    rllAliquota: TRLLabel;
-    RLDraw6: TRLDraw;
-    rlsLinhaH1: TRLDraw;
-    rllCodigoObra: TRLLabel;
-    rllCodObra: TRLLabel;
-    rllTituloConstCivil: TRLLabel;
-    rllCodigoArt: TRLLabel;
-    rllCodART: TRLLabel;
-    RLLabel34: TRLLabel;
-    rllValorPIS: TRLLabel;
-    RLLabel36: TRLLabel;
-    rllValorCOFINS: TRLLabel;
-    RLLabel38: TRLLabel;
-    rllValorIR: TRLLabel;
-    RLLabel40: TRLLabel;
-    rllValorINSS: TRLLabel;
-    RLLabel42: TRLLabel;
-    rllValorCSLL: TRLLabel;
-    RLLabel44: TRLLabel;
-    RLDraw13: TRLDraw;
-    RLDraw14: TRLDraw;
-    RLLabel35: TRLLabel;
-    RLLabel37: TRLLabel;
-    RLLabel39: TRLLabel;
-    RLLabel41: TRLLabel;
-    RLLabel43: TRLLabel;
-    RLLabel45: TRLLabel;
-    RLLabel46: TRLLabel;
-    RLLabel47: TRLLabel;
-    RLLabel48: TRLLabel;
-    RLLabel49: TRLLabel;
-    RLLabel50: TRLLabel;
-    RLLabel51: TRLLabel;
-    RLLabel52: TRLLabel;
-    RLLabel53: TRLLabel;
-    RLLabel54: TRLLabel;
-    RLLabel55: TRLLabel;
-    RLLabel56: TRLLabel;
-    RLDraw15: TRLDraw;
-    RLDraw16: TRLDraw;
-    rllValorServicos1: TRLLabel;
-    rllValorServicos2: TRLLabel;
-    rllDescIncondicionado1: TRLLabel;
-    rllDescIncondicionado2: TRLLabel;
-    rllDescCondicionado: TRLLabel;
-    rllRetencoesFederais: TRLLabel;
-    rllOutrasRetencoes: TRLLabel;
-    rllValorIssRetido: TRLLabel;
-    rllValorLiquido: TRLLabel;
-    RLDraw17: TRLDraw;
-    rllIncentivador: TRLLabel;
-    rllNatOperacao: TRLMemo;
-    rllValorDeducoes: TRLLabel;
-    rllRegimeEspecial: TRLLabel;
-    rllOpcaoSimples: TRLLabel;
-    rllISSReter: TRLLabel;
-    rllMsgTeste: TRLLabel;
     rbOutrasInformacoes: TRLBand;
-    rlmDadosAdicionais: TRLMemo;
-    rllDataHoraImpressao: TRLLabel;
-    rllSistema: TRLLabel;
-    RLLabel6: TRLLabel;
-    rlbCanhoto: TRLBand;
-    RLLabel26: TRLLabel;
-    rllPrestNomeEnt: TRLLabel;
-    RLLabel28: TRLLabel;
-    RLDraw1: TRLDraw;
-    rllNumNF0Ent: TRLLabel;
-    RLLabel57: TRLLabel;
-    RLLabel33: TRLLabel;
-    RLDraw5: TRLDraw;
-    RLLabel58: TRLLabel;
-    RLLabel59: TRLLabel;
-    RLDraw7: TRLDraw;
     RLLabel60: TRLLabel;
-    RLLabel61: TRLLabel;
     rllTomaInscEstadual: TRLLabel;
-    rllTomadorNomeEnt: TRLLabel;
-    rlmDescricao: TRLMemo;
-    RLSystemInfo1: TRLSystemInfo;
-    RLSystemInfo2: TRLSystemInfo;
-    RLLabel62: TRLLabel;
-    RLLabel63: TRLLabel;
-    RLDraw11: TRLDraw;
-    RLLabel64: TRLLabel;
-    rllMunicipioPrestacaoServico: TRLLabel;
     rlbHeaderItensDetalhado: TRLBand;
-    RLLabel65: TRLLabel;
-    RLLabel66: TRLLabel;
-    RLLabel67: TRLLabel;
-    RLLabel68: TRLLabel;
     subItens: TRLSubDetail;
     rlbItensServico: TRLBand;
     txtServicoQtde: TRLLabel;
     rlmServicoDescricao: TRLMemo;
     txtServicoUnitario: TRLLabel;
     txtServicoTotal: TRLLabel;
-    rllCodTributacaoMunicipio: TRLLabel;
-    rlmDescCodTributacaoMunicipio: TRLMemo;
-    RLLabel69: TRLLabel;
     rllPrestInscEstadual: TRLLabel;
+    RLLabel70: TRLLabel;
+    rllNFSeSerie: TRLLabel;
+    RLLabel71: TRLLabel;
+    RLLabel72: TRLLabel;
+    RLDraw12: TRLDraw;
+    RLDraw18: TRLDraw;
+    RLLabel12: TRLLabel;
+    RLDraw19: TRLDraw;
+    RLLabel1: TRLLabel;
+    RLLabel2: TRLLabel;
+    RLLabel32: TRLLabel;
+    RLLabel31: TRLLabel;
+    RLLabel29: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLLabel22: TRLLabel;
+    rllPrestNomeFantasia: TRLLabel;
+    RLLabel74: TRLLabel;
+    RLLabel9: TRLLabel;
+    RLLabel23: TRLLabel;
+    RLLabel24: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLDraw20: TRLDraw;
+    RLLabel15: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel17: TRLLabel;
+    RLLabel19: TRLLabel;
+    RLLabel10: TRLLabel;
+    RLLabel11: TRLLabel;
+    RLLabel61: TRLLabel;
+    RLLabel25: TRLLabel;
+    RLLabel21: TRLLabel;
+    RLLabel27: TRLLabel;
+    RLLabel14: TRLLabel;
+    RLLabel66: TRLLabel;
+    RLLabel87: TRLLabel;
+    RLLabel65: TRLLabel;
+    RLLabel68: TRLLabel;
+    RLLabel67: TRLLabel;
+    RLDraw25: TRLDraw;
+    RLDraw22: TRLDraw;
+    RLDraw23: TRLDraw;
+    RLDraw24: TRLDraw;
+    txtServicoTributavel: TRLLabel;
+    RLDraw26: TRLDraw;
+    RLDraw27: TRLDraw;
+    RLDraw28: TRLDraw;
+    RLDraw29: TRLDraw;
+    RLLabel90: TRLLabel;
+    rllValorTributavel: TRLLabel;
+    RLLabel91: TRLLabel;
+    rllValorNaoTributavel: TRLLabel;
+    RLLabel116: TRLLabel;
+    rllValorServicos1: TRLLabel;
+    RLLabel96: TRLLabel;
+    rllValorDeducoes: TRLLabel;
+    rllDescIncondicionado: TRLLabel;
+    RLLabel95: TRLLabel;
+    rllDescCondicionado: TRLLabel;
+    RLLabel100: TRLLabel;
+    rllBaseCalc: TRLLabel;
+    RLLabel98: TRLLabel;
+    rllAliquota: TRLLabel;
+    RLLabel102: TRLLabel;
+    rllValorISS: TRLLabel;
+    RLLabel104: TRLLabel;
+    RLLabel105: TRLLabel;
+    rllValorPIS: TRLLabel;
+    rllValorCOFINS: TRLLabel;
+    RLLabel107: TRLLabel;
+    rllValorINSS: TRLLabel;
+    RLLabel108: TRLLabel;
+    rllValorIR: TRLLabel;
+    RLLabel110: TRLLabel;
+    rllValorCSLL: TRLLabel;
+    RLLabel113: TRLLabel;
+    rllOutrasRetencoes: TRLLabel;
+    RLLabel115: TRLLabel;
+    rllValorLiquido: TRLLabel;
+    RLLabel118: TRLLabel;
+    RLLabel120: TRLLabel;
+    rlmCodServico: TRLMemo;
+    RLDraw53: TRLDraw;
+    RLDraw32: TRLDraw;
+    RLDraw33: TRLDraw;
+    RLDraw34: TRLDraw;
+    RLDraw35: TRLDraw;
+    RLDraw30: TRLDraw;
+    RLDraw31: TRLDraw;
+    RLDraw13: TRLDraw;
+    RLDraw17: TRLDraw;
+    RLDraw6: TRLDraw;
+    RLDraw14: TRLDraw;
+    RLLabel16: TRLLabel;
+    RLLabel34: TRLLabel;
+    RLLabel36: TRLLabel;
+    RLLabel56: TRLLabel;
+    RLLabel40: TRLLabel;
+    RLLabel38: TRLLabel;
+    RLLabel106: TRLLabel;
+    rllDataHoraImpressao: TRLLabel;
+    rlmDadosAdicionais: TRLMemo;
+    rllCNAE: TRLLabel;
+    rllIncentivador: TRLLabel;
+    rllRecolhimento: TRLLabel;
+    rllCompetencia: TRLLabel;
+    RLLabel93: TRLLabel;
+    rllMunicipioPrestacaoServico: TRLLabel;
+    RLLabel89: TRLLabel;
+    rllRegimeEspecial: TRLLabel;
+    rllOpcaoSimples: TRLLabel;
+    lblNatOperacao: TRLLabel;
+    rllNatOperacao: TRLLabel;
+    RLLabel55: TRLLabel;
+    rllSistema: TRLLabel;
+    RLLabel41: TRLLabel;
+    RLLabel42: TRLLabel;
+    RLLabel103: TRLLabel;
+    RLLabel44: TRLLabel;
+    rllDataGeracao: TRLLabel;
+    rllNumeroRps: TRLLabel;
+    rllSerieRps: TRLLabel;
+    rllNumNFSeSubstituida: TRLLabel;
+    RLLabel46: TRLLabel;
+    RLSystemInfo3: TRLSystemInfo;
+    RLLabel47: TRLLabel;
+    RLSystemInfo4: TRLSystemInfo;
+    rllTituloConstCivil: TRLLabel;
+    rllCodigoObra: TRLLabel;
+    rllCodObra: TRLLabel;
+    rllCodigoArt: TRLLabel;
+    rllCodART: TRLLabel;
+    RLDraw15: TRLDraw;
+    rlsLinhaH1: TRLDraw;
+    RLDraw52: TRLDraw;
+    rlbCanhoto: TRLBand;
+    RLLabel26: TRLLabel;
+    rllPrestNomeEnt: TRLLabel;
+    RLLabel28: TRLLabel;
+    RLLabel59: TRLLabel;
+    RLLabel58: TRLLabel;
+    RLDraw7: TRLDraw;
+    RLLabel33: TRLLabel;
+    RLLabel57: TRLLabel;
+    rllNumNF0Ent: TRLLabel;
+    RLLabel6: TRLLabel;
+    rllCodVerificacao2: TRLLabel;
+    RLDraw5: TRLDraw;
+    RLDraw1: TRLDraw;
+    RLLabel3: TRLLabel;
+    rllMsgTeste: TRLLabel;
+    RLDraw4: TRLDraw;
+    rlmDescricao: TRLMemo;
+    rliPrestLogo: TRLImage;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -240,6 +256,7 @@ type
     procedure RLNFSeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure subItensDataRecord(Sender: TObject; RecNo: Integer;
        CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure rlbHeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     { Private declarations }
     FNumItem: Integer;
@@ -250,7 +267,7 @@ type
   end;
 
 var
-  frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato;
+  frlXDANFSeRLSimplISS: TfrlXDANFSeRLSimplISS;
 
 implementation
 
@@ -270,14 +287,14 @@ uses
 var
   FQuebradeLinha: String;
 
-{ TfrlXDANFSeRLRetrato }
+{ TfrlXDANFSeRLSimplISS }
 
-class procedure TfrlXDANFSeRLRetrato.QuebradeLinha(const sQuebradeLinha: String);
+class procedure TfrlXDANFSeRLSimplISS.QuebradeLinha(const sQuebradeLinha: String);
 begin
   FQuebradeLinha := sQuebradeLinha;
 end;
 
-procedure TfrlXDANFSeRLRetrato.rbOutrasInformacoesBeforePrint(Sender: TObject;
+procedure TfrlXDANFSeRLSimplISS.rbOutrasInformacoesBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   QrCode: TDelphiZXingQRCode;
@@ -347,23 +364,24 @@ begin
     end;
   end;
 
-  rlmDadosAdicionais.Lines.EndUpdate;
-  rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s') , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
-
-  if fpDANFSe.Usuario <> '' then
-    rllDataHoraImpressao.Caption := Format(ACBrStr('%s   USUÁRIO: %s'), [rllDataHoraImpressao.Caption, fpDANFSe.Usuario]);
-
-  // imprime sistema
-  if fpDANFSe.Sistema <> '' then
-    rllSistema.Caption := Format('Desenvolvido por %s' , [fpDANFSe.Sistema])
-  else
-    rllSistema.Caption := '';
+//  rlmDadosAdicionais.Lines.EndUpdate;
+//  //rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s') , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
+//  rllDataHoraImpressao.Caption := FormatDateTime('dd/mm/yyyy hh:nn',Now);
+//
+//  if fpDANFSe.Usuario <> '' then
+//    rllDataHoraImpressao.Caption := Format(ACBrStr('%s   USUÁRIO: %s'), [rllDataHoraImpressao.Caption, fpDANFSe.Usuario]);
+//
+//  // imprime sistema
+//  if fpDANFSe.Sistema <> '' then
+//    rllSistema.Caption := Format('Desenvolvido por %s %s' , [fpDANFSe.Sistema, fpDANFSe.Site])
+//  else
+//    rllSistema.Caption := '';
 
   //Exibe canhoto
   rlbCanhoto.Visible := fpDANFSe.ImprimeCanhoto;
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrlXDANFSeRLSimplISS.rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   CodigoIBGE: Integer;
   xMunicipio, xUF: string;
@@ -386,18 +404,42 @@ begin
     rllNumeroRPS.Caption := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
-  	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
-	  // do tomador em vez do que foi informado em Serviço.
+	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
+	// do tomador em vez do que foi informado em Serviço.
     CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
 
     if CodigoIBGE > 0 then
       xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
 
     rllMunicipioPrestacaoServico.Caption := xMunicipio;
+
+    rllNFSeSerie.Caption := 'E';//SeriePrestacao; //estava pegando serie rps
   end;
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrlXDANFSeRLSimplISS.rlbHeaderItensBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  inherited;
+  rlmDescricao.Lines.Clear;
+  rlmDescricao.Lines.Add(StringReplace(fpNFSe.Servico.Discriminacao,
+                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
+
+  rllMsgTeste.Visible := (fpDANFSe.Producao = snNao);
+  rllMsgTeste.Enabled := (fpDANFSe.Producao = snNao);
+
+  if fpDANFSe.Cancelada or (fpNFSe.NfseCancelamento.DataHora <> 0) or
+    (fpNFSe.SituacaoNfse = snCancelado) or (fpNFSe.StatusRps = srCancelado) then
+  begin
+    rllMsgTeste.Caption := 'NFS-e CANCELADA';
+    rllMsgTeste.Visible := True;
+    rllMsgTeste.Enabled := True;
+  end;
+
+  rllMsgTeste.Repaint;
+end;
+
+procedure TfrlXDANFSeRLSimplISS.rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   with fpNFSe.Servico.ItemServico.Items[FNumItem] do
   begin
@@ -410,10 +452,15 @@ begin
       ValorTotal := Quantidade * ValorUnitario;
 
     txtServicoTotal.Caption := FormatFloatBr(ValorTotal);
+
+    if (Tributavel = snSim) then
+      txtServicoTributavel.Caption := 'Sim'
+    else
+      txtServicoTributavel.Caption := 'Não';
   end;
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrlXDANFSeRLSimplISS.rlbISSQNBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   MostrarObra, MostrarNaturezaOperacao: Boolean;
   FProvider: IACBrNFSeXProvider;
@@ -421,16 +468,17 @@ begin
   inherited;
 
   RLLabel16.Visible := False;
-  rllCodTributacaoMunicipio.Visible     := False;
-  rlmDescCodTributacaoMunicipio.Visible := False;
+//  rllCodTributacaoMunicipio.Visible     := False;
+//  rlmDescCodTributacaoMunicipio.Visible := False;
 
   FProvider := ACBrNFSe.Provider;
 
   With fpNFSe do
   begin
-    rllNatOperacao.Lines.Text := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
+    //rllNatOperacao.Lines.Text := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
+    rllNatOperacao.Caption := ACBrStr(FProvider.NaturezaOperacaoDescricao(NaturezaOperacao));
     MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
-    RLLabel137.Visible        := MostrarNaturezaOperacao;
+    lblNatOperacao.Visible        := MostrarNaturezaOperacao;
     rllRegimeEspecial.Caption := ACBrStr(FProvider.RegimeEspecialTributacaoDescricao(RegimeEspecialTributacao));
     rllOpcaoSimples.Caption   := ACBrStr(FProvider.SimNaoDescricao(OptanteSimplesNacional));
     rllIncentivador.Caption   := ACBrStr(FProvider.SimNaoDescricao(IncentivadorCultural));
@@ -438,16 +486,22 @@ begin
     rllCodART.Caption         := ConstrucaoCivil.Art;
 
     MostrarObra                 := (rllCodObra.Caption <> '') or (rllCodART.Caption <> '');
-    rlsLinhaH1.Visible          := MostrarObra;
+    //rlsLinhaH1.Visible          := MostrarObra;
+    RLDraw52.Visible          := MostrarObra;
     rllTituloConstCivil.Visible := MostrarObra;
     rllCodigoObra.Visible       := MostrarObra;
     rllCodObra.Visible          := MostrarObra;
     rllCodigoArt.Visible        := MostrarObra;
     rllCodART.Visible           := MostrarObra;
 
+    if (MostrarObra) then
+      rlbISSQN.Height:= 272
+    else
+      rlbISSQN.Height:= 240;
+
     with Servico.Valores  do
     begin
-      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat(',0.00' , ValorServicos);
+//      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat(',0.00' , ValorServicos);
       rlmCodServico.Lines.Clear;
 
       if Servico.xItemListaServico <> '' then
@@ -459,13 +513,13 @@ begin
 
         rlmCodServico.Lines.Append(Servico.ItemListaServico + ' - '+ Servico.xItemListaServico);
 
-        if (Servico.xCodigoTributacaoMunicipio <> '') then
-        begin
-          rllCodTributacaoMunicipio.Visible     := True;
-          rlmDescCodTributacaoMunicipio.Visible := True;
-          rlmDescCodTributacaoMunicipio.Lines.Append(Servico.xCodigoTributacaoMunicipio);
-        end
-        else
+//        if (Servico.xCodigoTributacaoMunicipio <> '') then
+//        begin
+//          rllCodTributacaoMunicipio.Visible     := True;
+//          rlmDescCodTributacaoMunicipio.Visible := True;
+//          rlmDescCodTributacaoMunicipio.Lines.Append(Servico.xCodigoTributacaoMunicipio);
+//        end
+//        else
           rlmCodServico.Height := Trunc(rlmCodServico.Height * 2.5);
       end
       else
@@ -478,43 +532,71 @@ begin
         end
       end;
 
+      rllValorTributavel.Caption      := FormatFloat(',0.00', BaseCalculo);
+      rllValorNaoTributavel.Caption   := '0,00'; // ToDo
       rllValorPIS.Caption             := FormatFloat(',0.00', ValorPis);
       rllValorCOFINS.Caption          := FormatFloat(',0.00', ValorCofins);
       rllValorIR.Caption              := FormatFloat(',0.00', ValorIr);
       rllValorINSS.Caption            := FormatFloat(',0.00', ValorInss);
       rllValorCSLL.Caption            := FormatFloat(',0.00', ValorCsll);
       rllValorServicos1.Caption       := FormatFloat(',0.00', ValorServicos);
-      rllDescIncondicionado1.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
+      rllDescIncondicionado.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
       rllDescCondicionado.Caption     := FormatFloat(',0.00', DescontoCondicionado);
-      rllRetencoesFederais.Caption    := FormatFloat(',0.00', ValorPis +
-                                                              ValorCofins +
-                                                              ValorInss +
-                                                              ValorIr +
-                                                              ValorCsll);
+//      rllRetencoesFederais.Caption    := FormatFloat(',0.00', ValorPis +
+//                                                              ValorCofins +
+//                                                              ValorInss +
+//                                                              ValorIr +
+//                                                              ValorCsll);
       rllOutrasRetencoes.Caption      := FormatFloat(',0.00', OutrasRetencoes);
-      rllValorIssRetido.Caption       := FormatFloat(',0.00', ValorIssRetido);
+//      rllValorIssRetido.Caption       := FormatFloat(',0.00', ValorIssRetido);
       rllValorLiquido.Caption         := FormatFloat(',0.00', ValorLiquidoNfse);
-      rllValorServicos2.Caption       := FormatFloat(',0.00', ValorServicos);
+//      rllValorServicos2.Caption       := FormatFloat(',0.00', ValorServicos);
       rllValorDeducoes.Caption        := FormatFloat(',0.00', ValorDeducoes);
-      rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
+//      rllDescIncondicionado2.Caption  := FormatFloat(',0.00', DescontoIncondicionado);
       rllBaseCalc.Caption             := FormatFloat(',0.00', BaseCalculo);
       rllAliquota.Caption             := ManterAliquota (Aliquota);
-      rllISSReter.Caption             := FProvider.SituacaoTributariaDescricao(IssRetido);
+//      rllISSReter.Caption             := FProvider.SituacaoTributariaDescricao(IssRetido);
       rllValorISS.Caption             := FormatFloat(',0.00',ValorIss);
+
+      rllCNAE.Caption := fpNFSe.Servico.CodigoCnae;
+      rllDataGeracao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
+      case Servico.Valores.IssRetido of
+        stRetencao:
+          rllRecolhimento.Caption := 'Com Retenção';
+        stNormal:
+          rllRecolhimento.Caption := 'Sem Retenção';
+        stSubstituicao:
+          rllRecolhimento.Caption := 'Substituição';
+      else
+        rllRecolhimento.Caption := '';
+      end;
     end;
   end;
+
+
+  //rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s') , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
+  rllDataHoraImpressao.Caption := FormatDateTime('dd/mm/yyyy hh:nn',Now);
+
+  if fpDANFSe.Usuario <> '' then
+    rllDataHoraImpressao.Caption := Format(ACBrStr('%s   USUÁRIO: %s'), [rllDataHoraImpressao.Caption, fpDANFSe.Usuario]);
+
+  // imprime sistema
+  if fpDANFSe.Sistema <> '' then
+    rllSistema.Caption := Format('Desenvolvido por %s %s' , [fpDANFSe.Sistema, fpDANFSe.Site])
+  else
+    rllSistema.Caption := '';
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrlXDANFSeRLSimplISS.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
-  rlmDescricao.Lines.Clear;
-  rlmDescricao.Lines.Add(StringReplace(fpNFSe.Servico.Discriminacao,
-                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
+//  rlmDescricao.Lines.Clear;
+//  rlmDescricao.Lines.Add(StringReplace(fpNFSe.Servico.Discriminacao,
+//                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase]));
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrlXDANFSeRLSimplISS.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -524,8 +606,10 @@ begin
   begin
     rllPrestNome.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.Prestador.RazaoSocial);
 
-    if rllPrestNome.Caption = '' then
-      rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
+    rllPrestNomeFantasia.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
+
+//    if rllPrestNome.Caption = '' then
+//      rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.Prestador.NomeFantasia);
 
     with IdentificacaoPrestador do
     begin
@@ -575,14 +659,15 @@ begin
   end;
 
   rllNumNF0Ent.Caption := FormatFloat('00000000000', StrToFloatDef(fpNFSe.Numero, 0));
-  rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') +
-                               FormatDateTime('dd/mm/yy', fpNFSe.DataEmissao) +
-                               '-Tomador:' + fpNFSe.Tomador.RazaoSocial +
-                               '-Total:' +
-                  FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
+  rllCodVerificacao2.Caption := fpNFSe.CodigoVerificacao;
+//  rllTomadorNomeEnt.Caption := ACBrStr('Emissão:') +
+//                               FormatDateTime('dd/mm/yy', fpNFSe.DataEmissao) +
+//                               '-Tomador:' + fpNFSe.Tomador.RazaoSocial +
+//                               '-Total:' +
+//                  FormatFloat(',0.00', fpNFSe.Servico.Valores.ValorLiquidoNfse);
 end;
 
-procedure TfrlXDANFSeRLRetrato.rlbTomadorBeforePrint(Sender: TObject;
+procedure TfrlXDANFSeRLSimplISS.rlbTomadorBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
@@ -641,21 +726,21 @@ begin
     end;
   end;
 
-  rllMsgTeste.Visible := (fpDANFSe.Producao = snNao);
-  rllMsgTeste.Enabled := (fpDANFSe.Producao = snNao);
-
-  if fpDANFSe.Cancelada or (fpNFSe.NfseCancelamento.DataHora <> 0) or
-    (fpNFSe.SituacaoNfse = snCancelado) or (fpNFSe.StatusRps = srCancelado) then
-  begin
-    rllMsgTeste.Caption := 'NFS-e CANCELADA';
-    rllMsgTeste.Visible := True;
-    rllMsgTeste.Enabled := True;
-  end;
-
-  rllMsgTeste.Repaint;
+//  rllMsgTeste.Visible := (fpDANFSe.Producao = snNao);
+//  rllMsgTeste.Enabled := (fpDANFSe.Producao = snNao);
+//
+//  if fpDANFSe.Cancelada or (fpNFSe.NfseCancelamento.DataHora <> 0) or
+//    (fpNFSe.SituacaoNfse = snCancelado) or (fpNFSe.StatusRps = srCancelado) then
+//  begin
+//    rllMsgTeste.Caption := 'NFS-e CANCELADA';
+//    rllMsgTeste.Visible := True;
+//    rllMsgTeste.Enabled := True;
+//  end;
+//
+//  rllMsgTeste.Repaint;
 end;
 
-procedure TfrlXDANFSeRLRetrato.RLNFSeBeforePrint(Sender: TObject;
+procedure TfrlXDANFSeRLSimplISS.RLNFSeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   Detalhar: Boolean;
@@ -679,7 +764,7 @@ begin
   txtServicoQtde.Visible := not (ACBrNFSe.Configuracoes.Geral.Provedor in [proSimple]);
 end;
 
-procedure TfrlXDANFSeRLRetrato.subItensDataRecord(Sender: TObject;
+procedure TfrlXDANFSeRLSimplISS.subItensDataRecord(Sender: TObject;
    RecNo: Integer; CopyNo: Integer; var Eof: Boolean;
    var RecordAction: TRLRecordAction);
 begin
@@ -690,7 +775,7 @@ begin
   RecordAction := raUseIt;
 end;
 
-function TfrlXDANFSeRLRetrato.ManterAliquota(dAliquota: Double): String;
+function TfrlXDANFSeRLSimplISS.ManterAliquota(dAliquota: Double): String;
 begin
   // Agora a multiplicação por 100 é feita pela rotina que lê o XML.
   Result := FormatFloat(',0.00', dAliquota);

@@ -10,10 +10,8 @@ object frmACBrNFe: TfrmACBrNFe
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
@@ -1901,9 +1899,27 @@ object frmACBrNFe: TfrmACBrNFe
           Top = 40
           Width = 178
           Height = 25
-          Caption = 'Manif. Dest. - Recusa da opera'#231#227'o'
+          Caption = 'Manif. Dest. - Desconhecimento'
           TabOrder = 4
-          OnClick = btnManifDestDesconnhecimentoClick
+          OnClick = btnManifDestConfirmacaoClick
+        end
+        object btnManifDestCiencia: TButton
+          Left = 377
+          Top = 40
+          Width = 178
+          Height = 25
+          Caption = 'Manif. Dest. - Ci'#234'ncia'
+          TabOrder = 5
+          OnClick = btnManifDestConfirmacaoClick
+        end
+        object btnManifDestOperNaoRealizada: TButton
+          Left = 8
+          Top = 71
+          Width = 178
+          Height = 25
+          Caption = 'Manif. Dest. - Oper. N'#227'o Realizada'
+          TabOrder = 6
+          OnClick = btnManifDestConfirmacaoClick
         end
       end
     end
@@ -2006,6 +2022,10 @@ object frmACBrNFe: TfrmACBrNFe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFe1StatusChange
     OnGerarLog = ACBrNFe1GerarLog
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200

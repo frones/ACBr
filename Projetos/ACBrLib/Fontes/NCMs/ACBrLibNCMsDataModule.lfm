@@ -1,0 +1,13 @@
+inherited LibNCMsDM: TLibNCMsDM
+  Height = 150
+  HorizontalOffset = 257
+  VerticalOffset = 127
+  Width = 150
+  object ACBrNCMs1: TACBrNCMs[0]
+    ProxyPort = '8080'
+    UrlConsulta = 'https://portalunico.siscomex.gov.br/classif/api/publico/nomenclatura/download/json'
+    CacheArquivo = 'ACBrNCM.json'
+    Left = 24
+    Top = 16
+  end
+end

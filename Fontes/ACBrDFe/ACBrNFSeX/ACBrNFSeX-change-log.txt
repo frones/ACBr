@@ -43,6 +43,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+15/09/2022
+-- ACBrNFSeXServicos --
+[*] A cidade Feira de Santana/BA - Ajuste na versão e URL.
+   Por: João Antônio
+[*] A cidade Santo Antonio do Monte/MG - Ajuste na versão e URL.
+   Por: Gustavo Totta
+[*] A cidade Santo Antonio da Platina/SC trocou de provedor, agora é IPM.
+   Por: Gustavo Totta
+[*] A cidade Monte Castelo/SC trocou de provedor, agora é Betha.
+   Por: Andreus
+
 14/09/2022
 -- Diversos --
 [+] DANFSE especifico para o provedor SimplISS, alterações no componente para 

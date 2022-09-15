@@ -214,9 +214,19 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'okk');
+      //ProcessarMensagemErros(ANode, Response, '', 'okk');
 
-      Response.Sucesso := (Response.Erros.Count = 0);
+      //Response.Sucesso := (Response.Erros.Count = 0);
+
+      with Response do
+      begin
+        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
+      end;
+
+      Response.Sucesso := (Response.Situacao = 'OK');
+
+      if not Response.Sucesso then
+        ProcessarMensagemErros(ANode, Response, '', 'okk');
 
       AuxNode := ANode.Childrens.FindAnyNs('okk');
 
@@ -343,11 +353,14 @@ begin
         Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfelink'), tcStr);
         xStatus := ObterConteudoTag(ANode.Childrens.FindAnyNs('nfestatus'), tcStr);
 
-        if xStatus = 'SIM' then
+        if UpperCase(xStatus) = 'SIM' then
           DescSituacao := 'NFSe Cancelada';
       end;
 
       Response.Sucesso := (Response.Situacao = 'OK');
+
+      if not Response.Sucesso then
+        ProcessarMensagemErros(ANode, Response, '', 'okk');
 
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(Response.NumeroRps);
 
@@ -380,14 +393,6 @@ begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod108;
     AErro.Descricao := Desc108;
-    Exit;
-  end;
-
-  if EstaVazio(Response.InfCancelamento.SerieNFSe) then
-  begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := Cod112;
-    AErro.Descricao := Desc112;
     Exit;
   end;
 
@@ -449,9 +454,26 @@ begin
 
       ANode := Document.Root;
 
-      ProcessarMensagemErros(ANode, Response, '', 'okk');
+      //ProcessarMensagemErros(ANode, Response, '', 'okk');
 
-      Response.Sucesso := (Response.Erros.Count = 0);
+      //Response.Sucesso := (Response.Erros.Count = 0);
+
+      Response.RetCancelamento.MsgCanc := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
+      Response.RetCancelamento.Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('okk'), tcStr);
+
+      if (Copy(Response.RetCancelamento.Link, 1, 5) = 'https') or
+         (Copy(Response.RetCancelamento.Link, 1, 5) = 'http:') or
+         (Copy(Response.RetCancelamento.Link, 1, 4) = 'www.') then
+      begin
+        Response.Sucesso := True;
+        Response.RetCancelamento.Sucesso := 'SIM';
+      end
+      else
+      begin
+        Response.Sucesso := False;
+        Response.RetCancelamento.Sucesso := 'NÃO';
+        Response.RetCancelamento.Link := '';
+      end;
 
       {
       AuxNode := ANode.Childrens.FindAnyNs('okk');

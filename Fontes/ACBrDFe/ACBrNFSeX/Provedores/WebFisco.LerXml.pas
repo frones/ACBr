@@ -118,7 +118,11 @@ begin
     DataEmissao := EncodeDataHora(aValor);
 
     CodigoVerificacao := ObterConteudo(ANode.Childrens.FindAnyNs('nfeautenticacao'), tcStr);
-    SituacaoNfse := StrToStatusNFSe(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('nfestatus'), tcStr));
+
+    SituacaoNfse := snNormal;
+
+    if UpperCase(ObterConteudo(ANode.Childrens.FindAnyNs('nfestatus'), tcStr)) = 'SIM' then
+      SituacaoNfse := snCancelado;
 
 //      <xsd:element name="nfecontrole" type="xsd:string"/>
 

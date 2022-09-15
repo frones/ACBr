@@ -710,8 +710,8 @@ begin
           Add(strLinha);
         end;
         /// Registros FILHOS
-        WriteRegistroD110( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD101( RegD001.RegistroD100.Items[intFor] ) ;
+        WriteRegistroD110( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD130( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD140( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD150( RegD001.RegistroD100.Items[intFor] ) ;

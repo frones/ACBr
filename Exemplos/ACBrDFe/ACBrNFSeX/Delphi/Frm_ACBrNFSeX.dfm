@@ -469,7 +469,7 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Height = 21
                 TabOrder = 6
               end
-              object ckSalvar: TCheckBox
+              object chkSalvarGer: TCheckBox
                 Left = 8
                 Top = 146
                 Width = 209
@@ -645,7 +645,7 @@ object frmACBrNFSe: TfrmACBrNFSe
                   'Homologa'#231#227'o')
                 TabOrder = 0
               end
-              object cbxSalvarSOAP: TCheckBox
+              object chkSalvarSOAP: TCheckBox
                 Left = 10
                 Top = 92
                 Width = 153
@@ -1343,7 +1343,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Height = 13
               Caption = 'Pasta Arquivos NFSe'
             end
-            object cbxSalvarArqs: TCheckBox
+            object chkSalvarArq: TCheckBox
               Left = 6
               Top = 0
               Width = 210

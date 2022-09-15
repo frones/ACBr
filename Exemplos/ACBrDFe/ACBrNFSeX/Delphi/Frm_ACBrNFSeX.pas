@@ -57,7 +57,7 @@ type
     Label31: TLabel;
     spPathSchemas: TSpeedButton;
     edtPathLogs: TEdit;
-    ckSalvar: TCheckBox;
+    chkSalvarGer: TCheckBox;
     cbFormaEmissao: TComboBox;
     cbxAtualizarXML: TCheckBox;
     cbxExibirErroSchema: TCheckBox;
@@ -70,7 +70,7 @@ type
     lSSLLib1: TLabel;
     cbxVisualizar: TCheckBox;
     rgTipoAmb: TRadioGroup;
-    cbxSalvarSOAP: TCheckBox;
+    chkSalvarSOAP: TCheckBox;
     seTimeOut: TSpinEdit;
     cbSSLType: TComboBox;
     gbProxy: TGroupBox;
@@ -114,7 +114,7 @@ type
     TabSheet13: TTabSheet;
     sbPathNFSe: TSpeedButton;
     Label35: TLabel;
-    cbxSalvarArqs: TCheckBox;
+    chkSalvarArq: TCheckBox;
     cbxPastaMensal: TCheckBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxEmissaoPathNFSe: TCheckBox;
@@ -441,6 +441,9 @@ begin
 
     with NotasFiscais.New.NFSe do
     begin
+      // Provedor CTAConsult
+      TipoRecolhimento := '1';
+
       // Provedor PadraoNacional
       verAplic := 'ACBrNFSeX-1.00';
 
@@ -591,9 +594,9 @@ begin
 
       // Provedores que permitem informar mais de 1 serviço:
       if (ACBrNFSeX1.Configuracoes.Geral.Provedor in [proAgili, proAssessorPublico,
-           proCTA, proEloTech, proEquiplano, proFacundo, proFGMaiss, profintelISS,
-           proGoverna, proInfisc, proIPM, proISSDSF, proRLZ, proSimple, proSimplISS,
-           proSmarAPD, proWebFisco]) or
+           proCTA, proCTAConsult, proEloTech, proEquiplano, proFacundo, proFGMaiss,
+           profintelISS, proGoverna, proInfisc, proIPM, proISSDSF, proRLZ,
+           proSimple, proSimplISS, proSmarAPD, proWebFisco]) or
          ((ACBrNFSeX1.Configuracoes.Geral.Provedor in [proEL]) and
           (ACBrNFSeX1.Configuracoes.Geral.Versao = ve100)) then
       begin
@@ -738,23 +741,26 @@ begin
           Servico.Valores.ValorCsll - Servico.Valores.OutrasRetencoes -
           Servico.Valores.ValorIssRetido - Servico.Valores.DescontoIncondicionado
           - Servico.Valores.DescontoCondicionado;
-
-        case ACBrNFSeX1.Configuracoes.Geral.Provedor of
-          proSiapSistemas:
-            // código padrão ABRASF acrescido de um sub-item
-            Servico.ItemListaServico := '01.05.00';
-
-          proPadraoNacional:
-            Servico.ItemListaServico := '010500';
-        else
-          // código padrão da ABRASF
-          Servico.ItemListaServico := '09.01';
-        end;
       end;
 
       {=========================================================================
         Dados do Serviço
       =========================================================================}
+
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proSiapSistemas:
+          // código padrão ABRASF acrescido de um sub-item
+          Servico.ItemListaServico := '01.05.00';
+
+        proPadraoNacional:
+          Servico.ItemListaServico := '010500';
+
+        proCTAConsult:
+          Servico.ItemListaServico := '01050';
+      else
+        // código padrão da ABRASF
+        Servico.ItemListaServico := '09.01';
+      end;
 
       Servico.Discriminacao := 'discriminacao I; discriminacao II';
 
@@ -782,7 +788,7 @@ begin
       end;
 
       case ACBrNFSeX1.Configuracoes.Geral.Provedor of
-        proSiat, proISSDSF:
+        proSiat, proISSDSF, proCTAConsult:
           // código com 9 digitos
           Servico.CodigoCnae := '452000200';
 
@@ -835,7 +841,15 @@ begin
       Prestador.Endereco.xPais := 'BRASIL';
       Prestador.Endereco.CEP := '14800123';
 
-      Prestador.Contato.Telefone := '1633224455';
+      Prestador.Contato.DDD := '16';
+
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proSigep, proCTAConsult:
+          Prestador.Contato.Telefone := '33224455';
+      else
+        Prestador.Contato.Telefone := '1633224455';
+      end;
+
       Prestador.Contato.Email    := 'nome@provedor.com.br';
 
       {=========================================================================
@@ -880,10 +894,14 @@ begin
       Tomador.Endereco.CEP := edtEmitCEP.Text;
       Tomador.Endereco.xPais := 'BRASIL';
 
-      if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proSigep] then
-        Tomador.Contato.Telefone := '22223333'
+      Tomador.Contato.DDD := '16';
+
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proSigep, proCTAConsult:
+          Tomador.Contato.Telefone := '22223333';
       else
         Tomador.Contato.Telefone := '1622223333';
+      end;
 
       Tomador.Contato.Email := 'nome@provedor.com.br';
 
@@ -1052,6 +1070,13 @@ begin
         exit;
     end;
 
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proCTAConsult then
+    begin
+      ChNFSe := '434945460000011998000000976482769641000';
+      if not (InputQuery(Titulo, 'Chave da NFSe', ChNFSe)) then
+        exit;
+    end;
+
     // Codigo de Cancelamento
     // 1 - Erro de emissão
     // 2 - Serviço não concluido
@@ -1120,6 +1145,14 @@ begin
       xCodServ := '702';
       if not(InputQuery(Titulo, 'Codigo do Serviço', xCodServ)) then
         exit;
+    end;
+
+    if ACBrNFSeX1.Configuracoes.Geral.Provedor = proCTAConsult then
+    begin
+      xDataEmissao := FormatDateTime('DD/MM/YYYY', Date);
+      if not (InputQuery(Titulo, 'Data de Emissão (DD/MM/AAAA):', xDataEmissao)) then
+        exit;
+      DataEmissao := StrToDateDef(xDataEmissao, 0);
     end;
 
     if ACBrNFSeX1.Configuracoes.Geral.Provedor = proSigISS then
@@ -2442,7 +2475,7 @@ begin
     Ini.WriteString( 'Geral', 'FormatoAlerta',    edtFormatoAlerta.Text);
     Ini.WriteInteger('Geral', 'FormaEmissao',     cbFormaEmissao.ItemIndex);
     Ini.WriteBool(   'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
-    Ini.WriteBool(   'Geral', 'Salvar',           ckSalvar.Checked);
+    Ini.WriteBool(   'Geral', 'Salvar',           chkSalvarGer.Checked);
     Ini.WriteString( 'Geral', 'PathSalvar',       edtPathLogs.Text);
     Ini.WriteString( 'Geral', 'PathSchemas',      edtPathSchemas.Text);
     Ini.WriteString( 'Geral', 'LogoMarca',        edtLogoMarca.Text);
@@ -2455,7 +2488,7 @@ begin
 
     Ini.WriteInteger('WebService', 'Ambiente',     rgTipoAmb.ItemIndex);
     Ini.WriteBool(   'WebService', 'Visualizar',   cbxVisualizar.Checked);
-    Ini.WriteBool(   'WebService', 'SalvarSOAP',   cbxSalvarSOAP.Checked);
+    Ini.WriteBool(   'WebService', 'SalvarSOAP',   chkSalvarSOAP.Checked);
     Ini.WriteBool(   'WebService', 'AjustarAut',   cbxAjustarAut.Checked);
     Ini.WriteString( 'WebService', 'Aguardar',     edtAguardar.Text);
     Ini.WriteString( 'WebService', 'Tentativas',   edtTentativas.Text);
@@ -2473,7 +2506,7 @@ begin
     Ini.WriteString('Proxy', 'User',  edtProxyUser.Text);
     Ini.WriteString('Proxy', 'Pass',  edtProxySenha.Text);
 
-    Ini.WriteBool(  'Arquivos', 'Salvar',          cbxSalvarArqs.Checked);
+    Ini.WriteBool(  'Arquivos', 'Salvar',          chkSalvarArq.Checked);
     Ini.WriteBool(  'Arquivos', 'PastaMensal',     cbxPastaMensal.Checked);
     Ini.WriteBool(  'Arquivos', 'AddLiteral',      cbxAdicionaLiteral.Checked);
     Ini.WriteBool(  'Arquivos', 'EmissaoPathNFSe', cbxEmissaoPathNFSe.Checked);
@@ -2578,7 +2611,7 @@ begin
     edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
     cbFormaEmissao.ItemIndex    := Ini.ReadInteger('Geral', 'FormaEmissao',     0);
 
-    ckSalvar.Checked          := Ini.ReadBool(  'Geral', 'Salvar',         True);
+    chkSalvarGer.Checked      := Ini.ReadBool(  'Geral', 'Salvar',         True);
     cbxRetirarAcentos.Checked := Ini.ReadBool(  'Geral', 'RetirarAcentos', True);
     edtPathLogs.Text          := Ini.ReadString('Geral', 'PathSalvar',     PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
     edtPathSchemas.Text       := Ini.ReadString('Geral', 'PathSchemas',    '');
@@ -2592,7 +2625,7 @@ begin
 
     rgTipoAmb.ItemIndex     := Ini.ReadInteger('WebService', 'Ambiente',     0);
     cbxVisualizar.Checked   := Ini.ReadBool(   'WebService', 'Visualizar',   False);
-    cbxSalvarSOAP.Checked   := Ini.ReadBool(   'WebService', 'SalvarSOAP',   False);
+    chkSalvarSOAP.Checked   := Ini.ReadBool(   'WebService', 'SalvarSOAP',   False);
     cbxAjustarAut.Checked   := Ini.ReadBool(   'WebService', 'AjustarAut',   False);
     edtAguardar.Text        := Ini.ReadString( 'WebService', 'Aguardar',     '0');
     edtTentativas.Text      := Ini.ReadString( 'WebService', 'Tentativas',   '5');
@@ -2610,7 +2643,7 @@ begin
     edtProxyUser.Text  := Ini.ReadString('Proxy', 'User',  '');
     edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass',  '');
 
-    cbxSalvarArqs.Checked      := Ini.ReadBool(  'Arquivos', 'Salvar',          False);
+    chkSalvarArq.Checked       := Ini.ReadBool(  'Arquivos', 'Salvar',          False);
     cbxPastaMensal.Checked     := Ini.ReadBool(  'Arquivos', 'PastaMensal',     False);
     cbxAdicionaLiteral.Checked := Ini.ReadBool(  'Arquivos', 'AddLiteral',      False);
     cbxEmissaoPathNFSe.Checked := Ini.ReadBool(  'Arquivos', 'EmissaoPathNFSe', False);
@@ -3396,7 +3429,7 @@ begin
 
     AtualizarSSLLibsCombo;
 
-    Salvar           := ckSalvar.Checked;
+    Salvar           := chkSalvarGer.Checked;
     ExibirErroSchema := cbxExibirErroSchema.Checked;
     RetirarAcentos   := cbxRetirarAcentos.Checked;
     FormatoAlerta    := edtFormatoAlerta.Text;
@@ -3446,7 +3479,7 @@ begin
   begin
     Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
-    Salvar     := cbxSalvarSOAP.Checked;
+    Salvar     := chkSalvarSOAP.Checked;
     UF         := edtEmitUF.Text;
 
     AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
@@ -3478,7 +3511,7 @@ begin
   with ACBrNFSeX1.Configuracoes.Arquivos do
   begin
     NomeLongoNFSe    := True;
-    Salvar           := cbxSalvarArqs.Checked;
+    Salvar           := chkSalvarArq.Checked;
     SepararPorMes    := cbxPastaMensal.Checked;
     AdicionarLiteral := cbxAdicionaLiteral.Checked;
     EmissaoPathNFSe  := cbxEmissaoPathNFSe.Checked;

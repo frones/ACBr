@@ -178,6 +178,7 @@ uses
   Siappa.Provider,
   Siat.Provider,
   SigISS.Provider,
+  SigISSWeb.Provider,
   Simple.Provider,
   SoftPlan.Provider,
   WebFisco.Provider;
@@ -446,6 +447,9 @@ begin
             Result := nil;
           end;
         end;
+
+      proSigISSWeb:
+        Result := TACBrNFSeProviderSigISSWeb.Create(ACBrNFSe);
 
       proSilTecnologia:
         begin

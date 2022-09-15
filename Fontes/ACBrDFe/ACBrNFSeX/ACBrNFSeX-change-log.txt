@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 15/09/2022
+-- Diversos --
+[*] Inicio da implementação do provedor SigISSWeb.
+   Por: Italo Giurizzato Junior
 -- WebFisco.Provider/WebFisco.LerXml --
 [*] Ajustes na leitura do XML da NFS-e e no tratamento do retorno dos serviços.
    Por: Leandro Coelho

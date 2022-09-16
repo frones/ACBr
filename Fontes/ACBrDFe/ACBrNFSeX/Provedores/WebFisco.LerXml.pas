@@ -102,7 +102,6 @@ function TNFSeR_WebFisco.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 var
   i: Integer;
   aValor: string;
-  Ok: Boolean;
 begin
   Result := True;
 

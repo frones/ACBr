@@ -130,6 +130,7 @@ begin
   if (Length(ANotas) < 1) then
     Exit;
 
+  DANFSeReport := nil;
   try
     SetLength(ReportArray, Length(ANotas));
 

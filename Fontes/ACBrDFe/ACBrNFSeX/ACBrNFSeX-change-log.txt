@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+16/09/2022
+-- ABase.Provider --
+[*] Desfeito a alteração realizada no dia 06/09/2022, pois gerou um efeito colateral,
+    passou a ocorrer erro de validação.
+   Por: Italo Giurizzato Junior
+
 15/09/2022
 -- Diversos --
 [*] Inicio da implementação do provedor SigISSWeb.

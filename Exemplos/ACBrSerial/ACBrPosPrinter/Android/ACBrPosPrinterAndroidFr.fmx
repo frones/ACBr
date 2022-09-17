@@ -21,7 +21,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
     Size.Height = 639.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabPosition = Top
     Sizes = (
@@ -33,7 +33,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 202.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -161,7 +161,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Selectable = False
           Position.Y = 104.000000000000000000
           Size.Width = 405.000000000000000000
-          Size.Height = 40.000000000000000000
+          Size.Height = 52.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
           object cbxModelo: TComboBox
@@ -170,24 +170,11 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 160.000000000000000000
+            Size.Width = 138.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             OnChange = cbxModeloChange
-          end
-          object cbControlePorta: TCheckBox
-            Align = Right
-            IsChecked = True
-            Margins.Left = 8.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Position.X = 285.000000000000000000
-            Size.Width = 112.000000000000000000
-            Size.Height = 40.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 1
-            Text = 'Controle Porta'
-            TextSettings.WordWrap = True
           end
           object cbxPagCodigo: TComboBox
             Align = Right
@@ -197,12 +184,45 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Position.X = 184.000000000000000000
-            Position.Y = 4.000000000000000000
+            Position.X = 162.000000000000000000
+            Position.Y = 10.000000000000000000
             Size.Width = 85.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 3
+            TabOrder = 2
+          end
+          object Layout2: TLayout
+            Align = Right
+            Position.X = 255.000000000000000000
+            Size.Width = 150.000000000000000000
+            Size.Height = 52.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 37
+            object cbControlePorta: TCheckBox
+              Align = Top
+              IsChecked = True
+              Margins.Left = 8.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Position.X = 8.000000000000000000
+              Size.Width = 134.000000000000000000
+              Size.Height = 26.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              Text = 'Controle Porta'
+              TextSettings.WordWrap = True
+            end
+            object cbSmartPOS: TCheckBox
+              Align = Client
+              IsChecked = True
+              Margins.Left = 8.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Size.Width = 134.000000000000000000
+              Size.Height = 26.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = 'Smart POS ?'
+              TextSettings.WordWrap = True
+            end
           end
         end
         object ListBoxGroupHeader2: TListBoxGroupHeader
@@ -214,7 +234,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 10.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Position.X = 10.000000000000000000
-          Position.Y = 146.000000000000000000
+          Position.Y = 158.000000000000000000
           Size.Width = 385.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
@@ -223,7 +243,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         end
         object lbImpressoras: TListBoxItem
           Selectable = False
-          Position.Y = 178.000000000000000000
+          Position.Y = 190.000000000000000000
           Size.Width = 405.000000000000000000
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
@@ -278,7 +298,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 10.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Position.X = 10.000000000000000000
-          Position.Y = 220.000000000000000000
+          Position.Y = 232.000000000000000000
           Size.Width = 385.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
@@ -287,7 +307,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         end
         object lbLarguraEspacejamento: TListBoxItem
           Selectable = False
-          Position.Y = 252.000000000000000000
+          Position.Y = 264.000000000000000000
           Size.Width = 405.000000000000000000
           Size.Height = 74.000000000000000000
           Size.PlatformDefault = False
@@ -432,7 +452,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
           Margins.Right = 10.000000000000000000
           Margins.Bottom = 2.000000000000000000
           Position.X = 10.000000000000000000
-          Position.Y = 328.000000000000000000
+          Position.Y = 340.000000000000000000
           Size.Width = 385.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
@@ -441,7 +461,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         end
         object lbCodBarras: TListBoxItem
           Selectable = False
-          Position.Y = 360.000000000000000000
+          Position.Y = 372.000000000000000000
           Size.Width = 405.000000000000000000
           Size.Height = 74.000000000000000000
           Size.PlatformDefault = False
@@ -579,7 +599,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
         end
         object lbBotoes: TListBoxItem
           Selectable = False
-          Position.Y = 434.000000000000000000
+          Position.Y = 446.000000000000000000
           Size.Width = 405.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
@@ -696,7 +716,7 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 203.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -35909,8 +35929,8 @@ object PosPrinterAndroidTesteForm: TPosPrinterAndroidTesteForm
   end
   object GestureManager1: TGestureManager
     Sensitivity = 80.000000000000000000
-    Left = 192
-    Top = 1
+    Left = 222
+    Top = 51
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False

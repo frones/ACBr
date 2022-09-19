@@ -4314,6 +4314,8 @@ object Form1: TForm1
                   Font.Color = clWindowText
                   Font.Height = -11
                   Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
                   OnClick = sbSicrediAcharChavePrivadaClick
                   ShowHint = True
                   ParentFont = False
@@ -4329,6 +4331,8 @@ object Form1: TForm1
                   Font.Color = clWindowText
                   Font.Height = -11
                   Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
                   OnClick = sbSicrediAcharArqCertificadoClick
                   ShowHint = True
                   ParentFont = False
@@ -4405,7 +4409,7 @@ object Form1: TForm1
                   Width = 808
                   Anchors = [akTop, akLeft, akRight]
                   AutoSize = False
-                  OnChange = edSicrediArqChavePrivadaChange
+                  OnChange = edSicrediArqsChange
                   TabOrder = 4
                   Text = 'SicrediChavePrivada.pem'
                 end
@@ -4416,9 +4420,189 @@ object Form1: TForm1
                   Width = 808
                   Anchors = [akTop, akLeft, akRight]
                   AutoSize = False
-                  OnChange = edSicrediArqCertificadoChange
+                  OnChange = edSicrediArqsChange
                   TabOrder = 5
                   Text = 'SicrediCertificado.pem'
+                end
+              end
+            end
+            object tsSicoob: TTabSheet
+              Caption = 'Sicoob'
+              ClientHeight = 485
+              ClientWidth = 984
+              object pnConfPSPSicoob: TPanel
+                Left = 56
+                Height = 324
+                Top = 80
+                Width = 860
+                BevelOuter = bvNone
+                ClientHeight = 324
+                ClientWidth = 860
+                TabOrder = 0
+                object lbSicoobChavePix: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 24
+                  Width = 53
+                  Caption = 'Chave PIX'
+                  ParentColor = False
+                end
+                object lbSicoobTipoChave: TLabel
+                  Left = 688
+                  Height = 15
+                  Top = 24
+                  Width = 59
+                  Anchors = [akTop, akRight]
+                  Caption = 'Tipo Chave'
+                  ParentColor = False
+                end
+                object lbSicoobClientID: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 75
+                  Width = 45
+                  Caption = 'Client ID'
+                  ParentColor = False
+                end
+                object lbSicoobArquivoChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 132
+                  Width = 120
+                  Caption = 'Arquivo Chave Privada'
+                  ParentColor = False
+                end
+                object imSicoobErroChavePrivada: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 152
+                  Width = 16
+                  Visible = False
+                end
+                object lbSicoobErroChavePrivada: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 173
+                  Width = 139
+                  Caption = 'lbSicoobErroChavePrivada'
+                  ParentColor = False
+                  Visible = False
+                end
+                object lbSicoobArquivoCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 202
+                  Width = 103
+                  Caption = 'Arquivo Certificado'
+                  ParentColor = False
+                end
+                object imSicoobErroCertificado: TImage
+                  Left = 3
+                  Height = 16
+                  Top = 223
+                  Width = 16
+                  Visible = False
+                end
+                object lbSicoobErroCertificado: TLabel
+                  Left = 24
+                  Height = 15
+                  Top = 248
+                  Width = 125
+                  Caption = 'lbSicoobErroCertificado'
+                  ParentColor = False
+                  Visible = False
+                end
+                object imSicoobErroChavePIX: TImage
+                  Left = 836
+                  Height = 16
+                  Top = 44
+                  Width = 16
+                  Anchors = [akTop, akRight]
+                  Visible = False
+                end
+                object sbSicoobAcharChavePrivada: TSpeedButton
+                  Left = 836
+                  Height = 23
+                  Top = 148
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = sbSicoobAcharChavePrivadaClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object sbSicoobAcharArqCertificado: TSpeedButton
+                  Left = 836
+                  Height = 23
+                  Top = 220
+                  Width = 24
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Font.Color = clWindowText
+                  Font.Height = -11
+                  Font.Name = 'MS Sans Serif'
+                  Images = ImageList1
+                  ImageIndex = 9
+                  OnClick = sbSicoobAcharArqCertificadoClick
+                  ShowHint = True
+                  ParentFont = False
+                  ParentShowHint = False
+                end
+                object edSicoobChavePIX: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 40
+                  Width = 642
+                  Anchors = [akTop, akLeft, akRight]
+                  OnChange = edSicoobChavePIXChange
+                  TabOrder = 0
+                end
+                object cbSicoobTipoChave: TComboBox
+                  Left = 688
+                  Height = 23
+                  Top = 40
+                  Width = 144
+                  Anchors = [akTop, akRight]
+                  ItemHeight = 15
+                  Style = csDropDownList
+                  TabOrder = 1
+                  TabStop = False
+                end
+                object edSicoobClientID: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 91
+                  Width = 808
+                  Anchors = [akTop, akLeft, akRight]
+                  TabOrder = 2
+                end
+                object edSicoobArqChavePrivada: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 148
+                  Width = 808
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edSicoobArqsChange
+                  TabOrder = 3
+                  Text = 'SicoobChavePrivada.pem'
+                end
+                object edSicoobArqCertificado: TEdit
+                  Left = 24
+                  Height = 23
+                  Top = 220
+                  Width = 808
+                  Anchors = [akTop, akLeft, akRight]
+                  AutoSize = False
+                  OnChange = edSicoobArqsChange
+                  TabOrder = 4
+                  Text = 'SicoobCertificado.pem'
                 end
               end
             end
@@ -4699,6 +4883,10 @@ object Form1: TForm1
   end
   object ACBrPSPSicredi1: TACBrPSPSicredi
     Left = 256
+    Top = 416
+  end
+  object ACBrPSPSicoob1: TACBrPSPSicoob
+    Left = 288
     Top = 416
   end
 end

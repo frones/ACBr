@@ -232,6 +232,11 @@ begin
             ARetornoWS.DadosRet.TituloRet.ValorAtual                 := AJson.Values['valorAtualTituloCobranca'].AsNumber;
             ARetornoWS.DadosRet.TituloRet.ValorPago                  := AJson.Values['valorPagoSacado'].AsNumber;
 
+            ARetornoWS.DadosRet.TituloRet.ValorRecebido              := AJson.Values['valorCreditoCedente'].AsNumber;
+            ARetornoWS.DadosRet.TituloRet.ValorMoraJuros             := AJson.Values['valorJuroMoraRecebido'].AsNumber;
+            ARetornoWS.DadosRet.TituloRet.ValorDesconto              := AJson.Values['valorDescontoUtilizado'].AsNumber;
+            ARetornoWS.DadosRet.TituloRet.ValorOutrosCreditos        := AJson.Values['valorOutroRecebido'].AsNumber;
+            ARetornoWS.DadosRet.TituloRet.ValorIOF                   := AJson.Values['valorImpostoSobreOprFinanceirasRecebidoTitulo'].AsNumber;
 
             ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado          := AJson.Values['nomeSacadoCobranca'].AsString;
             ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro          := AJson.Values['textoEnderecoSacadoCobranca'].AsString;

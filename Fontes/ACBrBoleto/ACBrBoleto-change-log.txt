@@ -49,6 +49,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2022
+--ACBrBoletoRet_BancoBrasil_API--
+TK-3033 Alimentar propriedades Outros Valores Retorno Banco do Brasil API (tpConsultaDetalhada)  ValorRecebido,ValorMoraJuros,ValorDesconto,ValorOutrosCreditos,ValorIOF 
+  Por : Pandaaa
+
 13/09/2022
 --ACBrBoletoWS.pas--
 [-] TK-3054 ACBrBoleto Geração de LOG Forcando gerar diretório mesmo inativo

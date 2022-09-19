@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2022
+-- ACBrNFeServicos --
+[*] Correção nas URLs de Consulta via QR-Code de MG.
+   Por: Italo Giurizzato Junior
+
 09/09/2022
 -- ACBrNFeServicos --
 [*] Remoção das URLs de Consulta ao Cadastro da SEFAZ-ES, pois agora ela usa as

@@ -238,14 +238,15 @@ begin
        GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto)
     else
       begin
-        if ( self.InfoExclusao.IdeFolhaPagto.perApur = '' ) then
-           GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True)
-        else if VersaoDF <= ve02_05_00 then
-           GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto)
+        if VersaoDF <= ve02_05_00 then
+          begin
+            if ( self.InfoExclusao.IdeFolhaPagto.perApur = '' ) then
+            GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
+          end
         else
-           GerarIdeFolhaPagto2(self.InfoExclusao.IdeFolhaPagto)
+        GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
+        GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
       end;
-    
 
     Gerador.wGrupo('/infoExclusao');
     Gerador.wGrupo('/evtExclusao');

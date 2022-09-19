@@ -52,6 +52,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2022
+-- pcesS3000 --
+[*] Ajuste Envio S3000 referente a tabela S-1207
+    Por: Antonio Carlos Junior / Italo Giurizzato Junior
+
 06/07/2022
 -- pcesGerador --
 [*] Atualização na validação para geração do grupo sucessaoVinc baseado nas tags ataus do layout simplificado.

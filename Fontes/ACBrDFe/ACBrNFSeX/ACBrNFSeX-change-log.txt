@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/09/2022
+-- ACBrNFSeXServicos --
+[*] Traca das URLs de homologação/produção da cidade de Itapetininga/SP
+   Por: Adilson Pazzini
 -- Pronim.Provider --
 [*] Invertido a chamada da função RemoverCaracteresDesnecessarios para solucionar o problema da
     leitura do XML retornado.

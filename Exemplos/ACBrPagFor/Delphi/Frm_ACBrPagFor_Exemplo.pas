@@ -3,9 +3,9 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
+{ Colaboradores nesse arquivo: Italo Giurizzato Junior                         }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -890,6 +890,47 @@ begin
           // Usado pela Caixa
           SeuNumero := '123456';
           NossoNumero := '123456';
+
+          with SegmentoJ52.New do
+          begin
+            CodMovimento := imInclusaoRegistroDetalheLiberado;
+
+            with Pagador do
+            begin
+              with Inscricao do
+              begin
+                Tipo := tiCNPJ;
+                Numero := '12345678000123';
+              end;
+
+              Nome := 'Nome do Pagador';
+            end;
+
+            with Beneficiario do
+            begin
+              with Inscricao do
+              begin
+                Tipo := tiCNPJ;
+                Numero := '12345678000123';
+              end;
+
+              Nome := 'Nome do Beneficiario';
+            end;
+
+            with SacadorAvalista do
+            begin
+              with Inscricao do
+              begin
+                Tipo := tiCNPJ;
+                Numero := '12345678000123';
+              end;
+
+              Nome := 'Nome do Sacador/Avalista';
+            end;
+
+            Chave := '';
+            TXID := '';
+          end;
 
           TotalLote := TotalLote + ValorPagamento;
         end;

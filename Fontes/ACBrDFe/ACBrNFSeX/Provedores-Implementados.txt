@@ -49,7 +49,7 @@ Futurize             2.02
 GeisWeb              1.00
 geNFe                1.00
 Giap                 1.00  02/08/2022
-Ginfes               1.00  12/08/2022
+Ginfes               1.00  19/09/2022
 Giss                 2.04
 GovBr                1.00
 GovDigital           2.00
@@ -61,7 +61,7 @@ infisc               1.01
 infisc               2.01
 IPM                  1.00
 IPM                  1.01  24/08/2022
-ISSBarueri           1.00
+ISSBarueri           1.00  19/09/2022
 ISSCambe             1.00
 ISSCuritiba          1.00
 ISSDigital           2.00

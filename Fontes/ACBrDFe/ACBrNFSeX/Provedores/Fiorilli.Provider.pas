@@ -87,7 +87,8 @@ begin
   inherited Configuracao;
 
   ConfigGeral.QuebradeLinha := '\s\n';
-
+  ConfigGeral.ConsultaPorFaixaPreencherNumNfseFinal := true;
+  
   with ConfigAssinar do
   begin
     Rps := True;

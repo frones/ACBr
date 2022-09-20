@@ -76,6 +76,7 @@ type
     ACBrPSPShipay1: TACBrPSPShipay;
     ACBrPSPSicoob1: TACBrPSPSicoob;
     ACBrPSPSicredi1: TACBrPSPSicredi;
+    btSantanderPFXConverter: TBitBtn;
     btCobVCancelar: TBitBtn;
     btCobVCancelarLimpar: TBitBtn;
     btCobVConsultar: TBitBtn;
@@ -137,8 +138,8 @@ type
     cbxPSPAtual: TComboBox;
     cbxRecebedorUF: TComboBox;
     cbSicrediTipoChave: TComboBox;
+    cbSantanderTipoChave: TComboBox;
     cbxSolicitarDevolucaoPix_Natureza: TComboBox;
-    cbxSantanderTipoChave: TComboBox;
     cbxBBTipoChave: TComboBox;
     cbxConsultarCobrancas_Status: TComboBox;
     chCriarCobrancaImediata_PermiterAlterarValor: TCheckBox;
@@ -173,7 +174,10 @@ type
     edFluxoItemValor: TEdit;
     edItauRenovarCertificadoArq: TEdit;
     edSantanderArqCertificadoPFX: TEdit;
+    edSantanderArqCertificadoPFXConverter: TEdit;
+    edSantanderArqCertificadoPEM: TEdit;
     edSantanderSenhaCertificadoPFX: TEdit;
+    edSantanderSenhaCertificadoPFXConverter: TEdit;
     edSicoobArqCertificado: TEdit;
     edSicoobArqChavePrivada: TEdit;
     edSicoobChavePIX: TEdit;
@@ -191,6 +195,9 @@ type
     edSicrediChavePIX: TEdit;
     edSicrediClientID: TEdit;
     edSicrediClientSecret: TEdit;
+    edSantanderChavePIX: TEdit;
+    edSantanderConsumerKey: TEdit;
+    edSantanderConsumerSecret: TEdit;
     fleQREValor: TEdit;
     feSolicitarDevolucaoPix_Valor: TEdit;
     edtBBSimulaPagamento_pixCopiaECola: TEdit;
@@ -246,6 +253,7 @@ type
     imgQRCriarCobrancaImediata: TImage;
     imgQRE: TImage;
     imgQRD: TImage;
+    imSantanderErroChavePIX: TImage;
     imSantanderErroCertificadoPFX: TImage;
     imSicoobErroCertificado: TImage;
     imSicoobErroChavePIX: TImage;
@@ -269,6 +277,10 @@ type
     Label27: TLabel;
     Label28: TLabel;
     Label3: TLabel;
+    lbSantanderChavePIX: TLabel;
+    lbSantanderTipoChave: TLabel;
+    lbSantanderConsumerKey: TLabel;
+    lbSantanderConsumerSecret: TLabel;
     Label34: TLabel;
     Label35: TLabel;
     Label36: TLabel;
@@ -276,6 +288,12 @@ type
     Label38: TLabel;
     Label39: TLabel;
     Label42: TLabel;
+    lbSantanderArqCertificadoPFX: TLabel;
+    lbSantanderArqCertificadoPFXConverter: TLabel;
+    lbSantanderArqCertificadoPEM: TLabel;
+    lbSantanderErroCertificadoPFX: TLabel;
+    lbSantanderSenhaCertificado: TLabel;
+    lbSantanderSenhaCertificadoConverter: TLabel;
     lbSicoobArquivoCertificado: TLabel;
     lbSicoobArquivoChavePrivada: TLabel;
     lbSicoobChavePix: TLabel;
@@ -288,9 +306,6 @@ type
     Label50: TLabel;
     Label8: TLabel;
     Label9: TLabel;
-    lbSantanderArqCertificadoPFX: TLabel;
-    lbSantanderErroCertificadoPFX: TLabel;
-    lbSantanderSenhaCertificado: TLabel;
     lbSicoobErroCertificado: TLabel;
     lbSicoobErroChavePrivada: TLabel;
     lbSicrediArqChavePrivada: TLabel;
@@ -350,14 +365,10 @@ type
     lConsultarPixE2eid: TLabel;
     edtBBClientID: TEdit;
     edtConsultarPixE2eid: TEdit;
-    edtSantanderChavePIX: TEdit;
     edtBBClientSecret: TEdit;
-    edtSantanderConsumerKey: TEdit;
     edtBBDevAppKey: TEdit;
-    edtSantanderConsumerSecret: TEdit;
     edtBBChavePIX: TEdit;
     imgBBErroChavePIX: TImage;
-    imgSantanderErroChavePIX: TImage;
     lCPFCPNJ1: TLabel;
     lE2eid: TLabel;
     lConsultarDevolucaoPixE2eid1: TLabel;
@@ -394,9 +405,12 @@ type
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
+    pgSantander: TPageControl;
     Panel10: TPanel;
     Panel11: TPanel;
     Panel12: TPanel;
+    pnSantanderConverterCertificado: TPanel;
+    pConfPSPSantander: TPanel;
     pnConfPSPSicoob: TPanel;
     pnConfPSPSicredi: TPanel;
     pgTestesEndPointCobV: TPageControl;
@@ -474,26 +488,24 @@ type
     Label22: TLabel;
     Label23: TLabel;
     Label24: TLabel;
-    Label30: TLabel;
-    Label31: TLabel;
-    Label32: TLabel;
-    Label33: TLabel;
     pConfPSPBB: TPanel;
     pBotoesConfiguracao: TPanel;
-    pConfPSPBB2: TPanel;
     pCriarCobrancaImediata: TPanel;
     sbArqLog: TSpeedButton;
     sbConsultaCEP: TSpeedButton;
     sbCriarCobrancaImediata_GerarTxId: TSpeedButton;
     sbItauAcharArqCertificado: TSpeedButton;
     sbItauAcharArqChavePrivada: TSpeedButton;
+    sbSantanderAcharCertificadoPFX: TSpeedButton;
+    sbSantanderAcharCertificadoPFXConverter: TSpeedButton;
+    sbSantanderPFXConverterInfo: TSpeedButton;
+    sbSantanderVerSenhaPFX: TSpeedButton;
+    sbSantanderPFXVerSenhaConverter: TSpeedButton;
     sbSicoobAcharArqCertificado: TSpeedButton;
     sbSicoobAcharChavePrivada: TSpeedButton;
     sbSicrediAcharArqCertificado: TSpeedButton;
     sbSicrediAcharChavePrivada: TSpeedButton;
-    sbSantanderAcharCertificadoPFX: TSpeedButton;
     sbVerSenhaProxy: TSpeedButton;
-    sbSantanderVerSenhaPFX: TSpeedButton;
     seCobrancaExpiracao: TSpinEdit;
     seConsultarCobrancaImediata_Revisao: TSpinEdit;
     seConsultarCobrancas_ItensPagina: TSpinEdit;
@@ -520,6 +532,8 @@ type
     seTimeout: TSpinEdit;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
+    tsSantanderCredenciais: TTabSheet;
+    tsSantanderConverterCertificado: TTabSheet;
     tsSicoob: TTabSheet;
     tsSicredi: TTabSheet;
     tsItauRenovarChaveCertificado: TTabSheet;
@@ -566,6 +580,7 @@ type
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL: String;
       const AMethod: String; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
+    procedure btSantanderPFXConverterClick(Sender: TObject);
     procedure btBBSimulaPagamento_ExecutarClick(Sender: TObject);
     procedure btBBSimulaPagamento_LimparClick(Sender: TObject);
     procedure btCancelarCobrancaClick(Sender: TObject);
@@ -629,7 +644,7 @@ type
     procedure edtItauClientIDChange(Sender: TObject);
     procedure edtItauClientSecretChange(Sender: TObject);
     procedure edtRecebedorNomeChange(Sender: TObject);
-    procedure edtSantanderChavePIXChange(Sender: TObject);
+    procedure edSantanderChavePIXChange(Sender: TObject);
     procedure mQREChange(Sender: TObject);
     procedure pgPrincipalChange(Sender: TObject);
     procedure pgPSPItauChaveCertificadoChange(Sender: TObject);
@@ -642,7 +657,10 @@ type
     procedure sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
     procedure sbItauAcharArqCertificadoClick(Sender: TObject);
     procedure sbItauAcharArqChavePrivadaClick(Sender: TObject);
+    procedure sbSantanderAcharCertificadoPFXConverterClick(Sender: TObject);
     procedure sbSantanderAcharCertificadoPFXClick(Sender: TObject);
+    procedure sbSantanderPFXConverterInfoClick(Sender: TObject);
+    procedure sbSantanderPFXVerSenhaConverterClick(Sender: TObject);
     procedure sbSantanderVerSenhaPFXClick(Sender: TObject);
     procedure sbSicoobAcharArqCertificadoClick(Sender: TObject);
     procedure sbSicoobAcharChavePrivadaClick(Sender: TObject);
@@ -827,11 +845,40 @@ begin
   ValidarChavePSPItau;
 end;
 
+procedure TForm1.sbSantanderAcharCertificadoPFXConverterClick(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+    edSantanderArqCertificadoPFXConverter.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+end;
+
 procedure TForm1.sbSantanderAcharCertificadoPFXClick(Sender: TObject);
 begin
   if OpenDialog1.Execute then
     edSantanderArqCertificadoPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
   ValidarCertificadoPSPSantander;
+end;
+
+procedure TForm1.sbSantanderPFXConverterInfoClick(Sender: TObject);
+begin
+  MessageDlg(ACBrStr('PSP Santander solicita um arquivo em formato PEM para ' +
+    'disponibilizar as credenciais Consumer Key e Consumer Secret.' + sLineBreak +
+    'Após a geração do certificado PEM a liberação das credenciais deve ser ' +
+    'feita no Internet Banking Santander!'), mtInformation, [mbOK], 0);
+end;
+
+procedure TForm1.sbSantanderPFXVerSenhaConverterClick(Sender: TObject);
+begin
+  {$IfDef FPC}
+  if sbSantanderPFXVerSenhaConverter.Down then
+    edSantanderSenhaCertificadoPFXConverter.EchoMode := emNormal
+  else
+    edSantanderSenhaCertificadoPFXConverter.EchoMode := emPassword;
+  {$Else}
+  if sbSantanderPFXVerSenhaConverter.Down then
+    edSantanderSenhaCertificadoPFXConverter.PasswordChar := #0
+  else
+    edSantanderSenhaCertificadoPFXConverter.PasswordChar := '*';
+  {$EndIf}
 end;
 
 procedure TForm1.sbSantanderVerSenhaPFXClick(Sender: TObject);
@@ -999,6 +1046,38 @@ begin
     finally
       jsRet.Free;
     end;
+  end;
+end;
+
+procedure TForm1.btSantanderPFXConverterClick(Sender: TObject);
+var                
+  wArqPEM: String;
+  wSL: TStringList;
+begin
+  if EstaVazio(edSantanderArqCertificadoPFXConverter.Text) then
+  begin
+    MessageDlg('Arquivo PFX não informado', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  if EstaVazio(edSantanderArqCertificadoPEM.Text) then
+  begin
+    MessageDlg('Arquivo de destino PEM não informado', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  wSL := TStringList.Create;
+  try
+    wArqPEM := edSantanderArqCertificadoPEM.Text;
+    ACBrOpenSSLUtils1.LoadPFXFromFile(
+      edSantanderArqCertificadoPFXConverter.Text,
+      edSantanderSenhaCertificadoPFXConverter.Text);
+    wSL.Text := ACBrOpenSSLUtils1.CertificateAsString;
+    wSL.SaveToFile(wArqPEM);
+
+    MessageDlg('Arquivo PEM gerado em: ' + wArqPEM, mtError, [mbOK], 0);
+  finally
+    wSL.Free;
   end;
 end;
 
@@ -1888,10 +1967,10 @@ begin
   imgErrNome.Visible := (Length(Trim(edtRecebedorNome.Text)) < 5);
 end;
 
-procedure TForm1.edtSantanderChavePIXChange(Sender: TObject);
+procedure TForm1.edSantanderChavePIXChange(Sender: TObject);
 begin
-  cbxSantanderTipoChave.ItemIndex := Integer(DetectarTipoChave(edtSantanderChavePIX.Text));
-  imgSantanderErroChavePIX.Visible := (edtSantanderChavePIX.Text <> '') and (cbxSantanderTipoChave.ItemIndex = 0);
+  cbSantanderTipoChave.ItemIndex := Integer(DetectarTipoChave(edSantanderChavePIX.Text));
+  imSantanderErroChavePIX.Visible := (edSantanderChavePIX.Text <> '') and (cbSantanderTipoChave.ItemIndex = 0);
 end;
 
 procedure TForm1.edSicrediArqsChange(Sender: TObject);
@@ -2015,7 +2094,7 @@ end;
 
 procedure TForm1.LigarAlertasdeErrosDeConfiguracaoPSPSantander;
 begin
-  edtSantanderChavePIXChange(Nil);
+  edSantanderChavePIXChange(Nil);
   ValidarCertificadoPSPSantander;
 end;
 
@@ -2289,9 +2368,9 @@ begin
     edtItauArqChavePrivada.Text := Ini.ReadString('Itau', 'ArqChavePrivada', edtItauArqChavePrivada.Text);
     edtItauArqCertificado.Text := Ini.ReadString('Itau', 'ArqCertificado', edtItauArqCertificado.Text);
 
-    edtSantanderChavePIX.Text := Ini.ReadString('Santander', 'ChavePIX', '');
-    edtSantanderConsumerKey.Text := Ini.ReadString('Santander', 'ConsumerKey', '');
-    edtSantanderConsumerSecret.Text := Ini.ReadString('Santander', 'ConsumerSecret', '');
+    edSantanderChavePIX.Text := Ini.ReadString('Santander', 'ChavePIX', '');
+    edSantanderConsumerKey.Text := Ini.ReadString('Santander', 'ConsumerKey', '');
+    edSantanderConsumerSecret.Text := Ini.ReadString('Santander', 'ConsumerSecret', '');
     edSantanderArqCertificadoPFX.Text := Ini.ReadString('Santander', 'ArqCertificadoPFX', '');
     edSantanderSenhaCertificadoPFX.Text := Ini.ReadString('Santander', 'SenhaCertificadoPFX', '');
 
@@ -2355,9 +2434,9 @@ begin
     Ini.WriteString('Itau', 'ArqChavePrivada', edtItauArqChavePrivada.Text);
     Ini.WriteString('Itau', 'ArqCertificado', edtItauArqCertificado.Text);
 
-    Ini.WriteString('Santander', 'ChavePIX', edtSantanderChavePIX.Text);
-    Ini.WriteString('Santander', 'ConsumerKey', edtSantanderConsumerKey.Text);
-    Ini.WriteString('Santander', 'ConsumerSecret', edtSantanderConsumerSecret.Text);
+    Ini.WriteString('Santander', 'ChavePIX', edSantanderChavePIX.Text);
+    Ini.WriteString('Santander', 'ConsumerKey', edSantanderConsumerKey.Text);
+    Ini.WriteString('Santander', 'ConsumerSecret', edSantanderConsumerSecret.Text);
     Ini.WriteString('Santander', 'ArqCertificadoPFX', edSantanderArqCertificadoPFX.Text);
     Ini.WriteString('Santander', 'SenhaCertificadoPFX', edSantanderSenhaCertificadoPFX.Text);
 
@@ -2407,7 +2486,7 @@ begin
   ImageList1.GetBitmap(6, imSicoobErroCertificado.Picture.Bitmap);
   ImageList1.GetBitmap(6, imSicoobErroChavePrivada.Picture.Bitmap);
 
-  ImageList1.GetBitmap(6, imgSantanderErroChavePIX.Picture.Bitmap);
+  ImageList1.GetBitmap(6, imSantanderErroChavePIX.Picture.Bitmap);
   ImageList1.GetBitmap(6, imSantanderErroCertificadoPFX.Picture.Bitmap);
 
   ImageList1.GetBitmap(31, btFluxoItemIncluir.Glyph);
@@ -2460,6 +2539,7 @@ begin
   ImageList1.GetBitmap(9, sbArqLog.Glyph);
   ImageList1.GetBitmap(7, sbVerSenhaProxy.Glyph);
   ImageList1.GetBitmap(7, sbSantanderVerSenhaPFX.Glyph);
+  ImageList1.GetBitmap(7, sbSantanderPFXVerSenhaConverter.Glyph);
 
   ImageList1.GetBitmap(16, btItauValidarChaveCertificado.Glyph);
   ImageList1.GetBitmap(9, sbItauAcharArqChavePrivada.Glyph);
@@ -2477,6 +2557,8 @@ begin
   ImageList1.GetBitmap(9, sbSicoobAcharChavePrivada.Glyph);
   ImageList1.GetBitmap(9, sbSicoobAcharArqCertificado.Glyph);
   ImageList1.GetBitmap(9, sbSantanderAcharCertificadoPFX.Glyph);
+  ImageList1.GetBitmap(9, sbSantanderAcharCertificadoPFXConverter.Glyph);
+  ImageList1.GetBitmap(27, sbSantanderPFXConverterInfo.Glyph);
 end;
 
 procedure TForm1.InicializarActivePages;
@@ -2522,7 +2604,7 @@ begin
   for k := Low(TACBrPIXTipoChave) to High(TACBrPIXTipoChave) do
      cbxBBTipoChave.Items.Add( GetEnumName(TypeInfo(TACBrPIXTipoChave), integer(k) ));
   cbxItauTipoChave.Items.Assign(cbxBBTipoChave.Items);
-  cbxSantanderTipoChave.Items.Assign(cbxBBTipoChave.Items);
+  cbSantanderTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbSicrediTipoChave.Items.Assign(cbxBBTipoChave.Items);
   cbSicoobTipoChave.Items.Assign(cbxBBTipoChave.Items);
 
@@ -2616,9 +2698,9 @@ begin
   ACBrPSPItau1.ArquivoChavePrivada := edtItauArqChavePrivada.Text;
   ACBrPSPItau1.ArquivoCertificado := edtItauArqCertificado.Text;
 
-  ACBrPSPSantander1.ChavePIX := edtSantanderChavePIX.Text;
-  ACBrPSPSantander1.ConsumerKey := edtSantanderConsumerKey.Text;
-  ACBrPSPSantander1.ConsumerSecret := edtSantanderConsumerSecret.Text;
+  ACBrPSPSantander1.ChavePIX := edSantanderChavePIX.Text;
+  ACBrPSPSantander1.ConsumerKey := edSantanderConsumerKey.Text;
+  ACBrPSPSantander1.ConsumerSecret := edSantanderConsumerSecret.Text;
   ACBrPSPSantander1.SenhaPFX := edSantanderSenhaCertificadoPFX.Text;
   ACBrPSPSantander1.ArquivoPFX := edSantanderArqCertificadoPFX.Text;
 

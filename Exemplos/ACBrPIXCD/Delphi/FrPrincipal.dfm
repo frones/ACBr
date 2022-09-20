@@ -3817,167 +3817,294 @@ object Form1: TForm1
             end
             object tsSantander: TTabSheet
               Caption = 'Santander'
-              DesignSize = (
-                984
-                492)
-              object pConfPSPBB2: TPanel
-                Left = 56
-                Top = 80
-                Width = 860
-                Height = 272
-                Anchors = [akLeft, akRight]
-                BevelOuter = bvNone
+              object pgSantander: TPageControl
+                Left = 48
+                Top = 56
+                Width = 888
+                Height = 368
+                ActivePage = tsSantanderCredenciais
                 TabOrder = 0
-                DesignSize = (
-                  860
-                  272)
-                object Label30: TLabel
-                  Left = 24
-                  Top = 24
-                  Width = 51
-                  Height = 13
-                  Caption = 'Chave PIX'
+                object tsSantanderCredenciais: TTabSheet
+                  Caption = 'Credenciais'
+                  object pConfPSPSantander: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 880
+                    Height = 340
+                    Align = alClient
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      880
+                      340)
+                    object lbSantanderChavePIX: TLabel
+                      Left = 24
+                      Top = 24
+                      Width = 51
+                      Height = 13
+                      Caption = 'Chave PIX'
+                    end
+                    object lbSantanderTipoChave: TLabel
+                      Left = 688
+                      Top = 24
+                      Width = 55
+                      Height = 13
+                      Anchors = [akTop, akRight]
+                      Caption = 'Tipo Chave'
+                    end
+                    object lbSantanderConsumerKey: TLabel
+                      Left = 24
+                      Top = 75
+                      Width = 68
+                      Height = 13
+                      Caption = 'Consumer Key'
+                    end
+                    object lbSantanderConsumerSecret: TLabel
+                      Left = 24
+                      Top = 131
+                      Width = 81
+                      Height = 13
+                      Caption = 'Consumer Secret'
+                    end
+                    object imSantanderErroChavePIX: TImage
+                      Left = 856
+                      Top = 44
+                      Width = 16
+                      Height = 16
+                      Anchors = [akTop, akRight]
+                      Visible = False
+                    end
+                    object imSantanderErroCertificadoPFX: TImage
+                      Left = 3
+                      Top = 200
+                      Width = 16
+                      Height = 16
+                      Visible = False
+                    end
+                    object lbSantanderErroCertificadoPFX: TLabel
+                      Left = 24
+                      Top = 222
+                      Width = 146
+                      Height = 13
+                      Caption = 'lbSantanderErroCertificadoPFX'
+                    end
+                    object lbSantanderArqCertificadoPFX: TLabel
+                      Left = 24
+                      Top = 181
+                      Width = 112
+                      Height = 13
+                      Caption = 'Arquivo Certificado PFX'
+                    end
+                    object sbSantanderAcharCertificadoPFX: TSpeedButton
+                      Left = 640
+                      Top = 197
+                      Width = 24
+                      Height = 23
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Charset = DEFAULT_CHARSET
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Font.Style = []
+                      ParentFont = False
+                      ParentShowHint = False
+                      ShowHint = True
+                      OnClick = sbSantanderAcharCertificadoPFXClick
+                    end
+                    object lbSantanderSenhaCertificado: TLabel
+                      Left = 688
+                      Top = 181
+                      Width = 84
+                      Height = 13
+                      Caption = 'Senha Certificado'
+                    end
+                    object sbSantanderVerSenhaPFX: TSpeedButton
+                      Left = 856
+                      Top = 197
+                      Width = 23
+                      Height = 23
+                      AllowAllUp = True
+                      Anchors = [akTop, akRight]
+                      GroupIndex = 1
+                      Flat = True
+                      OnClick = sbSantanderVerSenhaPFXClick
+                    end
+                    object edSantanderChavePIX: TEdit
+                      Left = 24
+                      Top = 40
+                      Width = 640
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 1
+                      OnChange = edSantanderChavePIXChange
+                    end
+                    object cbSantanderTipoChave: TComboBox
+                      Left = 688
+                      Top = 40
+                      Width = 164
+                      Height = 21
+                      Style = csDropDownList
+                      Anchors = [akTop, akRight]
+                      ItemHeight = 13
+                      TabOrder = 0
+                      TabStop = False
+                    end
+                    object edSantanderConsumerKey: TEdit
+                      Left = 24
+                      Top = 91
+                      Width = 828
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 2
+                    end
+                    object edSantanderConsumerSecret: TEdit
+                      Left = 24
+                      Top = 147
+                      Width = 828
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      TabOrder = 3
+                    end
+                    object edSantanderArqCertificadoPFX: TEdit
+                      Left = 24
+                      Top = 197
+                      Width = 616
+                      Height = 23
+                      Anchors = [akLeft, akTop, akRight]
+                      AutoSize = False
+                      TabOrder = 4
+                      OnChange = edSantanderArqCertificadoPFXChange
+                    end
+                    object edSantanderSenhaCertificadoPFX: TEdit
+                      Left = 688
+                      Top = 197
+                      Width = 164
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      PasswordChar = '*'
+                      TabOrder = 5
+                    end
+                  end
                 end
-                object Label31: TLabel
-                  Left = 688
-                  Top = 24
-                  Width = 55
-                  Height = 13
-                  Anchors = [akTop, akRight]
-                  Caption = 'Tipo Chave'
-                end
-                object Label32: TLabel
-                  Left = 24
-                  Top = 75
-                  Width = 68
-                  Height = 13
-                  Caption = 'Consumer Key'
-                end
-                object Label33: TLabel
-                  Left = 24
-                  Top = 131
-                  Width = 81
-                  Height = 13
-                  Caption = 'Consumer Secret'
-                end
-                object imgSantanderErroChavePIX: TImage
-                  Left = 836
-                  Top = 44
-                  Width = 16
-                  Height = 16
-                  Anchors = [akTop, akRight]
-                  Visible = False
-                end
-                object imSantanderErroCertificadoPFX: TImage
-                  Left = 3
-                  Top = 200
-                  Width = 16
-                  Height = 16
-                  Visible = False
-                end
-                object lbSantanderErroCertificadoPFX: TLabel
-                  Left = 24
-                  Top = 222
-                  Width = 146
-                  Height = 13
-                  Caption = 'lbSantanderErroCertificadoPFX'
-                end
-                object lbSantanderArqCertificadoPFX: TLabel
-                  Left = 24
-                  Top = 181
-                  Width = 112
-                  Height = 13
-                  Caption = 'Arquivo Certificado PFX'
-                end
-                object sbSantanderAcharCertificadoPFX: TSpeedButton
-                  Left = 642
-                  Top = 197
-                  Width = 24
-                  Height = 23
-                  Anchors = [akTop, akRight]
-                  Flat = True
-                  Font.Charset = DEFAULT_CHARSET
-                  Font.Color = clWindowText
-                  Font.Height = -11
-                  Font.Name = 'MS Sans Serif'
-                  Font.Style = []
-                  ParentFont = False
-                  ParentShowHint = False
-                  ShowHint = True
-                  OnClick = sbSantanderAcharCertificadoPFXClick
-                end
-                object lbSantanderSenhaCertificado: TLabel
-                  Left = 688
-                  Top = 181
-                  Width = 51
-                  Height = 13
-                  Caption = 'Chave PIX'
-                end
-                object sbSantanderVerSenhaPFX: TSpeedButton
-                  Left = 836
-                  Top = 197
-                  Width = 23
-                  Height = 23
-                  AllowAllUp = True
-                  Anchors = [akTop, akRight]
-                  GroupIndex = 1
-                  Flat = True
-                  OnClick = sbSantanderVerSenhaPFXClick
-                end
-                object edtSantanderChavePIX: TEdit
-                  Left = 24
-                  Top = 40
-                  Width = 642
-                  Height = 21
-                  Anchors = [akLeft, akTop, akRight]
-                  TabOrder = 1
-                  OnChange = edtSantanderChavePIXChange
-                end
-                object cbxSantanderTipoChave: TComboBox
-                  Left = 688
-                  Top = 40
-                  Width = 144
-                  Height = 21
-                  Style = csDropDownList
-                  Anchors = [akTop, akRight]
-                  ItemHeight = 13
-                  TabOrder = 0
-                  TabStop = False
-                end
-                object edtSantanderConsumerKey: TEdit
-                  Left = 24
-                  Top = 91
-                  Width = 812
-                  Height = 21
-                  Anchors = [akLeft, akTop, akRight]
-                  TabOrder = 2
-                end
-                object edtSantanderConsumerSecret: TEdit
-                  Left = 24
-                  Top = 147
-                  Width = 812
-                  Height = 21
-                  Anchors = [akLeft, akTop, akRight]
-                  TabOrder = 3
-                end
-                object edSantanderArqCertificadoPFX: TEdit
-                  Left = 24
-                  Top = 197
-                  Width = 616
-                  Height = 23
-                  Anchors = [akLeft, akTop, akRight]
-                  AutoSize = False
-                  TabOrder = 4
-                  OnChange = edSantanderArqCertificadoPFXChange
-                end
-                object edSantanderSenhaCertificadoPFX: TEdit
-                  Left = 688
-                  Top = 197
-                  Width = 144
-                  Height = 21
-                  Anchors = [akLeft, akTop, akRight]
-                  PasswordChar = '*'
-                  TabOrder = 5
+                object tsSantanderConverterCertificado: TTabSheet
+                  Caption = 'Converter Certificado'
+                  ImageIndex = 1
+                  object pnSantanderConverterCertificado: TPanel
+                    Left = 0
+                    Top = 0
+                    Width = 880
+                    Height = 340
+                    Align = alClient
+                    BevelOuter = bvNone
+                    TabOrder = 0
+                    DesignSize = (
+                      880
+                      340)
+                    object lbSantanderArqCertificadoPFXConverter: TLabel
+                      Left = 40
+                      Top = 40
+                      Width = 112
+                      Height = 13
+                      Caption = 'Arquivo Certificado PFX'
+                    end
+                    object sbSantanderAcharCertificadoPFXConverter: TSpeedButton
+                      Left = 600
+                      Top = 56
+                      Width = 24
+                      Height = 23
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Charset = DEFAULT_CHARSET
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Font.Style = []
+                      ParentFont = False
+                      ParentShowHint = False
+                      ShowHint = True
+                      OnClick = sbSantanderAcharCertificadoPFXConverterClick
+                    end
+                    object lbSantanderSenhaCertificadoConverter: TLabel
+                      Left = 640
+                      Top = 40
+                      Width = 84
+                      Height = 13
+                      Caption = 'Senha Certificado'
+                    end
+                    object sbSantanderPFXVerSenhaConverter: TSpeedButton
+                      Left = 808
+                      Top = 56
+                      Width = 23
+                      Height = 23
+                      AllowAllUp = True
+                      Anchors = [akTop, akRight]
+                      GroupIndex = 1
+                      Flat = True
+                      OnClick = sbSantanderPFXVerSenhaConverterClick
+                    end
+                    object lbSantanderArqCertificadoPEM: TLabel
+                      Left = 40
+                      Top = 160
+                      Width = 115
+                      Height = 13
+                      Caption = 'Arquivo Certificado PEM'
+                    end
+                    object sbSantanderPFXConverterInfo: TSpeedButton
+                      Left = 224
+                      Top = 104
+                      Width = 30
+                      Height = 30
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Charset = DEFAULT_CHARSET
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Font.Style = []
+                      ParentFont = False
+                      ParentShowHint = False
+                      ShowHint = True
+                      OnClick = sbSantanderPFXConverterInfoClick
+                    end
+                    object edSantanderArqCertificadoPFXConverter: TEdit
+                      Left = 40
+                      Top = 56
+                      Width = 560
+                      Height = 23
+                      Anchors = [akLeft, akTop, akRight]
+                      AutoSize = False
+                      TabOrder = 0
+                    end
+                    object edSantanderSenhaCertificadoPFXConverter: TEdit
+                      Left = 640
+                      Top = 56
+                      Width = 164
+                      Height = 21
+                      Anchors = [akLeft, akTop, akRight]
+                      PasswordChar = '*'
+                      TabOrder = 1
+                    end
+                    object btSantanderPFXConverter: TBitBtn
+                      Left = 40
+                      Top = 104
+                      Width = 179
+                      Height = 30
+                      Caption = 'Converter PFX para PEM'
+                      TabOrder = 2
+                      OnClick = btSantanderPFXConverterClick
+                    end
+                    object edSantanderArqCertificadoPEM: TEdit
+                      Left = 40
+                      Top = 176
+                      Width = 791
+                      Height = 23
+                      Anchors = [akLeft, akTop, akRight]
+                      AutoSize = False
+                      TabOrder = 3
+                      Text = 'SantanderCertificado.pem'
+                    end
+                  end
                 end
               end
             end

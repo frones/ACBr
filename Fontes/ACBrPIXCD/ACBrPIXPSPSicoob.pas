@@ -106,6 +106,7 @@ uses
 constructor TACBrPSPSicoob.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  fpQuandoReceberRespostaEndPoint := QuandoReceberRespostaEndPoint;
   Clear;
 end;
 

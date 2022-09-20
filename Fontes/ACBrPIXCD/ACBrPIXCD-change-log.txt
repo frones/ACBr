@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2022
+-- ACBrPIXPSPSicoob --
+[-] Correção para tratar corretamente o retorno do Sicoob ao Solicitar uma devolução
+
 19/09/2022
 -- ACBrPIXCDReg --
 [+] Inclusão de novo PSP Sicoob

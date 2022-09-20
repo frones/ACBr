@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/09/2022
+-- pcnConversaoReinf -- 
+[*] Remoção do enumerador v1_02_00, uma vez que nem existe no arquivo 
+ACBrReinfServicos.ini a URL dessa versão, sendo que o Reinf já está na versão 1.5.1
+   Por: Italo Giurizzato Junior
 -- ACBrReinfServicos -- 
 [*] Correção no nome da sessão das URLs de produção.
    Por: Italo Giurizzato Junior

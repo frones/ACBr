@@ -2209,7 +2209,7 @@ begin
   end;
 
   lbSicoobErroChavePrivada.Caption := e;
-  lbSicoobErroChavePrivada.Caption := True;
+  lbSicoobErroChavePrivada.Visible := True;
   imSicoobErroChavePrivada.Visible := (e <> 'OK');
 end;
 

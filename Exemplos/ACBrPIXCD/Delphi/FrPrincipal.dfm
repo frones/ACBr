@@ -4456,6 +4456,7 @@ object Form1: TForm1
                   TabOrder = 3
                   Text = 'SicoobChavePrivada.pem'
                   OnChange = edSicoobArqsChange
+                  OnExit = edSicoobArqChavePrivadaExit
                 end
                 object edSicoobArqCertificado: TEdit
                   Left = 24
@@ -4467,6 +4468,7 @@ object Form1: TForm1
                   TabOrder = 4
                   Text = 'SicoobCertificado.pem'
                   OnChange = edSicoobArqsChange
+                  OnExit = edSicoobArqCertificadoExit
                 end
               end
             end

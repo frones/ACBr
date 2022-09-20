@@ -630,6 +630,8 @@ type
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
     procedure edSantanderArqCertificadoPFXChange(Sender: TObject);
+    procedure edSicoobArqCertificadoExit(Sender: TObject);
+    procedure edSicoobArqChavePrivadaExit(Sender: TObject);
     procedure edSicoobArqsChange(Sender: TObject);
     procedure edSicoobChavePIXChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
@@ -1867,6 +1869,16 @@ begin
   lbSantanderErroCertificadoPFX.Caption := EmptyStr;
 end;
 
+procedure TForm1.edSicoobArqCertificadoExit(Sender: TObject);
+begin
+  ValidarCertificadoPSPSicoob;
+end;
+
+procedure TForm1.edSicoobArqChavePrivadaExit(Sender: TObject);
+begin
+  ValidarChavePSPSicoob;
+end;
+
 procedure TForm1.edSicoobArqsChange(Sender: TObject);
 begin
   lbSicoobErroChavePrivada.Caption := '';
@@ -2197,6 +2209,7 @@ begin
   end;
 
   lbSicoobErroChavePrivada.Caption := e;
+  lbSicoobErroChavePrivada.Caption := True;
   imSicoobErroChavePrivada.Visible := (e <> 'OK');
 end;
 
@@ -2221,6 +2234,7 @@ begin
   end;
 
   lbSicoobErroCertificado.Caption := e;
+  lbSicoobErroCertificado.Visible := True;
   imSicoobErroCertificado.Visible := (e <> 'OK');
 end;
 

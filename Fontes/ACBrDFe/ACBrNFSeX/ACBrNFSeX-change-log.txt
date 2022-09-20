@@ -44,6 +44,17 @@ Símbolo : Significado
 
 
 20/09/2022
+-- ACBrNFSeXServicos --
+[*] Corrigindo nome do município que estava com a última palavra contendo "s" no final incorretamente
+    Corrigidos links dos DANFSes pelo provedor
+   Por: Renato Rubinho
+[+] Incluído a cidade: Presidente Getúlio/SC - Provedor IPM
+   Por: Jairo Fusinato
+[+] Incluído as cidades: Sumare/SP, Leme/SP, Santa Barbara D Oeste/SP, Santa Gertruudes/SP
+    Conchal/SP, Valinhos/SP e Engenheiro Coelho/SP - Provedor SigISSWeb.
+   Por: Italo Giurizzato Junior
+[*] As cidades: Cordeiro/RJ e Araras/SP trocaram de Provedor, agora é: SigISSWeb.
+   Por: Italo Giurizzato Junior
 -- Fiorilli.Provider --
 [*] A consulta por faixa exige que seja preenchido o Numero final da Faixa.
    Por: Verissimo

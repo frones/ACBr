@@ -45,6 +45,8 @@ Símbolo : Significado
 
 20/09/2022
 -- ACBrNFSeXServicos --
+[+] Incluído a cidade: Saudades/SC - Provedor Pronim
+   Por: Léo
 [*] Traca das URLs de homologação/produção da cidade de Itapetininga/SP
    Por: Adilson Pazzini
 -- Pronim.Provider --

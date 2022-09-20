@@ -135,6 +135,6 @@ VersaTecnologia      2.00
 VersaTecnologia      2.01
 VersaTecnologia      2.02
 Virtual              2.02
-WebFisco             1.00
+WebFisco             1.00  20/09/2022
 WebISS               1.00
 WebISS               2.02

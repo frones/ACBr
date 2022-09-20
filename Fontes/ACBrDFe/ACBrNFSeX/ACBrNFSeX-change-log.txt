@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 20/09/2022
+-- Pronim.Provider --
+[*] Invertido a chamada da função RemoverCaracteresDesnecessarios para solucionar o problema da
+    leitura do XML retornado.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.LerXml --
 [*] Ajuste para ler tanto o CNPJ quanto o CPF do tomador.
    Por: Giquieu

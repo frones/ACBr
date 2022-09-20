@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 20/09/2022
+-- ISSBarueri.LerXml --
+[*] Ajuste para ler tanto o CNPJ quanto o CPF do tomador.
+   Por: Giquieu
 -- ACBrNFSeXServicos --
 [*] Corrigindo nome do município que estava com a última palavra contendo "s" no final incorretamente
     Corrigidos links dos DANFSes pelo provedor

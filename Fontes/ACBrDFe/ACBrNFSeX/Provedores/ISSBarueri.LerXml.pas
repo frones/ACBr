@@ -317,7 +317,12 @@ begin
   CpfCnpjNode := AuxNode.Childrens.FindAnyNs('CpfCnpj');
 
   if (CpfCnpjNode <> Nil) then
+  begin
     NFSe.Tomador.IdentificacaoTomador.CpfCnpj := ObterConteudo(CpfCnpjNode.Childrens.FindAnyNs('Cnpj'), tcStr);
+
+    if NFSe.Tomador.IdentificacaoTomador.CpfCnpj = '' then
+      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := ObterConteudo(CpfCnpjNode.Childrens.FindAnyNs('Cpf'), tcStr);
+  end;
 end;
 
 procedure TNFSeR_ISSBarueri.LerCartaCorrecao(const ANode: TACBrXmlNode);

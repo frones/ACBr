@@ -1268,7 +1268,7 @@ begin
                and (Prod.rastro.Count<=0)
                and (not (NFe.Ide.finNFe in [fnDevolucao,fnAjuste,fnComplementar])) // exceção 1
                and (not (NFe.Ide.indPres in [pcInternet, pcTeleatendimento]))      // exceção 2
-               and (IndexStr(Prod.CFOP,['5922','6922','5118','6118',               // exceção 3 CFOP's excluidos da validação
+               and (AnsiIndexStr(Prod.CFOP,['5922','6922','5118','6118',               // exceção 3 CFOP's excluidos da validação
                                         '5119','6119','5120','6120'  ]) = -1)
                and (NFe.Ide.tpNF = tnSaida)                                        // exceção 4
             then

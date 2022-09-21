@@ -403,6 +403,12 @@
         <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\cloudpossdk-s-1.0.2.jar">
             <Disabled/>
         </JavaReference>
+        <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\cloudpossdkinterface_en_slim.jar">
+            <Disabled/>
+        </JavaReference>
+        <JavaReference Include="..\..\..\..\Fontes\Terceiros\Elgin\cloudpossdkinterfaceimpl_001_en-slim.jar">
+            <Disabled/>
+        </JavaReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

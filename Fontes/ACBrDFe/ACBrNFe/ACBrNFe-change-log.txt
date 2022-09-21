@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2022
+-- ACBrNFeNotasFiscais --
+[-] TK-3082 K01-20 REGRA DE VALIDAÇÃO DE NEGOCIOS NT2021.004 1.34
+  Por : Pandaaa
+
 19/09/2022
 -- ACBrNFeServicos --
 [*] Correção nas URLs de Consulta via QR-Code de MG.

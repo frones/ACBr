@@ -1264,7 +1264,14 @@ begin
           for J:=0 to Prod.med.Count-1 do
           begin
             GravaLog('Validar: 873-Se informado Grupo de Medicamentos (tag:med) obrigatório preenchimento do grupo rastro (id: I80) [nItem: '+IntToStr(Prod.nItem)+']');
-            if NaoEstaVazio(Prod.med[J].cProdANVISA) and (Prod.rastro.Count<=0) then
+            if NaoEstaVazio(Prod.med[J].cProdANVISA)
+               and (Prod.rastro.Count<=0)
+               and (not (NFe.Ide.finNFe in [fnDevolucao,fnAjuste,fnComplementar])) // exceção 1
+               and (not (NFe.Ide.indPres in [pcInternet, pcTeleatendimento]))      // exceção 2
+               and (IndexStr(Prod.CFOP,['5922','6922','5118','6118',               // exceção 3 CFOP's excluidos da validação
+                                        '5119','6119','5120','6120'  ]) = -1)
+               and (NFe.Ide.tpNF = tnSaida)                                        // exceção 4
+            then
               AdicionaErro('873-Rejeição: Operação com medicamentos e não informado os campos de rastreabilidade [nItem: '+IntToStr(Prod.nItem)+']');
           end;
 

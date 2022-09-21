@@ -135,6 +135,11 @@ begin
     begin
       LinhaAtual := FileStr[I];
 
+      // Verificar se é uma linha válida do SPED e não a assinatura do arquivo
+      if (LeftStrNativeString(LinhaAtual, 1) <> '|') and
+         (RightStrNativeString(LinhaAtual, 1) <> '|') then
+        Continue;
+
       if Assigned(FAntesDeInserirLinha) then
         FAntesDeInserirLinha(LinhaAtual, I);
 

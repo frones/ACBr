@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 20/09/2022
+-- ISSSaoPaulo.LerXml --
+[-] Correção na leitura do campo TributacaoRPS, estava faltando a função de conversão.
+   Por: Adonis
+
+20/09/2022
 -- ACBrNFSeXServicos --
 [+] Incluído a cidade: Saudades/SC - Provedor Pronim
    Por: Léo

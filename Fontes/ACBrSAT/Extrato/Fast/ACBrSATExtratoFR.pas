@@ -233,6 +233,8 @@ begin
     FieldByName('Sistema').AsString := Ifthen(Self.Sistema <> '',Self.Sistema,'Projeto ACBr - https://www.projetoacbr.com.br');
     FieldByName('Usuario').AsString := Ifthen(Self.Usuario <> '', Self.Usuario,'');
     FieldByName('MsgAppQRCode').AsString := Ifthen(Self.MsgAppQRCode <> '', Self.MsgAppQRCode,'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)');
+    if Self.Logo <> '' then
+      TBlobField(FieldByName('LogoCarregado')).LoadFromFile(Self.Logo);
     Post;
   end;
 end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2022
+--ACBrSATExtratoFR--
+[*] TK-3072 Extrato SAT - Carregamento de Imagem Header
+  Por : Próton Sistemas
+
 26/08/2022
 -- ACBrSATExtratoFR--
 [-] TK-2881 ACBrSATExtratoFR Ajustes de Margens

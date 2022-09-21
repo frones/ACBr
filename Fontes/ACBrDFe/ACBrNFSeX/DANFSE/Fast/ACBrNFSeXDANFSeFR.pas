@@ -913,7 +913,7 @@ begin
         begin
           CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-          if CodigoIBGE > 0 then
+          if CodigoIBGE >= 1100015 then
             xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
 
           FieldByName('CodigoMunicipio').AsString := xMunicipio;

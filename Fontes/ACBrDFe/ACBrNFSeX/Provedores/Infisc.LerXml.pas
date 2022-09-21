@@ -190,8 +190,8 @@ end;
 procedure TNFSeR_Infisc.LerEnderecoEmitente(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  CodigoIBGE: Integer;
-  xUF: string;
+//  CodigoIBGE: Integer;
+//  xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('end');
 
@@ -206,7 +206,7 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
-
+      {
       CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
       if CodigoIBGE > 0 then
@@ -214,7 +214,7 @@ begin
 
       if UF = '' then
         UF := xUF;
-
+      }
       // versão 1.1
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
       xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPais'), tcStr);
@@ -231,8 +231,8 @@ end;
 procedure TNFSeR_Infisc.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  CodigoIBGE: Integer;
-  xUF: string;
+//  CodigoIBGE: Integer;
+//  xUF: string;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ender');
 
@@ -247,7 +247,7 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('cMun'), tcStr);
       UF              := ObterConteudo(AuxNode.Childrens.FindAnyNs('UF'), tcStr);
       CEP             := ObterConteudo(AuxNode.Childrens.FindAnyNs('CEP'), tcStr);
-
+      {
       CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
       if CodigoIBGE > 0 then
@@ -255,7 +255,7 @@ begin
 
       if UF = '' then
         UF := xUF;
-
+      }
       // versão 1.1
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('cPais'), tcInt);
       xPais      := ObterConteudo(AuxNode.Childrens.FindAnyNs('xPais'), tcStr);

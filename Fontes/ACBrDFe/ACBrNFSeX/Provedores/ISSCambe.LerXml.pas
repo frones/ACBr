@@ -200,8 +200,8 @@ procedure TNFSeR_ISSCambe.LerDadosTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
   ok: Boolean;
-  CodigoIBGE: Integer;
-  xUF: string;
+//  CodigoIBGE: Integer;
+//  xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -229,7 +229,7 @@ begin
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorUF'), tcStr);
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('tomadorPais'), tcInt);
-
+      {
       CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
       if CodigoIBGE > 0 then
@@ -237,6 +237,7 @@ begin
 
       if UF = '' then
         UF := xUF;
+      }
     end;
 
     NFSe.Servico.CodigoMunicipio := NFSe.Tomador.Endereco.CodigoMunicipio;
@@ -247,8 +248,8 @@ end;
 procedure TNFSeR_ISSCambe.LerDadosPrestador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  CodigoIBGE: Integer;
-  xUF: string;
+//  CodigoIBGE: Integer;
+//  xUF: string;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -273,7 +274,7 @@ begin
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorCEP'), tcStr);
       CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorMunicipio'), tcStr);
       UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('prestadorUF'), tcStr);
-
+      {
       CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
       if CodigoIBGE > 0 then
@@ -281,6 +282,7 @@ begin
 
       if UF = '' then
         UF := xUF;
+      }
     end;
 
     with NFSe.Prestador.Contato do

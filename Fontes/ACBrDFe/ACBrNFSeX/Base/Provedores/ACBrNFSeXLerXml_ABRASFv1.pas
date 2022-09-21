@@ -220,8 +220,8 @@ procedure TNFSeR_ABRASFv1.LerEnderecoPrestadorServico(const ANode: TACBrXmlNode;
   aTag: string);
 var
   AuxNode: TACBrXmlNode;
-  xUF: string;
-  CodigoIBGE: Integer;
+//  xUF: string;
+//  CodigoIBGE: Integer;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -247,14 +247,15 @@ begin
 
       CodigoPais := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoPais'), tcInt);
       CEP        := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-
+      {
       CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-      if CodigoIBGE > 0 then
+      if CodigoIBGE >= 1100015 then
         xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
 
       if UF = '' then
         UF := xUF;
+      }
     end;
   end;
 end;
@@ -262,8 +263,8 @@ end;
 procedure TNFSeR_ABRASFv1.LerEnderecoTomador(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  xUF: string;
-  CodigoIBGE: Integer;
+//  xUF: string;
+//  CodigoIBGE: Integer;
 begin
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -288,14 +289,15 @@ begin
         UF := ObterConteudo(AuxNode.Childrens.FindAnyNs('Estado'), tcStr);
 
       CEP := ObterConteudo(AuxNode.Childrens.FindAnyNs('Cep'), tcStr);
-
+      {
       CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
 
-      if CodigoIBGE > 0 then
+      if CodigoIBGE >= 1100015 then
         xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
 
       if UF = '' then
         UF := xUF;
+      }
     end;
   end;
 end;

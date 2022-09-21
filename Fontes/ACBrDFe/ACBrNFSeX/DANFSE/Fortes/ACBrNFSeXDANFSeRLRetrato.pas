@@ -389,8 +389,10 @@ begin
   	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
 	  // do tomador em vez do que foi informado em Serviço.
     CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
+    xMunicipio := '';
+    xUF := '';
 
-    if CodigoIBGE > 0 then
+    if CodigoIBGE >= 1100015 then
       xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
 
     rllMunicipioPrestacaoServico.Caption := xMunicipio;
@@ -515,6 +517,9 @@ begin
 end;
 
 procedure TfrlXDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   inherited;
 
@@ -551,10 +556,18 @@ begin
           rllPrestMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio
         else
         begin
-          if xMunicipio <> '' then
-            rllPrestMunicipio.Caption := xMunicipio
-          else
-            rllPrestMunicipio.Caption := CodigoMunicipio;
+          xUF := '';
+          CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+          if CodigoIBGE >= 1100015 then
+          begin
+            xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+            if UF = '' then
+              UF := xUF;
+          end;
+
+          rllPrestMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
         end;
       end
       else
@@ -584,6 +597,9 @@ end;
 
 procedure TfrlXDANFSeRLRetrato.rlbTomadorBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  CodigoIBGE: Integer;
+  xUF: string;
 begin
   inherited;
 
@@ -624,10 +640,18 @@ begin
           rllTomaMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio
         else
         begin
-          if xMunicipio <> '' then
-            rllTomaMunicipio.Caption := xMunicipio
-          else
-            rllTomaMunicipio.Caption := CodigoMunicipio;
+          xUF := '';
+          CodigoIBGE := StrToIntDef(CodigoMunicipio, 0);
+
+          if CodigoIBGE >= 1100015 then
+          begin
+            xMunicipio := ObterNomeMunicipio(CodigoIBGE, xUF);
+
+            if UF = '' then
+              UF := xUF;
+          end;
+
+          rllTomaMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
         end;
       end;
 

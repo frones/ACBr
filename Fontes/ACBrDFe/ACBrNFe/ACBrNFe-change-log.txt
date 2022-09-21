@@ -45,6 +45,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/09/2022
+-- ACBrNFeServicos --
+[*] Correção na URL de Consulta via QR-Code de MG (Homologação).
+   Por: Italo Giurizzato Junior
 -- ACBrNFeNotasFiscais --
 [-] TK-3082 K01-20 REGRA DE VALIDAÇÃO DE NEGOCIOS NT2021.004 1.34
   Por : Pandaaa

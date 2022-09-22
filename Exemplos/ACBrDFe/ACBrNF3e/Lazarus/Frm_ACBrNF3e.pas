@@ -37,7 +37,7 @@ interface
 uses
   LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls,
-  SynEdit, SynHighlighterXML,
+  SynEdit, SynHighlighterXML, ACBrXmlBase,ACBrNF3eConversao,
   ACBrDFe, ACBrDFeReport, ACBrBase, ACBrUtil,
   ACBrPosPrinter, ACBrNF3eDANF3eClass, ACBrNF3eDANF3eESCPOS, ACBrNF3e, ACBrMail;
 
@@ -331,7 +331,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   IniFiles, Printers,
-  pcnAuxiliar, pcnConversao, pcnConversaoNF3e,
+  pcnAuxiliar, pcnConversao,
   ACBrDFeUtil, ACBrDFeSSL,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
 
@@ -356,8 +356,8 @@ begin
 
     // TpcnTipoAmbiente = (taProducao, taHomologacao);
     case rgTipoAmb.ItemIndex of
-      0: Ide.tpAmb := taProducao;
-      1: Ide.tpAmb := taHomologacao;
+      0: Ide.tpAmb := ACBrXmlBase.taProducao;
+      1: Ide.tpAmb := ACBrXmlBase.taHomologacao;
     end;
 
     Ide.modelo := 66;
@@ -366,9 +366,9 @@ begin
     Ide.cNF    := GerarCodigoDFe(Ide.nNF);
     Ide.dhEmi  := Now;
     // TpcnTipoEmissao = (teNormal, teOffLine);
-    Ide.tpEmis  := teNormal;
+    Ide.tpEmis  := ACBrXmlBase.teNormal;
     Ide.cMunFG  := 3503208;
-    Ide.finNF3e := fnNormal;
+    Ide.finNF3e := ACBrNF3eConversao.fnNormal;
     Ide.verProc := '1.0.0.0'; //Versão do seu sistema
 
     // Alimentar os 2 campos abaixo só em caso de contingência
@@ -397,7 +397,7 @@ begin
     //
     Dest.xNome     := edtEmitRazao.Text;
     Dest.CNPJCPF   := edtEmitCNPJ.Text;
-    Dest.indIEDest := inNaoContribuinte;
+    Dest.indIEDest := ACBrNF3eConversao.inNaoContribuinte;
     Dest.IE        := edtEmitIE.Text;
     Dest.IM        := '';
     Dest.cNIS      := '';
@@ -464,15 +464,15 @@ begin
             qFaturada    := 50;
             vItem        := 2;
             vProd        := qFaturada * vItem;
-            indDevolucao := tiNao;
-            indPrecoACL  := tiNao;
+            indDevolucao := ACBrNF3eConversao.tiNao;
+            indPrecoACL  := ACBrNF3eConversao.tiNao;
           end;
 
           with Imposto do
           begin
             with ICMS do
             begin
-              CST   := cst00;
+              CST   := ACBrNF3eConversao.cst00;
               vBC   := 100;
               pICMS := 18;
               vICMS := vBC * pICMS / 100;
@@ -480,7 +480,7 @@ begin
 
             with PIS do
             begin
-              CST  := pis01;
+              CST  := ACBrNF3eConversao.pis01;
               vBC  := 100;
               pPIS := 2;
               vPIS := vBC * pPIS / 100;
@@ -488,7 +488,7 @@ begin
 
             with COFINS do
             begin
-              CST     := cof01;
+              CST     := ACBrNF3eConversao.cof01;
               vBC     := 100;
               pCOFINS := 1.5;
               vCOFINS := vBC * pCOFINS / 100;
@@ -789,7 +789,7 @@ begin
     infEvento.dhEvento := now;
     infEvento.tpEvento := teCCe;
     infEvento.nSeqEvento := StrToInt(nSeqEvento);
-    infEvento.detEvento.xCorrecao := Correcao;
+    infEvento.detEvento.xJust := Correcao;
   end;
 
   ACBrNF3e1.EnviarEvento(StrToInt(idLote));
@@ -1286,7 +1286,7 @@ begin
   begin
     lMsg:=
     'Id: ' + Id + #13 +
-    'tpAmb: ' + TpAmbToStr(tpAmb) + #13 +
+    'tpAmb: ' + TipoAmbienteToStr(tpAmb) + #13 +
     'verAplic: ' + verAplic + #13 +
     'cOrgao: ' + IntToStr(cOrgao) + #13 +
     'cStat: ' + IntToStr(cStat) + #13 +

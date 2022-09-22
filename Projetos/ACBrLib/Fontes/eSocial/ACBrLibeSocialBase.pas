@@ -256,8 +256,6 @@ begin
      if not FileExists(AIniFile) then
        raise Exception.Create(ACBrStr(Format(SErroeSocialAbrir, [AIniFile])));
 
-     with TACBrLibeSocial(pLib) do
-     begin
         eSocialDM.Travar;
         try
            eSocialDM.ACBreSocial1.Eventos.LoadFromIni(AIniFile);
@@ -296,7 +294,6 @@ begin
         finally
           eSocialDM.Destravar;
         end;
-     end;
 
   except
     on E: EACBrLibException do
@@ -316,7 +313,6 @@ begin
      else
       GravarLog('eSocial_Limpar', logNormal);
 
-    begin
      eSocialDM.Travar;
       try
         eSocialDM.ACBreSocial1.Eventos.Clear;
@@ -324,7 +320,6 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-    end;
 
   except
     on E: EACBrLibException do
@@ -386,7 +381,6 @@ begin
     if DirectoryExists(idEmpregador) then
       raise EACBrLibException.Create(ErrDiretorioNaoExiste, 'Diretorio não existe');
 
-    begin
       eSocialDM.Travar;
       try
         eSocialDM.ACBreSocial1.Configuracoes.Geral.IdEmpregador := idEmpregador;
@@ -394,8 +388,6 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-
-    end;
 
   except
     on E: EACBrLibException do
@@ -420,7 +412,6 @@ begin
     if EstaVazio(idTransmissor)then
          raise Exception.Create('Valor Nulo');
 
-    begin
       eSocialDM.Travar;
       try
         eSocialDM.ACBreSocial1.Configuracoes.Geral.IdTransmissor := idTransmissor;
@@ -428,7 +419,6 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-    end;
 
   except
     on E: EACBrLibException do
@@ -451,7 +441,6 @@ begin
      else
       GravarLog('eSocial_SetTipoEmpregador', logNormal);
 
-     begin
         eSocialDM.Travar;
        try
          eSocialDM.ACBreSocial1.Configuracoes.Geral.TipoEmpregador := TEmpregador( tipoEmpregador );
@@ -459,8 +448,6 @@ begin
        finally
          eSocialDM.Destravar;
        end;
-
-     end;
 
    except
      on E: EACBrLibException do
@@ -485,7 +472,6 @@ begin
     else
       GravarLog('eSocial_SetVersaoDF', logNormal);
 
-    begin
       eSocialDM.Travar;
       try
         eSocialDM.ACBreSocial1.Configuracoes.Geral.VersaoDF := StrToVersaoeSocial(OK, versao);
@@ -493,7 +479,6 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-    end;
 
   except
     on E: EACBrLibException do
@@ -523,7 +508,6 @@ begin
     else
       GravarLog('eSocial_ConsultaIdentificadoresEventosEmpregador', logNormal);
 
-    begin
       eSocialDM.Travar;
       try
 
@@ -548,7 +532,6 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-    end;
 
   except
     on E: EACBrLibException do
@@ -581,7 +564,6 @@ begin
     else
      GravarLog('eSocial_ConsultaIdentificadoresEventosTabela', logNormal);
 
-    begin
       eSocialDM.Travar;
       try
         if ( (EstaVazio(idEmpregador)) or (EstaVazio(Chave)) or (DataInicial <= 0 ) or (DataFinal <= 0) ) then
@@ -604,7 +586,6 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-    end;
 
   except
     on E: EACBrLibException do
@@ -634,7 +615,6 @@ begin
     else
       GravarLog('eSocial_ConsultaIdentificadoresEventosTrabalhador', logNormal);
 
-    begin
       eSocialDM.Travar;
       try
         if ((EstaVazio(idEmpregador)) or (EstaVazio(CPFTrabalhador))
@@ -660,7 +640,6 @@ begin
         eSocialDM.Destravar;
       end;
 
-    end;
 
   except
     on E: EACBrLibException do
@@ -693,7 +672,6 @@ begin
      else
       GravarLog('eSocial_DownloadEventos', logNormal);
 
-    begin
      eSocialDM.Travar;
       try
 
@@ -718,7 +696,6 @@ begin
         eSocialDM.Destravar;
       end;
 
-    end;
 
   except
     on E: EACBrLibException do

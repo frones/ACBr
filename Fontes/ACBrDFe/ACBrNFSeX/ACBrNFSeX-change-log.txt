@@ -43,10 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
-20/09/2022
+22/09/2022
+-- Agili.LerXml --
+[-] Correção, na leitura do XML da NFS-e não estava alimentando o campo: ItemListaServico
+   Por: Diego Reckziegel
+
+21/09/2022
 -- Diversos --
 [*] A execução da função ObterNomeMunicipio nas units que fazem a leitura do XML da
-    NFS-e estava impedindo salvar o XML caso a execução da função gera-se uma excessão.
+    NFS-e estava impedindo salvar o XML caso a execução da função gera-se uma exceção.
     Agora a função é executada no momento da impressão do DANFSE.
    Por: Italo Giurizzato Junior
 -- ISSSaoPaulo.LerXml --

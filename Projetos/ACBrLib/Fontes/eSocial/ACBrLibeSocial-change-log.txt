@@ -44,6 +44,11 @@ Símbolo : Significado
 
 22/08/2022
 --- ACBrLibeSocial ---
+[*] Correção unit ACBrLibeSocialMT
+    Por: Antonio Carlos
+
+22/08/2022
+--- ACBrLibeSocial ---
 [*] Correção Access Violation de alguns métodos da ACBrLibeSocial
     Por: Antonio Carlos / Juliomar Marchetti  
 

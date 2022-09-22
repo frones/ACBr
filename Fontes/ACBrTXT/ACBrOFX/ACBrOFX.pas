@@ -158,6 +158,7 @@ var
   oItem: TOFXItem;
   sLine: string;
   Amount: string;
+  LMemo : string;
 begin
   Clear;
   DateStart := '';
@@ -168,7 +169,6 @@ begin
     raise Exception.Create(FILE_NOT_FOUND);
 
   oFile := TStringList.Create;
-
   try
     oFile.LoadFromFile(FOFXFile);
     i := 0;
@@ -222,9 +222,15 @@ begin
             sLine := oFile.Strings[i];
             if FindString('<TRNTYPE>', sLine) then
             begin
-              if (InfLine(sLine) = '0') or (InfLine(sLine) = 'CREDIT') OR (InfLine(sLine) = 'DEP') then
-                oItem.MovType := 'C'
-              else if (InfLine(sLine) = '1') or (InfLine(sLine) = 'DEBIT') OR (InfLine(sLine) = 'XFER') then
+              if (InfLine(sLine) = '0')
+                or (InfLine(sLine) = 'CREDIT')
+                or (InfLine(sLine) = 'DEP')
+                then
+                  oItem.MovType := 'C'
+              else
+                if (InfLine(sLine) = '1')
+                  or (InfLine(sLine) = 'DEBIT')
+                  or (InfLine(sLine) = 'XFER') then
                 oItem.MovType := 'D'
               else
                 oItem.MovType := 'OTHER';
@@ -237,7 +243,11 @@ begin
             if FindString('<CHKNUM>', sLine) or FindString('<CHECKNUM>', sLine) then
               oItem.Document := InfLine(sLine);
             if FindString('<MEMO>', sLine) then
+            begin
               oItem.Description := InfLine(sLine);
+              if Pos('REC', UpperCase(oItem.Description)) > 0 then
+                oItem.MovType := 'C';
+            end;
             if FindString('<TRNAMT>', sLine) then
             begin
               Amount := InfLine(sLine);

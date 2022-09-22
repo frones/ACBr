@@ -76,7 +76,7 @@ type
     ACBrPSPShipay1: TACBrPSPShipay;
     ACBrPSPSicoob1: TACBrPSPSicoob;
     ACBrPSPSicredi1: TACBrPSPSicredi;
-    btSantanderPFXConverter: TBitBtn;
+    btSantanderExtrairPEM: TBitBtn;
     btCobVCancelar: TBitBtn;
     btCobVCancelarLimpar: TBitBtn;
     btCobVConsultar: TBitBtn;
@@ -118,6 +118,13 @@ type
     btQREColar: TBitBtn;
     btQRDColar: TBitBtn;
     btQREGerar: TBitBtn;
+    btSicoobExtrairChaveCertificado: TBitBtn;
+    btSicoobExtrairChaveCertificadoArqPFX: TSpeedButton;
+    btSicoobExtrairChaveCertificadoVerSenhaPFX: TSpeedButton;
+    btSicrediGerarCertificado: TBitBtn;
+    btSicrediGerarCertificadoInfo: TSpeedButton;
+    btSicrediGerarChaveInfo: TSpeedButton;
+    btSicrediGerarChavePrivada: TBitBtn;
     btSolicitarDevolucaoPix: TBitBtn;
     btConsultarPix: TBitBtn;
     btConsultarPixRecebidos: TBitBtn;
@@ -132,12 +139,12 @@ type
     cbCobVJurosModalidade: TComboBox;
     cbCobVMultaModalidade: TComboBox;
     cbSicoobTipoChave: TComboBox;
+    cbSicrediTipoChave: TComboBox;
     cbxAmbiente: TComboBox;
     cbxItauTipoChave: TComboBox;
     cbxNivelLog: TComboBox;
     cbxPSPAtual: TComboBox;
     cbxRecebedorUF: TComboBox;
-    cbSicrediTipoChave: TComboBox;
     cbSantanderTipoChave: TComboBox;
     cbxSolicitarDevolucaoPix_Natureza: TComboBox;
     cbxBBTipoChave: TComboBox;
@@ -174,14 +181,25 @@ type
     edFluxoItemValor: TEdit;
     edItauRenovarCertificadoArq: TEdit;
     edSantanderArqCertificadoPFX: TEdit;
-    edSantanderArqCertificadoPFXConverter: TEdit;
-    edSantanderArqCertificadoPEM: TEdit;
+    edSantanderExtrairCertificadoPFX: TEdit;
+    edSantanderExtrairCertificadoPEM: TEdit;
     edSantanderSenhaCertificadoPFX: TEdit;
-    edSantanderSenhaCertificadoPFXConverter: TEdit;
+    edSantanderExtrairCertificadoSenhaPFX: TEdit;
     edSicoobArqCertificado: TEdit;
     edSicoobArqChavePrivada: TEdit;
     edSicoobChavePIX: TEdit;
     edSicoobClientID: TEdit;
+    edSicoobExtrairCertificado: TEdit;
+    edSicoobExtrairChaveCertificadoArqPFX: TEdit;
+    edSicoobExtrairChaveCertificadoSenhaPFX: TEdit;
+    edSicoobExtrairChavePrivada: TEdit;
+    edSicrediArqCertificado: TEdit;
+    edSicrediArqChavePrivada: TEdit;
+    edSicrediChavePIX: TEdit;
+    edSicrediClientID: TEdit;
+    edSicrediClientSecret: TEdit;
+    edSicrediGerarCertificado: TEdit;
+    edSicrediGerarChavePrivada: TEdit;
     edtArqLog: TEdit;
     edtProxyHost: TEdit;
     edtProxySenha: TEdit;
@@ -190,11 +208,6 @@ type
     edtRecebedorCEP: TEdit;
     edtRecebedorCidade: TEdit;
     edtRecebedorNome: TEdit;
-    edSicrediArqCertificado: TEdit;
-    edSicrediArqChavePrivada: TEdit;
-    edSicrediChavePIX: TEdit;
-    edSicrediClientID: TEdit;
-    edSicrediClientSecret: TEdit;
     edSantanderChavePIX: TEdit;
     edSantanderConsumerKey: TEdit;
     edSantanderConsumerSecret: TEdit;
@@ -289,16 +302,11 @@ type
     Label39: TLabel;
     Label42: TLabel;
     lbSantanderArqCertificadoPFX: TLabel;
-    lbSantanderArqCertificadoPFXConverter: TLabel;
-    lbSantanderArqCertificadoPEM: TLabel;
+    lbSantanderExtrairCertificadoPFX: TLabel;
+    lbSantanderExtrairCertificadoPEM: TLabel;
     lbSantanderErroCertificadoPFX: TLabel;
     lbSantanderSenhaCertificado: TLabel;
-    lbSantanderSenhaCertificadoConverter: TLabel;
-    lbSicoobArquivoCertificado: TLabel;
-    lbSicoobArquivoChavePrivada: TLabel;
-    lbSicoobChavePix: TLabel;
-    lbSicoobClientID: TLabel;
-    lbSicoobTipoChave: TLabel;
+    lbSantanderExtrairCertificadoSenhaPFX: TLabel;
     lbQRDTxID: TLabel;
     Label47: TLabel;
     Label48: TLabel;
@@ -306,16 +314,6 @@ type
     Label50: TLabel;
     Label8: TLabel;
     Label9: TLabel;
-    lbSicoobErroCertificado: TLabel;
-    lbSicoobErroChavePrivada: TLabel;
-    lbSicrediArqChavePrivada: TLabel;
-    lbSicrediChavePIX: TLabel;
-    lbSicrediArqCertificado: TLabel;
-    lbSicrediClientSecret: TLabel;
-    lbSicrediClientID: TLabel;
-    lbSicrediErroCertificado: TLabel;
-    lbSicrediErroChavePrivada: TLabel;
-    lbSicrediTipoChave: TLabel;
     lbCobVCancelarTxID: TLabel;
     lbCobVCompradorDoc: TLabel;
     lbCobVCompradorNome: TLabel;
@@ -345,6 +343,26 @@ type
     lbFluxoItemValor: TLabel;
     lbItauRenovarCertificadoArq: TLabel;
     lbItauRenovarCertificadoPEM: TLabel;
+    lbSicoobArquivoCertificado: TLabel;
+    lbSicoobArquivoChavePrivada: TLabel;
+    lbSicoobChavePix: TLabel;
+    lbSicoobClientID: TLabel;
+    lbSicoobErroCertificado: TLabel;
+    lbSicoobErroChavePrivada: TLabel;
+    lbSicoobExtrairCertificado: TLabel;
+    lbSicoobExtrairChaveCertificadoArqPFX: TLabel;
+    lbSicoobExtrairChaveCertificadoSenhaPFX: TLabel;
+    lbSicoobTipoChave: TLabel;
+    lbSicrediArqCertificado: TLabel;
+    lbSicrediArqChavePrivada: TLabel;
+    lbSicrediChavePIX: TLabel;
+    lbSicrediClientID: TLabel;
+    lbSicrediClientSecret: TLabel;
+    lbSicrediErroCertificado: TLabel;
+    lbSicrediErroChavePrivada: TLabel;
+    lbSicrediGerarCertificado: TLabel;
+    lbSicrediGerarChavePrivada: TLabel;
+    lbSicrediTipoChave: TLabel;
     lConsultarPixE2eid1: TLabel;
     lConsultarPixE2eid2: TLabel;
     lbCancelarCobrancaTxID: TLabel;
@@ -396,6 +414,8 @@ type
     mmCobVConsultar: TMemo;
     mmCobVConsultarLista: TMemo;
     mmItauRenovarCertificadoPEM: TMemo;
+    mmSicrediGerarCertificado: TMemo;
+    mmSicrediGerarChavePrivada: TMemo;
     mQRE: TMemo;
     mQRD: TMemo;
     mSolicitarDevolucaoPix: TMemo;
@@ -405,14 +425,16 @@ type
     mCriarCobrancaImediata: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
+    pnSicoobCredenciais: TPanel;
     pgSantander: TPageControl;
     Panel10: TPanel;
     Panel11: TPanel;
     Panel12: TPanel;
-    pnSantanderConverterCertificado: TPanel;
-    pConfPSPSantander: TPanel;
+    pgSicoob: TPageControl;
+    pgSicredi: TPageControl;
     pnConfPSPSicoob: TPanel;
-    pnConfPSPSicredi: TPanel;
+    pnSantanderExtrairCertificado: TPanel;
+    pConfPSPSantander: TPanel;
     pgTestesEndPointCobV: TPageControl;
     pItauEditCertificado1: TPanel;
     pnCobVCancelarParams: TPanel;
@@ -472,6 +494,9 @@ type
     pnFluxoStatus: TPanel;
     pnFluxoTotal: TPanel;
     pnFluxoTotalStr: TPanel;
+    pnSicoobExtrairChaveCertificado: TPanel;
+    pnSicrediCredenciais: TPanel;
+    pnSicrediGerarChaveCertificado: TPanel;
     pQREDados: TPanel;
     pQRDDados: TPanel;
     pQREGerado: TPanel;
@@ -497,10 +522,10 @@ type
     sbItauAcharArqCertificado: TSpeedButton;
     sbItauAcharArqChavePrivada: TSpeedButton;
     sbSantanderAcharCertificadoPFX: TSpeedButton;
-    sbSantanderAcharCertificadoPFXConverter: TSpeedButton;
-    sbSantanderPFXConverterInfo: TSpeedButton;
+    sbSantanderExtrairCertificadoPFX: TSpeedButton;
+    sbSantanderExtrairCertificadoInfo: TSpeedButton;
     sbSantanderVerSenhaPFX: TSpeedButton;
-    sbSantanderPFXVerSenhaConverter: TSpeedButton;
+    sbSantanderExtrairCertificadoVerSenhaPFX: TSpeedButton;
     sbSicoobAcharArqCertificado: TSpeedButton;
     sbSicoobAcharChavePrivada: TSpeedButton;
     sbSicrediAcharArqCertificado: TSpeedButton;
@@ -530,11 +555,15 @@ type
     seConsultarPixRecebidosPagina: TSpinEdit;
     seConsultarPixRecebidosItensPagina: TSpinEdit;
     seTimeout: TSpinEdit;
+    lbSicoobExtrairChavePrivada: TLabel;
+    btSicoobExtrairChaveCertificadoInfo: TSpeedButton;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
+    tsSicoobCredenciais: TTabSheet;
     tsSantanderCredenciais: TTabSheet;
-    tsSantanderConverterCertificado: TTabSheet;
+    tsSantanderExtrairCertificado: TTabSheet;
     tsSicoob: TTabSheet;
+    tsSicoobExtrairChaveCertificado: TTabSheet;
     tsSicredi: TTabSheet;
     tsItauRenovarChaveCertificado: TTabSheet;
     tmConsultarDevolucao: TTimer;
@@ -558,6 +587,8 @@ type
     tsItauCertificado: TTabSheet;
     tsCriarCobrancaImediata: TTabSheet;
     tsConsultarCobrancaImediata: TTabSheet;
+    tsSicrediCredenciais: TTabSheet;
+    tsSicrediGerarChaveCertificado: TTabSheet;
     tsSolicitarDevolucaoPix: TTabSheet;
     tsConsultarDevolucaoPix: TTabSheet;
     tsConsultarPix: TTabSheet;
@@ -580,7 +611,7 @@ type
     procedure ACBrPSPBancoDoBrasil1QuandoReceberRespostaHttp(const AURL: String;
       const AMethod: String; RespHeaders: TStrings; var AResultCode: Integer;
       var RespostaHttp: AnsiString);
-    procedure btSantanderPFXConverterClick(Sender: TObject);
+    procedure btSantanderExtrairPEMClick(Sender: TObject);
     procedure btBBSimulaPagamento_ExecutarClick(Sender: TObject);
     procedure btBBSimulaPagamento_LimparClick(Sender: TObject);
     procedure btCancelarCobrancaClick(Sender: TObject);
@@ -626,6 +657,13 @@ type
     procedure btLerParametrosClick(Sender: TObject);
     procedure btQREColarClick(Sender: TObject);
     procedure btSalvarParametrosClick(Sender: TObject);
+    procedure btSicoobExtrairChaveCertificadoArqPFXClick(Sender: TObject);
+    procedure btSicoobExtrairChaveCertificadoClick(Sender: TObject);
+    procedure btSicoobExtrairChaveCertificadoInfoClick(Sender: TObject);
+    procedure btSicoobExtrairChaveCertificadoVerSenhaPFXClick(Sender: TObject);
+    procedure btSicrediGerarChaveCertificadoInfoClick(Sender: TObject);
+    procedure btSicrediGerarChavePrivadaClick(Sender: TObject);
+    procedure btSicrediGerarCertificadoClick(Sender: TObject);
     procedure btSolicitarDevolucaoPixClick(Sender: TObject);
     procedure cbxAmbienteChange(Sender: TObject);
     procedure cbxPSPAtualChange(Sender: TObject);
@@ -634,6 +672,8 @@ type
     procedure edSicoobArqChavePrivadaExit(Sender: TObject);
     procedure edSicoobArqsChange(Sender: TObject);
     procedure edSicoobChavePIXChange(Sender: TObject);
+    procedure edSicrediArqsChange(Sender: TObject);
+    procedure edSicrediChavePIXChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
     procedure edtCriarCobrancaImediata_CPF_CNPJChange(Sender: TObject);
     procedure edtCriarCobrancaImediata_NomeDevedorChange(Sender: TObject);
@@ -651,7 +691,6 @@ type
     procedure pgPrincipalChange(Sender: TObject);
     procedure pgPSPItauChaveCertificadoChange(Sender: TObject);
     procedure QuandoMudarDadosQRCode(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure imgInfoMCCClick(Sender: TObject);
     procedure lURLTEFClick(Sender: TObject);
     procedure sbArqLogClick(Sender: TObject);
@@ -659,20 +698,20 @@ type
     procedure sbCriarCobrancaImediata_GerarTxIdClick(Sender: TObject);
     procedure sbItauAcharArqCertificadoClick(Sender: TObject);
     procedure sbItauAcharArqChavePrivadaClick(Sender: TObject);
-    procedure sbSantanderAcharCertificadoPFXConverterClick(Sender: TObject);
+    procedure sbSantanderExtrairCertificadoPFXClick(Sender: TObject);
     procedure sbSantanderAcharCertificadoPFXClick(Sender: TObject);
-    procedure sbSantanderPFXConverterInfoClick(Sender: TObject);
-    procedure sbSantanderPFXVerSenhaConverterClick(Sender: TObject);
+    procedure sbSantanderExtrairCertificadoInfoClick(Sender: TObject);
+    procedure sbSantanderExtrairCertificadoVerSenhaPFXClick(Sender: TObject);
     procedure sbSantanderVerSenhaPFXClick(Sender: TObject);
     procedure sbSicoobAcharArqCertificadoClick(Sender: TObject);
     procedure sbSicoobAcharChavePrivadaClick(Sender: TObject);
+    procedure sbSicrediAcharChavePrivadaClick(Sender: TObject);
+    procedure sbSicrediAcharArqCertificadoClick(Sender: TObject);
     procedure sbVerSenhaProxyClick(Sender: TObject);
     procedure tmConsultarDevolucaoTimer(Sender: TObject);
     procedure tmConsultarPagtoTimer(Sender: TObject);
-    procedure sbSicrediAcharChavePrivadaClick(Sender: TObject);
-    procedure sbSicrediAcharArqCertificadoClick(Sender: TObject);
-    procedure edSicrediArqsChange(Sender: TObject);
-    procedure edSicrediChavePIXChange(Sender: TObject);
+    procedure tsSicrediGerarChaveCertificadoShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     fFluxoDados: TFluxoPagtoDados;
 
@@ -794,7 +833,7 @@ var
 begin
   if (Trim(edtArqLog.Text) = '') then
   begin
-    MessageDlg('Arquivo de Log não informado', mtError, [mbOK], 0);
+    MessageDlg(ACBrStr('Arquivo de Log não informado'), mtError, [mbOK], 0);
     Exit;
   end;
 
@@ -804,7 +843,7 @@ begin
     AFileLog := edtArqLog.Text;
 
   if not FileExists(AFileLog) then
-    MessageDlg('Arquivo '+AFileLog+' não encontrado', mtError, [mbOK], 0)
+    MessageDlg(ACBrStr('Arquivo '+AFileLog+' não encontrado'), mtError, [mbOK], 0)
   else
     OpenURL(AFileLog);
 end;
@@ -847,10 +886,10 @@ begin
   ValidarChavePSPItau;
 end;
 
-procedure TForm1.sbSantanderAcharCertificadoPFXConverterClick(Sender: TObject);
+procedure TForm1.sbSantanderExtrairCertificadoPFXClick(Sender: TObject);
 begin
   if OpenDialog1.Execute then
-    edSantanderArqCertificadoPFXConverter.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+    edSantanderExtrairCertificadoPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
 end;
 
 procedure TForm1.sbSantanderAcharCertificadoPFXClick(Sender: TObject);
@@ -860,7 +899,7 @@ begin
   ValidarCertificadoPSPSantander;
 end;
 
-procedure TForm1.sbSantanderPFXConverterInfoClick(Sender: TObject);
+procedure TForm1.sbSantanderExtrairCertificadoInfoClick(Sender: TObject);
 begin
   MessageDlg(ACBrStr('PSP Santander solicita um arquivo em formato PEM para ' +
     'disponibilizar as credenciais Consumer Key e Consumer Secret.' + sLineBreak +
@@ -868,18 +907,18 @@ begin
     'feita no Internet Banking Santander!'), mtInformation, [mbOK], 0);
 end;
 
-procedure TForm1.sbSantanderPFXVerSenhaConverterClick(Sender: TObject);
+procedure TForm1.sbSantanderExtrairCertificadoVerSenhaPFXClick(Sender: TObject);
 begin
   {$IfDef FPC}
-  if sbSantanderPFXVerSenhaConverter.Down then
-    edSantanderSenhaCertificadoPFXConverter.EchoMode := emNormal
+  if sbSantanderExtrairCertificadoVerSenhaPFX.Down then
+    edSantanderExtrairCertificadoSenhaPFX.EchoMode := emNormal
   else
-    edSantanderSenhaCertificadoPFXConverter.EchoMode := emPassword;
+    edSantanderExtrairCertificadoSenhaPFX.EchoMode := emPassword;
   {$Else}
-  if sbSantanderPFXVerSenhaConverter.Down then
-    edSantanderSenhaCertificadoPFXConverter.PasswordChar := #0
+  if sbSantanderExtrairCertificadoVerSenhaPFX.Down then
+    edSantanderExtrairCertificadoSenhaPFX.PasswordChar := #0
   else
-    edSantanderSenhaCertificadoPFXConverter.PasswordChar := '*';
+    edSantanderExtrairCertificadoSenhaPFX.PasswordChar := '*';
   {$EndIf}
 end;
 
@@ -982,6 +1021,28 @@ begin
   end;
 end;
 
+procedure TForm1.tsSicrediGerarChaveCertificadoShow(Sender: TObject);
+var
+  wSL: TStringList;
+begin
+  wSL := TStringList.Create;
+  try
+    if FileExists(edSicrediGerarChavePrivada.Text) then
+    begin
+      wSL.LoadFromFile(edSicrediGerarChavePrivada.Text);
+      mmSicrediGerarChavePrivada.Text := wSL.Text;
+    end;
+
+    if FileExists(edSicrediGerarCertificado.Text) then
+    begin
+      wSL.LoadFromFile(edSicrediGerarCertificado.Text);
+      mmSicrediGerarCertificado.Text := wSL.Text;
+    end;
+  finally
+    wSL.Free;
+  end;
+end;
+
 function TForm1.GetNomeArquivoConfiguracao: String;
 begin
   Result := ChangeFileExt(Application.ExeName,'.ini');
@@ -1051,33 +1112,34 @@ begin
   end;
 end;
 
-procedure TForm1.btSantanderPFXConverterClick(Sender: TObject);
+procedure TForm1.btSantanderExtrairPEMClick(Sender: TObject);
 var                
   wArqPEM: String;
   wSL: TStringList;
 begin
-  if EstaVazio(edSantanderArqCertificadoPFXConverter.Text) then
+  if EstaVazio(edSantanderExtrairCertificadoPFX.Text) or
+     (not FileExists(edSantanderExtrairCertificadoPFX.Text)) then
   begin
-    MessageDlg('Arquivo PFX não informado', mtError, [mbOK], 0);
+    MessageDlg(ACBrStr('Arquivo PFX não informado/existe'), mtError, [mbOK], 0);
     Exit;
   end;
 
-  if EstaVazio(edSantanderArqCertificadoPEM.Text) then
+  if EstaVazio(edSantanderExtrairCertificadoPEM.Text) then
   begin
-    MessageDlg('Arquivo de destino PEM não informado', mtError, [mbOK], 0);
+    MessageDlg(ACBrStr('Arquivo de destino PEM não informado'), mtError, [mbOK], 0);
     Exit;
   end;
 
   wSL := TStringList.Create;
   try
-    wArqPEM := edSantanderArqCertificadoPEM.Text;
+    wArqPEM := edSantanderExtrairCertificadoPEM.Text;
     ACBrOpenSSLUtils1.LoadPFXFromFile(
-      edSantanderArqCertificadoPFXConverter.Text,
-      edSantanderSenhaCertificadoPFXConverter.Text);
+      edSantanderExtrairCertificadoPFX.Text,
+      edSantanderExtrairCertificadoSenhaPFX.Text);
     wSL.Text := ACBrOpenSSLUtils1.CertificateAsString;
     wSL.SaveToFile(wArqPEM);
 
-    MessageDlg('Arquivo PEM gerado em: ' + wArqPEM, mtError, [mbOK], 0);
+    MessageDlg('Arquivo PEM gerado em: ' + wArqPEM, mtInformation, [mbOK], 0);
   finally
     wSL.Free;
   end;
@@ -1092,10 +1154,10 @@ begin
   VerificarConfiguracao;
   mBBSimulaPagamento.Lines.Clear;
   if not (ACBrPixCD1.PSP is TACBrPSPBancoDoBrasil) then
-    raise Exception.Create('PSP Configurado, não é Banco do Brasil');
+    raise Exception.Create(ACBrStr('PSP Configurado, não é Banco do Brasil'));
 
   if (ACBrPixCD1.Ambiente <> ambTeste) then
-    raise Exception.Create('Função só disponível em ambiente de Testes');
+    raise Exception.Create(ACBrStr('Função só disponível em ambiente de Testes'));
 
   wTimerPagtoEnabled := tmConsultarPagto.Enabled;
   tmConsultarPagto.Enabled := False;
@@ -1828,6 +1890,156 @@ begin
   AplicarConfiguracao;
 end;
 
+procedure TForm1.btSicoobExtrairChaveCertificadoArqPFXClick(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+    edSicoobExtrairChaveCertificadoArqPFX.Text := RemoverPathAplicacao(OpenDialog1.FileName);
+end;
+
+procedure TForm1.btSicoobExtrairChaveCertificadoClick(Sender: TObject);
+var
+  wArqPEM, wChave: String;
+  wSL: TStringList;
+begin
+  if EstaVazio(edSicoobExtrairChaveCertificadoArqPFX.Text) or
+     (not FileExists(edSicoobExtrairChaveCertificadoArqPFX.Text)) then
+  begin
+    MessageDlg(ACBrStr('Arquivo PFX não informado/existe'), mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  if EstaVazio(edSicoobExtrairChavePrivada.Text) then
+  begin
+    MessageDlg(ACBrStr('Arquivo de destino da Chave Privada não informado'), mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  if EstaVazio(edSicoobExtrairCertificado.Text) then
+  begin
+    MessageDlg(ACBrStr('Arquivo de destino do Certificado PEM não informado'), mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  wSL := TStringList.Create;
+  try
+    wChave := edSicoobExtrairChavePrivada.Text;
+    wArqPEM := edSicoobExtrairCertificado.Text;
+
+    ACBrOpenSSLUtils1.LoadPFXFromFile(
+      edSicoobExtrairChaveCertificadoArqPFX.Text,
+      edSicoobExtrairChaveCertificadoSenhaPFX.Text);
+
+    // Salvando arquivo Chave Privada
+    wSL.Text := ACBrOpenSSLUtils1.PrivateKeyAsString;
+    wSL.SaveToFile(wChave);
+    edSicoobArqChavePrivada.Text := wChave;
+
+    // Salvando arquivo Certificado
+    wSL.Text := ACBrOpenSSLUtils1.CertificateAsString;
+    wSL.SaveToFile(wArqPEM);
+    edSicoobArqCertificado.Text := wArqPEM;
+
+    MessageDlg(
+      '- Chave Privada gerada em: ' + wChave + sLineBreak +
+      '- Certificado PEM gerado em: ' + wArqPEM, mtInformation, [mbOK], 0);
+  finally
+    wSL.Free;
+  end;
+end;
+
+procedure TForm1.btSicoobExtrairChaveCertificadoInfoClick(Sender: TObject);
+begin 
+  MessageDlg(ACBrStr('Para utilizar o PSP Sicoob em ambiente de Produção é ' +
+    'necessário extrair a Chave Privada e o Certificado PEM do Certificado PFX ' +
+    sLineBreak + 'Após esse procedimento envie o arquivo PEM para o Sicoob pelo ' +
+    'Internet Banking e receba seu Client ID para utilizar nas requisições'),
+    mtInformation, [mbOk], 0);
+end;
+
+procedure TForm1.btSicoobExtrairChaveCertificadoVerSenhaPFXClick(Sender: TObject);
+begin
+  {$IfDef FPC}
+  if btSicoobExtrairChaveCertificadoVerSenhaPFX.Down then
+    edSicoobExtrairChaveCertificadoSenhaPFX.EchoMode := emNormal
+  else
+    edSicoobExtrairChaveCertificadoSenhaPFX.EchoMode := emPassword;
+  {$Else}
+  if btSicoobExtrairChaveCertificadoVerSenhaPFX.Down then
+    edSicoobExtrairChaveCertificadoSenhaPFX.PasswordChar := #0
+  else
+    edSicoobExtrairChaveCertificadoSenhaPFX.PasswordChar := '*';
+  {$EndIf}
+end;
+
+procedure TForm1.btSicrediGerarChaveCertificadoInfoClick(Sender: TObject);
+begin
+  MessageDlg(ACBrStr('Para utilizar o PSP Sicredi em ambiente de Produção é ' +
+    'necessário gerar uma Chave Privada e um Certificado PEM. ' + sLineBreak +
+    'Após esse procedimento envie esses arquivos para o Sicredi pelo Internet ' +
+    'Banking e receba um novo arquivo certificado .CER para utilizar nas requisições'),
+    mtInformation, [mbOk], 0);
+end;
+
+procedure TForm1.btSicrediGerarChavePrivadaClick(Sender: TObject);
+var
+  wPrivateKey, wPublicKey: String;
+begin
+  if FileExists(edSicrediGerarChavePrivada.Text) and
+     (MessageDlg('Chave Privada já existe, deseja realmente sobreescrecer ?',
+       mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
+    Exit;
+
+  ACBrOpenSSLUtils.GenerateKeyPair(wPrivateKey, wPublicKey);
+  mmSicrediGerarChavePrivada.Lines.Text := ChangeLineBreak(wPrivateKey, sLineBreak);
+  mmSicrediGerarChavePrivada.Lines.SaveToFile(edSicrediGerarChavePrivada.Text);
+  edSicrediArqChavePrivada.Text := edSicrediGerarChavePrivada.Text;
+end;
+
+procedure TForm1.btSicrediGerarCertificadoClick(Sender: TObject);
+var
+  wErros, wCertificado: String;
+begin
+  if FileExists(edSicrediGerarCertificado.Text) and
+     (MessageDlg('Certificado PEM já existe, deseja realmente sobreescrecer ?',
+       mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
+    Exit;
+
+  if EstaVazio(mmSicrediGerarChavePrivada.Text) then
+  begin
+    MessageDlg('Antes de gerar o Certificado é necessário gerar a Chave Privada', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+
+  wErros := EmptyStr;
+  if (Trim(edSicrediClientID.Text) = EmptyStr) then
+    wErros := sLineBreak + ACBrStr('- Campo ClientID não informado');
+
+  if (Trim(edtRecebedorNome.Text) = EmptyStr) then
+    wErros := sLineBreak + ACBrStr('- Campo Nome do Recebedor não informado');
+
+  if (Trim(edtRecebedorCidade.Text) = EmptyStr) then
+    wErros := sLineBreak + ACBrStr('- Campo Cidade do Recebedor não informado');
+
+  if (Trim(cbxRecebedorUF.Text) = EmptyStr) then
+    wErros := sLineBreak + ACBrStr('- Campo UF do Recebedor não informado');
+
+  if NaoEstaVazio(wErros) then
+  begin
+    MessageDlg('Erro ao gerar Certificado:' + wErros, mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mmSicrediGerarChavePrivada.Text);
+  wCertificado := ACBrOpenSSLUtils1.CreateCertificateSignRequest(
+                    edSicrediClientID.Text,
+                    edtRecebedorNome.Text,
+                    ACBrPixCD1.DadosAutomacao.NomeAplicacao,
+                    edtRecebedorCidade.Text,
+                    cbxRecebedorUF.Text, 'BR');
+  mmSicrediGerarCertificado.Text := ChangeLineBreak(wCertificado, sLineBreak);
+  mmSicrediGerarCertificado.Lines.SaveToFile(edSicrediGerarCertificado.Text);
+end;
+
 procedure TForm1.btSolicitarDevolucaoPixClick(Sender: TObject);
 begin
   VerificarConfiguracao;
@@ -2030,7 +2242,7 @@ begin
       mItauChavePrivadaPEM.Lines.Text := ChangeLineBreak(ACBrOpenSSLUtils1.PrivateKeyAsString, sLineBreak);
     end
     else
-      mItauChavePrivadaPEM.Lines.Text := 'Arquivo: '+a+'  não encontrado';
+      mItauChavePrivadaPEM.Lines.Text := ACBrStr('Arquivo: '+a+'  não encontrado');
 
     a := AdicionarPathAplicacao(edtItauArqCertificado.Text);
     if (a = '') then
@@ -2171,9 +2383,9 @@ begin
   a := AdicionarPathAplicacao(edSicrediArqChavePrivada.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não especificado'
+    e := ACBrStr('Arquivo não especificado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else
   begin
     try
@@ -2195,9 +2407,9 @@ begin
   a := AdicionarPathAplicacao(edSicoobArqChavePrivada.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não especificado'
+    e := ACBrStr('Arquivo não especificado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else
   begin
     try
@@ -2220,9 +2432,9 @@ begin
   a := AdicionarPathAplicacao(edSicoobArqCertificado.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não especificado'
+    e := ACBrStr('Arquivo não especificado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else
   begin
     try
@@ -2245,9 +2457,9 @@ begin
   a := AdicionarPathAplicacao(edSicrediArqCertificado.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não especificado'
+    e := ACBrStr('Arquivo não especificado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else
   begin
     try
@@ -2269,11 +2481,11 @@ begin
   a := AdicionarPathAplicacao(edSantanderArqCertificadoPFX.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não informado'
+    e := ACBrStr('Arquivo não informado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else if EstaVazio(edSantanderSenhaCertificadoPFX.Text) then
-    e := 'Senha do Certificado PFX não informada'
+    e := ACBrStr('Senha do Certificado PFX não informada')
   else
   begin
     try
@@ -2296,9 +2508,9 @@ begin
   a := AdicionarPathAplicacao(edtItauArqChavePrivada.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não especificado'
+    e := ACBrStr('Arquivo não especificado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else
   begin
     try
@@ -2321,9 +2533,9 @@ begin
   a := AdicionarPathAplicacao(edtItauArqCertificado.Text);
   e := 'OK';
   if (a = '') then
-    e := 'Arquivo não especificado'
+    e := ACBrStr('Arquivo não especificado')
   else if (not FileExists(a)) then
-    e := 'Arquivo não encontrado'
+    e := ACBrStr('Arquivo não encontrado')
   else
   begin
     try
@@ -2393,6 +2605,8 @@ begin
     edSicrediClientSecret.Text := Ini.ReadString('Sicredi', 'ClientSecret', '');
     edSicrediArqChavePrivada.Text := Ini.ReadString('Sicredi', 'ArqChavePrivada', edSicrediArqChavePrivada.Text);
     edSicrediArqCertificado.Text := Ini.ReadString('Sicredi', 'ArqCertificado', edSicrediArqCertificado.Text);
+    edSicrediGerarCertificado.Text := Ini.ReadString('Sicredi', 'CertificadoPEM', edSicrediGerarCertificado.Text);
+    edSicrediGerarChavePrivada.Text := edSicrediArqChavePrivada.Text;
 
     edSicoobChavePIX.Text := Ini.ReadString('Sicoob', 'ChavePIX', '');
     edSicoobClientID.Text := Ini.ReadString('Sicoob', 'ClientID', '');
@@ -2459,6 +2673,8 @@ begin
     Ini.WriteString('Sicredi', 'ClientSecret', edSicrediClientSecret.Text);
     Ini.WriteString('Sicredi', 'ArqChavePrivada', edSicrediArqChavePrivada.Text);
     Ini.WriteString('Sicredi', 'ArqCertificado', edSicrediArqCertificado.Text);
+    if FileExists(edSicrediGerarCertificado.Text) then
+      Ini.WriteString('Sicredi', 'CertificadoPEM', edSicrediGerarCertificado.Text);
 
     Ini.WriteString('Sicoob', 'ChavePIX', edSicoobChavePIX.Text);
     Ini.WriteString('Sicoob', 'ClientID', edSicoobClientID.Text);
@@ -2546,6 +2762,9 @@ begin
   ImageList1.GetBitmap(1, btQRDGerar.Glyph);
   ImageList1.GetBitmap(5, btQREAnalisar.Glyph);
   ImageList1.GetBitmap(5, btQRDAnalisar.Glyph);
+  ImageList1.GetBitmap(5, btSicrediGerarChaveInfo.Glyph);
+  ImageList1.GetBitmap(5, btSicrediGerarCertificadoInfo.Glyph);
+  ImageList1.GetBitmap(5, btSicoobExtrairChaveCertificadoInfo.Glyph);
   ImageList1.GetBitmap(13, btQREColar.Glyph);
   ImageList1.GetBitmap(13, btQRDColar.Glyph);
 
@@ -2553,7 +2772,8 @@ begin
   ImageList1.GetBitmap(9, sbArqLog.Glyph);
   ImageList1.GetBitmap(7, sbVerSenhaProxy.Glyph);
   ImageList1.GetBitmap(7, sbSantanderVerSenhaPFX.Glyph);
-  ImageList1.GetBitmap(7, sbSantanderPFXVerSenhaConverter.Glyph);
+  ImageList1.GetBitmap(7, sbSantanderExtrairCertificadoVerSenhaPFX.Glyph);
+  ImageList1.GetBitmap(7, btSicoobExtrairChaveCertificadoVerSenhaPFX.Glyph);
 
   ImageList1.GetBitmap(16, btItauValidarChaveCertificado.Glyph);
   ImageList1.GetBitmap(9, sbItauAcharArqChavePrivada.Glyph);
@@ -2571,8 +2791,9 @@ begin
   ImageList1.GetBitmap(9, sbSicoobAcharChavePrivada.Glyph);
   ImageList1.GetBitmap(9, sbSicoobAcharArqCertificado.Glyph);
   ImageList1.GetBitmap(9, sbSantanderAcharCertificadoPFX.Glyph);
-  ImageList1.GetBitmap(9, sbSantanderAcharCertificadoPFXConverter.Glyph);
-  ImageList1.GetBitmap(27, sbSantanderPFXConverterInfo.Glyph);
+  ImageList1.GetBitmap(9, sbSantanderExtrairCertificadoPFX.Glyph);
+  ImageList1.GetBitmap(9, btSicoobExtrairChaveCertificadoArqPFX.Glyph);
+  ImageList1.GetBitmap(27, sbSantanderExtrairCertificadoInfo.Glyph);
 end;
 
 procedure TForm1.InicializarActivePages;

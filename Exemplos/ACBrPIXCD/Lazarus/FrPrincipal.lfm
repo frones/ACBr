@@ -4261,11 +4261,11 @@ object Form1: TForm1
                     end
                   end
                 end
-                object tsSantanderConverterCertificado: TTabSheet
-                  Caption = 'Converter Certificado'
+                object tsSantanderExtrairCertificado: TTabSheet
+                  Caption = 'Extrair Certificado'
                   ClientHeight = 340
                   ClientWidth = 880
-                  object pnSantanderConverterCertificado: TPanel
+                  object pnSantanderExtrairCertificado: TPanel
                     Left = 0
                     Height = 340
                     Top = 0
@@ -4275,7 +4275,7 @@ object Form1: TForm1
                     ClientHeight = 340
                     ClientWidth = 880
                     TabOrder = 0
-                    object sbSantanderAcharCertificadoPFXConverter: TSpeedButton
+                    object sbSantanderExtrairCertificadoPFX: TSpeedButton
                       Left = 600
                       Height = 23
                       Top = 56
@@ -4287,12 +4287,12 @@ object Form1: TForm1
                       Font.Name = 'MS Sans Serif'
                       Images = ImageList1
                       ImageIndex = 9
-                      OnClick = sbSantanderAcharCertificadoPFXConverterClick
+                      OnClick = sbSantanderExtrairCertificadoPFXClick
                       ShowHint = True
                       ParentFont = False
                       ParentShowHint = False
                     end
-                    object edSantanderArqCertificadoPFXConverter: TEdit
+                    object edSantanderExtrairCertificadoPFX: TEdit
                       Left = 40
                       Height = 23
                       Top = 56
@@ -4301,7 +4301,7 @@ object Form1: TForm1
                       AutoSize = False
                       TabOrder = 0
                     end
-                    object lbSantanderArqCertificadoPFXConverter: TLabel
+                    object lbSantanderExtrairCertificadoPFX: TLabel
                       Left = 40
                       Height = 15
                       Top = 40
@@ -4309,18 +4309,18 @@ object Form1: TForm1
                       Caption = 'Arquivo Certificado PFX'
                       ParentColor = False
                     end
-                    object btSantanderPFXConverter: TBitBtn
+                    object btSantanderExtrairPEM: TBitBtn
                       Left = 40
                       Height = 30
                       Top = 104
                       Width = 179
-                      Caption = 'Converter PFX para PEM'
+                      Caption = 'Extrair Certificado PEM'
                       Images = ImageList1
                       ImageIndex = 12
-                      OnClick = btSantanderPFXConverterClick
+                      OnClick = btSantanderExtrairPEMClick
                       TabOrder = 1
                     end
-                    object edSantanderArqCertificadoPEM: TEdit
+                    object edSantanderExtrairCertificadoPEM: TEdit
                       Left = 40
                       Height = 23
                       Top = 176
@@ -4330,7 +4330,7 @@ object Form1: TForm1
                       TabOrder = 2
                       Text = 'SantanderCertificado.pem'
                     end
-                    object lbSantanderArqCertificadoPEM: TLabel
+                    object lbSantanderExtrairCertificadoPEM: TLabel
                       Left = 40
                       Height = 15
                       Top = 160
@@ -4338,7 +4338,7 @@ object Form1: TForm1
                       Caption = 'Arquivo Certificado PEM'
                       ParentColor = False
                     end
-                    object edSantanderSenhaCertificadoPFXConverter: TEdit
+                    object edSantanderExtrairCertificadoSenhaPFX: TEdit
                       Left = 640
                       Height = 23
                       Top = 56
@@ -4348,7 +4348,7 @@ object Form1: TForm1
                       PasswordChar = '*'
                       TabOrder = 3
                     end
-                    object lbSantanderSenhaCertificadoConverter: TLabel
+                    object lbSantanderExtrairCertificadoSenhaPFX: TLabel
                       Left = 640
                       Height = 15
                       Top = 40
@@ -4356,7 +4356,7 @@ object Form1: TForm1
                       Caption = 'Senha Certificado'
                       ParentColor = False
                     end
-                    object sbSantanderPFXVerSenhaConverter: TSpeedButton
+                    object sbSantanderExtrairCertificadoVerSenhaPFX: TSpeedButton
                       Left = 808
                       Height = 23
                       Top = 56
@@ -4367,9 +4367,9 @@ object Form1: TForm1
                       GroupIndex = 1
                       Images = ImageList1
                       ImageIndex = 7
-                      OnClick = sbSantanderPFXVerSenhaConverterClick
+                      OnClick = sbSantanderExtrairCertificadoVerSenhaPFXClick
                     end
-                    object sbSantanderPFXConverterInfo: TSpeedButton
+                    object sbSantanderExtrairCertificadoInfo: TSpeedButton
                       Left = 224
                       Height = 30
                       Top = 104
@@ -4380,7 +4380,7 @@ object Form1: TForm1
                       GroupIndex = 1
                       Images = ImageList1
                       ImageIndex = 27
-                      OnClick = sbSantanderPFXConverterInfoClick
+                      OnClick = sbSantanderExtrairCertificadoInfoClick
                     end
                   end
                 end
@@ -4390,186 +4390,339 @@ object Form1: TForm1
               Caption = 'Sicredi'
               ClientHeight = 485
               ClientWidth = 984
-              object pnConfPSPSicredi: TPanel
-                Left = 56
-                Height = 324
-                Top = 80
-                Width = 860
-                Anchors = [akLeft, akRight]
-                BevelOuter = bvNone
-                ClientHeight = 324
-                ClientWidth = 860
+              object pgSicredi: TPageControl
+                Left = 48
+                Height = 368
+                Top = 56
+                Width = 888
+                ActivePage = tsSicrediCredenciais
+                TabIndex = 0
                 TabOrder = 0
-                object lbSicrediChavePIX: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 24
-                  Width = 53
-                  Caption = 'Chave PIX'
+                object tsSicrediCredenciais: TTabSheet
+                  Caption = 'Credenciais'
+                  ClientHeight = 340
+                  ClientWidth = 880
+                  object pnSicrediCredenciais: TPanel
+                    Left = 0
+                    Height = 340
+                    Top = 0
+                    Width = 880
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 340
+                    ClientWidth = 880
+                    TabOrder = 0
+                    object sbSicrediAcharChavePrivada: TSpeedButton
+                      Left = 836
+                      Height = 23
+                      Top = 197
+                      Width = 24
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Images = ImageList1
+                      ImageIndex = 9
+                      OnClick = sbSicrediAcharChavePrivadaClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
+                    object sbSicrediAcharArqCertificado: TSpeedButton
+                      Left = 836
+                      Height = 23
+                      Top = 267
+                      Width = 24
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Images = ImageList1
+                      ImageIndex = 9
+                      OnClick = sbSicrediAcharArqCertificadoClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
+                    object lbSicrediTipoChave: TLabel
+                      Left = 675
+                      Height = 15
+                      Top = 24
+                      Width = 59
+                      Anchors = [akTop, akRight]
+                      Caption = 'Tipo Chave'
+                      ParentColor = False
+                    end
+                    object lbSicrediErroChavePrivada: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 222
+                      Width = 138
+                      Caption = 'lbSicrediErroChavePrivada'
+                      ParentColor = False
+                    end
+                    object lbSicrediErroCertificado: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 294
+                      Width = 124
+                      Caption = 'lbSicrediErroCertificado'
+                      ParentColor = False
+                    end
+                    object lbSicrediClientSecret: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 132
+                      Width = 66
+                      Caption = 'Client Secret'
+                      ParentColor = False
+                    end
+                    object lbSicrediClientID: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 75
+                      Width = 45
+                      Caption = 'Client ID'
+                      ParentColor = False
+                    end
+                    object lbSicrediChavePIX: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 24
+                      Width = 53
+                      Caption = 'Chave PIX'
+                      ParentColor = False
+                    end
+                    object lbSicrediArqChavePrivada: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 181
+                      Width = 120
+                      Caption = 'Arquivo Chave Privada'
+                      ParentColor = False
+                    end
+                    object lbSicrediArqCertificado: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 251
+                      Width = 235
+                      Caption = 'Arquivo Certificado (GERADO PELO SICREDI)'
+                      ParentColor = False
+                    end
+                    object imSicrediErroChavePrivada: TImage
+                      Left = 3
+                      Height = 16
+                      Top = 200
+                      Width = 16
+                      Visible = False
+                    end
+                    object imSicrediErroChavePix: TImage
+                      Left = 836
+                      Height = 16
+                      Top = 44
+                      Width = 16
+                      Anchors = [akTop, akRight]
+                      Visible = False
+                    end
+                    object imSicrediErroCertificado: TImage
+                      Left = 3
+                      Height = 16
+                      Top = 271
+                      Width = 16
+                      Visible = False
+                    end
+                    object edSicrediClientSecret: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 147
+                      Width = 808
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 0
+                    end
+                    object edSicrediClientID: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 91
+                      Width = 808
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 1
+                    end
+                    object edSicrediChavePIX: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 40
+                      Width = 630
+                      Anchors = [akTop, akLeft, akRight]
+                      OnChange = edSicrediChavePIXChange
+                      TabOrder = 2
+                    end
+                    object edSicrediArqChavePrivada: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 197
+                      Width = 808
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      OnChange = edSicrediArqsChange
+                      TabOrder = 3
+                      Text = 'SicrediChavePrivada.key'
+                    end
+                    object edSicrediArqCertificado: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 267
+                      Width = 808
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      OnChange = edSicrediArqsChange
+                      TabOrder = 4
+                      Text = 'SicrediCertificado.cer'
+                    end
+                    object cbSicrediTipoChave: TComboBox
+                      Left = 675
+                      Height = 23
+                      Top = 40
+                      Width = 157
+                      Anchors = [akTop, akRight]
+                      ItemHeight = 15
+                      Style = csDropDownList
+                      TabOrder = 5
+                      TabStop = False
+                    end
+                  end
                 end
-                object lbSicrediTipoChave: TLabel
-                  Left = 688
-                  Height = 15
-                  Top = 24
-                  Width = 59
-                  Anchors = [akTop, akRight]
-                  Caption = 'Tipo Chave'
-                end
-                object lbSicrediClientID: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 75
-                  Width = 45
-                  Caption = 'Client ID'
-                end
-                object lbSicrediClientSecret: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 132
-                  Width = 66
-                  Caption = 'Client Secret'
-                end
-                object imSicrediErroChavePix: TImage
-                  Left = 836
-                  Height = 16
-                  Top = 44
-                  Width = 16
-                  Anchors = [akTop, akRight]
-                  Visible = False
-                end
-                object lbSicrediArqChavePrivada: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 181
-                  Width = 120
-                  Caption = 'Arquivo Chave Privada'
-                end
-                object lbSicrediArqCertificado: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 251
-                  Width = 103
-                  Caption = 'Arquivo Certificado'
-                end
-                object sbSicrediAcharChavePrivada: TSpeedButton
-                  Left = 836
-                  Height = 23
-                  Top = 197
-                  Width = 24
-                  Anchors = [akTop, akRight]
-                  Flat = True
-                  Font.Color = clWindowText
-                  Font.Height = -11
-                  Font.Name = 'MS Sans Serif'
-                  Images = ImageList1
-                  ImageIndex = 9
-                  OnClick = sbSicrediAcharChavePrivadaClick
-                  ShowHint = True
-                  ParentFont = False
-                  ParentShowHint = False
-                end
-                object sbSicrediAcharArqCertificado: TSpeedButton
-                  Left = 836
-                  Height = 23
-                  Top = 267
-                  Width = 24
-                  Anchors = [akTop, akRight]
-                  Flat = True
-                  Font.Color = clWindowText
-                  Font.Height = -11
-                  Font.Name = 'MS Sans Serif'
-                  Images = ImageList1
-                  ImageIndex = 9
-                  OnClick = sbSicrediAcharArqCertificadoClick
-                  ShowHint = True
-                  ParentFont = False
-                  ParentShowHint = False
-                end
-                object lbSicrediErroCertificado: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 294
-                  Width = 124
-                  Caption = 'lbSicrediErroCertificado'
-                end
-                object lbSicrediErroChavePrivada: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 222
-                  Width = 138
-                  Caption = 'lbSicrediErroChavePrivada'
-                end
-                object imSicrediErroChavePrivada: TImage
-                  Left = 3
-                  Height = 16
-                  Top = 200
-                  Width = 16
-                  Visible = False
-                end
-                object imSicrediErroCertificado: TImage
-                  Left = 3
-                  Height = 16
-                  Top = 271
-                  Width = 16
-                  Visible = False
-                end
-                object edSicrediChavePIX: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 40
-                  Width = 642
-                  Anchors = [akTop, akLeft, akRight]
-                  OnChange = edSicrediChavePIXChange
-                  TabOrder = 1
-                end
-                object cbSicrediTipoChave: TComboBox
-                  Left = 688
-                  Height = 23
-                  Top = 40
-                  Width = 144
-                  Anchors = [akTop, akRight]
-                  ItemHeight = 15
-                  Style = csDropDownList
-                  TabOrder = 0
-                  TabStop = False
-                end
-                object edSicrediClientID: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 91
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 2
-                end
-                object edSicrediClientSecret: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 147
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 3
-                end
-                object edSicrediArqChavePrivada: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 197
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  AutoSize = False
-                  OnChange = edSicrediArqsChange
-                  TabOrder = 4
-                  Text = 'SicrediChavePrivada.pem'
-                end
-                object edSicrediArqCertificado: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 267
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  AutoSize = False
-                  OnChange = edSicrediArqsChange
-                  TabOrder = 5
-                  Text = 'SicrediCertificado.pem'
+                object tsSicrediGerarChaveCertificado: TTabSheet
+                  Caption = 'Converter Certificado'
+                  ClientHeight = 340
+                  ClientWidth = 880
+                  ImageIndex = 1
+                  object pnSicrediGerarChaveCertificado: TPanel
+                    Left = 0
+                    Height = 340
+                    Top = 0
+                    Width = 880
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 340
+                    ClientWidth = 880
+                    TabOrder = 0
+                    object lbSicrediGerarChavePrivada: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 21
+                      Width = 75
+                      Caption = 'Chave Privada'
+                      ParentColor = False
+                    end
+                    object lbSicrediGerarCertificado: TLabel
+                      Left = 24
+                      Height = 15
+                      Top = 181
+                      Width = 85
+                      Caption = 'Certificado PEM'
+                      ParentColor = False
+                    end
+                    object btSicrediGerarChaveInfo: TSpeedButton
+                      Left = 112
+                      Height = 30
+                      Top = 8
+                      Width = 30
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      OnClick = btSicrediGerarChaveCertificadoInfoClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
+                    object btSicrediGerarCertificadoInfo: TSpeedButton
+                      Left = 112
+                      Height = 30
+                      Top = 168
+                      Width = 30
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      OnClick = btSicrediGerarChaveCertificadoInfoClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
+                    object edSicrediGerarChavePrivada: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 37
+                      Width = 673
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      TabOrder = 0
+                      Text = 'SicrediChavePrivada.key'
+                    end
+                    object mmSicrediGerarChavePrivada: TMemo
+                      Left = 24
+                      Height = 89
+                      Top = 72
+                      Width = 825
+                      Anchors = [akTop, akLeft, akRight, akBottom]
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'Lucida Console'
+                      ParentFont = False
+                      ReadOnly = True
+                      TabOrder = 1
+                      WantReturns = False
+                      WordWrap = False
+                    end
+                    object btSicrediGerarChavePrivada: TBitBtn
+                      Left = 712
+                      Height = 33
+                      Top = 32
+                      Width = 137
+                      Caption = 'Gerar Chave Privada'
+                      OnClick = btSicrediGerarChavePrivadaClick
+                      TabOrder = 2
+                    end
+                    object edSicrediGerarCertificado: TEdit
+                      Left = 24
+                      Height = 23
+                      Top = 197
+                      Width = 665
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      TabOrder = 3
+                      Text = 'SicrediCertificado.pem'
+                    end
+                    object mmSicrediGerarCertificado: TMemo
+                      Left = 24
+                      Height = 89
+                      Top = 232
+                      Width = 825
+                      Anchors = [akTop, akLeft, akRight, akBottom]
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'Lucida Console'
+                      ParentFont = False
+                      ReadOnly = True
+                      TabOrder = 4
+                      WantReturns = False
+                      WordWrap = False
+                    end
+                    object btSicrediGerarCertificado: TBitBtn
+                      Left = 712
+                      Height = 33
+                      Top = 192
+                      Width = 137
+                      Caption = 'Gerar Chave Privada'
+                      OnClick = btSicrediGerarCertificadoClick
+                      TabOrder = 5
+                    end
+                  end
                 end
               end
             end
@@ -4577,181 +4730,353 @@ object Form1: TForm1
               Caption = 'Sicoob'
               ClientHeight = 485
               ClientWidth = 984
-              object pnConfPSPSicoob: TPanel
-                Left = 56
-                Height = 324
-                Top = 80
-                Width = 860
-                BevelOuter = bvNone
-                ClientHeight = 324
-                ClientWidth = 860
+              object pgSicoob: TPageControl
+                Left = 48
+                Height = 368
+                Top = 56
+                Width = 888
+                ActivePage = tsSicoobCredenciais
+                TabIndex = 0
                 TabOrder = 0
-                object lbSicoobChavePix: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 24
-                  Width = 53
-                  Caption = 'Chave PIX'
-                  ParentColor = False
+                object tsSicoobCredenciais: TTabSheet
+                  Caption = 'Credenciais'
+                  ClientHeight = 340
+                  ClientWidth = 880
+                  object pnSicoobCredenciais: TPanel
+                    Left = 0
+                    Height = 340
+                    Top = 0
+                    Width = 880
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 340
+                    ClientWidth = 880
+                    TabOrder = 0
+                    object pnConfPSPSicoob: TPanel
+                      Left = 0
+                      Height = 340
+                      Top = 0
+                      Width = 880
+                      Align = alClient
+                      BevelOuter = bvNone
+                      ClientHeight = 340
+                      ClientWidth = 880
+                      TabOrder = 0
+                      object lbSicoobChavePix: TLabel
+                        Left = 24
+                        Height = 15
+                        Top = 24
+                        Width = 53
+                        Caption = 'Chave PIX'
+                        ParentColor = False
+                      end
+                      object lbSicoobTipoChave: TLabel
+                        Left = 671
+                        Height = 15
+                        Top = 24
+                        Width = 59
+                        Anchors = [akTop, akRight]
+                        Caption = 'Tipo Chave'
+                        ParentColor = False
+                      end
+                      object lbSicoobClientID: TLabel
+                        Left = 24
+                        Height = 15
+                        Top = 83
+                        Width = 45
+                        Caption = 'Client ID'
+                        ParentColor = False
+                      end
+                      object lbSicoobArquivoChavePrivada: TLabel
+                        Left = 24
+                        Height = 15
+                        Top = 137
+                        Width = 120
+                        Caption = 'Arquivo Chave Privada'
+                        ParentColor = False
+                      end
+                      object imSicoobErroChavePrivada: TImage
+                        Left = 3
+                        Height = 16
+                        Top = 156
+                        Width = 16
+                        Visible = False
+                      end
+                      object lbSicoobErroChavePrivada: TLabel
+                        Left = 24
+                        Height = 15
+                        Top = 178
+                        Width = 139
+                        Caption = 'lbSicoobErroChavePrivada'
+                        ParentColor = False
+                        Visible = False
+                      end
+                      object lbSicoobArquivoCertificado: TLabel
+                        Left = 24
+                        Height = 15
+                        Top = 207
+                        Width = 103
+                        Caption = 'Arquivo Certificado'
+                        ParentColor = False
+                      end
+                      object imSicoobErroCertificado: TImage
+                        Left = 3
+                        Height = 16
+                        Top = 227
+                        Width = 16
+                        Visible = False
+                      end
+                      object lbSicoobErroCertificado: TLabel
+                        Left = 24
+                        Height = 15
+                        Top = 250
+                        Width = 125
+                        Caption = 'lbSicoobErroCertificado'
+                        ParentColor = False
+                        Visible = False
+                      end
+                      object imSicoobErroChavePIX: TImage
+                        Left = 836
+                        Height = 16
+                        Top = 42
+                        Width = 16
+                        Anchors = [akTop, akRight]
+                        Visible = False
+                      end
+                      object sbSicoobAcharChavePrivada: TSpeedButton
+                        Left = 836
+                        Height = 23
+                        Top = 153
+                        Width = 24
+                        Anchors = [akTop, akRight]
+                        Flat = True
+                        Font.Color = clWindowText
+                        Font.Height = -11
+                        Font.Name = 'MS Sans Serif'
+                        Images = ImageList1
+                        ImageIndex = 9
+                        OnClick = sbSicoobAcharChavePrivadaClick
+                        ShowHint = True
+                        ParentFont = False
+                        ParentShowHint = False
+                      end
+                      object sbSicoobAcharArqCertificado: TSpeedButton
+                        Left = 836
+                        Height = 23
+                        Top = 223
+                        Width = 24
+                        Anchors = [akTop, akRight]
+                        Flat = True
+                        Font.Color = clWindowText
+                        Font.Height = -11
+                        Font.Name = 'MS Sans Serif'
+                        Images = ImageList1
+                        ImageIndex = 9
+                        OnClick = sbSicoobAcharArqCertificadoClick
+                        ShowHint = True
+                        ParentFont = False
+                        ParentShowHint = False
+                      end
+                      object edSicoobChavePIX: TEdit
+                        Left = 24
+                        Height = 23
+                        Top = 40
+                        Width = 630
+                        Anchors = [akTop, akLeft, akRight]
+                        OnChange = edSicoobChavePIXChange
+                        TabOrder = 0
+                      end
+                      object cbSicoobTipoChave: TComboBox
+                        Left = 675
+                        Height = 23
+                        Top = 40
+                        Width = 157
+                        Anchors = [akTop, akRight]
+                        ItemHeight = 15
+                        Style = csDropDownList
+                        TabOrder = 1
+                        TabStop = False
+                      end
+                      object edSicoobClientID: TEdit
+                        Left = 24
+                        Height = 23
+                        Top = 99
+                        Width = 808
+                        Anchors = [akTop, akLeft, akRight]
+                        TabOrder = 2
+                      end
+                      object edSicoobArqChavePrivada: TEdit
+                        Left = 24
+                        Height = 23
+                        Top = 153
+                        Width = 808
+                        Anchors = [akTop, akLeft, akRight]
+                        AutoSize = False
+                        OnChange = edSicoobArqsChange
+                        OnExit = edSicoobArqChavePrivadaExit
+                        TabOrder = 3
+                        Text = 'SicoobChavePrivada.key'
+                      end
+                      object edSicoobArqCertificado: TEdit
+                        Left = 24
+                        Height = 23
+                        Top = 223
+                        Width = 808
+                        Anchors = [akTop, akLeft, akRight]
+                        AutoSize = False
+                        OnChange = edSicoobArqsChange
+                        OnExit = edSicoobArqCertificadoExit
+                        TabOrder = 4
+                        Text = 'SicoobCertificado.pem'
+                      end
+                    end
+                  end
                 end
-                object lbSicoobTipoChave: TLabel
-                  Left = 688
-                  Height = 15
-                  Top = 24
-                  Width = 59
-                  Anchors = [akTop, akRight]
-                  Caption = 'Tipo Chave'
-                  ParentColor = False
-                end
-                object lbSicoobClientID: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 75
-                  Width = 45
-                  Caption = 'Client ID'
-                  ParentColor = False
-                end
-                object lbSicoobArquivoChavePrivada: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 132
-                  Width = 120
-                  Caption = 'Arquivo Chave Privada'
-                  ParentColor = False
-                end
-                object imSicoobErroChavePrivada: TImage
-                  Left = 3
-                  Height = 16
-                  Top = 152
-                  Width = 16
-                  Visible = False
-                end
-                object lbSicoobErroChavePrivada: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 173
-                  Width = 139
-                  Caption = 'lbSicoobErroChavePrivada'
-                  ParentColor = False
-                  Visible = False
-                end
-                object lbSicoobArquivoCertificado: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 202
-                  Width = 103
-                  Caption = 'Arquivo Certificado'
-                  ParentColor = False
-                end
-                object imSicoobErroCertificado: TImage
-                  Left = 3
-                  Height = 16
-                  Top = 223
-                  Width = 16
-                  Visible = False
-                end
-                object lbSicoobErroCertificado: TLabel
-                  Left = 24
-                  Height = 15
-                  Top = 248
-                  Width = 125
-                  Caption = 'lbSicoobErroCertificado'
-                  ParentColor = False
-                  Visible = False
-                end
-                object imSicoobErroChavePIX: TImage
-                  Left = 836
-                  Height = 16
-                  Top = 44
-                  Width = 16
-                  Anchors = [akTop, akRight]
-                  Visible = False
-                end
-                object sbSicoobAcharChavePrivada: TSpeedButton
-                  Left = 836
-                  Height = 23
-                  Top = 148
-                  Width = 24
-                  Anchors = [akTop, akRight]
-                  Flat = True
-                  Font.Color = clWindowText
-                  Font.Height = -11
-                  Font.Name = 'MS Sans Serif'
-                  Images = ImageList1
-                  ImageIndex = 9
-                  OnClick = sbSicoobAcharChavePrivadaClick
-                  ShowHint = True
-                  ParentFont = False
-                  ParentShowHint = False
-                end
-                object sbSicoobAcharArqCertificado: TSpeedButton
-                  Left = 836
-                  Height = 23
-                  Top = 220
-                  Width = 24
-                  Anchors = [akTop, akRight]
-                  Flat = True
-                  Font.Color = clWindowText
-                  Font.Height = -11
-                  Font.Name = 'MS Sans Serif'
-                  Images = ImageList1
-                  ImageIndex = 9
-                  OnClick = sbSicoobAcharArqCertificadoClick
-                  ShowHint = True
-                  ParentFont = False
-                  ParentShowHint = False
-                end
-                object edSicoobChavePIX: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 40
-                  Width = 642
-                  Anchors = [akTop, akLeft, akRight]
-                  OnChange = edSicoobChavePIXChange
-                  TabOrder = 0
-                end
-                object cbSicoobTipoChave: TComboBox
-                  Left = 688
-                  Height = 23
-                  Top = 40
-                  Width = 144
-                  Anchors = [akTop, akRight]
-                  ItemHeight = 15
-                  Style = csDropDownList
-                  TabOrder = 1
-                  TabStop = False
-                end
-                object edSicoobClientID: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 91
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 2
-                end
-                object edSicoobArqChavePrivada: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 148
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  AutoSize = False
-                  OnChange = edSicoobArqsChange
-                  OnExit = edSicoobArqChavePrivadaExit
-                  TabOrder = 3
-                  Text = 'SicoobChavePrivada.pem'
-                end
-                object edSicoobArqCertificado: TEdit
-                  Left = 24
-                  Height = 23
-                  Top = 220
-                  Width = 808
-                  Anchors = [akTop, akLeft, akRight]
-                  AutoSize = False
-                  OnChange = edSicoobArqsChange
-                  OnExit = edSicoobArqCertificadoExit
-                  TabOrder = 4
-                  Text = 'SicoobCertificado.pem'
+                object tsSicoobExtrairChaveCertificado: TTabSheet
+                  Caption = 'Extrair Chave/Certificado'
+                  ClientHeight = 340
+                  ClientWidth = 880
+                  ImageIndex = 1
+                  object pnSicoobExtrairChaveCertificado: TPanel
+                    Left = 0
+                    Height = 340
+                    Top = 0
+                    Width = 880
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 340
+                    ClientWidth = 880
+                    TabOrder = 0
+                    object lbSicoobExtrairChaveCertificadoArqPFX: TLabel
+                      Left = 40
+                      Height = 15
+                      Top = 40
+                      Width = 126
+                      Caption = 'Arquivo Certificado PFX'
+                      ParentColor = False
+                    end
+                    object btSicoobExtrairChaveCertificadoArqPFX: TSpeedButton
+                      Left = 600
+                      Height = 23
+                      Top = 56
+                      Width = 24
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Images = ImageList1
+                      ImageIndex = 9
+                      OnClick = btSicoobExtrairChaveCertificadoArqPFXClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
+                    object lbSicoobExtrairChaveCertificadoSenhaPFX: TLabel
+                      Left = 640
+                      Height = 15
+                      Top = 40
+                      Width = 93
+                      Caption = 'Senha Certificado'
+                      ParentColor = False
+                    end
+                    object btSicoobExtrairChaveCertificadoVerSenhaPFX: TSpeedButton
+                      Left = 808
+                      Height = 23
+                      Top = 56
+                      Width = 23
+                      AllowAllUp = True
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      GroupIndex = 1
+                      Images = ImageList1
+                      ImageIndex = 7
+                      OnClick = btSicoobExtrairChaveCertificadoVerSenhaPFXClick
+                    end
+                    object lbSicoobExtrairChavePrivada: TLabel
+                      Left = 40
+                      Height = 15
+                      Top = 160
+                      Width = 120
+                      Caption = 'Arquivo Chave Privada'
+                      ParentColor = False
+                    end
+                    object btSicoobExtrairChaveCertificadoInfo: TSpeedButton
+                      Left = 224
+                      Height = 30
+                      Top = 104
+                      Width = 30
+                      Anchors = [akTop, akRight]
+                      Flat = True
+                      Font.Color = clWindowText
+                      Font.Height = -11
+                      Font.Name = 'MS Sans Serif'
+                      Images = ImageList1
+                      ImageIndex = 5
+                      OnClick = btSicoobExtrairChaveCertificadoInfoClick
+                      ShowHint = True
+                      ParentFont = False
+                      ParentShowHint = False
+                    end
+                    object lbSicoobExtrairCertificado: TLabel
+                      Left = 40
+                      Height = 15
+                      Top = 216
+                      Width = 130
+                      Caption = 'Arquivo Certificado PEM'
+                      ParentColor = False
+                    end
+                    object edSicoobExtrairChaveCertificadoArqPFX: TEdit
+                      Left = 40
+                      Height = 23
+                      Top = 56
+                      Width = 560
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      TabOrder = 0
+                    end
+                    object edSicoobExtrairChaveCertificadoSenhaPFX: TEdit
+                      Left = 640
+                      Height = 23
+                      Top = 56
+                      Width = 164
+                      Anchors = [akTop, akLeft, akRight]
+                      EchoMode = emPassword
+                      PasswordChar = '*'
+                      TabOrder = 1
+                    end
+                    object btSicoobExtrairChaveCertificado: TBitBtn
+                      Left = 40
+                      Height = 30
+                      Top = 104
+                      Width = 179
+                      Caption = 'Extrair Chave/Certificado'
+                      Images = ImageList1
+                      ImageIndex = 12
+                      OnClick = btSicoobExtrairChaveCertificadoClick
+                      TabOrder = 2
+                    end
+                    object edSicoobExtrairChavePrivada: TEdit
+                      Left = 40
+                      Height = 23
+                      Top = 176
+                      Width = 791
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      TabOrder = 3
+                      Text = 'SicoobChavePrivada.key'
+                    end
+                    object edSicoobExtrairCertificado: TEdit
+                      Left = 40
+                      Height = 23
+                      Top = 232
+                      Width = 791
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = False
+                      TabOrder = 4
+                      Text = 'SicoobCertificado.pem'
+                    end
+                  end
                 end
               end
             end

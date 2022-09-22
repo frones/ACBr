@@ -384,6 +384,10 @@ begin
     rllCompetencia.Caption := IfThen(Competencia > 0, FormatDateTime('mm/yyyy', Competencia), '');
 
     rllNumeroRPS.Caption := IdentificacaoRps.Numero;
+
+    if IdentificacaoRps.Serie <> '' then
+      rllNumeroRPS.Caption := rllNumeroRPS.Caption + '/' + IdentificacaoRps.Serie;
+
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
   	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio

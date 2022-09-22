@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/09/2022
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração visando imprimir Numero/Serie do RPS no DANFSE "Padrão"
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [+] Incluído a cidade: Jaiba/MG - Provedor WebISS
    Por: Destak

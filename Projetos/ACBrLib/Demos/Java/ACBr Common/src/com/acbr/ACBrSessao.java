@@ -43,5 +43,6 @@ public enum  ACBrSessao {
     BoletoCedenteWS,
     BoletoWebSevice,
     IBGE,
-    Sedex,;
+    Sedex,
+    eSocial;
 }

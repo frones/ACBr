@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/08/2022
+--- ACBrLibeSocial ---
+[*] Correção Access Violation de alguns métodos da ACBrLibeSocial
+    Por: Antonio Carlos / Juliomar Marchetti  
+
 17/08/2022
 --- ACBrLibeSocial ---
 [*] Refatoração da ACBrLibeSocial e classe de Respostas

@@ -204,9 +204,7 @@ begin
     else
      GravarLog('eSocial_ConsultareSocial', logNormal);
 
-    with TACBrLibeSocial(pLib) do
-    begin
-      eSocialDM.Travar;
+     eSocialDM.Travar;
       try
         eSocialDM.ACBreSocial1.Eventos.Clear;
         esocialDM.ACBreSocial1.Consultar(AProtocolo);
@@ -226,8 +224,7 @@ begin
       finally
         eSocialDM.Destravar;
       end;
-    end;
-
+      
   except
     on E: EACBrLibException do
      Result := SetRetorno(E.Erro, E.Message);
@@ -319,7 +316,6 @@ begin
      else
       GravarLog('eSocial_Limpar', logNormal);
 
-    with TACBrLibeSocial(pLib) do
     begin
      eSocialDM.Travar;
       try
@@ -390,7 +386,6 @@ begin
     if DirectoryExists(idEmpregador) then
       raise EACBrLibException.Create(ErrDiretorioNaoExiste, 'Diretorio não existe');
 
-    with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
       try
@@ -425,7 +420,6 @@ begin
     if EstaVazio(idTransmissor)then
          raise Exception.Create('Valor Nulo');
 
-    with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
       try
@@ -457,7 +451,6 @@ begin
      else
       GravarLog('eSocial_SetTipoEmpregador', logNormal);
 
-     with TACBrLibeSocial(pLib) do
      begin
         eSocialDM.Travar;
        try
@@ -492,7 +485,6 @@ begin
     else
       GravarLog('eSocial_SetVersaoDF', logNormal);
 
-    with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
       try
@@ -531,7 +523,6 @@ begin
     else
       GravarLog('eSocial_ConsultaIdentificadoresEventosEmpregador', logNormal);
 
-    with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
       try
@@ -590,7 +581,6 @@ begin
     else
      GravarLog('eSocial_ConsultaIdentificadoresEventosTabela', logNormal);
 
-    with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
       try
@@ -644,7 +634,6 @@ begin
     else
       GravarLog('eSocial_ConsultaIdentificadoresEventosTrabalhador', logNormal);
 
-    with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
       try
@@ -704,7 +693,6 @@ begin
      else
       GravarLog('eSocial_DownloadEventos', logNormal);
 
-    with TACBrLibeSocial(pLib) do
     begin
      eSocialDM.Travar;
       try

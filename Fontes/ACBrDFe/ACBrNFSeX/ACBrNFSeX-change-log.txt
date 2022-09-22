@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 22/09/2022
+-- ACBrNFSeXServicos --
+[+] Incluído a cidade: Jaiba/MG - Provedor WebISS
+   Por: Destak
 -- Agili.LerXml --
 [-] Correção, na leitura do XML da NFS-e não estava alimentando o campo: ItemListaServico
    Por: Diego Reckziegel

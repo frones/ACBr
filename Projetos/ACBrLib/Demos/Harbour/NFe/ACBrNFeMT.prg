@@ -12,7 +12,7 @@
 
 CREATE CLASS ACBrNFe
     HIDDEN:
-    VAR hHandle
+    VAR MTHandle   
 
     METHOD CheckResult(hResult)
     METHOD ProcessResult(buffer, bufferLen)
@@ -79,20 +79,22 @@ METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrNFe
     eArqConfig :=if(eArqConfig = nil, '', eArqConfig)
     eChaveCrypt:=if(eChaveCrypt = nil, '', eChaveCrypt)
 
-    ::hHandle := DllLoad(ACBrLIB)
-    if EMPTY(::hHandle) // Eric.Developer: xHarbour retorna 0x00000000
+    ::MTHandle := hb_libLoad(ACBrLIB)
+    if EMPTY(::MTHandle) // Eric.Developer: xHarbour retorna 0x00000000
         oErr := ErrorNew()
         oErr:Severity := ES_ERROR        
         oErr:Description := "Erro a carregar a dll [" + ACBrLIB + "]"
         Throw(oErr)
     endif
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Inicializar", hb_StrToUTF8(eArqConfig), hb_StrToUTF8(eChaveCrypt))
+
+    hResult := hb_DynCall({"NFE_Inicializar", ACBrLIB, DLL_OSAPI}, @::MTHandle, hb_StrToUTF8(eArqConfig), hb_StrToUTF8(eChaveCrypt))
     ::CheckResult(hResult) 
 RETURN Self
 
 METHOD Destroy CLASS ACBrNFe
-    DllCall(::hHandle, DLL_OSAPI, "NFE_Finalizar")
-    DllUnload(::hHandle)
+    hb_DynCall({"NFE_Finalizar", ACBrLIB, DLL_OSAPI}, ::MTHandle)
+    hb_libFree(ACBrLIB)
+    //hb_LibFree(::MTHandle)
 RETURN nil
 
 METHOD CheckResult(hResult) CLASS ACBrNFe
@@ -104,10 +106,10 @@ METHOD CheckResult(hResult) CLASS ACBrNFe
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
 
-    DllCall(::hHandle, DLL_OSAPI, "NFE_UltimoRetorno", @buffer, @bufferLen)
+    hb_DynCall({"NFE_UltimoRetorno", ACBrLIB, DLL_OSAPI}, ::MTHandle, @buffer, @bufferLen)
     if bufferLen > STR_LEN
         buffer := Space(bufferLen)
-        DllCall(::hHandle, DLL_OSAPI, "NFE_UltimoRetorno", @buffer, @bufferLen)        
+        hb_DynCall({"NFE_UltimoRetorno", ACBrLIB, DLL_OSAPI}, ::MTHandle, @buffer, @bufferLen)        
     endif    
 
     oErr := ErrorNew()
@@ -119,7 +121,7 @@ RETURN nil
 METHOD ProcessResult(buffer, bufferLen) CLASS ACBrNFe
     if bufferLen > STR_LEN
         buffer := Space(bufferLen)
-        DllCall(::hHandle, DLL_OSAPI, "NFE_UltimoRetorno", @buffer, @bufferLen)        
+        hb_DynCall({"NFE_UltimoRetorno", ACBrLIB, DLL_OSAPI}, ::MTHandle, @buffer, @bufferLen)        
     endif
 RETURN buffer
 
@@ -127,7 +129,7 @@ METHOD Nome CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Nome", @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_Nome", ACBrLIB, DLL_OSAPI}, ::MTHandle , @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -135,19 +137,19 @@ METHOD Versao CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Versao", @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_Versao", ACBrLIB, DLL_OSAPI}, ::MTHandle ,@buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD ConfigLer(eArqConfig) CLASS ACBrNFe
     local hResult    
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConfigLer", hb_StrToUTF8(eArqConfig))
+    hResult := hb_DynCall({"NFE_ConfigLer", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArqConfig))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD ConfigGravar(eArqConfig) CLASS ACBrNFe
     local hResult    
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConfigGravar", hb_StrToUTF8(eArqConfig))
+    hResult := hb_DynCall({"NFE_ConfigGravar", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArqConfig))
     ::CheckResult(hResult)
 RETURN nil
 
@@ -155,25 +157,25 @@ METHOD ConfigLerValor(eSessao, eChave) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConfigLerValor", hb_StrToUTF8(eSessao), hb_StrToUTF8(eChave), @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_ConfigLerValor", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eSessao), hb_StrToUTF8(eChave), @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD ConfigGravarValor(eSessao, eChave, eValor) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConfigGravarValor", hb_StrToUTF8(eSessao), hb_StrToUTF8(eChave), hb_StrToUTF8(eValor))
+    hResult := hb_DynCall({"NFE_ConfigGravarValor", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eSessao), hb_StrToUTF8(eChave), hb_StrToUTF8(eValor))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD CarregarXML(eArquivoOuXml) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarXML", hb_StrToUTF8(eArquivoOuXml))
+    hResult := hb_DynCall({"NFE_CarregarXML", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoOuXml))
     ::CheckResult(hResult)
 RETURN nil
     
 METHOD CarregarINI(eArquivoOuIni) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarINI", hb_StrToUTF8(eArquivoOuIni))
+    hResult := hb_DynCall({"NFE_CarregarINI", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoOuIni))
     ::CheckResult(hResult)
 RETURN nil
 
@@ -181,13 +183,13 @@ METHOD ObterXml(AIndex) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ObterXml", AIndex, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_ObterXml", ACBrLIB, DLL_OSAPI}, ::MTHandle, AIndex, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD GravarXml(AIndex, eNomeArquivo, ePathArquivo) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GravarXml", AIndex, hb_StrToUTF8(eNomeArquivo), hb_StrToUTF8(ePathArquivo))
+    hResult := DllCall({"NFE_GravarXml", ACBrLIB, DLL_OSAPI}, ::MTHandle, AIndex, hb_StrToUTF8(eNomeArquivo), hb_StrToUTF8(ePathArquivo))
     ::CheckResult(hResult)
 RETURN nil
 
@@ -195,49 +197,49 @@ METHOD ObterIni(AIndex) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ObterIni", AIndex, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_ObterIni", ACBrLIB, DLL_OSAPI}, ::MTHandle, AIndex, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
     
 METHOD GravarIni(AIndex, eNomeArquivo, ePathArquivo) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GravarIni", AIndex, hb_StrToUTF8(eNomeArquivo), hb_StrToUTF8(ePathArquivo))
+    hResult := hb_DynCall({"NFE_GravarIni", ACBrLIB, DLL_OSAPI}, ::MTHandle, AIndex, hb_StrToUTF8(eNomeArquivo), hb_StrToUTF8(ePathArquivo))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD CarregarEventoXML(eArquivoOuXml) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarEventoXML", hb_StrToUTF8(eArquivoOuXml))
+    hResult := hb_DynCall({"NFE_CarregarEventoXML", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoOuXml))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD CarregarEventoINI(eArquivoOuIni) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarEventoINI", hb_StrToUTF8(eArquivoOuIni))
+    hResult := hb_DynCall({"NFE_CarregarEventoINI", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoOuIni))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD LimparLista() CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_LimparLista")
+    hResult := hb_DynCall({"NFE_LimparLista", ACBrLIB, DLL_OSAPI}, ::MTHandle)
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD LimparListaEventos() CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_LimparListaEventos")
+    hResult := hb_DynCall({"NFE_LimparListaEventos", ACBrLIB, DLL_OSAPI}, ::MTHandle)
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD Assinar() CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Assinar")
+    hResult := hb_DynCall({"NFE_Assinar", ACBrLIB, DLL_OSAPI}, ::MTHandle)
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD Validar() CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Validar")
+    hResult := hb_DynCall({"NFE_Validar", ACBrLIB, DLL_OSAPI}, ::MTHandle)
     ::CheckResult(hResult)
 RETURN nil
 
@@ -245,13 +247,13 @@ METHOD ValidarRegrasdeNegocios() CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)  
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ValidarRegrasdeNegocios", @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_ValidarRegrasdeNegocios", ACBrLIB, DLL_OSAPI}, ::MTHandle, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD VerificarAssinatura() CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_VerificarAssinatura")
+    hResult := hb_DynCall({"NFE_VerificarAssinatura", ACBrLIB, DLL_OSAPI}, ::MTHandle)
     ::CheckResult(hResult)
 RETURN nil
 
@@ -259,7 +261,7 @@ METHOD GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, 
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GerarChave", ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_GerarChave", ACBrLIB, DLL_OSAPI}, ::MTHandle, ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -267,7 +269,7 @@ METHOD ObterCertificados() CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ObterCertificados", @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_ObterCertificados", ACBrLIB, DLL_OSAPI}, ::MTHandle, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -275,7 +277,7 @@ METHOD GetPath(tipo)
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GetPath", tipo, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_GetPath", ACBrLIB, DLL_OSAPI}, ::MTHandle, tipo, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -283,7 +285,7 @@ METHOD GetPathEvento(aCodEvento)
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GetPathEvento", hb_StrToUTF8(aCodEvento), @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_GetPathEvento", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(aCodEvento), @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -291,7 +293,7 @@ METHOD StatusServico() CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_StatusServico", @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_StatusServico", ACBrLIB, DLL_OSAPI}, ::MTHandle, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -299,7 +301,7 @@ METHOD Consultar(eChaveOuNFe, AExtrairEventos) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Consultar", hb_StrToUTF8(eChaveOuNFe), AExtrairEventos, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_Consultar", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eChaveOuNFe), AExtrairEventos, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -307,7 +309,7 @@ METHOD Inutilizar(ACNPJ, AJustificativa, Ano, Modelo, Serie, NumeroInicial, Nume
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Inutilizar", hb_StrToUTF8(ACNPJ), hb_StrToUTF8(AJustificativa), Ano, Modelo, Serie, NumeroInicial, NumeroFinal, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_Inutilizar", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(ACNPJ), hb_StrToUTF8(AJustificativa), Ano, Modelo, Serie, NumeroInicial, NumeroFinal, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -315,7 +317,7 @@ METHOD Enviar(ALote, Imprimir, Sincrono, Zipado) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Enviar", ALote, Imprimir, Sincrono, Zipado, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_Enviar", ACBrLIB, DLL_OSAPI}, ::MTHandle, ALote, Imprimir, Sincrono, Zipado, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -323,7 +325,7 @@ METHOD ConsultarRecibo(ARecibo) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConsultarRecibo", hb_StrToUTF8(ARecibo), @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_ConsultarRecibo", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(ARecibo), @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -331,7 +333,7 @@ METHOD Cancelar(eChave, eJustificativa, eCNPJ, ALote) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Cancelar", hb_StrToUTF8(eChave), hb_StrToUTF8(eJustificativa), hb_StrToUTF8(eCNPJ), ALote, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_Cancelar", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eChave), hb_StrToUTF8(eJustificativa), hb_StrToUTF8(eCNPJ), ALote, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -339,7 +341,7 @@ METHOD EnviarEvento(ALote) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEvento", ALote, @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_EnviarEvento", ACBrLIB, DLL_OSAPI}, ::MTHandle, ALote, @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -347,7 +349,7 @@ METHOD DistribuicaoDFePorUltNSU(acUFAutor, eCNPJCPF, eultNSU) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_DistribuicaoDFePorUltNSU", acUFAutor, hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(eultNSU), @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_DistribuicaoDFePorUltNSU", ACBrLIB, DLL_OSAPI}, ::MTHandle, acUFAutor, hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(eultNSU), @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -355,7 +357,7 @@ METHOD DistribuicaoDFePorNSU(acUFAutor, eCNPJCPF, eNSU) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_DistribuicaoDFePorNSU", acUFAutor, hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(eNSU), @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_DistribuicaoDFePorNSU", ACBrLIB, DLL_OSAPI}, ::MTHandle, acUFAutor, hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(eNSU), @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
@@ -363,54 +365,54 @@ METHOD DistribuicaoDFePorChave(acUFAutor, eCNPJCPF, echNFe) CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_DistribuicaoDFePorChave", acUFAutor, hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(echNFe), @buffer, @bufferLen)
+    hResult := hb_DynCall({"NFE_DistribuicaoDFePorChave", ACBrLIB, DLL_OSAPI}, ::MTHandle, acUFAutor, hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(echNFe), @buffer, @bufferLen)
     ::CheckResult(hResult)
 RETURN ::ProcessResult(buffer, bufferLen)
 
 METHOD EnviarEmail(ePara, eXMLNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmail", hb_StrToUTF8(ePara), hb_StrToUTF8(eXMLNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos), hb_StrToUTF8(eMensagem))
+    hResult := hb_DynCall({"NFE_EnviarEmail", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(ePara), hb_StrToUTF8(eXMLNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos), hb_StrToUTF8(eMensagem))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD EnviarEmailEvento(ePara, eXMLEvento, eXMLNFe, aEnviaPDF, eAssunto, eCc, eAnexos, eMensagem) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmailEvento", hb_StrToUTF8(ePara), hb_StrToUTF8(eXMLEvento), hb_StrToUTF8(eXMLNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos), hb_StrToUTF8(eMensagem))
+    hResult := hb_DynCall({"NFE_EnviarEmailEvento", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(ePara), hb_StrToUTF8(eXMLEvento), hb_StrToUTF8(eXMLNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos), hb_StrToUTF8(eMensagem))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Imprimir", hb_StrToUTF8(cImpressora), nNumCopias, hb_StrToUTF8(cProtocolo), hb_StrToUTF8(bMostrarPreview), hb_StrToUTF8(cMarcaDagua), hb_StrToUTF8(bViaConsumidor), hb_StrToUTF8(bSimplificado))
+    hResult := hb_DynCall({"NFE_Imprimir", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(cImpressora), nNumCopias, hb_StrToUTF8(cProtocolo), hb_StrToUTF8(bMostrarPreview), hb_StrToUTF8(cMarcaDagua), hb_StrToUTF8(bViaConsumidor), hb_StrToUTF8(bSimplificado))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD ImprimirPDF() CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirPDF")
+    hResult := hb_DynCall({"NFE_ImprimirPDF", ACBrLIB, DLL_OSAPI}, ::MTHandle)
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD ImprimirEvento(eArquivoXmlNFe, eArquivoXmlEvento) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEvento", hb_StrToUTF8(eArquivoXmlNFe), hb_StrToUTF8(eArquivoXmlEvento))
+    hResult := hb_DynCall({"NFE_ImprimirEvento", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoXmlNFe), hb_StrToUTF8(eArquivoXmlEvento))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD ImprimirEventoPDF(eArquivoXmlNFe, eArquivoXmlEvento) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEventoPDF", hb_StrToUTF8(eArquivoXmlNFe), hb_StrToUTF8(eArquivoXmlEvento))
+    hResult := hb_DynCall({"NFE_ImprimirEventoPDF", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoXmlNFe), hb_StrToUTF8(eArquivoXmlEvento))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD ImprimirInutilizacao(eArquivoXml) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacao", hb_StrToUTF8(eArquivoXml))
+    hResult := hb_DynCall({"NFE_ImprimirInutilizacao", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoXml))
     ::CheckResult(hResult)
 RETURN nil
 
 METHOD ImprimirInutilizacaoPDF(eArquivoXml) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacaoPDF", hb_StrToUTF8(eArquivoXml))
+    hResult := hb_DynCall({"NFE_ImprimirInutilizacaoPDF", ACBrLIB, DLL_OSAPI}, ::MTHandle, hb_StrToUTF8(eArquivoXml))
     ::CheckResult(hResult)
 RETURN nil

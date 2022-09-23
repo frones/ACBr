@@ -672,6 +672,8 @@ type
     procedure edSicoobArqChavePrivadaExit(Sender: TObject);
     procedure edSicoobArqsChange(Sender: TObject);
     procedure edSicoobChavePIXChange(Sender: TObject);
+    procedure edSicrediArqCertificadoExit(Sender: TObject);
+    procedure edSicrediArqChavePrivadaExit(Sender: TObject);
     procedure edSicrediArqsChange(Sender: TObject);
     procedure edSicrediChavePIXChange(Sender: TObject);
     procedure edtBBChavePIXChange(Sender: TObject);
@@ -2030,7 +2032,7 @@ begin
   end;
 
   ACBrOpenSSLUtils1.LoadPrivateKeyFromString(mmSicrediGerarChavePrivada.Text);
-  wCertificado := ACBrOpenSSLUtils1.CreateCertificateSignRequest(
+  wCertificado := ACBrOpenSSLUtils1.CreateSelfSignedCert(
                     edSicrediClientID.Text,
                     edtRecebedorNome.Text,
                     ACBrPixCD1.DadosAutomacao.NomeAplicacao,
@@ -2101,6 +2103,16 @@ procedure TForm1.edSicoobChavePIXChange(Sender: TObject);
 begin
   cbSicoobTipoChave.ItemIndex := Integer(DetectarTipoChave(edSicoobChavePIX.Text));
   imSicoobErroChavePIX.Visible := (edSicoobChavePIX.Text <> '') and (cbSicoobTipoChave.ItemIndex = 0);
+end;
+
+procedure TForm1.edSicrediArqCertificadoExit(Sender: TObject);
+begin
+  ValidarCertificadoPSPSicredi;
+end;
+
+procedure TForm1.edSicrediArqChavePrivadaExit(Sender: TObject);
+begin
+  ValidarChavePSPSicredi;
 end;
 
 procedure TForm1.edtRecebedorCEPExit(Sender: TObject);

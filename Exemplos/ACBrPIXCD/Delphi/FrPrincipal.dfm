@@ -4278,6 +4278,7 @@ object Form1: TForm1
                       TabOrder = 3
                       Text = 'SicrediChavePrivada.key'
                       OnChange = edSicrediArqsChange
+                      OnExit = edSicrediArqChavePrivadaExit
                     end
                     object edSicrediArqCertificado: TEdit
                       Left = 24
@@ -4289,6 +4290,7 @@ object Form1: TForm1
                       TabOrder = 4
                       Text = 'SicrediCertificado.cer'
                       OnChange = edSicrediArqsChange
+                      OnExit = edSicrediArqCertificadoExit
                     end
                     object cbSicrediTipoChave: TComboBox
                       Left = 675
@@ -4434,7 +4436,7 @@ object Form1: TForm1
                       Top = 192
                       Width = 137
                       Height = 33
-                      Caption = 'Gerar Chave Privada'
+                      Caption = 'Gerar Certificado'
                       TabOrder = 5
                       OnClick = btSicrediGerarCertificadoClick
                     end

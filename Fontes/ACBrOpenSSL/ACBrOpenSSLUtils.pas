@@ -170,6 +170,12 @@ type
       C_CountryName: String = ''; EMAIL_EmailAddress: String = '';
       Algorithm: TACBrOpenSSLAlgorithm = algSHA512): String;
 
+    function CreateSelfSignedCert(const CN_CommonName: String;
+      O_OrganizationName: String = ''; OU_OrganizationalUnitName: String = '';
+      L_Locality: String = ''; ST_StateOrProvinceName: String = '';
+      C_CountryName: String = ''; EMAIL_EmailAddress: String = '';
+      Algorithm: TACBrOpenSSLAlgorithm = algSHA512): String;
+
     property PrivateKeyAsString: AnsiString read GetPrivateKeyAsString;
     property PublicKeyAsString: AnsiString read GetPublicKeyAsString;
     property PublicKeyAsOpenSSH: AnsiString read GetPublicKeyAsOpenSSH;
@@ -1139,6 +1145,64 @@ begin
     end;
   finally
     X509_REQ_free(x);
+  end;
+end;
+
+function TACBrOpenSSLUtils.CreateSelfSignedCert(const CN_CommonName: String;
+  O_OrganizationName: String; OU_OrganizationalUnitName: String;
+  L_Locality: String; ST_StateOrProvinceName: String; C_CountryName: String;
+  EMAIL_EmailAddress: String; Algorithm: TACBrOpenSSLAlgorithm): String;
+var
+  x: pX509;
+  wName: PX509_NAME;
+  bio: PBIO;
+  md: PEVP_MD;
+begin
+  Result := EmptyStr;
+  CheckPrivateKeyIsLoaded;
+  CheckPublicKeyIsLoaded;
+
+  x := X509New;
+  try
+    wName := X509_NAME_new;
+    try
+      if (EMAIL_EmailAddress <> '') then
+        X509NameAddEntryByTxt(wName, 'EMAIL', MBSTRING_ASC, EMAIL_EmailAddress, -1, -1, 0);
+      if (C_CountryName <> '') then
+        X509NameAddEntryByTxt(wName, 'C', MBSTRING_ASC, C_CountryName, -1, -1, 0);
+      if (ST_StateOrProvinceName <> '') then
+        X509NameAddEntryByTxt(wName, 'ST', MBSTRING_ASC, ST_StateOrProvinceName, -1, -1, 0);
+      if (L_Locality <> '') then
+        X509NameAddEntryByTxt(wName, 'L', MBSTRING_ASC, L_Locality, -1, -1, 0);
+      if (OU_OrganizationalUnitName <> '') then
+        X509NameAddEntryByTxt(wName, 'OU', MBSTRING_ASC, OU_OrganizationalUnitName, -1, -1, 0);
+      if (O_OrganizationName <> '') then
+        X509NameAddEntryByTxt(wName, 'O', MBSTRING_ASC, O_OrganizationName, -1, -1, 0);
+      X509NameAddEntryByTxt(wName, 'CN', MBSTRING_ASC, CN_CommonName, -1, -1, 0);
+
+      if (X509SetIssuerName(x, wName) <> 1) then
+        raise EACBrOpenSSLException.Create('X509SetIssuerName' + sLineBreak + GetLastOpenSSLError);
+    finally
+      X509_NAME_free(wName);
+    end;
+
+    if (X509SetPubkey(x, fEVP_PublicKey) <> 1) then
+      raise EACBrOpenSSLException.Create('X509SetPubkey' + sLineBreak + GetLastOpenSSLError);
+
+    md := GetEVPAlgorithmByName(Algorithm);
+    if (X509Sign(x, fEVP_PrivateKey, md) = 0) then
+      raise EACBrOpenSSLException.Create('X509Sign' + sLineBreak + GetLastOpenSSLError);
+
+    bio := BioNew(BioSMem);
+    try
+      if (PEM_write_bio_X509(bio, x) <> 1) then
+        raise EACBrOpenSSLException.Create('PEM_write_bio_X509' + sLineBreak + GetLastOpenSSLError);
+      Result := BioToStr(bio);
+    finally
+      BioFreeAll(bio);
+    end;
+  finally
+    X509Free(x);
   end;
 end;
 

@@ -49,6 +49,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2022
+[*] TK-2030 ACBrBoleto - Ajuste leitura retorno CNAB400 quanto ao método CodMotivoRejeicaoToDescricao
+  Por : Pandaaa / José Luiz
+
 19/09/2022
 --ACBrBoletoRet_BancoBrasil_API--
 TK-3033 Alimentar propriedades Outros Valores Retorno Banco do Brasil API (tpConsultaDetalhada)  ValorRecebido,ValorMoraJuros,ValorDesconto,ValorOutrosCreditos,ValorIOF 

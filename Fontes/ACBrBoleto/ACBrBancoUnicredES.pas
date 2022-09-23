@@ -65,6 +65,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; Override;
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia : TACBrTipoOcorrencia ; CodMotivo : Integer) : String ; override;
+    function CodComplementoMovimento(const ACodMotivo: String): String;
     function TipoOcorrenciaToCodRemessa(const ATipoOcorrencia: TACBrTipoOcorrencia): String; override;
 
   end;
@@ -279,7 +280,7 @@ begin
           OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                          copy(Linha,109,2),0));
 
-          codInstrucao := copy(Linha,327,2);
+          codInstrucao := copy(Linha,319,8);
           MotivoRejeicaoComando.Add(codInstrucao);
 
           DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,StrToIntDef(codInstrucao,0)));
@@ -320,6 +321,219 @@ begin
     fpTamanhoMaximoNossoNum:= 10;
   end;
 
+end;
+
+function TACBrBancoUnicredES.CodComplementoMovimento(
+  const ACodMotivo: String): String;
+begin
+  try
+    if ACodMotivo = '00' then
+      Result := '00 - Sem Complemento a informar'
+    else
+    if StrToInt(ACodMotivo) > 0 then
+    begin
+      case StrToIntDef(ACodMotivo,0) of
+        // Códigos de Complemento do Movimento
+        01 : Result := '01 - Código do Banco Inválido';
+        04 : Result := '04 - Código de Movimento não permitido para a carteira';
+        05 : Result := '05 - Código de Movimento Inválido';
+        06 : Result := '06 - Número de Inscrição do Beneficiário Inválido';
+        07 : Result := '07 - Agência - Conta Inválida';
+        08 : Result := '08 - Nosso Número Inválido';
+        09 : Result := '09 - Nosso Número Duplicado';
+        10 : Result := '10 - Carteira inválida';
+        12 : Result := '12 - Tipo de Documento Inválido';
+        15 : Result := '15 - Data de Vencimento inferior a 5 dias uteis para remessa gráfica';
+        16 : Result := '16 - Data de Vencimento Inválida';
+        17 : Result := '17 - Data de Vencimento Anterior à Data de Emissão';
+        18 : Result := '18 - Vencimento fora do Prazo de Operação';
+        20 : Result := '20 - Valor do Título Inválido';
+        24 : Result := '24 - Data de Emissão Inválida';
+        25 : Result := '25 - Data de Emissão Posterior à data de Entrega';
+        26 : Result := '26 - Código de juros inválido';
+        27 : Result := '27 – Valor de juros inválido';
+        28 : Result := '28 – Código de Desconto inválido';
+        29 : Result := '29 – Valor de Desconto inválido';
+        30 : Result := '30 - Alteração de Dados Rejeitada';
+        33 : Result := '33 - Valor de Abatimento Inválido';
+        34 : Result := '34 - Valor do Abatimento Maior ou Igual ao Valor do título';
+        37 : Result := '37 - Código para Protesto Inválido; (Protesto via SGR, não é CRA)';
+        38 : Result := '38 - Prazo para Protesto Inválido; (Protesto via SGR, não é CRA)';
+        39 : Result := '39 - Pedido de Protesto Não Permitido para o Título';
+        40 : Result := '40 - Título com Ordem de Protesto Emitida';
+        41 : Result := '41 - Pedido de Cancelamento/Sustação para Títulos sem Instrução de Protesto ou Instrução de Protesto não confirmada pelo cartório';
+        45 : Result := '45 - Nome do Pagador não informado';
+        46 : Result := '46 - Número de Inscrição do Pagador Inválido';
+        47 : Result := '47 - Endereço do Pagador Não Informado';
+        48 : Result := '48 - CEP Inválido';
+        52 : Result := '52 - Unidade Federativa Inválida';
+        57 : Result := '57 – Código de Multa inválido';
+        58 : Result := '58 – Data de Multa inválido';
+        59 : Result := '59 – Valor / percentual de Multa inválido';
+        60 : Result := '60 - Movimento para Título não Cadastrado';
+        63 : Result := '63 - Entrada para Título já cadastrado';
+        79 : Result := '79 – Data de Juros inválida';
+        80 : Result := '80 – Data de Desconto inválida';
+        86 : Result := '86 - Seu Número Inválido';
+        //Códigos de Complemento do Movimento, relacionados a Protesto de título:
+        101 : Result := '101 - Data da apresentação inferior à data de vencimento';
+        102 : Result := '102 - Falta de comprovante da prestação de serviço';
+        103 : Result := '103 - Nome do sacado incompleto/incorreto';
+        104 : Result := '104 - Nome do cedente incompleto/incorreto';
+        105 : Result := '105 - Nome do sacador incompleto/incorreto';
+        106 : Result := '106 - Endereço do sacado insuficiente';
+        107 : Result := '107 - CNPJ/CPF do sacado inválido/incorreto';
+        108 : Result := '108 - CNPJ/CPF incompatível c/ o nome do sacado/sacador/avalista';
+        109 : Result := '109 - CNPJ/CPF do sacado incompatível com o tipo de documento';
+        110 : Result := '110 - CNPJ/CPF do sacador incompatível com a espécie';
+        111 : Result := '111 - Título aceito sem a assinatura do sacado';
+        112 : Result := '112 - Título aceito rasurado ou rasgado';
+        113 : Result := '113 - Título aceito – falta título (ag ced: enviar)';
+        114 : Result := '114 - CEP incorreto';
+        115 : Result := '115 - Praça de pagamento incompatível com endereço';
+        116 : Result := '116 - Falta número do título';
+        117 : Result := '117 - Título sem endosso do cedente ou irregular';
+        118 : Result := '118 - Falta data de emissão do título';
+        119 : Result := '119 - Título aceito: valor por extenso diferente do valor por numérico';
+        120 : Result := '120 - Data de emissão posterior ao vencimento';
+        121 : Result := '121 - Espécie inválida para protesto';
+        122 : Result := '122 - CEP do sacado incompatível com a praça de protesto';
+        123 : Result := '123 - Falta espécie do título';
+        124 : Result := '124 - Saldo maior que o valor do título';
+        125 : Result := '125 - Tipo de endosso inválido';
+        126 : Result := '126 - Devolvido por ordem judicial';
+        127 : Result := '127 - Dados do título não conferem com disquete';
+        128 : Result := '128 - Sacado e Sacador/Avalista são a mesma pessoa';
+        129 : Result := '129 - Corrigir a espécie do título';
+        130 : Result := '130 - Aguardar um dia útil após o vencimento para protestar';
+        131 : Result := '131 - Data do vencimento rasurada';
+        132 : Result := '132 - Vencimento – extenso não confere com número';
+        133 : Result := '133 - Falta data de vencimento no título';
+        134 : Result := '134 - DM/DMI sem comprovante autenticado ou declaração';
+        135 : Result := '135 - Comprovante ilegível para conferência e microfilmagem';
+        136 : Result := '136 - Nome solicitado não confere com emitente ou sacado';
+        137 : Result := '137 - Confirmar se são 2 emitentes. Se sim, indicar os dados dos 2';
+        138 : Result := '138 - Endereço do sacado igual ao do sacador ou do portador';
+        139 : Result := '139 - Endereço do apresentante incompleto ou não informado';
+        140 : Result := '140 - Rua / Número inexistente no endereço';
+        141 : Result := '141 - Informar a qualidade do endosso (M ou T)';
+        142 : Result := '142 - Falta endosso do favorecido para o apresentante';
+        143 : Result := '143 - Data da emissão rasurada';
+        144 : Result := '144 - Protesto de cheque proibido – motivo 20/25/28/30 ou 35';
+        145 : Result := '145 - Falta assinatura do emitente no cheque';
+        146 : Result := '146 - Endereço do emitente no cheque igual ao do banco sacado';
+        147 : Result := '147 - Falta o motivo da devolução no cheque ou motivo ilegível';
+        148 : Result := '148 - Falta assinatura do sacador no título';
+        149 : Result := '149 - Nome do apresentante não informado/incompleto/incorreto';
+        150 : Result := '150 - Erro de preenchimento do título';
+        151 : Result := '151 - Título com direito de regresso vencido';
+        152 : Result := '152 - Título apresentado em duplicidade';
+        153 : Result := '153 - Título já protestado';
+        154 : Result := '154 - Letra de Câmbio vencida – falta aceite do sacado';
+        155 : Result := '155 - Título – falta tradução por tradutor público';
+        156 : Result := '156 - Falta declaração de saldo assinada no título';
+        157 : Result := '157 - Contrato de Câmbio – falta conta gráfica';
+        158 : Result := '158 - Ausência do Documento Físico';
+        159 : Result := '159 - Sacado Falecido';
+        160 : Result := '160 - Sacado Apresentou Quitação do Título';
+        161 : Result := '161 - Título de outra jurisdição territorial';
+        162 : Result := '162 - Título com emissão anterior à concordata do sacado';
+        163 : Result := '163 - Sacado consta na lista de falência';
+        164 : Result := '164 - Apresentante não aceita publicação de edital';
+        165 : Result := '165 - Dados do sacador em branco ou inválido';
+        166 : Result := '166 - Título sem autorização para protesto por edital';
+        167 : Result := '167 - Valor divergente entre título e comprovante';
+        168 : Result := '168 - Condomínio não pode ser protestado para fins falimentares';
+        169 : Result := '169 - Vedada a intimação por edital para protesto falimentar';
+        170 : Result := '170 - Dados do Cedente em branco ou inválido';
+      end;
+    end;
+  except
+    if ACodMotivo = 'A5' then
+      Result := 'A5 - Título Liquidado'
+    else if ACodMotivo = 'A8' then
+      Result := 'A8 - Valor do Abatimento Inválido para Cancelamento'
+    else if ACodMotivo = 'C0' then
+      Result := 'C0 – Sistema Intermitente – Entre em contato com sua Cooperativa'
+    else if ACodMotivo = 'C1' then
+      Result := 'C1 - Situação do título Aberto'
+    else if ACodMotivo = 'C3' then
+      Result := 'C3 - Status do Borderô Inválido'
+    else if ACodMotivo = 'C4' then
+      Result := 'C4 - Nome do Beneficiário Inválido'
+    else if ACodMotivo = 'C5' then
+      Result := 'C5 - Documento Inválido'
+    else if ACodMotivo = 'C6' then
+      Result := 'C6 - Instrução não Atualiza Cadastro do Título'
+    else if ACodMotivo = 'C7' then
+      Result := 'C7 – Título não registrado na CIP'
+    else if ACodMotivo = 'C8' then
+      Result := 'C8 – Situação do Borderô inválida'
+    else if ACodMotivo = 'C9' then
+      Result := 'C9 – Título inválido conforme situação CIP'
+    else if ACodMotivo = 'C10' then
+      Result := 'C10 - Protesto: Título precisa estar em Aberto'
+    else if ACodMotivo = 'D0' then
+      Result := 'D0 – Beneficiário não autorizado a operar com produto Desconto'
+    else if ACodMotivo = 'D1' then
+      Result := 'D1 – Alteração de status de desconto não permitido para título'
+    else if ACodMotivo = 'D2' then
+      Result := 'D2 – Operação de desconto não permitida para título vencido'
+    else if ACodMotivo = 'D3' then
+      Result := 'D3 - Alteração de status de desconto não permitido para situação do título'
+    else if ACodMotivo = 'E0' then
+      Result := 'E0 - CEP indicado para o endereço do Pagador não compatível com os Correios'
+    else if ACodMotivo = 'E1' then
+      Result := 'E1 - Logradouro para o endereço do Pagador não compatível com o CEP indicado'
+    else if ACodMotivo = 'E2' then
+      Result := 'E2 – Tipo de logradouro para o endereço do Pagador não compatível o CEP indicado'
+    else if ACodMotivo = 'E3' then
+      Result := 'E3 – Bairro para o endereço do Pagador não compatível com o CEP indicado'
+    else if ACodMotivo = 'E4' then
+      Result := 'E4 – Cidade para o endereço do Pagador não compatível com o CEP indicado'
+    else if ACodMotivo = 'E5' then
+      Result := 'E5 – UF para o endereço do Pagador não compatível com o CEP indicado'
+    else if ACodMotivo = 'E6' then
+      Result := 'E6 – Dados do segmento/registro opcional de endereço do pagador, incompletos no arquivo remessa'
+    else if ACodMotivo = 'E7' then
+      Result := 'E7 – Beneficiário não autorizado a enviar boleto por e-mail'
+    else if ACodMotivo = 'E8' then
+      Result := 'E8 – Indicativo para pagador receber boleto por e-mail sinalizado, porém sem o endereço do e-mail'
+    else if ACodMotivo = 'E9' then
+      Result := 'E9 – Beneficiário não autorizado a enviar títulos para protesto'
+    else if ACodMotivo = 'E10' then
+      Result := 'E10 – Instrução "09 – Protestar", usada erroneamente para título a vencer ou ainda dentro do período de Carência de "1 dia" do vencimento, referente a liquidação por Compensação'
+    else if ACodMotivo = 'E11' then
+      Result := 'E11 - Instrução "26 – Protesto Automático", usada erroneamente para título vencido'
+    else if ACodMotivo = 'E12' then
+      Result := 'E12 - Cancelamento de protesto automático não permitido, título não possui configuração de protesto automático'
+    else if ACodMotivo = 'E13' then
+      Result := 'E13 - Configuração de Número de Dias para Protesto, foi informado para cancelamento de protesto automático'
+    else if ACodMotivo = 'E14' then
+      Result := 'E14 - Configuração de Número de Dias para Protesto, não foi informado para protesto automático'
+    else if ACodMotivo = 'E15' then
+      Result := 'E15 - Cancelamento de protesto automático não permitido, para protesto já enviado a cartório'
+    else if ACodMotivo = 'E16' then
+      Result := 'E16 - Código para Protesto inválido'
+    else if ACodMotivo = 'E17' then
+      Result := 'E17 – Instrução não permitida para título descontado'
+    else if ACodMotivo = 'E18' then
+      Result := 'E18 - Configuração de Número de Dias para Protesto, foi informado para opção de não protestar'
+    else if ACodMotivo = 'E19' then
+      Result := 'E19 – Baixa por decurso de prazo foi encaminhada em duplicidade pela CIP'
+    else if ACodMotivo = 'E20' then
+      Result := 'E20 – Títulos com múltiplos pagamentos devem ter permissão para receber qualquer valor de pagamento'
+    else if ACodMotivo = 'E21' then
+      Result := 'E21 – Instrução não permitida para títulos com múltiplos pagamentos'
+    else if ACodMotivo = 'E22' then
+      Result := 'E22 – Funcionalidade para títulos com múltiplos pagamentos não está habilitada'
+    else if ACodMotivo = 'E23' then
+      Result := 'E23 – Quantidade de pagamentos parciais, deve ser 99'
+    else if ACodMotivo = 'E24' then
+      Result := 'E24 – Quantidade de pagamentos parciais não deve ser informado'
+    else if ACodMotivo = 'E25' then
+      Result := 'E25 - Modelo de calculo invalido para titulo com pagamentos parciais';
+  end;
 end;
 
 function TACBrBancoUnicredES.CodDescontoToStr(

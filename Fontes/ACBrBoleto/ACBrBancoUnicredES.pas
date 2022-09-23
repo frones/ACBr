@@ -283,7 +283,7 @@ begin
           codInstrucao := copy(Linha,319,8);
           MotivoRejeicaoComando.Add(codInstrucao);
 
-          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,StrToIntDef(codInstrucao,0)));
+          DescricaoMotivoRejeicaoComando.Add(CodComplementoMovimento(codInstrucao));
 
 
 

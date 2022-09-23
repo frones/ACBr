@@ -77,7 +77,8 @@ implementation
 
 Uses
   ACBrLibConsts, ACBrLibConfig,
-  ACBrLibNCMsConfig, ACBrLibNCMsRespostas;
+  ACBrLibNCMsConfig, ACBrLibNCMsRespostas,
+  ACBrUtil.Strings;
 
 { TACBrLibNCMs }
 
@@ -111,34 +112,174 @@ end;
 
 function TACBrLibNCMs.DescricaoNCM(const cNCM: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 begin
+  //???
+  try
+        //if Config.Log.Nivel > logNormal then
+        //  GravarLog('CEP_BuscarPorCEP( ' + ACEP + ' )', logCompleto, True)
+        //else
+        //  GravarLog('CEP_BuscarPorCEP', logNormal);
 
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 function TACBrLibNCMs.Validar(const cNCM: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
+var
+  aNCM: String;
+  NCMehValido: Boolean;
+  AResposta: String;
 begin
+  try
+    aNCM := ConverterAnsiParaUTF8(cNCM);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('NCM_Validar( ' + cNCM + ' )', logCompleto, True)
+    else
+      GravarLog('NCM_Validar', logNormal);
 
+    NCMsDM.Travar;
+    try
+      aNCM := OnlyNumber(aNCM);
+
+      if (Length(aNCM) <> 8) then
+        raise Exception.Create('O codigo do NCM deve conter 8 Caracteres');
+
+      NCMehValido := NCMsDM.ACBrNCMs1.Validar(aNCM);
+      if NCMehValido  then
+         AResposta := 'NCM Valido'
+      else
+         raise Exception.Create('NCM Invalido');
+
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, AResposta);
+    finally
+      NCMsDM.Destravar;
+    end;
+
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 function TACBrLibNCMs.BaixarLista(const cNomeArquivo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+var
+  aNomeArquivo: String;
+  AResposta: String;
 begin
+  try
+    aNomeArquivo := ConverterAnsiParaUTF8(cNomeArquivo);
+    if Config.Log.Nivel > logNormal then
+      GravarLog('NCM_BaixarLista( ' + aNomeArquivo + ' )', logCompleto, True)
+    else
+      GravarLog('NCM_BaixarLista', logNormal);
 
+    NCMsDM.Travar;
+    try
+      NCMsDM.ACBrNCMs1.ObterNCMs;
+      NCMsDM.ACBrNCMs1.NCMS.SaveToFile(aNomeArquivo);
+
+      AResposta := 'Arquivo salvo em: ' + aNomeArquivo;
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, AResposta);
+    finally
+      NCMsDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 function TACBrLibNCMs.ObterNCMs(const sResposta: PChar; var esTamanho: longint): longint;
+var
+  AResposta: String;
 begin
+  try
+    GravarLog('NCM_ObterNCMs', logNormal);
 
+    NCMsDM.Travar;
+    try
+      NCMsDM.ACBrNCMs1.ObterNCMs;
+
+      AResposta := 'Lista de NCMs atualizada';
+      MoverStringParaPChar(AResposta, sResposta, esTamanho);
+      Result := SetRetorno(ErrOK, AResposta);
+    finally
+      NCMsDM.Destravar;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 function TACBrLibNCMs.BuscarPorCodigo(const cNCM: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 begin
+  //???
+  try
+    //aNCM := ConverterAnsiParaUTF8(aNCM);
+    //if Config.Log.Nivel > logNormal then
+    //  GravarLog('NCM_Validar( ' + cNCM + ' )', logCompleto, True)
+    //else
+    //  GravarLog('NCM_Validar', logNormal);
+    //
+    //NCMsDM.Travar;
+    //try
+    //
+    //finally
+    //  NCMsDM.Destravar;
+    //end;
 
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 function TACBrLibNCMs.BuscarPorDescricao(const cDesc: PChar; const nTipo: longint; const sResposta: PChar;
   var esTamanho: longint): longint;
 begin
+  //???
+  try
+    //aNCM := ConverterAnsiParaUTF8(aNCM);
+    //if Config.Log.Nivel > logNormal then
+    //  GravarLog('NCM_Validar( ' + cNCM + ' )', logCompleto, True)
+    //else
+    //  GravarLog('NCM_Validar', logNormal);
+    //
+    //NCMsDM.Travar;
+    //try
+    //
+    //finally
+    //  NCMsDM.Destravar;
+    //end;
 
+
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 ///////////////

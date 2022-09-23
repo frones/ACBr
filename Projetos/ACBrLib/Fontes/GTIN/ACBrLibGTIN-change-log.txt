@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2022
+--- ACBrLibGTIN ---
+[*] Correção Unit ACBrLibGTINMT
+    Por: Antonio Carlos
+
 20/08/2022
 --- ACBrLibGTIN ---
 [+] Inicio do projeto.

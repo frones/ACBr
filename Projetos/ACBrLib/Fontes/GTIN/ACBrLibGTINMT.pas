@@ -43,38 +43,38 @@ uses
 function GTIN_Inicializar (var libHandle: PLibHandle; const eArqConfig, eChaveCrypt: Pchar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_Finalizar (var libHandle: PLibHandle): longint;
+function GTIN_Finalizar (libHandle: PLibHandle): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_Nome (var libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function GTIN_Nome (const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_Versao (var libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function GTIN_Versao (const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_UltimoRetorno (var libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GTIN_UltimoRetorno (const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_ConfigImportar (var libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GTIN_ConfigImportar (const libHandle: PLibHandle; const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_ConfigExportar (var libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GTIN_ConfigExportar (const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_ConfigLer (var libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GTIN_ConfigLer (const libHandle: PLibHandle; const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_ConfigGravar (var libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GTIN_ConfigGravar (const libHandle: PLibHandle; const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_ConfigLerValor (var libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
+function GTIN_ConfigLerValor (const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_ConfigGravarValor (var libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function GTIN_ConfigGravarValor (const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function GTIN_Consultar (var libHandle: PLibHandle; aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function GTIN_Consultar (const libHandle: PLibHandle; aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
 implementation
@@ -88,75 +88,75 @@ begin
   Result := LIB_Inicializar(libHandle, TACBrLibeSocial, eArqConfig, eChaveCrypt);
 end;
 
-function GTIN_Finalizar(var libHandle: PLibHandle): longint;
+function GTIN_Finalizar(libHandle: PLibHandle): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar(libHandle);
   pLib := Nil;
 end;
 
-function GTIN_Nome(var libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
+function GTIN_Nome(const libHandle: PLibHandle; const sNome: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Nome(libHandle, sNome, esTamanho);
 end;
 
-function GTIN_Versao(var libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
+function GTIN_Versao(const libHandle: PLibHandle; const sVersao: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Versao(libHandle, sVersao, esTamanho);
 end;
 
-function GTIN_UltimoRetorno(var libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
+function GTIN_UltimoRetorno(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(libHandle, sMensagem, esTamanho);
 end;
 
-function GTIN_ConfigImportar(var libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GTIN_ConfigImportar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigImportar(libHandle, eArqConfig);
 end;
 
-function GTIN_ConfigExportar(var libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint
+function GTIN_ConfigExportar(const libHandle: PLibHandle; const sMensagem: PChar; var esTamanho: longint
   ): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigExportar(libHandle, sMensagem, esTamanho);
 end;
 
-function GTIN_ConfigLer(var libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GTIN_ConfigLer(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(libHandle, eArqConfig);
 end;
 
-function GTIN_ConfigGravar(var libHandle: PLibHandle; const eArqConfig: PChar): longint;
+function GTIN_ConfigGravar(const libHandle: PLibHandle; const eArqConfig: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(libHandle, eArqConfig);
 end;
 
-function GTIN_ConfigLerValor(var libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
+function GTIN_ConfigLerValor(const libHandle: PLibHandle; const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(libHandle, eSessao, eChave, sValor, esTamanho);
 end;
 
-function GTIN_ConfigGravarValor(var libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
+function GTIN_ConfigGravarValor(const libHandle: PLibHandle; const eSessao, eChave, eValor: PChar): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(libHandle, eSessao, eChave, eValor);
 end;
 
-function GTIN_Consultar(aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function GTIN_Consultar(const libHandle: PLibHandle; aGTIN: PChar; const sResposta: PChar; var esTamanho: longint): longint;
  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
-    VerificarLibInicializada(pLib);
-    Result := TACBrLibGTIN(pLib^.Lib).Consultar(aGTIN);
+    VerificarLibInicializada(libHandle);
+    Result := TACBrLibGTIN(libHandle^.Lib).Consultar(aGTIN);
   except
      on E: EACBrLibException do
      Result := E.Erro;

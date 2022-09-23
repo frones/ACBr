@@ -253,6 +253,7 @@ type
     Femv: String;
     FurlPix: String;
     FtxId: String;
+    FCodigoOcorrenciaCartorio: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -328,6 +329,7 @@ type
     property Contrato: String read FContrato write FContrato;
     property CodigoEstadoTituloCobranca: String read FCodigoEstadoTituloCobranca write FCodigoEstadoTituloCobranca;
     property EstadoTituloCobranca: String read FEstadoTituloCobranca write FEstadoTituloCobranca;
+    property CodigoOcorrenciaCartorio: String read FCodigoOcorrenciaCartorio write FCodigoOcorrenciaCartorio;
     property DataMovimento: TDateTime read FDataMovimento write FDataMovimento;
     property EMV: String read Femv write Femv;
     property UrlPix: String read FurlPix write FurlPix;

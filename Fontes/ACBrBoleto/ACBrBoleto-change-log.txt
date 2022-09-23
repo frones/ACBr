@@ -50,8 +50,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/09/2022
+-- ACBrBancoUnicredES --
 [*] TK-2030 ACBrBoleto - Ajuste leitura retorno CNAB400 quanto ao método CodMotivoRejeicaoToDescricao
   Por : Pandaaa / José Luiz
+
+-- ACBrBoletoRetorno ACBrBoletoRet_BancoBrasil_API --
+[*] TK-3089 ACBrBoleto - Ajuste integração por API do BB para leitura de mais campos
+  Por : Aggille Sistemas de Gestão / Pandaaa
 
 19/09/2022
 --ACBrBoletoRet_BancoBrasil_API--

@@ -237,6 +237,11 @@ begin
             ARetornoWS.DadosRet.TituloRet.ValorDesconto              := AJson.Values['valorDescontoUtilizado'].AsNumber;
             ARetornoWS.DadosRet.TituloRet.ValorOutrosCreditos        := AJson.Values['valorOutroRecebido'].AsNumber;
             ARetornoWS.DadosRet.TituloRet.ValorIOF                   := AJson.Values['valorImpostoSobreOprFinanceirasRecebidoTitulo'].AsNumber;
+            ARetornoWS.DadosRet.TituloRet.ValorAbatimento            := AJson.Values['valorAbatimentoTotal'].AsNumber;
+            ARetornoWS.DadosRet.TituloRet.MultaValorFixo             := true;
+            ARetornoWS.DadosRet.TituloRet.PercentualMulta            := AJson.Values['valorMultaRecebido'].AsNumber;
+
+            ARetornoWS.DadosRet.TituloRet.CodigoOcorrenciaCartorio   := IntToStr(AJson.Values['codigoOcorrenciaCartorio'].AsInteger);
 
             ARetornoWS.DadosRet.TituloRet.Sacado.NomeSacado          := AJson.Values['nomeSacadoCobranca'].AsString;
             ARetornoWS.DadosRet.TituloRet.Sacado.Logradouro          := AJson.Values['textoEnderecoSacadoCobranca'].AsString;

@@ -194,7 +194,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Top = 139
         Width = 94
         Height = 15
-        Caption = 'N'#250'mero do RPS:'
+        Caption = 'Num. RPS/Ser.:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13

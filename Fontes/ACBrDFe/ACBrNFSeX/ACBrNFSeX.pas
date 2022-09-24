@@ -518,13 +518,14 @@ begin
     CNPJTomador := aInfConsultaNFSe.CNPJTomador;
     IMTomador := aInfConsultaNFSe.IMTomador;
     CNPJInter := aInfConsultaNFSe.CNPJInter;
-    IMInter   := aInfConsultaNFSe.IMInter;
+    IMInter := aInfConsultaNFSe.IMInter;
     NumeroLote := aInfConsultaNFSe.NumeroLote;
     Pagina := aInfConsultaNFSe.Pagina;
     CadEconomico := aInfConsultaNFSe.CadEconomico;
     CodServ := aInfConsultaNFSe.CodServ;
     CodVerificacao := aInfConsultaNFSe.CodVerificacao;
-    Tipo:= aInfConsultaNFSe.Tipo;
+    Tipo := aInfConsultaNFSe.Tipo;
+    ChaveNFSe := aInfConsultaNFSe.ChaveNFSe;
   end;
 
   ConsultarNFSe;

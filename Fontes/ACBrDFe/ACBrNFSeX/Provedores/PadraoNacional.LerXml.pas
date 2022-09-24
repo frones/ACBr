@@ -45,6 +45,8 @@ type
   { TNFSeR_PadraoNacional }
 
   TNFSeR_PadraoNacional = class(TNFSeRClass)
+  private
+    FpLerPrestador: Boolean;
   protected
     procedure LerinfNFSe(const ANode: TACBrXmlNode);
     procedure LerEmitente(const ANode: TACBrXmlNode);
@@ -315,6 +317,34 @@ begin
 
       Contato.Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('fone'), tcStr);
       Contato.Email := ObterConteudo(AuxNode.Childrens.FindAnyNs('email'), tcStr);
+    end;
+
+    with NFSe.Prestador do
+    begin
+      with IdentificacaoPrestador do
+      begin
+        CpfCnpj := NFSe.infNFSe.emit.Identificacao.CpfCnpj;
+        InscricaoMunicipal := NFSe.infNFSe.emit.Identificacao.InscricaoMunicipal;
+      end;
+
+      RazaoSocial := NFSe.infNFSe.emit.RazaoSocial;
+      NomeFantasia := NFSe.infNFSe.emit.NomeFantasia;
+
+      with Endereco do
+      begin
+        Endereco := NFSe.infNFSe.emit.Endereco.Endereco;
+        Numero := NFSe.infNFSe.emit.Endereco.Numero;
+        Complemento := NFSe.infNFSe.emit.Endereco.Complemento;
+        Bairro := NFSe.infNFSe.emit.Endereco.Bairro;
+        UF := NFSe.infNFSe.emit.Endereco.UF;
+        CEP := NFSe.infNFSe.emit.Endereco.CEP;
+      end;
+
+      with Contato do
+      begin
+        Telefone := NFSe.infNFSe.emit.Contato.Telefone;
+        Email := NFSe.infNFSe.emit.Contato.Email;
+      end;
     end;
   end;
 end;
@@ -736,7 +766,10 @@ begin
     NFSe.tpEmit := StrTotpEmit(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpEmit'), tcStr));
 
     LerSubstituicao(AuxNode);
-    LerPrestador(AuxNode);
+
+    if FpLerPrestador then
+      LerPrestador(AuxNode);
+
     LerTomador(AuxNode);
     LerIntermediario(AuxNode);
     LerServico(AuxNode);
@@ -948,6 +981,7 @@ begin
         CAEPF := ObterConteudo(AuxNode.Childrens.FindAnyNs('CAEPF'), tcStr);
         InscricaoMunicipal := ObterConteudo(AuxNode.Childrens.FindAnyNs('IM'), tcStr);
       end;
+
       RazaoSocial := ObterConteudo(AuxNode.Childrens.FindAnyNs('xNome'), tcStr);
 
       LerEnderecoPrestador(AuxNode);
@@ -1254,6 +1288,7 @@ end;
 function TNFSeR_PadraoNacional.LerXmlNfse(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
+  FpLerPrestador := False;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 
@@ -1263,6 +1298,7 @@ end;
 function TNFSeR_PadraoNacional.LerXmlRps(const ANode: TACBrXmlNode): Boolean;
 begin
   Result := True;
+  FpLerPrestador := True;
 
   if not Assigned(ANode) or (ANode = nil) then Exit;
 

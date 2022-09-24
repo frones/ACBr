@@ -45,7 +45,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceSoftPlan = class(TACBrNFSeXWebserviceRest)
+  TACBrNFSeXWebserviceSoftPlan = class(TACBrNFSeXWebserviceRest2)
   private
     function GetOperacao: string;
 

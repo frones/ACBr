@@ -294,8 +294,8 @@ begin
   ListaRps := AplicarLineBreak(ListaRps, '');
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := ListaRps;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -603,8 +603,8 @@ begin
   TagEnvio := ConfigMsgDados.SubstituirNFSe.DocElemento;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := xRps;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;

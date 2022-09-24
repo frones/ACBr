@@ -403,8 +403,8 @@ begin
   ListaRps := ChangeLineBreak(ListaRps, '');
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := ListaRps;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;

@@ -44,7 +44,7 @@ uses
   ACBrNFSeXWebserviceBase, ACBrNFSeXWebservicesResponse;
 
 type
-  TACBrNFSeXWebserviceCenti202 = class(TACBrNFSeXWebserviceRest)
+  TACBrNFSeXWebserviceCenti202 = class(TACBrNFSeXWebserviceRest2)
   private
     function GetOperacao: string;
 

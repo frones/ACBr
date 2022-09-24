@@ -43,6 +43,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/09/2022
+-- Diversos --
+[*] Algumas units sofreram algumas correções para evitar Violação de Acesso,
+    outras foram ajustadas com uma nova classe de webservice e por fim as units
+    do provedor PadraoNacional, com ajustes e implementação dos serviços de 
+    Emissão e Consulta a NFS-e.
+   Por: Italo Giurizzato Junior
+
 22/09/2022
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alteração visando imprimir Numero/Serie do RPS no DANFSE "Padrão"

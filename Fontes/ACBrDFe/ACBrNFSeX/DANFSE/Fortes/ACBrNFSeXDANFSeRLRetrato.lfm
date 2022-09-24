@@ -182,7 +182,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Height = 15
         Top = 139
         Width = 94
-        Caption = 'Número do RPS:'
+        Caption = 'Num. RPS/Ser.:'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Times New Roman'

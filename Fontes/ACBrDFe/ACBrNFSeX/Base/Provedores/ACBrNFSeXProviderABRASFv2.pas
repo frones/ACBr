@@ -358,8 +358,8 @@ begin
   ListaRps := ChangeLineBreak(ListaRps, '');
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := ListaRps;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -601,8 +601,8 @@ begin
   TagEnvio := ConfigMsgDados.ConsultarLote.DocElemento;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -800,8 +800,8 @@ begin
   TagEnvio := ConfigMsgDados.ConsultarNFSeRps.DocElemento;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -1109,8 +1109,8 @@ begin
                  '</' + Prefixo + 'Faixa>';
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := XmlConsulta;
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;
@@ -1346,8 +1346,8 @@ begin
   end;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := XmlConsulta;
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;
@@ -1596,8 +1596,8 @@ begin
   end;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := XmlConsulta;
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;
@@ -1872,8 +1872,8 @@ begin
     xCodVerif := '';
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;
@@ -2164,8 +2164,8 @@ begin
   TagEnvio := ConfigMsgDados.SubstituirNFSe.DocElemento;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := xRps;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;

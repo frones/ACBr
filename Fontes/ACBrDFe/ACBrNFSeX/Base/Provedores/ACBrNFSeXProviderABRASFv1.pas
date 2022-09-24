@@ -323,8 +323,8 @@ begin
   ListaRps := ChangeLineBreak(ListaRps, '');
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := ListaRps;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -462,8 +462,8 @@ begin
   end;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;
@@ -592,8 +592,8 @@ begin
   end;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;
@@ -790,8 +790,8 @@ begin
   TagEnvio := ConfigMsgDados.ConsultarNFSeRps.DocElemento;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -1029,8 +1029,8 @@ begin
   TagEnvio := ConfigMsgDados.ConsultarNFSe.DocElemento;
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := XmlConsulta;
     aParams.TagEnvio := TagEnvio;
     aParams.Prefixo := Prefixo;
@@ -1243,8 +1243,8 @@ begin
     xMotivo := '';
 
   aParams := TNFSeParamsResponse.Create;
-  aParams.Clear;
   try
+    aParams.Clear;
     aParams.Xml := '';
     aParams.TagEnvio := '';
     aParams.Prefixo := Prefixo;

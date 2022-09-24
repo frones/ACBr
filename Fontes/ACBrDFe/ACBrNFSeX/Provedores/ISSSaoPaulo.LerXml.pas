@@ -446,8 +446,9 @@ begin
 
   ItemServico := FormatFloat('0000', Item);
 
-  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
-                                     Copy(ItemServico, 3, 2);
+//  NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
+//                                     Copy(ItemServico, 3, 2);
+  NFSe.Servico.ItemListaServico := '0' + ItemServico;
 
   if FpAOwner.ConfigGeral.TabServicosExt then
     NFSe.Servico.xItemListaServico := ObterDescricaoServico(ItemServico)

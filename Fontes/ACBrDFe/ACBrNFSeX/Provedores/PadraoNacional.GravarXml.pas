@@ -143,9 +143,9 @@ begin
   vCNPJ := OnlyNumber(ACNPJCPF);
 
   if Length(vCNPJ) = 11 then
-    tpInsc := '2'
+    tpInsc := '1'
   else
-    tpInsc := '1';
+    tpInsc := '2';
 
   vCNPJ   := PadLeft(vCNPJ, 14, '0');
   vSerie  := Poem_Zeros(ASerie, 5);
@@ -287,13 +287,18 @@ end;
 
 function TNFSeW_PadraoNacional.GerarEnderecoNacionalPrestador: TACBrXmlNode;
 begin
-  Result := CreateElement('endNac');
+  Result := nil;
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 7, 7, 1,
+  if NFSe.Prestador.Endereco.CEP <> '' then
+  begin
+    Result := CreateElement('endNac');
+
+    Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 7, 7, 1,
                                   NFSe.Prestador.Endereco.CodigoMunicipio, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'CEP', 8, 8, 1,
+    Result.AppendChild(AddNode(tcStr, '#1', 'CEP', 8, 8, 1,
                                               NFSe.Prestador.Endereco.CEP, ''));
+  end;
 end;
 
 function TNFSeW_PadraoNacional.GerarEnderecoExteriorPrestador: TACBrXmlNode;
@@ -320,7 +325,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'opSimpNac', 1, 1, 1,
                                   OptanteSNToStr(NFSe.OptanteSN), DSC_INDOPSN));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'regApTribSN', 1, 1, 1,
+  if NFSe.OptanteSN = osnOptanteMEEPP then
+    Result.AppendChild(AddNode(tcStr, '#1', 'regApTribSN', 1, 1, 1,
                              RegimeApuracaoSNToStr(NFSe.RegimeApuracaoSN), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'regEspTrib', 1, 1, 1,
@@ -1066,13 +1072,15 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tribISSQN', 1, 1, 1,
                    tribISSQNToStr(NFSe.Servico.Valores.tribMun.tribISSQN), ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cPaisResult', 2, 2, 0,
+  if NFSe.Servico.Valores.tribMun.cPaisResult > 0 then
+    Result.AppendChild(AddNode(tcStr, '#1', 'cPaisResult', 2, 2, 0,
          CodIBGEPaisToSiglaISO2(NFSe.Servico.Valores.tribMun.cPaisResult), ''));
 
   Result.AppendChild(GerarBeneficioMunicipal);
   Result.AppendChild(GerarExigibilidadeSuspensa);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tpImunidade', 1, 1, 0,
+  if NFSe.Servico.Valores.tribMun.tribISSQN = tiImunidade then
+    Result.AppendChild(AddNode(tcStr, '#1', 'tpImunidade', 1, 1, 0,
                tpImunidadeToStr(NFSe.Servico.Valores.tribMun.tpImunidade), ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'pAliq', 1, 3, 0,

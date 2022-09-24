@@ -507,6 +507,9 @@ begin
 
         proSystemPro:
           IdentificacaoRps.Serie := 'RPP';
+
+        proPadraoNacional:
+          IdentificacaoRps.Serie := '900';
       else
         IdentificacaoRps.Serie := '85';
       end;
@@ -535,17 +538,13 @@ begin
         NaturezaOperacao := no1;
       end;
 
-      {
-        TnfseRegimeEspecialTributacao =
-        ( retNenhum, retMicroempresaMunicipal, retEstimativa,
-          retSociedadeProfissionais, retCooperativa,
-          retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
-          retLucroReal, retLucroPresumido, retSimplesNacional,
-          retImune, retEmpresaIndividualRELI, retEmpresaPP,
-          retMicroEmpresario, retOutros);
-      }
-      RegimeEspecialTributacao := retMicroempresaMunicipal;
-
+      case ACBrNFSeX1.Configuracoes.Geral.Provedor of
+        proPadraoNacional:
+          RegimeEspecialTributacao := retCooperativa;
+      else
+        RegimeEspecialTributacao := retMicroempresaMunicipal;
+      end;
+	  
       // TnfseSimNao = ( snSim, snNao );
       OptanteSimplesNacional := snNao;
 
@@ -723,6 +722,25 @@ begin
 
         Servico.Valores.Aliquota := 2;
 
+        // Provedor PadraoNacional
+        Servico.Valores.tribMun.tribISSQN := tiOperacaoTributavel;
+        Servico.Valores.tribMun.cPaisResult := 0;
+
+        Servico.Valores.tribNac.CST := cst01;
+        Servico.Valores.tribNac.vBCPisCofins := Servico.Valores.BaseCalculo;
+        Servico.Valores.tribNac.pAliqPis := 1.65;
+        Servico.Valores.tribNac.pAliqCofins := 7.60;
+        Servico.Valores.tribNac.vPis := Servico.Valores.tribNac.vBCPisCofins *
+                                         Servico.Valores.tribNac.pAliqPis / 100;
+        Servico.Valores.tribNac.vCofins := Servico.Valores.tribNac.vBCPisCofins *
+                                      Servico.Valores.tribNac.pAliqCofins / 100;
+        Servico.Valores.tribNac.tpRetPisCofins := trpcNaoRetido;
+
+        Servico.Valores.totTrib.vTotTribFed := Servico.Valores.tribNac.vPis;
+        Servico.Valores.totTrib.vTotTribEst := 0;
+        Servico.Valores.totTrib.vTotTribMun := Servico.Valores.tribNac.vCofins;
+
+
         vValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
         // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
@@ -751,7 +769,7 @@ begin
           Servico.ItemListaServico := '01.05.00';
 
         proPadraoNacional:
-          Servico.ItemListaServico := '010500';
+          Servico.ItemListaServico := '010201';
 
         proCTAConsult:
           Servico.ItemListaServico := '01050';
@@ -780,7 +798,7 @@ begin
           Servico.CodigoTributacaoMunicipio := '';
 
         proPadraoNacional:
-          Servico.CodigoTributacaoMunicipio := '123';
+          Servico.CodigoTributacaoMunicipio := '';
       else
         Servico.CodigoTributacaoMunicipio := '63194';
       end;
@@ -837,7 +855,7 @@ begin
       Prestador.Endereco.UF := edtEmitUF.Text;
       Prestador.Endereco.CodigoPais := 1058;
       Prestador.Endereco.xPais := 'BRASIL';
-      Prestador.Endereco.CEP := '14800123';
+      Prestador.Endereco.CEP := edtEmitCEP.Text;
 
       Prestador.Contato.DDD := '16';
 
@@ -1323,11 +1341,18 @@ end;
 procedure TfrmACBrNFSe.btnConsultarNFSePeloNumeroClick(Sender: TObject);
 var
   xTitulo, NumeroNFSe, SerNFSe, NumPagina, NumLote, xDataIni, xDataFin,
-  xTipo, xCodServ, xCodVerif: String;
+  xTipo, xCodServ, xCodVerif, chNFSe: String;
   InfConsultaNFSe: TInfConsultaNFSe;
   OK: Boolean;
 begin
   xTitulo := 'Consultar NFSe Por Numero';
+
+  if ACBrNFSeX1.Configuracoes.Geral.Provedor in [proPadraoNacional] then
+  begin
+    chNFSe := '';
+    if not(InputQuery(xTitulo, 'Chave da NFS-e:', chNFSe)) then
+      exit;
+  end;
 
   NumeroNFSe := '';
   if not(InputQuery(xTitulo, 'Numero da NFSe:', NumeroNFSe)) then
@@ -1485,6 +1510,24 @@ begin
             DataInicial := StrToDateDef('01/' + xDataIni, 0);
             CodServ := xCodServ;
             CodVerificacao := xCodVerif;
+          end;
+
+          ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
+        finally
+          InfConsultaNFSe.Free;
+        end;
+      end;
+
+    proPadraoNacional:
+      begin
+        InfConsultaNFSe := TInfConsultaNFSe.Create;
+
+        try
+          with InfConsultaNFSe do
+          begin
+            tpConsulta := tcPorFaixa;
+
+            ChaveNFSe := chNFSe;
           end;
 
           ACBrNFSeX1.ConsultarNFSeGenerico(InfConsultaNFSe);
@@ -2019,8 +2062,18 @@ begin
         // LoadFromLoteNfse - Usado para carregar um lote de notas
     //    ACBrNFSeX1.NotasFiscais.LoadFromLoteNfse(OpenDialog1.FileName);
 
+    {
+      Se o webservice não retorna o conteudo de OutrasInformacoes, mas a
+      prefeitura tem um texto padrão a ser impresso no DANFSE, pode-se alimentar
+      o campo OutrasInformacoes antes de executar o método Imprimir
+    }
+//    ACBrNFSeX1.NotasFiscais.Items[0].NFSe.OutrasInformacoes := 'Outras Informações 1;Outras Informações 2';
     ACBrNFSeX1.NotasFiscais.Imprimir;
-    ACBrNFSeX1.NotasFiscais.ImprimirPDF;
+
+    {
+      Se desejar gerar o PDF do DANFSE basta descomentar a linha abaixo
+    }
+//    ACBrNFSeX1.NotasFiscais.ImprimirPDF;
 
     if ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps <> '' then
       memoLog.Lines.Add('Arquivo Carregado de: ' + ACBrNFSeX1.NotasFiscais.Items[0].NomeArqRps)

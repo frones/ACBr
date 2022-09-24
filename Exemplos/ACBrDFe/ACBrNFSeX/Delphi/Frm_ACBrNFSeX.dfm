@@ -1970,7 +1970,7 @@ object frmACBrNFSe: TfrmACBrNFSe
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           Lines.Strings = (
-            'Somente para os provedores: ISSDSF, Siat e SP.')
+            'Somente para os provedores: ISSDSF, Siat e ISSSaoPaulo.')
           ParentFont = False
           ReadOnly = True
           TabOrder = 1
@@ -2106,7 +2106,6 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.Versao = ve100
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
     Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.Arquivos.TabServicosExt = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

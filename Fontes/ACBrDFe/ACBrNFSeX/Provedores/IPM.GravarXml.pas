@@ -156,7 +156,7 @@ begin
   inherited Configuracao;
 
   FpGerarID := False;
-  FpNrOcorrTagsTomador := 0;
+  FpNrOcorrTagsTomador := 1;
   FpNrOcorrCodigoAtividade := -1;
 end;
 

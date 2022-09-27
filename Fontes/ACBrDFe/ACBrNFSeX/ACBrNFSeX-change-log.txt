@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 27/09/2022
+-- ACBrNFSeXServicos --
+[*] Alteração na URL de produção da cidade de Ribeirão das Neves/MG 
+   Por: Anadilson
+[*] A cidade Ita/SC trocou de provedor, agora é IPM 
+   Por: Junior Dias
 -- ISSSaoPaulo.Provider --
 [*] Implementado a Consulta de NFSe Serviço Tomado.
    Por: Paulo Henrique Panico

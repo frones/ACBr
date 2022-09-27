@@ -45,6 +45,8 @@ Símbolo : Significado
 
 27/09/2022
 -- ACBrNFSeXServicos --
+[*] A cidade Cachoeirinha/RS mudou as URLs de Produção e Homologação.
+   Por: Italo Giurizzato Junior
 [*] Alteração na URL de produção da cidade de Ribeirão das Neves/MG 
    Por: Anadilson
 [*] A cidade Ita/SC trocou de provedor, agora é IPM 

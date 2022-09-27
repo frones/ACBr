@@ -1593,7 +1593,7 @@ object frmACBrNFe: TfrmACBrNFe
       Top = 1
       Width = 567
       Height = 197
-      ActivePage = tsEnvios
+      ActivePage = tsDistribuicao
       Align = alTop
       TabOrder = 0
       object tsEnvios: TTabSheet

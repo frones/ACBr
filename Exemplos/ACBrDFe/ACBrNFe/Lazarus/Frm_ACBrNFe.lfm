@@ -12,7 +12,7 @@ object frmACBrNFe: TfrmACBrNFe
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.2.2.0'
   object pnlMenus: TPanel
     Left = 0
     Height = 612
@@ -2063,6 +2063,33 @@ object frmACBrNFe: TfrmACBrNFe
           Caption = 'Distribuição DF-e por Chave'
           OnClick = btnDistrDFePorChaveClick
           TabOrder = 2
+        end
+        object btnManifDestDesconnhecimento: TButton
+          Left = 192
+          Height = 25
+          Top = 40
+          Width = 178
+          Caption = 'Manif. Dest. - Desconhecimento'
+          OnClick = btnManifDestConfirmacaoClick
+          TabOrder = 4
+        end
+        object btnManifDestCiencia: TButton
+          Left = 377
+          Height = 25
+          Top = 40
+          Width = 178
+          Caption = 'Manif. Dest. - Ciência'
+          OnClick = btnManifDestConfirmacaoClick
+          TabOrder = 5
+        end
+        object btnManifDestOperNaoRealizada: TButton
+          Left = 8
+          Height = 25
+          Top = 71
+          Width = 178
+          Caption = 'Manif. Dest. - Oper. Não Realizada'
+          OnClick = btnManifDestConfirmacaoClick
+          TabOrder = 6
         end
       end
     end

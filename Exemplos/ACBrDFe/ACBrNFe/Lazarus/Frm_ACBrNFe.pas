@@ -287,6 +287,9 @@ type
     btnAtorInterNFeTransp: TButton;
     btnDistrDFePorNSU: TButton;
     btnDistrDFePorChave: TButton;
+    btnManifDestDesconnhecimento: TButton;
+    btnManifDestCiencia: TButton;
+    btnManifDestOperNaoRealizada: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -1308,26 +1311,40 @@ begin
       // (consulte o contador do seu cliente para saber qual deve ser utilizado)
       // Pode variar de um produto para outro.
 
+      orig := oeNacional;
+
       if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
-        CST := cst00
+      begin
+        CST     := cst00;
+        modBC   := dbiPrecoTabelado;
+        vBC     := 100;
+        pICMS   := 18;
+        vICMS   := 18;
+        modBCST := dbisMargemValorAgregado;
+        pMVAST  := 0;
+        pRedBCST:= 0;
+        vBCST   := 0;
+        pICMSST := 0;
+        vICMSST := 0;
+        pRedBC  := 0;
+      end
       else
-        CSOSN := csosn101;
+      begin
+        CSOSN   := csosn101;
+        modBC   := dbiValorOperacao;
+        pCredSN := 5;
+        vCredICMSSN := 100 * pCredSN / 100;;
+        vBC     := 0;
+        pICMS   := 0;
+        vICMS   := 0;
+        modBCST := dbisListaNeutra;
+        pMVAST  := 0;
+        pRedBCST:= 0;
+        vBCST   := 0;
+        pICMSST := 0;
+        vICMSST := 0;
+      end;
 
-      orig    := oeNacional;
-      modBC   := dbiValorOperacao;
-      vBC     := 100;
-      pICMS   := 18;
-      vICMS   := 18;
-      modBCST := dbisMargemValorAgregado;
-      pMVAST  := 0;
-      pRedBCST:= 0;
-      vBCST   := 0;
-      pICMSST := 0;
-      vICMSST := 0;
-      pRedBC  := 0;
-
-      pCredSN := 5;
-      vCredICMSSN := 50;
       vBCFCPST := 100;
       pFCPST := 2;
       vFCPST := 2;
@@ -1510,8 +1527,17 @@ begin
 
 *)
 
-  NotaF.NFe.Total.ICMSTot.vBC     := 100;
-  NotaF.NFe.Total.ICMSTot.vICMS   := 18;
+  if NotaF.NFe.Emit.CRT in [crtSimplesExcessoReceita, crtRegimeNormal] then
+  begin
+    NotaF.NFe.Total.ICMSTot.vBC := 100;
+    NotaF.NFe.Total.ICMSTot.vICMS := 18;
+  end
+  else
+  begin
+    NotaF.NFe.Total.ICMSTot.vBC := 0;
+    NotaF.NFe.Total.ICMSTot.vICMS := 0;
+  end;
+
   NotaF.NFe.Total.ICMSTot.vBCST   := 0;
   NotaF.NFe.Total.ICMSTot.vST     := 0;
   NotaF.NFe.Total.ICMSTot.vProd   := 100;
@@ -2259,28 +2285,107 @@ end;
 
 procedure TfrmACBrNFe.btnDistrDFePorUltNSUClick(Sender: TObject);
 var
-  xTitulo, cUFAutor, CNPJ, ultNSU: string;
+  xTitulo, cUFAutor, CNPJ, AultNSU: string;
+  i: Integer;
 begin
-  xTitulo := 'Distribuição DF-e por último NSU';
+  // Opção para simular uma consulta ao WebService lendo o arquivo de retorno e populando o componente
+  OpenDialog1.Title := 'Selecione um Arquivo de Distribuição para simular uma consulta ou feche para consultar o WebService';
+  OpenDialog1.DefaultExt := '*-dist-dfe.XML';
+  OpenDialog1.Filter := 'Arquivos Distribuição DFe (*-dist-dfe.XML)|*-dist-dfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
-  cUFAutor := '';
-  if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
-     exit;
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
 
-  CNPJ := '';
-  if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
-     exit;
+  // Lê o arquivo selecionado
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.Leitor.CarregarArquivo(OpenDialog1.FileName);
+    ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.LerXml;
 
-  ultNSU := '';
-  if not(InputQuery(xTitulo, 'Último NSU recebido pelo ator', ultNSU)) then
-     exit;
+    AultNSU := ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+  end
+  // Consulta o WebService
+  else
+  begin
+    xTitulo := 'Distribuição DF-e por último NSU';
 
-  ACBrNFe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, ultNSU);
+    cUFAutor := IntToStr(ACBrNFe1.Configuracoes.WebServices.UFCodigo);
+    if not(InputQuery(xTitulo, 'Código da UF do Autor', cUFAutor)) then
+       exit;
+
+    CNPJ := edtEmitCNPJ.Text;
+    if not(InputQuery(xTitulo, 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
+       exit;
+
+    AultNSU := '';
+    if not(InputQuery(xTitulo, 'Último NSU recebido pelo ator', AultNSU)) then
+       exit;
+
+    ACBrNFe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, AultNSU);
+  end;
+
+  with ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt do
+  begin
+    // Caso não retorne registros, ocorra consumo indevido ou seja o último lote, gera alerta
+    if ( ( cStat = 137 ) or
+         ( cStat = 656 ) or
+         ( ultNSU = maxNSU ) ) then
+    begin
+      // 656-Consumo indevido
+      if cStat = 656 then
+      begin
+        MemoDados.Lines.Add('Atenção...: Consumo indevido.');
+
+        if AultNSU <> ultNSU then
+          MemoDados.Lines.Add('            ultNSU utilizado nesta consulta [' + AultNSU + '] é diferente ' +
+                              'do ultNSU consultado na Sefaz [' + ultNSU + '].');
+      end
+      // 137-Nenhum documento localizado
+      else if cStat = 137 then
+        MemoDados.Lines.Add('Atenção...: Não existem mais registros disponíveis.')
+      // ultNSU = maxNSU - Documentos Localizados, mas é o último lote
+      else
+        MemoDados.Lines.Add('Atenção...: Este é o último lote de registros disponíveis para distribuição.');
+
+      MemoDados.Lines.Add('Atenção...: Aguarde 1 hora para a próxima consulta.');
+      MemoDados.Lines.Add(' ');
+    end;
+
+    MemoDados.Lines.Add('Qtde Documentos Retornados: ' + IntToStr(docZip.Count));
+    MemoDados.Lines.Add('Status....: ' + IntToStr(cStat));
+    MemoDados.Lines.Add('Motivo....: ' + xMotivo);
+    MemoDados.Lines.Add('Último NSU: ' + ultNSU);
+    MemoDados.Lines.Add('Máximo NSU: ' + maxNSU);
+    MemoDados.Lines.Add(' ');
+    MemoDados.Lines.Add('Documentos Retornados:');
+
+    for i := 0 to docZip.Count -1 do
+    begin
+      case docZip[i].schema of
+        schresNFe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Resumo Nota) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schprocNFe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Nota Completa) Chave: ' + docZip[i].resDFe.chDFe);
+
+        schresEvento:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Resumo Evento) Chave: ' + docZip[i].resEvento.chDFe);
+
+        schprocEventoNFe:
+          MemoDados.Lines.Add(IntToStr(i+1) + ' NSU: ' + docZip[i].NSU +
+            ' (Evento Completo) ID: ' + docZip[i].procEvento.Id);
+      end;
+    end;
+  end;
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
 
   LoadXML(MemoResp, WBResposta);
+
+  pgRespostas.ActivePage := Dados;
 end;
 
 procedure TfrmACBrNFe.btnEnviarEmailClick(Sender: TObject);
@@ -3340,17 +3445,29 @@ end;
 
 procedure TfrmACBrNFe.btnManifDestConfirmacaoClick(Sender: TObject);
 var
-  Chave, idLote, CNPJ, lMsg: string;
+  Chave, idLote, CNPJ, lMsg, Titulo: string;
+  AtpEvento: TpcnTpEvento;
 begin
+  if Sender = btnManifDestConfirmacao then
+    AtpEvento := teManifDestConfirmacao
+  else if Sender = btnManifDestDesconnhecimento then
+    AtpEvento := teManifDestDesconhecimento
+  else if Sender = btnManifDestCiencia then
+    AtpEvento := teManifDestCiencia
+  else if Sender = btnManifDestOperNaoRealizada then
+    AtpEvento := teManifDestOperNaoRealizada;
+
+  Titulo := 'Manifestação Destinatario - ' + StringReplace(TpEventoToDescStr(AtpEvento),'ManifDest','',[rfReplaceAll]);
+
   Chave:='';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Chave da NF-e', Chave)) then
+  if not(InputQuery(Titulo, 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
   idLote := '1';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+  if not(InputQuery(Titulo, 'Numero do Lote de envio do Evento', idLote)) then
      exit;
   CNPJ := '';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+  if not(InputQuery(Titulo, 'CNPJ ou CPF do autor do Evento', CNPJ)) then
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
@@ -3372,12 +3489,13 @@ begin
        teManifDestDesconhecimento  = Desconhecimento da Operação
        teManifDestOperNaoRealizada = Operação Não Realizada
     }
-    infEvento.tpEvento := teManifDestConfirmacao;
+    infEvento.tpEvento := AtpEvento;
 
     {
      Se o tipo for: teManifDestOperNaoRealizada, informar a justificativa
     }
-//    InfEvento.detEvento.xJust := 'justificativa';
+    if AtpEvento = teManifDestOperNaoRealizada then
+      InfEvento.detEvento.xJust := 'justificativa';
   end;
 
   ACBrNFe1.EnviarEvento(StrToInt(idLote));

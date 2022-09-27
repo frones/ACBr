@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/09/2022
+-- ACBrNFSeXDANFSeRLRetrato --
+[*] Alteração na banda do campo Observacao que não estava com autosize ativo.
+   Por: Guilherme Vaz
 -- ACBrNFSeXServicos --
 [*] Incluído a URL de Consulta a NFS-e serviço Tomado para a cidade Barueri/SP.
    Por: Paulo Henrique Panico

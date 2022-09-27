@@ -1,8 +1,8 @@
 inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
-  Left = 349
-  Top = 55
+  Left = 709
+  Top = 76
+  Height = 884
   Caption = 'frlXDANFSeRLRetrato'
-  ClientHeight = 845
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
@@ -1031,7 +1031,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
       Left = 23
       Top = 492
       Width = 752
-      Height = 325
+      Height = 318
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2055,9 +2055,9 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rbOutrasInformacoes: TRLBand
       Left = 23
-      Top = 817
+      Top = 810
       Width = 752
-      Height = 103
+      Height = 40
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2069,8 +2069,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Left = 5
         Top = 21
         Width = 743
-        Height = 64
-        AutoSize = False
+        Height = 14
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -2080,34 +2079,6 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
         Lines.Strings = (
           'Dados Adicionais....')
         ParentFont = False
-      end
-      object rllDataHoraImpressao: TRLLabel
-        Left = 2
-        Top = 91
-        Width = 76
-        Height = 10
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-      end
-      object rllSistema: TRLLabel
-        Left = 356
-        Top = 91
-        Width = 392
-        Height = 11
-        Alignment = taRightJustify
-        AutoSize = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
       end
       object RLLabel6: TRLLabel
         Left = 299
@@ -2127,7 +2098,7 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
     end
     object rlbCanhoto: TRLBand
       Left = 23
-      Top = 920
+      Top = 868
       Width = 752
       Height = 73
       BandType = btSummary
@@ -2432,6 +2403,41 @@ inherited frlXDANFSeRLRetrato: TfrlXDANFSeRLRetrato
           ParentFont = False
           Transparent = False
         end
+      end
+    end
+    object RLBand1: TRLBand
+      Left = 23
+      Top = 850
+      Width = 752
+      Height = 18
+      BandType = btSummary
+      object rllDataHoraImpressao: TRLLabel
+        Left = 2
+        Top = 3
+        Width = 76
+        Height = 10
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rllSistema: TRLLabel
+        Left = 356
+        Top = 2
+        Width = 392
+        Height = 11
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
       end
     end
   end

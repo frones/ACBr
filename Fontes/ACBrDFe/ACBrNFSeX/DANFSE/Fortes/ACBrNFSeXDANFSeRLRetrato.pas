@@ -186,8 +186,6 @@ type
     rllMsgTeste: TRLLabel;
     rbOutrasInformacoes: TRLBand;
     rlmDadosAdicionais: TRLMemo;
-    rllDataHoraImpressao: TRLLabel;
-    rllSistema: TRLLabel;
     RLLabel6: TRLLabel;
     rlbCanhoto: TRLBand;
     RLLabel26: TRLLabel;
@@ -228,6 +226,9 @@ type
     rlmDescCodTributacaoMunicipio: TRLMemo;
     RLLabel69: TRLLabel;
     rllPrestInscEstadual: TRLLabel;
+    RLBand1: TRLBand;
+    rllDataHoraImpressao: TRLLabel;
+    rllSistema: TRLLabel;
 
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensServicoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -390,8 +391,8 @@ begin
 
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
 
-  	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
-	  // do tomador em vez do que foi informado em Serviço.
+    // Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
+    // do tomador em vez do que foi informado em Serviço.
     CodigoIBGE := StrToIntDef(Servico.CodigoMunicipio, 0);
     xMunicipio := '';
     xUF := '';

@@ -1844,9 +1844,18 @@ object frmACBrNFSe: TfrmACBrNFSe
           TabOrder = 6
           OnClick = btnConsultarNFSeGenericoClick
         end
+        object btnObterPDFdoDANFSE: TButton
+          Left = 186
+          Top = 72
+          Width = 177
+          Height = 25
+          Caption = 'Obter PDF do DANFSE'
+          TabOrder = 7
+          OnClick = btnObterPDFdoDANFSEClick
+        end
       end
       object tsConsServPrest: TTabSheet
-        Caption = 'Consultas Serv. Prestados'
+        Caption = 'Cons. Serv. Prestados'
         ImageIndex = 4
         object btnConsultarNFSeServicoPrestadoPorNumero: TButton
           Left = 3
@@ -1886,7 +1895,7 @@ object frmACBrNFSe: TfrmACBrNFSe
         end
       end
       object tsConsServTom: TTabSheet
-        Caption = 'Consultas Serv. Tomados'
+        Caption = 'Cons. Serv. Tomados'
         ImageIndex = 5
         object btnConsultarNFSeServicoTomadoPorNumero: TButton
           Left = 3
@@ -1987,6 +1996,19 @@ object frmACBrNFSe: TfrmACBrNFSe
           Caption = 'Gerar Token'
           TabOrder = 0
           OnClick = btnGerarTokenClick
+        end
+      end
+      object tsEventos: TTabSheet
+        Caption = 'Eventos'
+        ImageIndex = 7
+        object btnEventoCancNFSe: TButton
+          Left = 11
+          Top = 18
+          Width = 177
+          Height = 25
+          Caption = 'Cancelar NFSe'
+          TabOrder = 0
+          OnClick = btnEventoCancNFSeClick
         end
       end
     end

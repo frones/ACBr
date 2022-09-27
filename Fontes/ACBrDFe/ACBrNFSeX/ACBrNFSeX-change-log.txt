@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/09/2022
+-- ISSSaoPaulo.Provider --
+[*] Implementado a Consulta de NFSe Serviço Tomado.
+   Por: Paulo Henrique Panico
 -- Diversos --
 [*] Implementado o método ObterDANFSE que no provedor PadraoNacional retorna
     o PDF do DANFSE.

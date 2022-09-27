@@ -143,6 +143,8 @@ const
   Desc125	= 'Emitente.WSChaveAutoriz não informada.';
   Cod126 = 'X126';
   Desc126	= 'Chave da DPS não informada.';
+  Cod127 = 'X127';
+  Desc127	= 'CNPJ do Tomador não informado.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';

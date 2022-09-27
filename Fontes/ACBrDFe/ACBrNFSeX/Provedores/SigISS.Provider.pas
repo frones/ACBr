@@ -172,6 +172,7 @@ var
   ANode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   AErro: TNFSeEventoCollectionItem;
+  Codigo: string;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
@@ -187,13 +188,18 @@ begin
 
   for I := Low(ANodeArray) to High(ANodeArray) do
   begin
-    AErro := Response.Erros.New;
-    AErro.Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('id'), tcStr);
-    AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
-    AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
+    Codigo := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('id'), tcStr);
 
-    if AErro.Descricao = '' then
-      AErro.Descricao := ANodeArray[I].AsString;
+    if Codigo <> '43' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Codigo;
+      AErro.Descricao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoProcesso'), tcStr);
+      AErro.Correcao := ObterConteudoTag(ANodeArray[I].Childrens.FindAnyNs('DescricaoErro'), tcStr);
+
+      if AErro.Descricao = '' then
+        AErro.Descricao := ANodeArray[I].AsString;
+    end;
   end;
 end;
 

@@ -44,6 +44,12 @@ Símbolo : Significado
 
 
 27/09/2022
+-- SigISS.Provider --
+[*] Ajuste na procedure que processa as mensagens de erros.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] A cidade Sarandi/PR trocou de provedor agora é: SigISS.
+   Por: Marcio Alpha
 -- ACBrNFSeXDANFSeRLRetrato --
 [*] Alteração na banda do campo Observacao que não estava com autosize ativo.
    Por: Guilherme Vaz

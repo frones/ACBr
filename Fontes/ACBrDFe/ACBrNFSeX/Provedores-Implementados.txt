@@ -14,7 +14,7 @@ Agili                1.00  08/09/2022
 AssessorPublico      1.00  23/08/2022
 Asten                2.02
 Bauhaus (em desenvolvimento)
-Betha                1.00
+Betha                1.00  23/09/2022
 Betha                2.02  17/08/2022
 BHISS                1.00  11/08/2022
 Centi                2.02

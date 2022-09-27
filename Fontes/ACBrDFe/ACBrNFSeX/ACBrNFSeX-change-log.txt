@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/09/2022
+-- ISSBarueri.Provider/ISSBarueri.LerXml --
+[*] Implementado a Consulta de NFSe Serviço Tomado.
+   Por: Paulo Henrique Panico
 -- ACBrNFSeXServicos --
 [*] A cidade Cachoeirinha/RS mudou as URLs de Produção e Homologação.
    Por: Italo Giurizzato Junior

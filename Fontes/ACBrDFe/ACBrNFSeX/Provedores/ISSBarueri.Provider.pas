@@ -65,6 +65,7 @@ type
     function Recepcionar(ACabecalho, AMSG: String): string; override;
     function ConsultarSituacao(ACabecalho, AMSG: String): string; override;
     function ConsultarLote(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
     function Cancelar(ACabecalho, AMSG: String): string; override;
   end;
 
@@ -93,6 +94,9 @@ type
 
     procedure PrepararConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
     procedure TratarRetornoConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse); override;
+
+    procedure PrepararConsultaNFSeServicoTomado(Response: TNFSeConsultaNFSeResponse); override;
+    procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
 
     procedure PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
     procedure TratarRetornoCancelaNFSe(Response: TNFSeCancelaNFSeResponse); override;
@@ -328,7 +332,8 @@ begin
   end;
 end;
 
-function TACBrNFSeProviderISSBarueri.ExisteErroRegistro(const ALinha: String): Boolean;
+function TACBrNFSeProviderISSBarueri.ExisteErroRegistro(
+  const ALinha: String): Boolean;
 begin
   Result := (Length(ALinha) > 1971) and (
     (ALinha[1] = '1') or
@@ -352,12 +357,19 @@ begin
   with ConfigMsgDados do
   begin
     Prefixo := 'nfe';
+
     LoteRps.DocElemento := 'NFeLoteEnviarArquivo';
     LoteRps.xmlns := 'http://www.barueri.sp.gov.br/nfe';
+
     ConsultarSituacao.DocElemento := 'NFeLoteStatusArquivo';
     ConsultarSituacao.xmlns := 'http://www.barueri.sp.gov.br/nfe';
+
     ConsultarLote.DocElemento := 'NFeLoteBaixarArquivo';
     ConsultarLote.xmlns := 'http://www.barueri.sp.gov.br/nfe';
+
+    ConsultarNFSe.DocElemento := 'ConsultaNFeRecebidaPeriodo';
+    ConsultarNFSe.xmlns := 'http://www.barueri.sp.gov.br/nfe';
+
     GerarNSLoteRps := False;
     GerarPrestadorLoteRps := False;
     UsarNumLoteConsLote := False;
@@ -367,19 +379,22 @@ begin
   ConfigSchemas.Validar := False;
 end;
 
-function TACBrNFSeProviderISSBarueri.CriarGeradorXml(const ANFSe: TNFSe): TNFSeWClass;
+function TACBrNFSeProviderISSBarueri.CriarGeradorXml(
+  const ANFSe: TNFSe): TNFSeWClass;
 begin
   Result := TNFSeW_ISSBarueri.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderISSBarueri.CriarLeitorXml(const ANFSe: TNFSe): TNFSeRClass;
+function TACBrNFSeProviderISSBarueri.CriarLeitorXml(
+  const ANFSe: TNFSe): TNFSeRClass;
 begin
   Result := TNFSeR_ISSBarueri.Create(Self);
   Result.NFSe := ANFSe;
 end;
 
-function TACBrNFSeProviderISSBarueri.CriarServiceClient(const AMetodo: TMetodo): TACBrNFSeXWebservice;
+function TACBrNFSeProviderISSBarueri.CriarServiceClient(
+  const AMetodo: TMetodo): TACBrNFSeXWebservice;
 var
   URL: string;
 begin
@@ -391,7 +406,8 @@ begin
     raise EACBrDFeException.Create('ERR_SEM_URL');
 end;
 
-procedure TACBrNFSeProviderISSBarueri.TratarRetornoEmitir(Response: TNFSeEmiteResponse);
+procedure TACBrNFSeProviderISSBarueri.TratarRetornoEmitir(
+  Response: TNFSeEmiteResponse);
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
@@ -427,7 +443,8 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderISSBarueri.GerarMsgDadosEmitir(Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
+procedure TACBrNFSeProviderISSBarueri.GerarMsgDadosEmitir(
+  Response: TNFSeEmiteResponse; Params: TNFSeParamsResponse);
 var
   XML, NumeroRps: String;
   Emitente: TEmitenteConfNFSe;
@@ -449,12 +466,14 @@ begin
   Response.ArquivoEnvio := XML;
 end;
 
-function TACBrNFSeProviderISSBarueri.PrepararRpsParaLote(const aXml: string): string;
+function TACBrNFSeProviderISSBarueri.PrepararRpsParaLote(
+  const aXml: string): string;
 begin
   Result := aXml;
 end;
 
-procedure TACBrNFSeProviderISSBarueri.PrepararConsultaSituacao(Response: TNFSeConsultaSituacaoResponse);
+procedure TACBrNFSeProviderISSBarueri.PrepararConsultaSituacao(
+  Response: TNFSeConsultaSituacaoResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
@@ -479,7 +498,8 @@ begin
   Response.ArquivoEnvio := XML;
 end;
 
-procedure TACBrNFSeProviderISSBarueri.TratarRetornoConsultaSituacao(Response: TNFSeConsultaSituacaoResponse);
+procedure TACBrNFSeProviderISSBarueri.TratarRetornoConsultaSituacao(
+  Response: TNFSeConsultaSituacaoResponse);
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
@@ -542,7 +562,8 @@ begin
   end;
 end;
 
-procedure TACBrNFSeProviderISSBarueri.PrepararCancelaNFSe(Response: TNFSeCancelaNFSeResponse);
+procedure TACBrNFSeProviderISSBarueri.PrepararCancelaNFSe(
+  Response: TNFSeCancelaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
@@ -619,9 +640,13 @@ begin
   XML := '<NFeLoteEnviarArquivo xmlns="http://www.barueri.sp.gov.br/nfe">';
   XML := XML + '<InscricaoMunicipal>' + Emitente.InscMun + '</InscricaoMunicipal>';
   XML := XML + '<CPFCNPJContrib>' + Emitente.CNPJ + '</CPFCNPJContrib>';
-  XML := XML + '<NomeArquivoRPS>' + Format('Rps-Canc-%s.txt', [NumeroRps]) + '</NomeArquivoRPS>';
+  XML := XML + '<NomeArquivoRPS>' +
+                  Format('Rps-Canc-%s.txt', [NumeroRps]) +
+               '</NomeArquivoRPS>';
   XML := XML + '<ApenasValidaArq>false</ApenasValidaArq>';
-  XML := XML + '<ArquivoRPSBase64>' + string(EncodeBase64(AnsiString(xRps))) + '</ArquivoRPSBase64>';
+  XML := XML + '<ArquivoRPSBase64>' +
+                  string(EncodeBase64(AnsiString(xRps))) +
+               '</ArquivoRPSBase64>';
   XML := XML + '</NFeLoteEnviarArquivo>';
 
   Response.ArquivoEnvio := XML;
@@ -775,7 +800,7 @@ begin
       Response.NumeroRps := NumRps;
 
       //Retorno do Txt de um RPS Processado com sucesso...
-      if ( (Response.Sucesso) and (Length(Dados[0]) > 26) ) then
+      if ((Response.Sucesso) and (Length(Dados[0]) > 26)) then
       begin
         //1XXXXXXX0000000000000000PMB00200000000004
         //2     00000120220318211525723K.1473.0553.5240699-I...
@@ -804,7 +829,8 @@ begin
         begin
           XML := string(FAOwner.SSL.HTTPGet(Response.Link));
 
-          if (NaoEstaVazio(XML) and (Pos('<ConsultarNfeServPrestadoResposta', XML) > 0) ) then
+          if (NaoEstaVazio(XML) and
+             (Pos('<ConsultarNfeServPrestadoResposta', XML) > 0) ) then
           begin
             XML := RemoverDeclaracaoXML(XML);
             XML := ConverteXMLtoUTF8(XML);
@@ -832,6 +858,125 @@ begin
     FreeAndNil(Document);
     FreeAndNil(Dados);
     FreeAndNil(Erros);
+  end;
+end;
+
+procedure TACBrNFSeProviderISSBarueri.PrepararConsultaNFSeServicoTomado(
+  Response: TNFSeConsultaNFSeResponse);
+var
+  XmlConsulta: String;
+begin
+  XmlConsulta := '<NFeRecebidaPeriodo xmlns="http://www.barueri.sp.gov.br/nfe">';
+
+  if NaoEstaVAzio(Response.InfConsultaNFSe.CNPJTomador) then
+  begin
+    XmlConsulta := XmlConsulta +
+                   '<CPFCNPJTomador>' +
+                      Response.InfConsultaNFSe.CNPJTomador +
+                   '</CPFCNPJTomador>';
+  end;
+
+  if (Response.InfConsultaNFSe.DataInicial > 0) and
+     (Response.InfConsultaNFSe.DataFinal > 0) then
+    XmlConsulta := XmlConsulta +
+                     '<DataInicial>' +
+                        FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataInicial) +
+                     '</DataInicial>' +
+                     '<DataFinal>' +
+                        FormatDateTime('yyyy-mm-dd', Response.InfConsultaNFSe.DataFinal) +
+                     '</DataFinal>';
+
+  if NaoEstaVAzio(Response.InfConsultaNFSe.CNPJPrestador) then
+  begin
+    XmlConsulta := XmlConsulta +
+                     '<' + 'CPFCNPJPrestador>' +
+                          Response.InfConsultaNFSe.CNPJPrestador+
+                       '</CPFCNPJPrestador>';
+  end;
+
+  XmlConsulta := XmlConsulta + '<Pagina>' +
+                                  IntToStr( Response.InfConsultaNFSe.Pagina ) +
+                               '</Pagina>' ;
+  XmlConsulta := XmlConsulta + '</NFeRecebidaPeriodo>';
+
+  Response.Metodo := tmConsultarNFSeServicoTomado;
+
+  Response.ArquivoEnvio := XmlConsulta;
+end;
+
+procedure TACBrNFSeProviderISSBarueri.TratarRetornoConsultaNFSe(
+  Response: TNFSeConsultaNFSeResponse);
+var
+  Document: TACBrXmlDocument;
+  ANode, AuxNode: TACBrXmlNode;
+  ANodeArray: TACBrXmlNodeArray;
+  AErro: TNFSeEventoCollectionItem;
+  ANota: TNotaFiscal;
+  NumNFSe: String;
+  I: Integer;
+begin
+  Document := TACBrXmlDocument.Create;
+
+  try
+    try
+      TACBrNFSeX(FAOwner).NotasFiscais.Clear;
+
+      if Response.ArquivoRetorno = '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod201;
+        AErro.Descricao := Desc201;
+        Exit
+      end;
+
+      Document.LoadFromXml(Response.ArquivoRetorno);
+
+      ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      ANode := ANode.Childrens.FindAnyNs('ListaNfe');
+
+      if ANode = nil then
+        ANode := Document.Root;
+
+      ProcessarMensagemErros(ANode, Response);
+
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      ANodeArray := ANode.Childrens.FindAllAnyNs('CompNfe');
+      if not Assigned(ANodeArray) then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod203;
+        AErro.Descricao := Desc203;
+        Exit;
+      end;
+
+      for I := Low(ANodeArray) to High(ANodeArray) do
+      begin
+        ANode := ANodeArray[I];
+        AuxNode := ANode.Childrens.FindAnyNs('Nfe');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfNFe');
+        AuxNode := AuxNode.Childrens.FindAnyNs('NumeroNfe');
+        NumNFSe := AuxNode.AsString;
+
+        ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByNFSe(NumNFSe);
+
+        CarregarXmlNfse(ANota, ANode.OuterXml);
+
+        SalvarXmlNfse(ANota);
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
   end;
 end;
 
@@ -878,14 +1023,16 @@ begin
   Result := string(NativeStringToUTF8(AXMLRps));
 end;
 
-function TACBrNFSeProviderISSBarueri.AplicarLineBreak(AXMLRps: String; const ABreak: String): String;
+function TACBrNFSeProviderISSBarueri.AplicarLineBreak(AXMLRps: String;
+  const ABreak: String): String;
 begin
   Result := AXMLRps;
 end;
 
 { TACBrNFSeXWebserviceISSBarueri }
 
-function TACBrNFSeXWebserviceISSBarueri.Recepcionar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSBarueri.Recepcionar(ACabecalho,
+  AMSG: String): string;
 var
   Request: string;
 begin
@@ -899,11 +1046,13 @@ begin
   Request := Request + '</nfe:NFeLoteEnviarArquivo>';
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
-    Request,
-    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+                     Request,
+                     ['NFeLoteEnviarArquivoResult'],
+                     ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSBarueri.ConsultarSituacao(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSBarueri.ConsultarSituacao(ACabecalho,
+  AMSG: String): string;
 var
   Request: string;
 begin
@@ -917,11 +1066,13 @@ begin
   Request := Request + '</nfe:NFeLoteStatusArquivo>';
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteStatusArquivo',
-    Request,
-    ['NFeLoteStatusArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+                     Request,
+                     ['NFeLoteStatusArquivoResult'],
+                     ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSBarueri.ConsultarLote(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSBarueri.ConsultarLote(ACabecalho,
+  AMSG: String): string;
 var
   Request: string;
 begin
@@ -935,11 +1086,34 @@ begin
   Request := Request + '</nfe:NFeLoteBaixarArquivo>';
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteBaixarArquivo',
-    Request,
-    ['NFeLoteBaixarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+                     Request,
+                     ['NFeLoteBaixarArquivoResult'],
+                     ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
-function TACBrNFSeXWebserviceISSBarueri.Cancelar(ACabecalho, AMSG: String): string;
+function TACBrNFSeXWebserviceISSBarueri.ConsultarNFSeServicoTomado(ACabecalho,
+  AMSG: String): string;
+var
+  Request: string;
+begin
+  FPMsgOrig := AMSG;
+
+  Request := '<nfe:ConsultaNFeRecebidaPeriodo  xmlns="http://www.barueri.sp.gov.br/nfe">';
+  Request := Request + '<nfe:VersaoSchema>1</nfe:VersaoSchema>';
+  Request := Request + '<nfe:MensagemXML>';
+  Request := Request + IncluirCDATA(AMSG);
+  Request := Request + '</nfe:MensagemXML>';
+  Request := Request + '</nfe:ConsultaNFeRecebidaPeriodo>';
+
+
+  Result := Executar('http://www.barueri.sp.gov.br/nfe/ConsultaNFeRecebidaPeriodo',
+                     Request,
+                     ['ConsultaNFeRecebidaPeriodoResult'],
+                     ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+end;
+
+function TACBrNFSeXWebserviceISSBarueri.Cancelar(ACabecalho,
+  AMSG: String): string;
 var
   Request: string;
 begin
@@ -953,8 +1127,9 @@ begin
   Request := Request + '</nfe:NFeLoteEnviarArquivo>';
 
   Result := Executar('http://www.barueri.sp.gov.br/nfe/NFeLoteEnviarArquivo',
-    Request,
-    ['NFeLoteEnviarArquivoResult'], ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
+                     Request,
+                     ['NFeLoteEnviarArquivoResult'],
+                     ['xmlns:nfe="http://www.barueri.sp.gov.br/nfe"']);
 end;
 
 end.

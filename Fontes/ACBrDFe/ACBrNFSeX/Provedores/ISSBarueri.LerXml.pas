@@ -182,7 +182,14 @@ var
   AuxNode: TACBrXmlNode;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoServicoPrestado');
-  AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoServicoPrestado');
+
+  if AuxNode <> Nil then
+    AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoServicoPrestado')
+  else
+  begin
+    AuxNode := ANode.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
+    AuxNode := AuxNode.Childrens.FindAnyNs('InfDeclaracaoPrestacaoServico');
+  end;
 
   NFSe.Competencia := Iso8601ToDateTime(ObterConteudo(AuxNode.Childrens.FindAnyNs('Competencia'), tcStr));
 
@@ -212,6 +219,9 @@ var
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ServicoPrestado');
 
+  if AuxNode = nil then
+    AuxNode := ANode.Childrens.FindAnyNs('Servico');
+
   NFSe.Servico.CodigoMunicipio := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoServico'), tcStr);
   NFSe.Servico.Descricao := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescricaoServico'), tcStr);
   NFSe.Servico.Discriminacao := ObterConteudo(AuxNode.Childrens.FindAnyNs('Discriminacao'), tcStr);
@@ -228,6 +238,9 @@ var
   OK: Boolean;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('ValoresServicoPrestado');
+
+  if AuxNode = nil then
+    AuxNode := ANode;
 
   NFSe.Servico.Valores.IssRetido := FpAOwner.StrToSituacaoTributaria(OK, ObterConteudo(ANode.Childrens.FindAnyNs('IssRetido'), tcInt));
 
@@ -263,6 +276,9 @@ var
   Pag: TParcelasCollectionItem;
 begin
   AuxNode := ANode.Childrens.FindAnyNs('Fatura');
+
+  if AuxNode = nil then
+    Exit;
 
   NFSe.FormaPagamento := StrToIntDef(ObterConteudo(AuxNode.Childrens.FindAnyNs('FormaPagamentoFatura'), tcInt), 0);
 
@@ -458,7 +474,8 @@ end;
 
 function TNFSeR_ISSBarueri.IsXML(const aArquivo: String): Boolean;
 begin
-  Result := (Pos('<ConsultarNfeServPrestadoResposta', aArquivo) > 0);
+  Result := (Pos('<ConsultarNfeServPrestadoResposta', aArquivo) > 0) or
+            (Pos('<CompNfe>', aArquivo) > 0);
 end;
 
 function TNFSeR_ISSBarueri.LerXml: Boolean;
@@ -530,15 +547,19 @@ begin
 
       AuxNode := XmlNode.Childrens.FindAnyNs('ListaMensagemRetorno');
 
-      if (AuxNode <> Nil) then
-        raise Exception.Create(ObterConteudo(AuxNode.Childrens.FindAnyNs('Mensagem'), tcStr));
-
-      AuxNode := XmlNode.Childrens.FindAnyNs('ListaNfeServPrestado');
-      AuxNode := AuxNode.Childrens.FindAnyNs('CompNfeServPrestado');
-      AuxNode := AuxNode.Childrens.FindAnyNs('NfeServPrestado');
-      AuxNode := AuxNode.Childrens.FindAnyNs('InfNfeServPrestado');
-
-      Result := LerXmlNfse(AuxNode);
+      if AuxNode <> nil then
+      begin
+        AuxNode := AuxNode.Childrens.FindAnyNs('CompNfeServPrestado');
+        AuxNode := AuxNode.Childrens.FindAnyNs('NfeServPrestado');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfNfeServPrestado');
+        Result := LerXmlNfse(AuxNode);
+      end
+      else
+      begin
+        AuxNode := XmlNode.Childrens.FindAnyNs('Nfe');
+        AuxNode := AuxNode.Childrens.FindAnyNs('InfNFe');
+        Result := LerXmlNfse(AuxNode);
+      end;
     end;
   finally
     FreeAndNil(FDocument);

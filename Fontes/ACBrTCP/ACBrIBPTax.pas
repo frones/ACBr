@@ -322,11 +322,14 @@ begin
     // proximas linhas contem os registros
     for I := 1 to Arquivo.Count - 1 do
     begin
-      QuebrarLinha(Arquivo.Strings[I], Item);
+      QuebrarLinha(Trim(Arquivo.Strings[I]), Item);
 
       // ajustes para erros conhecidos nos arquivos
       if Item.Count <> COUNT_COLUN then
         QuebrarLinha(StringReplace(Arquivo.Strings[I], '"Ex"', 'Ex', []), Item);
+
+      if(Item.Count <= 0)then
+        break;
 
       if Trim(Item.Strings[2]) <> '' then
       begin

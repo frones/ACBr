@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 27/09/2022
+-- ACBrNFSeXServicos --
+[*] Incluído a URL de Consulta a NFS-e serviço Tomado para a cidade Barueri/SP.
+   Por: Paulo Henrique Panico
 -- ISSBarueri.Provider/ISSBarueri.LerXml --
 [*] Implementado a Consulta de NFSe Serviço Tomado.
    Por: Paulo Henrique Panico

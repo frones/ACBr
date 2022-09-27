@@ -49,16 +49,10 @@ uses
 type
   TACBrNFSeXWebservicePadraoNacional = class(TACBrNFSeXWebserviceRest)
   public
-    function Recepcionar(ACabecalho, AMSG: String): string; override;
-    function RecepcionarSincrono(ACabecalho, AMSG: String): string; override;
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
-    function ConsultarLote(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSePorRps(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSePorFaixa(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoPrestado(ACabecalho, AMSG: String): string; override;
-    function ConsultarNFSeServicoTomado(ACabecalho, AMSG: String): string; override;
-    function Cancelar(ACabecalho, AMSG: String): string; override;
-    function SubstituirNFSe(ACabecalho, AMSG: String): string; override;
+    function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
+    function EnviarEvento(ACabecalho, AMSG: String): string; override;
 
     function TratarXmlRetornado(const aXML: string): string; override;
   end;
@@ -67,6 +61,7 @@ type
   private
     FpPath: string;
     FpMethod: string;
+    FpChave: string;
   protected
     procedure Configuracao; override;
 
@@ -77,12 +72,20 @@ type
     procedure PrepararEmitir(Response: TNFSeEmiteResponse); override;
     procedure TratarRetornoEmitir(Response: TNFSeEmiteResponse); override;
 
+    procedure PrepararConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+    procedure TratarRetornoConsultaNFSeporRps(Response: TNFSeConsultaNFSeporRpsResponse); override;
+
     procedure PrepararConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSe(Response: TNFSeConsultaNFSeResponse); override;
 
+    procedure PrepararEnviarEvento(Response: TNFSeEnviarEventoResponse); override;
+    procedure TratarRetornoEnviarEvento(Response: TNFSeEnviarEventoResponse); override;
+
     procedure ProcessarMensagemDeErros(LJson: TACBrJSONObject;
                                      Response: TNFSeWebserviceResponse;
-                                     const AListTag: string = 'erros'); //override;
+                                     const AListTag: string = 'erros');
+
+    procedure ValidarSchema(Response: TNFSeWebserviceResponse; aMetodo: TMetodo); override;
   public
     function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): string; override;
     function StrToRegimeEspecialTributacao(out ok: boolean; const s: string): TnfseRegimeEspecialTributacao; override;
@@ -93,6 +96,7 @@ implementation
 
 uses
   synacode,
+  pcnAuxiliar,
   ACBrDFeException, ACBrCompress,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings,
   ACBrNFSeX, ACBrNFSeXConsts, ACBrNFSeXConfiguracoes,
@@ -107,6 +111,7 @@ begin
   with ConfigGeral do
   begin
     ModoEnvio := meUnitario;
+    ConsultaLote := False;
   end;
 
   with ConfigWebServices do
@@ -126,113 +131,29 @@ begin
 
     with XmlRps do
     begin
-      // Define o NameSpace do XML do Rps, sobrepõe a definição global: SetXmlNameSpace
-      xmlns := '';
       InfElemento := 'infDPS';
       DocElemento := 'DPS';
     end;
 
-    (*
-    // Usado para geração do Xml do Rps
-    // Usado para geração do Envio do Lote em modo assíncrono
-    with LoteRps do
+    with EnviarEvento do
     begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsEnvio';
+      InfElemento := 'infPedReg';
+      DocElemento := 'pedRegEvento';
     end;
-
-    // Usado para geração do Envio do Lote em modo Sincrono
-    with LoteRpsSincrono do
-    begin
-      xmlns := '';
-      InfElemento := 'LoteRps';
-      DocElemento := 'EnviarLoteRpsSincronoEnvio';
-    end;
-
-    // Usado para geração da Consulta a Situação do Lote
-    with ConsultarSituacao do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarSituacaoLoteRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta do Lote
-    with ConsultarLote do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarLoteRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta da NFSe por RPS
-    with ConsultarNFSeRps do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseRpsEnvio';
-    end;
-
-    // Usado para geração da Consulta da NFSe
-    with ConsultarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := '';
-      DocElemento := 'ConsultarNfseEnvio';
-    end;
-
-    // Usado para geração do Cancelamento
-    with CancelarNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'InfPedidoCancelamento';
-      DocElemento := 'Pedido';
-    end;
-
-    // Usado para geração do Substituir
-    with SubstituirNFSe do
-    begin
-      xmlns := '';
-      InfElemento := 'SubstituicaoNfse';
-      DocElemento := 'SubstituirNfseEnvio';
-    end;
-    *)
   end;
 
   with ConfigAssinar do
   begin
-    Rps := True;
     RpsGerarNFSe := True;
-    {
-    ConsultarSituacao := False;
-    ConsultarLote     := False;
-    ConsultarNFSeRps  := False;
-    ConsultarNFSe     := False;
-    CancelarNFSe      := False;
-    LoteGerarNFSe     := False;
-    RpsSubstituirNFSe := False;
-    SubstituirNFSe    := False;
-    }
+    EnviarEvento := True;
   end;
 
   with ConfigSchemas do
   begin
-    Recepcionar := 'DPS_v1.00.xsd';
     GerarNFSe := 'DPS_v1.00.xsd';
-    {
-    ConsultarSituacao := 'nfse.xsd';
-    ConsultarLote := 'nfse.xsd';
-    ConsultarNFSeRps := 'nfse.xsd';
-    ConsultarNFSe := 'nfse.xsd';
-    ConsultarNFSePorFaixa := 'nfse.xsd';
-    ConsultarNFSeServicoPrestado := 'nfse.xsd';
-    ConsultarNFSeServicoTomado := 'nfse.xsd';
-    CancelarNFSe := 'nfse.xsd';
-    RecepcionarSincrono := 'nfse.xsd';
-    SubstituirNFSe := 'nfse.xsd';
-    }
-    Validar := False;
+    ConsultarNFSe := 'DPS_v1.00.xsd';
+    ConsultarNFSeRps := 'DPS_v1.00.xsd';
+    EnviarEvento := 'pedRegEvento_v1.00.xsd';
   end;
 end;
 
@@ -280,8 +201,16 @@ var
   JsonErro, JSon: TACBrJSONObject;
   Codigo: string;
   AErro: TNFSeEventoCollectionItem;
+  LerErro: Boolean;
 begin
+  LerErro := True;
   JSonErros := LJson.AsJSONArray['erros'];
+
+  if JSonErros.Count = 0 then
+  begin
+    JSonErros := LJson.AsJSONArray['erro'];
+    LerErro := False;
+  end;
 
   for I := 0 to JSonErros.Count-1 do
   begin
@@ -295,21 +224,36 @@ begin
       AErro.Codigo := Codigo;
       AErro.Descricao := JSon.AsString['Descricao'];
       AErro.Correcao := JSon.AsString['Complemento'];
+    end
+    else
+    begin
+      Codigo := JSon.AsString['codigo'];
+
+      if Codigo <> '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Codigo;
+        AErro.Descricao := JSon.AsString['descricao'];
+        AErro.Correcao := JSon.AsString['complemento'];
+      end;
     end;
   end;
 
-  JSonErro := LJson.AsJSONObject['erro'];
-
-  if JsonErro <> nil then
+  if LerErro then
   begin
-    Codigo := JSonErro.AsString['codigo'];
+    JSonErro := LJson.AsJSONObject['erro'];
 
-    if Codigo <> '' then
+    if JsonErro <> nil then
     begin
-      AErro := Response.Erros.New;
-      AErro.Codigo := Codigo;
-      AErro.Descricao := JSonErro.AsString['descricao'];
-      AErro.Correcao := JSonErro.AsString['complemento'];
+      Codigo := JSonErro.AsString['codigo'];
+
+      if Codigo <> '' then
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Codigo;
+        AErro.Descricao := JSonErro.AsString['descricao'];
+        AErro.Correcao := JSonErro.AsString['complemento'];
+      end;
     end;
   end;
 end;
@@ -333,8 +277,8 @@ begin
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod003;
-    AErro.Descricao := 'Conjunto de RPS transmitidos (máximo de ' +
-                       IntToStr(Response.MaxRps) + ' RPS)' +
+    AErro.Descricao := 'Conjunto de DPS transmitidos (máximo de ' +
+                       IntToStr(Response.MaxRps) + ' DPS)' +
                        ' excedido. Quantidade atual: ' +
                        IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count);
   end;
@@ -365,14 +309,6 @@ begin
                                          ConfigMsgDados.XmlRps.InfElemento, '', '', '', IdAttr);
 
       Response.ArquivoEnvio := Nota.XmlRps;
-      // Verificar se o envio vai ser em lote também.
-      ValidarSchema(Response, tmGerar);
-
-      if (EmiteResponse.Erros.Count > 0) then
-      begin
-        TACBrNFSeX(FAOwner).SetStatus(stNFSeIdle);
-        Exit;
-      end;
     end;
 
     SalvarXmlRps(Nota);
@@ -380,13 +316,7 @@ begin
     ListaRps := ListaRps + Nota.XmlRps;
   end;
 
-  ListaRps := AplicarLineBreak(ListaRps, '');
-  ListaRps := EncodeBase64(GZipCompress(ListaRps));
-  ListaRps := AplicarLineBreak(ListaRps, '');
-
-  Response.ArquivoEnvio := '{"dpsXmlGZipB64":"' + ListaRps + '"}';
-  FpPath := '/nfse';
-  FpMethod := 'POST';
+  Response.ArquivoEnvio := ListaRps;
 end;
 
 procedure TACBrNFSeProviderPadraoNacional.TratarRetornoEmitir(
@@ -472,12 +402,66 @@ begin
   end;
 end;
 
+procedure TACBrNFSeProviderPadraoNacional.PrepararConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if EstaVazio(Response.NumRPS) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod126;
+    AErro.Descricao := Desc126;
+    Exit;
+  end;
+
+  Response.ArquivoEnvio := '';
+  FpPath := '/dps/' + Response.NumRPS;
+  FpMethod := 'GET';
+end;
+
+procedure TACBrNFSeProviderPadraoNacional.TratarRetornoConsultaNFSeporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse);
+var
+  Document: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := Desc201;
+    Exit
+  end;
+
+  Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+
+  try
+    try
+      ProcessarMensagemDeErros(Document, Response);
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
+      Response.idNota := Document.AsString['chaveAcesso'];
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := Desc999 + E.Message;
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
 procedure TACBrNFSeProviderPadraoNacional.PrepararConsultaNFSe(
   Response: TNFSeConsultaNFSeResponse);
 var
   AErro: TNFSeEventoCollectionItem;
 begin
-  if EstaVazio(Response.InfConsultaNFSe.ChaveNFSe) then
+  if EstaVazio(Response.InfConsultaNFSe.NumeroIniNFSe) then
   begin
     AErro := Response.Erros.New;
     AErro.Codigo := Cod118;
@@ -485,10 +469,15 @@ begin
     Exit;
   end;
 
-  Response.Metodo := tmConsultarNFSePorFaixa;
+  Response.Metodo := tmConsultarNFSe;
 
   Response.ArquivoEnvio := '';
-  FpPath := '/nfse/' + Response.InfConsultaNFSe.ChaveNFSe;
+
+  if Response.InfConsultaNFSe.tpRetorno = trXml then
+    FpPath := '/nfse/' + Response.InfConsultaNFSe.NumeroIniNFSe
+  else
+    FpPath := '/danfse/' + Response.InfConsultaNFSe.NumeroIniNFSe;
+
   FpMethod := 'GET';
 end;
 
@@ -511,6 +500,189 @@ begin
     Exit
   end;
 
+  if Response.InfConsultaNFSe.tpRetorno = trXml then
+  begin
+    Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
+
+    try
+      try
+        ProcessarMensagemDeErros(Document, Response);
+        Response.Sucesso := (Response.Erros.Count = 0);
+
+        Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
+
+        NFSeXml := Document.AsString['nfseXmlGZipB64'];
+
+        if NFSeXml <> '' then
+          NFSeXml := DeCompress(DecodeBase64(NFSeXml));
+
+        DocumentXml := TACBrXmlDocument.Create;
+
+        try
+          try
+            if NFSeXml = '' then
+            begin
+              AErro := Response.Erros.New;
+              AErro.Codigo := Cod203;
+              AErro.Descricao := Desc203;
+              Exit
+            end;
+
+            DocumentXml.LoadFromXml(NFSeXml);
+
+            ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
+
+            NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('Numero'), tcStr);
+            ANode := ANode.Childrens.FindAnyNs('DPS');
+            ANode := ANode.Childrens.FindAnyNs('infDPS');
+            NumRps := ObterConteudoTag(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+
+            ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumRps);
+
+            ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
+            SalvarXmlNfse(ANota);
+          except
+            on E:Exception do
+            begin
+              AErro := Response.Erros.New;
+              AErro.Codigo := Cod999;
+              AErro.Descricao := Desc999 + E.Message;
+            end;
+          end;
+        finally
+          FreeAndNil(DocumentXml);
+        end;
+      except
+        on E:Exception do
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod999;
+          AErro.Descricao := Desc999 + E.Message;
+        end;
+      end;
+    finally
+      FreeAndNil(Document);
+    end;
+  end
+  else
+  begin
+    Response.ArquivoRetorno := RemoverDeclaracaoXML(Response.ArquivoRetorno);
+    SalvarPDFNfse(Response.InfConsultaNFSe.NumeroIniNFSe, Response.ArquivoRetorno);
+  end;
+end;
+
+procedure TACBrNFSeProviderPadraoNacional.PrepararEnviarEvento(
+  Response: TNFSeEnviarEventoResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+  xEvento, xUF, xAutorEvento, IdAttr, xCamposEvento: string;
+begin
+  with Response.InfEvento.pedRegEvento do
+  begin
+    if chNFSe = '' then
+    begin
+      AErro := Response.Erros.New;
+      AErro.Codigo := Cod004;
+      AErro.Descricao := Desc004;
+    end;
+
+    if Response.Erros.Count > 0 then Exit;
+
+    xUF := TACBrNFSeX(FAOwner).Configuracoes.WebServices.UF;
+
+    if Length(TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ) < 14 then
+    begin
+      xAutorEvento := '<CPFAutor>' +
+                        TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ +
+                      '</CPFAutor>';
+    end
+    else
+    begin
+      xAutorEvento := '<CNPJAutor>' +
+                        TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ +
+                      '</CNPJAutor>';
+    end;
+
+    ID := chNFSe + OnlyNumber(tpEventoToStr(tpEvento)) +
+              FormatFloat('000', nPedRegEvento);
+
+    IdAttr := 'Id="' + 'PRE' + ID + '"';
+
+    case tpEvento of
+      teCancelamento:
+        xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                         '<xMotivo>' + xMotivo + '</xMotivo>';
+      {
+      teCancelamentoSubstituicao,
+      teAnaliseParaCancelamento,
+      teCancelamentoDeferido,
+      teCancelamentoIndeferido,
+      teConfirmacaoPrestador,
+      teConfirmacaoTomador,
+      ConfirmacaoIntermediario,
+      teConfirmacaoTacita,
+      teRejeicaoPrestador,
+      teRejeicaoTomador,
+      teRejeicaoIntermediario,
+      AnulacaoRejeicao,
+      teCancelamentoPorOficio,
+      teBloqueioPorOficio,
+      teDesbloqueioPorOficio
+      }
+    else
+      xCamposEvento := '';
+    end;
+
+    xEvento := '<pedRegEvento xmlns="' + ConfigMsgDados.EnviarEvento.xmlns +
+                           '" versao="' + ConfigWebServices.VersaoAtrib + '">' +
+                 '<infPedReg ' + IdAttr + '>' +
+                   '<tpAmb>' + IntToStr(tpAmb) + '</tpAmb>' +
+                   '<verAplic>' + verAplic + '</verAplic>' +
+                   '<dhEvento>' +
+                     FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', dhEvento) +
+                     GetUTC(xUF, dhEvento) +
+                   '</dhEvento>' +
+                   xAutorEvento +
+                   '<chNFSe>' + chNFSe + '</chNFSe>' +
+                   '<nPedRegEvento>' + FormatFloat('000', nPedRegEvento) + '</nPedRegEvento>' +
+                   '<' + tpEventoToStr(tpEvento) + '>' +
+                     '<xDesc>' + tpEventoToDesc(tpEvento) + '</xDesc>' +
+                     xCamposEvento +
+                   '</' + tpEventoToStr(tpEvento) + '>' +
+                 '</infPedReg>' +
+               '</pedRegEvento>';
+
+    xEvento := AplicarXMLtoUTF8(xEvento);
+    xEvento := AplicarLineBreak(xEvento, '');
+
+    Response.ArquivoEnvio := xEvento;
+    FpChave := chNFSe;
+
+  //  SalvarXmlRps(Nota);
+  end;
+end;
+
+procedure TACBrNFSeProviderPadraoNacional.TratarRetornoEnviarEvento(
+  Response: TNFSeEnviarEventoResponse);
+var
+  Document: TACBrJSONObject;
+  AErro: TNFSeEventoCollectionItem;
+  EventoXml: string;
+  DocumentXml: TACBrXmlDocument;
+  {
+  ANode: TACBrXmlNode;
+  NumNFSe, NumRps: string;
+  ANota: TNotaFiscal;
+  }
+begin
+  if Response.ArquivoRetorno = '' then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := Desc201;
+    Exit
+  end;
+
   Document := TACBrJsonObject.Parse(Response.ArquivoRetorno);
 
   try
@@ -520,24 +692,24 @@ begin
 
       Response.Data := Document.AsISODateTime['dataHoraProcessamento'];
 
-      NFSeXml := Document.AsString['nfseXmlGZipB64'];
+      EventoXml := Document.AsString['eventoXmlGZipB64'];
 
-      if NFSeXml <> '' then
-        NFSeXml := DeCompress(DecodeBase64(NFSeXml));
+      if EventoXml <> '' then
+        EventoXml := DeCompress(DecodeBase64(EventoXml));
 
       DocumentXml := TACBrXmlDocument.Create;
 
       try
         try
-          if NFSeXml = '' then
+          if EventoXml = '' then
           begin
             AErro := Response.Erros.New;
-            AErro.Codigo := Cod203;
-            AErro.Descricao := Desc203;
+            AErro.Codigo := Cod211;
+            AErro.Descricao := Desc211;
             Exit
           end;
-
-          DocumentXml.LoadFromXml(NFSeXml);
+          {
+          DocumentXml.LoadFromXml(EventoXml);
 
           ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
@@ -550,6 +722,7 @@ begin
 
           ANota := CarregarXmlNfse(ANota, DocumentXml.Root.OuterXml);
           SalvarXmlNfse(ANota);
+          }
         except
           on E:Exception do
           begin
@@ -571,6 +744,34 @@ begin
     end;
   finally
     FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderPadraoNacional.ValidarSchema(
+  Response: TNFSeWebserviceResponse; aMetodo: TMetodo);
+begin
+  if aMetodo in [tmGerar, tmEnviarEvento] then
+  begin
+    inherited ValidarSchema(Response, aMetodo);
+
+    Response.ArquivoEnvio := AplicarLineBreak(Response.ArquivoEnvio, '');
+    Response.ArquivoEnvio := EncodeBase64(GZipCompress(Response.ArquivoEnvio));
+
+    case aMetodo of
+      tmGerar:
+        begin
+          Response.ArquivoEnvio := '{"dpsXmlGZipB64":"' + Response.ArquivoEnvio + '"}';
+          FpPath := '/nfse';
+        end;
+
+      tmEnviarEvento:
+        begin
+          Response.ArquivoEnvio := '{"pedidoRegistroEventoXmlGZipB64":"' + Response.ArquivoEnvio + '"}';
+          FpPath := '/nfse/' + FpChave + '/eventos';
+        end;
+    end;
+
+    FpMethod := 'POST';
   end;
 end;
 
@@ -612,40 +813,6 @@ end;
 
 { TACBrNFSeXWebservicePadraoNacional }
 
-function TACBrNFSeXWebservicePadraoNacional.Recepcionar(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:RecepcionarLoteRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:RecepcionarLoteRpsRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRps', Request,
-                     ['outputXML', 'EnviarLoteRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
-function TACBrNFSeXWebservicePadraoNacional.RecepcionarSincrono(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:RecepcionarLoteRpsSincronoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:RecepcionarLoteRpsSincronoRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
-                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
 function TACBrNFSeXWebservicePadraoNacional.GerarNFSe(ACabecalho,
   AMSG: String): string;
 var
@@ -655,11 +822,10 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('',
-                     Request, ['GerarNfseResposta'], []);
+  Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarLote(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSe(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
@@ -668,21 +834,7 @@ begin
 
   Request := AMSG;
 
-  Result := Executar('',
-                     Request, ['GerarNfseResposta'], []);
-end;
-
-function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorFaixa(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := AMSG;
-
-  Result := Executar('',
-                     Request, ['GerarNfseResposta'], []);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSePorRps(ACabecalho,
@@ -692,89 +844,27 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:ConsultarNfsePorRpsRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfsePorRpsRequest>';
+  Request := AMSG;
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfsePorRps', Request,
-                     ['outputXML', 'ConsultarNfseRpsResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('', Request, [], []);
 end;
 
-function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSeServicoPrestado(ACabecalho,
+function TACBrNFSeXWebservicePadraoNacional.EnviarEvento(ACabecalho,
   AMSG: String): string;
 var
   Request: string;
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<nfse:ConsultarNfseServicoPrestadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfseServicoPrestadoRequest>';
+  Request := AMSG;
 
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado', Request,
-                     ['outputXML', 'ConsultarNfseServicoPrestadoResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
-function TACBrNFSeXWebservicePadraoNacional.ConsultarNFSeServicoTomado(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:ConsultarNfseServicoTomadoRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:ConsultarNfseServicoTomadoRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/ConsultarNfseServicoTomado', Request,
-                     ['outputXML', 'ConsultarNfseServicoTomadoResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
-function TACBrNFSeXWebservicePadraoNacional.Cancelar(ACabecalho, AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:CancelarNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:CancelarNfseRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/CancelarNfse', Request,
-                     ['outputXML', 'CancelarNfseResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
-end;
-
-function TACBrNFSeXWebservicePadraoNacional.SubstituirNFSe(ACabecalho,
-  AMSG: String): string;
-var
-  Request: string;
-begin
-  FPMsgOrig := AMSG;
-
-  Request := '<nfse:SubstituirNfseRequest>';
-  Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
-  Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
-  Request := Request + '</nfse:SubstituirNfseRequest>';
-
-  Result := Executar('http://nfse.abrasf.org.br/SubstituirNfse', Request,
-                     ['outputXML', 'SubstituirNfseResposta'],
-                     ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  Result := Executar('', Request, [], []);
 end;
 
 function TACBrNFSeXWebservicePadraoNacional.TratarXmlRetornado(
   const aXML: string): string;
 begin
   Result := inherited TratarXmlRetornado(aXML);
-
-  Result := RemoverCaracteresDesnecessarios(Result);
 end;
 
 end.

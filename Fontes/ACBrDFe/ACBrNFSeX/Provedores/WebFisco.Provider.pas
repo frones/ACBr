@@ -310,7 +310,7 @@ begin
                                Response.InfConsultaNFSe.NumeroIniNFSe +
                              '</ctr>' +
                              '<tipo xsi:type="xsd:string">' +
-                               TipoDocToStr(Response.InfConsultaNFSe.Tipo) +
+                               tpDocumentoToStr(Response.InfConsultaNFSe.tpDocumento) +
                              '</tipo>' +
                            '</ConsultaNfe>';
 end;
@@ -423,7 +423,7 @@ begin
                                Response.InfCancelamento.NumeroNFSe +
                              '</ctr>' +
                              '<tipo xsi:type="xsd:string">' +
-                               TipoDocToStr(Response.InfCancelamento.Tipo) +
+                               tpDocumentoToStr(Response.InfCancelamento.tpDocumento) +
                              '</tipo>' +
                              '<obs xsi:type="xsd:string">' +
                                Response.InfCancelamento.MotCancelamento +

@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+27/09/2022
+-- Diversos --
+[*] Implementado o método ObterDANFSE que no provedor PadraoNacional retorna
+    o PDF do DANFSE.
+    No provedor PadraoNacional, implementado as chamadas para a ConsultaNFSePorRps,
+    e EnviarEvento.
+    Em outras units foram feitos diversos ajustes para atender o provedor.
+   Por: Italo Giurizzato Junior
+
 24/09/2022
 -- Diversos --
 [*] Algumas units sofreram algumas correções para evitar Violação de Acesso,

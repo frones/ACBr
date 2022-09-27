@@ -88,6 +88,8 @@ const
   Desc002 = 'Nenhum RPS adicionado ao componente.';
   Cod003 = 'X003';
   Desc003 = 'Conjunto de RPS transmitidos (máximo de xxx RPS) excedido. Quantidade atual: yyy';
+  Cod004 = 'X004';
+  Desc004 = 'Nenhum Evento adicionado ao componente';
 
   Cod101 = 'X101';
   Desc101 = 'Número do Protocolo não informado.';
@@ -139,6 +141,8 @@ const
   Desc124	= 'Emitente.WSChaveAcesso não informada.';
   Cod125 = 'X125';
   Desc125	= 'Emitente.WSChaveAutoriz não informada.';
+  Cod126 = 'X126';
+  Desc126	= 'Chave da DPS não informada.';
 
   Cod201 = 'X201';
   Desc201 = 'WebService retornou um XML vazio.';
@@ -160,6 +164,8 @@ const
   Desc209 = 'Retorno do Cancelamento não encontrada.';
   Cod210 = 'X210';
   Desc210 = 'Nfse do Cancelamento não encontrada.';
+  Cod211 = 'X21';
+  Desc211 = 'Não foi retornado nenhum Evento.';
 
   Cod800 = 'X800';
   Desc800 = 'Erro de Validação: ';

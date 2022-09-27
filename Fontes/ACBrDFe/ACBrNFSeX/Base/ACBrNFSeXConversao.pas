@@ -203,7 +203,9 @@ type
   TTipoLancamento = (tlDevidoNoMunicPrestador, tlDevidoNoMunicTomador,
                      tlSimplesNacional, tlIsentoImune, tlCancelado);
 
-  TTipoDoc = (tdNFSe, tdRPS);
+  TtpDocumento = (tdNFSe, tdRPS);
+
+  TtpRetorno = (trXml, trPDF);
 
   // Usado pelo PadraoNacional
   TtpEmit = (tePrestador, teTomador, teIntermediario);
@@ -363,6 +365,9 @@ function StrTotpConsulta(out ok: boolean; const s: string): TtpConsulta;
 function tpPeriodoToStr(const t: TtpPeriodo): string;
 function StrTotpPeriodo(out ok: boolean; const s: string): TtpPeriodo;
 
+function tpRetornoToStr(const t: TtpRetorno): string;
+function StrTotpRetorno(out ok: boolean; const s: string): TtpRetorno;
+
 function MetodoToStr(const t: TMetodo): string;
 
 function ModoEnvioToStr(const t: TmodoEnvio): string;
@@ -370,8 +375,8 @@ function ModoEnvioToStr(const t: TmodoEnvio): string;
 function TipoLancamentoToStr(const t: TTipoLancamento): string;
 function StrToTipoLancamento(out ok: boolean; const s: string): TTipoLancamento;
 
-function TipoDocToStr(const t: TTipoDoc): string;
-function StrToTipoDoc(out ok: boolean; const s: string): TTipoDoc;
+function tpDocumentoToStr(const t: TtpDocumento): string;
+function StrTotpDocumento(out ok: boolean; const s: string): TtpDocumento;
 
 function tpEmitToStr(const t: TtpEmit): string;
 function StrTotpEmit(out ok: Boolean; const s: string): TtpEmit;
@@ -450,6 +455,7 @@ function StrToprocEmi(out ok: Boolean; const s: string): TprocEmi;
 
 function tpEventoToStr(const t: TtpEvento): string;
 function StrTotpEvento(out ok: Boolean; const s: string): TtpEvento;
+function tpEventoToDesc(const t: TtpEvento): string;
 
 function TipoDeducaoToStr(const t: TTipoDeducao): string;
 function StrToTipoDeducao(out ok: Boolean; const s: string): TTipoDeducao;
@@ -12639,6 +12645,20 @@ begin
                            [tpEmissao, tpCompetencia]);
 end;
 
+function tpRetornoToStr(const t: TtpRetorno): string;
+begin
+  Result := EnumeradoToStr(t,
+                           ['XML', 'PDF'],
+                           [trXml, trPDF]);
+end;
+
+function StrTotpRetorno(out ok: boolean; const s: string): TtpRetorno;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['XML', 'PDF'],
+                           [trXml, trPDF]);
+end;
+
 function MetodoToStr(const t: TMetodo): string;
 begin
   Result := EnumeradoToStr(t,
@@ -12681,12 +12701,12 @@ begin
                           tlSimplesNacional, tlIsentoImune, tlCancelado]);
 end;
 
-function TipoDocToStr(const t: TTipoDoc): string;
+function tpDocumentoToStr(const t: TtpDocumento): string;
 begin
   Result := EnumeradoToStr(t, ['1', '2'], [tdNFSe, tdRPS]);
 end;
 
-function StrToTipoDoc(out ok: boolean; const s: string): TTipoDoc;
+function StrTotpDocumento(out ok: boolean; const s: string): TtpDocumento;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2'], [tdNFSe, tdRPS]);
 end;
@@ -13101,6 +13121,35 @@ begin
                           'e202201', 'e203202', 'e204203', 'e205204', 'e202205',
                           'e203206', 'e204207', 'e205208', 'e305101', 'e305102',
                           'e305103'],
+                   [teCancelamento, teCancelamentoSubstituicao,
+                    teAnaliseParaCancelamento, teCancelamentoDeferido,
+                    teCancelamentoIndeferido, teConfirmacaoPrestador,
+                    teConfirmacaoTomador, ConfirmacaoIntermediario,
+                    teConfirmacaoTacita, teRejeicaoPrestador, teRejeicaoTomador,
+                    teRejeicaoIntermediario, AnulacaoRejeicao,
+                    teCancelamentoPorOficio, teBloqueioPorOficio,
+                    teDesbloqueioPorOficio]);
+end;
+
+function tpEventoToDesc(const t: TtpEvento): string;
+begin
+  result := EnumeradoToStr(t,
+                         ['Cancelamento de NFS-e',
+                          'Cancelamento de NFS-e por Substituicao',
+                          'Solicitacao de Analise Fiscal para Cancelamento de NFS-e',
+                          'Cancelamento de NFS-e Deferido por Análise Fiscal',
+                          'Cancelamento de NFS-e Indeferido por Análise Fiscal',
+                          'Confirmação do Prestador',
+                          'Confirmação do Tomador',
+                          'Confirmação do Intermediário',
+                          'Confirmação Tácita',
+                          'Rejeição do Prestador',
+                          'Rejeição do Tomador',
+                          'Rejeição do Intermediário',
+                          'Anulação da Rejeição',
+                          'Cancelamento de NFS-e por Ofício',
+                          'Bloqueio de NFS-e por Ofício',
+                          'Desbloqueio de NFS-e por Ofício'],
                    [teCancelamento, teCancelamentoSubstituicao,
                     teAnaliseParaCancelamento, teCancelamentoDeferido,
                     teCancelamentoIndeferido, teConfirmacaoPrestador,

@@ -79,6 +79,7 @@ type
     procedure SetXmlNameSpace(const aNameSpace: string);
     procedure SalvarXmlRps(aNota: TNotaFiscal);
     procedure SalvarXmlNfse(aNota: TNotaFiscal);
+    procedure SalvarPDFNfse(const aNome, aPDF: string);
 
     function CarregarXmlNfse(aNota: TNotaFiscal; aXml: string): TNotaFiscal;
 
@@ -839,6 +840,24 @@ begin
     TACBrNFSeX(FAOwner).Gravar(aNota.NomeArq, aNota.XmlNfse);
 end;
 
+procedure TACBrNFSeXProvider.SalvarPDFNfse(const aNome, aPDF: string);
+var
+  aPath, aNomeArq: string;
+  aConfig: TConfiguracoesNFSe;
+begin
+  aConfig := TConfiguracoesNFSe(FAOwner.Configuracoes);
+
+  aPath := aConfig.Arquivos.GetPathNFSe(0, aConfig.Geral.Emitente.CNPJ,
+                        aConfig.Geral.Emitente.DadosEmitente.InscricaoEstadual);
+
+  aNomeArq := PathWithDelim(aPath) + aNome + '-nfse.pdf';
+
+  if FAOwner.Configuracoes.Arquivos.Salvar then
+    WriteToTXT(aNomeArq, aPDF, False, False);
+
+//    TACBrNFSeX(FAOwner).Gravar(aNomeArq, aPDF);
+end;
+
 procedure TACBrNFSeXProvider.SetNomeXSD(const aNome: string);
 begin
   with ConfigSchemas do
@@ -881,6 +900,7 @@ begin
     SubstituirNFSe.xmlns := aNameSpace;
     AbrirSessao.xmlns := aNameSpace;
     FecharSessao.xmlns := aNameSpace;
+    EnviarEvento.xmlns := aNameSpace;
   end;
 
   TACBrNFSeX(FAOwner).SSL.NameSpaceURI := aNameSpace;
@@ -1327,6 +1347,7 @@ begin
     tmSubstituirNFSe: Schema := ConfigSchemas.SubstituirNFSe;
     tmAbrirSessao: Schema := ConfigSchemas.AbrirSessao;
     tmFecharSessao: Schema := ConfigSchemas.FecharSessao;
+    tmEnviarEvento: Schema := ConfigSchemas.EnviarEvento;
   else
     // tmTeste
     Schema := ConfigSchemas.Teste;
@@ -2053,6 +2074,7 @@ begin
     try
       TACBrNFSeX(FAOwner).SetStatus(stNFSeEnvioWebService);
       AService := CriarServiceClient(tmEnviarEvento);
+      AService.Prefixo := EnviarEventoResponse.InfEvento.pedRegEvento.ID;
 
       EnviarEventoResponse.ArquivoRetorno := AService.EnviarEvento(ConfigMsgDados.DadosCabecalho,
                                                            EnviarEventoResponse.ArquivoEnvio);

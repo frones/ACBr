@@ -243,7 +243,7 @@ namespace ACBrLib.eSocial
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<eSocial_ConsultaIdentificadoresEventosTabela>();
-            var ret = ExecuteMethod(() => method(aIdEmpregador, aTipoEvento, aChave, aDataInicial, aDataFinal, buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(aIdEmpregador), aTipoEvento, aChave, aDataInicial, aDataFinal, buffer, ref bufferLen));
 
             CheckResult(ret);
 
@@ -256,7 +256,7 @@ namespace ACBrLib.eSocial
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<eSocial_ConsultaIdentificadoresEventosTrabalhador>();
-            var ret = ExecuteMethod(() => method(aIdEmpregador, aCPFTrabalhador, aDataInicial, aDataFinal, buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(aIdEmpregador), aCPFTrabalhador, aDataInicial, aDataFinal, buffer, ref bufferLen));
 
             CheckResult(ret);
 
@@ -269,7 +269,7 @@ namespace ACBrLib.eSocial
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<eSocial_DownloadEventos>();
-            var ret = ExecuteMethod(() => method(aIdEmpregador, aCPFTrabalhador, aDataInicial, aDataFinal, buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(aIdEmpregador), aCPFTrabalhador, aDataInicial, aDataFinal, buffer, ref bufferLen));
 
             CheckResult(ret);
 

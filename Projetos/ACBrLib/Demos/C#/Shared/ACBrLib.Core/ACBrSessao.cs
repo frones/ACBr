@@ -45,5 +45,6 @@
         GNRe,
         Guia,
         Sedex,
+        eSocial,
     }
 }

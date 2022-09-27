@@ -1,0 +1,1491 @@
+﻿namespace ACBrLibeSocial.Demo
+{
+    partial class FrmMain
+    {
+        /// <summary>
+        /// Variável de designer necessária.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Limpar os recursos que estão sendo usados.
+        /// </summary>
+        /// <param name="disposing">true se for necessário descartar os recursos gerenciados; caso contrário, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Código gerado pelo Windows Form Designer
+
+        /// <summary>
+        /// Método necessário para suporte ao Designer - não modifique 
+        /// o conteúdo deste método com o editor de código.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rtbRespostas = new System.Windows.Forms.RichTextBox();
+            this.tabControl3 = new System.Windows.Forms.TabControl();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnConsultaIdentificadoresEventosTrabalhador = new System.Windows.Forms.Button();
+            this.btnConsultaIdentificadoresEventosTabela = new System.Windows.Forms.Button();
+            this.btnConsultaIdentificadoresEventosEmpregador = new System.Windows.Forms.Button();
+            this.btnCarregarXMLEventoeSocial = new System.Windows.Forms.Button();
+            this.btnDownloadEventos = new System.Windows.Forms.Button();
+            this.btnSetVersaoDF = new System.Windows.Forms.Button();
+            this.btnSetTipoEmpregador = new System.Windows.Forms.Button();
+            this.btnSetIDTransmissor = new System.Windows.Forms.Button();
+            this.btnSetIDEmpregador = new System.Windows.Forms.Button();
+            this.btnLimpareSocial = new System.Windows.Forms.Button();
+            this.btnCriarEnviareSocial = new System.Windows.Forms.Button();
+            this.btnConsultareSocial = new System.Windows.Forms.Button();
+            this.btnEnviareSocial = new System.Windows.Forms.Button();
+            this.btnCriarEventoeSocial = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tbpConfiguracoes = new System.Windows.Forms.TabPage();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ckbSalvar = new System.Windows.Forms.CheckBox();
+            this.ckbRetirarAcentos = new System.Windows.Forms.CheckBox();
+            this.txtSchemaPath = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.btnSelectSchema = new System.Windows.Forms.Button();
+            this.label31 = new System.Windows.Forms.Label();
+            this.cmbFormaEmissao = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.txtFormatoAlerta = new System.Windows.Forms.TextBox();
+            this.ckbExibirErroSchema = new System.Windows.Forms.CheckBox();
+            this.ckbAtualizarXML = new System.Windows.Forms.CheckBox();
+            this.txtLogs = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnSelectLog = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ckbSalvarSOAP = new System.Windows.Forms.CheckBox();
+            this.ckbVisualizar = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nudIntervalos = new System.Windows.Forms.NumericUpDown();
+            this.label29 = new System.Windows.Forms.Label();
+            this.nudTentativas = new System.Windows.Forms.NumericUpDown();
+            this.label28 = new System.Windows.Forms.Label();
+            this.nudAguardar = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.ckbAjustarAut = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtProxySenha = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtProxyUsuario = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.nudProxyPorta = new System.Windows.Forms.NumericUpDown();
+            this.txtProxyServidor = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.nudTimeOut = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbSSlType = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rdbProducao = new System.Windows.Forms.RadioButton();
+            this.rdbHomologacao = new System.Windows.Forms.RadioButton();
+            this.cmbUfDestino = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtDadosPFX = new System.Windows.Forms.TextBox();
+            this.btnDadosPFX = new System.Windows.Forms.Button();
+            this.txtCertNumero = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCertPassword = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtCertPath = new System.Windows.Forms.TextBox();
+            this.btnSelecionarCertificado = new System.Windows.Forms.Button();
+            this.cmbXmlSign = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbHttp = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbCrypt = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txtArqeSocial = new System.Windows.Forms.TextBox();
+            this.btnArqeSocial = new System.Windows.Forms.Button();
+            this.label36 = new System.Windows.Forms.Label();
+            this.ckbSepararPorModelo = new System.Windows.Forms.CheckBox();
+            this.ckbSepararPorCNPJ = new System.Windows.Forms.CheckBox();
+            this.ckbSalvaPathEvento = new System.Windows.Forms.CheckBox();
+            this.ckbEmissaoPatheSocial = new System.Windows.Forms.CheckBox();
+            this.ckbAdicionaLiteral = new System.Windows.Forms.CheckBox();
+            this.ckbPastaMensal = new System.Windows.Forms.CheckBox();
+            this.ckbSalvarArqs = new System.Windows.Forms.CheckBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cmbVersaoDF = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cmbTipoEmpregador = new System.Windows.Forms.ComboBox();
+            this.txtTransmissor = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtEmpregador = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
+            this.btnSalvarConfiguracoes = new System.Windows.Forms.Button();
+            this.groupBox2.SuspendLayout();
+            this.tabControl3.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tbpConfiguracoes.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudIntervalos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTentativas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAguardar)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudProxyPorta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTimeOut)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rtbRespostas);
+            this.groupBox2.Location = new System.Drawing.Point(398, 285);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(423, 211);
+            this.groupBox2.TabIndex = 20;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Respostas";
+            // 
+            // rtbRespostas
+            // 
+            this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
+            this.rtbRespostas.Name = "rtbRespostas";
+            this.rtbRespostas.Size = new System.Drawing.Size(417, 192);
+            this.rtbRespostas.TabIndex = 3;
+            this.rtbRespostas.Text = "";
+            // 
+            // tabControl3
+            // 
+            this.tabControl3.Controls.Add(this.tabPage5);
+            this.tabControl3.Location = new System.Drawing.Point(398, 12);
+            this.tabControl3.Name = "tabControl3";
+            this.tabControl3.SelectedIndex = 0;
+            this.tabControl3.Size = new System.Drawing.Size(427, 267);
+            this.tabControl3.TabIndex = 25;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.btnConsultaIdentificadoresEventosTrabalhador);
+            this.tabPage5.Controls.Add(this.btnConsultaIdentificadoresEventosTabela);
+            this.tabPage5.Controls.Add(this.btnConsultaIdentificadoresEventosEmpregador);
+            this.tabPage5.Controls.Add(this.btnCarregarXMLEventoeSocial);
+            this.tabPage5.Controls.Add(this.btnDownloadEventos);
+            this.tabPage5.Controls.Add(this.btnSetVersaoDF);
+            this.tabPage5.Controls.Add(this.btnSetTipoEmpregador);
+            this.tabPage5.Controls.Add(this.btnSetIDTransmissor);
+            this.tabPage5.Controls.Add(this.btnSetIDEmpregador);
+            this.tabPage5.Controls.Add(this.btnLimpareSocial);
+            this.tabPage5.Controls.Add(this.btnCriarEnviareSocial);
+            this.tabPage5.Controls.Add(this.btnConsultareSocial);
+            this.tabPage5.Controls.Add(this.btnEnviareSocial);
+            this.tabPage5.Controls.Add(this.btnCriarEventoeSocial);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(419, 241);
+            this.tabPage5.TabIndex = 0;
+            this.tabPage5.Text = "Comandos";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // btnConsultaIdentificadoresEventosTrabalhador
+            // 
+            this.btnConsultaIdentificadoresEventosTrabalhador.Location = new System.Drawing.Point(6, 209);
+            this.btnConsultaIdentificadoresEventosTrabalhador.Name = "btnConsultaIdentificadoresEventosTrabalhador";
+            this.btnConsultaIdentificadoresEventosTrabalhador.Size = new System.Drawing.Size(242, 23);
+            this.btnConsultaIdentificadoresEventosTrabalhador.TabIndex = 23;
+            this.btnConsultaIdentificadoresEventosTrabalhador.Text = "Consulta Identificadores Eventos Trabalhador";
+            this.btnConsultaIdentificadoresEventosTrabalhador.UseVisualStyleBackColor = true;
+            this.btnConsultaIdentificadoresEventosTrabalhador.Click += new System.EventHandler(this.btnConsultaIdentificadoresEventosTrabalhador_Click);
+            // 
+            // btnConsultaIdentificadoresEventosTabela
+            // 
+            this.btnConsultaIdentificadoresEventosTabela.Location = new System.Drawing.Point(6, 180);
+            this.btnConsultaIdentificadoresEventosTabela.Name = "btnConsultaIdentificadoresEventosTabela";
+            this.btnConsultaIdentificadoresEventosTabela.Size = new System.Drawing.Size(242, 23);
+            this.btnConsultaIdentificadoresEventosTabela.TabIndex = 22;
+            this.btnConsultaIdentificadoresEventosTabela.Text = "Consulta Identificadores Eventos Tabela";
+            this.btnConsultaIdentificadoresEventosTabela.UseVisualStyleBackColor = true;
+            this.btnConsultaIdentificadoresEventosTabela.Click += new System.EventHandler(this.btnConsultaIdentificadoresEventosTabela_Click);
+            // 
+            // btnConsultaIdentificadoresEventosEmpregador
+            // 
+            this.btnConsultaIdentificadoresEventosEmpregador.Location = new System.Drawing.Point(6, 151);
+            this.btnConsultaIdentificadoresEventosEmpregador.Name = "btnConsultaIdentificadoresEventosEmpregador";
+            this.btnConsultaIdentificadoresEventosEmpregador.Size = new System.Drawing.Size(242, 23);
+            this.btnConsultaIdentificadoresEventosEmpregador.TabIndex = 21;
+            this.btnConsultaIdentificadoresEventosEmpregador.Text = "Consulta Identificadores Eventos Empregador";
+            this.btnConsultaIdentificadoresEventosEmpregador.UseVisualStyleBackColor = true;
+            this.btnConsultaIdentificadoresEventosEmpregador.Click += new System.EventHandler(this.btnConsultaIdentificadoresEventosEmpregador_Click);
+            // 
+            // btnCarregarXMLEventoeSocial
+            // 
+            this.btnCarregarXMLEventoeSocial.Location = new System.Drawing.Point(254, 6);
+            this.btnCarregarXMLEventoeSocial.Name = "btnCarregarXMLEventoeSocial";
+            this.btnCarregarXMLEventoeSocial.Size = new System.Drawing.Size(158, 23);
+            this.btnCarregarXMLEventoeSocial.TabIndex = 20;
+            this.btnCarregarXMLEventoeSocial.Text = "Carregar XML Evento eSocial";
+            this.btnCarregarXMLEventoeSocial.UseVisualStyleBackColor = true;
+            this.btnCarregarXMLEventoeSocial.Click += new System.EventHandler(this.btnCarregarXMLEventoeSocial_Click);
+            // 
+            // btnDownloadEventos
+            // 
+            this.btnDownloadEventos.Location = new System.Drawing.Point(130, 122);
+            this.btnDownloadEventos.Name = "btnDownloadEventos";
+            this.btnDownloadEventos.Size = new System.Drawing.Size(118, 23);
+            this.btnDownloadEventos.TabIndex = 19;
+            this.btnDownloadEventos.Text = "Download Eventos";
+            this.btnDownloadEventos.UseVisualStyleBackColor = true;
+            this.btnDownloadEventos.Click += new System.EventHandler(this.btnDownloadEventos_Click);
+            // 
+            // btnSetVersaoDF
+            // 
+            this.btnSetVersaoDF.Location = new System.Drawing.Point(130, 93);
+            this.btnSetVersaoDF.Name = "btnSetVersaoDF";
+            this.btnSetVersaoDF.Size = new System.Drawing.Size(118, 23);
+            this.btnSetVersaoDF.TabIndex = 18;
+            this.btnSetVersaoDF.Text = "SetVersaoDF";
+            this.btnSetVersaoDF.UseVisualStyleBackColor = true;
+            this.btnSetVersaoDF.Click += new System.EventHandler(this.btnSetVersaoDF_Click);
+            // 
+            // btnSetTipoEmpregador
+            // 
+            this.btnSetTipoEmpregador.Location = new System.Drawing.Point(130, 64);
+            this.btnSetTipoEmpregador.Name = "btnSetTipoEmpregador";
+            this.btnSetTipoEmpregador.Size = new System.Drawing.Size(118, 23);
+            this.btnSetTipoEmpregador.TabIndex = 17;
+            this.btnSetTipoEmpregador.Text = "SetTipoEmpregador";
+            this.btnSetTipoEmpregador.UseVisualStyleBackColor = true;
+            this.btnSetTipoEmpregador.Click += new System.EventHandler(this.btnSetTipoEmpregador_Click);
+            // 
+            // btnSetIDTransmissor
+            // 
+            this.btnSetIDTransmissor.Location = new System.Drawing.Point(130, 35);
+            this.btnSetIDTransmissor.Name = "btnSetIDTransmissor";
+            this.btnSetIDTransmissor.Size = new System.Drawing.Size(118, 23);
+            this.btnSetIDTransmissor.TabIndex = 16;
+            this.btnSetIDTransmissor.Text = "SetIDTransmissor";
+            this.btnSetIDTransmissor.UseVisualStyleBackColor = true;
+            this.btnSetIDTransmissor.Click += new System.EventHandler(this.btnSetIDTransmissor_Click);
+            // 
+            // btnSetIDEmpregador
+            // 
+            this.btnSetIDEmpregador.Location = new System.Drawing.Point(130, 6);
+            this.btnSetIDEmpregador.Name = "btnSetIDEmpregador";
+            this.btnSetIDEmpregador.Size = new System.Drawing.Size(118, 23);
+            this.btnSetIDEmpregador.TabIndex = 15;
+            this.btnSetIDEmpregador.Text = "SetIDEmpregador";
+            this.btnSetIDEmpregador.UseVisualStyleBackColor = true;
+            this.btnSetIDEmpregador.Click += new System.EventHandler(this.btnSetIDEmpregador_Click);
+            // 
+            // btnLimpareSocial
+            // 
+            this.btnLimpareSocial.Location = new System.Drawing.Point(6, 122);
+            this.btnLimpareSocial.Name = "btnLimpareSocial";
+            this.btnLimpareSocial.Size = new System.Drawing.Size(118, 23);
+            this.btnLimpareSocial.TabIndex = 14;
+            this.btnLimpareSocial.Text = "Limpar eSocial";
+            this.btnLimpareSocial.UseVisualStyleBackColor = true;
+            this.btnLimpareSocial.Click += new System.EventHandler(this.btnLimpareSocial_Click);
+            // 
+            // btnCriarEnviareSocial
+            // 
+            this.btnCriarEnviareSocial.Location = new System.Drawing.Point(3, 93);
+            this.btnCriarEnviareSocial.Name = "btnCriarEnviareSocial";
+            this.btnCriarEnviareSocial.Size = new System.Drawing.Size(118, 23);
+            this.btnCriarEnviareSocial.TabIndex = 13;
+            this.btnCriarEnviareSocial.Text = "Criar Enviar eSocial";
+            this.btnCriarEnviareSocial.UseVisualStyleBackColor = true;
+            this.btnCriarEnviareSocial.Click += new System.EventHandler(this.btnCriarEnviareSocial_Click);
+            // 
+            // btnConsultareSocial
+            // 
+            this.btnConsultareSocial.Location = new System.Drawing.Point(6, 64);
+            this.btnConsultareSocial.Name = "btnConsultareSocial";
+            this.btnConsultareSocial.Size = new System.Drawing.Size(118, 23);
+            this.btnConsultareSocial.TabIndex = 12;
+            this.btnConsultareSocial.Text = "Consultar eSocial";
+            this.btnConsultareSocial.UseVisualStyleBackColor = true;
+            this.btnConsultareSocial.Click += new System.EventHandler(this.btnConsultareSocial_Click);
+            // 
+            // btnEnviareSocial
+            // 
+            this.btnEnviareSocial.Location = new System.Drawing.Point(6, 35);
+            this.btnEnviareSocial.Name = "btnEnviareSocial";
+            this.btnEnviareSocial.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviareSocial.TabIndex = 11;
+            this.btnEnviareSocial.Text = "Enviar eSocial";
+            this.btnEnviareSocial.UseVisualStyleBackColor = true;
+            this.btnEnviareSocial.Click += new System.EventHandler(this.btnEnviareSocial_Click);
+            // 
+            // btnCriarEventoeSocial
+            // 
+            this.btnCriarEventoeSocial.Location = new System.Drawing.Point(6, 6);
+            this.btnCriarEventoeSocial.Name = "btnCriarEventoeSocial";
+            this.btnCriarEventoeSocial.Size = new System.Drawing.Size(118, 23);
+            this.btnCriarEventoeSocial.TabIndex = 10;
+            this.btnCriarEventoeSocial.Text = "Criar Evento eSocial";
+            this.btnCriarEventoeSocial.UseVisualStyleBackColor = true;
+            this.btnCriarEventoeSocial.Click += new System.EventHandler(this.btnCriarEventoeSocial_Click);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tbpConfiguracoes);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(380, 484);
+            this.tabControl1.TabIndex = 26;
+            // 
+            // tbpConfiguracoes
+            // 
+            this.tbpConfiguracoes.Controls.Add(this.tabControl2);
+            this.tbpConfiguracoes.Location = new System.Drawing.Point(4, 22);
+            this.tbpConfiguracoes.Name = "tbpConfiguracoes";
+            this.tbpConfiguracoes.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpConfiguracoes.Size = new System.Drawing.Size(372, 458);
+            this.tbpConfiguracoes.TabIndex = 2;
+            this.tbpConfiguracoes.Text = "Configurações";
+            this.tbpConfiguracoes.UseVisualStyleBackColor = true;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage1);
+            this.tabControl2.Controls.Add(this.tabPage2);
+            this.tabControl2.Controls.Add(this.tabPage3);
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(3, 3);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(366, 452);
+            this.tabControl2.TabIndex = 24;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.ckbSalvar);
+            this.tabPage1.Controls.Add(this.ckbRetirarAcentos);
+            this.tabPage1.Controls.Add(this.txtSchemaPath);
+            this.tabPage1.Controls.Add(this.label33);
+            this.tabPage1.Controls.Add(this.btnSelectSchema);
+            this.tabPage1.Controls.Add(this.label31);
+            this.tabPage1.Controls.Add(this.cmbFormaEmissao);
+            this.tabPage1.Controls.Add(this.label30);
+            this.tabPage1.Controls.Add(this.txtFormatoAlerta);
+            this.tabPage1.Controls.Add(this.ckbExibirErroSchema);
+            this.tabPage1.Controls.Add(this.ckbAtualizarXML);
+            this.tabPage1.Controls.Add(this.txtLogs);
+            this.tabPage1.Controls.Add(this.label10);
+            this.tabPage1.Controls.Add(this.btnSelectLog);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(358, 426);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Geral";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ckbSalvar
+            // 
+            this.ckbSalvar.AutoSize = true;
+            this.ckbSalvar.Location = new System.Drawing.Point(6, 164);
+            this.ckbSalvar.Name = "ckbSalvar";
+            this.ckbSalvar.Size = new System.Drawing.Size(202, 17);
+            this.ckbSalvar.TabIndex = 36;
+            this.ckbSalvar.Text = "Salvar Arquivos de Envio e Resposta";
+            this.ckbSalvar.UseVisualStyleBackColor = true;
+            // 
+            // ckbRetirarAcentos
+            // 
+            this.ckbRetirarAcentos.AutoSize = true;
+            this.ckbRetirarAcentos.Location = new System.Drawing.Point(6, 141);
+            this.ckbRetirarAcentos.Name = "ckbRetirarAcentos";
+            this.ckbRetirarAcentos.Size = new System.Drawing.Size(195, 17);
+            this.ckbRetirarAcentos.TabIndex = 35;
+            this.ckbRetirarAcentos.Text = "Retirar Acentos dos XMLs enviados";
+            this.ckbRetirarAcentos.UseVisualStyleBackColor = true;
+            // 
+            // txtSchemaPath
+            // 
+            this.txtSchemaPath.Location = new System.Drawing.Point(6, 239);
+            this.txtSchemaPath.Name = "txtSchemaPath";
+            this.txtSchemaPath.Size = new System.Drawing.Size(238, 20);
+            this.txtSchemaPath.TabIndex = 32;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(3, 223);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(118, 13);
+            this.label33.TabIndex = 33;
+            this.label33.Text = "Pasta dos Schemas";
+            // 
+            // btnSelectSchema
+            // 
+            this.btnSelectSchema.Location = new System.Drawing.Point(243, 238);
+            this.btnSelectSchema.Name = "btnSelectSchema";
+            this.btnSelectSchema.Size = new System.Drawing.Size(27, 22);
+            this.btnSelectSchema.TabIndex = 34;
+            this.btnSelectSchema.Text = "...";
+            this.btnSelectSchema.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(3, 94);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(109, 13);
+            this.label31.TabIndex = 28;
+            this.label31.Text = "Forma de Emissão";
+            // 
+            // cmbFormaEmissao
+            // 
+            this.cmbFormaEmissao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFormaEmissao.FormattingEnabled = true;
+            this.cmbFormaEmissao.Location = new System.Drawing.Point(6, 110);
+            this.cmbFormaEmissao.Name = "cmbFormaEmissao";
+            this.cmbFormaEmissao.Size = new System.Drawing.Size(156, 21);
+            this.cmbFormaEmissao.TabIndex = 29;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(3, 55);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(89, 13);
+            this.label30.TabIndex = 26;
+            this.label30.Text = "Formato Alerta";
+            // 
+            // txtFormatoAlerta
+            // 
+            this.txtFormatoAlerta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFormatoAlerta.Location = new System.Drawing.Point(6, 71);
+            this.txtFormatoAlerta.Name = "txtFormatoAlerta";
+            this.txtFormatoAlerta.Size = new System.Drawing.Size(267, 20);
+            this.txtFormatoAlerta.TabIndex = 27;
+            // 
+            // ckbExibirErroSchema
+            // 
+            this.ckbExibirErroSchema.AutoSize = true;
+            this.ckbExibirErroSchema.Location = new System.Drawing.Point(6, 29);
+            this.ckbExibirErroSchema.Name = "ckbExibirErroSchema";
+            this.ckbExibirErroSchema.Size = new System.Drawing.Size(115, 17);
+            this.ckbExibirErroSchema.TabIndex = 25;
+            this.ckbExibirErroSchema.Text = "Exibir Erro Schema";
+            this.ckbExibirErroSchema.UseVisualStyleBackColor = true;
+            // 
+            // ckbAtualizarXML
+            // 
+            this.ckbAtualizarXML.AutoSize = true;
+            this.ckbAtualizarXML.Location = new System.Drawing.Point(6, 6);
+            this.ckbAtualizarXML.Name = "ckbAtualizarXML";
+            this.ckbAtualizarXML.Size = new System.Drawing.Size(91, 17);
+            this.ckbAtualizarXML.TabIndex = 24;
+            this.ckbAtualizarXML.Text = "Atualizar XML";
+            this.ckbAtualizarXML.UseVisualStyleBackColor = true;
+            // 
+            // txtLogs
+            // 
+            this.txtLogs.Location = new System.Drawing.Point(6, 200);
+            this.txtLogs.Name = "txtLogs";
+            this.txtLogs.Size = new System.Drawing.Size(238, 20);
+            this.txtLogs.TabIndex = 13;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(3, 184);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(94, 13);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Pasta dos Logs";
+            // 
+            // btnSelectLog
+            // 
+            this.btnSelectLog.Location = new System.Drawing.Point(243, 199);
+            this.btnSelectLog.Name = "btnSelectLog";
+            this.btnSelectLog.Size = new System.Drawing.Size(27, 22);
+            this.btnSelectLog.TabIndex = 15;
+            this.btnSelectLog.Text = "...";
+            this.btnSelectLog.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.ckbSalvarSOAP);
+            this.tabPage2.Controls.Add(this.ckbVisualizar);
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.label3);
+            this.tabPage2.Controls.Add(this.nudTimeOut);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.cmbSSlType);
+            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Controls.Add(this.cmbUfDestino);
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(358, 426);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Webservices";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ckbSalvarSOAP
+            // 
+            this.ckbSalvarSOAP.AutoSize = true;
+            this.ckbSalvarSOAP.Location = new System.Drawing.Point(6, 123);
+            this.ckbSalvarSOAP.Name = "ckbSalvarSOAP";
+            this.ckbSalvarSOAP.Size = new System.Drawing.Size(135, 17);
+            this.ckbSalvarSOAP.TabIndex = 17;
+            this.ckbSalvarSOAP.Text = "Salvar envelope SOAP";
+            this.ckbSalvarSOAP.UseVisualStyleBackColor = true;
+            // 
+            // ckbVisualizar
+            // 
+            this.ckbVisualizar.AutoSize = true;
+            this.ckbVisualizar.Location = new System.Drawing.Point(6, 100);
+            this.ckbVisualizar.Name = "ckbVisualizar";
+            this.ckbVisualizar.Size = new System.Drawing.Size(125, 17);
+            this.ckbVisualizar.TabIndex = 16;
+            this.ckbVisualizar.Text = "Visualizar Mensagem";
+            this.ckbVisualizar.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.nudIntervalos);
+            this.groupBox1.Controls.Add(this.label29);
+            this.groupBox1.Controls.Add(this.nudTentativas);
+            this.groupBox1.Controls.Add(this.label28);
+            this.groupBox1.Controls.Add(this.nudAguardar);
+            this.groupBox1.Controls.Add(this.label27);
+            this.groupBox1.Controls.Add(this.ckbAjustarAut);
+            this.groupBox1.Location = new System.Drawing.Point(6, 146);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(267, 82);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Retorno de Envio";
+            // 
+            // nudIntervalos
+            // 
+            this.nudIntervalos.Location = new System.Drawing.Point(181, 56);
+            this.nudIntervalos.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudIntervalos.Name = "nudIntervalos";
+            this.nudIntervalos.Size = new System.Drawing.Size(80, 20);
+            this.nudIntervalos.TabIndex = 13;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(178, 39);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(57, 13);
+            this.label29.TabIndex = 12;
+            this.label29.Text = "Intervalo";
+            // 
+            // nudTentativas
+            // 
+            this.nudTentativas.Location = new System.Drawing.Point(92, 55);
+            this.nudTentativas.Name = "nudTentativas";
+            this.nudTentativas.Size = new System.Drawing.Size(83, 20);
+            this.nudTentativas.TabIndex = 11;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(89, 39);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(67, 13);
+            this.label28.TabIndex = 10;
+            this.label28.Text = "Tentativas";
+            // 
+            // nudAguardar
+            // 
+            this.nudAguardar.Location = new System.Drawing.Point(6, 56);
+            this.nudAguardar.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudAguardar.Name = "nudAguardar";
+            this.nudAguardar.Size = new System.Drawing.Size(80, 20);
+            this.nudAguardar.TabIndex = 9;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(3, 39);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(58, 13);
+            this.label27.TabIndex = 8;
+            this.label27.Text = "Aguardar";
+            // 
+            // ckbAjustarAut
+            // 
+            this.ckbAjustarAut.AutoSize = true;
+            this.ckbAjustarAut.Location = new System.Drawing.Point(6, 19);
+            this.ckbAjustarAut.Name = "ckbAjustarAut";
+            this.ckbAjustarAut.Size = new System.Drawing.Size(226, 17);
+            this.ckbAjustarAut.TabIndex = 0;
+            this.ckbAjustarAut.Text = "Ajustar Automaticamente prop. \"Aguardar\"";
+            this.ckbAjustarAut.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtProxySenha);
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.txtProxyUsuario);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Controls.Add(this.nudProxyPorta);
+            this.groupBox5.Controls.Add(this.txtProxyServidor);
+            this.groupBox5.Controls.Add(this.label13);
+            this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(6, 234);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(267, 141);
+            this.groupBox5.TabIndex = 13;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Proxy";
+            // 
+            // txtProxySenha
+            // 
+            this.txtProxySenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProxySenha.Location = new System.Drawing.Point(9, 110);
+            this.txtProxySenha.Name = "txtProxySenha";
+            this.txtProxySenha.PasswordChar = '*';
+            this.txtProxySenha.Size = new System.Drawing.Size(252, 20);
+            this.txtProxySenha.TabIndex = 23;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(6, 94);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(43, 13);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Senha";
+            // 
+            // txtProxyUsuario
+            // 
+            this.txtProxyUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProxyUsuario.Location = new System.Drawing.Point(9, 71);
+            this.txtProxyUsuario.Name = "txtProxyUsuario";
+            this.txtProxyUsuario.Size = new System.Drawing.Size(252, 20);
+            this.txtProxyUsuario.TabIndex = 21;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(6, 55);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(50, 13);
+            this.label15.TabIndex = 20;
+            this.label15.Text = "Usuário";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(199, 16);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 13);
+            this.label14.TabIndex = 19;
+            this.label14.Text = "Porta";
+            // 
+            // nudProxyPorta
+            // 
+            this.nudProxyPorta.Location = new System.Drawing.Point(202, 33);
+            this.nudProxyPorta.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudProxyPorta.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudProxyPorta.Name = "nudProxyPorta";
+            this.nudProxyPorta.Size = new System.Drawing.Size(59, 20);
+            this.nudProxyPorta.TabIndex = 18;
+            this.nudProxyPorta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudProxyPorta.Value = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            // 
+            // txtProxyServidor
+            // 
+            this.txtProxyServidor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProxyServidor.Location = new System.Drawing.Point(9, 32);
+            this.txtProxyServidor.Name = "txtProxyServidor";
+            this.txtProxyServidor.Size = new System.Drawing.Size(187, 20);
+            this.txtProxyServidor.TabIndex = 17;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(6, 16);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(54, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Servidor";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(179, 3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "TimeOut";
+            // 
+            // nudTimeOut
+            // 
+            this.nudTimeOut.Location = new System.Drawing.Point(182, 19);
+            this.nudTimeOut.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.nudTimeOut.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudTimeOut.Name = "nudTimeOut";
+            this.nudTimeOut.Size = new System.Drawing.Size(73, 20);
+            this.nudTimeOut.TabIndex = 12;
+            this.nudTimeOut.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudTimeOut.Value = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(76, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "SSL Type";
+            // 
+            // cmbSSlType
+            // 
+            this.cmbSSlType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSSlType.FormattingEnabled = true;
+            this.cmbSSlType.Location = new System.Drawing.Point(79, 19);
+            this.cmbSSlType.Name = "cmbSSlType";
+            this.cmbSSlType.Size = new System.Drawing.Size(97, 21);
+            this.cmbSSlType.TabIndex = 10;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.rdbProducao);
+            this.groupBox3.Controls.Add(this.rdbHomologacao);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(6, 46);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(267, 48);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ambiente";
+            // 
+            // rdbProducao
+            // 
+            this.rdbProducao.AutoSize = true;
+            this.rdbProducao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbProducao.Location = new System.Drawing.Point(6, 19);
+            this.rdbProducao.Name = "rdbProducao";
+            this.rdbProducao.Size = new System.Drawing.Size(71, 17);
+            this.rdbProducao.TabIndex = 1;
+            this.rdbProducao.Text = "Produção";
+            this.rdbProducao.UseVisualStyleBackColor = true;
+            // 
+            // rdbHomologacao
+            // 
+            this.rdbHomologacao.AutoSize = true;
+            this.rdbHomologacao.Checked = true;
+            this.rdbHomologacao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbHomologacao.Location = new System.Drawing.Point(170, 19);
+            this.rdbHomologacao.Name = "rdbHomologacao";
+            this.rdbHomologacao.Size = new System.Drawing.Size(91, 17);
+            this.rdbHomologacao.TabIndex = 0;
+            this.rdbHomologacao.TabStop = true;
+            this.rdbHomologacao.Text = "Homologação";
+            this.rdbHomologacao.UseVisualStyleBackColor = true;
+            // 
+            // cmbUfDestino
+            // 
+            this.cmbUfDestino.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbUfDestino.FormattingEnabled = true;
+            this.cmbUfDestino.Items.AddRange(new object[] {
+            "AC",
+            "AL",
+            "AM",
+            "AP",
+            "BA",
+            "CE",
+            "DF",
+            "ES",
+            "GO",
+            "MA",
+            "MG",
+            "MS",
+            "MT",
+            "PA",
+            "PB",
+            "PE",
+            "PI",
+            "PR",
+            "RJ",
+            "RN",
+            "RO",
+            "RR",
+            "RS",
+            "SC",
+            "SE",
+            "SP",
+            "TO"});
+            this.cmbUfDestino.Location = new System.Drawing.Point(6, 19);
+            this.cmbUfDestino.Name = "cmbUfDestino";
+            this.cmbUfDestino.Size = new System.Drawing.Size(67, 21);
+            this.cmbUfDestino.TabIndex = 8;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Uf Destino";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox4);
+            this.tabPage3.Controls.Add(this.cmbXmlSign);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.cmbHttp);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.cmbCrypt);
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(358, 426);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Certificados";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label26);
+            this.groupBox4.Controls.Add(this.txtDadosPFX);
+            this.groupBox4.Controls.Add(this.btnDadosPFX);
+            this.groupBox4.Controls.Add(this.txtCertNumero);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.txtCertPassword);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.txtCertPath);
+            this.groupBox4.Controls.Add(this.btnSelecionarCertificado);
+            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.Location = new System.Drawing.Point(6, 129);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(265, 180);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Certificados";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(3, 55);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(70, 13);
+            this.label26.TabIndex = 15;
+            this.label26.Text = "Dados PFX";
+            // 
+            // txtDadosPFX
+            // 
+            this.txtDadosPFX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDadosPFX.Location = new System.Drawing.Point(6, 71);
+            this.txtDadosPFX.MaxLength = 99999;
+            this.txtDadosPFX.Name = "txtDadosPFX";
+            this.txtDadosPFX.Size = new System.Drawing.Size(227, 20);
+            this.txtDadosPFX.TabIndex = 14;
+            // 
+            // btnDadosPFX
+            // 
+            this.btnDadosPFX.Location = new System.Drawing.Point(232, 70);
+            this.btnDadosPFX.Name = "btnDadosPFX";
+            this.btnDadosPFX.Size = new System.Drawing.Size(27, 22);
+            this.btnDadosPFX.TabIndex = 16;
+            this.btnDadosPFX.Text = "...";
+            this.btnDadosPFX.UseVisualStyleBackColor = true;
+            // 
+            // txtCertNumero
+            // 
+            this.txtCertNumero.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCertNumero.Location = new System.Drawing.Point(6, 149);
+            this.txtCertNumero.Name = "txtCertNumero";
+            this.txtCertNumero.Size = new System.Drawing.Size(253, 20);
+            this.txtCertNumero.TabIndex = 13;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(3, 133);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(101, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "Número de Série";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(3, 94);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(43, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Senha";
+            // 
+            // txtCertPassword
+            // 
+            this.txtCertPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCertPassword.Location = new System.Drawing.Point(6, 110);
+            this.txtCertPassword.Name = "txtCertPassword";
+            this.txtCertPassword.PasswordChar = '*';
+            this.txtCertPassword.Size = new System.Drawing.Size(253, 20);
+            this.txtCertPassword.TabIndex = 10;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(3, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Caminho";
+            // 
+            // txtCertPath
+            // 
+            this.txtCertPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCertPath.Location = new System.Drawing.Point(6, 32);
+            this.txtCertPath.Name = "txtCertPath";
+            this.txtCertPath.Size = new System.Drawing.Size(227, 20);
+            this.txtCertPath.TabIndex = 6;
+            // 
+            // btnSelecionarCertificado
+            // 
+            this.btnSelecionarCertificado.Location = new System.Drawing.Point(232, 31);
+            this.btnSelecionarCertificado.Name = "btnSelecionarCertificado";
+            this.btnSelecionarCertificado.Size = new System.Drawing.Size(27, 22);
+            this.btnSelecionarCertificado.TabIndex = 9;
+            this.btnSelecionarCertificado.Text = "...";
+            this.btnSelecionarCertificado.UseVisualStyleBackColor = true;
+            // 
+            // cmbXmlSign
+            // 
+            this.cmbXmlSign.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbXmlSign.FormattingEnabled = true;
+            this.cmbXmlSign.Location = new System.Drawing.Point(9, 102);
+            this.cmbXmlSign.Name = "cmbXmlSign";
+            this.cmbXmlSign.Size = new System.Drawing.Size(129, 21);
+            this.cmbXmlSign.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(6, 86);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "XmlSignLib";
+            // 
+            // cmbHttp
+            // 
+            this.cmbHttp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHttp.FormattingEnabled = true;
+            this.cmbHttp.Location = new System.Drawing.Point(9, 62);
+            this.cmbHttp.Name = "cmbHttp";
+            this.cmbHttp.Size = new System.Drawing.Size(129, 21);
+            this.cmbHttp.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(6, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "HttpLib";
+            // 
+            // cmbCrypt
+            // 
+            this.cmbCrypt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCrypt.FormattingEnabled = true;
+            this.cmbCrypt.Location = new System.Drawing.Point(9, 22);
+            this.cmbCrypt.Name = "cmbCrypt";
+            this.cmbCrypt.Size = new System.Drawing.Size(129, 21);
+            this.cmbCrypt.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(6, 6);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "CryptLib";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.txtArqeSocial);
+            this.tabPage4.Controls.Add(this.btnArqeSocial);
+            this.tabPage4.Controls.Add(this.label36);
+            this.tabPage4.Controls.Add(this.ckbSepararPorModelo);
+            this.tabPage4.Controls.Add(this.ckbSepararPorCNPJ);
+            this.tabPage4.Controls.Add(this.ckbSalvaPathEvento);
+            this.tabPage4.Controls.Add(this.ckbEmissaoPatheSocial);
+            this.tabPage4.Controls.Add(this.ckbAdicionaLiteral);
+            this.tabPage4.Controls.Add(this.ckbPastaMensal);
+            this.tabPage4.Controls.Add(this.ckbSalvarArqs);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(358, 426);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Arquivos";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // txtArqeSocial
+            // 
+            this.txtArqeSocial.Location = new System.Drawing.Point(3, 180);
+            this.txtArqeSocial.Name = "txtArqeSocial";
+            this.txtArqeSocial.Size = new System.Drawing.Size(248, 20);
+            this.txtArqeSocial.TabIndex = 25;
+            // 
+            // btnArqeSocial
+            // 
+            this.btnArqeSocial.Location = new System.Drawing.Point(249, 179);
+            this.btnArqeSocial.Name = "btnArqeSocial";
+            this.btnArqeSocial.Size = new System.Drawing.Size(27, 22);
+            this.btnArqeSocial.TabIndex = 27;
+            this.btnArqeSocial.Text = "...";
+            this.btnArqeSocial.UseVisualStyleBackColor = true;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(3, 164);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(138, 13);
+            this.label36.TabIndex = 26;
+            this.label36.Text = "Pasta Arquivos eSocial";
+            // 
+            // ckbSepararPorModelo
+            // 
+            this.ckbSepararPorModelo.AutoSize = true;
+            this.ckbSepararPorModelo.Location = new System.Drawing.Point(6, 144);
+            this.ckbSepararPorModelo.Name = "ckbSepararPorModelo";
+            this.ckbSepararPorModelo.Size = new System.Drawing.Size(221, 17);
+            this.ckbSepararPorModelo.TabIndex = 13;
+            this.ckbSepararPorModelo.Text = "Separar Arqs pelo Modelo do Documento";
+            this.ckbSepararPorModelo.UseVisualStyleBackColor = true;
+            // 
+            // ckbSepararPorCNPJ
+            // 
+            this.ckbSepararPorCNPJ.AutoSize = true;
+            this.ckbSepararPorCNPJ.Location = new System.Drawing.Point(6, 121);
+            this.ckbSepararPorCNPJ.Name = "ckbSepararPorCNPJ";
+            this.ckbSepararPorCNPJ.Size = new System.Drawing.Size(208, 17);
+            this.ckbSepararPorCNPJ.TabIndex = 12;
+            this.ckbSepararPorCNPJ.Text = "Separar Arqs pelo CNPJ do Certificado";
+            this.ckbSepararPorCNPJ.UseVisualStyleBackColor = true;
+            // 
+            // ckbSalvaPathEvento
+            // 
+            this.ckbSalvaPathEvento.AutoSize = true;
+            this.ckbSalvaPathEvento.Location = new System.Drawing.Point(6, 97);
+            this.ckbSalvaPathEvento.Name = "ckbSalvaPathEvento";
+            this.ckbSalvaPathEvento.Size = new System.Drawing.Size(157, 17);
+            this.ckbSalvaPathEvento.TabIndex = 11;
+            this.ckbSalvaPathEvento.Text = "Salvar Arquivos de Eventos";
+            this.ckbSalvaPathEvento.UseVisualStyleBackColor = true;
+            // 
+            // ckbEmissaoPatheSocial
+            // 
+            this.ckbEmissaoPatheSocial.AutoSize = true;
+            this.ckbEmissaoPatheSocial.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ckbEmissaoPatheSocial.Location = new System.Drawing.Point(6, 75);
+            this.ckbEmissaoPatheSocial.Name = "ckbEmissaoPatheSocial";
+            this.ckbEmissaoPatheSocial.Size = new System.Drawing.Size(255, 17);
+            this.ckbEmissaoPatheSocial.TabIndex = 10;
+            this.ckbEmissaoPatheSocial.Text = "Salvar Documento pelo campo Data de Emissão";
+            this.ckbEmissaoPatheSocial.UseVisualStyleBackColor = true;
+            // 
+            // ckbAdicionaLiteral
+            // 
+            this.ckbAdicionaLiteral.AutoSize = true;
+            this.ckbAdicionaLiteral.Location = new System.Drawing.Point(6, 52);
+            this.ckbAdicionaLiteral.Name = "ckbAdicionaLiteral";
+            this.ckbAdicionaLiteral.Size = new System.Drawing.Size(199, 17);
+            this.ckbAdicionaLiteral.TabIndex = 9;
+            this.ckbAdicionaLiteral.Text = "Adicionar Literal no nome das pastas";
+            this.ckbAdicionaLiteral.UseVisualStyleBackColor = true;
+            // 
+            // ckbPastaMensal
+            // 
+            this.ckbPastaMensal.AutoSize = true;
+            this.ckbPastaMensal.Location = new System.Drawing.Point(6, 29);
+            this.ckbPastaMensal.Name = "ckbPastaMensal";
+            this.ckbPastaMensal.Size = new System.Drawing.Size(148, 17);
+            this.ckbPastaMensal.TabIndex = 8;
+            this.ckbPastaMensal.Text = "Criar Pastas Mensalmente";
+            this.ckbPastaMensal.UseVisualStyleBackColor = true;
+            // 
+            // ckbSalvarArqs
+            // 
+            this.ckbSalvarArqs.AutoSize = true;
+            this.ckbSalvarArqs.Location = new System.Drawing.Point(6, 6);
+            this.ckbSalvarArqs.Name = "ckbSalvarArqs";
+            this.ckbSalvarArqs.Size = new System.Drawing.Size(206, 17);
+            this.ckbSalvarArqs.TabIndex = 7;
+            this.ckbSalvarArqs.Text = "Salvar Arquivos em Pastas Separadas";
+            this.ckbSalvarArqs.UseVisualStyleBackColor = true;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.label18);
+            this.tabPage6.Controls.Add(this.cmbVersaoDF);
+            this.tabPage6.Controls.Add(this.label17);
+            this.tabPage6.Controls.Add(this.cmbTipoEmpregador);
+            this.tabPage6.Controls.Add(this.txtTransmissor);
+            this.tabPage6.Controls.Add(this.label12);
+            this.tabPage6.Controls.Add(this.txtEmpregador);
+            this.tabPage6.Controls.Add(this.label11);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(358, 426);
+            this.tabPage6.TabIndex = 4;
+            this.tabPage6.Text = "Emitente";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(9, 169);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(66, 13);
+            this.label18.TabIndex = 33;
+            this.label18.Text = "Versão DF";
+            // 
+            // cmbVersaoDF
+            // 
+            this.cmbVersaoDF.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVersaoDF.FormattingEnabled = true;
+            this.cmbVersaoDF.Items.AddRange(new object[] {
+            "02_04_01",
+            "02_04_02",
+            "02_05_00",
+            "S01_00_00"});
+            this.cmbVersaoDF.Location = new System.Drawing.Point(12, 185);
+            this.cmbVersaoDF.Name = "cmbVersaoDF";
+            this.cmbVersaoDF.Size = new System.Drawing.Size(242, 21);
+            this.cmbVersaoDF.TabIndex = 34;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(9, 118);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(121, 13);
+            this.label17.TabIndex = 31;
+            this.label17.Text = "Tipo de Empregador";
+            // 
+            // cmbTipoEmpregador
+            // 
+            this.cmbTipoEmpregador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipoEmpregador.FormattingEnabled = true;
+            this.cmbTipoEmpregador.Items.AddRange(new object[] {
+            "tePessoaJuridica",
+            "teOrgaoPublico",
+            "tePessoaFisica",
+            "teOrgaoPublicoExecutivoFederal",
+            "teOrgaoPublicoLegislativoFederal",
+            "teOrgaoPublicoJudiciarioFederal",
+            "teOrgaoPublicoAutonomoFederal"});
+            this.cmbTipoEmpregador.Location = new System.Drawing.Point(12, 134);
+            this.cmbTipoEmpregador.Name = "cmbTipoEmpregador";
+            this.cmbTipoEmpregador.Size = new System.Drawing.Size(242, 21);
+            this.cmbTipoEmpregador.TabIndex = 32;
+            // 
+            // txtTransmissor
+            // 
+            this.txtTransmissor.Location = new System.Drawing.Point(9, 84);
+            this.txtTransmissor.Name = "txtTransmissor";
+            this.txtTransmissor.Size = new System.Drawing.Size(248, 20);
+            this.txtTransmissor.TabIndex = 29;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(9, 68);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(172, 13);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "CNPJ ou CPF do Transmissor";
+            // 
+            // txtEmpregador
+            // 
+            this.txtEmpregador.Location = new System.Drawing.Point(6, 34);
+            this.txtEmpregador.Name = "txtEmpregador";
+            this.txtEmpregador.Size = new System.Drawing.Size(248, 20);
+            this.txtEmpregador.TabIndex = 27;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 18);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(172, 13);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "CNPJ ou CPF do Empregador";
+            // 
+            // btnCarregarConfiguracoes
+            // 
+            this.btnCarregarConfiguracoes.Location = new System.Drawing.Point(16, 499);
+            this.btnCarregarConfiguracoes.Name = "btnCarregarConfiguracoes";
+            this.btnCarregarConfiguracoes.Size = new System.Drawing.Size(139, 23);
+            this.btnCarregarConfiguracoes.TabIndex = 28;
+            this.btnCarregarConfiguracoes.Text = "Carregar Configurações";
+            this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
+            this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
+            // 
+            // btnSalvarConfiguracoes
+            // 
+            this.btnSalvarConfiguracoes.Location = new System.Drawing.Point(249, 499);
+            this.btnSalvarConfiguracoes.Name = "btnSalvarConfiguracoes";
+            this.btnSalvarConfiguracoes.Size = new System.Drawing.Size(139, 23);
+            this.btnSalvarConfiguracoes.TabIndex = 27;
+            this.btnSalvarConfiguracoes.Text = "Salvar Configurações";
+            this.btnSalvarConfiguracoes.UseVisualStyleBackColor = true;
+            this.btnSalvarConfiguracoes.Click += new System.EventHandler(this.btnSalvarConfiguracoes_Click);
+            // 
+            // FrmMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(829, 534);
+            this.Controls.Add(this.btnCarregarConfiguracoes);
+            this.Controls.Add(this.btnSalvarConfiguracoes);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl3);
+            this.Controls.Add(this.groupBox2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "FrmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "ACBrLibeSocial Demo";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.Shown += new System.EventHandler(this.FrmMain_Shown);
+            this.groupBox2.ResumeLayout(false);
+            this.tabControl3.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tbpConfiguracoes.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudIntervalos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTentativas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAguardar)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudProxyPorta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTimeOut)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RichTextBox rtbRespostas;
+        private System.Windows.Forms.TabControl tabControl3;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button btnCriarEventoeSocial;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tbpConfiguracoes;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.CheckBox ckbSalvar;
+        private System.Windows.Forms.CheckBox ckbRetirarAcentos;
+        private System.Windows.Forms.TextBox txtSchemaPath;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button btnSelectSchema;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox cmbFormaEmissao;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox txtFormatoAlerta;
+        private System.Windows.Forms.CheckBox ckbExibirErroSchema;
+        private System.Windows.Forms.CheckBox ckbAtualizarXML;
+        private System.Windows.Forms.TextBox txtLogs;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnSelectLog;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox ckbSalvarSOAP;
+        private System.Windows.Forms.CheckBox ckbVisualizar;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NumericUpDown nudIntervalos;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.NumericUpDown nudTentativas;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.NumericUpDown nudAguardar;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.CheckBox ckbAjustarAut;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox txtProxySenha;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtProxyUsuario;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.NumericUpDown nudProxyPorta;
+        private System.Windows.Forms.TextBox txtProxyServidor;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown nudTimeOut;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbSSlType;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rdbProducao;
+        private System.Windows.Forms.RadioButton rdbHomologacao;
+        private System.Windows.Forms.ComboBox cmbUfDestino;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox txtDadosPFX;
+        private System.Windows.Forms.Button btnDadosPFX;
+        private System.Windows.Forms.TextBox txtCertNumero;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtCertPassword;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtCertPath;
+        private System.Windows.Forms.Button btnSelecionarCertificado;
+        private System.Windows.Forms.ComboBox cmbXmlSign;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbHttp;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbCrypt;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox txtArqeSocial;
+        private System.Windows.Forms.Button btnArqeSocial;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.CheckBox ckbSepararPorModelo;
+        private System.Windows.Forms.CheckBox ckbSepararPorCNPJ;
+        private System.Windows.Forms.CheckBox ckbSalvaPathEvento;
+        private System.Windows.Forms.CheckBox ckbEmissaoPatheSocial;
+        private System.Windows.Forms.CheckBox ckbAdicionaLiteral;
+        private System.Windows.Forms.CheckBox ckbPastaMensal;
+        private System.Windows.Forms.CheckBox ckbSalvarArqs;
+        private System.Windows.Forms.Button btnCarregarConfiguracoes;
+        private System.Windows.Forms.Button btnSalvarConfiguracoes;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TextBox txtTransmissor;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtEmpregador;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cmbVersaoDF;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox cmbTipoEmpregador;
+        private System.Windows.Forms.Button btnEnviareSocial;
+        private System.Windows.Forms.Button btnConsultareSocial;
+        private System.Windows.Forms.Button btnCriarEnviareSocial;
+        private System.Windows.Forms.Button btnLimpareSocial;
+        private System.Windows.Forms.Button btnSetIDEmpregador;
+        private System.Windows.Forms.Button btnCarregarXMLEventoeSocial;
+        private System.Windows.Forms.Button btnDownloadEventos;
+        private System.Windows.Forms.Button btnSetVersaoDF;
+        private System.Windows.Forms.Button btnSetTipoEmpregador;
+        private System.Windows.Forms.Button btnSetIDTransmissor;
+        private System.Windows.Forms.Button btnConsultaIdentificadoresEventosEmpregador;
+        private System.Windows.Forms.Button btnConsultaIdentificadoresEventosTrabalhador;
+        private System.Windows.Forms.Button btnConsultaIdentificadoresEventosTabela;
+    }
+}
+

@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/09/2022
+-- ACBrNFSeXServicos --
+[*] A cidade Sao Jose/SC trocou de provedor agora é: IPM.
+   Por: Willian Delan
+[+] Incluída a cidade Ararangua/SC - Provedor IPM.
+   Por: Maiquel
+[+] Incluída a cidade Tres Cachoeiras/RS - Provedor Betha.
+   Por: Mario Inacio
+
 27/09/2022
 -- SigISS.Provider --
 [*] Ajuste na procedure que processa as mensagens de erros.

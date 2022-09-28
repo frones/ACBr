@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 28/09/2022
+-- Pronim.GravarXml --
+[*] Imposta uma condição para sempre gerar a tag Aliquota quando a empresa for
+    Simples Nacional, caso contrario a tag é opcional.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXLerXml_ABRASFv2 --
 [*] Alteração visando a leitura da tag IssRetido quando ela esta fora do lugar.
    Por: Italo Giurizzato Junior

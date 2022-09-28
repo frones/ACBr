@@ -56,6 +56,8 @@ type
   protected
     procedure Configuracao; override;
 
+  public
+    function GerarXml: Boolean; Override;
   end;
 
 implementation
@@ -93,6 +95,14 @@ begin
   NrOcorrAliquota := 0;
 
   Opcoes.SuprimirDecimais := True;
+end;
+
+function TNFSeW_Pronim202.GerarXml: Boolean;
+begin
+  if NFSe.OptanteSimplesNacional = snSim then
+    NrOcorrAliquota := 1;
+
+  Result := inherited GerarXml;
 end;
 
 end.

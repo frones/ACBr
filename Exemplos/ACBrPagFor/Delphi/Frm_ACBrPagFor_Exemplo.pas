@@ -1021,7 +1021,7 @@ end;
 procedure TfrmACBrPagFor_Exemplo.btnLerClick(Sender: TObject);
 var
   NomeArquivo: String;
-  i: Integer;
+  i, k: Integer;
 begin
   OpenDialog1.Title := 'Selecione o Arquivo de Retorno';
   OpenDialog1.DefaultExt := '*.txt';
@@ -1046,13 +1046,16 @@ begin
 
     for i := 0 to ACBrPagFor1.Arquivos.Count -1 do
     begin
-      with ACBrPagFor1.Arquivos.Items[0].PagFor.Registro0.Aviso.Items[i] do
+      for k := 0 to ACBrPagFor1.Arquivos.Items[i].PagFor.Registro0.Aviso.Count -1 do
       begin
-        LogMsg.Lines.Add('Código........:' + CodigoRetorno);
-        LogMsg.Lines.Add('Mensagem......:' + MensagemRetorno);
-        LogMsg.Lines.Add('Segmento......:' + Segmento);
-        LogMsg.Lines.Add('Segmento Filho:' + SegmentoFilho);
-        LogMsg.Lines.Add('Seu Numero....:' + SeuNumero);
+        with ACBrPagFor1.Arquivos.Items[i].PagFor.Registro0.Aviso.Items[k] do
+        begin
+          LogMsg.Lines.Add('Código........:' + CodigoRetorno);
+          LogMsg.Lines.Add('Mensagem......:' + MensagemRetorno);
+          LogMsg.Lines.Add('Segmento......:' + Segmento);
+          LogMsg.Lines.Add('Segmento Filho:' + SegmentoFilho);
+          LogMsg.Lines.Add('Seu Numero....:' + SeuNumero);
+        end;
       end;
     end;
   end;

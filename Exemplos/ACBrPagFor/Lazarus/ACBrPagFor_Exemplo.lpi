@@ -12,6 +12,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrPagFor_Exemplo"/>
+      <Scaled Value="True"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -63,9 +64,6 @@
       </SyntaxOptions>
     </Parsing>
     <Linking>
-      <Debugging>
-        <DebugInfoType Value="dsDwarf2Set"/>
-      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

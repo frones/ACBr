@@ -20,49 +20,143 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="145"/>
-        <CursorPos X="26" Y="154"/>
+        <TopLine Value="436"/>
+        <CursorPos X="23" Y="440"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\lcl\lcltype.pp"/>
+        <UnitName Value="LCLType"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagFor.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="132"/>
+        <CursorPos Y="148"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.lfm"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="51" Y="11"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForConversao.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="540"/>
+        <CursorPos X="38" Y="554"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\ACBrPagForArquivo.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="190"/>
+        <CursorPos Y="204"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\Terceiros\synalist\synautil.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1802"/>
+        <CursorPos Y="1817"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\ACBrPagForProviderBase.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="151"/>
+        <CursorPos Y="171"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Bancos\PagFor.Caixa.Provider.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="57"/>
+        <CursorPos Y="79"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\Provider\CNAB240.LerTxtRetorno.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1554"/>
+        <CursorPos Y="1575"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Fontes\ACBrPagFor\Base\ACBrPagForClass.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="2965"/>
+        <CursorPos X="29" Y="2975"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="8">
+    <JumpHistory HistoryIndex="12">
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="19" Column="33" TopLine="10"/>
+        <Caret Line="431" TopLine="420"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="247" Column="61" TopLine="235"/>
+        <Caret Line="432" TopLine="420"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret TopLine="25"/>
+        <Caret Line="433" TopLine="420"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="122" Column="25" TopLine="113"/>
+        <Caret Line="435" TopLine="420"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="436" TopLine="426"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="165" Column="25" TopLine="145"/>
+        <Caret Line="440" TopLine="429"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="217" Column="25" TopLine="197"/>
+        <Caret Line="442" Column="57" TopLine="438"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="296" Column="58" TopLine="277"/>
+        <Caret Line="441" Column="51" TopLine="436"/>
       </Position>
       <Position>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
-        <Caret Line="295" Column="58" TopLine="276"/>
+        <Caret Line="442" TopLine="436"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="442" Column="70" TopLine="430"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="444" Column="67" TopLine="434"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="440" TopLine="434"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="442" TopLine="434"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -71,4 +165,15 @@
     </RunParams>
   </ProjectSession>
   <SkipCheckLCLInterfaces Value="True"/>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Line Value="525"/>
+      </Item>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

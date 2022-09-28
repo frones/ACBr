@@ -11,6 +11,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
   Font.Color = clWindowText
   Font.Height = -14
   Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
   OnShow = FormShow
   object Label1: TLabel
     Left = 379
@@ -127,9 +128,9 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
         Height = 426
         Top = 19
         Width = 346
-        ActivePage = TabSheet4
+        ActivePage = TabSheet2
         MultiLine = True
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 0
         Options = [nboMultiLine]
         object TabSheet4: TTabSheet
@@ -573,6 +574,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     Top = 90
     Width = 126
     Caption = 'Linha Dig.'
+    OnClick = btnLinhaDigClick
     TabOrder = 4
   end
   object btnCodBarras: TButton
@@ -581,6 +583,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     Top = 90
     Width = 144
     Caption = 'Cod. Barras'
+    OnClick = btnCodBarrasClick
     TabOrder = 5
   end
   object btnMontarCodBarras: TButton
@@ -589,6 +592,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     Top = 129
     Width = 125
     Caption = 'Monta Barras'
+    OnClick = btnMontarCodBarrasClick
     TabOrder = 6
   end
   object btnConvenio: TButton
@@ -597,6 +601,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     Top = 129
     Width = 144
     Caption = 'Convenio'
+    OnClick = btnConvenioClick
     TabOrder = 7
   end
   object btnLer: TButton
@@ -605,9 +610,11 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     Top = 129
     Width = 211
     Caption = 'Ler Arquivo Retorno'
+    OnClick = btnLerClick
     TabOrder = 8
   end
   object ACBrPagFor1: TACBrPagFor
+    Configuracoes.Geral.Banco = pagCaixaEconomica
     Configuracoes.Geral.Empresa.TipoInscricao = tiIsento
     Configuracoes.Geral.Empresa.Conta.AgenciaCodigo = 0
     Configuracoes.Geral.Empresa.Conta.ContaNumero = 0

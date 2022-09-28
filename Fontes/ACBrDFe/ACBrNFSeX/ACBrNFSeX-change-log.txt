@@ -44,11 +44,16 @@ Símbolo : Significado
 
 
 28/09/2022
+-- ACBrNFSeXServicos --
+[*] A cidade de Montenegro trocou de provedor agora é: Pronim
+   Por: douglas.garda
 -- Diversos --
 [*] Alterações visando suportar a versão 2.04 no provedor ISSNet que vai ser
     utilizado por Brasília/DF.
    Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
+[*] A cidade de Montenegro trocou de provedor aogra é: Pronim
+   Por: douglas.garda
 [*] Incluída a cidade de Brasília/DF - Provedor ISSNet
    Por: Italo Giurizzato Junior
 -- Betha.Provider/Betha.LerXml --

@@ -917,8 +917,8 @@ function TACBrNFSeXProvider.StrToSimNao(out ok: boolean;
   const s: string): TnfseSimNao;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [snSim, snNao]);
+                           ['1', '2', ''],
+                           [snSim, snNao, snNao]);
 end;
 
 function TACBrNFSeXProvider.SituacaoTributariaToStr(

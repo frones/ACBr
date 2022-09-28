@@ -168,6 +168,8 @@ procedure TACBrNFSeProviderBetha.Configuracao;
 begin
   inherited Configuracao;
 
+  ConfigGeral.DetalharServico := True;
+
   with ConfigAssinar do
   begin
     Rps := True;

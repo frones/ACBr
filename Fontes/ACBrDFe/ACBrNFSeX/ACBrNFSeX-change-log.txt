@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 28/09/2022
+-- Betha.Provider/Betha.LerXml --
+[*] Alterações visando apresentar as informações do campo Discriminacao de forma
+    mas compreensivel.
+   Por: Italo Giurizzato Junior
 -- Pronim.GravarXml --
 [*] Imposta uma condição para sempre gerar a tag Aliquota quando a empresa for
     Simples Nacional, caso contrario a tag é opcional.

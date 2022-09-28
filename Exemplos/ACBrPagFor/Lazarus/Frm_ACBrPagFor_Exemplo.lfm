@@ -1,41 +1,32 @@
 object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
-  Left = 548
-  Height = 620
-  Top = 219
-  Width = 1025
+  Left = 192
+  Height = 596
+  Top = 114
+  Width = 1014
   Caption = 'Programa exemplo do Componente ACBrPagFor (Padrão FEBRABAN 240 Posições)'
-  ClientHeight = 620
-  ClientWidth = 1025
+  ClientHeight = 596
+  ClientWidth = 1014
   Color = clBtnFace
   DesignTimePPI = 120
   Font.Color = clWindowText
   Font.Height = -14
   Font.Name = 'MS Sans Serif'
   OnShow = FormShow
-  LCLVersion = '2.0.10.0'
   object Label1: TLabel
-    Left = 380
+    Left = 379
     Height = 16
-    Top = 130
+    Top = 168
     Width = 119
     Caption = 'Log de Mensagens:'
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
     ParentColor = False
-    ParentFont = False
   end
   object btnGerar: TButton
     Left = 380
     Height = 31
     Top = 90
-    Width = 121
-    Caption = 'Gerar Arquivo'
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
+    Width = 211
+    Caption = 'Gerar Arquivo Remessa'
     OnClick = btnGerarClick
-    ParentFont = False
     TabOrder = 0
   end
   object Memo1: TMemo
@@ -48,29 +39,25 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     Font.Name = 'MS Sans Serif'
     Lines.Strings = (
       'Arquivo padrão FEBRABAN de 240 Posições, para o Intercâmbio de '
-      'Informações entre Bancos e Empresas.'
+      'Informações entre Bancos e Empresas (Pagamentos).'
     )
     ParentFont = False
     TabOrder = 1
   end
   object Panel1: TPanel
     Left = 0
-    Height = 620
+    Height = 596
     Top = 0
     Width = 371
     Align = alLeft
-    ClientHeight = 620
+    ClientHeight = 596
     ClientWidth = 371
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
-    ParentFont = False
     TabOrder = 2
     object lblColaborador: TLabel
       Cursor = crHandPoint
-      Left = 18
+      Left = 19
       Height = 16
-      Top = 466
+      Top = 505
       Width = 324
       Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
       Font.Color = clNavy
@@ -83,9 +70,9 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     end
     object lblPatrocinador: TLabel
       Cursor = crHandPoint
-      Left = 18
+      Left = 19
       Height = 16
-      Top = 485
+      Top = 524
       Width = 326
       Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
       Font.Color = clGreen
@@ -98,9 +85,9 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     end
     object lblDoar1: TLabel
       Cursor = crHandPoint
-      Left = 25
+      Left = 26
       Height = 16
-      Top = 505
+      Top = 544
       Width = 311
       Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
       Font.Color = clRed
@@ -113,9 +100,9 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     end
     object lblDoar2: TLabel
       Cursor = crHandPoint
-      Left = 144
+      Left = 145
       Height = 16
-      Top = 525
+      Top = 564
       Width = 77
       Caption = 'clique aqui'
       Font.Color = clRed
@@ -127,52 +114,36 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
       OnClick = lblDoar2Click
     end
     object gbConfiguracoes: TGroupBox
-      Left = 8
-      Height = 411
-      Top = 8
+      Left = 10
+      Height = 451
+      Top = 9
       Width = 351
       Caption = 'Configurações'
-      ClientHeight = 390
+      ClientHeight = 430
       ClientWidth = 347
-      Font.Color = clWindowText
-      Font.Height = -14
-      Font.Name = 'MS Sans Serif'
-      ParentFont = False
       TabOrder = 0
       object PageControl1: TPageControl
-        Left = 0
-        Height = 392
-        Top = 1
+        Left = 2
+        Height = 426
+        Top = 19
         Width = 346
         ActivePage = TabSheet4
-        Font.Color = clWindowText
-        Font.Height = -14
-        Font.Name = 'MS Sans Serif'
         MultiLine = True
-        ParentFont = False
         TabIndex = 0
         TabOrder = 0
         Options = [nboMultiLine]
         object TabSheet4: TTabSheet
           Caption = 'Dados da Empresa'
-          ClientHeight = 363
+          ClientHeight = 397
           ClientWidth = 338
-          Font.Color = clWindowText
-          Font.Height = -14
-          Font.Name = 'MS Sans Serif'
           ImageIndex = 3
-          ParentFont = False
           object Label12: TLabel
             Left = 10
             Height = 16
             Top = 5
             Width = 35
             Caption = 'CNPJ'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label13: TLabel
             Left = 170
@@ -180,11 +151,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 5
             Width = 49
             Caption = 'Insc.Est.'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label14: TLabel
             Left = 10
@@ -192,11 +159,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 55
             Width = 81
             Caption = 'Razão Social'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label15: TLabel
             Left = 10
@@ -204,11 +167,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 105
             Width = 52
             Caption = 'Fantasia'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label16: TLabel
             Left = 10
@@ -216,11 +175,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 205
             Width = 70
             Caption = 'Logradouro'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label17: TLabel
             Left = 260
@@ -228,11 +183,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 205
             Width = 48
             Caption = 'Número'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label18: TLabel
             Left = 10
@@ -240,11 +191,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 255
             Width = 84
             Caption = 'Complemento'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label19: TLabel
             Left = 170
@@ -252,11 +199,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 255
             Width = 36
             Caption = 'Bairro'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label20: TLabel
             Left = 10
@@ -264,11 +207,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 305
             Width = 78
             Caption = 'Cód. Cidade '
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label21: TLabel
             Left = 95
@@ -276,11 +215,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 305
             Width = 44
             Caption = 'Cidade'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label22: TLabel
             Left = 281
@@ -288,11 +223,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 305
             Width = 18
             Caption = 'UF'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label23: TLabel
             Left = 170
@@ -300,11 +231,7 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 155
             Width = 27
             Caption = 'CEP'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object Label24: TLabel
             Left = 10
@@ -312,21 +239,13 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Top = 155
             Width = 31
             Caption = 'Fone'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object edtEmitCNPJ: TEdit
             Left = 10
             Height = 24
             Top = 25
             Width = 154
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 0
           end
           object edtEmitIE: TEdit
@@ -334,10 +253,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 25
             Width = 154
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 1
           end
           object edtEmitRazao: TEdit
@@ -345,10 +260,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 75
             Width = 315
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 2
           end
           object edtEmitFantasia: TEdit
@@ -356,10 +267,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 125
             Width = 315
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 3
           end
           object edtEmitFone: TEdit
@@ -367,10 +274,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 175
             Width = 156
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 4
           end
           object edtEmitCEP: TEdit
@@ -378,10 +281,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 175
             Width = 154
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 5
           end
           object edtEmitLogradouro: TEdit
@@ -389,10 +288,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 225
             Width = 245
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 6
           end
           object edtEmitNumero: TEdit
@@ -400,10 +295,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 225
             Width = 62
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 7
           end
           object edtEmitComp: TEdit
@@ -411,10 +302,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 275
             Width = 154
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 8
           end
           object edtEmitBairro: TEdit
@@ -422,10 +309,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 275
             Width = 154
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 9
           end
           object edtEmitCodCidade: TEdit
@@ -433,10 +316,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 325
             Width = 76
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 10
           end
           object edtEmitCidade: TEdit
@@ -444,10 +323,6 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 325
             Width = 178
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 11
           end
           object edtEmitUF: TEdit
@@ -455,42 +330,27 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Height = 24
             Top = 325
             Width = 44
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
-            ParentFont = False
             TabOrder = 12
           end
         end
         object TabSheet2: TTabSheet
           Caption = 'Dados do Banco'
-          ClientHeight = 0
-          ClientWidth = 0
-          Font.Color = clWindowText
-          Font.Height = -14
-          Font.Name = 'MS Sans Serif'
+          ClientHeight = 397
+          ClientWidth = 338
           ImageIndex = 1
-          ParentFont = False
           object Label30: TLabel
             Left = 10
-            Height = 13
+            Height = 16
             Top = 10
-            Width = 31
+            Width = 39
             Caption = 'Banco'
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             ParentColor = False
-            ParentFont = False
           end
           object sbtnPathSalvar: TSpeedButton
-            Left = 302
+            Left = 304
             Height = 30
-            Top = 156
+            Top = 332
             Width = 29
-            Font.Color = clWindowText
-            Font.Height = -14
-            Font.Name = 'MS Sans Serif'
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               04000000000000010000130B0000130B00001000000000000000000000000000
@@ -507,7 +367,14 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             }
             NumGlyphs = 2
             OnClick = sbtnPathSalvarClick
-            ParentFont = False
+          end
+          object Label2: TLabel
+            Left = 10
+            Height = 16
+            Top = 65
+            Width = 57
+            Caption = 'Convênio'
+            ParentColor = False
           end
           object cbBanco: TComboBox
             Left = 10
@@ -518,37 +385,15 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             Font.Height = -16
             Font.Name = 'MS Sans Serif'
             ItemHeight = 20
-            Items.Strings = (
-              '000-Nenhum'
-              '001-Banco do Brasil'
-              '033-Santander'
-              '104-Caixa Economica'
-              '000-Caixa Sicob'
-              '237-Bradesco'
-              '341-Itau'
-              '389-Banco Mercantil'
-              '000-Sicred'
-              '756-Bancoob'
-              '000-Banrisul'
-              '000-Banestes'
-              '399-HSBC'
-              '000-Banco do Nordeste'
-              '000-BRB'
-              '000-Bic Banco'
-              '000-Bradesco SICOOB'
-              '000-Banco Safra'
-              '000-Safra Bradesco'
-              '000-Banco CECRED'
-            )
             ParentFont = False
             Style = csDropDownList
             TabOrder = 0
           end
           object ckSalvar: TCheckBox
-            Left = 10
-            Height = 15
-            Top = 130
-            Width = 209
+            Left = 11
+            Height = 23
+            Top = 306
+            Width = 248
             Caption = 'Salvar Arquivos de Envio e Resposta'
             Font.Color = clWindowText
             Font.Height = -14
@@ -557,28 +402,140 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
             TabOrder = 1
           end
           object edtPathSalvar: TEdit
-            Left = 10
-            Height = 21
-            Top = 160
+            Left = 11
+            Height = 24
+            Top = 336
             Width = 285
+            TabOrder = 2
+          end
+          object edtConvenio: TEdit
+            Left = 10
+            Height = 24
+            Top = 85
+            Width = 154
+            TabOrder = 3
+          end
+          object grpConta: TGroupBox
+            Left = 10
+            Height = 181
+            Top = 120
+            Width = 312
+            Caption = 'Conta'
+            ClientHeight = 160
+            ClientWidth = 308
+            TabOrder = 4
+            object Label3: TLabel
+              Left = 10
+              Height = 16
+              Top = 19
+              Width = 50
+              Caption = 'Agência'
+              ParentColor = False
+            end
+            object Label4: TLabel
+              Left = 175
+              Height = 16
+              Top = 19
+              Width = 19
+              Caption = 'DV'
+              ParentColor = False
+            end
+            object Label5: TLabel
+              Left = 9
+              Height = 16
+              Top = 71
+              Width = 35
+              Caption = 'Conta'
+              ParentColor = False
+            end
+            object Label6: TLabel
+              Left = 174
+              Height = 16
+              Top = 71
+              Width = 19
+              Caption = 'DV'
+              ParentColor = False
+            end
+            object Label7: TLabel
+              Left = 10
+              Height = 16
+              Top = 126
+              Width = 19
+              Caption = 'DV'
+              ParentColor = False
+            end
+            object Label8: TLabel
+              Left = 52
+              Height = 16
+              Top = 126
+              Width = 85
+              Caption = 'Tipo de Conta'
+              ParentColor = False
+            end
+            object edtAgencia: TEdit
+              Left = 10
+              Height = 24
+              Top = 39
+              Width = 154
+              TabOrder = 0
+            end
+            object edtAgenciaDV: TEdit
+              Left = 175
+              Height = 24
+              Top = 39
+              Width = 31
+              TabOrder = 1
+            end
+            object edtContaNumero: TEdit
+              Left = 9
+              Height = 24
+              Top = 91
+              Width = 154
+              TabOrder = 2
+            end
+            object edtContaDV: TEdit
+              Left = 174
+              Height = 24
+              Top = 91
+              Width = 31
+              TabOrder = 3
+            end
+            object edtDV: TEdit
+              Left = 10
+              Height = 24
+              Top = 146
+              Width = 31
+              TabOrder = 4
+            end
+            object edtTipoConta: TEdit
+              Left = 52
+              Height = 24
+              Top = 146
+              Width = 154
+              TabOrder = 5
+            end
+          end
+          object chkUsarDadosConfig: TCheckBox
+            Left = 11
+            Height = 23
+            Top = 368
+            Width = 217
+            Caption = 'Usar os Dados da Configuração'
             Font.Color = clWindowText
             Font.Height = -14
             Font.Name = 'MS Sans Serif'
             ParentFont = False
-            TabOrder = 2
+            TabOrder = 5
           end
         end
       end
     end
     object btnSalvarConfig: TBitBtn
-      Left = 85
+      Left = 80
       Height = 31
-      Top = 428
+      Top = 466
       Width = 191
       Caption = 'Salvar Configurações'
-      Font.Color = clWindowText
-      Font.Height = -14
-      Font.Name = 'MS Sans Serif'
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -595,15 +552,14 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
       }
       NumGlyphs = 2
       OnClick = btnSalvarConfigClick
-      ParentFont = False
       TabOrder = 1
     end
   end
   object LogMsg: TMemo
-    Left = 380
-    Height = 391
-    Top = 150
-    Width = 621
+    Left = 379
+    Height = 399
+    Top = 188
+    Width = 625
     Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'MS Sans Serif'
@@ -611,61 +567,59 @@ object frmACBrPagFor_Exemplo: TfrmACBrPagFor_Exemplo
     ScrollBars = ssVertical
     TabOrder = 3
   end
-  object Button1: TButton
-    Left = 509
+  object btnLinhaDig: TButton
+    Left = 728
     Height = 31
     Top = 90
-    Width = 122
+    Width = 126
     Caption = 'Linha Dig.'
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
-    OnClick = Button1Click
-    ParentFont = False
     TabOrder = 4
   end
-  object Button2: TButton
-    Left = 639
+  object btnCodBarras: TButton
+    Left = 860
     Height = 31
     Top = 90
-    Width = 142
+    Width = 144
     Caption = 'Cod. Barras'
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
-    OnClick = Button2Click
-    ParentFont = False
     TabOrder = 5
   end
-  object Button3: TButton
-    Left = 789
+  object btnMontarCodBarras: TButton
+    Left = 728
     Height = 31
-    Top = 90
-    Width = 94
+    Top = 129
+    Width = 125
     Caption = 'Monta Barras'
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
-    OnClick = Button3Click
-    ParentFont = False
     TabOrder = 6
   end
-  object Convenio: TButton
-    Left = 890
+  object btnConvenio: TButton
+    Left = 860
     Height = 31
-    Top = 90
-    Width = 94
+    Top = 129
+    Width = 144
     Caption = 'Convenio'
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
-    OnClick = ConvenioClick
-    ParentFont = False
     TabOrder = 7
   end
+  object btnLer: TButton
+    Left = 380
+    Height = 31
+    Top = 129
+    Width = 211
+    Caption = 'Ler Arquivo Retorno'
+    TabOrder = 8
+  end
   object ACBrPagFor1: TACBrPagFor
+    Configuracoes.Geral.Empresa.TipoInscricao = tiIsento
+    Configuracoes.Geral.Empresa.Conta.AgenciaCodigo = 0
+    Configuracoes.Geral.Empresa.Conta.ContaNumero = 0
+    Configuracoes.Geral.Empresa.Conta.TipoConta = 0
+    Configuracoes.Geral.Empresa.Endereco.CEP = 0
     Configuracoes.Arquivos.PathSalvar = 'C:\Program Files (x86)\Embarcadero\Studio\20.0\bin\'
-    Left = 440
-    Top = 180
+    Configuracoes.Arquivos.Salvar = True
+    Left = 424
+    Top = 200
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 410
+    Top = 260
   end
 end

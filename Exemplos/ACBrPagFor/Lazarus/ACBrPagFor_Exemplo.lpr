@@ -1,5 +1,6 @@
 program ACBrPagFor_Exemplo;
 
+{$MODE Delphi}
 
 uses
   Forms, Interfaces,

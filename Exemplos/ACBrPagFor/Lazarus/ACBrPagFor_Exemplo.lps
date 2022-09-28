@@ -2,36 +2,73 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="2">
-      <Unit0>
+    <Units>
+      <Unit>
         <Filename Value="ACBrPagFor_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="2"/>
         <UsageCount Value="20"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit0>
-      <Unit1>
+      </Unit>
+      <Unit>
         <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmACBrPagFor_Exemplo"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="30"/>
-        <CursorPos X="120" Y="39"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="145"/>
+        <CursorPos X="26" Y="154"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit1>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="8">
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="19" Column="33" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="247" Column="61" TopLine="235"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret TopLine="25"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="122" Column="25" TopLine="113"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="165" Column="25" TopLine="145"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="217" Column="25" TopLine="197"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="296" Column="58" TopLine="277"/>
+      </Position>
+      <Position>
+        <Filename Value="Frm_ACBrPagFor_Exemplo.pas"/>
+        <Caret Line="295" Column="58" TopLine="276"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode=""/>
+      <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
 </CONFIG>

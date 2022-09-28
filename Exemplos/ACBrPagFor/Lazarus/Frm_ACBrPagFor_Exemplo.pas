@@ -41,9 +41,34 @@ uses
   Dialogs, StdCtrls, Buttons, ComCtrls, IniFiles, ExtCtrls, ACBrPagFor;
 
 type
+
+  { TfrmACBrPagFor_Exemplo }
+
   TfrmACBrPagFor_Exemplo = class(TForm)
+    btnCodBarras: TButton;
+    btnConvenio: TButton;
     btnGerar: TButton;
+    btnLer: TButton;
+    btnLinhaDig: TButton;
+    btnMontarCodBarras: TButton;
+    chkUsarDadosConfig: TCheckBox;
+    edtAgencia: TEdit;
+    edtAgenciaDV: TEdit;
+    edtContaDV: TEdit;
+    edtContaNumero: TEdit;
+    edtConvenio: TEdit;
+    edtDV: TEdit;
+    edtTipoConta: TEdit;
+    grpConta: TGroupBox;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
     Memo1: TMemo;
+    OpenDialog1: TOpenDialog;
     Panel1: TPanel;
     lblColaborador: TLabel;
     lblPatrocinador: TLabel;
@@ -420,7 +445,7 @@ begin
         Registro1.Empresa.Nome := edtEmitRazao.Text;
         Registro1.Informacao1 := '';
         Registro1.Endereco.Logradouro := edtEmitLogradouro.Text;
-        Registro1.Endereco.Numero := strToIntDef(edtEmitNumero.Text, 0);
+        Registro1.Endereco.Numero := edtEmitNumero.Text;
         Registro1.Endereco.Complemento := edtEmitComp.Text;
         Registro1.Endereco.Cidade := edtEmitCidade.Text;
         Registro1.Endereco.CEP := StrToIntDef(edtEmitCEP.Text, 0);
@@ -473,7 +498,7 @@ begin
             with Endereco do
             begin
               Logradouro  := 'ROD. JOÃO ALFREDO ROSA';
-              Numero      := 1;
+              Numero      := '1';
               Complemento := '';
               Bairro      := 'GUARDA MARGEM ESQUERDA';
               Cidade      := 'TUBARÃO';
@@ -523,7 +548,7 @@ begin
         Registro1.Empresa.Nome := edtEmitRazao.Text;
         Registro1.Informacao1 := '';
         Registro1.Endereco.Logradouro := edtEmitLogradouro.Text;
-        Registro1.Endereco.Numero := strToIntDef(edtEmitNumero.Text, 0);
+        Registro1.Endereco.Numero := edtEmitNumero.Text;
         Registro1.Endereco.Complemento := edtEmitComp.Text;
         Registro1.Endereco.Cidade := edtEmitCidade.Text;
         Registro1.Endereco.CEP := StrToIntDef(edtEmitCEP.Text, 0);
@@ -580,7 +605,7 @@ begin
         Registro1.Empresa.Nome := edtEmitRazao.Text;
         Registro1.Informacao1 := '';
         Registro1.Endereco.Logradouro := edtEmitLogradouro.Text;
-        Registro1.Endereco.Numero := strToIntDef(edtEmitNumero.Text, 0);
+        Registro1.Endereco.Numero := edtEmitNumero.Text;
         Registro1.Endereco.Complemento := edtEmitComp.Text;
         Registro1.Endereco.Cidade := edtEmitCidade.Text;
         Registro1.Endereco.CEP := StrToIntDef(edtEmitCEP.Text, 0);
@@ -633,7 +658,7 @@ begin
         Registro1.Empresa.Nome := edtEmitRazao.Text;
         Registro1.Informacao1 := '';
         Registro1.Endereco.Logradouro := edtEmitLogradouro.Text;
-        Registro1.Endereco.Numero := strToIntDef(edtEmitNumero.Text, 0);
+        Registro1.Endereco.Numero := edtEmitNumero.Text;
         Registro1.Endereco.Complemento := edtEmitComp.Text;
         Registro1.Endereco.Cidade := edtEmitCidade.Text;
         Registro1.Endereco.CEP := StrToIntDef(edtEmitCEP.Text, 0);
@@ -690,7 +715,7 @@ begin
             with Endereco do
             begin
               Logradouro  := 'ROD. JOÃO ALFREDO ROSA';
-              Numero      := 1;
+              Numero      := '1';
               Complemento := '';
               Bairro      := 'GUARDA MARGEM ESQUERDA';
               Cidade      := 'TUBARÃO';

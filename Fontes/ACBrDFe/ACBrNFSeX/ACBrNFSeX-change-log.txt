@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/09/2022
+-- ACBrNFSeXLerXml_ABRASFv2 --
+[*] Alteração visando a leitura da tag IssRetido quando ela esta fora do lugar.
+   Por: Italo Giurizzato Junior
 -- ISSDSF.Provider --
 [*] Alterações no Tratar Retorno do cancelamento e habilitado o preenchimento do
     motivo do cancelamento.

@@ -925,16 +925,16 @@ function TACBrNFSeXProvider.SituacaoTributariaToStr(
   const t: TnfseSituacaoTributaria): string;
 begin
   Result := EnumeradoToStr(t,
-                             ['1', '2', '3'],
-                             [stRetencao, stNormal, stSubstituicao]);
+                             ['1', '2', '3', ''],
+                             [stRetencao, stNormal, stSubstituicao, stNenhum]);
 end;
 
 function TACBrNFSeXProvider.StrToSituacaoTributaria(out ok: boolean;
   const s: string): TnfseSituacaoTributaria;
 begin
   Result := StrToEnumerado(ok, s,
-                             ['1', '2', '3'],
-                             [stRetencao, stNormal, stSubstituicao]);
+                             ['1', '2', '3', ''],
+                             [stRetencao, stNormal, stSubstituicao, stNenhum]);
 end;
 
 function TACBrNFSeXProvider.SituacaoTributariaDescricao(
@@ -944,6 +944,7 @@ begin
     stRetencao     : Result := '1 - Sim' ;
     stNormal       : Result := '2 - Não' ;
     stSubstituicao : Result := '3 - Substituição' ;
+    stNenhum       : Result := '' ;
   else
     Result := '';
   end;

@@ -63,7 +63,7 @@ exports
   GTIN_ConfigLerValor,
   GTIN_ConfigGravarValor,
 
-  // CEP
+  // GTIN
   GTIN_Consultar,
 
 begin

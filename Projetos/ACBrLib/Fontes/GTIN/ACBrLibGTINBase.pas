@@ -97,8 +97,41 @@ begin
 end;
 
 function TACBrLibGTIN.Consultar(aGTIN: PChar; const sResposta: PChar; var esTamanho: longint);
+var
+  GTIN, AResposta: String;
+  Resp: TGTINResposta;
 begin
+  try
+    GTIN:= AnsiString(aGTIN);
 
+    if Config.Log.Nivel > logNormal then
+     GravarLog('GTIN_Consultar (' + GTIN + ' ) ', logCompleto, True)
+    else
+     GravarLog('GTIN_Consultar', logNormal);
+
+    GTINDM.Travar;
+    try
+      GTINDM.ACBrGTIN1.Consultar(GTIN);
+      AResposta:= '';
+
+      Resp:= TGTINConsultaResposta.Create(Config.TipoResposta, Config.CodResposta);
+      try
+        Resp.Processar(GTINDM.ACBrGTIN1);
+        AResposta:= Resp.Gerar;
+      finally
+        Resp.Free;
+      end;
+    finally
+      GTINDM.Destravar;
+    end;
+
+  except
+    on E: EACBrLibException do
+     Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+     Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 end.

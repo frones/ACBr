@@ -45,6 +45,8 @@ Símbolo : Significado
 
 28/09/2022
 -- ACBrNFSeXServicos --
+[*] A cidade Jardim/MS trocou de provedor agora é: Fiorilli.
+   Por: Digibyte
 [*] A cidade Sao Jose/SC trocou de provedor agora é: IPM.
    Por: Willian Delan
 [+] Incluída a cidade Ararangua/SC - Provedor IPM.

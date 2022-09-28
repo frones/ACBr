@@ -178,6 +178,7 @@ begin
     QuebradeLinha := '<br >';
     ModoEnvio := meLoteSincrono;
     DetalharServico := True;
+    CancPreencherMotivo := True;
   end;
 
   with ConfigAssinar do
@@ -1394,23 +1395,29 @@ begin
 
       ANode := Document.Root.Childrens.FindAnyNs('RetornoCancelamentoNFSe');
 
-      ProcessarMensagemErros(ANode, Response);
-
-      AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
-
-      if AuxNode <> nil then
+      if ANode <> nil then
       begin
-        ProcessarMensagemErros(AuxNode, Response);
+        ProcessarMensagemErros(ANode, Response);
 
-        with Response do
+        AuxNode := ANode.Childrens.FindAnyNs('Cabecalho');
+
+        if AuxNode <> nil then
         begin
-          Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
+          ProcessarMensagemErros(AuxNode, Response);
+
+          with Response do
+          begin
+            Sucesso := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('Sucesso'), tcStr) = 'true';
+          end;
         end;
-      end;
 
-      Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
+        Response.Sucesso := (Response.Erros.Count = 0) and (Response.Alertas.Count = 0);
+      end
+      else
+        Response.Sucesso := False;
 
-      ANode := ANode.Childrens.Find('NotasCanceladas');
+      if ANode <> nil then
+        ANode := ANode.Childrens.Find('NotasCanceladas');
 
       if ANode <> nil then
       begin

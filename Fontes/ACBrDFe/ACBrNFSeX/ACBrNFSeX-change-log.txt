@@ -44,7 +44,15 @@ Símbolo : Significado
 
 
 28/09/2022
+-- ISSDSF.Provider --
+[*] Alterações no Tratar Retorno do cancelamento e habilitado o preenchimento do
+    motivo do cancelamento.
+   Por: Renato Rubinho
 -- ACBrNFSeXServicos --
+[*] Incluído a URL de homologação, correção na url de namespace e incluído as
+    URLs de produção e homologação do link para ter acesso ao DANFSE.
+    Essas alterações se referem a cidade Nova Iguaçu/RJ.
+   Por: Renato Rubinho
 [*] A cidade Jardim/MS trocou de provedor agora é: Fiorilli.
    Por: Digibyte
 [*] A cidade Sao Jose/SC trocou de provedor agora é: IPM.

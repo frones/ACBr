@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2022
+-- ACBrMonitor1 --
+[*] Alterações para funcionamento da consulta de GTIN por INI e TCP/IP
+
+-- DoACBrGTIN --
+[+] Inclusão do GTIN no ACBrMonitor
+    Por: Elias César
+
 06/09/2022
 -- ACBrMonitor1 --
 [*] Inclusão de checkbox para possibilitar atualização do cache local da lista de NCMs.

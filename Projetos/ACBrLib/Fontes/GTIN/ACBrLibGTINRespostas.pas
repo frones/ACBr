@@ -37,9 +37,78 @@ unit ACBrLibGTINRespostas;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, ACBrGTIN, ACBrLibResposta, ACBrLibGTINConsts;
+
+type
+
+  { TGTINResposta }
+
+  TGTINResposta = class(TACBrLibRespostaBase)
+  private
+    fNCM: String;
+    fCEST: String;
+    fxProd: String;
+    fcStat: Integer;
+    ftpGTIN: Integer;
+    fxMotivo: String;
+    fdhResp: TDateTime;
+  public
+    constructor Create(const aTipo: TACBrLibRespostaTipo; const aFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Clear;
+    procedure Processar(const aACBrGTIN: TACBrGTIN);
+
+  published
+    property NCM: String read fNCM write fNCM;
+    property CEST: String read fCEST write fCEST;
+    property xProd: String read fxProd write fxProd;
+    property cStat: Integer read fcStat write fcStat;
+    property tpGTIN: Integer read ftpGTIN write ftpGTIN;
+    property xMotivo: String read fxMotivo write fxMotivo;
+    property dhResp: TDateTime read fdhResp write fdhResp;
+  end;
 
 implementation
+
+{ TGTINResposta }
+
+constructor TGTINResposta.Create(const aTipo: TACBrLibRespostaTipo;
+  const aFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoRespConsulta, aTipo, aFormato);
+  Clear;
+end;
+
+destructor TGTINResposta.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TGTINResposta.Clear;
+begin
+  fcStat := 0;
+  fdhResp := 0;
+  ftpGTIN := 0;
+  fNCM := EmptyStr;
+  fCEST := EmptyStr;
+  fxProd := EmptyStr;
+  fxMotivo := EmptyStr;
+end;
+
+procedure TGTINResposta.Processar(const aACBrGTIN: TACBrGTIN);
+begin
+  with aACBrGTIN.WebServices do
+  begin
+    fNCM := Consulta.NCM;
+    fCEST := Consulta.CEST;
+    fcStat := Consulta.cStat;
+    fxProd := Consulta.xProd;
+    ftpGTIN := Consulta.tpGTIN;
+    fdhResp := Consulta.dhResp;
+    fxMotivo := Consulta.xMotivo;
+  end;
+end;
 
 end.
 

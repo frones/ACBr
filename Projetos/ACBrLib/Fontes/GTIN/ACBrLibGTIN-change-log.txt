@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2022
+--- ACBrLibGTINRespostas ---
+[*] Criação de classe para tratar as respostas do componente ACBrGTIN
+    Por: Elias César
+
 23/09/2022
 --- ACBrLibGTIN ---
 [*] Correção Unit ACBrLibGTINMT

@@ -44,6 +44,13 @@ Símbolo : Significado
 
 
 28/09/2022
+-- Diversos --
+[*] Alterações visando suportar a versão 2.04 no provedor ISSNet que vai ser
+    utilizado por Brasília/DF.
+   Por: Italo Giurizzato Junior
+-- ACBrNFSeXServicos --
+[*] Incluída a cidade de Brasília/DF - Provedor ISSNet
+   Por: Italo Giurizzato Junior
 -- Betha.Provider/Betha.LerXml --
 [*] Alterações visando apresentar as informações do campo Discriminacao de forma
     mas compreensivel.

@@ -69,7 +69,6 @@ uses
   ISSFortaleza.Provider,
   ISSIntel.Provider,
   ISSNatal.Provider,
-  ISSNet.Provider,
   ISSRecife.Provider,
   ISSRio.Provider,
   ISSSalvador.Provider,
@@ -144,6 +143,7 @@ uses
   // Provedores que seguem a versão 1 e 2 do layout da ABRASF
   Abaco.Provider,
   Betha.Provider,
+  ISSNet.Provider,
   Pronim.Provider,
   SilTecnologia.Provider,
   SimplISS.Provider,
@@ -365,7 +365,16 @@ begin
         Result := TACBrNFSeProviderISSLencois.Create(ACBrNFSe);
 
       proISSNatal: Result := TACBrNFSeProviderISSNatal.Create(ACBrNFSe);
-      proISSNet:   Result := TACBrNFSeProviderISSNet.Create(ACBrNFSe);
+
+      proISSNet:
+        begin
+          case Versao of
+            ve100: Result := TACBrNFSeProviderISSNet.Create(ACBrNFSe);
+            ve204: Result := TACBrNFSeProviderISSNet204.Create(ACBrNFSe);
+          else
+            Result := nil;
+          end;
+        end;
 
       proISSPortoVelho:
         Result := TACBrNFSeProviderISSPortoVelho200.Create(ACBrNFSe);

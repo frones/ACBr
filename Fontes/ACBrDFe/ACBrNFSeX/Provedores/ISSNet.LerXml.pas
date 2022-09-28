@@ -38,12 +38,22 @@ interface
 
 uses
   SysUtils, Classes, StrUtils,
-  ACBrNFSeXLerXml_ABRASFv1;
+  ACBrNFSeXLerXml_ABRASFv1, ACBrNFSeXLerXml_ABRASFv2;
 
 type
   { TNFSeR_ISSNet }
 
   TNFSeR_ISSNet = class(TNFSeR_ABRASFv1)
+  protected
+
+    function NormatizarXml(const aXml: string): string; override;
+  public
+
+  end;
+
+  { TNFSeR_ISSNet204 }
+
+  TNFSeR_ISSNet204 = class(TNFSeR_ABRASFv2)
   protected
 
     function NormatizarXml(const aXml: string): string; override;
@@ -65,6 +75,16 @@ uses
 { TNFSeR_ISSNet }
 
 function TNFSeR_ISSNet.NormatizarXml(const aXml: string): string;
+begin
+  Result := inherited NormatizarXml(aXml);
+
+  Result := RemoverPrefixosDesnecessarios(Result);
+  Result := RemoverCaracteresDesnecessarios(Result);
+end;
+
+{ TNFSeR_ISSNet204 }
+
+function TNFSeR_ISSNet204.NormatizarXml(const aXml: string): string;
 begin
   Result := inherited NormatizarXml(aXml);
 

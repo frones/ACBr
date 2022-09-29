@@ -49,6 +49,8 @@ type
   public
     function GerarNFSe(ACabecalho, AMSG: String): string; override;
     function ConsultarNFSe(ACabecalho, AMSG: String): string; override;
+
+    function TratarXmlRetornado(const aXML: string): string; override;
   end;
 
   TACBrNFSeProviderRLZ = class (TACBrNFSeProviderProprio)
@@ -474,7 +476,7 @@ procedure TACBrNFSeProviderRLZ.TratarRetornoEmitir(
 var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
-  ANode: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
   NumNfse: String;
   ANota: TNotaFiscal;
 begin
@@ -498,16 +500,19 @@ begin
 
       Response.Sucesso := (Response.Erros.Count = 0);
 
-      ANode := ANode.Childrens.FindAnyNs('nota');
+      AuxNode := ANode.Childrens.FindAnyNs('nota');
+
+      if AuxNode = nil then
+        AuxNode := ANode;
 
       with Response do
       begin
-        NumeroNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('numero'), tcStr);
+        NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('numero'), tcStr);
         NumNfse := NumeroNota;
-        Protocolo := ObterConteudoTag(ANode.Childrens.FindAnyNs('guia'), tcStr);
-        CodVerificacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
-        Link := ObterConteudoTag(ANode.Childrens.FindAnyNs('url'), tcStr);
-        Situacao := ObterConteudoTag(ANode.Childrens.FindAnyNs('situacao'), tcStr);
+        Protocolo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('guia'), tcStr);
+        CodVerificacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('codigoverificacao'), tcStr);
+        Link := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('url'), tcStr);
+        Situacao := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('situacao'), tcStr);
       end;
 
       if Response.NumeroNota = '' then
@@ -520,7 +525,7 @@ begin
 
       ANota := TACBrNFSeX(FAOwner).NotasFiscais.FindByRps(NumNfse);
 
-      ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+      ANota := CarregarXmlNfse(ANota, AuxNode.OuterXml);
       SalvarXmlNfse(ANota);
     except
       on E:Exception do
@@ -665,6 +670,14 @@ begin
   Result := Executar('urn:server.issqn#listarNotasXML', Request,
                      ['return'],
                      ['xmlns:urn="urn:server.issqn"']);
+end;
+
+function TACBrNFSeXWebserviceRLZ.TratarXmlRetornado(const aXML: string): string;
+begin
+  Result := inherited TratarXmlRetornado(aXML);
+
+  Result := ParseText(AnsiString(Result), True, False);
+  Result := RemoverDeclaracaoXML(Result);
 end;
 
 end.

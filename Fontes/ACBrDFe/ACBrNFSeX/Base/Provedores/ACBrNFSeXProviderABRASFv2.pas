@@ -119,7 +119,6 @@ type
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); virtual;
 
-//    function LerDatas(const xData: string): TDateTime;
   end;
 
 implementation
@@ -132,30 +131,6 @@ uses
 
 { TACBrNFSeProviderABRASFv2 }
 
-{
-function TACBrNFSeProviderABRASFv2.LerDatas(const xData: string): TDateTime;
-begin
-  if Pos('/', xData) = 3 then
-  begin
-    if Copy(xData, 1, 2) > '12' then
-      result := EncodeDataHora(xData, 'DD/MM/YYYY')
-    else
-      result := EncodeDataHora(xData, 'MM/DD/YYYY');
-  end
-  else
-  begin
-    if Pos('/', xData) = 2 then
-    begin
-      if Copy(xData, 3, 2) > '12' then
-        result := EncodeDataHora(xData, 'M/DD/YYYY')
-      else
-        result := EncodeDataHora(xData, 'D/MM/YYYY');
-    end
-    else
-      result := EncodeDataHora(xData, '');
-  end;
-end;
-}
 procedure TACBrNFSeProviderABRASFv2.Configuracao;
 const
   NameSpace = 'http://www.abrasf.org.br/nfse.xsd';

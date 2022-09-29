@@ -44,6 +44,11 @@ Símbolo : Significado
 
 
 29/09/2022
+-- ACBrNFSeXProviderABRASFv1 --
+[*] Possível solução para quando ao consultar a situação do lote o
+    WebService não retorna a situação.
+   Por: Italo Giurizzato Junior
+
 -- ACBrNFSeXServicos --
 [*] Incluído o parâmetro GerarTag para a cidade de São José/SC
    Por: Willian Carminatt

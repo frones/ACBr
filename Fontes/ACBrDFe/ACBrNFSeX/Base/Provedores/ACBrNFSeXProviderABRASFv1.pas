@@ -527,6 +527,10 @@ begin
 
       Response.Lote := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('NumeroLote'), tcStr);
       Response.Situacao := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('Situacao'), tcStr);
+
+      if not Response.Sucesso then
+        Response.Situacao := '3';
+
     except
       on E:Exception do
       begin

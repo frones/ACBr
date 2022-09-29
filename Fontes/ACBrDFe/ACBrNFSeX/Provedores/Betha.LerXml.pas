@@ -77,18 +77,18 @@ var
 
   function ExtraiValorCampo(aCampo: string): string;
   begin
-    i := Pos(aCampo, xDiscriminacao, j) + Length(aCampo) + 1;
+    i := PosEx(aCampo, xDiscriminacao, j) + Length(aCampo) + 1;
 
     if i = Length(aCampo) + 1 then
       Result := ''
     else
     begin
-      j := Pos(']', xDiscriminacao, i);
+      j := PosEx(']', xDiscriminacao, i);
       Result := Copy(xDiscriminacao, i, j-i);
     end;
   end;
 begin
-  inherited LerXml;
+  Result := inherited LerXml;
 
   // Tratar a Discriminacao do serviço
   xDiscriminacao := NFSe.Servico.Discriminacao;

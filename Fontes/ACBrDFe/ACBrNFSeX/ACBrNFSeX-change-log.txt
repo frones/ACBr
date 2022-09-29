@@ -44,6 +44,10 @@ Símbolo : Significado
 
 
 29/09/2022
+-- DSF.Provider --
+[*] Incluído a função TratarXmlRetornado para tratar o XML retornado do
+    WebService.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXProviderABRASFv1 --
 [*] Possível solução para quando ao consultar a situação do lote o
     WebService não retorna a situação.
